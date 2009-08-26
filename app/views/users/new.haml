@@ -1,0 +1,6 @@
+%h1= t('.title')
+
+- form_for @user do |f|
+  = user_fields(f)
+  
+  = submit_tag t('.save')

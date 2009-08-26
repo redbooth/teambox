@@ -1,0 +1,26 @@
+= f.error_messages
+
+.login.text_field
+  = f.label :login, t('.login')
+  %br
+  = f.text_field :login
+.email.text_field
+  = f.label :email, t('.email')
+  %br
+  = f.text_field :email
+.time_zone.text_field
+  = f.label :time_zone, t('.time_zone')
+  %br
+  = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"
+.language.select
+  = f.label :language, t('.language')
+  %br
+  = f.select :language, [['English', 'en']]
+.password.text_field
+  = f.label :password, t('.password')
+  %br
+  = f.password_field :password
+.password_confirmation.text_field
+  = f.label :password_confirmation, t('.password_confirmation')
+  %br
+  = f.password_field :password_confirmation

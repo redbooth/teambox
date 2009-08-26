@@ -19,12 +19,55 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string   :salt,                      :limit => 40
     t.string   :remember_token,            :limit => 40
     t.datetime :remember_token_expires_at
+    t.string   :time_zone,          :default => "Eastern Time (US & Canada)"
+    t.string   :language,           :default => "en"
     t.timestamps
   end
 
   create_table :sessions do |t|
     t.string :session_id, :null => false
     t.text :data
+    t.timestamps
+  end
+  
+  create_table :projects do |t|
+    t.integer :user_id
+    t.string  :name
+    t.string  :permalink
+    t.timestamps
+  end
+
+  create_table :task_lists do |t|
+    t.integer :project_id
+    t.integer :user_id
+    t.string  :name
+    t.integer :position
+    t.timestamps
+  end
+  
+  create_table :tasks do |t|
+    t.integer :project_id
+    t.integer :task_list_id
+    t.integer :user_id
+    t.string  :name
+    t.integer :position
+    t.timestamps
+  end
+
+  create_table :comments do |t|
+    t.integer :project_id
+    t.integer :target_id 
+    t.string  :taget_type #model name
+    t.integer :user_id
+    t.text  :body
+    t.text  :body_html
+    t.timestamps    
+  end
+  
+  create_table :conversations do |t|
+    t.integer :project_id
+    t.integer :user_id
+    t.string  :name
     t.timestamps
   end
 

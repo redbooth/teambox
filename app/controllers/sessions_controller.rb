@@ -3,6 +3,9 @@ class SessionsController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
 
+  skip_before_filter :login_required, :except => [ :destroy ]
+  skip_before_filter :load_project
+
   # render new.rhtml
   def new
   end
