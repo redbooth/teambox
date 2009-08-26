@@ -11,5 +11,25 @@ en:
       password: Password
       password_confirmation: Confirm Password
     new:
-      title: Create a New Account
+      title: Create an Account
       save: Create account
+      
+  projects:
+    fields:
+      name: Name
+      permalink: URL
+      permalink_prefix: http://teambox.com/
+    new:
+      title: Create a Project
+      submit: Create
+    edit:
+      title: Edit
+      submit: Save
+      
+  sessions:
+    fields:
+      login: Login
+      password: Password
+    new:
+      title: Login
+      submit: Login

@@ -1,8 +1,8 @@
 %h1
-  Edit
+  = t('.title')
   = h(@project.name)
 
 - form_for @project do |f|
   = project_fields(f)
   
-  = f.submit 'Save'
+  = f.submit t('.submit')

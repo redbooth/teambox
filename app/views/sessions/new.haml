@@ -1,0 +1,6 @@
+%h1= t('.title')
+
+- form_tag session_path do
+  = session_fields
+
+  = submit_tag t('.submit')

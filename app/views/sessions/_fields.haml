@@ -1,0 +1,11 @@
+.login.text_field
+  = label_tag t('.login')
+  %br
+  = text_field_tag 'login', @login
+
+.password.text_field
+  = label_tag t('.password')
+  %br
+  = text_field_tag 'password'
+
+= hidden_field_tag 'remember_me', '1'
