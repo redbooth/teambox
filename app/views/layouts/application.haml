@@ -1,0 +1,17 @@
+!!! XML
+!!! Strict
+
+%html
+  %head
+    %title
+    
+    = stylesheet_link_tag 'application'
+    
+  %body
+    - if logged_in?
+      = link_to 'Logout', logout_path
+    - else
+      = link_to 'Login', login_path
+      = link_to 'Signup', signup_path
+    
+    = yield

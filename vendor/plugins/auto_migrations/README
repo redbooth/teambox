@@ -1,0 +1,51 @@
+== AutoMigrations
+
+Forget migrations, auto-migrate!
+
+
+== Usage
+
+Write out your schema (or use an existing one)
+
+  $ cat db/schema.rb
+
+  ActiveRecord::Schema.define do
+
+    create_table :posts do |t|
+      t.string   :title
+      t.text     :body
+      t.timestamps
+    end
+  
+  end
+
+  $ rake db:auto:migrate
+
+  Created posts table
+
+...a few days later
+
+  $ cat db/schema.rb
+
+  ActiveRecord::Schema.define do
+
+    create_table :posts do |t|
+      t.string   :title
+      t.text     :content
+      t.timestamps
+    end
+  
+  end
+
+  $ rake db:auto:migrate
+  -- add_column("posts", :content, :text)
+     -> 0.0307s
+  -- remove_column("posts", "body")
+     -> 0.0311s
+
+Found a bug?  Sweet.  Add it at the Lighthouse: 
+  http://err.lighthouseapp.com/projects/466-plugins/tickets/new
+
+Feature requests are welcome. 
+
+* PJ Hyett [ pjhyett@gmail.com ]
