@@ -1,8 +1,7 @@
 class Project < ActiveRecord::Base
   belongs_to :user
   has_many :task_lists
-  has_many :conversations
-  
+  has_many :conversations, :order => 'created_at DESC'
   has_many :comments, :as => :target, :order => 'created_at DESC'
   
   validates_length_of :name, :minimum => 3

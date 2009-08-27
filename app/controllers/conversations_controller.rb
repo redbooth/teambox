@@ -1,4 +1,6 @@
 class ConversationsController < ApplicationController
+  before_filter :load_conversation, :only => [ :show, :edit, :update, :destroy ]
+  
   def new
     @conversation = @current_project.conversations.new
   end
@@ -15,6 +17,20 @@ class ConversationsController < ApplicationController
     end
   end
   
-  def show
+  def index
+    @conversations = @current_project.conversations
   end
+  
+  def show
+    @comments = @current_conversation.comments
+  end
+  
+  private
+    def load_conversation
+      @current_conversation = @current_project.conversations.find(params[:id])
+      
+      if @current_conversation.nil?
+        redirect_to project_path(@current_project)
+      end
+    end
 end
