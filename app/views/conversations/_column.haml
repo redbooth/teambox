@@ -1,0 +1,4 @@
+- content_for :column do
+  = new_conversation_link(project)
+  .conversations
+    = list_conversations(conversations,current_conversation)

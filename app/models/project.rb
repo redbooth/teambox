@@ -1,8 +1,8 @@
 class Project < ActiveRecord::Base
   belongs_to :user
   has_many :task_lists
-  has_many :conversations
-  
+  has_many :conversations, :order => 'created_at DESC'
+  has_many :pages, :order => 'created_at DESC'
   has_many :comments, :as => :target, :order => 'created_at DESC'
   
   validates_length_of :name, :minimum => 3
@@ -30,6 +30,12 @@ class Project < ActiveRecord::Base
       comment.project_id = self.id
       comment.user_id = user.id
       comment.target = target
+    end
+  end
+  
+  def new_page(user,page)
+    self.pages.new(page) do |page|
+      page.user_id = user.id
     end
   end
   

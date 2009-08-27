@@ -71,6 +71,25 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :name
     t.timestamps
   end
+  
+  create_table :pages do |t|
+    t.integer :project_id
+    t.integer :user_id
+    t.string  :name
+    t.text    :body
+    t.integer :version
+    t.timestamps
+  end
+  
+  create_table :page_versions do |t|
+    t.integer :project_id
+    t.integer :user_id
+    t.string  :name
+    t.text    :body
+    t.integer :version
+    t.integer :page_id
+    t.timestamps
+  end
 
   add_index :sessions, :session_id
   add_index :sessions, :updated_at

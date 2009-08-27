@@ -13,12 +13,14 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :conversations, :has_many => [:comments]    
   end
     
-  map.resources :projects, :has_many => [:comments] do |project|
+  map.resources :projects, :has_many => [:comments, :pages] do |project|
     project.resources :task_lists, :has_many => [:comments] do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
     project.resources :conversations, :has_many => [:comments]
   end
+  
+  map.resources :comments
 
   map.root :controller => 'projects', :action => 'index'
 end

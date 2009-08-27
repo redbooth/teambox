@@ -1,4 +1,7 @@
-.comment
+.comment{:id => "comment_#{comment.id}"}
+  .actions
+    = edit_comment_link(comment)
+    = delete_comment_link(comment)
   .user
     = comment.user.login
   .body

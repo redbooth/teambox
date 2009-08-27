@@ -1,1 +1,6 @@
-Empty
+= conversation_column(@current_project,@conversations,@current_conversation)
+
+= new_comment_form(@current_project,@current_conversation)
+
+#comments
+  = list_comments(@comments)

@@ -1,0 +1,8 @@
+welcome:
+  id: 1
+  title: Welcome to the weblog
+  body: Such a lovely day
+  version: 24
+  author_id: 1
+  revisor_id: 1
+  created_on: "2008-01-01 00:00:00"
