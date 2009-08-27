@@ -3,6 +3,8 @@ class Project < ActiveRecord::Base
   has_many :task_lists
   has_many :conversations
   
+  has_many :comments, :as => :target
+  
   validates_length_of :name, :minimum => 3
   validates_uniqueness_of :permalink
   validates_format_of :permalink, :with => /^[a-z0-9_\-\.]{2,}$/
@@ -20,6 +22,12 @@ class Project < ActiveRecord::Base
   def new_conversation(user,conversation)
     self.conversations.new(conversation) do |conversation|
       conversation.user_id = user.id
+    end
+  end
+  
+  def new_comment(user,comment)
+    self.comments.new(comment) do |comment|
+      comment.user_id = user.id
     end
   end
   
