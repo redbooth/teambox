@@ -2,4 +2,43 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  users:
+    fields:
+      login: Username
+      time_zone: Time Zone
+      language: Language
+      email: Email
+      password: Password
+      password_confirmation: Confirm Password
+    new:
+      title: Create an Account
+      save: Create account
+      
+  projects:
+    show:
+      new_task_list_link: New Task List
+    fields:
+      name: Name
+      permalink: URL
+      permalink_prefix: http://teambox.com/
+    new:
+      title: Create a Project
+      submit: Create
+    edit:
+      title: Edit
+      submit: Save
+  
+  task_lists:
+    fields:
+      name: Name
+    new:
+      title: New Task List
+      submit: Create
+      
+  sessions:
+    fields:
+      login: Login
+      password: Password
+    new:
+      title: Login
+      submit: Login

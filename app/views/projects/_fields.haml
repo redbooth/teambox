@@ -1,0 +1,12 @@
+= f.error_messages
+
+.name
+  = f.label :name, t('.name')
+  %br
+  = f.text_field :name
+
+.permalink
+  = f.label :permalink, t('.permalink')
+  %br
+  = t('.permalink_prefix')
+  = f.text_field :permalink

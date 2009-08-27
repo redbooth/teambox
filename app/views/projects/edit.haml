@@ -1,0 +1,8 @@
+%h1
+  = t('.title')
+  = h(@project.name)
+
+- form_for @project do |f|
+  = project_fields(f)
+  
+  = f.submit t('.submit')

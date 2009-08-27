@@ -7,6 +7,17 @@ class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem
 
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
+  before_filter :load_project, :login_required, :set_locale
+  
+  private
+    def load_project
+      if params[:project_id] != nil
+        @current_project = Project.find_by_permalink(params[:project_id])
+      end
+    end
+    
+    def set_locale
+      # if this is nil then I18n.default_locale will be used
+      I18n.locale = current_user.language if logged_in?
+    end
 end
