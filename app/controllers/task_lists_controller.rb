@@ -17,6 +17,7 @@ class TaskListsController < ApplicationController
   end
   
   def show
+    @tasks = @current_task_list.tasks
   end
   
   private

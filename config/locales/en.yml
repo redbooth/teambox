@@ -28,6 +28,13 @@ en:
       title: Edit
       submit: Save
   
+  tasks:
+    fields:
+      name: Name
+    new:
+      title: New Task
+      submit: Create
+  
   task_lists:
     fields:
       name: Name

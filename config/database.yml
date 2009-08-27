@@ -5,12 +5,8 @@ development:
   server: localhost
   username: root 
   password:
-<<<<<<< HEAD:config/database.yml
-  database: teambox2_dev
-=======
   database: teambox2
   
->>>>>>> 634319572044b87a346998ed2d69ab6ade7d35ea:config/database.yml
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
