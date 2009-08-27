@@ -1,22 +1,30 @@
 <div class="project_navigation"><%  
 render_tabnav :project, :generate_css => false do 
   add_tab do |t|
-    t.named t('navigation.overview')
-    t.links_to overview_path
+    t.named t('.overview')
+    t.links_to project_path(project)
     t.highlights_on :controller => :projects, :action => :show
   end
   
   add_tab do |t|
-    t.named t('navigation.conversations')
+    t.named t('.conversations')
     t.links_to  project_conversations_path(project)
     t.highlights_on :controller => :messages
   end
 
   add_tab do |t|
-    t.named t('navigation.task_lists')
+    t.named t('.task_lists')
     t.links_to  project_task_lists_path(project)
     t.highlights_on :controller => :task_lists
   end
+
+  add_tab do |t|
+    t.named t('.project_settings')
+    t.links_to  edit_project_path(project)
+    t.highlights_on :controller => :project, :action => :edit
+    t.li_class = 'right_side'
+  end
+  
 
   #add_tab do |t|
   #  t.named t('navigation.pages')
@@ -31,4 +39,4 @@ render_tabnav :project, :generate_css => false do
   #end    
 
 end
-%></div><div class="clear"></div>
+%><div class="clear"></div></div>

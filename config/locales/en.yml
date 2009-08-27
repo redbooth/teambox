@@ -31,10 +31,12 @@ en:
   task_lists:
     fields:
       name: Name
+    index:
+      add_link: New Task List
     new:
       title: New Task List
       submit: Create
-      
+
   sessions:
     fields:
       login: Login
@@ -43,3 +45,9 @@ en:
     new:
       title: Login
       submit: Login
+  shared:
+      project_navigation:
+        overview: Overview
+        conversations: Conversations
+        task_lists: Task Lists
+        project_settings: Project Settings
