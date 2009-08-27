@@ -1,0 +1,6 @@
+%h2= t('.title')
+
+- form_for [@current_project,@conversation] do |f|
+  = conversation_fields(f)
+  
+  = f.submit t('.submit')

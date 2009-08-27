@@ -30,5 +30,41 @@ module ApplicationHelper
   def location_name
     "#{action_name}_#{controller.controller_name}"
   end
+   
+  def ef(e)
+    page << "if($('#{e}')){"
+  end
+
+  def esf(e)
+    page << "}else if($('#{e}')){"
+  end
+
+  def els
+    page << "}else{"
+  end
+
+  def en
+    page << "}"
+  end
+
+  def loading(action,id=nil)
+    if id.nil?
+      image_tag('loading.gif', :id => "#{action}_loading", :style => 'display: none')
+    else  
+      image_tag('loading.gif', :id => "#{action}_loading_#{id}", :style => 'display: none')
+    end
+  end
+  
+  def trash_image(size='24x24')
+    image_tag('trash.gif', :class => 'trash', :size => size)
+  end
+
+  def pencil_image(size='24x24')
+    image_tag('pencil.gif', :class => 'pencil', :size => size)
+  end
+
+  def reload_javascript_events
+      page << "Event.addBehavior.reload()"
+  end
     
 end

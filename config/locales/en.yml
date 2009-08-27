@@ -27,6 +27,20 @@ en:
     edit:
       submit: Save Changes
   
+  conversations:
+    fields:
+      name: Name
+    new:
+      title: New Conversation
+      submit: Create
+  
+  tasks:
+    fields:
+      name: Name
+    new:
+      title: New Task
+      submit: Create
+  
   task_lists:
     fields:
       name: Name
@@ -35,6 +49,10 @@ en:
     new:
       title: New Task List
       submit: Create
+
+  comments:
+    form:
+      submit: Comment
 
   sessions:
     fields:

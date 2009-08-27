@@ -6,8 +6,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   map.resource :session
   
-  map.resources :projects do |project|
-    project.resources :task_lists do |task_lists|
+  map.resources :projects, :has_many => [:comments] do |project|
+    project.resources :task_lists, :has_many => [:comments] do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
     

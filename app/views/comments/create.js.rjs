@@ -1,0 +1,5 @@
+if @comment.new_record?
+else
+  page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment }
+  page['comment_body'].setValue('')
+end
