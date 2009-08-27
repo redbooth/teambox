@@ -1,5 +1,3 @@
-.new_task_list_link
-  = new_task_list_link(@current_project)
-
 - content_for :column do
+  = new_task_list_link(@current_project)
   = list_task_lists(@current_project,@task_lists)

@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.datetime :remember_token_expires_at
     t.string   :time_zone,          :default => "Eastern Time (US & Canada)"
     t.string   :language,           :default => "en"
+    t.text     :recent_projects
     t.timestamps
   end
 

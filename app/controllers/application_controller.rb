@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem
 
-  before_filter :load_project, :login_required, :set_locale
+  before_filter :load_project, :login_required, :set_locale, :recent_projects
   
   private
     def load_project
@@ -16,6 +16,16 @@ class ApplicationController < ActionController::Base
       end
     end
     
+    def recent_projects
+      if logged_in?
+        unless current_user.recent_projects.nil?
+          @recent_projects = Project.find(current_user.recent_projects)
+        else
+          []
+        end  
+      end
+    end
+        
     def set_locale
       # if this is nil then I18n.default_locale will be used
       I18n.locale = current_user.language if logged_in?

@@ -65,10 +65,13 @@ en:
   shared:
       navigation:
         all_projects: 'All Projects'
+        new_project: +
       project_navigation:
         overview: Overview
+        all_conversations: All Conversations
         conversations: Conversations
         task_lists: Task Lists
+        all_task_lists: All Task Lists
         project_settings: Project Settings
       global_navigation:
         logout: Logout
