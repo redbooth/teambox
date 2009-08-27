@@ -24,6 +24,7 @@ class ProjectsController < ApplicationController
   end
   
   def show
+    @comments = @current_project.comments
   end
   
   def edit

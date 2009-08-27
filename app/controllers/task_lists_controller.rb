@@ -23,6 +23,7 @@ class TaskListsController < ApplicationController
   
   def show
     @tasks = @current_task_list.tasks
+    @comments = @current_task_list.comments
   end
   
   private

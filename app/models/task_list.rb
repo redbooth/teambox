@@ -3,6 +3,7 @@ class TaskList < ActiveRecord::Base
   belongs_to :project
   
   has_many :tasks, :order => 'position'
+  has_many :comments, :as => :target, :order => 'created_at DESC'
   
   validates_length_of :name, :minimum => 3
   
