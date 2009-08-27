@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   create_table :comments do |t|
     t.integer :target_id 
     t.string  :target_type #model name
+    t.integer :project_id
     t.integer :user_id
     t.text  :body
     t.text  :body_html

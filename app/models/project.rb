@@ -25,9 +25,11 @@ class Project < ActiveRecord::Base
     end
   end
   
-  def new_comment(user,comment)
+  def new_comment(user,target,comment)
     self.comments.new(comment) do |comment|
+      comment.project_id = self.id
       comment.user_id = user.id
+      comment.target = target
     end
   end
   

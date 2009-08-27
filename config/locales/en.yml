@@ -51,6 +51,10 @@ en:
       title: New Task List
       submit: Create
 
+  comments:
+    form:
+      submit: Comment
+
   sessions:
     fields:
       login: Login
