@@ -23,6 +23,7 @@ class ConversationsController < ApplicationController
   
   def show
     @comments = @current_conversation.comments
+    @conversations = @current_project.conversations
   end
   
   private

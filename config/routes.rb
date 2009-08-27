@@ -13,6 +13,8 @@ ActionController::Routing::Routes.draw do |map|
     
     project.resources :conversations, :has_many => [:comments]
   end
+  
+  map.resources :comments
 
   map.root :controller => 'projects', :action => 'index'
 end

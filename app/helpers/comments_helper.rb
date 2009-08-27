@@ -11,4 +11,27 @@ module CommentsHelper
   def list_comments(comments)
     render :partial => 'comments/comment', :collection => comments
   end
+  
+  def edit_comment_link(comment)
+    link_to_remote 'edit', 
+      :url => edit_comment_path(comment),
+      :method => :get
+  end
+  
+  def comment_fields(f)
+    render :partial => 'comments/fields', :locals => { :f => f }
+  end
+  
+  def cancel_edit_comment_link(comment)
+    link_to_remote 'cancel',
+      :url => comment_path(comment),
+      :method => :get
+  end
+  
+  def delete_comment_link(comment)
+    link_to_remote 'delete',
+      :url => comment_path(comment),
+      :method => :delete,
+      :confirm => t('.confirm_delete')
+  end
 end

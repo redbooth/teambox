@@ -1,6 +1,4 @@
-class CommentsController < ApplicationController
-  before_filter :load_target
-  
+class CommentsController < ApplicationController  
   def create
     if !params[:task_id].nil?
       # Commenting on a task
@@ -21,9 +19,29 @@ class CommentsController < ApplicationController
     
     respond_to{|f|f.js}
   end
+
+  before_filter :load_comment, :only => [ :edit, :update, :show, :destroy ]
+
+  def show
+    respond_to{|f|f.js}
+  end
+
+  def edit
+    respond_to{|f|f.js}
+  end
   
+  def update
+    @comment.update_attributes(params[:comment])
+    respond_to{|f|f.js}
+  end
+  
+  def destroy
+    @comment.destroy
+  end
+
   private
-    def load_target
-      
+    def load_comment
+      @comment = Comment.find(params[:id])
     end
+
 end
