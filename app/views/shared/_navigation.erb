@@ -1,0 +1,13 @@
+<div class="navigation"><%  
+render_tabnav :main, :generate_css => false do 
+
+  unless project.nil?
+    add_tab do |t|
+      t.named project.name
+      t.links_to project_path(project)
+      t.highlights_on :controller => controller_name
+    end
+  end
+  
+end  
+%></div>

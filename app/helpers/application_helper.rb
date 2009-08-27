@@ -5,13 +5,14 @@ module ApplicationHelper
     render :partial => 'shared/header'
   end
 
-  def project_navigation
+  def project_navigation(project)
     render :partial => 'shared/project_navigation',
       :locals => { :project => project }
   end
   
-  def navigation
-    render :partial => 'shared/navigation'
+  def navigation(project)
+    render :partial => 'shared/navigation',
+      :locals => { :project => project }
   end
 
   def footer

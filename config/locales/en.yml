@@ -12,7 +12,7 @@ en:
       password_confirmation: Confirm Password
     new:
       title: Create an Account
-      save: Create account
+      submit: Create account
       
   projects:
     show:
@@ -45,14 +45,23 @@ en:
   task_lists:
     fields:
       name: Name
+    index:
+      add_link: New Task List
     new:
       title: New Task List
       submit: Create
-      
+
   sessions:
     fields:
       login: Login
       password: Password
+      remember_me: Remember me
     new:
       title: Login
       submit: Login
+  shared:
+      project_navigation:
+        overview: Overview
+        conversations: Conversations
+        task_lists: Task Lists
+        project_settings: Project Settings

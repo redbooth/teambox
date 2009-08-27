@@ -1,0 +1,4 @@
+nov 01, 2007
+  ADD: Added disableable support to Tabnav, thanks to Nick Plante <nap@zerosum.org>
+  ADD: Added partial rendering for Tooltips
+  ADD: started tracking changes in this CHANGELOG

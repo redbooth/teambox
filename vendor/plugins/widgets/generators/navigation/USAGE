@@ -1,0 +1,10 @@
+The navigation generator creates a sample navigation partial.
+      
+invoke with:  ./script/generate navigation <name>
+         es:  ./script/generate navigation main
+
+Usage:
+    Customize your generated partial (es: views/widgets/_main_navigation.rhtml)
+    then insert in your .rhtml pages one of this snippet:
+
+    <%= navigation :main %>

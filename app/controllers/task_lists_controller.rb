@@ -1,5 +1,10 @@
 class TaskListsController < ApplicationController
-  before_filter :load_task_list, :except => [ :new, :create ]
+  before_filter :load_task_list, :except => [:index, :new, :create ]
+  
+  def index
+    @task_lists = @current_project.task_lists
+  end
+  
   def new
     @task_list = @current_project.task_lists.new
   end
@@ -9,7 +14,7 @@ class TaskListsController < ApplicationController
     
     respond_to do |f|
       if @task_list.save
-        f.html { redirect_to project_path(@current_project) }
+        f.html { redirect_to project_task_lists_path(@current_project) }
       else
         f.html { render :action => 'new' }
       end

@@ -1,0 +1,26 @@
+<%%  
+# this partial renders a navigation bar, you can call it in your views with:
+#   <%% navigation :<%=name%> % > 
+#
+# you can pass render_navigation a few options:
+#   :generate_css => true|false #=> generates a default inline css for the tabnav, defaults to false
+#   :html => aHash #=> sets html options for the tabnav's div (es :html => {:class=> 'myCssClass', :id=>'myCssId'}) 
+#  
+render_navigation :<%=name%>, :generate_css => true do 
+    add_item :name => 'home', 
+             :link => {:controller => 'main'}
+    add_item :name => 'www.seesaw.it', 
+             :link => 'http://www.seesaw.it'
+    add_item :name => 'blog.seesaw.it', 
+             :link => 'http://blog.seesaw.it' 
+
+    # you can pass add_item a block to just like the tabnav!
+    #  
+    # add_item do |i|
+    #   i.html = {:id => 'logout_link'}
+    #   i.named 'logout', 
+    #   i.links_to :action => 'logout'
+    # end
+    #
+end 
+%>
