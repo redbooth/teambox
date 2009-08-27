@@ -1,3 +1,9 @@
 %h1= h(@project.name)
 
 = edit_project_link(@project)
+
+%h2 Task Lists
+.new_task_list_link
+  = new_task_list_link(@project)
+  
+= list_task_lists(@project)

@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
   belongs_to :user
+  has_many :task_lists
   
   validates_length_of :name, :minimum => 3
   validates_uniqueness_of :permalink

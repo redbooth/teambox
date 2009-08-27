@@ -18,5 +18,4 @@ module ProjectsHelper
   def edit_project_link(project)
     link_to 'Edit this project', edit_project_path(project)
   end
-  
 end

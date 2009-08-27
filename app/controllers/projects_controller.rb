@@ -1,5 +1,4 @@
 class ProjectsController < ApplicationController
-  before_filter :login_required
   before_filter :find_project, :only => [ :show, :edit, :update ]
   layout 'application'
   
