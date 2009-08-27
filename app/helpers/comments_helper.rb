@@ -7,4 +7,8 @@ module CommentsHelper
     end
     render :partial => 'comments/form', :locals => { :target => target, :form_url => form_url }
   end
+  
+  def list_comments(comments)
+    render :partial => 'comments/comment', :collection => comments
+  end
 end

@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
   has_many :task_lists
   has_many :conversations
   
-  has_many :comments, :as => :target
+  has_many :comments, :as => :target, :order => 'created_at DESC'
   
   validates_length_of :name, :minimum => 3
   validates_uniqueness_of :permalink
