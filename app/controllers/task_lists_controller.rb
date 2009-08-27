@@ -5,7 +5,7 @@ class TaskListsController < ApplicationController
   end
   
   def create
-    @task_list = @current_project.task_lists.new(params[:task_list])
+    @task_list = @current_project.new_task_list(current_user,params[:task_list])
     
     respond_to do |f|
       if @task_list.save

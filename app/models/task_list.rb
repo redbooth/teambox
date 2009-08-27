@@ -16,4 +16,20 @@ class TaskList < ActiveRecord::Base
     end
     
   end
+  
+  def before_save
+    if position.nil?
+      last_position = self.project.task_lists.find(:first,
+        :order => 'position DESC',
+        :limit => 1)
+      
+      if last_position.nil?
+        self.position = 1
+      else
+        self.position = last_position.position + 1
+      end
+      
+    end
+  end
+  
 end

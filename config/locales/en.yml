@@ -28,6 +28,13 @@ en:
       title: Edit
       submit: Save
   
+  conversations:
+    fields:
+      name: Name
+    new:
+      title: New Conversation
+      submit: Create
+  
   tasks:
     fields:
       name: Name
