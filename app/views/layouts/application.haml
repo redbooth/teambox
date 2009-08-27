@@ -9,11 +9,7 @@
   %body{ :class => "#{location_name} #{I18n.locale}"}
     .container
       =header
-      - if logged_in?
-        = link_to 'Logout', logout_path
-      - else
-        = link_to 'Login', login_path
-        = link_to 'Signup', signup_path
+      =global_navigation
       =navigation(@current_project)
       .wrapper
         = if @current_project

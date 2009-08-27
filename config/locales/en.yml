@@ -25,8 +25,7 @@ en:
       title: Create a Project
       submit: Create
     edit:
-      title: Edit
-      submit: Save
+      submit: Save Changes
   
   task_lists:
     fields:
@@ -46,8 +45,14 @@ en:
       title: Login
       submit: Login
   shared:
+      navigation:
+        all_projects: 'All Projects'
       project_navigation:
         overview: Overview
         conversations: Conversations
         task_lists: Task Lists
         project_settings: Project Settings
+      global_navigation:
+        logout: Logout
+        login: Login
+        signup: Signup

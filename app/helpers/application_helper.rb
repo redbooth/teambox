@@ -15,6 +15,10 @@ module ApplicationHelper
       :locals => { :project => project }
   end
 
+  def global_navigation
+    render :partial => 'shared/global_navigation'
+  end
+  
   def footer
     render :partial => 'shared/footer'
   end

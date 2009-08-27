@@ -1,7 +1,9 @@
 module TaskListsHelper
-  def list_task_lists(task_lists)
+  def list_task_lists(project,task_lists)
     render :partial => 'task_lists/task_list', 
-      :collection => task_lists
+      :collection => task_lists,
+      :locals => {
+        :project => project }
   end
   
   def new_task_list_link(project)

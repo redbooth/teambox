@@ -1,5 +1,4 @@
-%h2 List Projects
-
 = list_projects(@projects)
 
-= new_project_link
+- content_for :column do
+  = new_project_link

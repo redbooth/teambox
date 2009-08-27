@@ -11,8 +11,11 @@ module ProjectsHelper
     link_to 'Create a Project', new_project_path
   end
   
-  def project_fields(f)
-    render :partial => 'fields', :locals => { :f => f }
+  def project_fields(f,project)
+    render :partial => 'fields', 
+      :locals => { 
+        :f => f,
+        :project => project }
   end
   
 end
