@@ -12,7 +12,7 @@ en:
       password_confirmation: Confirm Password
     new:
       title: Create an Account
-      save: Create account
+      submit: Create account
       
   projects:
     show:
@@ -39,6 +39,7 @@ en:
     fields:
       login: Login
       password: Password
+      remember_me: Remember me
     new:
       title: Login
       submit: Login
