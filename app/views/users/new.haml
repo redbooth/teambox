@@ -1,0 +1,17 @@
+-@user.password = @user.password_confirmation = nil
+
+- form_for @user do |f|
+  .login.text_field
+    = f.label :login
+    = f.text_field :login
+  .login.text_field
+    = f.label :email
+    = f.text_field :email
+  .password.text_field
+    = f.label :password
+    = f.password_field :password
+  .password.text_field
+    = f.label :password_confirmation, 'Confirm Password'
+    = f.password_field :password_confirmation
+  .submit
+    = f.submit 'Signup'

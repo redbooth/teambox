@@ -1,0 +1,13 @@
+-form_tag session_path, :class => 'new_session' do 
+  .login.text_field
+    = label_tag 'login'
+    = text_field_tag 'login', @login
+  .password.text_field
+    = label_tag 'password'
+    = password_field_tag 'password', nil
+  .remember_me
+    = label_tag 'remember_me', 'Remember me'
+    %span
+      =check_box_tag 'remember_me', '1', @remember_me
+  .submit
+    = submit_tag 'Login'
