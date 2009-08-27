@@ -1,42 +1,51 @@
 <div class="project_navigation"><%  
 render_tabnav :project, :generate_css => false do 
-  add_tab do |t|
-    t.named t('.overview')
-    t.links_to project_path(project)
-    t.highlights_on :controller => :projects, :action => :show
-  end
-  
-  add_tab do |t|
-    t.named t('.conversations')
-    t.links_to  project_conversations_path(project)
-    t.highlights_on :controller => :messages
-  end
 
-  add_tab do |t|
-    t.named t('.task_lists')
-    t.links_to  project_task_lists_path(project)
-    t.highlights_on :controller => :task_lists
-  end
-
-  add_tab do |t|
-    t.named t('.project_settings')
-    t.links_to  edit_project_path(project)
-    t.highlights_on :controller => :projects, :action => :edit
-    t.li_class = 'right_side'
-  end
-  
-
-  #add_tab do |t|
-  #  t.named t('navigation.pages')
-  #  t.links_to  project_pages_path(project)
-  #  t.highlights_on :controller => :pages
-  #end
+  if project.nil?
+    add_tab do |t|
+      t.named t('.overview')
+      t.links_to projects_path
+      t.highlights_on :controller => :projects, :action => :index
+    end
     
-  #add_tab do |t|
-  #  t.named t('navigation.people')
-  #  t.links_to  project_people_path(project)
-  #  t.highlights_on :controller => :people
-  #end    
+  else
+    add_tab do |t|
+      t.named t('.overview')
+      t.links_to project_path(project)
+      t.highlights_on :controller => :projects, :action => :show
+    end
 
+    add_tab do |t|
+      t.named t('.conversations')
+      t.links_to  project_conversations_path(project)
+      t.highlights_on :controller => :messages
+    end
+
+    add_tab do |t|
+      t.named t('.task_lists')
+      t.links_to  project_task_lists_path(project)
+      t.highlights_on :controller => :task_lists
+    end
+
+    add_tab do |t|
+      t.named t('.project_settings')
+      t.links_to  edit_project_path(project)
+      t.highlights_on :controller => :projects, :action => :edit
+      t.li_class = 'right_side'
+    end
+
+    #add_tab do |t|
+    #  t.named t('navigation.pages')
+    #  t.links_to  project_pages_path(project)
+    #  t.highlights_on :controller => :pages
+    #end
+
+    #add_tab do |t|
+    #  t.named t('navigation.people')
+    #  t.links_to  project_people_path(project)
+    #  t.highlights_on :controller => :people
+    #end
+
+  end
 end
 %><div class="clear"></div></div>

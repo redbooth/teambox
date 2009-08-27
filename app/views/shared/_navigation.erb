@@ -1,5 +1,10 @@
 <div class="navigation"><%  
 render_tabnav :main, :generate_css => false do 
+  add_tab do |t|
+    t.named t('.all_projects')
+    t.links_to projects_path
+    t.highlights_on :controller => :projects, :action => :index
+  end    
 
   unless project.nil?
     add_tab do |t|
@@ -7,12 +12,6 @@ render_tabnav :main, :generate_css => false do
       t.links_to project_path(project)
       t.highlights_on :controller => controller_name
     end
-  else
-    add_tab do |t|
-      t.named t('.all_projects')
-      t.links_to projects_path
-      t.highlights_on :controller => :projects, :action => :index
-    end    
   end
   
 end  
