@@ -3,7 +3,6 @@
 - form_for [@current_project,@page] do |f|
   .name.text_field
     = f.label :name, t('.name')
-    %br
     = f.text_field :name
   
   = f.submit 'Create'

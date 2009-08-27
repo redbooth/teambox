@@ -1,5 +1,10 @@
 class TasksController < ApplicationController
   before_filter :load_task_list
+
+  def show
+    @task_lists = @current_project.task_lists
+    @task = @current_project.tasks(params[:task_id])
+  end
   
   def new
     @task = @current_task_list.tasks.new
