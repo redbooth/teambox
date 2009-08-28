@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Fleximage::Operator::Shadow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Fleximage::Operator::Shadow</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/fleximage/operator/shadow_rb.html">
+                lib/fleximage/operator/shadow.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Operator::Base
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Add a drop shadow to the image.
+</p>
+<pre>
+  image.shadow(options = {})
+</pre>
+<p>
+Use the following keys in the <tt>options</tt> hash:
+</p>
+<ul>
+<li><tt>offset</tt>: distance of the dropsahdow form the image, in FlexImage
+<b>size</b> format. Positive number move it down and right, negative
+numbers move it up and left.
+
+</li>
+<li><tt>blur</tt>: how blurry the shadow is. Roughly corresponds to distance in
+pixels of the blur.
+
+</li>
+<li><tt>background</tt>: a color for the background of the image. What the
+shadow fades into. Use an RMagick named color or use the <tt>color</tt>
+method in FlexImage::Controller, or a Magick::Pixel object.
+
+</li>
+<li><tt>color</tt>: color of the shadow itself. Use an RMagick named color or
+use the <tt>color</tt> method in FlexImage::Controller, or a Magick::Pixel
+object.
+
+</li>
+<li><tt>opacity</tt>: opacity of the shadow. A value between 0.0 and 1.0, where
+1 is opaque and 0 is transparent.
+
+</li>
+</ul>
+<p>
+Example:
+</p>
+<pre>
+  @photo.operate do |image|
+    # Default settings
+    image.shadow(
+      :color      =&gt; 'black',    # or color(0, 0, 0)
+      :background =&gt; 'white',    # or color(255, 255, 255)
+      :blur       =&gt; 8,
+      :offset     =&gt; '2x2',
+      :opacity    =&gt; 0.75
+    )
+
+    # Huge, red shadow
+    image.shadow(
+      :color      =&gt; color(255, 0, 0),
+      :background =&gt; 'black',    # or color(255, 255, 255)
+      :blur       =&gt; 30,
+      :offset     =&gt; '20x10',
+      :opacity    =&gt; 1
+    )
+  end
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000024">operate</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
+
+        <div class="method-heading">
+          <a href="#M000024" class="method-signature">
+          <span class="method-name">operate</span><span class="method-args">(options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000024-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/fleximage/operator/shadow.rb, line 48</span>
+48:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">operate</span>(<span class="ruby-identifier">options</span> = {})
+49:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">symbolize_keys</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:symbolize_keys</span>)
+50:         <span class="ruby-identifier">defaults</span> = {
+51:           <span class="ruby-identifier">:offset</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-value">2</span>,
+52:           <span class="ruby-identifier">:blur</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-value">8</span>,
+53:           <span class="ruby-identifier">:background</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'white'</span>,
+54:           <span class="ruby-identifier">:color</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'black'</span>,
+55:           <span class="ruby-identifier">:opacity</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span><span class="ruby-value">.75</span>
+56:         }
+57:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">options</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">defaults</span>
+58: 
+59:         <span class="ruby-comment cmt"># verify options</span>
+60:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:offset</span>] = <span class="ruby-identifier">size_to_xy</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:offset</span>])
+61:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:blur</span>]   = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:blur</span>].<span class="ruby-identifier">to_i</span>
+62: 
+63:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:background</span>]    = <span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">Pixel</span>.<span class="ruby-identifier">from_color</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:background</span>]) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:background</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">Pixel</span>)
+64:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:color</span>]         = <span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">Pixel</span>.<span class="ruby-identifier">from_color</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:color</span>])      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:color</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">Pixel</span>)
+65:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:color</span>].<span class="ruby-identifier">opacity</span> = (<span class="ruby-value">1</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:opacity</span>]) <span class="ruby-operator">*</span> <span class="ruby-value">255</span>
+66: 
+67:         <span class="ruby-comment cmt"># generate shadow image</span>
+68:         <span class="ruby-identifier">shadow</span> = <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">dup</span>
+69:         <span class="ruby-identifier">shadow</span>.<span class="ruby-identifier">background_color</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:color</span>]
+70:         <span class="ruby-identifier">shadow</span>.<span class="ruby-identifier">erase!</span>
+71:         <span class="ruby-identifier">shadow</span>.<span class="ruby-identifier">border!</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:offset</span>].<span class="ruby-identifier">max</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:blur</span>] <span class="ruby-operator">*</span> <span class="ruby-value">3</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:offset</span>].<span class="ruby-identifier">max</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:blur</span>] <span class="ruby-operator">*</span> <span class="ruby-value">3</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:background</span>])
+72:         <span class="ruby-identifier">shadow</span> = <span class="ruby-identifier">shadow</span>.<span class="ruby-identifier">blur_image</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:blur</span>] <span class="ruby-operator">/</span> <span class="ruby-value">2</span>)
+73: 
+74:         <span class="ruby-comment cmt"># apply shadow</span>
+75:         <span class="ruby-ivar">@image</span> = <span class="ruby-identifier">shadow</span>.<span class="ruby-identifier">composite</span>(
+76:           <span class="ruby-ivar">@image</span>, 
+77:           <span class="ruby-identifier">symbol_to_gravity</span>(<span class="ruby-identifier">:top_left</span>), 
+78:           (<span class="ruby-identifier">shadow</span>.<span class="ruby-identifier">columns</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">columns</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:offset</span>][<span class="ruby-value">0</span>], 
+79:           (<span class="ruby-identifier">shadow</span>.<span class="ruby-identifier">rows</span>    <span class="ruby-operator">-</span> <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">rows</span>)    <span class="ruby-operator">/</span> <span class="ruby-value">2</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:offset</span>][<span class="ruby-value">1</span>], 
+80:           <span class="ruby-identifier">symbol_to_blending_mode</span>(<span class="ruby-identifier">:over</span>)
+81:         )
+82:         <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">trim!</span>
+83:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Fleximage::Model::ClassMethods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Fleximage::Model::ClassMethods</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/fleximage/model_rb.html">
+                lib/fleximage/model.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Provides class methods for <a href="../../Fleximage.html">Fleximage</a> for
+use in model classes. The only class method is <a
+href="ClassMethods.html#M000002">acts_as_fleximage</a> which integrates <a
+href="../../Fleximage.html">Fleximage</a> functionality into a model class.
+</p>
+<p>
+The following class level accessors also get inserted.
+</p>
+<ul>
+<li><tt>image_directory</tt>: (String, no default) Where the master images are
+stored, directory path relative to your app root.
+
+</li>
+<li><tt>use_creation_date_based_directories</tt>: (Boolean, default
+<tt>true</tt>) If true, master images will be stored in directories based
+on creation date. For example:
+<tt>&quot;#{image_directory}/2007/11/24/123.png&quot;</tt> for an image
+with an id of 123 and a creation date of November 24, 2007. Turing this off
+would cause the path to be &quot;#{image_directory}/123.png&quot; instead.
+This helps keep the OS from having directories that are too full.
+
+</li>
+<li><tt>image_storage_format</tt>: (:png or :jpg, default :png) The format of
+your master images. Using :png will give you the best quality, since the
+master images as stored as lossless version of the original upload. :jpg
+will apply lossy compression, but the master image file sizes will be much
+smaller. If storage space is a concern, us :jpg.
+
+</li>
+<li><tt>require_image</tt>: (Boolean, default <tt>true</tt>) The model will
+raise a validation error if no image is uploaded with the record. Setting
+to false allows record to be saved with no images.
+
+</li>
+<li><tt><a href="ClassMethods.html#M000006">missing_image_message</a></tt>:
+(String, default &quot;is required&quot;) Validation message to display
+when no image was uploaded for a record.
+
+</li>
+<li><tt><a href="ClassMethods.html#M000007">invalid_image_message</a></tt>:
+(String default &quot;was not a readable image&quot;) Validation message
+when an image is uploaded, but is not an image format that can be read by
+RMagick.
+
+</li>
+<li><tt>output_image_jpg_quality</tt>: (Integer, default 85) When rendering
+JPGs, this represents the amount of compression. Valid values are 0-100,
+where 0 is very small and very ugly, and 100 is near lossless but very
+large in filesize.
+
+</li>
+<li><tt>default_image_path</tt>: (String, nil default) If no image is present
+for this record, the image at this path will be used instead. Useful for a
+placeholder graphic for new content that may not have an image just yet.
+
+</li>
+<li><tt>default_image</tt>: A hash which defines an empty starting image. This
+hash look like: <tt>:size =&gt; &#8216;123x456&#8217;, :color =&gt;
+:transparent</tt>, where <tt>:size</tt> defines the dimensions of the
+default image, and <tt>:color</tt> defines the fill. <tt>:color</tt> can be
+a named color as a string (&#8216;red&#8217;), :transparent, or a
+Magick::Pixel object.
+
+</li>
+<li><tt><a href="ClassMethods.html#M000003">preprocess_image</a></tt>: (Block,
+no default) Call this class method just like you would call
+<tt>operate</tt> in a view. The image transoformation in the provided block
+will be run on every uploaded image before its saved as the master image.
+
+</li>
+</ul>
+<p>
+Example:
+</p>
+<pre>
+  class Photo &lt; ActiveRecord::Base
+    acts_as_fleximage do
+      image_directory 'public/images/uploaded'
+      use_creation_date_based_directories true
+      image_storage_format      :png
+      require_image             true
+      missing_image_message     'is required'
+      invalid_image_message     'was not a readable image'     #       default_image_path        'public/images/no_photo_yet.png'
+      default_image             nil
+      output_image_jpg_quality  85
+
+      preprocess_image do |image|
+        image.resize '1024x768'
+      end
+    end
+
+    # normal model methods...
+  end
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000002">acts_as_fleximage</a>&nbsp;&nbsp;
+      <a href="#M000004">db_store?</a>&nbsp;&nbsp;
+      <a href="#M000005">has_store?</a>&nbsp;&nbsp;
+      <a href="#M000010">image_file_exists</a>&nbsp;&nbsp;
+      <a href="#M000008">image_too_small_message</a>&nbsp;&nbsp;
+      <a href="#M000007">invalid_image_message</a>&nbsp;&nbsp;
+      <a href="#M000009">minimum_image_size_to_s</a>&nbsp;&nbsp;
+      <a href="#M000006">missing_image_message</a>&nbsp;&nbsp;
+      <a href="#M000003">preprocess_image</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="InstanceMethods.html">Fleximage::Model::InstanceMethods</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">db_store?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Internal method to ask this class if it stores image in the DB.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/fleximage/model.rb, line 88</span>
+88:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">db_store?</span>
+89:           <span class="ruby-identifier">columns</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+90:             <span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'image_file_data'</span>
+91:           <span class="ruby-keyword kw">end</span>
+92:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="#M000005" class="method-signature">
+          <span class="method-name">has_store?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/fleximage/model.rb, line 94</span>
+94:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">has_store?</span>
+95:           <span class="ruby-identifier">db_store?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">image_directory</span>
+96:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
+          <span class="method-name">image_too_small_message</span><span class="method-args">(str = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Image too small message Should include {{minimum}}
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/fleximage/model.rb, line 158</span>
+158:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">image_too_small_message</span>(<span class="ruby-identifier">str</span> = <span class="ruby-keyword kw">nil</span>)
+159:           <span class="ruby-identifier">fb</span> = <span class="ruby-node">&quot;is too small (Minimum: #{minimum_image_size_to_s})&quot;</span>
+160:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">nil?</span>
+161:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@image_too_small_message</span>
+162:               <span class="ruby-ivar">@image_too_small_message</span>
+163:             <span class="ruby-keyword kw">else</span>
+164:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-node">&quot;activerecord.errors.models.#{self.model_name.underscore}.image_too_small&quot;</span>, <span class="ruby-identifier">:minimum</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">minimum_image_size_to_s</span>
+165:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-value str">&quot;activerecord.errors.messages.image_too_small&quot;</span>, <span class="ruby-identifier">:minimum</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">minimum_image_size_to_s</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">fb</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;{{minimum}}&quot;</span>, <span class="ruby-identifier">minimum_image_size_to_s</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">translation</span>.<span class="ruby-identifier">match</span> <span class="ruby-regexp re">/translation missing:/</span>
+166:               <span class="ruby-identifier">translation</span>
+167:             <span class="ruby-keyword kw">end</span>
+168:           <span class="ruby-keyword kw">else</span>
+169:             <span class="ruby-ivar">@image_too_small_message</span> = <span class="ruby-identifier">str</span>
+170:           <span class="ruby-keyword kw">end</span>
+171:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">invalid_image_message</span><span class="method-args">(str = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <pre>
+ Invalid image message
+</pre>
+<p>
+dsl_accessor :<a
+href="ClassMethods.html#M000007">invalid_image_message</a>, :default =&gt;
+&#8216;was not a readable image&#8216;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/fleximage/model.rb, line 141</span>
+141:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">invalid_image_message</span>(<span class="ruby-identifier">str</span> = <span class="ruby-keyword kw">nil</span>)
+142:           <span class="ruby-identifier">fb</span> = <span class="ruby-value str">'was not a readable image'</span>
+143:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">nil?</span>
+144:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@invalid_image_message</span>
+145:               <span class="ruby-ivar">@invalid_image_message</span>
+146:             <span class="ruby-keyword kw">else</span>
+147:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-node">&quot;activerecord.errors.models.#{self.model_name.underscore}.invalid_image&quot;</span>
+148:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-value str">&quot;activerecord.errors.messages.invalid_image&quot;</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">fb</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">translation</span>.<span class="ruby-identifier">match</span> <span class="ruby-regexp re">/translation missing:/</span>
+149:               <span class="ruby-identifier">translation</span>
+150:             <span class="ruby-keyword kw">end</span>
+151:           <span class="ruby-keyword kw">else</span>
+152:             <span class="ruby-ivar">@invalid_image_message</span> = <span class="ruby-identifier">str</span>
+153:           <span class="ruby-keyword kw">end</span>
+154:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">minimum_image_size_to_s</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/fleximage/model.rb, line 173</span>
+173:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">minimum_image_size_to_s</span>
+174:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">minimum_image_size</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">minimum_image_size</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+175:             <span class="ruby-comment cmt">#if minimum_image_size[0] &gt; 0 &amp;&amp; minimum_image_size[1] &gt; 0</span>
+176:             <span class="ruby-node">&quot;#{minimum_image_size[0]}x#{minimum_image_size[1]}&quot;</span>
+177:           <span class="ruby-keyword kw">end</span>
+178:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="#M000006" class="method-signature">
+          <span class="method-name">missing_image_message</span><span class="method-args">(str = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <pre>
+ Missing image message
+</pre>
+<p>
+dsl_accessor :<a
+href="ClassMethods.html#M000006">missing_image_message</a>, :default =&gt;
+&#8216;is required&#8216;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/fleximage/model.rb, line 122</span>
+122:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">missing_image_message</span>(<span class="ruby-identifier">str</span> = <span class="ruby-keyword kw">nil</span>)
+123:           <span class="ruby-identifier">fb</span> = <span class="ruby-value str">'is required'</span>
+124:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">nil?</span>
+125:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@missing_image_message</span>
+126:               <span class="ruby-ivar">@missing_image_message</span>
+127:             <span class="ruby-keyword kw">else</span>
+128:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-node">&quot;activerecord.errors.models.#{self.model_name.underscore}.missing_image&quot;</span>
+129:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-value str">&quot;activerecord.errors.messages.missing_image&quot;</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">fb</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">translation</span>.<span class="ruby-identifier">match</span> <span class="ruby-regexp re">/translation missing:/</span>
+130:               <span class="ruby-identifier">translation</span>
+131:             <span class="ruby-keyword kw">end</span>
+132:             
+133:           <span class="ruby-keyword kw">else</span>
+134:             <span class="ruby-ivar">@missing_image_message</span> = <span class="ruby-identifier">str</span>
+135:           <span class="ruby-keyword kw">end</span>
+136:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">preprocess_image</span><span class="method-args">(&amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Call this class method just like you would call <tt>operate</tt> in a view.
+The image transoformation in the provided block will be run on every
+uploaded image before its saved as the master image.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/fleximage/model.rb, line 83</span>
+83:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">preprocess_image</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+84:           <span class="ruby-identifier">preprocess_image_operation</span>(<span class="ruby-identifier">block</span>)
+85:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">acts_as_fleximage</span><span class="method-args">(options = {}) {|if block_given?| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Use this method to include <a href="../../Fleximage.html">Fleximage</a>
+functionality in your model. It takes an options hash with a single
+required key, :<tt>image_directory</tt>. This key should point to the
+directory you want your images stored on your server. Or configure with a
+nice looking block.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/fleximage/model.rb, line 75</span>
+ 75:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">acts_as_fleximage</span>(<span class="ruby-identifier">options</span> = {})
+ 76:         
+ 77:         <span class="ruby-comment cmt"># Include the necesary instance methods</span>
+ 78:         <span class="ruby-identifier">include</span> <span class="ruby-constant">Fleximage</span><span class="ruby-operator">::</span><span class="ruby-constant">Model</span><span class="ruby-operator">::</span><span class="ruby-constant">InstanceMethods</span>
+ 79:         
+ 80:         <span class="ruby-comment cmt"># Call this class method just like you would call +operate+ in a view.</span>
+ 81:         <span class="ruby-comment cmt"># The image transoformation in the provided block will be run on every uploaded image before its saved as the </span>
+ 82:         <span class="ruby-comment cmt"># master image.</span>
+ 83:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">preprocess_image</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+ 84:           <span class="ruby-identifier">preprocess_image_operation</span>(<span class="ruby-identifier">block</span>)
+ 85:         <span class="ruby-keyword kw">end</span>
+ 86:         
+ 87:         <span class="ruby-comment cmt"># Internal method to ask this class if it stores image in the DB.</span>
+ 88:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">db_store?</span>
+ 89:           <span class="ruby-identifier">columns</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+ 90:             <span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'image_file_data'</span>
+ 91:           <span class="ruby-keyword kw">end</span>
+ 92:         <span class="ruby-keyword kw">end</span>
+ 93:         
+ 94:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">has_store?</span>
+ 95:           <span class="ruby-identifier">db_store?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">image_directory</span>
+ 96:         <span class="ruby-keyword kw">end</span>
+ 97:         
+ 98:         <span class="ruby-comment cmt"># validation callback</span>
+ 99:         <span class="ruby-identifier">validate</span> <span class="ruby-identifier">:validate_image</span>
+100:         
+101:         <span class="ruby-comment cmt"># The filename of the temp image.  Used for storing of good images when validation fails</span>
+102:         <span class="ruby-comment cmt"># and the form needs to be redisplayed.</span>
+103:         <span class="ruby-identifier">attr_reader</span> <span class="ruby-identifier">:image_file_temp</span>
+104:         
+105:         <span class="ruby-comment cmt"># Setter for jpg compression quality at the instance level</span>
+106:         <span class="ruby-identifier">attr_accessor</span> <span class="ruby-identifier">:jpg_compression_quality</span>
+107:         
+108:         <span class="ruby-comment cmt"># Where images get stored</span>
+109:         <span class="ruby-identifier">dsl_accessor</span> <span class="ruby-identifier">:image_directory</span>
+110:         
+111:         <span class="ruby-comment cmt"># Put uploads from different days into different subdirectories</span>
+112:         <span class="ruby-identifier">dsl_accessor</span> <span class="ruby-identifier">:use_creation_date_based_directories</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>
+113:         
+114:         <span class="ruby-comment cmt"># The format are master images are stored in</span>
+115:         <span class="ruby-identifier">dsl_accessor</span> <span class="ruby-identifier">:image_storage_format</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Proc</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">:png</span> }
+116:         
+117:         <span class="ruby-comment cmt"># Require a valid image.  Defaults to true.  Set to false if its ok to have no image for</span>
+118:         <span class="ruby-identifier">dsl_accessor</span> <span class="ruby-identifier">:require_image</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>
+119:         
+120:         <span class="ruby-comment cmt"># Missing image message</span>
+121:         <span class="ruby-comment cmt">#dsl_accessor :missing_image_message, :default =&gt; 'is required'</span>
+122:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">missing_image_message</span>(<span class="ruby-identifier">str</span> = <span class="ruby-keyword kw">nil</span>)
+123:           <span class="ruby-identifier">fb</span> = <span class="ruby-value str">'is required'</span>
+124:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">nil?</span>
+125:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@missing_image_message</span>
+126:               <span class="ruby-ivar">@missing_image_message</span>
+127:             <span class="ruby-keyword kw">else</span>
+128:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-node">&quot;activerecord.errors.models.#{self.model_name.underscore}.missing_image&quot;</span>
+129:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-value str">&quot;activerecord.errors.messages.missing_image&quot;</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">fb</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">translation</span>.<span class="ruby-identifier">match</span> <span class="ruby-regexp re">/translation missing:/</span>
+130:               <span class="ruby-identifier">translation</span>
+131:             <span class="ruby-keyword kw">end</span>
+132:             
+133:           <span class="ruby-keyword kw">else</span>
+134:             <span class="ruby-ivar">@missing_image_message</span> = <span class="ruby-identifier">str</span>
+135:           <span class="ruby-keyword kw">end</span>
+136:         <span class="ruby-keyword kw">end</span>
+137:         
+138:         
+139:         <span class="ruby-comment cmt"># Invalid image message</span>
+140:         <span class="ruby-comment cmt">#dsl_accessor :invalid_image_message, :default =&gt; 'was not a readable image'</span>
+141:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">invalid_image_message</span>(<span class="ruby-identifier">str</span> = <span class="ruby-keyword kw">nil</span>)
+142:           <span class="ruby-identifier">fb</span> = <span class="ruby-value str">'was not a readable image'</span>
+143:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">nil?</span>
+144:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@invalid_image_message</span>
+145:               <span class="ruby-ivar">@invalid_image_message</span>
+146:             <span class="ruby-keyword kw">else</span>
+147:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-node">&quot;activerecord.errors.models.#{self.model_name.underscore}.invalid_image&quot;</span>
+148:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-value str">&quot;activerecord.errors.messages.invalid_image&quot;</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">fb</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">translation</span>.<span class="ruby-identifier">match</span> <span class="ruby-regexp re">/translation missing:/</span>
+149:               <span class="ruby-identifier">translation</span>
+150:             <span class="ruby-keyword kw">end</span>
+151:           <span class="ruby-keyword kw">else</span>
+152:             <span class="ruby-ivar">@invalid_image_message</span> = <span class="ruby-identifier">str</span>
+153:           <span class="ruby-keyword kw">end</span>
+154:         <span class="ruby-keyword kw">end</span>
+155:         
+156:         <span class="ruby-comment cmt"># Image too small message</span>
+157:         <span class="ruby-comment cmt"># Should include {{minimum}}</span>
+158:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">image_too_small_message</span>(<span class="ruby-identifier">str</span> = <span class="ruby-keyword kw">nil</span>)
+159:           <span class="ruby-identifier">fb</span> = <span class="ruby-node">&quot;is too small (Minimum: #{minimum_image_size_to_s})&quot;</span>
+160:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">nil?</span>
+161:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@image_too_small_message</span>
+162:               <span class="ruby-ivar">@image_too_small_message</span>
+163:             <span class="ruby-keyword kw">else</span>
+164:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-node">&quot;activerecord.errors.models.#{self.model_name.underscore}.image_too_small&quot;</span>, <span class="ruby-identifier">:minimum</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">minimum_image_size_to_s</span>
+165:               <span class="ruby-identifier">translation</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span> <span class="ruby-value str">&quot;activerecord.errors.messages.image_too_small&quot;</span>, <span class="ruby-identifier">:minimum</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">minimum_image_size_to_s</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">fb</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;{{minimum}}&quot;</span>, <span class="ruby-identifier">minimum_image_size_to_s</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">translation</span>.<span class="ruby-identifier">match</span> <span class="ruby-regexp re">/translation missing:/</span>
+166:               <span class="ruby-identifier">translation</span>
+167:             <span class="ruby-keyword kw">end</span>
+168:           <span class="ruby-keyword kw">else</span>
+169:             <span class="ruby-ivar">@image_too_small_message</span> = <span class="ruby-identifier">str</span>
+170:           <span class="ruby-keyword kw">end</span>
+171:         <span class="ruby-keyword kw">end</span>
+172:         
+173:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">minimum_image_size_to_s</span>
+174:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">minimum_image_size</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">minimum_image_size</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+175:             <span class="ruby-comment cmt">#if minimum_image_size[0] &gt; 0 &amp;&amp; minimum_image_size[1] &gt; 0</span>
+176:             <span class="ruby-node">&quot;#{minimum_image_size[0]}x#{minimum_image_size[1]}&quot;</span>
+177:           <span class="ruby-keyword kw">end</span>
+178:         <span class="ruby-keyword kw">end</span>
+179:         
+180:         <span class="ruby-comment cmt"># Sets the quality of rendered JPGs</span>
+181:         <span class="ruby-identifier">dsl_accessor</span> <span class="ruby-identifier">:output_image_jpg_quality</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">85</span>
+182:         
+183:         <span class="ruby-comment cmt"># Set a default image to use when no image has been assigned to this record</span>
+184:         <span class="ruby-identifier">dsl_accessor</span> <span class="ruby-identifier">:default_image_path</span>
+185:         
+186:         <span class="ruby-comment cmt"># Set a default image based on a a size and fill</span>
+187:         <span class="ruby-identifier">dsl_accessor</span> <span class="ruby-identifier">:default_image</span>
+188:         
+189:         <span class="ruby-comment cmt"># A block that processes an image before it gets saved as the master image of a record.</span>
+190:         <span class="ruby-comment cmt"># Can be helpful to resize potentially huge images to something more manageable. Set via</span>
+191:         <span class="ruby-comment cmt"># the &quot;preprocess_image { |image| ... }&quot; class method.</span>
+192:         <span class="ruby-identifier">dsl_accessor</span> <span class="ruby-identifier">:preprocess_image_operation</span>
+193:         
+194:         <span class="ruby-comment cmt"># Set a minimum size ([x, y] e.g. [800, 600])</span>
+195:         <span class="ruby-comment cmt"># Set [0, 600] to just enforce y size or</span>
+196:         <span class="ruby-comment cmt"># [800, 0] to just validate x size.</span>
+197:         <span class="ruby-identifier">dsl_accessor</span> <span class="ruby-identifier">:minimum_image_size</span>
+198:         
+199:         <span class="ruby-comment cmt"># Image related save and destroy callbacks</span>
+200:         <span class="ruby-identifier">after_destroy</span> <span class="ruby-identifier">:delete_image_file</span>
+201:         <span class="ruby-identifier">before_save</span>   <span class="ruby-identifier">:pre_save</span>
+202:         <span class="ruby-identifier">after_save</span>    <span class="ruby-identifier">:post_save</span>
+203:         
+204:         <span class="ruby-comment cmt"># execute configuration block</span>
+205:         <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+206:         
+207:         <span class="ruby-comment cmt"># set the image directory from passed options</span>
+208:         <span class="ruby-identifier">image_directory</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:image_directory</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:image_directory</span>]
+209:         
+210:         <span class="ruby-comment cmt"># Require the declaration of a master image storage directory</span>
+211:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">image_directory</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">db_store?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">default_image</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">default_image_path</span>
+212:           <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;No place to put images!  Declare this via the :image_directory =&gt; 'path/to/directory' option\n&quot;</span><span class="ruby-operator">+</span>
+213:                 <span class="ruby-value str">&quot;Or add a database column named image_file_data for DB storage&quot;</span>
+214:         <span class="ruby-keyword kw">end</span>
+215:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">image_file_exists</span><span class="method-args">(file)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/fleximage/model.rb, line 217</span>
+217:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">image_file_exists</span>(<span class="ruby-identifier">file</span>)
+218:         <span class="ruby-comment cmt"># File must be a valid object</span>
+219:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">nil?</span>
+220:         
+221:         <span class="ruby-comment cmt"># Get the size of the file.  file.size works for form-uploaded images, file.stat.size works</span>
+222:         <span class="ruby-comment cmt"># for file object created by File.open('foo.jpg', 'rb').  It must have a size &gt; 0.</span>
+223:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">file</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:size</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">stat</span>.<span class="ruby-identifier">size</span>) <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
+224:         
+225:         <span class="ruby-comment cmt"># object must respond to the read method to fetch its contents.</span>
+226:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">file</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:read</span>)
+227:         
+228:         <span class="ruby-comment cmt"># file validation passed, return true</span>
+229:         <span class="ruby-keyword kw">true</span>
+230:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

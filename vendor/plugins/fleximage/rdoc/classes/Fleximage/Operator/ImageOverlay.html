@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Fleximage::Operator::ImageOverlay</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Fleximage::Operator::ImageOverlay</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/fleximage/operator/image_overlay_rb.html">
+                lib/fleximage/operator/image_overlay.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Operator::Base
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Adds an overlay to the base image. It&#8216;s useful for things like
+attaching a logo, watermark, or even a border to the image. It will work
+best with a 24-bit PNG with alpha channel since it will properly deal with
+partial transparency.
+</p>
+<pre>
+  image.resize(image_overlay_path, options = {})
+</pre>
+<p>
+<tt>image_overlay_path</tt> is the path, relative to <tt>RAILS_ROOT</tt>
+where the image you want superimposed can be found.
+</p>
+<p>
+Use the following keys in the <tt>options</tt> hash:
+</p>
+<ul>
+<li><tt>size</tt>: The size of the overlayed image, as
+<tt>&#8216;123x456&#8216;</tt> or <tt>[123, 456]</tt>. By default the
+overlay is not resized before compositing. Use this options if you want to
+resize the overlay, perhaps to have a small logo on thumbnails and a big
+logo on full size images. Other than just numerical dimensions, the size
+parameter takes 2 special values :<tt>scale_to_fit</tt> and
+:<tt>stretch_to_fit</tt>. :<tt>scale_to_fit</tt> will make the overlay fit
+as much as it can inside the image without changing the aspect ratio.
+:<tt>stretch_to_fit</tt> will make the overlay the exact same size as the
+image but with a distorted aspect ratio to make it fit.
+:<tt>stretch_to_fit</tt> is designed to add border to images.
+
+</li>
+<li><tt>alignment</tt>: A symbol that tells <a
+href="../../Fleximage.html">Fleximage</a> where to put the overlay. Can be
+any of the following: <tt>:center, :top, :top_right, :right, :bottom_right,
+:bottom, :bottom_left, :left, :top_left</tt>. Default is :<tt>center</tt>
+
+</li>
+<li><tt>offset</tt>: the number of pixels to offset the overlay from it&#8216;s
+:<tt>alignment</tt> anchor, in <tt>&#8216;123x456&#8216;</tt> or <tt>[123,
+456]</tt> format. Useful to give a bit a space between your logo and the
+edge of the image, for instance. *NOTE:* Due to some unexpected (buggy?)
+RMagick behaviour :<tt>offset</tt> will work strangely if
+:<tt>alignment</tt> is set to a non-corner value, such as :<tt>top</tt> or
+:<tt>center</tt>. Using :<tt>offset</tt> in these cases will force the
+overlay into a corner anyway.
+
+</li>
+<li><tt>blending</tt>: The blending mode governs how the overlay gets
+composited onto the image. You can get some funky effects with modes like
+:<tt>copy_cyan</tt> or :<tt>screen</tt>. For a full list of blending modes
+checkout the RMagick documentation (<a
+href="http://www.simplesystems.org/RMagick/doc/constants.html#CompositeOperator">www.simplesystems.org/RMagick/doc/constants.html#CompositeOperator</a>).
+To use a blend mode remove the <tt>CompositeOp</tt> form the name and
+&quot;unserscorize&quot; the rest. For instance,
+<tt>MultiplyCompositeOp</tt> becomes :<tt>multiply</tt>, and
+<tt>CopyBlackCompositeOp</tt> becomes :<tt>copy_black</tt>.
+
+</li>
+</ul>
+<p>
+Example:
+</p>
+<pre>
+  @photo.operate do |image|
+    image.image_overlay('images/my_logo_with_alpha.png',
+      :size =&gt; '25x25',
+      :alignment =&gt; :top_right,
+      :blending =&gt; :screen
+    )
+  end
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000025">operate</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+          <a href="#M000025" class="method-signature">
+          <span class="method-name">operate</span><span class="method-args">(image_overlay_path, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000025-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/fleximage/operator/image_overlay.rb, line 52</span>
+52:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">operate</span>(<span class="ruby-identifier">image_overlay_path</span>, <span class="ruby-identifier">options</span> = {})
+53:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">symbolize_keys</span>
+54:       
+55:         <span class="ruby-comment cmt">#load overlay</span>
+56:         <span class="ruby-identifier">overlay</span> = <span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">image_overlay_path</span>).<span class="ruby-identifier">first</span>
+57:       
+58:         <span class="ruby-comment cmt">#resize overlay</span>
+59:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>]
+60:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">:scale_to_fit</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">:stretch_to_fit</span>
+61:             <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span> = <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">columns</span>, <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">rows</span>
+62:           <span class="ruby-keyword kw">else</span>
+63:             <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span> = <span class="ruby-identifier">size_to_xy</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>])
+64:           <span class="ruby-keyword kw">end</span>
+65:         
+66:           <span class="ruby-identifier">method</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">:stretch_to_fit</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">:stretch</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">:scale</span>
+67:           <span class="ruby-identifier">send</span>(<span class="ruby-identifier">method</span>, [<span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>], <span class="ruby-identifier">overlay</span>)
+68:         <span class="ruby-keyword kw">end</span>
+69:       
+70:         <span class="ruby-comment cmt">#prepare arguments for composite!</span>
+71:         <span class="ruby-identifier">args</span> = []
+72:         <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">overlay</span>                                               <span class="ruby-comment cmt">#overlay image</span>
+73:         <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">symbol_to_gravity</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:alignment</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">:center</span>)     <span class="ruby-comment cmt">#gravity</span>
+74:         <span class="ruby-identifier">args</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">size_to_xy</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:offset</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:offset</span>]      <span class="ruby-comment cmt">#offset</span>
+75:         <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">symbol_to_blending_mode</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:blending</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">:over</span>)  <span class="ruby-comment cmt">#compositing mode</span>
+76:         
+77:         <span class="ruby-comment cmt">#composite</span>
+78:         <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">composite!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+79:       
+80:         <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@image</span>
+81:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

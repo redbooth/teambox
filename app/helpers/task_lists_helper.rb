@@ -7,7 +7,7 @@ module TaskListsHelper
   end
   
   def new_task_list_link(project)
-    link_to t('.add_link'), new_project_task_list_path(project)
+    link_to image_tag('add_task_list.jpg'), new_project_task_list_path(project)
   end
   
   def task_list_fields(f)

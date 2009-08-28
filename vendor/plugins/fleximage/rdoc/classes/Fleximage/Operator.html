@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Fleximage::Operator</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Fleximage::Operator</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/fleximage/operator/border_rb.html">
+                lib/fleximage/operator/border.rb
+                </a>
+        <br />
+                <a href="../../files/lib/fleximage/operator/text_rb.html">
+                lib/fleximage/operator/text.rb
+                </a>
+        <br />
+                <a href="../../files/lib/fleximage/operator/crop_rb.html">
+                lib/fleximage/operator/crop.rb
+                </a>
+        <br />
+                <a href="../../files/lib/fleximage/operator/unsharp_mask_rb.html">
+                lib/fleximage/operator/unsharp_mask.rb
+                </a>
+        <br />
+                <a href="../../files/lib/fleximage/operator/image_overlay_rb.html">
+                lib/fleximage/operator/image_overlay.rb
+                </a>
+        <br />
+                <a href="../../files/lib/fleximage/operator/base_rb.html">
+                lib/fleximage/operator/base.rb
+                </a>
+        <br />
+                <a href="../../files/lib/fleximage/operator/resize_rb.html">
+                lib/fleximage/operator/resize.rb
+                </a>
+        <br />
+                <a href="../../files/lib/fleximage/operator/shadow_rb.html">
+                lib/fleximage/operator/shadow.rb
+                </a>
+        <br />
+                <a href="../../files/lib/fleximage/operator/trim_rb.html">
+                lib/fleximage/operator/trim.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="Operator/Base.html" class="link">Fleximage::Operator::Base</a><br />
+Class <a href="Operator/Border.html" class="link">Fleximage::Operator::Border</a><br />
+Class <a href="Operator/Crop.html" class="link">Fleximage::Operator::Crop</a><br />
+Class <a href="Operator/ImageOverlay.html" class="link">Fleximage::Operator::ImageOverlay</a><br />
+Class <a href="Operator/Resize.html" class="link">Fleximage::Operator::Resize</a><br />
+Class <a href="Operator/Shadow.html" class="link">Fleximage::Operator::Shadow</a><br />
+Class <a href="Operator/Text.html" class="link">Fleximage::Operator::Text</a><br />
+Class <a href="Operator/Trim.html" class="link">Fleximage::Operator::Trim</a><br />
+Class <a href="Operator/UnsharpMask.html" class="link">Fleximage::Operator::UnsharpMask</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">GRAVITIES</td>
+          <td>=</td>
+          <td class="context-item-value">{       :center       =&gt; Magick::CenterGravity,       :top          =&gt; Magick::NorthGravity,       :top_right    =&gt; Magick::NorthEastGravity,       :right        =&gt; Magick::EastGravity,       :bottom_right =&gt; Magick::SouthEastGravity,       :bottom       =&gt; Magick::SouthGravity,       :bottom_left  =&gt; Magick::SouthWestGravity,       :left         =&gt; Magick::WestGravity,       :top_left     =&gt; Magick::NorthWestGravity,     } unless defined?(GRAVITIES)</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Conversion table for mapping alignment symbols to their equivalent RMagick
+gravity constants.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

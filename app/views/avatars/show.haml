@@ -1,0 +1,23 @@
+.form_user_wrap
+  %div{ :style => 'background: rgb(255,255,255)'}
+    %div{ :style => 'padding: 10px'}
+      #avatar_preview
+
+      .avatar_crop_preview
+        = image_tag profile_user_avatar_path(@user, :jpg), :id => 'avatar_crop'
+      %br/
+    - form_for :avatar, @avatar, :url => user_avatar_path(@user), :html => { :method => :put } do |f|
+      #results
+        = hidden_field_tag 'id', @avatar.id
+        = f.hidden_field :x1, :id => 'x1'
+        = f.hidden_field :y1, :id => 'y1'
+        = f.hidden_field :x2, :id => 'x2'
+        = f.hidden_field :y2, :id => 'y2'
+        = f.hidden_field :crop_width, :id => 'crop_width'
+        = f.hidden_field :crop_height, :id => 'crop_height'
+        .submit
+          = f.submit "Save Changes"
+          or 
+          = link_to 'Cancel', edit_user_path(@user)
+  
+    = javascript_tag "image_crop(#{@coords})"

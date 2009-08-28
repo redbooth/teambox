@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Fleximage::Operator::Resize</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Fleximage::Operator::Resize</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/fleximage/operator/resize_rb.html">
+                lib/fleximage/operator/resize.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Operator::Base
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="Resize.html">Resize</a> this image, constraining proportions.
+Options allow cropping, stretching, upsampling and padding.
+</p>
+<pre>
+  image.resize(size, options = {})
+</pre>
+<p>
+<tt>size</tt> is size of the output image after the resize operation.
+Accepts either <tt>&#8216;123x456&#8216;</tt> format or <tt>[123, 456]</tt>
+format.
+</p>
+<p>
+Use the following keys in the <tt>options</tt> hash:
+</p>
+<ul>
+<li><tt>crop</tt>: pass true to this option to make the ouput image exactly the
+same dimensions as <tt>size</tt>. The default behaviour will resize the
+image without cropping any part meaning the image will be no bigger than
+the <tt>size</tt>. When <tt>:crop</tt> is true the final image is resized
+to fit as much as possible in the frame, and then crops it to make it
+exactly the dimensions declared by the <tt>size</tt> argument.
+
+</li>
+<li><tt>upsample</tt>: By default the image will never display larger than its
+original dimensions, no matter how large the <tt>size</tt> argument is.
+Pass <tt>true</tt> to use this option to allow upsampling, disabling the
+default behaviour.
+
+</li>
+<li><tt>padding</tt>: This option will pad the space around your image with a
+solid color to make it exactly the requested size. Pass <tt>true</tt>, for
+the default of <tt>white</tt>, or give it a text or pixel color like
+<tt>&quot;red&quot;</tt> or <tt>color(255, 127, 0)</tt>. This is like the
+opposite of the <tt>crop</tt> option. Instead of trimming the image to make
+it exactly the requested size, it will make sure the entire image is
+visible, but adds space around the edges to make it the right dimensions.
+
+</li>
+<li><tt>stretch</tt>: Set this option to true and the image will not preserve
+its aspect ratio. The final image will stretch to fit the requested
+<tt>size</tt>. The resulting image is exactly the size you ask for.
+
+</li>
+</ul>
+<p>
+Example:
+</p>
+<pre>
+  @photo.operate do |image|
+    image.resize '200x200', :crop =&gt; true
+  end
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000036">operate</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="#M000036" class="method-signature">
+          <span class="method-name">operate</span><span class="method-args">(size, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/fleximage/operator/resize.rb, line 39</span>
+39:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">operate</span>(<span class="ruby-identifier">size</span>, <span class="ruby-identifier">options</span> = {})
+40:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">symbolize_keys</span>
+41:         
+42:         <span class="ruby-comment cmt"># Find dimensions</span>
+43:         <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span> = <span class="ruby-identifier">size_to_xy</span>(<span class="ruby-identifier">size</span>)
+44: 
+45:         <span class="ruby-comment cmt"># prevent upscaling unless :usample param exists.</span>
+46:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:upsample</span>]
+47:           <span class="ruby-identifier">x</span> = <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">columns</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">x</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">columns</span>
+48:           <span class="ruby-identifier">y</span> = <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">rows</span>    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">y</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">rows</span>
+49:         <span class="ruby-keyword kw">end</span>
+50: 
+51:         <span class="ruby-comment cmt"># Perform image resize</span>
+52:         <span class="ruby-keyword kw">case</span>
+53:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:crop</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">options</span>[<span class="ruby-identifier">:crop</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:crop_resized!</span>)
+54:           <span class="ruby-comment cmt"># perform resize and crop</span>
+55:           <span class="ruby-identifier">scale_and_crop</span>([<span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>])
+56: 
+57:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:stretch</span>]
+58:           <span class="ruby-comment cmt"># stretch the image, ignoring aspect ratio</span>
+59:           <span class="ruby-identifier">stretch</span>([<span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>])
+60: 
+61:         <span class="ruby-keyword kw">else</span>
+62:           <span class="ruby-comment cmt"># perform the resize without crop</span>
+63:           <span class="ruby-identifier">scale</span>([<span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>])
+64: 
+65:         <span class="ruby-keyword kw">end</span>
+66: 
+67:         <span class="ruby-comment cmt"># apply padding if necesary</span>
+68:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">padding_color</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:padding</span>]
+69:           <span class="ruby-comment cmt"># get color</span>
+70:           <span class="ruby-identifier">padding_color</span> = <span class="ruby-value str">'white'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">padding_color</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">true</span>
+71: 
+72:           <span class="ruby-comment cmt"># get original x and y.  This makes it play nice if the requested size is larger </span>
+73:           <span class="ruby-comment cmt"># than the image and upsampling is not allowed.</span>
+74:           <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span> = <span class="ruby-identifier">size_to_xy</span>(<span class="ruby-identifier">size</span>)
+75: 
+76:           <span class="ruby-comment cmt"># get proper border sizes</span>
+77:           <span class="ruby-identifier">x_border</span> = [<span class="ruby-value">0</span>, (<span class="ruby-identifier">x</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">columns</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2</span>].<span class="ruby-identifier">max</span>
+78:           <span class="ruby-identifier">y_border</span> = [<span class="ruby-value">0</span>, (<span class="ruby-identifier">y</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">rows</span>    <span class="ruby-operator">+</span> <span class="ruby-value">1</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2</span>].<span class="ruby-identifier">max</span>
+79: 
+80:           <span class="ruby-comment cmt"># apply padding</span>
+81:           <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">border!</span>(<span class="ruby-identifier">x_border</span>, <span class="ruby-identifier">y_border</span>, <span class="ruby-identifier">padding_color</span>)
+82: 
+83:           <span class="ruby-comment cmt"># crop to remove possible extra pixel</span>
+84:           <span class="ruby-ivar">@image</span>.<span class="ruby-identifier">crop!</span>(<span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>, <span class="ruby-keyword kw">true</span>)
+85:         <span class="ruby-keyword kw">end</span>
+86:         
+87:         <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@image</span>
+88:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
