@@ -43,6 +43,8 @@ en:
       submit: Create
   
   pages:
+    rename:
+      submit: Update
     new:
       name: Name
     edit:

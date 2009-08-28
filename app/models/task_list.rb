@@ -1,6 +1,7 @@
 class TaskList < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
+  belongs_to :page
   
   has_many :tasks, :order => 'position'
   has_many :comments, :as => :target, :order => 'created_at DESC'

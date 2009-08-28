@@ -1,0 +1,2 @@
+page["section_divider_#{@pid}"].hide
+page.insert_html :after, "section_divider_#{@pid}", :partial => 'pages/section_divider_active', :locals => { :page => @page, :id => @pid }

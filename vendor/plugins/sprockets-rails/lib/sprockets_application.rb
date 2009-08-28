@@ -38,6 +38,7 @@ module SprocketsApplication
       end
 
       def source_is_unchanged?
+        return false
         previous_source_last_modified, @source_last_modified = 
           @source_last_modified, secretary.source_last_modified
           

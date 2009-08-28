@@ -1,0 +1,4 @@
+page.replace_html :name, :partial => 'pages/name', :locals => { :page => @page }
+page['name'].show
+page['rename'].remove
+page.reload_javascript_events
