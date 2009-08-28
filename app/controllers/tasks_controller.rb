@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   def show
     @task_lists = @current_project.task_lists
-    @task = @current_project.tasks(params[:task_id])
+    @task = @current_project.tasks.find(params[:id])
   end
   
   def new

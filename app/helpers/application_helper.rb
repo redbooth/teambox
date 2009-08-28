@@ -57,12 +57,12 @@ module ApplicationHelper
     end
   end
   
-  def trash_image(size='24x24')
-    image_tag('trash.gif', :class => 'trash', :size => size)
+  def trash_image
+    image_tag('trash.jpg', :class => 'trash')
   end
 
-  def pencil_image(size='24x24')
-    image_tag('pencil.gif', :class => 'pencil', :size => size)
+  def pencil_image
+    image_tag('pencil.jpg', :class => 'pencil')
   end
 
   def reload_javascript_events

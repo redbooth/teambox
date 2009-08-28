@@ -3,6 +3,6 @@
 %h2= t('.title')
 
 - form_for @user do |f|
-  = user_fields(f)
+  = user_fields(f,@user)
   .submit
     = submit_tag t('.submit')
