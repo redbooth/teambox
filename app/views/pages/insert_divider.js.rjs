@@ -1,0 +1,4 @@
+page["section_divider_active_#{@pid}"].remove
+page.insert_html :after, "section_divider_#{@pid}", :partial => 'pages/divider', :locals => { :page => @page }
+page["section_divider_#{@pid}"].show
+page.reload_javascript_events

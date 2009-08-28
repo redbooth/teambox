@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   create_table :task_lists do |t|
     t.integer :project_id
     t.integer :user_id
+    t.integer :page_id, :null => true, :default => nil
     t.string  :name
     t.integer :position
     t.timestamps
@@ -47,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   
   create_table :tasks do |t|
     t.integer :project_id
+    t.integer :page_id, :null => true, :default => nil
     t.integer :task_list_id
     t.integer :user_id
     t.string  :name
@@ -75,19 +77,19 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :project_id
     t.integer :user_id
     t.string  :name
-    t.text    :body
-    t.integer :version
     t.timestamps
   end
-  
-  create_table :page_versions do |t|
-    t.integer :project_id
-    t.integer :user_id
-    t.string  :name
-    t.text    :body
-    t.integer :version
+
+  create_table :page_sections do |t|
     t.integer :page_id
-    t.timestamps
+    t.integer :target_id
+    t.string  :target_type
+    t.integer :position
+  end
+  
+  create_table :dividers do |t|
+    t.integer :page_id
+    t.string  :name
   end
 
   add_index :sessions, :session_id

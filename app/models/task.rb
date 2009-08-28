@@ -2,6 +2,7 @@ class Task < ActiveRecord::Base
   belongs_to :project
   belongs_to :user
   belongs_to :task_list
+  belongs_to :page
   
   attr_accessible :name
   

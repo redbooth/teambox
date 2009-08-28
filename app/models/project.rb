@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
   belongs_to :user
-  has_many :task_lists
+  has_many :task_lists, :conditions => { :page_id => nil }
   has_many :conversations, :order => 'created_at DESC'
   has_many :pages, :order => 'created_at DESC'
   has_many :comments, :as => :target, :order => 'created_at DESC'

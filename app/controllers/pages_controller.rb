@@ -19,7 +19,14 @@ class PagesController < ApplicationController
     end
   end
   
-  before_filter :load_page, :only => [ :edit, :update ]
+  before_filter :load_page, :only => [ :edit, :update, :rename, :insert_divider, :section_divider ]
+  
+  def rename
+  end
+  
+  def section_divider
+    @pid = params[:pid]
+  end
   
   def edit
   end
@@ -28,8 +35,10 @@ class PagesController < ApplicationController
     respond_to do |f|
       if @page.update_attributes(params[:page])
         f.html {redirect_to project_page_path(@current_project,@page)}
+        f.js
       else
         f.html {render :action => 'edit'}
+        f.js
       end
     end
   end

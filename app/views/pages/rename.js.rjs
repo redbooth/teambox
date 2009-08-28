@@ -1,0 +1,2 @@
+page['name'].hide
+page.insert_html :after, :name, :partial => 'pages/rename', :locals => { :page => @page }

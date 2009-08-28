@@ -1,0 +1,6 @@
+#rename
+  - remote_form_for [@current_project,page] do |f|
+    .name.text_field
+      = f.text_field :name
+      = f.submit t('.submit')
+      = cancel_rename_link
