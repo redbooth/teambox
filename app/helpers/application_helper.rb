@@ -10,9 +10,11 @@ module ApplicationHelper
       :locals => { :project => project }
   end
   
-  def navigation(project)
+  def navigation(project,recent_projects)
     render :partial => 'shared/navigation',
-      :locals => { :project => project }
+      :locals => { 
+        :project => project, 
+        :recent_projects => recent_projects }
   end
 
   def global_navigation
@@ -99,11 +101,11 @@ module ApplicationHelper
   end
   
   def trash_image(size='24x24')
-    image_tag('trash.gif', :class => 'trash', :size => size)
+    image_tag('trash.jpg', :class => 'trash', :size => size)
   end
 
-  def pencil_image(size='24x24')
-    image_tag('pencil.gif', :class => 'pencil', :size => size)
+  def pencil_image
+    image_tag('pencil.jpg', :class => 'pencil')
   end
 
   def reload_javascript_events

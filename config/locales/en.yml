@@ -13,7 +13,8 @@ en:
     new:
       title: Create an Account
       submit: Create account
-      
+    edit:
+      submit: Update account
   projects:
     show:
       new_task_list_link: New Task List
@@ -79,12 +80,17 @@ en:
   shared:
       navigation:
         all_projects: 'All Projects'
+        new_project: +
       project_navigation:
         overview: Overview
+        all_conversations: All Conversations
         conversations: Conversations
         task_lists: Task Lists
+        all_task_lists: All Task Lists
         project_settings: Project Settings
+        pages: Pages
       global_navigation:
         logout: Logout
         login: Login
         signup: Signup
+        settings: Settings

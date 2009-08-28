@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.datetime :remember_token_expires_at
     t.string   :time_zone,          :default => "Eastern Time (US & Canada)"
     t.string   :language,           :default => "en"
+    t.text     :recent_projects
     t.timestamps
   end
 
@@ -96,5 +97,19 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   add_index :sessions, :updated_at
 
   add_index :users, ["login"], :name => "index_users_on_login", :unique => true
+
+  create_table :avatars do |t|
+    t.integer  :user_id
+    t.integer  :x1
+    t.integer  :y1
+    t.integer  :x2
+    t.integer  :y2
+    t.integer  :crop_width
+    t.integer  :crop_height
+    t.integer  :width
+    t.integer  :height
+    t.timestamps
+  end
+  add_index "avatars", ["user_id"], :name => "index_avatars_on_user"
 
 end

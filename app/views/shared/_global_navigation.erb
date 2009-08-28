@@ -3,6 +3,11 @@ render_tabnav :global, :generate_css => false do
 
   if logged_in?
     add_tab do |t|
+      t.named t('.settings')
+      t.links_to settings_path
+      t.highlights_on :controller => :users, :action => :edit
+    end
+    add_tab do |t|
       t.named t('.logout')
       t.links_to logout_path
     end

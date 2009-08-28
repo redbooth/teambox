@@ -7,7 +7,19 @@ render_tabnav :project, :generate_css => false do
       t.links_to projects_path
       t.highlights_on :controller => :projects, :action => :index
     end
-    
+
+    add_tab do |t|
+      t.named t('.all_conversations')
+      t.links_to  user_conversations_path(project)
+      t.highlights_on :controller => :messages
+    end
+
+    add_tab do |t|
+      t.named t('.all_task_lists')
+      t.links_to  user_task_lists_path(project)
+      t.highlights_on :controller => :task_lists
+    end
+        
   else
     add_tab do |t|
       t.named t('.overview')
@@ -34,11 +46,11 @@ render_tabnav :project, :generate_css => false do
       t.li_class = 'right_side'
     end
 
-    #add_tab do |t|
-    #  t.named t('navigation.pages')
-    #  t.links_to  project_pages_path(project)
-    #  t.highlights_on :controller => :pages
-    #end
+    add_tab do |t|
+      t.named t('.pages')
+      t.links_to  project_pages_path(project)
+      t.highlights_on :controller => :pages
+    end
 
     #add_tab do |t|
     #  t.named t('navigation.people')

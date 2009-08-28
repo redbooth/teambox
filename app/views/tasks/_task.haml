@@ -1,2 +1,3 @@
 .task
-  = h(task.name)
+  =check_box_tag 'rwarwa'
+  = link_to task.name, project_task_list_task_path(project,task_list,task)

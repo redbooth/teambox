@@ -13,10 +13,11 @@ div.global_navigation
       a  
         :float left
         :display block
-    a
-      :color rgb(255,255,255)
-      :font-size 12px
-      :margin 0px 7px
+        :color rgb(255,255,255)
+        :font-size 12px
+        :margin 0px 7px
+      a:hover,a.active
+        :color rgb(255,255,0)
 div.navigation
   :clear both
   ul
@@ -39,9 +40,16 @@ div.navigation
       :color rgb(48,48,48)
       :background rgb(160,228,237)
     a.active
-      :font-weight bold
       :color rgb(48,48,48)
       :background rgb(160,228,237)
+  li.button
+    a
+      :font-size 14px
+      :background rgb(43,43,43)
+      :padding 4px 8px
+    a:hover
+      :color rgb(43,43,43)
+      :background rgb(211,209,209)
       
 div.project_navigation
   :background rgb(160,228,237) url(../images/project_navigation_bg.jpg) no-repeat top
