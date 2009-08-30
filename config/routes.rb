@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resource :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }
   end
     
-  map.resources :projects, :has_many => [:comments, :pages] do |project|
+  map.resources :projects, :has_many => [:comments, :pages, :invitations] do |project|
     
     project.resources :task_lists, :has_many => [:comments] do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }

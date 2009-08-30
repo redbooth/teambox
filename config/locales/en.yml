@@ -27,7 +27,11 @@ en:
       submit: Create
     edit:
       submit: Save Changes
-  
+  invitations:
+    fields:
+      email: Email to send invitation to
+    new:
+      submit: Send
   conversations:
     fields:
       name: Name

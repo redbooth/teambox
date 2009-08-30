@@ -86,6 +86,15 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :project_id
     t.text :body
     t.integer :position
+    t.timestamps
+  end
+
+  create_table :invitations do |t|
+    t.integer :user_id
+    t.integer :project_id
+    t.string  :email
+    t.string  :token
+    t.timestamps
   end
 
   add_index :sessions, :session_id
