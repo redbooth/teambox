@@ -1,21 +1,12 @@
 Event.addBehavior({
-  "#name:mouseover": function(e){
-      hideAllActions();
+  ".note:mouseover": function(e){
+      $$(".note p.actions").invoke('hide');
       $(this).down('p.actions').show();
   },
-  "#name:mouseout": function(e){
-    $$("#name p.actions").invoke('hide');
-  },
-  
-  ".section_divider:mouseover": function(e){
-      hideAllActions();
-      $(this).down('p.actions').show();
-  },
-  ".section_divider:mouseout": function(e){
-    $$(".insert p.actions").invoke('hide');
-  }  
+  ".note:mouseout": function(e){
+  }
 });
 
-function hideAllActions() {
-  $$('p.actions').invoke('hide');
+function notesUpdate(e){
+  alert('hi');
 }

@@ -1,0 +1,3 @@
+page["note_#{@note.id}"].hide
+page.insert_html :after, "note_#{@note.id}", :partial => 'notes/edit', :locals => { :note => @note }
+page.reload_javascript_events

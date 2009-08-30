@@ -10,27 +10,21 @@
       :overflow auto
       :position absolute
       :display block
-      :width 80px
+      :width 90px
       :height 25px
-      :left -95px
+      :left -105px
       :top 0px
     a
       :color rgb(0,0,255)
-
-.section_divide
-  :height 16px
-  :border-bottom 1px solid black
-
+      
 #edit_page
   :padding 10px
-  #name
+  .note
     +actions
-  .divider
-    :height 8px
-    :border-bottom 1px solid black
-    :margin-bottom 8px
-  .section_divider
-    +actions
-    :height 8px
     :border-bottom 1px solid rgb(230,230,230)
-    :margin-bottom 8px
+    :padding-bottom 5px
+    :margin-bottom 5px
+  .edit_note
+    textarea
+      :width 98%
+      :height 200px

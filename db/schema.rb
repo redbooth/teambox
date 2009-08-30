@@ -80,17 +80,12 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :name
     t.timestamps
   end
-
-  create_table :page_sections do |t|
-    t.integer :page_id
-    t.integer :target_id
-    t.string  :target_type
-    t.integer :position
-  end
   
-  create_table :dividers do |t|
+  create_table :notes do |t|
     t.integer :page_id
-    t.string  :name
+    t.integer :project_id
+    t.text :body
+    t.integer :position
   end
 
   add_index :sessions, :session_id
