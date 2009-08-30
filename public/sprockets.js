@@ -8131,7 +8131,7 @@ _62.top=_61.y;
 }
 }});
 
-<<<<<<< HEAD:public/sprockets.js
+
 Event.addBehavior({
   "#name:mouseover": function(e){
       hideAllActions();
@@ -8152,7 +8152,6 @@ Event.addBehavior({
 
 function hideAllActions() {
   $$('p.actions').invoke('hide');
-=======
 
 
 Event.addBehavior({

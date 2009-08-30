@@ -3,6 +3,7 @@ class Task < ActiveRecord::Base
   belongs_to :user
   belongs_to :task_list
   belongs_to :page
+  has_many :comments, :as => :target, :order => 'created_at DESC'
   
   attr_accessible :name
   

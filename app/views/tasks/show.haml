@@ -1,5 +1,12 @@
 - content_for :column do
   = new_task_list_link(@current_project)
-  = list_task_lists(@current_project,@task_lists)
+  = list_task_lists(@current_project,@task_lists,@task)
 
+%h2.title
+  Comment on
+  =@task.name
+    
 = new_comment_form(@current_project,@task)
+
+#comments
+  = list_comments(@comments)

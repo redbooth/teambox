@@ -16,21 +16,21 @@ class TaskListsController < ApplicationController
       if @task_list.save
         f.html { redirect_to project_task_lists_path(@current_project) }
       else
-        f.html { render :action => 'new' }
+        f.html { render 'new' }
       end
     end
   end
   
   def show
-    @tasks = @current_task_list.tasks
-    @comments = @current_task_list.comments
+    @task_lists = @current_project.task_lists
+    @comments = @task_list.comments
   end
   
   private
     def load_task_list
-      @current_task_list = TaskList.find(params[:id])
+      @task_list = @current_project.task_lists.find(params[:id])
       
-      if @current_task_list.nil?
+      if @task_list.nil?
         redirect_to project_path(@current_project)
       end
     end

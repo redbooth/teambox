@@ -13,11 +13,7 @@ Rails::Initializer.run do |config|
   config.action_controller.session_store = :active_record_store
 
   config.gem 'haml'
-
-  # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-  # Run "rake -D time" for a list of tasks for finding time zone names.
+  require 'RedCloth'  
   config.time_zone = 'UTC'
-  # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-  # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
-  # config.i18n.default_locale = :de
+
 end
