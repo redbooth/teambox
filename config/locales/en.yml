@@ -42,12 +42,17 @@ en:
       title: New Task
       submit: Create
   
+  notes:
+    actions:
+      delete_confirm: Are you sure you want to delete this note?
+    edit:
+      submit: Save
   pages:
-    rename:
-      submit: Update
     new:
       name: Name
+      submit: Create
     edit:
+      new_note: Add a note
       submit: Update
     fields:
       body: Content

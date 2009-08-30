@@ -89,23 +89,16 @@ module ApplicationHelper
     end
   end
   
-  def cancel_rename_link
-    link_to_function 'cancel', cancel_rename
-  end
-  
-  def cancel_rename
-    update_page do |page|
-      page['rename'].remove
-      page['name'].show
-    end
-  end
-  
   def trash_image(size='24x24')
     image_tag('trash.jpg', :class => 'trash', :size => size)
   end
 
   def pencil_image
     image_tag('pencil.jpg', :class => 'pencil')
+  end
+  
+  def drag_image
+    image_tag('drag.jpg', :class => 'drag')
   end
 
   def reload_javascript_events
