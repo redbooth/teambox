@@ -1,0 +1,12 @@
+.clear_both
+- content_for :column do
+  .buttons
+    = add_file_link(@current_project)
+
+
+#uploads
+  - if @uploads.length == 0
+    There are no files uploaded for this course.
+  - else
+    = render :partial => 'upload', :collection => @uploads
+.clear_both

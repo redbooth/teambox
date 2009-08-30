@@ -97,6 +97,17 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.timestamps
   end
 
+  create_table :uploads do |t|
+    t.integer  :user_id
+    t.integer  :project_id
+    t.string   :image_filename
+    t.integer  :image_width
+    t.integer  :image_height
+    t.text     :description, :default => ''
+    t.string   :content_type
+    t.timestamps
+  end
+
   add_index :sessions, :session_id
   add_index :sessions, :updated_at
 

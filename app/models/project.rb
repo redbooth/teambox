@@ -7,6 +7,7 @@ class Project < ActiveRecord::Base
   has_many :conversations, :order => 'created_at DESC'
   has_many :pages, :order => 'created_at DESC'
   has_many :comments, :as => :target, :order => 'created_at DESC'
+  has_many :uploads
   
   validates_length_of :name, :minimum => 3
   validates_uniqueness_of :permalink

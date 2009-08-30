@@ -14,6 +14,7 @@ Rails::Initializer.run do |config|
 
   config.gem 'haml'
   require 'RedCloth'  
+  require 'mime/types'
   config.time_zone = 'UTC'
 
 end

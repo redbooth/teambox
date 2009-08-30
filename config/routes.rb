@@ -18,9 +18,13 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :projects, :has_many => [:comments, :pages, :invitations] do |project|
     
+    project.resources :uploads, :requirements => { :id => /[^\/]+/ }
+    project.upload_thumbnail 'uploads/:id/thumbnail', :controller => 'uploads', :action => 'thumbnail', :conditions => { :method => :get }
+    
     project.resources :task_lists, :has_many => [:comments] do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
+    
     project.resources :conversations, :has_many => [:comments]
     project.resources :pages, :has_many => [:notes]
   end
