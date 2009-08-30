@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README.rdoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README.rdoc</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README.rdoc
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Tue Mar 17 15:28:58 +0100 2009</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>I18n</h1>
+<h2>Overview</h2>
+<p>
+Uses the Rails I18n to translate error messages. While they still can be
+set by using the &#8216;missing_image_message&#8217; and
+&#8216;invalid_image_message&#8217; accessors, it&#8216;s better to
+configure them in your locale:
+</p>
+<pre>
+  en:
+    activerecord:
+      errors:
+        messages:
+          missing_image: is really required
+          invalid_image: seems to be broken
+          image_too_small: &quot;seems to be too small, it needs to be {{minimum}} pixels&quot;
+</pre>
+<p>
+They can also be set on a model level:
+</p>
+<pre>
+  en:
+    activerecord:
+      errors:
+        models:
+          photo:
+            missing_image: needs to be attached
+            invalid_image: is broken
+            image_too_small: &quot;is too small (should be &gt;= {{minimum}})&quot;
+</pre>
+<p>
+If no message is set in your locale, the default one of the original plugin
+will be shown.
+</p>
+<h2>ModelClassAccessor minimum_image_size</h2>
+<p>
+If this option is set, the model validates that the image is bigger than or
+equal to a minimum size.
+</p>
+<pre>
+  minimum_image_size [800, 600]
+</pre>
+<p>
+You can set one integer to 1 if you just want one dimension be checked.
+(E.g. [800, 1] for images wider than 799 px)
+</p>
+<p>
+The corresponding error message can be set either via
+</p>
+<pre>
+  image_too_small_message &quot;too small image (min {{minimum}})&quot;
+</pre>
+<p>
+or as shown above via I18n.
+</p>
+<h2>Installation</h2>
+<p>
+Using git:
+</p>
+<pre>
+  git submodule add git://github.com/moser/fleximage_i18n.git vendor/plugins/fleximage_i18n
+</pre>
+<p>
+or using:
+</p>
+<pre>
+  ./script/plugin install git://github.com/moser/fleximage_i18n.git
+</pre>
+<h1><a href="../classes/Fleximage.html">Fleximage</a> (original Doc)</h1>
+<h2>Overview</h2>
+<p>
+<a href="../classes/Fleximage.html">Fleximage</a> is a Rails plugin that
+tries to make image uploading and rendering super easy.
+</p>
+<p>
+There are 2 pieces involved in making Rails image handling easy.
+</p>
+<h3>1. Image Uploads</h3>
+<p>
+In this post Rails 2, resource-driven world, <a
+href="../classes/Fleximage.html">Fleximage</a> believes that images should
+belong directly to a record. So you simply tell your model class to act as
+<a href="../classes/Fleximage.html">Fleximage</a>, and your model
+effortlessly gains the ability to handle file uploads.
+</p>
+<ul>
+<li>Your model gains the ability to interface directly with a
+<tt>file_field</tt> form, allowing uploads with zero extra controller or
+model code.
+
+</li>
+<li>Accept uploads from a web address, pulling in the image from the internet
+and saving it locally.
+
+</li>
+<li>Image presence validation with customizable form field error messages.
+
+</li>
+<li>Image format validation that will not allow the file to be uploaded unless
+RMagick can parse it into useable image data.
+
+</li>
+<li>Image pre-processing to keep uploaded images under a certain size, or other
+on-upload image processing tasks.
+
+</li>
+</ul>
+<h3>2. Image Rendering</h3>
+<p>
+The other half of the problem comes from the need to send the uploaded
+images back to the web browser. Most of the time, you need to display the
+image in different sizes or formats in different places on your site. For
+example, a product image in a store may need a square thumbnail image, a
+medium image for its focus page, and a large image for an &quot;enlarge
+this photo&quot; popup.
+</p>
+<p>
+<a href="../classes/Fleximage.html">Fleximage</a> uses a simple templating
+engine that allows you to re-render images exactly how you need them. Using
+the same &quot;master image,&quot; many images can be rendered from the
+same source. You can even go beyond resizing; there is support for image
+overlays, text drawing, drop shadows, borders and more. The rendering
+engine is flexible and extensible to whatever your dynamic image needs are.
+</p>
+<ul>
+<li>Renderer implemented as template engine, which fits in perfectly with Rails
+2 RESTful style format-sensitive views.
+
+</li>
+<li>Does not need to have everything resized on upload allowing your site
+layout the change later on, and all images will re-render themselves just
+right with your new rendering templates.
+
+</li>
+<li>Support for special effects like text, image or logo overlays, borders and
+shadows.
+
+</li>
+<li>Extensible by adding image operator classes which allow for reusable
+snippets of direct RMagick code.
+
+</li>
+<li>Requires absolutely zero controller code.
+
+</li>
+</ul>
+<h1>Getting Started</h1>
+<h2>1. Installing the plugin</h2>
+<p>
+If running on rails edge:
+</p>
+<pre>
+  ./script/plugin install git://github.com/Squeegy/fleximage.git
+</pre>
+<p>
+Otherwise, you have to do a manual install since Rails does not yet support
+git. Download this file:
+</p>
+<p>
+<a
+href="http://github.com/Squeegy/fleximage/tarball/master">github.com/Squeegy/fleximage/tarball/master</a>
+</p>
+<p>
+Unzip, and place the root <tt>fleximage</tt> folder in your
+<tt>railsapproot/vendor/plugins</tt> directory.
+</p>
+<h2>2. Activating your model</h2>
+<p>
+You need to let your model know it should be <a
+href="../classes/Fleximage.html">Fleximage</a>-friendly. Lets say you have
+a model for photos.
+</p>
+<pre>
+  # app/models/photo.rb
+  class Photo &lt; ActiveRecord::Base
+    acts_as_fleximage :image_directory =&gt; 'public/images/uploaded_photos'
+  end
+</pre>
+<p>
+The :<tt>image_directory</tt> option tells the plugin where to store your
+master images. This value is relative to your application root, and
+doesn&#8216;t need to be in your public directory if you don&#8216;t want
+it to be. This is where the source images will be that all your templates
+start with.
+</p>
+<p>
+There are many other options for your model. Refer to the <tt><a
+href="../classes/Fleximage/Model/ClassMethods.html">Fleximage::Model::ClassMethods</a></tt>
+class in the <tt>rdoc</tt> for more information on these.
+</p>
+<h2>3. The upload form</h2>
+<p>
+Your users need a way to upload their images into your site. Here is how we
+might render a form to create a photo record.
+</p>
+<pre>
+  # app/views/photos/new.html.erb
+
+  &lt;% form_for @photo, :html =&gt; { :multipart =&gt; true } do |f| %&gt;
+    &lt;p&gt;
+      &lt;b&gt;Name&lt;/b&gt;&lt;br /&gt;
+      &lt;%= f.text_field :name %&gt;
+    &lt;/p&gt;
+
+    &lt;p&gt;
+      &lt;b&gt;Author&lt;/b&gt;&lt;br /&gt;
+      &lt;%= f.text_field :author %&gt;
+    &lt;/p&gt;
+
+    &lt;p&gt;
+      &lt;b&gt;Upload Image&lt;/b&gt;&lt;br /&gt;
+      &lt;%= f.file_field :image_file %&gt;&lt;br /&gt;
+      or URL: &lt;%= f.text_field :image_file_url %&gt;
+    &lt;/p&gt;
+
+    &lt;p&gt;
+      &lt;%= f.submit &quot;Create&quot; %&gt;
+    &lt;/p&gt;
+  &lt;% end %&gt;
+</pre>
+<p>
+<b>NOTE</b>: The &quot;:html =&gt; { :multipart =&gt; true }&quot; is
+<b>VERY</b> <b>IMPORTANT</b>. Without this snippet your browser will not
+send binary data to the server. If things aren&#8216;t working, check to
+make sure you have this in your form declaration.
+</p>
+<p>
+The relevant bit of our form code is:
+</p>
+<pre>
+  &lt;p&gt;
+    &lt;b&gt;Upload Image&lt;/b&gt;&lt;br /&gt;
+    &lt;%= f.file_field :image_file %&gt;&lt;br /&gt;
+    or URL: &lt;%= f.text_field :image_file_url %&gt;
+  &lt;/p&gt;
+</pre>
+<p>
+First there is a file upload field, mapping the the &quot;image_file&quot;
+attribute of our model. When the user browses to a local file and uploads
+it, the model is waiting to accept an uploaded file on this attribute and
+will automatically open it and save it to disk for you.
+</p>
+<p>
+Right along side the upload field is a simple text field, which maps to the
+&quot;image_file_url&quot; property. Your model also listens for assignment
+to this attribute to automatically fetch the contents of a URL and save it
+locally as the master image.
+</p>
+<p>
+You can have just one of these fields, or both. The model will know how to
+do the right thing either way.
+</p>
+<p>
+When the user submits the form, all you have to do is assign the form
+contents to your object in standard Rails fashion, and the image is
+uploaded and saved for you. Creating a new photo may look like this in your
+controller:
+</p>
+<pre>
+  # app/controllers/photos_controller.rb
+  def create
+    @photo = Photo.new(params[:photo])
+    if @photo.save
+      redirect_to photo_url(@photo)
+    else
+      flash[:notice] = 'Your photo did not pass validation!'
+      render :action =&gt; 'new'
+    end
+  end
+</pre>
+<h2>4. Linking to the generated images</h2>
+<p>
+Rails 2 has amazing support for format driven responses. Given a photo
+object, by default it would have an HTML view that describes information
+about that photo. With <a href="../classes/Fleximage.html">Fleximage</a>,
+the JPG or (GIF or PNG) view can be the image data itself.
+</p>
+<p>
+A photo HTML view may look like this:
+</p>
+<pre>
+  # app/views/photos/show.html.erb
+  # http://mysite.com/photos/123
+
+  &lt;p&gt;
+    &lt;%= image_tag formatted_photo_path(@photo, :jpg) %&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;b&gt;Name:&lt;/b&gt;
+    &lt;%=h @photo.name %&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;b&gt;Author:&lt;/b&gt;
+    &lt;%=h @photo.author %&gt;
+  &lt;/p&gt;
+</pre>
+<p>
+That image tag uses a Rails route as its <tt>src</tt>. In this case, that
+route corresponds to the <tt>.jpg</tt> format of the <tt>photo</tt>
+resource, which would give us a URL like:
+</p>
+<pre>
+  http://mysite.com/photos/123.jpg
+</pre>
+<p>
+This is the URL where the image will be.
+</p>
+<h2>5. Rendering the image</h2>
+<p>
+Now it&#8216;s time to actually create a template to render the image. This
+happens through a special view with a .<tt>flexi</tt> extension. This view
+template will pull out the master image for you, and send it to the browser
+as binary data after your processing of it done.
+</p>
+<p>
+The filename of the template should look like this:
+<tt>action_name.jpg.flexi</tt>, where <tt>action_name</tt> is the
+controller action that will render this view. The <tt>jpg</tt> tells the
+controller to render this view when the <tt>jpg</tt> format is asked for.
+The <tt>flexi</tt> tells Rails to render this view with the <a
+href="../classes/Fleximage.html">Fleximage</a> template engine, rather than
+<tt>erb</tt>, <tt>builder</tt> or other template types.
+</p>
+<p>
+The syntax of the view is pure ruby, but to process the image the view
+needs to call <tt>operate</tt> on the instance of your model.
+</p>
+<p>
+Here is the view to render a photo record at 320x240:
+</p>
+<pre>
+  # app/views/photos/show.jpg.flexi
+  # http://mysite.com/photos/123.jpg
+  @photo.operate do |image|
+    image.resize '320x240'
+  end
+</pre>
+<p>
+Calling <tt>@photo.operate { |image| .. }</tt> prepares the model object
+for image processing and provides a ruby object that will allow you to
+perform image transformations. This example just resizes the image to
+320x240, however many other operators are included.
+</p>
+<p>
+Here is a .<tt>flexi</tt> template that will do much more:
+</p>
+<pre>
+  # app/views/show.jpg.flexi
+  @photo.operate do |image|
+    image.resize '640x480', :crop =&gt; true
+    image.image_overlay 'public/images/logo.png',
+      :alignment =&gt; :bottom_right,
+      :offset =&gt; '20x20'
+    image.border :size =&gt; 10, :color =&gt; 'green'
+    image.text 'I like Cheese'
+    image.unsharp_mask
+    image.shadow
+  end
+</pre>
+<p>
+This template will:
+</p>
+<ul>
+<li>Resize the image to exactly 640x480, cropping off any extra.
+
+</li>
+<li>Add a logo 20 pixels form the lower right corner
+
+</li>
+<li>Add a green 10 pixel border
+
+</li>
+<li>Write &quot;I like Cheese&quot; in the upper left corder
+
+</li>
+<li>Sharpen the image
+
+</li>
+<li>Add a black drop shadow on a white background
+
+</li>
+</ul>
+<p>
+For more information on image operators, open up
+<tt>vendor/plugins/fleximage/rdoc/index.html</tt> in your installed plugin
+and check out the full for details about each operator:
+</p>
+<ul>
+<li><a
+href="../classes/Fleximage/Operator/Border.html">Fleximage::Operator::Border</a>
+
+</li>
+<li><a
+href="../classes/Fleximage/Operator/Crop.html">Fleximage::Operator::Crop</a>
+
+</li>
+<li><a
+href="../classes/Fleximage/Operator/ImageOverlay.html">Fleximage::Operator::ImageOverlay</a>
+
+</li>
+<li><a
+href="../classes/Fleximage/Operator/Resize.html">Fleximage::Operator::Resize</a>
+
+</li>
+<li><a
+href="../classes/Fleximage/Operator/Shadow.html">Fleximage::Operator::Shadow</a>
+
+</li>
+<li><a
+href="../classes/Fleximage/Operator/Text.html">Fleximage::Operator::Text</a>
+
+</li>
+<li><a
+href="../classes/Fleximage/Operator/Trim.html">Fleximage::Operator::Trim</a>
+
+</li>
+<li><a
+href="../classes/Fleximage/Operator/UnsharpMask.html">Fleximage::Operator::UnsharpMask</a>
+
+</li>
+</ul>
+<h1>Other Useful Information</h1>
+<h2>Image output format</h2>
+<p>
+You don&#8216;t want to render JPGs? That&#8216;s fine. Just link to the
+format you want (:<tt>jpg</tt>, :<tt>gif</tt> or :<tt>png</tt>) and declare
+the your template name to match and the image will be rendered properly.
+For instance, this will render a <tt>gif</tt>.
+</p>
+<pre>
+  # app/views/photos/show.html.erb
+  &lt;%= image_tag photo_path(@photo, :gif) %&gt;
+
+  # app/views/photos/show.gif.flexi
+  @photo.operate do |image|
+    @photo.resize '150x150', :crop =&gt; true
+  end
+</pre>
+<p>
+The <a href="../classes/Fleximage.html">Fleximage</a> template engine will
+automatically detect the format that is being asked for, and render the
+right type of image.
+</p>
+<h2>Converting/Upgrading your master image store</h2>
+<p>
+Are you upgrading your live app to the new file store creation date based
+format? Did you start out with PNG image storage, and later realize you
+need to store with the more space economic JPG instead? Not problem, <a
+href="../classes/Fleximage.html">Fleximage</a> provides some rake tasks to
+help you out.
+</p>
+<p>
+Each conversion rake task requires that you tell it the class for which
+that you are changing the file store. For example, if you want to change to
+the new creation date based storage structure, for the class
+<tt>Photo</tt>, you can run a rake task like this:
+</p>
+<pre>
+  rake fleximage:convert:to_nested FLEXIMAGE_CLASS=Photo
+</pre>
+<p>
+Or if you want to run this on your production database
+</p>
+<pre>
+  rake fleximage:convert:to_nested FLEXIMAGE_CLASS=Photo RAILS_ENV=production
+</pre>
+<p>
+<b>IMPORTANT</b>: These tasks manipulate the source files that make up your
+images. I take no responsibility if these rake tasks delete all your
+images. <b>It is highly advised you back up you master image directory
+before running any of these tasks on your production site.</b>
+</p>
+<p>
+Here are all the conversion tasks:
+</p>
+<ul>
+<li>fleximage:convert:to_nested : Converts your master image store from the
+flat based path/to/images/123.png format to the creation date based format
+path/to/images/2008/11/12/123.png based format. Use this task if you are
+upgrading from an older version of <a
+href="../classes/Fleximage.html">Fleximage</a>.
+
+</li>
+<li>fleximage:convert:to_flat : Converts your master image store from the
+creation date based path/to/images/2008/11/12/123.png format to the flat
+format path/to/images/123.png format. Note this will leave the date based
+directories in place, but they will be empty and can be easily manually
+deleted.
+
+</li>
+<li>fleximage:convert:to_jpg : Converts all your stored master images from PNG
+format to JPG format. This will compress your previously lossless master
+images.
+
+</li>
+<li>fleximage:convert:to_png : Converts all your stored master images from JPG
+format to PNG format.
+
+</li>
+</ul>
+<p>
+After you run any of these tasks, make sure to update your model&#8216;s
+class accessors <tt>use_creation_date_based_directories</tt> and
+<tt>image_storage_format</tt> to reflect the state of your image store.
+Otherwise, the plugin will not find you master images for rendering.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

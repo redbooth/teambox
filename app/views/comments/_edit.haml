@@ -1,5 +1,5 @@
 - remote_form_for comment do |f|
   = comment_fields(f)
-  
-  = f.submit t('.submit')
-  = cancel_edit_comment_link(comment)
+  .submit
+    = f.submit t('.submit')
+    = cancel_edit_comment_link(comment)

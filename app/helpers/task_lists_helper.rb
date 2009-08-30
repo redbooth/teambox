@@ -1,13 +1,15 @@
 module TaskListsHelper
-  def list_task_lists(project,task_lists)
+
+  def list_task_lists(project,task_lists,current_target=nil)
     render :partial => 'task_lists/task_list', 
       :collection => task_lists,
       :locals => {
-        :project => project }
+        :project => project,
+        :current_target => current_target }
   end
   
   def new_task_list_link(project)
-    link_to t('.add_link'), new_project_task_list_path(project)
+    link_to image_tag('add_task_list.jpg'), new_project_task_list_path(project)
   end
   
   def task_list_fields(f)
@@ -19,6 +21,7 @@ module TaskListsHelper
   end
   
   def new_task_link(task_list)
-    link_to 'New Task', new_project_task_list_task_path(task_list.project,task_list)
+    link_to '+ Add Task', new_project_task_list_task_path(task_list.project,task_list),
+      :class => 'add_task_link'
   end
 end
