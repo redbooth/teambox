@@ -3,9 +3,9 @@ class UploadsController < ApplicationController
 
   def find_upload
     if params[:id].match /^\d+$/
-      @upload = @current_course.uploads.find(params[:id])
+      @upload = @current_project.uploads.find(params[:id])
     else
-      @upload = @current_course.uploads.find_by_image_filename(params[:id])
+      @upload = @current_project.uploads.find_by_image_filename(params[:id])
     end
   end
 
@@ -36,14 +36,10 @@ class UploadsController < ApplicationController
   
   def show
     if @upload
-      if @upload.is_image?
-        render :inline => "@upload.operate { |p| }", :type => :flexi
-      else
-        send_file @upload.pathname, :content_type => @upload.content_type
-      end
+      render :inline => "@upload.operate { |p| }", :type => :flexi
     else
       flash[:notice] = "#{params[:upload_fileame]} could not be found."
-      redirect_to project_uploads_path(@current_course)
+      redirect_to project_uploads_path(@current_project)
     end
   end
   
