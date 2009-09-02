@@ -18,6 +18,7 @@ en:
   projects:
     show:
       new_task_list_link: New Task List
+      people_in_project: People in this project
     fields:
       name: Name
       permalink: URL

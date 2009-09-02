@@ -1,5 +1,7 @@
 - content_for :column do
-  rwawrawr
+  .people_list
+    %h2= t 'projects.show.people_in_project'
+    = list_people([@current_project.user])
 
 = new_comment_form(@current_project)
 
