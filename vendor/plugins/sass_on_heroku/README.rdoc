@@ -1,0 +1,7 @@
+= Sass on Heroku
+
+Rails plugin to compile Sass files to tmp/ and serve from there, avoiding trouble with read-only filesystems.
+
+It will add a Rack middleware on top of your Rails app that quickly detects requests for Sass CSS files, and serve them with caching headers.
+
+If you have issues please tell us on support.heroku.com -- or just fork it :)
