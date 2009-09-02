@@ -1,0 +1,27 @@
+<h1>Editing photo_file</h1>
+
+<%= error_messages_for :photo_file %>
+
+<% form_for(@photo_file) do |f| %>
+  <p>
+    <b>Image filename</b><br />
+    <%= f.text_field :image_filename %>
+  </p>
+
+  <p>
+    <b>Image width</b><br />
+    <%= f.text_field :image_width %>
+  </p>
+
+  <p>
+    <b>Image height</b><br />
+    <%= f.text_field :image_height %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @photo_file %> |
+<%= link_to 'Back', photo_files_path %>

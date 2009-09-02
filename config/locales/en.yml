@@ -78,7 +78,9 @@ en:
       submit: Comment
     edit:
       submit: Save
-
+  uploads:
+    index:
+      new_file: Upload a File
   sessions:
     fields:
       login: Login

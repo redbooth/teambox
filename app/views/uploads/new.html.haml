@@ -4,9 +4,7 @@
     .file
       Select a file to upload
       %br
-      = f.file_field :image_file
-      or URL:
-      = f.text_field :image_file_url
+      = file_column_field 'upload', 'file'
 
     .description
       = f.label :description

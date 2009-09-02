@@ -119,7 +119,6 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :image_height
     t.text     :description, :default => ''
     t.string   :content_type
-    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
 

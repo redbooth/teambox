@@ -23,7 +23,20 @@ class UploadsController < ApplicationController
   end
   
   def create
+    tmp_filename = params[:upload][:file].original_filename
+    mime_type = MIME::Types.type_for(tmp_filename).to_s
+    
+    # If the upload is an image this will pass the image to FlexImage
+    # Otherwise the file will be handled by file_column
+    if mime_type.match /^image/
+      params[:upload][:image_file] = params[:upload][:file]
+      params[:upload][:file] = nil
+    end
+    
     @upload = @current_project.uploads.new(params[:upload])
+    @upload.user = current_user
+    @upload.content_type = mime_type
+    @upload.image_filename = tmp_filename
 
     respond_to do |format|
       if @upload.save
@@ -36,7 +49,11 @@ class UploadsController < ApplicationController
   
   def show
     if @upload
-      render :inline => "@upload.operate { |p| }", :type => :flexi
+      if @upload.is_image?
+        render :inline => "@upload.operate { |p| }", :type => :flexi
+      else
+        send_file @upload.pathname, :content_type => @upload.content_type
+      end
     else
       flash[:notice] = "#{params[:upload_fileame]} could not be found."
       redirect_to project_uploads_path(@current_project)
@@ -50,10 +67,8 @@ class UploadsController < ApplicationController
   end
   
   def thumbnail
-    if @upload
-      if @upload.is_image?
-        render :inline => "@upload.operate {|p| p.resize '64x64'}", :type => :flexi
-      end
+    if @upload and @upload.is_image?
+      render :inline => "@upload.operate {|p| p.resize '64x64'}", :type => :flexi
     end
   end
   

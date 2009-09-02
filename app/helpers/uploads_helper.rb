@@ -1,7 +1,7 @@
 module UploadsHelper
 
-  def add_file_link(course)
-    link_to image_tag('add_file_button.jpg', :class => 'button'), new_project_upload_path(@current_project)
+  def new_file_link(course)
+    link_to t('.new_file'), new_project_upload_path(@current_project)
   end
 
   def upload_link(upload)

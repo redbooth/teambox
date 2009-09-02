@@ -3,3 +3,6 @@ tmp/*
 public/stylesheets/*.css
 */.DS_Store
 public/avatars/*
+public/upload/*
+public/uploads/*
+

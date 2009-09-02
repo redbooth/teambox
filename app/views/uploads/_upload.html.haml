@@ -1,4 +1,8 @@
 .upload{:id => "upload_#{upload.id}"}
+  %p.actions
+    %span
+      = edit_upload_link upload
+      = delete_upload_link upload
   .thumbnail
     = image_tag project_upload_thumbnail_path(@current_project,upload)
   .filename
@@ -15,7 +19,5 @@
     .show_details
       .name
         = upload_link upload
-        = edit_upload_link upload
-        = delete_upload_link upload
       .description= h(upload.description)
-  .clear_both
+  .clear

@@ -1,0 +1,26 @@
+<h1>Listing photo_dbs</h1>
+
+<table>
+  <tr>
+    <th>Image filename</th>
+    <th>Image width</th>
+    <th>Image height</th>
+    <th>Image file data</th>
+  </tr>
+
+<% for photo_db in @photo_dbs %>
+  <tr>
+    <td><%=h photo_db.image_filename %></td>
+    <td><%=h photo_db.image_width %></td>
+    <td><%=h photo_db.image_height %></td>
+    <td><%=h photo_db.image_file_data %></td>
+    <td><%= link_to 'Show', photo_db %></td>
+    <td><%= link_to 'Edit', edit_photo_db_path(photo_db) %></td>
+    <td><%= link_to 'Destroy', photo_db, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New photo_db', new_photo_db_path %>

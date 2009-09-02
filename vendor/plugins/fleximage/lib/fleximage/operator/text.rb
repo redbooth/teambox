@@ -15,6 +15,8 @@ module Fleximage
     # * font: path to a font file relative to +RAILS_ROOT+
     # * rotate: degrees as an integer
     # * shadow: <tt>{:blur => 1, :opacity => 1.0}</tt>
+    # * font_weight: RMagick font weight constant or value. See: http://www.imagemagick.org/RMagick/doc/draw.html#font_weight
+    # * stroke: hash that, if present, will stroke the text.  The hash should have both <tt>:width</tt> (integer) and <tt>:color</tt> (string or color object).
     #
     # Example:
     #
@@ -30,6 +32,10 @@ module Fleximage
     #       :shadow => {
     #         :blur => 1,
     #         :opacity => 0.5,
+    #       },
+    #       :stroke => {
+    #         :width => 3,
+    #         :color => color(0, 0, 0),
     #       }
     #     )
     #   end
@@ -45,6 +51,10 @@ module Fleximage
           :text_align => :left,
           :rotate     => 0,
           :shadow     => nil,
+          :stroke     => {
+            :width => 0,
+            :color => 'white',
+          }
         }.merge(options)
         options[:offset] = size_to_xy(options[:offset])
 
@@ -55,6 +65,12 @@ module Fleximage
         text.text_antialias = options[:antialias]
         text.pointsize      = options[:font_size].to_i
         text.rotation       = options[:rotate]
+        text.font_weight    = options[:font_weight] if options[:font_weight]
+        
+        if options[:stroke][:width] > 0
+          text.stroke_width   = options[:stroke][:width]
+          text.stroke         = options[:stroke][:color]
+        end
 
         # assign font path with to rails root unless the path is absolute
         if options[:font]

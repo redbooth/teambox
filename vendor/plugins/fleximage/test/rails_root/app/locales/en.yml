@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    errors:
+      models:
+        photo_custom_error:
+          missing_image: needs to be attached
+          invalid_image: seems to be broken
+          image_too_small: "must be bigger (min. size: {{minimum}})"

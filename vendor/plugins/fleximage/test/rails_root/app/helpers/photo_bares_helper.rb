@@ -1,0 +1,2 @@
+module PhotoBaresHelper
+end
