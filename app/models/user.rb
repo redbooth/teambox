@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
-  has_many :projects
+  has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   
   has_many :people
   has_many :projects, :through => :people
