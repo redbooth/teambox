@@ -15,7 +15,7 @@ module CommentsHelper
   end
   
   def edit_comment_link(comment)
-    link_to_remote pencil_image, 
+    link_to_remote "Edit", 
       :url => edit_comment_path(comment),
       :method => :get
   end
@@ -31,7 +31,7 @@ module CommentsHelper
   end
   
   def delete_comment_link(comment)
-    link_to_remote trash_image,
+    link_to_remote "Delete",
       :url => comment_path(comment),
       :method => :delete,
       :confirm => t('.confirm_delete')

@@ -3,6 +3,7 @@
     = edit_comment_link(comment)
     = delete_comment_link(comment)
   .user
-    = comment.user.login
+    = link_to comment.user.login
+    = 'said:'
   .body
     = comment.body
