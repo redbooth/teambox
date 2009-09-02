@@ -4,4 +4,6 @@
 class Person < ActiveRecord::Base
   belongs_to :user
   belongs_to :project  
+  
+  validates_presence_of :user, :project   # Make sure they both exist and are set
 end

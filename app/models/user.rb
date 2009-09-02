@@ -9,6 +9,15 @@ class User < ActiveRecord::Base
   include Authentication::ByCookieToken
 
   before_create { |user| user.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500) }
+
+  has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
+  
+  has_many :people
+  has_many :projects, :through => :people
+  
+  has_one :avatar
+  
+  serialize :recent_projects
   
   validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40
@@ -22,15 +31,8 @@ class User < ActiveRecord::Base
   validates_length_of       :email,    :within => 6..100 #r@a.wk
   validates_uniqueness_of   :email
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
-
-  has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   
-  has_many :people
-  has_many :projects, :through => :people
-  
-  has_one :avatar
-  
-  serialize :recent_projects
+  validates_associated :projects, :people   # Ensure associated people and projects exist
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation

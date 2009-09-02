@@ -17,6 +17,9 @@ class Project < ActiveRecord::Base
   validates_length_of :name, :minimum => 3
   validates_uniqueness_of :permalink
   validates_format_of :permalink, :with => /^[a-z0-9_\-\.]{2,}$/
+
+  validates_presence_of :user         # A project _needs_ and owner
+  validates_associated :people        # An will only accept valid people
   
   attr_accessible :name, :permalink
   
@@ -33,7 +36,7 @@ class Project < ActiveRecord::Base
       conversation.user_id = user.id
     end
   end
-  
+
   def new_comment(user,target,comment)
     self.comments.new(comment) do |comment|
       comment.project_id = self.id
@@ -46,6 +49,11 @@ class Project < ActiveRecord::Base
     self.pages.new(page) do |page|
       page.user_id = user.id
     end
+  end
+
+  def after_create
+    person = self.people.new(:user_id => self.user_id)
+    person.save
   end
   
   def to_param
