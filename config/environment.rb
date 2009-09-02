@@ -13,6 +13,9 @@ Rails::Initializer.run do |config|
   config.action_controller.session_store = :active_record_store
 
   config.gem 'haml'
+  
+  # Install instructions at http://github.com/adzap/ar_mailer/tree/master
+  config.gem "adzap-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gems.github.com'
 
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
   # Run "rake -D time" for a list of tasks for finding time zone names.
