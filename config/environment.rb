@@ -13,6 +13,7 @@ Rails::Initializer.run do |config|
   config.action_controller.session_store = :active_record_store
 
   config.gem 'haml'
+  config.gem 'sprockets'
   
   # Install instructions at http://github.com/adzap/ar_mailer/tree/master
   config.gem "adzap-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gems.github.com'
