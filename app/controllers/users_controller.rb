@@ -30,4 +30,10 @@ class UsersController < ApplicationController
       render :action => 'new'
     end
   end
+  
+  def update
+    @current_user.update_attributes(params[:user])
+    @current_user.save
+  end
+
 end

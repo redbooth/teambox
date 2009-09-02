@@ -89,8 +89,8 @@ module ApplicationHelper
     end
   end
   
-  def trash_image(size='24x24')
-    image_tag('trash.jpg', :class => 'trash', :size => size)
+  def trash_image
+    image_tag('trash.jpg', :class => 'trash')
   end
 
   def pencil_image

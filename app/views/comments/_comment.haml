@@ -1,8 +1,13 @@
 .comment{:id => "comment_#{comment.id}"}
-  .actions
-    = edit_comment_link(comment)
-    = delete_comment_link(comment)
-  .user
-    = comment.user.login
+  %p.actions
+    %span
+      = edit_comment_link(comment)
+      = delete_comment_link(comment)
+
+  =thumb_avatar(comment.user)
+  .name
+    = link_to comment.user.name, user_path(comment.user)
+    =comment.created_at.strftime("%I:%M %p &mdash; %b %d %Y")
   .body
     = comment.body_html
+  .clear  

@@ -5,6 +5,7 @@ en:
   users:
     fields:
       login: Username
+      name: Full Name
       time_zone: Time Zone
       language: Language
       email: Email
