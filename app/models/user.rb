@@ -1,5 +1,8 @@
 require 'digest/sha1'
 
+# A User model describes an actual user, with his password and personal info.
+# A Person model describes the relationship of a User that follows a Project.
+
 class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
@@ -21,6 +24,10 @@ class User < ActiveRecord::Base
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
   has_many :projects
+  
+  has_many :people
+  has_many :projects, :through => :people
+  
   has_one :avatar
   
   serialize :recent_projects

@@ -37,6 +37,11 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :permalink
     t.timestamps
   end
+  
+  create_table :people do |t|
+    t.integer :user_id
+    t.integer :project_id
+  end
 
   create_table :task_lists do |t|
     t.integer :project_id

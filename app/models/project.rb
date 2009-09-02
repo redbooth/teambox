@@ -1,5 +1,11 @@
+# A User model describes an actual user, with his password and personal info.
+# A Person model describes the relationship of a User that follows a Project.
+
 class Project < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user # project owner
+
+  has_many :people # people invited to the project
+  has_many :users, :through => :people
 
   has_many :task_lists, :conditions => { :page_id => nil }
   has_many :tasks
