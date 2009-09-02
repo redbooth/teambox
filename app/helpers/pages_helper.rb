@@ -16,6 +16,18 @@ module PagesHelper
   end
   
   def notes_sortable_tag(page)
-    sortable_element('notes', { :tag => 'div', :handle => 'img.drag', :url => project_page_path(page.project,page), :method => :put })
+    url = project_page_path(page.project,page)
+    update_page_tag do |page|
+      page.notes_sortable(url)
+    end
+  end
+  
+  def notes_sortable(url)
+    page.sortable('notes', {
+      :tag => 'div',
+      :handle => 'img.drag',
+      :url => url,
+      :method => :put
+    })
   end
 end

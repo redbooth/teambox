@@ -4,3 +4,5 @@ page["note_#{@note.id}"].hide
 page.insert_html :bottom, :notes, :partial => 'notes/edit', :locals => { :note => @note }
 
 page.reload_javascript_events
+
+page.notes_sortable(project_page_path(@note.page.project,@note.page))

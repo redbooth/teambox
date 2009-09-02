@@ -13,6 +13,10 @@ module CommentsHelper
   end
   
   def list_comments(comments)
+    unless comments.first.nil?
+      CommentRead.user(current_user).read_up_to(comments.first)
+    end
+    
     render :partial => 'comments/comment', :collection => comments
   end
   

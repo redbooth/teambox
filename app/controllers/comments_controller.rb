@@ -14,8 +14,14 @@ class CommentsController < ApplicationController
       target = @current_project
     end
 
+    was_target_read = CommentRead.user(current_user).are_comments_read?(target)
+
     @comment = @current_project.new_comment(current_user,target,params[:comment])
     @comment.save
+    
+    if was_target_read
+      CommentRead.user(current_user).read_up_to(@comment)
+    end
     
     respond_to{|f|f.js}
   end

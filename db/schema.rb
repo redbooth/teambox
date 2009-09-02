@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.string  :name
     t.string  :permalink
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
 
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :page_id, :null => true, :default => nil
     t.string  :name
     t.integer :position
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
   
@@ -54,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.string  :name
     t.integer :position
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
 
@@ -67,10 +70,18 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.timestamps    
   end
   
+  create_table :comments_read do |t|
+    t.integer :target_id
+    t.string  :target_type
+    t.integer :user_id
+    t.integer :last_read_comment_id
+  end
+  
   create_table :conversations do |t|
     t.integer :project_id
     t.integer :user_id
     t.string  :name
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
   
@@ -78,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :project_id
     t.integer :user_id
     t.string  :name
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
   
@@ -85,7 +97,9 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :page_id
     t.integer :project_id
     t.text :body
+    t.text  :body_html
     t.integer :position
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
 
@@ -105,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :image_height
     t.text     :description, :default => ''
     t.string   :content_type
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
 

@@ -104,5 +104,10 @@ module ApplicationHelper
   def reload_javascript_events
       page << "Event.addBehavior.reload()"
   end
+  
+  def unread_comment_count(target)
+    render :partial => 'shared/unread_comment_count', :locals => {
+      :count => CommentRead.user(current_user).unread_count(target) }
+  end
     
 end
