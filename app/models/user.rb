@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
 
   has_many :projects
   has_one :avatar
+  has_many :uploads
   
   serialize :recent_projects
 

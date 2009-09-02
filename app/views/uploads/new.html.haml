@@ -1,0 +1,15 @@
+#new_upload
+  = error_messages_for :upload
+  - form_for @upload, :url => project_uploads_path, :html => { :multipart => true } do |f|
+    .file
+      Select a file to upload
+      %br
+      = f.file_field :image_file
+      or URL:
+      = f.text_field :image_file_url
+
+    .description
+      = f.label :description
+      %br
+      = f.text_field :description
+    = submit_tag 'Upload'
