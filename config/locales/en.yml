@@ -77,6 +77,11 @@ en:
     new:
       title: Login
       submit: Login
+
+  email:
+    user:
+      welcome: Welcome to Teambox!
+
   shared:
       navigation:
         all_projects: 'All Projects'

@@ -25,6 +25,7 @@ class ProjectsController < ApplicationController
   
   def show
     @comments = @current_project.comments
+    Emailer.deliver_welcome(current_user)
   end
   
   def edit

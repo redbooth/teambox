@@ -112,4 +112,12 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   end
   add_index "avatars", ["user_id"], :name => "index_avatars_on_user"
 
+  create_table "emails", :force => true do |t|
+    t.string   "from"
+    t.string   "to"
+    t.integer  "last_send_attempt", :default => 0
+    t.text     "mail"
+    t.datetime "created_on"
+  end
+
 end
