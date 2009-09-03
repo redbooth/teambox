@@ -1,4 +1,4 @@
-.person{:id => "person_#{person.id}"}
+.person{:id => "person_#{person.id}", :class => person_status(person)}
   = person.login
   .status
-    online
+    = time_ago_in_words(person.updated_at)

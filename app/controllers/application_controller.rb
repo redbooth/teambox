@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem
 
-  before_filter :load_project, :login_required, :set_locale, :recent_projects
+  before_filter :load_project, :login_required, :set_locale, :touch_user, :recent_projects
   
   private
     def load_project
@@ -29,5 +29,9 @@ class ApplicationController < ActionController::Base
     def set_locale
       # if this is nil then I18n.default_locale will be used
       I18n.locale = current_user.language if logged_in?
+    end
+    
+    def touch_user
+      current_user.touch if logged_in?
     end
 end
