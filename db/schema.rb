@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.string  :name
     t.string  :permalink
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
   
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :page_id, :null => true, :default => nil
     t.string  :name
     t.integer :position
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
   
@@ -60,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.string  :name
     t.integer :position
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
 
@@ -73,10 +76,18 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.timestamps    
   end
   
+  create_table :comments_read do |t|
+    t.integer :target_id
+    t.string  :target_type
+    t.integer :user_id
+    t.integer :last_read_comment_id
+  end
+  
   create_table :conversations do |t|
     t.integer :project_id
     t.integer :user_id
     t.string  :name
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
   
@@ -84,19 +95,37 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :project_id
     t.integer :user_id
     t.string  :name
+    t.integer :last_comment_id, :null => true, :default => nil
+    t.timestamps
+  end
+  
+  create_table :notes do |t|
+    t.integer :page_id
+    t.integer :project_id
+    t.text :body
+    t.text  :body_html
+    t.integer :position
+    t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
 
-  create_table :page_sections do |t|
-    t.integer :page_id
-    t.integer :target_id
-    t.string  :target_type
-    t.integer :position
+  create_table :invitations do |t|
+    t.integer :user_id
+    t.integer :project_id
+    t.string  :email
+    t.string  :token
+    t.timestamps
   end
-  
-  create_table :dividers do |t|
-    t.integer :page_id
-    t.string  :name
+
+  create_table :uploads do |t|
+    t.integer  :user_id
+    t.integer  :project_id
+    t.string   :image_filename
+    t.integer  :image_width
+    t.integer  :image_height
+    t.text     :description, :default => ''
+    t.string   :content_type
+    t.timestamps
   end
 
   add_index :sessions, :session_id

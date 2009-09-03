@@ -1,0 +1,1 @@
+page["note_#{@note.id}"].remove

@@ -433,26 +433,25 @@ module Fleximage
       # Load the image from disk/DB, or return the cached and potentially 
       # processed output image.
       def load_image #:nodoc:
-
         @output_image ||= @uploaded_image
         
         # Return the current image if we have loaded it already
         return @output_image if @output_image
-  
+        
         # Load the image from disk
-        if self.class.has_store?  
-          if self.class.db_store?      
+        if self.class.has_store?
+          if self.class.db_store?
             if image_file_data && image_file_data.any?
               # Load the image from the database column
               @output_image = Magick::Image.from_blob(image_file_data).first
             else
               master_image_not_found
             end
-          else       
+          else
             # Load the image from the disk
             @output_image = Magick::Image.read(file_path).first
           end
-        else     
+        else
           master_image_not_found
         end
         

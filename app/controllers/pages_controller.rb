@@ -9,6 +9,7 @@ class PagesController < ApplicationController
   
   def create
     @page = @current_project.new_page(current_user,params[:page])
+    @page.build_note({})
     
     respond_to do |f|
       if @page.save
@@ -19,27 +20,35 @@ class PagesController < ApplicationController
     end
   end
   
-  before_filter :load_page, :only => [ :edit, :update, :rename, :insert_divider, :section_divider ]
-  
-  def rename
-  end
-  
-  def section_divider
-    @pid = params[:pid]
-  end
+  before_filter :load_page, :only => [ :edit, :update ]
   
   def edit
   end
   
   def update
-    respond_to do |f|
-      if @page.update_attributes(params[:page])
-        f.html {redirect_to project_page_path(@current_project,@page)}
-        f.js
-      else
-        f.html {render :action => 'edit'}
-        f.js
+    
+    unless params[:notes].nil?
+      position = 0
+      params[:notes].each do |note_id|
+        note = @page.notes.detect { |n| n.id == note_id.to_i }
+        unless note.nil?
+          note.position = position
+          note.save(false)
+          position += 1
+        end
       end
+      
+      respond_to{|f|f.js}
+    else
+    
+      respond_to do |f|
+        if @page.update_attributes(params[:page])
+          f.html {redirect_to edit_project_page_path(@current_project,@page)}
+        else
+          f.html {render :action => 'edit'}
+        end
+      end
+      
     end
   end
   

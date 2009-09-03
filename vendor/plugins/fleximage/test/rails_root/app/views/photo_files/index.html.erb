@@ -1,0 +1,24 @@
+<h1>Listing photo_files</h1>
+
+<table>
+  <tr>
+    <th>Image filename</th>
+    <th>Image width</th>
+    <th>Image height</th>
+  </tr>
+
+<% for photo_file in @photo_files %>
+  <tr>
+    <td><%=h photo_file.image_filename %></td>
+    <td><%=h photo_file.image_width %></td>
+    <td><%=h photo_file.image_height %></td>
+    <td><%= link_to 'Show', photo_file %></td>
+    <td><%= link_to 'Edit', edit_photo_file_path(photo_file) %></td>
+    <td><%= link_to 'Destroy', photo_file, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New photo_file', new_photo_file_path %>

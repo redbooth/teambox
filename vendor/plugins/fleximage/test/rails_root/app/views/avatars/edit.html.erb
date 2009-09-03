@@ -1,0 +1,17 @@
+<h1>Editing avatar</h1>
+
+<%= error_messages_for :avatar %>
+
+<% form_for(@avatar) do |f| %>
+  <p>
+    <b>Username</b><br />
+    <%= f.text_field :username %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @avatar %> |
+<%= link_to 'Back', avatars_path %>

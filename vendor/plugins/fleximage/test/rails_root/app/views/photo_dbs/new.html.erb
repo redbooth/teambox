@@ -1,0 +1,31 @@
+<h1>New photo_db</h1>
+
+<%= error_messages_for :photo_db %>
+
+<% form_for(@photo_db) do |f| %>
+  <p>
+    <b>Image filename</b><br />
+    <%= f.text_field :image_filename %>
+  </p>
+
+  <p>
+    <b>Image width</b><br />
+    <%= f.text_field :image_width %>
+  </p>
+
+  <p>
+    <b>Image height</b><br />
+    <%= f.text_field :image_height %>
+  </p>
+
+  <p>
+    <b>Image file data</b><br />
+    <%= f.text_field :image_file_data %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', photo_dbs_path %>

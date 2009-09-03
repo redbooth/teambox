@@ -1,2 +1,3 @@
 .conversation{:class => conversation_class(conversation,current_conversation)}
+  = unread_comment_count(conversation)
   = conversation_link(@current_project,conversation)

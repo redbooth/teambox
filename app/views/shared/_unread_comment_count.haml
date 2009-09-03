@@ -1,0 +1,5 @@
+%span.unread_comment_count
+  - if count > 0
+    = "(" + count.to_s + ")"
+  - else
+    = " "

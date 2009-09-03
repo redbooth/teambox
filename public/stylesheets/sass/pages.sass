@@ -2,35 +2,26 @@
   p.actions
     :position relative
     :margin 0px
-    span
-      :background rgb(255,255,255)
-      :padding 0px
-        :left 15px
-        :top 2px
+    span    
+      :background url(../images/comment_actions_bg.jpg) no-repeat
+      :padding 3px 0px
+        :left 2px
       :overflow auto
       :position absolute
       :display block
-      :width 80px
-      :height 25px
-      :left -95px
-      :top 0px
-    a
-      :color rgb(0,0,255)
-
-.section_divide
-  :height 16px
-  :border-bottom 1px solid black
-
+      :width 30px
+      :height 65px
+      :left -24px
+      :top 2px
+      
 #edit_page
   :padding 10px
-  #name
+  .note
     +actions
-  .divider
-    :height 8px
-    :border-bottom 1px solid black
-    :margin-bottom 8px
-  .section_divider
-    +actions
-    :height 8px
     :border-bottom 1px solid rgb(230,230,230)
-    :margin-bottom 8px
+    :padding-bottom 5px
+    :margin-bottom 5px
+  .edit_note
+    textarea
+      :width 98%
+      :height 200px

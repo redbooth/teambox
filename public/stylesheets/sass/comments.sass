@@ -1,17 +1,30 @@
 form#new_comment, form.edit_comment
   .body
     textarea
-      :width 98%
+      :width 100%
       :height 80px
+  .submit
+    :text-align right
 
-#comments
-  .comment
+.comment
+  :border-bottom solid 1px rgb(230,230,230)
+  :padding-top 5px
+  .name
     :font-size 12px
-    :display block
-    :margin-top 10px
-    :border-top 1px #999 dashed
-    :padding 10px 0 10px 0
-    .actions
-      :float right
-    .user
+    a
       :font-size 12px
+      :font-weight bold
+  p.actions
+    :position relative
+    :margin 0px
+    span    
+      :background url(../images/comment_actions_bg.jpg) no-repeat
+      :padding 3px 0px
+        :left 2px
+      :overflow auto
+      :position absolute
+      :display block
+      :width 30px
+      :height 45px
+      :left -24px
+      :top 2px    

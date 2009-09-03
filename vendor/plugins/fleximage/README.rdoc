@@ -2,11 +2,11 @@
 
 Using git:
 
-  git submodule add git://github.com/moser/fleximage_i18n.git vendor/plugins/fleximage_i18n
+  git submodule add git://github.com/Squeegy/fleximage.git vendor/plugins/fleximage
 
 or using:
 
-  ./script/plugin install git://github.com/moser/fleximage_i18n.git
+  ./script/plugin install git://github.com/Squeegy/fleximage.git
 
 
 = Fleximage

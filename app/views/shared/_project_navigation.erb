@@ -37,6 +37,7 @@ render_tabnav :project, :generate_css => false do
       t.named t('.task_lists')
       t.links_to  project_task_lists_path(project)
       t.highlights_on :controller => :task_lists
+      t.highlights_on :controller => :tasks
     end
 
     add_tab do |t|

@@ -7,10 +7,16 @@ module CommentsHelper
     else
       form_url = [project,target,Comment.new]
     end
-    render :partial => 'comments/form', :locals => { :target => target, :form_url => form_url }
+    render :partial => 'comments/new', 
+      :locals => { :target => target, 
+        :form_url => form_url }
   end
   
   def list_comments(comments)
+    unless comments.first.nil?
+      CommentRead.user(current_user).read_up_to(comments.first)
+    end
+    
     render :partial => 'comments/comment', :collection => comments
   end
   
