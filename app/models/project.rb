@@ -5,7 +5,7 @@ class Project < ActiveRecord::Base
   belongs_to :user # project owner
 
   has_many :people # people invited to the project
-  has_many :users, :through => :people
+  has_many :users, :through => :people, :order => 'updated_at desc'
 
   has_many :task_lists, :conditions => { :page_id => nil }
   has_many :tasks

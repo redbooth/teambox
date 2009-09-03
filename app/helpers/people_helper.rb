@@ -5,7 +5,7 @@ module PeopleHelper
   end
 
   def person_status(person)
-    'online' if person.updated_at > 3.minutes.ago
+    'online' if person.updated_at > 5.minutes.ago
   end
 
 end
