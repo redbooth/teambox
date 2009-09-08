@@ -23,5 +23,13 @@ Event.addBehavior({
   ".trash:mouseout": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')    
-  }
+  },
+  ".comment:mouseover": function(e){
+    $(this).down('p.actions').show();
+  },
+  ".comment:mouseout": function(e){
+    $$("div.comment p.actions").each(function(e){ 
+      e.hide();
+    });    
+  },  
 });

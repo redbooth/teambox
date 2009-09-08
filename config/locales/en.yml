@@ -46,7 +46,7 @@ en:
       name: Name
     new:
       title: New Task
-      submit: Create
+      submit: Add Task
   
   notes:
     actions:

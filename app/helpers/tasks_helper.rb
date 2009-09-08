@@ -10,4 +10,12 @@ module TasksHelper
   def task_fields(f)
     render :partial => 'tasks/fields', :locals => { :f => f}
   end
+
+  def new_task_form(project,task_list,task)
+    render :partial => 'tasks/new', :locals => {
+      :project => project,
+      :task_list => task_list,
+      :task => task }
+  end
+
 end

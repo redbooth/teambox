@@ -8149,7 +8149,15 @@ Event.addBehavior({
   ".trash:mouseout": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')
-  }
+  },
+  ".comment:mouseover": function(e){
+    $(this).down('p.actions').show();
+  },
+  ".comment:mouseout": function(e){
+    $$("div.comment p.actions").each(function(e){
+      e.hide();
+    });
+  },
 });
 function image_crop(c){
   Event.observe(
@@ -8184,25 +8192,4 @@ function onEndCrop(coords, dimensions){
   $('y2').value = coords.y2;
   $('crop_width').value = dimensions.width;
   $('crop_height').value = dimensions.height;
-}
-Event.addBehavior({
-  "#name:mouseover": function(e){
-      hideAllActions();
-      $(this).down('p.actions').show();
-  },
-  "#name:mouseout": function(e){
-    $$("#name p.actions").invoke('hide');
-  },
-
-  ".section_divider:mouseover": function(e){
-      hideAllActions();
-      $(this).down('p.actions').show();
-  },
-  ".section_divider:mouseout": function(e){
-    $$(".insert p.actions").invoke('hide');
-  }
-});
-
-function hideAllActions() {
-  $$('p.actions').invoke('hide');
 }
