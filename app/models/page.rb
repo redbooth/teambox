@@ -18,4 +18,8 @@ class Page < ActiveRecord::Base
       note.page_id = self.id
     end
   end
+  
+  def after_create
+    project.log_activity(self,'add')
+  end
 end
