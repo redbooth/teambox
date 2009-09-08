@@ -5,4 +5,8 @@ class Conversation < ActiveRecord::Base
   has_many :comments, :as => :target, :order => 'created_at DESC'
   
   attr_accessible :name
+  
+  def after_create
+    self.project.log_activity(self,'add')
+  end
 end

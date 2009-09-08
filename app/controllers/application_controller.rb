@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
 
   before_filter :load_project, :login_required, :set_locale, :touch_user, :recent_projects
+  public :render_to_string
   
   private
     def load_project

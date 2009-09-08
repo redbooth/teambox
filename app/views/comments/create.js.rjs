@@ -1,5 +1,9 @@
-if @comment.new_record?
-else
-  page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment }
+unless @comment.new_record?
+  page.ef('comments')
+    page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment }
+  page.esf('activities')
+    page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity }
+  page.en
+  
   page['comment_body'].setValue('')
 end

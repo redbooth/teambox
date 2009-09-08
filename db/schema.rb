@@ -155,4 +155,12 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.datetime :created_on
   end
 
+  create_table :activities, :force => true do |t|
+    t.integer  :project_id
+    t.integer  :target_id,   :limit => 11
+    t.string   :target_type
+    t.string   :action
+    t.timestamps
+  end
+
 end

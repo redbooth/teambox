@@ -13,11 +13,11 @@ module CommentsHelper
   end
   
   def list_comments(comments)
-    unless comments.first.nil?
-      CommentRead.user(current_user).read_up_to(comments.first)
-    end
-    
     render :partial => 'comments/comment', :collection => comments
+  end
+  
+  def show_comment(comment)
+    render :partial => 'comments/comment', :locals => { :comment => comment }
   end
   
   def edit_comment_link(comment)
