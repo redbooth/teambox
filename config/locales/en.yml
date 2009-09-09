@@ -26,6 +26,7 @@ en:
     show:
       new_task_list_link: New Task List
       people_in_project: People in this project
+      subscribe: Subscribe to the news feed
     fields:
       name: Name
       permalink: URL
