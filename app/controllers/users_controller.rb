@@ -5,12 +5,20 @@ class UsersController < ApplicationController
   skip_before_filter :load_project
   
   def index
-    
   end
 
   # render new.rhtml
   def new
     @user = User.new
+  end
+
+  def show
+    options = { :only => [:id, :login, :name, :language, :email, 'time-zone', 'created-at', 'updated-at'] }
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @user.to_xml(options) }
+      format.json { render :json => @user.to_json(options) }
+    end
   end
  
   def create
