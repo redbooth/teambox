@@ -2,5 +2,4 @@
   = person.login
   = person.name
   = person.email
-  .status
-    = time_ago_in_words(person.updated_at)
+  = link_to 'Remove from project', destroy_project_person_path(@current_project,person)

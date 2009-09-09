@@ -31,6 +31,7 @@ ActionController::Routing::Routes.draw do |map|
       task_lists.resources :tasks, :has_many => [:comments,:uploads], :member => { :check => :put, :uncheck => :put }
     end
     
+    project.resources :people, :member => { :destroy => :get }
     project.resources :conversations, :has_many => [:comments,:uploads]
     project.resources :pages, :has_many => [:notes,:uploads]
   end

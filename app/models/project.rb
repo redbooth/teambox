@@ -72,16 +72,25 @@ class Project < ActiveRecord::Base
     Activity.log(self,target,action)
   end
   
-  def add_person(user)
+  def add_user(user)
     unless Person.exists? :user_id => user.id, :project_id => self.id
       person = self.people.new(:user_id => user.id)
       person.save
-      log_activity(person,'add')
+      log_activity(person.user,'add')
+    end
+  end
+
+  def remove_user(user)
+    person = Person.find_by_user_id_and_project_id user.id, self.id
+    
+    if person
+      person.destroy
+      log_activity(person.user,'remove')
     end
   end
 
   def after_create
-    add_person(user)
+    add_user(user)
   end
   
   def to_param
