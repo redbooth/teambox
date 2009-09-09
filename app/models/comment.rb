@@ -3,6 +3,8 @@ class Comment < ActiveRecord::Base
   belongs_to :target, :polymorphic => true
   belongs_to :project
   
+  has_many :uploads, :as => :target
+  
   attr_accessible :body
   formats_attributes :body
   

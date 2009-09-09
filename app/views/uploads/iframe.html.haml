@@ -1,0 +1,14 @@
+#new_upload_iframe
+  = error_messages_for :upload
+  - form_for @upload, :url => upload_url_for(@current_project,@target), :html => { :multipart => true, :method => :post } do |f|
+    = hidden_field_tag 'iframe', 'true'
+    .file
+      Select a file to upload
+
+      = file_column_field 'upload', "file", :size => 25
+      .description
+        .label
+          = f.label :description
+        .field
+          = f.text_field :description, :class => 'upload_description'
+          = submit_tag 'Upload', :class => 'upload_button'

@@ -10,4 +10,7 @@
     = comment.created_at.strftime("%I:%M %p &mdash; %b %d %Y")
   .body
     = comment.body_html
+  - if comment.uploads.count
+    .upload_list
+      = list_uploads_inline(comment.uploads)
   .clear  

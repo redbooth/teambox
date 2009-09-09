@@ -80,6 +80,7 @@ en:
     edit:
       submit: Save
   uploads:
+    upload_a_file_link: Upload a file
     index:
       new_file: Upload a File
   sessions:

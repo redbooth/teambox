@@ -4,6 +4,8 @@ class Note < ActiveRecord::Base
   
   formats_attributes :body
   
+  has_many :uploads
+  
   attr_accessor :deleted
   attr_accessible :body, :deleted
   

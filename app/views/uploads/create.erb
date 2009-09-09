@@ -1,0 +1,20 @@
+<%=
+unless @upload.new_record?
+  if @target.new_record?
+    update_page_tag do |page|
+      page << "parent.$$('iframe')[0].previous('.uploads_save').insert("
+      page << { :top => content_tag(:input,nil,{ :name => 'uploads[]',:type => 'hidden',:value => @upload.id }) }.to_json 
+      page << ");"
+      page << "parent.$$('iframe')[0].previous('.uploads_current').insert("
+      page << { :top => render(:partial => 'uploads/inline', :locals => { :upload => @upload })}.to_json
+      page << ");"
+      page << "parent.$$('iframe').invoke('hide');"
+    end
+    
+  else
+    update_page_tag do |page|
+      page.alert('existing')
+    end
+  end
+end
+%>

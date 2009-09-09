@@ -1,7 +1,9 @@
 class Upload < ActiveRecord::Base
   belongs_to :user
-  
+  belongs_to :target, :polymorphic => true
   file_column :file
+  
+  TARGET_TYPES = ['Comment','Page','Note','Project','Task','TaskList','User']
   
   validates_each :image_filename do |record, attr, value|
     filename_is_used = Upload.find(:first,:conditions => { :project_id => record.project_id, :image_filename => value })
