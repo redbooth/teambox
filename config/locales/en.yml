@@ -16,6 +16,9 @@ en:
       submit: Create account
     edit:
       submit: Update account
+    show:
+      profile: Profile
+      projects: Projects
   projects:
     index:
       projects: My Projects
