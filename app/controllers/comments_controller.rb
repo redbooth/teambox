@@ -18,6 +18,8 @@ class CommentsController < ApplicationController
 
     @comment = @current_project.new_comment(current_user,target,params[:comment])
     @comment.save
+
+    save_uploads(@comment)
     
     if was_target_read
       CommentRead.user(current_user).read_up_to(@comment)

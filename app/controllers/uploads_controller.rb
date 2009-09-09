@@ -38,11 +38,17 @@ class UploadsController < ApplicationController
     @upload.content_type = mime_type
     @upload.image_filename = tmp_filename
 
-    respond_to do |format|
-      if @upload.save
-        format.html { redirect_to(project_uploads_path) }
-      else
-        format.html { render :action => "new" }
+    if is_iframe?
+      load_target
+      @upload.save
+      respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
+    else
+      respond_to do |format|
+        if @upload.save
+          format.html { redirect_to(project_uploads_path) }
+        else
+          format.html { render :action => "new" }
+        end
       end
     end
   end
@@ -73,7 +79,30 @@ class UploadsController < ApplicationController
   end
   
   def iframe
-    @upload = @current_course.uploads.new
+    #unless Upload::TARGET_TYPES.include?(params[:target_type])
+    #  redirect_to root_path
+    #end
+    
+    load_target
+    @upload = @current_project.new_upload(current_user)
+    
     render :layout => 'upload_iframe'
   end
+  
+  private
+    def is_iframe?
+      params[:iframe] != nil and !params[:iframe].empty?
+    end
+    
+    def has_target?
+      params[:target_id] != nil and !params[:target_id].empty?
+    end
+    
+    def load_target
+      if has_target?
+        @target = params[:target_type].singularize.camelize.constantize.find(params[:target_id])
+      else
+        @target = params[:target_type].singularize.camelize.constantize.new
+      end
+    end
 end

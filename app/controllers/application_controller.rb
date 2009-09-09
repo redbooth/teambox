@@ -34,4 +34,17 @@ class ApplicationController < ActionController::Base
     def touch_user
       current_user.touch if logged_in?
     end
+    
+    def save_uploads(target)
+      if params[:uploads] != nil
+        params[:uploads].each do |upload_id|
+          upload = Upload.find(upload_id)
+          if upload != nil
+            upload.target_id = target.id
+            upload.target_type = target.class.name
+            upload.save
+          end
+        end
+      end
+    end
 end

@@ -1,0 +1,14 @@
+- content_for :column do
+  %h2= t '.profile'
+  .vcard
+    = link_to 'Download vCard'
+  .name= @user.name
+  .email= mail_to @user.email, @user.email
+
+  %h2= t '.projects'
+  .project_list
+    .project
+      = list_projects(@user.projects)
+      
+%h2= @user.name  
+= list_activities_for_all_projects(@user.activities)

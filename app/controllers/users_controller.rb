@@ -1,16 +1,28 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
+  before_filter :find_user, :only => [ :show ]
   
   skip_before_filter :login_required, :only => [ :new, :create ]
   skip_before_filter :load_project
   
   def index
-    
   end
 
   # render new.rhtml
   def new
     @user = User.new
+  end
+
+  def show
+<<<<<<< HEAD:app/controllers/users_controller.rb
+    options = { :only => [:id, :login, :name, :language, :email, 'time-zone', 'created-at', 'updated-at'] }
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @user.to_xml(options) }
+      format.json { render :json => @user.to_json(options) }
+    end
+=======
+>>>>>>> 6209d07... User show view with recent activity on all projects, profile and links to his projects.:app/controllers/users_controller.rb
   end
  
   def create
@@ -35,5 +47,10 @@ class UsersController < ApplicationController
     @current_user.update_attributes(params[:user])
     @current_user.save
   end
+
+  private
+    def find_user
+      @user = User.find_by_id(params[:id])
+    end
 
 end

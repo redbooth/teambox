@@ -16,10 +16,17 @@ en:
       submit: Create account
     edit:
       submit: Update account
+    show:
+      profile: Profile
+      projects: Projects
   projects:
+    index:
+      projects: My Projects
+      subscribe: Subscribe to the news feed
     show:
       new_task_list_link: New Task List
       people_in_project: People in this project
+      subscribe: Subscribe to the news feed
     fields:
       name: Name
       permalink: URL
@@ -40,6 +47,12 @@ en:
     new:
       title: New Conversation
       submit: Create
+    column:
+      conversations: Conversations
+    conversation_with_extract:
+      posted_by: Posted by
+    show:
+      posted_by: Posted by
   
   tasks:
     fields:
@@ -84,6 +97,7 @@ en:
     edit:
       submit: Save
   uploads:
+    upload_a_file_link: Upload a file
     index:
       new_file: Upload a File
   sessions:
@@ -110,6 +124,7 @@ en:
         task_lists: Task Lists
         all_task_lists: All Task Lists
         project_settings: Project Settings
+        people: People
         pages: Pages
       global_navigation:
         logout: Logout

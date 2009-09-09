@@ -14,6 +14,7 @@ class Project < ActiveRecord::Base
   has_many :pages, :order => 'created_at DESC'
   has_many :comments, :as => :target, :order => 'created_at DESC'
   has_many :uploads
+  has_many :activities, :order => 'created_at DESC'
   
   validates_length_of :name, :minimum => 3
   validates_uniqueness_of :permalink
@@ -55,10 +56,30 @@ class Project < ActiveRecord::Base
       page.user_id = user.id
     end
   end
+  
+  def new_upload(user,target = nil)
+    if target == nil
+      self.uploads.new(:user_id => user.id)
+    else
+      self.uploads.new do |upload|
+        upload.user_id = user.id
+        upload.target = target
+      end
+    end
+  end
+  
+  def log_activity(target,action)
+    Activity.log(self,target,action)
+  end
+  
+  def add_person(user)
+    person = self.people.new(:user_id => user.id)
+    person.save
+    log_activity(person,'add')
+  end
 
   def after_create
-    person = self.people.new(:user_id => self.user_id)
-    person.save
+    add_person(user)
   end
   
   def to_param

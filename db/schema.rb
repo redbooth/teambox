@@ -120,6 +120,8 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   create_table :uploads do |t|
     t.integer  :user_id
     t.integer  :project_id
+    t.string   :target_type
+    t.integer  :target_id
     t.string   :image_filename
     t.integer  :image_width
     t.integer  :image_height
@@ -153,6 +155,14 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :last_send_attempt, :default => 0
     t.text     :mail
     t.datetime :created_on
+  end
+
+  create_table :activities, :force => true do |t|
+    t.integer  :project_id
+    t.integer  :target_id,   :limit => 11
+    t.string   :target_type
+    t.string   :action
+    t.timestamps
   end
 
 end

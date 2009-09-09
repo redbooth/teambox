@@ -14,6 +14,18 @@ module ConversationsHelper
   def conversation_link(project,conversation)
     link_to h(conversation.name), project_conversation_path(project,conversation)
   end
+
+  def edit_conversation_link(text,project,conversation)
+    link_to h(text), edit_project_conversation_path(project,conversation)
+  end
+  
+  def conversation_comments_count(conversation)
+    pluralize(conversation.comments.size, t('shared.common.comment'), t('shared.common.comments'))
+  end
+  
+  def conversation_comments_link(project,conversation)
+    link_to conversation_comments_count(conversation), project_conversation_path(project,conversation)
+  end
   
   def conversation_column(project,conversations,current_conversation = nil)
     render :partial => 'conversations/column', :locals => {

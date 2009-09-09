@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
   end
   
   def show
-    @comments = @current_project.comments
+    @activities = @current_project.activities
   end
   
   def edit

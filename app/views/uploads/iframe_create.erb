@@ -1,0 +1,5 @@
+<%=
+  update_page_tag do |page|
+    page << "parent.Upload.file_uploaded(" + render(:partial => 'notes/upload_list_item', :locals => { :upload_list_item => @upload } ).to_json + ");"
+  end
+%>

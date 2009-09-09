@@ -44,19 +44,30 @@ module UploadsHelper
     link_to_function 'cancel', update_page { |page| page.hide_upload_form(upload) }
   end
   
-  def show_loading(action,id = nil)
-    if id
-      page["#{action}_loading_#{id}"].show
-    else
-      page["#{action}_loading"].show
+  def upload_a_file_link(target)
+    link_to_function t('uploads.upload_a_file_link'), show_upload_form(target)
+  end
+  
+  def show_upload_form(target)
+    update_page do |page|
+      page << "if ($$('iframe.upload_form').length > 0) {"
+        page << "$$('iframe.upload_form')[0].setAttribute('src','#{upload_url_for(@current_project,target)}');"
+        page << "$$('iframe.upload_form')[0].show();"
+      page << "}else{"
+        page << "this.insert("
+        page << { :after => render(
+          :partial => 'uploads/iframe_upload', 
+          :locals => { :target => target, :project => @current_project })}.to_json
+        page << ");"
+      page << "}"      
     end
   end
-
-  def hide_loading(action,id = nil)
-    if id
-      page["#{action}_loading_#{id}"].hide
-    else
-      page["#{action}_loading"].hide
-    end
+  
+  def upload_url_for(project,target)
+    upload_iframe_url(project.permalink,target.class.name.tableize)
+  end
+  
+  def list_uploads_inline(uploads)
+    render :partial => 'uploads/inline', :collection => uploads, :as => :upload
   end
 end
