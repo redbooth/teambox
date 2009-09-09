@@ -17,6 +17,8 @@ en:
     edit:
       submit: Update account
   projects:
+    index:
+      projects: My Projects
     show:
       new_task_list_link: New Task List
       people_in_project: People in this project

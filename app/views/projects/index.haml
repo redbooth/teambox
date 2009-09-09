@@ -1,4 +1,6 @@
 = list_projects(@projects)
 
 - content_for :column do
-  rrwawar
+  .project_list
+    %h2= t '.projects'
+    = list_projects(@projects)
