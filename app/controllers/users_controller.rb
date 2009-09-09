@@ -14,15 +14,12 @@ class UsersController < ApplicationController
   end
 
   def show
-<<<<<<< HEAD:app/controllers/users_controller.rb
     options = { :only => [:id, :login, :name, :language, :email, 'time-zone', 'created-at', 'updated-at'] }
     respond_to do |format|
       format.html
       format.xml { render :xml => @user.to_xml(options) }
       format.json { render :json => @user.to_json(options) }
     end
-=======
->>>>>>> 6209d07... User show view with recent activity on all projects, profile and links to his projects.:app/controllers/users_controller.rb
   end
  
   def create
