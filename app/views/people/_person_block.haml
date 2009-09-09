@@ -1,0 +1,6 @@
+.person{:id => "person_#{person.id}"}
+  = person.login
+  = person.name
+  = person.email
+  .status
+    = time_ago_in_words(person.updated_at)
