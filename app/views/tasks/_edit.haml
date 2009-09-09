@@ -1,0 +1,7 @@
+- remote_form_for [project,task_list,task], :html => { :id => "project_#{project.id}_task_list_#{task_list.id}_edit_task_#{task.id}", :class => 'task_form_wrap', :style => 'display: none' } do |f|
+  .task_form
+    = task_fields(f)
+    .submit
+      = f.submit t('.submit')
+      or
+      = link_to_function t('.cancel'), hide_edit_task(project,task_list,task)

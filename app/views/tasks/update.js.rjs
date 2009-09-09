@@ -1,0 +1,4 @@
+page.remove_edit_task_form(@current_project,@task_list,@task)
+page.replace_task(@current_project,@task_list,@task)
+page.highlight_task(@current_project,@task_list,@task)
+page.reload_javascript_events

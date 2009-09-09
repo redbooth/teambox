@@ -1,0 +1,1 @@
+page.remove_task(@current_project,@task_list,@task)
