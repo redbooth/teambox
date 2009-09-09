@@ -10,6 +10,10 @@ module PagesHelper
   def list_pages(pages)
     render :partial => 'pages/page', :collection => pages
   end
+
+  def page_link(project,page)
+    link_to h(page.name), project_page_path(project,page)
+  end
   
   def edit_page_link(project,page)
     link_to h(page.name), edit_project_page_path(project,page)

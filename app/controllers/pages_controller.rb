@@ -20,7 +20,10 @@ class PagesController < ApplicationController
     end
   end
   
-  before_filter :load_page, :only => [ :edit, :update ]
+  before_filter :load_page, :only => [ :show, :edit, :update ]
+  
+  def show
+  end
   
   def edit
   end
