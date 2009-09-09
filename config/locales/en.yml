@@ -44,9 +44,13 @@ en:
   tasks:
     fields:
       name: Name
+    edit:
+      submit: Update Task
+      cancel: Cancel
     new:
       title: New Task
       submit: Add Task
+      cancel: Cancel
   
   notes:
     actions:

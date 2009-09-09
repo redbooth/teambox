@@ -10,15 +10,6 @@ class TaskList < ActiveRecord::Base
   
   attr_accessible :name
   
-  def new_task(user,task)
-    
-    self.tasks.new(task) do |task|
-      task.user_id = user.id
-      task.project_id = self.project.id
-    end
-    
-  end
-  
   def before_save
     if position.nil?
       last_position = self.project.task_lists.find(:first,

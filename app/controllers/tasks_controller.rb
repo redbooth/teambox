@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :load_task_list
+  before_filter :find_task_list, :only => [:destroy,:create,:update,:check]
+  before_filter :find_task, :only => [:destroy,:update,:check,:uncheck]
 
   def show
     @task_lists = @current_project.task_lists
@@ -12,23 +13,38 @@ class TasksController < ApplicationController
   end
   
   def create
-    @task = @task_list.new_task(current_user,params[:task])
+    @task = @current_project.tasks.build(params[:task])
+    @task.task_list = @task_list
+    @task.user = current_user
+    @task.save
+    respond_to {|f|f.js}
+  end
+  
+  def update
+    @task.update_attributes(params[:task])
+    respond_to {|f|f.js}
+  end
+  
+  def destroy
+    @task.destroy if @task.owner?(current_user)
+    respond_to {|f|f.js}
+  end
+  
+  def check
     
-    respond_to do |f|
-      if @task.save
-        f.html { redirect_to project_task_list_path(@current_project,@task_list) }
-      else
-        f.html { render 'new' }
-      end
-    end
+  end
+  
+  def uncheck
+    
   end
   
   private
-    def load_task_list
-      @task_list = TaskList.find(params[:task_list_id])
-      
-      if @task_list.nil?
-        redirect_to project_path(@current_project)
-      end
+    
+    def find_task_list
+      @task_list = @current_project.task_lists.find(params[:task_list_id])
+    end
+    
+    def find_task
+      @task = @current_project.tasks.find(params[:id])
     end
 end

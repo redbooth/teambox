@@ -20,8 +20,5 @@ module TaskListsHelper
     link_to h(task_list.name), project_task_list_path(task_list.project,task_list)
   end
   
-  def new_task_link(task_list)
-    link_to '+ Add Task', new_project_task_list_task_path(task_list.project,task_list),
-      :class => 'add_task_link'
-  end
+
 end

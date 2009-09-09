@@ -8149,7 +8149,9 @@ Event.addBehavior({
   ".trash:mouseout": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')
-  },
+  }
+});
+Event.addBehavior({
   ".comment:mouseover": function(e){
     $(this).down('p.actions').show();
   },
@@ -8157,7 +8159,7 @@ Event.addBehavior({
     $$("div.comment p.actions").each(function(e){
       e.hide();
     });
-  },
+  }
 });
 function image_crop(c){
   Event.observe(
@@ -8193,3 +8195,13 @@ function onEndCrop(coords, dimensions){
   $('crop_width').value = dimensions.width;
   $('crop_height').value = dimensions.height;
 }
+Event.addBehavior({
+  ".task:mouseover": function(e){
+      $(this).down('p.actions').show();
+  },
+  ".task:mouseout": function(e){
+    $$(".task p.actions").each(function(e){
+      e.hide();
+    });
+  }
+});

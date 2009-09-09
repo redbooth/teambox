@@ -26,6 +26,10 @@ class Project < ActiveRecord::Base
   
   has_permalink :name
   
+  def owner?(u)
+    user = u
+  end
+  
   def new_task_list(user,task_list)
     self.task_lists.new(task_list) do |task_list|
       task_list.user_id = user.id

@@ -6,6 +6,10 @@ class Task < ActiveRecord::Base
   has_many :comments, :as => :target, :order => 'created_at DESC'
   
   attr_accessible :name
+
+  def owner?(u)
+    user = u
+  end
   
   def before_save
     if position.nil?

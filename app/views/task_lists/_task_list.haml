@@ -1,7 +1,8 @@
-.task_list_wrap{ :id => "task_list_#{project.id}_#{task_list.id}" }
+.task_list_wrap
   .task_list{ :class => "#{ 'active_task_list' if current_target == task_list }" }
     = unread_comment_count(task_list)
     = task_list_link(task_list)
-  = list_tasks(project,task_list,task_list.tasks,current_target)
-  = new_task_link(task_list)
+  .tasks{ :id => "project_#{project.id}_task_list_#{task_list.id}" }
+    = list_tasks(project,task_list,task_list.tasks,current_target)
+  = new_task_link(project,task_list)
   =new_task_form(project,task_list,Task.new)
