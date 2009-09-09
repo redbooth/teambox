@@ -40,6 +40,12 @@ en:
     new:
       title: New Conversation
       submit: Create
+    column:
+      conversations: Conversations
+    conversation_with_extract:
+      posted_by: Posted by
+    show:
+      posted_by: Posted by
   
   tasks:
     fields:

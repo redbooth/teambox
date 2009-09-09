@@ -1,6 +1,24 @@
 = conversation_column(@current_project,@conversations,@current_conversation)
 
-= new_comment_form(@current_project,@current_conversation)
+.conversation_show
+  .header
+    %h2= @current_conversation.name
+  .body
+    = @current_conversation.body_html
+  .footer
+    = t '.posted_by'
+    %span.by
+      = link_to @current_conversation.user.name
+    %span.when
+      = t('shared.common.time_ago', :time => time_ago_in_words(@current_conversation.created_at))
+    %span.edit
+      = edit_conversation_link( t('shared.common.edit'), @current_project,@current_conversation)
+    %span.comments
+      = conversation_comments_count(@current_conversation)
+
 
 #comments
   = list_comments(@comments)
+  
+= new_comment_form(@current_project,@current_conversation)
+  
