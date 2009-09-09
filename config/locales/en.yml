@@ -107,6 +107,7 @@ en:
         task_lists: Task Lists
         all_task_lists: All Task Lists
         project_settings: Project Settings
+        people: People
         pages: Pages
       global_navigation:
         logout: Logout
