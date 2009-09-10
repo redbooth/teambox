@@ -6,8 +6,7 @@ class Activity < ActiveRecord::Base
   def self.log(project,target,action)
     activity = Activity.new(
       :project_id => project.id,
-      :target_id => target.id,
-      :target_type => target.class.name,
+      :target => target,
       :action => action)
     activity.save
     activity

@@ -7,9 +7,10 @@ module CommentsHelper
     else
       form_url = [project,target,Comment.new]
     end
+    @comment = project.comments.new
     render :partial => 'comments/new', 
       :locals => { :target => target, 
-        :form_url => form_url }
+        :form_url => form_url, :comment => @comment }
   end
   
   def list_comments(comments)

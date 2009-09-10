@@ -1,5 +1,6 @@
 - remote_form_for comment do |f|
   = comment_fields(f)
+  = upload_a_file_link(comment)
   .submit
     = f.submit t('.submit')
     = cancel_edit_comment_link(comment)

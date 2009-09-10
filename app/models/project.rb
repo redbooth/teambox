@@ -12,7 +12,7 @@ class Project < ActiveRecord::Base
   has_many :invitations
   has_many :conversations, :order => 'created_at DESC'
   has_many :pages, :order => 'created_at DESC'
-  has_many :comments, :as => :target, :order => 'created_at DESC'
+  has_many :comments, :order => 'created_at DESC'
   has_many :uploads
   has_many :activities, :order => 'created_at DESC'
   
@@ -76,7 +76,7 @@ class Project < ActiveRecord::Base
     unless Person.exists? :user_id => user.id, :project_id => self.id
       person = self.people.new(:user_id => user.id)
       person.save
-      log_activity(person.user,'add')
+      log_activity(person,'add')
     end
   end
 
@@ -85,7 +85,7 @@ class Project < ActiveRecord::Base
     
     if person
       person.destroy
-      log_activity(person.user,'remove')
+      log_activity(person,'remove')
     end
   end
 

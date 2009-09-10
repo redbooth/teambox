@@ -8,14 +8,11 @@ class UploadsController < ApplicationController
       @upload = @current_project.uploads.find_by_image_filename(params[:id])
     end
   end
-
-  def index
-    @uploads = @current_project.uploads
-  end
   
   def new
-    @upload = current_user.uploads.new
-    respond_to { |f| f.html }
+    load_target
+    @upload = @current_project.uploads.new(:user_id => current_user.id)
+    respond_to { |f| f.html { render :layout => 'upload_iframe' }}
   end
   
   def update
@@ -38,19 +35,12 @@ class UploadsController < ApplicationController
     @upload.content_type = mime_type
     @upload.image_filename = tmp_filename
 
-    if is_iframe?
-      load_target
-      @upload.save
-      respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
-    else
-      respond_to do |format|
-        if @upload.save
-          format.html { redirect_to(project_uploads_path) }
-        else
-          format.html { render :action => "new" }
-        end
-      end
+    load_target
+    unless @target.new_record?
+      @upload.comment_id = @target.id
     end
+    @upload.save
+    respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
   end
   
   def show
@@ -78,31 +68,16 @@ class UploadsController < ApplicationController
     end
   end
   
-  def iframe
-    #unless Upload::TARGET_TYPES.include?(params[:target_type])
-    #  redirect_to root_path
-    #end
-    
-    load_target
-    @upload = @current_project.new_upload(current_user)
-    
-    render :layout => 'upload_iframe'
-  end
-  
   private
     def is_iframe?
       params[:iframe] != nil and !params[:iframe].empty?
     end
     
-    def has_target?
-      params[:target_id] != nil and !params[:target_id].empty?
-    end
-    
     def load_target
-      if has_target?
-        @target = params[:target_type].singularize.camelize.constantize.find(params[:target_id])
+      unless params[:comment_id].nil?
+        @target = Comment.find(params[:comment_id])
       else
-        @target = params[:target_type].singularize.camelize.constantize.new
+        @target = @current_project.comments.new(:user_id => current_user.id)
       end
     end
 end

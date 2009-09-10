@@ -1,2 +1,2 @@
-.upload_thumbnail
-  = image_tag thumbnail_project_upload_path(@current_project,upload)
+.upload_thumbnail{:id => "upload_#{upload.id}"}
+  = upload_link(upload)

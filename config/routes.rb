@@ -1,9 +1,4 @@
-ActionController::Routing::Routes.draw do |map|
-  map.upload_iframe '/projects/:project_id/:target_type/uploads', :controller => 'uploads', :action => 'iframe',
-    :conditions => { :method => :get }
-  map.upload_iframe '/projects/:project_id/:target_type/uploads', :controller => 'uploads', :action => 'create',
-    :conditions => { :method => :post }  
-  
+ActionController::Routing::Routes.draw do |map|  
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'users', :action => 'create'
@@ -14,21 +9,21 @@ ActionController::Routing::Routes.draw do |map|
   
 
   map.resources :users do |user|
-    user.resources :task_lists, :has_many => [:comments,:uploads] do |task_lists|
-      task_lists.resources :tasks, :has_many => [:comments,:uploads], :member => { :check => :put, :uncheck => :put }
+    user.resources :task_lists, :has_many => [:comments] do |task_lists|
+      task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
-    user.resources :conversations, :has_many => [:comments,:uploads]
+    user.resources :conversations, :has_many => [:comments]
     user.resource :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }
   end
     
-  map.resources :projects, :has_many => [:invitations,:uploads,:people] do |project|
-    project.resources :comments, :has_many => [:uploads]
-    project.resources :pages, :has_many => [:uploads]
-    
+  map.resources :projects, :has_many => [:pages,:invitations,:people] do |project|
+    project.resources :comments do |comment|
+      comment.resources :uploads, :member => { :iframe => :get }
+    end
     project.resources :uploads, :requirements => { :id => /[^\/]+/ }, :member => { :thumbnail => :get }
     
-    project.resources :task_lists, :has_many => [:comments,:uploads] do |task_lists|
-      task_lists.resources :tasks, :has_many => [:comments,:uploads], :member => { :check => :put, :uncheck => :put }
+    project.resources :task_lists, :has_many => [:comments] do |task_lists|
+      task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
     
     project.resources :people, :member => { :destroy => :get }

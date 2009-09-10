@@ -97,7 +97,9 @@ en:
     edit:
       submit: Save
   uploads:
-    upload_a_file_link: Upload a file
+    upload_a_file_link: + Attachment
+    new:
+        select_a_file: Select a file
     index:
       new_file: Upload a File
   sessions:

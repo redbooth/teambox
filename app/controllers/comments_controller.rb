@@ -51,5 +51,14 @@ class CommentsController < ApplicationController
     def load_comment
       @comment = Comment.find(params[:id])
     end
-
+    
+    def save_uploads(comment)      
+      params[:uploads].each do |upload_id|
+        upload = Upload.find(upload_id)
+        unless upload.nil?
+          upload.comment_id = comment.id
+          upload.save(false)
+        end
+      end unless params[:uploads].nil?
+    end
 end
