@@ -129,6 +129,7 @@ en:
         people: People
         pages: Pages
         time_tracking: Time Tracking
+        files: Files
       global_navigation:
         logout: Logout
         login: Login

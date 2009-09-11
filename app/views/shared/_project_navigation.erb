@@ -66,6 +66,12 @@ render_tabnav :project, :generate_css => false do
       t.highlights_on :controller => :hours
     end
 
+    add_tab do |t|
+      t.named t('.files')
+      t.links_to  project_uploads_path(project)
+      t.highlights_on :controller => :uploads
+    end
+    
   end
 end
 %><div class="clear"></div></div>
