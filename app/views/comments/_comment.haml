@@ -1,8 +1,8 @@
 .comment{:id => "comment_#{comment.id}" }
   %p.actions{ :style => 'display: none' }
     %span
-      = edit_comment_link(project,comment)
-      = delete_comment_link(project,comment)
+      = edit_comment_link(comment)
+      = delete_comment_link(comment)
 
   =thumb_avatar(comment.user)
   .name

@@ -13,16 +13,20 @@ module CommentsHelper
         :form_url => form_url, :comment => @comment }
   end
   
-  def list_comments(project,comments)
-    render :partial => 'comments/comment', :collection => comments,
-      :locals => {
-        :project => project }
+  def list_comments(comments)
+    render :partial => 'comments/comment', :collection => comments
   end
   
   def show_comment(comment)
     render :partial => 'comments/comment', :locals => { :comment => comment }
   end
-    
+  
+  def edit_comment_link(comment)
+    link_to_remote pencil_image,
+      :url => edit_comment_path(comment),
+      :method => :get
+  end
+  
   def comment_fields(f)
     render :partial => 'comments/fields', :locals => { :f => f }
   end
@@ -32,16 +36,10 @@ module CommentsHelper
       :url => comment_path(comment),
       :method => :get
   end
-
-  def edit_comment_link(project,comment)
-    link_to_remote pencil_image,
-      :url => edit_project_comment_path(comment),
-      :method => :get
-  end
-    
-  def delete_comment_link(project,comment)
+  
+  def delete_comment_link(comment)
     link_to_remote trash_image,
-      :url => project_comment_path(project,comment),
+      :url => comment_path(comment),
       :method => :delete,
       :confirm => t('.confirm_delete')
   end
