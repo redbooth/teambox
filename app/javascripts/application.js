@@ -25,3 +25,13 @@ Event.addBehavior({
     $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')    
   } 
 });
+
+Comment = {
+  update_uploads_current: function(e) {
+    if (e.select('div.upload_thumbnail').length == 0) {
+      e.hide();
+    } else {
+      e.show();
+    }
+  }
+};

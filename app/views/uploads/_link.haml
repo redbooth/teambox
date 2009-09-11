@@ -2,5 +2,5 @@
 .uploads_save{:style => 'display: none;'}
 .uploads_current{:style => (comment.uploads.count > 0 ? '' : 'display: none;')}
   - if comment.uploads.count > 0
-    = list_uploads_inline(comment.uploads)
+    = list_uploads_edit(comment.uploads,comment)
   %br

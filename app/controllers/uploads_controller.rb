@@ -36,9 +36,6 @@ class UploadsController < ApplicationController
     @upload.image_filename = tmp_filename
 
     load_target
-    unless @target.new_record?
-      @upload.comment_id = @target.id
-    end
     @upload.save
     respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
   end
