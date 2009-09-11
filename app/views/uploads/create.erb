@@ -2,23 +2,23 @@
 unless @upload.new_record?
   if @target.new_record?
     update_page_tag do |page|
-      page << "window.frameElement.next('.uploads_save').insert("
+      page << "$(window.frameElement).next('.uploads_save').insert("
       page << { :top => content_tag(:input,nil,{ :name => 'uploads[]',:type => 'hidden',:value => @upload.id }) }.to_json 
       page << ");"
-      page << "window.frameElement.next('.uploads_current').insert("
+      page << "$(window.frameElement).next('.uploads_current').insert("
       page << { :top => render(:partial => 'uploads/inline', :locals => { :upload => @upload })}.to_json
       page << ");"
-      page << "window.frameElement.next('.uploads_current').show();"
-      page << "window.frameElement.remove();"
+      page << "$(window.frameElement).next('.uploads_current').show();"
+      page << "$(window.frameElement).remove();"
     end
     
   else
     update_page_tag do |page|
-      page << "window.frameElement.next('.uploads_current').insert("
+      page << "$(window.frameElement).next('.uploads_current').insert("
       page << { :top => render(:partial => 'uploads/inline', :locals => { :upload => @upload })}.to_json
       page << ");"
-      page << "window.frameElement.next('.uploads_current').show();"
-      page << "window.frameElement.remove();"
+      page << "$(window.frameElement).next('.uploads_current').show();"
+      page << "$(window.frameElement).remove();"
     end
   end
 end
