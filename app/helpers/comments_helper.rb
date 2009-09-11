@@ -35,7 +35,7 @@ module CommentsHelper
 
   def edit_comment_link(project,comment)
     link_to_remote pencil_image,
-      :url => edit_project_comment_path(comment),
+      :url => edit_project_comment_path(project,comment),
       :method => :get
   end
     

@@ -1,8 +1,8 @@
 unless @comment.new_record?
   page.ef('comments')
-    page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment }
+    page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
   page.esf('activities')
-    page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity }
+    page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
   page.en
   
   page['comment_body'].setValue('')
