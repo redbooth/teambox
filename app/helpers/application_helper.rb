@@ -109,5 +109,4 @@ module ApplicationHelper
     render :partial => 'shared/unread_comment_count', :locals => {
       :count => CommentRead.user(current_user).unread_count(target) }
   end
-    
 end

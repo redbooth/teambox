@@ -1,4 +1,13 @@
 - content_for :column do
-  asdasdasd
-  
-asdasdasdd
+  = list_people(@current_project.users)
+
+= flash[:success]
+= flash[:error]
+
+- form_for project_people_path, :person do |f|
+  = f.label :search, 'Enter username or email:'
+  = text_field_tag :search
+  = f.submit 'Invite'
+
+.people_cards
+  = render :partial => 'people/person_block', :collection => @current_project.users, :as => :person

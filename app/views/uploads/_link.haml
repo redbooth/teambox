@@ -1,0 +1,6 @@
+= link_to_function t('uploads.upload_a_file_link'), show_upload_form(comment), :class => 'add_upload'
+.uploads_save{:style => 'display: none;'}
+.uploads_current{:style => (comment.uploads.count > 0 ? '' : 'display: none;')}
+  - if comment.uploads.count > 0
+    = list_uploads_inline(comment.uploads)
+  %br

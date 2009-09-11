@@ -13,16 +13,19 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
 
   map.resources :users do |user|
-    user.resources :task_lists, :has_many => [:comments,:uploads] do |task_lists|
-      task_lists.resources :tasks, :has_many => [:comments,:uploads], :member => { :check => :put, :uncheck => :put }
+    user.resources :task_lists, :has_many => [:comments] do |task_lists|
+      task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
-    user.resources :conversations, :has_many => [:comments,:uploads]
+    user.resources :conversations, :has_many => [:comments]
     user.resource :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }
   end
 
   map.resources :projects, :has_many => [:invitations,:uploads,:people] do |project|
     project.time_tracking '/projects/:project_id/time_tracking', :controller => 'hours', :action => 'index'
-    project.resources :comments, :has_many => [:uploads,:hour]
+    project.resources :comments do |comment|
+      comment.resources :uploads, :member => { :iframe => :get }
+      comment.resources :hours
+    end
     project.resources :pages, :has_many => [:uploads]
 
     project.resources :uploads, :requirements => { :id => /[^\/]+/ }, :member => { :thumbnail => :get }
@@ -31,11 +34,10 @@ ActionController::Routing::Routes.draw do |map|
       task_lists.resources :tasks, :has_many => [:comments,:uploads], :member => { :check => :put, :uncheck => :put }
     end
 
+    project.resources :people, :member => { :destroy => :get }
     project.resources :conversations, :has_many => [:comments,:uploads]
     project.resources :pages, :has_many => [:notes,:uploads]
   end
-
-
 
   map.root :controller => 'projects', :action => 'index'
 

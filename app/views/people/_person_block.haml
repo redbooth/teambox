@@ -1,0 +1,5 @@
+.person{:id => "person_#{person.id}"}
+  = person.login
+  = person.name
+  = person.email
+  = link_to 'Remove from project', destroy_project_person_path(@current_project,person)

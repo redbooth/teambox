@@ -6,6 +6,8 @@ unless @comment.new_record?
   page.en
   
   page['comment_body'].setValue('')
-  page << "$$('.uploads_save')[0].childElements().invoke('remove');"
-  page << "$$('.uploads_current')[0].childElements().invoke('remove');"
+  page['new_comment'].down('.uploads_save').childElements.invoke('remove')
+  page['new_comment'].down('.uploads_current').select('div').invoke('remove')
+  page['new_comment'].down('.uploads_current').hide
+  page.reload_javascript_events
 end

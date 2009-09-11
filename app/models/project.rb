@@ -12,7 +12,7 @@ class Project < ActiveRecord::Base
   has_many :invitations
   has_many :conversations, :order => 'created_at DESC'
   has_many :pages, :order => 'created_at DESC'
-  has_many :comments, :as => :target, :order => 'created_at DESC'
+  has_many :comments, :order => 'created_at DESC'
   has_many :uploads
   has_many :activities, :order => 'created_at DESC'
   
@@ -72,14 +72,25 @@ class Project < ActiveRecord::Base
     Activity.log(self,target,action)
   end
   
-  def add_person(user)
-    person = self.people.new(:user_id => user.id)
-    person.save
-    log_activity(person,'add')
+  def add_user(user)
+    unless Person.exists? :user_id => user.id, :project_id => self.id
+      person = self.people.new(:user_id => user.id)
+      person.save
+      log_activity(person,'add')
+    end
+  end
+
+  def remove_user(user)
+    person = Person.find_by_user_id_and_project_id user.id, self.id
+    
+    if person
+      person.destroy
+      log_activity(person,'remove')
+    end
   end
 
   def after_create
-    add_person(user)
+    add_user(user)
   end
   
   def to_param
