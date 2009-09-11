@@ -1,5 +1,5 @@
-- remote_form_for [project,task_list,task], :html => { :id => "project_#{project.id}_task_list_#{task_list.id}_new_task", :class => 'new_task_wrap', :style => 'display: none' } do |f|
-  .new_task
+- remote_form_for [project,task_list,task], :html => { :id => "project_#{project.id}_task_list_#{task_list.id}_new_task", :class => 'task_form_wrap', :style => 'display: none' } do |f|
+  .form_task
     = task_fields(f)
     .submit
       = f.submit t('.submit')

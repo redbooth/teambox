@@ -165,4 +165,12 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.timestamps
   end
 
+  create_table :hours, :force => true do |t|
+    t.integer   :project_id
+    t.integer   :user_id
+    t.integer   :comment_id
+    t.float     :hours
+    t.timestamps
+  end
+
 end

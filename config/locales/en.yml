@@ -126,6 +126,7 @@ en:
         project_settings: Project Settings
         people: People
         pages: Pages
+        time_tracking: Time Tracking
       global_navigation:
         logout: Logout
         login: Login
