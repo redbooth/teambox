@@ -12,17 +12,20 @@ class ApplicationController < ActionController::Base
   private
     def load_project
       if params[:project_id] != nil
-        @current_project = Project.find_by_permalink(params[:project_id])
+        @current_project = Project.find_by_permalink(params[:project_id])        
+        unless @current_project.nil?
+          current_user.add_recent_project(@current_project)
+        end
       end
     end
     
     def recent_projects
       if logged_in?
         unless current_user.recent_projects.nil?
-          @recent_projects = Project.find(current_user.recent_projects)
+          @recent_projects = current_user.recent_projects
         else
-          []
-        end  
+          @recent_projects = []
+        end
       end
     end
         

@@ -35,19 +35,8 @@ class User < ActiveRecord::Base
 
   validates_associated :projects  #, :people Ensure associated people and projects exist
 
-  # HACK HACK HACK -- how to do attr_accessible from here?
-  # prevents a user from submitting a crafted form that bypasses activation
-  # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :name, :password, :password_confirmation, :avatar
 
-
-
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  #
-  # uff.  this is really an authorization, not authentication routine.  
-  # We really need a Dispatch Chain here or something.
-  # This will also let us return a human error message.
-  #
   def self.authenticate(login, password)
     return nil if login.blank? || password.blank?
     u = find_by_login(login.downcase) # need to get the salt
@@ -60,6 +49,26 @@ class User < ActiveRecord::Base
 
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
+  end
+  
+  def get_recent_projects
+    @recent_projects ||= []
+    unless @recent_projects == []
+      @recent_projects
+    else
+      self.recent_projects ||= []
+      @recent_projects = self.recent_projects.collect { |p| Project.find(p) }.compact
+    end
+  end
+  
+  def add_recent_project(project)
+    self.recent_projects ||= []
+    
+    unless self.recent_projects.include?(project.id)
+      self.recent_projects = self.recent_projects.unshift(project.id).slice(0,5)
+      @recent_projects = nil
+      self.save(false)
+    end
   end
 
 end

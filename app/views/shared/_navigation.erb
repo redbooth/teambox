@@ -12,13 +12,13 @@ render_tabnav :main, :generate_css => false do
     t.highlights_on :controller => :projects, :action => :new
   end
   
-  unless recent_projects.nil?
-    for recent_project in recent_projects
+  unless current_user.get_recent_projects == []
+    for project in current_user.get_recent_projects
       add_tab do |t|
-        t.named recent_project.name
-        t.links_to project_path(recent_project)
-        if recent_project == project
-        t.highlights_on :controller => controller_name
+        t.named truncate(project.name, :length => 20)
+        t.links_to project_path(project)
+        if project == @current_project
+          t.highlights_on :controller => controller_name
         end
       end
     end
