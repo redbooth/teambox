@@ -1,0 +1,12 @@
+#new_upload
+  = error_messages_for :upload
+  - form_for [@current_project,@upload], :html => { :multipart => true } do |f|
+    .file
+      Select a file to upload
+      %br
+      = file_column_field 'upload', "file", :size => 40
+    .description
+      = f.label :description
+      %br
+      = f.text_field :description
+    = submit_tag 'Upload'

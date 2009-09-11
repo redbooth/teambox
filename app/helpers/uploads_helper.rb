@@ -68,12 +68,28 @@ module UploadsHelper
     end
   end
   
-  def delete_upload_link(upload,target)
-    link_to_function 'D', delete_upload(upload,target)
+  def delete_upload_link(upload,target = nil)
+    if target.nil?
+      link_to_remote trash_image, 
+        :url => project_upload_path(upload.project,upload), 
+        :method => :delete, 
+        :class => 'delete_link', 
+        :confirm => "Are you sure you want to delete this file?"
+    else
+      link_to_function 'D', delete_upload(upload,target)
+    end
   end
   
   def upload_save_tag(name,upload)
     content_tag(:input,nil,{ :name => name,:type => 'hidden',:value => upload.id.to_s })
+  end
+  
+  def upload_text_link(upload)
+    link_to h(upload.image_filename), project_upload_path(upload.project,upload.image_filename), :class => 'link_to_file'
+  end
+  
+  def add_file_link
+    link_to 'Upload a file', new_project_upload_path(@current_project)
   end
   
   def delete_upload(upload,target)
@@ -94,5 +110,25 @@ module UploadsHelper
         page["upload_#{upload.id}"].remove
       end
     end
+  end
+  
+  def edit_upload_link(upload)
+    link_to_function pencil_image, edit_upload_form(upload), :class => 'edit_upload_link'
+  end
+    
+  def edit_upload_form(upload)
+    update_page do |page|
+      page["upload_#{upload.id}"].down('.show_details').hide
+      page["upload_#{upload.id}"].down('.edit_details').show
+    end
+  end
+  
+  def hide_upload_form(upload)
+    page["upload_#{upload.id}"].down('.show_details').show
+    page["upload_#{upload.id}"].down('.edit_details').hide
+  end
+  
+  def cancel_edit_link(upload)
+    link_to_function 'cancel', update_page { |page| page.hide_upload_form(upload) }
   end
 end

@@ -10,9 +10,22 @@ class UploadsController < ApplicationController
   end
   
   def new
+    @upload = current_user.uploads.new
+    respond_to { |f| f.html }
+  end
+  
+  def index
+    @uploads = @current_project.uploads
+  end
+  
+  def new
     load_target
     @upload = @current_project.uploads.new(:user_id => current_user.id)
-    respond_to { |f| f.html { render :layout => 'upload_iframe' }}
+    if is_iframe?
+      respond_to { |f| f.html { render :layout => 'upload_iframe' }}
+    else
+      respond_to { |f| f.html { render :template => 'uploads/new_upload' } }
+    end
   end
   
   def update
@@ -37,7 +50,11 @@ class UploadsController < ApplicationController
 
     load_target
     @upload.save
-    respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
+    if is_iframe?
+      respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
+    else
+      respond_to{|f|f.html {redirect_to(project_uploads_path(@current_project))}}
+    end
   end
   
   def show
@@ -67,7 +84,7 @@ class UploadsController < ApplicationController
   
   private
     def is_iframe?
-      params[:iframe] != nil and !params[:iframe].empty?
+      params[:iframe] != nil
     end
     
     def load_target

@@ -1,0 +1,7 @@
+page["upload_#{@upload.id}"].down('.link_to_file').replace upload_text_link(@upload)
+page["upload_#{@upload.id}"].down('.description').replace content_tag(:div,h(@upload.description),:class => 'description')
+
+page["upload_#{@upload.id}"].down('.upload_filename').setValue @upload.image_filename
+page["upload_#{@upload.id}"].down('.upload_description').setValue @upload.description
+
+page.hide_upload_form(@upload)
