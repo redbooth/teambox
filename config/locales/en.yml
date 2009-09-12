@@ -104,9 +104,8 @@ en:
       new_file: Upload a File
   sessions:
     fields:
-      login: Login
+      username_or_email: Username or email
       password: Password
-      remember_me: Remember me
     new:
       title: Login
       submit: Login
