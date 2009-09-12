@@ -15,6 +15,11 @@
       .wrapper
         =project_navigation(@current_project)
         %div{ :class => "#{@content_for_column.nil? ? 'content_wrap_single' : 'content_wrap'}" }
+          - if flash[:error]
+            .flash_box.error= flash[:error]
+
+          - if flash[:success]
+            .flash_box.success= flash[:success]
           .content
             = yield
         -unless @content_for_column.nil?

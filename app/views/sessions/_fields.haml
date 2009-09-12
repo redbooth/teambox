@@ -4,7 +4,3 @@
 .password.text_field
   = label_tag t('.password')
   = password_field_tag 'password', nil
-.remember_me
-  = label_tag 'remember_me', t('.remember_me')
-  %span
-    =check_box_tag 'remember_me', '1', @remember_me

@@ -41,6 +41,12 @@ render_tabnav :project, :generate_css => false do
     end
 
     add_tab do |t|
+      t.named t('.pages')
+      t.links_to  project_pages_path(project)
+      t.highlights_on :controller => :pages
+    end
+
+    add_tab do |t|
       t.named t('.people')
       t.links_to  project_people_path(project)
       t.highlights_on :controller => :people
@@ -53,18 +59,6 @@ render_tabnav :project, :generate_css => false do
       t.highlights_on :controller => :projects, :action => :edit
       t.li_class = 'right_side'
     end
-
-    add_tab do |t|
-      t.named t('.pages')
-      t.links_to  project_pages_path(project)
-      t.highlights_on :controller => :pages
-    end
-
-    #add_tab do |t|
-    #  t.named t('navigation.people')
-    #  t.links_to  project_people_path(project)
-    #  t.highlights_on :controller => :people
-    #end
 
   end
 end
