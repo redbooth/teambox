@@ -1,11 +1,35 @@
 .flash_box
   :display block
-  :padding 10px
+  :padding 5px
+    :left 10px
   :font-size 12px
+  :border-bottom 2px rgb(100,100,100) solid
+  :border-top 2px rgb(100,100,100) solid
+  :background rgb(200,200,200)
   &.error
     :border-bottom 2px rgb(180,50,50) solid
     :border-top 2px rgb(180,50,50) solid
     :background rgb(255,200,200)
   &.success
     :border-bottom 2px rgb(50,180,50) solid
+    :border-top 2px rgb(50,180,50) solid
     :background rgb(200,255,200)
+
+.errorExplanation
+  :display block
+  :padding 0px
+    :left 10px
+  :font-size 12px
+  :border 2px rgb(180,50,50) solid
+  :background rgb(255,200,200)
+  :margin-bottom 20px
+  h2, p
+    :display none
+  ul
+    :padding-left 20px
+    
+.fieldWithErrors
+  input
+    :background rgb(255,200,200)
+    :border 1px red solid
+  

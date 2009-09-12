@@ -1,9 +1,12 @@
+=label_styles
+  :display block
+  :font-size 12px
+  :padding-bottom 5px
+
 .text_field
   :padding-bottom 5px
   label
-    :display block
-    :font-size 12px
-    :padding-bottom 5px
+    +label_styles
   input
     :font-size 16px
     :padding 5px
@@ -13,7 +16,14 @@
       :left solid 1px rgb(233,233,233)
       :bottom solid 1px rgb(233,233,233)
       :right solid 1px rgb(196,196,196)
+.select
+  label
+    +label_styles
+    :float left
+    :padding-right 10px
 .text_area
+  label
+    +label_styles
   textarea
     :font-size 16px
     :padding 5px
