@@ -30,7 +30,7 @@ render_tabnav :project, :generate_css => false do
     add_tab do |t|
       t.named t('.conversations')
       t.links_to  project_conversations_path(project)
-      t.highlights_on :controller => :messages
+      t.highlights_on :controller => :conversations
     end
 
     add_tab do |t|
