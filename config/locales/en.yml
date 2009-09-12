@@ -127,8 +127,12 @@ en:
         project_settings: Project Settings
         people: People
         pages: Pages
+        login: Login
+        signup: Signup
       global_navigation:
         logout: Logout
         login: Login
         signup: Signup
         settings: Settings
+        product_site: Product site
+        blog: Blog
