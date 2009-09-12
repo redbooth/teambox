@@ -8,17 +8,17 @@ render_tabnav :project, :generate_css => false do
       t.highlights_on :controller => :projects, :action => :index
     end
 
-    add_tab do |t|
-      t.named t('.all_conversations')
-      t.links_to  user_conversations_path(project)
-      t.highlights_on :controller => :messages
-    end
+#    add_tab do |t|
+#      t.named t('.all_conversations')
+#      t.links_to  user_conversations_path(project)
+#      t.highlights_on :controller => :messages
+#    end
 
-    add_tab do |t|
-      t.named t('.all_task_lists')
-      t.links_to  user_task_lists_path(project)
-      t.highlights_on :controller => :task_lists
-    end
+#    add_tab do |t|
+#      t.named t('.all_task_lists')
+#      t.links_to  user_task_lists_path(project)
+#      t.highlights_on :controller => :task_lists
+#    end
         
   else
     add_tab do |t|
