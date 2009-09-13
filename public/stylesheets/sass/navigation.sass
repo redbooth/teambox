@@ -1,3 +1,8 @@
+=round_corners
+  :-moz-border-radius
+    :topleft 5px
+    :topright 5px
+
 div.global_navigation
   :background rgb(76,74,74)
   :float right
@@ -28,6 +33,8 @@ div.navigation
   li
     :float left
     :display block
+    :margin-right 2px
+    +round_corners
     a  
       :float left
       :display block
@@ -37,11 +44,11 @@ div.navigation
       :margin-right 1px
       :font-size 15px
     a:hover
-      :color rgb(48,48,48)
-      :background rgb(160,228,237)
+      :text-decoration underline
     a.active
       :color rgb(48,48,48)
       :background rgb(160,228,237)
+      +round_corners
   li.button
     a
       :font-size 14px
@@ -70,6 +77,7 @@ div.project_navigation
       :padding 4px 10px 6px 8px
       :margin-bottom 0px
       :font-size 12px
+      +round_corners
     a:hover
       :color rgb(0,0,0)
       :text-decoration underline
