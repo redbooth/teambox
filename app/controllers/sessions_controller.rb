@@ -12,15 +12,21 @@ class SessionsController < ApplicationController
 
   def create
     logout_keeping_session!
-    user = User.authenticate(params[:login], params[:password])
+    
+    if user_from_email = User.find_by_email(params[:login])
+      username = user_from_email.login
+    else
+      username = params[:login]
+    end
+    
+    user = User.authenticate(username, params[:password])
     if user
       # Protects against session fixation attacks, causes request forgery
       # protection if user resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
       # reset_session
       self.current_user = user
-      new_cookie_flag = (params[:remember_me] == "1")
-      handle_remember_cookie! new_cookie_flag
+      handle_remember_cookie! true
       redirect_back_or_default('/')
       flash[:notice] = "Logged in successfully"
     else

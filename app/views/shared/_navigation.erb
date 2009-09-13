@@ -1,27 +1,30 @@
 <div class="navigation"><%  
-render_tabnav :main, :generate_css => false do 
-  add_tab do |t|
-    t.named t('.all_projects')
-    t.links_to projects_path
-    t.highlights_on :controller => :projects, :action => :index
-  end
 
-  add_tab do |t|
-    t.named t('.new_project')
-    t.links_to new_project_path
-    t.highlights_on :controller => :projects, :action => :new
-  end
+if logged_in?
+  render_tabnav :main, :generate_css => false do 
+    add_tab do |t|
+      t.named t('.all_projects')
+      t.links_to projects_path
+      t.highlights_on :controller => :projects, :action => :index
+    end
+
+    add_tab do |t|
+      t.named t('.new_project')
+      t.links_to new_project_path
+      t.highlights_on :controller => :projects, :action => :new
+    end
   
-  unless current_user.get_recent_projects == []
-    for project in current_user.get_recent_projects
-      add_tab do |t|
-        t.named truncate(project.name, :length => 20)
-        t.links_to project_path(project)
-        if project == @current_project
-          t.highlights_on :controller => controller_name
+    unless current_user.get_recent_projects.empty?
+      for project in current_user.get_recent_projects
+        add_tab do |t|
+          t.named truncate(project.name, :length => 20)
+          t.links_to project_path(project)
+          if project == @current_project
+            t.highlights_on :controller => controller_name
+          end
         end
       end
-    end
+    end  
   end
-end  
+end
 %></div>
