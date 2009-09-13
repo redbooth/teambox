@@ -12,5 +12,6 @@
       .project
         = list_projects(@user.projects)
       
-%h2= t('.recent_activity_for', :user_name => @user.name)  
-//= list_activities_for_all_projects(@user.activities)
+%h2= t('.recent_activity_for', :user_name => @user.name)
+#activities
+  = list_activities(@user.activities)

@@ -68,8 +68,9 @@ class Project < ActiveRecord::Base
     end
   end
   
-  def log_activity(target,action)
-    Activity.log(self,target,action)
+  def log_activity(target,action,creator_id=nil)
+    creator = target.user_id unless creator
+    Activity.log(self,target,action,target.user_id)
   end
   
   def add_user(user)

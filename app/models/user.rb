@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   
   has_many :people
   has_many :projects, :through => :people
+
+  has_many :activities
   
   has_one :avatar
   has_many :uploads

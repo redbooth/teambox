@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   end
 
   create_table :activities, :force => true do |t|
+    t.integer  :user_id
     t.integer  :project_id
     t.integer  :target_id,   :limit => 11
     t.string   :target_type
