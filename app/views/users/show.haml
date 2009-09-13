@@ -14,4 +14,4 @@
       
 %h2= t('.recent_activity_for', :user_name => @user.name)
 #activities
-  = list_activities(@user.activities)
+  = list_activities(@visible_activities)
