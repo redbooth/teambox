@@ -1,11 +1,10 @@
 - content_for :column do
-  = list_people(@current_project.users)
-
-= flash[:success]
-= flash[:error]
-
+  asdadff
+  
 - form_for project_people_path, :person do |f|
-  = f.label :search, 'Enter username or email:'
+  %h2
+    Invite people
+  = f.label :search, t('.enter_username_or_email')
   = text_field_tag :search
   = f.submit 'Invite'
 

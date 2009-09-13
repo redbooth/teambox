@@ -88,6 +88,11 @@ en:
     new:
       title: New Task List
       submit: Create
+  people:
+    index:
+      enter_username_or_email: "Enter your teammate's username or email:"
+    person_block:
+      formatted_address: "{{street}}, {{city}} ({{country}})"
 
   comments:
     comment:
