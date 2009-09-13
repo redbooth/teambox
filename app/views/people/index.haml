@@ -2,11 +2,11 @@
   asdadff
   
 - form_for project_people_path, :person do |f|
-  %h2
-    Invite people
+  %h2 Invite people
   = f.label :search, t('.enter_username_or_email')
   = text_field_tag :search
   = f.submit 'Invite'
 
-.people_cards
-  = render :partial => 'people/person_block', :collection => @current_project.users, :as => :person
+.people
+  = render :partial => 'users/user_card', :collection => @current_project.users, :as => :user
+
