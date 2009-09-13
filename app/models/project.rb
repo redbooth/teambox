@@ -76,7 +76,7 @@ class Project < ActiveRecord::Base
     unless Person.exists? :user_id => user.id, :project_id => self.id
       person = self.people.new(:user_id => user.id)
       person.save
-      log_activity(person,'add')
+      log_activity(user,'add')
     end
   end
 
@@ -85,7 +85,7 @@ class Project < ActiveRecord::Base
     
     if person
       person.destroy
-      log_activity(person,'remove')
+      log_activity(user,'remove')
     end
   end
 
