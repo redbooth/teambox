@@ -19,6 +19,7 @@ en:
     show:
       profile: Profile
       projects: Projects
+      recent_activity_for: Recent activity for {{user_name}}
     user_card:
       formatted_address: "{{street}}, {{city}} ({{country}})"
   projects:
