@@ -4,10 +4,10 @@ unless @avatar.x1.nil? || @avatar.y1.nil? || @avatar.crop_width.nil? || @avatar.
       :from => [@avatar.x1,@avatar.y1].join('x'), 
       :size => [@avatar.crop_width,@avatar.crop_width].join('x')
     )
-    image.resize '60x60'
+    image.resize '48x48'
   end
 else
   @avatar.operate do |image|
-    image.resize '60x60'
+    image.resize '48x48'
   end  
 end    
