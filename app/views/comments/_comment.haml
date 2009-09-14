@@ -6,7 +6,7 @@
 
   =thumb_avatar(comment.user)
   .when
-    = comment.created_at.strftime("%I:%M %p &mdash; %b %d %Y")
+    = posted_date(comment.created_at)
   .name
     = link_to comment.user.name, user_path(comment.user)
   .body
