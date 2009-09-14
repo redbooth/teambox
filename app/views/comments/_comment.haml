@@ -5,9 +5,10 @@
       = delete_comment_link(comment)
 
   =thumb_avatar(comment.user)
+  .when
+    = comment.created_at.strftime("%I:%M %p &mdash; %b %d %Y")
   .name
     = link_to comment.user.name, user_path(comment.user)
-    = comment.created_at.strftime("%I:%M %p &mdash; %b %d %Y")
   .body
     = comment.body_html
   - if comment.uploads.count > 0
