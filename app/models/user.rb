@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   
   has_many :people
   has_many :projects, :through => :people
+
+  has_many :activities
   
   has_one :avatar
   has_many :uploads
@@ -64,10 +66,24 @@ class User < ActiveRecord::Base
   def add_recent_project(project)
     self.recent_projects ||= []
     
-    unless self.recent_projects.include?(project.id)
+    if self.recent_projects.include?(project.id)
+      unless self.recent_projects.first == project.id
+        self.recent_projects.delete(project.id)
+        self.recent_projects = self.recent_projects.unshift(project.id).slice(0,5)
+      end
+    else
       self.recent_projects = self.recent_projects.unshift(project.id).slice(0,5)
       @recent_projects = nil
       self.save(false)
+    end
+  end
+
+  def activities_visible_to_user(user)
+    shared_projects = self.projects & user.projects
+    shared_projects_ids = shared_projects.collect { |project| project.id }
+    
+    self.activities.select do |activity|
+      shared_projects_ids.include? activity.project_id
     end
   end
 

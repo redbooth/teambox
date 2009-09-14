@@ -5,7 +5,7 @@ module UploadsHelper
         project_upload_path(upload.project,upload.image_filename),
         :class => 'link_to_upload'
     else
-      link_to image_tag('rails.png'),
+      link_to image_tag('_blank.png'),
         project_upload_path(upload.project,upload.image_filename),
         :class => 'link_to_upload'
     end
