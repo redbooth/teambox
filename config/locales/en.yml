@@ -55,7 +55,11 @@ en:
     conversation_with_extract:
       posted_by: Posted by
     show:
-      posted_by: Posted by
+      started_by: Started by
+      edit: Edit
+      comment: Comment
+      comments: Comments
+      
   
   tasks:
     fields:
