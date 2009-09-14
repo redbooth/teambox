@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   
   def index
     @projects = current_user.projects
+    @activities = @projects.collect { |p| p.activities }.flatten.sort { |x,y| y.created_at <=> x.created_at }
   end
   
   def new
