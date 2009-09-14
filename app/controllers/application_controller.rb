@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem
 
+  filter_parameter_logging :password
+
   before_filter :load_project, :login_required, :set_locale, :touch_user, :recent_projects
   
   private
