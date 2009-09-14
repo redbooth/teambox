@@ -120,25 +120,31 @@ en:
       welcome: Welcome to Teambox!
 
   shared:
-      navigation:
-        all_projects: 'All Projects'
-        new_project: +
-      project_navigation:
-        overview: Overview
-        all_conversations: All Conversations
-        conversations: Conversations
-        task_lists: Task Lists
-        all_task_lists: All Task Lists
-        project_settings: Project Settings
-        people: People
-        pages: Pages
-        time_tracking: Time Tracking
-        login: Login
-        signup: Signup
-      global_navigation:
-        logout: Logout
-        login: Login
-        signup: Signup
-        settings: Settings
-        product_site: Product site
-        blog: Blog
+    navigation:
+      all_projects: 'All Projects'
+      new_project: +
+    project_navigation:
+      overview: Overview
+      all_conversations: All Conversations
+      conversations: Conversations
+      task_lists: Task Lists
+      all_task_lists: All Task Lists
+      project_settings: Project Settings
+      people: People
+      pages: Pages
+      time_tracking: Time Tracking
+      login: Login
+      signup: Signup
+    global_navigation:
+      logout: Logout
+      login: Login
+      signup: Signup
+      settings: Settings
+      product_site: Product site
+      blog: Blog
+
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"

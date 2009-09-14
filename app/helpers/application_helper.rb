@@ -89,6 +89,17 @@ module ApplicationHelper
     end
   end
   
+  def posted_date(datetime)
+    if datetime > 1.day.ago
+      datetime.strftime("%I:%M %p")
+    elsif datetime > 7.days.ago
+      datetime.strftime("%b %d")
+    else
+      datetime.strftime("%b %d %Y")
+    end
+    # datetime.strftime("%I:%M %p &mdash; %b %d %Y")
+  end
+  
   def trash_image
     image_tag('trash.jpg', :class => 'trash')
   end
