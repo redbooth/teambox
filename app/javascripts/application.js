@@ -23,20 +23,8 @@ Event.addBehavior({
   ".trash:mouseout": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')    
-<<<<<<< HEAD
-  },
-  ".time:mouseover": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/time.*\.jpg/,'time_hover.jpg')
-  },
-  ".time:mouseout": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/time.*\.jpg/,'time.jpg')    
-  }  
 });
-=======
-  } 
-});
+
 
 Comment = {
   update_uploads_current: function(e) {
@@ -47,4 +35,4 @@ Comment = {
     }
   }
 };
->>>>>>> d6305dbf61abc65b46e88d55beedabe63011ab27
+
