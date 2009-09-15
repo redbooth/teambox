@@ -8149,6 +8149,14 @@ Event.addBehavior({
   ".trash:mouseout": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')
+  },
+  ".time:mouseover": function(e){
+    image_source = $(this).src
+    $(this).src = image_source.sub(/time.*\.jpg/,'time_hover.jpg')
+  },
+  ".time:mouseout": function(e){
+    image_source = $(this).src
+    $(this).src = image_source.sub(/time.*\.jpg/,'time.jpg')
   }
 });
 
@@ -8164,11 +8172,11 @@ Comment = {
 Event.addBehavior({
   ".comment:mouseover": function(e){
     $(this).down('p.actions').show();
+    $(this).down('a.hours').show();
   },
   ".comment:mouseout": function(e){
-    $$("div.comment p.actions").each(function(e){
-      e.hide();
-    });
+    $$("div.comment p.actions").each(function(e){ e.hide(); });
+    $$("div.comment a.hours").each(function(e){ e.hide(); });
   }
 });
 function image_crop(c){
@@ -8207,7 +8215,7 @@ function onEndCrop(coords, dimensions){
 }
 Event.addBehavior({
   ".task:mouseover": function(e){
-      $(this).down('p.actions').show();
+    $(this).down('p.actions').show();
   },
   ".task:mouseout": function(e){
     $$(".task p.actions").each(function(e){

@@ -1,7 +1,11 @@
 - content_for :column do
   = new_task_list_link(@current_project)
-  = list_task_lists(@current_project,@task_lists,@task)
-
+  %h2.title_with_button
+    Task Lists
+  .task_lists
+    = list_task_lists(@current_project,@task_lists,@task)
+  =filter_box
+  
 %h2.title
   Comment on
   =@task.name

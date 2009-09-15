@@ -23,8 +23,8 @@ Event.addBehavior({
   ".trash:mouseout": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')    
-  } 
 });
+
 
 Comment = {
   update_uploads_current: function(e) {
@@ -35,3 +35,4 @@ Comment = {
     }
   }
 };
+

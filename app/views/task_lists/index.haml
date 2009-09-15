@@ -1,3 +1,10 @@
 - content_for :column do
   = new_task_list_link(@current_project)
-  = list_task_lists(@current_project,@task_lists)
+  %h2.title_with_button
+    Task Lists
+  .task_lists
+    = list_task_lists(@current_project,@task_lists)
+  =filter_box
+  
+#comments
+  = list_comments(@comments)

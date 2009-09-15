@@ -9,7 +9,8 @@ module TaskListsHelper
   end
   
   def new_task_list_link(project)
-    link_to image_tag('add_task_list.jpg'), new_project_task_list_path(project)
+    link_to add_image, new_project_task_list_path(project),
+    :class => 'add_button'
   end
   
   def task_list_fields(f)

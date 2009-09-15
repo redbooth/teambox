@@ -20,13 +20,7 @@ module CommentsHelper
   def show_comment(comment)
     render :partial => 'comments/comment', :locals => { :comment => comment }
   end
-  
-  def edit_comment_link(comment)
-    link_to_remote pencil_image,
-      :url => edit_comment_path(comment),
-      :method => :get
-  end
-  
+
   def comment_fields(f)
     render :partial => 'comments/fields', :locals => { :f => f }
   end
@@ -36,11 +30,18 @@ module CommentsHelper
       :url => comment_path(comment),
       :method => :get
   end
-  
+
+  def edit_comment_link(comment)
+    link_to_remote pencil_image,
+      :url => edit_comment_path(comment),
+      :method => :get
+  end
+    
   def delete_comment_link(comment)
     link_to_remote trash_image,
       :url => comment_path(comment),
       :method => :delete,
       :confirm => t('.confirm_delete')
   end
+  
 end

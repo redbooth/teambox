@@ -3,8 +3,14 @@ div.wrapper
   :background rgb(255,255,255) url(../images/wrapper_bg.jpg) no-repeat bottom
 div.content_wrap
   :float left
-  :width 600px
+  :width 610px
   :padding 10px
+    :right 0px
+  h2.title
+    :margin 0px
+      :bottom 3px
+    :color rgb(60,60,60)
+    :font-weight normal
 div.column_wrap
   :float right
   :background rgb(230,230,230)
@@ -16,7 +22,34 @@ div.column_wrap
     :text-transform uppercase
     :border-bottom solid 1px rgb(200,200,200)
     :margin-bottom 5px
-h2.title
-  :margin 0px
-    :bottom 3px
-  :font-weight normal
+
+div.column_wrap
+  a.add_button
+    :float left
+  h2.title
+    :margin 0px
+      :bottom 3px
+    :color rgb(60,60,60)
+  h2.title_with_button
+    :float right
+    :width 270px
+    :margin 0px
+      :bottom 3px
+      :top 5px
+    :color rgb(60,60,60)
+    
+.sort
+  :margin
+    :top 5px
+  :background rgb(240,240,240)
+  :border solid 1px rgb(220,220,220)
+  :padding 5px
+  .filters
+    :padding-top 5px
+    :font-size 12px
+  a
+    :font-size 14px
+    :padding 2px 4px
+  a.active
+    :background rgb(0,0,255)
+    :color rgb(255,255,255)

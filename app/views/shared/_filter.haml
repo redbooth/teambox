@@ -1,0 +1,14 @@
+.sort
+  =link_to 'Ascending', '', :class => 'active'
+  or
+  =link_to 'Descending', ''
+  .filters
+    .radio_button.uploads
+      =radio_button_tag 'sort', 'all', 1
+      = label_tag 'All Comments'
+    .radio_button.uploads
+      =radio_button_tag 'sort', 'uploads'
+      = label_tag 'Files'
+    .radio_button.hours
+      =radio_button_tag 'sort', 'hours'
+      = label_tag 'Tracked Hours'
