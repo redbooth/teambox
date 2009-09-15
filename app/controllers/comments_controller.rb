@@ -40,6 +40,9 @@ class CommentsController < ApplicationController
   
   def update
     @comment.update_attributes(params[:comment])
+    
+    save_uploads(@comment)
+    
     respond_to{|f|f.js}
   end
   
@@ -60,5 +63,12 @@ class CommentsController < ApplicationController
           upload.save(false)
         end
       end unless params[:uploads].nil?
+      
+      params[:uploads_deleted].each do |upload_id|
+        upload = Upload.find(upload_id)
+        unless upload.nil?
+          upload.destroy
+        end
+      end unless params[:uploads_deleted].nil?
     end
 end

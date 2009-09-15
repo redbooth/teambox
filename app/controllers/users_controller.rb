@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @visible_activities = @user.activities_visible_to_user @current_user
     options = { :only => [:id, :login, :name, :language, :email, 'time-zone', 'created-at', 'updated-at'] }
     respond_to do |format|
       format.html
@@ -27,7 +28,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     success = @user && @user.save
     if success && @user.errors.empty?
-            # Protects against session fixation attacks, causes request forgery
+      # Protects against session fixation attacks, causes request forgery
       # protection if visitor resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
       # reset session
@@ -36,13 +37,20 @@ class UsersController < ApplicationController
       flash[:notice] = "Thanks for signing up!"
     else
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-      render :action => 'new'
+      render :action => :new
     end
   end
   
   def update
     @current_user.update_attributes(params[:user])
-    @current_user.save
+    if @current_user.save
+      flash[:error] = nil
+      flash[:success] = "User profile updated!"
+    else
+      flash[:success] = nil
+      flash[:error] = "Couldn't save the updated profile. Please correct the mistakes and retry."
+    end
+    render :action => :edit
   end
 
   private

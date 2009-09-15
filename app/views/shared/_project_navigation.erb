@@ -1,69 +1,84 @@
 <div class="project_navigation"><%  
 render_tabnav :project, :generate_css => false do 
 
-  if project.nil?
-    add_tab do |t|
-      t.named t('.overview')
-      t.links_to projects_path
-      t.highlights_on :controller => :projects, :action => :index
-    end
+  if logged_in?
+    if project.nil?
+      add_tab do |t|
+        t.named t('.overview')
+        t.links_to projects_path
+        t.highlights_on :controller => :projects, :action => :index
+      end
 
-    add_tab do |t|
-      t.named t('.all_conversations')
-      t.links_to  user_conversations_path(project)
-      t.highlights_on :controller => :messages
-    end
+  #    add_tab do |t|
+  #      t.named t('.all_conversations')
+  #      t.links_to  user_conversations_path(project)
+  #      t.highlights_on :controller => :messages
+  #    end
 
-    add_tab do |t|
-      t.named t('.all_task_lists')
-      t.links_to  user_task_lists_path(project)
-      t.highlights_on :controller => :task_lists
-    end
+  #    add_tab do |t|
+  #      t.named t('.all_task_lists')
+  #      t.links_to  user_task_lists_path(project)
+  #      t.highlights_on :controller => :task_lists
+  #    end
         
+    else
+      add_tab do |t|
+        t.named t('.overview')
+        t.links_to project_path(project)
+        t.highlights_on :controller => :projects, :action => :show
+      end
+
+      add_tab do |t|
+        t.named t('.conversations')
+        t.links_to  project_conversations_path(project)
+        t.highlights_on :controller => :conversations
+      end
+
+      add_tab do |t|
+        t.named t('.task_lists')
+        t.links_to  project_task_lists_path(project)
+        t.highlights_on :controller => :task_lists
+        t.highlights_on :controller => :tasks
+      end
+
+      add_tab do |t|
+        t.named t('.pages')
+        t.links_to  project_pages_path(project)
+        t.highlights_on :controller => :pages
+      end
+      
+      add_tab do |t|
+        t.named t('.time_tracking')
+        t.links_to  project_time_tracking_path(project)
+        t.highlights_on :controller => :hours
+      end
+
+      add_tab do |t|
+        t.named t('.people')
+        t.links_to  project_people_path(project)
+        t.highlights_on :controller => :people
+        t.li_class = 'right_side'
+      end
+
+      add_tab do |t|
+        t.named t('.project_settings')
+        t.links_to  edit_project_path(project)
+        t.highlights_on :controller => :projects, :action => :edit
+        t.li_class = 'right_side'
+      end
+
+    end
   else
     add_tab do |t|
-      t.named t('.overview')
-      t.links_to project_path(project)
-      t.highlights_on :controller => :projects, :action => :show
+      t.named t('.login')
+      t.links_to login_path
+      t.highlights_on :controller => :sessions
     end
 
     add_tab do |t|
-      t.named t('.conversations')
-      t.links_to  project_conversations_path(project)
-      t.highlights_on :controller => :messages
-    end
-
-    add_tab do |t|
-      t.named t('.task_lists')
-      t.links_to  project_task_lists_path(project)
-      t.highlights_on :controller => :task_lists
-      t.highlights_on :controller => :tasks
-    end
-
-    add_tab do |t|
-      t.named t('.people')
-      t.links_to  project_people_path(project)
-      t.highlights_on :controller => :people
-      t.li_class = 'right_side'
-    end
-
-    add_tab do |t|
-      t.named t('.project_settings')
-      t.links_to  edit_project_path(project)
-      t.highlights_on :controller => :projects, :action => :edit
-      t.li_class = 'right_side'
-    end
-
-    add_tab do |t|
-      t.named t('.pages')
-      t.links_to  project_pages_path(project)
-      t.highlights_on :controller => :pages
-    end
-
-    add_tab do |t|
-      t.named t('.time_tracking')
-      t.links_to  project_time_tracking_path(project)
-      t.highlights_on :controller => :hours
+      t.named t('.signup')
+      t.links_to signup_path
+      t.highlights_on :controller => :users
     end
 
     add_tab do |t|

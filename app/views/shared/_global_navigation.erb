@@ -13,14 +13,12 @@ render_tabnav :global, :generate_css => false do
     end
   else
     add_tab do |t|
-      t.named t('.login')
-      t.links_to login_path
-      t.highlights_on :controller => :sessions, :action => :new
-    end    
+      t.named t('.product_site')
+      t.links_to 'http://www.teambox.com/'
+    end
     add_tab do |t|
-      t.named t('.signup')
-      t.links_to signup_path
-      t.highlights_on :controller => :users, :action => :new
+      t.named t('.blog')
+      t.links_to 'http://www.teambox.com/blog/'
     end
   end
   

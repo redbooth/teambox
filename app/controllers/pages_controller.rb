@@ -48,7 +48,7 @@ class PagesController < ApplicationController
         if @page.update_attributes(params[:page])
           f.html {redirect_to edit_project_page_path(@current_project,@page)}
         else
-          f.html {render :action => 'edit'}
+          f.html {render :action => :edit}
         end
       end
       

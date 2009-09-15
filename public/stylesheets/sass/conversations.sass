@@ -1,4 +1,33 @@
 #column
   .conversations
-    .selected
-      :font-weight bold
+    .conversation
+      :font-size 12px
+      .selected
+        :font-weight bold
+      a
+        :color #555
+        :display block
+        :padding 3px 0
+      &:hover
+        :background #ccc
+
+.show_conversations
+  .conversation_header
+    :display block
+    :margin-bottom 20px
+    h2
+      :font-size 16px
+      :margin-left 20px
+    .actions
+      :float right
+      :font-size 12px
+      :color rgb(200,200,200)
+      :text-align right
+      .by
+        a
+          :color rgb(200,200,200)
+  #comments
+    :font-size 12px
+  form#new_comment
+    :margin-top 10px
+  

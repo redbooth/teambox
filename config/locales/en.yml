@@ -19,6 +19,9 @@ en:
     show:
       profile: Profile
       projects: Projects
+      recent_activity_for: Recent activity for {{user_name}}
+    user_card:
+      formatted_address: "{{street}}, {{city}} ({{country}})"
   projects:
     index:
       projects: My Projects
@@ -52,7 +55,11 @@ en:
     conversation_with_extract:
       posted_by: Posted by
     show:
-      posted_by: Posted by
+      started_by: Started by
+      edit: Edit
+      comment: Comment
+      comments: Comments
+      
   
   tasks:
     fields:
@@ -88,7 +95,9 @@ en:
     new:
       title: New Task List
       submit: Create
-
+  people:
+    index:
+      enter_username_or_email: "Enter your teammate's username or email:"
   comments:
     comment:
       confirm_delete: Are you sure you want to delete this comment?
@@ -104,9 +113,8 @@ en:
       new_file: Upload a File
   sessions:
     fields:
-      login: Login
+      username_or_email: Username or email
       password: Password
-      remember_me: Remember me
     new:
       title: Login
       submit: Login
@@ -116,22 +124,31 @@ en:
       welcome: Welcome to Teambox!
 
   shared:
-      navigation:
-        all_projects: 'All Projects'
-        new_project: +
-      project_navigation:
-        overview: Overview
-        all_conversations: All Conversations
-        conversations: Conversations
-        task_lists: Task Lists
-        all_task_lists: All Task Lists
-        project_settings: Project Settings
-        people: People
-        pages: Pages
-        time_tracking: Time Tracking
-        files: Files
-      global_navigation:
-        logout: Logout
-        login: Login
-        signup: Signup
-        settings: Settings
+    navigation:
+      all_projects: 'All Projects'
+      new_project: +
+    project_navigation:
+      overview: Overview
+      all_conversations: All Conversations
+      conversations: Conversations
+      task_lists: Task Lists
+      all_task_lists: All Task Lists
+      project_settings: Project Settings
+      people: People
+      pages: Pages
+      time_tracking: Time Tracking
+      login: Login
+      signup: Signup
+    global_navigation:
+      logout: Logout
+      login: Login
+      signup: Signup
+      settings: Settings
+      product_site: Product site
+      blog: Blog
+
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"

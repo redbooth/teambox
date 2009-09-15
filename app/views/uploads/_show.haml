@@ -1,0 +1,23 @@
+.upload{:id => "upload_#{upload.id}"}
+  .thumbnail
+    - if upload.is_image?
+      = image_tag thumbnail_project_upload_path(project,upload)
+    - else
+      Thumb
+  .filename
+    .edit_details{:style => 'display: none;'}
+      - remote_form_for upload, :url => project_upload_path(project,upload) do |f|
+        .filename_edit
+          = f.text_field :image_filename, :class => "upload_filename"
+          = f.submit 'Save', :id => "save_upload_#{upload.id}"
+          = cancel_edit_link upload
+          = loading('update',upload.id)
+        .description_edit
+          = f.text_field :description, :class => "upload_description"
+    .show_details
+      .name
+        = upload_text_link upload
+        = edit_upload_link upload
+        = delete_upload_link upload
+      .description= h(upload.description)
+  .clear_both

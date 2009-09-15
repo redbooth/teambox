@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   
   def index
     @projects = current_user.projects
+    @activities = @projects.collect { |p| p.activities }.flatten.sort { |x,y| y.created_at <=> x.created_at }
   end
   
   def new
@@ -44,5 +45,8 @@ class ProjectsController < ApplicationController
     def find_project
       @current_project = Project.find_by_permalink(params[:id])
       @project = @current_project
+      unless @current_project.nil?
+        current_user.add_recent_project(@current_project)
+      end
     end
 end
