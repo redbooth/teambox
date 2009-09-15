@@ -7,7 +7,8 @@ class ConversationsController < ApplicationController
   
   def create
     @conversation = @current_project.new_conversation(current_user,params[:conversation])
-    
+    @conversation.body = params[:conversation][:body]
+
     respond_to do |f|
       if @conversation.save
         f.html { redirect_to project_conversation_path(@current_project,@conversation) }

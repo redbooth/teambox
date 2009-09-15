@@ -13,4 +13,11 @@
 
 - form_for [@current_project,@conversation] do |f|
   = conversation_fields(f)  
+
+  - for user in @current_project.users
+    .user
+      =user_checkbox(user)
+
   = f.submit t('.submit')
+  
+  
