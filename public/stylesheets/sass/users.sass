@@ -66,6 +66,7 @@ div.upload_avatar
     :width 48px
     :height 48px
     :margin-right 5px
-    :background url(/images/avatar_thumb_corners.png)
-  a:hover
-    :background url(/images/avatar_thumb_corners_hover.png)
+    &.round_corners
+      :background url(/images/avatar_thumb_corners.png)
+    &.round_corners:hover
+      :background url(/images/avatar_thumb_corners_hover.png)
