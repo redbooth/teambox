@@ -46,10 +46,12 @@ en:
       submit: Send
   conversations:
     fields:
-      name: Name
+      name: Title
+      first_message: First message
     new:
       title: New Conversation
       submit: Create
+      subscribe_note: This people will be notified of this message and any following comments. As soon as we code that in, of course
     column:
       conversations: Conversations
     conversation_with_extract:

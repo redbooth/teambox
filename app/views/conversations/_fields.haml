@@ -1,3 +1,6 @@
 .name.text_field
   = f.label :name, t('.name')
   = f.text_field :name
+.body.text_area
+  = label_tag :body, t('.first_message')
+  = text_area_tag :body
