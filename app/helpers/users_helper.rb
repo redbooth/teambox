@@ -14,9 +14,12 @@ module UsersHelper
         :user => user }
   end
 
+  def user_link(user)
+    link_to user.name, user_path(user)
+  end
+
   def user_checkbox(user)
-    text = ''
-    text << check_box_tag("user_#{user.id}", :value => '1', :checked => true) 
+    text =  check_box_tag("user_#{user.id}", :value => '1', :checked => true) 
     text << ' '
     text << label_tag("user_#{user.id}", user.name)
   end

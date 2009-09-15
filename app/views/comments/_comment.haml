@@ -8,7 +8,7 @@
   .when
     = posted_date(comment.created_at)
   .name
-    = link_to comment.user.name, user_path(comment.user)
+    = user_link(comment.user)
   .body
     = comment.body_html
   - if comment.uploads.count > 0
