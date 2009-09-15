@@ -2,6 +2,34 @@ class TasksController < ApplicationController
   before_filter :find_task_list, :only => [:destroy,:create,:update,:check]
   before_filter :find_task, :only => [:destroy,:update,:check,:uncheck]
 
+  def filter
+    if params[:filter_action] == 'asc'
+      @comments = tasks.comments.ascending
+    elsif params[:filter_action] == 'desc'
+      @comments = tasks.comments.descending
+    else
+      @comments = tasks.comments
+    end
+      
+    respond_to do |format|
+      format.js
+    end    
+  end
+
+  def sort
+    if params[:sort_action] == 'uploads'
+      @comments = tasks.comments.with_uploads
+    elsif params[:sort_action] == 'hours'
+      @comments = tasks.comments.with_hours
+    else
+      @comments = tasks.comments
+    end
+        
+    respond_to do |format|
+      format.js
+    end    
+  end
+  
   def show
     @task_lists = @current_project.task_lists
     @task = @current_project.tasks.find(params[:id])

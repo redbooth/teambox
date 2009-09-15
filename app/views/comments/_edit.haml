@@ -1,6 +1,13 @@
 - remote_form_for comment do |f|
   = comment_fields(f)
-  = upload_a_file_link(comment)
+  .hours
+    .text_field
+      = f.label :hours
+      = f.text_field :hours
+  .upload
+    = upload_a_file_link(comment)
   .submit
     = f.submit t('.submit')
+    or
     = cancel_edit_comment_link(comment)
+  .clear

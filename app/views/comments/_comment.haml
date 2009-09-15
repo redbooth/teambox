@@ -1,18 +1,26 @@
 .comment{:id => "comment_#{comment.id}" }
-  %p.actions{ :style => 'display: none' }
-    %span
-      = edit_comment_link(comment)
-      = delete_comment_link(comment)
-
-  =thumb_avatar(comment.user)
-  .date
-    = comment.created_at.strftime("%I:%M %p &mdash; %b %d %Y")
-  .name
-    = link_to comment.user.name, user_path(comment.user)
-  .body
-    = comment.body_html
-  - if comment.uploads.count > 0
-    .upload_list
-      = list_uploads_inline(comment.uploads)
-      %br
+  .info
+    %p.actions{ :style => 'display: none' }
+      %span
+        = edit_comment_link(comment)
+        = delete_comment_link(comment)
+        
+    =thumb_avatar(comment.user)
+    - unless comment.hours.nil?
+      .hours
+        =hour_image
+        %span
+          =comment.hours
+          hr
+  .block
+    .date
+      = comment.created_at.strftime("%I:%M %p &mdash; %b %d %Y")
+    .name
+      = link_to comment.user.name, user_path(comment.user)
+    .body
+      = comment.body_html
+    - if comment.uploads.count > 0
+      .upload_list
+        = list_uploads_inline(comment.uploads)
+        %br
   .clear

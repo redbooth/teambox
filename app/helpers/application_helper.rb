@@ -1,6 +1,10 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  def filter_box
+    render :partial => 'shared/filter'
+  end
+  
   def header
     render :partial => 'shared/header'
   end
@@ -96,11 +100,23 @@ module ApplicationHelper
   def pencil_image
     image_tag('pencil.jpg', :class => 'pencil')
   end
+
+  def time_image
+    image_tag('time.jpg', :class => 'time')
+  end
+    
+  def hour_image
+    image_tag('hours.jpg', :class => 'hour')
+  end
   
   def drag_image
     image_tag('drag.jpg', :class => 'drag')
   end
 
+  def add_image
+    image_tag('add_button.jpg', :class => 'add')
+  end
+  
   def reload_javascript_events
       page << "Event.addBehavior.reload()"
   end

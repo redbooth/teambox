@@ -23,5 +23,13 @@ Event.addBehavior({
   ".trash:mouseout": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')    
-  } 
+  },
+  ".time:mouseover": function(e){
+    image_source = $(this).src
+    $(this).src = image_source.sub(/time.*\.jpg/,'time_hover.jpg')
+  },
+  ".time:mouseout": function(e){
+    image_source = $(this).src
+    $(this).src = image_source.sub(/time.*\.jpg/,'time.jpg')    
+  }  
 });

@@ -71,8 +71,10 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :target_type #model name
     t.integer :project_id
     t.integer :user_id
-    t.text  :body
-    t.text  :body_html
+    t.text    :body
+    t.text    :body_html
+    t.float   :hours
+    t.billable  :boolean
     t.timestamps    
   end
   
@@ -161,14 +163,6 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :target_id,   :limit => 11
     t.string   :target_type
     t.string   :action
-    t.timestamps
-  end
-
-  create_table :hours, :force => true do |t|
-    t.integer   :project_id
-    t.integer   :user_id
-    t.integer   :comment_id
-    t.float     :hours
     t.timestamps
   end
 
