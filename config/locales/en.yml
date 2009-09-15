@@ -61,7 +61,10 @@ en:
       edit: Edit
       comment: Comment
       comments: Comments
-      
+    index:
+      message: message
+      messages: messages
+    
   
   tasks:
     fields:
