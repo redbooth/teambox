@@ -1,5 +1,5 @@
 - remote_form_for form_url do |f|
   = comment_fields(f)
+  = upload_a_file_link(comment)
   .submit
     = f.submit t('.submit')
-  = upload_a_file_link(comment)
