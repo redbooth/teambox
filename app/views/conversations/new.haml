@@ -1,3 +1,14 @@
+- content_for :column do
+  .notify_all
+    = link_to 'Notify all'
+  %h2
+    Notify users
+  - for user in @current_project.users
+    .user
+      =user_checkbox(user)
+  .explanation
+    =t '.subscribe_note'
+
 %h2= t('.title')
 
 - form_for [@current_project,@conversation] do |f|
