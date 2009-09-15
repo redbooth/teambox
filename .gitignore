@@ -6,4 +6,5 @@ public/stylesheets/*.css
 public/avatars/*
 public/upload/*
 public/uploads/*
-
+.idea
+db/test.sqlite3
