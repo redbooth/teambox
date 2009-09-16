@@ -1,0 +1,65 @@
+#column .conversations .conversation {
+  font-size: 12px; }
+  #column .conversations .conversation .selected {
+    font-weight: bold; }
+  #column .conversations .conversation a {
+    color: #555;
+    display: block;
+    padding: 3px 0; }
+  #column .conversations .conversation:hover {
+    background: #ccc; }
+  #column .conversations .conversation .unread_comment_count {
+    float: right; }
+
+.index_conversations #conversations .conversation {
+  margin: 10px 0 10px 10px;
+  color: rgb(30,30,30); }
+  .index_conversations #conversations .conversation h3 {
+    font-size: 15px;
+    margin: 0;
+    padding: 0; }
+  .index_conversations #conversations .conversation .body {
+    font-size: 12px;
+    color: rgb(60,60,60); }
+
+.new_conversations .content h2, .new_conversations .content form {
+  margin-left: 20px; }
+.new_conversations .content input#conversation_name {
+  width: 500px; }
+.new_conversations .content textarea#conversation_body {
+  width: 500px;
+  height: 240px;
+  font-size: 12px; }
+.new_conversations .content input#conversation_submit {
+  margin: 15px 0 20px 430px; }
+.new_conversations .column {
+  font-size: 12px; }
+  .new_conversations .column .notify_all {
+    float: right; }
+    .new_conversations .column .notify_all a {
+      color: rgb(120,120,120);
+      text-decoration: none;
+      font-size: 10px; }
+  .new_conversations .column .user {
+    display: block;
+    font-size: 12px; }
+  .new_conversations .column .explanation {
+    margin-top: 10px; }
+
+.show_conversations .conversation_header {
+  display: block;
+  margin-bottom: 20px; }
+  .show_conversations .conversation_header h2 {
+    font-size: 16px;
+    margin-left: 20px; }
+  .show_conversations .conversation_header .actions {
+    float: right;
+    font-size: 12px;
+    color: rgb(200,200,200);
+    text-align: right; }
+    .show_conversations .conversation_header .actions .by a {
+      color: rgb(200,200,200); }
+.show_conversations #comments {
+  font-size: 12px; }
+.show_conversations form#new_comment {
+  margin-top: 10px; }

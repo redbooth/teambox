@@ -10,6 +10,40 @@
         :padding 3px 0
       &:hover
         :background #ccc
+      .unread_comment_count
+        :float right
+
+.index_conversations
+  #conversations
+    .conversation
+      :margin 10px 0 25px 10px
+      :color rgb(30,30,30)
+      h3
+        :font-family "Lucida Grande",Verdana,Arial,Helvetica,sans-serif
+        :margin 0
+          :bottom 5px
+        :padding 0
+        :font-size 18px
+        a
+          :color rgb(20,20,20)
+      .body
+        :font-size 12px
+        :color rgb(60,60,60)
+        p
+          :font-family "Lucida Grande",Verdana,Arial,Helvetica,sans-serif
+          :line-height 1.3em
+          :margin 2px 0 10px
+      .footer
+        :font-size 11px
+        :padding 0
+        :margin 5px 0 0 0
+        :color rgb(120,120,120)
+        a
+          :font-size 11px
+          :color rgb(120,120,120)
+          :text-decoration underline
+        a:hover
+          :text-decoration none
 
 .new_conversations
   .content 
@@ -17,7 +51,7 @@
       :margin-left 20px
     input#conversation_name
       :width 500px
-    textarea#body
+    textarea#conversation_body
       :width 500px
       :height 240px
       :font-size 12px

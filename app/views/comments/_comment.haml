@@ -1,6 +1,6 @@
 .comment{:id => "comment_#{comment.id}" }
   .info
-    %p.actions{ :style => 'display: none' }
+    %p.actions
       %span
         = edit_comment_link(comment)
         = delete_comment_link(comment)
@@ -14,7 +14,7 @@
           hr
   .block
     .date
-      = comment.created_at.strftime("%I:%M %p &mdash; %b %d %Y")
+      = posted_date comment.created_at
     .name
       = link_to comment.user.name, user_path(comment.user)
     .body

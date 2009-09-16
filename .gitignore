@@ -7,4 +7,4 @@ public/avatars/*
 public/upload/*
 public/uploads/*
 .idea
-db/test.sqlite3
+db/*.sqlite3

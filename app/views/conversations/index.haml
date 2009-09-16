@@ -1,1 +1,18 @@
 = conversation_column(@current_project,@conversations)
+
+#conversations
+  - for conversation in @conversations
+    .conversation
+      %h3= conversation_link(@current_project,conversation)
+      .body
+        - if conversation.comments.first
+          = conversation.comments.first.body_html
+        - else
+          %p= "No comments for this conversation"
+      .footer
+        Started by
+        = user_link(conversation.user)
+        = "3 days ago."
+        = conversation_comments_link(@current_project,conversation) + ','
+        last posted
+        = "4 hours ago. "
