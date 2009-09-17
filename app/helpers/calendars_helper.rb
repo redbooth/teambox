@@ -1,10 +1,22 @@
 module CalendarsHelper
 
-  def build_small_calendar(calendar,year,month)
-    build_calendar(calendar,year,month,true)
+  def day_hours(comments)
+    day_hours = {}
+    comments.group_by(&:day).each do |day, comments|
+      day_hours[day] = comments
+    end
+    day_hours
+  end
+
+  def week_hours
+    
+  end
+
+  def build_small_calendar(comments,year,month)
+    build_calendar(comments,year,month,true)
   end
   
-  def build_calendar(year,month,small=false)
+  def build_calendar(comments,year,month,small=false)
     first = Date.civil(year,month, 1)
     last = Date.civil(year,month, -1)
     first_weekday = first_day_of_week(0)
@@ -12,36 +24,45 @@ module CalendarsHelper
 
     cal = ''
     cal << print_previous_month_days(first_weekday,first,small)
-
+    week_tally = 0
     first.upto(last) do |cur|
-
+      tally = 0
       current_day = add_zero_for_first_week(cur)
 
-      #marked = marks.has_key?(current_day) && marks[current_day].accomplished ? 'marked' : nil
-      #mark = marks[current_day] if marks.has_key?(current_day)
-    
-      cell_text  ||= cur.mday
+      day_hours = day_hours(comments)
+      if day_hours.has_key?(current_day)
+        day_hours[current_day].each { |c| tally += c.hours }
+        cell_text  ||= "#{cur.mday} <p>#{tally} hrs</p>"
+      else
+        cell_text  ||= cur.mday
+      end
       cell_attrs = {}
       cell_attrs[:class] = "day this_month #{'today' if (cur == Time.current.to_date)} "
       cell_attrs[:id] = "day_#{cur.mday}"
-    
+
       #if markable?(calendar,marked,year,month,cell_text)
       #  cell_attrs[:class] += 'markable'
       #  cell_attrs[:onclick] = "Mark.mark_calendar_block('#{form_authenticity_token}','#{calendar.permalink}',#{cell_text},#{month},#{year});"
       #end
-    
-      cal << assign_day(cell_attrs,cell_text,last_weekday,cur)
 
+      week_tally += tally
+      cal << assign_day(cell_attrs,cell_text,last_weekday,cur,week_tally,last)
+      if cur.wday == last_weekday
+        week_tally = 0
+      end
+      
     end    
-    cal << print_next_month_days(first_weekday,last_weekday,last)
+    cal << print_next_month_days(first_weekday,last_weekday,week_tally,last)
   end
 
   private
 
-  def assign_day(cell_attrs,cell_text,last_weekday,cur)
+  def assign_day(cell_attrs,cell_text,last_weekday,cur,week_tally,last)
     cell_attrs = cell_attrs.map {|k, v| %(#{k}="#{v}") }.join(" ")
     cal = "<td #{cell_attrs}>#{cell_text}</td>"
-    cal << "</tr><tr>" if cur.wday == last_weekday
+    if cur.wday == last_weekday
+      cal << "<td><p>#{week_tally} hrs</p></td></tr><tr>" 
+    end  
     return cal
   end
 
@@ -70,7 +91,7 @@ module CalendarsHelper
         "<th>#{d}</th>"         
       end
     end.join('')
-    cal << "</tr><tr>"
+    cal << "<th>Weekly Total</th></tr><tr>"
   
     beginning_of_week(first, first_weekday).upto(first - 1) do |d|
       cal << %(<td class="previous_month)
@@ -80,20 +101,21 @@ module CalendarsHelper
     return cal 
   end
 
-  def print_next_month_days(first_weekday,last_weekday,last)
+  def print_next_month_days(first_weekday,last_weekday,week_tally,last)
     cal = ''
     (last + 1).upto(beginning_of_week(last + 7, first_weekday) - 1)  do |d|
       cal << %(<td class="next_month)
       cal << " weekendDay" if weekend?(d)
       cal << %(">#{d.day}</td>)        
     end unless last.wday == last_weekday
+    cal << "<td><p>#{week_tally} hrs</p></td></tr><tr>"     
     cal << "</tr></table>"    
   end
 
   def first_day_of_week(day)
     day
   end
-
+    
   def last_day_of_week(day)
     if day > 0
       day - 1

@@ -1,2 +1,9 @@
-.calendar  
-  = build_calendar(@year,@month)
+-content_for :banner do
+  .calendar  
+    = build_calendar(@comments,@year,@month)
+
+-content_for :column do
+  rwar
+ 
+= new_comment_form(@current_project) 
+=list_comments(@comments)
