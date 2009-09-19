@@ -3,13 +3,17 @@ class TaskList < ActiveRecord::Base
   belongs_to :project
   belongs_to :page
   
-  has_many :tasks, :order => 'position'
+  has_many :tasks, :order => 'position', :dependent => :destroy
   has_many :comments, :as => :target, :order => 'created_at DESC'
   
   validates_length_of :name, :minimum => 3
   
   attr_accessible :name
-  
+
+  def owner?(u)
+    user = u
+  end
+    
   def before_save
     if position.nil?
       last_position = self.project.task_lists.find(:first,

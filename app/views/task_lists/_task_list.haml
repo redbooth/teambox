@@ -1,5 +1,6 @@
 .task_list_wrap
   .task_list{ :class => "#{ 'active_task_list' if current_target == task_list }" }
+    =task_list_action_links(project,task_list)
     = unread_comment_count(task_list)
     = task_list_link(task_list)
   .tasks{ :id => "project_#{project.id}_task_list_#{task_list.id}" }
