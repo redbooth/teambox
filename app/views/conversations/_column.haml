@@ -1,4 +1,6 @@
 - content_for :column do
   = new_conversation_link(project)
+  %h2.title_with_button
+    =link_to 'Conversations', project_conversations_path(project)
   .conversations
     = list_conversations(conversations,current_conversation)
