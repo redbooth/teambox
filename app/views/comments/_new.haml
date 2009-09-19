@@ -1,5 +1,6 @@
+- show_hours ||= false
 - remote_form_for form_url do |f|
-  = comment_fields(f)
+  = comment_fields(f,comment,show_hours)
   = upload_a_file_link(comment)
   .submit
     = f.submit t('.submit')

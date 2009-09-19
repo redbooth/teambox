@@ -1,9 +1,11 @@
 -content_for :banner do
+  =calendar_nav(@current_project,@year,@month)
   .calendar  
     = build_calendar(@comments,@year,@month)
 
 -content_for :column do
   rwar
  
-= new_comment_form(@current_project) 
-=list_comments(@comments)
+= new_hour_comment_form(@current_project) 
+#comments
+  =list_comments(@comments)

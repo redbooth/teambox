@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   private
     def load_project
       if params[:project_id] != nil
-        @current_project = Project.find_by_permalink(params[:project_id])        
+        @current_project = Project.find_by_permalink(params[:project_id])
         unless @current_project.nil?
           current_user.add_recent_project(@current_project)
         end

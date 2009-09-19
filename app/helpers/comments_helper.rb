@@ -1,4 +1,13 @@
 module CommentsHelper
+
+  def new_hour_comment_form(project)
+    render :partial => 'comments/new', 
+      :locals => { :target => nil, 
+        :form_url => [project,Comment.new], 
+        :comment => project.comments.new,
+        :show_hours => true }
+  end
+
   def new_comment_form(project,target = nil)
     if target.nil?
       form_url = [project,Comment.new]
@@ -7,10 +16,9 @@ module CommentsHelper
     else
       form_url = [project,target,Comment.new]
     end
-    @comment = project.comments.new
     render :partial => 'comments/new', 
       :locals => { :target => target, 
-        :form_url => form_url, :comment => @comment }
+        :form_url => form_url, :comment => project.comments.new }
   end
   
   def list_comments(comments)
@@ -21,8 +29,8 @@ module CommentsHelper
     render :partial => 'comments/comment', :locals => { :comment => comment }
   end
 
-  def comment_fields(f)
-    render :partial => 'comments/fields', :locals => { :f => f }
+  def comment_fields(f,comment,show_hours)
+    render :partial => 'comments/fields', :locals => { :f => f, :comment => comment, :show_hours => show_hours }
   end
   
   def cancel_edit_comment_link(comment)

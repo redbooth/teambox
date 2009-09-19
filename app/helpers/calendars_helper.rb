@@ -25,6 +25,7 @@ module CalendarsHelper
     cal = ''
     cal << print_previous_month_days(first_weekday,first,small)
     week_tally = 0
+    total = 0
     first.upto(last) do |cur|
       tally = 0
       current_day = add_zero_for_first_week(cur)
@@ -46,13 +47,14 @@ module CalendarsHelper
       #end
 
       week_tally += tally
+      total += week_tally
       cal << assign_day(cell_attrs,cell_text,last_weekday,cur,week_tally,last)
       if cur.wday == last_weekday
         week_tally = 0
       end
       
     end    
-    cal << print_next_month_days(first_weekday,last_weekday,week_tally,last)
+    cal << print_next_month_days(first_weekday,last_weekday,week_tally,last,total)
   end
 
   private
@@ -61,7 +63,7 @@ module CalendarsHelper
     cell_attrs = cell_attrs.map {|k, v| %(#{k}="#{v}") }.join(" ")
     cal = "<td #{cell_attrs}>#{cell_text}</td>"
     if cur.wday == last_weekday
-      cal << "<td><p>#{week_tally} hrs</p></td></tr><tr>" 
+      cal << "<td class='total'><p>#{week_tally} hrs</p></td></tr><tr>" 
     end  
     return cal
   end
@@ -101,15 +103,16 @@ module CalendarsHelper
     return cal 
   end
 
-  def print_next_month_days(first_weekday,last_weekday,week_tally,last)
+  def print_next_month_days(first_weekday,last_weekday,week_tally,last,total)
     cal = ''
     (last + 1).upto(beginning_of_week(last + 7, first_weekday) - 1)  do |d|
       cal << %(<td class="next_month)
       cal << " weekendDay" if weekend?(d)
       cal << %(">#{d.day}</td>)        
     end unless last.wday == last_weekday
-    cal << "<td><p>#{week_tally} hrs</p></td></tr><tr>"     
-    cal << "</tr></table>"    
+    cal << "<td class='total'><p>#{week_tally} hrs</p></td></tr><tr>"     
+    cal << "<tr><td class='blank' colspan='7'></td> <td class='max_total total'><p>#{total} hrs</p></td></tr>"
+    cal << "</tr></table>"
   end
 
   def first_day_of_week(day)
@@ -150,24 +153,32 @@ module CalendarsHelper
     marks
   end
 
-  def link_to_last_month(year,month)
+  def link_to_last_month(project,year,month)
     if month == 1
       month = 12
       year -= 1
     else
       month -= 1
     end  
-    link_to '&larr;', ''
+    link_to '&larr;', project_hours_by_month_url(project,year,month)
   end
 
-  def link_to_next_month(year,month)
+  def link_to_next_month(project,year,month)
     if month == 12
       month = 1
       year += 1
     else
       month += 1
     end    
-    link_to '&rarr;', ''
+    link_to '&rarr;', project_hours_by_month_url(project,year,month)
   end
 
+  def calendar_nav(project,year,month)
+    render :partial => 'hours/calendar_navigation',
+      :locals => { 
+        :project => project,
+        :year => year,
+        :month => month }
+  end
+  
 end  

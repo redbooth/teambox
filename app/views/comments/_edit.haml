@@ -1,9 +1,5 @@
 - remote_form_for comment do |f|
-  = comment_fields(f)
-  .hours
-    .text_field
-      = f.label :hours
-      = f.text_field :hours
+  = comment_fields(f,comment,true)
   .upload
     = upload_a_file_link(comment)
   .submit

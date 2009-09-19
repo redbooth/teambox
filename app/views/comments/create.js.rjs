@@ -5,7 +5,7 @@ unless @comment.new_record?
     page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
   page.en
   
-  page['comment_body'].setValue('')
+  page << "Form.reset('new_comment')"
   page['new_comment'].down('.uploads_save').childElements.invoke('remove')
   page['new_comment'].down('.uploads_current').select('div').invoke('remove')
   page['new_comment'].down('.uploads_current').hide
