@@ -1,9 +1,39 @@
-#activities
-  .activity
-    :padding 0px
-    :margin 0px
-      :top 15px
-      :bottom 15px
-    :font-size 12px
-    .comment
-      :border 0
+.activity
+  :padding 0px
+  :margin 0px
+    :top 15px
+    :bottom 15px
+  :font-size 12px
+
+  .comment
+    :border 0
+  .activity_action
+    .date
+      :float right
+      :font-size 10px
+      :color rgb(180,180,180)
+      :padding-top 3px
+    span
+      :vertical-align middle
+    span.name
+      a
+        :font-weight bold
+    span.target
+      a
+        :font-weight bold
+    img
+      :vertical-align middle
+      :margin
+        :right 3px
+        :left 2px 
+    .clear
+      :border-bottom solid 1px rgb(235,235,235)
+      :margin-left 26px
+      :padding-bottom 1px
+
+.activity_hover
+  .activity_action
+    .clear
+      :border-bottom solid 1px rgb(200,200,200)
+    .date
+      :color rgb(0,0,0)

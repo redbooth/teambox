@@ -8158,10 +8158,16 @@ Event.addBehavior({
 
 Event.addBehavior({
   ".comment:mouseover": function(e){
-    $(this).down('a.hours').show();
+    $(this).className = 'comment comment_hover'
   },
   ".comment:mouseout": function(e){
-    $$("div.comment a.hours").each(function(e){ e.hide(); });
+    $$("div.comment").each(function(e){ e.className = 'comment'; });
+  },
+  ".activity:mouseover": function(e){
+    $(this).className = 'activity activity_hover'
+  },
+  ".activity:mouseout": function(e){
+    $$("div.activity").each(function(e){ e.className = 'activity'; });
   },
   "#sort_hours:click": function(e){
     alert($(this).checked);

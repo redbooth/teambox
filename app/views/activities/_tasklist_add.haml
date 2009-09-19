@@ -1,4 +1,8 @@
-.tasklist
-  = activity.target.user.login
-  added a task list
-  = task_list_link(activity.target)
+.activity_action.activity_tasklist_add
+  =image_tag('activity_tasklist_add.jpg')
+  %span.name= link_to activity.target.user.name, user_path(activity.target.user)
+  %span
+    added a task list
+  %span.target= task_list_link(activity.target)
+  .date= posted_date activity.target.created_at
+  .clear
