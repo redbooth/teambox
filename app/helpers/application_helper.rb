@@ -94,8 +94,10 @@ module ApplicationHelper
   end
   
   def posted_date(datetime)
-    if datetime > 1.day.ago
+    if datetime > Time.current.beginning_of_day
       datetime.strftime("%I:%M %p")
+    elsif datetime > 1.day.ago.beginning_of_day
+      t 'date.yesterday'
     elsif datetime > 7.days.ago
       datetime.strftime("%b %d")
     else

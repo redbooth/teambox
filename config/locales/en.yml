@@ -154,7 +154,4 @@ en:
       blog: Blog
 
   date:
-    formats:
-      default: "%Y-%m-%d"
-      short: "%b %d"
-      long: "%B %d, %Y"
+    yesterday: Yesterday
