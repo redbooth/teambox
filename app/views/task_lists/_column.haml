@@ -1,0 +1,7 @@
+- content_for :column do
+  = new_task_list_link(project)
+  %h2.title_with_button
+    =link_to 'Task Lists', project_task_lists_path(project)
+  .task_lists  
+    = list_task_lists(project,task_lists,current_target)
+  =filter_box
