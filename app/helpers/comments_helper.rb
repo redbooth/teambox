@@ -1,5 +1,10 @@
 module CommentsHelper
 
+  def comments_settings
+    render :partial => 'comments/settings'
+  end
+
+
   def new_hour_comment_form(project)
     render :partial => 'comments/new', 
       :locals => { :target => nil, 

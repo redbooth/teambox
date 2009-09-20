@@ -66,6 +66,16 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.timestamps
   end
 
+  create_table :activities, :force => true do |t|
+    t.integer  :user_id
+    t.integer  :project_id
+    t.integer  :target_id,   :limit => 11
+    t.string   :target_type
+    t.string   :action
+    t.string   :comment_type
+    t.timestamps
+  end
+  
   create_table :comments do |t|
     t.integer :target_id 
     t.string  :target_type #model name
@@ -156,15 +166,6 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :last_send_attempt, :default => 0
     t.text     :mail
     t.datetime :created_on
-  end
-
-  create_table :activities, :force => true do |t|
-    t.integer  :user_id
-    t.integer  :project_id
-    t.integer  :target_id,   :limit => 11
-    t.string   :target_type
-    t.string   :action
-    t.timestamps
   end
 
 end

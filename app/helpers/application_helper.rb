@@ -1,9 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-
-  def filter_box
-    render :partial => 'shared/filter'
-  end
   
   def header
     render :partial => 'shared/header'
