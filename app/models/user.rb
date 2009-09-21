@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
 
   validates_associated :projects  #, :people Ensure associated people and projects exist
 
-  attr_accessible :login, :email, :name, :password, :password_confirmation, :avatar
+  attr_accessible :login, :email, :name, :password, :password_confirmation, :avatar, :time_zone, :language
 
   def self.authenticate(login, password)
     return nil if login.blank? || password.blank?
