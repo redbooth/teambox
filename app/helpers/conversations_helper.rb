@@ -1,4 +1,9 @@
 module ConversationsHelper
+
+  def conversations_settings
+    render :partial => 'conversations/settings'
+  end
+  
   def new_conversation_link(project)
     link_to add_image, new_project_conversation_path(project),
     :class => 'add_button'

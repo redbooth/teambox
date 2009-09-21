@@ -13,7 +13,7 @@ class Comment < ActiveRecord::Base
   named_scope :with_hours, :conditions => 'hours > 0'
 
   attr_accessor :activity
-  
+
   def after_create
     target.last_comment_id = id
     target.save(false)
