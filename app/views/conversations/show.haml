@@ -2,8 +2,6 @@
 
 .conversation_header
   .actions
-    %span.by
-      = link_to @current_conversation.user.name, user_path(@current_conversation.user)
     %span.comments
       = conversation_comments_count(@current_conversation)
     %span.edit
