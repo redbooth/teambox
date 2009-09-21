@@ -58,9 +58,9 @@ en:
       posted_by: Posted by
     show:
       started_by: Started by
-      edit: Edit
-      comment: Comment
-      comments: Comments
+      edit: Edit title
+      message: message
+      messages: messages
     index:
       message: message
       messages: messages
