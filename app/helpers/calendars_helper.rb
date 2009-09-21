@@ -1,19 +1,23 @@
 module CalendarsHelper
 
   def list_hour_users(users)
-    render :partial => 'hours/user_filter', :collection => users.uniq, :as => :user
+    render :partial => 'hours/user_filter', :locals => { :users => users.uniq }
   end
 
-  def observe_hour_filter(dom_id)
+  def observe_user_filter
     update_page_tag do |page|
-      page[dom_id].observe('change') do |page|
-        page << "if (this.checked) {"
-          page << "$$('.hour_' + this.readAttribute('value')).invoke('show');"
-        page << "} else {"
-          page << "$$('.hour_' + this.readAttribute('value')).invoke('hide');"
-        page << "}"
-      end
+      page['user_filter'].observe('change') { |page| page.apply_user_filter }
     end
+  end
+  
+  def apply_user_filter
+    page << "if (this.selectedIndex == 0) {"
+      page.select('.hour').invoke('show')
+    page.els
+      page['total_sum'].hide
+      page.select('.hour').invoke('hide')
+      page << "$$('.hour_' + this.getValue()).invoke('show');"
+    page.en
   end
 
   def day_hours(comments)
@@ -30,7 +34,7 @@ module CalendarsHelper
     @current_class_name ||= 0
     @class_names ||= {}
     @class_names[user.to_s] ||= (@current_class_name += 1)
-    "#{text}_#{user}_#{@class_names[user.to_s]} hour_#{user}"
+    "#{text}_#{@class_names[user.to_s]} hour_#{user} hour"
   end
 
   def week_hours
@@ -151,7 +155,7 @@ module CalendarsHelper
     cal << "<tr><td class='blank' colspan='7'></td><td class='max_total total'>"
     total_tally.each { |i,w|
       cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'month_total') ) }
-    cal << "<p>Total: #{total_sum}"
+    cal << "<p id='total_sum' class='hour'>Total: #{total_sum}"
     cal << "</td></tr>"
     cal << "</table>"
   end
