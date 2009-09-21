@@ -1,12 +1,13 @@
 class Avatar < ActiveRecord::Base
   belongs_to :user
+  validates_associated :user
   
   acts_as_fleximage do
     image_directory 'public/avatars'
     use_creation_date_based_directories false
     image_storage_format :jpg
     invalid_image_message 'format is invalid. You must supply a valid image file.'
-    require_image true
+    require_image false
     default_image_path 'public/images/default_avatar.jpg'
   
     preprocess_image do |image|
