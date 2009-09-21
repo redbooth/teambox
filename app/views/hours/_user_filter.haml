@@ -1,0 +1,5 @@
+.user_filter
+  = check_box_tag '', user.login, true, :id => "filter_#{user.login}"
+  = label_tag "filter_#{user.login}", user.login
+  = observe_hour_filter("filter_#{user.login}")
+  
