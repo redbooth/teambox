@@ -24,16 +24,25 @@ module CalendarsHelper
 
     cal = ''
     cal << print_previous_month_days(first_weekday,first,small)
-    week_tally = 0
-    total = 0
+    
+    tally = {}
+    week_tally = {}
+    total_tally = {}
+    total_sum = 0
+    
     first.upto(last) do |cur|
-      tally = 0
       current_day = add_zero_for_first_week(cur)
 
       day_hours = day_hours(comments)
       if day_hours.has_key?(current_day)
-        day_hours[current_day].each { |c| tally += c.hours }
-        cell_text  ||= "#{cur.mday} <p>#{tally} hrs</p>"
+        cell_text  ||= "#{cur.mday}"
+        day_hours[current_day].each do |c|
+          tally[c.user.login] ||= 0; tally[c.user.login] += c.hours
+          week_tally[c.user.login] ||= 0; week_tally[c.user.login] += c.hours
+          total_tally[c.user.login] ||= 0; total_tally[c.user.login] += c.hours;
+          total_sum += c.hours
+          cell_text << content_tag(:p,"#{c.user.login} #{c.hours} hrs")
+        end
       else
         cell_text  ||= cur.mday
       end
@@ -46,15 +55,12 @@ module CalendarsHelper
       #  cell_attrs[:onclick] = "Mark.mark_calendar_block('#{form_authenticity_token}','#{calendar.permalink}',#{cell_text},#{month},#{year});"
       #end
 
-      week_tally += tally
-      total += week_tally
       cal << assign_day(cell_attrs,cell_text,last_weekday,cur,week_tally,last)
       if cur.wday == last_weekday
-        week_tally = 0
+        week_tally = {}
       end
-      
-    end    
-    cal << print_next_month_days(first_weekday,last_weekday,week_tally,last,total)
+    end
+    cal << print_next_month_days(first_weekday,last_weekday,week_tally,last,total_tally,total_sum)
   end
 
   private
@@ -63,7 +69,10 @@ module CalendarsHelper
     cell_attrs = cell_attrs.map {|k, v| %(#{k}="#{v}") }.join(" ")
     cal = "<td #{cell_attrs}>#{cell_text}</td>"
     if cur.wday == last_weekday
-      cal << "<td class='total'><p>#{week_tally} hrs</p></td></tr><tr>" 
+      cal << "<td class='total'>"
+      week_tally.each_with_index { |i,w| cal << "<p>#{i} #{w} hrs</p>" }
+      cal << "</td></tr><tr>"
+#      cal << "<td class='total'><p>#{week_tally} hrs</p></td></tr><tr>" 
     end  
     return cal
   end
@@ -103,16 +112,22 @@ module CalendarsHelper
     return cal 
   end
 
-  def print_next_month_days(first_weekday,last_weekday,week_tally,last,total)
+  def print_next_month_days(first_weekday,last_weekday,week_tally,last,total_tally,total_sum)
     cal = ''
     (last + 1).upto(beginning_of_week(last + 7, first_weekday) - 1)  do |d|
       cal << %(<td class="next_month)
       cal << " weekendDay" if weekend?(d)
       cal << %(">#{d.day}</td>)        
     end unless last.wday == last_weekday
-    cal << "<td class='total'><p>#{week_tally} hrs</p></td></tr><tr>"     
-    cal << "<tr><td class='blank' colspan='7'></td> <td class='max_total total'><p>#{total} hrs</p></td></tr>"
-    cal << "</tr></table>"
+    cal << "<td class='total'>"
+    week_tally.each_with_index { |i,w| cal << "<p>#{i} #{w} hrs</p>" }
+    cal << "</td></tr><tr>"
+#    cal << "<td class='total'><p>#{week_tally} hrs</p></td></tr><tr>"     
+    cal << "<tr><td class='blank' colspan='7'></td><td class='max_total total'>"
+    total_tally.each_with_index { |i,w| cal << "<p>#{i} #{w}</p>"}
+    cal << "<p>Total: #{total_sum}"
+    cal << "</td></tr>"
+    cal << "</table>"
   end
 
   def first_day_of_week(day)
