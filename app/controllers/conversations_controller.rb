@@ -1,5 +1,5 @@
 class ConversationsController < ApplicationController
-  before_filter :load_conversation, :only => [ :show, :edit, :update, :destroy ]
+  before_filter :load_conversation, :only => [ :show, :edit, :update, :destroy, :update_comments ]
   
   def new
     @conversation = @current_project.conversations.new
@@ -23,8 +23,18 @@ class ConversationsController < ApplicationController
   end
   
   def show
-    @comments = @current_conversation.comments
+    @comments = @current_conversation.get_comments(current_user)
     @conversations = @current_project.conversations
+  end
+  
+  def update_comments
+    if params.has_key?(:show)
+      show = params[:show]
+    else
+      show = 'all'
+    end
+    
+    @comments = @current_conversation.get_comments(current_user,show)
   end
   
   private

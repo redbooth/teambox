@@ -24,6 +24,7 @@ class CommentsController < ApplicationController
     end
 
     @original_controller = params[:original_controller]
+    
     @current_date = Time.current
     set_year_month(@current_date.year,@current_date.month)
 
