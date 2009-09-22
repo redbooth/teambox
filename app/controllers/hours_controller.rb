@@ -4,12 +4,9 @@ class HoursController < ApplicationController
     go_to_default_path = true unless params.has_key?(:year) && params.has_key?(:month)
     @current_date = Time.current
     unless go_to_default_path
-      @year = params[:year].to_i
-      @month = params[:month].to_i
-      @comments = @current_project.comments.with_hours.find_by_month(@month,@year)
+      set_year_month(@current_date.year,@current_date.month)
     else
-      @year = @current_date.year
-      @month = @current_date.month        
+      set_year_month(params[:year].to_i,params[:month].to_i)
     end
         
     respond_to do |format|
