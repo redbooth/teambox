@@ -54,24 +54,26 @@ module CalendarsHelper
     cal = ''
     cal << print_previous_month_days(first_weekday,first,small)
     
-    tally = {}
     week_tally = {}
     total_tally = {}
     total_sum = 0
     
     first.upto(last) do |cur|
       current_day = add_zero_for_first_week(cur)
-
+      
       day_hours = day_hours(comments)
       if day_hours.has_key?(current_day)
         cell_text  ||= "#{cur.mday}"
+        tally = {}
         day_hours[current_day].each do |c|
           tally[c.user.login] ||= 0; tally[c.user.login] += c.hours
           week_tally[c.user.login] ||= 0; week_tally[c.user.login] += c.hours
           total_tally[c.user.login] ||= 0; total_tally[c.user.login] += c.hours;
           total_sum += c.hours
-          cell_text << content_tag(:p,"#{c.user.login} #{c.hours} hrs", :class => user_class_name(c.user.login,'hours'))
         end
+        
+        tally.each { |i,c|
+          cell_text << content_tag(:p,"#{i} #{c} hrs", :class => user_class_name(i,'hours')) }
       else
         cell_text  ||= cur.mday
       end
