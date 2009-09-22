@@ -1,5 +1,19 @@
 module UsersHelper
 
+  def conversations_first_comment_link
+    link_to_remote 'First Comment', 
+      :url => conversations_first_comment_user_path(current_user), 
+      :method => :put, 
+      :html => { :class => "#{'active' if current_user.conversations_first_comment}", :id => 'conversations_first_comment' }    
+  end
+
+  def conversations_latest_comment_link
+    link_to_remote 'Lastest Comment', 
+      :url => conversations_latest_comment_user_path(current_user), 
+      :method => :put, 
+      :html => { :class => "#{'active' unless current_user.conversations_first_comment}", :id => 'conversations_latest_comment' }
+  end
+
   def comments_ascending_user_link
     link_to_remote 'Ascending', 
       :url => comments_ascending_user_path(current_user), 

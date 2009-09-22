@@ -69,6 +69,22 @@ class UsersController < ApplicationController
     end
   end
   
+  def conversations_first_comment
+    @current_user.update_attribute(:conversations_first_comment,true)
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def conversations_latest_comment
+    @current_user.update_attribute(:conversations_first_comment,false)
+
+    respond_to do |format|
+      format.js
+    end
+  end  
+  
   private
     def find_user
       @user = User.find_by_id(params[:id])
