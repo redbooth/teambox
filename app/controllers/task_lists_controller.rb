@@ -3,7 +3,7 @@ class TaskListsController < ApplicationController
   
   def index
     @task_lists = @current_project.task_lists
-    @activities = @current_project.activities.for_task_list
+    @activities = @current_project.activities.for_task_lists
   end
   
   def new
