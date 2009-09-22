@@ -207,6 +207,7 @@ module CalendarsHelper
     else
       month -= 1
     end  
+
     link_to '&larr;', project_hours_by_month_url(project,year,month)
   end
 
