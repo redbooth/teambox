@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   include Authentication::ByPassword
   include Authentication::ByCookieToken
 
-  before_create { |user| user.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500) }
+  after_create { |user| user.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save() }
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   
@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
 
   validates_associated :projects  #, :people Ensure associated people and projects exist
 
-  attr_accessible :login, :email, :name, :password, :password_confirmation, :avatar
+  attr_accessible :login, :email, :name, :password, :password_confirmation, :avatar, :time_zone, :language
 
   def self.authenticate(login, password)
     return nil if login.blank? || password.blank?
@@ -86,5 +86,4 @@ class User < ActiveRecord::Base
       shared_projects_ids.include? activity.project_id
     end
   end
-
 end

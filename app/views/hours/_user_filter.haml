@@ -1,0 +1,8 @@
+%option
+  All users
+- for user in users 
+  %option{:value => user.login}
+    = "#{user.login} "
+    - unless user.name.blank?
+      (#{user.name})
+  
