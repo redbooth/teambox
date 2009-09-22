@@ -48,8 +48,13 @@ module CalendarsHelper
   def build_calendar(comments,year,month,small=false)
     first = Date.civil(year,month, 1)
     last = Date.civil(year,month, -1)
-    first_weekday = first_day_of_week(0)
-    last_weekday = last_day_of_week(0)
+    if current_user.first_day_of_week == 'monday'
+      first_weekday = first_day_of_week(1)
+      last_weekday = last_day_of_week(1)
+    else
+      first_weekday = first_day_of_week(0)
+      last_weekday = last_day_of_week(0)
+    end
 
     cal = ''
     cal << print_previous_month_days(first_weekday,first,small)

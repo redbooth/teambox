@@ -20,3 +20,6 @@
   .language.select
     = f.label :language, t('.language')
     = f.select :language, [['English', 'en']]
+  .first_day_of_week.select
+    = f.label :first_day_of_week, t('.first_day_of_week')
+    = f.select :first_day_of_week, [[t('.sunday'), 'sunday'],[t('.monday'), 'monday']]
