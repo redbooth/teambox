@@ -132,16 +132,16 @@ module UploadsHelper
     link_to_function 'cancel', update_page { |page| page.hide_upload_form(upload) }
   end
   
-  def file_icon_image(filename)
+  def file_icon_image(filename,size='48px')
     extension = File.extname(filename)
     if extension.length > 0
       extension = extension[1,10]
     end
     
     if Upload::ICONS.include?(extension)
-      image_tag("file_icons/48px/#{extension}.png")
+      image_tag("file_icons/#{size}/#{extension}.png")
     else
-      image_tag("file_icons/48px/_blank.png")
+      image_tag("file_icons/#{size}/_blank.png")
     end
   end
 end

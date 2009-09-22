@@ -46,4 +46,8 @@ class Upload < ActiveRecord::Base
     end
     new_filename
   end
+  
+  def after_create
+    self.project.log_activity(self,'create')
+  end
 end
