@@ -1,9 +1,9 @@
 .column_settings
   %h2
     Comments Settings
-  =link_to 'Ascending', '', :class => 'active'
+  =comments_ascending_user_link
   or
-  =link_to 'Descending', ''
+  =comments_descending_user_link
   .filters
     .radio_button.uploads
       =radio_button_tag 'sort', 'all', 1

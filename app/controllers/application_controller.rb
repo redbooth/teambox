@@ -39,4 +39,10 @@ class ApplicationController < ActionController::Base
     def touch_user
       current_user.touch if logged_in?
     end
+    
+    def set_year_month(year,month)
+      @year = year
+      @month = month
+      @comments = @current_project.comments.with_hours.find_by_month(@month,@year)
+    end
 end

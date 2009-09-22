@@ -3,8 +3,8 @@ class Activity < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
 
-  named_scope :for_task_list, :conditions => "target_type = 'TaskList' || target_type = 'Task'"
-    
+  named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_type = 'TaskList' || comment_type = 'Task'"
+      
   def self.log(project,target,action,creator_id)
     puts 'rwaawrwar'
     puts target.class    
