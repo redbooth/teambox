@@ -7,8 +7,7 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resource :session
   
-
-  map.resources :users do |user|
+  map.resources :users, :member => { :comments_descending => :put, :comments_ascending => :put } do |user|
     user.resources :task_lists, :has_many => [:comments] do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end

@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string   :time_zone,          :default => "Eastern Time (US & Canada)"
     t.string   :language,           :default => "en"
     t.text     :recent_projects
+    t.boolean  :comments_ascending, :default => true
     t.timestamps
   end
 
@@ -78,7 +79,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   
   create_table :comments do |t|
     t.integer :target_id 
-    t.string  :target_type #model name
+    t.string  :target_type
     t.integer :project_id
     t.integer :user_id
     t.text    :body

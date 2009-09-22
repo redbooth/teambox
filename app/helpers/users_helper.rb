@@ -1,5 +1,19 @@
 module UsersHelper
 
+  def comments_ascending_user_link
+    link_to_remote 'Ascending', 
+      :url => comments_ascending_user_path(current_user), 
+      :method => :put, 
+      :html => { :class => "#{'active' if current_user.comments_ascending}", :id => 'comments_ascending' }    
+  end
+
+  def comments_descending_user_link
+    link_to_remote 'Descending', 
+      :url => comments_descending_user_path(current_user), 
+      :method => :put, 
+      :html => { :class => "#{'active' unless current_user.comments_ascending}", :id => 'comments_descending' }
+  end
+  
   def user_fields(f,user)
     render :partial => 'users/fields', 
       :locals => { 
