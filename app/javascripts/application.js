@@ -24,7 +24,17 @@ Event.addBehavior({
   ".trash:mouseout": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')    
-  }
+  },
+  ".column_settings:mouseout": function(e){
+    image_source = $(this).src
+    $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')    
+  },  
+  ".column_settings:mouseover": function(){
+    $(this).down('.toggle').className = 'toggle toggle_hover';
+  },
+  ".column_settings:mouseout": function(){
+    $$('.column_settings .toggle').each(function(e){ e.className = 'toggle'; });
+  }  
 });
 
 

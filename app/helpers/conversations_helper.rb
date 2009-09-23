@@ -1,5 +1,18 @@
 module ConversationsHelper
 
+  def conversation_comment(conversation)
+    if current_user.conversations_first_comment
+      render :partial => 'comments/comment', :locals => { :comment => conversation.comments.first }
+    else
+      render :partial => 'comments/comment', :locals => { :comment => conversation.comments.last }
+    end  
+    
+  end
+  
+  def list_short_conversations(conversations)
+    render :partial => 'conversations/short_conversation', :collection => conversations
+  end
+  
   def conversations_settings
     render :partial => 'conversations/settings'
   end
@@ -26,7 +39,7 @@ module ConversationsHelper
   end
   
   def conversation_comments_count(conversation)
-    pluralize(conversation.comments.size, t('.message'), t('.messages'))
+    pluralize(conversation.comments.size, t('.comment'), t('.comments'))
   end
   
   def conversation_comments_link(project,conversation)

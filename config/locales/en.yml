@@ -61,9 +61,9 @@ en:
       edit: Edit title
       message: message
       messages: messages
-    index:
-      message: message
-      messages: messages
+    short_conversation:
+      comment: comment
+      comments: comments
     
   
   tasks:
