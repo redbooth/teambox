@@ -47,4 +47,15 @@ module ConversationsHelper
       ""
     end
   end
+  
+  def update_conversation_comments(comments)
+    page['comments'].update(list_comments(comments))
+  end
+  
+  def conversation_script
+    update_page_tag do |page|
+      page.assign('conversation_id',@current_conversation.id)
+      page.assign('conversation_update_url',update_comments_project_conversation_path(@current_project,@current_conversation))
+    end
+  end
 end

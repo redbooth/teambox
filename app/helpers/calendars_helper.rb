@@ -48,30 +48,37 @@ module CalendarsHelper
   def build_calendar(comments,year,month,small=false)
     first = Date.civil(year,month, 1)
     last = Date.civil(year,month, -1)
-    first_weekday = first_day_of_week(0)
-    last_weekday = last_day_of_week(0)
+    if current_user.first_day_of_week == 'monday'
+      first_weekday = first_day_of_week(1)
+      last_weekday = last_day_of_week(1)
+    else
+      first_weekday = first_day_of_week(0)
+      last_weekday = last_day_of_week(0)
+    end
 
     cal = ''
     cal << print_previous_month_days(first_weekday,first,small)
     
-    tally = {}
     week_tally = {}
     total_tally = {}
     total_sum = 0
     
     first.upto(last) do |cur|
       current_day = add_zero_for_first_week(cur)
-
+      
       day_hours = day_hours(comments)
       if day_hours.has_key?(current_day)
         cell_text  ||= "#{cur.mday}"
+        tally = {}
         day_hours[current_day].each do |c|
           tally[c.user.login] ||= 0; tally[c.user.login] += c.hours
           week_tally[c.user.login] ||= 0; week_tally[c.user.login] += c.hours
           total_tally[c.user.login] ||= 0; total_tally[c.user.login] += c.hours;
           total_sum += c.hours
-          cell_text << content_tag(:p,"#{c.user.login} #{c.hours} hrs", :class => user_class_name(c.user.login,'hours'))
         end
+        
+        tally.each { |i,c|
+          cell_text << content_tag(:p,"#{i} #{c} hrs", :class => user_class_name(i,'hours')) }
       else
         cell_text  ||= cur.mday
       end
@@ -205,6 +212,7 @@ module CalendarsHelper
     else
       month -= 1
     end  
+
     link_to '&larr;', project_hours_by_month_url(project,year,month)
   end
 

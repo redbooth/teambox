@@ -4,6 +4,9 @@ class Upload < ActiveRecord::Base
   belongs_to :project
   file_column :file
   
+  ICONS = ["aac", "ai", "aiff", "avi", "bmp", "c", "cpp", "css", "dat", "dmg", "doc", "dotx", "dwg", "dxf", "eps", "exe", "flv", "gif", "h", "hpp", "html", "ics", "iso", "java", "jpg", "key", "mid", "mp3", "mp4", "mpg", "odf", "ods", "odt", "otp", "ots", "ott", "pdf", "php", "png", "ppt", "psd", "py", "qt", "rar", "rb", "rtf", "sql", "tga", "tgz", "tiff", "txt", "wav", "xls", "xlsx", "xml", "yml", "zip"]
+  
+  
   validates_each :image_filename do |record, attr, value|
     filename_is_used = Upload.find(:first,:conditions => { :project_id => record.project_id, :image_filename => value })
     if filename_is_used
@@ -42,5 +45,9 @@ class Upload < ActiveRecord::Base
       x += 1
     end
     new_filename
+  end
+  
+  def after_create
+    self.project.log_activity(self,'create')
   end
 end

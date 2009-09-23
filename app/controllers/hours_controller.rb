@@ -1,9 +1,10 @@
 class HoursController < ApplicationController
 
   def index
-    go_to_default_path = true unless params.has_key?(:year) && params.has_key?(:month)
+    go_to_default_path = !(params.has_key?(:year) && params.has_key?(:month))
     @current_date = Time.current
-    unless go_to_default_path
+
+    if go_to_default_path
       set_year_month(@current_date.year,@current_date.month)
     else
       set_year_month(params[:year].to_i,params[:month].to_i)
