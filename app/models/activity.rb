@@ -6,8 +6,6 @@ class Activity < ActiveRecord::Base
   named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_type = 'TaskList' || comment_type = 'Task'"
       
   def self.log(project,target,action,creator_id)
-    puts 'rwaawrwar'
-    puts target.class    
     if target.class.to_s == 'Comment'
       comment_type = target.target_type
     else

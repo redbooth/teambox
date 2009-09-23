@@ -10,9 +10,6 @@ Event.addBehavior({
   },
   ".activity:mouseout": function(e){
     $$("div.activity").each(function(e){ e.className = 'activity'; });
-  },  
-  "#sort_hours:click": function(e){
-    alert($(this).checked);
   }
 });
 

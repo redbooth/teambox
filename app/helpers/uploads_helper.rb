@@ -5,7 +5,7 @@ module UploadsHelper
         project_upload_path(upload.project,upload.image_filename),
         :class => 'link_to_upload'
     else
-      link_to image_tag('_blank.png'),
+      link_to file_icon_image(upload.image_filename),
         project_upload_path(upload.project,upload.image_filename),
         :class => 'link_to_upload'
     end
@@ -130,5 +130,18 @@ module UploadsHelper
   
   def cancel_edit_link(upload)
     link_to_function 'cancel', update_page { |page| page.hide_upload_form(upload) }
+  end
+  
+  def file_icon_image(filename,size='48px')
+    extension = File.extname(filename)
+    if extension.length > 0
+      extension = extension[1,10]
+    end
+    
+    if Upload::ICONS.include?(extension)
+      image_tag("file_icons/#{size}/#{extension}.png")
+    else
+      image_tag("file_icons/#{size}/_blank.png")
+    end
   end
 end

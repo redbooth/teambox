@@ -11,6 +11,9 @@ en:
       email: Email
       password: Password
       password_confirmation: Confirm Password
+      sunday: Sunday
+      monday: Monday
+      first_day_of_week: Week starts on
     new:
       title: Create an Account
       submit: Create account
