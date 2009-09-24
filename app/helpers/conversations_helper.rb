@@ -26,8 +26,8 @@ module ConversationsHelper
     render :partial => 'conversations/fields', :locals => { :f => f }
   end
   
-  def list_conversations(conversations,current_conversation = nil)
-    render :partial => 'conversations/conversation', :collection => conversations, :locals => { :current_conversation => current_conversation }
+  def list_conversations(conversations,conversation = nil)
+    render :partial => 'conversations/conversation', :collection => conversations, :locals => { :conversation => conversation }
   end
   
   def conversation_link(project,conversation)
@@ -46,14 +46,21 @@ module ConversationsHelper
     link_to conversation_comments_count(conversation), project_conversation_path(project,conversation)
   end
   
-  def conversation_column(project,conversations,current_conversation = nil)
+  def conversation_column(project,conversations,options={})
+    
+    options[:conversation] ||= nil
+    options[:show_conversation_settings] ||= false
+    options[:show_comments_settings] ||= false
+    
     render :partial => 'conversations/column', :locals => {
         :project => project,
         :conversations => conversations,
-        :current_conversation => current_conversation }
+        :conversation => options[:conversation],
+        :show_conversation_settings =>  options[:show_conversation_settings],
+        :show_comments_settings => options[:show_comments_settings] }
   end
   
-  def conversation_class(conversation,current_conversation = nil)
+  def set_conversation_class(conversation,current_conversation = nil)
     if conversation == current_conversation
       "selected"
     else
@@ -67,8 +74,8 @@ module ConversationsHelper
   
   def conversation_script
     update_page_tag do |page|
-      page.assign('conversation_id',@current_conversation.id)
-      page.assign('conversation_update_url',update_comments_project_conversation_path(@current_project,@current_conversation))
+      page.assign('conversation_id',@conversation.id)
+      page.assign('conversation_update_url',update_comments_project_conversation_path(@current_project,@conversation))
     end
   end
 end

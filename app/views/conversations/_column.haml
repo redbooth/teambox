@@ -3,6 +3,6 @@
   %h2.title_with_button
     =link_to 'Conversations', project_conversations_path(project)
   .conversations
-    = list_conversations(conversations,current_conversation)
-  =conversations_settings
-  =comments_settings
+    = list_conversations(conversations,conversation)
+  =conversations_settings if show_conversation_settings
+  =comments_settings if show_comments_settings

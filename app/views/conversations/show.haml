@@ -1,16 +1,16 @@
-= conversation_column(@current_project,@conversations,@current_conversation)
+= conversation_column(@current_project,@conversations, :current_conversation => @conversation, :show_comments_settings => true)
 
 .conversation_header
   .actions
     %span.comments
-      = conversation_comments_count(@current_conversation)
+      = conversation_comments_count(@conversation)
     %span.edit
-      = edit_conversation_link( t('.edit'), @current_project,@current_conversation)
-  %h2= @current_conversation.name
+      = edit_conversation_link( t('.edit'), @current_project,@conversation)
+  %h2= @conversation.name
 
 = conversation_script
 #comments
   = list_comments(@comments)
   
-= new_comment_form(@current_project,@current_conversation)
+= new_comment_form(@current_project,@conversation)
   

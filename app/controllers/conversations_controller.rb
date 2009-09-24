@@ -23,7 +23,7 @@ class ConversationsController < ApplicationController
   end
   
   def show
-    @comments = @current_conversation.get_comments(current_user)
+    @comments = @conversation.get_comments(current_user)
     @conversations = @current_project.conversations
   end
   
@@ -34,14 +34,14 @@ class ConversationsController < ApplicationController
       show = 'all'
     end
     
-    @comments = @current_conversation.get_comments(current_user,show)
+    @comments = @conversation.get_comments(current_user,show)
   end
   
   private
     def load_conversation
-      @current_conversation = @current_project.conversations.find(params[:id])
+      @conversation = @current_project.conversations.find(params[:id])
       
-      if @current_conversation.nil?
+      if @conversation.nil?
         redirect_to project_path(@current_project)
       end
     end
