@@ -1,4 +1,8 @@
-.page
-  = activity.target.user.login
-  added page
-  = edit_page_link(activity.project,activity.target)
+.activity_action.activity_page_add
+  =image_tag('activity_page.jpg')
+  %span.name= link_to activity.target.user.name, user_path(activity.target.user)
+  %span
+    created a new conversation
+  %span.target= edit_page_link(activity.project,activity.target)
+  .date= posted_date activity.target.created_at
+  .clear  

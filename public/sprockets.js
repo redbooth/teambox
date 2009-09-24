@@ -8133,7 +8133,6 @@ _62.top=_61.y;
 }});
 
 
-
 Event.addBehavior({
   ".pencil:mouseover": function(e){
     image_source = $(this).src
@@ -8162,12 +8161,6 @@ Event.addBehavior({
     $$('.column_settings .toggle').each(function(e){ e.className = 'toggle'; });
   }
 });
-
-
-
-
-
-
 Event.addBehavior({
   ".comment:mouseover": function(e){
     $(this).className = 'comment comment_hover'

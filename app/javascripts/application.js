@@ -7,7 +7,6 @@
 //= require <lowpro>
 //= require <cropper>
 
-
 Event.addBehavior({
   ".pencil:mouseover": function(e){
     image_source = $(this).src
@@ -36,7 +35,3 @@ Event.addBehavior({
     $$('.column_settings .toggle').each(function(e){ e.className = 'toggle'; });
   }  
 });
-
-
-
-
