@@ -111,8 +111,8 @@ module UploadsHelper
     link_to h(upload.image_filename), project_upload_path(upload.project,upload.image_filename), :class => 'link_to_file'
   end
   
-  def add_file_link
-    link_to 'Upload a file', new_project_upload_path(@current_project)
+  def add_upload_link
+    link_to '<span>Upload a file</span>', new_project_upload_path(@current_project), :class => 'button'
   end
   
   def delete_upload(upload,target)

@@ -1,6 +1,6 @@
 module PagesHelper
-  def new_page_link(project)
-    link_to 'New Page', new_project_page_path(project)
+  def add_page_link(project)
+    link_to '<span>Add Page</span>', new_project_page_path(project), :class => 'button'
   end
   
   def page_fields(f)
