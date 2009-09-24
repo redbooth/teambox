@@ -30,8 +30,8 @@ module CommentsHelper
         :form_url => form_url, :comment => project.comments.new }
   end
   
-  def list_comments(comments)
-    render :partial => 'comments/comment', :collection => comments
+  def list_comments(comments,target)
+    render :partial => 'comments/list_comments', :locals => { :comments => comments, :target => target }
   end
   
   def show_comment(comment)
@@ -59,6 +59,19 @@ module CommentsHelper
       :url => comment_path(comment),
       :method => :delete,
       :confirm => t('.confirm_delete')
+  end
+  
+  def comments_script(target)
+    if target.is_a? Project
+      project = target
+    else
+      project = target.project
+    end
+      
+    update_page_tag do |page|
+      page.assign('comments_update_url',get_comments_project_path(project))
+      page.assign('comments_parameters', { :target_name => target.class.name, :target_id => target.id })
+    end
   end
   
 end

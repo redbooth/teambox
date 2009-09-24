@@ -10,6 +10,15 @@ Event.addBehavior({
   },
   ".activity:mouseout": function(e){
     $$("div.activity").each(function(e){ e.className = 'activity'; });
+  },
+  "#sort_uploads:click": function(e){
+    Comment.update();
+  },
+  "#sort_all:click": function(e){
+    Comment.update();
+  },
+  "#sort_hours:click": function(e){
+    Comment.update();
   }
 });
 
@@ -19,5 +28,14 @@ Comment = {
       e.hide();
     else
       e.show();
+  },
+  update: function() {
+    var params = {};
+    if ($('sort_uploads').checked) {
+      params = { show: 'uploads' };
+    } else if ($('sort_hours').checked) {
+      params = { show: 'hours' };
+    }
+    new Ajax.Request(comments_update_url, { method: 'get', parameters: $H(params).merge(comments_parameters) });
   }
 };
