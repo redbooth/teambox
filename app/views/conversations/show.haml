@@ -8,9 +8,8 @@
       = edit_conversation_link( t('.edit'), @current_project,@conversation)
   %h2= @conversation.name
 
-= conversation_script
 #comments
-  = list_comments(@comments)
+  = list_comments(@comments,@conversation)
   
 = new_comment_form(@current_project,@conversation)
   

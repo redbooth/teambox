@@ -57,5 +57,27 @@ class Comment < ActiveRecord::Base
     end
   end
   
+  def self.get_comments(user,target,show = 'all')
+    if user.comments_ascending
+      order = 'comments.created_at ASC'
+    else
+      order = 'comments.created_at DESC'
+    end
+  
+    if show == 'hours'
+      target.comments.find(:all,:conditions => [ 'hours IS NOT NULL and hours > 0'], :order => order)
+    elsif show == 'uploads'
+      target.comments.find(:all,
+        :select => 'comments.*',
+        :joins => 'INNER JOIN uploads ON (uploads.comment_id = comments.id)',
+        :order => order)
+    else
+      target.comments.find(:all,:order => order)
+    end
+  end
+  
+  def self.get_target(target_name,target_id)
+    target_name.constantize.find(target_id)
+  end
     
 end

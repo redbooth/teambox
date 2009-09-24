@@ -41,6 +41,11 @@ class ProjectsController < ApplicationController
     end
   end 
   
+  def get_comments
+    @target = Comment.get_target(params[:target_name],params[:target_id])
+    @comments = Comment.get_comments(current_user,@target,params[:show])
+  end
+  
   private
     def find_project
       @current_project = Project.find_by_permalink(params[:id])
