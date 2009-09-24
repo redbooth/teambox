@@ -23,18 +23,8 @@ class ConversationsController < ApplicationController
   end
   
   def show
-    @comments = @conversation.get_comments(current_user)
+    @comments = Comment.get_comments(current_user,@conversation)
     @conversations = @current_project.conversations
-  end
-  
-  def update_comments
-    if params.has_key?(:show)
-      show = params[:show]
-    else
-      show = 'all'
-    end
-    
-    @comments = @conversation.get_comments(current_user,show)
   end
   
   private

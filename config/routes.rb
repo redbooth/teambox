@@ -34,7 +34,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     
     project.resources :people, :member => { :destroy => :get }
-    project.resources :conversations, :has_many => [:comments,:uploads], :member => { :update_comments => :get }
+    project.resources :conversations, :has_many => [:comments,:uploads]
     project.resources :pages, :has_many => [:notes,:uploads]
   end
   
