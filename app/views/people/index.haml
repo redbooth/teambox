@@ -8,5 +8,5 @@
   = f.submit 'Invite'
 
 .people
-  = render :partial => 'users/user_card', :collection => @current_project.users, :as => :user
+  = list_people(@current_project.users)
 

@@ -1,7 +1,6 @@
 module PeopleHelper
-
-  def list_people(people)
-    render :partial => 'people/person', :collection => people
+  def list_people(user)
+    render :partial => 'users/user', :collection => users, :as => :user    
   end
 
   def person_status(person)
