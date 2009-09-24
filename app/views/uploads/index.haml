@@ -5,5 +5,5 @@
   - if @uploads.length == 0
     There are no files uploaded for this project.
   - else
-    = render :partial => 'show', :collection => @uploads, :as => :upload, :locals => { :project => @current_project }
-.clear_both
+    =list_uploads(@current_project,@uploads)
+.clear

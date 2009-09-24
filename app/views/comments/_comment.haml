@@ -1,10 +1,6 @@
 .comment{:id => "comment_#{comment.id}" }
   .info
-    %p.actions
-      %span
-        = edit_comment_link(comment)
-        = delete_comment_link(comment)
-        
+    =comment_actions_link(comment)
     =thumb_avatar(comment.user)
     - unless comment.hours.nil?
       .hours

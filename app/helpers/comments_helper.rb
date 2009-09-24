@@ -1,5 +1,10 @@
 module CommentsHelper
 
+  def comment_actions_link(comment)
+    render :partial => 'comments/actions', :locals => {
+      :comment => comment }
+  end
+  
   def comments_settings
     render :partial => 'comments/settings'
   end
