@@ -20,4 +20,23 @@ class Conversation < ActiveRecord::Base
     comment.save!
   end
 
+  def get_comments(user,show = 'all')
+    if user.comments_ascending
+      order = 'comments.created_at ASC'
+    else
+      order = 'comments.created_at DESC'
+    end
+
+    if show == 'hours'  
+      self.comments.find(:all,:conditions => [ 'hours IS NOT NULL and hours > 0'], :order => order)
+    elsif show == 'uploads'
+      self.comments.find(:all,
+        :select => 'comments.*',
+        :joins => 'INNER JOIN uploads ON (uploads.comment_id = comments.id)',
+        :order => order)
+    else
+      self.comments.find(:all,:order => order)
+    end
+  end
+  
 end
