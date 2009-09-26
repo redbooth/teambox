@@ -1,9 +1,9 @@
 - content_for :column do
-  = add_file_link
+  = add_upload_link
   
 #uploads
-  - if @uploads.length == 0
+  - if @uploads.empty?
     There are no files uploaded for this project.
   - else
-    = render :partial => 'show', :collection => @uploads, :as => :upload, :locals => { :project => @current_project }
-.clear_both
+    =list_uploads(@current_project,@uploads)
+.clear

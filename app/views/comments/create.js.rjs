@@ -1,13 +1,10 @@
 unless @comment.new_record?
-  if @original_controller == 'conversations'
-    page << "Conversation.update_comments();"
-  else
-    page.ef('comments')
-      page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
-    page.esf('activities')
-      page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
-    page.en
-  end  
+  page.ef('comments')
+    page << "Comment.update();"
+    #page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
+  page.esf('activities')
+    page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
+  page.en
   
   page << "Form.reset('new_comment')"
   page['new_comment'].down('.uploads_save').childElements.invoke('remove')

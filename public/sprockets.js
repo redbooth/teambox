@@ -8133,7 +8133,6 @@ _62.top=_61.y;
 }});
 
 
-
 Event.addBehavior({
   ".pencil:mouseover": function(e){
     image_source = $(this).src
@@ -8150,12 +8149,18 @@ Event.addBehavior({
   ".trash:mouseout": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')
+  },
+  ".column_settings:mouseout": function(e){
+    image_source = $(this).src
+    $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')
+  },
+  ".column_settings:mouseover": function(){
+    $(this).down('.toggle').className = 'toggle toggle_hover';
+  },
+  ".column_settings:mouseout": function(){
+    $$('.column_settings .toggle').each(function(e){ e.className = 'toggle'; });
   }
 });
-
-
-
-
 Event.addBehavior({
   ".comment:mouseover": function(e){
     $(this).className = 'comment comment_hover'
@@ -8168,6 +8173,15 @@ Event.addBehavior({
   },
   ".activity:mouseout": function(e){
     $$("div.activity").each(function(e){ e.className = 'activity'; });
+  },
+  "#sort_uploads:click": function(e){
+    Comment.update();
+  },
+  "#sort_all:click": function(e){
+    Comment.update();
+  },
+  "#sort_hours:click": function(e){
+    Comment.update();
   }
 });
 
@@ -8177,31 +8191,17 @@ Comment = {
       e.hide();
     else
       e.show();
-  }
-};
-Conversation = {
-  update_comments: function() {
+  },
+  update: function() {
     var params = {};
     if ($('sort_uploads').checked) {
       params = { show: 'uploads' };
     } else if ($('sort_hours').checked) {
       params = { show: 'hours' };
     }
-    new Ajax.Request(conversation_update_url, { method: 'get', parameters: params });
+    new Ajax.Request(comments_update_url, { method: 'get', parameters: $H(params).merge(comments_parameters) });
   }
 };
-
-Event.addBehavior({
-  "#sort_uploads:click": function(e){
-    Conversation.update_comments();
-  },
-  "#sort_all:click": function(e){
-    Conversation.update_comments();
-  },
-  "#sort_hours:click": function(e){
-    Conversation.update_comments();
-  }
-});
 function image_crop(c){
   Event.observe(
     window,
@@ -8250,6 +8250,16 @@ Event.addBehavior({
   },
   ".task:mouseout": function(e){
     $$(".task p.actions").each(function(e){
+      e.hide();
+    });
+  }
+});
+Event.addBehavior({
+  ".upload_wrap:mouseover": function(e){
+    $(this).down('p.actions').show();
+  },
+  ".upload_wrap:mouseout": function(e){
+    $$(".upload_wrap p.actions").each(function(e){
       e.hide();
     });
   }

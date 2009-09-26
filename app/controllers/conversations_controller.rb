@@ -23,25 +23,15 @@ class ConversationsController < ApplicationController
   end
   
   def show
-    @comments = @current_conversation.get_comments(current_user)
+    @comments = Comment.get_comments(current_user,@conversation)
     @conversations = @current_project.conversations
-  end
-  
-  def update_comments
-    if params.has_key?(:show)
-      show = params[:show]
-    else
-      show = 'all'
-    end
-    
-    @comments = @current_conversation.get_comments(current_user,show)
   end
   
   private
     def load_conversation
-      @current_conversation = @current_project.conversations.find(params[:id])
+      @conversation = @current_project.conversations.find(params[:id])
       
-      if @current_conversation.nil?
+      if @conversation.nil?
         redirect_to project_path(@current_project)
       end
     end

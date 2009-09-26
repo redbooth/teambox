@@ -63,16 +63,43 @@ div.column_wrap
   .filters
     :padding-top 10px
     :font-size 12px
-  a
-    :font-size 12px
-    :padding 2px 4px
-    :-moz-border-radius 4px
-    :-webkit-border-radius 4px
-    :background rgb(100,100,100)
-    :color rgb(200,200,200)
-  a:hover,a.active:hover
-    :background rgb(85,173,10)
-    :color rgb(255,255,255)
-  a.active
-    :background rgb(0,0,255)
-    :color rgb(255,255,255)
+  .toggle
+    a
+      :font-size 12px
+      :padding 2px 4px
+      :-moz-border-radius 4px
+      :-webkit-border-radius 4px
+      :background rgb(200,200,200)
+      :color rgb(255,255,255)
+    a:hover,a.active:hover
+      :background rgb(85,173,10)
+      :color rgb(255,255,255)
+    a.active
+      :background rgb(200,200,255)
+      :color rgb(255,255,255)
+  .toggle_hover
+    a
+      :font-size 12px
+      :padding 2px 4px
+      :-moz-border-radius 4px
+      :-webkit-border-radius 4px
+      :background rgb(100,100,100)
+      :color rgb(200,200,200)
+    a:hover,a.active:hover
+      :background rgb(85,173,10)
+      :color rgb(255,255,255)
+    a.active
+      :background rgb(0,0,255)
+      :color rgb(255,255,255)
+      
+a.button
+  :background url(../images/button_bg.jpg) no-repeat left
+  :font-size 12px
+  :padding 5px
+    :left 20px
+  span
+    :color rgb(40,40,40)
+    :padding 5px
+      :right 10px
+    :font-weight bold
+    :background url(../images/button_wrap_bg.jpg) no-repeat right    

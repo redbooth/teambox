@@ -1,11 +1,34 @@
 module UploadsHelper
+
+  def list_uploads(project,uploads)
+    render :partial => 'uploads/upload', :collection => uploads, :as => :upload, :locals => { :project => project }    
+  end
+
+  def edit_upload_form(project,upload)
+    render :partial => 'uploads/edit', :locals => {
+      :project => project,
+      :upload => upload }
+  end
+
+  def upload_thumbnail_image(project,upload)
+    if upload.is_image?
+      image_tag(thumbnail_project_upload_path(project,upload), :class => 'thumbnail')
+    end
+  end
+      
+  def upload_actions_links(upload)
+    render :partial => 'uploads/actions',
+    :locals => { 
+      :upload => upload }
+  end
+  
   def upload_link(upload)
     if upload.is_image?
       link_to image_tag(thumbnail_project_upload_path(upload.project,upload)),
         project_upload_path(upload.project,upload.image_filename),
         :class => 'link_to_upload'
     else
-      link_to file_icon_image(upload.image_filename),
+      link_to file_icon_image(upload),
         project_upload_path(upload.project,upload.image_filename),
         :class => 'link_to_upload'
     end
@@ -46,7 +69,7 @@ module UploadsHelper
   end
   
   def list_uploads_inline(uploads)
-    render :partial => 'uploads/upload', :collection => uploads, :as => :upload
+    render :partial => 'uploads/thumbnail', :collection => uploads, :as => :upload
   end
   
   def observe_upload_form
@@ -88,8 +111,8 @@ module UploadsHelper
     link_to h(upload.image_filename), project_upload_path(upload.project,upload.image_filename), :class => 'link_to_file'
   end
   
-  def add_file_link
-    link_to 'Upload a file', new_project_upload_path(@current_project)
+  def add_upload_link
+    link_to '<span>Upload a file</span>', new_project_upload_path(@current_project), :class => 'button'
   end
   
   def delete_upload(upload,target)
@@ -113,10 +136,10 @@ module UploadsHelper
   end
   
   def edit_upload_link(upload)
-    link_to_function pencil_image, edit_upload_form(upload), :class => 'edit_upload_link'
+    link_to_function pencil_image, show_edit_upload_form(upload), :class => 'edit_upload_link'
   end
     
-  def edit_upload_form(upload)
+  def show_edit_upload_form(upload)
     update_page do |page|
       page["upload_#{upload.id}"].down('.show_details').hide
       page["upload_#{upload.id}"].down('.edit_details').show
@@ -132,14 +155,14 @@ module UploadsHelper
     link_to_function 'cancel', update_page { |page| page.hide_upload_form(upload) }
   end
   
-  def file_icon_image(filename,size='48px')
-    extension = File.extname(filename)
+  def file_icon_image(upload,size='48px')
+    extension = File.extname(upload.image_filename)
     if extension.length > 0
       extension = extension[1,10]
     end
     
     if Upload::ICONS.include?(extension)
-      image_tag("file_icons/#{size}/#{extension}.png")
+      image_tag("file_icons/#{size}/#{extension}.png", :class => "file_icon #{extension}")
     else
       image_tag("file_icons/#{size}/_blank.png")
     end

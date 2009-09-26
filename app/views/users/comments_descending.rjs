@@ -1,3 +1,3 @@
 page['comments_descending'].addClassName('active')
 page['comments_ascending'].removeClassName('active')
-page << "Conversation.update_comments();"
+page << "Comment.update();"

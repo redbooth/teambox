@@ -1,2 +1,19 @@
-.upload_thumbnail{:id => "upload_#{upload.id}"}
-  = upload_link(upload)
+.upload_wrap{:id => "upload_#{upload.id}"}
+  = upload_actions_links(upload)
+  .upload
+    = file_icon_image(upload,'48px')
+    = upload_thumbnail_image(project,upload)
+
+    .filename
+      .name
+        = upload_text_link(upload)
+      .date
+        = posted_date upload.created_at
+      .uploader
+        Uploaded by
+        = link_to upload.user.name, user_path(upload.user)
+      .description
+        = h(upload.description)
+      =edit_upload_form(project,upload)
+
+    .clear

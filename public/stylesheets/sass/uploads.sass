@@ -1,32 +1,46 @@
-=actions
+.upload_wrap
+  :clear both
   p.actions
     :position relative
     :margin 0px
-    span    
-      :background url(/images/comment_actions_bg.jpg) no-repeat
-      :padding 3px 0px
-        :left 2px
+    span
+      :padding 6px 0px
       :overflow auto
       :position absolute
       :display block
-      :width 30px
-      :height 65px
-      :left -24px
-      :top 2px
-
-#uploads
-  :padding 5px
+      :width 16px
+      :height 40px
   .upload
-    :clear both
-    
-
-.upload
-  +actions
-  .thumbnail
+    :width 600px
+    :margin-left 16px
     :float left
-    :margin-right 5px
-  .show_details
-    :float left
+    .file_icon
+      :float left
+      :padding-bottom 5px
+    .thumbnail
+      :float left
+      :margin-right 5px
+    .show_details
+      :float left
+    .name
+      :font-size 12px
+      :margin-bottom 3px
+    .uploader
+      :font-size 12px
+      :border-bottom solid 1px rgb(235,235,235)
+      :margin-bottom 5px
+      :color rgb(180,180,180)
+      a
+        :color rgb(180,180,180)
+      a:hover
+        :color rgb(80,80,80)
+    .date
+      :float right
+      :font-size 10px
+      :color rgb(180,180,180)
+    .description
+      :font-size 12px
+      :margin-bottom 10px
 .iframe_container
   :height 30px
   :overflow none

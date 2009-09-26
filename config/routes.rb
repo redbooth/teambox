@@ -19,7 +19,9 @@ ActionController::Routing::Routes.draw do |map|
     user.resource :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }
   end
     
-  map.resources :projects, :has_many => [:pages,:invitations,:people] do |project|
+  map.resources :projects,
+      :has_many => [:pages,:invitations,:people],
+      :member => [:get_comments] do |project|
     project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
     project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
     project.resources :comments do |comment|
@@ -32,7 +34,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     
     project.resources :people, :member => { :destroy => :get }
-    project.resources :conversations, :has_many => [:comments,:uploads], :member => { :update_comments => :get }
+    project.resources :conversations, :has_many => [:comments,:uploads]
     project.resources :pages, :has_many => [:notes,:uploads]
   end
   

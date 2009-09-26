@@ -3,10 +3,11 @@ module NotesHelper
     render :partial => 'notes/note', :collection => notes
   end
   
-  def create_note_link(project,page)
-    link_to_remote t('.new_note'),
+  def add_note_link(project,page)
+    link_to_remote "<span>#{t('.new_note')}</span>",
       :url => project_page_notes_path(project,page),
-      :method => :post
+      :method => :post,
+      :html => { :class => 'button' }
   end
   
   def note_actions(note)

@@ -1,8 +1,9 @@
 .activity_action.activity_upload_add
-  = file_icon_image(activity.target.image_filename,'16px')
-  %span.name= link_to activity.target.user.name, user_path(activity.target.user)
-  %span
-    uploaded
-  %span.target= link_to h(activity.target.image_filename), project_upload_path(activity.target.project,activity.target.image_filename)
-  .date= posted_date activity.target.created_at
+  = file_icon_image(activity.target,'48px')
+  .item
+    %span.name= link_to activity.target.user.name, user_path(activity.target.user)
+    %span
+      uploaded
+    %span.target= link_to h(activity.target.image_filename), project_upload_path(activity.target.project,activity.target.image_filename)
+    .date= posted_date activity.target.created_at
   .clear
