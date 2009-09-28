@@ -12,24 +12,10 @@
     .date
       = posted_date comment.created_at
     .name
-      - if is_controller? :projects, :index
-        = '[' + link_to(comment.project.name, project_path(comment.project)) + ']'
-      = link_to comment.user.name, user_path(comment.user)
-      - if is_controller? :projects
-        - case comment.target_type
-        - when 'Conversation'
-          = t '.commented_on'
-          = link_to_conversation(comment.target.target)
-        - when 'Project'
-          = ""
-        - when 'Task'
-          = t '.commented_on'
-          = link_to_task_list(comment.target.target.task_list)
-          = "/"
-          = link_to_task(comment.target.target)
-        - when 'TaskList'
-          = t '.commented_on_a_task_list'
-          = link_to_task_list(comment.target.target)
+      =activity_comment_user_link(comment)
+      =activity_comment_project_link(comment)
+      =activity_comment_target_link(comment)
+      =comment_user_link(comment)
     .body
       = comment.body_html
     - if comment.uploads.count > 0

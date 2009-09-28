@@ -3,6 +3,6 @@
   %span.name= link_to activity.target.user.name, user_path(activity.target.user)
   %span
     created a new conversation
-  %span.target= task_list_link(activity.target)
+  %span.target= conversation_link(activity.target.project,activity.target)
   .date= posted_date activity.target.created_at
   .clear

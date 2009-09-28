@@ -1,5 +1,36 @@
 module CommentsHelper
 
+  def comment_user_link(comment)
+    unless is_controller? :projects
+      link_to comment.user.name, user_path(comment.user)
+    end  
+  end
+
+  def activity_comment_user_link(comment)
+    if is_controller? :projects
+      "<span class='author'>#{link_to comment.user.name, user_path(comment.user)}</span> <span class='arr'>&rarr;</span>"
+    end  
+  end
+
+  def activity_comment_project_link(comment)
+    if is_controller? :projects, :index
+      "<span class='project'>#{link_to(comment.project.name, project_path(comment.project))}</span>"
+    end
+  end
+  
+  def activity_comment_target_link(comment)
+    if is_controller? :projects
+      case comment.target_type
+        when 'Conversation'
+          "<span class='arr'>&rarr;</span> #{link_to_conversation(comment.target.target)}"
+        when 'Task'
+          "<span class='arr'>&rarr;</span> #{link_to_task(comment.target.target)}"
+        when 'TaskList'
+          "<span class='arr'>&rarr;</span> #{link_to_task_list(comment.target.target)}"
+      end
+    end
+  end
+
   def comment_actions_link(comment)
     render :partial => 'comments/actions', :locals => {
       :comment => comment }
