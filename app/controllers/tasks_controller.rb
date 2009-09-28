@@ -55,7 +55,7 @@ class TasksController < ApplicationController
   
   def destroy
     @task.destroy if @task.owner?(current_user)
-    respond_to {|f|f.js}
+    redirect_to project_task_lists_path(@current_project)
   end
   
   def check
