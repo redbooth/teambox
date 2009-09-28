@@ -18,17 +18,17 @@
       - if is_controller? :projects
         - case comment.target_type
         - when 'Conversation'
-          = "commented on"
+          = t '.commented_on'
           = link_to_conversation(comment.target.target)
         - when 'Project'
           = ""
         - when 'Task'
-          = "commented on"
+          = t '.commented_on'
           = link_to_task_list(comment.target.target.task_list)
           = "/"
           = link_to_task(comment.target.target)
         - when 'TaskList'
-          = "commented on a task list:"
+          = t '.commented_on_a_task_list'
           = link_to_task_list(comment.target.target)
     .body
       = comment.body_html
