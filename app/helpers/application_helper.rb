@@ -90,8 +90,10 @@ module ApplicationHelper
   end
   
   def posted_date(datetime)
-    if datetime > 1.day.ago
+    if datetime > Time.current.beginning_of_day
       datetime.strftime("%I:%M %p")
+    elsif datetime > 1.day.ago.beginning_of_day
+      t 'date.yesterday'
     elsif datetime > 7.days.ago
       datetime.strftime("%b %d")
     else
@@ -131,5 +133,9 @@ module ApplicationHelper
   def unread_comment_count(target)
     render :partial => 'shared/unread_comment_count', :locals => {
       :count => CommentRead.user(current_user).unread_count(target) }
+  end
+  
+  def is_controller?(_controller, _action = nil)
+    controller.controller_name == _controller.to_s and (_action == nil or controller.action_name == _action.to_s)
   end
 end

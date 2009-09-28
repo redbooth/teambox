@@ -111,6 +111,8 @@ en:
       enter_username_or_email: "Enter your teammate's username or email:"
   comments:
     comment:
+      commented_on: "-"
+      commented_on_a_task_list: "-"
       confirm_delete: Are you sure you want to delete this comment?
     new:
       submit: Comment
@@ -160,7 +162,4 @@ en:
       blog: Blog
 
   date:
-    formats:
-      default: "%Y-%m-%d"
-      short: "%b %d"
-      long: "%B %d, %Y"
+    yesterday: Yesterday
