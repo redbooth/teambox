@@ -1,6 +1,13 @@
-- content_for :column do
-  = add_page_link(@current_project)
+=page_column(@current_project,@pages,@page)
 
-%h2= @page.name
-Notes:
-= @page.notes.size
+%h2
+  = @page.name
+
+.buttons#buttons
+  = add_note_link(@current_project,@page)
+  =link_to '<span>Divider</span>', '', :class => 'button'
+  =link_to '<span>Task List</span>', '', :class => 'button'
+  =link_to '<span>File</span>', '', :class => 'button'
+
+#notes
+  = list_page_notes(@page.notes)

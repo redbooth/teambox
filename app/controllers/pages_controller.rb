@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  before_filter :load_page, :only => [ :show, :edit, :update ]
+  
   def index
     @pages = @current_project.pages
   end
@@ -19,10 +21,9 @@ class PagesController < ApplicationController
       end
     end
   end
-  
-  before_filter :load_page, :only => [ :show, :edit, :update ]
-  
+    
   def show
+    @pages = @current_project.pages    
   end
   
   def edit

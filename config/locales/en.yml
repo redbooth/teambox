@@ -83,14 +83,17 @@ en:
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?
+    new:
+      submit: Add Note
     edit:
-      submit: Save
+      submit: Update Note
   pages:
+    show:
+      new_note: Note
     new:
       name: Name
       submit: Create
     edit:
-      new_note: Add a note
       submit: Update
     fields:
       body: Content

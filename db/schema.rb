@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   create_table :notes do |t|
     t.integer :page_id
     t.integer :project_id
+    t.string  :name
     t.text :body
     t.text  :body_html
     t.integer :position

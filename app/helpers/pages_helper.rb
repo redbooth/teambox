@@ -1,14 +1,24 @@
 module PagesHelper
+
+  def page_column(project,pages,current_target = nil)
+    render :partial => 'pages/column', :locals => {
+      :project => project,
+      :pages => pages,
+      :current_target => current_target }
+  end
+  
   def add_page_link(project)
-    link_to '<span>Add Page</span>', new_project_page_path(project), :class => 'button'
+    link_to add_image, new_project_page_path(project),
+    :class => 'add_button'
   end
   
   def page_fields(f)
     render :partial => 'pages/fields', :locals => { :f => f }
   end
   
-  def list_pages(pages)
-    render :partial => 'pages/page', :collection => pages
+  def list_pages(pages,current_target)
+    render :partial => 'pages/page', :collection => pages, :locals => {
+      :current_target => current_target }
   end
 
   def page_link(project,page)

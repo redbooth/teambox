@@ -1,27 +1,61 @@
-=actions
-  p.actions
-    :position relative
-    :margin 0px
-    span    
-      :background url(/images/comment_actions_bg.jpg) no-repeat
-      :padding 3px 0px
-        :left 2px
-      :overflow auto
-      :position absolute
-      :display block
-      :width 30px
-      :height 65px
-      :left -24px
-      :top 2px
+div.active_page
+  :background rgb(255,255,0)
       
-#edit_page
-  :padding 10px
+      
+.pages
+  :clear both
+  div.page
+    a
+      :font-size 12px
+
+.show_pages
+  h2
+    :font-size 25px
+    :margin 0px
+      :bottom 5px
+  h3
+    :font-size 18px
+    :margin 0px
+  p
+    :font-size 15px
+    :line-height 1.4em
+  .buttons
+    :background rgb(230,230,230)
+    :padding 10px
+      :top 6px
+    :-moz-border-radius 8px
+    :-webkit-border-radius 8px
   .note
-    +actions
     :border-bottom 1px solid rgb(230,230,230)
     :padding-bottom 5px
-    :margin-bottom 5px
-  .edit_note
-    textarea
-      :height 5em
-      :width 100%
+    :margin 5px 0px
+    p.actions
+      :position relative
+      :margin 0px
+      span    
+        :background rgb(255,255,255)
+        :-moz-border-radius 4px
+        :-webkit-border-radius 4px
+        :padding 3px 0px
+          :left 2px
+          :bottom 0px
+        :position absolute
+        :display block
+        :width 22px
+        :height 40px
+        :left -24px
+        :top 2px
+  .new_note, .edit_note
+    :margin-top 5px
+    :border solid 1px rgb(230,230,230)
+    :background rgb(245,245,245)
+    :padding 10px
+    :-moz-border-radius 8px
+    :-webkit-border-radius 8px
+    .text_area
+      :padding-right 10px
+      textarea
+        :height 5em
+        :width 100%
+    .submit
+      :font-size 12px

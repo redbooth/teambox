@@ -7,7 +7,7 @@ class Note < ActiveRecord::Base
   has_many :uploads
   
   attr_accessor :deleted
-  attr_accessible :body, :deleted
+  attr_accessible :body, :deleted, :name
   
   def html_id
     if self.new_record?
