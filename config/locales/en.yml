@@ -119,7 +119,7 @@ en:
     edit:
       submit: Save
   uploads:
-    upload_a_file_link: + Attachment
+    comment_upload_link: Attachment
     new:
         select_a_file: Select a file
     index:

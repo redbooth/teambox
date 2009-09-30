@@ -72,7 +72,8 @@ module Widgets
                
         li_options = tab.html[:id] ? {:id => tab.html[:id] + '_container'} : {} 
         li_options[:class] = tab.html[:li_class] if tab.html[:li_class]
-        tab.html.delete(:li_class)        
+        tag_end = tab.html[:li_end] if tab.html[:li_end]
+        tab.html.delete(:li_end)        
         
         out tag('li', li_options, true)
         
@@ -95,7 +96,7 @@ module Widgets
         else
           raise "WHAT THE HELL?"
         end 
-        out "</li> \n"
+        out "#{tag_end} </li> \n"
       end 
       out '</ul>'
     end  

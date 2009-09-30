@@ -38,7 +38,7 @@ module UploadsHelper
     end
   end
 
-  def upload_a_file_link(comment)
+  def comment_upload_link(comment)
     render :partial => 'uploads/link', :locals => { :comment => comment }
   end
   

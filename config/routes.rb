@@ -22,8 +22,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :projects,
       :has_many => [:pages,:invitations,:people],
       :member => [:get_comments] do |project|
-    project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
-    project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
+    #project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
+    #project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
     project.resources :comments do |comment|
       comment.resources :uploads, :member => { :iframe => :get }
     end

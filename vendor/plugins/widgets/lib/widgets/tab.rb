@@ -28,7 +28,9 @@ module Widgets
     
     def li_class; @html[:li_class]; end
     def li_class=(li); @html[:li_class] = li; end
-    
+    def li_end; @html[:li_end]; end
+    def li_end=(li); @html[:li_end] = li; end
+        
     # more idiomatic ways to set tab properties
     def links_to(l); @link = l; end
     def links_to_remote(rl); 

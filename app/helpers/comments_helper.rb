@@ -1,5 +1,9 @@
 module CommentsHelper
 
+  def add_hours_link(f)
+    render :partial => 'comments/hours', :locals => { :f => f }
+  end
+
   def comment_user_link(comment)
     unless is_controller? :projects
       link_to comment.user.name, user_path(comment.user)
@@ -8,13 +12,13 @@ module CommentsHelper
 
   def activity_comment_user_link(comment)
     if is_controller? :projects
-      "<span class='author'>#{link_to comment.user.name, user_path(comment.user)}</span> <span class='arr'>&rarr;</span>"
+      "<span class='author'>#{link_to comment.user.name, user_path(comment.user)}</span>"
     end  
   end
 
   def activity_comment_project_link(comment)
     if is_controller? :projects, :index
-      "<span class='project'>#{link_to(comment.project.name, project_path(comment.project))}</span>"
+      "<span class='arr'>&rarr;</span> <span class='project'>#{link_to(comment.project.name, project_path(comment.project))}</span>"
     end
   end
   

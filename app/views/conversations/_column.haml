@@ -4,5 +4,5 @@
     =link_to 'Conversations', project_conversations_path(project)
   .conversations
     = list_conversations(conversations,conversation)
-  =conversations_settings if show_conversation_settings
-  =comments_settings if show_comments_settings
+  =#conversations_settings if show_conversation_settings
+  =#comments_settings if show_comments_settings
