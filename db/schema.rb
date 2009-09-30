@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.string  :name
     t.integer :last_comment_id, :null => true, :default => nil
+    t.integer :comments_count
     t.timestamps
   end
   
