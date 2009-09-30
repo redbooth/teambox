@@ -1,4 +1,4 @@
-= link_to_function image_tag('attach_button.jpg'), show_upload_form(comment)
+= link_to_function "<span>Upload</span>", show_upload_form(comment), :class => 'attach_button'
 .uploads_save{:style => 'display: none;'}
 .uploads_current{:style => (comment.uploads.count > 0 ? '' : 'display: none;')}
   - if comment.uploads.count > 0
