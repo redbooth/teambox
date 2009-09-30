@@ -4,6 +4,12 @@ module CommentsHelper
     render :partial => 'comments/hours', :locals => { :f => f }
   end
 
+  def activity_comment_icon(comment)
+    if is_controller? :projects
+      "<p class='activity_icon'>#{image_tag("activity_#{comment.target_type.to_s.underscore}.jpg")}</p>"
+    end        
+  end
+
   def comment_user_link(comment)
     unless is_controller? :projects
       link_to comment.user.name, user_path(comment.user)
