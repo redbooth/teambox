@@ -1,0 +1,11 @@
+.activity{ :class => "#{activity.action_type}" }
+  =image_tag("activity_#{activity.downcase_type}.jpg")
+  %span.name
+    = link_to activity.user.name, user_path(activity.user)
+  %span
+    = t(".#{activity.action_type}")
+  %span.target
+    = action_link
+  .date
+    = posted_date activity.posted_date
+  .clear

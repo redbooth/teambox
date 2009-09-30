@@ -2,6 +2,12 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  activities:
+    activity_line:
+      create_conversation: created the conversation
+      create_task_list: created the task list
+      create_page: created the page
+      create_person: added to the project
   users:
     fields:
       login: Username

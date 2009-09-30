@@ -43,6 +43,10 @@ has to do. Its saves alot of time in development. Then when you're ready to
 share you app for deployment there is a rake to convert your current schema
 to a migration file. So you'll only have migration files for major revisions.
 
+TODO (Version 2)
+
+* when adding a user to a project it should list them but as pending, with the option to send an invitation again
+* fixture data, so when were in development we can load up a project quickly
 
 TODO (Version 2.1)
 -------

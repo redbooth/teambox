@@ -30,7 +30,7 @@ class TaskList < ActiveRecord::Base
   end
   
   def after_create
-    self.project.log_activity(self,'add')
+    self.project.log_activity(self,'create')
   end
   
 end

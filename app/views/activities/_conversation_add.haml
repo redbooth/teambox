@@ -1,8 +1,0 @@
-.activity_action.activity_conversation_add
-  =image_tag('activity_conversation.jpg')
-  %span.name= link_to activity.target.user.name, user_path(activity.target.user)
-  %span
-    created a new conversation
-  %span.target= conversation_link(activity.target.project,activity.target)
-  .date= posted_date activity.target.created_at
-  .clear

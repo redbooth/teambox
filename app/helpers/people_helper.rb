@@ -1,4 +1,9 @@
 module PeopleHelper
+
+  def person_link(project,person)
+    link_to "#{person.name}", ''
+  end
+  
   def list_people(user)
     render :partial => 'users/user', :collection => users, :as => :user    
   end

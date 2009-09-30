@@ -18,7 +18,7 @@ class Comment < ActiveRecord::Base
     target.last_comment_id = id
     target.save(false)
     
-    self.activity = project.log_activity(self,'add')
+    self.activity = project.log_activity(self,'create')
   end
 
   def day
