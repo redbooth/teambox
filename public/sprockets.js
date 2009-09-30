@@ -8134,6 +8134,14 @@ _62.top=_61.y;
 
 
 Event.addBehavior({
+  ".drag:mouseover": function(e){
+    image_source = $(this).src
+    $(this).src = image_source.sub(/drag.*\.jpg/,'drag_hover.jpg')
+  },
+  ".drag:mouseout": function(e){
+    image_source = $(this).src
+    $(this).src = image_source.sub(/drag.*\.jpg/,'drag.jpg')
+  },
   ".pencil:mouseover": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/pencil.*\.jpg/,'pencil_hover.jpg')
