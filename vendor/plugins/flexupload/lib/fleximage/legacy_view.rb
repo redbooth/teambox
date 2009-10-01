@@ -56,6 +56,7 @@ module Fleximage
     ensure
     
       # ensure garbage collection happens after every flex image render
+      rendered_image.dispose!
       GC.start
     end
   end

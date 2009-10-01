@@ -32,14 +32,14 @@ module Fleximage
                 ".flexi template was expected to return a model instance that acts_as_fleximage, but got an instance of <#{result.class}> instead."
       end
       
-      # Figure out the proper format
-      requested_format = (@view.params[:format] || :jpg).to_sym
-      unless [:jpg, :gif, :png].include?(requested_format)
-        raise 'Image must be requested with an image type format.  jpg, gif and png only are supported.'
-      end
-      
       # Set proper content type
-      @view.controller.response.content_type = Mime::Type.lookup_by_extension(requested_format.to_s).to_s
+      @view.controller.response.content_type = result.content_type
+      
+      unless result.is_image?
+        @view.controller.response.headers['Content-Disposition'] = "attachment; filename=#{CGI::escape(result.filename)}"
+      else
+        @view.controller.response.headers['Content-Disposition'] = "inline"
+      end
       
       # Set proper caching headers
       if defined?(Rails) && Rails.env == 'production'
@@ -47,7 +47,7 @@ module Fleximage
       end
       
       # return rendered result
-      return result.output_image(:format => requested_format)
+      return result.output_file
     ensure
     
       # ensure garbage collection happens after every flex image render

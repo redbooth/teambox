@@ -4,6 +4,6 @@
     %span.name= link_to activity.target.user.name, user_path(activity.target.user)
     %span
       uploaded
-    %span.target= link_to h(activity.target.image_filename), project_upload_path(activity.target.project,activity.target.image_filename)
+    %span.target= link_to h(activity.target.filename), project_upload_path(activity.target.project,activity.target.filename)
     .date= posted_date activity.target.created_at
   .clear

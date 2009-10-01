@@ -1,0 +1,3 @@
+@file.operate do |file|
+  file.resize '48x48'
+end

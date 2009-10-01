@@ -87,8 +87,10 @@ module Fleximage
           # adjust color to proper bit depth
           if Magick::QuantumDepth != 8
             max = case Magick::QuantumDepth
-              when 16: 65_535
-              when 32: 4_294_967_295
+            when 16
+              65_535
+            when 32
+              4_294_967_295
             end
             
             args.map! do |value|

@@ -1,13 +1,5 @@
 class UploadsController < ApplicationController
   before_filter :find_upload, :only => [ :destroy, :update, :thumbnail, :show ]
-
-  def find_upload
-    if params[:id].match /^\d+$/
-      @upload = @current_project.uploads.find(params[:id])
-    else
-      @upload = @current_project.uploads.find_by_image_filename(params[:id])
-    end
-  end
   
   def new
     @upload = current_user.uploads.new
@@ -16,6 +8,10 @@ class UploadsController < ApplicationController
   
   def index
     @uploads = @current_project.uploads
+  end
+  
+  def edit
+    @upload = @current_project.uploads.find(params[:id])
   end
   
   def new
@@ -30,23 +26,17 @@ class UploadsController < ApplicationController
   
   def update
     @upload.update_attributes(params[:upload])
+    @upload.save
+
+    respond_to do |f|
+      f.js
+      f.html { redirect_to(project_uploads_path(@current_project)) }
+    end
   end
   
   def create
-    tmp_filename = params[:upload][:file].original_filename
-    mime_type = MIME::Types.type_for(tmp_filename).to_s
-    
-    # If the upload is an image this will pass the image to FlexImage
-    # Otherwise the file will be handled by file_column
-    if mime_type.match /^image/
-      params[:upload][:image_file] = params[:upload][:file]
-      params[:upload][:file] = nil
-    end
-    
     @upload = @current_project.uploads.new(params[:upload])
     @upload.user = current_user
-    @upload.content_type = mime_type
-    @upload.image_filename = tmp_filename
 
     load_target
     @upload.save
@@ -59,11 +49,7 @@ class UploadsController < ApplicationController
   
   def show
     if @upload
-      if @upload.is_image?
-        render :inline => "@upload.operate { |p| }", :type => :flexi
-      else
-        send_file @upload.pathname, :content_type => @upload.content_type
-      end
+      render :inline => "@upload.operate { |p| }", :type => :flexu
     else
       flash[:notice] = "#{params[:upload_fileame]} could not be found."
       redirect_to project_uploads_path(@current_project)
@@ -78,7 +64,7 @@ class UploadsController < ApplicationController
   
   def thumbnail
     if @upload and @upload.is_image?
-      render :inline => "@upload.operate {|p| p.resize '64x64'}", :type => :flexi
+      render :inline => "@upload.operate {|p| p.resize '64x64'}", :type => :flexu
     end
   end
   
@@ -93,5 +79,14 @@ class UploadsController < ApplicationController
       else
         @target = @current_project.comments.new(:user_id => current_user.id)
       end
+    end
+    
+    def find_upload
+      if params[:id].match /^\d+$/
+        @upload = @current_project.uploads.find(params[:id])
+      else
+        @upload = @current_project.uploads.find_by_filename(params[:id])
+      end
+      
     end
 end

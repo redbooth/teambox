@@ -2,7 +2,7 @@
   - form_for :avatar, @avatar, :url => user_avatar_path(@user), :html => { :class => 'new_avatar', :multipart => true } do |f|
     .image_file
       %label{ :for => 'image_file'} Upload Image
-      = f.file_field :image_file
+      = f.file_field :file
     .submit
       = f.submit "Upload this Image"
       or
