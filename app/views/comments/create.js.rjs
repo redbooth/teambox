@@ -1,7 +1,7 @@
 unless @comment.new_record?
   page.ef('comments')
-    page << "Comment.update();"
-    #page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
+    #page << "Comment.update();"
+    page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
   page.esf('activities')
     page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
   page.en
@@ -12,12 +12,12 @@ unless @comment.new_record?
   page['new_comment'].down('.uploads_current').hide
   page.reload_javascript_events
   
-  if @original_controller == 'hours'
-    page['calendar'].update(build_calendar(@comments,@year,@month))
-    page << "var apply_filter_func = function () {"
-      page.apply_user_filter
-    page << "}; var apply_filter = apply_filter_func.bind($('user_filter'));"
-    page << "apply_filter();"
-  end
+  #if @original_controller == 'hours'
+  #  page['calendar'].update(build_calendar(@comments,@year,@month))
+  #  page << "var apply_filter_func = function () {"
+  #    page.apply_user_filter
+  #  page << "}; var apply_filter = apply_filter_func.bind($('user_filter'));"
+  #  page << "apply_filter();"
+  #end
   
 end

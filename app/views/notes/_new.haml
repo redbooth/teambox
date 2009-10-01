@@ -1,4 +1,4 @@
-- remote_form_for [note.project,note.page,note] do |f|
+- remote_form_for [project,page,note], :html => { :id => "new_note_form_#{unique_id}" } do |f|
   = note_fields(f)
   .submit
     = f.submit t('.submit')

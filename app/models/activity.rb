@@ -21,4 +21,35 @@ class Activity < ActiveRecord::Base
     activity.save
     activity
   end
+
+  def action_comment_type
+    i = "#{action}#{target_type}"
+    i +="#{comment_type}" unless comment_type.nil?
+    i.underscore
+  end
+
+
+  def action_type
+    i = "#{action}#{target_type}"
+    i.underscore
+  end
+    
+  def action_type?(current_type)
+    i = "#{action}#{target_type.singular_class_name}"
+    i.underscore
+    i == current_type
+  end
+  
+  def user
+    target.user
+  end
+
+  def posted_date
+    target.created_at
+  end
+
+  def downcase_type
+    target.type.to_s.downcase
+  end
+
 end

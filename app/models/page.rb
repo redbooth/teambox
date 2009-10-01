@@ -20,6 +20,6 @@ class Page < ActiveRecord::Base
   end
   
   def after_create
-    project.log_activity(self,'add')
+    project.log_activity(self,'create')
   end
 end

@@ -1,0 +1,6 @@
+.projects_dropdown_wrap
+  =image_tag('dropdown_arrow.png')
+  .projects_dropdown{ :style => 'display: none'}
+    -for project in current_user.projects
+      .project_dropdown
+        =link_to project.name, project_path(project)

@@ -1,7 +1,8 @@
 class Comment < ActiveRecord::Base
   belongs_to :user
-  belongs_to :target, :polymorphic => true
+  belongs_to :target, :polymorphic => true, :counter_cache => true
   belongs_to :project
+
   has_many :uploads
     
   attr_accessible :body, :hours
@@ -18,7 +19,7 @@ class Comment < ActiveRecord::Base
     target.last_comment_id = id
     target.save(false)
     
-    self.activity = project.log_activity(self,'add')
+    self.activity = project.log_activity(self,'create')
   end
 
   def day

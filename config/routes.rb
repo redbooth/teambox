@@ -22,14 +22,14 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :projects,
       :has_many => [:pages,:invitations,:people],
       :member => [:get_comments] do |project|
-    project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
-    project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
+    #project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
+    #project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
     project.resources :comments do |comment|
       comment.resources :uploads, :member => { :iframe => :get }
     end
     project.resources :uploads, :requirements => { :id => /[^\/]+/ }, :member => { :thumbnail => :get }
     
-    project.resources :task_lists, :has_many => [:comments] do |task_lists|
+    project.resources :task_lists, :has_many => [:comments], :member => { :reorder => :post } do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
     

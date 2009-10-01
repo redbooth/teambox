@@ -1,4 +1,8 @@
 form#new_comment, form.edit_comment
+  :padding 5px
+  :-moz-border-radius 8px
+  :-webkit-border-radius 8px
+  :background rgb(230,230,230)
   .hours
     label
       :display inline
@@ -7,7 +11,7 @@ form#new_comment, form.edit_comment
   .body
     :padding 5px
     textarea
-      :width 595px
+      :width 578px
       :height 80px
   .submit
     :margin-top 3px
@@ -18,23 +22,14 @@ form#new_comment, form.edit_comment
     :font-size 12px
     &:hover
       :text-decoration none
-      
-form.edit_comment
-  :background rgb(245,245,245)
-  :padding 5px
-  .hours
-    label
-      :display inline
+  div.submit
     input
-      :width 3em
-  .body
-    textarea
-      :width 575px
-  .submit
-    :float right
-    :width 130px
-    :padding 5px
-      :right 8px
+      :border none
+      :background url('../images/comment_submit_button.jpg') no-repeat
+      :width 125px
+      :height 30px
+      :font-size 16px
+      :font-weight bold
   
 .comment
   :margin 0px
@@ -43,18 +38,23 @@ form.edit_comment
   &:hover
     p.actions
       :visibility visible
+  p.activity_icon
+    :position relative
+    img
+      :overflow auto
+      :position absolute
+      :display block      
   p.actions
     :visibility hidden
     :position relative
     :margin 0px
     span
-      :padding 6px 0px
       :overflow auto
       :position absolute
       :display block
       :width 16px
       :height 40px
-  .info
+  .info  
     :width 80px
     :float left
     .thumb_avatar
@@ -68,13 +68,20 @@ form.edit_comment
         :vertical-align middle
       span
         :vertical-align middle
+  span.author, span.project
+    :color rgb(120,120,120)
+    a
+      :color rgb(80,80,80)
+      :font-weight normal
+  span.arr
+    :color rgb(140,140,140)
   .block
     :width 530px
     :float right
     .name
       :font-size 12px
-      :border-bottom solid 1px rgb(235,235,235)
       :margin-bottom 5px
+      :border-bottom solid 1px rgb(235,235,235)      
       a
         :font-size 12px
         :font-weight bold
@@ -89,10 +96,33 @@ form.edit_comment
         :font-family "Lucida Grande",Verdana,Arial,Helvetica,sans-serif
         :line-height 1.3em
         :margin 2px 0 10px
-
+    .clear
 .comment_hover
   .block
     .name
       :border-bottom solid 1px rgb(200,200,200)
     .date
       :color rgb(0,0,0)
+      
+      
+      
+span.count
+  :-moz-border-radius 4px
+  :-webkit-border-radius 4px
+  :background rgb(160,160,160)
+  :color rgb(255,255,255)    
+  :text-align center
+  :font-size 9px    
+  :line-height 1em
+  :padding 1px 0px
+  :margin-right 4px
+  span.total   
+    :padding 1px 4px
+      :right 2px
+  span.unread
+    :padding 1px 4px
+      :right 2px
+    :background rgb(30,30,255)
+    :color rgb(255,255,255)
+    :-moz-border-radius 4px
+    :-webkit-border-radius 4px      

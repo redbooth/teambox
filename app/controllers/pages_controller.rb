@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  before_filter :load_page, :only => [ :show, :edit, :update ]
+  
   def index
     @pages = @current_project.pages
   end
@@ -13,16 +15,15 @@ class PagesController < ApplicationController
     
     respond_to do |f|
       if @page.save
-        f.html{redirect_to edit_project_page_path(@current_project,@page)}
+        f.html{redirect_to project_page_path(@current_project,@page)}
       else
-        f.html{render :action => 'new'}
+        f.html{render 'new'}
       end
     end
   end
-  
-  before_filter :load_page, :only => [ :show, :edit, :update ]
-  
+    
   def show
+    @pages = @current_project.pages    
   end
   
   def edit

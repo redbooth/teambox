@@ -1,5 +1,9 @@
 module UploadsHelper
 
+  def show_upload(upload)
+     render :partial => 'uploads/upload', :locals => { :project => upload.project, :upload => upload }
+   end
+
   def list_uploads(project,uploads)
     render :partial => 'uploads/upload', :collection => uploads, :as => :upload, :locals => { :project => project }    
   end
@@ -34,7 +38,7 @@ module UploadsHelper
     end
   end
 
-  def upload_a_file_link(comment)
+  def comment_upload_link(comment)
     render :partial => 'uploads/link', :locals => { :comment => comment }
   end
   

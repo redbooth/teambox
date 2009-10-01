@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :name
     t.integer :position
     t.integer :last_comment_id, :null => true, :default => nil
+    t.integer :comments_count
     t.timestamps
   end
   
@@ -65,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.string  :name
     t.integer :position
+    t.integer :comments_count
     t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
@@ -87,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.text    :body
     t.text    :body_html
     t.float   :hours
-    t.billable  :boolean
+    t.billable :boolean
     t.timestamps    
   end
   
@@ -103,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.string  :name
     t.integer :last_comment_id, :null => true, :default => nil
+    t.integer :comments_count
     t.timestamps
   end
   
@@ -117,6 +120,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   create_table :notes do |t|
     t.integer :page_id
     t.integer :project_id
+    t.string  :name
     t.text :body
     t.text  :body_html
     t.integer :position

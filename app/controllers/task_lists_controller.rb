@@ -27,6 +27,10 @@ class TaskListsController < ApplicationController
     @comments = @task_list.comments
   end
   
+  def reorder
+    render :text => params.inspect
+  end
+  
   private
     def load_task_list
       @task_list = @current_project.task_lists.find(params[:id])

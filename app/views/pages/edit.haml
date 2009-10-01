@@ -1,5 +1,5 @@
 - content_for :column do
-  = add_note_link(@current_project,@page)
+  
 
 #edit_page
   - form_for [@current_project,@page] do |f|
@@ -7,7 +7,6 @@
     
     = f.submit t('.submit')
     
-    #notes
-      = list_page_notes(@page.notes)
+
     
     = notes_sortable_tag(@page)

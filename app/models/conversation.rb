@@ -9,7 +9,7 @@ class Conversation < ActiveRecord::Base
   attr_accessor :body
   
   def after_create
-    self.project.log_activity(self,'add')
+    self.project.log_activity(self,'create')
 
     comment = self.comments.new do |comment|
       comment.project_id = self.project_id
