@@ -5,7 +5,7 @@ class Avatar < ActiveRecord::Base
   acts_as_fleximage do
     directory 'public/avatars'
     use_creation_date_based_directories false
-    require_image false
+    require_file false
     only_images true
     default_file_path 'public/images/default_avatar.jpg'
   

@@ -4,7 +4,7 @@
     = hidden_field_tag 'iframe', 'true'
     .file
       = t('.select_a_file')
-      = file_column_field 'upload', "file", :size => 25
+      = f.file_field :file, :size => 25
       = submit_tag 'Upload', :class => 'upload_button'
       = loading('upload')
       = observe_upload_form

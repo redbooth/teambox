@@ -41,7 +41,7 @@ module Fleximage
         dsl_accessor :directory
         
         # Require a valid image.  Defaults to true.  Set to false if its ok to have no image for
-        dsl_accessor :require_image, :default => false
+        dsl_accessor :require_file, :default => false
         
         # Only allow images
         dsl_accessor :only_images, :default => false
@@ -64,7 +64,7 @@ module Fleximage
         
         # Image related save and destroy callbacks
         if respond_to?(:before_save)
-          after_destroy :delete_image_file
+          after_destroy :delete_file
           before_save   :pre_save
           after_save    :post_save
         end
@@ -126,20 +126,20 @@ module Fleximage
         "#{temp_path}/#{@file_temp}"
       end
       
+      def set_file_attributes(file)
+        if file.respond_to?(:original_filename)
+          self.filename = file.original_filename
+        else
+          self.filename = File.basename(file.path)
+        end
+        
+        self.content_type = get_content_type(file)
+        self.filesize = file.size if file.respond_to?(:size)
+      end
+      
       def file=(file)
         if self.class.file_exists(file)
-          if file.respond_to?(:original_filename)
-            self.filename = file.original_filename
-          else
-            self.filename = File.basename(file.path)
-          end
-          
-          self.content_type = get_content_type(file)
-          self.filesize = file.size
-          
-          if self.class.only_images && !self.is_image?
-            raise "Expected an image"
-          end
+          set_file_attributes(file)
           
           @uploaded_file = true
           
@@ -211,11 +211,29 @@ module Fleximage
         end
       end
       
+      def default_file
+        "#{RAILS_ROOT}/#{self.class.default_file_path}"
+      end
+      
       private
         # Perform pre save tasks.  Preprocess the image, and write it to DB.
         def pre_save
-          if @uploaded_file && self.class.preprocess_image_operation
+          if @uploaded_file.nil? and self.class.default_file_path
+            set_file_attributes(File.new(default_file))
+            load_file(default_file)
+            @uploaded_file = true
+          end
+          
+          if @uploaded_file
             operate(&self.class.preprocess_image_operation)
+          end
+          
+          if self.class.only_images
+            raise "Not an image" unless is_image?
+          end
+        
+          if self.class.require_file
+            raise "No file" unless filename
           end
         end
         
@@ -255,6 +273,10 @@ module Fleximage
           end
         end
         
+        def delete_file
+          FileUtils.rm_rf(file_path)
+        end
+        
         def temp_path
           "#{RAILS_ROOT}/tmp/fleximage"
         end
@@ -262,37 +284,6 @@ module Fleximage
         # Delete the temp image after its no longer needed
         def delete_temp_file
           FileUtils.rm_rf temp_file_path
-        end
-        
-        # Load the default image, or raise an expection
-        def master_image_not_found
-          # Load the default image from a path
-          if self.class.default_image_path
-            @output_image = Magick::Image.read("#{RAILS_ROOT}/#{self.class.default_image_path}").first
-          
-          # Or create a default image
-          elsif self.class.default_image
-            x, y = Fleximage::Operator::Base.size_to_xy(self.class.default_image[:size])
-            color = self.class.default_image[:color]
-            
-            @output_image = Magick::Image.new(x, y) do
-              self.background_color = color if color && color != :transparent
-            end
-          
-          # No default, not master image, so raise exception
-          else
-            message = "Master image was not found for this record"
-            
-            if !self.class.db_store?
-              message << "\nExpected image to be at:"
-              message << "\n  #{file_path}"
-            end
-            
-            raise MasterImageNotFound, message
-          end
-        ensure
-          @output_image.dispose! if @output_image
-          GC.start
         end
     end
     

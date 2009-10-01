@@ -28,8 +28,7 @@ class Upload < ActiveRecord::Base
     directory 'public/upload'
     use_creation_date_based_directories false
     only_images false
-    require_image false
-    #default_image_path 'public/images/person.gif'    
+    require_file true
   end
   
   def unique_filename(_filename)
