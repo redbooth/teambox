@@ -179,8 +179,6 @@ module Fleximage
             proxy = ImageProxy.new(load_file(file_path), self)
             block.call(proxy)
             @output_file = proxy.image
-          else
-            @output_file = File.new(file_path)
           end
         end
       end

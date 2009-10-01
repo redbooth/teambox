@@ -36,7 +36,9 @@ module Fleximage
       @view.controller.response.content_type = result.content_type
       
       unless result.is_image?
-        @view.controller.response.headers['Content-Disposition'] = "attachment; filename=#{CGI::escape(result.filename)}"
+        escaped_filename = result.filename.gsub(/\\/,"\\\\")
+        escaped_filename.gsub!(/"/,'\\"')
+        @view.controller.response.headers['Content-Disposition'] = "attachment; filename=\"#{escaped_filename}\""
       else
         @view.controller.response.headers['Content-Disposition'] = "inline"
       end
