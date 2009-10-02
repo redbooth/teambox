@@ -1,5 +1,11 @@
 module CommentsHelper
 
+  def conversation_last_comment_text(comment)
+    if is_controller? :conversations, :index
+      "Last Comment by"
+    end  
+  end
+  
   def add_hours_link(f)
     render :partial => 'comments/hours', :locals => { :f => f }
   end

@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :name
     t.string  :permalink
     t.integer :last_comment_id, :null => true, :default => nil
+    t.integer :comments_count
     t.timestamps
   end
   
