@@ -141,11 +141,11 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :user_id
     t.integer  :project_id
     t.integer  :comment_id
-    t.string   :image_filename
-    t.integer  :image_width
-    t.integer  :image_height
-    t.text     :description, :default => ''
+    t.string   :filename
     t.string   :content_type
+    t.integer   :filesize
+    t.text     :description, :default => ''
+    t.integer  :version
     t.timestamps
   end
 
@@ -164,6 +164,9 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :crop_height
     t.integer  :width
     t.integer  :height
+    t.string   :filename
+    t.string   :content_type
+    t.integer  :filesize
     t.timestamps
   end
   add_index "avatars", ["user_id"], :name => "index_avatars_on_user"

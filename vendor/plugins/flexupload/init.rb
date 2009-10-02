@@ -10,6 +10,12 @@ rescue MissingSourceFile => e
   raise e
 end
 
+# Patch String class for ruby < 1.9
+require 'fleximage/string_patch'
+
+# Apply a few RMagick patches
+require 'fleximage/rmagick_image_patch'
+
 # Load dsl_accessor from lib
 require 'dsl_accessor'
 
@@ -27,15 +33,11 @@ ActiveRecord::Base.class_eval { include Fleximage::Model }
 require 'fleximage/image_proxy'
 
 # Setup View
-ActionController::Base.exempt_from_layout :flexi
+ActionController::Base.exempt_from_layout :flexu
 if defined?(ActionView::Template)
   # Rails >= 2.1
   require 'fleximage/view'
-  ActionView::Template.register_template_handler :flexi, Fleximage::View
-else
-  # Rails < 2.1
-  require 'fleximage/legacy_view'
-  ActionView::Base.register_template_handler :flexi, Fleximage::LegacyView
+  ActionView::Template.register_template_handler :flexu, Fleximage::View
 end
 
 # Setup Helper
@@ -46,7 +48,8 @@ ActionView::Base.class_eval { include Fleximage::Helper }
 ActionController::Base.class_eval{ include Fleximage::AviaryController }
 
 # Register mime types
-Mime::Type.register_alias "image/pjpeg", :jpg # IE6 sends jpg data as "image/pjpeg".  Silly IE6.
-Mime::Type.register "image/jpeg", :jpg
-Mime::Type.register "image/gif", :gif
-Mime::Type.register "image/png", :png
+#Mime::Type.register_alias "image/pjpeg", :jpg # IE6 sends jpg data as "image/pjpeg".  Silly IE6.
+##Mime::Type.register "image/jpeg", :jpg
+#Mime::Type.register "image/gif", :gif
+#Mime::Type.register "image/png", :png
+Mime::Type.register "application/octet-stream", :flexu

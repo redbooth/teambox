@@ -29,11 +29,11 @@ module UploadsHelper
   def upload_link(upload)
     if upload.is_image?
       link_to image_tag(thumbnail_project_upload_path(upload.project,upload)),
-        project_upload_path(upload.project,upload.image_filename),
+        project_upload_path(upload.project,upload.filename),
         :class => 'link_to_upload'
     else
       link_to file_icon_image(upload),
-        project_upload_path(upload.project,upload.image_filename),
+        project_upload_path(upload.project,upload.filename),
         :class => 'link_to_upload'
     end
   end
@@ -112,7 +112,7 @@ module UploadsHelper
   end
   
   def upload_text_link(upload)
-    link_to h(upload.image_filename), project_upload_path(upload.project,upload.image_filename), :class => 'link_to_file'
+    link_to h(upload.filename), project_upload_path(upload.project,upload.filename), :class => 'link_to_file'
   end
   
   def add_upload_link
@@ -160,7 +160,7 @@ module UploadsHelper
   end
   
   def file_icon_image(upload,size='48px')
-    extension = File.extname(upload.image_filename)
+    extension = File.extname(upload.filename)
     if extension.length > 0
       extension = extension[1,10]
     end

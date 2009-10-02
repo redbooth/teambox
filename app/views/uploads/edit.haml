@@ -1,10 +1,14 @@
-#new_upload
+#edit_upload
   = error_messages_for :upload
   - form_for [@current_project,@upload], :html => { :multipart => true } do |f|
     .file
       Select a file to upload
       %br
       = f.file_field :file, :size => 40
+    .filename
+      = f.label :filename, 'Filename'
+      %br
+      = f.text_field :filename
     .description
       = f.label :description
       %br
