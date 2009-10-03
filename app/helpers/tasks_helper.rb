@@ -18,10 +18,6 @@ module TasksHelper
     end  
   end
 
-  def reset_new_form(project,task_list)
-    page << "Form.reset('project_#{project.id}_task_list_#{task_list.id}_new_task')"
-  end  
-
   def show_new_task(project,task_list)
     update_page do |page|
       page.hide_new_task_link(project,task_list)
@@ -43,6 +39,10 @@ module TasksHelper
       page.show_task(project,task_list,task)
     end    
   end
+  
+  def reset_new_form(project,task_list)
+    page << "Form.reset('project_#{project.id}_task_list_#{task_list.id}_new_task')"
+  end  
   
   def hide_task(project,task_list,task)
     page["project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}"].hide

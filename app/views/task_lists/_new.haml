@@ -1,0 +1,7 @@
+- remote_form_for [project,task_list], :html => { :id => "new_task_list", :class => 'task_list_form_wrap', :style => 'display: none' } do |f|
+  .task_form
+    = f.text_field :name
+    .submit
+      = f.submit t('.submit')
+      or
+      = link_to_function t('.cancel'), hide_new_task_list

@@ -96,6 +96,9 @@ en:
   pages:
     show:
       new_note: Note
+      new_divider: Divider
+      new_upload: Upload
+      new_task_list: Task List
     new:
       name: Name
       submit: Create

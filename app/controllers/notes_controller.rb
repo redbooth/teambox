@@ -1,13 +1,9 @@
 class NotesController < ApplicationController
   before_filter :load_page
   
-  def new
-    respond_to{|f|f.js}
-  end
-  
   def create
-    @note = @page.build_note({})
-    @note.save(false)
+    @note = @page.build_note(params[:note])
+    @note.save
     respond_to{|f|f.js}
   end
   
