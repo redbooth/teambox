@@ -39,7 +39,7 @@ module ConversationsHelper
   end
   
   def conversation_comments_count(conversation)
-    pluralize(conversation.comments.size, t('.comment'), t('.comments'))
+    pluralize(conversation.comments.size, t('.message'), t('.messages'))
   end
   
   def conversation_comments_link(project,conversation)
