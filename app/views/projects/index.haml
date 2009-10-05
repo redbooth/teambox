@@ -1,3 +1,7 @@
+- if @pending_projects
+  .pending_projects
+    = list_pending_projects(@pending_projects)
+    
 #activities
   = list_activities(@activities)
 

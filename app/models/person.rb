@@ -11,4 +11,8 @@ class Person < ActiveRecord::Base
     user.name
   end
   
+  def login
+    user.login
+  end
+  
 end

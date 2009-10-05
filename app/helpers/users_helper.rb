@@ -43,7 +43,11 @@ module UsersHelper
   end
 
   def user_link(user)
-    link_to user.name, user_path(user)
+    if user.name.blank?
+      link_to user.login, user_path(user)
+    else
+      link_to user.name, user_path(user)
+    end
   end
 
   def user_checkbox(user)

@@ -23,4 +23,8 @@ module ProjectsHelper
         :project => project }
   end
   
+  def list_pending_projects(projects)
+    render :partial => 'pending', :as => :project, :collection => projects
+  end
+  
 end

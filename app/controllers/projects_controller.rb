@@ -1,9 +1,10 @@
 class ProjectsController < ApplicationController
-  before_filter :find_project, :only => [ :show, :edit, :update ]
+  before_filter :find_project, :only => [ :show, :edit, :update, :accept, :decline ]
   layout 'application'
   
   def index
     @projects = current_user.projects
+    @pending_projects = current_user.pending_projects
     @activities = @projects.collect { |p| p.activities }.flatten.sort { |x,y| y.created_at <=> x.created_at }
   end
   
@@ -45,6 +46,28 @@ class ProjectsController < ApplicationController
   def get_comments
     @target = Comment.get_target(params[:target_name],params[:target_id])
     @comments = Comment.get_comments(current_user,@target,params[:show])
+  end
+  
+  def accept
+    person = current_user.people.find(:first,:conditions => {
+      :project_id => @project.id, :pending => true})
+      
+    if person
+      person.pending = false
+      person.save(false)
+      redirect_to project_path(@project)
+    else
+      redirect_to projects_path
+    end
+  end
+  
+  def decline
+    person = current_user.people.find(:first,:conditions => {
+      :project_id => @project.id, :pending => true})
+
+    person.destroy if person
+    
+    redirect_to projects_path
   end
   
   private

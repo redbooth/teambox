@@ -19,16 +19,22 @@ class PeopleController < ApplicationController
   end
   
   def destroy
-    user = User.find params[:id]
+    @user = User.find params[:id]
 
-    if user
-      @current_project.remove_user(user)
-      flash[:success] = "#{user.name} has been removed from this project!"
+    if @user
+      @current_project.remove_user(@user)
+      flash[:success] = "#{@user.name} has been removed from this project!"
       
-      redirect_to project_people_path
+      respond_to do |f|
+        f.html { redirect_to project_people_path }
+        f.js
+      end
     else
       flash[:error] = "Person not found."
-      redirect_to project_people_path
+      respond_to do |f|
+        f.html { redirect_to project_people_path }
+        f.js
+      end
     end
   end
   
