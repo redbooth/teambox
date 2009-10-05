@@ -20,6 +20,7 @@ en:
       sunday: Sunday
       monday: Monday
       first_day_of_week: Week starts on
+      change_password: Change password
     new:
       title: Create an Account
       submit: Create account

@@ -55,5 +55,12 @@ module UsersHelper
     text << ' '
     text << label_tag("user_#{user.id}", user.name)
   end
+
+  def show_user_password_fields
+    update_page do |page|
+      page['change_password_link'].hide
+      page['password_fields'].show
+    end
+  end
     
 end
