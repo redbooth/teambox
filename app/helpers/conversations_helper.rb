@@ -18,8 +18,8 @@ module ConversationsHelper
   end
   
   def new_conversation_link(project)
-    link_to add_image, new_project_conversation_path(project),
-    :class => 'add_button'
+    link_to "<span>Conversation</span>", new_project_conversation_path(project),
+    :class => 'button'
   end
   
   def conversation_fields(f)

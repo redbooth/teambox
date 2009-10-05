@@ -1,6 +1,4 @@
 - content_for :column do
-  = add_page_link(project)
-  %h2.title_with_button
-    =link_to 'Pages', project_task_lists_path(project)
+  = new_page_link(project)
   .pages
     = list_pages(pages,current_target)

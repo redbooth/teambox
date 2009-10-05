@@ -8169,6 +8169,21 @@ Event.addBehavior({
     $$('.column_settings .toggle').each(function(e){ e.className = 'toggle'; });
   }
 });
+
+Element.addMethods({
+  auto_focus: function(element){
+    element = $(element);
+    var field;
+    if (field = element.down(".focus")) { (function() { try { field.focus() } catch (e) { } }).defer(); }
+    return element;
+  },
+  auto_select: function(element){
+    element = $(element);
+    var field;
+    if (field = element.down(".focus")) { (function() { try { field.select() } catch (e) { } }).defer(); }
+    return element;
+  }
+});
 Event.addBehavior({
   ".comment:mouseover": function(e){
     $(this).className = 'comment comment_hover'
@@ -8244,6 +8259,16 @@ function onEndCrop(coords, dimensions){
   $('crop_width').value = dimensions.width;
   $('crop_height').value = dimensions.height;
 }
+Event.addBehavior({
+  ".note:mouseover": function(e){
+    $(this).down('p.actions').show();
+  },
+  ".note:mouseout": function(e){
+    $$(".note p.actions").each(function(e){
+      e.hide();
+    });
+  }
+});
 Event.addBehavior({
   ".task_list:mouseover": function(e){
     $(this).down('p.actions').show();

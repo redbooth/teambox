@@ -7,9 +7,9 @@ module PagesHelper
       :current_target => current_target }
   end
   
-  def add_page_link(project)
-    link_to add_image, new_project_page_path(project),
-    :class => 'add_button'
+  def new_page_link(project)
+    link_to "<span>Page</span>", new_project_page_path(project),
+    :class => 'button'
   end
   
   def page_fields(f)
