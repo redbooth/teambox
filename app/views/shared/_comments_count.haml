@@ -1,6 +1,3 @@
-%span.count
-  - if unread_count > 0
-    %span.unread
-      = unread_count
-  %span.total
-    = target.comments_count
+- if unread_count > 0
+  %span.unread_comments
+    •
