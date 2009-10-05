@@ -26,6 +26,7 @@ class ProjectsController < ApplicationController
   
   def show
     @activities = @current_project.activities
+    CommentRead.user(current_user).read_up_to(@current_project.comments.first,true)
   end
   
   def edit

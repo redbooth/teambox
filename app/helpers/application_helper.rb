@@ -135,7 +135,7 @@ module ApplicationHelper
   end
   
   def show_comments_count(target)
-    #render :partial => 'shared/comments_count', :locals => { :target => target, :unread_count => CommentRead.user(current_user).unread_count(target) }
+    render :partial => 'shared/comments_count', :locals => { :target => target, :unread_count => CommentRead.user(current_user).unread_count(target) }
   end
   
   def is_controller?(_controller, _action = nil)

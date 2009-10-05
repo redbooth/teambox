@@ -9,7 +9,7 @@ class CommentRead < ActiveRecord::Base
       user_id = self.new.user_id
       
       last_comment = self.last_read_comment(target)
-      
+
       if target.last_comment_id.nil?
         return 0
       else
@@ -17,22 +17,35 @@ class CommentRead < ActiveRecord::Base
           target.comments.count
         else
           target.comments.count(:conditions => 
-            [ "id > ?", target.last_comment_id ] )
+            [ "id > ?", last_comment.last_read_comment_id ] )
         end
       end
     end
     
-    def read_up_to(comment)
-      CommentRead.delete_all({
-        :target_type => comment.target_type,
-        :target_id => comment.target_id
-      })
-      
-      cr = self.new({
-        :target_type => comment.target_type,
-        :target_id => comment.target_id,
-        :last_read_comment_id => comment.id
-      })
+    def read_up_to(comment,project = false)
+      if project
+        CommentRead.delete_all({
+          :target_type => 'Project',
+          :target_id => comment.project_id
+        })
+
+        cr = self.new({
+          :target_type => 'Project',
+          :target_id => comment.project_id,
+          :last_read_comment_id => comment.id
+        })
+      else
+        CommentRead.delete_all({
+          :target_type => comment.target_type,
+          :target_id => comment.target_id
+        })
+
+        cr = self.new({
+          :target_type => comment.target_type,
+          :target_id => comment.target_id,
+          :last_read_comment_id => comment.id
+        })
+      end
       
       cr.save
     end
