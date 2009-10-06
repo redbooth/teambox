@@ -1,0 +1,7 @@
+%h2= @conversation.name
+
+- @conversation.comments.each do |comment|
+  = comment.body_html
+  %hr
+
+Unsuscribe

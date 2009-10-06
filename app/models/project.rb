@@ -20,8 +20,8 @@ class Project < ActiveRecord::Base
   validates_uniqueness_of :permalink
   validates_format_of :permalink, :with => /^[a-z0-9_\-\.]{2,}$/
 
-  validates_presence_of :user         # A project _needs_ and owner
-  validates_associated :people        # An will only accept valid people
+  validates_presence_of :user         # A project _needs_ an owner
+  validates_associated :people        # And will only accept valid people
   
   attr_accessible :name, :permalink
   
