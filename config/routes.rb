@@ -18,10 +18,10 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :conversations, :has_many => [:comments]
     user.resource :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }
   end
-    
+  
   map.resources :projects,
       :has_many => [:pages,:invitations,:people],
-      :member => [:get_comments] do |project|
+      :member => [:get_comments,:accept,:decline] do |project|
     #project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
     #project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
     project.resources :comments do |comment|

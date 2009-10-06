@@ -23,7 +23,8 @@ class ConversationsController < ApplicationController
   end
   
   def show
-    @comments = Comment.get_comments(current_user,@conversation)
+    @comments = @conversation.comments
+    CommentRead.user(current_user).read_up_to(@comments.first)
     @conversations = @current_project.conversations
   end
   

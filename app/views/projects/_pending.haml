@@ -1,0 +1,10 @@
+.project
+  You were invited to join the project
+  %span.name= h(project.name)
+  
+  .actions
+    - form_for project, :url => accept_project_path(project), :html => { :class => 'accept_project' } do |f|
+      = f.submit 'Accept'
+    
+    - form_for project, :url => decline_project_path(project), :html => { :class => 'decline_project' } do |f|
+      = f.submit 'Decline'

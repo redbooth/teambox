@@ -25,6 +25,7 @@ class TaskListsController < ApplicationController
   def show
     @task_lists = @current_project.task_lists
     @comments = @task_list.comments
+    CommentRead.user(current_user).read_up_to(@comments.first)
   end
   
   def reorder

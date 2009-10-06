@@ -43,13 +43,24 @@ module UsersHelper
   end
 
   def user_link(user)
-    link_to user.name, user_path(user)
+    if user.name.blank?
+      link_to user.login, user_path(user)
+    else
+      link_to user.name, user_path(user)
+    end
   end
 
   def user_checkbox(user)
     text =  check_box_tag("user_#{user.id}", :value => '1', :checked => true) 
     text << ' '
     text << label_tag("user_#{user.id}", user.name)
+  end
+
+  def show_user_password_fields
+    update_page do |page|
+      page['change_password_link'].hide
+      page['password_fields'].show
+    end
   end
     
 end

@@ -1,0 +1,10 @@
+.person{:class => "person_#{person.user.id} #{person_status(person)}" }
+  = thumb_avatar(person.user)
+  = user_link(person)
+  .actions
+    = delete_person_link(person)  
+  - if person.pending
+    .pending
+      Waiting to accept invitiation.
+  .status
+    = time_ago_in_words(person.updated_at)

@@ -7,12 +7,16 @@
 .email.text_field
   = f.label :email, t('.email')
   = f.text_field :email
-.password.text_field
-  = f.label :password
-  = f.password_field :password
-.password.text_field
-  = f.label :password_confirmation, 'Confirm Password'
-  = f.password_field :password_confirmation
+- unless user.new_record?
+  #change_password_link
+    = link_to_function t('.change_password'), show_user_password_fields
+#password_fields{:style => (user.new_record? ? "" : "display: none;")}
+  .password.text_field
+    = f.label :password
+    = f.password_field :password
+  .password.text_field
+    = f.label :password_confirmation, 'Confirm Password'
+    = f.password_field :password_confirmation
 - unless user.new_record?
   .time_zone.text_field
     = f.label :time_zone, t('.time_zone')

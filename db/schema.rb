@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   create_table :people do |t|
     t.integer :user_id
     t.integer :project_id
+    t.boolean :pending, :default => true
     t.timestamps
   end
 
