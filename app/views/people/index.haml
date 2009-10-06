@@ -1,5 +1,5 @@
 - content_for :column do
-  asdadff
+  &nbsp;
   
 - form_for project_people_path, :person do |f|
   %h2 Invite people
@@ -8,5 +8,5 @@
   = f.submit 'Invite'
 
 .people
-  =# list_people(@current_project.users)
+  = list_people(@current_project.people)
 

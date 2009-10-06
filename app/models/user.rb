@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   
   has_many :people
-  has_many :projects, :through => :people
+  has_many :projects, :through => :people, :conditions => 'people.pending = false'
+  has_many :pending_projects, :through => :people, :source => :project, :conditions => 'people.pending = true'
 
   has_many :activities
   

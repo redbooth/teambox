@@ -20,6 +20,7 @@ en:
       sunday: Sunday
       monday: Monday
       first_day_of_week: Week starts on
+      change_password: Change password
     new:
       title: Create an Account
       submit: Create account
@@ -118,6 +119,8 @@ en:
   people:
     index:
       enter_username_or_email: "Enter your teammate's username or email:"
+    person:
+      confirm_delete: Are you sure you want to remove this person from the project?
   comments:
     comment:
       commented_on: "-"

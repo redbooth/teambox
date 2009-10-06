@@ -19,6 +19,9 @@ class Comment < ActiveRecord::Base
     target.last_comment_id = id
     target.save(false)
     
+    project.last_comment_id = id
+    project.save(false)
+    
     self.activity = project.log_activity(self,'create')
   end
 
