@@ -10,6 +10,9 @@
   =new_page_upload_link(@current_project,@page)
 
 =new_note_form(@current_project,@page)
-  
+=new_divider_form(@current_project,@page)
+
+#dividers
+  = list_page_dividers(@page.dividers)
 #notes
   = list_page_notes(@page.notes)

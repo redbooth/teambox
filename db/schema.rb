@@ -118,6 +118,14 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.timestamps
   end
   
+  create_table :dividers do |t|
+    t.integer :page_id
+    t.integer :project_id
+    t.string  :name
+    t.integer :position
+    t.timestamps
+  end
+  
   create_table :notes do |t|
     t.integer :page_id
     t.integer :project_id

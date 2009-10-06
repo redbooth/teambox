@@ -1,4 +1,4 @@
-class Note < ActiveRecord::Base
+class Divider < ActiveRecord::Base
   belongs_to :page
   belongs_to :project
   

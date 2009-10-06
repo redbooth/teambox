@@ -1,0 +1,5 @@
+page.insert_html :top, :dividers, :partial => 'dividers/divider', :locals => { :divider => @divider }
+page.hide_divider_form
+page["divider_#{@divider.id}"].highlight
+#page.dividers_sortable(project_page_path(@divider.page.project,@divider.page))
+page.reload_javascript_events

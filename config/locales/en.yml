@@ -93,6 +93,13 @@ en:
       submit: Add Note
     edit:
       submit: Update Note
+  dividers:
+    actions:
+      delete_confirm: Are you sure you want to delete this divider?
+    new:
+      submit: Add
+    edit:
+      submit: Update
   pages:
     show:
       new_note: Note
@@ -114,7 +121,8 @@ en:
       add_link: New Task List
     new:
       title: New Task List
-      submit: Create
+      submit: Add TaskList
+      cancel: Cancel
   people:
     index:
       enter_username_or_email: "Enter your teammate's username or email:"

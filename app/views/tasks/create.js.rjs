@@ -1,5 +1,5 @@
 page.insert_task(@current_project,@task_list,@task)
 page.highlight_task(@current_project,@task_list,@task)
-page.replace_new_task_form(@current_project,@task_list)
-page.show_new_task_link(@current_project,@task_list)
-page.hide_new_task_form(@current_project,@task_list)
+page.new_task(:link,:show,  @current_project,@task_list)
+page.new_task(:form,:hide,  @current_project,@task_list)
+page.new_task(:form,:reset, @current_project,@task_list)
