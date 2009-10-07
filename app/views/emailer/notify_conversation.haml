@@ -1,7 +1,53 @@
-%h2= @conversation.name
+.email{ :style => 'font-size: 12px; color: rgb(0,0,0); font-family: Helvetica, Arial' }
 
-- @conversation.comments.each do |comment|
-  = comment.body_html
-  %hr
+  %p{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
+    = "Answer above this line to post a reply to this conversation."
 
-Unsuscribe
+  %p{ :style => 'font-size: 14px; color: rgb(50,50,50)' }
+    = "Teambox Project:"
+    = link_to @project.name, project_path(@project)
+
+  %h2{ :style => 'font-size: 18px; color: rgb(0,0,0)' }
+    = link_to @conversation.name, project_conversation_path(@project, @conversation)
+
+  - @conversation.comments.each do |comment|
+    - if comment == @conversation.comments.first
+      - unread = 'background: rgb(255,255,200)'
+    - else
+      - unread = ''
+    .comment{ :style => 'font-size: 14px; color: rgb(50,50,50); border-bottom: 1px #555 dotted' }
+      .body{ :style => unread }
+        %p
+          %strong{ :style => 'font-size: 12px; color: rgb(50,50,50);' }
+            = comment.user.name + ', '
+          %span{ :style => 'font-size: 12px; color: rgb(150,150,150);' }= comment.created_at.strftime("%b %d at %I:%M %p")
+          = comment.body_html
+        - if comment.uploads.count > 0
+          %ul
+            - comment.uploads.each do |upload|
+              %li
+                = "File:"
+                = link_to h(upload.filename), project_upload_path(upload.project, upload.filename)
+                = "uploaded by"
+                = link_to upload.user.name, user_path(upload.user)
+                - if upload.description
+                  = '(' + h(upload.description) + ')'
+
+  .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
+    %p
+      = "You can"
+      = link_to "view this conversation online", project_conversation_path(@project, @conversation)
+      = "to answer and attach files or hours."
+    %p
+      = "You can also answer to this email to post a reply in the conversation."
+
+  .footer{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
+    %p
+      = "Pablo, Andrew and Brandon are suscribed to this conversations, and will be notified of future replies."
+
+    %p
+      = "You can"
+      = link_to "stop watching this conversation", "this_should_be_a_get_action"
+      = "or change your"
+      = link_to "notification settings", settings_path
+
