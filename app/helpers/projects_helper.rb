@@ -13,7 +13,7 @@ module ProjectsHelper
   end
   
   def new_project_link
-    link_to 'Create a Project', new_project_path
+    render :partial => 'projects/new'    
   end
   
   def project_fields(f,project)

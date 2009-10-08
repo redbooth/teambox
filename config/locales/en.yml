@@ -47,6 +47,7 @@ en:
     new:
       title: Create a Project
       submit: Create
+      new_project: New Project...
     edit:
       submit: Save Changes
   invitations:

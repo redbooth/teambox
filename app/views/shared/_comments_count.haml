@@ -1,3 +1,2 @@
-- if unread_count > 0
-  %span.unread_comments
-    •
+%span{ :class => unread_count > 0 ? :unread_comments : :no_unread_comments }
+  •
