@@ -1,8 +1,8 @@
 .comment{:id => "comment_#{comment.id}" }
   .info
-    =activity_comment_icon(comment)
-    =comment_actions_link(comment)
-    =thumb_avatar(comment.user)
+    = activity_comment_icon(comment)
+    = comment_actions_link(comment)
+    = thumb_avatar(comment.user)
     - if false ##unless comment.hours.nil?
       .hours
         =hour_image
@@ -13,11 +13,10 @@
     .date
       = posted_date comment.created_at
     .name
-      =conversation_last_comment_text(comment)
-      =activity_comment_user_link(comment)
-      =activity_comment_project_link(comment)
-      =activity_comment_target_link(comment)
-      =comment_user_link(comment)
+      = conversation_last_comment_text(comment)
+      = activity_comment_user_link(comment)
+      = activity_comment_project_link(comment)
+      = activity_comment_target_link(comment)
     .body
       = comment.body_html
     - if comment.uploads.count > 0
