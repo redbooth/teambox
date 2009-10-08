@@ -1,5 +1,22 @@
-%h1= t('.title')
+%h2= t('.title')
 
 - form_for @project do |f|
   = project_fields(f,@project)
   = f.submit t('.submit')
+  
+- content_for :column do
+  %p A project is a shared group with your teammates.
+  %p Inside a project, each team member can:
+  %ul
+    %li Post status updates.
+    %li Start conversations or reply.
+    %li Send attachments.
+    %li Assign and review tasks.
+    %li Comment on tasks.
+    %li Track hours spent on each item.
+    %li Create, edit and view pages.
+  %p This project will belong to you. You can transfer this project to other contacts at any time.
+  %p
+    As a free account, you can only upload up to 10 Mb of attachments to this project.
+    = link_to "Upgrade your account now."
+  
