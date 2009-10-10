@@ -109,6 +109,8 @@ en:
     fields:
       body: Content
       name: Name  
+    column:
+      new_page: New Page
   task_lists:
     fields:
       name: Name
