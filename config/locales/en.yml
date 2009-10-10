@@ -64,7 +64,7 @@ en:
       submit: Create
       subscribe_note: This people will be notified of this message and any following comments. As soon as we code that in, of course
     column:
-      conversations: Conversations
+      new_conversation: New Conversation
     conversation_with_extract:
       posted_by: Posted by
     show:

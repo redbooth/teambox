@@ -18,7 +18,7 @@ module ConversationsHelper
   end
   
   def new_conversation_link(project)
-    link_to "<span>Conversation</span>", new_project_conversation_path(project),
+    link_to content_tag(:span, t('.new_conversation')), new_project_conversation_path(project),
     :class => 'button'
   end
   
@@ -31,7 +31,7 @@ module ConversationsHelper
   end
   
   def conversation_link(project,conversation)
-    link_to h(conversation.name), project_conversation_path(project,conversation)
+    link_to h(conversation.name), project_conversation_path(project,conversation), :class => 'conversation_link'
   end
 
   def edit_conversation_link(text,project,conversation)
