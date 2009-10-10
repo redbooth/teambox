@@ -12,7 +12,8 @@ ActionController::Routing::Routes.draw do |map|
                           :comments_descending => :put, 
                           :comments_ascending => :put,
                           :conversations_first_comment => :put,
-                          :conversations_latest_comment => :put } do |user|
+                          :conversations_latest_comment => :put,
+                          :invitations => :get } do |user|
     user.resources :task_lists, :has_many => [:comments] do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end

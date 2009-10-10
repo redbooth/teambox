@@ -50,6 +50,8 @@ en:
       new_project: New Project...
     edit:
       submit: Save Changes
+    pending:
+      invited_to_join: "{{by}} has invited you to join the project {{project}}."
   invitations:
     fields:
       email: Email to send invitation to
@@ -182,6 +184,7 @@ en:
       settings: Settings
       product_site: Product site
       blog: Blog
+      project_invitations: "Invitations ({{count}})"
 
   date:
     yesterday: Yesterday

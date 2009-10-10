@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   
   has_many :people
   has_many :projects, :through => :people, :conditions => 'people.pending = false'
-  has_many :pending_projects, :through => :people, :source => :project, :conditions => 'people.pending = true'
+  has_many :project_invitations, :class_name => 'Person', :conditions => 'people.pending = true'
 
   has_many :activities
     

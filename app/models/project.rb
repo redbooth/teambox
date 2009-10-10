@@ -73,9 +73,11 @@ class Project < ActiveRecord::Base
     Activity.log(self,target,action,creator_id)
   end
   
-  def add_user(user)
-    unless Person.exists? :user_id => user.id, :project_id => self.id
-      person = self.people.new(:user_id => user.id)
+  def add_user(user,source_user=nil)
+    unless Person.exists? :user_id => user.id, :project_id => self.id      
+      source_user = user if source_user.nil?
+      
+      person = self.people.new(:user_id => user.id,:source_user_id => source_user.id)
       person.save
       log_activity(person,'create',person)
     end
