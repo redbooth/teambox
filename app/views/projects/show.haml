@@ -2,6 +2,8 @@
   .people_list
     %h2= t 'projects.show.people_in_project'
     = list_people_statuses(@current_project.users)
+    .invite_people
+      = link_to 'Invite people...', project_people_path(@current_project)
   .subscribe
     = link_to t('.subscribe')
 

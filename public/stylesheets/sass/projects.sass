@@ -1,11 +1,63 @@
-.new_project,.edit_project
-  :padding 30px
+.show_projects, .index_task_lists
+  #activities
+    .comment
+      .name
+        .author
+        .project, .project_arr
+          :display none
+        .target, .target_arr
+
+.index_conversations, .show_conversations, .show_tasks
+  .comment
+    .name
+      .author
+      .project, .project_arr
+        :display none
+      .target, .target_arr
+        :display none
+
+.new_projects
+  .content 
+    h2, form
+      :margin-left 20px
+    form
+      :margin-bottom 20px
+  .column
+    :font-size 12px
+    p
+      :margin 0 0 5px 0
+    ul
+      :padding-left 20px
+      :margin-top 5px
+      li
+        :margin-bottom 3px
+
+form#new_project, form.edit_project
+  :border 1px solid rgb(220,220,220)
+  :padding 10px
+  :background rgb(240,240,240)
+  .text_field
+    :margin-bottom 10px
+    .label
+      :display block
+      :margin-bottom 5px
+      label
+        :display inline
+      .description
+        :display inline
+        :font-size 10px
+        :font-style italic
+  #project_name
+    :width 272px
+  #project_permalink
+    :width 140px
 
 .people_list
-  .person
+  .person, .invite_people
     :font-size 12px
     :margin-left 10px
     :padding-left 15px
+  .person
     :background transparent url(/images/grey_dot.png) no-repeat scroll 0 4px
   a
     :color rgb(80,80,80)
@@ -21,11 +73,14 @@
       :display none
   
 .project_list
+  :font-size 12px
   .project_link
-    :font-size 12px
     .unread_comment_count
       :float right
       :font-weight normal
+  .new_project_link
+    a
+      :color rgb(150,150,150)
 
 .subscribe
   :margin-top 15px

@@ -46,7 +46,8 @@ en:
       permalink_prefix: http://teambox.com/
     new:
       title: Create a Project
-      submit: Create
+      submit: Create project and start inviting people
+      new_project: New Project...
     edit:
       submit: Save Changes
   invitations:

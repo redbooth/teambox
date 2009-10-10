@@ -1,9 +1,17 @@
+if @comment.target_type == 'Conversation'
+  direction = :bottom
+else
+  direction = :top
+end
+
 unless @comment.new_record?
   page.ef('comments')
     #page << "Comment.update();"
-    page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
+    page.insert_html direction, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
+    page["comment_#{@comment.id}"].highlight
   page.esf('activities')
-    page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
+    page.insert_html direction, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
+    page["comment_#{@comment.id}"].highlight
   page.en
   
   page << "Form.reset('new_comment')"

@@ -9,5 +9,6 @@
   .project_list
     %h2= t '.projects'
     = list_projects(@projects)
+    = new_project_link
   .subscribe
     = link_to t('.subscribe')

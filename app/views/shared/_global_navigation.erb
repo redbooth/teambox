@@ -11,9 +11,9 @@ render_tabnav :global, :generate_css => false do
     #end
     
     add_tab do |t|
-      t.named "#{current_user.name}"
+      t.named "#{current_user.login}"
       t.links_to user_path(current_user)
-      t.highlights_on :controller => :users, :action => :edit
+      t.highlights_on :controller => :users, :action => :show
     end
     add_tab do |t|
       t.named t('.settings')

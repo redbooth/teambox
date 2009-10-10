@@ -1,8 +1,11 @@
 .name.text_field
-  = f.label :name, t('.name')
+  .label
+    = f.label :name, t('.name')
+    .description= "Choose a brief and descriptive title. For example: Taggart Transcontinental"
   = f.text_field :name
-- if project.new_record?
-  .permalink.text_field
+.permalink.text_field
+  .label
     = f.label :permalink, t('.permalink')
-    = t('.permalink_prefix')
-    = f.text_field :permalink
+    .description= "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
+  = t('.permalink_prefix')
+  = f.text_field :permalink
