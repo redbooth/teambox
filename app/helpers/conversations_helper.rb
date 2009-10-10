@@ -1,5 +1,14 @@
 module ConversationsHelper
 
+  def conversation_action_links(project,conversation)
+    if conversation.owner?(current_user)
+      render :partial => 'conversations/actions',
+      :locals => { 
+        :project => project,
+        :conversation => conversation }
+    end
+  end
+
   def conversation_comment(conversation)
     if current_user.conversations_first_comment
       render :partial => 'comments/comment', :locals => { :comment => conversation.comments.first }
@@ -34,8 +43,12 @@ module ConversationsHelper
     link_to h(conversation.name), project_conversation_path(project,conversation)
   end
 
-  def edit_conversation_link(text,project,conversation)
-    link_to h(text), edit_project_conversation_path(project,conversation)
+  def edit_conversation_link(project,conversation)
+    link_to pencil_image, edit_project_conversation_path(project,conversation)
+  end
+  
+  def delete_conversation_link(project,conversation)
+    link_to trash_image, project_conversation_path(project,conversation), :method => :delete
   end
   
   def conversation_comments_count(conversation)
@@ -47,7 +60,6 @@ module ConversationsHelper
   end
   
   def conversation_column(project,conversations,options={})
-    
     options[:conversation] ||= nil
     options[:show_conversation_settings] ||= false
     options[:show_comments_settings] ||= false
@@ -59,7 +71,7 @@ module ConversationsHelper
         :show_conversation_settings =>  options[:show_conversation_settings],
         :show_comments_settings => options[:show_comments_settings] }
   end
-  
+
   def set_conversation_class(conversation,current_conversation = nil)
     if conversation == current_conversation
       "selected"
@@ -67,4 +79,5 @@ module ConversationsHelper
       ""
     end
   end
+
 end

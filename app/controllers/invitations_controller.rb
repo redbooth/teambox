@@ -1,4 +1,8 @@
 class InvitationsController < ApplicationController
+  def index
+    @invitations = @current_user.invitations
+  end
+
   def new
     @invitation = @current_project.invitations.new
   end

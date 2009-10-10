@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   has_many :pending_projects, :through => :people, :source => :project, :conditions => 'people.pending = true'
 
   has_many :activities
-  
+    
   has_one :avatar
   has_many :uploads
     

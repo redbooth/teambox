@@ -6,8 +6,9 @@ ActionController::Routing::Routes.draw do |map|
   map.settings '/settings', :controller => 'users', :action => 'edit'
     
   map.resource :session
-  
+
   map.resources :users, :member => { 
+                          :invitations => :get,
                           :comments_descending => :put, 
                           :comments_ascending => :put,
                           :conversations_first_comment => :put,

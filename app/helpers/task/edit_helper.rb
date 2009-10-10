@@ -1,5 +1,9 @@
 module Task::EditHelper
 
+  def edit_task_link(project,task_list,task)
+    link_to_function pencil_image, show_edit_task(project,task_list,task)
+  end
+
   def hide_edit_task_form(project,task_list,task)
     page["project_#{project.id}_task_list_#{task_list.id}_edit_task_#{task.id}"].hide
   end

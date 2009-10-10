@@ -20,4 +20,8 @@ class Conversation < ActiveRecord::Base
     comment.save!
   end
   
+  def owner?(u)
+    user = u
+  end
+    
 end

@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.boolean  :comments_ascending, :default => true
     t.boolean  :conversations_first_comment, :default => true
     t.string  :first_day_of_week, :default => 'sunday'
+    t.integer :invitations_count, :default => 0
     t.timestamps
   end
 

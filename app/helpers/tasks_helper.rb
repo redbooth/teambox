@@ -1,5 +1,6 @@
 module TasksHelper
 
+
   def remove_task(project,task_list,task)
     page["project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}"].remove
   end
@@ -10,10 +11,6 @@ module TasksHelper
 
   def show_task(project,task_list,task)
     page["project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}"].show
-  end
-
-  def edit_task_link(project,task_list,task)
-    link_to_function pencil_image, show_edit_task(project,task_list,task)
   end
 
   def delete_task_link(project,task_list,task)
