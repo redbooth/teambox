@@ -22,8 +22,8 @@ module TaskListsHelper
   end
   
   def new_task_list_link
-    link_to_function "<span>Task List</span>", show_new_task_list,
-    :class => 'button', :id => "new_task_list_link"
+    link_to_function content_tag(:span, t('.new_task_list')), show_new_task_list,
+      :class => 'button', :id => "new_task_list_link"
   end
   
   def show_new_task_list

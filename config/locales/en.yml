@@ -117,6 +117,8 @@ en:
     new:
       title: New Task List
       submit: Create
+    column:
+      new_task_list: New Task List
   people:
     index:
       enter_username_or_email: "Enter your teammate's username or email:"
