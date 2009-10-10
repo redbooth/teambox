@@ -94,7 +94,7 @@ module ApplicationHelper
       datetime.strftime("%I:%M %p")
     elsif datetime > 1.day.ago.beginning_of_day
       t 'date.yesterday'
-    elsif datetime > 7.days.ago
+    elsif datetime > Time.current.beginning_of_year
       datetime.strftime("%b %d")
     else
       datetime.strftime("%b %d %Y")
