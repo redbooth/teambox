@@ -6,6 +6,14 @@ class ProjectsController < ApplicationController
     @projects = current_user.projects
     @pending_projects = current_user.pending_projects
     @activities = @projects.collect { |p| p.activities }.flatten.sort { |x,y| y.created_at <=> x.created_at }
+    
+    options = { :include => [:target], :except => 'body_html' }
+    
+    respond_to do |f|
+      f.html
+      f.xml  { render :xml  => @activities.to_xml(options) }
+      f.json { render :json => @activities.to_json(options) }
+    end
   end
   
   def new
@@ -28,6 +36,14 @@ class ProjectsController < ApplicationController
   def show
     @activities = @current_project.activities
     CommentRead.user(current_user).read_up_to(@current_project.comments.first,true)
+    
+    options = { :include => [:target], :except => ['body_html', :project_id] }
+    
+    respond_to do |f|
+      f.html
+      f.xml  { render :xml  => @activities.to_xml(options) }
+      f.json { render :json => @activities.to_json(options) }
+    end
   end
   
   def edit

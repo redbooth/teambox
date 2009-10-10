@@ -5,7 +5,7 @@
     .invite_people
       = link_to 'Invite people...', project_people_path(@current_project)
   .subscribe
-    = link_to t('.subscribe')
+    = link_to t('.subscribe'), project_path(@current_project, :format => :rss)
 
 = new_comment_form(@current_project)
 
