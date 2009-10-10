@@ -37,6 +37,7 @@ en:
       projects: My Projects
       subscribe: Subscribe to the news feed
     show:
+      invite_people: 'Invite people...'
       new_task_list_link: New Task List
       people_in_project: People in this project
       subscribe: Subscribe to the news feed
