@@ -67,12 +67,7 @@ class User < ActiveRecord::Base
   def add_recent_project(project)
     self.recent_projects ||= []
     
-    if self.recent_projects.include?(project.id)
-      unless self.recent_projects.first == project.id
-        self.recent_projects.delete(project.id)
-        self.recent_projects = self.recent_projects.unshift(project.id).slice(0,5)
-      end
-    else
+    unless self.recent_projects.include?(project.id)
       self.recent_projects = self.recent_projects.unshift(project.id).slice(0,5)
       @recent_projects = nil
       self.save(false)
