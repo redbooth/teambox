@@ -1,4 +1,9 @@
 = conversation_column(@current_project,@conversations, :show_conversation_settings => true)
 
-#conversations
-  =list_short_conversations(@conversations)
+- if @conversations.count > 0
+  #conversations
+    =list_short_conversations(@conversations)
+- else
+  #primer
+    %h2 Create your first conversation!
+    %p Conversations are..
