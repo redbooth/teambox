@@ -1,6 +1,6 @@
 = conversation_column(@current_project,@conversations, :show_conversation_settings => true)
 
-- if @conversations.count > 0
+- unless @conversations.empty?
   #conversations
     = list_short_conversations(@conversations)
     

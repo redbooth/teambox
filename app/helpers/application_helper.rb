@@ -142,4 +142,8 @@ module ApplicationHelper
     controller.controller_name == _controller.to_s and (_action == nil or controller.action_name == _action.to_s)
   end
   
+  def help_link
+    link_to t('.help'), "http://help.teambox.com/#{controller.controller_name}"
+  end
+
 end

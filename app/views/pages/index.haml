@@ -1,6 +1,6 @@
 =page_column(@current_project,@pages)
 
-- if @pages.count > 0
+- unless @pages.empty?
   grumble, grumble
 
 - else

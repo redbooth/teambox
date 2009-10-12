@@ -70,7 +70,7 @@ en:
       primer:
         empty: This project doesn't have any conversations yet.
         create_first: Create the first conversation in this project!
-        define: "Use conversations to <b>discuss decisions</b> and <b>update your team</b> about a subject.<br/>Each conversation is a thread of comments, which are similar to emails."
+        define: "Use conversations to <b>discuss decisions</b> and <b>update your team</b> in a centralized way.<br/>Each conversation is a thread of comments, which replace messy emails."
         item1: "<b>Share files</b>. Comments can have attached files, too."
         item2: "<b>Subscribe</b> to a conversation to be notified about future replies by email or RSS."
         item3: "<b>Impress</b>. Any comment can be formatted with text styles."
@@ -144,7 +144,7 @@ en:
       primer:
         empty: This project doesn't have any conversations yet.
         create_first: Create the first conversation in this project!
-        define: "Use tasks to <b>plan ahead</b>, <b>keep track of progress</b> and <b>review what's been done</b>.<br/>Tasks have a status, an assigned person and a thread of comments."
+        define: "Use tasks to <b>plan ahead</b>, <b>keep track of progress</b> and <b>review what's been done</b>.<br/><i>What? Who? When?</i> Tasks can have a status, an assigned person and due dates."
         item1: "<b>Plan</b>. Create tasks inside each list and assign them to your teammates."
         item2: "<b>Report</b>. Post comments for each task. Attach files. Ask for feedback."
         item3: "<b>Follow</b>. Receive notifications for tasks related to you."
@@ -176,6 +176,15 @@ en:
         select_a_file: Select a file
     index:
       new_file: Upload a File
+      primer:
+        empty: This project doesn't have any files yet.
+        create_first: Upload the first file to this project!
+        define1: "Ever had problems sharing a file with your team? Teambox makes sharing easy again."
+        define2: "You can upload files here or attach documents to conversations, tasks or pages. "
+        item1: "<b>Bigger files</b>. Upload files of any size and forget about email limitations."
+        item2: "<b>Versioning</b>. Upload new versions of a file and keep track of changes."
+        item3: "<b>Always available</b>. Files stay in context in the project for future reference."
+      
   sessions:
     fields:
       username_or_email: Username or email
@@ -213,6 +222,8 @@ en:
       product_site: Product site
       blog: Blog
       project_invitations: "Invitations ({{count}})"
+    footer:
+      help: Help
 
   date:
     yesterday: Yesterday
