@@ -2,8 +2,19 @@
 
 - if @conversations.count > 0
   #conversations
-    =list_short_conversations(@conversations)
+    = list_short_conversations(@conversations)
+    
 - else
   #primer
-    %h2 Create your first conversation!
-    %p Conversations are..
+    %p= t('.primer.empty')
+    .box
+      %h2= link_to t('.primer.create_first'), new_project_conversation_path(@current_project)
+      %p= t '.primer.define'
+      %ul
+        %li= t '.primer.item1'
+        %li= t '.primer.item2'
+        %li= t '.primer.item3'
+        %li= t '.primer.item4'
+        %li= t '.primer.item5'
+      %p= t '.primer.footer1' 
+      %p= t '.primer.footer2'
