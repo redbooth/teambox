@@ -109,6 +109,18 @@ en:
     edit:
       submit: Update Note
   pages:
+    index:
+      primer:
+        empty: This project doesn't have any pages yet.
+        create_first: Create the first page in this project!
+        define1: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
+        define2: "Editing a page is easy and fun, with drag-and-drop elements you can edit in place."
+        item1: "<b>Share</b>. All your teammates can view and edit the project's pages."
+        item2: "<b>Publish</b>. Instant web publishing with shared pages. Show the world."
+        item3: "<b>Print</b>. Pages are printer-friendly. Try printing or exporting a PDF!"
+        item4: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
+        footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
+        footer2: "You can also attach files to any page inside each note. Enjoy!"
     show:
       new_note: Note
       new_divider: Divider
