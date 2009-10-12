@@ -38,14 +38,14 @@ class ProjectsController < ApplicationController
     
     options = { :include => [:target], :except => ['body_html', :project_id] }
     
-    unless @current_project.comments.first.nil?
-      CommentRead.user(current_user).read_up_to(@current_project.comments.first,true)
-    end
-    
     respond_to do |f|
       f.html
       f.xml  { render :xml  => @activities.to_xml(options) }
       f.json { render :json => @activities.to_json(options) }
+    end
+  ensure
+    unless @current_project.comments.first.nil?
+      CommentRead.user(current_user).read_up_to(@current_project.comments.first,true)
     end
   end
   

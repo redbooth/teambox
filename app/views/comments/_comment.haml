@@ -10,6 +10,9 @@
           =comment.hours
           hr
   .block
+    - if CommentRead.user(current_user).unread?(comment)
+      .unread
+        •
     .date
       = posted_date comment.created_at
     .name

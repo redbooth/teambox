@@ -103,6 +103,8 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :last_read_comment_id
   end
   
+  add_index :comments_read, [:target_type,:target_id,:user_id]
+  
   create_table :conversations do |t|
     t.integer :project_id
     t.integer :user_id

@@ -19,10 +19,31 @@ class Comment < ActiveRecord::Base
     target.last_comment_id = id
     target.save(false)
     
-    project.last_comment_id = id
-    project.save(false)
-    
     self.activity = project.log_activity(self,'create')
+  end
+  
+  def after_destroy
+    last_comment = Comment.find(:first, :conditions => {
+        :target_type => target.class.name,
+        :target_id => target.id},
+      :order => 'id DESC')
+    
+    original_id = target.last_comment_id  
+    
+    if last_comment.nil?
+      target.last_comment_id = nil
+      CommentRead.delete_all(:conditions => {
+        :target_type => target.class.name,
+        :target_id => target.id})
+    else
+      target.last_comment_id = last_comment.id
+      CommentRead.update_all("last_read_comment_id = #{last_comment.id}",
+        :target_type => target.class.name,
+        :target_id => target.id,
+        :last_read_comment_id => original_id)
+    end
+    
+    target.save(false)
   end
 
   def day
@@ -60,28 +81,4 @@ class Comment < ActiveRecord::Base
       find_by_month
     end
   end
-  
-  def self.get_comments(user,target,show = 'all')
-    if user.comments_ascending
-      order = 'comments.created_at ASC'
-    else
-      order = 'comments.created_at DESC'
-    end
-  
-    if show == 'hours'
-      target.comments.find(:all,:conditions => [ 'hours IS NOT NULL and hours > 0'], :order => order)
-    elsif show == 'uploads'
-      target.comments.find(:all,
-        :select => 'comments.*',
-        :joins => 'INNER JOIN uploads ON (uploads.comment_id = comments.id)',
-        :order => order)
-    else
-      target.comments.find(:all,:order => order)
-    end
-  end
-  
-  def self.get_target(target_name,target_id)
-    target_name.constantize.find(target_id)
-  end
-    
 end
