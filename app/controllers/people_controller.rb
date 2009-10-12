@@ -8,7 +8,7 @@ class PeopleController < ApplicationController
     user ||= User.find_by_login params[:search]
 
     if user
-      @current_project.add_user(user)
+      @current_project.add_user(user,current_user)
       flash[:success] = "#{user.name} has been invited to this project!"
       
       redirect_to project_people_path

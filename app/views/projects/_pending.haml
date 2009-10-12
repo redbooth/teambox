@@ -1,10 +1,10 @@
 .project
-  You were invited to join the project
-  %span.name= h(project.name)
+  = thumb_avatar(invitation.source_user)
+  = t('.invited_to_join', :by => h(invitation.source_user.login), :project => h(invitation.project.name))
   
   .actions
-    - form_for project, :url => accept_project_path(project), :html => { :class => 'accept_project' } do |f|
+    - form_for invitation.project, :url => accept_project_path(invitation.project), :html => { :class => 'accept_project' } do |f|
       = f.submit 'Accept'
     
-    - form_for project, :url => decline_project_path(project), :html => { :class => 'decline_project' } do |f|
+    - form_for invitation.project, :url => decline_project_path(invitation.project), :html => { :class => 'decline_project' } do |f|
       = f.submit 'Decline'

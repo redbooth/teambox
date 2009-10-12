@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   
   has_many :people
   has_many :projects, :through => :people, :conditions => 'people.pending = false'
-  has_many :pending_projects, :through => :people, :source => :project, :conditions => 'people.pending = true'
+  has_many :project_invitations, :class_name => 'Person', :conditions => 'people.pending = true'
 
   has_many :activities
   
@@ -67,12 +67,7 @@ class User < ActiveRecord::Base
   def add_recent_project(project)
     self.recent_projects ||= []
     
-    if self.recent_projects.include?(project.id)
-      unless self.recent_projects.first == project.id
-        self.recent_projects.delete(project.id)
-        self.recent_projects = self.recent_projects.unshift(project.id).slice(0,5)
-      end
-    else
+    unless self.recent_projects.include?(project.id)
       self.recent_projects = self.recent_projects.unshift(project.id).slice(0,5)
       @recent_projects = nil
       self.save(false)

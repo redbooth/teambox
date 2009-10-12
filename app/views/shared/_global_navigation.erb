@@ -7,11 +7,21 @@ render_tabnav :global, :generate_css => false do
       t.links_to user_path(current_user)
       t.highlights_on :controller => :users, :action => :show
     end
+    
     add_tab do |t|
       t.named t('.settings')
       t.links_to settings_path
       t.highlights_on :controller => :users, :action => :edit
     end
+    
+    if current_user.project_invitations.count > 0
+      add_tab do |t|
+        t.named t('.project_invitations', :count => current_user.project_invitations.count)
+        t.links_to invitations_user_path(current_user)
+        t.highlights_on :controller => :users, :action => :invitations
+      end
+    end
+    
     add_tab do |t|
       t.named t('.logout')
       t.links_to logout_path
