@@ -1,4 +1,19 @@
 =task_list_column(@current_project,@task_lists,@task_list)
 
-#activities
-  = list_activities(@activities)
+- if @activities.count > 0
+  #activities
+    = list_activities(@activities)
+
+- else
+  #primer
+    %p= t('.primer.empty')
+    .box
+      %h2= link_to t('.primer.create_first'), new_project_task_list_path(@current_project)
+      %p= t '.primer.define'
+      %ul
+        %li= t '.primer.item1'
+        %li= t '.primer.item2'
+        %li= t '.primer.item3'
+        %li= t '.primer.item4'
+      %p= t '.primer.footer1' 
+      %p= t '.primer.footer2'

@@ -70,14 +70,13 @@ en:
       primer:
         empty: This project doesn't have any conversations yet.
         create_first: Create the first conversation in this project!
-        define: Use conversations to <b>discuss decisions</b> and <b>update your team</b> about a subject.
-        item1: Each conversation is a thread of comments, which are similar to emails.
-        item2: Comments can have attached files, too.
-        item3: You can subscribe to a conversation to be notified about future replies by email or RSS.
-        item4: Any comment can be formatted with text styles.
-        item5: You can answer to a conversation from your email to post a reply.
-        footer1: Conversations are great to share a new design, decide a date for meeting or report some news.
-        footer2: Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said.
+        define: "Use conversations to <b>discuss decisions</b> and <b>update your team</b> about a subject.<br/>Each conversation is a thread of comments, which are similar to emails."
+        item1: "<b>Share files</b>. Comments can have attached files, too."
+        item2: "<b>Subscribe</b> to a conversation to be notified about future replies by email or RSS."
+        item3: "<b>Impress</b>. Any comment can be formatted with text styles."
+        item4: "<b>Inbox-driven?</b> You can answer to a conversation from your email to post a reply."
+        footer1: "Conversations are great to <b>share a design</b>, <b>decide a date</b> for meeting or <b>report</b> some news."
+        footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
     column:
       new_conversation: New Conversation
     conversation_with_extract:
@@ -90,7 +89,6 @@ en:
     short_conversation:
       comment: comment
       comments: comments
-    
   
   tasks:
     fields:
@@ -131,6 +129,16 @@ en:
       name: Name
     index:
       add_link: New Task List
+      primer:
+        empty: This project doesn't have any conversations yet.
+        create_first: Create the first conversation in this project!
+        define: "Use tasks to <b>plan ahead</b>, <b>keep track of progress</b> and <b>review what's been done</b>.<br/>Tasks have a status, an assigned person and a thread of comments."
+        item1: "<b>Plan</b>. Create tasks inside each list and assign them to your teammates."
+        item2: "<b>Report</b>. Post comments for each task. Attach files. Ask for feedback."
+        item3: "<b>Follow</b>. Receive notifications for tasks related to you."
+        item4: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
+        footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others now."
+        footer2: "It's time to forget about excel planning sheets and complex GANTT charts!"
     new:
       title: New Task List
       submit: Create
