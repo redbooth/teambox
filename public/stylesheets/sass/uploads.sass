@@ -53,7 +53,8 @@
       :margin-top 5px
     .field .upload_description
       :width 320px
-.uploads_current, .upload_list
+
+.uploads_current, .upload_images
   :margin 5px
     :left 0px
   :border 1px solid rgb(230,230,230)
@@ -63,6 +64,24 @@
   .upload_thumbnail
     :float left
     :margin-right 5px
+    
+.upload_list
+  :margin 5px
+    :left 0px
+  :padding 5px
+    :left 0px
+  :clear both
+  .upload_file
+    :font-size 12px
+    img
+      :margin-right 5px
+      :padding-top 2px
+    span
+      :position relative
+      :top -2px
+    .size
+      :color rgb(120,120,120)
+  
 iframe.upload_form
   :width 90%
   :height 30px

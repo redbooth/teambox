@@ -8,7 +8,10 @@ module ActivitiesHelper
       when 'create_comment'
         show_comment(target)
       when 'create_upload'
-        show_upload(target)
+        # Uploads will already be shown in their parent comment.
+        # We will only show them if they're not attached to a comment.
+        # BUT we should show new versions uploaded for existing files.        
+        show_upload(target) unless target.comment_id
       when 'create_conversation'
         show_activity_line(activity,conversation_link(project,target))
       when 'create_task_list'

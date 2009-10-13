@@ -27,15 +27,13 @@ module UploadsHelper
   end
   
   def upload_link(upload)
-    if upload.is_image?
-      link_to image_tag(thumbnail_project_upload_path(upload.project,upload)),
-        project_upload_path(upload.project,upload.filename),
-        :class => 'link_to_upload'
-    else
-      link_to file_icon_image(upload),
-        project_upload_path(upload.project,upload.filename),
-        :class => 'link_to_upload'
-    end
+    link_to upload.filename, project_upload_path(upload.project,upload.filename), :class => 'link_to_upload'
+  end
+  
+  def upload_link_with_thumbnail(upload)
+    link_to image_tag(thumbnail_project_upload_path(upload.project,upload)),
+      project_upload_path(upload.project,upload.filename),
+      :class => 'link_to_upload'
   end
 
   def comment_upload_link(comment)
@@ -73,6 +71,10 @@ module UploadsHelper
   end
   
   def list_uploads_inline(uploads)
+    render :partial => 'uploads/file', :collection => uploads, :as => :upload
+  end
+
+  def list_uploads_inline_with_thumbnails(uploads)
     render :partial => 'uploads/thumbnail', :collection => uploads, :as => :upload
   end
   
