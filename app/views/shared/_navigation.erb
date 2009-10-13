@@ -3,7 +3,7 @@
 <%  
 
 if logged_in?
-  render_tabnav :main, :generate_css => false do 
+  render_tabnav :main do 
     add_tab do |t|
       t.named "#{t('.all_projects')}"
       t.links_to projects_path

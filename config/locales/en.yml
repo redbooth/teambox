@@ -188,3 +188,11 @@ en:
 
   date:
     yesterday: Yesterday
+
+
+  weakling:
+    default: Must be at least 5 characters
+    error: too short
+    weak: weak
+    average: average
+    strong: strong

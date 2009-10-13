@@ -8132,6 +8132,71 @@ _62.top=_61.y;
 }
 }});
 
+Weakling = {
+  check_password_strength: function(target,name,strengths){
+    var score = this.password_score($(target).value);
+    if(score == 5)
+      $(name).innerHTML = "<span class='strong'>"+strengths['strong']+"</span>";
+    else if (score > 2)
+      $(name).innerHTML = "<span class='average'>"+strengths['average']+"</span>";
+    else if (score > 0)
+      $(name).innerHTML = "<span class='weak'>"+strengths['weak']+"</span>";
+    else if (score == 0)
+      $(name).innerHTML = "<span class='default'>"+strengths['default']+"</span>";
+    else if (score == -1)
+      $(name).innerHTML = "<span class='error'>"+strengths['error']+"</span>";
+  },
+  password_score: function(password){
+    var score = 0;
+    if (password.match(/.[!,@,#,$,%,^,&,*,?,_,~]/))  //special character
+      score += 1;
+    if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) //upper and lower case
+      score += 1;
+    if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) //letters and numbers
+      score += 1;
+    if (password.length == 0)
+      score = 0;
+    else if (password.length <= 4)
+      score = -1;
+    else if (password.length > 4 && password.length < 8)
+      score += 1;
+    else if (password.length >= 8)
+      score += 2;
+
+    return score;
+  }
+}
+Fyi = {
+  hide_all: function(){
+    $$('.fyi').each(function(e){e.hide();})
+  }
+}
+
+Event.onReady(Fyi.hide_all);
+
+Event.addBehavior({
+  "input:focus": function(e){
+    if ($($(this).id+'_fyi') != null){
+      tooltip = $($(this).id+'_fyi')
+      tooltip.show();
+      offset = $(this).cumulativeOffset();
+      tooltip.move(offset[0] + $(this).getWidth() + 10,offset[1]);
+    }
+  },
+  "input:blur": function(e){
+    if ($($(this).id+'_fyi') != null)
+      $($(this).id+'_fyi').hide();
+  }
+});
+
+Element.addMethods({
+  move: function(element,x,y){
+    element = $(element);
+    element.style.left = x+'px';
+    element.style.top = y+'px';
+    return element;
+  }
+});
 
 Event.addBehavior({
   ".drag:mouseover": function(e){
@@ -8293,6 +8358,37 @@ Event.addBehavior({
     $$(".task p.actions").each(function(e){
       e.hide();
     });
+  }
+});
+ToolTips = {
+  hide_all: function(){
+    $$('.tooltip').each(function(e){e.hide();})
+  }
+}
+
+Event.onReady(ToolTips.hide_all);
+
+Event.addBehavior({
+  "input:focus": function(e){
+    if ($($(this).id+'_tooltip') != null){
+      tooltip = $($(this).id+'_tooltip')
+      tooltip.show();
+      offset = $(this).cumulativeOffset();
+      tooltip.move(offset[0] + $(this).getWidth() + 10,offset[1]);
+    }
+  },
+  "input:blur": function(e){
+    if ($($(this).id+'_tooltip') != null)
+      $($(this).id+'_tooltip').hide();
+  }
+});
+
+Element.addMethods({
+  move: function(element,x,y){
+    element = $(element);
+    element.style.left = x+'px';
+    element.style.top = y+'px';
+    return element;
   }
 });
 Event.addBehavior({

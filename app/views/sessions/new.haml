@@ -1,11 +1,10 @@
-=image_tag('header_logo_large.jpg')s
-
-
-%h2= t('.title')
-
--form_tag session_path, :class => 'new_session' do
+-form_tag session_path, :class => 'new_session', :id => 'new_session' do
+  %h2= t('.title')
   = session_fields
   .submit
-  = submit_tag t('.submit')
-      
-.clear
+    = submit_tag t('.submit')
+  .for
+    %p=link_to 'Forgot your password?', ''
+    %p=link_to 'Forgot your username?', ''
+    
+= javascript_tag("$('new_session').auto_focus();")
