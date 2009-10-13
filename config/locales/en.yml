@@ -52,11 +52,16 @@ en:
       new_project: New Project...
     edit:
       submit: Save Changes
-    pending:
-      invited_to_join: "{{by}} has invited you to join the project {{project}}."
   invitations:
     fields:
-      email: Email to send invitation to
+      user_or_email: "Enter your teammate's username or email:"
+    invitation:
+      invited_user: "{{inviter}} invited {{invitee}} to join the project."
+      invited_email: "{{inviter}} invited {{email}} to join the project."
+    user_invitation:
+      invited_to_join: "{{by}} has invited you to join the project {{project}}."
+    index_user:
+      no_invitations: "You have no pending project invitations."
     new:
       submit: Send
   conversations:
@@ -160,7 +165,7 @@ en:
   people:
     index:
       enter_username_or_email: "Enter your teammate's username or email:"
-    person:
+    person_list:
       confirm_delete: Are you sure you want to remove this person from the project?
   comments:
     comment:
@@ -215,6 +220,7 @@ en:
       login: Login
       signup: Signup
       files: Files
+      invitations: Invitations
     global_navigation:
       logout: Logout
       login: Login

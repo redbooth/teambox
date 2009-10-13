@@ -14,10 +14,10 @@ render_tabnav :global, :generate_css => false do
       t.highlights_on :controller => :users, :action => :edit
     end
     
-    if current_user.project_invitations.count > 0
+    if current_user.invitations.count > 0
       add_tab do |t|
-        t.named t('.project_invitations', :count => current_user.project_invitations.count)
-        t.links_to invitations_user_path(current_user)
+        t.named t('.project_invitations', :count => current_user.invitations.count)
+        t.links_to user_invitations_path(current_user)
         t.highlights_on :controller => :users, :action => :invitations
       end
     end

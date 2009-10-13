@@ -1,4 +1,3 @@
-.email.text_field
-  = f.label :email, t('.email')
-  %br
-  = f.text_field :email
+= label_tag :user_or_email, t('.user_or_email')
+.text_field
+  = f.text_field :user_or_email

@@ -1,0 +1,6 @@
+- content_for :column do
+  = new_invitation_link(@current_project)
+
+.invitations
+  =list_invitations(@invitations)
+.clear

@@ -1,3 +1,5 @@
+- unless @invitation_token.nil?
+  = hidden_field_tag 'invitation', @invitation_token
 .login.text_field
   = f.label :login, t('.login')
   = f.text_field :login

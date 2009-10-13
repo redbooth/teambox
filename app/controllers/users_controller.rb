@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   before_filter :find_user, :only => [ :show ]
-  
+  before_filter :load_invitation, :only => [ :new, :create ]
   skip_before_filter :login_required, :only => [ :new, :create ]
   skip_before_filter :load_project
   
@@ -33,7 +33,16 @@ class UsersController < ApplicationController
       # button. Uncomment if you understand the tradeoffs.
       # reset session
       self.current_user = @user # !! now logged in
-      redirect_back_or_default('/')
+      
+      unless @invitation.nil?
+        person = @invitation.project.people.new(:user => @user, :source_user_id => @invitation.user)
+        person.save
+        @invitation.destroy
+        redirect_to(project_path(@invitation.project))
+      else
+        redirect_back_or_default('/')
+      end
+      
       flash[:notice] = "Thanks for signing up!"
     else
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
@@ -91,6 +100,15 @@ class UsersController < ApplicationController
   private
     def find_user
       @user = User.find_by_id(params[:id])
+    end
+    
+    def load_invitation
+      unless params[:invitation].nil?
+        @invitation = Invitation.find_by_token(params[:invitation])
+        unless @invitation.nil?
+          @invitation_token = params[:invitation]
+        end
+      end
     end
 
 end

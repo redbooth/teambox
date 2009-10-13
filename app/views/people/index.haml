@@ -1,12 +1,13 @@
 - content_for :column do
   &nbsp;
   
-- form_for project_people_path, :person do |f|
+- form_for [@current_project,Invitation.new], :person do |f|
   %h2 Invite people
-  = f.label :search, t('.enter_username_or_email')
-  = text_field_tag :search
+  = hidden_field_tag 'people','true'
+  = f.label :user_or_email, t('.enter_username_or_email')
+  = f.text_field :user_or_email
   = f.submit 'Invite'
 
 .people
   = list_people(@current_project.people)
-
+  = list_invitations(@current_project.invitations)

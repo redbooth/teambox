@@ -1,4 +1,4 @@
-.project
+.user_invitation
   = thumb_avatar(invitation.user)
   = t('.invited_to_join', :by => h(invitation.user.login), :project => h(invitation.project.name))
   
@@ -8,3 +8,4 @@
     
     - form_for invitation.project, :url => decline_project_invitation_path(invitation.project,invitation), :html => { :class => 'decline_project' } do |f|
       = f.submit 'Decline'
+  .clear

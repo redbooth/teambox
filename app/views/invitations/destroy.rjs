@@ -1,0 +1,1 @@
+page["invitation_#{@invitation.id}"].remove
