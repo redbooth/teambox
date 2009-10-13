@@ -13,9 +13,9 @@ module ProjectsHelper
   end
   
   def new_project_link
-    render :partial => 'projects/new'    
+    link_to content_tag(:span, t('.new_project')), new_project_path, :class => 'button'
   end
-  
+
   def project_fields(f,project)
     render :partial => 'fields', 
       :locals => { 

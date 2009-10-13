@@ -36,6 +36,7 @@ en:
     index:
       projects: My Projects
       subscribe: Subscribe to the news feed
+      new_project: New Project
     show:
       invite_people: 'Invite people...'
       new_task_list_link: New Task List
