@@ -20,4 +20,8 @@ class Conversation < ActiveRecord::Base
     comment.save!
   end
   
+  def notify_new_comment(comment)
+    Emailer.deliver_notify_conversation(@recipient, comment.project, comment, self)
+  end
+
 end

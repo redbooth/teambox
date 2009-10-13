@@ -8,5 +8,13 @@ class Emailer < ActionMailer::Base
     content_type "text/plain"
     body       :recipient => recipient, :project => project, :invitation => invitation
   end
-  
+
+  def notify_conversation(recipient, project, comment, conversation)
+    recipients recipient
+    from       "#{project.permalink}@teambox.com"
+    subject    "[#{project.permalink}] New message from #{comment.user.name}"
+    content_type "text/plain"
+    body       :recipient => recipient, :project => project, :comment => comment, :conversation => conversation
+  end
+
 end
