@@ -24,5 +24,14 @@ Rails::Initializer.run do |config|
   require 'mime/types'
   config.time_zone = 'UTC'
 
+  config.action_mailer.default_url_options = { :host => 'teambox.com' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address        => 'smtp.gmail.com',
+    :port           => 587,
+    :domain         => 'teambox.com',
+    :user_name      => 'mailer@teambox.com',
+    :password       => 'password',
+    :authentication => :plain
+  }
 end
-
