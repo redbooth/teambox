@@ -22,6 +22,7 @@ class Comment < ActiveRecord::Base
     project.last_comment_id = id
     project.save(false)
     
+    self.target.reload    
     target.notify_new_comment(self)
     
     self.activity = project.log_activity(self,'create')
