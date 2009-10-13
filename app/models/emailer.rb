@@ -7,6 +7,7 @@ class Emailer < ActionMailer::Base
     subject       'Invitation to Teambox'
     content_type  'text/html'
     sent_on       Time.now
+    reply_to      'no-reply@teambox.com'
     body          :recipient => recipient, :project => project, :invitation => invitation
   end
 
@@ -16,6 +17,7 @@ class Emailer < ActionMailer::Base
     subject       "[#{project.permalink}] #{conversation.name}"
     content_type  "text/html"
     sent_on       Time.now
+    reply_to      "#{project.permalink}+conversation+#{conversation.id}@teambox.com"
     body          :recipient => recipient, :project => project, :comment => comment, :conversation => conversation
   end
 
