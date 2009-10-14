@@ -30,8 +30,8 @@ class User < ActiveRecord::Base
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   
   has_many :people
-  has_many :projects, :through => :people, :conditions => 'people.pending = false'
-  has_many :project_invitations, :class_name => 'Person', :conditions => 'people.pending = true'
+  has_many :projects, :through => :people
+  has_many :invitations, :foreign_key => 'invited_user_id'
 
   has_many :activities
     

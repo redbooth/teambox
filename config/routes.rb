@@ -6,15 +6,14 @@ ActionController::Routing::Routes.draw do |map|
   map.settings '/settings', :controller => 'users', :action => 'edit'
     
   map.resource :session
-
-  map.resources :users, :member => { 
-                          :invitations => :get,
+  
+  map.resources :users, :has_many => [:invitations], :member => { 
                           :comments_descending => :put, 
                           :comments_ascending => :put,
                           :conversations_first_comment => :put,
                           :conversations_latest_comment => :put,
-                          :invitations => :get,
                           :contact_importer => :get } do |user|
+
     user.resources :task_lists, :has_many => [:comments] do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
@@ -23,10 +22,12 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :projects,
-      :has_many => [:pages,:invitations,:people],
+      :has_many => [:pages,:people],
       :member => [:get_comments,:accept,:decline] do |project|
     #project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
     #project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
+    project.resources :invitations, :member => [:accept,:decline]
+    
     project.resources :comments do |comment|
       comment.resources :uploads, :member => { :iframe => :get }
     end

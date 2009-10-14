@@ -70,5 +70,15 @@ module UsersHelper
       page['password_fields'].show
     end
   end
-    
+  
+  def clear_password_if_not_updated
+    update_page_tag do |page|
+      page['edit_user'].observe('submit') do |page|
+        page << "if ($('change_password_link').visible()) {"
+          page['user_password'].setValue('')
+          page['user_password_confirmation'].setValue('')
+        page << "}"
+      end
+    end
+  end
 end

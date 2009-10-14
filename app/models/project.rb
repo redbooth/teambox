@@ -9,7 +9,7 @@ class Project < ActiveRecord::Base
 
   has_many :task_lists, :conditions => { :page_id => nil }
   has_many :tasks
-  has_many :invitations
+  has_many :invitations, :order => 'created_at DESC'
   has_many :conversations, :order => 'created_at DESC'
   has_many :pages, :order => 'created_at DESC'
   has_many :comments, :order => 'created_at DESC'

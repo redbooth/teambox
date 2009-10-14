@@ -2,8 +2,10 @@
   - form_for @current_user do |f|
     = edit_avatar(f,@current_user)
     
-- form_for @current_user do |f|
+- form_for @current_user, :html => { :id => 'edit_user' } do |f|
   = f.error_messages
   = user_fields(f,@current_user)
   .submit
     = submit_tag t('.submit')
+
+= clear_password_if_not_updated

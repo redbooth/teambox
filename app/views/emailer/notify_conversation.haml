@@ -5,10 +5,10 @@
 
   %p{ :style => 'font-size: 14px; color: rgb(50,50,50)' }
     = "Teambox Project:"
-    = link_to @project.name, project_path(@project)
+    = link_to @project.name, project_url(@project)
 
   %h2{ :style => 'font-size: 18px; color: rgb(0,0,0)' }
-    = link_to @conversation.name, project_conversation_path(@project, @conversation)
+    = link_to @conversation.name, project_conversation_url(@project, @conversation)
 
   - @conversation.comments.each do |comment|
     - if comment == @conversation.comments.first
@@ -27,16 +27,16 @@
             - comment.uploads.each do |upload|
               %li
                 = "File:"
-                = link_to h(upload.filename), project_upload_path(upload.project, upload.filename)
+                = link_to h(upload.filename), project_upload_url(upload.project, upload.filename)
                 = "uploaded by"
-                = link_to upload.user.name, user_path(upload.user)
+                = link_to upload.user.name, user_url(upload.user)
                 - if upload.description
                   = '(' + h(upload.description) + ')'
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
     %p
       = "You can"
-      = link_to "view this conversation online", project_conversation_path(@project, @conversation)
+      = link_to "view this conversation online", project_conversation_url(@project, @conversation)
       = "to answer and attach files or hours."
     %p
       = "You can also answer to this email to post a reply in the conversation."
@@ -49,5 +49,5 @@
       = "You can"
       = link_to "stop watching this conversation", "this_should_be_a_get_action"
       = "or change your"
-      = link_to "notification settings", settings_path
+      = link_to "notification settings", settings_url
 

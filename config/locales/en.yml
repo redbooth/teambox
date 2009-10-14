@@ -52,11 +52,16 @@ en:
       new_project: New Project...
     edit:
       submit: Save Changes
-    pending:
-      invited_to_join: "{{by}} has invited you to join the project {{project}}."
   invitations:
     fields:
-      email: Email to send invitation to
+      user_or_email: "Enter your teammate's username or email:"
+    invitation:
+      invited_user: "{{inviter}} invited {{invitee}} to join the project."
+      invited_email: "{{inviter}} invited {{email}} to join the project."
+    user_invitation:
+      invited_to_join: "{{by}} has invited you to join the project {{project}}."
+    index_user:
+      no_invitations: "You have no pending project invitations."
     new:
       submit: Send
   conversations:
@@ -151,7 +156,7 @@ en:
       add_link: New Task List
       primer:
         empty: This project doesn't have any conversations yet.
-        create_first: Create the first conversation in this project!
+        create_first: Create the first task list in this project!
         define: "Use tasks to <b>plan ahead</b>, <b>keep track of progress</b> and <b>review what's been done</b>.<br/><i>What? Who? When?</i> Tasks can have a status, an assigned person and due dates."
         item1: "<b>Plan</b>. Create tasks inside each list and assign them to your teammates."
         item2: "<b>Report</b>. Post comments for each task. Attach files. Ask for feedback."
@@ -169,7 +174,7 @@ en:
   people:
     index:
       enter_username_or_email: "Enter your teammate's username or email:"
-    person:
+    person_list:
       confirm_delete: Are you sure you want to remove this person from the project?
   comments:
     comment:
@@ -224,15 +229,17 @@ en:
       login: Login
       signup: Signup
       files: Files
+      invitations: Invitations
     global_navigation:
       project_invitations: Project Invitations
+      blog: Blog
+      help: Help
       logout: Logout
       login: Login
+      product_site: Product site
+      project_invitations: "Invitations ({{count}})"
       signup: Signup
       settings: Settings
-      product_site: Product site
-      blog: Blog
-      project_invitations: "Invitations ({{count}})"
     footer:
       help: Help
 
