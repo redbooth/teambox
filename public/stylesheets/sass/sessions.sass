@@ -1,25 +1,68 @@
 .new_sessions, .create_sessions
   h2
-    :display block
     :margin
-      :left 30px  
-  form.new_session
+      :top 0
+      :bottom 10px
+    :font-size 16px
+
+  ul
+    :padding-left 15px
+    li
+      :margin-bottom 3px
+    
+  .home_column
     :float left
+    :font-size 12px
     :width 270px
+    :height 400px
     :padding
       :left 30px
-      :right 40px
-    :border-right dashed 1px rgb(160,160,160)
-    :margin-bottom 10px
-    .text_field
-      :color rgb(100,100,100)
-      input
-        :width 100%
-  .banner_wrap
-    :float right
-    :width 400px
-    :margin-right 10px
-    :background rgb(84,149,169) url(/images/new_account_banner_wrap.jpg) no-repeat bottom
-    div.banner
-      :padding 10px
-      :background url(/images/new_account_banner.jpg) no-repeat
+      :right 20px
+    :margin
+      :left 0px
+      :top 20px
+      :bottom 20px
+    p
+      :text-align justify
+      :margin 5px 0 5px 0
+      &.big
+        :font-size 16px
+        :font-family Georgia, "Times New Roman"
+        :font-style italic
+        :color rgb(150,150,150)
+    &.left
+      :width 220px
+      :padding-right 40px
+      :border-right dashed 1px rgb(160,160,160)
+      form.new_session
+        .text_field
+          :color rgb(100,100,100)
+          input
+            :width 100%
+        .forgot
+          :float left
+          :margin-top 5px
+          a
+            :color rgb(150,150,150)
+            :text-decoration underline
+        .submit
+          :float right
+          :margin-top 5px
+      .box
+        :display block
+        :margin-top 15px
+        :padding 5px
+        :background rgb(220,220,220)
+        :border 3px rgb(150,150,150) solid
+        :width 215px
+        :height 140px
+    &.middle
+      :border-right dashed 1px rgb(160,160,160)
+      .signup
+        :margin 25px 0 25px 20px
+  
+    &.right
+      a
+        :text-decoration underline
+      h2.second
+        :margin 20px 0 0 0
