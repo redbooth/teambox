@@ -34,11 +34,11 @@ class UsersController < ApplicationController
       # button. Uncomment if you understand the tradeoffs.
       # reset session
       self.current_user = @user # !! now logged in
-      redirect_back_or_default('/')
+      redirect_to contact_importer_users_path
       flash[:notice] = "Thanks for signing up!"
     else
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-      render :action => :new
+      render :action => :new, :layout => 'login'
     end
   end
   
@@ -52,6 +52,10 @@ class UsersController < ApplicationController
       flash[:error] = "Couldn't save the updated profile. Please correct the mistakes and retry."
     end
     render :action => :edit
+  end
+  
+  def contact_importer
+    
   end
 
   def comments_ascending

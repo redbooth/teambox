@@ -8,6 +8,7 @@
     = sprockets_include_tag
 
   %body{ :class => "#{location_name} #{I18n.locale}"}
+    =hot_flashes(flash)
     .container
       =header
       =global_navigation
@@ -17,12 +18,6 @@
         -unless @content_for_banner.nil?
           .banner
             = yield :banner
-        - if flash[:success]
-          .flash_box.success= flash[:success]
-        - if flash[:error]
-          .flash_box.error= flash[:error]
-        - if flash[:notice]
-          .flash_box= flash[:notice]
         %div{ :class => "#{@content_for_column.nil? ? 'content_wrap_single' : 'content_wrap'}" }
           .content
             = yield
@@ -30,5 +25,6 @@
           .column_wrap
             .column#column
               = yield :column
+            =profile_completeness
           .clear
       =footer

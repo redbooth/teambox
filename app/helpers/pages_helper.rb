@@ -8,8 +8,7 @@ module PagesHelper
   end
   
   def new_page_link(project)
-    link_to "<span>Page</span>", new_project_page_path(project),
-    :class => 'button'
+    link_to content_tag(:span,t('.new_page')), new_project_page_path(project), :class => 'button'
   end
   
   def page_fields(f)

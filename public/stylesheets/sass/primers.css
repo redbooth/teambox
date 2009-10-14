@@ -1,0 +1,23 @@
+#primer {
+  padding: 10px 0 10px; }
+  #primer p {
+    font-size: 12px;
+    margin-left: 10px;
+    margin-bottom: 10px; }
+  #primer .box {
+    display: block;
+    background-color: rgb(255,255,200);
+    margin: 10px;
+    padding: 10px;
+    border: 1px rgb(220,220,150) solid; }
+    #primer .box h2 {
+      margin-top: 5px;
+      text-align: center; }
+      #primer .box h2 a {
+        color: rgb(0,0,150);
+        text-decoration: underline; }
+    #primer .box ul {
+      margin: 5px 0 10px 0; }
+      #primer .box ul li {
+        font-size: 12px;
+        margin-bottom: 5px; }

@@ -8,6 +8,23 @@ class User < ActiveRecord::Base
   include Authentication::ByPassword
   include Authentication::ByCookieToken
 
+  before_save do |e| 
+    e.profile_score = e.completeness_score
+    e.profile_percent = e.percent_complete
+    e.profile_grade = e.completeness_grade.to_s
+  end
+
+  define_completeness_scoring do
+    check :biography, lambda { |per| per.biography.present? },    :biography_presence
+    check :biography, lambda { |per| per.biography.length > 30 }, :biograhpy_length_short
+    check :biography, lambda { |per| per.biography.length > 128 }, :biograhpy_length_average
+    check :biography, lambda { |per| per.biography.length > 250 }, :biograhpy_length_long
+  end
+  
+  def profile_complete?
+    completeness_score == 100
+  end
+  
   after_create { |user| user.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save() }
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
@@ -38,7 +55,18 @@ class User < ActiveRecord::Base
 
   validates_associated :projects  #, :people Ensure associated people and projects exist
 
-  attr_accessible :login, :email, :name, :password, :password_confirmation, :avatar, :time_zone, :language, :comments_ascending, :conversations_first_comment, :first_day_of_week
+  attr_accessible :login, 
+                  :email, 
+                  :name, 
+                  :biography, 
+                  :password, 
+                  :password_confirmation, 
+                  :avatar, 
+                  :time_zone, 
+                  :language, 
+                  :comments_ascending, 
+                  :conversations_first_comment, 
+                  :first_day_of_week
 
   def self.authenticate(login, password)
     return nil if login.blank? || password.blank?
@@ -67,12 +95,7 @@ class User < ActiveRecord::Base
   def add_recent_project(project)
     self.recent_projects ||= []
     
-    if self.recent_projects.include?(project.id)
-      unless self.recent_projects.first == project.id
-        self.recent_projects.delete(project.id)
-        self.recent_projects = self.recent_projects.unshift(project.id).slice(0,5)
-      end
-    else
+    unless self.recent_projects.include?(project.id)
       self.recent_projects = self.recent_projects.unshift(project.id).slice(0,5)
       @recent_projects = nil
       self.save(false)

@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   create_table :users, :force => true do |t|
     t.string   :login,                     :limit => 40
     t.string   :name,                      :limit => 100, :default => ""
+    t.text     :biography
     t.string   :email,                     :limit => 100
     t.string   :crypted_password,          :limit => 40
     t.string   :salt,                      :limit => 40
@@ -26,6 +27,9 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.boolean  :conversations_first_comment, :default => true
     t.string  :first_day_of_week, :default => 'sunday'
     t.integer :invitations_count, :default => 0
+    t.float   :profile_score, :default => 0
+    t.float   :profile_percent, :default => 0
+    t.string  :profile_grade
     t.timestamps
   end
 
@@ -103,6 +107,8 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.integer :last_read_comment_id
   end
+  
+  add_index :comments_read, [:target_type,:target_id,:user_id]
   
   create_table :conversations do |t|
     t.integer :project_id

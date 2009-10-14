@@ -10,6 +10,9 @@
           =comment.hours
           hr
   .block
+    - if CommentRead.user(current_user).unread?(comment)
+      .unread
+        •
     .date
       = posted_date comment.created_at
     .name
@@ -20,7 +23,10 @@
     .body
       = comment.body_html
     - if comment.uploads.count > 0
-      .upload_list
-        = list_uploads_inline(comment.uploads)
-        %br
+      - if comment.uploads.all? { |upload| upload.is_image? }
+        .upload_images
+          = list_uploads_inline_with_thumbnail(comment.uploads)
+      - else
+        .upload_list
+          = list_uploads_inline(comment.uploads)
   .clear

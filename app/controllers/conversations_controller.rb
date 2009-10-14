@@ -24,8 +24,15 @@ class ConversationsController < ApplicationController
   
   def show
     @comments = @conversation.comments
-    CommentRead.user(current_user).read_up_to(@comments.first)
     @conversations = @current_project.conversations
+
+    respond_to{|f|f.html}
+
+    ensure CommentRead.user(current_user).read_up_to(@comments.first)
+
+#   Use this snippet to test the notification emails that we send:
+#    @project = @current_project
+#    render :file => 'emailer/notify_conversation', :layout => false
   end
   
   private

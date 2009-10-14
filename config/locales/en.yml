@@ -36,7 +36,9 @@ en:
     index:
       projects: My Projects
       subscribe: Subscribe to the news feed
+      new_project: New Project
     show:
+      invite_people: 'Invite people...'
       new_task_list_link: New Task List
       people_in_project: People in this project
       subscribe: Subscribe to the news feed
@@ -65,8 +67,19 @@ en:
       title: New Conversation
       submit: Create
       subscribe_note: This people will be notified of this message and any following comments. As soon as we code that in, of course
+    index:
+      primer:
+        empty: This project doesn't have any conversations yet.
+        create_first: Create the first conversation in this project!
+        define: "Use conversations to <b>discuss decisions</b> and <b>update your team</b> in a centralized way.<br/>Each conversation is a thread of comments, which replace messy emails."
+        item1: "<b>Share files</b>. Comments can have attached files, too."
+        item2: "<b>Subscribe</b> to a conversation to be notified about future replies by email or RSS."
+        item3: "<b>Impress</b>. Any comment can be formatted with text styles."
+        item4: "<b>Inbox-driven?</b> You can answer to a conversation from your email to post a reply."
+        footer1: "Conversations are great to <b>share a design</b>, <b>decide a date</b> for meeting or <b>report</b> some news."
+        footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
     column:
-      conversations: Conversations
+      new_conversation: New Conversation
     conversation_with_extract:
       posted_by: Posted by
     show:
@@ -77,7 +90,6 @@ en:
     short_conversation:
       comment: comment
       comments: comments
-    
   
   tasks:
     fields:
@@ -105,6 +117,18 @@ en:
     edit:
       submit: Update
   pages:
+    index:
+      primer:
+        empty: This project doesn't have any pages yet.
+        create_first: Create the first page in this project!
+        define1: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
+        define2: "Editing a page is easy and fun, with drag-and-drop elements you can edit in place."
+        item1: "<b>Share</b>. All your teammates can view and edit the project's pages."
+        item2: "<b>Publish</b>. Instant web publishing with shared pages. Show the world."
+        item3: "<b>Print</b>. Pages are printer-friendly. Try printing or exporting a PDF!"
+        item4: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
+        footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
+        footer2: "You can also attach files to any page inside each note. Enjoy!"
     show:
       new_note: Note
       new_divider: Divider
@@ -118,15 +142,30 @@ en:
     fields:
       body: Content
       name: Name  
+    column:
+      new_page: New Page
   task_lists:
     fields:
       name: Name
     index:
       add_link: New Task List
+      primer:
+        empty: This project doesn't have any conversations yet.
+        create_first: Create the first conversation in this project!
+        define: "Use tasks to <b>plan ahead</b>, <b>keep track of progress</b> and <b>review what's been done</b>.<br/><i>What? Who? When?</i> Tasks can have a status, an assigned person and due dates."
+        item1: "<b>Plan</b>. Create tasks inside each list and assign them to your teammates."
+        item2: "<b>Report</b>. Post comments for each task. Attach files. Ask for feedback."
+        item3: "<b>Follow</b>. Receive notifications for tasks related to you."
+        item4: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
+        footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others now."
+        footer2: "It's time to forget about excel planning sheets and complex GANTT charts!"
     new:
       title: New Task List
       submit: Add TaskList
       cancel: Cancel
+      submit: Create
+    column:
+      new_task_list: New Task List
   people:
     index:
       enter_username_or_email: "Enter your teammate's username or email:"
@@ -147,6 +186,15 @@ en:
         select_a_file: Select a file
     index:
       new_file: Upload a File
+      primer:
+        empty: This project doesn't have any files yet.
+        create_first: Upload the first file to this project!
+        define1: "Ever had problems sharing a file with your team? Teambox makes sharing easy again."
+        define2: "You can upload files here or attach documents to conversations, tasks or pages. "
+        item1: "<b>Bigger files</b>. Upload files of any size and forget about email limitations."
+        item2: "<b>Versioning</b>. Upload new versions of a file and keep track of changes."
+        item3: "<b>Always available</b>. Files stay in context in the project for future reference."
+      
   sessions:
     fields:
       username_or_email: Username or email
@@ -185,6 +233,8 @@ en:
       product_site: Product site
       blog: Blog
       project_invitations: "Invitations ({{count}})"
+    footer:
+      help: Help
 
   date:
     yesterday: Yesterday
@@ -196,3 +246,15 @@ en:
     weak: weak
     average: average
     strong: strong
+    
+  completeness_scoring:
+    models:
+      user:
+        biography_presence:
+          title: 'Write your profile'
+        biograhpy_length_short:
+          title: 'Expand your profile to 30 words'
+        biograhpy_length_average:
+          title: 'Expand your profile to 128 words'
+        biograhpy_length_long:
+          title: 'Expand your profile to 250 words'

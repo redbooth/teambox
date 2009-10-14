@@ -1,0 +1,6 @@
+.upload_file{:id => "upload_#{upload.id}"}
+  = file_icon_image(upload,'16px')
+  %span.filename
+    = upload_link(upload)
+  %span.size
+    = "(#{number_to_human_size upload.filesize})"

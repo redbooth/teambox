@@ -1,17 +1,22 @@
 .flash_box
-  :display block
-  :padding 5px
-    :left 10px
-  :font-size 12px
-  :border-bottom 2px #ddd solid
-  :border-top 2px #ddd solid
-  :background #eee
-  :margin-top 5px
-  &.error
-    :border-bottom 2px rgb(180,50,50) solid
-    :border-top 2px rgb(180,50,50) solid
-    :background rgb(255,200,200)
-  &.success
-    :border-bottom 2px rgb(50,180,50) solid
-    :border-top 2px rgb(50,180,50) solid
-    :background rgb(200,255,200)
+  :padding 10px
+  :font-size 18px
+  :background rgb(255,255,255)
+  :border-bottom solid 5px rgb(155,155,155)
+  :color rgb(0,0,0)
+  :font-weight bold
+  div
+    :width 960px
+    :margin 0px auto
+.flash_error
+  :background rgb(255,100,100)
+  :border-bottom solid 5px rgb(155,50,50)
+  :color rgb(50,0,0)
+.flash_success
+  :background rgb(100,255,100)
+  :border-bottom solid 5px rgb(50,155,50)
+  :color rgb(0,50,0)
+.flash_notice
+  :background rgb(255,255,100)
+  :border-bottom solid 5px rgb(155,155,50)
+  :color rgb(50,50,0)

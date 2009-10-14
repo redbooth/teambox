@@ -34,7 +34,8 @@ class TasksController < ApplicationController
     @task_lists = @current_project.task_lists
     @task = @current_project.tasks.find(params[:id])
     @comments = @task.comments
-    #CommentRead.user(current_user).read_up_to(@comments.first)
+  ensure
+    CommentRead.user(current_user).read_up_to(@comments.first)
   end
   
   def new

@@ -14,7 +14,8 @@ Rails::Initializer.run do |config|
 
   config.gem 'haml'
   config.gem 'sprockets'
-  
+  config.gem 'completeness-fu'
+    
   # Install instructions at http://github.com/adzap/ar_mailer/tree/master
   config.gem "adzap-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gems.github.com'
 
@@ -24,4 +25,14 @@ Rails::Initializer.run do |config|
   require 'mime/types'
   config.time_zone = 'UTC'
 
+  config.action_mailer.default_url_options = { :host => 'teambox.com' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => 25,
+    :domain         => 'teamboxapp.com',
+    :user_name      => 'notifications@teamboxapp.com',
+    :password       => 'kickME55',
+    :authentication => :plain
+  }
 end
