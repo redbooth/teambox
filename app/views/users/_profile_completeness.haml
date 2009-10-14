@@ -1,0 +1,13 @@
+.profile_completeness
+  %h2
+    Profile Completion
+  .description
+    Unlock Premium features by completing your profile
+    
+  .progress_container
+    .bar{ :style => "width: #{current_user.profile_percent.to_i}%"}
+      ="#{current_user.profile_percent.to_i}% complete"
+  .next_check
+    =link_to current_user.next_failed_check[:title], ''
+    to get to
+    ="#{current_user.next_percent_complete.to_i}%"

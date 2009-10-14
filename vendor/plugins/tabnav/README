@@ -1,0 +1,91 @@
+Tabnav generates tabbed navigations with highlighting and disable rules. 
+
+h2. Tabnav generator
+
+This will generate a file called 'navigation' in views/shared
+
+<pre><code>
+.script/generate tabnav navigation
+</code></pre>
+
+
+h2. Add tabs to the tab file
+
+
+<pre><code>add_tab do |t|
+    t.named "name of tab"
+    t.links_to :controller => "orders" # could also be :controller => "orders", :action => "show"
+end
+</code></pre>
+
+h2. Highligting
+
+Sometimes you do not have one tab per controller and want a tab to be highlighted on different conditions.
+
+edit: _app/view/widgets/_main_tabnav.html.erb_
+	
+add: @t.highlights_on :controller => "locations"@ to the relevant tab.
+
+It is not mandatory to highlight by _:controller_ or _:action_. The _highlight_on_ method will match any request parameter, so that:
+
+<pre><code>add_tab do |t|
+    t.named "Animals"
+    t.links_to :controller => "animals"
+    t.highlights_on :is_animal => "true"
+end
+</code></pre>
+
+Will highlight on: 
+* localhost:3000/animals _matches :controller => "animals" _
+* localhost:3000/animals/index _matches :controller => "animals" _
+* localhost:3000/dogs?*is_animal=true* _matches :is_animal => true_
+* localhost:3000/search?name=corky&*is_animal=true* _matches :is_animal => true_
+
+h2. RESTful tabs links
+
+edit: _app/view/widgets/_main_tabnav.html.erb_
+
+change: @t.links_to :controller => "orders"@
+to: @t.links_to hash_for_orders_path@
+
+h2. Conditional tabs
+
+Example: You only want to show a tab if a user is logged in:
+
+<pre><code>add_tab do |t|
+  t.named 'Software'
+  t.links_to :controller => "programs"
+end if logged_in?	
+</code></pre>
+
+h2. Nested tabs
+
+Create a new tabnav with a different name:
+<pre><code>$ ruby script/generate tabnav invoices
+</code></pre>
+
+Insert the following code in your relevant view file(s):
+
+<pre><code><%= tabnav :invoices %>
+</code></pre>
+
+Example: You want a tab for every CRUD action:
+edit:	_app/view/widgets/_invoices_tabnav.html.erb_
+
+<pre><code>add_tab do |t|
+  t.named "show"
+  t.links_to :controller => "invoices", :action => "show"
+end	
+	
+add_tab do |t|
+  t.named "new"
+  t.links_to :controller => "invoices", :action => "new"
+end	
+	
+add_tab do |t|
+  t.named "edit"
+  t.links_to :controller => "invoices", :action => "edit"
+end	
+</code></pre>
+
+Note: remember to add highlighting rules to the main tabnav, to maintain highlighting.

@@ -1,0 +1,14 @@
+The tabnav generator creates a sample Tabnav partial.
+      
+invoke with:  ./script/generate tabnav <name>
+         es:  ./script/generate tabnav main
+
+Usage:
+    Customize your generated partial (es: views/shared/_main_tabnav.rhtml)
+    then insert in your .rhtml pages one of these snippets:
+
+    <% tabnav :main do %>
+       your html here
+    <% end %>
+ 
+    <%= tabnav :main %>

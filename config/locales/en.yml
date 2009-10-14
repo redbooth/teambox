@@ -214,9 +214,11 @@ en:
 
   shared:
     navigation:
+      welcome: Welcome
       all_projects: 'All Projects'
       new_project: +
     project_navigation:
+      stop_welcome: Stop showing this Welcome tab
       overview: Overview
       all_conversations: All Conversations
       conversations: Conversations

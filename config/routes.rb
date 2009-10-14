@@ -4,7 +4,8 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.settings '/settings', :controller => 'users', :action => 'edit'
-    
+  map.welcome '/welcome', :controller => 'users', :action => 'welcome'
+  map.close_wecome_tab '/close_welcome_tab', :controller => 'users', :action => 'close_welcome'
   map.resource :session
   
   map.resources :users, :has_many => [:invitations], :member => { 

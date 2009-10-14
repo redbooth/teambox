@@ -24,6 +24,7 @@ class UsersController < ApplicationController
     end
   end
  
+ 
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
@@ -100,6 +101,21 @@ class UsersController < ApplicationController
   end  
   
   def invitations
+  end
+
+  def welcome
+    if current_user.welcome
+      respond_to do |format|
+        format.html { redirect_to projects_path }
+      end
+    end
+  end
+  
+  def close_welcome
+    @current_user.update_attribute(:welcome,true)
+    respond_to do |format|
+      format.html { redirect_to projects_path }
+    end
   end
   
   private

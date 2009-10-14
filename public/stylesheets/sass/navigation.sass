@@ -65,6 +65,7 @@ div.navigation
       
 div.project_navigation
   :background rgb(160,228,237)
+  +round_corners  
   :padding 5px 10px
   ul
     :margin 0px
@@ -93,7 +94,13 @@ div.project_navigation
     :margin-
       :right 0px
       :left 10px
-        
+  li.welcome_close
+    a
+      :text-decoration none
+    img
+      :vertical-align middle
+    span  
+      :vertical-align middle  
 div.projects_dropdown_wrap
   :float left
 div.projects_dropdown
