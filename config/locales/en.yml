@@ -149,7 +149,7 @@ en:
       add_link: New Task List
       primer:
         empty: This project doesn't have any conversations yet.
-        create_first: Create the first conversation in this project!
+        create_first: Create the first task list in this project!
         define: "Use tasks to <b>plan ahead</b>, <b>keep track of progress</b> and <b>review what's been done</b>.<br/><i>What? Who? When?</i> Tasks can have a status, an assigned person and due dates."
         item1: "<b>Plan</b>. Create tasks inside each list and assign them to your teammates."
         item2: "<b>Report</b>. Post comments for each task. Attach files. Ask for feedback."
@@ -222,13 +222,14 @@ en:
       files: Files
       invitations: Invitations
     global_navigation:
+      blog: Blog
+      help: Help
       logout: Logout
       login: Login
+      product_site: Product site
+      project_invitations: "Invitations ({{count}})"
       signup: Signup
       settings: Settings
-      product_site: Product site
-      blog: Blog
-      project_invitations: "Invitations ({{count}})"
     footer:
       help: Help
 
