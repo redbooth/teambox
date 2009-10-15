@@ -17,7 +17,7 @@ class Project < ActiveRecord::Base
   has_many :activities, :order => 'created_at DESC'
   
   validates_length_of :name, :minimum => 3
-  validates_uniqueness_of :permalink
+  validates_uniqueness_of :permalink, :case_sensitive => false
   validates_format_of :permalink, :with => /^[a-z0-9_\-\.]{2,}$/
 
   validates_presence_of :user         # A project _needs_ an owner
