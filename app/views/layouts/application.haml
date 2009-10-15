@@ -8,10 +8,10 @@
     = sprockets_include_tag
 
   %body{ :class => "#{location_name} #{I18n.locale}"}
-    =hot_flashes(flash)
     .container
       =header
       =global_navigation
+      =hot_flashes(flash)
       =navigation(@current_project,@recent_projects)
       .wrapper
         =project_navigation(@current_project)
