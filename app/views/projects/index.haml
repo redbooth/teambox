@@ -10,8 +10,9 @@
 
 - content_for :column do
   = new_project_link
-  .project_list
-    %h2= t '.projects'
-    = list_projects(@projects)
-  .subscribe
-    = link_to t('.subscribe'), projects_path(:format => :rss)
+  - unless @projects.empty?
+    .project_list
+      %h2= t '.projects'
+      = list_projects(@projects)
+    .subscribe
+      = link_to t('.subscribe'), projects_path(:format => :rss)
