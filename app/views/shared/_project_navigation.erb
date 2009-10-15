@@ -1,8 +1,17 @@
 <div class="project_navigation"><%  
-render_tabnav :project, :generate_css => false do 
+render_tabnav :project do 
 
   if logged_in?
-    if project.nil?
+    if location_name?('welcome_users')
+      add_tab do |t|
+        t.named "<span>#{t('.stop_welcome')}</span> #{image_tag('welcome_close.jpg')}"
+        t.links_to close_wecome_tab_path
+        t.highlights_on :controller => :projects, :action => :index
+        t.li_class = 'right_side'
+      end
+      
+    elsif project.nil?
+      
       add_tab do |t|
         t.named t('.overview')
         t.links_to projects_path

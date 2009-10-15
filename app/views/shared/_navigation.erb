@@ -3,7 +3,15 @@
 <%  
 
 if logged_in?
-  render_tabnav :main, :generate_css => false do 
+  render_tabnav :main do 
+    unless current_user.welcome
+      add_tab do |t|
+        t.named t('.welcome')
+        t.links_to welcome_path
+        t.highlights_on :controller => :users, :action => :welcome
+      end
+    end
+    
     add_tab do |t|
       t.named "#{t('.all_projects')}"
       t.links_to projects_path

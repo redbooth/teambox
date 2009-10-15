@@ -1,5 +1,13 @@
 module UsersHelper
 
+  def profile_completeness
+    if logged_in?
+      unless current_user.profile_complete?
+        render :partial => 'users/profile_completeness'
+      end  
+    end  
+  end
+
   def conversations_first_comment_link
     link_to_remote 'First Comment', 
       :url => conversations_first_comment_user_path(current_user), 

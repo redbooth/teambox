@@ -1,0 +1,8 @@
+en:
+  completeness_scoring:
+    models:
+      scoringtest:
+        title:
+          title: 'Title'
+          description: 'The Scoring Test Description'
+          extra: 'Just give it a title'

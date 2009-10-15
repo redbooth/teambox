@@ -114,6 +114,13 @@ en:
       submit: Add Note
     edit:
       submit: Update Note
+  dividers:
+    actions:
+      delete_confirm: Are you sure you want to delete this divider?
+    new:
+      submit: Add
+    edit:
+      submit: Update
   pages:
     index:
       primer:
@@ -159,6 +166,8 @@ en:
         footer2: "It's time to forget about excel planning sheets and complex GANTT charts!"
     new:
       title: New Task List
+      submit: Add TaskList
+      cancel: Cancel
       submit: Create
     column:
       new_task_list: New Task List
@@ -205,9 +214,11 @@ en:
 
   shared:
     navigation:
+      welcome: Welcome
       all_projects: 'All Projects'
       new_project: +
     project_navigation:
+      stop_welcome: Stop showing this Welcome tab
       overview: Overview
       all_conversations: All Conversations
       conversations: Conversations
@@ -222,6 +233,7 @@ en:
       files: Files
       invitations: Invitations
     global_navigation:
+      project_invitations: Project Invitations
       blog: Blog
       help: Help
       logout: Logout
@@ -235,3 +247,23 @@ en:
 
   date:
     yesterday: Yesterday
+
+
+  weakling:
+    default: Must be at least 5 characters
+    error: too short
+    weak: weak
+    average: average
+    strong: strong
+    
+  completeness_scoring:
+    models:
+      user:
+        biography_presence:
+          title: 'Write your profile'
+        biograhpy_length_short:
+          title: 'Expand your profile to 30 words'
+        biograhpy_length_average:
+          title: 'Expand your profile to 128 words'
+        biograhpy_length_long:
+          title: 'Expand your profile to 250 words'

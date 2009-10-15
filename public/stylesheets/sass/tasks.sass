@@ -42,10 +42,9 @@ a.add_task_link
   :color rgb(120,120,120)
   
 form.task_form_wrap
-  :margin-top 5px
-  :background rgb(173,173,173)
-  :-moz-border-radius 8px
-  :-webkit-border-radius 8px  
+  :background rgb(200,200,200)
+  :-moz-border-radius 4px
+  :-webkit-border-radius 4px  
   div.task_form
     :padding 10px
     .text_field
@@ -58,3 +57,21 @@ form.task_form_wrap
 
 #task_lists
   :clear both
+  
+.task_title  
+  p.actions
+    :position relative
+    :margin 0px
+    span    
+      :background rgb(255,255,255)
+      :-moz-border-radius 4px
+      :-webkit-border-radius 4px
+      :padding 3px 0px
+        :left 2px
+        :bottom 0px
+      :position absolute
+      :display block
+      :width 22px
+      :height 40px
+      :left -24px
+      :top 2px

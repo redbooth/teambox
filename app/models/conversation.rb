@@ -20,6 +20,10 @@ class Conversation < ActiveRecord::Base
     comment.save!
   end
   
+  def owner?(u)
+    user = u
+  end
+
   def notify_new_comment(comment)
     Emailer.deliver_notify_conversation('pablo@teambox.com', comment.project, comment, self)
   end

@@ -26,7 +26,7 @@ class TaskListsController < ApplicationController
     @task_lists = @current_project.task_lists
     @comments = @task_list.comments
   ensure
-    CommentRead.user(current_user).read_up_to(@comments.first)
+    CommentRead.user(current_user).read_up_to(@comments.first) unless @comments.first.nil?
   end
   
   def reorder

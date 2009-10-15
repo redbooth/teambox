@@ -14,7 +14,8 @@ Rails::Initializer.run do |config|
 
   config.gem 'haml'
   config.gem 'sprockets'
-  
+  config.gem 'completeness-fu'
+    
   # Install instructions at http://github.com/adzap/ar_mailer/tree/master
   config.gem "adzap-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gems.github.com'
 

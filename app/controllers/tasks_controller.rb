@@ -35,7 +35,7 @@ class TasksController < ApplicationController
     @task = @current_project.tasks.find(params[:id])
     @comments = @task.comments
   ensure
-    CommentRead.user(current_user).read_up_to(@comments.first)
+    CommentRead.user(current_user).read_up_to(@comments.first) unless @comments.first.nil?
   end
   
   def new
@@ -46,8 +46,13 @@ class TasksController < ApplicationController
     @task = @current_project.tasks.build(params[:task])
     @task.task_list = @task_list
     @task.user = current_user
-    @task.save
-    respond_to {|f|f.js}
+    respond_to do |format|
+      if @task.save
+        format.html { redirect_to project_task_list_task_url(@current_project,@task_list,@task) } 
+      else
+        format.js
+      end  
+    end  
   end
   
   def update

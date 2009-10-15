@@ -1,7 +1,15 @@
 <div class="global_navigation"><%  
-render_tabnav :global, :generate_css => false do 
+render_tabnav :global do 
 
   if logged_in?
+    #unless current_user.invitations_count == 0
+    #  add_tab do |t|
+    #    t.named "#{current_user.invitations_count} #{t('.project_invitations')}"
+    #    t.links_to user_invitations_path(current_user)
+    #    t.highlights_on :controller => :invitations
+    #  end
+    #end
+    
     add_tab do |t|
       t.named "#{current_user.login}"
       t.links_to user_path(current_user)

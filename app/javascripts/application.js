@@ -6,6 +6,8 @@
 //= require <dragdrop>
 //= require <lowpro>
 //= require <cropper>
+//= require <weakling>
+//= require <fyi>
 
 Event.addBehavior({
   ".drag:mouseover": function(e){

@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   create_table :users, :force => true do |t|
     t.string   :login,                     :limit => 40
     t.string   :name,                      :limit => 100, :default => ""
+    t.text     :biography, :default => "", :null => false
     t.string   :email,                     :limit => 100
     t.string   :crypted_password,          :limit => 40
     t.string   :salt,                      :limit => 40
@@ -25,6 +26,11 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.boolean  :comments_ascending, :default => true
     t.boolean  :conversations_first_comment, :default => true
     t.string  :first_day_of_week, :default => 'sunday'
+    t.integer :invitations_count, :default => 0
+    t.float   :profile_score, :default => 0
+    t.float   :profile_percent, :default => 0
+    t.string  :profile_grade
+    t.boolean :welcome, :default => false
     t.timestamps
   end
 
@@ -118,6 +124,14 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.string  :name
     t.integer :last_comment_id, :null => true, :default => nil
+    t.timestamps
+  end
+  
+  create_table :dividers do |t|
+    t.integer :page_id
+    t.integer :project_id
+    t.string  :name
+    t.integer :position
     t.timestamps
   end
   

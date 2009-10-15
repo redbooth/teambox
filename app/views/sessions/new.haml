@@ -1,44 +1,67 @@
-.home_column.left
-  -form_tag session_path, :class => 'new_session' do
-    %h2= t('.title')
-    = session_fields
-    .forgot
-      = link_to "I forgot my password"
-    .submit
-      = submit_tag t('.submit')
-  .clear
-  .box
-    Screencast or tip of the day here. Or maybe blog posts and news.
+%h2= t('.title')
+-form_tag session_path, :class => 'new_session', :id => 'new_session' do
+  = session_fields
+  .submit
+    = submit_tag t('.submit')
+  .for
+    %p=link_to 'Forgot your password?', ''
+    %p=link_to 'Forgot your username?', ''
+    
+= javascript_tag("$('new_session').auto_focus();")
 
-.home_column.middle
-  %h2 New to Teambox?
-  %p.big Simple web collaboration
-  %p Teambox the better, smarter way to <b>get things done</b> and <b>bring people together</b>.
-  %p People from all over the world use Teambox to <b>manage and collaborate</b> over their professional and personal projects.
-  %ul
-    %li <b>Projects</b>, not documents.
-    %li Share centralized <b>conversations</b>.
-    %li Plan <b>tasks</b> and post updates on them.
-    %li Follow up with your teammates.
-    %li Keep <b>shared pages</b> for your project.
-  .signup
-    = link_to "<span>Get an account in 1 minute</span>", "asd", :class => 'button'
-  %p.big A better way to get things done!
 
-.home_column.right
-  %h2 Software on the Cloud
-  %p Online software means no-install, hassle-free software you can access anywhere, any time.
-  %p= link_to "Visit our site to learn more."
+- content_for :column do
+  %h2 
+    New to Teambox?
+  .new_to_teambox
+    %h3
+      Simple web collaboration
+    %p 
+      Teambox the better, smarter way to <b>get things done</b> and <b>bring people together</b>.
+    %p 
+      People from all over the world use Teambox to <b>manage and collaborate</b> over their professional and personal projects.
+    %ul
+      %li 
+        %stong
+          Projects
+          , not documents.
+      %li 
+        Share centralized <b>conversations</b>.
+      %li 
+        Plan <b>tasks</b> and post updates on them.
+      %li 
+        Follow up with your teammates.
+      %li 
+        Keep <b>shared pages</b> for your project.
+    .signup
+      = link_to "<span>Get an account in 1 minute</span>", "asd", :class => 'button'
+    %p.big 
+      A better way to get things done!
+
+- content_for :sell_column do
+  %h2 
+    Software on the Cloud
+  %p 
+    Online software means no-install, hassle-free software you can access anywhere, any time.
+  %p
+    = link_to "Visit our site to learn more."
   
-  %h2.second Join the community!
-  %p Teambox is open-source software, open to the community. This means you can install it in your own server and contribute to its development.
-  %p.big Improve your karma!
-  %p You can contribute by...
+  %h2.second 
+    Join the community!
+  %p 
+    Teambox is open-source software, open to the community. This means you can install it in your own server and contribute to its development.
+  %p.big 
+    Improve your karma!
+  %p 
+    You can contribute by...
   %ul
-    %li Improving our Ruby on Rails app. <a>How?</a>
-    %li Spreading the love. <a>How?</a>
-    %li Reporting bugs. <a>How?</a>
-    %li Sending us feedback. <a>How?</a>
-  %p We've worked hard so you can use a <b>great project-management tool</b>. Now there's a way to give back and improve a product thousands of people use everyday!
-      
-.clear
+    %li 
+      Improving our Ruby on Rails app. <a>How?</a>
+    %li 
+      Spreading the love. <a>How?</a>
+    %li 
+      Reporting bugs. <a>How?</a>
+    %li 
+      Sending us feedback. <a>How?</a>
+  %p 
+    We've worked hard so you can use a <b>great project-management tool</b>. Now there's a way to give back and improve a product thousands of people use everyday!

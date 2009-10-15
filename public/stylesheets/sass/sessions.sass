@@ -1,68 +1,67 @@
 .new_sessions, .create_sessions
   h2
-    :margin
-      :top 0
-      :bottom 10px
-    :font-size 16px
+    :font-size 14px
+    :margin 0px
+    :background rgb(160,228,237)
+    :padding 5px 10px
+      :bottom 7px
+    :-moz-border-radius
+      :topleft 5px
+      :topright 5px
+    :-webkit-border-top-left-radius 5px
+    :-webkit-border-top-right-radius 5px
+  .header
+    :float left
+    :margin-top 20px
+  .content
+    :float left
+    :margin-top 10px
+    :width 270px
+  form.new_session
+    :background rgb(255,255,255)
+    :-moz-border-radius
+      :bottomleft 5px
+      :bottomright 5px
+    :-webkit-border-bottom-left-radius 5px
+    :-webkit-border-bottom-right-radius 5px
+    :padding 10px
+      :left 20px
+      :right 30px
+    :margin-bottom 10px
+    h2
+    .text_field
+      :color rgb(100,100,100)
+      input
+        :width 100%
+  .for
+    :padding-top 5px
+    p
+      :margin 2px
+      a
+        :font-size 13px
+
+  
 
   ul
     :padding-left 15px
     li
       :margin-bottom 3px
     
-  .home_column
-    :float left
+  .column,.sell_column
+    :float right
     :font-size 12px
     :width 270px
-    :height 400px
-    :padding
-      :left 30px
-      :right 20px
     :margin
       :left 0px
-      :top 20px
-      :bottom 20px
-    p
-      :text-align justify
-      :margin 5px 0 5px 0
-      &.big
-        :font-size 16px
-        :font-family Georgia, "Times New Roman"
-        :font-style italic
-        :color rgb(150,150,150)
-    &.left
-      :width 220px
-      :padding-right 40px
-      :border-right dashed 1px rgb(160,160,160)
-      form.new_session
-        .text_field
-          :color rgb(100,100,100)
-          input
-            :width 100%
-        .forgot
-          :float left
-          :margin-top 5px
-          a
-            :color rgb(150,150,150)
-            :text-decoration underline
-        .submit
-          :float right
-          :margin-top 5px
-      .box
-        :display block
-        :margin-top 15px
-        :padding 5px
-        :background rgb(220,220,220)
-        :border 3px rgb(150,150,150) solid
-        :width 215px
-        :height 140px
-    &.middle
-      :border-right dashed 1px rgb(160,160,160)
-      .signup
-        :margin 25px 0 25px 20px
-  
-    &.right
-      a
-        :text-decoration underline
-      h2.second
-        :margin 20px 0 0 0
+      :top 10px
+    h3
+      :margin 0px
+      :font-size 16px
+      :font-family Georgia, "Times New Roman"
+      :font-style italic
+      :color rgb(150,150,150)
+    .new_to_teambox        
+      :background rgb(255,255,255)
+      :padding 10px
+  .column
+    :margin-right 20px

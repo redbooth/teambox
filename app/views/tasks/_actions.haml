@@ -1,3 +1,4 @@
-%p.actions{ :id => "list_actions_#{task.id}", :style => 'display: none'}
-  %span.drag
-    =drag_image
+%p.actions{ :id => "list_actions_#{task.id}", :style => 'display: block'}
+  %span
+    =edit_task_link(project,task_list,task)
+    =delete_task_link(project,task_list,task)

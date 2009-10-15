@@ -3,6 +3,7 @@
 .login.text_field
   = f.label :login, t('.login')
   = f.text_field :login
+  = tooltip 'user_login', "You need a username to login. People will be able to find you by username. Must be all lowercase, no spaces. You can use undescores."
 .name.text_field
   = f.label :name, t('.name')
   = f.text_field :name
@@ -16,10 +17,14 @@
   .password.text_field
     = f.label :password
     = f.password_field :password
+    = password_strength :password_strength, 'user_password'
   .password.text_field
     = f.label :password_confirmation, 'Confirm Password'
     = f.password_field :password_confirmation
 - unless user.new_record?
+  .description.text_area
+    = f.label :biography
+    = f.text_area :biography
   .time_zone.text_field
     = f.label :time_zone, t('.time_zone')
     = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"

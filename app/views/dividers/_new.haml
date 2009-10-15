@@ -1,0 +1,10 @@
+- remote_form_for [project,page,divider], :loading => show_loading_divider_form, :html => { :id => "new_divider_form", :style => 'display: none' } do |f|
+  .area
+    = divider_fields(f)
+    .submit{ :id => "divider_submit" }
+      = f.submit t('.submit')
+      or
+      = link_to_function 'Cancel', inline_hide_divider_form
+    =loading('divider_form')
+    .clear  
+  .clear  

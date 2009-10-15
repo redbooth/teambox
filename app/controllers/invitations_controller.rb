@@ -12,7 +12,7 @@ class InvitationsController < ApplicationController
       end
     end
   end
-  
+
   def new
     @invitation = @current_project.invitations.new
   end

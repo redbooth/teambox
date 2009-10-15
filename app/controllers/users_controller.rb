@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   # render new.rhtml
   def new
     @user = User.new
+    render :layout => 'login'
   end
 
   def show
@@ -23,6 +24,7 @@ class UsersController < ApplicationController
     end
   end
  
+ 
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
@@ -33,7 +35,7 @@ class UsersController < ApplicationController
       # button. Uncomment if you understand the tradeoffs.
       # reset session
       self.current_user = @user # !! now logged in
-      
+
       unless @invitation.nil?
         person = @invitation.project.people.new(:user => @user, :source_user_id => @invitation.user)
         person.save
@@ -46,7 +48,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Thanks for signing up!"
     else
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-      render :action => :new
+      render :action => :new, :layout => 'login'
     end
   end
   
@@ -60,6 +62,10 @@ class UsersController < ApplicationController
       flash[:error] = "Couldn't save the updated profile. Please correct the mistakes and retry."
     end
     render :action => :edit
+  end
+  
+  def contact_importer
+    
   end
 
   def comments_ascending
@@ -95,6 +101,21 @@ class UsersController < ApplicationController
   end  
   
   def invitations
+  end
+
+  def welcome
+    if current_user.welcome
+      respond_to do |format|
+        format.html { redirect_to projects_path }
+      end
+    end
+  end
+  
+  def close_welcome
+    @current_user.update_attribute(:welcome,true)
+    respond_to do |format|
+      format.html { redirect_to projects_path }
+    end
   end
   
   private
