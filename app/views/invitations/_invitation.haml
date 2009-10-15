@@ -6,6 +6,6 @@
     = t('.invited_email', :email => invitation.email, :inviter => invitation.user.login)
   .status
     Pending
-    = "(#{time_ago_in_words(invitation.updated_at)})"
+    = t('.time_ago', :time_ago_in_words => time_ago_in_words(invitation.updated_at))
   .actions
     = delete_invitation_link(invitation)

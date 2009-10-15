@@ -58,6 +58,7 @@ en:
     invitation:
       invited_user: "{{inviter}} invited {{invitee}} to join the project."
       invited_email: "{{inviter}} invited {{email}} to join the project."
+      time_ago: "({{time_ago_in_words}} ago)"
     user_invitation:
       invited_to_join: "{{by}} has invited you to join the project {{project}}."
     index_user:
