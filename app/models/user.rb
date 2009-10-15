@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
     e.profile_score = e.completeness_score
     e.profile_percent = e.percent_complete
     e.profile_grade = e.completeness_grade.to_s
+    
+    e.login.downcase!
+    e.email.downcase!
   end
 
   define_completeness_scoring do

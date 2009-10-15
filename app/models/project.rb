@@ -27,6 +27,10 @@ class Project < ActiveRecord::Base
   
   has_permalink :name
   
+  before_save do |p|
+    p.permalink.downcase!
+  end
+  
   def owner?(u)
     user = u
   end
