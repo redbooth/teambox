@@ -28,11 +28,10 @@ class SessionsController < ApplicationController
       self.current_user = user
       handle_remember_cookie! true
       redirect_back_or_default('/')
-      flash[:notice] = "Logged in successfully"
     else
       note_failed_signin
       @login       = params[:login]
-      @remember_me = params[:remember_me]
+      @remember_me = true
       render :action => 'new'
     end
   end
