@@ -1,24 +1,33 @@
 class Emailer < ActionMailer::Base
   include ActionController::UrlWriter # Allows us to generate URLs
 
+  def confirm_email(user)
+    recipients    user.email
+    from          'Teambox <no-reply@teambox.com>'
+    subject       'Get started with Teambox!'
+    content_type  'text/html'
+    sent_on       Time.now
+    body          :user => user
+  end
+
   def invitation(recipient,project,invitation)
     recipients    recipient
-    from          'invitation@teambox.com'
+    from          'Teambox <no-reply@teambox.com>'
     subject       'Invitation to Teambox'
     content_type  'text/html'
     sent_on       Time.now
-    reply_to      'no-reply@teambox.com'
+    reply_to      'Teambox <no-reply@teambox.com>'
     body          :recipient => recipient, :project => project, :invitation => invitation
   end
 
   def notify_conversation(recipient, project, comment, conversation)
     default_url_options[:host] = "sandbox.teambox.com"
     recipients    recipient
-    from          "#{project.permalink}@teambox.com"
+    from          "Teambox <#{project.permalink}@teambox.com>"
     subject       "[#{project.permalink}] #{conversation.name}"
     content_type  "text/html"
     sent_on       Time.now
-    reply_to      "#{project.permalink}+conversation+#{conversation.id}@teambox.com"
+    reply_to      "Teambox <#{project.permalink}+conversation+#{conversation.id}@teambox.com>"
     body          :recipient => recipient, :project => project, :comment => comment, :conversation => conversation
   end
 

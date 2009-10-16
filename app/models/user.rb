@@ -28,7 +28,11 @@ class User < ActiveRecord::Base
     completeness_score == 100
   end
   
-  after_create { |user| user.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save() }
+  after_create do |user|
+    user.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save
+
+    Emailer.deliver_confirm_email user
+  end
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   
