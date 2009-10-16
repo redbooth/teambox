@@ -37,6 +37,17 @@ en:
       projects: My Projects
       subscribe: Subscribe to the news feed
       new_project: New Project
+      primer:
+        empty: You don't belong to any projects yet
+        create_first: Create your first project!
+        define1: "Use projects to <b>collaborate</b> with groups of people: A website, organizing a party, client work..."
+        define2: "You can create <b>as many projects as you wish</b> to share with different users online."
+        item1: "<b>Create a project</b>, name it and <b>invite some contacts</b> to it."
+        item2: "<b>Comment</b> about what you're doing at each moment in the general timeline."
+        item3: "<b>Discuss</b> about important decisions with Conversations."
+        item4: "<b>Plan</b> what needs to be done and post updates with Tasks."
+        item5: "<b>Share information</b> by easily editable Pages for each project."
+        footer: "Projects are a centralized way of collaborating, so you'll never need to email your team again."
     show:
       invite_people: 'Invite people...'
       new_task_list_link: New Task List
