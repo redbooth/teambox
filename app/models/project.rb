@@ -92,6 +92,10 @@ class Project < ActiveRecord::Base
     
     if person
       person.destroy
+      
+      user.recent_projects.delete self.id
+      user.save
+      
       log_activity(person,'delete')
     end
   end
