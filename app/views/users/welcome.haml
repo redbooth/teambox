@@ -30,13 +30,13 @@
     We're real people, motivated developers with a mission, just like you!
   %p 
     You can <b>help us</b> by telling your friends how you enjoy Teambox on
-    = link_to "Twitter,"
-    = link_to "Facebook"
+    = link_to 'Twitter,', 'http://twitter.com/?status=Using+Teambox+to+manage+my+projects,+sign+up+for+free+at+http://www.teambox.com', :target => '_blank'
+    = link_to 'Facebook', 'http://www.facebook.com/share.php?u=http://www.teambox.com', :target => '_blank'
     or
     = link_to "in your site!"
   %p
     If you enjoy using Teambox, also consider
-    = mail_to "telling us about it", "love@teambox.com"
+    = mail_to 'love@teambox.com', 'telling us about it'
     in an email!
 
 - content_for :column do

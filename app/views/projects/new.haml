@@ -5,18 +5,18 @@
   = f.submit t('.submit')
   
 - content_for :column do
-  %p A project is a shared group with your teammates.
-  %p Inside a project, each team member can:
+  %p= t '.define1'
+  %p= t '.define2'
   %ul
-    %li Post status updates.
-    %li Start conversations or reply.
-    %li Send attachments.
-    %li Assign and review tasks.
-    %li Comment on tasks.
-    %li Track hours spent on each item.
-    %li Create, edit and view pages.
-  %p This project will belong to you. You can transfer this project to other contacts at any time.
-  %p
-    As a free account, you can only upload up to 10 Mb of attachments to this project.
-    = link_to "Upgrade your account now."
+    %li= t '.feature1'
+    %li= t '.feature2'
+    %li= t '.feature3'
+    %li= t '.feature4'
+    %li= t '.feature5'
+    %li= t '.feature6'
+    %li= t '.feature7'
+  %p= t '.footer'
+  %p.hide_me
+    = t '.limited'
+    = link_to(t('.upgrade'), "")
   

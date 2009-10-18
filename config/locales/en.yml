@@ -61,6 +61,18 @@ en:
       title: Create a Project
       submit: Create project and start inviting people
       new_project: New Project...
+      define1: A project is a shared group with your teammates.
+      define2: "Inside a project, each team member can:"
+      feature1: Post status updates.
+      feature2: Start conversations or reply.
+      feature3: Send attachments.
+      feature4: Assign and review tasks.
+      feature5: Comment on tasks.
+      feature6: Track hours spent on each item.
+      feature7: "Create, edit and view pages."
+      footer: This project will belong to you. You can transfer this project to other contacts at any time.
+      limited: "As a free account, you can only upload up to 10 Mb of attachments to this project."
+      upgrade: Upgrade your account now!
     edit:
       submit: Save Changes
   invitations:
