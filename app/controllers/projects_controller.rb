@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_filter :find_project, :only => [ :show, :edit, :update, :accept, :decline ]
+
   layout 'application'
   
   def index
@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
       f.json { render :json => @activities.to_json(options) }
     end
   end
-  
+
   def new
     @project = Project.new
   end
@@ -55,20 +55,11 @@ class ProjectsController < ApplicationController
   
   def update
     respond_to do |f|
-      if @project.update_attributes(params[:project])
-        f.html { redirect_to project_path(@project) }
+      if @current_project.update_attributes(params[:project])
+        f.html { redirect_to project_path(@current_project) }
       else
         f.html { render :action => 'edit' }
       end
     end
   end 
-
-  private
-    def find_project
-      @current_project = Project.find_by_permalink(params[:id])
-      @project = @current_project
-      unless @current_project.nil?
-        current_user.add_recent_project(@current_project)
-      end
-    end
 end

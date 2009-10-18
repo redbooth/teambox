@@ -24,7 +24,7 @@ class InvitationsController < ApplicationController
     if @invitation.save
       unless @invitation.email.nil?
         @recipient = params[:email]
-        Emailer.deliver_invitation(@recipient,@current_project,@invitation)
+        Emailer.deliver_invitation(@recipient, @current_project, @invitation)
       end
       respond_to do |f|
         f.html do
@@ -49,6 +49,7 @@ class InvitationsController < ApplicationController
   end
   
   before_filter :load_user_invitation, :only => [ :accept, :decline ]
+  skip_before_filter :belongs_to_project?, :only => [ :accept, :decline ]
   
   def accept
     person = @invitation.project.people.new(
@@ -70,6 +71,7 @@ class InvitationsController < ApplicationController
         :project_id => @current_project.id,
         :invited_user_id => current_user.id})
       unless @invitation
+        flash[:error] = "Invalid invitation code"
         redirect_to user_invitations_path(current_user)
       end
     end

@@ -2,6 +2,6 @@
   oh, yeah, baby
 
 
-- form_for @project do |f|
-  = project_fields(f,@project)
+- form_for @current_project do |f|
+  = project_fields(f,@current_project)
   = f.submit t('.submit')

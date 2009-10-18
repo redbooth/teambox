@@ -108,6 +108,16 @@ class User < ActiveRecord::Base
       self.save(false)
     end
   end
+  
+  def remove_recent_project(project)
+    self.recent_projects ||= []
+    
+    if self.recent_projects.include?(project.id)
+      self.recent_projects.delete(project.id)
+      @recent_projects = nil
+      self.save(false)
+    end    
+  end
 
   def activities_visible_to_user(user)
     shared_projects = self.projects & user.projects
