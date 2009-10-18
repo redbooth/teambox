@@ -5,9 +5,9 @@
     = thumb_avatar(comment.user)
     - if false ##unless comment.hours.nil?
       .hours
-        =hour_image
+        = hour_image
         %span
-          =comment.hours
+          = comment.hours
           hr
   .block
     - if CommentRead.user(current_user).unread?(comment)

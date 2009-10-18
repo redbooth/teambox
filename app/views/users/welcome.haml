@@ -15,7 +15,7 @@
     = link_to "create your first project", new_project_path
     now! 
 
-.section
+.section.hide_me
   %h2 Agendas
   %p
     Keep track of your contacts and clients. Remember what was said. Follow-ups. Don't forget a date.
@@ -33,11 +33,11 @@
     = link_to 'Twitter,', 'http://twitter.com/?status=Using+Teambox+to+manage+my+projects,+sign+up+for+free+at+http://www.teambox.com', :target => '_blank'
     = link_to 'Facebook', 'http://www.facebook.com/share.php?u=http://www.teambox.com', :target => '_blank'
     or
-    = link_to "in your site!"
+    = "in your site!"
   %p
     If you enjoy using Teambox, also consider
     = mail_to 'love@teambox.com', 'telling us about it'
     in an email!
 
 - content_for :column do
-  r
+  = link_to t('.stop_welcome'), close_wecome_tab_path

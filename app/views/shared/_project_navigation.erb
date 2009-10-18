@@ -3,13 +3,7 @@ render_tabnav :project do
 
   if logged_in?
     if location_name?('welcome_users')
-      add_tab do |t|
-        t.named "<span>#{t('.stop_welcome')}</span> #{image_tag('welcome_close.jpg')}"
-        t.links_to close_wecome_tab_path
-        t.highlights_on :controller => :projects, :action => :index
-        t.li_class = 'right_side'
-      end
-      
+      # Display a thin blue line, without tabs. See welcome.sass
     elsif project.nil?
       
       add_tab do |t|
