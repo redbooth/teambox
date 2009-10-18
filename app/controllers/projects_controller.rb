@@ -34,6 +34,7 @@ class ProjectsController < ApplicationController
   end
   
   def show
+    @pending_projects = current_user.invitations
     @activities = @current_project.activities
     
     options = { :include => [:target], :except => ['body_html', :project_id] }

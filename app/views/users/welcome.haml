@@ -15,6 +15,10 @@
     = link_to "create your first project", new_project_path
     now! 
 
+  - if @pending_projects
+    .pending_projects
+      = list_pending_projects(@pending_projects)
+
 .section.hide_me
   %h2 Agendas
   %p

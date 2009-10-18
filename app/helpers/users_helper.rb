@@ -52,9 +52,9 @@ module UsersHelper
 
   def user_link(user)
     if user.name.blank?
-      link_to user.login, user_path(user)
+      link_to h(user.login), user_path(user)
     else
-      link_to user.name, user_path(user)
+      link_to h(user.name), user_path(user)
     end
   end
 
