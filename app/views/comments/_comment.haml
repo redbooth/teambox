@@ -1,7 +1,7 @@
 .comment{:id => "comment_#{comment.id}" }
   .info
     = activity_comment_icon(comment)
-    = comment_actions_link(comment)
+    = #comment_actions_link(comment)
     = thumb_avatar(comment.user)
     - if false ##unless comment.hours.nil?
       .hours
