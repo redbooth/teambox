@@ -2,12 +2,19 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  common:
+    or: or
+    cancel: Cancel
   activities:
     activity_line:
       create_conversation: created the conversation
       create_task_list: created the task list
       create_page: created the page
       create_person: added to the project
+  avatars:
+    edit:
+      upload_new_image: Upload a new image for your avatar
+      upload: Upload this avatar
   users:
     fields:
       login: Username
@@ -34,11 +41,12 @@ en:
       formatted_address: "{{street}}, {{city}} ({{country}})"
   projects:
     index:
+      title: News feed for all your projects
       projects: My Projects
       subscribe: Subscribe to the news feed
       new_project: New Project
       primer:
-        empty: You don't belong to any projects yet
+        empty: You don't own or belong to any projects yet.
         create_first: Create your first project!
         define1: "Use projects to <b>collaborate</b> with groups of people: A website, organizing a party, client work..."
         define2: "You can create <b>as many projects as you wish</b> to share with different users online."

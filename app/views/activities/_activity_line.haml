@@ -1,5 +1,5 @@
 .activity{ :class => "#{activity.action_type}" }
-  =image_tag("activity_#{activity.downcase_type}.jpg")
+  = image_tag("activity_#{activity.downcase_type}.jpg")
   %span.name
     = link_to activity.user.name, user_path(activity.user)
   %span
