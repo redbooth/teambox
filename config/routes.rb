@@ -1,11 +1,12 @@
 ActionController::Routing::Routes.draw do |map|  
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  map.login '/login', :controller => 'sessions', :action => 'new'
-  map.register '/register', :controller => 'users', :action => 'create'
-  map.signup '/signup', :controller => 'users', :action => 'new'
-  map.settings '/settings', :controller => 'users', :action => 'edit'
-  map.welcome '/welcome', :controller => 'users', :action => 'welcome'
-  map.close_wecome_tab '/close_welcome_tab', :controller => 'users', :action => 'close_welcome'
+  map.logout            '/logout',            :controller => 'sessions',  :action => 'destroy'
+  map.login             '/login',             :controller => 'sessions',  :action => 'new'
+  map.register          '/register',          :controller => 'users',     :action => 'create'
+  map.signup            '/signup',            :controller => 'users',     :action => 'new'
+  map.settings          '/settings',          :controller => 'users',     :action => 'edit'
+  map.welcome           '/welcome',           :controller => 'users',     :action => 'welcome'
+  map.close_wecome_tab  '/close_welcome_tab', :controller => 'users',     :action => 'close_welcome'
+
   map.resource :session
   
   map.resources :users, :has_many => [:invitations], :member => { 
@@ -15,16 +16,16 @@ ActionController::Routing::Routes.draw do |map|
                           :conversations_latest_comment => :put,
                           :contact_importer => :get } do |user|
 
-    user.resources :task_lists, :has_many => [:comments] do |task_lists|
+    user.resource  :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }
+    user.resources :conversations,  :has_many => [:comments]
+    user.resources :task_lists,     :has_many => [:comments] do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
-    user.resources :conversations, :has_many => [:comments]
-    user.resource :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }
   end
   
-  map.resources :projects,
-      :has_many => [:pages,:people],
-      :member => [:get_comments,:accept,:decline] do |project|
+  map.resources :projects, :as => 'p', 
+      :has_many => [:pages, :people],
+      :member => [:get_comments, :accept, :decline] do |project|
     #project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
     #project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
     project.resources :invitations, :member => [:accept,:decline]
@@ -44,7 +45,6 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :comments
-
 
   map.root :controller => 'projects', :action => 'index'
   
