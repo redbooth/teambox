@@ -41,6 +41,10 @@ module ApplicationHelper
   def footer
     render :partial => 'shared/footer'
   end
+  
+  def javascripts
+    render :partial => 'shared/javascripts'
+  end
 
   def location_name?(names)
     names.any?{ |name| name == location_name }
