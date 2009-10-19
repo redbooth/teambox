@@ -37,7 +37,11 @@ class ConversationsController < ApplicationController
   
   private
     def load_conversation
-      @conversation = @current_project.conversations.find(params[:id])
+      begin
+        @conversation = @current_project.conversations.find(params[:id])
+      rescue
+        flash[:error] = "Conversation #{params[:id]} not found in this project"
+      end
       
       if @conversation.nil?
         redirect_to project_path(@current_project)

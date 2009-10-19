@@ -35,7 +35,11 @@ class TaskListsController < ApplicationController
   
   private
     def load_task_list
-      @task_list = @current_project.task_lists.find(params[:id])
+      begin
+        @task_list = @current_project.task_lists.find(params[:id])
+      rescue
+        flash[:error] = "Task list #{params[:id]} not found"
+      end
       
       if @task_list.nil?
         redirect_to project_path(@current_project)

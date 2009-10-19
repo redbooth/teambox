@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:destroy,:create,:update,:check]
-  before_filter :find_task, :only => [:destroy,:update,:check,:uncheck]
+  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:check]
+  before_filter :find_task, :only => [:show,:destroy,:update,:check,:uncheck]
 
   def filter
     if params[:filter_action] == 'asc'
@@ -76,10 +76,26 @@ class TasksController < ApplicationController
   private
     
     def find_task_list
-      @task_list = @current_project.task_lists.find(params[:task_list_id])
+      begin
+        @task_list = @current_project.task_lists.find(params[:task_list_id])
+      rescue
+        flash[:error] = "Task list #{params[:task_list_id]} not found in this project"
+      end
+      
+      if @task_list.nil?
+        redirect_to project_path(@current_project)
+      end
     end
     
     def find_task
-      @task = @current_project.tasks.find(params[:id])
+      begin
+        @task = @current_project.tasks.find(params[:id])
+      rescue
+        flash[:error] = "Task #{params[:id]}not found in this project"
+      end
+      
+      if @task.nil?
+        redirect_to project_path(@current_project)
+      end
     end
 end
