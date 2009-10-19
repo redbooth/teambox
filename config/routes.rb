@@ -17,8 +17,8 @@ ActionController::Routing::Routes.draw do |map|
                           :contact_importer => :get } do |user|
 
     user.resource  :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }
-    user.resources :conversations,  :has_many => [:comments]
-    user.resources :task_lists,     :has_many => [:comments] do |task_lists|
+    user.resources :conversations, :has_many => [:comments]
+    user.resources :task_lists,    :has_many => [:comments] do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
   end
