@@ -163,4 +163,7 @@ module ApplicationHelper
     link_to t('.help'), "http://help.teambox.com/#{controller.controller_name}"
   end
 
+  def parenthesize(text)
+    '(' + text.to_s + ')'
+  end
 end
