@@ -9,14 +9,31 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password
 
-  before_filter :load_project, :login_required, :set_locale, :touch_user, :recent_projects
+  before_filter :load_project, :login_required, :set_locale, :touch_user, :recent_projects, :belongs_to_project?
   
   private
+    def belongs_to_project?
+      if @current_project and current_user
+        unless Person.find_by_project_id_and_user_id(@current_project.id, current_user.id)
+          current_user.remove_recent_project @current_project
+          render :text => "You don't have permission to view this project", :status => :forbidden
+        end
+      end
+    end
+    
     def load_project
-      if params[:project_id] != nil
-        @current_project = Project.find_by_permalink(params[:project_id])
-        unless @current_project.nil? or current_user.nil?
-          current_user.add_recent_project(@current_project)
+      project_id ||= params[:project_id]
+      project_id ||= params[:id]
+      
+      if project_id
+        @current_project = Project.find_by_permalink(project_id)
+        
+        if @current_project.nil?
+          flash[:error] = "The project <i>#{h(project_id)}</i> doesn't exist."
+          redirect_to projects_path, :status => 301
+          return
+        else        
+          current_user.add_recent_project(@current_project) unless current_user.nil?
         end
       end
     end
@@ -30,7 +47,7 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-        
+
     def set_locale
       # if this is nil then I18n.default_locale will be used
       I18n.locale = current_user.language if logged_in?

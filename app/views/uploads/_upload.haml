@@ -1,20 +1,20 @@
-.upload_wrap{:id => "upload_#{upload.id}", :style => 'display:block'}
-  = upload_actions_links(upload)
-  .upload
-    = file_icon_image(upload,'48px')
+.upload{ :id => "upload_#{upload.id}" }
+  = #upload_actions_links(upload)
+  .info
+    = link_to file_icon_image(upload,'48px'), project_upload_path(upload.project,upload.filename)
+  .block
     = upload_thumbnail_image(project,upload)
-
     .filename.show_details
-      .name
-        = upload_text_link(upload)
       .date
         = posted_date upload.created_at
-      .uploader
-        Uploaded by
+      .name
         = link_to upload.user.name, user_path(upload.user)
-      .description
-        = h(upload.description)
-        
-    =edit_upload_form(project,upload)
-
-    .clear
+        = "uploaded a file:"
+      .body
+        - if upload.description
+          %p= h(upload.description)
+        %p
+          = upload_text_link(upload)
+          = parenthesize(number_to_human_size(upload.filesize))
+    = #edit_upload_form(project,upload)
+  .clear

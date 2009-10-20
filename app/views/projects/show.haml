@@ -1,3 +1,13 @@
+- if @pending_projects
+  .pending_projects
+    = list_pending_projects(@pending_projects)
+
+= new_comment_form(@current_project)
+
+#activities
+  = list_activities(@activities)
+  
+  
 - content_for :column do
   .people_list
     %h2= t '.people_in_project'
@@ -6,11 +16,3 @@
       = link_to t('.invite_people'), project_people_path(@current_project)
   .subscribe
     = link_to t('.subscribe'), project_path(@current_project, :format => :rss)
-
-= new_comment_form(@current_project)
-
-#activities
-  = list_activities(@activities)
-  
-  
-  

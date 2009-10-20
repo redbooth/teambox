@@ -1,10 +1,12 @@
 .project
   = thumb_avatar(invitation.user)
-  = t('.invited_to_join', :by => h(invitation.user.login), :project => h(invitation.project.name))
+  .text
+    = t('invitations.user_invitation.invited_to_join', :by => user_link(invitation.user), :project => content_tag(:b,h(invitation.project.name)))
   
   .actions
     - form_for invitation.project, :url => accept_project_invitation_path(invitation.project,invitation), :html => { :class => 'accept_project' } do |f|
       = f.submit 'Accept'
-    
+    %span 
+      the request to access the project or 
     - form_for invitation.project, :url => decline_project_invitation_path(invitation.project,invitation), :html => { :class => 'decline_project' } do |f|
       = f.submit 'Decline'

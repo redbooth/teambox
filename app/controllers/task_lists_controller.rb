@@ -26,7 +26,7 @@ class TaskListsController < ApplicationController
     @task_lists = @current_project.task_lists
     @comments = @task_list.comments
   ensure
-    CommentRead.user(current_user).read_up_to(@comments.first)
+    CommentRead.user(current_user).read_up_to(@comments.first) unless @comments.first.nil?
   end
   
   def reorder
@@ -35,7 +35,11 @@ class TaskListsController < ApplicationController
   
   private
     def load_task_list
-      @task_list = @current_project.task_lists.find(params[:id])
+      begin
+        @task_list = @current_project.task_lists.find(params[:id])
+      rescue
+        flash[:error] = "Task list #{params[:id]} not found"
+      end
       
       if @task_list.nil?
         redirect_to project_path(@current_project)

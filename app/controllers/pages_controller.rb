@@ -58,6 +58,14 @@ class PagesController < ApplicationController
   
   private
     def load_page
-      @page = @current_project.pages.find(params[:id])
+      begin
+        @page = @current_project.pages.find(params[:id])
+      rescue
+        flash[:error] = "Page #{params[:id]} not found in this project"
+      end
+      
+      if @page.nil?
+        redirect_to project_path(@current_project)
+      end
     end
 end

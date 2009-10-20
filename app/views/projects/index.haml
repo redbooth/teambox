@@ -1,14 +1,33 @@
 - if @pending_projects
   .pending_projects
     = list_pending_projects(@pending_projects)
+
+- if not @activities.empty?
+  %h2= t '.title'
     
-#activities
-  = list_activities(@activities)
+  #activities
+    = list_activities(@activities)
+
+- else
+  #primer
+    %p= t('.primer.empty')
+    .box
+      %h2= link_to t('.primer.create_first'), new_project_path
+      %p= t '.primer.define1'
+      %p= t '.primer.define2'
+      %ol
+        %li= t '.primer.item1'
+        %li= t '.primer.item2'
+        %li= t '.primer.item3'
+        %li= t '.primer.item4'
+        %li= t '.primer.item5'
+      %p= t '.primer.footer' 
 
 - content_for :column do
   = new_project_link
-  .project_list
-    %h2= t '.projects'
-    = list_projects(@projects)
-  .subscribe
-    = link_to t('.subscribe'), projects_path(:format => :rss)
+  - unless @projects.empty?
+    .project_list
+      %h2= t '.projects'
+      = list_projects(@projects)
+    .subscribe
+      = link_to t('.subscribe'), projects_path(:format => :rss)

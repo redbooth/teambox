@@ -8,13 +8,13 @@
     = sprockets_include_tag
 
   %body{ :class => "#{location_name} #{I18n.locale}"}
-    =hot_flashes(flash)
     .container
-      =header
-      =global_navigation
-      =navigation(@current_project,@recent_projects)
+      = header
+      = global_navigation
+      = hot_flashes(flash)
+      = navigation(@current_project,@recent_projects)
       .wrapper
-        =project_navigation(@current_project)
+        = project_navigation(@current_project)
         -unless @content_for_banner.nil?
           .banner
             = yield :banner
@@ -25,6 +25,7 @@
           .column_wrap
             .column#column
               = yield :column
-            =profile_completeness
+            = profile_completeness
           .clear
-      =footer
+      = footer
+    = javascripts

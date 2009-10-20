@@ -104,6 +104,8 @@ class UsersController < ApplicationController
   end
 
   def welcome
+    @pending_projects = current_user.invitations
+
     if current_user.welcome
       respond_to do |format|
         format.html { redirect_to projects_path }

@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
     else
       note_failed_signin
       @login       = params[:login]
-      @remember_me = params[:remember_me]
+      @remember_me = true
       render :action => 'new'
     end
   end

@@ -80,7 +80,7 @@ module CommentsHelper
   end
   
   def cancel_edit_comment_link(comment)
-    link_to_remote 'cancel',
+    link_to_remote t('common.cancel'),
       :url => comment_path(comment),
       :method => :get
   end

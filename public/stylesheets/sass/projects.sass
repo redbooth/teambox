@@ -1,3 +1,8 @@
+.index_projects
+  .content
+    h2
+      :margin 5px 0 0 20px
+
 .show_projects, .index_task_lists
   #activities
     .comment
@@ -73,6 +78,7 @@ form#new_project, form.edit_project
       :display none
   
 .project_list
+  :margin-top 15px
   :font-size 12px
   .project_link
     .unread_comment_count
@@ -88,14 +94,3 @@ form#new_project, form.edit_project
     :font-size 12px
     :padding-left 25px
     :background url(/images/feed.png) no-repeat left
-
-.pending_projects
-  .project
-    :border-bottom 1px solid rgb(230,230,230)
-    :padding-bottom 5px
-    :margin-bottom 5px
-    .name
-      :font-weight bold
-
-    form.accept_project, form.decline_project
-      :display inline

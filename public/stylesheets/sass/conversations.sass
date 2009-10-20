@@ -1,12 +1,16 @@
 #column
   .conversations
     :clear both
-    :margin-top 10px
+    :margin-top 20px
     .conversation
       :padding-top 2px
       :font-size 12px
       a
         :padding 3px 0
+      &:hover
+        :background #ccc
+      span.comment_count
+        :color rgb(150,150,150)
 
 .index_conversations
   #conversations

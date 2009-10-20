@@ -3,4 +3,4 @@
   %span.filename
     = upload_link(upload)
   %span.size
-    = "(#{number_to_human_size upload.filesize})"
+    = parenthesize(number_to_human_size(upload.filesize))

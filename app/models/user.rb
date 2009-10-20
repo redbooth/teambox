@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
     e.profile_score = e.completeness_score
     e.profile_percent = e.percent_complete
     e.profile_grade = e.completeness_grade.to_s
+    
+    e.login.downcase!
+    e.email.downcase!
   end
 
   define_completeness_scoring do
@@ -25,7 +28,11 @@ class User < ActiveRecord::Base
     completeness_score == 100
   end
   
-  after_create { |user| user.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save() }
+  after_create do |user|
+    user.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save
+
+    Emailer.deliver_confirm_email user
+  end
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   
@@ -42,7 +49,7 @@ class User < ActiveRecord::Base
   
   validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40
-  validates_uniqueness_of   :login
+  validates_uniqueness_of   :login,    :case_sensitive => false
   validates_format_of       :login,    :with => Authentication.login_regex, :message => Authentication.bad_login_message
 
   validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true
@@ -50,7 +57,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of     :email
   validates_length_of       :email,    :within => 6..100 #r@a.wk
-  validates_uniqueness_of   :email
+  validates_uniqueness_of   :email,    :case_sensitive => false
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
   validates_associated :projects  #, :people Ensure associated people and projects exist
@@ -100,6 +107,16 @@ class User < ActiveRecord::Base
       @recent_projects = nil
       self.save(false)
     end
+  end
+  
+  def remove_recent_project(project)
+    self.recent_projects ||= []
+    
+    if self.recent_projects.include?(project.id)
+      self.recent_projects.delete(project.id)
+      @recent_projects = nil
+      self.save(false)
+    end    
   end
 
   def activities_visible_to_user(user)

@@ -40,6 +40,10 @@ render_tabnav :global do
       t.links_to 'http://www.teambox.com/'
     end
     add_tab do |t|
+      t.named t('.help')
+      t.links_to 'http://help.teambox.com/'
+    end
+    add_tab do |t|
       t.named t('.blog')
       t.links_to 'http://www.teambox.com/blog/'
     end

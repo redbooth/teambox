@@ -2,12 +2,19 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  common:
+    or: or
+    cancel: Cancel
   activities:
     activity_line:
       create_conversation: created the conversation
       create_task_list: created the task list
       create_page: created the page
       create_person: added to the project
+  avatars:
+    edit:
+      upload_new_image: Upload a new image for your avatar
+      upload: Upload this avatar
   users:
     fields:
       login: Username
@@ -32,11 +39,25 @@ en:
       recent_activity_for: Recent activity for {{user_name}}
     user_card:
       formatted_address: "{{street}}, {{city}} ({{country}})"
+    welcome:
+      stop_welcome: Stop showing this Welcome tab
   projects:
     index:
+      title: News feed for all your projects
       projects: My Projects
       subscribe: Subscribe to the news feed
       new_project: New Project
+      primer:
+        empty: You don't own or belong to any projects yet.
+        create_first: Create your first project!
+        define1: "Use projects to <b>collaborate</b> with groups of people: A website, organizing a party, client work..."
+        define2: "You can create <b>as many projects as you wish</b> to share with different users online."
+        item1: "<b>Create a project</b>, name it and <b>invite some contacts</b> to it."
+        item2: "<b>Comment</b> about what you're doing at each moment in the general timeline."
+        item3: "<b>Discuss</b> about important decisions with Conversations."
+        item4: "<b>Plan</b> what needs to be done and post updates with Tasks."
+        item5: "<b>Share information</b> by easily editable Pages for each project."
+        footer: "Projects are a centralized way of collaborating, so you'll never need to email your team again."
     show:
       invite_people: 'Invite people...'
       new_task_list_link: New Task List
@@ -50,6 +71,18 @@ en:
       title: Create a Project
       submit: Create project and start inviting people
       new_project: New Project...
+      define1: A project is a shared group with your teammates.
+      define2: "Inside a project, each team member can:"
+      feature1: Post status updates.
+      feature2: Start conversations or reply.
+      feature3: Send attachments.
+      feature4: Assign and review tasks.
+      feature5: Comment on tasks.
+      feature6: Track hours spent on each item.
+      feature7: "Create, edit and view pages."
+      footer: This project will belong to you. You can transfer this project to other contacts at any time.
+      limited: "As a free account, you can only upload up to 10 Mb of attachments to this project."
+      upgrade: Upgrade your account now!
     edit:
       submit: Save Changes
   invitations:
@@ -58,6 +91,7 @@ en:
     invitation:
       invited_user: "{{inviter}} invited {{invitee}} to join the project."
       invited_email: "{{inviter}} invited {{email}} to join the project."
+      time_ago: "({{time_ago_in_words}} ago)"
     user_invitation:
       invited_to_join: "{{by}} has invited you to join the project {{project}}."
     index_user:
@@ -218,7 +252,6 @@ en:
       all_projects: 'All Projects'
       new_project: +
     project_navigation:
-      stop_welcome: Stop showing this Welcome tab
       overview: Overview
       all_conversations: All Conversations
       conversations: Conversations

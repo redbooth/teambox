@@ -9,10 +9,11 @@
   %body{ :class => "splash #{location_name} #{I18n.locale}"}
     .container
       .header
-        =image_tag('header_logo_large.jpg')
-      =global_navigation
-      =navigation(@current_project,@recent_projects)
+        = image_tag('header_logo_large.jpg')
+      = global_navigation
+      = navigation(@current_project,@recent_projects)
       .content= yield
       .sell_column= yield :sell_column
       .column= yield :column
-      =footer
+      = footer
+    = javascripts
