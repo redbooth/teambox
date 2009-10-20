@@ -8,13 +8,13 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
-
+ 
 ActiveRecord::Schema.define(:version => 20090825190238) do
-
+ 
   create_table :users, :force => true do |t|
     t.string   :login,                     :limit => 40
     t.string   :name,                      :limit => 100, :default => ""
-    t.text     :biography
+    t.text     :biography, :default => "", :null => false
     t.string   :email,                     :limit => 100
     t.string   :crypted_password,          :limit => 40
     t.string   :salt,                      :limit => 40
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.boolean :welcome, :default => false
     t.timestamps
   end
-
+ 
   create_table :sessions do |t|
     t.string :session_id, :null => false
     t.text :data
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :source_user_id
     t.timestamps
   end
-
+ 
   create_table :task_lists do |t|
     t.integer :project_id
     t.integer :user_id
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
-
+ 
   create_table :activities, :force => true do |t|
     t.integer  :user_id
     t.integer  :project_id
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :last_comment_id, :null => true, :default => nil
     t.timestamps
   end
-
+ 
   create_table :invitations do |t|
     t.integer :user_id
     t.integer :project_id
@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :token
     t.timestamps
   end
-
+ 
   create_table :uploads do |t|
     t.integer  :user_id
     t.integer  :project_id
@@ -166,12 +166,12 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :version
     t.timestamps
   end
-
+ 
   add_index :sessions, :session_id
   add_index :sessions, :updated_at
-
+ 
   add_index :users, ["login"], :name => "index_users_on_login", :unique => true
-
+ 
   create_table :avatars do |t|
     t.integer  :user_id
     t.integer  :x1
@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.timestamps
   end
   add_index "avatars", ["user_id"], :name => "index_avatars_on_user"
-
+ 
   create_table :emails, :force => true do |t|
     t.string   :from
     t.string   :to
@@ -196,5 +196,5 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.text     :mail
     t.datetime :created_on
   end
-
+ 
 end

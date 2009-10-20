@@ -1,5 +1,7 @@
 Tabnav generates tabbed navigations with highlighting and disable rules. 
 
+Paolo Dona originally created Tabnav which was then merged which into a plugin called 'rails-widgets'. I've simply extracted Tabnav and refactored and simplified this plugin.
+
 h2. Tabnav generator
 
 This will generate a file called 'navigation' in views/shared
