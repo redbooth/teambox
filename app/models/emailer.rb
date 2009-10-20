@@ -10,14 +10,14 @@ class Emailer < ActionMailer::Base
     body          :user => user
   end
 
-  def invitation(recipient,project,invitation)
+  def invitation(recipient, project, invitation)
     recipients    recipient
     from          'Teambox <no-reply@teambox.com>'
-    subject       'Invitation to Teambox'
+    subject       "#{invitation.user.name} shared [#{project.name}] with you"
     content_type  'text/html'
     sent_on       Time.now
     reply_to      'Teambox <no-reply@teambox.com>'
-    body          :recipient => recipient, :project => project, :invitation => invitation
+    body          :referral => invitation.user, :project => project, :invitation => invitation
   end
 
   def notify_conversation(recipient, project, comment, conversation)
@@ -28,7 +28,7 @@ class Emailer < ActionMailer::Base
     content_type  "text/html"
     sent_on       Time.now
     reply_to      "Teambox <#{project.permalink}+conversation+#{conversation.id}@teambox.com>"
-    body          :recipient => recipient, :project => project, :comment => comment, :conversation => conversation
+    body          :project => project, :comment => comment, :conversation => conversation
   end
 
   # Receives an email and performs the adequate action
