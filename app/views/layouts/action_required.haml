@@ -1,0 +1,18 @@
+!!! Strict
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang'=>"en", :lang=>"en" }
+  %head
+    %meta{ 'http-equiv' => "content-type", :content => "text/html;charset=utf-8" }
+    %title
+      Teambox
+    = stylesheet_link_tag 'application'
+    = sprockets_include_tag
+
+  %body{ :class => "#{location_name} #{I18n.locale}"}
+    .container
+      = header
+      = hot_flashes(flash)
+      .wrapper
+        %div{ :class => "#{@content_for_column.nil? ? 'content_wrap_single' : 'content_wrap'}" }
+          .content
+            = yield
+    = javascripts

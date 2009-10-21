@@ -4,14 +4,19 @@ class UsersController < ApplicationController
   before_filter :load_invitation, :only => [ :new, :create ]
   skip_before_filter :login_required, :only => [ :new, :create ]
   skip_before_filter :load_project
+  skip_before_filter :confirmed_user?, :only => [ :unconfirmed_email ]  
   
   def index
   end
 
-  # render new.rhtml
   def new
-    @user = User.new
-    render :layout => 'login'
+    if logged_in?
+      flash[:success] = "You already have an account. Log out first to sign up as a different user."
+      redirect_to projects_path
+    else
+      @user = User.new
+      render :layout => 'login'
+    end
   end
 
   def show
@@ -23,13 +28,12 @@ class UsersController < ApplicationController
       format.json { render :json => @user.to_json(options) }
     end
   end
- 
- 
+
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
-    success = @user && @user.save
-    if success && @user.errors.empty?
+    success = @user and @user.save
+    if success and @user.errors.empty?
       # Protects against session fixation attacks, causes request forgery
       # protection if visitor resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
@@ -64,8 +68,17 @@ class UsersController < ApplicationController
     render :action => :edit
   end
   
+  def unconfirmed_email
+    if params[:resend]
+      Emailer.deliver_confirm_email current_user
+      flash[:success] = "We've re-sent the activation email. Take a look at your inbox!"
+    end
+
+    @email = current_user.email
+    render :layout => 'action_required'
+  end
+  
   def contact_importer
-    
   end
 
   def comments_ascending
