@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       redirect_to projects_path
     else
       @user = User.new
-      render :layout => 'login'
+      render :layout => 'sessions'
     end
   end
 
@@ -49,10 +49,10 @@ class UsersController < ApplicationController
         redirect_back_or_default('/')
       end
       
-      flash[:notice] = "Thanks for signing up!"
+      flash[:success] = "Thanks for signing up!"
     else
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-      render :action => :new, :layout => 'login'
+      render :action => :new, :layout => 'sessions'
     end
   end
   

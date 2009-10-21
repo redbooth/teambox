@@ -34,4 +34,18 @@ module TaskListsHelper
     render :partial => 'task_lists/fields', :locals => { :f => f }
   end
 
+
+  def insert_task_list(project,task_list)  
+    page.insert_html :bottom, "task_lists",
+      :partial => 'task_lists/task_list', 
+      :locals => {  
+        :project => project, 
+        :task_list => task_list,
+        :current_target => nil }
+  end
+
+  def highlight_task_list(project,task_list)
+    page["task_list_#{task_list.id}"].highlight
+  end
+  
 end

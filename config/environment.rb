@@ -15,12 +15,13 @@ Rails::Initializer.run do |config|
   config.gem 'haml'
   config.gem 'sprockets'
   config.gem 'completeness-fu'
-    
-  # Install instructions at http://github.com/adzap/ar_mailer/tree/master
+  config.gem 'thoughtbot-factory_girl', :lib => 'factory_girl', :source => 'http://gems.github.com'
+  config.gem 'rspec-rails', :lib => false 
+  config.gem 'rspec', :lib => false 
+  config.gem 'cucumber' 
+  config.gem 'webrat'
   config.gem "adzap-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gems.github.com'
-
-  # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-  # Run "rake -D time" for a list of tasks for finding time zone names.
+  
   require 'RedCloth'  
   require 'mime/types'
   config.time_zone = 'UTC'

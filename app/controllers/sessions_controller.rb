@@ -7,10 +7,6 @@ class SessionsController < ApplicationController
   skip_before_filter :confirmed_user?
   skip_before_filter :load_project
 
-  def new
-    render :layout => 'login'
-  end
-
   def create
     logout_keeping_session!
     

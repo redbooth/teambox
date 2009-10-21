@@ -14,7 +14,8 @@
       = hot_flashes(flash)
       = navigation(@current_project,@recent_projects)
       .wrapper
-        = project_navigation(@current_project)
+        -unless location_name?('welcome_users')
+          = project_navigation(@current_project)
         -unless @content_for_banner.nil?
           .banner
             = yield :banner
