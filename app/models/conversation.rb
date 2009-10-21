@@ -21,7 +21,7 @@ class Conversation < ActiveRecord::Base
   end
   
   def owner?(u)
-    user = u
+    user == u
   end
 
   def notify_new_comment(comment)
