@@ -25,8 +25,8 @@ class Conversation < ActiveRecord::Base
   end
 
   def notify_new_comment(comment)
-    comment.project.people.each do |person|
-      Emailer.deliver_notify_conversation(person.email, comment.project, comment, self)
+    comment.project.users.each do |user|
+      Emailer.deliver_notify_conversation(user.email, comment.project, comment, self)
     end
   end
 
