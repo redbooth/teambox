@@ -6,13 +6,13 @@
       Teambox
     = stylesheet_link_tag 'application'
     = sprockets_include_tag
-  %body{ :class => "splash #{location_name} #{I18n.locale}"}
+
+  %body{ :class => "#{location_name} #{I18n.locale}"}
     .container
-      .header
-        = image_tag('header_logo_large.jpg')
-      = global_navigation
+      = header
       = hot_flashes(flash)
-      = navigation(@current_project,@recent_projects)
-      .content= yield
-      = footer
+      .wrapper
+        %div{ :class => "#{@content_for_column.nil? ? 'content_wrap_single' : 'content_wrap'}" }
+          .content
+            = yield
     = javascripts

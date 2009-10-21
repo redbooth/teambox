@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   after_create do |user|
     user.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save
 
-    Emailer.deliver_confirm_email user
+    user.send_confirm_email
   end
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
@@ -79,6 +79,23 @@ class User < ActiveRecord::Base
     return nil if login.blank? || password.blank?
     u = find_by_login(login.downcase) # need to get the salt
     u && u.authenticated?(password) ? u : nil
+  end
+
+  def send_confirm_email
+    self.update_attribute :login_token, Digest::SHA1.hexdigest(rand(999999999).to_s) + Time.new.to_i.to_s
+    self.update_attribute :login_token_expires_at, 1.month.from_now
+    self.reload
+
+    Emailer.deliver_confirm_email self
+  end
+  
+  def confirm_email(confirmed = true)
+    self.update_attribute :confirmed_user, confirmed
+    self.update_attribute :login_token_expires_at, 1.minute.ago
+  end
+  
+  def is_login_token_valid?(token)
+    (token == self.login_token) and (self.login_token_expires_at > Time.now)
   end
 
   def login=(value)

@@ -7,12 +7,12 @@
     = "In order to complete your signup for Teambox, we need you to log in with the following link:"
 
   %h2{ :style => 'font-size: 20px; color: rgb(0,0,0)' }
-    = link_to "Log into Teambox now!", "sdfsdf"
+    = link_to "Log into Teambox now!", @login_link
 
   %p{ :style => 'font-size: 14px; color: rgb(50,50,50)' }
     = "If this doesn't work, copy and paste the following link in your browser's bar:"
     %br
-    = link_to "http://www.teambox.com/asdsdadasda", "asdasd"
+    = link_to @login_link, @login_link
 
   .footer{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
     %p
