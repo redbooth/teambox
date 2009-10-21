@@ -38,12 +38,6 @@ form#new_comment, form.edit_comment
   &:hover
     p.actions
       :visibility visible
-  p.activity_icon
-    :position relative
-    img
-      :overflow auto
-      :position absolute
-      :display block      
   p.actions
     :visibility hidden
     :position relative
@@ -59,6 +53,14 @@ form#new_comment, form.edit_comment
     :float left
     .thumb_avatar
       :float right
+    p.activity_icon
+      :position relative
+      img
+        :overflow auto
+        :position absolute
+        :display block      
+    .unread
+      :position relative
     .hours
       :padding-left 1px
       :padding-right 10px

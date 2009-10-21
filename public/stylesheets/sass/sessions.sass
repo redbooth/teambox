@@ -1,4 +1,4 @@
-.new_sessions, .create_sessions
+.new_sessions, .create_sessions, .new_users, .create_users
   h2
     :font-size 14px
     :margin 0px
@@ -10,14 +10,20 @@
       :topright 5px
     :-webkit-border-top-left-radius 5px
     :-webkit-border-top-right-radius 5px
+  .global_navigation
+    :float none
+    :margin 
+      :top 5px
+      :bottom 8px
   .header
-    :float left
     :margin-top 20px
-  .content
-    :float left
-    :margin-top 10px
-    :width 270px
-  form.new_session
+  .container
+    :width 400px
+    :margin 10px auto
+  .footer
+    :padding
+      :top 0px
+  form
     :background rgb(255,255,255)
     :-moz-border-radius
       :bottomleft 5px
@@ -33,36 +39,14 @@
       :color rgb(100,100,100)
       input
         :width 100%
-  .for
-    :padding-top 5px
-    :padding-bottom 30px
-    p
-      :margin 2px
-      a
-        :font-size 13px
-
-  
-
-  ul
-    :padding-left 15px
-    li
-      :margin-bottom 3px
-    
-  .column,.sell_column
-    :float right
-    :font-size 12px
-    :width 270px
-    :margin
-      :left 0px
-      :top 10px
-    h3
-      :margin 0px
-      :font-size 16px
-      :font-family Georgia, "Times New Roman"
-      :font-style italic
-      :color rgb(150,150,150)
-    .new_to_teambox        
-      :background rgb(255,255,255)
-      :padding 10px
-  .column
-    :margin-right 20px
+  form.new_session
+    .password
+      :margin-top 5px
+      input
+        :width 190px
+      p  
+        :text-align right
+        :float right
+        :font-size 12px
+        :padding
+          :top 8px

@@ -5,11 +5,12 @@ development:
   password:
   database: teambox2
   
-test:
-  adapter: sqlite3
-  database: db/test.sqlite3
-  pool: 5
-  timeout: 5000
+test: &TEST
+  adapter: mysql
+  server: localhost
+  username: root 
+  password:
+  database: teambox2_test
 
 production:
   adapter: mysql
@@ -17,3 +18,6 @@ production:
   username: root 
   password:
   database: teambox2_production
+
+cucumber:
+  <<: *TEST

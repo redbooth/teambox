@@ -6,11 +6,6 @@ class SessionsController < ApplicationController
   skip_before_filter :login_required, :except => [ :destroy ]
   skip_before_filter :load_project
 
-  # render new.rhtml
-  def new
-    render :layout => 'login'
-  end
-
   def create
     logout_keeping_session!
     

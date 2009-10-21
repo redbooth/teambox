@@ -9,6 +9,7 @@ if logged_in?
         t.named t('.welcome')
         t.links_to welcome_path
         t.highlights_on :controller => :users, :action => :welcome
+        t.li_class = 'welcome'
       end
     end
     

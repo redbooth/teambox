@@ -267,11 +267,12 @@ en:
       invitations: Invitations
     global_navigation:
       project_invitations: Project Invitations
+      home: Home
+      tour: Tour
       blog: Blog
       help: Help
       logout: Logout
       login: Login
-      product_site: Product site
       project_invitations: "Invitations ({{count}})"
       signup: Signup
       settings: Settings

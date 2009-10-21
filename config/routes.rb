@@ -23,7 +23,7 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
   
-  map.resources :projects, :as => 'p', 
+  map.resources :projects,
       :has_many => [:pages, :people],
       :member => [:get_comments, :accept, :decline] do |project|
     #project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }

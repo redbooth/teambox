@@ -12,13 +12,9 @@ class TaskListsController < ApplicationController
   
   def create
     @task_list = @current_project.new_task_list(current_user,params[:task_list])
-    
+    @task_list.save    
     respond_to do |f|
-      if @task_list.save
-        f.html { redirect_to project_task_lists_path(@current_project) }
-      else
-        f.html { render 'new' }
-      end
+      f.js
     end
   end
   
