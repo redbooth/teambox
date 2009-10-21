@@ -4,9 +4,9 @@ class SessionsController < ApplicationController
   include AuthenticatedSystem
 
   skip_before_filter :login_required, :except => [ :destroy ]
+  skip_before_filter :confirmed_user?
   skip_before_filter :load_project
 
-  # render new.rhtml
   def new
     render :layout => 'login'
   end

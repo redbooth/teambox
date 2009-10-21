@@ -9,9 +9,16 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password
 
-  before_filter :load_project, :login_required, :set_locale, :touch_user, :recent_projects, :belongs_to_project?
+  before_filter :confirmed_user?, :load_project, :login_required, :set_locale, :touch_user, :recent_projects, :belongs_to_project?
   
   private
+    def confirmed_user?
+      if current_user and not current_user.confirmed_user
+        flash[:error] = "You need to activate your account first"
+        redirect_to unconfirmed_email_user_path(current_user)
+      end
+    end
+
     def belongs_to_project?
       if @current_project and current_user
         unless Person.find_by_project_id_and_user_id(@current_project.id, current_user.id)
