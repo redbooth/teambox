@@ -1,0 +1,10 @@
+Description:
+    Auto-generate RSpec view specs by interrogating your existing views. You
+    can add extra template stubs, if you need. Current limitation: you have to
+    add the --force option for subsequent runs.
+
+Example:
+    ./script/generate view_specify [--stubs=stub1,stub2,stub3]
+
+    This will create:
+        spec/views/[each_view_dir]/[each_view]

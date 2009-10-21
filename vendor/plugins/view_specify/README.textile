@@ -1,0 +1,27 @@
+h1. view_specify
+
+That's "speck-a-fie." This plugin auto-generates RSpec view specs by interrogating your existing
+views. It looks through your views, mocking all instance variables and stubbing all helper method
+calls and routes off @template@.
+
+Pardon our dust; this is alpha software. But, it serves as a handy, time-saving first pass at
+writing your view specs.
+
+You can add extra template stubs, if you need, with the @--stubs@ option.
+
+Current limitations:
+
+# you have to add the @--force@ option for subsequent runs
+# mocking "dot chains" doesn't work right now
+
+<pre>
+<code>
+  Example:
+      ./script/generate view_specify [--stubs=stub1,stub2,stub3]
+
+      This will create:
+          spec/views/[each_view_dir]/[each_view]
+</code>
+</pre>
+
+Copyright (c) 2008 Obie Fernandez, Jon "Lark" Larkowski, and "Hashrocket":http://www.hashrocket.com/, released under the MIT license
