@@ -5,7 +5,7 @@ describe ProjectsController do
     before(:each) do
       Factory.stub(:project)
       @user = Factory(:user)
-      controller.stub(:current_user).returns(@user)
+      controller.stubs(:current_user).returns(@user)
       get :new
     end
 
