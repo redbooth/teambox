@@ -7,7 +7,7 @@ class Emailer < ActionMailer::Base
     subject       'Get started with Teambox!'
     content_type  'text/html'
     sent_on       Time.now
-    body          :user => user
+    body          :user => user, :login_link => confirm_email_user_url(user, :token => user.login_token)
   end
 
   def invitation(recipient, project, invitation)

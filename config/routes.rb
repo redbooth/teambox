@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :users, :has_many => [:invitations], :member => { 
                           :unconfirmed_email => :get,
+                          :confirm_email => :get,
                           :comments_descending => :put, 
                           :comments_ascending => :put,
                           :conversations_first_comment => :put,

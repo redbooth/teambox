@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.float    :profile_score, :default => 0
     t.float    :profile_percent, :default => 0
     t.string   :profile_grade
+    t.string   :login_token,               :limit => 40
+    t.datetime :login_token_expires_at
     t.boolean  :welcome,        :default => false
     t.boolean  :confirmed_user, :default => false
     t.timestamps

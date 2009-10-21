@@ -13,7 +13,10 @@
   %li
     = "Empty inbox? Make sure the email wasn't classified as spam by your email client."
   %li
-    = "Wrong address? If you mistyped your email address, go back and re-create your account with a valid address."
+    = "Wrong address? If you mistyped your email address,"
+    = link_to "cancel the signup process", logout_path
+    = " and re-create your account with a valid address."
+    
 %p
   = "If you're still having problems, please contact "
   = mail_to "support@teambox.com", "support@teambox.com"

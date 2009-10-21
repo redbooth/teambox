@@ -11,6 +11,7 @@
       .header
         = image_tag('header_logo_large.jpg')
       = global_navigation
+      = hot_flashes(flash)
       = navigation(@current_project,@recent_projects)
       .content= yield
       .sell_column= yield :sell_column

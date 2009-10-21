@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
-  before_filter :find_user, :only => [ :show ]
+  before_filter :find_user, :only => [ :show, :confirm_email ]
   before_filter :load_invitation, :only => [ :new, :create ]
-  skip_before_filter :login_required, :only => [ :new, :create ]
+  skip_before_filter :login_required, :only => [ :new, :create, :confirm_email ]
   skip_before_filter :load_project
-  skip_before_filter :confirmed_user?, :only => [ :unconfirmed_email ]  
+  skip_before_filter :confirmed_user?, :only => [ :new, :create, :unconfirmed_email, :confirm_email ]  
   
   def index
   end
@@ -70,12 +70,32 @@ class UsersController < ApplicationController
   
   def unconfirmed_email
     if params[:resend]
-      Emailer.deliver_confirm_email current_user
+      current_user.send_confirm_email
       flash[:success] = "We've re-sent the activation email. Take a look at your inbox!"
     end
 
     @email = current_user.email
     render :layout => 'action_required'
+  end
+  
+  def confirm_email
+    logout_keeping_session!
+    if @user
+      if @user.is_login_token_valid? params[:token]
+        if @user.confirmed_user
+          flash[:success] = "You had already confirmed your email! You can now use Teambox."
+        else
+          flash[:success] = "Your account has been activated! Welcome to Teambox :)"
+          @user.confirm_email
+          self.current_user = @user
+        end
+      else
+        flash[:error] = "<p>Invalid or expired access link. Login with your email and password.</p><p>If you don't remember your login data, follow the Forgot your Password link.</p>"
+      end
+    else
+      flash[:error] = "Invalid user"
+    end
+    redirect_to '/'
   end
   
   def contact_importer
