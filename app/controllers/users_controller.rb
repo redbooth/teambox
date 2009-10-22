@@ -70,7 +70,7 @@ class UsersController < ApplicationController
   
   def unconfirmed_email
     if params[:resend]
-      current_user.send_confirm_email
+      current_user.send_activation_email
       flash[:success] = "We've re-sent the activation email. Take a look at your inbox!"
     end
 
@@ -86,7 +86,8 @@ class UsersController < ApplicationController
           flash[:success] = "You had already confirmed your email! You can now use Teambox."
         else
           flash[:success] = "Your account has been activated! Welcome to Teambox :)"
-          @user.confirm_email
+          @user.activate!
+          @user.expire_login_code!
           self.current_user = @user
         end
       else

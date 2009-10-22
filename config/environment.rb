@@ -6,7 +6,7 @@ RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-DEFAULT_HOST   = "sandbox.teambox.com"
+DEFAULT_HOST   = "www.myhost.dev"
 DEFAULT_SECRET = "46ef9bf493d1ae37a5b69e6acb8753ab67876361eb9f7e84fc0308cabdc74934d401a07d3eed715497f0239580552e024ba5b59804da2f1002fa908f304c7b07"
 
 Rails::Initializer.run do |config|
@@ -41,10 +41,9 @@ Rails::Initializer.run do |config|
     :authentication => :plain
   }
   
-  secret = APP_CONFIG[:action_controller][:session][:secret] rescue DEFAULT_SECRET
-
-  config.action_controller.session = { :session_key => '_teambox_session', :secret => secret }
+#  secret = APP_CONFIG[:action_controller][:session][:secret] rescue DEFAULT_SECRET
+#  config.action_controller.session = { :session_key => '_teambox_session', :secret => secret }
 end
 
 # use this domain for cookies so switching networks doesn't drop cookies
-ActionController::Base.session_options[:domain] = DEFAULT_HOST
+#ActionController::Base.session_options[:domain] = DEFAULT_HOST
