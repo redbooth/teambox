@@ -32,7 +32,7 @@ class Project < ActiveRecord::Base
   end
   
   def owner?(u)
-    user = u
+    user == u
   end
   
   def new_task_list(user,task_list)

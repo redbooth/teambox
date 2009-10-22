@@ -8,7 +8,7 @@ class Task < ActiveRecord::Base
   attr_accessible :name
 
   def owner?(u)
-    user = u
+    user == u
   end
   
   def before_save
