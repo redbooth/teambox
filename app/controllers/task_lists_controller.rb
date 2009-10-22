@@ -2,8 +2,17 @@ class TaskListsController < ApplicationController
   before_filter :load_task_list, :except => [:index, :new, :create ]
   
   def index
-    @task_lists = @current_project.task_lists
-    @activities = @current_project.activities.for_task_lists
+    if @current_project.nil?
+      @task_lists = []
+      @activities = []
+      current_user.projects.each do |project|
+        @task_lists |= project.task_lists
+        @activities |= project.activities.for_task_lists
+      end
+    else
+      @task_lists = @current_project.task_lists
+      @activities = @current_project.activities.for_task_lists
+    end
   end
   
   def new

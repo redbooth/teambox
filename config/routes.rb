@@ -47,7 +47,10 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :comments
-
+  map.resources :task_lists
+  map.resources :conversations
+  map.resources :pages
+  
   map.root :controller => 'projects', :action => 'index'
   
   SprocketsApplication.routes(map)

@@ -2,7 +2,14 @@ class PagesController < ApplicationController
   before_filter :load_page, :only => [ :show, :edit, :update ]
   
   def index
-    @pages = @current_project.pages
+    if @current_project.nil?
+      @pages = []
+      current_user.projects.each do |project|
+        @pages |= project.pages
+      end
+    else
+      @pages = @current_project.pages
+    end
   end
   
   def new
