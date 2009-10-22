@@ -92,6 +92,10 @@ en:
       invited_user: "{{inviter}} invited {{invitee}} to join the project."
       invited_email: "{{inviter}} invited {{email}} to join the project."
       time_ago: "({{time_ago_in_words}} ago)"
+      resend: Re-send invitation email
+    resend:
+      resent: "The invitation has been resent to {{recipient}}. If the email is not received make sure to check the spam folder."
+      return: Go back
     user_invitation:
       invited_to_join: "{{by}} has invited you to join the project {{project}}."
     index_user:

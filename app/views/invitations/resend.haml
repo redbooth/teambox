@@ -1,0 +1,4 @@
+.invitation_resent
+  = t('.resent', :recipient => @recipient)
+  .return
+    = link_to t('.return'), project_people_path(@current_project)

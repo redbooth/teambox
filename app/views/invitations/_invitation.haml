@@ -7,5 +7,7 @@
   .status
     Pending
     = t('.time_ago', :time_ago_in_words => time_ago_in_words(invitation.updated_at))
+  .resend
+    = resend_invitation_link(invitation)
   .actions
     = delete_invitation_link(invitation)

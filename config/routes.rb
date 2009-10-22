@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
       :member => [:get_comments, :accept, :decline] do |project|
     #project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
     #project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
-    project.resources :invitations, :member => [:accept,:decline]
+    project.resources :invitations, :member => [:accept,:decline,:resend]
     
     project.resources :comments do |comment|
       comment.resources :uploads, :member => { :iframe => :get }
