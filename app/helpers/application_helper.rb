@@ -112,15 +112,15 @@ module ApplicationHelper
   
   def posted_date(datetime)
     if datetime > Time.current.beginning_of_day
-      datetime.strftime("%I:%M %p")
+      datetime.in_time_zone(current_user.time_zone).strftime("%I:%M %p")
     elsif datetime > 1.day.ago.beginning_of_day
       t 'date.yesterday'
     elsif datetime > Time.current.beginning_of_year
-      datetime.strftime("%b %d")
+      datetime.in_time_zone(current_user.time_zone).strftime("%b %d")
     else
-      datetime.strftime("%b %d %Y")
+      datetime.in_time_zone(current_user.time_zone).strftime("%b %d %Y")
     end
-    # datetime.strftime("%I:%M %p &mdash; %b %d %Y")
+    # datetime.in_time_zone(current_user.time_zone).strftime("%I:%M %p &mdash; %b %d %Y")
   end
   
   def trash_image
