@@ -38,8 +38,8 @@ module ConversationsHelper
     render :partial => 'conversations/conversation', :collection => conversations, :locals => { :conversation => conversation }
   end
   
-  def conversation_link(project,conversation)
-    link_to h(conversation.name), project_conversation_path(project,conversation), :class => 'conversation_link'
+  def conversation_link(conversation)
+    link_to h(conversation.name), project_conversation_path(conversation.project,conversation), :class => 'conversation_link'
   end
 
   def edit_conversation_link(project,conversation)
