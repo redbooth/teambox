@@ -20,8 +20,8 @@ module PagesHelper
       :current_target => current_target }
   end
 
-  def page_link(project,page)
-    link_to h(page.name), project_page_path(project,page)
+  def page_link(page)
+    link_to h(page.name), project_page_path(page.project,page)
   end
   
   def edit_page_link(project,page)

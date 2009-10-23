@@ -25,4 +25,8 @@ module InvitationsHelper
   def new_invitation_link(project)
     link_to 'Invite someone', new_project_invitation_path(project)
   end
+  
+  def resend_invitation_link(invitation)
+    link_to t('.resend'), resend_project_invitation_path(invitation.project,invitation)
+  end
 end

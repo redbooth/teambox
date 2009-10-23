@@ -19,7 +19,14 @@ class ConversationsController < ApplicationController
   end
   
   def index
-    @conversations = @current_project.conversations
+    if @current_project.nil?
+      @conversations = []
+      current_user.projects.each do |project|
+        @conversations |= project.conversations
+      end
+    else
+      @conversations = @current_project.conversations
+    end
   end
   
   def show

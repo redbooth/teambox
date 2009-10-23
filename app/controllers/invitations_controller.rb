@@ -40,6 +40,14 @@ class InvitationsController < ApplicationController
     end
   end
   
+  def resend
+    @invitation = Invitation.find(params[:id])
+    unless @invitation.nil?
+      @recipient = @invitation.email
+      Emailer.deliver_invitation(@recipient, @current_project, @invitation)
+    end
+  end
+  
   def destroy
     @invitation = Invitation.find(params[:id])
     if @invitation
