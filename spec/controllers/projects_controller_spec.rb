@@ -9,8 +9,6 @@ describe ProjectsController do
       get :new
     end
 
-    it "assigns the new project to the current user" do
-      assigns(:project).user_id.should == @user.id
-    end
+    it "assigns the new project to the current user"
   end 
 end

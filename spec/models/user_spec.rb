@@ -1,13 +1,29 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe User do
-  it { should have_many(:projects_owned, :class_name => 'Project') }
+  it { should have_many(:projects_owned) }
   it { should have_many(:people) }
-  it { should have_many(:projects, :through => :people) }
+  it { should have_many(:projects) }
   it { should have_many(:invitations) }
   it { should have_many(:activities) }
   it { should have_many(:uploads) }
   it { should have_one(:avatar) }
+  
+  it { should validate_presence_of     :login }
+  it { should validate_length_of       :login,    :within => 3..40 }
+  it { should validate_uniqueness_of   :login }
+# it { should validate_format_of       :login,    :with => Authentication.login_regex, :message => Authentication.bad_login_message }
+
+# it { should validate_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true }
+  it { should validate_length_of       :name,     :maximum => 100 }
+                      
+  it { should validate_presence_of     :email }
+  it { should validate_length_of       :email,    :within => 6..100 }
+  it { should validate_uniqueness_of   :email }
+# it { should validate_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message }
+                      
+# it { should validate_associated :projects }
+  
   
   describe "authentication" do
     before do
@@ -65,10 +81,6 @@ describe User do
         @user.is_login_token_valid?(@user.login_token).should be_true
       end
     end
-  end
-
-  describe "profile completeness indicator" do
-    it "should be spec'd"
   end
 
   describe "recent projects tabs" do
