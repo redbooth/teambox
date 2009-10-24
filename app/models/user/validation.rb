@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User
   
   validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40

@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User
   
   include Authentication
   include Authentication::ByPassword

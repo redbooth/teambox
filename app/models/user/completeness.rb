@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User
   
   define_completeness_scoring do
     check :biography, lambda { |per| per.biography.present? },    :biography_presence

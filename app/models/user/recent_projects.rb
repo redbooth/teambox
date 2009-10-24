@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User
 
   serialize :recent_projects
 

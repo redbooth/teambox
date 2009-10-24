@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User
   
   def send_activation_email
     self.generate_login_code!
