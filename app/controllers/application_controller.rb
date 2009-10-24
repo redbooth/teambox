@@ -38,7 +38,6 @@ class ApplicationController < ActionController::Base
         if @current_project.nil?
           flash[:error] = "The project <i>#{h(project_id)}</i> doesn't exist."
           redirect_to projects_path, :status => 301
-          return
         else        
           current_user.add_recent_project(@current_project) unless current_user.nil?
         end
