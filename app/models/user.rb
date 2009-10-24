@@ -6,13 +6,13 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   concerned_with :activation, :authentication, :completeness, :recent_projects, :validation
   
-  before_save do |user|
-    user.update_profile_score
+  def before_save
+    self.update_profile_score
   end
   
-  after_create do |user|
-    user.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save
-    user.send_activation_email
+  def after_create
+    self.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save
+    self.send_activation_email
   end
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
@@ -22,10 +22,10 @@ class User < ActiveRecord::Base
   has_many :invitations, :foreign_key => 'invited_user_id'
 
   has_many :activities
-    
-  has_one :avatar
+
+  has_one  :avatar
   has_many :uploads
-  
+
   attr_accessible :login, 
                   :email, 
                   :name, 

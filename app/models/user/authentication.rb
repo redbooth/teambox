@@ -6,8 +6,13 @@ class User
   
   def self.authenticate(login, password)
     return nil if login.blank? || password.blank?
-    u = find_by_login(login.downcase) # need to get the salt
+
+    if login.include? '@' # usernames are not allowed to contain '@'
+      u = find_by_email(login)
+    else
+      u = find_by_login(login.downcase)
+    end
     u && u.authenticated?(password) ? u : nil
   end
-  
+
 end
