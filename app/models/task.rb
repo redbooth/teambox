@@ -1,4 +1,7 @@
 class Task < ActiveRecord::Base
+
+  include Watchable
+
   belongs_to :project
   belongs_to :user
   belongs_to :task_list

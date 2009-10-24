@@ -3,6 +3,7 @@ module Watchable
   def add_follower(user)
     self.followers_ids ||= []
     self.followers_ids << user.id
+    self.followers_ids.uniq!
     self.save
   end
 
