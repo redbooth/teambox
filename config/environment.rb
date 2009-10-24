@@ -23,7 +23,7 @@ Rails::Initializer.run do |config|
   config.gem 'rspec', :lib => false 
   config.gem 'cucumber' 
   config.gem 'webrat'
-  config.gem "adzap-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gems.github.com'
+#  config.gem "adzap-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gems.github.com'
   
   require 'RedCloth'  
   require 'mime/types'
