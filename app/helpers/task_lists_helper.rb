@@ -28,7 +28,7 @@ module TaskListsHelper
     end
   end
 
-  def task_list_partial_action_links(project,task_list)
+  def task_list_partial_action_links(project, task_list)
     if logged_in?
       if task_list.owner?(current_user)
         render :partial => 'task_lists/partial_actions',
@@ -44,7 +44,7 @@ module TaskListsHelper
   end
 
 
-  def insert_task_list(project,task_list)  
+  def insert_task_list(project, task_list)  
     page.insert_html :bottom, "task_lists",
       :partial => 'task_lists/task_list', 
       :locals => {  
@@ -53,8 +53,16 @@ module TaskListsHelper
         :current_target => nil }
   end
 
-  def highlight_task_list(project,task_list)
+  def highlight_task_list(project, task_list)
     page["task_list_#{task_list.id}"].highlight
   end
   
+  def edit_task_list_link(project, task_list)
+    link_to_function t('common.edit'), show_edit_task_list(project, task_list)
+  end
+  
+  def delete_task_list_link(project, task_list)
+    link_to t('common.delete'), project_task_list_path(project, task_list),
+      :confirm => t('confirm.delete_task_list'), :method => :delete
+  end
 end
