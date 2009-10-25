@@ -54,7 +54,9 @@ module CommentsHelper
         :show_hours => true }
   end
 
-  def new_comment_form(project,target = nil)
+  def new_comment_form(project,options={})
+    message = options[:message] ||= nil
+    target  = options[:target]  ||= nil
     if target.nil?
       form_url = [project,Comment.new]
     elsif target.class.to_s == 'Task'
@@ -62,9 +64,11 @@ module CommentsHelper
     else
       form_url = [project,target,Comment.new]
     end
-    render :partial => 'comments/new', 
-      :locals => { :target => target, 
-        :form_url => form_url, :comment => project.comments.new }
+    render :partial => 'comments/new',
+      :locals => { :target => target,
+        :message => message,
+        :form_url => form_url, 
+        :comment => project.comments.new }
   end
   
   def list_comments(comments,target)

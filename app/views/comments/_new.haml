@@ -1,6 +1,12 @@
 - show_hours ||= true
 - remote_form_for form_url do |f|
-  = comment_fields(f,comment,show_hours)
-  .submit
-    = f.submit t('.submit')
+  = hidden_field_tag :original_controller, controller_name
+  .body.text_area
+    = text_area_tag 'comment[body]', message, :class => 'comment_body'
+  .extra
+    = comment_upload_link(comment)
+    .submit
+      = f.submit t('.submit')
   .clear
+
+=javascript_tag "$$('#new_comment .extra')[0].hide()"

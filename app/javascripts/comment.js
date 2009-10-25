@@ -1,4 +1,19 @@
 Event.addBehavior({
+  '.comment_body:focus':function(e){
+    this.className = 'comment_body_focused';
+    $(this).innerHTML = '';
+    $(this).up('#new_comment').down('.extra').show();
+  },
+  '.comment_body:blur':function(e){
+      if ($F(this) == ''){
+        this.className = 'comment_body'; 
+        this.innerHTML = 'Write a comment...';
+        $(this).up('#new_comment').down('.extra').hide();
+      }else{
+        this.className = 'comment_body_focused';
+        $(this).up('#new_comment').down('.extra').show();
+      }  
+  },
   ".comment:mouseover": function(e){
     $(this).className = 'comment comment_hover'
   },
