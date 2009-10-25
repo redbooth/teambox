@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
     self.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save
     self.send_activation_email
   end
+  
+  def to_s
+    self.name
+  end
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   
