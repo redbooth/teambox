@@ -1,11 +1,9 @@
 = conversation_column(@current_project,@conversations, :current_conversation => @conversation, :show_comments_settings => true)
 
 .conversation_header
-  =conversation_action_links(@current_project,@conversation)
+  = conversation_action_links(@current_project,@conversation)
   %h2= @conversation.name
-  .watching
-    = t('.people_watching')
-    = @conversation.watchers.join ", "
+  = people_watching @conversation
 
 = new_comment_form(@current_project, :target => @conversation)
 

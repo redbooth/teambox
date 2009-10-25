@@ -5,6 +5,8 @@ en:
   common:
     or: or
     cancel: Cancel
+    people_watching: "People watching this item:"
+    nobody_watching: "Nobody is watching this."
   activities:
     activity_line:
       create_conversation: created the conversation
@@ -131,7 +133,6 @@ en:
       edit: Edit title
       message: message
       messages: messages
-      people_watching: "People watching this conversation:"
     short_conversation:
       comment: comment
       comments: comments
@@ -146,6 +147,8 @@ en:
       title: New Task
       submit: Add Task
       cancel: Cancel
+    show:
+      task_title: "Task: {{name}}"
   
   notes:
     actions:

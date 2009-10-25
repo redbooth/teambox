@@ -1,12 +1,11 @@
-=task_list_column(@current_project,@task_lists,@task)
+= task_list_column(@current_project, @task_lists, @task)
 
-.task_title  
-  =task_action_links(@current_project,@task_lists,@task)
-  %h2.title
-    Comment on
-    =@task.name
+.task_header  
+  = task_action_links(@current_project, @task_lists, @task)
+  %h2= t('.task_title', :name => @task.name)
+  = people_watching @task
   
-= new_comment_form(@current_project,:target => @task)
+= new_comment_form(@current_project, :target => @task)
 
 #comments
-  = list_comments(@comments,@task)
+  = list_comments(@comments, @task)

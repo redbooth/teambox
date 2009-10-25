@@ -152,7 +152,7 @@ module ApplicationHelper
   end
   
   def reload_javascript_events
-      page << "Event.addBehavior.reload()"
+    page << "Event.addBehavior.reload()"
   end
   
   def show_comments_count(target)
@@ -169,5 +169,16 @@ module ApplicationHelper
 
   def parenthesize(text)
     '(' + text.to_s + ')'
+  end
+  
+  def people_watching(object)
+    content_tag :div, :class => :watching do
+      if object.watchers.empty?
+        html =  t('common.nobody_watching')
+      else
+        html =  t('common.people_watching')
+        html << object.watchers.join(", ")
+      end
+    end
   end
 end
