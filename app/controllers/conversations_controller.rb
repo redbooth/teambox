@@ -5,12 +5,15 @@ class ConversationsController < ApplicationController
     @conversation = @current_project.conversations.new
   end
   
-  def create
+  def create    
     @conversation = @current_project.new_conversation(current_user,params[:conversation])
     @conversation.body = params[:conversation][:body]
 
     respond_to do |f|
       if @conversation.save
+        add_watchers params[:user]
+        @conversation.notify_new_comment
+        
         f.html { redirect_to project_conversation_path(@current_project,@conversation) }
       else
         f.html { render :action => 'new' }
@@ -52,6 +55,17 @@ class ConversationsController < ApplicationController
       
       if @conversation.nil?
         redirect_to project_path(@current_project)
+      end
+    end
+    
+    def add_watchers(hash)
+      if hash
+        hash.each do |user_id, should_notify|
+          if should_notify == "1" and Person.exists? :project_id => @conversation.project_id, :user_id => user_id
+            user = User.find user_id
+            @conversation.add_watcher user# if user
+          end
+        end
       end
     end
 end

@@ -3,6 +3,9 @@
 .conversation_header
   =conversation_action_links(@current_project,@conversation)
   %h2= @conversation.name
+  .watching
+    People watching this conversation:
+    = @conversation.watchers.join ", "
 
 #comments
   = list_comments(@comments,@conversation)

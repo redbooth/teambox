@@ -41,26 +41,36 @@
     h2, form
       :margin-left 20px
     input#conversation_name
-      :width 500px
+      :width 580px
     textarea#conversation_body
-      :width 500px
+      :width 580px
       :height 240px
       :font-size 12px
     input#conversation_submit
-      :margin 15px 0 20px 430px
+      :margin 15px 0 20px 500px
+    .watchers
+      :width 570px
+      :background-color rgb(255,255,200)
+      :margin 10px
+        :left 0px
+      :padding 10px
+        :top 0px
+      :border 1px rgb(220,220,150) solid
+      :font-size 12px
+      h3
+        :font-size 14px
+        :margin-bottom 10px
+      .user
+        :float left
+        :width 170px
+      p
+        :margin-top 10px
   .column
     :font-size 12px
-    .notify_all
-      :float right
-      a
-        :color rgb(120,120,120)
-        :text-decoration none
-        :font-size 10px
-    .user
-      :display block
-      :font-size 12px
-    .explanation
-      :margin-top 10px
+    ul
+      :padding-left 15px
+    p, ul
+      :margin-bottom 10px
 
 .show_conversations
   .conversation_header
@@ -77,6 +87,10 @@
       .by
         a
           :color rgb(200,200,200)
+    .watching
+      :font-size 12px
+      :margin-left 20px
+      :color rgb(180,180,180)
   #comments
     :font-size 12px
   form#new_comment

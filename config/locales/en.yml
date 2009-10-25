@@ -109,7 +109,8 @@ en:
     new:
       title: New Conversation
       submit: Create
-      subscribe_note: This people will be notified of this message and any following comments. As soon as we code that in, of course
+      add_suscribers: Which people will be watching this conversation?
+      subscribe_note: These people will be notified via email of this message and any following comments.<br/>They can unsuscribe at any moment.
     index:
       primer:
         empty: This project doesn't have any conversations yet.

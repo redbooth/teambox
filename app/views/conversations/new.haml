@@ -1,22 +1,27 @@
 - content_for :column do
-  .notify_all
-    = link_to 'Notify all'
-  %h2
-    Notify users
-  - for user in @current_project.users
-    .user
-      =user_checkbox(user)
-  .explanation
-    =t '.subscribe_note'
+  %p= t 'conversations.index.primer.define'
+  %ul
+    %li= t 'conversations.index.primer.item1'
+    %li= t 'conversations.index.primer.item2'
+    %li= t 'conversations.index.primer.item3'
+    %li= t 'conversations.index.primer.item4'
+  %p= t 'conversations.index.primer.footer1' 
+  %p= t 'conversations.index.primer.footer2'
 
 %h2= t('.title')
 
 - form_for [@current_project,@conversation] do |f|
   = conversation_fields(f)  
 
-  - for user in @current_project.users
-    .user
-      =user_checkbox(user)
+  .watchers
+    %h3= t('.add_suscribers')
+    - for user in @current_project.users
+      - unless user == current_user
+        .user
+          = user_checkbox(user)
+    .clear
+    %p= t('.subscribe_note')
+    
 
   = f.submit t('.submit')
   
