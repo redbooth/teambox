@@ -4,11 +4,14 @@
   =conversation_action_links(@current_project,@conversation)
   %h2= @conversation.name
   .watching
-    People watching this conversation:
+    = t('.people_watching')
     = @conversation.watchers.join ", "
+    
+    
+
+= new_comment_form(@current_project, :target => @conversation)
 
 #comments
   = list_comments(@comments,@conversation)
   
-= new_comment_form(@current_project, :target => @conversation)
 

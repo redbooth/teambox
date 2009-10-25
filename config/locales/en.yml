@@ -131,6 +131,7 @@ en:
       edit: Edit title
       message: message
       messages: messages
+      people_watching: "People watching this conversation:"
     short_conversation:
       comment: comment
       comments: comments
