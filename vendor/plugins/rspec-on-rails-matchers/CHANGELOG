@@ -1,0 +1,10 @@
+Change Log
+==========
+
+Trunk
+-----
+
+* 2008/03/02 - Added have_form_putting_to(url_or_path) - Patch by unknown google code submitter
+* 2008/03/02 - Added should observe (Luke Melia)
+* 2008/03/02 - Patched validates_length_of to use within to be consistent with Rails (Matt Pelletier)
+* 2007/01/03 - Initial Public Release
