@@ -1,0 +1,18 @@
+class User
+  
+  include Authentication
+  include Authentication::ByPassword
+  include Authentication::ByCookieToken
+  
+  def self.authenticate(login, password)
+    return nil if login.blank? || password.blank?
+
+    if login.include? '@' # usernames are not allowed to contain '@'
+      u = find_by_email(login)
+    else
+      u = find_by_login(login.downcase)
+    end
+    u && u.authenticated?(password) ? u : nil
+  end
+
+end

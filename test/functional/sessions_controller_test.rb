@@ -32,15 +32,8 @@ class SessionsControllerTest < ActionController::TestCase
 
   def test_should_remember_me
     @request.cookies["auth_token"] = nil
-    post :create, :login => 'quentin', :password => 'monkey', :remember_me => "1"
+    post :create, :login => 'quentin', :password => 'monkey'
     assert_not_nil @response.cookies["auth_token"]
-  end
-
-  def test_should_not_remember_me
-    @request.cookies["auth_token"] = nil
-    post :create, :login => 'quentin', :password => 'monkey', :remember_me => "0"
-    puts @response.cookies["auth_token"]
-    assert @response.cookies["auth_token"].blank?
   end
   
   def test_should_delete_token_on_logout

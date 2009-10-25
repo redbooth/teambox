@@ -82,7 +82,7 @@ class UsersController < ApplicationController
     logout_keeping_session!
     if @user
       if @user.is_login_token_valid? params[:token]
-        if @user.confirmed_user
+        if @user.is_active?
           flash[:success] = "You had already confirmed your email! You can now use Teambox."
         else
           flash[:success] = "Your account has been activated! Welcome to Teambox :)"

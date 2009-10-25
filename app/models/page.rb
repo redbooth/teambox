@@ -1,4 +1,7 @@
 class Page < ActiveRecord::Base
+
+  include Watchable
+
   belongs_to :user
   belongs_to :project
   has_many :notes, :order => 'position'
