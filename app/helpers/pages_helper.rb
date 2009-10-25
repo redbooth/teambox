@@ -24,8 +24,12 @@ module PagesHelper
     link_to h(page.name), project_page_path(page.project,page)
   end
   
-  def edit_page_link(project,page)
-    link_to h(page.name), edit_project_page_path(project,page)
+  def edit_page_link(project, page)
+    link_to t('common.edit'), edit_project_page_path(project,page)
+  end
+
+  def delete_page_link(project, page)
+    link_to t('common.delete'), edit_project_page_path(project,page), :method => :delete
   end
   
   def notes_sortable_tag(page)
@@ -42,5 +46,12 @@ module PagesHelper
       :url => url,
       :method => :put
     })
+  end
+  
+  def page_action_links(project, page)
+    render :partial => 'pages/actions',
+    :locals => { 
+      :project => project,
+      :page => page }
   end
 end

@@ -1,7 +1,9 @@
-=page_column(@current_project,@pages,@page)
+= page_column(@current_project, @pages, @page)
 
-%h2
-  = @page.name
+.page_header
+  = page_action_links(@current_project, @task_list)
+  %h2= @page.name
+  = people_watching @page
 
 .buttons#buttons
   =new_page_note_link(@current_project,@page)

@@ -20,9 +20,18 @@ module TaskListsHelper
   end
 
   def task_list_action_links(project,task_list)
+    if task_list.owner?(current_user)
+      render :partial => 'task_lists/actions',
+      :locals => { 
+        :project => project,
+        :task_list => task_list }
+    end
+  end
+
+  def task_list_partial_action_links(project,task_list)
     if logged_in?
       if task_list.owner?(current_user)
-        render :partial => 'task_lists/actions',
+        render :partial => 'task_lists/partial_actions',
         :locals => { 
           :project => project,
           :task_list => task_list }

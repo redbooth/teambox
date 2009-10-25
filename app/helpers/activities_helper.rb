@@ -17,7 +17,7 @@ module ActivitiesHelper
       when 'create_task_list'
         show_activity_line(activity,task_list_link(target))
       when 'create_page'
-        show_activity_line(activity,edit_page_link(project,target))
+        show_activity_line(activity,'') #edit_page_link(project,target))
       when 'create_person'
         show_activity_line(activity,person_link(project,target))
       else  

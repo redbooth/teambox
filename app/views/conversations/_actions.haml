@@ -1,4 +1,4 @@
-%p.actions{ :id => "list_actions_#{conversation.id}", :style => 'display: block'}
-  %span
-    =edit_conversation_link(project,conversation)
-    =delete_conversation_link(project,conversation)
+.text_actions
+  = delete_conversation_link(project,conversation)
+  = t('common.or')
+  = edit_conversation_link(project, conversation)

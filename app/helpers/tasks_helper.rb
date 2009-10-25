@@ -1,6 +1,5 @@
 module TasksHelper
 
-
   def remove_task(project,task_list,task)
     page["project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}"].remove
   end
@@ -14,8 +13,8 @@ module TasksHelper
   end
 
   def delete_task_link(project,task_list,task)
-    link_to trash_image, project_task_list_task_path(project,task_list,task),
-      :confirm => 'Are you sure you want to delete this task?', 
+    link_to t('common.delete'), project_task_list_task_path(project,task_list,task),
+      :confirm => t('confirm.delete_task'), 
       :method => :delete
   end
 

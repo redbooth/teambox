@@ -60,29 +60,18 @@ form.task_form_wrap
 #task_lists
   :clear both
   
-.task_header
+.task_header, .task_list_header
   :display block
   :margin-bottom 20px
   h2
     :font-size 16px
     :margin-left 20px
- 
-  p.actions
-    :position relative
-    :margin 0px
-    span    
-      :background rgb(255,255,255)
-      :-moz-border-radius 4px
-      :-webkit-border-radius 4px
-      :padding 3px 0px
-        :left 2px
-        :bottom 0px
-      :position absolute
-      :display block
-      :width 22px
-      :height 40px
-      :left -24px
-      :top 2px
+  .text_actions
+    :float right
+    :font-size 12px
+    :color rgb(200,200,200)
+    a
+      :text-decoration underline
   .watching
     :font-size 12px
     :margin-left 20px

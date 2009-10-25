@@ -43,11 +43,11 @@ module ConversationsHelper
   end
 
   def edit_conversation_link(project,conversation)
-    link_to pencil_image, edit_project_conversation_path(project,conversation)
+    link_to t('common.edit'), edit_project_conversation_path(project,conversation)
   end
   
   def delete_conversation_link(project,conversation)
-    link_to trash_image, project_conversation_path(project,conversation), :method => :delete
+    link_to t('common.delete'), project_conversation_path(project,conversation), :method => :delete
   end
   
   def conversation_comments_count(conversation)

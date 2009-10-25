@@ -1,4 +1,4 @@
-%p.actions{ :id => "list_actions_#{task.id}", :style => 'display: block'}
-  %span
-    =edit_task_link(project,task_list,task)
-    =delete_task_link(project,task_list,task)
+.text_actions
+  = edit_task_link(project, task_list, task)
+  = t('common.or')
+  = delete_task_link(project, task_list, task)
