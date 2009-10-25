@@ -45,6 +45,7 @@ describe User do
       User.authenticate(@login, "bad_password").should be_nil
       User.authenticate(@email, "bad_password").should be_nil
       User.authenticate("bad_email", "badpass").should be_nil
+      User.authenticate("", "").should be_nil
     end
   end
   
