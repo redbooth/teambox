@@ -6,8 +6,6 @@
   .watching
     = t('.people_watching')
     = @conversation.watchers.join ", "
-    
-    
 
 = new_comment_form(@current_project, :target => @conversation)
 
