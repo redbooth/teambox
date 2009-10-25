@@ -2,7 +2,7 @@
   .pending_projects
     = list_pending_projects(@pending_projects)
 
-= new_comment_form(@current_project)
+= new_comment_form(@current_project, :message => 'Update your status...')
 
 #activities
   = list_activities(@activities)

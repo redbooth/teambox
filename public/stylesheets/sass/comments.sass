@@ -1,4 +1,19 @@
-form#new_comment, form.edit_comment
+form#new_comment
+  :padding-bottom 3px
+  :border-bottom solid 1px rgb(220,220,220)
+  .body
+    textarea
+      :width 626px
+      :margin-bottom 3px
+      :color rgb(160,160,160)
+  .comment_body
+    :height 1.3em
+  .comment_body_focused  
+    :height 4em 
+    :color rgb(0,0,0)
+  .submit
+    :float right
+form.edit_comment
   :padding 5px
   :-moz-border-radius 8px
   :-webkit-border-radius 8px
@@ -78,7 +93,7 @@ form#new_comment, form.edit_comment
   span.arr
     :color rgb(140,140,140)
   .block
-    :width 530px
+    :width 560px
     :float right
     .name
       :font-size 12px

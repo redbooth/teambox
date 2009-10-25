@@ -6,7 +6,7 @@
     Comment on
     =@task.name
   
-= new_comment_form(@current_project,@task)
+= new_comment_form(@current_project,:target => @task)
 
 #comments
   = list_comments(@comments,@task)
