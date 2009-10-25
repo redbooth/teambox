@@ -10,9 +10,9 @@ module CommentsHelper
     render :partial => 'comments/hours', :locals => { :f => f }
   end
 
-  def activity_comment_icon(comment)
+  def activity_comment_icon(comment,unread)
     if is_controller? :projects
-      "<p class='activity_icon'>#{image_tag("activity_#{comment.target_type.to_s.underscore}.jpg")}</p>"
+      "<div class='activity_icon activity_#{comment.target_type.to_s.underscore}#{'_unread' if unread}'><!-- --></div>"
     end        
   end
 

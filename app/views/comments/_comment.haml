@@ -1,9 +1,6 @@
 .comment{:id => "comment_#{comment.id}" }
   .info
-    = activity_comment_icon(comment)
-    - if true #CommentRead.user(current_user).unread?(comment)
-      .unread
-        =image_tag('unread.jpg')
+    = activity_comment_icon(comment,CommentRead.user(current_user).unread?(comment))
     = #comment_actions_link(comment)
     = thumb_avatar(comment.user)
     - if false ##unless comment.hours.nil?
