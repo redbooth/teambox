@@ -8,7 +8,9 @@ class User
   end
   
   def profile_complete?
-    completeness_score == 100
+    true
+    # Profile completeness is disabled temporarily
+    # completeness_score == 100
   end
 
   def update_profile_score
