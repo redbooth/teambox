@@ -196,6 +196,14 @@ en:
       new_upload: Upload
       new_task_list: Task List
     new:
+      define1: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
+      define2: "Editing a page is easy and fun, with drag-and-drop elements you can edit in place."
+      feature1: "<b>Share</b>. All your teammates can view and edit the project's pages."
+      feature2: "<b>Publish</b>. Instant web publishing with shared pages. Show the world."
+      feature3: "<b>Print</b>. Pages are printer-friendly. Try printing or exporting a PDF!"
+      feature4: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
+      footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
+      footer2: "You can also attach files to any page inside each note. Enjoy!"
       submit: Create
     edit:
       submit: Update
@@ -321,9 +329,9 @@ en:
       user:
         biography_presence:
           title: 'Write your profile'
-        biograhpy_length_short:
+        biography_length_short:
+          title: 'Expand your profile to 10 words'
+        biography_length_average:
+          title: 'Expand your profile to 20 words'
+        biography_length_long:
           title: 'Expand your profile to 30 words'
-        biograhpy_length_average:
-          title: 'Expand your profile to 128 words'
-        biograhpy_length_long:
-          title: 'Expand your profile to 250 words'
