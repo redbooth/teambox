@@ -8,6 +8,7 @@ class Task < ActiveRecord::Base
   belongs_to :page
 
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
+  belongs_to :assigned, :class_name => 'User'
   
   attr_accessible :name
 

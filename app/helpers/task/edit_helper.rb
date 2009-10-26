@@ -37,5 +37,19 @@ module Task::EditHelper
       page.show_task(project,task_list,task)
     end    
   end
-    
-end  
+
+  def edit_task(element,action,project,task_list)
+    if action == :show
+      page["project_#{project.id}_task_list_#{task_list.id}_edit_task_#{element.to_s}"].show
+    elsif action == :hide
+      page["project_#{project.id}_task_list_#{task_list.id}_edit_task_#{element.to_s}"].hide
+    elsif element == :form
+      if action == :reset
+        page << "Form.reset('project_#{project.id}_task_list_#{task_list.id}_edit_task_form')"
+      elsif action == :focus
+        page << "$('project_#{project.id}_task_list_#{task_list.id}_edit_task_form').auto_focus()"
+      end
+    end
+  end
+
+end

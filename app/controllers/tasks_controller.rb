@@ -49,7 +49,13 @@ class TasksController < ApplicationController
     @task.save    
     respond_to do |format|
       format.js
-    end  
+    end
+  end
+  
+  def edit
+    respond_to do |format|
+      format.js
+    end    
   end
   
   def update

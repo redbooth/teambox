@@ -181,4 +181,9 @@ module ApplicationHelper
       end
     end
   end
+  
+  def edit_element
+    
+  end
+  
 end
