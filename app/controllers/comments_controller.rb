@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController  
-  before_filter :load_comment, :only => [:edit,:update,:show,:destroy]
+  before_filter :load_comment, :only => [:edit, :update, :show, :destroy]
   
   def create
     if !params[:task_id].nil?

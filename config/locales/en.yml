@@ -12,6 +12,8 @@ en:
   confirm:
     delete_task_list: Are you sure you want to delete this task list?
     delete_task: Are you sure you want to delete this task?
+  deleted:
+    conversation: "Deleted <b>{{name}}</b> conversation"
   activities:
     activity_line:
       create_conversation: created the conversation

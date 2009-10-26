@@ -6,14 +6,11 @@ class Task < ActiveRecord::Base
   belongs_to :user
   belongs_to :task_list
   belongs_to :page
-  has_many :comments, :as => :target, :order => 'created_at DESC'
+
+  has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
   
   attr_accessible :name
 
-  def owner?(u)
-    user == u
-  end
-  
   def before_save
     if position.nil?
       last_position = self.task_list.tasks.find(:first,
@@ -28,4 +25,14 @@ class Task < ActiveRecord::Base
       
     end
   end
+  
+  def after_destroy
+    Activity.destroy_all  :target_id => self.id, :target_type => self.class.to_s
+    Comment.destroy_all   :target_id => self.id, :target_type => self.class.to_s
+  end
+
+  def owner?(u)
+    user == u
+  end
+  
 end

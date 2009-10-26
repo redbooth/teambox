@@ -6,7 +6,7 @@ class Conversation < ActiveRecord::Base
   belongs_to :project
   
   has_many :uploads
-  has_many :comments, :as => :target, :order => 'created_at DESC'
+  has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
   serialize :watchers_ids
 
@@ -22,10 +22,14 @@ class Conversation < ActiveRecord::Base
       comment.user_id = self.user_id
       comment.body = self.body
     end
-    
+
     comment.save!
   end
   
+  def after_destroy
+    Activity.destroy_all  :target_id => self.id, :target_type => self.class.to_s
+  end
+
   def owner?(u)
     user == u
   end
@@ -38,4 +42,5 @@ class Conversation < ActiveRecord::Base
       end
     end
   end
+  
 end

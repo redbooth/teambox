@@ -45,6 +45,14 @@ class ConversationsController < ApplicationController
 #    render :file => 'emailer/notify_conversation', :layout => false
   end
   
+  def destroy
+    flash[:success] = t('deleted.conversation', :name => @conversation.name)
+    @conversation.destroy
+    respond_to do |f|
+      f.html { redirect_to project_conversations_path(@current_project) }
+    end
+  end
+  
   private
     def load_conversation
       begin

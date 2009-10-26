@@ -31,27 +31,28 @@ class Comment < ActiveRecord::Base
   end
   
   def after_destroy
-    last_comment = Comment.find(:first, :conditions => {
-        :target_type => target.class.name,
-        :target_id => target.id},
-        :order => 'id DESC')
-    
-    original_id = target.last_comment_id  
-    
-    if last_comment.nil?
-      target.last_comment_id = nil
-      CommentRead.delete_all(:conditions => {
-        :target_type => target.class.name,
-        :target_id => target.id})
-    else
-      target.last_comment_id = last_comment.id
-      CommentRead.update_all("last_read_comment_id = #{last_comment.id}",
-        :target_type => target.class.name,
-        :target_id => target.id,
-        :last_read_comment_id => original_id)
+    Activity.destroy_all :target_type => self.class.to_s, :target_id => self.id
+
+    if target
+      original_id = target.last_comment_id  
+      
+      last_comment = Comment.find(:first, :conditions => {
+          :target_type => target.class.name,
+          :target_id => target.id},
+          :order => 'id DESC')
+
+      if last_comment.nil?
+        target.last_comment_id = nil
+        CommentRead.delete_all :target_type => target.class.name, :target_id => target.id
+      else
+        target.last_comment_id = last_comment.id
+        CommentRead.update_all("last_read_comment_id = #{last_comment.id}",
+          :target_type => target.class.name,
+          :target_id => target.id,
+          :last_read_comment_id => original_id)
+      end
+      target.save(false)
     end
-    
-    target.save(false)
   end
 
   def day
@@ -89,4 +90,5 @@ class Comment < ActiveRecord::Base
       find_by_month
     end
   end
+  
 end

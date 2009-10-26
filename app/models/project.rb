@@ -4,17 +4,17 @@
 class Project < ActiveRecord::Base
   belongs_to :user # project owner
 
-  has_many :people # people invited to the project
+  has_many :people, :dependent => :destroy # people invited to the project
   has_many :users, :through => :people, :order => 'updated_at desc'
 
-  has_many :task_lists, :conditions => { :page_id => nil }
-  has_many :tasks
-  has_many :invitations, :order => 'created_at DESC'
-  has_many :conversations, :order => 'created_at DESC'
-  has_many :pages, :order => 'created_at DESC'
-  has_many :comments, :order => 'created_at DESC'
-  has_many :uploads
-  has_many :activities, :order => 'created_at DESC'
+  has_many :task_lists, :conditions => { :page_id => nil }, :dependent => :destroy
+  has_many :tasks, :dependent => :destroy
+  has_many :invitations, :order => 'created_at DESC', :dependent => :destroy
+  has_many :conversations, :order => 'created_at DESC', :dependent => :destroy
+  has_many :pages, :order => 'created_at DESC', :dependent => :destroy
+  has_many :comments, :order => 'created_at DESC', :dependent => :destroy
+  has_many :uploads, :dependent => :destroy
+  has_many :activities, :order => 'created_at DESC', :dependent => :destroy
   
   validates_length_of :name, :minimum => 3
   validates_uniqueness_of :permalink, :case_sensitive => false
