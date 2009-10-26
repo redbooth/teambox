@@ -6,11 +6,7 @@ class User
   
   def self.authenticate(login, password)
     unless login.blank? or password.blank?
-      if login.include? '@' # usernames are not allowed to contain '@'
-        u = find_by_email(login.downcase)
-      else
-        u = find_by_login(login.downcase)
-      end
+      u = find_by_username_or_email(login)
       u && u.authenticated?(password) ? u : nil
     end
   end

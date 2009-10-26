@@ -15,6 +15,14 @@ class User < ActiveRecord::Base
     self.send_activation_email
   end
   
+  def self.find_by_username_or_email(login)
+    if login.include? '@' # usernames are not allowed to contain '@'
+      find_by_email(login.downcase)
+    else
+      find_by_login(login.downcase)
+    end
+  end
+  
   def to_s
     self.name
   end

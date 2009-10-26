@@ -35,10 +35,12 @@ describe User do
 
     it "should return the user object for a valid login using his username" do
       User.authenticate(@login, @password).should == @user
+      User.authenticate(@login.upcase, @password).should == @user
     end
 
     it "should return the user object for a valid login using his email" do
       User.authenticate(@email, @password).should == @user
+      User.authenticate(@email.upcase, @password).should == @user
     end
 
     it "should return nil for incorrect login attempts" do
