@@ -9,10 +9,59 @@ div.active_page
       :font-size 12px
 
 .new_pages
-  h2, form
-    :margin-left 20px
-  form
-    :padding-bottom 20px
+  .content 
+    h2, form
+      :margin-left 20px
+    input#page_name
+      :width 580px
+    textarea#page_description
+      :width 580px
+      :height 50px
+      :font-size 12px
+    .watchers
+      :width 570px
+      :background-color rgb(255,255,200)
+      :margin 10px
+        :left 0px
+      :padding 10px
+        :top 0px
+      :border 1px rgb(220,220,150) solid
+      :font-size 12px
+      h3
+        :font-size 14px
+        :margin-bottom 10px
+      .user
+        :float left
+        :width 170px
+      p
+        :margin-top 10px
+  .column
+    :font-size 12px
+    ul
+      :padding-left 15px
+    p, ul
+      :margin-bottom 10px
+
+.index_pages
+  .content
+    h2
+      :margin-left 20px
+    .page
+      :display block
+      :margin 15px
+        :left 30px
+        :right 0
+      h3
+        :font-size 14px
+        :margin 0
+      a
+        :text-decoration underline
+      p
+        :margin
+          :top 3px
+          :left 10px
+        :font-size 12px
+        :color rgb(200,200,200)
 
 .show_pages
   .page_header
@@ -20,14 +69,16 @@ div.active_page
     :margin-bottom 20px
     h2
       :font-size 16px
-      :margin-left 20px
+      :margin
+        :left 20px
+        :bottom 3px
     .text_actions
       :float right
       :font-size 12px
       :color rgb(200,200,200)
       a
         :text-decoration underline
-    .watching
+    .watching, .description
       :font-size 12px
       :margin-left 20px
       :color rgb(180,180,180)

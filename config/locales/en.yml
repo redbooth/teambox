@@ -41,6 +41,7 @@ en:
       title: Create an Account
       submit: Create account
     edit:
+      title: Your account
       submit: Update account
     show:
       profile: Profile
@@ -74,7 +75,9 @@ en:
       subscribe: Subscribe to the news feed
     fields:
       name: Name
+      name_description: "Choose a brief and descriptive title. For example: Taggart Transcontinental"
       permalink: URL
+      permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
       permalink_prefix: http://teambox.com/
     new:
       title: Create a Project
@@ -98,8 +101,8 @@ en:
     fields:
       user_or_email: "Enter your teammate's username or email:"
     invitation:
-      invited_user: "{{inviter}} invited {{invitee}} to join the project."
-      invited_email: "{{inviter}} invited {{email}} to join the project."
+      invited_user: "{{inviter}} invited <b>{{invitee}}</b> to join the project."
+      invited_email: "{{inviter}} invited <b>{{email}}</b> to join the project."
       time_ago: "({{time_ago_in_words}} ago)"
       resend: Re-send invitation email
     resend:
@@ -114,7 +117,9 @@ en:
   conversations:
     fields:
       name: Title
+      name_description: "As short as possible, this will appear in notification email's subjects"
       first_message: First message
+      first_message_description: "Ask a question, tell your team what's new, start a discussion"
     new:
       title: New Conversation
       submit: Create
@@ -173,6 +178,7 @@ en:
       submit: Update
   pages:
     index:
+      pages_in_this_project: Pages in this project
       primer:
         empty: This project doesn't have any pages yet.
         create_first: Create the first page in this project!
@@ -190,13 +196,14 @@ en:
       new_upload: Upload
       new_task_list: Task List
     new:
-      name: Name
       submit: Create
     edit:
       submit: Update
     fields:
-      body: Content
-      name: Name  
+      name: Name
+      name_description: Choose a short and descriptive title
+      description: Description
+      description_description: "Optional. Enter any information that people reading or editing this page should know."
     column:
       new_page: New Page
   task_lists:

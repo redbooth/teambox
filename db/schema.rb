@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :project_id
     t.integer :user_id
     t.string  :name
+    t.text    :description
     t.integer :last_comment_id, :null => true, :default => nil
     t.text    :watchers_ids
     t.timestamps

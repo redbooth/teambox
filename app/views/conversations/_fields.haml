@@ -1,6 +1,11 @@
 .name.text_field
-  = f.label :name, t('.name')
+  .label
+    = f.label :name, t('.name')
+    .description= t('.name_description')
   = f.text_field :name
+
 .body.text_area
-  = f.label :body, t('.first_message')
+  .label
+    = f.label :body, t('.first_message')
+    .description= t('.first_message_description')
   = f.text_area :body

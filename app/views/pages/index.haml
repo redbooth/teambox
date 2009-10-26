@@ -1,7 +1,12 @@
-=page_column(@current_project,@pages)
+= page_column(@current_project, @pages)
 
 - unless @pages.empty?
-  grumble, grumble
+  #pages
+    %h2= t('.pages_in_this_project')
+    - @pages.each do |page|
+      .page
+        %h3= page_link(page)
+        %p= page.description
 
 - else
   #primer

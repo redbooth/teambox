@@ -2,7 +2,9 @@
 
 - form_for @project do |f|
   = project_fields(f,@project)
-  = f.submit t('.submit')
+  
+  .submit
+    = f.submit t('.submit')
   
 - content_for :column do
   %p= t '.define1'

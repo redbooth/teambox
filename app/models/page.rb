@@ -7,7 +7,7 @@ class Page < ActiveRecord::Base
   has_many :notes, :order => 'position'
   has_many :dividers, :order => 'position'
     
-  attr_accessible :name, :note_attributes
+  attr_accessible :name, :description, :note_attributes
   
   def build_note(note = {})
     self.notes.build(note) do |note|

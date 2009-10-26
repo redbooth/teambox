@@ -2,8 +2,9 @@
 
 - form_for [@current_project,@page] do |f|
   = page_fields(f)
-  
-  = f.submit t('.submit')
+
+  .submit
+    = f.submit t('.submit')
   
 - content_for :column do
   bhehe
