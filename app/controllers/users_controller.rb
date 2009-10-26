@@ -133,9 +133,6 @@ class UsersController < ApplicationController
       format.js
     end
   end  
-  
-  def invitations
-  end
 
   def welcome
     @pending_projects = current_user.invitations

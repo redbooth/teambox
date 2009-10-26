@@ -7,6 +7,8 @@ en:
     cancel: Cancel
     delete: Delete
     edit: Edit
+    accept: Accept
+    decline: Decline
     people_watching: "People watching this item: "
     nobody_watching: "Nobody is watching this."
   confirm:
@@ -69,6 +71,7 @@ en:
         item5: "<b>Share information</b> by easily editable Pages for each project."
         footer: "Projects are a centralized way of collaborating, so you'll never need to email your team again."
     show:
+      update_your_status: "Update your status..."
       invite_people: 'Invite people...'
       new_task_list_link: New Task List
       people_in_project: People in this project
@@ -105,12 +108,14 @@ en:
       invited_email: "{{inviter}} invited <b>{{email}}</b> to join the project."
       time_ago: "({{time_ago_in_words}} ago)"
       resend: Re-send invitation email
+    pending:
+      to_access_or: to access the project or 
+      invited_to_join: "{{by}} has invited you to join the project {{project}}."
     resend:
       resent: "The invitation has been resent to {{recipient}}. If the email is not received make sure to check the spam folder."
       return: Go back
-    user_invitation:
-      invited_to_join: "{{by}} has invited you to join the project {{project}}."
     index_user:
+      title: Pending invitations
       no_invitations: "You have no pending project invitations."
     new:
       submit: Send

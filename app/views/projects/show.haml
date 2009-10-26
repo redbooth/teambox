@@ -1,8 +1,8 @@
 - if @pending_projects
-  .pending_projects
-    = list_pending_projects(@pending_projects)
+  .invitations
+    = list_pending_invites(@pending_projects)
 
-= new_comment_form(@current_project, :message => 'Update your status...')
+= new_comment_form(@current_project, :message => t('.update_your_status'))
 
 #activities
   = list_activities(@activities)

@@ -1,6 +1,7 @@
+%h2= t('.title')
 - if @invitations.length == 0
   .no_content
     = t('.no_invitations')
 - else
   .invitations
-    = list_user_invitations(@invitations)
+    = list_pending_invites(@invitations)

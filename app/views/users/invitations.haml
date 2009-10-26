@@ -1,7 +1,0 @@
-.invitations
-  - if current_user.project_invitations.count > 0
-    .pending_projects
-      = list_pending_projects(current_user.project_invitations)
-  - else
-    .no_content
-      You do not have any pending invitations.

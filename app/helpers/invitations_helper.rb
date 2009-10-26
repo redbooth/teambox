@@ -11,10 +11,10 @@ module InvitationsHelper
   def list_invitations(invitations)
     render :partial => 'invitations/invitation', :collection => invitations
   end
-  
-  def list_user_invitations(invitations)
-    render :partial => 'invitations/user_invitation', :collection => invitations, :as => :invitation
-  end  
+
+  def list_pending_invites(invitations)
+    render :partial => 'invitations/pending', :as => :invitation, :collection => invitations
+  end
   
   def delete_invitation_link(invitation)
     link_to_remote trash_image,

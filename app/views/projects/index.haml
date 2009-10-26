@@ -1,6 +1,6 @@
 - if @pending_projects
-  .pending_projects
-    = list_pending_projects(@pending_projects)
+  .invitations
+    = list_pending_invites(@pending_projects)
 
 - if not @activities.empty?
   %h2= t '.title'
