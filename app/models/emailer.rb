@@ -10,14 +10,24 @@ class Emailer < ActionMailer::Base
     body          :user => user, :login_link => confirm_email_user_url(user, :token => user.login_token)
   end
 
-  def invitation(recipient, project, invitation)
-    recipients    recipient
+  def project_invitation(invitation)
+    recipients    invitation.email
     from          'Teambox <no-reply@teambox.com>'
-    subject       "#{invitation.user.name} shared [#{project.name}] with you"
+    subject       "#{invitation.user.name} shared [#{invitation.project.name}] with you"
     content_type  'text/html'
     sent_on       Time.now
     reply_to      'Teambox <no-reply@teambox.com>'
-    body          :referral => invitation.user, :project => project, :invitation => invitation
+    body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
+  end
+
+  def signup_invitation(invitation)
+    recipients    invitation.email
+    from          'Teambox <no-reply@teambox.com>'
+    subject       "#{invitation.user.name} shared [#{invitation.project.name}] with you"
+    content_type  'text/html'
+    sent_on       Time.now
+    reply_to      'Teambox <no-reply@teambox.com>'
+    body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
 
   def notify_conversation(recipient, project, comment, conversation)

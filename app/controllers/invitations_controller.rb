@@ -22,10 +22,6 @@ class InvitationsController < ApplicationController
     @invitation.user = current_user
     
     if @invitation.save
-      unless @invitation.email.nil?
-        @recipient = params[:email]
-        Emailer.deliver_invitation(@recipient, @current_project, @invitation)
-      end
       respond_to do |f|
         f.html do
           unless params[:people].nil?
@@ -42,10 +38,7 @@ class InvitationsController < ApplicationController
   
   def resend
     @invitation = Invitation.find(params[:id])
-    unless @invitation.nil?
-      @recipient = @invitation.email
-      Emailer.deliver_invitation(@recipient, @current_project, @invitation)
-    end
+    @invitation.send_email unless @invitation.nil?
   end
   
   def destroy
