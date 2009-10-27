@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   
   def create
     @target = set_comment_target(@current_project,params)
-    @target.update_attribute(:status, 'open') #if params[:status]
+    @target.update_attribute(:status, Task.status(params[:status])) if params[:status] and Task.status(params[:status])
     @comment = @current_project.new_comment(current_user,@target,params[:comment])
     @comment.save
     save_uploads(@comment)
