@@ -1,19 +1,2 @@
 = task_list_column(@current_project, @task_lists, @task)
-
-.task_header{ :id => "#{task_id(:header,:edit,@current_project,@task_list)}" }
-  = task_action_links(@current_project, @task_list, @task)
-  %h2
-    = task_status(@task)
-    = @task.name
-  .assignment
-    - if @task.assigned?(current_user)
-      = "Assigned to #{link_to @task.assigned.user.name, user_path(current_user)}"
-  
-=edit_task_form(@current_project, @task_list, @task)
-  
-= new_comment_form(@current_project, :target => @task)
-
-#comments
-  = list_comments(@comments, @task)
-  
-= people_watching @task
+= show_task(@task)

@@ -105,4 +105,14 @@ module TasksHelper
   def task_list_primer(project)
     render :partial => 'task_lists/primer', :locals => { :project => project }
   end
+  
+  def show_task(task)
+    render :partial => 'tasks/show', :locals => { :task => task }
+  end
+  
+  def update_active_task(task)
+    page.select('.content').invoke('replace',show_task(task))
+    page.select('.task').invoke('removeClassName','active_task')
+    page.select(".task_item_#{task.id}").invoke('addClassName','active_task')
+  end
 end
