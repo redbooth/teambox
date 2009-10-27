@@ -72,4 +72,26 @@ module TaskListsHelper
     link_to t('common.delete'), project_task_list_path(project, task_list),
       :confirm => t('confirm.delete_task_list'), :method => :delete
   end
+  
+  def task_list_sortable_tag(task_list)
+    update_page_tag do |page|
+      page.sortable("project_#{task_list.project.id}_task_list_#{task_list.id}",{
+        :tag => 'div',
+        :url => order_project_task_list_path(task_list.project,task_list),
+        :only => 'task',
+        :format => page.literal('/task_(\d+)/'),
+        :handle => 'span.drag'
+      })
+    end
+  end
+  
+  def task_list_sortable(task_list,url)
+    page.sortable("project_#{task_list.project.id}_task_list_#{task_list.id}",{
+      :tag => 'div',
+      :url => url,
+      :only => 'task',
+      :format => page.literal('/task_(\d+)/'),
+      :handle => 'span.drag'
+    })
+  end
 end

@@ -35,8 +35,12 @@ class TaskListsController < ApplicationController
     CommentRead.user(current_user).read_up_to(@comments.first) unless @comments.first.nil?
   end
   
-  def reorder
-    render :text => params.inspect
+  def order
+    @task_list_id = "project_#{@current_project.id}_task_list_#{@task_list.id}"
+    params[@task_list_id].each_with_index do |task_id,idx|
+      task = @task_list.tasks.find(task_id)
+      task.update_attribute(:position,idx.to_i)
+    end
   end
   
   private

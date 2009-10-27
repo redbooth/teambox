@@ -37,7 +37,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     project.resources :uploads, :requirements => { :id => /[^\/]+/ }, :member => { :thumbnail => :get }
     
-    project.resources :task_lists, :has_many => [:comments], :member => { :reorder => :post } do |task_lists|
+    project.resources :task_lists, :has_many => [:comments], :member => { :order => :post } do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
     

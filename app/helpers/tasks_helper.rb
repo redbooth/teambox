@@ -59,7 +59,11 @@ module TasksHelper
   end
 
   def task_id(element,controller_action,project,task_list,task=nil)
-    "project_#{project.id}_task_list_#{task_list.id}_#{controller_action}_task_#{element.to_s}"
+    if task
+      "project_#{project.id}_task_list_#{task_list.id}_#{controller_action}_task_#{task.id}_#{element.to_s}"
+    else
+      "project_#{project.id}_task_list_#{task_list.id}_#{controller_action}_task_#{element.to_s}"
+    end
   end
 
   def item_task(action,project,task_list,task)
