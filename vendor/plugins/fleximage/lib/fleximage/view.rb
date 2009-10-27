@@ -49,7 +49,7 @@ module Fleximage
       end
       
       # return rendered result
-      return result.output_file
+      return result.output_image
     ensure
     
       # ensure garbage collection happens after every flex image render

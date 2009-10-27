@@ -2,7 +2,7 @@ class AvatarsController < ApplicationController
   skip_before_filter :require_login
   before_filter :find_user, :only => [:show,:thumb,:micro,:profile,:create,:update,:destroy]
   before_filter :find_avatar, :only => [:show,:thumb,:micro,:profile,:create,:update,:destroy]
-  before_filter :responds_to_flexu, :only => [:thumb,:profile]
+  before_filter :responds_to_flexi, :only => [:thumb,:profile]
   
     def index
       @avatars = Avatar.find(:all)
@@ -10,7 +10,7 @@ class AvatarsController < ApplicationController
     end
 
     def micro
-      respond_to {|f|f.flexu}      
+      respond_to {|f|f.flexi}      
     end
 
     def show
@@ -29,7 +29,7 @@ class AvatarsController < ApplicationController
 
       respond_to do |format|
         format.html
-        format.flexu
+        format.flexi
       end
     end
 
@@ -87,7 +87,7 @@ class AvatarsController < ApplicationController
       @user = User.find(params[:user_id])
     end
 
-    def responds_to_flexu
-      respond_to {|f|f.flexu}
+    def responds_to_flexi
+      respond_to {|f|f.flexi}
     end
 end

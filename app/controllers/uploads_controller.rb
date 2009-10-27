@@ -40,6 +40,7 @@ class UploadsController < ApplicationController
 
     load_target
     @upload.save
+    
     if is_iframe?
       respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
     else
@@ -49,7 +50,7 @@ class UploadsController < ApplicationController
   
   def show
     if @upload
-      render :inline => "@upload.operate { |p| }", :type => :flexu
+      render :inline => "@upload.operate { |p| }", :type => :flexi
     else
       flash[:notice] = "#{params[:upload_fileame]} could not be found."
       redirect_to project_uploads_path(@current_project)
@@ -64,7 +65,7 @@ class UploadsController < ApplicationController
   
   def thumbnail
     if @upload and @upload.is_image?
-      render :inline => "@upload.operate {|p| p.resize '64x64'}", :type => :flexu
+      render :inline => "@upload.operate {|p| p.resize '64x64'}", :type => :flexi
     end
   end
   

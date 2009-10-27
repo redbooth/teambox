@@ -1,3 +1,6 @@
 .upload_thumbnail{:id => "upload_#{upload.id}"}
-  = upload_link(upload)
+  - if upload.is_image?
+    =upload_link_with_thumbnail(upload)
+  - else
+    = upload_link(upload)
   = delete_upload_link(upload,target)

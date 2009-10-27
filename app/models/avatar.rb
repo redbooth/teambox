@@ -3,12 +3,12 @@ class Avatar < ActiveRecord::Base
   validates_associated :user
   
   acts_as_fleximage do
-    directory 'public/avatars'
+    image_directory 'public/avatars'
     use_creation_date_based_directories false
-    require_file false
     only_images true
-    default_file_path 'public/images/default_avatar.jpg'
-  
+    default_image_path 'public/images/default_avatar.jpg'
+    require_image true
+    
     preprocess_image do |image|
       image.resize '255x800', :upsample => true
       image.crop :from => '0x0', :size => '255x400'

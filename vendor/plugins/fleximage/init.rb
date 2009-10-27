@@ -33,11 +33,11 @@ ActiveRecord::Base.class_eval { include Fleximage::Model }
 require 'fleximage/image_proxy'
 
 # Setup View
-ActionController::Base.exempt_from_layout :flexu
+ActionController::Base.exempt_from_layout :flexi
 if defined?(ActionView::Template)
   # Rails >= 2.1
   require 'fleximage/view'
-  ActionView::Template.register_template_handler :flexu, Fleximage::View
+  ActionView::Template.register_template_handler :flexi, Fleximage::View
 end
 
 # Setup Helper
@@ -48,8 +48,4 @@ ActionView::Base.class_eval { include Fleximage::Helper }
 ActionController::Base.class_eval{ include Fleximage::AviaryController }
 
 # Register mime types
-#Mime::Type.register_alias "image/pjpeg", :jpg # IE6 sends jpg data as "image/pjpeg".  Silly IE6.
-##Mime::Type.register "image/jpeg", :jpg
-#Mime::Type.register "image/gif", :gif
-#Mime::Type.register "image/png", :png
-Mime::Type.register "application/octet-stream", :flexu
+Mime::Type.register "application/octet-stream", :flexi

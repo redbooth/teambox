@@ -25,7 +25,7 @@ class Upload < ActiveRecord::Base
   end
   
   acts_as_fleximage do
-    directory 'public/upload'
+    image_directory 'public/upload'
     use_creation_date_based_directories false
     only_images false
     require_file true
