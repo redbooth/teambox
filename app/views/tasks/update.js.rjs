@@ -1,4 +1,6 @@
-page.remove_edit_task_form(@current_project,@task_list,@task)
 page.replace_task(@current_project,@task_list,@task)
-page.highlight_task(@current_project,@task_list,@task)
+page.edit_task(:header,:show,@current_project,@task_list)
+page.edit_task(:form,:hide,@current_project,@task_list)
+page.edit_task(:form,:reset,@current_project,@task_list)
+page.edit_task(:header,:highlight,@current_project,@task_list)
 page.reload_javascript_events

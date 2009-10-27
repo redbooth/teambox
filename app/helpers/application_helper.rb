@@ -182,8 +182,4 @@ module ApplicationHelper
     end
   end
   
-  def edit_element
-    
-  end
-  
 end

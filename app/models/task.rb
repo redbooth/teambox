@@ -7,10 +7,11 @@ class Task < ActiveRecord::Base
   belongs_to :task_list
   belongs_to :page
 
+  belongs_to :assigned, :class_name => 'Person'
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
   belongs_to :assigned, :class_name => 'User'
   
-  attr_accessible :name
+  attr_accessible :name, :assigned_id
 
   def before_save
     if position.nil?
@@ -32,6 +33,10 @@ class Task < ActiveRecord::Base
     Comment.destroy_all   :target_id => self.id, :target_type => self.class.to_s
   end
 
+  def assigned?(u)
+    assigned.user.id = u.id unless assigned.nil?
+  end
+  
   def owner?(u)
     user == u
   end

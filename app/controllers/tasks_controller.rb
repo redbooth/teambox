@@ -11,9 +11,7 @@ class TasksController < ApplicationController
       @comments = tasks.comments
     end
       
-    respond_to do |format|
-      format.js
-    end    
+    respond_to{|f|f.js}
   end
 
   def sort
@@ -25,9 +23,7 @@ class TasksController < ApplicationController
       @comments = tasks.comments
     end
         
-    respond_to do |format|
-      format.js
-    end    
+    respond_to{|f|f.js}
   end
   
   def show
@@ -53,9 +49,7 @@ class TasksController < ApplicationController
   end
   
   def edit
-    respond_to do |format|
-      format.js
-    end    
+    respond_to{|f|f.js}
   end
   
   def update

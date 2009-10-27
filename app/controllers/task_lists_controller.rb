@@ -1,5 +1,7 @@
 class TaskListsController < ApplicationController
   before_filter :load_task_list, :except => [:index, :new, :create ]
+
+  
   
   def index
     if @current_project.nil?
@@ -14,7 +16,7 @@ class TaskListsController < ApplicationController
       @activities = @current_project.activities.for_task_lists
     end
   end
-  
+
   def new
     @task_list = @current_project.task_lists.new
   end
@@ -22,9 +24,8 @@ class TaskListsController < ApplicationController
   def create
     @task_list = @current_project.new_task_list(current_user,params[:task_list])
     @task_list.save    
-    respond_to do |f|
-      f.js
-    end
+    respond_to {|f|f.js}
+    
   end
   
   def show

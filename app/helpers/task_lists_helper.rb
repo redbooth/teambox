@@ -1,4 +1,11 @@
 module TaskListsHelper
+
+  def list_main_task_list(project,task_lists)
+    render :partial => 'task_lists/main_task_lists',
+    :collection => task_lists,
+    :locals => {
+      :project => project }    
+  end
   
   def task_list_column(project,task_lists,current_target = nil)
     render :partial => 'task_lists/column', :locals => {
