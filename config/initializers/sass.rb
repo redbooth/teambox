@@ -1,0 +1,1 @@
+Sass::Plugin.options[:always_check] = true
