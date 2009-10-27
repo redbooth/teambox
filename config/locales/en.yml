@@ -45,9 +45,22 @@ en:
     new:
       title: Create an Account
       submit: Create account
+      you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
+    create:
+      thanks: Thanks for signing up!
+      error: "We couldn't set up that account, sorry. Please try again, or contact an admin (link is above)."
     edit:
       title: Your account
       submit: Update account
+    update:
+      updated: User profile updated!
+      error: "Couldn't save the updated profile. Please correct the mistakes and retry."
+    activation:
+      resent: "We've re-sent the activation email. Take a look at your inbox!"
+      already_done: "You had already confirmed your email! You can now use Teambox."
+      activated: "Your account has been activated! Welcome to Teambox :)"
+      invalid: "<p>Invalid or expired access link. Login with your email and password.</p><p>If you don't remember your login data, follow the Forgot your Password link.</p>"
+      invalid_user: Invalid user
     show:
       profile: Profile
       projects: Projects

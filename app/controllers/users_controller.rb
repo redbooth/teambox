@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
   def new
     if logged_in?
-      flash[:success] = "You already have an account. Log out first to sign up as a different user."
+      flash[:success] = t('users.new.you_are_logged_in')
       redirect_to projects_path
     else
       @user = User.new
@@ -54,9 +54,9 @@ class UsersController < ApplicationController
         redirect_back_or_default('/')
       end
       
-      flash[:success] = "Thanks for signing up!"
+      flash[:success] = t('users.create.thanks')
     else
-      flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
+      flash[:error]  = t('users.create.error')
       render :action => :new, :layout => 'sessions'
     end
   end
@@ -65,10 +65,10 @@ class UsersController < ApplicationController
     @current_user.update_attributes(params[:user])
     if @current_user.save
       flash[:error] = nil
-      flash[:success] = "User profile updated!"
+      flash[:success] = t('users.update.updated')
     else
       flash[:success] = nil
-      flash[:error] = "Couldn't save the updated profile. Please correct the mistakes and retry."
+      flash[:error] = t('users.update.error')
     end
     render :action => :edit
   end
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
   def unconfirmed_email
     if params[:resend]
       current_user.send_activation_email
-      flash[:success] = "We've re-sent the activation email. Take a look at your inbox!"
+      flash[:success] = t('users.activation.resent')
     end
 
     @email = current_user.email
@@ -88,18 +88,18 @@ class UsersController < ApplicationController
     if @user
       if @user.is_login_token_valid? params[:token]
         if @user.is_active?
-          flash[:success] = "You had already confirmed your email! You can now use Teambox."
+          flash[:success] = t('users.activation.already_done')
         else
-          flash[:success] = "Your account has been activated! Welcome to Teambox :)"
+          flash[:success] = t('users.activation.activated')
           @user.activate!
           @user.expire_login_code!
           self.current_user = @user
         end
       else
-        flash[:error] = "<p>Invalid or expired access link. Login with your email and password.</p><p>If you don't remember your login data, follow the Forgot your Password link.</p>"
+        flash[:error] = t('users.activation.invalid')
       end
     else
-      flash[:error] = "Invalid user"
+      flash[:error] = t('users.invalid_user')
     end
     redirect_to '/'
   end
