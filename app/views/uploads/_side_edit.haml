@@ -5,10 +5,12 @@
       %label 
         Select a file to upload
       = f.file_field :file, :size => 20
-    .filename.text_field
-      = f.label :filename, 'Filename'
-      = f.text_field :filename
+    -if false
+      .filename.text_field
+        = f.label :filename, 'Filename'
+        = f.text_field :filename
+    
     .description.text_field
-      = f.label :description
+      = f.label :description, "Description (Optional)"
       = f.text_field :description
     = submit_tag 'Upload'
