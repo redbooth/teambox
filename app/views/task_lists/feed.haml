@@ -1,0 +1,7 @@
+=task_list_column(@current_project,@task_lists,@task_list)
+
+- unless @task_lists.empty?
+  #activities
+    = list_activities(@activities)
+- else
+  =task_list_primer(@current_project)
