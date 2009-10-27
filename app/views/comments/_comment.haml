@@ -22,7 +22,7 @@
     - if comment.uploads.count > 0
       - if comment.uploads.all? { |upload| upload.is_image? }
         .upload_images
-          = list_uploads_inline_with_thumbnail(comment.uploads)
+          = list_uploads_inline_with_thumbnails(comment.uploads)
       - else
         .upload_list
           = list_uploads_inline(comment.uploads)

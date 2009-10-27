@@ -643,6 +643,7 @@ module Fleximage
 
             self.filename = filename if self.respond_to?(:filename=)
             self.content_type = get_content_type(filename) if self.respond_to?(:content_type=)
+            self.filesize = File.size(file.path) if self.respond_to?(:filesize=)
           end
         end
         
