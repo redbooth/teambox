@@ -5,8 +5,10 @@
     = text_area_tag 'comment[body]', message, :class => 'comment_body'
   .extra
     = comment_upload_link(comment)
+    -unless target.nil?
+      -if target.class.to_s == 'Task'
+        = select_tag 'comment[status]', options_for_select(Task::STATUSES)
     .submit
       = f.submit t('.submit')
   .clear
-
 =javascript_tag "$$('#new_comment .extra')[0].hide()"

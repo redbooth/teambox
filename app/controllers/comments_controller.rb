@@ -2,32 +2,16 @@ class CommentsController < ApplicationController
   before_filter :load_comment, :only => [:edit, :update, :show, :destroy]
   
   def create
-    if !params[:task_id].nil?
-      target = Task.find(params[:task_id])
-    elsif !params[:task_list_id].nil?
-      target = TaskList.find(params[:task_list_id])
-    elsif !params[:conversation_id].nil?
-      target = Conversation.find(params[:conversation_id])
-    else      
-      target = @current_project
-    end
-
-    was_target_read = CommentRead.user(current_user).are_comments_read?(target)
-
-    @comment = @current_project.new_comment(current_user,target,params[:comment])
+    @target = set_comment_target(@current_project,params)
+    @comment = @current_project.new_comment(current_user,@target,params[:comment])
     @comment.save
-
+    target.update_attribute(:status, params[:status]) if params[:task_id] && params[:status]
     save_uploads(@comment)
-    
-    if was_target_read
+    if CommentRead.user(current_user).are_comments_read?(@target)
       CommentRead.user(current_user).read_up_to(@comment)
     end
-
     @original_controller = params[:original_controller]
-    
-    @current_date = Time.current
-    set_year_month(@current_date.year,@current_date.month)
-
+    @comments = @current_project.comments
     respond_to{|f|f.js}
   end
 
@@ -70,4 +54,16 @@ class CommentsController < ApplicationController
         end
       end unless params[:uploads_deleted].nil?
     end
+
+    def set_comment_target(project,params)
+      if params[:task_id]
+        target = Task.find(params[:task_id])
+      elsif params[:task_list_id]
+        target = TaskList.find(params[:task_list_id])
+      elsif params[:conversation_id]
+        target = Conversation.find(params[:conversation_id])
+      else      
+        target = project
+      end    
+    end    
 end

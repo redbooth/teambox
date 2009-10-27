@@ -2,6 +2,6 @@
 
 - unless @task_lists.empty?
   #activities
-    = list_main_task_list(@task_lists)
+    = list_main_task_list(@current_project,@task_lists)
 - else
   =task_list_primer(@current_project)

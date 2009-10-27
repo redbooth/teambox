@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :last_comment_id, :null => true, :default => nil
     t.text    :watchers_ids
     t.integer :assigned_id
+    t.integer :status
     t.timestamps
   end
  

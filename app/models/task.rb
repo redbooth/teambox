@@ -13,6 +13,8 @@ class Task < ActiveRecord::Base
   
   attr_accessible :name, :assigned_id
 
+  STATUSES = ['new','open','on hold','resolved','rejected']
+
   def before_save
     if position.nil?
       last_position = self.task_list.tasks.find(:first,
