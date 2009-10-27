@@ -3,9 +3,10 @@
 .task_list_header
   = task_list_action_links(@current_project, @task_list)
   %h2= t('.title', :name => @task_list.name)
-  = people_watching @task_list
 
 = new_comment_form(@current_project, :target => @task_list)
 
 #comments
   = list_comments(@comments, @task_list)
+  
+= people_watching @task_list

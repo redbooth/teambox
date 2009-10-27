@@ -1,0 +1,14 @@
+#edit_upload{ :style => 'display: none' }
+  = error_messages_for :upload
+  - form_for [project,upload], :html => { :multipart => true } do |f|
+    .file
+      %label 
+        Select a file to upload
+      = f.file_field :file, :size => 20
+    .filename.text_field
+      = f.label :filename, 'Filename'
+      = f.text_field :filename
+    .description.text_field
+      = f.label :description
+      = f.text_field :description
+    = submit_tag 'Upload'

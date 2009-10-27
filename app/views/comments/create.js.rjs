@@ -3,7 +3,7 @@ unless @comment.new_record?
     #page << "Comment.update();"
     page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
     page["comment_#{@comment.id}"].highlight
-  page.esf('activities')
+  page.esf('activities')    
     page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
     page["comment_#{@comment.id}"].highlight
   page.en
@@ -13,6 +13,8 @@ unless @comment.new_record?
   page['new_comment'].down('.uploads_current').select('div').invoke('remove')
   page['new_comment'].down('.uploads_current').hide
   page.reload_javascript_events
+  
+  page.update_task_status(@target)
   
   #if @original_controller == 'hours'
   #  page['calendar'].update(build_calendar(@comments,@year,@month))

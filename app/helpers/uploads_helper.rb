@@ -1,5 +1,9 @@
 module UploadsHelper
 
+  def edit_side_upload_form(project,upload)
+    render :partial => 'uploads/side_edit', :locals => { :project => project, :upload => upload }
+  end
+
   def show_upload(upload)
      render :partial => 'uploads/upload', :locals => { :project => upload.project, :upload => upload }
    end
@@ -120,7 +124,7 @@ module UploadsHelper
   end
   
   def add_upload_link
-    link_to '<span>Upload a file</span>', new_project_upload_path(@current_project), :class => 'button'
+    link_to_function '<span>Upload a file</span>', "$('edit_upload').show(); $('add_upload_link').hide();", :class => 'button', :id => "add_upload_link"
   end
   
   def delete_upload(upload,target)

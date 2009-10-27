@@ -1,7 +1,10 @@
 module TasksHelper
+  def update_task_status(task)
+    page.replace 'task_status', task_status(task) if task.class.to_s == 'Task'
+  end
 
   def task_status(task)
-    "<span class='task_status task_status_#{Task::STATUSES[task.status.to_i].underscore}'>#{Task::STATUSES[task.status.to_i].capitalize}</span>"
+    "<span id='task_status' class='task_status task_status_#{Task::STATUSES[task.status.to_i].underscore}'>#{Task::STATUSES[task.status.to_i].capitalize}</span>"
   end
   
   def my_tasks_link

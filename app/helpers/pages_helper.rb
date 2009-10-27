@@ -1,5 +1,9 @@
 module PagesHelper
 
+  def page_primer(project)
+    render :partial => 'pages/primer', :locals => { :project => project }
+  end
+
   def page_column(project,pages,current_target = nil)
     render :partial => 'pages/column', :locals => {
       :project => project,

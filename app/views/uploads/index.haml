@@ -1,6 +1,6 @@
 - content_for :column do
   = add_upload_link
-  
+  = edit_side_upload_form(@current_project,Upload.new)
 
 - unless @uploads.empty?
   #uploads
