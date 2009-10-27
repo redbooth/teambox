@@ -1,27 +1,25 @@
 .email{ :style => 'font-size: 14px; color: rgb(50,50,50); font-family: Helvetica, Arial' }
   %p{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
-    = "Do not answer to this email."
+    = t('emailer.common.do_not_answer')
 
   .box{ :style => 'background-color: rgb(255,255,200); margin: 10px; padding: 10px; border: 1px rgb(220,220,150) solid' }
-    %p= "#{@referral.name} wants to collaborate with you on Teambox:"
+    %p= t('.collaborate_with', :name => @referral.name)
     %p{ :style => 'font-size: 18px; color: rgb(0,0,0)' }
-      = "You have been invited to the project <b>#{@project.name}</b>"
+      = t('.you_have_been_invited_to', :project => @project.name)
     %h2{ :style => 'font-size: 18px; color: rgb(0,0,0)' }
-      = link_to "Accept the invitation to start collaborating", new_user_url(:invitation => @invitation.token)
+      = link_to t('.accept_the_invitation'), new_user_url(:invitation => @invitation.token)
     %p
       %strong
-        = "Current users in this project:"
+        = t('.current_users')
       = @project.people.collect { |p| p.name }.join(", ")
 
   %p{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
-    = "If the above link doesn't work, copy and paste the following code into your browser bar: "
+    = t('.plaintext_link')
     %br
     = link_to new_user_url(:invitation => @invitation.token), new_user_url(:invitation => @invitation.token)
-  %p
-    Teambox is a project management platform made for real-world collaboration.
-  %p
-    Plan, share and keep track of what's been done. Simple as it should be.
+  %p= t('.teambox_is_a_pm_platform')
+  %p= t('.plan_share_and_collaborate')
 
   .footer{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
     %p
-      = "This email was sent to you by your contact's request. Please report any abuse to abuse@teambox.com."
+      = t('.report_abuse')

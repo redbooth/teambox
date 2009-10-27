@@ -15,6 +15,8 @@ class UsersController < ApplicationController
       redirect_to projects_path
     else
       @user = User.new
+      @user.email = @invitation.email if @invitation
+
       render :layout => 'sessions'
     end
   end
@@ -157,11 +159,9 @@ class UsersController < ApplicationController
     end
     
     def load_invitation
-      unless params[:invitation].nil?
+      if params[:invitation]
         @invitation = Invitation.find_by_token(params[:invitation])
-        unless @invitation.nil?
-          @invitation_token = params[:invitation]
-        end
+        @invitation_token = params[:invitation] unless @invitation.nil?
       end
     end
 

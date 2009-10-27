@@ -1,0 +1,1 @@
+page.invitation_sent(@invitation)

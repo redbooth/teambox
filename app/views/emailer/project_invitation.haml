@@ -1,9 +1,9 @@
 .email{ :style => 'font-size: 14px; color: rgb(50,50,50); font-family: Helvetica, Arial' }
   %p{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
-    = "Do not answer to this email."
+    = t('common.do_not_answer')
 
   .box{ :style => 'background-color: rgb(255,255,200); margin: 10px; padding: 10px; border: 1px rgb(220,220,150) solid' }
-    %p= "#{@referral.name} wants to collaborate with you on Teambox:"
+    %p= t('.collaborate_with', :referral => @referral.name)
     %p{ :style => 'font-size: 18px; color: rgb(0,0,0)' }
       = "You have been invited to the project <b>#{@project.name}</b>"
     %h2{ :style => 'font-size: 18px; color: rgb(0,0,0)' }

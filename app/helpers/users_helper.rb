@@ -36,11 +36,12 @@ module UsersHelper
       :html => { :class => "#{'active' unless current_user.comments_ascending}", :id => 'comments_descending' }
   end
   
-  def user_fields(f,user)
+  def user_fields(f, user, invite = nil)
     render :partial => 'users/fields', 
       :locals => { 
         :f => f,
-        :user => user }
+        :user => user,
+        :invite => invite }
   end
 
   def edit_avatar(f,user)

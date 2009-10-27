@@ -7,6 +7,27 @@ describe Invitation do
       @inviter = Factory.create(:user)
     end
 
+    it "should initialize properly entering non-existing users' emails" do
+      invitation = @project.invitations.new(:user_or_email => "vnabokov@mail.ru")
+      invitation.valid?.should be_false
+      invitation.user = @inviter
+      invitation.valid?.should be_true
+      invitation.project.should == @project
+      invitation.user.should == @inviter
+      invitation.email.should == "vnabokov@mail.ru"
+    end
+    
+    it "should initialize properly entering existing users' emails" do
+      user = Factory(:user)
+      invitation = @project.invitations.new(:user_or_email => user.email)
+      invitation.valid?.should be_false
+      invitation.user = @inviter
+      invitation.valid?.should be_true
+      invitation.project.should == @project
+      invitation.user.should == @inviter
+      invitation.email.should == user.email
+    end
+    
     it "should find a user by her login" do
       user = Factory.create(:user)
       invitation = @project.invitations.new(:user_or_email => user.login, :user => @inviter)

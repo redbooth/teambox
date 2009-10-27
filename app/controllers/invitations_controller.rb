@@ -18,27 +18,25 @@ class InvitationsController < ApplicationController
   end
   
   def create
-    @invitation = @current_project.invitations.new(params[:invitation])
+    @invitation = @current_project.invitations.new params[:invitation]
     @invitation.user = current_user
     
-    if @invitation.save
-      respond_to do |f|
+    respond_to do |f|
+      if @invitation.save
+        f.html { redirect_to project_people_path(@current_project) }
+      else
         f.html do
-          unless params[:people].nil?
-            redirect_to project_people_path(@current_project)
-          else
-            redirect_to project_invitations_path(@current_project)
-          end
+          flash[:error] = @invitation.errors.full_messages.first
+          redirect_to project_people_path(@current_project)
         end
       end
-    else
-      respond_to{|f|f.html{ render :action => 'new'}}
     end
   end
   
   def resend
     @invitation = Invitation.find(params[:id])
     @invitation.send_email unless @invitation.nil?
+    respond_to{|f|f.js}
   end
   
   def destroy

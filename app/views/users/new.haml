@@ -1,8 +1,8 @@
--@user.password = @user.password_confirmation = nil
+- @user.password = @user.password_confirmation = nil
 
 %h2= t('.title')
 
 - form_for @user do |f|
-  = user_fields(f,@user)
+  = user_fields(f, @user, @invite)
   .submit
     = submit_tag t('.submit')

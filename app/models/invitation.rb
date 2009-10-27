@@ -5,9 +5,9 @@ class Invitation < ActiveRecord::Base
   belongs_to :project, :validate => true
   belongs_to :invited_user, :class_name => 'User'
   
-  attr_accessor :user_or_email, :user
+  attr_accessor :user_or_email
   attr_accessible :user_or_email, :user
-
+  
   validates_presence_of :user
 
   validates_each :user_or_email do |record, attr, value|
@@ -34,7 +34,7 @@ class Invitation < ActiveRecord::Base
           record.email = value
         end
       else
-        record.errors.add attr, 'is not a valid username or email'        
+        record.errors.add attr, 'is not a valid username or email'
       end
     end
     # SHOULD ONLY BE ABLE TO INVITE TO PROJECTS WHERE THE INVITING USER IS ALLOWED

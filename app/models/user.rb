@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   end
   
   def self.find_by_username_or_email(login)
+    return unless login
     if login.include? '@' # usernames are not allowed to contain '@'
       find_by_email(login.downcase)
     else

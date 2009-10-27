@@ -27,6 +27,15 @@ module InvitationsHelper
   end
   
   def resend_invitation_link(invitation)
-    link_to t('.resend'), resend_project_invitation_path(invitation.project,invitation)
+    link_to_remote t('.resend'),
+      :url => resend_project_invitation_path(invitation.project,invitation),
+      :loading => show_loading('resend_invitation', invitation.id),
+      :html => { :id => "resend_invitation_#{invitation.id}_link" }
   end
+  
+  def invitation_sent(invitation)
+    page.replace "resend_invitation_loading_#{invitation.id}",
+      :partial => 'invitations/sent'
+  end
+  
 end
