@@ -7,7 +7,7 @@
     = comment_upload_link(comment)
     -unless target.nil?
       -if target.class.to_s == 'Task'
-        = select_tag 'comment[status]', options_for_select(Task::STATUSES)
+        = select_tag 'status', options_for_select(Task::STATUSES)
     .submit
       = f.submit t('.submit')
   .clear

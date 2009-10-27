@@ -11,7 +11,7 @@ class Task < ActiveRecord::Base
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
   belongs_to :assigned, :class_name => 'User'
   
-  attr_accessible :name, :assigned_id
+  attr_accessible :name, :assigned_id, :status
 
   STATUSES = ['new','open','on hold','resolved','rejected']
 

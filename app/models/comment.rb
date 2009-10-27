@@ -5,7 +5,7 @@ class Comment < ActiveRecord::Base
 
   has_many :uploads
     
-  attr_accessible :body, :hours
+  attr_accessible :body, :hours, :status
   formats_attributes :body
 
   named_scope :ascending, :order => 'created_at ASC'

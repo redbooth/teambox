@@ -2,7 +2,9 @@
 
 .task_header{ :id => "#{task_id(:header,:edit,@current_project,@task_list)}" }
   = task_action_links(@current_project, @task_list, @task)
-  %h2= @task.name
+  %h2
+    = task_status(@task)
+    = @task.name
   .assignment
     - if @task.assigned?(current_user)
       = "Assigned to #{link_to @task.assigned.user.name, user_path(current_user)}"

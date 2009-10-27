@@ -3,9 +3,9 @@ class CommentsController < ApplicationController
   
   def create
     @target = set_comment_target(@current_project,params)
+    @target.update_attribute(:status, 'open') #if params[:status]
     @comment = @current_project.new_comment(current_user,@target,params[:comment])
     @comment.save
-    target.update_attribute(:status, params[:status]) if params[:task_id] && params[:status]
     save_uploads(@comment)
     if CommentRead.user(current_user).are_comments_read?(@target)
       CommentRead.user(current_user).read_up_to(@comment)

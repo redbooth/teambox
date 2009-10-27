@@ -1,5 +1,9 @@
 module TasksHelper
 
+  def task_status(task)
+    "<span class='task_status task_status_#{Task::STATUSES[task.status.to_i].underscore}'>#{Task::STATUSES[task.status.to_i].capitalize}</span>"
+  end
+  
   def my_tasks_link
     link_to 'My Tasks', ''
   end
