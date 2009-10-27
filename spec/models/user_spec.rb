@@ -141,9 +141,15 @@ describe User do
   end
   
   describe "signup and activation" do
-    it "should send an activation email on signup" do
+    it "should send an activation email when signing up without an invitation" do
       @user = Factory.build(:user)
       Emailer.should_receive(:deliver_confirm_email).once
+      @user.save
+    end
+
+    it "should not send an activation email if the user is active when created, for example, when invited" do
+      @user = Factory.build(:user, :confirmed_user => true)
+      Emailer.should_not_receive(:deliver_confirm_email)
       @user.save
     end
 

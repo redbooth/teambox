@@ -34,6 +34,8 @@ class UsersController < ApplicationController
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
+    @user.confirmed_user = true if @invitation and @invitation.email == @user.email
+
     success = @user and @user.save
     if success and @user.errors.empty?
       # Protects against session fixation attacks, causes request forgery
@@ -45,6 +47,7 @@ class UsersController < ApplicationController
       unless @invitation.nil?
         person = @invitation.project.people.new(:user => @user, :source_user_id => @invitation.user)
         person.save
+
         @invitation.destroy
         redirect_to(project_path(@invitation.project))
       else

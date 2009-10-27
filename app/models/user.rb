@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   
   def after_create
     self.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save
-    self.send_activation_email
+    self.send_activation_email unless self.confirmed_user
   end
   
   def self.find_by_username_or_email(login)
