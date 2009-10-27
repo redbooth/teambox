@@ -1,25 +1,26 @@
-.email{ :style => 'font-size: 14px; color: rgb(50,50,50); font-family: Helvetica, Arial' }
-  %p{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
+.email{ :style => email_global }
+  %p{ :style => email_text(:small) }
     = t('emailer.common.do_not_answer')
 
-  .box{ :style => 'background-color: rgb(255,255,200); margin: 10px; padding: 10px; border: 1px rgb(220,220,150) solid' }
-    %p= t('.collaborate_with', :name => @referral.name)
-    %p{ :style => 'font-size: 18px; color: rgb(0,0,0)' }
-      = t('.you_have_been_invited_to', :project => @project.name)
-    %h2{ :style => 'font-size: 18px; color: rgb(0,0,0)' }
-      = link_to t('.accept_the_invitation'), new_user_url(:invitation => @invitation.token)
+  %p= t('emailer.invitation.teambox_is_a_pm_platform')
+  %p= t('emailer.invitation.plan_share_and_collaborate')
+
+  .box{ :style => email_box }
+    %p= t('emailer.invitation.collaborate_with', :name => @referral.name)
+    %p{ :style => email_text(:big) }
+      = t('emailer.invitation.you_have_been_invited_to', :project => @project.name)
+    %h2{ :style => email_text(:big) }
+      = link_to t('emailer.invitation.accept_the_invitation'), new_user_url(:invitation => @invitation.token)
     %p
       %strong
-        = t('.current_users')
+        = t('emailer.invitation.current_users')
       = @project.people.collect { |p| p.name }.join(", ")
 
-  %p{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
-    = t('.plaintext_link')
+  %p{ :style => email_text(:small) }
+    = t('emailer.invitation.plaintext_link')
     %br
     = link_to new_user_url(:invitation => @invitation.token), new_user_url(:invitation => @invitation.token)
-  %p= t('.teambox_is_a_pm_platform')
-  %p= t('.plan_share_and_collaborate')
 
-  .footer{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
+  .footer{ :style => email_text(:small) }
     %p
-      = t('.report_abuse')
+      = t('emailer.invitation.report_abuse')

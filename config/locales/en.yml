@@ -330,7 +330,7 @@ en:
   emailer:
     common: 
       do_not_answer: "Do not answer to this email."
-    signup_invitation:
+    invitation:
       collaborate_with: "{{name}} wants to collaborate with you on Teambox:"
       you_have_been_invited_to: "You have been invited to the project <b>{{project}}</b>"
       accept_the_invitation: Accept the invitation to start collaborating
