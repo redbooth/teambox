@@ -5,7 +5,6 @@
     .file
       = t('.select_a_file')
       = f.file_field :file, :size => 25
-      = submit_tag 'Upload', :class => 'upload_button'
       = loading('upload')
       = observe_upload_form
       or

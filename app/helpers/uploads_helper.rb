@@ -80,8 +80,10 @@ module UploadsHelper
   
   def observe_upload_form
     update_page_tag do |page|
+      page['upload_file'].observe('change') do |page|
+        page['new_upload'].submit
+      end
       page['new_upload'].observe('submit') do |page|
-        page.select('.upload_button').invoke('hide')
         page['upload_loading'].show
       end
     end
