@@ -1,19 +1,12 @@
 .section.welcome_section
-  %h2.welcome Get started with Teambox!
-  %p
-    You're our newest member! You'll soon see how Teambox can become your day's starting point.
-  %p 
-    Where can you go now? Create a project to <b>collaborate</b> or an agenda to <b>keep track of contacts</b>:
+  %h2.welcome= t('.get_started')
+  %p= t('.intro1')
+  %p= t('.intro2')
     
 .section    
-  %h2 Projects
-  %p
-    Share and collaborate with your team! Group twitter, conversations, tasks, pages and files.
-  %p
-    An event, a design, a product...
-    Go ahead and
-    = link_to "create your first project", new_project_path
-    now! 
+  %h2= t('.projects.title')
+  %p= t('.projects.share_and_collaborate')
+  %p= t('.projects.create_your_first_project', :link => new_project_path)
 
   - if @pending_projects
     .pending_projects
@@ -28,20 +21,15 @@
     to become a better salesman. Take advantage of every opportunity.
 
 .section
-  %h2 Do you love us too?
+  %h2= t('.spread.title')
+  %p= t('.spread.reasons')
   %p
-    We've been working on Teambox for years, hoping it can be useful for you.
-    We're real people, motivated developers with a mission, just like you!
-  %p 
-    You can <b>help us</b> by telling your friends how you enjoy Teambox on
-    = link_to 'Twitter,', 'http://twitter.com/?status=Using+Teambox+to+manage+my+projects,+sign+up+for+free+at+http://www.teambox.com', :target => '_blank'
-    = link_to 'Facebook', 'http://www.facebook.com/share.php?u=http://www.teambox.com', :target => '_blank'
-    or
-    = "in your site!"
-  %p
-    If you enjoy using Teambox, also consider
-    = mail_to 'love@teambox.com', 'telling us about it'
-    in an email!
+    = t('.spread.help') 
+    = link_to t('.spread.twitter'), 'http://twitter.com/?status=Using+Teambox+to+manage+my+projects,+sign+up+for+free+at+http://www.teambox.com', :target => '_blank'
+    = link_to t('.spread.facebook'), 'http://www.facebook.com/share.php?u=http://www.teambox.com', :target => '_blank'
+    = t('common.or')
+    = t('.spread.in_your_site')
+  %p= t('.spread.tell_us', :address => 'love@teambox.com')
 
 - content_for :column do
   = link_to t('.stop_welcome'), close_wecome_tab_path
