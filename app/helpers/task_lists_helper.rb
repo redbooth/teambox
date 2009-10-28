@@ -80,7 +80,8 @@ module TaskListsHelper
         :url => order_project_task_list_path(task_list.project,task_list),
         :only => 'task',
         :format => page.literal('/task_(\d+)/'),
-        :handle => 'span.drag'
+        :handle => '.drag',
+        :constraint => 'vertical'
       })
     end
   end

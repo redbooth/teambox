@@ -15,7 +15,7 @@ class Task < ActiveRecord::Base
   
   attr_accessible :name, :assigned_id, :status
 
-  STATUSES = ['new','open','on hold','resolved','rejected']
+  STATUSES = ['new','open','hold','resolved','rejected']
 
   def self.status(n)
     STATUSES.index(n)

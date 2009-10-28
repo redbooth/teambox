@@ -1,4 +1,17 @@
 module UploadsHelper
+  def upload_primer(project)
+    render :partial => 'uploads/primer', :locals => { :project => project }
+  end
+
+  def the_comment_upload_link(comment)
+    link_to_function image_tag('attach_button.jpg'), show_upload_form(comment), :id => 'comment_upload_link'
+  end
+
+  def upload_iframe_form(comment)
+    render :partial => 'uploads/iframe_upload', 
+    :locals => { 
+      :comment => comment }    
+  end
 
   def edit_side_upload_form(project,upload)
     render :partial => 'uploads/side_edit', :locals => { :project => project, :upload => upload }
@@ -40,18 +53,23 @@ module UploadsHelper
       :class => 'link_to_upload'
   end
 
-  def comment_upload_link(comment)
-    render :partial => 'uploads/link', :locals => { :comment => comment }
+  def comment_area(comment)
+    render :partial => 'uploads/link', :locals => {:comment => comment }
   end
-  
+
   def show_upload_form(comment)
     update_page do |page|
-        page << "this.insert("
-        page << { :after => render(
-          :partial => 'uploads/iframe_upload', 
-          :locals => { :comment => comment, :project => comment.project })}.to_json
-        page << ");"
-    end
+      page['upload_area'].show
+      page['comment_upload_link'].hide
+    end  
+  end
+
+  def insert_upload_form(comment)
+    page.insert_html :after, "upload_area",
+      :partial => 'uploads/iframe_upload', 
+      :locals => { 
+        :comment => comment, 
+        :project => comment.project }
   end
   
   def upload_form_url_for(comment)
@@ -86,9 +104,8 @@ module UploadsHelper
     update_page_tag do |page|
       page['upload_file'].observe('change') do |page|
         page['new_upload'].submit
-      end
-      page['new_upload'].observe('submit') do |page|
-        page['upload_loading'].show
+        page['new_upload'].hide
+        page['upload_iframe_form_loading'].show
       end
     end
   end
@@ -111,7 +128,7 @@ module UploadsHelper
         :class => 'delete_link', 
         :confirm => "Are you sure you want to delete this file?"
     else
-      link_to_function 'D', delete_upload(upload,target)
+      link_to_function 'Remove', delete_upload(upload,target), :class => 'remove'
     end
   end
   
@@ -158,10 +175,6 @@ module UploadsHelper
     end
   end
   
-  def hide_upload_form(upload)
-    page["upload_#{upload.id}"].down('.show_details').show
-    page["upload_#{upload.id}"].down('.edit_details').hide
-  end
   
   def cancel_edit_link(upload)
     link_to_function 'cancel', update_page { |page| page.hide_upload_form(upload) }

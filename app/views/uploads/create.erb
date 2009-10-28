@@ -1,14 +1,19 @@
 <%=
 unless @upload.new_record?
+
+
     update_page_tag do |page|
-      page << "$(window.frameElement).next('.uploads_save').insert("
+      #page << "$(window.frameElement).(column).hide();"
+      page << "$(window.Parent).down('.uploads_save').insert("
       page << { :top => upload_save_tag('uploads[]',@upload) }.to_json 
       page << ");"
-      page << "$(window.frameElement).next('.uploads_current').insert("
+      page << "$(window.Parent).down('.uploads_current').insert("
       page << { :top => list_uploads_edit([@upload],@target) }.to_json
       page << ");"
-      page << "$(window.frameElement).next('.uploads_current').show();"
-      page << "$(window.frameElement).remove();"
+      page << "$(window.Parent).down('.uploads_current').show();"
+      #page << "$(parent.window.frameElement).remove();"
     end
 end
 %>
+
+

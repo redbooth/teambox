@@ -5,10 +5,12 @@ div.active_task
 div.task_list_wrap
   :margin-top 10px  
   div.task_list
+    :border-bottom solid 1px rgb(210,210,210)
     a
       :font-size 12px
 div.task
-  :padding 1px
+  :padding 0px
+    :left 15px
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
   input
@@ -36,16 +38,8 @@ div.task_list, div.task
     :line-height 1em
     :font-size 1em
     span
-      :-moz-border-radius
-        :topleft 5px
-        :bottomleft 5px
-      :-webkit-border-top-left-radius 5px
-      :-webkit-border-bottom-left-radius 5px
       :line-height 1em
-      :background rgb(230,230,230)
-      :padding 4px 0px
-        :left 2px
-        :bottom 0px
+      :padding-top 2px
       :position absolute
       :display block
       :width 20px
@@ -55,7 +49,7 @@ div.task_list, div.task
     
 a.add_task_link
   :font-size 12px
-  :margin-left 6px
+  :margin-left 4px
   :color rgb(120,120,120)
   
 form.task_form_wrap
@@ -93,22 +87,8 @@ form.task_form_wrap
   :padding 5px 0px
   h2
     span.task_status
-      :padding 3px 5px
-      :text-transform uppercase
-      :color rgb(255,255,255)
+      :padding 2px 5px
       :font-size 12px
-      :-moz-border-radius 4px
-      :-webkit-border-radius 4px
-    span.task_status_new
-      :background rgb(200,200,200)
-    span.task_status_open
-      :background rgb(100,100,200)
-    span.task_status_on_hold
-      :background rgb(200,200,100)
-    span.task_status_resolved
-      :background rgb(0,200,0)
-    span.task_status_rejected
-      :background rgb(200,0,0)
     :font-size 16px
     :margin 0px
       :bottom 3px
@@ -130,4 +110,22 @@ form.task_form_wrap
     :font-size 12px
     :margin-left 20px
     :color rgb(180,180,180)
+        
+span.task_status
+  :padding 0px 5px
+  :text-transform uppercase
+  :color rgb(255,255,255)
+  :font-size 11px
+  :-moz-border-radius 4px
+  :-webkit-border-radius 4px
+span.task_status_new
+  :background rgb(200,200,200)
+span.task_status_open
+  :background rgb(100,100,200)
+span.task_status_hold
+  :background rgb(200,200,100)
+span.task_status_resolved
+  :background rgb(0,200,0)
+span.task_status_rejected
+  :background rgb(200,0,0)
     

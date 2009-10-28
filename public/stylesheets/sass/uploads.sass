@@ -31,8 +31,7 @@
         :margin 0
     
 .iframe_container
-  :height 30px
-  :overflow none
+  :height 28px
   :background white
   :font-family "Lucida Grande","Helvetica Neue",Verdana,Arial,Helvetica,sans-serif
   form
@@ -46,13 +45,12 @@
 .uploads_current, .upload_images
   :margin 5px
     :left 0px
-  :border 1px solid rgb(230,230,230)
-  :background-color rgb(240,240,240)
   :padding 5px
   :clear both
   .upload_thumbnail
     :float left
-    :margin-right 5px
+    :padding 5px
+    :border 1px solid rgb(140,140,140)
     
 .upload_list
   :margin 5px
@@ -70,13 +68,27 @@
       :top -2px
     .size
       :color rgb(120,120,120)
+
+.upload_area
+  :clear both
+  :border solid 1px rgb(200,200,200)
+  :padding 5px
+  h3
+    :color rgb(100,100,100)
+    :font-size 11px
+    :margin 0px
+      :bottom 7px
+    :padding
+      :bottom 4px
+    :border-bottom solid 1px rgb(210,210,210)
   
 iframe.upload_form
-  :width 90%
-  :height 30px
-  :border 0
-  :margin-left 5px
-  :margin-top 5px
+  :clear both
+  :width 100%
+  :height 28px
+  :border none
+  body
+    :background rgb(255,255,255)
   
 .index_uploads
   .content
@@ -94,3 +106,10 @@ iframe.upload_form
       input
         :width 200px
         :margin-bottom 15px
+        
+a.remove
+  :color rgb(255,0,0)
+  :font-size 12px
+  
+body.iframe
+  :background rgb(255,255,255)

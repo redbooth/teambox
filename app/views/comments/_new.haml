@@ -4,10 +4,11 @@
   .body.text_area
     = text_area_tag 'comment[body]', message, :class => 'comment_body'
   .extra
-    = comment_upload_link(comment)
+    = the_comment_upload_link(comment) unless comment.project.nil?
+    = comment_area(comment)
     -unless target.nil?
       -if target.class.to_s == 'Task'
-        = select_tag 'status', options_for_select(Task::STATUSES)
+        = select_tag 'comment[status]', options_for_select(Task::STATUSES)
     .submit
       = f.submit t('.submit')
   .clear

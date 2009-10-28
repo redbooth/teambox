@@ -1,6 +1,9 @@
-= link_to_function image_tag('attach_button.jpg'), show_upload_form(comment)
-.uploads_save{:style => 'display: none;'}
-.uploads_current{:style => (comment.uploads.count > 0 ? '' : 'display: none;')}
-  - if comment.uploads.count > 0
-    = list_uploads_edit(comment.uploads,comment)
-  .clear
+.upload_area#upload_area{:style => 'display: none;'}
+  %h3
+    Upload
+  =upload_iframe_form(comment)
+  .uploads_save{ :style => 'display: block;', :id => 'uploads_save' }
+  .uploads_current{ :style => (comment.uploads.count > 0 ? '' : 'display: block;'), :id => 'uploads_current' }
+    - if comment.uploads.count > 0
+      = list_uploads_edit(comment.uploads,comment)
+    .clear

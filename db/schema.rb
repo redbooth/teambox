@@ -14,6 +14,8 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   create_table :users, :force => true do |t|
     t.string   :login,                     :limit => 40
     t.string   :name,                      :limit => 100, :default => ""
+    t.string   :first_name
+    t.string   :last_name
     t.text     :biography, :default => "", :null => false
     t.string   :email,                     :limit => 100
     t.string   :crypted_password,          :limit => 40
@@ -104,8 +106,9 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.text    :body
     t.text    :body_html
     t.float   :hours
-    t.billable :boolean
-    t.timestamps    
+    t.boolean :billable
+    t.integer :status, :default => 0
+    t.timestamps
   end
   
   create_table :comments_read do |t|

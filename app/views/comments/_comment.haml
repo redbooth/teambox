@@ -13,6 +13,7 @@
     .date
       = posted_date comment.created_at
     .name
+      = task_status(comment.status) if comment.target_type == 'Task'
       = conversation_last_comment_text(comment)
       = activity_comment_user_link(comment)
       = activity_comment_project_link(comment)
