@@ -67,12 +67,10 @@ class ConversationsController < ApplicationController
     end
     
     def add_watchers(hash)
-      if hash
-        hash.each do |user_id, should_notify|
-          if should_notify == "1" and Person.exists? :project_id => @conversation.project_id, :user_id => user_id
-            user = User.find user_id
-            @conversation.add_watcher user# if user
-          end
+      hash.if_defined.each do |user_id, should_notify|
+        if should_notify == "1" and Person.exists? :project_id => @conversation.project_id, :user_id => user_id
+          user = User.find user_id
+          @conversation.add_watcher user# if user
         end
       end
     end
