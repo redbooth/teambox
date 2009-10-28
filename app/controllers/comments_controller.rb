@@ -39,20 +39,20 @@ class CommentsController < ApplicationController
     end
     
     def save_uploads(comment)      
-      params[:uploads].each do |upload_id|
+      params[:uploads].if_defined.each do |upload_id|
         upload = Upload.find(upload_id)
         unless upload.nil?
           upload.comment_id = comment.id
           upload.save(false)
         end
-      end unless params[:uploads].nil?
+      end
       
-      params[:uploads_deleted].each do |upload_id|
+      params[:uploads_deleted].if_defined.each do |upload_id|
         upload = Upload.find(upload_id)
         unless upload.nil?
           upload.destroy
         end
-      end unless params[:uploads_deleted].nil?
+      end unless
     end
 
     def set_comment_target(project,params)

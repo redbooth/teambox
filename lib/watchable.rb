@@ -20,8 +20,7 @@ module Watchable
   end
   
   def watchers
-    return [] unless self.watchers_ids
-    self.watchers_ids.collect do |id|
+    self.watchers_ids.if_defined.collect do |id|
       User.find id, :select => "id, email, name, language"
     end
   end

@@ -37,7 +37,6 @@ class PagesController < ApplicationController
   end
   
   def update
-    
     unless params[:notes].nil?
       position = 0
       params[:notes].each do |note_id|
@@ -48,10 +47,8 @@ class PagesController < ApplicationController
           position += 1
         end
       end
-      
       respond_to{|f|f.js}
     else
-    
       respond_to do |f|
         if @page.update_attributes(params[:page])
           f.html {redirect_to edit_project_page_path(@current_project,@page)}
@@ -59,7 +56,6 @@ class PagesController < ApplicationController
           f.html {render :action => :edit}
         end
       end
-      
     end
   end
   
