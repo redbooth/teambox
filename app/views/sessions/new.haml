@@ -1,8 +1,6 @@
 %h2= t('.title')
 -form_tag session_path, :class => 'new_session', :id => 'new_session' do
   = session_fields
-  .submit
-    = submit_tag t('.submit')
+  = submit_tag t('.submit')
 
 = javascript_tag("$('new_session').auto_focus();")
-= nil.each { 0 }

@@ -4,6 +4,11 @@ class User
     self.generate_login_code!
     Emailer.deliver_confirm_email self
   end
+
+  def send_reset_password
+    self.generate_login_code!
+    Emailer.deliver_reset_password self
+  end
   
   def is_active?
     self.confirmed_user

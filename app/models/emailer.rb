@@ -10,6 +10,15 @@ class Emailer < ActionMailer::Base
     body          :user => user, :login_link => confirm_email_user_url(user, :token => user.login_token)
   end
 
+  def reset_password(user)
+    recipients    user.email
+    from          'Teambox <no-reply@teambox.com>'
+    subject       'Password retrieval for Teambox'
+    content_type  'text/html'
+    sent_on       Time.now
+    body          :user => user, :login_link => login_from_reset_password_user_url(user, :token => user.login_token)
+  end
+
   def project_invitation(invitation)
     recipients    invitation.email
     from          'Teambox <no-reply@teambox.com>'

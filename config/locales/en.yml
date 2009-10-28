@@ -42,6 +42,14 @@ en:
       use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
       tooltips:
         login: "You need a username to login. People will be able to find you by username. Must be all lowercase, no spaces. You can use undescores."
+    forgot_password:
+      title: So you forgot your password?
+      email: Which email did you sign up with?
+      back: Back to Login screen
+      submit: Send me a link to reset my password
+    reset_password:
+      not_found: "The email <b>{{email}}</b> doesn't belong to any Teambox user. Maybe you mispelt it?"
+      change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"
     new:
       title: Create an Account
       submit: Create account
@@ -310,6 +318,7 @@ en:
     fields:
       username_or_email: Username or email
       password: Password
+      forgot: Forgot your password?
     new:
       title: Login
       submit: Login

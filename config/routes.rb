@@ -6,12 +6,15 @@ ActionController::Routing::Routes.draw do |map|
   map.settings          '/settings',          :controller => 'users',     :action => 'edit'
   map.welcome           '/welcome',           :controller => 'users',     :action => 'welcome'
   map.close_wecome_tab  '/close_welcome_tab', :controller => 'users',     :action => 'close_welcome'
+  map.forgot_password   '/forgot',            :controller => 'users',     :action => 'forgot_password'
+  map.reset_password    '/reset',             :controller => 'users',     :action => 'reset_password'
 
   map.resource :session
   
   map.resources :users, :has_many => [:invitations], :member => { 
                           :unconfirmed_email => :get,
                           :confirm_email => :get,
+                          :login_from_reset_password => :get,
                           :comments_descending => :put, 
                           :comments_ascending => :put,
                           :conversations_first_comment => :put,

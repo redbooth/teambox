@@ -4,4 +4,4 @@
 .password.text_field
   = label_tag t('.password')
   = password_field_tag 'password', nil
-  %p= link_to 'Forgot your password?', ''
+  %p= link_to t('.forgot'), forgot_password_path
