@@ -2,6 +2,7 @@
 log/*.log
 tmp/*
 public/stylesheets/*.css
+public/stylesheets/pages/
 .DS_Store
 public/avatars/*
 public/upload/*
