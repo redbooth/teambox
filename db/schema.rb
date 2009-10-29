@@ -174,7 +174,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :comment_id
     t.string   :filename
     t.string   :content_type
-    t.integer   :filesize
+    t.integer  :filesize
     t.text     :description, :default => ''
     t.integer  :version
     t.timestamps

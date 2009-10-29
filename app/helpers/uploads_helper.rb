@@ -114,12 +114,7 @@ module UploadsHelper
     link_to_function 'cancel', cancel_upload_form
   end
   
-  def cancel_upload_form
-    update_page do |page|
-      page << "window.frameElement.remove();"
-    end
-  end
-  
+
   def delete_upload_link(upload,target = nil)
     if target.nil?
       link_to_remote trash_image, 
@@ -130,6 +125,10 @@ module UploadsHelper
     else
       link_to_function 'Remove', delete_upload(upload,target), :class => 'remove'
     end
+  end
+
+  def upload_form_params(comment)
+    render :partial => 'uploads/iframe_upload', :locals => { :comment => comment, :upload => Upload.new }
   end
   
   def upload_save_tag(name,upload)

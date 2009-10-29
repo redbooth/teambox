@@ -1,0 +1,10 @@
+#new_upload_iframe
+  = error_messages_for :upload
+  - form_for upload, :url => upload_form_url_for(comment), :html => { :multipart => true, :method => :post } do |f|
+    = hidden_field_tag 'iframe', 'true'
+    .file
+      = t('.select_a_file')
+      = f.file_field :file, :size => 25
+      = loading('upload')
+      = observe_upload_form
+=loading('upload_iframe_form')

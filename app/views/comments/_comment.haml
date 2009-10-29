@@ -20,6 +20,7 @@
       = activity_comment_target_link(comment)
     .body
       = comment.body_html
+
     - if comment.uploads.count > 0
       - if comment.uploads.all? { |upload| upload.is_image? }
         .upload_images

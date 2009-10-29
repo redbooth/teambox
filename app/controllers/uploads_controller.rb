@@ -15,7 +15,7 @@ class UploadsController < ApplicationController
   end
   
   def new
-    load_target
+    @comment = load_comment
     @upload = @current_project.uploads.new(:user_id => current_user.id)
     if is_iframe?
       respond_to { |f| f.html { render :layout => 'upload_iframe' }}
@@ -38,9 +38,9 @@ class UploadsController < ApplicationController
     @upload = @current_project.uploads.new(params[:upload])
     @upload.user = current_user
 
-    load_target
+    @comment = load_comment
     @upload.save
-    
+    @upload.reload
     if is_iframe?
       respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
     else
@@ -74,11 +74,11 @@ class UploadsController < ApplicationController
       params[:iframe] != nil
     end
     
-    def load_target
+    def load_comment
       unless params[:comment_id].nil?
-        @target = Comment.find(params[:comment_id])
+        Comment.find(params[:comment_id])
       else
-        @target = @current_project.comments.new(:user_id => current_user.id)
+        @current_project.comments.new(:user_id => current_user.id)
       end
     end
     

@@ -3,7 +3,3 @@ page["upload_#{@upload.id}"].down('.description').replace content_tag(:div,h(@up
 
 page["upload_#{@upload.id}"].down('.upload_filename').setValue @upload.filename
 page["upload_#{@upload.id}"].down('.upload_description').setValue @upload.description
-
-page['upload_area'].show
-page.insert_upload_form(Upload.new)
-page << "Form.reset('new_upload')"

@@ -1,6 +1,9 @@
 .upload_thumbnail{:id => "upload_#{upload.id}"}
-  - if upload.is_image?
+  -if upload.is_image?
     =upload_link_with_thumbnail(upload)
-  - else
+  -else
+    = file_icon_image(upload,'16px')
+  %span
     = upload_link(upload)
-  = delete_upload_link(upload,target)
+    = parenthesize(number_to_human_size(upload.filesize))
+    = delete_upload_link(upload,target)
