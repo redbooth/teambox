@@ -53,7 +53,7 @@ class CommentsController < ApplicationController
         unless upload.nil?
           upload.destroy
         end
-      end unless
+      end
     end
 
     def set_comment_target(project,params)
