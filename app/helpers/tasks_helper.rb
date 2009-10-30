@@ -70,6 +70,7 @@ module TasksHelper
   end
 
   def item_task(action,project,task_list,task)
+    id = task_id()
     rjs_task_master(:item,:single,action,project,task_list,task)
   end
 

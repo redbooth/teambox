@@ -17,9 +17,7 @@ class PagesController < ApplicationController
   end
   
   def create
-    @page = @current_project.new_page(current_user,params[:page])
-    @page.build_note({})
-    
+    @page = @current_project.new_page(current_user,params[:page])    
     respond_to do |f|
       if @page.save
         f.html{redirect_to project_page_path(@current_project,@page)}

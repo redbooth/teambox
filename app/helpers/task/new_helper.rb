@@ -14,7 +14,6 @@ module Task::NewHelper
     link_to_function '+ Add Task', show_new_task(project,task_list),
     :class => 'add_task_link',
     :id => task_id(:link,:new,project,task_list)
-    
   end
 
   def new_task_form(project,task_list,task)

@@ -1,30 +1,56 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <title>We're sorry, but something went wrong (500)</title>
-	<style type="text/css">
-		body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-		div.dialog {
-			width: 25em;
-			padding: 0 4em;
-			margin: 4em auto 0 auto;
-			border: 1px solid #ccc;
-			border-right-color: #999;
-			border-bottom-color: #999;
-		}
-		h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
-	</style>
+  <style type="text/css">
+    body { background: rgb(49,48,48); font-family: Helvetica, arial, sans-serif; padding-top: 50px; }
+    div.header { width: 440px; margin: 0px auto; }
+    div.block_wrap { background: url(images/error_top.jpg) no-repeat top rgb(255,255,255); width: 440px; margin: 0px auto;}
+    div.block { background: url(images/error_bottom.jpg) no-repeat bottom; padding: 10px; }
+    div.block_point { background: url(images/error_point.jpg) no-repeat top center; height: 28px; margin: 0px auto; }
+    h1 { text-align: center; text-transform: uppercase; font-size: 18px; color: rgb(240,0,0); line-height: 1.5em; margin-top: 0px; margin-bottom: 0px;}
+    h2 { text-transform: uppercase; font-size: 16px; text-align: center; margin: 5px 0px; }
+    p { font-size: 15px; margin: 5px 10px; line-height: 1.5em; }
+    div.either p { text-align: center; margin: 0px; }
+    a.bug_ticket { text-transform: uppercase; font-weight: bold; display: block; background: url(images/bug_ticket.jpg) no-repeat; width: 400px; height: 51px; margin: 10px auto; text-decoration: none; font-size: 26px; text-align: center; color: rgb(0,0,0); padding-top: 24px; }
+    div.first { text-align: center; }
+  </style>
 </head>
 
 <body>
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <h1>We're sorry, but something went wrong.</h1>
-    <p>We've been notified about this issue and we'll take a look at it shortly.</p>
-  </div>
+  <div class="header"><img src="images/header_logo.jpg"></div>
+  <div class="block_wrap first">
+    <div class="block">
+      <h1>Someone threw a wrench in the works!</h1>
+      <p>
+        An error has just occurred.
+        It sometimes happens.
+        We're automatically emailed whenever an 
+        error occurred.
+      </p>
+      <p>
+        If you want to help us out you can provide
+        us with more detailed information on what
+        you we're doing when the error occurred by
+        submitting us a bug ticket or sending us an
+        email
+      </p>
+    </div><!-- block -->
+  </div><!-- block_wrap -->  
+  <div class="block_point"><!-- --></div>  
+  <div class="block_wrap either">
+    <div class="block">
+      <a href="" class="bug_ticket">Submit us a Bug ticket</a>
+    </div><!-- block -->
+  </div><!-- block_wrap -->
+  <br />
+  <div class="block_wrap either">
+    <div class="block">
+      <h2>Send an email to either</h2>
+      <p>Andrew (CTO) at <a href="mailto:andrew@teambox.com">andrew@teambox.com</a></p>
+      <p>Pablo (CEO) at <a href="mailto:pablo@teambox.com">pablo@teambox.com</a></p>
+    </div><!-- block -->
+  </div><!-- block_wrap -->
 </body>
 </html>

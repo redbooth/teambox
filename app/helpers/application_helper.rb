@@ -181,5 +181,23 @@ module ApplicationHelper
       end
     end
   end
+
+  def rjs_master(ca,e,action,p,tl,t)
+    id = task_id(e,ca,p,tl,t)
+    case action
+      when :show
+        page[id].show
+      when :hide
+        page[id].hide
+      when :show
+        page[id].remove
+      when :highlight
+        page[id].highlight
+      when :reset
+        page << "Form.reset('#{id}')" if e == :form
+      when :focus
+        page << "$('#{id}').auto_focus()" if e == :form
+    end
+  end
   
 end
