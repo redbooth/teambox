@@ -25,7 +25,7 @@ Rails::Initializer.run do |config|
   
   config.time_zone = 'UTC'
 
-  config.action_mailer.default_url_options = { :host => 'sandbox.teambox.com' }
+  config.action_mailer.default_url_options = { :host => 'app.teambox.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address        => 'smtp.sendgrid.net',

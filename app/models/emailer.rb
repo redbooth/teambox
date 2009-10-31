@@ -40,7 +40,7 @@ class Emailer < ActionMailer::Base
   end
 
   def notify_conversation(recipient, project, comment, conversation)
-    default_url_options[:host] = "sandbox.teambox.com"
+    default_url_options[:host] = "app.teambox.com"
     recipients    recipient
     from          "Teambox <#{project.permalink}@teambox.com>"
     subject       "[#{project.permalink}] #{conversation.name}"
