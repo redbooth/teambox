@@ -18,11 +18,6 @@ Rails::Initializer.run do |config|
   config.gem 'haml'
   config.gem 'sprockets'
   config.gem 'completeness-fu'
-  config.gem 'thoughtbot-factory_girl', :lib => 'factory_girl', :source => 'http://gems.github.com'
-  config.gem 'rspec-rails', :lib => false 
-  config.gem 'rspec', :lib => false 
-  config.gem 'cucumber' 
-  config.gem 'webrat'
 #  config.gem "adzap-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gems.github.com'
   
   require 'RedCloth'  
