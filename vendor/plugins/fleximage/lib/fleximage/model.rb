@@ -277,7 +277,11 @@ module Fleximage
       end
       
       def file_extension
-        File.extname(self.filename)
+        if self.filename
+          File.extname(self.filename)
+        else
+          ""
+        end
       end
       
       # Returns the path to the master image file for this record.
