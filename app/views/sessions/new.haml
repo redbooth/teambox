@@ -1,5 +1,10 @@
 %h2= t('.title')
+
 -form_tag session_path, :class => 'new_session', :id => 'new_session' do
+  #primer
+    .box{ :style => 'font-size:12px;margin:5px'}
+      %p= "This is a <b>testing server</b>, which means that it's used exclusively to test new features before Teambox 2.0 is officially released."
+      %p= "All the data in this server will be destroyed. Don't use it for real-world purposes."
   = session_fields
   = submit_tag t('.submit')
 
