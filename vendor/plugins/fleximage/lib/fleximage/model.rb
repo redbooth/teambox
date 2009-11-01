@@ -629,8 +629,8 @@ module Fleximage
         
         def clear_magic_attributes
           unless frozen?
-            self.filename = nile if respond_to?(:filename)
-            self.content_type = nile if respond_to?(:content_type)
+            self.filename = nil if respond_to?(:filename=)
+            self.content_type = nil if respond_to?(:content_type=)
             self.image_width    = nil if respond_to?(:image_width=)
             self.image_height   = nil if respond_to?(:image_height=)
           end
@@ -694,7 +694,7 @@ module Fleximage
           # Load the default image from a path
           if self.class.default_image_path
             @output_image = Magick::Image.read("#{RAILS_ROOT}/#{self.class.default_image_path}").first
-          
+
           # Or create a default image
           elsif self.class.default_image
             x, y = Fleximage::Operator::Base.size_to_xy(self.class.default_image[:size])
@@ -716,7 +716,7 @@ module Fleximage
             raise MasterImageNotFound, message
           end
         ensure
-          @output_image.dispose! if @output_image if is_image?
+          #@output_image.dispose! if @output_image if is_image?
           GC.start
         end
     end
