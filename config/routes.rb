@@ -50,9 +50,9 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :comments
-  map.resources :task_lists
-  map.resources :conversations
-  map.resources :pages
+  map.resources :task_lists, :only => [ :index ]
+  map.resources :conversations, :only => [ :index ]
+  map.resources :pages, :only => [ :index ]
   
   map.root :controller => 'projects', :action => 'index'
   

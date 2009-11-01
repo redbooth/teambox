@@ -1,4 +1,5 @@
 - content_for :column do
-  = new_page_link(project)
+  - unless project.nil?
+    = new_page_link(project)
   .pages
     = list_pages(pages,current_target)
