@@ -12,15 +12,14 @@ describe User do
   it { should validate_presence_of     :login }
   it { should validate_length_of       :login,    :within => 3..40 }
   it { should validate_uniqueness_of   :login }
-# it { should validate_format_of       :login,    :with => Authentication.login_regex, :message => Authentication.bad_login_message }
+  
+  # TODO: Validates format of login, name and email
 
-# it { should validate_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true }
   it { should validate_length_of       :name,     :maximum => 100 }
                       
   it { should validate_presence_of     :email }
   it { should validate_length_of       :email,    :within => 6..100 }
   it { should validate_uniqueness_of   :email }
-# it { should validate_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message }
                       
 # it { should validate_associated :projects }
   

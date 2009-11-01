@@ -7,6 +7,10 @@ class SessionsController < ApplicationController
   skip_before_filter :confirmed_user?
   skip_before_filter :load_project
 
+  def new
+    redirect_to '/' if logged_in?
+  end
+
   def create
     logout_keeping_session!
     
