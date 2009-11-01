@@ -1,7 +1,10 @@
 Teambox Project Manager
 ================================
 
-THIS PROJECT IS IN AN EARLY PHASE AND ISN'T NOT READY FOR DEPLOYMENT.
+*THIS PROJECT IS IN AN EARLY PHASE AND ISN'T NOT READY FOR DEPLOYMENT*.
+*THIS PROJECT IS IN AN EARLY PHASE AND ISN'T NOT READY FOR DEPLOYMENT*.
+*THIS PROJECT IS IN AN EARLY PHASE AND ISN'T NOT READY FOR DEPLOYMENT*.
+
 For any questions, contact us at pablo@teambox.com
 
 Teambox is a project management software built on Ruby on Rails,
@@ -22,6 +25,10 @@ Teambox: Project Management and Collaboration software
 GET ROLLING!
 -------
 
+Install missing gems:
+
+rake gems:install
+
 Create Your Database 
 
 rake db:create
@@ -29,6 +36,10 @@ rake db:create
 Run Migrations
 
 rake db:auto:migrate
+
+Configure models/emailer.rb and replace _app.teambox.com_ for your own domain name.
+Configure config/environment.rb and replace _app.teambox.com_ for your own domain name.
+Configure config/environment.rb and enter your email settings for smtp_settings.
 
 
 Plugins were using you need to know about
