@@ -28,11 +28,11 @@ Rails::Initializer.run do |config|
   config.action_mailer.default_url_options = { :host => 'app.teambox.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address        => 'smtp.sendgrid.net',
+    :address        => 'smtp.yourserver.com',
     :port           => 25,
-    :domain         => 'teamboxapp.com',
-    :user_name      => 'notifications@teamboxapp.com',
-    :password       => 'kickME55',
+    :domain         => 'your_desploy_server_app',
+    :user_name      => 'username',
+    :password       => 'password',
     :authentication => :plain
   }
   
