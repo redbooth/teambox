@@ -1,5 +1,5 @@
 - content_for :column do
-  - unless project.nil?
+  - if project
     = new_task_list_link
     = new_task_list_form(project,TaskList.new)
   #task_lists  

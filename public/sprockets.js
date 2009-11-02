@@ -8342,6 +8342,11 @@ Event.addBehavior({
     });
   }
 });
+/*
+function(e) {
+  if (e.target.match('.foo #bar'))
+}
+*/
 Event.addBehavior({
   ".task_list:mouseover": function(e){
     $(this).down('p.actions').show();

@@ -1,7 +1,9 @@
-- remote_form_for [project,task_list], :html => { :id => "new_task_list_form", :class => 'task_form_wrap', :style => 'display: none' } do |f|
-  .task_form
-    = task_list_fields(f)
-    .submit
-      = f.submit t('.submit')
-      or
-      = link_to_function t('form.cancel'), hide_new_task_list
+- task_list_form_for(project,task_list) do |f|
+  = task_list_fields(f)
+  = task_list_submit(project,task_list)
+
+  .submit
+    = f.submit t('.submit')
+    = t('common.or')
+    = link_to_function t('form.cancel'), hide_new_task_list
+    

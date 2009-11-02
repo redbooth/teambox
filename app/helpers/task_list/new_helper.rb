@@ -8,12 +8,7 @@ module TaskList::NewHelper
         :task_list => task_list,
         :current_target => nil }
   end
-  
-  def new_task_list_link
-    link_to_function "<span>Task List</span>", show_new_task_list,
-    :class => 'button', :id => "new_task_list_link"
-  end
-    
+      
   def new_task_list_form(project,task_list)
     render :partial => 'task_lists/new', :locals => {
       :project => project,

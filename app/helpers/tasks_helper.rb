@@ -4,8 +4,8 @@ module TasksHelper
     action = task.new_record? ? 'new' : 'edit'
 
     link_to_function t("tasks.link.#{action}"), show_task(project,task_list,task),
-    :class => "#{action}_task_link",
-    :id => task_id("#{action}_link",project,task_list,task)
+      :class => "#{action}_task_link",
+      :id => task_id("#{action}_link",project,task_list,task)
   end
 
   def show_destroy_task_message(task)
@@ -28,8 +28,7 @@ module TasksHelper
     form_id = task_id("#{action}_form",project,task_list,task)
     
     update_page do |page|
-      page[header_id].show unless task.new_record?
-      page[link_id].show if task.new_record?
+      task.new_record? ? page[link_id].show : page[header_id].show
       page[form_id].hide
       page << "Form.reset('#{form_id}')"
     end  
@@ -50,8 +49,7 @@ module TasksHelper
     form_id = task_id("#{action}_form",project,task_list,task)
     
     update_page do |page|
-      page[header_id].hide unless task.new_record?
-      page[link_id].hide if task.new_record?
+      task.new_record? ? page[link_id].hide : page[header_id].hide
       page[form_id].show
       page << "Form.reset('#{form_id}')"
       page << "$('#{form_id}').auto_focus()"
@@ -79,17 +77,10 @@ module TasksHelper
   end
 
   def task_id(element,project,task_list,task=nil)
-    add_task = false
-    if task.nil?
-      add_task = true
-    elsif task.new_record?
-      add_task = true
-    end
-    
-    if add_task
-      "#{js_id([project,task_list,task])}_task#{"_#{element}" unless element.nil?}"
+    if task.nil? or (task and task.new_record?)
+      "#{js_id([project,task_list,task])}_task_#{"#{element}" unless element.nil?}"
     else  
-      "#{js_id([project,task_list,task])}#{"_#{element}" unless element.nil?}"
+      "#{js_id([project,task_list,task])}_#{"#{element}" unless element.nil?}"
     end
   end
 
