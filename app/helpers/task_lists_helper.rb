@@ -74,7 +74,6 @@ module TaskListsHelper
       :id => task_list_id("#{action}_link",project,task_list)
   end
   
-
   def list_main_task_list(project,task_lists)
     render :partial => 'task_lists/main_task_lists',
     :collection => task_lists,

@@ -28,6 +28,7 @@ module TasksHelper
     form_id = task_id("#{action}_form",project,task_list,task)
     
     update_page do |page|
+<<<<<<< HEAD
       task.new_record? ? page[link_id].show : page[header_id].show
       page[form_id].hide
       page << "Form.reset('#{form_id}')"
@@ -41,6 +42,22 @@ module TasksHelper
       :task => task }
   end
 
+=======
+      page[header_id].show unless task.new_record?
+      page[link_id].show if task.new_record?
+      page[form_id].hide
+      page << "Form.reset('#{form_id}')"
+    end  
+  end
+
+  def task_form(project,task_list,task)
+    render :partial => 'tasks/form', :locals => {
+      :project => project,
+      :task_list => task_list,
+      :task => task }
+  end
+
+>>>>>>> Heavily refactored tasks rjs, everything is super streamlined. Task lists are currently broken but that will be fixed next
   def show_task(project,task_list,task)    
     action = task.new_record? ? 'new' : 'edit'
     
@@ -49,7 +66,12 @@ module TasksHelper
     form_id = task_id("#{action}_form",project,task_list,task)
     
     update_page do |page|
+<<<<<<< HEAD
       task.new_record? ? page[link_id].hide : page[header_id].hide
+=======
+      page[header_id].hide unless task.new_record?
+      page[link_id].hide if task.new_record?
+>>>>>>> Heavily refactored tasks rjs, everything is super streamlined. Task lists are currently broken but that will be fixed next
       page[form_id].show
       page << "Form.reset('#{form_id}')"
       page << "$('#{form_id}').auto_focus()"
@@ -77,10 +99,24 @@ module TasksHelper
   end
 
   def task_id(element,project,task_list,task=nil)
+<<<<<<< HEAD
     if task.nil? or (task and task.new_record?)
       "#{js_id([project,task_list,task])}_task_#{"#{element}" unless element.nil?}"
     else  
       "#{js_id([project,task_list,task])}_#{"#{element}" unless element.nil?}"
+=======
+    add_task = false
+    if task.nil?
+      add_task = true
+    elsif task.new_record?
+      add_task = true
+    end
+    
+    if add_task
+      "#{js_id([project,task_list,task])}_task#{"_#{element}" unless element.nil?}"
+    else  
+      "#{js_id([project,task_list,task])}#{"_#{element}" unless element.nil?}"
+>>>>>>> Heavily refactored tasks rjs, everything is super streamlined. Task lists are currently broken but that will be fixed next
     end
   end
 
@@ -156,17 +192,8 @@ module TasksHelper
       :task => task }
   end
 
-  def task_id(element,controller_action,project,task_list,task=nil)
-    if task
-      "project_#{project.id}_task_list_#{task_list.id}_#{controller_action}_task_#{task.id}_#{element.to_s}"
-    else
-      "project_#{project.id}_task_list_#{task_list.id}_#{controller_action}_task_#{element.to_s}"
-    end
-  end
-
-  def item_task(action,project,task_list,task)
-    id = task_id()
-    rjs_task_master(:item,:single,action,project,task_list,task)
+  def render_task(project,task_list,task)
+    render :partial => 'tasks/show', :locals => { :project => project, :task_list => task_list, :task => task }
   end
 
   def update_active_task(project,task_list,task)  
@@ -208,4 +235,8 @@ module TasksHelper
         :task => task }
   end
     
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> Heavily refactored tasks rjs, everything is super streamlined. Task lists are currently broken but that will be fixed next
