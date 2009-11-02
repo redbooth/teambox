@@ -35,6 +35,10 @@ class Project < ActiveRecord::Base
     user == u
   end
   
+  def after_create
+    self.add_user self.user
+  end
+  
   def new_task_list(user,task_list)
     self.task_lists.new(task_list) do |task_list|
       task_list.user_id = user.id
@@ -72,18 +76,15 @@ class Project < ActiveRecord::Base
     end
   end
   
-  def log_activity(target,action,creator_id=nil)
+  def log_activity(target, action, creator_id=nil)
     creator_id = target.user_id unless creator_id
-    Activity.log(self,target,action,creator_id)
+    Activity.log(self, target, action, creator_id)
   end
   
-  def add_user(user,source_user=nil)
+  def add_user(user, source_user=nil)
     unless Person.exists? :user_id => user.id, :project_id => self.id      
-      source_user = user if source_user.nil?
-      
-      person = self.people.new(:user_id => user.id,:source_user_id => source_user.id)
-      person.save
-      log_activity(person,'create',person)
+      source_user = user if source_user.nil?  
+      self.people.create(:user_id => user.id, :source_user_id => source_user.id)
     end
   end
 
@@ -94,7 +95,7 @@ class Project < ActiveRecord::Base
       person.destroy
       
       user.recent_projects.delete self.id
-      user.save
+      user.save!
       
       log_activity(person,'delete')
     end
