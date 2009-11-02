@@ -206,7 +206,7 @@ module ApplicationHelper
     id = []
     locals.each do |m|
       unless m.nil?
-        id  << "#{m.class.to_s.underscore}_#{m.id}" unless m.new_record?
+        id << "#{m.class.to_s.underscore}_#{m.id}" unless m.new_record?
       end  
     end
     id.join('_')

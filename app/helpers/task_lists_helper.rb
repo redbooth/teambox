@@ -1,5 +1,71 @@
 module TaskListsHelper
 
+  def task_list_form_for(project,task_list,&proc)
+    raise ArgumentError, "Missing block" unless block_given?
+    action = task_list.new_record? ? 'new' : 'edit'
+
+    remote_form_for([project,task_list],
+      :loading => task_list_form_loading(action,project,task_list),
+      :html => {
+        :id => task_list_id('#{action}_form',project,task_list),
+        :class => 'task_form',
+        :style => 'display: none'},
+        &proc)
+  end
+  
+  def task_list_submit(project,task_list)
+    action = task_list.new_record? ? 'new' : 'edit'
+    submit_id =  task_list_id("#{action}_submit", project,task_list)
+    loading_id = task_list_id("#{action}_loading",project,task_list)
+    submit_to_function t("task_lists.#{action}.submit"), hide_task_list(project,task_list), submit_id, loading_id
+  end
+
+  def task_list_form_loading(action,project,task_list)
+    update_page do |page|
+      submit_id  = task_list_id("#{action}_submit", project,task_list)
+      loading_id = task_list_id("#{action}_loading",project,task_list)
+      page[submit_id].hide
+      page[loading_id].show
+    end    
+  end
+
+  def hide_task_list(project,task_list)
+    action = task_list.new_record? ? 'new' : 'edit'
+    
+    header_id = task_list_id("#{action}_header",project,task_list)
+    link_id = task_list_id("#{action}_link",project,task_list)
+    form_id = task_list_id("#{action}_form",project,task_list)
+    
+    update_page do |page|
+      task_list.new_record? ? page[link_id].show : page[header_id].show
+      page[form_id].hide
+      page << "Form.reset('#{form_id}')"
+    end  
+  end
+  
+  def show_task_list(project,task_list)
+    action = task_list.new_record? ? 'new' : 'edit'
+    
+    header_id = task_list_id("#{action}_header",project,task_list)
+    link_id = task_list_id("#{action}_link",project,task_list)
+    form_id = task_list_id("#{action}_form",project,task_list)
+    
+    update_page do |page|
+      task_list.new_record? ? page[link_id].hide : page[header_id].hide
+      page[form_id].show
+      page << "Form.reset('#{form_id}')"
+      page << "$('#{form_id}').auto_focus()"
+    end
+  end  
+  
+  def task_list_link(project,task_list)
+    action = task_list.new_record? ? 'new' : 'edit'
+
+    link_to_function t("task_lists.link.#{action}"), show_task_list(project,task_list),
+      :class => "#{action}_task_list_link",
+      :id => task_list_id("#{action}_link",project,task_list)
+  end
+  
   def task_list_id(element,project,task_list=nil)
     if task_list.nil? or (task_list and task_list.new_record?)
       "#{js_id([project,task_list])}_task_list_#{"#{element}" unless element.nil?}"
