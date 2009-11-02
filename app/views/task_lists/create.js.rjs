@@ -1,4 +1,8 @@
 page.insert_task_list(@current_project,@task_list)
-page.new_task_list(:link,:show)
-page.new_task_list(:form,:hide)
-page.new_task_list(:form,:reset)
+
+task_link_id = task_id(:new_link,@current_project,@task_list)
+task_form_id = task_id(:new_form,@current_project,@task_list)
+
+page[task_link_id].show
+page[task_form_id].hide
+page << "Form.reset('#{task_form_id}')"

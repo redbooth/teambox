@@ -2,43 +2,25 @@ class TaskList < ActiveRecord::Base
 
   include Watchable
 
+  default_scope :order => 'created_at DESC'
+  
   belongs_to :user
   belongs_to :project
   belongs_to :page
   
   has_many :tasks, :order => 'position', :dependent => :destroy
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
-  
-  validates_length_of :name, :minimum => 3
-  
+
+  acts_as_list :scope => :task_list
+    
   attr_accessible :name
 
+  validates_length_of :name, :minimum => 3
+  
   def before_save
-    if position.nil?
-      last_position = self.project.task_lists.find(:first,
-        :order => 'position DESC',
-        :limit => 1)
-      
-      if last_position.nil?
-        self.position = 1
-      else
-        self.position = last_position.position + 1
-      end 
-    end
-  end
-
-  def before_save
-    if position.nil?
-      last_position = self.task_list.tasks.find(:first,
-        :order => 'position DESC',
-        :limit => 1)
-      
-      if last_position.nil?
-        self.position = 1
-      else
-        self.position = last_position.position + 1
-      end
-      
+    if self.position.nil?
+      last_position = self.project.task_lists.first(:select => 'position').position
+      self.position = last_position.nil? ? 1 : last_position.succ
     end
   end
   

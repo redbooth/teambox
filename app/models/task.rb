@@ -2,6 +2,8 @@ class Task < ActiveRecord::Base
 
   include Watchable
 
+  default_scope :order => 'created_at DESC'
+  
   belongs_to :project
   belongs_to :user
   belongs_to :task_list
@@ -23,16 +25,8 @@ class Task < ActiveRecord::Base
 
   def before_save
     if position.nil?
-      last_position = self.task_list.tasks.find(:first,
-        :order => 'position DESC',
-        :limit => 1)
-      
-      if last_position.nil?
-        self.position = 1
-      else
-        self.position = last_position.position + 1
-      end
-      
+      last_position = self.task_list.tasks.first(:select => 'position').position
+      self.position = last_position.nil? ? 1 : last_position.succ
     end
   end
   

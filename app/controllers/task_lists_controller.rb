@@ -23,9 +23,8 @@ class TaskListsController < ApplicationController
   
   def create
     @task_list = @current_project.new_task_list(current_user,params[:task_list])
-    @task_list.save    
+    @task_list.save
     respond_to {|f|f.js}
-    
   end
   
   def show

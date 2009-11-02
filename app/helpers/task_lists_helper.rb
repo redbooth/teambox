@@ -1,5 +1,13 @@
 module TaskListsHelper
 
+  def task_list_id(element,project,task_list=nil)
+    if task_list.nil? or (task_list and task_list.new_record?)
+      "#{js_id([project,task_list])}_task_list_#{"#{element}" unless element.nil?}"
+    else  
+      "#{js_id([project,task_list])}_#{"#{element}" unless element.nil?}"
+    end
+  end
+  
   def task_list_form_for(project,task_list,&proc)
     raise ArgumentError, "Missing block" unless block_given?
     action = task_list.new_record? ? 'new' : 'edit'
@@ -7,7 +15,7 @@ module TaskListsHelper
     remote_form_for([project,task_list],
       :loading => task_list_form_loading(action,project,task_list),
       :html => {
-        :id => task_list_id('#{action}_form',project,task_list),
+        :id => task_list_id("#{action}_form",project,task_list),
         :class => 'task_form',
         :style => 'display: none'},
         &proc)
@@ -15,7 +23,7 @@ module TaskListsHelper
   
   def task_list_submit(project,task_list)
     action = task_list.new_record? ? 'new' : 'edit'
-    submit_id =  task_list_id("#{action}_submit", project,task_list)
+    submit_id = task_list_id("#{action}_submit", project,task_list)
     loading_id = task_list_id("#{action}_loading",project,task_list)
     submit_to_function t("task_lists.#{action}.submit"), hide_task_list(project,task_list), submit_id, loading_id
   end
@@ -61,18 +69,11 @@ module TaskListsHelper
   def task_list_link(project,task_list)
     action = task_list.new_record? ? 'new' : 'edit'
 
-    link_to_function t("task_lists.link.#{action}"), show_task_list(project,task_list),
+    link_to_function content_tag(:span,t("task_lists.link.#{action}")), show_task_list(project,task_list),
       :class => "#{action}_task_list_link",
       :id => task_list_id("#{action}_link",project,task_list)
   end
   
-  def task_list_id(element,project,task_list=nil)
-    if task_list.nil? or (task_list and task_list.new_record?)
-      "#{js_id([project,task_list])}_task_list_#{"#{element}" unless element.nil?}"
-    else  
-      "#{js_id([project,task_list])}_#{"#{element}" unless element.nil?}"
-    end
-  end
 
   def list_main_task_list(project,task_lists)
     render :partial => 'task_lists/main_task_lists',
@@ -96,7 +97,7 @@ module TaskListsHelper
         :current_target => current_target }
   end
 
-  def task_list_link(task_list)
+  def the_task_list_link(task_list)
     link_to h(task_list.name), project_task_list_path(task_list.project,task_list)
   end
 

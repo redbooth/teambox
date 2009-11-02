@@ -1,6 +1,6 @@
 - content_for :column do
   - if project
-    = new_task_list_link
+    = task_list_link(project,TaskList.new)
     = new_task_list_form(project,TaskList.new)
   #task_lists  
     = list_task_lists(project,task_lists,current_target)
