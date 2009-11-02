@@ -2,17 +2,32 @@ form#new_comment
   :padding-bottom 3px
   :border-bottom solid 1px rgb(220,220,220)
   .body
+    :margin-bottom 5px  
     textarea
       :width 626px
-      :margin-bottom 3px
+      :margin-bottom 0px
   .comment_body
-    :height 1.3em
-    :color rgb(160,160,160)    
-  .comment_body_focused  
     :height 4em
     :color rgb(0,0,0)
-  .submit
-    :float right
+  .extra
+    a#comment_upload_link
+      :float left
+    .status
+      :float left
+      :width 210px
+      :font-size 12px
+      :padding
+        :left 5px
+        :top 3px
+      select
+        :margin 0px
+        :padding 0px
+    .submit
+      :padding
+        :top 3px
+      :text-align right
+      :float right
+      :width 200px
 form.edit_comment
   :padding 5px
   :-moz-border-radius 8px

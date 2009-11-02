@@ -12,11 +12,11 @@
 Event.addBehavior({
   ".drag:mouseover": function(e){
     image_source = $(this).src
-    $(this).src = image_source.sub(/drag.*\.jpg/,'drag_hover.jpg')
+    $(this).src = image_source.sub(/drag.*\.png/,'drag_hover.png')
   },
   ".drag:mouseout": function(e){
     image_source = $(this).src
-    $(this).src = image_source.sub(/drag.*\.jpg/,'drag.jpg')    
+    $(this).src = image_source.sub(/drag.*\.png/,'drag.png')    
   },
   ".pencil:mouseover": function(e){
     image_source = $(this).src

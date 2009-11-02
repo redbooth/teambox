@@ -1,17 +1,9 @@
-.task_header{ :id => "#{task_id(:header,:edit,@current_project,task.task_list)}" }
-  = task_action_links(@current_project, task.task_list, task)
-  %h2
-    = task_status(task.status)
-    = task.name
-  .assignment
-    - if task.assigned?(current_user)
-      = "Assigned to #{link_to task.assigned.user.name, user_path(current_user)}"
-  
-=edit_task_form(@current_project, task.task_list, task)
-  
-= new_comment_form(@current_project, :target => task)
+#show_task
+  =task_header(project,task_list,task)
+  =task_form(project,task_list,task)
+  = new_comment_form(project, :target => task)
 
-#comments
-  = list_comments(task.comments, task)
-  
-= people_watching task
+  #comments
+    = list_comments(task.comments,task)
+
+  = people_watching(task)

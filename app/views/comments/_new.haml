@@ -6,10 +6,12 @@
   .extra
     = the_comment_upload_link(comment) unless comment.project.nil?
     = comment_area(comment)
-    -unless target.nil?
-      -if target.class.to_s == 'Task'
-        = select_tag 'comment[status]', options_for_select(Task::STATUSES)
+    .status
+      -unless target.nil?
+        -if target.class.to_s == 'Task'
+          = label_tag 'Change the status'
+          = select_tag 'comment[status]', options_for_select(Task::STATUSES)
     .submit
       = f.submit t('.submit')
   .clear
-=javascript_tag "$$('#new_comment .extra')[0].hide()"
+=javascript_tag "$('new_comment').auto_focus()"

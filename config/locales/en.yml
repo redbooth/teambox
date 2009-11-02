@@ -4,7 +4,6 @@
 en:
   common:
     or: or
-    cancel: Cancel
     delete: Delete
     edit: Edit
     accept: Accept
@@ -201,14 +200,14 @@ en:
       name: Name
     edit:
       submit: Update Task
-      cancel: Cancel
     new:
       title: New Task
       submit: Add Task
-      cancel: Cancel
     show:
       title: "Task: {{name}}"
-  
+    link:
+      new: + Add Task
+      edit: Edit
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?
@@ -279,7 +278,6 @@ en:
     new:
       title: New Task List
       submit: Add TaskList
-      cancel: Cancel
       submit: Create
     column:
       new_task_list: New Task List
@@ -395,3 +393,5 @@ en:
           title: 'Expand your profile to 20 words'
         biography_length_long:
           title: 'Expand your profile to 30 words'
+  form:
+    cancel: Cancel

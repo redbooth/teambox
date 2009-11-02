@@ -1,5 +1,20 @@
 module TaskListsHelper
 
+  def task_list_id(element,project,task_list=nil)
+    add_task_list = false
+    if task_list.nil?
+      add_task_list = true
+    elsif task_list.new_record?
+      add_task_list = true
+    end
+    
+    if add_task_list
+      "#{js_id([project])}_task_list#{"_#{element}" unless element.nil?}"
+    else  
+      "#{js_id([project,task_list])}#{"_#{element}" unless element.nil?}"
+    end
+  end
+
   def list_main_task_list(project,task_lists)
     render :partial => 'task_lists/main_task_lists',
     :collection => task_lists,
@@ -50,16 +65,6 @@ module TaskListsHelper
     render :partial => 'task_lists/fields', :locals => { :f => f }
   end
 
-
-  def insert_task_list(project, task_list)  
-    page.insert_html :bottom, "task_lists",
-      :partial => 'task_lists/task_list', 
-      :locals => {  
-        :project => project, 
-        :task_list => task_list,
-        :current_target => nil }
-  end
-
   def highlight_task_list(project, task_list)
     page["task_list_#{task_list.id}"].highlight
   end
@@ -95,4 +100,8 @@ module TaskListsHelper
       :handle => 'span.drag'
     })
   end
+  
+  def task_list_primer(project)
+    render :partial => 'task_lists/primer', :locals => { :project => project }
+  end  
 end

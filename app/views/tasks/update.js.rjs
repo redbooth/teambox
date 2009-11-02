@@ -1,6 +1,15 @@
 page.replace_task(@current_project,@task_list,@task)
-page.edit_task(:header,:show,@current_project,@task_list)
-page.edit_task(:form,:hide,@current_project,@task_list)
-page.edit_task(:form,:reset,@current_project,@task_list)
-page.edit_task(:header,:highlight,@current_project,@task_list)
+page.replace_task_header(@current_project,@task_list,@task)
+
+task_header_id = task_id(:edit_header,@current_project,@task_list,@task)
+task_form_id = task_id(:edit_form,@current_project,@task_list,@task)
+
+
+page[task_header_id].show
+page[task_form_id].hide 
+page << "Form.reset('#{task_form_id}')"
+page[task_id("edit_loading",@current_project,@task_list,@task)].hide
+page[task_id(:edit_submit,@current_project,@task_list,@task)].show
+
+page[task_header_id].highlight
 page.reload_javascript_events

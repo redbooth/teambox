@@ -1,9 +1,4 @@
 Event.addBehavior({
-  '.comment_body:focus':function(e){
-    this.className = 'comment_body_focused';
-    $(this).innerHTML = '';
-    $(this).up('#new_comment').down('.extra').show();
-  },
   ".comment:mouseover": function(e){
     $(this).className = 'comment comment_hover'
   },

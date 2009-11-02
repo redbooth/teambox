@@ -1,1 +1,7 @@
+.name.text_field
+  = f.text_field :name, :class => 'focus'
+- unless task.new_record?
+  .assigned.select
+    =f.label :assigned_id, "Assigned to:"
+    = f.select :assigned_id, project.people.map {|p| [ p.name, p.id ]}, { :include_blank => true }
 

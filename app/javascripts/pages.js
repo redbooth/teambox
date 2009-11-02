@@ -16,3 +16,8 @@ Event.addBehavior({
     });
   }  
 });
+/*
+function(e) {
+  if (e.target.match('.foo #bar'))
+}
+*/

@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   include AuthenticatedSystem
-
   filter_parameter_logging :password
 
   before_filter :confirmed_user?, :load_project, :login_required, :set_locale, :touch_user, :recent_projects, :belongs_to_project?

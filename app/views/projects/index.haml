@@ -7,22 +7,9 @@
     
   #activities
     = list_activities(@activities)
-
 - else
-  #primer
-    %p= t('.primer.empty')
-    .box
-      %h2= link_to t('.primer.create_first'), new_project_path
-      %p= t '.primer.define1'
-      %p= t '.primer.define2'
-      %ol
-        %li= t '.primer.item1'
-        %li= t '.primer.item2'
-        %li= t '.primer.item3'
-        %li= t '.primer.item4'
-        %li= t '.primer.item5'
-      %p= t '.primer.footer' 
-
+  =project_primer
+  
 - content_for :column do
   = new_project_link
   - unless @projects.empty?

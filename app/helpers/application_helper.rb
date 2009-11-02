@@ -1,5 +1,21 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+
+  def submit(name,path,id = nil)
+    submit_id = "submit_#{id}" unless id.nil?
+    render :partial => 'shared/submit', :locals => { 
+      :name => name, 
+      :path => path, 
+      :submit_id => id }
+  end
+  
+  def submit_to_function(name, code,submit_id,loading_id)
+    render :partial => 'shared/submit_to_function', :locals => {
+      :name => name, 
+      :code => code, 
+      :submit_id => submit_id, 
+      :loading_id => loading_id }
+  end
   
   def hot_flashes(flash)
     show_flash_bar = true
@@ -70,11 +86,15 @@ module ApplicationHelper
     page << "}"
   end
 
+  def loading_image(id)
+    image_tag('loading.gif', :id => id, :class => 'loading', :style => 'display: none')
+  end
+  
   def loading(action,id=nil)
     if id.nil?
-      image_tag('loading.gif', :id => "#{action}_loading", :style => 'display: none')
+      image_tag('loading.gif', :id => "#{action}_loading", :class => 'loading', :style => 'display: none')
     else  
-      image_tag('loading.gif', :id => "#{action}_loading_#{id}", :style => 'display: none')
+      image_tag('loading.gif', :id => "#{action}_loading_#{id}", :class => 'loading', :style => 'display: none')
     end
   end
   
@@ -140,7 +160,7 @@ module ApplicationHelper
   end
   
   def drag_image
-    image_tag('drag.jpg', :class => 'drag')
+    image_tag('drag.png', :class => 'drag')
   end
 
   def add_image
@@ -181,23 +201,15 @@ module ApplicationHelper
       end
     end
   end
-
-  def rjs_master(ca,e,action,p,tl,t)
-    id = task_id(e,ca,p,tl,t)
-    case action
-      when :show
-        page[id].show
-      when :hide
-        page[id].hide
-      when :show
-        page[id].remove
-      when :highlight
-        page[id].highlight
-      when :reset
-        page << "Form.reset('#{id}')" if e == :form
-      when :focus
-        page << "$('#{id}').auto_focus()" if e == :form
-    end
-  end
   
+  def js_id(locals=[])
+    id = []
+    locals.each do |m|
+      unless m.nil?
+        id  << "#{m.class.to_s.underscore}_#{m.id}" unless m.new_record?
+      end  
+    end
+    id.join('_')
+  end
+
 end

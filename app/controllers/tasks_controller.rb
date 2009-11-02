@@ -1,6 +1,10 @@
 class TasksController < ApplicationController
   before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:check]
   before_filter :find_task, :only => [:show,:destroy,:update,:check,:uncheck]
+  
+  def not_found
+    
+  end
 
   def filter
     if params[:filter_action] == 'asc'
@@ -59,7 +63,10 @@ class TasksController < ApplicationController
   
   def destroy
     @task.destroy if @task.owner?(current_user)
-    redirect_to project_task_lists_path(@current_project)
+    respond_to do |format|
+      format.html { redirect_to project_task_lists_path(@current_project) }
+      format.js
+    end
   end
   
   def check

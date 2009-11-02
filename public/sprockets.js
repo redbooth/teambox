@@ -8201,11 +8201,11 @@ Element.addMethods({
 Event.addBehavior({
   ".drag:mouseover": function(e){
     image_source = $(this).src
-    $(this).src = image_source.sub(/drag.*\.jpg/,'drag_hover.jpg')
+    $(this).src = image_source.sub(/drag.*\.png/,'drag_hover.png')
   },
   ".drag:mouseout": function(e){
     image_source = $(this).src
-    $(this).src = image_source.sub(/drag.*\.jpg/,'drag.jpg')
+    $(this).src = image_source.sub(/drag.*\.png/,'drag.png')
   },
   ".pencil:mouseover": function(e){
     image_source = $(this).src
@@ -8250,11 +8250,6 @@ Element.addMethods({
   }
 });
 Event.addBehavior({
-  '.comment_body:focus':function(e){
-    this.className = 'comment_body_focused';
-    $(this).innerHTML = '';
-    $(this).up('#new_comment').down('.extra').show();
-  },
   ".comment:mouseover": function(e){
     $(this).className = 'comment comment_hover'
   },

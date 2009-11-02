@@ -74,6 +74,8 @@ module CompletenessFu
       end
       
       #returns next_failed_check
+      
+      #first, random, larget (merge failed_check and percent_complete)
       def next_failed_check
         self.failed_checks.first
       end

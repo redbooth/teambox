@@ -22,5 +22,9 @@ module ProjectsHelper
         :f => f,
         :project => project }
   end
-    
+   
+  def project_primer
+    render :partial => 'projects/primer'
+  end  
+  
 end

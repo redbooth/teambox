@@ -1,4 +1,105 @@
 module TasksHelper
+
+  def task_link(project,task_list,task)
+    action = task.new_record? ? 'new' : 'edit'
+
+    link_to_function t("tasks.link.#{action}"), show_task(project,task_list,task),
+    :class => "#{action}_task_link",
+    :id => task_id("#{action}_link",project,task_list,task)
+  end
+
+  def show_destroy_task_message(task)
+    page.replace 'show_task', :partial => 'tasks/destroy_message', :locals => {
+      :task => task }
+  end
+
+  def task_submit(project,task_list,task)
+    action = task.new_record? ? 'new' : 'edit'
+    submit_id = task_id("#{action}_submit",project,task_list,task)
+    loading_id = task_id("#{action}_loading",project,task_list,task)
+    submit_to_function t("tasks.#{action}.submit"), hide_task(project,task_list,task), submit_id, loading_id
+  end
+  
+  def hide_task(project,task_list,task)
+    action = task.new_record? ? 'new' : 'edit'
+    
+    header_id = task_id("#{action}_header",project,task_list,task)
+    link_id = task_id("#{action}_link",project,task_list,task)
+    form_id = task_id("#{action}_form",project,task_list,task)
+    
+    update_page do |page|
+      page[header_id].show unless task.new_record?
+      page[link_id].show if task.new_record?
+      page[form_id].hide
+      page << "Form.reset('#{form_id}')"
+    end  
+  end
+
+  def task_form(project,task_list,task)
+    render :partial => 'tasks/form', :locals => {
+      :project => project,
+      :task_list => task_list,
+      :task => task }
+  end
+
+  def show_task(project,task_list,task)    
+    action = task.new_record? ? 'new' : 'edit'
+    
+    header_id = task_id("#{action}_header",project,task_list,task)
+    link_id = task_id("#{action}_link",project,task_list,task)
+    form_id = task_id("#{action}_form",project,task_list,task)
+    
+    update_page do |page|
+      page[header_id].hide unless task.new_record?
+      page[link_id].hide if task.new_record?
+      page[form_id].show
+      page << "Form.reset('#{form_id}')"
+      page << "$('#{form_id}').auto_focus()"
+    end
+  end  
+  
+  def task_form_for(project,task_list,task,&proc)
+    raise ArgumentError, "Missing block" unless block_given?
+    action = task.new_record? ? 'new' : 'edit'
+      
+    remote_form_for([project,task_list,task],
+      :loading => task_form_loading(action,project,task_list,task),
+      :html => {
+        :id => task_id("#{action}_form",project,task_list,task), 
+        :class => 'task_form', 
+        :style => 'display: none;'}, 
+        &proc)
+  end
+
+  def task_form_loading(action,project,task_list,task)
+    update_page do |page|
+      page[task_id("#{action}_submit",project,task_list,task)].hide
+      page[task_id("#{action}_loading",project,task_list,task)].show
+    end    
+  end
+
+  def task_id(element,project,task_list,task=nil)
+    add_task = false
+    if task.nil?
+      add_task = true
+    elsif task.new_record?
+      add_task = true
+    end
+    
+    if add_task
+      "#{js_id([project,task_list,task])}_task#{"_#{element}" unless element.nil?}"
+    else  
+      "#{js_id([project,task_list,task])}#{"_#{element}" unless element.nil?}"
+    end
+  end
+
+  def task_header(project,task_list,task)
+    render :partial => 'tasks/header', :locals => {
+      :project => project,
+      :task_list => task_list,
+      :task => task } 
+  end
+
   def update_task_status(task)
     page.replace 'task_status', task_status(task.status) if task.class.to_s == 'Task'
   end
@@ -10,23 +111,22 @@ module TasksHelper
   def my_tasks_link
     link_to 'My Tasks', ''
   end
-  
-  def remove_task(project,task_list,task)
-    page[task_id(:single,:item,project,task_list,task)].remove
-  end
-
-  def hide_task(project,task_list,task)
-    page[task_id(:single,:item,project,task_list,task)].hide
-  end
-
-  def show_task(project,task_list,task)
-    page[task_id(:single,:item,project,task_list,task)].show
-  end
 
   def delete_task_link(project,task_list,task)
-    link_to t('common.delete'), project_task_list_task_path(project,task_list,task),
+    link_to_remote t('common.delete'), 
+      :url => project_task_list_task_path(project,task_list,task),
+      :loading => delete_loading(project,task_list,task),
       :confirm => t('confirm.delete_task'), 
       :method => :delete
+  end
+
+  def delete_loading(project,task_list,task)
+    edit_actions_id = task_id('edit_actions',project,task_list,task)
+    delete_loading_id = task_id('delete_loading',project,task_list,task)
+    update_page do |page|
+      page[edit_actions_id].hide
+      page[delete_loading_id].show
+    end  
   end
 
   def task_action_links(project,task_list,task)
@@ -57,63 +157,55 @@ module TasksHelper
         :current_target => current_target }
   end
 
-  def task_fields(f)
-    render :partial => 'tasks/fields', :locals => { :f => f }
+  def task_fields(f,project,task_list,task)
+    render :partial => 'tasks/fields', :locals => { 
+      :f => f,
+      :project => project,
+      :task_list => task_list,
+      :task => task }
   end
 
-  def task_id(element,controller_action,project,task_list,task=nil)
-    if task
-      "project_#{project.id}_task_list_#{task_list.id}_#{controller_action}_task_#{task.id}_#{element.to_s}"
-    else
-      "project_#{project.id}_task_list_#{task_list.id}_#{controller_action}_task_#{element.to_s}"
-    end
+  def render_task(project,task_list,task)
+    render :partial => 'tasks/show', :locals => { :project => project, :task_list => task_list, :task => task }
   end
 
-  def item_task(action,project,task_list,task)
-    id = task_id()
-    rjs_task_master(:item,:single,action,project,task_list,task)
-  end
-
-  def edit_task(element,action,project,task_list)
-    rjs_task_master(:edit,element,action,project,task_list,nil)
-  end
-  
-  def new_task(element,action,project,task_list)
-    rjs_task_master(:new,element,action,project,task_list,nil)
-  end
-    
-  def rjs_task_master(ca,e,action,p,tl,t)
-    case action
-      when :show
-        page[task_id(e,ca,p,tl,t)].show
-      when :hide
-        page[task_id(e,ca,p,tl,t)].hide
-      when :show
-        page[task_id(e,ca,p,tl,t)].remove
-      when :highlight
-        page[task_id(e,ca,p,tl,t)].highlight
-      when :reset
-        if e == :form
-          page << "Form.reset('#{task_id(:form,ca,p,tl,t)}')"
-        end  
-      when :focus
-        if e == :form
-          page << "$('#{task_id(:form,ca,p,tl,t)}').auto_focus()"
-        end
-    end
-  end
-  
-  def task_list_primer(project)
-    render :partial => 'task_lists/primer', :locals => { :project => project }
-  end
-  
-  def show_task(task)
-    render :partial => 'tasks/show', :locals => { :task => task }
-  end
-  
-  def update_active_task(task)
-    page.select('.content').invoke('replace',show_task(task))
+  def update_active_task(project,task_list,task)  
+    page.replace 'show_task', :partial => 'tasks/show', 
+      :locals => { 
+        :project => project,
+        :task_list => task_list,
+        :task => task }
     page.select('.task').invoke('removeClassName','active_task')
     page.select(".task_item_#{task.id}").invoke('addClassName','active_task')
   end
+  
+  def insert_task(project,task_list,task)  
+    page.insert_html :bottom, "project_#{project.id}_task_list_#{task_list.id}",
+      :partial => 'tasks/task', 
+      :locals => {  
+        :task => task,
+        :project => project, 
+        :task_list => task_list,
+        :current_target => nil }
+  end  
+  
+  def replace_task(project,task_list,task)
+    page.replace task_id(:item,project,task_list,task),
+      :partial => 'tasks/task', 
+      :locals => { 
+        :project => project,
+        :task_list => task_list,
+        :task => task,
+        :current_target => task }
+  end
+
+  def replace_task_header(project,task_list,task)
+    page.replace task_id(:edit_header,project,task_list,task),
+      :partial => 'tasks/header', 
+      :locals => { 
+        :project => project,
+        :task_list => task_list,
+        :task => task }
+  end
+    
 end
