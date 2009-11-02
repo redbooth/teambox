@@ -18,7 +18,7 @@ class Project < ActiveRecord::Base
   
   validates_length_of :name, :minimum => 3
   validates_uniqueness_of :permalink, :case_sensitive => false
-  validates_format_of :permalink, :with => /^[a-z0-9_\-\.]{2,}$/
+  validates_format_of :permalink, :with => /^[a-z0-9_\-\.]{5,}$/
 
   validates_presence_of :user         # A project _needs_ an owner
   validates_associated :people        # And will only accept valid people
@@ -26,10 +26,6 @@ class Project < ActiveRecord::Base
   attr_accessible :name, :permalink
   
   has_permalink :name
-  
-  before_save do |p|
-    p.permalink.downcase!
-  end
   
   def owner?(u)
     user == u
@@ -92,12 +88,12 @@ class Project < ActiveRecord::Base
     person = Person.find_by_user_id_and_project_id user.id, self.id
     
     if person
-      person.destroy
-      
-      user.recent_projects.delete self.id
-      user.save!
-      
       log_activity(person,'delete')
+      
+      person.destroy
+
+      user.recent_projects.delete self.id
+      user.save!      
     end
   end
 

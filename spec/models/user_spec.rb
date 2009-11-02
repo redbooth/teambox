@@ -21,8 +21,7 @@ describe User do
   it { should validate_length_of       :email,    :within => 6..100 }
   it { should validate_uniqueness_of   :email }
                       
-# it { should validate_associated :projects }
-  
+# it { should validate_associated :projects }  
   
   describe "authentication" do
     before do

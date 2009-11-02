@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   
   def before_save
     self.update_profile_score
+    self.recent_projects ||= []
   end
   
   def after_create
