@@ -11,7 +11,7 @@ class TaskList < ActiveRecord::Base
   has_many :tasks, :order => 'position', :dependent => :destroy
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
-  acts_as_list :scope => :task_list
+  acts_as_list :scope => :project
     
   attr_accessible :name
 
@@ -19,8 +19,13 @@ class TaskList < ActiveRecord::Base
   
   def before_save
     if self.position.nil?
-      last_position = self.project.task_lists.first(:select => 'position').position
-      self.position = last_position.nil? ? 1 : last_position.succ
+      first_task_list = self.project.task_lists.first(:select => 'position')
+      if first_task_list.nil?
+        self.position = 0
+      else
+        last_position = first_task_list.position
+        self.position = last_position.nil? ? 1 : last_position.succ
+      end
     end
   end
   
