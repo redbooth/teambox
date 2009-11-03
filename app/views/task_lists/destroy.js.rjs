@@ -1,0 +1,2 @@
+page[task_list_id(:with_tasks,@current_project,@task_list)].remove
+page.show_destroy_task_list_message(@task_list)

@@ -106,12 +106,12 @@ module TasksHelper
   def delete_task_link(project,task_list,task)
     link_to_remote t('common.delete'), 
       :url => project_task_list_task_path(project,task_list,task),
-      :loading => delete_loading(project,task_list,task),
+      :loading => delete_task_loading(project,task_list,task),
       :confirm => t('confirm.delete_task'), 
       :method => :delete
   end
 
-  def delete_loading(project,task_list,task)
+  def delete_task_loading(project,task_list,task)
     edit_actions_id = task_id('edit_actions',project,task_list,task)
     delete_loading_id = task_id('delete_loading',project,task_list,task)
     update_page do |page|
@@ -160,14 +160,17 @@ module TasksHelper
     render :partial => 'tasks/show', :locals => { :project => project, :task_list => task_list, :task => task }
   end
 
-  def update_active_task(project,task_list,task)  
-    page.replace 'show_task', :partial => 'tasks/show', 
+  def update_active_task(project,task_list,task)
+    page.replace_html 'content', :partial => 'tasks/show', 
       :locals => { 
         :project => project,
         :task_list => task_list,
         :task => task }
+
+    item_id = task_id(:item,project,task_list,task)
     page.select('.task').invoke('removeClassName','active_task')
-    page.select(".task_item_#{task.id}").invoke('addClassName','active_task')
+    page.select('.task_list').invoke('removeClassName','active_task_list')
+    page[item_id].addClassName('active_task')
   end
   
   def insert_task(project,task_list,task)  

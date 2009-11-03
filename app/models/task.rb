@@ -25,8 +25,9 @@ class Task < ActiveRecord::Base
 
   def before_save
     if position.nil?
-      last_position = self.task_list.tasks.first(:select => 'position').position
-      self.position = last_position.nil? ? 1 : last_position.succ
+      puts "-------|||||| #{self.task_list.tasks}"
+      last_position = self.task_list.tasks.first(:select => 'position')
+      self.position = last_position.nil? ? 1 : last_position.position.succ
     end
   end
   

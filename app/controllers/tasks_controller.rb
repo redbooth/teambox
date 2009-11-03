@@ -85,10 +85,6 @@ class TasksController < ApplicationController
       rescue
         flash[:error] = "Task list #{params[:task_list_id]} not found in this project"
       end
-      
-      if @task_list.nil?
-        redirect_to project_path(@current_project)
-      end
     end
     
     def find_task
@@ -96,10 +92,6 @@ class TasksController < ApplicationController
         @task = @current_project.tasks.find(params[:id])
       rescue
         flash[:error] = "Task #{params[:id]}not found in this project"
-      end
-      
-      if @task.nil?
-        redirect_to project_path(@current_project)
       end
     end
 end

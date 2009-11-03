@@ -1,12 +1,2 @@
 = task_list_column(@current_project,@task_lists,@task_list)
-
-.task_list_header
-  = task_list_action_links(@current_project, @task_list)
-  %h2= t('.title', :name => @task_list.name)
-
-= new_comment_form(@current_project, :target => @task_list)
-
-#comments
-  = list_comments(@comments, @task_list)
-  
-= people_watching @task_list
+= render_task_list_with_tasks(@current_project,@task_list)

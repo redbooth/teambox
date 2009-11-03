@@ -266,6 +266,7 @@ en:
       name: Name
     link:
       new: Task List
+      edit: Edit
     index:
       add_link: New Task List
       primer:
@@ -282,6 +283,8 @@ en:
       title: New Task List
       submit: Add TaskList
       submit: Create
+    edit:
+      submit: Update Task List
     column:
       new_task_list: New Task List
     show:

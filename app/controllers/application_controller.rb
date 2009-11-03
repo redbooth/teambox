@@ -4,13 +4,19 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-
+  rescue_from ActiveRecord::RecordNotFound, :with => :show_errors
+  
   include AuthenticatedSystem
   filter_parameter_logging :password
 
   before_filter :confirmed_user?, :load_project, :login_required, :set_locale, :touch_user, :recent_projects, :belongs_to_project?
   
   private
+  
+    def show_errors
+      render :partial => 'shared/record_not_found', :layout => 'application'
+    end
+    
     def confirmed_user?
       if current_user and not current_user.is_active?
         flash[:error] = "You need to activate your account first"

@@ -1,0 +1,9 @@
+#show_task_list
+  =task_list_header(project,task_list)
+  =task_list_form(project,task_list)
+  = new_comment_form(project, :target => task_list)
+
+  #comments
+    = list_comments(task_list.comments,task_list)
+  
+  = people_watching(task_list)

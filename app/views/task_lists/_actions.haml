@@ -1,4 +1,5 @@
-.text_actions
-  = edit_task_list_link(@current_project, @task_list)
+=loading_image(task_list_id('delete_loading',project,task_list))
+.text_actions{ :id => task_list_id('edit_actions',project,task_list) }
+  = task_list_link(project,task_list)
   = t('common.or')
-  = delete_task_list_link(@current_project, @task_list)
+  = delete_task_list_link(project,task_list)

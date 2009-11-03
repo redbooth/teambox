@@ -1,8 +1,6 @@
 class TaskListsController < ApplicationController
-  before_filter :load_task_list, :except => [:index, :new, :create ]
-
-  
-  
+  before_filter :load_task_list, :except => [:index, :new, :create]
+    
   def index
     if @current_project.nil?
       @task_lists = []
@@ -27,6 +25,11 @@ class TaskListsController < ApplicationController
     respond_to {|f|f.js}
   end
   
+  def update
+    @task_list.update_attributes(params[:task_list])
+    respond_to {|f|f.js}
+  end
+  
   def show
     @task_lists = @current_project.task_lists
     @comments = @task_list.comments
@@ -42,16 +45,16 @@ class TaskListsController < ApplicationController
     end
   end
   
+  def destroy
+    @task_list.destroy if @task_list.owner?(current_user)
+    respond_to do |format|
+      format.html { redirect_to project_task_lists_path(@current_project) }
+      format.js
+    end
+  end
+  
   private
     def load_task_list
-      begin
-        @task_list = @current_project.task_lists.find(params[:id])
-      rescue
-        flash[:error] = "Task list #{params[:id]} not found"
-      end
-      
-      if @task_list.nil?
-        redirect_to project_path(@current_project)
-      end
+      @task_list = @current_project.task_lists.find(params[:id])
     end
 end
