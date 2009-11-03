@@ -53,12 +53,20 @@ class User < ActiveRecord::Base
                   :conversations_first_comment, 
                   :first_day_of_week
 
-  def activities_visible_to_user(user)
+  def can_view?(user)
     shared_projects = self.projects & user.projects
-    shared_projects_ids = shared_projects.collect { |project| project.id }
+    not shared_projects.empty?    
+  end
+
+  def projects_shared_with(user)
+    self.projects & user.projects
+  end
+
+  def activities_visible_to_user(user)
+    ids = projects_shared_with(user).collect { |project| project.id }
     
     self.activities.select do |activity|
-      shared_projects_ids.include? activity.project_id
+      ids.include? activity.project_id
     end
   end
 end

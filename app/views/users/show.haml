@@ -1,17 +1,24 @@
 - content_for :column do
-  .profile
-    %h2= t '.profile'
-    .vcard
-      = link_to 'Download vCard'
-    .name= @user.name
-    .email= mail_to @user.email, @user.email
+  - if current_user.can_view? @user
+    .profile
+      %h2= t '.profile'
+      .vcard
+        = link_to t('.vcard')
+      .name= @user.name
+      .email= mail_to @user.email, @user.email
+    .projects
+      %h2= t '.projects'
+      .project_list
+        .project
+          = list_projects(@user.projects)
+  - else
+    .profile
+      %h2= t '.profile'
+      .name= @user.name    
 
-  .projects
-    %h2= t '.projects'
-    .project_list
-      .project
-        = list_projects(@user.projects)
-      
-%h2= t('.recent_activity_for', :user_name => @user.name)
-#activities
-  = list_activities(@visible_activities)
+- if current_user.can_view? @user      
+  %h2= t('.recent_activity_for', :user_name => @user.name)
+  #activities
+    = list_activities(@visible_activities)
+- else
+  %h2= @user.name

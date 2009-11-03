@@ -73,6 +73,7 @@ en:
       profile: Profile
       projects: Projects
       recent_activity_for: Recent activity for {{user_name}}
+      vcard: Download vCard
     user_card:
       formatted_address: "{{street}}, {{city}} ({{country}})"
     welcome:
