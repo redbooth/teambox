@@ -11,7 +11,7 @@
     %p
       %strong
         = t('emailer.invitation.current_users')
-      = @project.people.collect { |p| p.name }.join(", ")
+      = to_sentence @project.people.collect { |p| p.name }
 
   %p{ :style => email_text(:small) }
     = t('emailer.invitation.plaintext_link')

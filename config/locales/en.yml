@@ -3,6 +3,7 @@
 
 en:
   common:
+    and: and
     or: or
     delete: Delete
     edit: Edit

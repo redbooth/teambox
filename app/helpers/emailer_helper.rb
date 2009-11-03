@@ -14,4 +14,7 @@ module EmailerHelper
     end
   end
 
+  def to_sentence(array)
+    array.to_sentence(:two_words_connector => " #{t('common.and')} ", :last_word_connector => " #{t('common.and')} ")
+  end
 end
