@@ -7,7 +7,7 @@
     %p{ :style => email_text(:big) }
       = t('emailer.invitation.you_have_been_invited_to', :project => @project.name)
     %h2{ :style => email_text(:big) }
-      = link_to t('emailer.invitation.accept_the_invitation'), new_user_url(:invitation => @invitation.token)
+      = link_to t('emailer.invitation.accept_the_invitation'), projects_url(:invitation => @invitation.token)
     %p
       %strong
         = t('emailer.invitation.current_users')
@@ -16,7 +16,7 @@
   %p{ :style => email_text(:small) }
     = t('emailer.invitation.plaintext_link')
     %br
-    = link_to new_user_url(:invitation => @invitation.token), new_user_url(:invitation => @invitation.token)
+    = link_to projects_url(:invitation => @invitation.token), projects_url(:invitation => @invitation.token)
 
   .footer{ :style => email_text(:small) }
     %p
