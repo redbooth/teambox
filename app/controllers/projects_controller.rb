@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   def index
     @projects = current_user.projects
     @pending_projects = current_user.invitations
-    @activities = @projects.collect { |p| p.activities }.flatten.sort { |x,y| y.created_at <=> x.created_at }
+    @activities = @projects.collect { |p| p.activities.all(:limit => 40) }.flatten.sort { |x,y| y.created_at <=> x.created_at }
     
     options = { :include => [:target], :except => 'body_html' }
     
@@ -35,7 +35,7 @@ class ProjectsController < ApplicationController
   
   def show
     @pending_projects = current_user.invitations
-    @activities = @current_project.activities
+    @activities = @current_project.activities.all(:limit => 40)
     
     options = { :include => [:target], :except => ['body_html', :project_id] }
     

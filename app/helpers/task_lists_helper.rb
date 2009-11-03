@@ -145,7 +145,7 @@ module TaskListsHelper
     end
   end
     
-  def task_list_fields(f)
+  def task_list_fields(f,project,task_list)
     render :partial => 'task_lists/fields', :locals => { :f => f }
   end
 
