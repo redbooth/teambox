@@ -78,8 +78,8 @@ class Project < ActiveRecord::Base
   end
   
   def add_user(user, source_user=nil)
-    unless Person.exists? :user_id => user.id, :project_id => self.id      
-      source_user = user if source_user.nil?  
+    unless Person.exists? :user_id => user.id, :project_id => self.id
+      source_user ||= user
       self.people.create(:user_id => user.id, :source_user_id => source_user.id)
     end
   end
