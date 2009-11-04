@@ -182,7 +182,7 @@ module TaskListsHelper
         :url => order_project_task_list_path(task_list.project,task_list),
         :only => 'task',
         :format => page.literal('/task_(\d+)/'),
-        :handle => '.drag',
+        :handle => 'img.drag',
         :constraint => 'vertical'
       })
     end
@@ -194,7 +194,7 @@ module TaskListsHelper
       :url => url,
       :only => 'task',
       :format => page.literal('/task_(\d+)/'),
-      :handle => 'span.drag'
+      :handle => 'img.drag'
     })
   end
   

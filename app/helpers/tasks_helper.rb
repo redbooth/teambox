@@ -96,9 +96,13 @@ module TasksHelper
   end
 
   def task_status(status)
-    "<span id='task_status' class='task_status task_status_#{Task::STATUSES[status.to_i].underscore}'>#{Task::STATUSES[status.to_i].capitalize}</span>"
+    "<span class='task_status task_status_#{Task::STATUSES[status.to_i].underscore}'><span>#{Task::STATUSES[status.to_i].capitalize}</span></span>"
   end
-  
+    
+  def task_status_image(status)
+    image_tag("status_#{Task::STATUSES[status.to_i].underscore}.png", :class => 'task_status')
+  end
+      
   def my_tasks_link
     link_to 'My Tasks', ''
   end
@@ -131,13 +135,7 @@ module TasksHelper
   end
 
   def task_drag_link(project,task_list,task)
-    if task.owner?(current_user)
-      render :partial => 'tasks/drag_action',
-      :locals => { 
-        :project => project,
-        :task_list => task_list,
-        :task => task }
-    end
+    drag_image if task.owner?(current_user)
   end
 
   def list_tasks(project,task_list,tasks,current_target=nil)

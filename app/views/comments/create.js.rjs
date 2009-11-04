@@ -1,18 +1,17 @@
 unless @comment.new_record?
   page.ef('comments')
-    #page << "Comment.update();"
     page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
   page.esf('activities')    
     page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
   page.en
   
   page << "Form.reset('new_comment')"
-  page['new_comment'].down('.uploads_save').childElements.invoke('remove')
-  page['new_comment'].down('.uploads_current').select('div').invoke('remove')
-  page['new_comment'].down('.uploads_current').hide
+  #page['new_comment'].down('.uploads_save').childElements.invoke('remove')
+  #page['new_comment'].down('.uploads_current').select('div').invoke('remove')
+  #page['new_comment'].down('.uploads_current').hide
   page.reload_javascript_events
   
-  page.update_task_status(@target)
+  #page.update_task_status(@target)
   
   #if @original_controller == 'hours'
   #  page['calendar'].update(build_calendar(@comments,@year,@month))

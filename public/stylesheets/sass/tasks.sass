@@ -11,10 +11,8 @@ div.task_list_wrap
     a
       :font-size 12px
 div.task
-  :padding 0px
+  :padding
     :left 5px
-  :margin
-    :left 10px
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
   input
@@ -130,3 +128,24 @@ span.task_status_resolved
   :background rgb(0,200,0)
 span.task_status_rejected
   :background rgb(200,0,0)
+
+.task
+  img
+    :display inline
+  span.task_status
+    :position absolute
+    :display block
+    :width 16px
+    :height 16px
+    span
+      :display none
+  span.task_status_new
+    :background url(../images/status_new.png) no-repeat
+  span.task_status_open
+    :background rgb(100,100,200)
+  span.task_status_hold
+    :background rgb(200,200,100)
+  span.task_status_resolved
+    :background rgb(0,200,0)
+  span.task_status_rejected
+    :background rgb(200,0,0)
