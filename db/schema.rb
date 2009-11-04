@@ -10,7 +10,12 @@
 # It's strongly recommended to check this file into your version control system.
  
 ActiveRecord::Schema.define(:version => 20090825190238) do
- 
+
+  create_table :announcements, :force => true do |t|
+    t.integer :user_id
+    t.integer :comment_id
+  end  
+     
   create_table :users, :force => true do |t|
     t.string   :login,                     :limit => 40
     t.string   :name,                      :limit => 100, :default => ""
@@ -36,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.datetime :login_token_expires_at
     t.boolean  :welcome,        :default => false
     t.boolean  :confirmed_user, :default => false
+    t.integer  :last_read_announcement
     t.timestamps
   end
  
