@@ -27,3 +27,9 @@ Factory.define :project do |project|
   project.name { Factory.next(:name) }
   project.association(:user)
 end
+
+Factory.define :comment do |comment|
+  comment.association(:user)
+  comment.association(:project)
+  comment.body 'Just finished posting this comment'
+end

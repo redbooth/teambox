@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   end
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
+  has_many :comments
   
   has_many :people
   has_many :projects, :through => :people
