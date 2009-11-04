@@ -23,8 +23,8 @@ ActionController::Routing::Routes.draw do |map|
 
     user.resource  :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }
     user.resources :conversations, :has_many => [:comments]
-    user.resources :task_lists,    :has_many => [:comments] do |task_lists|
-      task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
+    user.resources :task_lists,    :has_many => [:comments]  do |task_lists|
+      task_lists.resources :tasks, :has_many => [:comments]
     end
   end
   
@@ -39,8 +39,11 @@ ActionController::Routing::Routes.draw do |map|
       comment.resources :uploads, :member => { :iframe => :get }
     end
     project.resources :uploads, :requirements => { :id => /[^\/]+/ }, :member => { :thumbnail => :get }
+
+    map.reorder_task_lists 'project/:project_id/reorder_task_lists', :controller => 'task_lists', :action => 'reorder', :method => :post
+    map.reorder_tasks 'project/:project_id/task_lists/:task_list_id/reorder_task_list', :controller => 'tasks', :action => 'reorder', :method => :post
     
-    project.resources :task_lists, :has_many => [:comments], :member => { :order => :post } do |task_lists|
+    project.resources :task_lists, :has_many => [:comments], :collection => { :sortable => :get } do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
     end
     

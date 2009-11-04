@@ -1,5 +1,5 @@
 class TaskListsController < ApplicationController
-  before_filter :load_task_list, :except => [:index, :new, :create]
+  before_filter :load_task_list, :except => [:index, :new, :create, :sortable, :reorder]
     
   def index
     if @current_project.nil?
@@ -37,13 +37,18 @@ class TaskListsController < ApplicationController
     CommentRead.user(current_user).read_up_to(@comments.first) unless @comments.first.nil?
   end
   
-  def order
-    @task_list_id = "project_#{@current_project.id}_task_list_#{@task_list.id}"
-    params[@task_list_id].each_with_index do |task_id,idx|
-      task = @task_list.tasks.find(task_id)
-      task.update_attribute(:position,idx.to_i)
-    end
+  def sortable
+    @task_lists = @current_project.task_lists
+    respond_to {|f|f.js}
   end
+  
+  def reorder
+    params[:sortable_task_lists].each_with_index do |task_list_id,idx|
+      task_list = @current_project.task_lists.find(task_list_id)
+      task_list.update_attribute(:position,idx.to_i)
+    end
+  end  
+
   
   def destroy
     @task_list.destroy if @task_list.owner?(current_user)

@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:check]
-  before_filter :find_task, :only => [:show,:destroy,:update,:check,:uncheck]
+  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder]
+  before_filter :find_task, :only => [:show,:destroy,:update,:check,]
   
   def not_found
     
@@ -69,12 +69,12 @@ class TasksController < ApplicationController
     end
   end
   
-  def check
-    
-  end
-  
-  def uncheck
-    
+  def reorder
+    @task_list_id = "project_#{@current_project.id}_task_list_#{@task_list.id}_the_tasks"
+    params[@task_list_id].each_with_index do |task_id,idx|
+      task = @task_list.tasks.find(task_id)
+      task.update_attribute(:position,idx.to_i)
+    end
   end
   
   private

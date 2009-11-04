@@ -134,7 +134,12 @@ module TasksHelper
     end
   end
 
-  def task_drag_link(project,task_list,task)
+  def task_list_drag_link(task_list)
+    drag_image if task_list.owner?(current_user)
+  end
+
+
+  def task_drag_link(task)
     drag_image if task.owner?(current_user)
   end
 

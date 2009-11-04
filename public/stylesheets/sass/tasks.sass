@@ -4,12 +4,20 @@ div.active_task_list
 div.active_task
   :background rgb(255,255,0)
   :border solid 1px rgb(200,200,0)
+
 div.task_list_wrap
-  :margin-top 10px  
-  div.task_list
-    :border-bottom solid 1px rgb(210,210,210)
-    a
-      :font-size 12px
+  :margin
+    :top 10px  
+div.task_list
+  a
+    :font-size 12px
+    
+div#sortable_task_lists
+  :margin 10px 0px
+  
+div.task_list_wrap_reorder
+  :margin
+    :top 0px
 div.task
   :padding
     :left 5px
@@ -149,3 +157,6 @@ span.task_status_rejected
     :background rgb(0,200,0)
   span.task_status_rejected
     :background rgb(200,0,0)
+    
+.tasks
+  :border-top solid 1px rgb(210,210,210)    

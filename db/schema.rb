@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.text    :watchers_ids
     t.integer :assigned_id
     t.integer :status, :default => 0
+    t.boolean :archived => false
     t.timestamps
   end
  

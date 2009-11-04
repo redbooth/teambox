@@ -276,6 +276,7 @@ en:
     link:
       new: Task List
       edit: Edit
+      reorder: Reorder
     index:
       add_link: New Task List
     primer:

@@ -121,7 +121,25 @@ module TaskListsHelper
       :class => "#{action}_task_list_link",
       :id => task_list_id("#{action}_link",project,task_list)
   end
-  
+
+  def reorder_task_list_link(project,task_lists)
+    link_to_remote content_tag(:span,t("task_lists.link.reorder")), 
+      :url => sortable_project_task_lists_path(project),
+      :loading => reorder_button_loading,
+      :method => :get,
+      :html => {
+        :class => "reorder_task_list_link",
+        :id => 'reorder_link' }
+  end  
+
+  def reorder_task_lists(project,task_lists)
+    update_page do |page|
+      page << "$$('.tasks').each(function(task){ task.hide(); })"
+      page << "$$('.new_task_link').each(function(task){ task.hide(); })"
+      page << "$$('.task_list_wrap').each(function(task_list){ task_list.addClassName('task_list_wrap_reorder');})"
+    end
+  end
+
   def list_main_task_list(project,task_lists)
     render :partial => 'task_lists/main_task_lists',
     :collection => task_lists,
@@ -175,27 +193,30 @@ module TaskListsHelper
       :task_list => task_list }
   end
       
-  def task_list_sortable_tag(task_list)
+  
+  def task_lists_sortable(project)
     update_page_tag do |page|
-      page.sortable("project_#{task_list.project.id}_task_list_#{task_list.id}",{
+      page.sortable("sortable_task_lists",{
         :tag => 'div',
-        :url => order_project_task_list_path(task_list.project,task_list),
-        :only => 'task',
-        :format => page.literal('/task_(\d+)/'),
+        :url => reorder_task_lists_path(project),
+        :only => 'task_list',
+        :format => page.literal('/task_list_(\d+)/'),
         :handle => 'img.drag',
         :constraint => 'vertical'
       })
     end
   end
   
-  def task_list_sortable(task_list,url)
-    page.sortable("project_#{task_list.project.id}_task_list_#{task_list.id}",{
-      :tag => 'div',
-      :url => url,
-      :only => 'task',
-      :format => page.literal('/task_(\d+)/'),
-      :handle => 'img.drag'
-    })
+  def tasks_sortable(project,task_list)
+    update_page_tag do |page|    
+      page.sortable(task_list_id(:the_tasks,project,task_list),{
+        :tag => 'div',
+        :url => reorder_tasks_path(project,task_list),
+        :only => 'task',
+        :format => page.literal('/task_(\d+)/'),
+        :handle => 'img.drag',
+        :constraint => 'vertical' })
+    end      
   end
   
   def task_list_primer(project)
@@ -259,4 +280,18 @@ module TaskListsHelper
     page[item_list_id].addClassName('active_task')
   end
 
+  def list_sortable_task_lists(project,task_lists)
+    render :partial => 'task_lists/sortable_task_list', 
+      :collection => task_lists,
+      :as => :task_list,
+      :locals => {
+        :project => project }
+  end
+  
+  def reorder_button_loading
+    update_page do |page|
+      page['reorder_link'].className = 'loading_button'
+    end  
+  end
+  
 end
