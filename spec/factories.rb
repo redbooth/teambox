@@ -17,9 +17,10 @@ end
 Factory.define :user do |user|
   user.login { Factory.next(:login) }
   user.email { Factory.next(:email) }
-  user.name  'Andrew Brown'
-  user.password 'testing'
-  user.password_confirmation 'testing'
+  user.first_name 'Andrew'
+  user.last_name 'Wiggin'
+  user.password 'dragons'
+  user.password_confirmation 'dragons'
 end
 
 Factory.define :project do |project|

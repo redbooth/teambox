@@ -6,13 +6,20 @@
   = f.text_field :login
   = tooltip 'user_login', t('.tooltips.login')
 
-.name.text_field
-  = f.label :name, t('.name')
-  = f.text_field :name
+.first_name.text_field
+  = f.label :first_name, t('.first_name')
+  = f.text_field :first_name
+  = tooltip 'user_first_name', t('.tooltips.first_name')
+
+.last_name.text_field
+  = f.label :last_name, t('.last_name')
+  = f.text_field :last_name
+  = tooltip 'user_last_name', t('.tooltips.last_name')
 
 .email.text_field
   = f.label :email, t('.email')
   = f.text_field :email
+  = tooltip 'user_email', t('.tooltips.email')
 
 - if @invitation
   .use_this_email= t('.use_this_email')
@@ -26,6 +33,7 @@
     = f.label :password
     = f.password_field :password
     = password_strength :password_strength, 'user_password'
+    = tooltip 'user_password', t('.tooltips.password')
 
   .password.text_field
     = f.label :password_confirmation, 'Confirm Password'

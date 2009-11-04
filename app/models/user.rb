@@ -42,7 +42,8 @@ class User < ActiveRecord::Base
 
   attr_accessible :login, 
                   :email, 
-                  :name, 
+                  :first_name, 
+                  :last_name,
                   :biography, 
                   :password, 
                   :password_confirmation, 

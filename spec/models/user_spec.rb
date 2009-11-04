@@ -10,15 +10,16 @@ describe User do
   it { should have_one(:avatar) }
   
   it { should validate_presence_of     :login }
-  it { should validate_length_of       :login,    :within => 3..40 }
+  it { should validate_length_of       :login,      :within => 3..40 }
   it { should validate_uniqueness_of   :login }
   
   # TODO: Validates format of login, name and email
 
-  it { should validate_length_of       :name,     :maximum => 100 }
+  it { should validate_length_of       :first_name, :within => 1..20 }
+  it { should validate_length_of       :last_name,  :within => 1..20 }
                       
   it { should validate_presence_of     :email }
-  it { should validate_length_of       :email,    :within => 6..100 }
+  it { should validate_length_of       :email,      :within => 6..100 }
   it { should validate_uniqueness_of   :email }
                       
 # it { should validate_associated :projects }  
