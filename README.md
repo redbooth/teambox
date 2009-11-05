@@ -40,10 +40,15 @@ Run Migrations
 
 rake db:auto:migrate
 
+
 Configure models/emailer.rb and replace _app.teambox.com_ for your own domain name.
 Configure config/environment.rb and replace _app.teambox.com_ for your own domain name.
 Configure config/environment.rb and enter your email settings for smtp_settings.
 
+
+Rspec && Cucumber && Celerity && Culerity
+-------
+This stuff is shweet!
 
 Plugins were using you need to know about
 -------

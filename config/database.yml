@@ -19,5 +19,9 @@ production:
   password:
   database: teambox2_production
 
-cucumber:
+cucumber: &CUCUMBER
   <<: *TEST
+culerity_development:
+  <<: *CUCUMBER
+culerity_continuousintegration:
+  <<: *CUCUMBER
