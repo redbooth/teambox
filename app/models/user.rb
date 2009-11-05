@@ -5,7 +5,7 @@ require 'digest/sha1'
 
 class User < ActiveRecord::Base
   concerned_with :activation, :authentication, :completeness, :recent_projects, :validation
-  
+  acts_as_paranoid
   def before_save
     self.update_profile_score
     self.recent_projects ||= []

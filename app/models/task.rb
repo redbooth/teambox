@@ -14,7 +14,8 @@ class Task < ActiveRecord::Base
   belongs_to :assigned, :class_name => 'User'
   
   acts_as_list :scope => :task_list
-  
+  acts_as_paranoid
+    
   attr_accessible :name, :assigned_id, :status
 
   STATUSES = ['new','open','hold','resolved','rejected']

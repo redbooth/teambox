@@ -3,6 +3,8 @@
 
 class Project < ActiveRecord::Base  
   include GrabName
+  acts_as_paranoid
+  
   belongs_to :user # project owner
 
   has_many :people, :dependent => :destroy # people invited to the project

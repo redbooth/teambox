@@ -12,7 +12,7 @@ class TaskList < ActiveRecord::Base
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
   acts_as_list :scope => :project
-    
+  acts_as_paranoid    
   attr_accessible :name
 
   validates_length_of :name, :minimum => 3

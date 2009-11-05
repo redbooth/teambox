@@ -5,3 +5,4 @@ page.replace 'task_lists',
   :locals => {
     :project => @current_project,
     :task_lists => @task_lists }
+page.select('.drag').each{|e|e.show}

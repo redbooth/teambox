@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.boolean  :welcome,        :default => false
     t.boolean  :confirmed_user, :default => false
     t.integer  :last_read_announcement
+    t.datetime :deleted_at
     t.timestamps
   end
  
@@ -56,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :permalink
     t.integer :last_comment_id, :null => true, :default => nil
     t.integer :comments_count
+    t.datetime :deleted_at
     t.timestamps
   end
   
@@ -63,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.integer :project_id
     t.integer :source_user_id
+    t.datetime :deleted_at
     t.timestamps
   end
  
@@ -75,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :last_comment_id, :null => true, :default => nil
     t.integer :comments_count
     t.text    :watchers_ids
+    t.datetime :deleted_at
     t.timestamps
   end
   
@@ -91,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :assigned_id
     t.integer :status, :default => 0
     t.boolean :archived => false
+    t.datetime :deleted_at    
     t.timestamps
   end
  
@@ -101,6 +106,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string   :target_type
     t.string   :action
     t.string   :comment_type
+    t.datetime :deleted_at    
     t.timestamps
   end
   
@@ -114,6 +120,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.float   :hours
     t.boolean :billable
     t.integer :status, :default => 0
+    t.datetime :deleted_at    
     t.timestamps
   end
   
@@ -133,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :last_comment_id, :null => true, :default => nil
     t.integer :comments_count
     t.text    :watchers_ids
+    t.datetime :deleted_at
     t.timestamps
   end
   
@@ -143,6 +151,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.text    :description
     t.integer :last_comment_id, :null => true, :default => nil
     t.text    :watchers_ids
+    t.datetime :deleted_at    
     t.timestamps
   end
   
@@ -151,6 +160,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :project_id
     t.string  :name
     t.integer :position
+    t.datetime :deleted_at    
     t.timestamps
   end
   
@@ -162,6 +172,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.text  :body_html
     t.integer :position
     t.integer :last_comment_id, :null => true, :default => nil
+    t.datetime :deleted_at
     t.timestamps
   end
  

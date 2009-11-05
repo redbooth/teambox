@@ -1,7 +1,8 @@
 class Page < ActiveRecord::Base
   include GrabName
   include Watchable
-
+  acts_as_paranoid
+  
   belongs_to :user
   belongs_to :project
   has_many :notes, :order => 'position'

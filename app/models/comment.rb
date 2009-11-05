@@ -4,6 +4,8 @@ class Comment < ActiveRecord::Base
   belongs_to :project
 
   has_many :uploads
+
+  acts_as_paranoid
     
   attr_accessible :body, :hours, :status
   formats_attributes :body

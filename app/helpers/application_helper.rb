@@ -160,7 +160,7 @@ module ApplicationHelper
   end
   
   def drag_image
-    image_tag('drag.png', :class => 'drag')
+    image_tag('drag.png', :class => 'drag', :style => 'display: none')
   end
 
   def add_image

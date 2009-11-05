@@ -2,7 +2,8 @@ class Activity < ActiveRecord::Base
   belongs_to :target, :polymorphic => true
   belongs_to :user
   belongs_to :project
-
+  acts_as_paranoid
+  
   named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_type = 'TaskList' || comment_type = 'Task'"
       
   def self.log(project,target,action,creator_id)
