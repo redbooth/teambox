@@ -1,5 +1,5 @@
 class TaskList < ActiveRecord::Base
-
+  include GrabName
   include Watchable
 
   default_scope :order => 'created_at DESC'

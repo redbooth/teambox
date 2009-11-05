@@ -1,5 +1,5 @@
 class Conversation < ActiveRecord::Base
-
+  include GrabName
   include Watchable
 
   belongs_to :user

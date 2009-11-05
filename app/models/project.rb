@@ -1,7 +1,8 @@
 # A User model describes an actual user, with his password and personal info.
 # A Person model describes the relationship of a User that follows a Project.
 
-class Project < ActiveRecord::Base
+class Project < ActiveRecord::Base  
+  include GrabName
   belongs_to :user # project owner
 
   has_many :people, :dependent => :destroy # people invited to the project
@@ -26,7 +27,12 @@ class Project < ActiveRecord::Base
   attr_accessible :name, :permalink
   
   has_permalink :name
-  
+
+  def self.grab_name_by_permalink(permalink)
+    e = self.find_by_permalink(permalink,:select => 'name')
+    e = e.nil? ? '' : e.name
+  end
+
   def owner?(u)
     user == u
   end

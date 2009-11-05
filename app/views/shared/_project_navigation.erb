@@ -12,23 +12,23 @@ render_tabnav :project do
         t.highlights_on :controller => :projects, :action => :index
       end
       
-      add_tab do |t|
-        t.named t('.all_conversations')
-        t.links_to conversations_path
-        t.highlights_on :controller => :conversations, :action => :index
-      end
-
-      add_tab do |t|
-        t.named t('.all_task_lists')
-        t.links_to task_lists_path
-        t.highlights_on :controller => :task_lists, :action => :index
-      end
-      
-      add_tab do |t|
-        t.named t('.all_pages')
-        t.links_to pages_path
-        t.highlights_on :controller => :pages, :action => :index
-      end
+      #add_tab do |t|
+      #  t.named t('.all_conversations')
+      #  t.links_to conversations_path
+      #  t.highlights_on :controller => :conversations, :action => :index
+      #end
+      #
+      #add_tab do |t|
+      #  t.named t('.all_task_lists')
+      #  t.links_to task_lists_path
+      #  t.highlights_on :controller => :task_lists, :action => :index
+      #end
+      #
+      #add_tab do |t|
+      #  t.named t('.all_pages')
+      #  t.links_to pages_path
+      #  t.highlights_on :controller => :pages, :action => :index
+      #end
 
   #    add_tab do |t|
   #      t.named t('.all_conversations')

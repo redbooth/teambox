@@ -410,3 +410,13 @@ en:
           title: 'Expand your profile to 30 words'
   form:
     cancel: Cancel
+  page_title:
+    show_projects: Overview
+    index_task_lists: All Task Lists
+    index_conversations: All Conversations
+    index_pages: All Pages
+    index_uploads: All File Uploads
+    index_projects: All Projects
+    index_people: People
+    edit_users: Edit
+    welcome_users: Welcome!

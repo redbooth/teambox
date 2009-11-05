@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   filter_parameter_logging :password
 
-  before_filter :confirmed_user?, :load_project, :login_required, :set_locale, :touch_user, :recent_projects, :belongs_to_project?
+  before_filter :confirmed_user?, :load_project, :login_required, :set_locale, :touch_user, :recent_projects, :belongs_to_project?, :set_page_title
   
   private
   
@@ -67,5 +67,38 @@ class ApplicationController < ActionController::Base
     def touch_user
       current_user.touch if logged_in?
     end
-    
+
+    def set_page_title
+      location_name = "#{params[:action]}_#{params[:controller]}"
+      translate_location_name = t("page_title.#{location_name}")
+
+      if params.has_key?(:id) && (location_name == 'show_projects' || 'edit_projects')
+        #### I dont know why but this is breaking
+        ##        
+        #project_name = Project.find(params[:id],:select => 'name').name #Not working for some reason - .grab_name(params[:id])
+        #@page_title = "&rarr; #{project_name} &rarr; #{translate_location_name}"
+      elsif params.has_key?(:project_id)
+        project_name = Project.grab_name_by_permalink(params[:project_id])
+        name = nil
+        case location_name
+          when 'show_tasks'
+            name = Task.grab_name(params[:id])
+          when 'show_task_lists'
+            name = TaskList.grab_name(params[:id])
+          when 'show_conversations'
+            name = Conversations.grab_name(params[:id])
+        end  
+        @page_title = "&rarr; #{project_name} &rarr; #{ name.nil? ? translate_location_name : name }"
+      else
+        name = nil
+        user_name = nil
+        case location_name
+          when 'edit_users'
+            user_name = current_user.name
+          when 'show_users'
+            user_name = current_user.name            
+        end    
+        @page_title = "&rarr; #{ "#{user_name} &rarr;" unless user_name.nil? } #{translate_location_name}"
+      end    
+    end
 end
