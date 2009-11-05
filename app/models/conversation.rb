@@ -11,9 +11,9 @@ class Conversation < ActiveRecord::Base
 
   serialize :watchers_ids
 
-  attr_accessible :name
+  attr_accessible :name, :body
   attr_accessor :body
-
+  
   def after_create
     self.project.log_activity(self,'create')
     self.add_watcher self.user
