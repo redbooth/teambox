@@ -1,3 +1,4 @@
+@task.reload
 page.replace_task(@current_project,@task_list,@task)
 page.replace_task_header(@current_project,@task_list,@task)
 
@@ -8,7 +9,6 @@ submit_id = task_id(:edit_submit,@current_project,@task_list,@task)
 
 page[header_id].show
 page[form_id].hide 
-page << "Form.reset('#{form_id}')"
 page[loading_id].hide
 page[submit_id].show
 
