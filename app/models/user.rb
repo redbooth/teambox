@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
                   :comments_ascending, 
                   :conversations_first_comment, 
                   :first_day_of_week
-                  
+
   def can_view?(user)
     shared_projects = self.projects & user.projects
     not shared_projects.empty?    

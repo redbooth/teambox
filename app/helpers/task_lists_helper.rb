@@ -1,25 +1,4 @@
 module TaskListsHelper
-  def render_task_list(project,task_list,current_target)
-    render :partial => 'task_lists/task_list', :locals => {
-      :project => project,
-      :task_list => task_list,
-      :current_target => current_target }
-  end
-
-  def task_list_form(project,task_list)  
-    render :partial => 'task_lists/form', :locals => {
-      :project => project,
-      :task_list => task_list }
-  end
-
-  def insert_task_list(project,task_list)  
-    page.insert_html :top, "task_lists",
-      :partial => 'task_lists/task_list_with_tasks', 
-      :locals => {  
-        :project => project, 
-        :task_list => task_list,
-        :current_target => nil }
-  end
 
   def render_task_list(project,task_list,current_target)
     render :partial => 'task_lists/task_list', :locals => {

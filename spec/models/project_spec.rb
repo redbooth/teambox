@@ -29,8 +29,9 @@ describe Project do
     it "should belong to its owner" do
       @project.user.should == @owner
       @project.owner?(@owner).should be_true
-      @project.users.should == [@owner]
-      @owner.reload.projects.should include(@project)
+      @project.users.should include(@owner)
+      @owner.reload
+      @owner.projects.should include(@project)
     end
     
     it "should add users to the project, only once" do

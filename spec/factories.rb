@@ -3,11 +3,11 @@ Factory.define :task do |task|
 end
 
 Factory.sequence :login do |n|
-  "shweet_#{n}"
+  "gandhi_#{n}"
 end
 
 Factory.sequence :email do |n|
-  "shweet_#{n}@localhost.com"
+  "gandhi_#{n}@localhost.com"
 end
 
 Factory.sequence :name do |n|
@@ -18,9 +18,9 @@ Factory.define :user do |user|
   user.login { Factory.next(:login) }
   user.email { Factory.next(:email) }
   user.first_name 'Andrew'
-  user.last_name 'Brown'
-  user.password 'lobster'
-  user.password_confirmation 'lobster'
+  user.last_name 'Wiggin'
+  user.password 'dragons'
+  user.password_confirmation 'dragons'
 end
 
 Factory.define :project do |project|
