@@ -135,9 +135,9 @@ module Caboose #:nodoc:
                 with_deleted_scope { calculate_with_deleted(*args) }
           end
 
-          def delete_all(conditions = nil)
-            self.update_all ["#{self.deleted_attribute} = ?", current_time], conditions
-          end
+#          def delete_all(conditions = nil)
+#            self.update_all ["#{self.deleted_attribute} = ?", current_time], conditions
+#          end
 
           protected
             def current_time
