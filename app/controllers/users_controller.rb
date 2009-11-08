@@ -191,7 +191,10 @@ class UsersController < ApplicationController
   
   private
     def find_user
-      @user = User.find_by_id(params[:id])
+      unless @user = User.find_by_id(params[:id])
+        flash[:error] = "Unexisting user"
+        redirect_to '/'
+      end
     end
     
     def load_invitation
