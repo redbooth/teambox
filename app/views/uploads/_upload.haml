@@ -3,7 +3,6 @@
   .info
     = link_to file_icon_image(upload,'48px'), project_upload_path(upload.project,upload.filename)
   .block
-    = upload_thumbnail_image(project,upload)
     .filename.show_details
       .date
         = posted_date upload.created_at
@@ -16,5 +15,6 @@
         %p
           = upload_text_link(upload)
           = parenthesize(number_to_human_size(upload.filesize))
+    = upload_thumbnail_image(project,upload)
     = #edit_upload_form(project,upload)
   .clear

@@ -4,9 +4,9 @@
 
 - unless @uploads.empty?
   #uploads
-    =list_uploads(@current_project,@uploads)
+    = list_uploads(@current_project,@uploads)
   .clear
   
 - else
-  =upload_primer(@current_project)
+  = upload_primer(@current_project)
   

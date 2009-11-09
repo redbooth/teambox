@@ -140,9 +140,16 @@ module UploadsHelper
   end
   
   def add_upload_link
-    link_to_function '<span>Upload a file</span>', "$('edit_upload').show(); $('add_upload_link').hide();", :class => 'button', :id => "add_upload_link"
+    link_to_function content_tag(:span, t('.new_file')), show_new_upload_form, :class => 'button', :id => "add_upload_link"
   end
   
+  def show_new_upload_form
+    update_page do |page|
+      page['edit_upload'].show
+      page['add_upload_link'].hide
+    end
+  end
+    
   def delete_upload(upload,target)
     if target.new_record?
       update_page do |page|
@@ -176,7 +183,7 @@ module UploadsHelper
   
   
   def cancel_edit_link(upload)
-    link_to_function 'cancel', update_page { |page| page.hide_upload_form(upload) }
+    link_to_function t('common.cancel'), update_page { |page| page.hide_upload_form(upload) }
   end
   
   def file_icon_image(upload,size='48px')
