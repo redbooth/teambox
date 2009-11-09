@@ -10,6 +10,18 @@ module NavigationHelpers
     
     when /the home\s?page/
       '/'
+
+    when /the task lists page/
+      "/projects/ruby_rockstars/task_lists"
+      
+    when /the new project page/  
+      "/projects/new"
+
+    when /my settings page/
+      "/settings"
+      
+    #when /the index page for (.+)/
+    #  polymorphic_path(model($1))
     
     # Add more mappings here.
     # Here is a more fancy example:

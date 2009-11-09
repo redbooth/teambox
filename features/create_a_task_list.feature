@@ -1,11 +1,10 @@
 Feature Creating a task list
 
   Scenario: A logged in user creating a valid task list on my project
-    Given I am logged in as a user
-    And A project exists for the user
-    And I am at a task list page for my project
-    When I click the task lists button
-    And a task lists form appear
+    Given I am logged in as mislav
+    And a project exists with name: "ruby_rockstars"
+    When I go to the task lists page
+    And I click "new_task_list_link"
     And it will auto focus on the name textfield
     And I fill in "Name" with "Finish Writing Specs"
     And I press "Save task"

@@ -13,7 +13,7 @@ module ProjectsHelper
   end
   
   def new_project_link
-    link_to content_tag(:span, t('.new_project')), new_project_path, :class => 'button'
+    link_to content_tag(:span, t('.new_project')), new_project_path, :class => 'button', :id => 'new_project_link'
   end
 
   def project_fields(f,project)
