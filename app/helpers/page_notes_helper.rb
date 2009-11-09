@@ -84,8 +84,8 @@ module PageNotesHelper
   def remove_form(show_element=nil)
     update_page do |page|  
       page << "$(this).up('form').remove();"
-      unless show_element.nil?
-        page[show_element].show();
+      if show_element
+        page[show_element].show
       end
     end
   end
@@ -102,11 +102,11 @@ module PageNotesHelper
       
   def loading_note_form(toggle,id=nil)
     if toggle
-      page["note_form_loading#{"_#{id}" unless id.nil?}"].show
-      page["note_submit#{"_#{id}" unless id.nil?}"].hide
+      page["note_form_loading#{"_#{id}" if id}"].show
+      page["note_submit#{"_#{id}" if id}"].hide
     else
-      page["note_form_loading#{"_#{id}" unless id.nil?}"].hide
-      page["note_submit#{"_#{id}" unless id.nil?}"].show
+      page["note_form_loading#{"_#{id}" if id}"].hide
+      page["note_submit#{"_#{id}" if id}"].show
     end
   end
   

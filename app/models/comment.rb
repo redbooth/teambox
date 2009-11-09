@@ -43,15 +43,15 @@ class Comment < ActiveRecord::Base
           :target_id => target.id},
           :order => 'id DESC')
 
-      if last_comment.nil?
-        target.last_comment_id = nil
-        CommentRead.delete_all :target_type => target.class.name, :target_id => target.id
-      else
+      if last_comment
         target.last_comment_id = last_comment.id
         CommentRead.update_all("last_read_comment_id = #{last_comment.id}",
           :target_type => target.class.name,
           :target_id => target.id,
           :last_read_comment_id => original_id)
+      else
+        target.last_comment_id = nil
+        CommentRead.delete_all :target_type => target.class.name, :target_id => target.id
       end
       target.save(false)
     end

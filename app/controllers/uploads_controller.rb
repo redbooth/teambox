@@ -75,7 +75,7 @@ class UploadsController < ApplicationController
     end
     
     def load_comment
-      unless params[:comment_id].nil?
+      if params[:comment_id]
         Comment.find(params[:comment_id])
       else
         @current_project.comments.new(:user_id => current_user.id)

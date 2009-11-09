@@ -1,5 +1,5 @@
 - content_for :column do
-  - unless project.nil?
+  - if project
     = new_conversation_link(project)
   .conversations
     = list_conversations(conversations,conversation)

@@ -4,6 +4,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_ROOT)
 require 'spec/autorun'
 require 'spec/rails'
+require 'factory_girl'
+require File.dirname(__FILE__) + '/factories.rb'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

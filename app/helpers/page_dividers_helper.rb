@@ -84,8 +84,8 @@ module PageDividersHelper
   def remove_form(show_element=nil)
     update_page do |page|  
       page << "$(this).up('form').remove();"
-      unless show_element.nil?
-        page[show_element].show();
+      if show_element
+        page[show_element].show
       end
     end
   end
@@ -102,11 +102,11 @@ module PageDividersHelper
       
   def loading_divider_form(toggle,id=nil)
     if toggle
-      page["divider_form_loading#{"_#{id}" unless id.nil?}"].show
-      page["divider_submit#{"_#{id}" unless id.nil?}"].hide
+      page["divider_form_loading#{"_#{id}" if id}"].show
+      page["divider_submit#{"_#{id}" if id}"].hide
     else
-      page["divider_form_loading#{"_#{id}" unless id.nil?}"].hide
-      page["divider_submit#{"_#{id}" unless id.nil?}"].show
+      page["divider_form_loading#{"_#{id}" if id}"].hide
+      page["divider_submit#{"_#{id}" if id}"].show
     end
   end
   

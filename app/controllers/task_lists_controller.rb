@@ -2,16 +2,16 @@ class TaskListsController < ApplicationController
   before_filter :load_task_list, :except => [:index, :new, :create, :sortable, :reorder]
     
   def index
-    if @current_project.nil?
+    if @current_project
+      @task_lists = @current_project.task_lists
+      @activities = @current_project.activities.for_task_lists
+    else
       @task_lists = []
       @activities = []
       current_user.projects.each do |project|
         @task_lists |= project.task_lists
         @activities |= project.activities.for_task_lists
       end
-    else
-      @task_lists = @current_project.task_lists
-      @activities = @current_project.activities.for_task_lists
     end
   end
 
@@ -34,7 +34,7 @@ class TaskListsController < ApplicationController
     @task_lists = @current_project.task_lists
     @comments = @task_list.comments
   ensure
-    CommentRead.user(current_user).read_up_to(@comments.first) unless @comments.first.nil?
+    CommentRead.user(current_user).read_up_to(@comments.first) if @comments.first
   end
   
   def sortable

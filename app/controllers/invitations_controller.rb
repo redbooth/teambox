@@ -35,7 +35,7 @@ class InvitationsController < ApplicationController
   
   def resend
     @invitation = Invitation.find(params[:id])
-    @invitation.send_email unless @invitation.nil?
+    @invitation.send_email if @invitation
     respond_to{|f|f.js}
   end
   

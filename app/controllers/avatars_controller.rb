@@ -14,7 +14,6 @@ class AvatarsController < ApplicationController
     end
 
     def show
-
       @coords = {
         :x1 => @avatar.x1,
         :y1 => @avatar.y1,
@@ -52,19 +51,18 @@ class AvatarsController < ApplicationController
            @user.avatar.set_width_and_height
           format.html { redirect_to edit_user_path(@user) }
         else
-          format.html { render 'new' }
+          format.html { render :new }
         end
       end
     end
 
     def update
-
       respond_to do |format|
         if @avatar.update_attributes(params[:avatar])
           format.html { redirect_to edit_user_path(params[:user_id]) }
         else
           logger.info "check avatars: #{@avatar.errors}"
-          format.html { render 'edit' }
+          format.html { render :edit }
         end
       end
     end

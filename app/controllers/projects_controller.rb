@@ -45,7 +45,7 @@ class ProjectsController < ApplicationController
       f.json { render :json => @activities.to_json(options) }
     end
   ensure
-    unless @current_project.comments.first.nil?
+    if @current_project.comments.first
       CommentRead.user(current_user).read_up_to(@current_project.comments.first,true)
     end
   end

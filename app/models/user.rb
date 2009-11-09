@@ -56,8 +56,7 @@ class User < ActiveRecord::Base
                   :first_day_of_week
 
   def can_view?(user)
-    shared_projects = self.projects & user.projects
-    not shared_projects.empty?    
+    not projects_shared_with(user).empty?
   end
 
   def projects_shared_with(user)

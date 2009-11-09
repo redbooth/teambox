@@ -20,7 +20,7 @@ class NotesController < ApplicationController
   
   def destroy
     @note = @page.notes.find(params[:id])
-    @note.destroy unless @note.nil?
+    @note.destroy if @note
     respond_to{|f|f.js}    
   end
   

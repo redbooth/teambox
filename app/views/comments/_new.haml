@@ -7,11 +7,11 @@
     = the_comment_upload_link(comment) unless comment.project.nil?
     = comment_area(comment)
     .status
-      -unless target.nil?
-        -if target.class.to_s == 'Task'
+      - if target
+        - if target.class.to_s == 'Task'
           = label_tag 'Change the status'
           = select_tag 'comment[status]', options_for_select(Task::STATUSES)
     .submit
       = f.submit t('.submit')
   .clear
-=javascript_tag "$('new_comment').auto_focus()"
+= javascript_tag "$('new_comment').auto_focus()"

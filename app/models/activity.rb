@@ -25,7 +25,7 @@ class Activity < ActiveRecord::Base
 
   def action_comment_type
     i = "#{action}#{target_type}"
-    i +="#{comment_type}" unless comment_type.nil?
+    i +="#{comment_type}" if comment_type
     i.underscore
   end
 

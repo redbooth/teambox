@@ -44,7 +44,7 @@ class UsersController < ApplicationController
       # reset session
       self.current_user = @user # !! now logged in
 
-      unless @invitation.nil?
+      if @invitation
         person = @invitation.project.people.new(:user => @user, :source_user_id => @invitation.user)
         person.save
 
@@ -200,7 +200,7 @@ class UsersController < ApplicationController
     def load_invitation
       if params[:invitation]
         @invitation = Invitation.find_by_token(params[:invitation])
-        @invitation_token = params[:invitation] unless @invitation.nil?
+        @invitation_token = params[:invitation] if @invitation
       end
     end
 

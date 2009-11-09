@@ -85,10 +85,10 @@ class CommentRead < ActiveRecord::Base
       
       if @@time_cache["#{target.class.name}"][target.id].nil?
         last_read = last_read_comment(target)
-        if last_read.nil?
-          @@time_cache["#{target.class.name}"][target.id] = DateTime.new(0)
-        else
+        if last_read
           @@time_cache["#{target.class.name}"][target.id] = last_read.last_read_comment.created_at
+        else
+          @@time_cache["#{target.class.name}"][target.id] = DateTime.new(0)
         end
       end
 

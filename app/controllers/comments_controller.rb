@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
     def save_uploads(comment)      
       params[:uploads].if_defined.each do |upload_id|
         upload = Upload.find(upload_id)
-        unless upload.nil?
+        if upload
           upload.comment_id = comment.id
           upload.save(false)
         end
@@ -50,7 +50,7 @@ class CommentsController < ApplicationController
       
       params[:uploads_deleted].if_defined.each do |upload_id|
         upload = Upload.find(upload_id)
-        unless upload.nil?
+        if upload
           upload.destroy
         end
       end

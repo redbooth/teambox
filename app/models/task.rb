@@ -23,8 +23,7 @@ class Task < ActiveRecord::Base
   end
 
   def before_save
-    if position.nil?
-      puts "-------|||||| #{self.task_list.tasks}"
+    unless position
       last_position = self.task_list.tasks.first(:select => 'position')
       self.position = last_position.nil? ? 1 : last_position.position.succ
     end
@@ -36,7 +35,7 @@ class Task < ActiveRecord::Base
   end
 
   def assigned?(u)
-    assigned.user.id = u.id unless assigned.nil?
+    assigned.user.id = u.id if assigned
   end
   
   def owner?(u)

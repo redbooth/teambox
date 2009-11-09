@@ -35,7 +35,7 @@ class TasksController < ApplicationController
     @task = @current_project.tasks.find(params[:id])
     @comments = @task.comments
   ensure
-    CommentRead.user(current_user).read_up_to(@comments.first) unless @comments.first.nil?
+    CommentRead.user(current_user).read_up_to(@comments.first) if @comments.first
   end
   
   def new

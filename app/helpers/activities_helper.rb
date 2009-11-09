@@ -4,7 +4,7 @@ module ActivitiesHelper
   end
   
   def show_activity(project,activity,target)
-    unless target.nil? #dirty hack for when activities exist and there target doesn't
+    if target #dirty hack for when activities exist and there target doesn't
       case activity.action_type  
         when 'create_comment'
           show_comment(target)

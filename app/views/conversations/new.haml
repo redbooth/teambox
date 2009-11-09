@@ -13,14 +13,20 @@
 - form_for [@current_project,@conversation] do |f|
   = conversation_fields(f)  
 
-  .watchers
-    %h3= t('.add_suscribers')
-    - for user in @current_project.users
-      - unless user == current_user
-        .user
-          = user_checkbox(user)
-    .clear
-    %p= t('.subscribe_note')
+  - if @current_project.users.size > 1
+    .watchers
+      %h3= t('.add_suscribers')
+      - for user in @current_project.users
+        - unless user == current_user
+          .user
+            = user_checkbox(user)
+      .clear
+      %p= t('.subscribe_note')
+  - else
+    .watchers
+      %h3= t('.invite_users')
+      .clear
+      %p= t('.no_users_yet', :invite_link => project_people_path(@current_project))
     
   .submit
     = f.submit t('.submit')

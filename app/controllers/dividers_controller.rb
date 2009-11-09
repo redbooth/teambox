@@ -20,7 +20,7 @@ class DividersController < ApplicationController
   
   def destroy
     @divider = @page.dividers.find(params[:id])
-    @divider.destroy unless @divider.nil?
+    @divider.destroy if @divider
     respond_to{|f|f.js}    
   end
   

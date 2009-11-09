@@ -2,13 +2,13 @@ class PagesController < ApplicationController
   before_filter :load_page, :only => [ :show, :edit, :update ]
   
   def index
-    if @current_project.nil?
+    if @current_project
+      @pages = @current_project.pages
+    else
       @pages = []
       current_user.projects.each do |project|
         @pages |= project.pages
       end
-    else
-      @pages = @current_project.pages
     end
   end
   
@@ -35,11 +35,11 @@ class PagesController < ApplicationController
   end
   
   def update
-    unless params[:notes].nil?
+    if params[:notes]
       position = 0
       params[:notes].each do |note_id|
         note = @page.notes.detect { |n| n.id == note_id.to_i }
-        unless note.nil?
+        if note
           note.position = position
           note.save(false)
           position += 1
@@ -65,7 +65,7 @@ class PagesController < ApplicationController
         flash[:error] = "Page #{params[:id]} not found in this project"
       end
       
-      if @page.nil?
+      unless @page
         redirect_to project_path(@current_project)
       end
     end

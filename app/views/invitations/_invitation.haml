@@ -1,5 +1,5 @@
 .person.invitation{:id => "invitation_#{invitation.id}"}
-  - unless invitation.invited_user.nil?
+  - if invitation.invited_user
     = thumb_avatar(invitation.invited_user)
     = t('.invited_user', :invitee => invitation.invited_user.login, :inviter => invitation.user.login)
   - else

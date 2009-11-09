@@ -2,7 +2,7 @@
 module ApplicationHelper
 
   def submit(name,path,id = nil)
-    submit_id = "submit_#{id}" unless id.nil?
+    submit_id = "submit_#{id}" if id
     render :partial => 'shared/submit', :locals => { 
       :name => name, 
       :path => path, 
@@ -91,24 +91,24 @@ module ApplicationHelper
   end
   
   def loading(action,id=nil)
-    if id.nil?
-      image_tag('loading.gif', :id => "#{action}_loading", :class => 'loading', :style => 'display: none')
-    else  
+    if id
       image_tag('loading.gif', :id => "#{action}_loading_#{id}", :class => 'loading', :style => 'display: none')
+    else  
+      image_tag('loading.gif', :id => "#{action}_loading", :class => 'loading', :style => 'display: none')
     end
   end
   
   def show_loading(action,id=nil)
     update_page do |page|
-      if id.nil?
-        page["#{action}_loading"].show
-        page.ef("#{action}_link")
-          page["#{action}_link"].hide
-        page.en
-      else
+      if id
         page["#{action}_loading_#{id}"].show
         page.ef("#{action}_#{id}_link")
           page["#{action}_#{id}_link"].hide
+        page.en
+      else
+        page["#{action}_loading"].show
+        page.ef("#{action}_link")
+          page["#{action}_link"].hide
         page.en
       end
     end
@@ -116,15 +116,15 @@ module ApplicationHelper
   
   def hide_loading(action,id=nil)
     update_page do |page|
-      if id.nil?
-        page["#{action}_loading"].hide
-        page.ef("#{action}_link")
-          page["#{action}_link"].hide
-        page.en
-      else
+      if id
         page["#{action}_loading_#{id}"].hide
         page.ef("#{action}_#{id}_link")
           page["#{action}_#{id}_link"].show
+        page.en
+      else
+        page["#{action}_loading"].hide
+        page.ef("#{action}_link")
+          page["#{action}_link"].hide
         page.en
       end
     end
@@ -168,7 +168,7 @@ module ApplicationHelper
   end
   
   def loading_action_image(e=nil)
-    image_tag('loading_action.gif', :id => "loading_action#{ "_#{e}" unless e.nil?}")
+    image_tag('loading_action.gif', :id => "loading_action#{ "_#{e}" if e}")
   end
   
   def reload_javascript_events
@@ -209,7 +209,7 @@ module ApplicationHelper
   def js_id(locals=[])
     id = []
     locals.each do |m|
-      unless m.nil?
+      if m
         id << "#{m.class.to_s.underscore}_#{m.id}" unless m.new_record?
       end  
     end

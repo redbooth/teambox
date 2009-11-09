@@ -40,18 +40,18 @@ class ApplicationController < ActionController::Base
       if project_id
         @current_project = Project.find_by_permalink(project_id)
         
-        if @current_project.nil?
+        if @current_project
+          current_user.add_recent_project(@current_project) if current_user
+        else        
           flash[:error] = "The project <i>#{h(project_id)}</i> doesn't exist."
           redirect_to projects_path, :status => 301
-        else        
-          current_user.add_recent_project(@current_project) unless current_user.nil?
         end
       end
     end
     
     def recent_projects
       if logged_in?
-        unless current_user.recent_projects.nil?
+        if current_user.recent_projects
           @recent_projects = current_user.recent_projects
         else
           @recent_projects = []
@@ -88,7 +88,7 @@ class ApplicationController < ActionController::Base
           when 'show_conversations'
             name = Conversations.grab_name(params[:id])
         end  
-        @page_title = "&rarr; #{project_name} &rarr; #{ name.nil? ? translate_location_name : name }"
+        @page_title = "&rarr; #{project_name} &rarr; #{ name ? name : translate_location_name }"
       else
         name = nil
         user_name = nil
@@ -98,7 +98,7 @@ class ApplicationController < ActionController::Base
           when 'show_users'
             user_name = current_user.name            
         end    
-        @page_title = "&rarr; #{ "#{user_name} &rarr;" unless user_name.nil? } #{translate_location_name}"
+        @page_title = "&rarr; #{ "#{user_name} &rarr;" if user_name } #{translate_location_name}"
       end    
     end
 end

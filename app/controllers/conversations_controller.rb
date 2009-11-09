@@ -22,13 +22,13 @@ class ConversationsController < ApplicationController
   end
   
   def index
-    if @current_project.nil?
+    if @current_project
+      @conversations = @current_project.conversations
+    else
       @conversations = []
       current_user.projects.each do |project|
         @conversations |= project.conversations
       end
-    else
-      @conversations = @current_project.conversations
     end
   end
   
@@ -61,9 +61,7 @@ class ConversationsController < ApplicationController
         flash[:error] = "Conversation #{params[:id]} not found in this project"
       end
       
-      if @conversation.nil?
-        redirect_to project_path(@current_project)
-      end
+      redirect_to project_path(@current_project) unless @conversation
     end
     
     def add_watchers(hash)
