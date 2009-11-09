@@ -9,7 +9,7 @@
         = posted_date upload.created_at
       .name
         = link_to upload.user.name, user_path(upload.user)
-        = "uploaded a file:"
+        = t('.uploaded_a_file')
       .body
         - if upload.description
           %p= h(upload.description)

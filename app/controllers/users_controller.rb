@@ -129,7 +129,7 @@ class UsersController < ApplicationController
       @user.expire_login_code!
       self.current_user = @user
       redirect_to edit_user_path(@user)
-      flash[:success] = t('users.reset_password.chage_password_now')
+      flash[:success] = t('users.reset_password.change_password_now')
       flash[:change_password] = true
     else
       flash[:error] = t('users.activation.invalid_user')

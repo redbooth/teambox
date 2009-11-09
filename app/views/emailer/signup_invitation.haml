@@ -22,5 +22,4 @@
     = link_to new_user_url(:invitation => @invitation.token), new_user_url(:invitation => @invitation.token)
 
   .footer{ :style => email_text(:small) }
-    %p
-      = t('emailer.invitation.report_abuse')
+    %p= t('emailer.invitation.report_abuse')

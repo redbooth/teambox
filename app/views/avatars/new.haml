@@ -1,9 +1,9 @@
 .form_user_wrap
   - form_for :avatar, @avatar, :url => user_avatar_path(@user), :html => { :class => 'new_avatar', :multipart => true } do |f|
     .image_file
-      %label{ :for => 'image_file'} Upload Image
+      %label{ :for => 'image_file'}= t('.title')
       = f.file_field :file
     .submit
-      = f.submit "Upload this Image"
+      = f.submit t('.upload')
       or
-      = link_to 'Cancel', edit_user_path(@user)
+      = link_to t('common.cancel'), edit_user_path(@user)

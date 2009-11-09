@@ -1,6 +1,5 @@
 - content_for :column do
-  oh, yeah, baby
-
+  = @current_project.name
 
 - form_for @current_project do |f|
   = project_fields(f,@current_project)

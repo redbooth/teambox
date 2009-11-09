@@ -5,4 +5,4 @@
     = task.name
   .assignment
     - if task.assigned?(current_user)
-      = "Assigned to #{link_to task.assigned.user.name, user_path(current_user)}"
+      = t('.assigned_to', :user => link_to(task.assigned.user.name, user_path(current_user)))

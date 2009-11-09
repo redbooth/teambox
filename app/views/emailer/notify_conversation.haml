@@ -1,10 +1,10 @@
-.email{ :style => 'font-size: 12px; color: rgb(0,0,0); font-family: Helvetica, Arial' }
+.email{ :style => email_global }
 
   %p{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
     = #"Answer above this line to post a reply to this conversation."
 
   %p{ :style => 'font-size: 14px; color: rgb(50,50,50)' }
-    = "Teambox Project:"
+    = t('emailer.notify_conversation.project')
     = link_to @project.name, project_url(@project)
 
   %h2{ :style => 'font-size: 18px; color: rgb(0,0,0)' }
@@ -26,29 +26,21 @@
           %ul
             - comment.uploads.each do |upload|
               %li
-                = "File:"
+                = t('emailer.notify_conversation.file')
                 = link_to h(upload.filename), project_upload_url(upload.project, upload.filename)
-                = "uploaded by"
+                = t('emailer.notify_conversation.uploaded_by')
                 = link_to upload.user.name, user_url(upload.user)
                 - if upload.description
                   = '(' + h(upload.description) + ')'
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
-    %p
-      = "You can"
-      = link_to "view this conversation online", project_conversation_url(@project, @conversation)
-      = "to answer and attach files or hours."
-    %p
-      = #"You can also answer to this email to post a reply in the conversation."
+    %p= t('emailer.notify_conversation.view_online', :link => project_conversation_url(@project, @conversation))
+    %p= #t('emailer.notify_conversation.reply')
 
   .footer{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
     %p
       = to_sentence @project.people.collect { |p| p.name }
-      = " are suscribed to this conversations, and will be notified of future replies."
+      = t('.are_watching')
 
     %p
-      = "You can"
-      = link_to "stop watching this conversation", "this_should_be_a_get_action"
-      = "or change your"
-      = link_to "notification settings", settings_url
-
+      = #t('.notification_settings', :stop_watching_url => 'url', :notification_settings_url => 'url)

@@ -3,8 +3,8 @@
     = divider_fields(f)
     .submit{ :id => "divider_submit" }
       = f.submit t('.submit')
-      or
-      = link_to_function 'Cancel', inline_hide_divider_form
+      = t('common.or')
+      = link_to_function t('common.cancel'), inline_hide_divider_form
     =loading('divider_form')
     .clear  
   .clear  

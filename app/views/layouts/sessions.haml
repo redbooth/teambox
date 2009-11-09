@@ -13,6 +13,7 @@
       = global_navigation
       = hot_flashes(flash)
       = navigation(@current_project,@recent_projects)
-      .content= yield
+      .content
+        = yield
       = footer
     = javascripts

@@ -2,6 +2,6 @@
   = note_fields(f)
   .submit{ :id => "note_submit_#{note.id}" }
     = f.submit t('.submit')
-    or
+    = t('common.or')
     = link_to_function 'Cancel', remove_form("note_#{note.id}")
   =loading('note_form',note.id)

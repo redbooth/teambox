@@ -1,5 +1,2 @@
 .destroy_message
-  The Task List called
-  %strong
-    =task_list.name
-  was successfully deleted
+  = t('.deleted', :name => task_list.name)

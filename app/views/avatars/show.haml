@@ -16,8 +16,8 @@
         = f.hidden_field :crop_width, :id => 'crop_width'
         = f.hidden_field :crop_height, :id => 'crop_height'
         .submit
-          = f.submit "Save Changes"
+          = f.submit t('.save')
           or 
-          = link_to 'Cancel', edit_user_path(@user)
+          = link_to t('common.cancel'), edit_user_path(@user)
   
     = javascript_tag "image_crop(#{@coords})"

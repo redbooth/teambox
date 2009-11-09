@@ -3,14 +3,14 @@
   - form_for [project,upload], :html => { :multipart => true } do |f|
     .file
       %label 
-        Select a file to upload
+        = t('uploads.new_upload.select_file')
       = f.file_field :file, :size => 20
-    -if false
+    - if false
       .filename.text_field
-        = f.label :filename, 'Filename'
+        = f.label :filename, t('uploads.new_upload.filename')
         = f.text_field :filename
-    
+
     .description.text_field
-      = f.label :description, "Description (Optional)"
+      = f.label :description, t('uploads.new_upload.description')
       = f.text_field :description
-    = submit_tag 'Upload'
+    = submit_tag t('uploads.new_upload.upload')

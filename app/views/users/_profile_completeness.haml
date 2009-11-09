@@ -1,14 +1,13 @@
 .profile_completeness
-  %h2
-    Profile Completion
+  %h2= t('.title')
   .description
-    Unlock Premium features by completing your profile
+    = t('.complete_your_profile')
     
   .progress_container
     .bar{ :style => "width: #{current_user.profile_percent.to_i}%"}
-      ="#{current_user.profile_percent.to_i}% complete"
+      = t('.completeness', :percentage => current_user.profile_percent.to_i)
   - if current_user.next_failed_check
     .next_check
       = link_to current_user.next_failed_check[:title], ''
-      to get to
+      = t('.to_get_to')
       = "#{current_user.next_percent_complete.to_i}%"

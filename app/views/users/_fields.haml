@@ -36,7 +36,7 @@
     = tooltip 'user_password', t('.tooltips.password')
 
   .password.text_field
-    = f.label :password_confirmation, 'Confirm Password'
+    = f.label :password_confirmation, t('.confirm_password')
     = f.password_field :password_confirmation
 
 - unless user.new_record?

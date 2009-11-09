@@ -1,22 +1,16 @@
-%h2 Confirm your email
+%h2= t('.title')
 %p
-  = "An email invitation was sent to <i>#{@email}</i>, in order to verify your email address."
+  = t('.invitation_sent_to', :email => @email)
 %p 
-  = "Please <b>open this email and follow the link inside it</b> to activate your account."
+  = t('.follow_the_link')
 
-%h3 Problems?
+%h3= t('.problems')
 %ul
   %li
-    = "Lost the email?"
-    = link_to "Press here to re-send the activation email", unconfirmed_email_user_path(current_user, :resend => true)
-    = "if you can't find it."
+    = link_to t('.resend', :link => unconfirmed_email_user_path(current_user, :resend => true))
   %li
-    = "Empty inbox? Make sure the email wasn't classified as spam by your email client."
+    = t('.spam')
   %li
-    = "Wrong address? If you mistyped your email address,"
-    = link_to "cancel the signup process", logout_path
-    = " and re-create your account with a valid address."
+    = t('.wrong_address', :link => logout_path)
     
-%p
-  = "If you're still having problems, please contact "
-  = mail_to "support@teambox.com", "support@teambox.com"
+%p= t('.problems', :email => "support@teambox.com")
