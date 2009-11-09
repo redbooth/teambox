@@ -252,6 +252,7 @@ en:
       new_upload: Upload
       new_task_list: Task List
     new:
+      title: New Page
       define1: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
       define2: "Editing a page is easy and fun, with drag-and-drop elements you can edit in place."
       feature1: "<b>Share</b>. All your teammates can view and edit the project's pages."
@@ -262,6 +263,7 @@ en:
       footer2: "You can also attach files to any page inside each note. Enjoy!"
       submit: Create
     edit:
+      title: Edit Page
       submit: Update
     fields:
       name: Name

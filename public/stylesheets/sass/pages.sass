@@ -8,7 +8,7 @@ div.active_page
     a
       :font-size 12px
 
-.new_pages
+.new_pages, .edit_pages
   .content 
     h2, form
       :margin-left 20px
@@ -49,11 +49,13 @@ div.active_page
       :margin 0px
         :bottom 10px
     .page
-      :padding-bottom 5px
+      :padding
+        :left 20px
+        :bottom 5px
       :border-bottom solid 1px rgb(230,230,230)
       :display block
       h3
-        :font-size 14px
+        :font-size 15px
         :margin 0px
           :top 10px
       a
@@ -62,7 +64,7 @@ div.active_page
         :text-decoration underline
       p
         :margin 5px 0px
-        :font-size 14px
+        :font-size 12px
         :color rgb(100,100,100)
 
 .show_pages

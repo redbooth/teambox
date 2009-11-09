@@ -20,9 +20,9 @@ class PagesController < ApplicationController
     @page = @current_project.new_page(current_user,params[:page])    
     respond_to do |f|
       if @page.save
-        f.html{redirect_to project_page_path(@current_project,@page)}
+        f.html { redirect_to project_page_path(@current_project,@page) }
       else
-        f.html{render 'new'}
+        f.html { render :new }
       end
     end
   end
@@ -49,9 +49,9 @@ class PagesController < ApplicationController
     else
       respond_to do |f|
         if @page.update_attributes(params[:page])
-          f.html {redirect_to edit_project_page_path(@current_project,@page)}
+          f.html { redirect_to project_page_path(@current_project,@page)}
         else
-          f.html {render :action => :edit}
+          f.html { render :edit }
         end
       end
     end

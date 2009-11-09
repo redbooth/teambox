@@ -1,12 +1,18 @@
-- content_for :column do
-  
+%h2= t('.title')
 
-#edit_page
-  - form_for [@current_project,@page] do |f|
-    = page_fields(f)
-    
+- form_for [@current_project,@page] do |f|
+  = page_fields(f)
+
+  .submit
     = f.submit t('.submit')
-    
-
-    
-    = notes_sortable_tag(@page)
+  
+- content_for :column do
+  %p= t 'pages.new.define1'
+  %p= t 'pages.new.define2'
+  %ul
+    %li= t 'pages.new.feature1'
+    %li= t 'pages.new.feature2'
+    %li= t 'pages.new.feature3'
+    %li= t 'pages.new.feature4'
+  %p= t 'pages.new.footer1'
+  %p= t 'pages.new.footer2'
