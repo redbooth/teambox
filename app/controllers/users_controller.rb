@@ -104,42 +104,6 @@ class UsersController < ApplicationController
     redirect_to '/'
   end
 
-  def forgot_password
-    render :layout => 'sessions'
-  end
-  
-  def reset_password
-    if params[:email]
-      if @user = User.find_by_email(params[:email])
-        @user.send_reset_password
-        render :layout => 'sessions'
-      else
-        flash[:error] = t('users.reset_password.not_found', :email => params[:email])
-        redirect_to forgot_password_path
-      end
-    else
-      redirect_to forgot_password_path
-    end
-  end
-
-  def login_from_reset_password
-    logout_keeping_session!
-    if @user && @user.is_login_token_valid?(params[:token])
-      @user.activate!
-      @user.expire_login_code!
-      self.current_user = @user
-      redirect_to edit_user_path(@user)
-      flash[:success] = t('users.reset_password.change_password_now')
-      flash[:change_password] = true
-    else
-      flash[:error] = t('users.activation.invalid_user')
-      redirect_to '/'
-    end
-  end
-  
-  def contact_importer
-  end
-
   def welcome
     @pending_projects = current_user.invitations
 

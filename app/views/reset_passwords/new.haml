@@ -1,0 +1,9 @@
+%h2= t('.title')
+
+-form_for(@reset_password) do |f|
+  .email.text_field
+    = f.label :email
+    = f.text_field :email, :class => 'focus'
+  .submit
+    = link_to t('.back'), login_path
+    = submit_tag t('.submit')

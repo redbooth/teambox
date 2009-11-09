@@ -13,10 +13,19 @@ class Emailer < ActionMailer::Base
   def reset_password(user)
     recipients    user.email
     from          'Teambox <no-reply@teambox.com>'
+    subject       'Your password has successfully been reset!'
+    content_type  'text/html'
+    sent_on       Time.now
+    body          :user => user
+  end
+
+  def forgot_password(reset_password)
+    recipients    reset_password.email
+    from          'Teambox <no-reply@teambox.com>'
     subject       'Password retrieval for Teambox'
     content_type  'text/html'
     sent_on       Time.now
-    body          :user => user, :login_link => login_from_reset_password_user_url(user, :token => user.login_token)
+    body          :user => reset_password.user, :url => reset_password_url(reset_password.reset_code)
   end
 
   def project_invitation(invitation)

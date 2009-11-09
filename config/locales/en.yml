@@ -38,6 +38,18 @@ en:
       upload: Upload this avatar
     show:
       save: Save Changes
+  reset_passwords:
+    new:
+      title: So you forgot your password?
+      email: Which email did you sign up with?
+      back: Back to Login screen
+      submit: Send me a link to reset my password
+    sent:
+      title: Reset Password
+      login_link_sent: "We just sent you an email to {{email}} so you can retrieve your password."
+      follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
+      not_found: "The email <b>{{email}}</b> doesn't belong to any Teambox user. Maybe you mispelt it?"
+      change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"      
   users:
     fields:
       login: Username
@@ -60,17 +72,6 @@ en:
         last_name: Up to 20 characters.
         email: Enter your real email so your team-mates can contact you.
         password: "Combining letters, numbers, uppercase and lowercase is a good idea."
-    forgot_password:
-      title: So you forgot your password?
-      email: Which email did you sign up with?
-      back: Back to Login screen
-      submit: Send me a link to reset my password
-    reset_password:
-      title: Reset Password
-      login_link_sent: "We just sent you an email to {{email}} so you can retrieve your password."
-      follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
-      not_found: "The email <b>{{email}}</b> doesn't belong to any Teambox user. Maybe you mispelt it?"
-      change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"
     new:
       title: Create an Account
       submit: Create account

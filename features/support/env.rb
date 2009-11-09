@@ -46,6 +46,7 @@ Webrat.configure do |config|
 end
 
 require 'pickle/world'
+require 'email_spec/cucumber'
 # Example of configuring pickle:
 #
 # Pickle.configure do |config|

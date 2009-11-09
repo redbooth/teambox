@@ -50,6 +50,15 @@ Factory.define :mislav, :class => 'User' do |user|
   user.confirmed_user true  
 end
 
+Factory.define :geoffrey, :class => 'User' do |user|
+  user.login 'peepcode'
+  user.email 'peepcode@fuckingawesome.com'
+  user.first_name 'Geoffrey'
+  user.last_name 'Grosenbach'
+  user.password 'smoothlistening'
+  user.password_confirmation 'smoothlistening'
+  user.confirmed_user true  
+end
 
 #Factory.define :parkour, :class => 'TaskList' do |user|
 #  parkour

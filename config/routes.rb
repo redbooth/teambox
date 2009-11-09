@@ -1,20 +1,22 @@
 ActionController::Routing::Routes.draw do |map|  
-  map.logout            '/logout',            :controller => 'sessions',  :action => 'destroy'
-  map.login             '/login',             :controller => 'sessions',  :action => 'new'
-  map.register          '/register',          :controller => 'users',     :action => 'create'
-  map.signup            '/signup',            :controller => 'users',     :action => 'new'
-  map.settings          '/settings',          :controller => 'users',     :action => 'edit'
-  map.welcome           '/welcome',           :controller => 'users',     :action => 'welcome'
-  map.close_wecome_tab  '/close_welcome_tab', :controller => 'users',     :action => 'close_welcome'
-  map.forgot_password   '/forgot',            :controller => 'users',     :action => 'forgot_password'
-  map.reset_password    '/reset',             :controller => 'users',     :action => 'reset_password'
-
+  map.logout            '/logout',              :controller => 'sessions',    :action => 'destroy'
+  map.login             '/login',               :controller => 'sessions',    :action => 'new'
+  map.register          '/register',            :controller => 'users',       :action => 'create'
+  map.signup            '/signup',              :controller => 'users',       :action => 'new'
+  map.settings          '/settings',            :controller => 'users',       :action => 'edit'
+  map.welcome           '/welcome',             :controller => 'users',       :action => 'welcome'
+  map.close_wecome_tab  '/close_welcome_tab',   :controller => 'users',       :action => 'close_welcome'
+  map.forgot_password   '/forgot',              :controller => 'reset_passwords',   :action => 'new'
+  map.reset_password    '/reset/:reset_code',   :controller => 'reset_passwords',   :action => 'reset'
+  map.update_after_forgetting   '/forgetting',  :controller => 'reset_passwords',   :action => 'update_after_forgetting', :method => :put
+  map.sent_password     '/reset_password_sent', :controller => 'reset_passwords',   :action => 'sent'
+  
+  map.resources :reset_passwords
   map.resource :session
   
   map.resources :users, :has_many => [:invitations], :member => { 
                           :unconfirmed_email => :get,
                           :confirm_email => :get,
-                          :login_from_reset_password => :get,
                           :contact_importer => :get } do |user|
 
     user.resource  :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }

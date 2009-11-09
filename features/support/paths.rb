@@ -19,7 +19,9 @@ module NavigationHelpers
 
     when /my settings page/
       "/settings"
-      
+
+    when /the login page/
+      "/login"
     #when /the index page for (.+)/
     #  polymorphic_path(model($1))
     
