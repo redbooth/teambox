@@ -50,7 +50,7 @@
 
   .language.select
     = f.label :language, t('.language')
-    = f.select :language, [['English', 'en']]
+    = f.select :language, User::LANGUAGES
 
   .first_day_of_week.select
     = f.label :first_day_of_week, t('.first_day_of_week')
