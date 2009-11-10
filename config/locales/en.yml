@@ -26,9 +26,9 @@ en:
       create_page: created the page
       create_person: added to the project
     user_remove:
-      removed_from_project: {{user}} was removed from this project
+      removed_from_project: "{{user}} was removed from this project"
     user_add:
-      added_to_project: {{user}} was added to this project    
+      added_to_project: "{{user}} was added to this project"
   avatars:
     new:
       title: Upload an avatar
