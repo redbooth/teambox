@@ -50,7 +50,7 @@ es:
       password_confirmation: Confirmar contraseña
       sunday: Domingo
       monday: Lunes
-      first_day_of_week: La semana empieza en
+      first_day_of_week: Semana empieza en
       change_password: Cambiar contraseña
       confirm_password: Confirmar contraseña
       use_this_email: "Has sido invitado a Teambox con esta dirección de correo. Si quieres acceder a los proyectos de quien te invitó, no cambies la dirección de correo. Podrás cambiar tu email una vez estés dado de alta."
@@ -151,7 +151,7 @@ es:
       invite_people: 'Invitar a alguien más...'
       new_task_list_link: Nueva lista de tareas
       people_in_project: Personas en este proyecto
-      subscribe: Suscríbete a las actividades de este proyecto
+      subscribe: Suscríbete a este proyecto
     fields:
       name: Nombre
       name_description: "Escoge un título breve y explicativo. Por ejemplo: Taggart Transcontinental"
@@ -508,3 +508,40 @@ es:
           mb: "Mb"
           gb: "Gb"
           tb: "Tb"
+
+  datetime:
+      distance_in_words:
+        half_a_minute: "medio minuto" 
+        less_than_x_seconds:
+          one:  "menos de 1 segundo" 
+          other: "menos de {{count}} segundos"
+        x_seconds:
+          one:  "1 segundo" 
+          other: "{{count}} segundos" 
+        less_than_x_minutes:
+          one:  "menos de 1 minuto" 
+          other: "menos de {{count}} minutos" 
+        x_minutes:
+          one:  "1 minuto" 
+          other: "{{count}} minutos" 
+        about_x_hours:
+          one:  "alrededor de 1 hora" 
+          other: "alrededor de {{count}} horas" 
+        x_days:
+          one:  "1 día" 
+          other: "{{count}} días" 
+        about_x_months:
+          one:  "alrededor de 1 mes" 
+          other: "alrededor de {{count}} meses" 
+        x_months:
+          one:  "1 mes" 
+          other: "{{count}} meses" 
+        about_x_years:
+          one:  "alrededor de 1 año" 
+          other: "alrededor de {{count}} años" 
+        over_x_years:
+          one:  "más de 1 año" 
+          other: "más de {{count}} años" 
+
+
+  
