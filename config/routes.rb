@@ -15,10 +15,6 @@ ActionController::Routing::Routes.draw do |map|
                           :unconfirmed_email => :get,
                           :confirm_email => :get,
                           :login_from_reset_password => :get,
-                          :comments_descending => :put, 
-                          :comments_ascending => :put,
-                          :conversations_first_comment => :put,
-                          :conversations_latest_comment => :put,
                           :contact_importer => :get } do |user|
 
     user.resource  :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }

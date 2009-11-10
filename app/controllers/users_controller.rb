@@ -140,38 +140,6 @@ class UsersController < ApplicationController
   def contact_importer
   end
 
-  def comments_ascending
-    @current_user.update_attribute(:comments_ascending,true)
-
-    respond_to do |format|
-      format.js
-    end
-  end
-
-  def comments_descending
-    @current_user.update_attribute(:comments_ascending,false)
-
-    respond_to do |format|
-      format.js
-    end
-  end
-  
-  def conversations_first_comment
-    @current_user.update_attribute(:conversations_first_comment,true)
-
-    respond_to do |format|
-      format.js
-    end
-  end
-
-  def conversations_latest_comment
-    @current_user.update_attribute(:conversations_first_comment,false)
-
-    respond_to do |format|
-      format.js
-    end
-  end  
-
   def welcome
     @pending_projects = current_user.invitations
 
