@@ -9,7 +9,20 @@
 //= require <weakling>
 //= require <fyi>
 
+replace_ids = function(s){
+  var new_id = new Date().getTime();
+  return s.replace(/NEW_RECORD/g, new_id);
+}
+
 Event.addBehavior({
+  ".remove:mouseover": function(e){
+    image_source = $(this).src
+    $(this).src = image_source.sub(/remove.*\.png/,'remove_hover.png')
+  },
+  ".remove:mouseout": function(e){
+    image_source = $(this).src
+    $(this).src = image_source.sub(/remove.*\.png/,'remove.png')    
+  },
   ".drag:mouseover": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/drag.*\.png/,'drag_hover.png')
@@ -43,7 +56,19 @@ Event.addBehavior({
   },
   ".column_settings:mouseout": function(){
     $$('.column_settings .toggle').each(function(e){ e.className = 'toggle'; });
-  }  
+  },
+  ".add_nested_item:click": function(e){
+    link = $(this);
+    template = eval(link.href.replace(/.*#/, ''))
+    $(link.rel).insert({ bottom: replace_ids(template) });
+    Event.addBehavior.reload();
+  },
+  ".remove_nested_item:click": function(e){
+    link = $(this);
+    target = link.href.replace(/.*#/, '.')
+    link.up(target).hide();
+    if(hidden_input = link.previous("input[type=hidden]")) hidden_input.value = '1'
+  }      
 });
 
 Element.addMethods({
@@ -74,3 +99,4 @@ Project = {
     Element.update('handle',title) 
   }
 }
+

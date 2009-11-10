@@ -52,6 +52,22 @@ en:
       follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
       not_found: "The email <b>{{email}}</b> doesn't belong to any Teambox user. Maybe you mispelt it?"
       change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"      
+  cards:
+    card:
+      phone_numbers: Phone Numbers
+      email_addresses: Email Addresses
+      websites: Websites
+      addresses: Addresses
+      ims: IM
+      social_networks: Social Networks
+      vcard: Download vCard
+    field:
+      add_phone_numbers: Add Phone Number
+      add_email_addresses: Add Email
+      add_websites: Add Website
+      add_addresses: Add Address
+      add_ims: Add IM
+      add_social_networks: Add Social Network
   users:
     fields:
       login: Username
@@ -108,7 +124,6 @@ en:
       profile: Profile
       projects: Projects
       recent_activity_for: Recent activity for {{user_name}}
-      vcard: Download vCard
     user:
       formatted_address: "{{street}}, {{city}} ({{country}})"
       remove_from_project: Remove from Project
@@ -280,13 +295,9 @@ en:
       new: + Add Task
       edit: Edit
     destroy_message:
-<<<<<<< HEAD
-      deleted: "The Task <b>{{name}}</b> was successfully deleted!"      
-=======
       deleted: "The Task called <b>{{name}}</b> was successfully deleted!"
     archive_message:  
       archived: "The Task called <b>{{name}}</b> was successfully archived!"
->>>>>>> added basis styling for print css, added archiving to tasks
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?
@@ -434,6 +445,8 @@ en:
       welcome: Welcome to Teambox!
 
   shared:
+    projects:
+      projects: Projects
     navigation:
       welcome: Welcome
       all_projects: 'All Projects'

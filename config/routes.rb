@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login             '/login',               :controller => 'sessions',    :action => 'new'
   map.register          '/register',            :controller => 'users',       :action => 'create'
   map.signup            '/signup',              :controller => 'users',       :action => 'new'
-  map.settings          '/settings',            :controller => 'users',       :action => 'edit'
+
   map.welcome           '/welcome',             :controller => 'users',       :action => 'welcome'
   map.close_wecome_tab  '/close_welcome_tab',   :controller => 'users',       :action => 'close_welcome'
   map.forgot_password   '/forgot',              :controller => 'reset_passwords',   :action => 'new'
@@ -13,8 +13,13 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :reset_passwords
   map.resource :session
+
+  map.account_settings '/account/settings', :controller => 'users', :action => 'edit', :sub_action => 'settings'
+  map.account_picture '/account/picture', :controller => 'avatars', :action => 'show'
+  map.account_profile '/account/profile', :controller => 'users', :action => 'edit', :sub_action => 'profile'
+  map.account_notifications '/account/notications', :controller => 'users', :action => 'edit', :sub_action => 'notifications'
   
-  map.resources :users, :has_many => [:invitations], :member => { 
+  map.resources :users, :has_many => [:invitations,:comments], :member => { 
                           :unconfirmed_email => :get,
                           :confirm_email => :get,
                           :contact_importer => :get } do |user|

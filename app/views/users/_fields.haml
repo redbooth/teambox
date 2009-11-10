@@ -1,32 +1,30 @@
-- if @invitation_token
-  = hidden_field_tag 'invitation', @invitation_token
+-if user.new_record? || sub_action != nil
+  -if sub_action == 'settings'
+    .login.text_field
+      = f.label :login, t('.login')
+      = f.text_field :login
+      = tooltip 'user_login', t('.tooltips.login')
+  -if sub_action == 'profile'
+    .first_name.text_field
+      = f.label :first_name, t('.first_name')
+      = f.text_field :first_name
+      = tooltip 'user_first_name', t('.tooltips.first_name')
+    .last_name.text_field
+      = f.label :last_name, t('.last_name')
+      = f.text_field :last_name
+    = tooltip 'user_last_name', t('.tooltips.last_name')
+  -if sub_action == 'settings'
+    .email.text_field
+      = f.label :email, t('.email')
+      = f.text_field :email
+      = tooltip 'user_email', t('.tooltips.email')
 
-.login.text_field
-  = f.label :login, t('.login')
-  = f.text_field :login
-  = tooltip 'user_login', t('.tooltips.login')
+    - if @invitation
+      .use_this_email= t('.use_this_email')
 
-.first_name.text_field
-  = f.label :first_name, t('.first_name')
-  = f.text_field :first_name
-  = tooltip 'user_first_name', t('.tooltips.first_name')
-
-.last_name.text_field
-  = f.label :last_name, t('.last_name')
-  = f.text_field :last_name
-  = tooltip 'user_last_name', t('.tooltips.last_name')
-
-.email.text_field
-  = f.label :email, t('.email')
-  = f.text_field :email
-  = tooltip 'user_email', t('.tooltips.email')
-
-- if @invitation
-  .use_this_email= t('.use_this_email')
-
-- unless user.new_record?
-  #change_password_link
-    = link_to_function t('.change_password'), show_user_password_fields
+    - if @invitation_token
+      = hidden_field_tag 'invitation', @invitation_token
+      
 
 #password_fields{:style => (user.new_record? ? "" : "display: none;")}
   .password.text_field
@@ -39,20 +37,30 @@
     = f.label :password_confirmation, t('.confirm_password')
     = f.password_field :password_confirmation
 
+
 - unless user.new_record?
+  -if sub_action == 'settings'
+    #change_password_link
+      = link_to_function t('.change_password'), show_user_password_fields
+      
+    .time_zone.text_field
+      = f.label :time_zone, t('.time_zone')
+      = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"
+
+    .first_day_of_week.select
+      = f.label :first_day_of_week, t('.first_day_of_week')
+      = f.select :first_day_of_week, [[t('.sunday'), 'sunday'],[t('.monday'), 'monday']]
+    
+-if user.new_record? || sub_action == 'settings'
+  .language.select
+    = f.label :language, t('.language')
+    = f.select :language, User::LANGUAGES
+              
+- if sub_action == 'profile'
   .description.text_area
     = f.label :biography
     = f.text_area :biography
 
-  .time_zone.text_field
-    = f.label :time_zone, t('.time_zone')
-    = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"
+  = list_card_fields(f,%w(phone_numbers email_addresses websites addresses ims social_networks))
 
-.language.select
-  = f.label :language, t('.language')
-  = f.select :language, User::LANGUAGES
-
-- unless user.new_record?
-  .first_day_of_week.select
-    = f.label :first_day_of_week, t('.first_day_of_week')
-    = f.select :first_day_of_week, [[t('.sunday'), 'sunday'],[t('.monday'), 'monday']]
+= hidden_field_tag 'sub_action', sub_action

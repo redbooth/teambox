@@ -11,7 +11,7 @@
     :background rgb(76,74,74)
     :float right
     :padding 5px
-    :margin-top 10px
+    :margin-bottom 10px
     ul
       :margin 0px
       :padding 0px
@@ -124,7 +124,29 @@
     a:hover
       :background rgb(140,140,140)
       :color rgb(255,255,0)
-    
+div.user_navigation
+  ul
+    :list-style-type none
+    :margin 0px
+    :padding 0px
+    a
+      :display block
+      :-moz-border-radius 8px
+      :-webkit-border-radius 8px    
+      :background rgb(240,240,240)
+      :border solid 1px rgb(200,200,200)
+      :padding 5px 10px
+      :margin-bottom 5px
+      :font-size 14px
+    a:hover
+      :color rgb(255,255,0)
+      :background rgb(0,0,200)
+      :border solid 1px rgb(0,0,200)
+    a.active
+      :color rgb(255,255,255)
+      :background rgb(0,0,200)
+      :border solid 1px rgb(0,0,200)
+      :text-decoration none
 @media print
   div.navigation, div.global_navigation, div.project_navigation
     :display none

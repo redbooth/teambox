@@ -18,7 +18,7 @@ render_tabnav :global do
     
     add_tab do |t|
       t.named t('.settings')
-      t.links_to settings_path
+      t.links_to account_settings_path
       t.highlights_on :controller => :users, :action => :edit
     end
     

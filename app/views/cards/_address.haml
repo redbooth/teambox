@@ -1,0 +1,17 @@
+.address.hoverable
+  = f.select :account_type, Address::TYPES
+  .text_field.street
+    =f.label :street
+    =f.text_field :street
+    =remove_link_unless_new_record(f)
+  .text_field.city  
+    =f.label :city
+    =f.text_field :city
+  .text_field.state
+    =f.label :state
+    =f.text_field :state
+  .text_field.zip  
+    =f.label :zip
+    =f.text_field :zip
+  .country  
+    =f.localized_country_select :country, [], :include_blank => 'Please choose...'

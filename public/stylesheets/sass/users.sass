@@ -1,4 +1,3 @@
-
 .new_user
   :padding 10px
 
@@ -26,10 +25,6 @@
   .column_wrap
     .profile
       :margin-bottom 20px
-    .vcard, .name, .email
-      :font-size 12px
-    .vcard
-      :float right
     
 
 .edit_users, .update_users
@@ -44,6 +39,7 @@
     :text-align right
     :padding-right 10px
     :vertical-align middle
+    :font-size 12px
   .text_area
     :padding 5px 0px
     textarea
@@ -53,7 +49,66 @@
       :bottom 5px
       :left 130px
     :font-size 12px
-
+  .many_fields
+    :padding-top 10px
+    :border-top solid 1px rgb(230,230,230)
+    :clear both
+    label
+      :padding-bottom 10px
+  .fields
+    :float right
+    :width 510px
+    input
+      :width 140px
+  .website,.email_address
+    input
+      :width 300px
+  .twitter    
+    input
+      :width 240px  
+  .address
+    label
+      :float none
+      :display block
+      :clear both
+      :color rgb(160,160,160)
+      :text-align left
+      :width auto
+      :padding 0px
+    .street
+      input
+        :width 440px
+    .city
+      :float left
+      :width 220px
+      input
+        :margin-right 10px      
+        :width 200px
+    .state
+      :float left
+      :width 100px
+      input
+        :margin-right 10px
+        :width 80px
+    .zip
+      :float left
+      :width 100px
+      input
+        :width 100px
+    .country
+      :clear both
+      :margin-bottom 10px
+  a.add_crm_link
+    :display block
+    :float right
+    :width 510px    
+    :font-size 12px
+    :color rgb(160,160,160)
+    :margin-bottom 10px
+  a.add_crm_link:hover
+    :color rgb(0,0,200)
+  .submit
+    :clear both 
 div.upload_avatar
   .avatar
     :float left
@@ -155,3 +210,58 @@ div.upload_avatar
     p, li
       :font-size 13px
       :margin-bottom 5px
+
+
+.edit_users,.update_users
+  .content_wrap
+    :float right
+    :padding 10px
+      :left 0px    
+  .column_wrap
+    :float left
+  .content
+    h2
+      :font-size 22px
+      :margin 10px
+        :right 0px
+      :padding
+        :bottom 5px
+      :border-bottom solid 2px rgb(240,240,240)
+    .submit
+      :text-align right
+  .column  
+    :-moz-border-radius
+      :topleft 5px
+    :-webkit-border-top-left-radius 5px
+    .user_navigation
+      
+    
+.show_users
+  .banner
+    :-moz-border-radius
+      :topleft 5px
+      :topright 5px
+    :-webkit-border-top-left-radius 5px
+    :-webkit-border-top-right-radius 5px  
+    :background rgb(159,227,236)
+    :padding 10px
+    h2
+      :margin 0px
+      :font-size 24px
+      span
+        :color rgb(80,80,80)
+        :font-size 16px
+  .content_wrap
+    :float right
+    :padding 10px
+      :left 0px    
+  .column_wrap
+    :float left
+  .content
+    h2
+      :font-size 22px
+      :margin 10px
+        :right 0px
+      :padding
+        :bottom 5px
+      :border-bottom solid 2px rgb(240,240,240)

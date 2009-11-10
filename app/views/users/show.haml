@@ -1,24 +1,21 @@
-- content_for :column do
-  - if current_user.can_view? @user
-    .profile
-      %h2= t '.profile'
-      .vcard
-        = link_to t('.vcard')
-      .name= @user.name
-      .email= mail_to @user.email, @user.email
-    .projects
-      %h2= t '.projects'
-      .project_list
-        .project
-          = list_projects(@user.projects)
-  - else
-    .profile
-      %h2= t '.profile'
-      .name= @user.name    
+- content_for :banner do
+  %h2
+    = @user.name 
+    %span
+      ="(#{@user.login})"
 
-- if current_user.can_view? @user      
+- content_for :column do
+
+  = image_tag(profile_user_avatar_path(@user))
+  - if current_user.can_view?(@user)
+    =render_card(@card)
+
+    =# list_projects(@user.projects)
+
+
+
+- if current_user.can_view?(@user)
+  =# new_comment_user_form(current_user)
   %h2= t('.recent_activity_for', :user_name => @user.name)
   #activities
-    = list_activities(@visible_activities)
-- else
-  %h2= @user.name
+    = list_activities(@activities)

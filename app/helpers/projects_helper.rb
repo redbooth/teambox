@@ -5,7 +5,9 @@ module ProjectsHelper
   end
   
   def list_projects(projects)
-    render :partial => 'projects/project', :collection => projects
+    unless @projects.empty?
+    render :partial => 'shared/projects', :locals => { :projects => projects }
+    end
   end
   
   def project_link(project)

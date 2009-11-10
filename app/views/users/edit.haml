@@ -1,4 +1,6 @@
 - content_for :column do
+  =user_navigation
+    
   - form_for @current_user do |f|
     = edit_avatar(f,@current_user)
 
@@ -6,8 +8,16 @@
 
 - form_for @current_user, :html => { :id => 'edit_user' } do |f|
   = f.error_messages
-  = user_fields(f,@current_user)
+  = user_fields(f,@current_user,:sub_action => @sub_action)
   .submit
     = submit_tag t('.submit')
 
-= clear_password_if_not_updated
+-if @sub_action == 'settings'
+  = clear_password_if_not_updated
+
+-if @sub_action == 'profile'
+  - form_for @current_user do |f|
+    - f.fields_for :card, @current_user.card do |card_form|
+      - content_for :js_templates do
+        - %w(phone_numbers email_addresses websites addresses ims social_networks).each do |field|
+          = "var #{field}='#{generate_template(card_form, field.to_sym)}'"

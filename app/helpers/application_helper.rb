@@ -170,6 +170,10 @@ module ApplicationHelper
     image_tag('drag.png', :class => 'drag', :style => 'display: none')
   end
 
+  def remove_image
+    image_tag('remove.png', :class => 'remove')
+  end
+
   def add_image
     image_tag('add_button.jpg', :class => 'add')
   end

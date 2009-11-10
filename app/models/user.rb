@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
     self.rss_token = Digest::SHA1.hexdigest(rand(999999999).to_s) if self.rss_token.nil?
   end
   
+  def before_create
+    self.build_card
+  end
+  
   def after_create
     self.build_avatar(:x1 => 1, :y1 => 18, :x2 => 240, :y2 => 257, :crop_width => 239, :crop_height => 239, :width => 400, :height => 500).save
     self.send_activation_email unless self.confirmed_user
@@ -33,6 +37,9 @@ class User < ActiveRecord::Base
     self.name
   end
 
+  has_one :card
+  accepts_nested_attributes_for :card
+  
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
   
@@ -57,7 +64,8 @@ class User < ActiveRecord::Base
                   :language, 
                   :comments_ascending, 
                   :conversations_first_comment, 
-                  :first_day_of_week
+                  :first_day_of_week,
+                  :card_attributes
 
   def can_view?(user)
     not projects_shared_with(user).empty?
@@ -70,8 +78,8 @@ class User < ActiveRecord::Base
   def activities_visible_to_user(user)
     ids = projects_shared_with(user).collect { |project| project.id }
     
-    self.activities.select do |activity|
-      ids.include? activity.project_id
+    self.activities.all(:limit => 40, :order => 'created_at DESC').select do |activity|
+      ids.include?(activity.project_id) || activity.comment_type == 'User'
     end
   end
   
@@ -90,4 +98,23 @@ class User < ActiveRecord::Base
     user_id = t
     User.find_by_rss_token_and_id(token,user_id)
   end
+  
+  def read_comments(comment,target)
+    if CommentRead.user(self).are_comments_read?(target)
+      CommentRead.user(self).read_up_to(comment)
+    end
+  end  
+  
+  def new_comment(user,target,comment)
+    self.comments.new(comment) do |comment|
+      comment.user_id = user.id
+      comment.target = target
+    end
+  end
+
+  def log_activity(target, action, creator_id=nil)
+    creator_id = target.user_id unless creator_id
+    Activity.log(nil, target, action, creator_id)
+  end
+    
 end

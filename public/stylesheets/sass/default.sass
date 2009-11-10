@@ -73,6 +73,14 @@
     :padding 10px
     :font-size 13px
 
+  .hoverable
+    .on_hover,.on_hover_inline
+      :display none
+  .hoverable:hover
+    .on_hover_inline
+      :display inline
+    .on_hover
+      :display block
 @media print
   body
     :background rgb(255,255,255)
@@ -82,5 +90,4 @@
     img
       :vertical-align middle
   h1,h2,h3,h4,h5,h6,p,textarea
-    :font-family "Lucida Grande","Helvetica Neue",Verdana,Arial,Helvetica,sans-serif
-  
+    :font-family "Lucida Grande","Helvetica Neue",Verdana,Arial,Helvetica,sans-serif  

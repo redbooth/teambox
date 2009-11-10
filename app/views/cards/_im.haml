@@ -1,0 +1,5 @@
+.text_field.im
+  =f.text_field :name
+  =f.select :account_im_type, Im::ACCOUNT_TYPES
+  =f.select :account_type, Im::TYPES
+  =remove_link_unless_new_record(f)

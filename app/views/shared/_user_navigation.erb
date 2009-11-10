@@ -1,0 +1,28 @@
+<div class="user_navigation"><%  
+render_tabnav :user do 
+
+    add_tab do |t|
+      t.named 'Account Settings'
+      t.links_to account_settings_path
+      t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'settings'
+    end  
+
+    add_tab do |t|
+      t.named 'Profile Information'
+      t.links_to account_profile_path
+      t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'profile'
+    end
+        
+    add_tab do |t|
+      t.named 'Profile Picture'
+      t.links_to account_picture_path
+      t.highlights_on :controller => 'avatars', :action => 'show'
+    end
+    
+    #add_tab do |t|
+    #  t.named 'Notifications'
+    #  t.links_to account_notifications_path
+    #  t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'notifications'
+    #end    
+end
+%><div class="clear"></div></div>

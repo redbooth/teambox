@@ -1,4 +1,8 @@
 module UsersHelper
+    
+  def user_navigation
+    render :partial => 'shared/user_navigation'
+  end
 
   def profile_completeness
     if logged_in?
@@ -8,12 +12,15 @@ module UsersHelper
     end  
   end
 
-  def user_fields(f, user, invite = nil)
+  def user_fields(f,user,options={})
+    sub_action ||= options[:sub_action]
+    invite ||= options[:invite]
     render :partial => 'users/fields', 
       :locals => { 
         :f => f,
         :user => user,
-        :invite => invite }
+        :invite => invite,
+        :sub_action => sub_action }
   end
 
   def edit_avatar(f,user)

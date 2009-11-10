@@ -7,6 +7,8 @@
       =@page_title
     = stylesheet_link_tag 'application', :media => "all"
     = sprockets_include_tag
+    - javascript_tag do
+      = yield :js_templates
   %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
     .container
       = header
@@ -14,7 +16,7 @@
       = hot_flashes(flash)
       = navigation(@current_project,@recent_projects)
       .wrapper
-        - unless location_name?(['welcome_users','new_projects'])
+        - unless location_name?(['welcome_users','new_projects','show_users','edit_users','new_avatars'])
           = project_navigation(@current_project)
         - if @content_for_banner
           .banner

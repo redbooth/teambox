@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:respond_toorder,:archive,:unarchive]
+  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder,:archive,:unarchive]
   before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch]
+
   
   def not_found
     

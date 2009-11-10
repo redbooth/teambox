@@ -15,7 +15,54 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.integer :comment_id
   end  
+
+  create_table :cards, :force => true do |t|
+    t.integer   :user_id
+    t.boolean   :public, :default => false
+  end
      
+  create_table  :addresses, :force => true do |t|
+    t.integer   :card_id
+    t.string    :street
+    t.string    :city
+    t.string    :state
+    t.string    :zip
+    t.string    :country
+    t.integer   :account_type, :default => 0
+  end
+       
+  create_table  :email_addresses, :force => true do |t|
+    t.integer   :card_id
+    t.string    :name
+    t.integer   :account_type, :default => 0
+  end
+  
+  create_table  :phone_numbers, :force => true do |t|
+    t.integer   :card_id
+    t.string    :name
+    t.integer   :account_type, :default => 0
+  end
+  
+  create_table  :websites, :force => true do |t|
+    t.integer   :card_id
+    t.string    :name
+    t.integer   :account_type, :default => 0
+  end
+    
+  create_table  :ims, :force => true do |t|
+    t.integer   :card_id
+    t.string    :name
+    t.integer   :account_im_type, :default => 0
+    t.integer   :account_type, :default => 0
+  end
+      
+  create_table  :social_networks, :force => true do |t|
+    t.integer   :card_id
+    t.string    :name
+    t.integer   :account_network_type, :default => 0
+    t.integer   :account_type, :default => 0
+  end
+        
   create_table :users, :force => true do |t|
     t.string   :login,                     :limit => 40
     t.string   :first_name,                :limit => 20, :default => ""
@@ -43,6 +90,8 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :last_read_announcement
     t.datetime :deleted_at
     t.string   :rss_token, :default => nil, :limit => 40
+    t.boolean  :admin,    :default => false
+    t.integer :comments_count    
     t.timestamps
   end
  
@@ -209,14 +258,14 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
  
   create_table :avatars do |t|
     t.integer  :user_id
-    t.integer  :x1
-    t.integer  :y1
-    t.integer  :x2
-    t.integer  :y2
-    t.integer  :crop_width
-    t.integer  :crop_height
-    t.integer  :width
-    t.integer  :height
+    t.integer  :x1, :default => 0
+    t.integer  :y1, :default => 0
+    t.integer  :x2, :default => 0
+    t.integer  :y2, :default => 0
+    t.integer  :crop_width, :default => 0
+    t.integer  :crop_height, :default => 0
+    t.integer  :width, :default => 0
+    t.integer  :height, :default => 0
     t.string   :filename
     t.string   :content_type
     t.integer  :filesize

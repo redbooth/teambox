@@ -21,7 +21,13 @@ module CommentsHelper
   end
 
   def activity_comment_project_link(comment)
-    "<span class='arr project_arr'>→</span> <span class='project'>#{link_to(comment.project.name, project_path(comment.project))}</span>"
+    unless comment.project.nil?
+      out = "<span class='arr project_arr'>→</span> " 
+      out << "<span class='project'>"
+      out <<  link_to(comment.project.name, project_path(comment.project))
+      out << "</span>"
+      out
+    end  
   end
   
   def activity_comment_target_link(comment)
@@ -52,6 +58,15 @@ module CommentsHelper
         :form_url => [project,Comment.new], 
         :comment => project.comments.new,
         :show_hours => true }
+  end
+
+  def new_comment_user_form(user,options={})
+    message = options[:message] ||= nil
+    render :partial => 'comments/new',
+      :locals => { :target => user,
+        :message => message,
+        :form_url => [user,Comment.new], 
+        :comment => Comment.new }    
   end
 
   def new_comment_form(project,options={})

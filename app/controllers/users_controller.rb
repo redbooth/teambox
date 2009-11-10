@@ -22,7 +22,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @visible_activities = @user.activities_visible_to_user @current_user
+    @card = current_user.card
+    @activities = @user.activities_visible_to_user(@current_user)
     options = { :only => [:id, :login, :name, :language, :email, 'time-zone', 'created-at', 'updated-at'] }
     respond_to do |format|
       format.html
@@ -61,16 +62,25 @@ class UsersController < ApplicationController
     end
   end
   
+  def edit
+   @sub_action = params[:sub_action]
+  end
+  
   def update
+    @sub_action = params[:sub_action]
+      
     @current_user.update_attributes(params[:user])
-    if @current_user.save
-      flash[:error] = nil
-      flash[:success] = t('users.update.updated')
-    else
-      flash[:success] = nil
-      flash[:error] = t('users.update.error')
+    
+    respond_to do |f|
+      if @current_user.save
+        flash[:success] = t('users.update.updated')
+        f.html { redirect_to user_path(current_user) }
+      else
+        flash[:error] = t('users.update.error')
+        f.html { render :action => 'edit' }
+      end
     end
-    render :action => :edit
+
   end
   
   def unconfirmed_email

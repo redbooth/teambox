@@ -7,6 +7,8 @@ class Activity < ActiveRecord::Base
   named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_type = 'TaskList' || comment_type = 'Task'"
       
   def self.log(project,target,action,creator_id)
+    project_id = project.nil? ? nil : project.id
+
     if target.class.to_s == 'Comment'
       comment_type = target.target_type
     else
@@ -14,7 +16,7 @@ class Activity < ActiveRecord::Base
     end
         
     activity = Activity.new(
-      :project_id => project.id,
+      :project_id => project_id,
       :target => target,
       :action => action,
       :user_id => creator_id,

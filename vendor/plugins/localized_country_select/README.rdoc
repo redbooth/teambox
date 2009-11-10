@@ -1,0 +1,43 @@
+= LocalizedCountrySelect
+
+Rails plugin to provide support for localized <tt><select></tt> menu with country names and for
+storing country information as country _code_ (eg. 'es'), not _name_ (eg. 'Spain'), in the database.
+
+Uses the Rails internationalization framework (I18n, http://rails-i18n.org) for translating the names of countries.
+Requires Rails 2.2 (released November 21st, 2008) or later versions.
+Country names are loaded from hashes in plugin directory, according to <tt>I18n.locale</tt> value.
+
+You can easily translate country codes in your application like this:
+
+    <%= I18n.t @user.country, :scope => 'countries' %>
+
+Comes with a Rake task <tt>rake import:country_select 'de'</tt> for importing country names
+from Unicode.org's CLDR repository (http://www.unicode.org/cldr/data/charts/summary/root.html)
+Don't forget to restart the application when you add new locale.
+
+ActionView helper code is adapted from Rails' default +country_select+ plugin (previously in core).
+See http://github.com/rails/country_select/tree/master/lib/country_select.rb
+
+== Example
+
+    <%= localized_country_select(:user, :country, [], :include_blank => 'Please choose...') %>
+
+will become:
+    
+    <select name="user[country]" id="user_country">
+    <option value="">Please choose...</option>
+    <option disabled="disabled" value="">-------------</option>
+    <option value="AF">Afghanistan</option>
+    ...
+    <option value="ZW">Zimbabwe</option>
+    </select>
+
+for the <tt>en</tt> locale.
+
+== Other resources
+
+* http://github.com/rails/country_select (Default Rails plugin)
+* http://github.com/russ/country_code_select (Stores country code, not name)
+
+
+Copyright (c) 2008 Karel Minarik (www.karmi.cz), released under the MIT license

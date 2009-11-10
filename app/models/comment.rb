@@ -18,18 +18,25 @@ class Comment < ActiveRecord::Base
   attr_accessor :activity
 
   def after_create
-    target.last_comment_id = id
-    target.save(false)
-    
-    project.last_comment_id = id
-    project.save(false)
-    
     self.target.reload
+    unless self.target_type == 'User'
+      target.last_comment_id = id
+      target.save(false)
+    
+      project.last_comment_id = id
+      project.save(false)  
+    end
+    
+
     if self.target_type == 'Conversation'
       target.notify_new_comment(self)
     end
     
-    self.activity = project.log_activity(self,'create')
+    if self.target_type == 'User'
+      self.activity = target.log_activity(self,'create')
+    else  
+      self.activity = project.log_activity(self,'create')
+    end  
   end
   
   def after_destroy
@@ -90,6 +97,23 @@ class Comment < ActiveRecord::Base
     with_scope(:find => { :conditions => ["DAY(created_at) = ?", Time.current.day], :order => 'created_at ASC'}) do
       find_by_year
       find_by_month
+    end
+  end
+
+  def save_uploads(params)      
+    params[:uploads].if_defined.each do |upload_id|
+      upload = Upload.find(upload_id)
+      if upload
+        upload.comment_id = self.id
+        upload.save(false)
+      end
+    end
+    
+    params[:uploads_deleted].if_defined.each do |upload_id|
+      upload = Upload.find(upload_id)
+      if upload
+        upload.destroy
+      end
     end
   end
   

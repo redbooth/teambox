@@ -9,6 +9,14 @@ class AvatarsController < ApplicationController
       respond_to {|f|f.html}
     end
 
+    def profile
+      respond_to {|f|f.flexi}      
+    end
+
+    def thumb
+      respond_to {|f|f.flexi}      
+    end
+    
     def micro
       respond_to {|f|f.flexi}      
     end
@@ -48,7 +56,6 @@ class AvatarsController < ApplicationController
       @user.build_avatar(params[:avatar])
       respond_to do |format|
         if @user.save
-           @user.avatar.set_width_and_height
           format.html { redirect_to edit_user_path(@user) }
         else
           format.html { render :new }

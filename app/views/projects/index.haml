@@ -1,20 +1,16 @@
+- content_for :column do
+  = new_project_link
+  = list_projects(@projects)
+  .subscribe
+    = link_to t('.subscribe'), user_rss_token(projects_path(:format => :rss))
+
 - if @pending_projects
   .invitations
     = list_pending_invites(@pending_projects)
 
 - unless @activities.empty?
-  %h2= t '.title'
-    
+  %h2= t('.title')
   #activities
     = list_activities(@activities)
 - else
   =project_primer
-  
-- content_for :column do
-  = new_project_link
-  - unless @projects.empty?
-    .project_list
-      %h2= t '.projects'
-      = list_projects(@projects)
-    .subscribe
-      = link_to t('.subscribe'), user_rss_token(projects_path(:format => :rss))
