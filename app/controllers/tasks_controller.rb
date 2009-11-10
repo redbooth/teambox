@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder]
-  before_filter :find_task, :only => [:show,:destroy,:update,:check,:watch,:unwatch]
+  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:respond_toorder,:archive,:unarchive]
+  before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch]
   
   def not_found
     
@@ -67,6 +67,16 @@ class TasksController < ApplicationController
       format.html { redirect_to project_task_lists_path(@current_project) }
       format.js
     end
+  end
+  
+  def archive
+    @task.update_attribute(:archived,true)
+    respond_to {|f|f.js}    
+  end
+  
+  def unarchive
+    @task.update_attribute(:archived,false)
+    respond_to {|f|f.js}    
   end
   
   def reorder

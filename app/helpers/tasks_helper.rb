@@ -1,5 +1,51 @@
 module TasksHelper
 
+  def replace_task_column(project,task_lists,task)
+    page.replace_html 'column', task_list_column(project,task_lists,task)
+  end
+  
+  def unarchive_task_button(project,task_list,task)
+    link_to_remote '<span>Raise this Task from the grave</span>', 
+      :url => unarchive_project_task_list_task_path(project,task_list,task), 
+      :method => :put,
+      :loading => loading_archive_task,
+      :html => {
+        :class => 'button', 
+        :id => 'archive_button' }
+  end
+  
+  def task_archive_box(project,task_list,task)
+    if task.archived
+      render :partial => 'tasks/unarchive_box', :locals => {
+        :project => project,
+        :task_list => task_list,
+        :task => task }      
+    else
+      if task.closed?
+        render :partial => 'tasks/archive_box', :locals => {
+          :project => project,
+          :task_list => task_list,
+          :task => task }
+      end
+    end  
+  end
+
+  def archive_task_button(project,task_list,task)
+    link_to_remote '<span>Archive this Task</span>', 
+      :url => archive_project_task_list_task_path(project,task_list,task), 
+      :method => :put,
+      :loading => loading_archive_task,
+      :html => {
+        :class => 'button', 
+        :id => 'archive_button' }
+  end
+
+  def loading_archive_task
+    update_page do |page|
+      page['archive_button'].className = 'loading_button'
+    end  
+  end
+
   def task_link(project,task_list,task)
     action = task.new_record? ? 'new' : 'edit'
 
@@ -8,6 +54,11 @@ module TasksHelper
       :id => task_id("#{action}_link",project,task_list,task)
   end
 
+  def show_archive_task_message(task)
+    page.replace 'show_task', :partial => 'tasks/archive_message', :locals => {
+      :task => task }
+  end
+  
   def show_destroy_task_message(task)
     page.replace 'show_task', :partial => 'tasks/destroy_message', :locals => {
       :task => task }
@@ -96,7 +147,7 @@ module TasksHelper
   end
 
   def task_status(status)
-    "<span class='task_status task_status_#{Task::STATUSES[status.to_i].underscore}'><span>#{Task::STATUSES[status.to_i].capitalize}</span></span>"
+    "<span class='task_status task_status_#{Task::STATUSES[status.to_i].underscore}'>#{Task::STATUSES[status.to_i].capitalize}</span>"
   end
     
   def task_status_image(status)

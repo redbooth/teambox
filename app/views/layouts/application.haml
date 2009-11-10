@@ -5,7 +5,7 @@
     %title
       Teambox
       =@page_title
-    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'application', :media => "all"
     = sprockets_include_tag
   %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
     .container
@@ -14,7 +14,7 @@
       = hot_flashes(flash)
       = navigation(@current_project,@recent_projects)
       .wrapper
-        - unless location_name?('welcome_users')
+        - unless location_name?(['welcome_users','new_projects'])
           = project_navigation(@current_project)
         - if @content_for_banner
           .banner

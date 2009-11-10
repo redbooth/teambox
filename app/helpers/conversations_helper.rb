@@ -27,7 +27,7 @@ module ConversationsHelper
   end
   
   def new_conversation_link(project)
-    link_to content_tag(:span, t('.new_conversation')), new_project_conversation_path(project), :class => 'button'
+    link_to content_tag(:span, t('.new_conversation')), new_project_conversation_path(project), :class => 'add_button'
   end
   
   def conversation_fields(f)

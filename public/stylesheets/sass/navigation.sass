@@ -4,123 +4,127 @@
     :topright 5px
   :-webkit-border-top-left-radius 5px
   :-webkit-border-top-right-radius 5px
-  
-div.global_navigation
-  :-moz-border-radius 4px
-  :-webkit-border-radius 4px
-  :background rgb(76,74,74)
-  :float right
-  :padding 5px
-  :margin-top 10px
-  ul
-    :margin 0px
-    :padding 0px
-    :list-style-type none
+@media screen
+  div.global_navigation
+    :-moz-border-radius 4px
+    :-webkit-border-radius 4px
+    :background rgb(76,74,74)
+    :float right
+    :padding 5px
+    :margin-top 10px
+    ul
+      :margin 0px
+      :padding 0px
+      :list-style-type none
+      li
+        :float left
+        :display block
+        a  
+          :float left
+          :display block
+          :color rgb(255,255,255)
+          :font-size 12px
+          :margin 0px 7px
+        a:hover,a.active
+          :color rgb(255,255,0)
+      li.right_side
+        :float right
+  div.navigation
+    :clear both
+    :width 960px
+    ul
+      :margin 0px
+      :padding 0px
+      :list-style-type none
+      :margin-left 15px
+    li
+      :float left
+      :display block
+      :margin-right 2px
+      +round_corners
+      a  
+        :float left
+        :display block
+        :color rgb(255,255,255)
+        :text-decoration none
+        :padding 5px 8px
+        :margin-right 1px
+        :font-size 15px
+      a:hover
+        :text-decoration underline
+      a.active
+        :color rgb(48,48,48)
+        :background rgb(160,228,237)
+        +round_corners
+    li.welcome, li.new
+      a.active
+        :background rgb(255,255,255)
+    li.button
+      a
+        :font-size 14px
+        :background rgb(43,43,43)
+        :padding 4px 8px
+      a:hover
+        :color rgb(43,43,43)
+        :background rgb(211,209,209)
+      
+  div.project_navigation
+    :background rgb(160,228,237)
+    +round_corners  
+    :padding 5px 10px
+    ul
+      :margin 0px
+      :padding 0px
+      :list-style-type none
+      :margin-left 5px
     li
       :float left
       :display block
       a  
         :float left
         :display block
-        :color rgb(255,255,255)
-        :font-size 12px
-        :margin 0px 7px
-      a:hover,a.active
-        :color rgb(255,255,0)
+        :color rgb(26,149,168)
+        :text-decoration none
+        :padding 4px 10px 6px 8px
+        :margin-bottom 0px
+        :font-size 14px
+        +round_corners
+      a:hover
+        :color rgb(0,0,0)
+        :text-decoration underline
+      a.active
+        :color rgb(0,0,0)
     li.right_side
       :float right
-div.navigation
-  :clear both
-  :width 960px
-  ul
-    :margin 0px
-    :padding 0px
-    :list-style-type none
-    :margin-left 15px
-  li
+      :margin
+        :right 0px
+        :left 10px
+    li.welcome_close
+      a
+        :text-decoration none
+      img
+        :vertical-align middle
+      span  
+        :vertical-align middle  
+  div.projects_dropdown_wrap
     :float left
-    :display block
-    :margin-right 2px
-    +round_corners
-    a  
-      :float left
-      :display block
-      :color rgb(255,255,255)
-      :text-decoration none
-      :padding 5px 8px
-      :margin-right 1px
-      :font-size 15px
-    a:hover
-      :text-decoration underline
-    a.active
-      :color rgb(48,48,48)
-      :background rgb(160,228,237)
-      +round_corners
-  li.welcome
-    a.active
-      :background rgb(255,255,255)
-  li.button
-    a
-      :font-size 14px
-      :background rgb(43,43,43)
-      :padding 4px 8px
-    a:hover
-      :color rgb(43,43,43)
-      :background rgb(211,209,209)
-      
-div.project_navigation
-  :background rgb(160,228,237)
-  +round_corners  
-  :padding 5px 10px
-  ul
-    :margin 0px
-    :padding 0px
-    :list-style-type none
-    :margin-left 5px
-  li
-    :float left
-    :display block
-    a  
-      :float left
-      :display block
-      :color rgb(26,149,168)
-      :text-decoration none
-      :padding 4px 10px 6px 8px
-      :margin-bottom 0px
-      :font-size 14px
-      +round_corners
-    a:hover
-      :color rgb(0,0,0)
-      :text-decoration underline
-    a.active
-      :color rgb(0,0,0)
-  li.right_side
-    :float right
-    :margin
-      :right 0px
-      :left 10px
-  li.welcome_close
-    a
-      :text-decoration none
-    img
-      :vertical-align middle
-    span  
-      :vertical-align middle  
-div.projects_dropdown_wrap
-  :float left
-div.projects_dropdown
-  :width 330px
-  :position absolute
-  :padding 10px
-  :background rgb(120,120,120)  
-  :-moz-border-radius 8px
-  :-webkit-border-radius 8px
-  div.project_dropdown
-  a  
-    :display block
-    :font-size 15px
-    :color rgb(255,255,255)
+  div.projects_dropdown
+    :width 330px
+    :position absolute
     :padding 10px
-  a:hover
-    :background rgb(140,140,140)
-    :color rgb(255,255,0)
+    :background rgb(120,120,120)  
+    :-moz-border-radius 8px
+    :-webkit-border-radius 8px
+    div.project_dropdown
+    a  
+      :display block
+      :font-size 15px
+      :color rgb(255,255,255)
+      :padding 10px
+    a:hover
+      :background rgb(140,140,140)
+      :color rgb(255,255,0)
+    
+@media print
+  div.navigation, div.global_navigation, div.project_navigation
+    :display none

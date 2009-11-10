@@ -1,5 +1,15 @@
 module TaskListsHelper
 
+  def archived_task_lists(project,task_lists)
+    render :partial => 'task_lists/archived_task_list_with_tasks', 
+      :as => :task_list,
+      :collection => task_lists, :locals => { :project => project }
+  end
+  
+  def archived_task_list_link(project)
+    link_to 'View all Archived Tasks', archived_project_task_lists_path(project), :class => 'archived_task_list_link'
+  end
+
   def render_task_list(project,task_list,current_target)
     render :partial => 'task_lists/task_list', :locals => {
       :project => project,

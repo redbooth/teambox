@@ -8249,6 +8249,21 @@ Element.addMethods({
     return element;
   }
 });
+
+Project = {
+  valid_url: function(){
+    var title = $F('project_permalink');
+    var class_name = '';
+    if(title.match(/^[a-z0-9_\-\.]{5,}$/))
+      class_name = 'good'
+    else
+      class_name = 'bad'
+
+    $('handle').className = class_name;
+    Element.update('handle',title)
+  }
+}
+
 Event.addBehavior({
   ".comment:mouseover": function(e){
     $(this).className = 'comment comment_hover'

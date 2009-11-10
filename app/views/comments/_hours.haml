@@ -1,4 +1,4 @@
-= link_to_function '<span>Hours</span>', "this.hide();this.next('.hours').show();", :style => (f.object.hours.nil? ? '' : 'display: none;'), :class => 'button'
+= link_to_function '<span>Hours</span>', "this.hide();this.next('.hours').show();", :style => (f.object.hours.nil? ? '' : 'display: none;'), :class => 'add_button'
 .hours.text_field{:style => (f.object.hours.nil? ? 'display: none;' : '')}
   = f.label :hours
   = f.text_field :hours

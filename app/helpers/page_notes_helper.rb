@@ -35,7 +35,7 @@ module PageNotesHelper
   end
   
   def new_page_note_link(project,page)
-    link_to_function "<span>#{t('.new_note')}</span>", show_note_form, :class => 'button', :id => 'note_button'
+    link_to_function "<span>#{t('.new_note')}</span>", show_note_form, :class => 'add_button', :id => 'note_button'
   end
   
   def new_loading_form

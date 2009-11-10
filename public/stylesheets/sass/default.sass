@@ -1,73 +1,86 @@
 /* Default------------------------------------------------------------------------
-html,body 
-  :margin 0px 
-  :padding 0px
-body
-  :background rgb(49,48,48)
-  :font-family "Lucida Grande","Helvetica Neue",Verdana,Arial,Helvetica,sans-serif
-h1 
-  :font-size 1.3em
-  img
-    :vertical-align middle
-h1,h2,h3,h4,h5,h6,p,textarea
-  :font-family "Lucida Grande","Helvetica Neue",Verdana,Arial,Helvetica,sans-serif
-h2
-  :font-size 1em
-img 
-  :border none
-table
-  :border-collapse collapse 
-  :clear both 
-  :font-size 0.8em
-  th 
-    :text-align left
-    :font-weight normal
-  td
-    :vertical-align top
-abbr 
-  :border none
-br
-  :clear both
-textarea
-  :border solid 1px rgb(180,180,180)
-div.clear 
-  :clear both
-a
-  :color rgb(0,0,150)
-  :text-decoration none
-  :outline none
-a:hover
-  :text-decoration underline
+@media screen
+  html,body 
+    :margin 0px 
+    :padding 0px
+  body
+    :background rgb(49,48,48)
+    :font-family "Lucida Grande","Helvetica Neue",Verdana,Arial,Helvetica,sans-serif
+  h1 
+    :font-size 1.3em
+    img
+      :vertical-align middle
+  h1,h2,h3,h4,h5,h6,p,textarea
+    :font-family "Lucida Grande","Helvetica Neue",Verdana,Arial,Helvetica,sans-serif
+  h2
+    :font-size 1em
+  img 
+    :border none
+  table
+    :border-collapse collapse 
+    :clear both 
+    :font-size 0.8em
+    th 
+      :text-align left
+      :font-weight normal
+    td
+      :vertical-align top
+  abbr 
+    :border none
+  br
+    :clear both
+  textarea
+    :border solid 1px rgb(180,180,180)
+  div.clear 
+    :clear both
+  a
+    :color rgb(0,0,150)
+    :text-decoration none
+    :outline none
+  a:hover
+    :text-decoration underline
     
-div.container
-  :width 960px
-  :margin 0px auto
-p
-  :margin 0px auto
-  :padding 0px
+  div.container
+    :width 960px
+    :margin 0px auto
+  p
+    :margin 0px auto
+    :padding 0px
 
-div.fieldWithErrors
-  :display inline
+  div.fieldWithErrors
+    :display inline
 
-.hide_me
-  :display none
+  .hide_me
+    :display none
 
-span.unread_comment_count
-  :font-weight bold
-  :font-size 10px
+  span.unread_comment_count
+    :font-weight bold
+    :font-size 10px
   
-.development
-  :background url(../images/lobster_dev.jpg) top left no-repeat rgb(49,48,48)
+  .development
+    :background url(../images/lobster_dev.jpg) top left no-repeat rgb(49,48,48)
   
-div.destroy_message
-  :background rgb(231,244,153)
-  :padding 10px
-  :border 1px rgb(209,234,61) solid
-  :-moz-border-radius 8px
-  :-webkit-border-radius 8px
-  :font-size 13px  
+  div.destroy_message,div.archive_message
+    :background rgb(231,244,153)
+    :padding 10px
+    :border 1px rgb(209,234,61) solid
+    :-moz-border-radius 8px
+    :-webkit-border-radius 8px
+    :font-size 13px  
   
-div.record_not_found
-  :margin 10px
-  :padding 10px
-  :font-size 13px
+  div.record_not_found
+    :margin 10px
+    :padding 10px
+    :font-size 13px
+
+@media print
+  body
+    :background rgb(255,255,255)
+    :font-family "Lucida Grande","Helvetica Neue",Verdana,Arial,Helvetica,sans-serif
+  h1 
+    :font-size 1.3em
+    img
+      :vertical-align middle
+  h1,h2,h3,h4,h5,h6,p,textarea
+    :font-family "Lucida Grande","Helvetica Neue",Verdana,Arial,Helvetica,sans-serif
+  

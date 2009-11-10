@@ -1,0 +1,2 @@
+page[task_id(:item,@current_project,@task_list,@task)].remove
+page.show_archive_task_message(@task)

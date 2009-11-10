@@ -1,15 +1,15 @@
 class TaskListsController < ApplicationController
-  before_filter :load_task_list, :except => [:index, :new, :create, :sortable, :reorder]
+  before_filter :load_task_list, :only => [:update,:show,:destroy]
     
   def index
     if @current_project
-      @task_lists = @current_project.task_lists
+      @task_lists = @current_project.task_lists.unarchived
       @activities = @current_project.activities.for_task_lists
     else
       @task_lists = []
       @activities = []
       current_user.projects.each do |project|
-        @task_lists |= project.task_lists
+        @task_lists |= project.task_lists.unarchived
         @activities |= project.activities.for_task_lists
       end
     end
@@ -36,7 +36,7 @@ class TaskListsController < ApplicationController
   end
   
   def show
-    @task_lists = @current_project.task_lists
+    @task_lists = @current_project.task_lists.unarchived
     @comments = @task_list.comments
   ensure
     CommentRead.user(current_user).read_up_to(@comments.first) if @comments.first
@@ -53,7 +53,10 @@ class TaskListsController < ApplicationController
       task_list.update_attribute(:position,idx.to_i)
     end
   end  
-
+ 
+  def archived
+    @task_lists = @current_project.task_lists.with_archived_tasks
+  end
   
   def destroy
     @task_list.destroy if @task_list.owner?(current_user)

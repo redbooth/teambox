@@ -1,11 +1,11 @@
 #show_task
   = task_header(project,task_list,task)
   = task_form(project,task_list,task)
-  = new_comment_form(project, :target => task)
-
+  = new_comment_form(project, :target => task) unless task.archived
+  =task_archive_box(project,task_list,task)
   #comments
     = list_comments(task.comments,task)
 
-  = people_watching(task)
   #watch_link
     = watch_task_link(current_user,task)
+  = people_watching(task) unless task.archived

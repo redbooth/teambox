@@ -1,128 +1,148 @@
-div.wrapper 
-  :clear both
-  :background rgb(255,255,255)
-  :-moz-border-radius 5px
-  :-webkit-border-radius 5px
-div.content_wrap
-  :float left
-  :width 640px
-  :padding 10px
-    :right 0px
-  h2.title
-    :margin 0px
-      :bottom 3px
-    :color rgb(60,60,60)
-    :font-weight normal
-div.column_wrap
-  :float right
-  :width 300px
-  h2
-    :font-size 12px
-    :text-transform uppercase
-    :margin-bottom 5px  
-  div.column  
-    h2
-      :border-bottom solid 1px rgb(200,200,200)
-    :background rgb(230,230,230)
-    :padding 10px
-    :-moz-border-radius
-      :bottomleft 5px
-      :bottomright 5px
-    :-webkit-border-bottom-left-radius 5px
-    :-webkit-border-bottom-right-radius 5px
-
-div.column_wrap
-  a.add_button
+@media screen
+  div.wrapper 
+    :clear both
+    :background rgb(255,255,255)
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px
+  div.content_wrap
     :float left
-  h2.title
-    :margin 0px
-      :bottom 3px
-    :color rgb(60,60,60)
-  h2.title_with_button
-    :float right
-    :width 270px
-    :margin 0px
-      :bottom 3px
-      :top 5px
-    :color rgb(60,60,60)
-    a
+    :width 640px
+    :padding 10px
+      :right 0px
+    h2.title
+      :margin 0px
+        :bottom 3px
       :color rgb(60,60,60)
+      :font-weight normal
+  div.column_wrap
+    :float right
+    :width 300px
+    h2
+      :font-size 12px
+      :text-transform uppercase
+      :margin-bottom 5px  
+    div.column  
+      h2
+        :border-bottom solid 1px rgb(200,200,200)
+      :background rgb(230,230,230)
+      :padding 10px
+      :-moz-border-radius
+        :bottomleft 5px
+        :bottomright 5px
+      :-webkit-border-bottom-left-radius 5px
+      :-webkit-border-bottom-right-radius 5px
+    p
+      :font-size 12px
+  div.column_wrap
+    a.add_button
+      :float left
+    h2.title
+      :margin 0px
+        :bottom 3px
+      :color rgb(60,60,60)
+    h2.title_with_button
+      :float right
+      :width 270px
+      :margin 0px
+        :bottom 3px
+        :top 5px
+      :color rgb(60,60,60)
+      a
+        :color rgb(60,60,60)
     
-.column_settings
-  h2
-    :margin 0px
-    :color rgb(150,150,150)
-  :margin
-    :top 5px
-  :background rgb(240,240,240)
-  :border solid 1px rgb(220,220,220)
-  :padding 8px
-  :-moz-border-radius 8px
-  :-webkit-border-radius 8px  
-  .filters
-    :padding-top 10px
-    :font-size 12px
-  .toggle
-    a
+  .column_settings
+    h2
+      :margin 0px
+      :color rgb(150,150,150)
+    :margin
+      :top 5px
+    :background rgb(240,240,240)
+    :border solid 1px rgb(220,220,220)
+    :padding 8px
+    :-moz-border-radius 8px
+    :-webkit-border-radius 8px  
+    .filters
+      :padding-top 10px
       :font-size 12px
-      :padding 2px 4px
-      :-moz-border-radius 4px
-      :-webkit-border-radius 4px
-      :background rgb(200,200,200)
-      :color rgb(255,255,255)
-    a:hover,a.active:hover
-      :background rgb(85,173,10)
-      :color rgb(255,255,255)
-    a.active
-      :background rgb(200,200,255)
-      :color rgb(255,255,255)
-  .toggle_hover
-    a
-      :font-size 12px
-      :padding 2px 4px
-      :-moz-border-radius 4px
-      :-webkit-border-radius 4px
-      :background rgb(100,100,100)
-      :color rgb(200,200,200)
-    a:hover,a.active:hover
-      :background rgb(85,173,10)
-      :color rgb(255,255,255)
-    a.active
-      :background rgb(0,0,255)
-      :color rgb(255,255,255)
+    .toggle
+      a
+        :font-size 12px
+        :padding 2px 4px
+        :-moz-border-radius 4px
+        :-webkit-border-radius 4px
+        :background rgb(200,200,200)
+        :color rgb(255,255,255)
+      a:hover,a.active:hover
+        :background rgb(85,173,10)
+        :color rgb(255,255,255)
+      a.active
+        :background rgb(200,200,255)
+        :color rgb(255,255,255)
+    .toggle_hover
+      a
+        :font-size 12px
+        :padding 2px 4px
+        :-moz-border-radius 4px
+        :-webkit-border-radius 4px
+        :background rgb(100,100,100)
+        :color rgb(200,200,200)
+      a:hover,a.active:hover
+        :background rgb(85,173,10)
+        :color rgb(255,255,255)
+      a.active
+        :background rgb(0,0,255)
+        :color rgb(255,255,255)
 
-a.loading_button
-  :background url(../images/loading_button_bg.gif) no-repeat left
-  :font-size 12px
-  :padding 5px
-    :left 20px
-  span
-    :color rgb(0,0,40)
+  a.loading_button
+    :background url(../images/loading_button_bg.gif) no-repeat left
+    :font-size 12px
     :padding 5px
-      :right 10px
-    :font-weight bold
-    :background url(../images/loading_button_wrap_bg.jpg) no-repeat right
+      :left 20px
+    span
+      :color rgb(0,0,40)
+      :padding 5px
+        :right 10px
+      :font-weight bold
+      :background url(../images/loading_button_wrap_bg.jpg) no-repeat right
       
-a.button, a.new_task_list_link, a.reorder_task_list_link
-  :background url(../images/button_bg.jpg) no-repeat left
-  :font-size 12px
-  :padding 5px
-    :left 20px
-  span
-    :color rgb(40,40,40)
+  a.add_button, a.new_task_list_link, a.reorder_task_list_link
+    :background url(../images/add_button_bg.jpg) no-repeat left
+    :font-size 12px
     :padding 5px
-      :right 10px
-    :font-weight bold
-    :background url(../images/button_wrap_bg.jpg) no-repeat right
+      :left 20px
+    span
+      :color rgb(40,40,40)
+      :padding 5px
+        :right 10px
+      :font-weight bold
+      :background url(../images/button_wrap_bg.jpg) no-repeat right
+
+  a.button
+    :background url(../images/button_bg.jpg) no-repeat left
+    :font-size 12px
+    :padding 5px
+    span
+      :color rgb(40,40,40)
+      :padding 5px
+        :right 10px
+      :font-weight bold
+      :background url(../images/button_wrap_bg.jpg) no-repeat right
     
-a.attach_button
-  :background url(../images/attach_button_bg.jpg) no-repeat left
-  :font-size 12px
-  :padding 5px
-    :left 20px
-  span
-    :color rgb(40,40,40)
+  a.attach_button
+    :background url(../images/attach_button_bg.jpg) no-repeat left
+    :font-size 12px
     :padding 5px
-      :right 10px
-    :font-weight bold
-    :background url(../images/button_wrap_bg.jpg) no-repeat right    
+      :left 20px
+    span
+      :color rgb(40,40,40)
+      :padding 5px
+        :right 10px
+      :font-weight bold
+      :background url(../images/button_wrap_bg.jpg) no-repeat right        
+    
+@media print
+  div.wrapper
+    :background rgb(255,255,255)
+    :border none
+  div.content
+    :width 100%

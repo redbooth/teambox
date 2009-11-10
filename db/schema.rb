@@ -79,7 +79,11 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :last_comment_id, :null => true, :default => nil
     t.integer :comments_count
     t.text    :watchers_ids
-    t.datetime :deleted_at
+    t.boolean :archived, :default => false
+    t.datetime :deleted_at  
+    t.integer :archived_tasks_count, :default => 0
+    t.integer :tasks_count, :default => 0
+    
     t.timestamps
   end
   
@@ -95,7 +99,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.text    :watchers_ids
     t.integer :assigned_id
     t.integer :status, :default => 0
-    t.boolean :archived => false
+    t.boolean :archived, :default => false
     t.datetime :deleted_at    
     t.timestamps
   end

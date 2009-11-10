@@ -1,12 +1,11 @@
-- content_for :column do
-  - if project
-    = task_list_link(project,TaskList.new)
-    = task_list_form(project,TaskList.new)
-  #task_lists  
-    = list_task_lists(project,task_lists,current_target)
-    
-  .subscribe
-    = link_to t('.subscribe'), user_rss_token(project_task_lists_path(@current_project, :format => :rss))
-  =# comments_settings
-  =# reorder_task_list_link(project,task_lists)
-  
+- if project
+  = task_list_link(project,TaskList.new)
+  = task_list_form(project,TaskList.new)
+#task_lists  
+  = list_task_lists(project,task_lists,current_target)
+=# comments_settings
+=# reorder_task_list_link(project,task_lists)
+.subscribe
+  = link_to t('.subscribe'), user_rss_token(project_task_lists_path(@current_project, :format => :rss))
+.column_settings
+  = archived_task_list_link(project)

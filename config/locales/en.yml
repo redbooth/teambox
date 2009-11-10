@@ -133,7 +133,7 @@ en:
       title: Confirm your email
       invitation_sent_to: "An email invitation was sent to <i>{{email}}</i>, in order to verify your email address."
       follow_the_link: Please <b>open this email and follow the link inside it</b> to activate your account.
-      problems: Problems?
+      problem: Problems?
       resend: "Can't find the email? Press <a href='{{link}}'>here</a> to re-send the activation email."
       spam: "Make sure the email wasn't classified as spam by your email client."
       wrong_address: "Wrong address? If you mistyped your email address, <a href='{{link}}'>cancel the signup process</a> and re-create your account with a valid address."
@@ -280,7 +280,13 @@ en:
       new: + Add Task
       edit: Edit
     destroy_message:
+<<<<<<< HEAD
       deleted: "The Task <b>{{name}}</b> was successfully deleted!"      
+=======
+      deleted: "The Task called <b>{{name}}</b> was successfully deleted!"
+    archive_message:  
+      archived: "The Task called <b>{{name}}</b> was successfully archived!"
+>>>>>>> added basis styling for print css, added archiving to tasks
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?
@@ -342,6 +348,9 @@ en:
     column:
       new_page: New Page
   task_lists:
+    archived:
+      title: All Archived Tasks
+      description: You're currently looking at archived tasks. These are tasks that have been closed.
     fields:
       name: Name
     link:
@@ -528,7 +537,9 @@ en:
     index_people: People
     edit_users: Edit
     welcome_users: Welcome!
-    
+    new_projects: New Project    
+    archived_task_lists: Archived Tasks
+    new_avatars: New Avatar
   number:
     human:
       storage_units:
@@ -542,4 +553,3 @@ en:
           mb: "Mb"
           gb: "Gb"
           tb: "Tb"
-    

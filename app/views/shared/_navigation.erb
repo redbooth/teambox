@@ -24,6 +24,7 @@ if logged_in?
       t.named t('.new_project')
       t.links_to new_project_path
       t.highlights_on :controller => :projects, :action => :new
+      t.li_class = 'new'
     end
   
     unless current_user.get_recent_projects.empty?

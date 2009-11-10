@@ -1,10 +1,6 @@
-- if false
-  .task_list_wrap{ :id => "main_task_list_#{task_list.id}" }
-    .task_list{ :class => "#{ 'active_task_list' if current_target == task_list }" }
-      = task_list_partial_action_links(task_list.project,task_list)
-      = show_comments_count(task_list)
-      = task_list_link(task_list)
-    .tasks{ :id => "project_#{task_list.project.id}_task_list_#{task_list.id}" }
-      = list_tasks(task_list.project,task_list,task_list.tasks,current_target)
-    = new_task_link(task_list.project,task_list)
-    = new_task_form(task_list.project,task_list,Task.new)
+.task_list_wrap{ :id => "main_task_list_#{task_list.id}" }
+  .task_list
+    = show_comments_count(task_list)
+    = the_task_list_link(task_list)
+  .tasks{ :id => "project_#{task_list.project.id}_task_list_#{task_list.id}" }
+    = list_tasks(task_list.project,task_list,task_list.tasks,current_target)

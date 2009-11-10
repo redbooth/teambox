@@ -1,2 +1,10 @@
-= task_list_column(@current_project,@task_lists,@task)
+-content_for :column do
+  -unless @task.archived
+    = task_list_column(@current_project,@task_lists,@task)
+  -else
+    %p
+      This task is currently archived meaning
+      its not possible to edit or comment on it.
+    =link_to '&larr; Back to All Archived Tasks', archived_project_task_lists_path(@current_project)
+    
 = render_task(@current_project,@task_list,@task)

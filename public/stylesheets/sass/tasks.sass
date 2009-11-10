@@ -140,15 +140,8 @@ span.task_status_rejected
 .task
   img
     :display inline
-  span.task_status
-    :position absolute
-    :display block
-    :width 16px
-    :height 16px
-    span
-      :display none
   span.task_status_new
-    :background url(../images/status_new.png) no-repeat
+    :background rgb(200,200,200)
   span.task_status_open
     :background rgb(100,100,200)
   span.task_status_hold
@@ -160,3 +153,27 @@ span.task_status_rejected
     
 .tasks
   :border-top solid 1px rgb(210,210,210)    
+  
+.show_tasks
+  .archive
+    :margin-top 10px
+    :background rgb(220,220,220)
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px
+    :padding 20px
+      :top 10px
+    :text-align center
+    p
+      :font-size 13px
+      :margin-bottom 10px
+      
+a.archived_task_list_link
+  :font-size 12px
+  
+.archived_task_lists
+  .content
+    h2
+      :margin 0px
+  .column
+    p
+      :font-size 12px

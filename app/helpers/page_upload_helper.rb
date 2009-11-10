@@ -4,7 +4,7 @@ module PageUploadHelper
     link_to_remote "<span>#{t('.new_upload')}</span>",
       :url => new_project_page_upload_path(project,page),
       :method => :get,
-      :html => { :class => 'button' }
+      :html => { :class => 'add_button' }
   end  
   
 end

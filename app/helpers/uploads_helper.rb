@@ -140,7 +140,7 @@ module UploadsHelper
   end
   
   def add_upload_link
-    link_to_function content_tag(:span, t('.new_file')), show_new_upload_form, :class => 'button', :id => "add_upload_link"
+    link_to_function content_tag(:span, t('.new_file')), show_new_upload_form, :class => 'add_button', :id => "add_upload_link"
   end
   
   def show_new_upload_form

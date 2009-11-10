@@ -11,6 +11,10 @@ class TaskList < ActiveRecord::Base
   has_many :tasks, :order => 'position', :dependent => :destroy
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
+  named_scope :with_archived_tasks, :conditions => 'archived_tasks_count > 0'
+  named_scope :archived, :conditions => {:archived => true}
+  named_scope :unarchived, :conditions => {:archived => false}
+  
   acts_as_list :scope => :project
   acts_as_paranoid    
   attr_accessible :name

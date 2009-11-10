@@ -1,12 +1,11 @@
 .name.text_field
-  .label
-    = f.label :name, t('.name')
-    .description= t('.name_description')
+  = f.label :name, t('.name')
   = f.text_field :name
-
+  = tooltip 'project_name', t('.name_description')
 .permalink.text_field
-  .label
-    = f.label :permalink, t('.permalink')
-    .description= t('.permalink_description')
-  = t('.permalink_prefix')
+  = f.label :permalink, t('.permalink')
   = f.text_field :permalink
+  = tooltip 'project_permalink', t('.permalink_description')
+  .preview
+    ="#{t('.permalink_prefix')}<span id='handle'></span>" 
+  = javascript_tag "Event.observe('project_permalink', 'keyup', function(e) { Project.valid_url(); })"

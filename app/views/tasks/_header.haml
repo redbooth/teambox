@@ -1,5 +1,5 @@
 .task_header{ :id => "#{task_id(:edit_header,project,task_list,task)}" }
-  = task_action_links(project,task_list,task)
+  = task_action_links(project,task_list,task) unless task.archived
   %h2
     = task_status(task.status)
     = task.name

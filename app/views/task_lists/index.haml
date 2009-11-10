@@ -1,4 +1,5 @@
-= task_list_column(@current_project,@task_lists,@task_list)
+-content_for :column do
+  = task_list_column(@current_project,@task_lists,@task_list)
 
 - unless @task_lists.empty?
   #activities

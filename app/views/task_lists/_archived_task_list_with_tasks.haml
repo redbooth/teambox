@@ -1,0 +1,6 @@
+.task_list_wrap{ :id => "#{task_list_id(:with_archived_tasks,project,task_list)}" }
+  .task_list
+    = show_comments_count(task_list)
+    = the_task_list_link(task_list)
+  .tasks{ :id => task_list_id(:the_tasks,project,task_list) }
+    = list_tasks(task_list.project,task_list,task_list.tasks.archived)
