@@ -72,6 +72,17 @@ en:
         last_name: Up to 20 characters.
         email: Enter your real email so your team-mates can contact you.
         password: "Combining letters, numbers, uppercase and lowercase is a good idea."
+    forgot_password:
+      title: So you forgot your password?
+      email: Which email did you sign up with?
+      back: Back to Login screen
+      submit: Send me a link to reset my password
+    reset_password:
+      title: Reset Password
+      login_link_sent: "We just sent you an email to {{email}} so you can reset your password."
+      follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
+      not_found: "The email <b>{{email}}</b> doesn't belong to any Teambox user. Maybe you mispelt it?"
+      change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"
     new:
       title: Create an Account
       submit: Create account
@@ -102,10 +113,10 @@ en:
     welcome:
       get_started: Get started with Teambox!
       intro1: "You're our newest member! You'll soon see how Teambox can become your day's starting point."
-      intro2: "Where can you go now? Create a project to <b>collaborate</b> or an agenda to <b>keep track of contacts</b>:"
+      intro2: "Where can you go now? Create a project to <b>collaborate</b>:" # or an agenda to <b>keep track of contacts</b>:"
       projects:
         title: Projects
-        share_and_collaborate: "Share and collaborate with your team! Group twitter, conversations, tasks, pages and files."
+        share_and_collaborate: "Share and collaborate with your team! Project's wall updates, conversations, tasks, pages and files."
         create_your_first_project: "An event, a design, a product... Go ahead and <a href='{{link}}'>create your first project</a> now!"
       spread:
         title: Do you love us too?
@@ -124,7 +135,7 @@ en:
       resend: "Can't find the email? Press <a href='{{link}}'>here</a> to re-send the activation email."
       spam: "Make sure the email wasn't classified as spam by your email client."
       wrong_address: "Wrong address? If you mistyped your email address, <a href='{{link}}'>cancel the signup process</a> and re-create your account with a valid address."
-      problems: "If you're still having problems, please contact <a href='mailto:{{email}}'>{{email}}</a>"
+      problems: "If you're still having problems, please contact us at <a href='http://teambox.tenderapp.com'>http://teambox.tenderapp.com</a>"
     profile_completeness:
       title: Profile Completion
       complete_your_profile: Complete your profile so your team can keep in touch with your contact information!
@@ -173,7 +184,7 @@ en:
       feature6: Track hours spent on each item.
       feature7: "Create, edit and view pages."
       footer: This project will belong to you. You can transfer this project to other contacts at any time.
-      limited: "As a free account, you can only upload up to 10 Mb of attachments to this project."
+      limited: "As a free account, you can only upload up to 50 Mb of attachments to this project."
       upgrade: Upgrade your account now!
     edit:
       submit: Save Changes
@@ -253,7 +264,7 @@ en:
       new: + Add Task
       edit: Edit
     destroy_message:
-      deleted: "The Task called <b>{{name}}</b> was successfully deleted!"      
+      deleted: "The Task <b>{{name}}</b> was successfully deleted!"      
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?
@@ -332,7 +343,7 @@ en:
       footer2: "It's time to forget about excel planning sheets and complex GANTT charts!"
     new:
       title: New Task List
-      submit: Add TaskList
+      submit: Add Task List
       submit: Create
     edit:
       submit: Update Task List
@@ -341,7 +352,7 @@ en:
     show:
       title: "Task List: {{name}}"
     destroy_message:
-      deleted: "The Task List called <b>{{name}}</b> was successfully deleted!"
+      deleted: "The Task List <b>{{name}}</b> was successfully deleted!"
   people:
     index:
       enter_username_or_email: "Enter your teammate's username or email:"
@@ -481,8 +492,10 @@ en:
           title: 'Expand your profile to 20 words'
         biography_length_long:
           title: 'Expand your profile to 30 words'
+
   form:
     cancel: Cancel
+
   page_title:
     show_projects: Overview
     index_task_lists: All Task Lists
@@ -493,3 +506,18 @@ en:
     index_people: People
     edit_users: Edit
     welcome_users: Welcome!
+    
+  number:
+    human:
+      storage_units:
+        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%n %u"
+        units:
+          byte:
+            one: "b"
+            other: "b"
+          kb: "Kb"
+          mb: "Mb"
+          gb: "Gb"
+          tb: "Tb"
+    
