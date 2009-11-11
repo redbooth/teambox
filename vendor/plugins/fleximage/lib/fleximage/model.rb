@@ -479,10 +479,10 @@ module Fleximage
       # processed output image.
       def load_image #:nodoc:
         @output_image ||= @uploaded_image
-        
+
         # Return the current image if we have loaded it already
         return @output_image if @output_image
-        
+
         # Load the image from disk
         if self.class.has_store?
           if self.class.db_store?
@@ -497,6 +497,7 @@ module Fleximage
               # Load the image from the disk
               @output_image = Magick::Image.read(file_path).first
             else
+              raise Errno::ENOENT if File.directory?(file_path)
               @output_image = File.new(file_path)
             end
           end
@@ -506,6 +507,12 @@ module Fleximage
         
       rescue Magick::ImageMagickError => e
         if e.to_s =~ /unable to open (file|image)/
+          master_image_not_found
+        else
+          raise e
+        end
+      rescue Errno::ENOENT => e
+        if e.to_s =~ /No such file/
           master_image_not_found
         else
           raise e
@@ -545,7 +552,7 @@ module Fleximage
       # Execute image presence and validity validations.
       def validate_image #:nodoc:
         field_name = (@image_file_url && @image_file_url.present?) ? :image_file_url : :image_file
-        
+        load_image
         # If the file isn't an image and an image is required
         if (!is_image? and self.class.require_image) or (!is_image? and @uploaded_image and self.class.only_images)
           errors.add field_name, self.class.only_images_message
@@ -688,13 +695,18 @@ module Fleximage
         def delete_temp_image
           FileUtils.rm_rf "#{RAILS_ROOT}/tmp/fleximage/#{@image_file_temp}"
         end
+
+        def default_image_path
+          "#{RAILS_ROOT}/#{self.class.default_image_path}"
+        end
         
         # Load the default image, or raise an expection
         def master_image_not_found
           # Load the default image from a path
           if self.class.default_image_path
-            @output_image = Magick::Image.read("#{RAILS_ROOT}/#{self.class.default_image_path}").first
-
+            @output_image = Magick::Image.read(default_image_path).first
+            set_file_attributes(File.new(default_image_path))
+            return @output_image
           # Or create a default image
           elsif self.class.default_image
             x, y = Fleximage::Operator::Base.size_to_xy(self.class.default_image[:size])
