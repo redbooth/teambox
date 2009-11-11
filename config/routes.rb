@@ -41,12 +41,14 @@ ActionController::Routing::Routes.draw do |map|
     map.reorder_task_lists 'project/:project_id/reorder_task_lists', :controller => 'task_lists', :action => 'reorder', :method => :post
     map.reorder_tasks 'project/:project_id/task_lists/:task_list_id/reorder_task_list', :controller => 'tasks', :action => 'reorder', :method => :post
     
-    project.resources :task_lists, :has_many => [:comments], :collection => { :sortable => :get } do |task_lists|
-      task_lists.resources :tasks, :has_many => [:comments], :member => { :check => :put, :uncheck => :put }
+    project.resources :task_lists, :has_many => [:comments], :collection => { :sortable => :get },
+      :member => [:watch,:unwatch] do |task_lists|
+        task_lists.resources :tasks, :has_many => [:comments],
+          :member => { :check => :put, :uncheck => :put, :watch => :post, :unwatch => :post }
     end
     
     project.resources :people, :member => { :destroy => :get }
-    project.resources :conversations, :has_many => [:comments,:uploads]
+    project.resources :conversations, :has_many => [:comments,:uploads], :member => [:watch,:unwatch]
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads]
   end
   

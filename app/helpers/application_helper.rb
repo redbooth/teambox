@@ -192,7 +192,7 @@ module ApplicationHelper
   end
   
   def people_watching(object)
-    content_tag :div, :class => :watching do
+    content_tag :div, :class => :watching, :id => :watching do
       if object.watchers.empty?
         html =  t('common.nobody_watching')
       else
@@ -216,4 +216,8 @@ module ApplicationHelper
     id.join('_')
   end
 
+  def update_watching(link,people)
+    page['watch_link'].update link
+    page['watching'].replace people
+  end
 end

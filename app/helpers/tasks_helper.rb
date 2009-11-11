@@ -204,5 +204,14 @@ module TasksHelper
         :task_list => task_list,
         :task => task }
   end
-    
+   
+  def watch_task_link(user,task)
+    if task.watching?(user)
+      link_to_remote t('tasks.show.unwatch'),
+        :url => unwatch_project_task_list_task_path(task.project,task.task_list,task)
+    else
+      link_to_remote t('tasks.show.watch'),
+        :url => watch_project_task_list_task_path(task.project,task.task_list,task)
+    end
+  end 
 end

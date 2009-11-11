@@ -255,6 +255,8 @@ en:
       edit: Edit title
       message: message
       messages: messages
+      unwatch: Stop watching this conversation
+      watch: Watch this conversation for new posts
     short_conversation:
       comment: comment
       comments: comments
@@ -272,6 +274,8 @@ en:
       submit: Add Task
     show:
       title: "Task: {{name}}"
+      watch: Watch this tasks for changes
+      unwatch: Stop watching this task
     link:
       new: + Add Task
       edit: Edit
@@ -367,6 +371,8 @@ en:
       subscribe: Subscribe to the news feed
     show:
       title: "Task List: {{name}}"
+      watch: Watch this task list for changes
+      unwatch: Stop watching this task list
     destroy_message:
       deleted: "The Task List <b>{{name}}</b> was successfully deleted!"
   people:

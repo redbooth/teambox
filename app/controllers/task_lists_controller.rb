@@ -63,6 +63,16 @@ class TaskListsController < ApplicationController
     end
   end
   
+  def watch
+    @task_list.add_watcher(current_user)
+    respond_to{|f|f.js}
+  end
+  
+  def unwatch
+    @task_list.remove_watcher(current_user)
+    respond_to{|f|f.js}
+  end
+  
   private
     def load_task_list
       @task_list = @current_project.task_lists.find(params[:id])

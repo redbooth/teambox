@@ -4,7 +4,8 @@
   = conversation_action_links(@current_project, @conversation)
   %h2= @conversation.name
   = people_watching @conversation
-
+  #watch_link
+    = watch_conversation_link(current_user,@conversation)
 = new_comment_form(@current_project, :target => @conversation)
 
 #comments

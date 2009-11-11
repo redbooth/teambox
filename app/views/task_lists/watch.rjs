@@ -1,0 +1,1 @@
+page.update_watching(watch_task_list_link(current_user,@task_list),people_watching(@task_list))

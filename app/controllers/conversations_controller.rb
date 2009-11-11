@@ -1,5 +1,5 @@
 class ConversationsController < ApplicationController
-  before_filter :load_conversation, :only => [ :show, :edit, :update, :destroy, :update_comments ]
+  before_filter :load_conversation, :only => [ :show, :edit, :update, :destroy, :update_comments, :watch, :unwatch ]
   
   def new
     @conversation = @current_project.conversations.new
@@ -56,6 +56,16 @@ class ConversationsController < ApplicationController
     respond_to do |f|
       f.html { redirect_to project_conversations_path(@current_project) }
     end
+  end
+  
+  def watch
+    @conversation.add_watcher(current_user)
+    respond_to{|f|f.js}
+  end
+  
+  def unwatch
+    @conversation.remove_watcher(current_user)
+    respond_to{|f|f.js}
   end
   
   private

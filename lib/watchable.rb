@@ -12,6 +12,11 @@ module Watchable
       self.add_watcher user
     end
   end
+  
+  def watching?(user)
+    self.watchers_ids ||= []
+    !!self.watchers_ids.index(user.id)
+  end
 
   def remove_watcher(user)
     self.watchers_ids ||= []

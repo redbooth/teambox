@@ -17,6 +17,8 @@ class TaskList < ActiveRecord::Base
 
   validates_length_of :name, :minimum => 3
   
+  serialize :watchers_ids
+  
   def before_save
     unless self.position
       first_task_list = self.project.task_lists.first(:select => 'position')

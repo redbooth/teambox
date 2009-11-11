@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder]
-  before_filter :find_task, :only => [:show,:destroy,:update,:check,]
+  before_filter :find_task, :only => [:show,:destroy,:update,:check,:watch,:unwatch]
   
   def not_found
     
@@ -75,6 +75,16 @@ class TasksController < ApplicationController
       task = @task_list.tasks.find(task_id)
       task.update_attribute(:position,idx.to_i)
     end
+  end
+  
+  def watch
+    @task.add_watcher(current_user)
+    respond_to{|f|f.js}
+  end
+  
+  def unwatch
+    @task.remove_watcher(current_user)
+    respond_to{|f|f.js}
   end
   
   private
