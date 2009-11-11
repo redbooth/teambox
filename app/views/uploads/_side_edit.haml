@@ -4,6 +4,7 @@
     .file
       %label 
         = t('uploads.new_upload.select_file')
+      = hidden_field_tag 'MAX_FILE_SIZE', Upload::MAX_FILE_SIZE
       = f.file_field :file, :size => 20
     - if false
       .filename.text_field

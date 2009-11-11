@@ -4,6 +4,7 @@
     .file
       = t('uploads.new_upload.select_file')
       %br
+      = hidden_field_tag 'MAX_FILE_SIZE', Upload::MAX_FILE_SIZE
       = f.file_field :file, :size => 40
     .description
       = f.label :description, t('uploads.new_upload.description')

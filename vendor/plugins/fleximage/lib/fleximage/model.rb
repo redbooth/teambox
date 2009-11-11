@@ -126,6 +126,9 @@ module Fleximage
         
         # Require a file
         dsl_accessor :require_file, :default => false
+        
+        # Max file size
+        dsl_accessor :maximum_file_size, :default => 0
         def self.translate_error_message(name, fallback, options = {})
           translation = I18n.translate "activerecord.errors.models.#{self.model_name.underscore}.#{name}", options
           if translation.match /translation missing:/
@@ -189,6 +192,19 @@ module Fleximage
             end
           else
             @image_too_small_message = str
+          end
+        end
+        
+        # File size is too large
+        def self.file_is_too_large_message(str = nil)
+          if str.nil?
+            if @file_is_too_large_message
+              @file_is_too_large_message
+            else
+              translate_error_message("too_large", :size => self.class.maximum_file_size)
+            end
+          else
+            @invalid_image_message = str
           end
         end
         
@@ -338,7 +354,7 @@ module Fleximage
           # Save meta data to database
           set_magic_attributes(file)
           
-          save_temp_image(file) unless @dont_save_temp
+          save_temp_image(file) unless @dont_save_temp or file_is_too_large?
         end
       rescue Magick::ImageMagickError => e
         error_strings = [
@@ -566,6 +582,10 @@ module Fleximage
           errors.add field_name, self.class.missing_image_message
         end
         
+        if file_is_too_large?
+          errors.add field_name, self.class.file_is_too_large_message
+        end
+        
         if is_image?
           # Could not read the file as an image
           if @invalid_image
@@ -616,7 +636,7 @@ module Fleximage
           end
           
           # Cleanup temp files
-          #delete_temp_image
+          delete_temp_image
 
           # Start GC to close up memory leaks
           if @uploaded_image
@@ -655,6 +675,16 @@ module Fleximage
             self.filename = filename if self.respond_to?(:filename=)
             self.content_type = get_content_type(filename) if self.respond_to?(:content_type=)
             self.filesize = File.size(file.path) if self.respond_to?(:filesize=)
+            
+            @file_size = File.size(file.path)
+          end
+        end
+        
+        def file_is_too_large?
+          if @file_size and self.class.maximum_file_size != 0
+            @file_size > self.class.maximum_file_size
+          else
+            false
           end
         end
         
