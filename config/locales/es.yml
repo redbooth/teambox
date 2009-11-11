@@ -1,6 +1,3 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 es:
   latest_announcement: "Éste es un <b>servidor de pruebas</b>, lo que significa que se usa exclusivamente para testear Teambox 2.0antes de lanzarlo oficialmente.<br/><br/>Todos los datos en este servidor serán borrados. No lo uses para tus proyectos profesionales."
   common:
@@ -21,6 +18,8 @@ es:
     conversation: "Se ha borrado la conversación <b>{{name}}</b>"
   activities:
     activity_line:
+      create_comment: ha comentado
+      create_upload: ha subido un archivo
       create_conversation: ha empezado la conversación
       create_task_list: ha creado la lista de tareas
       create_page: ha creado la página
@@ -38,6 +37,18 @@ es:
       upload: Subir esta imagen
     show:
       save: Guardar los cambios
+  reset_passwords:
+    new:
+      title: ¿Ya has perdido la contraseña?
+      email: ¿Con qué email te inscribiste a Teambox?
+      back: Volver a la pantalla de Login
+      submit: Envíame un email para restablecer mi contraseña
+    sent:
+      title: Restablecer contraseña
+      login_link_sent: "Te hemos enviado un email a {{email}} para que puedas cambiar tu contraseña."
+      follow_the_link: "Sigue el enlace del email para entrar a Teambox! Si no lo encuentras, asegúrate de que no esté en la carp
+      not_found: "El email <b>{{email}}</b> no pertenece a ningún usuario de Teambox. Quizá lo hayas escrito mal."
+      change_password_now: "Bienvenido de nuevo! Es el momento de <b>escoger una nueva contraseña</b> que no olvidarás."
   users:
     fields:
       login: Nombre de usuario
@@ -60,17 +71,6 @@ es:
         last_name: Hasta 20 caracteres.
         email: "Usa tu dirección de correo real. De lo contrario, tus compañeros no podrán contactarte."
         password: "Combinar letras, números, mayúsculas y minúsculas es buena idea."
-    forgot_password:
-      title: ¿Ya has perdido la contraseña?
-      email: ¿Con qué email te inscribiste a Teambox?
-      back: Volver a la pantalla de Login
-      submit: Envíame un email para restablecer mi contraseña
-    reset_password:
-      title: Restablecer contraseña
-      login_link_sent: "Te hemos enviado un email a {{email}} para que puedas cambiar tu contraseña."
-      follow_the_link: "Sigue el enlace del email para entrar a Teambox! Si no lo encuentras, asegúrate de que no esté en la carpeta de correo no deseado."
-      not_found: "El email <b>{{email}}</b> no pertenece a ningún usuario de Teambox. Quizá lo hayas escrito mal."
-      change_password_now: "Bienvenido de nuevo! Es el momento de <b>escoger una nueva contraseña</b> que no olvidarás."
     new:
       title: Crear una cuenta
       submit: Crear cuenta
@@ -135,6 +135,9 @@ es:
       projects: Mis proyectos
       subscribe: Suscríbete al feed de actividades
       new_project: Nuevo proyecto
+      rss:
+        title: Teambox
+        description: Actividad en todos tus proyectos
     primer:
       empty: Aún no perteneces a ningún proyecto
       create_first: Crea tu primer proyecto!
@@ -152,6 +155,9 @@ es:
       new_task_list_link: Nueva lista de tareas
       people_in_project: Personas en este proyecto
       subscribe: Suscríbete a este proyecto
+    rss:
+      title: "{{name}}"
+      description: "Recent activities for the project {{name}}"
     fields:
       name: Nombre
       name_description: "Escoge un título breve y explicativo. Por ejemplo: Taggart Transcontinental"
@@ -212,6 +218,9 @@ es:
       invite_users: Eres el único usuario en este proyecto!
       no_users_yet: "Conversar es más útil cuando no lo haces solo. <a href='{{invite_link}}'>Invita a algunos usuarios</a> a este proyecto para que puedan leer, comentar y recibir actualizaciones de esta conversación."
     index:
+      rss:
+        title: "Conversaciones"
+        description: "Conversaciones en el proyecto {{name}}"
       primer:
         empty: Aún no hay ninguna conversación en este proyecto.
         create_first: Crea la primera conversación para este proyecto!
@@ -224,6 +233,7 @@ es:
         footer2: "Estando ordenadas por hilos, es fácil volver atrás en el tiempo y ver qué ficheros se enviaron y qué dijo cada miembro del equipo. En Teambox, <b>colaborar</b> genera una <b>trazabilidad</b> de qué se hizo."
     column:
       new_conversation: Nueva conversación
+      subscribe: Suscríbete al feed
     conversation_with_extract:
       posted_by: Publicado por
     show:
@@ -273,6 +283,9 @@ es:
   pages:
     index:
       pages_in_this_project: Páginas en este proyecto
+      rss:
+        title: Pages
+        description: "Páginas del proyecto {{name}}"
     primer:
       empty: Aún no hay ninguna página en este proyecto.
       create_first: Crea la primera página!
@@ -293,10 +306,10 @@ es:
       title: Nueva página
       define1: "Aquí puedes <b>compartir información de uso frecuente</b> con tu equipo: Un roadmap, links útiles, instrucciones, plantillas de emails..."
       define2: "Editar una página es sencillo y divertido, con elementos arrastrables que puedes editar en el sitio."
-      item1: "<b>Comparte</b>. Todos los miembros del proyecto pueden verlas y editarlas."
-      item2: "<b>Publica</b>. Publicación instantánea a la web con las páginas compartidas. Crea una web en segundos."
-      item3: "<b>Imprime</b>. Las páginas están preparadas para ser impresas. Prueba a imprimir una o exportarlas como PDF!"
-      item4: "<b>Wiki</b>. Actúan como un wiki, dando toda información de tu proyecto."
+      feature1: "<b>Comparte</b>. Todos los miembros del proyecto pueden verlas y editarlas."
+      feature2: "<b>Publica</b>. Publicación instantánea a la web con las páginas compartidas. Crea una web en segundos."
+      feature3: "<b>Imprime</b>. Las páginas están preparadas para ser impresas. Prueba a imprimir una o exportarlas como PDF!"
+      feature4: "<b>Wiki</b>. Actúan como un wiki, dando toda información de tu proyecto."
       footer1: "Usa Teambox como una <b>pizarra compartida</b> para información de uso frecuente."
       footer2: "También puedes adjuntar archivos a cualquier página del proyecto. Disfruta!"
       submit: Crear
@@ -337,6 +350,7 @@ es:
       submit: Actualizar
     column:
       new_task_list: Nueva lista de tareas
+      subscribe: Suscríbete a las tareas
     show:
       title: "Lista de tareas: {{name}}"
     destroy_message:

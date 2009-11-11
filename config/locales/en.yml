@@ -1,6 +1,3 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
   latest_announcement: "This is a <b>testing server</b>, which means that it's used exclusively to test new features before Teambox 2.0 is officially released.<br/><br/>All the data in this server will be destroyed. Don't use it for real-world purposes."
   common:
@@ -21,7 +18,7 @@ en:
     conversation: "Deleted <b>{{name}}</b> conversation"
   activities:
     activity_line:
-      create_comment: created a comment
+      create_comment: posted a comment
       create_upload: uploaded a file
       create_conversation: created the conversation
       create_task_list: created the task list
@@ -74,17 +71,6 @@ en:
         last_name: Up to 20 characters.
         email: Enter your real email so your team-mates can contact you.
         password: "Combining letters, numbers, uppercase and lowercase is a good idea."
-    forgot_password:
-      title: So you forgot your password?
-      email: Which email did you sign up with?
-      back: Back to Login screen
-      submit: Send me a link to reset my password
-    reset_password:
-      title: Reset Password
-      login_link_sent: "We just sent you an email to {{email}} so you can reset your password."
-      follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
-      not_found: "The email <b>{{email}}</b> doesn't belong to any Teambox user. Maybe you mispelt it?"
-      change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"
     new:
       title: Create an Account
       submit: Create account
