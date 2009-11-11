@@ -1,0 +1,18 @@
+xml.instruct! :xml, :version => "1.0" 
+xml.rss :version => "2.0" do
+  xml.channel do
+    xml.title t('.rss.tite')
+    xml.description t('.rss.description')
+    xml.link user_rss_token(project_task_lists_url(@current_project,:rss))
+    
+    for activity in @activities
+      xml.item do
+        xml.title t("activities.activity_line.#{activity.action_type}")
+        xml.description show_activity(@current_project,activity,activity.target)
+        xml.pubDate activity.posted_date.to_s(:rfc822)
+        xml.link project_task_lists_url(:anchor => "activity_#{activity.id}")
+        xml.guid project_task_lists_url(:anchor => "activity_#{activity.id}")
+      end
+    end
+  end
+end

@@ -10,6 +10,11 @@ class PagesController < ApplicationController
         @pages |= project.pages
       end
     end
+    
+    respond_to do |f|
+      f.html
+      f.rss { render :layout => false }
+    end
   end
   
   def new

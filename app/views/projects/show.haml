@@ -16,4 +16,4 @@
     .invite_people
       = link_to t('.invite_people'), project_people_path(@current_project)
   .subscribe
-    = link_to t('.subscribe'), project_path(@current_project, :format => :rss)
+    = link_to t('.subscribe'), user_rss_token(project_path(@current_project, :format => :rss))

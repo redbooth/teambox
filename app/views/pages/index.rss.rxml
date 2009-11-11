@@ -1,0 +1,18 @@
+xml.instruct! :xml, :version => "1.0" 
+xml.rss :version => "2.0" do
+  xml.channel do
+    xml.title t('.rss.tite')
+    xml.description t('.rss.description', :name => @current_project.name)
+    xml.link user_rss_token(project_pages_url(@current_project,:rss))
+    
+    for page in @pages
+      xml.item do
+        xml.title page.name
+        xml.description page.description
+        xml.pubDate page.created_at.to_s(:rfc822)
+        xml.link project_page_url(@current_project,page)
+        xml.guid project_page_url(@current_project,page)
+      end
+    end
+  end
+end

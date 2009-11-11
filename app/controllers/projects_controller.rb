@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
     
     respond_to do |f|
       f.html
+      f.rss { render :layout => false }
       f.xml  { render :xml  => @activities.to_xml(options) }
       f.json { render :json => @activities.to_json(options) }
     end
@@ -41,6 +42,7 @@ class ProjectsController < ApplicationController
     
     respond_to do |f|
       f.html
+      f.rss { render :layout => false }
       f.xml  { render :xml  => @activities.to_xml(options) }
       f.json { render :json => @activities.to_json(options) }
     end

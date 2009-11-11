@@ -30,6 +30,11 @@ class ConversationsController < ApplicationController
         @conversations |= project.conversations
       end
     end
+    
+    respond_to do |f|
+      f.html
+      f.rss { render :layout => false }
+    end
   end
   
   def show

@@ -21,6 +21,8 @@ en:
     conversation: "Deleted <b>{{name}}</b> conversation"
   activities:
     activity_line:
+      create_comment: created a comment
+      create_upload: uploaded a file
       create_conversation: created the conversation
       create_task_list: created the task list
       create_page: created the page
@@ -147,6 +149,9 @@ en:
       projects: My Projects
       subscribe: Subscribe to the news feed
       new_project: New Project
+      rss:
+        title: Projects Overview
+        description: Overview of all your projects
     primer:
       empty: You don't own or belong to any projects yet.
       create_first: Create your first project!
@@ -164,6 +169,9 @@ en:
       new_task_list_link: New Task List
       people_in_project: People in this project
       subscribe: Subscribe to the news feed
+      rss:
+        title: "{{name}}"
+        description: "Recent activities for the project {{name}}"
     fields:
       name: Name
       name_description: "Choose a brief and descriptive title. For example: Taggart Transcontinental"
@@ -224,6 +232,9 @@ en:
       invite_users: You are the only user in this project!
       no_users_yet: "Conversations are more useful when shared. <a href='{{invite_link}}'>Invite some users</a> to this project now so they can access this conversation, answer and receive updates."
     index:
+      rss:
+        title: "Conversations"
+        description: "Conversations for project {{name}}"
       primer:
         empty: This project doesn't have any conversations yet.
         create_first: Create the first conversation in this project!
@@ -236,6 +247,7 @@ en:
         footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
     column:
       new_conversation: New Conversation
+      subscribe: Subscribe to the news feed
     conversation_with_extract:
       posted_by: Posted by
     show:
@@ -285,6 +297,9 @@ en:
   pages:
     index:
       pages_in_this_project: Pages in this project
+      rss:
+        title: Pages
+        description: "Pages in project {{name}}"
     primer:
       empty: This project doesn't have any pages yet.
       create_first: Create the first page in this project!
@@ -349,6 +364,7 @@ en:
       submit: Update Task List
     column:
       new_task_list: New Task List
+      subscribe: Subscribe to the news feed
     show:
       title: "Task List: {{name}}"
     destroy_message:

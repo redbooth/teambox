@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   def before_save
     self.update_profile_score
     self.recent_projects ||= []
+    self.rss_token = Digest::SHA1.hexdigest(rand(999999999).to_s) if self.rss_token.nil?
   end
   
   def after_create
@@ -72,5 +73,21 @@ class User < ActiveRecord::Base
     self.activities.select do |activity|
       ids.include? activity.project_id
     end
+  end
+  
+  def rss_token
+    if read_attribute(:rss_token).nil?
+      token = Digest::SHA1.hexdigest(rand(999999999).to_s)
+      self.update_attribute(:rss_token, token)
+      write_attribute(:rss_token, token)
+    end
+    
+    read_attribute(:rss_token)
+  end
+  
+  def self.find_by_rss_token(t)
+    token = t.slice!(0..39)
+    user_id = t
+    User.find_by_rss_token_and_id(token,user_id)
   end
 end

@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   filter_parameter_logging :password
 
-  before_filter :confirmed_user?, :load_project, :login_required, :set_locale, :touch_user, :recent_projects, :belongs_to_project?, :set_page_title
+  before_filter :rss_token, :confirmed_user?, :load_project, :login_required, :set_locale, :touch_user, :recent_projects, :belongs_to_project?, :set_page_title
   
   private
   
@@ -21,6 +21,13 @@ class ApplicationController < ActionController::Base
       if current_user and not current_user.is_active?
         flash[:error] = "You need to activate your account first"
         redirect_to unconfirmed_email_user_path(current_user)
+      end
+    end
+    
+    def rss_token
+      unless params[:rss_token].nil? or params[:format] != 'rss'
+        user = User.find_by_rss_token(params[:rss_token])
+        set_current_user user unless user.nil?
       end
     end
 

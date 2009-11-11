@@ -17,4 +17,4 @@
       %h2= t '.projects'
       = list_projects(@projects)
     .subscribe
-      = link_to t('.subscribe'), projects_path(:format => :rss)
+      = link_to t('.subscribe'), user_rss_token(projects_path(:format => :rss))

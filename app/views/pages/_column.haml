@@ -3,3 +3,6 @@
     = new_page_link(project)
   .pages
     = list_pages(pages,current_target)
+    
+  .subscribe
+    = link_to t('.subscribe'), user_rss_token(project_pages_path(@current_project, :format => :rss))

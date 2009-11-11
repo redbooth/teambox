@@ -55,4 +55,8 @@ module UsersHelper
       end
     end
   end
+  
+  def user_rss_token(url)
+    url + "?rss_token=#{current_user.rss_token}#{current_user.id}"
+  end
 end

@@ -17,6 +17,11 @@ module AuthenticatedSystem
       session[:user_id] = new_user ? new_user.id : nil
       @current_user = new_user || false
     end
+    
+    # Store current user without updating session data (used for viewing RSS feeds)
+    def set_current_user(new_user)
+      @current_user = new_user
+    end
 
     # Check if the user is authorized
     #
