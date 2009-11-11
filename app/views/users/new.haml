@@ -4,4 +4,5 @@
 
 - form_for @user do |f|
   = user_fields(f, @user, @invite)
-  = submit_tag t('.submit')
+  .submit
+    = submit_tag t('.submit')
