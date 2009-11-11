@@ -100,8 +100,8 @@ es:
       remove_from_project: Borrar del proyecto
     welcome:
       get_started: Ya estás en Teambox!
-      intro1: "Eres nuestro invitado más reciente! Pronto aprenderás cómo Teambox puede convertirse en el punto de inicio de tu día."
-      intro2: "Ahora qué? Crea un proyecto para <b>colaborar</b>:" #" an agenda to <b>keep track of contacts</b>:"
+      intro1: "Eres nuestro invitado más reciente! Aprende cómo Teambox puede ser en el punto de inicio de tu día."
+      intro2: "Ahora qué? Crea un proyecto para <b>colaborar</b>." #" an agenda to <b>keep track of contacts</b>:"
       projects:
         title: Proyectos
         share_and_collaborate: "Comparte y colabora con tu equipo! Notificacione, conversaciones, tareas, páginas y archivos."
@@ -112,7 +112,7 @@ es:
         help: Puedes <b>ayudarnos</b> contándoles a tus amigos cómo usas Teambox en
         twitter: 'Twitter,'
         facebook: Facebook
-        in_your_site: en tu página web o blog!
+        in_your_site: en tu web o blog!
         tell_us: "¿Usas Teambox cada día? Cuéntanos <a href='mailto:{{address}}'>cómo lo usas</a> en un email!"
       stop_welcome: Ocultar la página de bienvenida
     unconfirmed_email:
