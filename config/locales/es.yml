@@ -123,7 +123,7 @@ es:
       resend: "¿No encuentras el email de confirmación? Pulsa <a href='{{link}}'>aquí</a> para reenviar el correo."
       spam: "Asegúrate de que el email no se ha clasificado como correo no deseado."
       wrong_address: "Dirección equivocada? Si escribiste mal tu dirección de email, <a href='{{link}}'>cancela el proceso</a> y vuelve a crear tu cuenta con un email válido."
-      problems: "Si aún tienes problemas, escríbenos! <a href='http://teambox.tenderapp.com'>http://teambox.tenderapp.com</a>"
+      problems: "Si aún tienes problemas, escríbenos! {{support}}"
     profile_completeness:
       title: Rellena tu perfil!
       complete_your_profile: Así tus compañeros estarán al día de tus datos de contacto.
@@ -163,7 +163,7 @@ es:
       name_description: "Escoge un título breve y explicativo. Por ejemplo: Taggart Transcontinental"
       permalink: URL
       permalink_description: "Esta será la dirección web de tu proyecto. Hazla tan breve como puedas y sin espacios."
-      permalink_prefix: http://teambox.com/projects/
+      permalink_prefix: "http://{{domain}}/projects/"
     new:
       title: Crear un proyecto
       submit: Crear proyecto and empezar a invitar usuarios
@@ -452,21 +452,21 @@ es:
       plaintext_link: "Si el enlace de arriba no funciona, copia y pega lo siguiente en la barra de direcciones de tu navegador:"
       teambox_is_a_pm_platform: "Teambox es una plataforma de gestión de proyectos pensada para el mundo real."
       plan_share_and_collaborate: "Planifica, comparte y manténte al día de lo que se ha hecho. Tan fácil como debería ser."
-      report_abuse: "Este email se te ha enviado por petición de tu amigo. Infórmanos de abusos en abuse@teambox.com."
+      report_abuse: "Este email se te ha enviado por petición de tu amigo. Si ha habido un intento de abuso, contáctanos."
     confirm:
       hey: "Hola, {{user_name}}!"
       follow_the_link: "Para <b>completar tu registro</b> en Teambox sólo tienes que seguir este enlace:"
       log_in: "Entra a Teambox ahora!"
       plaintext_link: "Si el enlace de arriba no funciona, copia y pega lo siguiente en la barra de direcciones de tu navegador:"
       report_abuse: "Recibes este mensaje porque te has registado en Teambox con la dirección {{email}}"
-      problems: "Si tienes problemas, ponte en contacto con nosotros en <a href='http://teambox.tenderapp.com'>http://teambox.tenderapp.com</a>"
+      problems: "Si tienes problemas, ponte en contacto con nosotros en {{support}}"
     reset_password:
       hey: "Hola, {{user_name}}!"
       follow_the_link: "Para <b>restablecer tu contraseña</b> en Teambox sólo tienes que seguir este enlace:"
       log_in: "Entra a Teambox ahora!"
       plaintext_link: "Si el enlace de arriba no funciona, copia y pega lo siguiente en la barra de direcciones de tu navegador:"
       report_abuse: "Recibes este mensaje porque te has registado en Teambox con la dirección {{email}}"
-      problems: "Si tienes problemas, ponte en contacto con nosotros en <a href='http://teambox.tenderapp.com'>http://teambox.tenderapp.com</a>"
+      problems: "Si tienes problemas, ponte en contacto con nosotros en {{support}}"
     notify_conversation:
       project: "Proyecto de Teambox:"
       file: "Archivo:"

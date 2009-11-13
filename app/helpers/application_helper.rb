@@ -184,7 +184,9 @@ module ApplicationHelper
   end
   
   def help_link
-    link_to t('.help'), "http://help.teambox.com/#{controller.controller_name}"
+    if APP_CONFIG.has_key? 'help_url'
+      link_to t('.help'), "#{APP_CONFIG['help_url']}/#{controller.controller_name}"
+    end
   end
 
   def parenthesize(text)

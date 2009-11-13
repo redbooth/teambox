@@ -119,11 +119,11 @@ en:
       title: Confirm your email
       invitation_sent_to: "An email invitation was sent to <i>{{email}}</i>, in order to verify your email address."
       follow_the_link: Please <b>open this email and follow the link inside it</b> to activate your account.
-      problems: Problems?
+      problems_title: Problems?
       resend: "Can't find the email? Press <a href='{{link}}'>here</a> to re-send the activation email."
       spam: "Make sure the email wasn't classified as spam by your email client."
       wrong_address: "Wrong address? If you mistyped your email address, <a href='{{link}}'>cancel the signup process</a> and re-create your account with a valid address."
-      problems: "If you're still having problems, please contact us at <a href='http://teambox.tenderapp.com'>http://teambox.tenderapp.com</a>"
+      problems: "If you're still having problems, please contact us at {{support}}"
     profile_completeness:
       title: Profile Completion
       complete_your_profile: Complete your profile so your team can keep in touch with your contact information!
@@ -163,7 +163,7 @@ en:
       name_description: "Choose a brief and descriptive title. For example: Taggart Transcontinental"
       permalink: URL
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
-      permalink_prefix: http://teambox.com/projects/
+      permalink_prefix: "http://{{domain}}/projects/"
     new:
       title: Create a Project
       submit: Create project and start inviting people
@@ -458,21 +458,21 @@ en:
       plaintext_link: "If the above link doesn't work, copy and paste the following code into your browser bar: "
       teambox_is_a_pm_platform: "Teambox is a project management platform made for real-world collaboration."
       plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
-      report_abuse: "This email was sent to you by your contact's request. Please report any abuse to abuse@teambox.com."
+      report_abuse: "This email was sent to you by your contact's request. Please report any abuse."
     confirm:
       hey: "Hey, {{user_name}}!"
       follow_the_link: "In order to <b>complete your signup</b> for Teambox, we need you to log in by clicking here:"
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You receive this message because you signed up for a Teambox account with {{email}}"
-      problems: "If you have any problems, please contact us at <a href='http://teambox.tenderapp.com'>http://teambox.tenderapp.com</a>"
+      problems: "If you have any problems, please contact us at {{support}}"
     reset_password:
       hey: "Hey, {{user_name}}!"
       follow_the_link: "In order to <b>set a new password</b> for Teambox, we need you to log in with the following link:"
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You receive this message because you signed up for a Teambox account with {{email}}"
-      problems: "If you have any problems, please contact us at <a href='http://teambox.tenderapp.com'>http://teambox.tenderapp.com</a>"
+      problems: "If you have any problems, please contact us at {{support}}"
     notify_conversation:
       project: "Teambox Project:"
       file: "File:"

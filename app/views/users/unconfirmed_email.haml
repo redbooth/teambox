@@ -4,7 +4,7 @@
 %p 
   = t('.follow_the_link')
 
-%h3= t('.problems')
+%h3= t('.problems_title')
 %ul
   %li
     = link_to t('.resend', :link => unconfirmed_email_user_path(current_user, :resend => true))
@@ -13,4 +13,4 @@
   %li
     = t('.wrong_address', :link => logout_path)
     
-%p= t('.problems', :email => "support@teambox.com")
+%p= t('.problems', :support => APP_CONFIG['support'])

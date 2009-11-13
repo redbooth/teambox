@@ -1,0 +1,45 @@
+#
+# This file takes care of some key strings for the interface and app.
+# You will also need to edit environment.rb with your own email settings.
+# 
+
+# This block defines defaults, shared for all environments.
+# You can override them individually under development, test or production.
+defaults: &DEFAULTS
+  # The domain from where your app is served from.
+  app_domain: app.teambox.com
+  
+  # The domain for your outgoing email, as in no_reply@app.teambox.com
+  email_domain: app.teambox.com
+  
+  # If true, will include the "reply above this line" notice where relevant and accept emails.
+  allow_incoming_email: false
+
+  home_url: http://www.teambox.com
+  #tour_url: http://www.teambox.com/tour
+  blog_url: http://blog.teambox.com
+  #help_url: http://help.teambox.com
+  
+  # [NOT IMPLEMENTED]
+  # If false, the only way of having an account will be being invited by another user.
+  allow_signups: true
+  
+  # Address where your users should write to ask for help. Accepts an email or website.
+  support: http://teambox.tenderapp.com
+  
+  time_zone: 'UTC'
+
+development:
+  <<: *DEFAULTS
+  app_domain: 127.0.0.1
+
+production:
+  <<: *DEFAULTS
+  app_domain: app.teambox.com
+
+test: &TEST
+  <<: *DEFAULTS
+  app_domain: 127.0.0.1
+
+cucumber:
+  <<: *TEST  

@@ -8,5 +8,5 @@
   .label
     = f.label :permalink, t('.permalink')
     .description= t('.permalink_description')
-  = t('.permalink_prefix')
+  = t('.permalink_prefix', :domain => APP_CONFIG['app_domain'])
   = f.text_field :permalink
