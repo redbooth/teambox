@@ -241,6 +241,8 @@ es:
       edit: Editar título
       message: mensaje
       messages: mensajes
+      unwatch: Dejar de seguir esta conversación
+      watch: Seguir esta conversación
     short_conversation:
       comment: respuesta
       comments: respuestas
@@ -258,6 +260,8 @@ es:
       submit: Crear
     show:
       title: "Tarea: {{name}}"
+      watch: Seguir esta tarea
+      unwatch: Dejar de seguir esta tarea
     link:
       new: + Nueva tarea
       edit: Editar
@@ -353,6 +357,8 @@ es:
       subscribe: Suscríbete a las tareas
     show:
       title: "Lista de tareas: {{name}}"
+      watch: Seguir esta lista de tareas
+      unwatch: Dejar de seguir esta lista
     destroy_message:
       deleted: "La lista <b>{{name}}</b> ha sido borrada!"
   people:
