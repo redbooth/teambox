@@ -1,10 +1,10 @@
--if user.new_record? || sub_action != nil
-  -if sub_action == 'settings'
+- if user.new_record? or sub_action != nil
+  -if user.new_record? or sub_action == 'settings'
     .login.text_field
       = f.label :login, t('.login')
       = f.text_field :login
       = tooltip 'user_login', t('.tooltips.login')
-  -if sub_action == 'profile'
+  -if user.new_record? or sub_action == 'profile'
     .first_name.text_field
       = f.label :first_name, t('.first_name')
       = f.text_field :first_name
@@ -13,7 +13,7 @@
       = f.label :last_name, t('.last_name')
       = f.text_field :last_name
     = tooltip 'user_last_name', t('.tooltips.last_name')
-  -if sub_action == 'settings'
+  -if user.new_record? or sub_action == 'settings'
     .email.text_field
       = f.label :email, t('.email')
       = f.text_field :email
