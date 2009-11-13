@@ -10,9 +10,6 @@ module NavigationHelpers
     
     when /the home\s?page/
       '/'
-
-    when /the task lists page/
-      "/projects/ruby_rockstars/task_lists"
       
     when /the new project page/  
       "/projects/new"
@@ -22,6 +19,13 @@ module NavigationHelpers
 
     when /the login page/
       "/login"
+
+    when /the conversations page/
+      "/projects/ruby_rockstars/conversations"
+
+    when /the task lists page/
+      "/projects/ruby_rockstars/task_lists"
+      
     #when /the index page for (.+)/
     #  polymorphic_path(model($1))
     
