@@ -8,3 +8,4 @@ public/avatars/*
 public/upload/*
 .idea
 db/*.sqlite3
+webrat-*

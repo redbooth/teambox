@@ -85,4 +85,12 @@ describe Project do
       project2.permalink.should == 'cheshire-cat-2'
     end
   end
+  
+  describe "factories" do
+    it "should generate Ruby Rockstars project with Mislav in it" do
+      project = Factory.create(:ruby_rockstars)
+      project.valid?.should be_true
+      project.users.first.should == User.find_by_login('mislav')
+    end
+  end
 end

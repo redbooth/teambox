@@ -157,4 +157,12 @@ describe User do
       user.is_active?.should be_false
     end    
   end
+  
+  describe "factories" do
+    it "should generate Mislav for use in Cucumber stories" do
+      mislav = Factory.create(:mislav)
+      mislav.valid?.should be_true
+      mislav.projects.should == []
+    end
+  end
 end

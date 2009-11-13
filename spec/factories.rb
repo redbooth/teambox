@@ -34,12 +34,6 @@ Factory.define :comment do |comment|
   comment.body 'Just finished posting this comment'
 end
 
-Factory.define :ruby_rockstars, :class => 'Project' do |project|
-  project.name "Ruby Rockstars"
-  project.permalink "ruby_rockstars"
-  project.association(:mislav)
-end
-
 Factory.define :mislav, :class => 'User' do |user|
   user.login 'mislav'
   user.email 'mislav@fuckingawesome.com'
@@ -51,13 +45,22 @@ Factory.define :mislav, :class => 'User' do |user|
 end
 
 Factory.define :geoffrey, :class => 'User' do |user|
-  user.login 'peepcode'
-  user.email 'peepcode@fuckingawesome.com'
+  user.login 'geoffrey'
+  user.email 'geoffrey@peepcode.com'
   user.first_name 'Geoffrey'
   user.last_name 'Grosenbach'
   user.password 'smoothlistening'
   user.password_confirmation 'smoothlistening'
   user.confirmed_user true  
+end
+
+Factory.define :ruby_rockstars, :class => 'Project' do |project|
+  project.name "Ruby Rockstars"
+  project.permalink "ruby_rockstars"
+  project.user_id do
+    (User.find_by_login('mislav') || Factory(:mislav)).id
+  end
+#  project.association(:user)
 end
 
 #Factory.define :parkour, :class => 'TaskList' do |user|

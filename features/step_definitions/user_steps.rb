@@ -1,5 +1,5 @@
 Given /^I am logged in as (.*)$/ do |user_type|
-  @current_user ||= Factory(user_type.to_sym)
+  @current_user ||= User.find_by_login(user_type) || Factory(user_type.to_sym) 
   @user = @current_user
 
   visit(login_path)
@@ -9,7 +9,7 @@ Given /^I am logged in as (.*)$/ do |user_type|
 end
 
 Given /^I login as (.*)$/ do |user_type|
-  @current_user ||= Factory(user_type.to_sym)
+  @current_user ||= User.find_by_login(user_type) || Factory(user_type.to_sym) 
   @user = @current_user
 
   visit(login_path)
