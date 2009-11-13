@@ -1,17 +1,16 @@
 Teambox Project Manager
 ================================
 
-*THIS PROJECT IS IN AN EARLY PHASE AND ISN'T NOT READY FOR DEPLOYMENT*.
-*THIS PROJECT IS IN AN EARLY PHASE AND ISN'T NOT READY FOR DEPLOYMENT*.
-*THIS PROJECT IS IN AN EARLY PHASE AND ISN'T NOT READY FOR DEPLOYMENT*.
+*A project management software built on Ruby on Rails with a focus on collaboration.*
 
-For any questions, contact us at pablo@teambox.com
+Teambox is project-oriented. Each project is private and can only be accessed by its owner and collaborators.
+Projects have a status wall, conversations, tasks, shared pages and file uploads.
 
-Teambox is a project management software built on Ruby on Rails,
-based in our previous project, Saiku.
+You can [use Teambox online](http://www.teambox.com/ "Teambox") to understand how it works before installing.
 
-Visit [Teambox website](http://www.teambox.com/ "Project Management")
-for documentation, community and support: <http://www.teambox.com/>
+Visit the product's site for documentation, community and support: <http://www.teambox.com/>
+
+<img src="http://blog.teambox.com/rails_features.jpg"/>
 
 Teambox: Project Management and Collaboration software
 -------
@@ -23,26 +22,27 @@ Teambox: Project Management and Collaboration software
 - Copyright: (cc) 2009 Teambox Desarrollos S.L.
 
 
-
-
 GET ROLLING!
 -------
 
 Install missing gems:
 
-rake gems:install
+- rake gems:install
 
 Create Your Database 
 
-rake db:create
+- rake db:create
 
 Run Migrations
 
-rake db:auto:migrate
+- rake db:auto:migrate
 
-Configure models/emailer.rb and replace _app.teambox.com_ for your own domain name.
-Configure config/environment.rb and replace _app.teambox.com_ for your own domain name.
-Configure config/environment.rb and enter your email settings for smtp_settings.
+Edit config files
+
+- config/teambox.yml: replace the needed values for your own domain name.
+- config/environment.rb: enter your email settings for smtp_settings.
+
+Run the server with ./script/server and go to http://localhost to start using Teambox!
 
 
 Plugins were using you need to know about
@@ -58,12 +58,13 @@ share you app for deployment there is a rake to convert your current schema
 to a migration file. So you'll only have migration files for major revisions.
 
 TODO (Version 2)
+-----
 
-* when adding a user to a project it should list them but as pending, with the option to send an invitation again
+* being able to delete comments and files
 * fixture data, so when were in development we can load up a project quickly
 
 TODO (Version 2.1)
--------
+-----
 
 * project drop down
 * time tracking
