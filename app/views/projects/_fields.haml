@@ -11,5 +11,5 @@
   = f.text_field :permalink
   = tooltip 'project_permalink', t('.permalink_description')
   .preview
-    ="#{t('.permalink_prefix')}<span id='handle'></span>" 
+    ="#{t('.permalink_prefix', :domain => APP_CONFIG['app_domain'])}<span id='handle'></span>" 
   = javascript_tag "Event.observe('project_permalink', 'keyup', function(e) { Project.valid_url(); })"
