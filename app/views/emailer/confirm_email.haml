@@ -16,6 +16,6 @@
 
   .footer{ :style => email_text(:small) }
     %p= t('emailer.confirm.report_abuse', :email => @user.email)
-    %p= t('emailer.confirm.problems')
+    %p= t('emailer.confirm.problems', :support => APP_CONFIG['support'])
     
 

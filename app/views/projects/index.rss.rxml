@@ -1,13 +1,13 @@
 xml.instruct! :xml, :version => "1.0" 
 xml.rss :version => "2.0" do
   xml.channel do
-    xml.title t('.rss.tite')
+    xml.title t('.rss.title')
     xml.description t('.rss.description')
     xml.link user_rss_token(projects_url(:rss))
     
     for activity in @activities
       xml.item do
-        xml.title t("activities.activity_line.#{activity.action_type}")
+        xml.title ["[#{activity.project.permalink}]", activity.user.short_name, t("activities.activity_line.#{activity.action_type}")].join(' ')
         xml.description show_activity(@current_project,activity,activity.target)
         xml.pubDate activity.posted_date.to_s(:rfc822)
         xml.link projects_url(:anchor => "activity_#{activity.id}")

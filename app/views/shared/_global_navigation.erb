@@ -37,16 +37,18 @@ render_tabnav :global do
   else
     add_tab do |t|
       t.named t('.home')
-      t.links_to 'http://www.teambox.com/'
-    end
+      t.links_to APP_CONFIG['home_url']
+    end if APP_CONFIG.has_key? 'home_url'
+
     add_tab do |t|
       t.named t('.tour')
-      t.links_to 'http://www.teambox.com/tour/'
-    end
+      t.links_to APP_CONFIG['tour_url']
+    end if APP_CONFIG.has_key? 'tour_url'
+
     add_tab do |t|
       t.named t('.blog')
-      t.links_to 'http://www.teambox.com/blog/'
-    end
+      t.links_to APP_CONFIG['blog_url']
+    end if APP_CONFIG.has_key? 'blog_url'
 
     add_tab do |t|
       t.named t('.signup')

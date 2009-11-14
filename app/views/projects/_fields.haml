@@ -3,7 +3,11 @@
   = f.text_field :name
   = tooltip 'project_name', t('.name_description')
 .permalink.text_field
-  = f.label :permalink, t('.permalink')
+  .label
+    = f.label :permalink, t('.permalink')
+    .description= t('.permalink_description')
+  = t('.permalink_prefix', :domain => APP_CONFIG['app_domain'])
+
   = f.text_field :permalink
   = tooltip 'project_permalink', t('.permalink_description')
   .preview

@@ -3,7 +3,7 @@ class Emailer < ActionMailer::Base
 
   def confirm_email(user)
     recipients    user.email
-    from          'Teambox <no-reply@teambox.com>'
+    from          "Teambox <no-reply@#{APP_CONFIG['email_domain']}>"
     subject       'Get started with Teambox!'
     content_type  'text/html'
     sent_on       Time.now
@@ -12,7 +12,7 @@ class Emailer < ActionMailer::Base
 
   def reset_password(user)
     recipients    user.email
-    from          'Teambox <no-reply@teambox.com>'
+    from          "Teambox <no-reply@#{APP_CONFIG['email_domain']}>"
     subject       'Your password has successfully been reset!'
     content_type  'text/html'
     sent_on       Time.now
@@ -21,7 +21,7 @@ class Emailer < ActionMailer::Base
 
   def forgot_password(reset_password)
     recipients    reset_password.email
-    from          'Teambox <no-reply@teambox.com>'
+    from          "Teambox <no-reply@#{APP_CONFIG['email_domain']}>"
     subject       'Password retrieval for Teambox'
     content_type  'text/html'
     sent_on       Time.now
@@ -30,41 +30,39 @@ class Emailer < ActionMailer::Base
 
   def project_invitation(invitation)
     recipients    invitation.email
-    from          'Teambox <no-reply@teambox.com>'
+    from          "Teambox <no-reply@#{APP_CONFIG['email_domain']}>"
     subject       "#{invitation.user.name} shared [#{invitation.project.name}] with you"
     content_type  'text/html'
     sent_on       Time.now
-    reply_to      'Teambox <no-reply@teambox.com>'
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
 
   def signup_invitation(invitation)
     recipients    invitation.email
-    from          'Teambox <no-reply@teambox.com>'
+    from          "Teambox <no-reply@#{APP_CONFIG['email_domain']}>"
     subject       "#{invitation.user.name} shared [#{invitation.project.name}] with you"
     content_type  'text/html'
     sent_on       Time.now
-    reply_to      'Teambox <no-reply@teambox.com>'
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
 
   def notify_conversation(recipient, project, comment, conversation)
     recipients    recipient
-    from          "Teambox <#{project.permalink}@teambox.com>"
+    from          "Teambox <#{project.permalink}@#{APP_CONFIG['email_domain']}>"
     subject       "[#{project.permalink}] #{conversation.name}"
     content_type  "text/html"
     sent_on       Time.now
-    reply_to      "Teambox <#{project.permalink}+conversation+#{conversation.id}@teambox.com>"
+    reply_to      "Teambox <#{project.permalink}+conversation+#{conversation.id}@#{APP_CONFIG['email_domain']}>"
     body          :project => project, :comment => comment, :conversation => conversation
   end
 
   # Receives an email and performs the adequate action
   #
-  # Emails can be sent to project@teambox.com or project+model+id@teambox.com
+  # Emails can be sent to project@app.server.com or project+model+id@app.server.com
   # Examples:
   #
-  # keiretsu@teambox.com                  Will post a new conversation with the Subject in the project Keiretsu
-  # keiretsu+conversation+5@teambox.com   Will post a new comment in the conversation whose id is 5
+  # keiretsu@app.server.com                  Will post a new conversation with the Subject in the project Keiretsu
+  # keiretsu+conversation+5@app.server.com   Will post a new comment in the conversation whose id is 5
   #
   # Invalid or malformed emails will be ignored
   #
