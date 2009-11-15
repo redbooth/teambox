@@ -1,9 +1,10 @@
 %h2= t('.title')
 
 - form_tag session_path, :class => 'new_session', :id => 'new_session' do
-  #primer
-    .box{ :style => 'font-size:12px;margin:5px'}
-      %p= t('latest_announcement')
+  - if t('latest_announcement').length > 5
+    #primer
+      .box{ :style => 'font-size:12px;margin:5px'}
+        %p= t('latest_announcement')
   = session_fields
   = submit_tag t('.submit')
 

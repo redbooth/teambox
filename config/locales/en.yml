@@ -1,5 +1,7 @@
 en:
-  latest_announcement: "This is a <b>testing server</b>, which means that it's used exclusively to test new features before Teambox 2.0 is officially released.<br/><br/>All the data in this server will be destroyed. Don't use it for real-world purposes."
+  # if latest_announcement is less than 5 characters, it will not be displayed
+  latest_announcement: .
+  #"You're now using <b>Teambox 2</b>, lots of new features!</p><p>All the data from Teambox 1 has been migrated.</p><p>If you have an <b>existing account</b>, you'll need to get a new password. Get a new one by using Forgot your Password and you'll be using Teambox 2!</p><p>First time here? Create an account at Signup."
   common:
     and: and
     or: or
