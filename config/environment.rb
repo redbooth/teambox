@@ -12,15 +12,18 @@ Rails::Initializer.run do |config|
   config.time_zone = APP_CONFIG['time_zone']
 
   config.action_mailer.default_url_options = { :host => APP_CONFIG['app_domain'] }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address        => 'smtp.yourserver.com',
-    :port           => 25,
-    :domain         => 'your_desploy_server_app',
-    :user_name      => 'username',
-    :password       => 'password',
-    :authentication => :plain
-  }
+
+  # Configure and uncomment the following lines for your email server
+  #
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   :address        => 'smtp.yourserver.com',
+  #   :port           => 25,
+  #   :domain         => 'your_desploy_server_app',
+  #   :user_name      => 'username',
+  #   :password       => 'password',
+  #   :authentication => :plain
+  # }
   
   require 'RedCloth'
   require 'mime/types'
