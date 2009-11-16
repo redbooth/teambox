@@ -17,7 +17,7 @@ class TaskList < ActiveRecord::Base
   
   acts_as_list :scope => :project
   acts_as_paranoid    
-  attr_accessible :name
+  attr_accessible :name, :start_on, :finish_on
 
   validates_length_of :name, :minimum => 3
   

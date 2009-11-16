@@ -17,7 +17,7 @@ class Task < ActiveRecord::Base
   named_scope :archived, :conditions => {:archived => true}
   named_scope :unarchived, :conditions => {:archived => false}
     
-  attr_accessible :name, :assigned_id, :status
+  attr_accessible :name, :assigned_id, :status, :due_on
 
   STATUSES = ['new','open','hold','resolved','rejected']
 

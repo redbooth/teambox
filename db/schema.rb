@@ -136,7 +136,9 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.datetime :deleted_at  
     t.integer :archived_tasks_count, :default => 0
     t.integer :tasks_count, :default => 0
-    
+    t.datetime :completed_at
+    t.date :start_on
+    t.date :finish_on
     t.timestamps
   end
   
@@ -153,6 +155,8 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :assigned_id
     t.integer :status, :default => 0
     t.boolean :archived, :default => false
+    t.date :due_on
+    t.datetime :completed_at
     t.datetime :deleted_at    
     t.timestamps
   end

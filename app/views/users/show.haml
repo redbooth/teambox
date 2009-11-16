@@ -8,8 +8,6 @@
 
     =# list_projects(@user.projects)
 
-
-
 - if current_user.can_view?(@user)
   =# new_comment_user_form(current_user)
   %h2= t('.recent_activity_for', :user_name => @user.name)

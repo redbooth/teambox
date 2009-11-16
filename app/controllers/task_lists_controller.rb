@@ -13,6 +13,13 @@ class TaskListsController < ApplicationController
         @activities |= project.activities.for_task_lists
       end
     end
+
+    @chart_task_lists = []
+    @task_lists.each do |task_list|
+      @chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name)
+    end
+
+    @chart = GanttChart::Base.new(@chart_task_lists)
     
     respond_to do |f|
       f.html
