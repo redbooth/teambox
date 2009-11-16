@@ -6,19 +6,11 @@ unless @comment.new_record?
   page.en
   
   page << "Form.reset('new_comment')"
-  #page['new_comment'].down('.uploads_save').childElements.invoke('remove')
-  #page['new_comment'].down('.uploads_current').select('div').invoke('remove')
-  #page['new_comment'].down('.uploads_current').hide
+  page.replace 'upload_area', upload_area(@comment)
+  page['comment_upload_link'].show
+  
   page.reload_javascript_events
   
   #page.update_task_status(@target)
-  
-  #if @original_controller == 'hours'
-  #  page['calendar'].update(build_calendar(@comments,@year,@month))
-  #  page << "var apply_filter_func = function () {"
-  #    page.apply_user_filter
-  #  page << "}; var apply_filter = apply_filter_func.bind($('user_filter'));"
-  #  page << "apply_filter();"
-  #end
-  
+    
 end

@@ -1,19 +1,22 @@
 .upload{ :id => "upload_#{upload.id}" }
   .info
-    =# link_to file_icon_image(upload,'48px'), project_upload_path(upload.project,upload.filename)
+    - if upload.is_image?
+      =image_tag(upload.asset(:thumb))
+      - if false
+        = link_to image_tag(upload.asset(:thumb)), "#upload_thumb_#{upload.id}", :class => "fancyzoom"
+        .large_thumbnail{ :id => "upload_thumb_#{upload.id}"}
+          =image_tag upload.asset(:original)
+    - else
+      = link_to file_icon_image(upload,'48px'), upload.url
   .block
     .filename.show_details
+      .description
+        = link_to upload.description, upload.url  if upload.description
       .date
         = posted_date upload.created_at
       .name
         = link_to upload.user.name, user_path(upload.user)
-        = t('.uploaded_a_file')
-      .body
-        - if upload.description
-          %p= h(upload.description)
-        %p
-          = upload_link(project,upload)
-          = number_to_human_size(upload.size)
-    = image_tag upload.url
-    =# upload_thumbnail_image(project,upload)
+        = t('.uploaded_the_file')
+        = upload_link(project,upload)
+        = number_to_human_size(upload.size)
   .clear

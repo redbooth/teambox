@@ -1,11 +1,11 @@
 - show_hours ||= true
-- remote_form_for form_url do |f|
+- remote_form_for form_url, :id => 'new_comment_form' do |f|
   = hidden_field_tag :original_controller, controller_name
   .body.text_area
     = text_area_tag 'comment[body]', message, :class => 'comment_body'
   .extra
-    =# the_comment_upload_link(comment) unless comment.project.nil?
-    = comment_area(comment)
+    = the_comment_upload_link(comment) unless comment.project.nil?
+    = upload_area(comment)
     .status
       - if target
         - if target.class.to_s == 'Task'

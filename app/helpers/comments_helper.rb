@@ -1,5 +1,6 @@
 module CommentsHelper
 
+
   def conversation_last_comment_text(comment)
     if is_controller? :conversations, :index
       "Last Comment by"

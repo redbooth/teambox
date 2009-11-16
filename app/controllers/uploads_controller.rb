@@ -1,13 +1,13 @@
 class UploadsController < ApplicationController
-  before_filter :find_upload, :only => [ :destroy, :update, :thumbnail, :show ]
-  
+  before_filter :find_upload, :only => [:destroy,:update,:thumbnail,:show]
+  skip_before_filter :load_project, :only => [:download]
   SEND_FILE_METHOD = :default
 
   def download
     head(:not_found) and return if (upload = Upload.find_by_id(params[:id])).nil?
     head(:forbidden) and return unless upload.downloadable?(current_user)
 
-    path = upload.upload.path(params[:style])
+    path = upload.asset.path(params[:style])
     head(:bad_request) and return unless File.exist?(path) && params[:format].to_s == File.extname(path).gsub(/^\.+/, '')
 
     send_file_options = { :type => File.mime_type?(path) }
@@ -43,37 +43,34 @@ class UploadsController < ApplicationController
     end
   end
   
+  def create
+    @upload = @current_project.uploads.new(params[:upload])
+    @upload.user = current_user
+
+    
+    if is_iframe?
+      @upload.save
+      @comment = load_comment
+      @upload.reload
+      respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
+    else
+      respond_to do |f|          
+        flash[:error] = "Couldn't upload file" unless @upload.save
+        f.html { redirect_to(project_uploads_path(@current_project)) }
+      end
+    end
+  end
+
+  
   def update
     @upload.update_attributes(params[:upload])
-    @upload.save
 
     respond_to do |format|
       format.js
       format.html { redirect_to(project_uploads_path(@current_project)) }
     end
   end
-  
-  def create
-    @upload = @current_project.uploads.new(params[:upload])
-    @upload.user = current_user
-
-    @comment = load_comment
-    @upload.save
-    @upload.reload
-    if is_iframe?
-      respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
-    else
-      respond_to{|f|f.html {redirect_to(project_uploads_path(@current_project))}}
-    end
-  end
-  
-  def show
-    unless @upload
-      flash[:notice] = "#{params[:upload_fileame]} could not be found."
-      redirect_to project_uploads_path(@current_project)
-    end
-  end
-  
+      
   def destroy
     if @upload
       @upload.destroy
@@ -84,7 +81,7 @@ class UploadsController < ApplicationController
     def is_iframe?
       params[:iframe] != nil
     end
-    
+        
     def load_comment
       if params[:comment_id]
         Comment.find(params[:comment_id])

@@ -1,2 +1,0 @@
-page['conversations_latest_comment'].addClassName('active')
-page['conversations_first_comment'].removeClassName('active')

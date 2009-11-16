@@ -1,9 +1,0 @@
-.edit_details{:style => 'display: none;'}
-  - remote_form_for upload, :url => project_upload_path(project,upload) do |f|
-    .filename_edit
-      = f.text_field :filename, :class => "upload_filename"
-      = f.submit t('common.save'), :id => "save_upload_#{upload.id}"
-      = cancel_edit_link upload
-      = loading('update',upload.id)
-    .description_edit
-      = f.text_field :description, :class => "upload_description"

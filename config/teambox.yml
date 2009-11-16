@@ -31,7 +31,7 @@ defaults: &DEFAULTS
 
 development:
   <<: *DEFAULTS
-  app_domain: 127.0.0.1
+  app_domain: localhost:3000
 
 production:
   <<: *DEFAULTS

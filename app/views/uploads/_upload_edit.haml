@@ -4,6 +4,6 @@
   -else
     = file_icon_image(upload,'16px')
   %span
-    = upload_link(upload)
-    = parenthesize(number_to_human_size(upload.filesize))
+    = upload_link(upload.project,upload)
+    = number_to_human_size(upload.size)
     = delete_upload_link(upload,target)

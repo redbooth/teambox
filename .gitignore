@@ -9,3 +9,4 @@ uploads/*
 .idea
 db/*.sqlite3
 webrat-*
+assets/*

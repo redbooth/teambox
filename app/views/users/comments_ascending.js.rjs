@@ -1,3 +1,0 @@
-page['comments_descending'].removeClassName('active')
-page['comments_ascending'].addClassName('active')
-page << "Comment.update();"

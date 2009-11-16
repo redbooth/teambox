@@ -1,17 +1,12 @@
 %h2= t('.title')
-%p
-  = t('.invitation_sent_to', :email => @email)
-%p 
-  = t('.follow_the_link')
+%p= t('.invitation_sent_to', :email => @email)
+%p= t('.follow_the_link')
 
 %h3= t('.problems_title')
 
 %ul
-  %li
-    = link_to t('.resend', :link => unconfirmed_email_user_path(current_user, :resend => true))
-  %li
-    = t('.spam')
-  %li
-    = t('.wrong_address', :link => logout_path)
+  %li= link_to t('.resend', :link => unconfirmed_email_user_path(current_user, :resend => true))
+  %li= t('.spam')
+  %li= t('.wrong_address', :link => logout_path)
     
 %p= t('.problems', :support => APP_CONFIG['support'])

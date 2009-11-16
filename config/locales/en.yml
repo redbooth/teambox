@@ -414,7 +414,7 @@ en:
       new_file: Upload a File
     new_upload:
       select_file: Select file
-      description: Description <i>(optional)</i>
+      description: Title <i>(optional)</i>
       upload: Upload file
     primer:
       empty: This project doesn't have any files yet.
@@ -425,7 +425,8 @@ en:
       item2: "<b>Versioning</b>. Upload new versions of a file and keep track of changes."
       item3: "<b>Always available</b>. Files stay in context in the project for future reference."      
     upload:
-      uploaded_a_file: "uploaded a file:"
+      uploaded_the_file: "uploaded the file"
+      download: Download
   sessions:
     fields:
       username_or_email: Username or email
@@ -552,6 +553,7 @@ en:
     index_conversations: All Conversations
     index_pages: All Pages
     index_uploads: All File Uploads
+    create_uploads: File Upload
     index_projects: All Projects
     index_people: People
     edit_users: Edit

@@ -8,6 +8,7 @@
 //= require <cropper>
 //= require <weakling>
 //= require <fyi>
+//= require <fancyzoom>
 
 replace_ids = function(s){
   var new_id = new Date().getTime();

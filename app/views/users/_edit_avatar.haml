@@ -1,9 +1,0 @@
-.upload_avatar
-  #upload_link
-    - if user.avatar.nil?
-      = link_to 'Upload Avatar', new_user_avatar_path(user)
-    - else
-      =thumb_avatar(user, false)
-      %p.actions
-        = link_to 'Adjust Thumbnail Cropping', user_avatar_path(user)
-        = link_to 'Upload a new Avatar', edit_user_avatar_path(user)

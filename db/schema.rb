@@ -248,9 +248,9 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :project_id
     t.integer  :comment_id
     t.text     :description, :default => ''
-    t.string   :upload_file_name
-    t.string   :upload_content_type
-    t.integer  :upload_file_size
+    t.string   :asset_file_name
+    t.string   :asset_content_type
+    t.integer  :asset_file_size
     t.timestamps
   end
  

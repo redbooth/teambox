@@ -1,6 +1,5 @@
 .comment{:id => "comment_#{comment.id}" }
   .info
-    = activity_comment_icon(comment,CommentRead.user(current_user).unread?(comment))
     = #comment_actions_link(comment)
     = thumb_avatar(comment.user)
   .block
@@ -14,4 +13,11 @@
       = activity_comment_target_link(comment)
     .body
       = comment.body_html
+    - if comment.uploads.count > 0
+      - if comment.uploads.all? { |upload| upload.is_image? }
+        .upload_images
+          = list_uploads_inline_with_thumbnails(comment.uploads)
+      - else
+        .upload_list
+          = list_uploads_inline(comment.uploads)
   .clear

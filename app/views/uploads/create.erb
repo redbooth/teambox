@@ -7,6 +7,11 @@ unless @upload.new_record?
       page << "top.$$('.upload_form').each(function(e){ e.hide(); })"
       page << "top.$('uploads_save').insert(#{{ :before => upload_form_params(@comment) }.to_json})"
     end
+else
+  update_page_tag do |page|  
+    page << "top.$$('.upload_form').each(function(e){ e.hide(); })"
+    page << "top.$('uploads_save').insert(#{{ :before => upload_form_params(@comment) }.to_json})"      
+  end  
 end
 %>
 

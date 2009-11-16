@@ -1,6 +1,6 @@
 .upload_file{:id => "upload_#{upload.id}"}
   = file_icon_image(upload,'16px')
   %span.filename
-    = upload_link(upload)
+    = upload_link(upload.project,upload)
   %span.size
-    = parenthesize(number_to_human_size(upload.filesize))
+    = parenthesize(number_to_human_size(upload.size))

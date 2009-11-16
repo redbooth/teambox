@@ -30,12 +30,6 @@ module UploadsHelper
       :project => project,
       :upload => upload }
   end
-
-  def upload_thumbnail_image(project,upload)
-    if upload.is_image?
-      image_tag(thumbnail_project_upload_path(project,upload), :class => 'thumbnail')
-    end
-  end
       
   def upload_actions_links(upload)
     render :partial => 'uploads/actions',
@@ -44,17 +38,23 @@ module UploadsHelper
   end
 
   def upload_link(project,upload)
-    link_to upload.file_name, upload.url, :class => 'upload_link'
+    if upload.file_name.length > 25
+      file_name = upload.file_name.sub!(/^.+\./,truncate(upload.file_name,20,'~.'))
+    else
+      file_name = upload.file_name
+    end  
+      
+    link_to file_name, upload.url, :class => 'upload_link'
   end
     
   def upload_link_with_thumbnail(upload)
-    link_to image_tag(thumbnail_project_upload_path(upload.project,upload)),
-      project_upload_path(upload.project,upload.filename),
+    link_to image_tag(upload.asset(:thumb)),
+      upload.url,
       :class => 'link_to_upload'
   end
 
-  def comment_area(comment)
-    render :partial => 'uploads/link', :locals => {:comment => comment }
+  def upload_area(comment)
+    render :partial => 'uploads/upload_area', :locals => {:comment => comment }
   end
 
   def show_upload_form(comment)
@@ -183,7 +183,7 @@ module UploadsHelper
   end
   
   def file_icon_image(upload,size='48px')
-    extension = File.extname(upload.filename)
+    extension = File.extname(upload.file_name)
     if extension.length > 0
       extension = extension[1,10]
     end
