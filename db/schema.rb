@@ -91,7 +91,11 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.datetime :deleted_at
     t.string   :rss_token, :default => nil, :limit => 40
     t.boolean  :admin,    :default => false
-    t.integer :comments_count    
+    t.integer :comments_count
+    
+    t.string  :avatar_file_name
+    t.string  :avatar_content_type
+    t.integer :avatar_file_size
     t.timestamps
   end
  
@@ -243,11 +247,10 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer  :user_id
     t.integer  :project_id
     t.integer  :comment_id
-    t.string   :filename
-    t.string   :content_type
-    t.integer  :filesize
     t.text     :description, :default => ''
-    t.integer  :version
+    t.string   :upload_file_name
+    t.string   :upload_content_type
+    t.integer  :upload_file_size
     t.timestamps
   end
  
@@ -255,24 +258,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   add_index :sessions, :updated_at
  
   add_index :users, ["login"], :name => "index_users_on_login", :unique => true
- 
-  create_table :avatars do |t|
-    t.integer  :user_id
-    t.integer  :x1, :default => 0
-    t.integer  :y1, :default => 0
-    t.integer  :x2, :default => 0
-    t.integer  :y2, :default => 0
-    t.integer  :crop_width, :default => 0
-    t.integer  :crop_height, :default => 0
-    t.integer  :width, :default => 0
-    t.integer  :height, :default => 0
-    t.string   :filename
-    t.string   :content_type
-    t.integer  :filesize
-    t.timestamps
-  end
-  add_index "avatars", ["user_id"], :name => "index_avatars_on_user"
- 
+  
   create_table :emails, :force => true do |t|
     t.string   :from
     t.string   :to

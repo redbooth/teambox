@@ -14,8 +14,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reset_passwords
   map.resource :session
 
+  
+
   map.account_settings '/account/settings', :controller => 'users', :action => 'edit', :sub_action => 'settings'
-  map.account_picture '/account/picture', :controller => 'avatars', :action => 'show'
+  map.account_picture '/account/picture', :controller => 'users', :action => 'edit', :sub_action => 'picture'
   map.account_profile '/account/profile', :controller => 'users', :action => 'edit', :sub_action => 'profile'
   map.account_notifications '/account/notications', :controller => 'users', :action => 'edit', :sub_action => 'notifications'
   
@@ -24,12 +26,13 @@ ActionController::Routing::Routes.draw do |map|
                           :confirm_email => :get,
                           :contact_importer => :get } do |user|
 
-    user.resource  :avatar, :member => { :micro => :get, :thumb => :get, :profile => :get,:crop => :put }
     user.resources :conversations, :has_many => [:comments]
     user.resources :task_lists,    :has_many => [:comments]  do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments]
     end
   end
+  
+
   
   map.resources :projects,
       :has_many => [:pages, :people],
@@ -41,7 +44,7 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :comments do |comment|
       comment.resources :uploads, :member => { :iframe => :get }
     end
-    project.resources :uploads, :requirements => { :id => /[^\/]+/ }, :member => { :thumbnail => :get }
+    project.resources :uploads#, :requirements => { :id => /[^\/]+/ }, :member => { :thumbnail => :get }
 
     map.reorder_task_lists 'project/:project_id/reorder_task_lists', :controller => 'task_lists', :action => 'reorder', :method => :post
     map.reorder_tasks 'project/:project_id/task_lists/:task_list_id/reorder_task_list', :controller => 'tasks', :action => 'reorder', :method => :post
@@ -61,6 +64,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pages, :only => [ :index ]
   
   map.root :controller => 'projects', :action => 'index'
-  
+  #map.connect 'uploads/:id/:style.:format', :controller => 'uploads', :action => 'download', :conditions => { :method => :get }  
   SprocketsApplication.routes(map)
 end

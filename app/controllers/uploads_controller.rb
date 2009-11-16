@@ -1,6 +1,25 @@
 class UploadsController < ApplicationController
   before_filter :find_upload, :only => [ :destroy, :update, :thumbnail, :show ]
   
+  SEND_FILE_METHOD = :default
+
+  def download
+    head(:not_found) and return if (upload = Upload.find_by_id(params[:id])).nil?
+    head(:forbidden) and return unless upload.downloadable?(current_user)
+
+    path = upload.upload.path(params[:style])
+    head(:bad_request) and return unless File.exist?(path) && params[:format].to_s == File.extname(path).gsub(/^\.+/, '')
+
+    send_file_options = { :type => File.mime_type?(path) }
+
+    case SEND_FILE_METHOD
+      when :apache then send_file_options[:x_sendfile] = true
+      when :nginx then head(:x_accel_redirect => path.gsub(Rails.root, ''), :content_type => send_file_options[:type]) and return
+    end
+
+    send_file(path, send_file_options)
+  end
+  
   def new
     @upload = current_user.uploads.new
     respond_to { |f| f.html }
@@ -28,9 +47,9 @@ class UploadsController < ApplicationController
     @upload.update_attributes(params[:upload])
     @upload.save
 
-    respond_to do |f|
-      f.js
-      f.html { redirect_to(project_uploads_path(@current_project)) }
+    respond_to do |format|
+      format.js
+      format.html { redirect_to(project_uploads_path(@current_project)) }
     end
   end
   
@@ -49,9 +68,7 @@ class UploadsController < ApplicationController
   end
   
   def show
-    if @upload
-      render :inline => "@upload.operate { |p| }", :type => :flexi
-    else
+    unless @upload
       flash[:notice] = "#{params[:upload_fileame]} could not be found."
       redirect_to project_uploads_path(@current_project)
     end
@@ -62,13 +79,7 @@ class UploadsController < ApplicationController
       @upload.destroy
     end
   end
-  
-  def thumbnail
-    if @upload and @upload.is_image?
-      render :inline => "@upload.operate {|p| p.resize '64x64'}", :type => :flexi
-    end
-  end
-  
+    
   private
     def is_iframe?
       params[:iframe] != nil
@@ -86,7 +97,7 @@ class UploadsController < ApplicationController
       if params[:id].match /^\d+$/
         @upload = @current_project.uploads.find(params[:id])
       else
-        @upload = @current_project.uploads.find_by_filename(params[:id])
+        @upload = @current_project.uploads.find_by_upload_file_name(params[:id])
       end
       
     end

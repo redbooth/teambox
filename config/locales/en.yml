@@ -97,7 +97,9 @@ en:
       thanks: Thanks for signing up!
       error: "We couldn't set up that account, sorry. Please try again, or contact an admin (link is above)."
     edit:
-      title: Your account
+      title_settings: Your Account Settings
+      title_profile: Your Profile Settings
+      title_picture: Your Profile Picture
       submit: Update account
     update:
       updated: User profile updated!
@@ -529,23 +531,8 @@ en:
           title: 'Expand your profile to 20 words'
         biography_length_long:
           title: 'Expand your profile to 30 words'
-
   form:
     cancel: Cancel
-
-  page_title:
-    show_projects: Overview
-    index_task_lists: All Task Lists
-    index_conversations: All Conversations
-    index_pages: All Pages
-    index_uploads: All File Uploads
-    index_projects: All Projects
-    index_people: People
-    edit_users: Edit
-    welcome_users: Welcome!
-    new_projects: New Project    
-    archived_task_lists: Archived Tasks
-    new_avatars: New Avatar
   number:
     human:
       storage_units:
@@ -559,3 +546,16 @@ en:
           mb: "Mb"
           gb: "Gb"
           tb: "Tb"
+  page_title:
+    show_projects: Overview
+    index_task_lists: All Task Lists
+    index_conversations: All Conversations
+    index_pages: All Pages
+    index_uploads: All File Uploads
+    index_projects: All Projects
+    index_people: People
+    edit_users: Edit
+    welcome_users: Welcome!
+    new_projects: New Project    
+    archived_task_lists: Archived Tasks
+    new_avatars: New Avatar

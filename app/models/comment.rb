@@ -7,7 +7,7 @@ class Comment < ActiveRecord::Base
 
   acts_as_paranoid
     
-  attr_accessible :body, :hours, :status
+  attr_accessible :body, :hours, :status, :user_id
   formats_attributes :body
 
   named_scope :ascending, :order => 'created_at ASC'

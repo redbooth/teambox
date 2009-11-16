@@ -1,13 +1,4 @@
 #new_upload
   = error_messages_for :upload
   - form_for [@current_project,@upload], :html => { :multipart => true } do |f|
-    .file
-      = t('uploads.new_upload.select_file')
-      %br
-      = hidden_field_tag 'MAX_FILE_SIZE', Upload::MAX_FILE_SIZE
-      = f.file_field :file, :size => 40
-    .description
-      = f.label :description, t('uploads.new_upload.description')
-      %br
-      = f.text_field :description
-    = submit_tag t('uploads.new_upload.upload')
+    = f.file_field :file

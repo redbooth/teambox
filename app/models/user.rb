@@ -37,19 +37,30 @@ class User < ActiveRecord::Base
     self.name
   end
 
+  has_attached_file :avatar, 
+    :url  => "/avatars/:id/:style/:basename.:extension",
+    :path => ":rails_root/public/avatars/:id/:style/:basename.:extension",
+    :styles => { 
+      :micro => "24x24#", 
+      :thumb => "48x48#", 
+      :profile => "278x500>" }
+
+  validates_attachment_size :avatar, :less_than => 2.megabytes
+  validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/png']
+  
+    # :processors => [:cropper]
+  #attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  #after_update :reprocess_avatar, :if => :cropping?
+
   has_one :card
   accepts_nested_attributes_for :card
   
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
-  
   has_many :people
   has_many :projects, :through => :people
   has_many :invitations, :foreign_key => 'invited_user_id'
-
-  has_many :activities
-
-  has_one  :avatar
+  has_many :activities      
   has_many :uploads
 
   attr_accessible :login, 
@@ -59,13 +70,14 @@ class User < ActiveRecord::Base
                   :biography, 
                   :password, 
                   :password_confirmation, 
-                  :avatar, 
                   :time_zone, 
                   :language, 
                   :comments_ascending, 
                   :conversations_first_comment, 
                   :first_day_of_week,
-                  :card_attributes
+                  :card_attributes,
+                  :avatar
+
 
   def can_view?(user)
     not projects_shared_with(user).empty?
@@ -116,5 +128,20 @@ class User < ActiveRecord::Base
     creator_id = target.user_id unless creator_id
     Activity.log(nil, target, action, creator_id)
   end
-    
+
+
+  def cropping?
+    !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
+  end
+  
+  def avatar_geometry(style = :original)
+    @geometry ||= {}
+    @geometry[style] ||= Paperclip::Geometry.from_file(avatar.path(style))
+  end
+  
+  private
+  
+  def reprocess_avatar
+    avatar.reprocess!
+  end    
 end

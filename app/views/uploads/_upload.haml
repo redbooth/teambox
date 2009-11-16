@@ -1,7 +1,6 @@
 .upload{ :id => "upload_#{upload.id}" }
-  = #upload_actions_links(upload)
   .info
-    = link_to file_icon_image(upload,'48px'), project_upload_path(upload.project,upload.filename)
+    =# link_to file_icon_image(upload,'48px'), project_upload_path(upload.project,upload.filename)
   .block
     .filename.show_details
       .date
@@ -13,8 +12,8 @@
         - if upload.description
           %p= h(upload.description)
         %p
-          = upload_text_link(upload)
-          = parenthesize(number_to_human_size(upload.filesize))
-    = upload_thumbnail_image(project,upload)
-    = #edit_upload_form(project,upload)
+          = upload_link(project,upload)
+          = number_to_human_size(upload.size)
+    = image_tag upload.url
+    =# upload_thumbnail_image(project,upload)
   .clear

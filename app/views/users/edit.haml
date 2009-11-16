@@ -1,12 +1,9 @@
 - content_for :column do
   =user_navigation
     
-  - form_for @current_user do |f|
-    = edit_avatar(f,@current_user)
+%h2= t(".title_#{@sub_action}")
 
-%h2= t('.title')
-
-- form_for @current_user, :html => { :id => 'edit_user' } do |f|
+- form_for @current_user, :html => { :multipart => true, :id => 'edit_user' } do |f|
   = f.error_messages
   = user_fields(f,@current_user,:sub_action => @sub_action)
   .submit
@@ -21,3 +18,4 @@
       - content_for :js_templates do
         - %w(phone_numbers email_addresses websites addresses ims social_networks).each do |field|
           = "var #{field}='#{generate_template(card_form, field.to_sym)}'"
+  

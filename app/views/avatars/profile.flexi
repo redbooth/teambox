@@ -1,4 +1,0 @@
-@avatar.operate do |image|
-  image.resize '280x800', :upsample => true
-  image.crop :from => '0x0', :size => '280x400'
-end

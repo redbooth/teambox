@@ -6,8 +6,6 @@ class UsersController < ApplicationController
   skip_before_filter :confirmed_user?, :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password, :unconfirmed_email ]
   skip_before_filter :load_project
   
-  def index
-  end
 
   def new
     if logged_in?
@@ -39,12 +37,7 @@ class UsersController < ApplicationController
 
     success = @user and @user.save
     if success and @user.errors.empty?
-      # Protects against session fixation attacks, causes request forgery
-      # protection if visitor resubmits an earlier form using back
-      # button. Uncomment if you understand the tradeoffs.
-      # reset session
-      self.current_user = @user # !! now logged in
-
+      self.current_user = @user
       if @invitation
         person = @invitation.project.people.new(:user => @user, :source_user_id => @invitation.user)
         person.save
@@ -68,16 +61,14 @@ class UsersController < ApplicationController
   
   def update
     @sub_action = params[:sub_action]
-      
-    @current_user.update_attributes(params[:user])
-    
+
     respond_to do |f|
-      if @current_user.save
+      if @current_user.update_attributes(params[:user])
         flash[:success] = t('users.update.updated')
         f.html { redirect_to user_path(current_user) }
       else
         flash[:error] = t('users.update.error')
-        f.html { render :action => 'edit' }
+        f.html { render 'edit' }
       end
     end
 
@@ -134,7 +125,7 @@ class UsersController < ApplicationController
   private
     def find_user
       unless @user = User.find_by_id(params[:id])
-        flash[:error] = "Unexisting user"
+        flash[:error] = "User does not exist"
         redirect_to '/'
       end
     end

@@ -63,4 +63,8 @@
 
   = list_card_fields(f,%w(phone_numbers email_addresses websites addresses ims social_networks))
 
+-if @sub_action == 'picture'
+  = f.label :avatar
+  = f.file_field :avatar
+
 = hidden_field_tag 'sub_action', sub_action

@@ -1,9 +1,10 @@
-.upload_area#upload_area{:style => 'display: none;'}
-  %h3#upload_header
-    Upload
-  =upload_iframe_form(comment)
-  .uploads_save{ :style => 'display: block;', :id => 'uploads_save' }
-  .uploads_current{ :style => (comment.uploads.count > 0 ? '' : 'display: block;'), :id => 'uploads_current' }
-    - if comment.uploads.count > 0
-      = list_uploads_edit(comment.uploads,comment)
-    .clear
+-if false
+  .upload_area#upload_area{:style => 'display: none;'}
+    %h3#upload_header
+      Upload
+    =upload_iframe_form(comment)
+    .uploads_save{ :style => 'display: block;', :id => 'uploads_save' }
+    .uploads_current{ :style => (comment.uploads.count > 0 ? '' : 'display: block;'), :id => 'uploads_current' }
+      - if comment.uploads.count > 0
+        = list_uploads_edit(comment.uploads,comment)
+      .clear

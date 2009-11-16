@@ -1,12 +1,5 @@
 - content_for :column do
   = add_upload_link
   = edit_side_upload_form(@current_project,Upload.new)
-
-- unless @uploads.empty?
-  #uploads
-    = list_uploads(@current_project,@uploads)
-  .clear
   
-- else
-  = upload_primer(@current_project)
-  
+=list_uploads(@current_project,@uploads)

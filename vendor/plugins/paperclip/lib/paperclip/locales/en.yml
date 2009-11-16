@@ -1,0 +1,9 @@
+en:
+  activerecord:
+    errors:
+      messages:
+        attachment_file_size_invalid: "file size must be between {{min}} and {{max}}"
+        attachment_file_size_greater_than: "file size must be greater than {{min}}"
+        attachment_file_size_less_than: "file size must be less than {{max}}"
+        attachment_content_type_invalid: "is not one of the allowed file types"
+        attachment_presence: "must be set"

@@ -4,7 +4,7 @@
   .body.text_area
     = text_area_tag 'comment[body]', message, :class => 'comment_body'
   .extra
-    = the_comment_upload_link(comment) unless comment.project.nil?
+    =# the_comment_upload_link(comment) unless comment.project.nil?
     = comment_area(comment)
     .status
       - if target

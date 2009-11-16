@@ -42,11 +42,11 @@ module UploadsHelper
     :locals => { 
       :upload => upload }
   end
-  
-  def upload_link(upload)
-    link_to upload.filename, project_upload_path(upload.project,upload.filename), :class => 'link_to_upload'
+
+  def upload_link(project,upload)
+    link_to upload.file_name, upload.url, :class => 'upload_link'
   end
-  
+    
   def upload_link_with_thumbnail(upload)
     link_to image_tag(thumbnail_project_upload_path(upload.project,upload)),
       project_upload_path(upload.project,upload.filename),
@@ -133,10 +133,6 @@ module UploadsHelper
   
   def upload_save_tag(name,upload)
     content_tag(:input,nil,{ :name => name,:type => 'hidden',:value => upload.id.to_s })
-  end
-  
-  def upload_text_link(upload)
-    link_to h(upload.filename), project_upload_path(upload.project,upload.filename), :class => 'link_to_file'
   end
   
   def add_upload_link
