@@ -2,10 +2,13 @@ class ProjectsController < ApplicationController
 
   layout 'application'
   
+  ACTIVITIES_TO_DISPLAY = 30
+  
   def index
     @projects = current_user.projects
     @pending_projects = current_user.invitations
-    @activities = @projects.collect { |p| p.activities.all(:limit => 40) }.flatten.sort { |x,y| y.created_at <=> x.created_at }
+    @activities = @projects.collect{ |p| p.activities.all(:limit => ACTIVITIES_TO_DISPLAY, :conditions => "created_at > '#{1.week.ago.to_s(:db)}'") }.flatten.
+                            sort{ |x,y| y.created_at <=> x.created_at }[0,ACTIVITIES_TO_DISPLAY]
     
     options = { :include => [:target], :except => 'body_html' }
     
@@ -36,7 +39,8 @@ class ProjectsController < ApplicationController
   
   def show
     @pending_projects = current_user.invitations
-    @activities = @current_project.activities.all(:limit => 40)
+    @activities = @current_project.activities.all(:limit => ACTIVITIES_TO_DISPLAY).
+                                   sort{|x,y| y.created_at <=> x.created_at}[0,ACTIVITIES_TO_DISPLAY]
     
     options = { :include => [:target], :except => ['body_html', :project_id] }
     
