@@ -3,7 +3,5 @@
     = new_conversation_link(project)
   .conversations
     = list_conversations(conversations,conversation)
-  .subscribe
-    = link_to t('.subscribe'), user_rss_token(project_conversations_path(@current_project, :format => :rss))
   =#conversations_settings if show_conversation_settings
   =#comments_settings if show_comments_settings

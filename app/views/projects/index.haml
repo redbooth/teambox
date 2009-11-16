@@ -8,7 +8,7 @@
   .invitations
     = list_pending_invites(@pending_projects)
 
-- unless @activities.empty?
+- unless @activities.empty? and @projects.empty?
   %h2= t('.title')
   #activities
     = list_activities(@activities)
