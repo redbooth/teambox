@@ -1,0 +1,4 @@
+.person{:id => "person_#{user.id}", :class => user_status(user) }
+  = user_link(user)
+  .status
+    = time_ago_in_words(user.updated_at)

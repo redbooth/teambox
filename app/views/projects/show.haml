@@ -12,7 +12,7 @@
 - content_for :column do
   .people_list
     %h2= t '.people_in_project'
-    = list_people_statuses(@current_project.users)
+    = list_users_statuses(@current_project.users)
     .invite_people
       = link_to t('.invite_people'), project_people_path(@current_project)
   .subscribe

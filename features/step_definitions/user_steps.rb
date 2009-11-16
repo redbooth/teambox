@@ -8,14 +8,8 @@ Given /^I am logged in as (.*)$/ do |user_type|
   click_button("Login")
 end
 
-Given /^I login as (.*)$/ do |user_type|
-  @current_user ||= User.find_by_login(user_type) || Factory(user_type.to_sym) 
-  @user = @current_user
-
-  visit(login_path)
-  fill_in("login",    :with => @current_user.email)
-  fill_in("password", :with => @current_user.password)
-  click_button("Login")
+Given /^I log out$/ do
+  visit(logout_path)
 end
 
 Given /I have confirmed my email/ do

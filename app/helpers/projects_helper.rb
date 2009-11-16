@@ -1,7 +1,7 @@
 module ProjectsHelper
 
-  def list_people_statuses(people)
-    render :partial => 'people/person', :collection => people
+  def list_users_statuses(users)
+    render :partial => 'users/status', :collection => users, :as => :user
   end
   
   def list_projects(projects)

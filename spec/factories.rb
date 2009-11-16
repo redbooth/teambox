@@ -60,9 +60,4 @@ Factory.define :ruby_rockstars, :class => 'Project' do |project|
   project.user_id do
     (User.find_by_login('mislav') || Factory(:mislav)).id
   end
-#  project.association(:user)
 end
-
-#Factory.define :parkour, :class => 'TaskList' do |user|
-#  parkour
-#end

@@ -377,7 +377,7 @@ en:
     column:
       new_task_list: New Task List
       subscribe: Subscribe to the news feed
-      view_archived: View {{number}} Archived Tasks
+      view_archived: "View {{number}} Archived Tasks"
     show:
       title: "Task List: {{name}}"
       watch: Watch this task list for changes
@@ -390,6 +390,10 @@ en:
       invite_people: Invite people to this project
       invite: Search and invite
     person_list:
+      owner: Project Owner
+      remove: Remove from project
+      transfer: Transfer Ownership
+      leave_project: Leave Project
       confirm_delete: Are you sure you want to remove this person from the project?
   comments:
     comment:

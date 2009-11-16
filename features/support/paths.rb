@@ -25,6 +25,9 @@ module NavigationHelpers
 
     when /the task lists page/
       "/projects/ruby_rockstars/task_lists"
+
+    when /the people page/
+      "/projects/ruby_rockstars/people"
       
     #when /the index page for (.+)/
     #  polymorphic_path(model($1))
