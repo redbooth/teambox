@@ -377,6 +377,7 @@ en:
     column:
       new_task_list: New Task List
       subscribe: Subscribe to the news feed
+      view_archived: View {{number}} Archived Tasks
     show:
       title: "Task List: {{name}}"
       watch: Watch this task list for changes

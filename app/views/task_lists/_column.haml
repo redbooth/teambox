@@ -6,8 +6,7 @@
 =# comments_settings
 =# reorder_task_list_link(project,task_lists)
 
-.subscribe
-  = link_to t('.subscribe'), user_rss_token(project_task_lists_path(@current_project, :format => :rss))
-.column_settings
-  = archived_task_list_link(project)
+- unless project.tasks.archived.empty?
+  .column_settings
+    = archived_task_list_link(project)
 

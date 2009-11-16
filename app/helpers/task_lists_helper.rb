@@ -7,7 +7,8 @@ module TaskListsHelper
   end
   
   def archived_task_list_link(project)
-    link_to 'View all Archived Tasks', archived_project_task_lists_path(project), :class => 'archived_task_list_link'
+    link_to t('.view_archived', :number => project.tasks.archived.size), archived_project_task_lists_path(project),
+      :class => 'archived_task_list_link'
   end
 
   def render_task_list(project,task_list,current_target)
