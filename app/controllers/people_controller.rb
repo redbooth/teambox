@@ -23,16 +23,18 @@ class PeopleController < ApplicationController
 
     if @user
       @current_project.remove_user(@user)
-      flash[:success] = "#{@user.name} has been removed from this project!"
       
       respond_to do |f|
-        f.html { redirect_to project_people_path }
+        f.html {
+          flash[:success] = "#{@user.name} has been removed from this project!"
+          redirect_to project_people_path }
         f.js
       end
     else
-      flash[:error] = "Person not found."
       respond_to do |f|
-        f.html { redirect_to project_people_path }
+        f.html {
+          flash[:error] = "Person not found."
+          redirect_to project_people_path }
         f.js
       end
     end
