@@ -5,6 +5,11 @@
     %title
     = stylesheet_link_tag 'application'
     = sprockets_include_tag
+    %style{:type => "text/css", :media => "screen"}
+      :plain
+        html {
+          overflow: auto;
+        }
   %body{ :class => 'iframe' } 
     .iframe_container#iframe_container
       = yield

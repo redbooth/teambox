@@ -10,6 +10,7 @@ render_tabnav :project do
         t.named t('.overview')
         t.links_to projects_path
         t.highlights_on :controller => :projects, :action => :index
+        t.tab_index = 150
       end
       
       #add_tab do |t|
@@ -47,12 +48,14 @@ render_tabnav :project do
         t.named t('.overview')
         t.links_to project_path(project)
         t.highlights_on :controller => :projects, :action => :show
+        t.tab_index = 150
       end
 
       add_tab do |t|
         t.named t('.conversations')
         t.links_to  project_conversations_path(project)
         t.highlights_on :controller => :conversations
+        t.tab_index = 151
       end
 
       add_tab do |t|
@@ -60,12 +63,14 @@ render_tabnav :project do
         t.links_to  project_task_lists_path(project)
         t.highlights_on :controller => :task_lists
         t.highlights_on :controller => :tasks
+        t.tab_index = 152
       end
 
       add_tab do |t|
         t.named t('.pages')
         t.links_to  project_pages_path(project)
         t.highlights_on :controller => :pages
+        t.tab_index = 153
       end
       
       #add_tab do |t|
@@ -75,10 +80,18 @@ render_tabnav :project do
       #end
 
       add_tab do |t|
+        t.named t('.files')
+        t.links_to  project_uploads_path(project)
+        t.highlights_on :controller => :uploads
+        t.tab_index = 154
+      end
+      
+      add_tab do |t|
         t.named t('.people')
         t.links_to  project_people_path(project)
         t.highlights_on :controller => :people
         t.li_class = 'right_side'
+        t.tab_index = 156
       end
 
       add_tab do |t|
@@ -86,28 +99,10 @@ render_tabnav :project do
         t.links_to  edit_project_path(project)
         t.highlights_on :controller => :projects, :action => :edit
         t.li_class = 'right_side'
+        t.tab_index = 155
       end
 
-      add_tab do |t|
-        t.named t('.files')
-        t.links_to  project_uploads_path(project)
-        t.highlights_on :controller => :uploads
-      end
-
-    end
-  else
-    add_tab do |t|
-      t.named t('.login')
-      t.links_to login_path
-      t.highlights_on :controller => :sessions
-    end
-
-    add_tab do |t|
-      t.named t('.signup')
-      t.links_to signup_path
-      t.highlights_on :controller => :users
-    end
-    
+    end    
   end
 end
 %><div class="clear"></div></div>

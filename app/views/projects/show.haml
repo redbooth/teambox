@@ -1,4 +1,4 @@
-- if @pending_projects
+- unless @pending_projects.empty?
   .invitations
     = list_pending_invites(@pending_projects)
 %h2{ :style => 'margin: 0px'}

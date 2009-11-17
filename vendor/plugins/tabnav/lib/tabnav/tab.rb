@@ -14,11 +14,19 @@ module Tabnav
       self.disabled_if opts[:disabled_if]
       @html = opts[:html] || {} 
       @html[:title] = opts[:title]
-
+      @html[:tab_index] = opts[:tab_index]
       yield(self) if block_given?
 
       self.highlights << @link if link? # it does highlight on itself
       raise ArgumentError, 'you must provide a name' unless @name
+    end
+
+    def tab_index
+      @html[:tabindex]
+    end
+    
+    def tab_index=(new_tab_index)
+      @html[:tabindex]=new_tab_index
     end
 
     def title

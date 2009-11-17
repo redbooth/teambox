@@ -1,4 +1,3 @@
-//= require <curvycorners>
 //= require <prototype>
 //= require <builder>
 //= require <effects>
