@@ -37,6 +37,12 @@ describe Comment do
         comment.body_html.should == "<p><a href=\"mailto:she@couchsurfing.org\">she@couchsurfing.org</a> used to mean so much to <a href=\"http://www.teambox.com\">www.teambox.com</a></p>"
       end
       
+      it "should turn to links textile links" do
+        body = 'I loved that quote: "I like the Divers, but they want me want to go to a bar":http://www.shmoop.com/tender-is-the-night/tommy-barban.html. Great page, too.'
+        comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+        comment.body_html.should == "<p>I loved that quote: <a href=\"http://www.shmoop.com/tender-is-the-night/tommy-barban.html\">I like the Divers, but they want me want to go to a bar</a>. Great page, too.</p>"
+      end
+
       it "should preserve html links and images"
       it "should preserve blocks of code and pre"
     end
