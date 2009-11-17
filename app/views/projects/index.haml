@@ -4,7 +4,7 @@
   .subscribe
     = link_to t('.subscribe'), user_rss_token(projects_path(:format => :rss))
 
-- if @pending_projects
+- unless @pending_projects.empty?
   .invitations
     = list_pending_invites(@pending_projects)
 
