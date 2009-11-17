@@ -1,5 +1,6 @@
 es:
-  latest_announcement: "Éste es un <b>servidor de pruebas</b>, lo que significa que se usa exclusivamente para testear Teambox 2.0antes de lanzarlo oficialmente.<br/><br/>Todos los datos en este servidor serán borrados. No lo uses para tus proyectos profesionales."
+  # if latest_announcement is less than 5 characters, it will not be displayed
+  latest_announcement: "Estás usando <b>Teambox 2</b>, con muchas novedades!</p><p>Todos los datos de Teambox 1 han sido migrados.</p><p>Si <b>ya tienes una cuenta</b>, tendrás que obtener una nueva contraseña haciendo click en <b>He olvidado mi contraseña</b></p><p>¿Aún no tienes una cuenta? Crea una cuenta en un minuto."
   common:
     and: y
     or: o
@@ -49,6 +50,22 @@ es:
       follow_the_link: "Sigue el enlace del email para entrar a Teambox! Si no lo encuentras, asegúrate de que no esté en la carpeta de correo no deseado. "
       not_found: "El email <b>{{email}}</b> no pertenece a ningún usuario de Teambox. Quizá lo hayas escrito mal."
       change_password_now: "Bienvenido de nuevo! Es el momento de <b>escoger una nueva contraseña</b> que no olvidarás."
+  cards:
+    card:
+      phone_numbers: Teléfonos
+      email_addresses: Direcciones e-mail
+      websites: Sitios web
+      addresses: Direcciones
+      ims: Chat
+      social_networks: Redes sociales
+      vcard: Descargar vCard
+    field:
+      add_phone_numbers: Añadir teléfono
+      add_email_addresses: Añadir email
+      add_websites: Añadir web
+      add_addresses: Añadir dirección
+      add_ims: Añadir Chat
+      add_social_networks: Añadir perfil
   users:
     fields:
       login: Nombre de usuario
@@ -79,7 +96,9 @@ es:
       thanks: ¡Gracias por registrarte!
       error: "No hemos podido registear esa cuenta, ¡lo sentimos! Inténtalo de nuevo."
     edit:
-      title: Tu cuenta de Teambox
+      title_settings: Preferencias
+      title_profile: Información de perfil
+      title_picture: Imagen de perfil
       submit: Actualizar
     update:
       updated: Perfil actualizado
@@ -94,7 +113,6 @@ es:
       profile: Perfil
       projects: Proyectos
       recent_activity_for: Actividad reciente de {{user_name}}
-      vcard: Descargar vCard
     user:
       formatted_address: "{{street}}, {{city}} ({{country}})"
       remove_from_project: Borrar del proyecto
@@ -155,9 +173,9 @@ es:
       new_task_list_link: Nueva lista de tareas
       people_in_project: Personas en este proyecto
       subscribe: Suscríbete a este proyecto
-    rss:
-      title: "{{name}}"
-      description: "Recent activities for the project {{name}}"
+      rss:
+        title: "{{name}}"
+        description: "Recent activities for the project {{name}}"
     fields:
       name: Nombre
       name_description: "Escoge un título breve y explicativo. Por ejemplo: Taggart Transcontinental"
@@ -267,6 +285,8 @@ es:
       edit: Editar
     destroy_message:
       deleted: "La tarea <b>{{name}}</b> se ha borrado"
+    archive_message:  
+      archived: "La tarea <b>{{name}}</b> ha sido archivada!"
   notes:
     actions:
       delete_confirm: Seguro que quieres borrar esta nota?
@@ -328,6 +348,9 @@ es:
     column:
       new_page: Nueva página
   task_lists:
+    archived:
+      title: Todas las tareas archivadas
+      description: "Estas son las tareas archivadas, al haber sido completadas o rechazadas."
     fields:
       name: Nombre
     link:
@@ -355,6 +378,7 @@ es:
     column:
       new_task_list: Nueva lista de tareas
       subscribe: Suscríbete a las tareas
+      view_archived: "Ver {{number}} tareas archivadas"
     show:
       title: "Lista de tareas: {{name}}"
       watch: Seguir esta lista de tareas
@@ -367,6 +391,10 @@ es:
       invite_people: Invitar al proyecto
       invite: Buscar e invitar
     person_list:
+      owner: Propietario del proyecto
+      remove: Expulsar del proyecto
+      transfer: Transferir el proyecto
+      leave_project: Dejar el Proyecto
       confirm_delete: Seguro que quieres borrar a esta persona del proyecto?
   comments:
     comment:
@@ -396,7 +424,8 @@ es:
       item2: "<b>Versiones</b>. Sube versiones nuevas de archivos y guarda el histórico."
       item3: "<b>Siempre disponibles</b>. Los ficheros no se borran, para que puedas consultarlos en el futuro."
     upload:
-      uploaded_a_file: "ha subido un archivo:"
+      uploaded_the_file: "ha subido el archivo"
+      download: Descargar
   sessions:
     fields:
       username_or_email: Usuario o email
@@ -411,6 +440,8 @@ es:
       welcome: Bienvenido a Teambox!
 
   shared:
+    projects:
+      projects: Proyectos
     navigation:
       welcome: Bienvenido
       all_projects: 'Proyectos'
@@ -421,7 +452,7 @@ es:
       conversations: Conversaciones
       task_lists: Tareas
       all_task_lists: Mis listas de tareas
-      project_settings: Opciones
+      project_settings: Mi cuenta
       all_pages: Mis páginas
       people: Personas
       pages: Páginas
@@ -500,21 +531,22 @@ es:
           title: 'Expand your profile to 20 words'
         biography_length_long:
           title: 'Expand your profile to 30 words'
-
   form:
     cancel: Cancel
-
   page_title:
     show_projects: Resumen
-    index_task_lists: Mis listas de tareas
+    index_task_lists: Mis tareas
     index_conversations: Mis conversaciones
     index_pages: Mis páginas
     index_uploads: Mis archivos
-    index_projects: Mis proyectos
+    create_uploads: Subir archivo
+    index_projects: Proyectos
     index_people: Personas
     edit_users: Editar
-    welcome_users: Bienvenido!
-    
+    welcome_users: ¡Bienvenido!
+    new_projects: Nuevo proyecto
+    archived_task_lists: Tareas archivadas
+          
   number:
     human:
       storage_units:
@@ -561,7 +593,4 @@ es:
           other: "alrededor de {{count}} años" 
         over_x_years:
           one:  "más de 1 año" 
-          other: "más de {{count}} años" 
-
-
-  
+          other: "más de {{count}} años"

@@ -1,7 +1,6 @@
 en:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: .
-  #"You're now using <b>Teambox 2</b>, lots of new features!</p><p>All the data from Teambox 1 has been migrated.</p><p>If you have an <b>existing account</b>, you'll need to get a new password. Get a new one by using Forgot your Password and you'll be using Teambox 2!</p><p>First time here? Create an account at Signup."
+  latest_announcement: "You're now using <b>Teambox 2</b>, lots of new features!</p><p>All the data from Teambox 1 has been migrated.</p><p>If you have an <b>existing account</b>, you'll need to get a new password. Get a new one by using Forgot your Password and you'll be using Teambox 2!</p><p>First time here? Create an account at Signup."
   common:
     and: and
     or: or
@@ -285,9 +284,9 @@ en:
       new: + Add Task
       edit: Edit
     destroy_message:
-      deleted: "The Task called <b>{{name}}</b> was successfully deleted!"
+      deleted: "The Task <b>{{name}}</b> was successfully deleted!"
     archive_message:  
-      archived: "The Task called <b>{{name}}</b> was successfully archived!"
+      archived: "The Task <b>{{name}}</b> was successfully archived!"
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?
@@ -534,19 +533,6 @@ en:
           title: 'Expand your profile to 30 words'
   form:
     cancel: Cancel
-  number:
-    human:
-      storage_units:
-        # %u is the storage unit, %n is the number (default: 2 MB)
-        format: "%n %u"
-        units:
-          byte:
-            one: "b"
-            other: "b"
-          kb: "Kb"
-          mb: "Mb"
-          gb: "Gb"
-          tb: "Tb"
   page_title:
     show_projects: Overview
     index_task_lists: All Task Lists
@@ -560,4 +546,51 @@ en:
     welcome_users: Welcome!
     new_projects: New Project    
     archived_task_lists: Archived Tasks
-    new_avatars: New Avatar
+
+  number:
+    human:
+      storage_units:
+        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%n %u"
+        units:
+          byte:
+            one: "b"
+            other: "b"
+          kb: "Kb"
+          mb: "Mb"
+          gb: "Gb"
+          tb: "Tb"
+
+  datetime:
+      distance_in_words:
+        half_a_minute: "half a minute" 
+        less_than_x_seconds:
+          one:  "less than 1 second" 
+          other: "less than {{count}} seconds"
+        x_seconds:
+          one:  "1 second" 
+          other: "{{count}} seconds" 
+        less_than_x_minutes:
+          one:  "less than 1 minute" 
+          other: "less than {{count}} minutes"
+        x_minutes:
+          one:  "1 minute" 
+          other: "{{count}} minutes" 
+        about_x_hours:
+          one:  "about 1 hour" 
+          other: "about {{count}} hours" 
+        x_days:
+          one:  "1 day" 
+          other: "{{count}} days" 
+        about_x_months:
+          one:  "about 1 month" 
+          other: "about 2 {{count}} months" 
+        x_months:
+          one:  "1 month" 
+          other: "{{count}} month" 
+        about_x_years:
+          one:  "about 1 year" 
+          other: "about {{count}} years" 
+        over_x_years:
+          one:  "more than 1 year" 
+          other: "more than {{count}} year"
