@@ -7,7 +7,6 @@ describe User do
   it { should have_many(:invitations) }
   it { should have_many(:activities) }
   it { should have_many(:uploads) }
-  it { should have_one(:avatar) }
   
   it { should validate_presence_of     :login }
   it { should validate_length_of       :login,      :within => 3..40 }

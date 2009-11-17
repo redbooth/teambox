@@ -10,3 +10,4 @@ uploads/*
 db/*.sqlite3
 webrat-*
 assets/*
+coverage/*
