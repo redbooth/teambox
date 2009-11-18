@@ -39,4 +39,9 @@ class Upload < ActiveRecord::Base
     File.mime_type?(self.asset.path(:original))  == 'image/jpeg'
   end
 
+  def file_type
+    File.extname(file_name).sub('.','')
+    #File.mime_type?(self.asset.path(:original))
+  end
+  
 end

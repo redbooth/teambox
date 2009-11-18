@@ -9,7 +9,7 @@
       = task_status(comment.status) if comment.target_type == 'Task'
       = conversation_last_comment_text(comment)
       = activity_comment_user_link(comment)
-      = activity_comment_project_link(comment)
+      = activity_project_link(comment.project)
       = activity_comment_target_link(comment)
     .body
       = comment.body_html
