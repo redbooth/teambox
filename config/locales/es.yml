@@ -299,7 +299,7 @@ es:
       body: Cuerpo
   dividers:
     actions:
-      delete_confirm: Seguro que quieres borrar este divisor?
+      delete_confirm: Seguro que quieres borrar este separador?
     new:
       submit: Añadir
     edit:
@@ -323,7 +323,7 @@ es:
       footer2: "También puedes adjuntar archivos a cualquier página del proyecto. Disfruta!"
     show:
       new_note: Nota
-      new_divider: Divisor
+      new_divider: Separador
       new_upload: Archivo
       new_task_list: Lista de Tareas
     new:
@@ -599,3 +599,86 @@ es:
         over_x_years:
           one:  "más de 1 año" 
           other: "más de {{count}} años"
+          
+  activerecord:
+    models:
+      card: Tarjeta
+      address: Dirección
+      email_address: Email
+      phone_number: Teléfono
+      website: Web
+      im: Mensajería Instantánea
+      social_network: Red social
+      user: Usuario
+      project: Proyecto
+      task_list: Lista de tareas
+      task: Tarea
+      comment: Comentario
+      conversation: Conversación
+      page: Página
+      divider: Separador
+      note: Nota
+      invitation: Invitación
+      upload: Archivo
+    attributes:
+      card:
+        street: Calle
+        city: Ciudad
+        state: Provincia
+        zip: CP
+        country: País
+      email_address:
+        name: Dirección
+        account_type: Tipo
+      phone_number:
+        name: Número
+        account_type: Tipo
+      website:
+        name: Dirección
+      im:
+        name: Dirección
+        account_im_type: Servicio
+        account_type: Tipo
+      social_network:
+        name: Dirección
+        account_network_type: Servicio
+        account_type: Tipo
+      user:
+        login: Nombre de usuario
+        first_name: Nombre
+        last_name: Apellidos
+        biography: Biografía
+        email: Email
+        time_zone: Zona horaria
+        language: Lenguaje
+        first_day_of_week: Primer día de la semana
+      project:
+        name: Nombre
+        permalink: Dirección
+      task_list:
+        name: Name
+        start_on: Fecha inicio
+        finish_on: Fecha fin
+      task:
+        name: Nombre
+        status: Status
+        due_on: Fecha límite
+      comment:
+        body: Cuerpo
+        hours: Horas
+        status: Status
+      conversation:
+        name: Nombre
+      pages:
+        name: Nombre
+        description: Descripción
+      divider:
+        name: Nombre
+      note:
+        name: Nombre
+        body: Cuerpo
+      invitation:
+        email: Email
+      upload:
+        description: Descripción
+          

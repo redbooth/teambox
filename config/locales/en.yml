@@ -540,10 +540,8 @@ en:
     cancel: Cancel
   page_title:
     show_projects: Overview
-    new_projects: New Project
     index_task_lists: All Task Lists
     index_conversations: All Conversations
-    new_conversations: New Conversation
     index_pages: All Pages
     index_uploads: All File Uploads
     create_uploads: File Upload
@@ -553,8 +551,7 @@ en:
     welcome_users: Welcome!
     new_projects: New Project    
     archived_task_lists: Archived Tasks
-    new_avatars: New Avatar
-    index_invitations: Invitations
+
   number:
     human:
       storage_units:
@@ -602,3 +599,85 @@ en:
         over_x_years:
           one:  "more than 1 year" 
           other: "more than {{count}} year"
+          
+  activerecord:
+    models:
+      card: Card
+      address: Address
+      email_address: Email
+      phone_number: Phone
+      website: Web
+      im: IM
+      social_network: Social network
+      user: User
+      project: Project
+      task_list: Task List
+      task: Task
+      comment: Comment
+      conversation: Conversation
+      page: Page
+      divider: Divider
+      note: Note
+      invitation: Invitation
+      upload: Upload
+    attributes:
+      card:
+        street: Street
+        city: City
+        state: State
+        zip: ZIP
+        country: Country
+      email_address:
+        name: Address
+        account_type: Type
+      phone_number:
+        name: Phone
+        account_type: Type
+      website:
+        name: Site
+      im:
+        name: Address
+        account_im_type: Service
+        account_type: Type
+      social_network:
+        name: Address
+        account_network_type: Network
+        account_type: Type
+      user:
+        login: Username
+        first_name: First name
+        last_name: Last name
+        biography: Biography
+        email: Email
+        time_zone: Time zone
+        language: Language
+        first_day_of_week: First day of week
+      project:
+        name: Name
+        permalink: Permalink
+      task_list:
+        name: Name
+        start_on: Start date
+        finish_on: Finish date
+      task:
+        name: Name
+        status: Status
+        due_on: Due date
+      comment:
+        body: Body
+        hours: Hours
+        status: Status
+      conversation:
+        name: Name
+      pages:
+        name: Page
+        description: Description
+      divider:
+        name: Name
+      note:
+        name: Name
+        body: Body
+      invitation:
+        email: Email
+      upload:
+        description: Description
