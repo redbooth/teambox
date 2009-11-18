@@ -1,7 +1,7 @@
 module PeopleHelper
 
   def person_link(project,person)
-    link_to "#{person.name}", ''
+    link_to "#{person.name}", user_path(person.user)
   end
   
   def list_people(people)

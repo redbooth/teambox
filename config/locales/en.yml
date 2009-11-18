@@ -24,7 +24,7 @@ en:
       create_conversation: created the conversation
       create_task_list: created the task list
       create_page: created the page
-      create_person: added to the project
+      create_person: was added to the project
     user_remove:
       removed_from_project: "{{user}} was removed from this project"
     user_add:
@@ -389,7 +389,7 @@ en:
     index:
       enter_username_or_email: "Enter your teammate's username or email:"
       invite_people: Invite people to this project
-      invite: Search and invite
+      invite: Invite
     person_list:
       owner: Project Owner
       remove: Remove from project
@@ -535,8 +535,10 @@ en:
     cancel: Cancel
   page_title:
     show_projects: Overview
+    new_projects: New Project
     index_task_lists: All Task Lists
     index_conversations: All Conversations
+    new_conversations: New Conversation
     index_pages: All Pages
     index_uploads: All File Uploads
     create_uploads: File Upload
@@ -546,7 +548,8 @@ en:
     welcome_users: Welcome!
     new_projects: New Project    
     archived_task_lists: Archived Tasks
-
+    new_avatars: New Avatar
+    index_invitations: Invitations
   number:
     human:
       storage_units:

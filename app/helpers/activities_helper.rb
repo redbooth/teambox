@@ -1,4 +1,15 @@
 module ActivitiesHelper
+
+  def activity_project_link(project)
+    unless project.nil?
+      out = "<span class='arr project_arr'>&rarr;</span> " 
+      out << "<span class='project'>"
+      out <<  link_to(project.name, project_path(project))
+      out << "</span>"
+      out
+    end  
+  end
+
   def list_activities(activities)
     render :partial => 'activities/activity', :collection => activities
   end

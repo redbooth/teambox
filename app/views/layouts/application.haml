@@ -17,7 +17,7 @@
       = hot_flashes(flash)
       = navigation(@current_project,@recent_projects)
       .wrapper
-        - unless location_name?(['welcome_users','new_projects','show_users','edit_users','new_avatars'])
+        - unless location_name?(['welcome_users','new_projects','show_users','edit_users','new_avatars','index_invitations'])
           = project_navigation(@current_project)
         - if @content_for_banner
           .banner

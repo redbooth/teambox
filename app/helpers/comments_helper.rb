@@ -20,16 +20,6 @@ module CommentsHelper
   def activity_comment_user_link(comment)
     "<span class='author'>#{link_to comment.user.name, user_path(comment.user)}</span>"
   end
-
-  def activity_project_link(project)
-    unless project.nil?
-      out = "<span class='arr project_arr'>&rarr;</span> " 
-      out << "<span class='project'>"
-      out <<  link_to(project.name, project_path(project))
-      out << "</span>"
-      out
-    end  
-  end
   
   def activity_comment_target_link(comment)
     link = case comment.target_type

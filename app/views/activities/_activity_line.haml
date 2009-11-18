@@ -1,11 +1,21 @@
 .activity{ :class => "#{activity.action_type}" }
   .activity_icon{ :class => "activity_#{activity.target_type.to_s.underscore}" }
-  %span.name
-    = link_to activity.user.name, user_path(activity.user)
-  %span
-    = t(".#{activity.action_type}")
-  %span.target
-    = action_link
-  .date
-    = posted_date activity.posted_date
-  .clear
+
+  -if activity.action_type == 'create_person'
+    %span.name
+      = link_to activity.user.name, user_path(activity.user)
+    %span
+      = t(".#{activity.action_type}")
+    = activity_project_link(activity.project) if location_name?('index_projects')
+
+  -else
+    %span.name
+      = link_to activity.user.name, user_path(activity.user)
+      = activity_project_link(activity.project) if location_name?('index_projects')
+    %span
+      = t(".#{activity.action_type}")
+    %span.target
+      = action_link
+    .date
+      = posted_date activity.posted_date
+    .clear
