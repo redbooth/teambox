@@ -5,5 +5,5 @@
     = f.label :assigned_id, t('.assigned_to')
     = f.select :assigned_id, project.people.map {|p| [ p.name, p.id ]}, { :include_blank => true }
   .date_select
-    =f.label :due_on
-    =f.date_select :due_on, :start_year => Time.current.year
+    = f.label :due_on
+    = f.date_select :due_on, :start_year => Time.current.year, :order => [:day,:month,:year]
