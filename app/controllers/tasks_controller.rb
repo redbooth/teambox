@@ -47,7 +47,11 @@ class TasksController < ApplicationController
     @task = @current_project.tasks.build(params[:task])
     @task.task_list = @task_list
     @task.user = current_user
-    @task.save    
+    if @task.save    
+      @comment = @current_project.comments.new
+      @comment.target = @task
+      @comment.status = @task.status
+    end      
     respond_to do |format|
       format.js
     end

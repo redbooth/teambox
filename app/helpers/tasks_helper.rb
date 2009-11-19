@@ -233,12 +233,13 @@ module TasksHelper
         :comment => comment }
   end
 
-  def update_active_task(project,task_list,task)
+  def update_active_task(project,task_list,task,comment)
     page.replace_html 'content', :partial => 'tasks/show', 
       :locals => { 
         :project => project,
         :task_list => task_list,
-        :task => task }
+        :task => task,
+        :comment => comment }
 
     item_id = task_id(:item,project,task_list,task)
     page.select('.task').invoke('removeClassName','active_task')
