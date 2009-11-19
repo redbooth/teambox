@@ -1,5 +1,5 @@
 class TaskListsController < ApplicationController
-  before_filter :load_task_list, :only => [:update,:show,:destroy]
+  before_filter :load_task_list, :only => [:update,:show,:destroy,:watch,:unwatch]
     
   def index
     if @current_project

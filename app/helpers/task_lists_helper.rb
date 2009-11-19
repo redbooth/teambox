@@ -284,15 +284,5 @@ module TaskListsHelper
       page['reorder_link'].className = 'loading_button'
     end  
   end
-  
-  def watch_task_list_link(user,task_list)
-    if task_list.watching?(user)
-      link_to_remote t('task_lists.show.unwatch'),
-        :url => unwatch_project_task_list_path(task_list.project,task_list)
-    else
-      link_to_remote t('task_lists.show.watch'),
-        :url => watch_project_task_list_path(task_list.project,task_list)
-    end
-  end
-  
+
 end

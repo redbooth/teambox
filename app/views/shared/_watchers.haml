@@ -1,0 +1,7 @@
+.watching#watching
+  =watch_link(project,user,target)
+  -if target.watchers.empty?
+    =t('.nobody_watching')
+  -else
+    =t('.people_watching')
+    =target.watchers.join(", ")

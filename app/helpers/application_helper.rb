@@ -205,16 +205,23 @@ module ApplicationHelper
   def parenthesize(text)
     '(' + text.to_s + ')'
   end
-  
-  def people_watching(object)
-    content_tag :div, :class => :watching, :id => :watching do
-      if object.watchers.empty?
-        html =  t('common.nobody_watching')
-      else
-        html =  t('common.people_watching')
-        html << object.watchers.join(", ")
-      end
-    end
+
+  def watch_link(project,user,target)
+    raise ArgumentError, "Invalid Model, was expecting Task, TaskList or Conversation but got #{target.class}" unless ['Task','TaskList','Conversation'].include?(target.class.to_s)
+    target_name = target.class.to_s.tableize
+    task_list_url = target.class.to_s == 'Task' ? "task_lists/#{target.task_list.id}/" : ''
+    watch_status =  target.watching?(user) ? 'unwatch' : 'watch'
+    
+    url = "/projects/#{project.permalink}/#{task_list_url}#{target_name}/#{target.id}/#{watch_status}"
+        
+    link_to_remote "<span>#{t(".#{watch_status}")}</span>", :url => url, :html => { :id => 'watch_link', :class => 'button' }
+  end
+   
+  def people_watching(project,user,target)
+      render :partial => 'shared/watchers', :locals => {
+        :project => project,
+        :user => user,
+        :target => target }
   end
   
   def to_sentence(array)
@@ -231,8 +238,10 @@ module ApplicationHelper
     id.join('_')
   end
 
-  def update_watching(link,people)
-    page['watch_link'].update link
-    page['watching'].replace people
+  def update_watching(project,user,target)
+    page.replace 'watching', :partial => 'shared/watchers', :locals => {
+      :project => project,
+      :user => user,
+      :target => target }
   end
 end

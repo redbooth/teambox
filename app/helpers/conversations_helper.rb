@@ -1,5 +1,11 @@
 module ConversationsHelper
 
+  def conversation_header(project,conversation)
+    render :partial => 'conversations/header', :locals => {
+      :project => project,
+      :conversation => conversation }
+  end
+
   def conversation_action_links(project,conversation)
     if conversation.owner?(current_user)
       render :partial => 'conversations/actions',
@@ -77,16 +83,6 @@ module ConversationsHelper
       "selected"
     else
       ""
-    end
-  end
-
-  def watch_conversation_link(user,conversation)
-    if conversation.watching?(user)
-      link_to_remote t('conversations.show.unwatch'),
-        :url => unwatch_project_conversation_path(conversation.project,conversation)
-    else
-      link_to_remote t('conversations.show.watch'),
-        :url => watch_project_conversation_path(conversation.project,conversation)
     end
   end
 

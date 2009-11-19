@@ -8,8 +8,6 @@ en:
     edit: Edit
     accept: Accept
     decline: Decline
-    people_watching: "People watching this item: "
-    nobody_watching: "Nobody is watching this."
     cancel: Cancel
     save: Save
   confirm:
@@ -263,8 +261,6 @@ en:
       edit: Edit title
       message: message
       messages: messages
-      unwatch: Stop watching this conversation
-      watch: Watch this conversation for new posts
     short_conversation:
       comment: comment
       comments: comments
@@ -281,8 +277,6 @@ en:
       submit: Add Task
     show:
       title: "Task: {{name}}"
-      watch: Watch this tasks for changes
-      unwatch: Stop watching this task
     link:
       new: + Add Task
       edit: Edit
@@ -384,8 +378,6 @@ en:
       view_archived: "View {{number}} Archived Tasks"
     show:
       title: "Task List: {{name}}"
-      watch: Watch this task list for changes
-      unwatch: Stop watching this task list
     destroy_message:
       deleted: "The Task List <b>{{name}}</b> was successfully deleted!"
   people:
@@ -482,7 +474,11 @@ en:
       profile_picture: Profile Picture
     footer:
       help: Help
-
+    watchers:
+      unwatch: Unwatch
+      watch: Watch      
+      people_watching: "People watching: "
+      nobody_watching: "Nobody is watching"
   date:
     yesterday: Yesterday
     formats: 
