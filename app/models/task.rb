@@ -59,4 +59,8 @@ class Task < ActiveRecord::Base
     user == u
   end
   
+  def comments_count
+    read_attribute(:comments_count) || 0
+  end
+  
 end
