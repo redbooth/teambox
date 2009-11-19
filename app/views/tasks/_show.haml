@@ -1,7 +1,8 @@
 #show_task
   = task_header(project,task_list,task)
-  = task_form(project,task_list,task)
-  = new_comment_form(project, :target => task) unless task.archived
+  -unless task.closed?
+    = task_form(project,task_list,task)
+    = new_comment_form(project,comment, :target => task)
   =task_archive_box(project,task_list,task)
   #comments
     = list_comments(task.comments,task)

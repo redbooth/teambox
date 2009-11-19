@@ -1,5 +1,12 @@
 module CommentsHelper
 
+  def options_for_people(people)
+    people.map {|p| [ p.name, p.id ]}
+  end
+  
+  def options_for_task_statuses
+    Task::STATUSES.to_enum(:each_with_index).collect { |i,e| [i,e] }
+  end
 
   def conversation_last_comment_text(comment)
     if is_controller? :conversations, :index
@@ -43,38 +50,38 @@ module CommentsHelper
     render :partial => 'comments/settings'
   end
 
-  def new_hour_comment_form(project)
+  def new_hour_comment_form(project,comment)
     render :partial => 'comments/new', 
       :locals => { :target => nil, 
-        :form_url => [project,Comment.new], 
-        :comment => project.comments.new,
+        :form_url => [project,comment], 
+        :comment => comment,
         :show_hours => true }
   end
 
-  def new_comment_user_form(user,options={})
+  def new_comment_user_form(user,comment,options={})
     message = options[:message] ||= nil
     render :partial => 'comments/new',
       :locals => { :target => user,
         :message => message,
-        :form_url => [user,Comment.new], 
-        :comment => Comment.new }    
+        :form_url => [user,comment], 
+        :comment => comment }
   end
 
-  def new_comment_form(project,options={})
+  def new_comment_form(project,comment,options={})
     message = options[:message] ||= nil
     target  = options[:target]  ||= nil
     if target.nil?
-      form_url = [project,Comment.new]
+      form_url = [project,comment]
     elsif target.class.to_s == 'Task'
-      form_url = [project,target.task_list,target,Comment.new]
+      form_url = [project,target.task_list,target,comment]
     else
-      form_url = [project,target,Comment.new]
+      form_url = [project,target,comment]
     end
     render :partial => 'comments/new',
       :locals => { :target => target,
         :message => message,
         :form_url => form_url, 
-        :comment => project.comments.new }
+        :comment => comment }
   end
   
   def list_comments(comments,target)

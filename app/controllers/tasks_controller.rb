@@ -35,8 +35,9 @@ class TasksController < ApplicationController
     @task_lists = @current_project.task_lists
     @task = @current_project.tasks.find(params[:id])
     @comments = @task.comments
-  ensure
-    CommentRead.user(current_user).read_up_to(@comments.first) if @comments.first
+    @comment = @current_project.comments.new
+    @comment.target = @task
+    @comment.status = @task.status
   end
   
   def new

@@ -143,16 +143,20 @@ module TasksHelper
   end
 
   def update_task_status(task)
-    page.replace 'task_status', task_status(task.status) if task.class.to_s == 'Task'
+    page.replace 'task_status', task_status(task) if task.class.to_s == 'Task'
   end
 
-  def task_status(status)
-    "<span class='task_status task_status_#{Task::STATUSES[status.to_i].underscore}'>#{Task::STATUSES[status.to_i].capitalize}</span>"
+  def comment_task_status(comment)
+    "<span class='task_status task_status_#{comment.status_name.underscore}'>#{comment.status_name}</span>"
+  end
+
+  def task_status(task,status_text=false)
+    out = "<span class='task_status task_status_#{task.status_name.underscore}'>"
+    out << "#{task.status_name} &mdash; " if status_text
+    out <<  "#{task.comments_count}</span>"
+    out
   end
     
-  def task_status_image(status)
-    image_tag("status_#{Task::STATUSES[status.to_i].underscore}.png", :class => 'task_status')
-  end
       
   def my_tasks_link
     link_to 'My Tasks', ''
@@ -194,6 +198,16 @@ module TasksHelper
     drag_image if task.owner?(current_user)
   end
 
+  def list_tabular_tasks(project,task_list,tasks)
+    render :partial => 'tasks/td_task', 
+      :collection => tasks,
+      :as => :task,
+      :locals => {
+        :project => project,
+        :task_list => task_list }
+  end
+
+
   def list_tasks(project,task_list,tasks,current_target=nil)
     render :partial => 'tasks/task', 
       :collection => tasks,:locals => {
@@ -210,8 +224,13 @@ module TasksHelper
       :task => task }
   end
 
-  def render_task(project,task_list,task)
-    render :partial => 'tasks/show', :locals => { :project => project, :task_list => task_list, :task => task }
+  def render_task(project,task_list,task,comment)
+    render :partial => 'tasks/show', 
+      :locals => { 
+        :project => project, 
+        :task_list => task_list, 
+        :task => task,
+        :comment => comment }
   end
 
   def update_active_task(project,task_list,task)

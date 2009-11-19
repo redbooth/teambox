@@ -6,7 +6,8 @@
     .date
       = posted_date comment.created_at
     .name
-      = task_status(comment.status) if comment.target_type == 'Task'
+      - # target.target must be some kind of rails bug, its the only way!
+      = comment_task_status(comment) if comment.target_type == 'Task'
       = conversation_last_comment_text(comment)
       = activity_comment_user_link(comment)
       = activity_project_link(comment.project)

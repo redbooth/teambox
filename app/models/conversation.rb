@@ -16,7 +16,7 @@ class Conversation < ActiveRecord::Base
 
   def after_create
     self.project.log_activity(self,'create')
-    self.add_watcher self.user
+    self.add_watcher(self.user) 
 
     comment = self.comments.new do |comment|
       comment.project_id = self.project_id

@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.datetime :deleted_at
     t.string   :rss_token, :default => nil, :limit => 40
     t.boolean  :admin,    :default => false
-    t.integer :comments_count
+    t.integer :comments_count, :default => 0
     
     t.string  :avatar_file_name
     t.string  :avatar_content_type
@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :name
     t.string  :permalink
     t.integer :last_comment_id, :null => true, :default => nil
-    t.integer :comments_count
+    t.integer :comments_count, :default => 0
     t.datetime :deleted_at
     t.timestamps
   end
@@ -129,7 +129,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :name
     t.integer :position
     t.integer :last_comment_id, :null => true, :default => nil
-    t.integer :comments_count
+    t.integer :comments_count, :default => 0
     t.text    :watchers_ids
     t.boolean :archived, :default => false
     t.datetime :deleted_at  
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.string  :name
     t.integer :position
-    t.integer :comments_count
+    t.integer :comments_count, :default => 0
     t.integer :last_comment_id, :null => true, :default => nil
     t.text    :watchers_ids
     t.integer :assigned_id
@@ -199,7 +199,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.string  :name
     t.integer :last_comment_id, :null => true, :default => nil
-    t.integer :comments_count
+    t.integer :comments_count, :default => 0
     t.text    :watchers_ids
     t.datetime :deleted_at
     t.timestamps

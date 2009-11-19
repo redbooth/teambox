@@ -4,13 +4,26 @@ unless @comment.new_record?
   page.esf('activities')    
     page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
   page.en
-  
-  page << "Form.reset('new_comment')"
-  page.replace 'upload_area', upload_area(@comment)
-  page['comment_upload_link'].show
+
+  unless @task.nil?
+    
+    unless @task.closed?
+      page.replace 'new_comment', new_comment_form(@current_project,@new_comment,:target => @task)
+    else
+      page.insert_html :after, 'new_comment',  
+        :partial => 'tasks/archive_box', :locals => {
+        :project => @current_project,
+        :task_list => @task.task_list,
+        :task => @task }
+      page['new_comment'].remove
+    end
+  else
+    page << "Form.reset('new_comment')"
+    page.replace 'upload_area', upload_area(@comment)
+    page['comment_upload_link'].show
+  end
   
   page.reload_javascript_events
   
-  #page.update_task_status(@target)
-    
+  #page.update_task_status(@target) 
 end

@@ -50,11 +50,7 @@ class ProjectsController < ApplicationController
       f.xml  { render :xml  => @activities.to_xml(options) }
       f.json { render :json => @activities.to_json(options) }
     end
-  ensure
-    if @current_project.comments.first
-      CommentRead.user(current_user).read_up_to(@current_project.comments.first,true)
-    end
-  end
+  end  
   
   def edit
   end

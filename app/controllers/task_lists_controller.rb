@@ -4,13 +4,10 @@ class TaskListsController < ApplicationController
   def index
     if @current_project
       @task_lists = @current_project.task_lists.unarchived
-      @activities = @current_project.activities.for_task_lists
     else
       @task_lists = []
-      @activities = []
       current_user.projects.each do |project|
         @task_lists |= project.task_lists.unarchived
-        @activities |= project.activities.for_task_lists
       end
     end
 
@@ -45,8 +42,6 @@ class TaskListsController < ApplicationController
   def show
     @task_lists = @current_project.task_lists.unarchived
     @comments = @task_list.comments
-  ensure
-    CommentRead.user(current_user).read_up_to(@comments.first) if @comments.first
   end
   
   def sortable

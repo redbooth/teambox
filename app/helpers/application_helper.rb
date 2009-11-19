@@ -187,7 +187,9 @@ module ApplicationHelper
   end
   
   def show_comments_count(target)
-    render :partial => 'shared/comments_count', :locals => { :target => target, :unread_count => CommentRead.user(current_user).unread_count(target) }
+    unless target.comments_count.nil? 
+      "<span class='comments_count'>#{target.comments_count}</span>" if target.comments_count >= 0
+    end  
   end
   
   def is_controller?(_controller, _action = nil)

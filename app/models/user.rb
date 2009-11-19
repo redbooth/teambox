@@ -110,13 +110,7 @@ class User < ActiveRecord::Base
     user_id = t
     User.find_by_rss_token_and_id(token,user_id)
   end
-  
-  def read_comments(comment,target)
-    if CommentRead.user(self).are_comments_read?(target)
-      CommentRead.user(self).read_up_to(comment)
-    end
-  end  
-  
+    
   def new_comment(user,target,comment)
     self.comments.new(comment) do |comment|
       comment.user_id = user.id

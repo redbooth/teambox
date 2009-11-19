@@ -1,13 +1,14 @@
 class Comment < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :target, :polymorphic => true, :counter_cache => true
-  belongs_to :project
 
   has_many :uploads
-
+  belongs_to :user
+  belongs_to :project
+  belongs_to :target, :polymorphic => true, :counter_cache => true
+  accepts_nested_attributes_for :target
+  
   acts_as_paranoid
     
-  attr_accessible :body, :hours, :status, :user_id
+  attr_accessible :body, :hours, :status, :user_id, :target_attributes
   formats_attributes :body
 
   named_scope :ascending, :order => 'created_at ASC'
@@ -52,16 +53,15 @@ class Comment < ActiveRecord::Base
 
       if last_comment
         target.last_comment_id = last_comment.id
-        CommentRead.update_all("last_read_comment_id = #{last_comment.id}",
-          :target_type => target.class.name,
-          :target_id => target.id,
-          :last_read_comment_id => original_id)
       else
         target.last_comment_id = nil
-        CommentRead.delete_all :target_type => target.class.name, :target_id => target.id
       end
       target.save(false)
     end
+  end
+
+  def status_name
+    Task::STATUSES[status.to_i].underscore
   end
 
   def day
@@ -102,8 +102,7 @@ class Comment < ActiveRecord::Base
 
   def save_uploads(params)      
     params[:uploads].if_defined.each do |upload_id|
-      upload = Upload.find(upload_id)
-      if upload
+      if upload = Upload.find(upload_id)
         upload.comment_id = self.id
         upload.save(false)
       end
@@ -111,9 +110,7 @@ class Comment < ActiveRecord::Base
     
     params[:uploads_deleted].if_defined.each do |upload_id|
       upload = Upload.find(upload_id)
-      if upload
-        upload.destroy
-      end
+      upload.destroy if upload
     end
   end
   

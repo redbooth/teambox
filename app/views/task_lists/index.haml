@@ -5,8 +5,6 @@
   = @chart.to_html(1, 22, 30, 0)
 
 - unless @task_lists.empty?
-  #activities
-    = list_activities(@activities)
-    =# list_main_task_list(@current_project,@task_lists)
+  =main_task_list(@current_project,@task_lists)
 - else
   = task_list_primer(@current_project)

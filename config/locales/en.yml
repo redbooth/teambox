@@ -268,7 +268,6 @@ en:
   tasks:
     fields:
       name: Name
-      assigned_to: "Assigned to:"
     header:
       assigned_to: "Assigned to {{user}}"
     edit:
@@ -402,6 +401,7 @@ en:
       commented_on_a_task_list: "-"
       confirm_delete: Are you sure you want to delete this comment?
     new:
+      assigned_to: "Assigned to:"
       submit: Comment
     edit:
       submit: Save

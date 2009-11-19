@@ -18,11 +18,11 @@ Feature Invite users
     And I should not see "Transfer Ownership"
 
     When I fill in "invitation_user_or_email" with "invalid user"
-    And I press "Search and invite"
+    And I press "Invite"
     Then I should see "User or email is not a valid username or email"
 
     When I fill in "invitation_user_or_email" with "ed_bloom@spectre.com"
-    And I press "Search and invite"
+    And I press "Invite"
     Then I should see "mislav invited ed_bloom@spectre.com to join the project"
     And I should see "An email was sent to this user, but they still haven't confirmed"
     And "ed_bloom@spectre.com" should receive 1 emails

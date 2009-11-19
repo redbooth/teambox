@@ -1,7 +1,7 @@
 .task_list_wrap{ :id => "#{task_list_id(:with_tasks,project,task_list)}", :class => "task_list_#{task_list.id}" }
   = render_task_list(project,task_list,current_target)
   .tasks{ :id => task_list_id(:the_tasks,project,task_list) }
-    = list_tasks(task_list.project,task_list,task_list.tasks.unarchived,current_target)
+    = list_tasks(project,task_list,task_list.tasks.unarchived,current_target)
   = task_link(project,task_list,Task.new)
   = task_form(project,task_list,Task.new)
   =tasks_sortable(project,task_list)

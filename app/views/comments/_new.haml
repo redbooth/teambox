@@ -1,16 +1,20 @@
-- show_hours ||= true
 - remote_form_for form_url, :id => 'new_comment_form' do |f|
   = hidden_field_tag :original_controller, controller_name
   .body.text_area
-    = text_area_tag 'comment[body]', message, :class => 'comment_body'
+    = f.text_area :body, :class => 'comment_body'
   .extra
-    = the_comment_upload_link(comment) unless comment.project.nil?
-    = upload_area(comment)
-    .status
-      - if target
-        - if target.class.to_s == 'Task'
-          = label_tag 'Change the status'
-          = select_tag 'comment[status]', options_for_select(Task::STATUSES)
+    -unless comment.project.nil?
+      = the_comment_upload_link(comment)
+      = upload_area(comment)
+    - unless target.nil?
+      - if target.class.to_s == 'Task'
+        .status
+          = f.label :status, 'Change the status'
+          = f.select :status, options_for_task_statuses
+        - f.fields_for :target, target do |task_form|
+          .assigned.select
+            = task_form.label :assigned_id, t('.assigned_to')
+            = task_form.select :assigned_id, options_for_people(comment.project.people), { :include_blank => true }
     .submit
       = f.submit t('.submit')
   .clear

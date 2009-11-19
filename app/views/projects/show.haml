@@ -3,7 +3,7 @@
     = list_pending_invites(@pending_projects)
 %h2{ :style => 'margin: 0px'}
   =t('.update_your_status')
-= new_comment_form(@current_project, :message => '')
+= new_comment_form(@current_project,@current_project.comments.new)
 
 #activities
   = list_activities(@activities)

@@ -25,8 +25,8 @@ class Task < ActiveRecord::Base
     status == 3 || status == 4
   end
 
-  def self.status(n)
-    STATUSES.index(n)
+  def status_name
+    Task::STATUSES[status.to_i].underscore
   end
 
   def before_save

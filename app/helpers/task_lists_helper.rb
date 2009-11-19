@@ -130,9 +130,10 @@ module TaskListsHelper
     end
   end
 
-  def list_main_task_list(project,task_lists)
+  def main_task_list(project,task_lists)
     render :partial => 'task_lists/main_task_lists',
     :collection => task_lists,
+    :as => :task_list,
     :locals => {
       :project => project }    
   end
