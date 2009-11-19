@@ -3,6 +3,8 @@ class Task < ActiveRecord::Base
   include Watchable
 
   default_scope :order => 'created_at DESC'
+
+  serialize :watchers_ids
   
   belongs_to :project
   belongs_to :user
