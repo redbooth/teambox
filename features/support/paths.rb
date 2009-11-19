@@ -20,6 +20,9 @@ module NavigationHelpers
     when /the login page/
       "/login"
 
+    when /the forgot password page/
+      "/forgot"
+
     when /the conversations page/
       "/projects/ruby_rockstars/conversations"
 

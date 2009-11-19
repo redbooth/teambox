@@ -20,12 +20,12 @@ class ResetPasswordsController < ApplicationController
         format.html { redirect_to sent_password_path(:email => @reset_password.email) }
         #format.xml  { render :xml => @reset_password, :status => :created, :location => @password }
       else
-        # use a friendlier message than standard error on missing email address
         if @reset_password.errors.on(:user)
           @reset_password.errors.clear
-          flash[:error] = "We can't find a #{user_model_name} with that email. Please check the email address and try again..."
+          flash[:error] = I18n.t('reset_passwords.create.not_found',
+                                  {:email => @reset_password.email, :support => APP_CONFIG['support']})
         end
-        format.html { render 'new' }
+        format.html { render :new }
         #format.xml  { render :xml => @reset_password.errors, :status => :unprocessable_entity }
       end
     end
@@ -35,8 +35,8 @@ class ResetPasswordsController < ApplicationController
     begin
       @user = ResetPassword.find(:first, :conditions => ['reset_code = ? and expiration_date > ?', params[:reset_code], Time.current]).user
     rescue
-      flash[:error] = 'The change password URL you visited is either invalid or expired.'
-      redirect_to(new_password_path)
+      flash[:error] = I18n.t('reset_passwords.create.invalid', :support => APP_CONFIG['support'])
+      redirect_to('/')
     end    
   end
 
@@ -49,13 +49,13 @@ class ResetPasswordsController < ApplicationController
         if @user.update_attributes(params[:user])
           @reset_password.destroy
           Emailer.deliver_reset_password(@user)
-          flash[:success] = "Password was successfully updated. Please log in."
+          flash[:success] = I18n.t('reset_passwords.create.password_updated')
           format.html { redirect_to login_path}
         else
           format.html { render :action => :reset, :reset_code => params[:reset_code] }
         end
       else
-        flash[:notice] = 'I think the link has expired. Go enter your email in and retrieve a new link'
+        flash[:notice] = I18n.t('reset_passwords.create.invalid', :support => APP_CONFIG['support'])
         format.html { render :action => :new, :reset_code => params[:reset_code] }
       end  
     end

@@ -15,6 +15,6 @@ Feature: Logging In
   Scenario: Mislav logs in for the first time and sees the welcome tab (he's not impressed)
     Given I login as mislav
     And I have confirmed my email
-    And It's my first time logging in
+    And It is my first time logging in
     When I go to the home page
     Then I should see "Welcome"

@@ -20,7 +20,7 @@ Given /I have never confirmed my email/ do
   @current_user.update_attribute(:confirmed_user,false)
 end
 
-Given /It's my first time logging in/ do
+Given /It is my first time logging in/ do
   @current_user.update_attribute(:welcome,false)
 end
 
