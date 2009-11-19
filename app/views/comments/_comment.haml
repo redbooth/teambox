@@ -15,7 +15,7 @@
     .body
       = comment.body_html
     - if comment.uploads.count > 0
-      - if comment.uploads.all? { |upload| upload.is_image? }
+      - if comment.uploads.all? { |upload| upload.image? }
         .upload_images
           = list_uploads_inline_with_thumbnails(comment.uploads)
       - else

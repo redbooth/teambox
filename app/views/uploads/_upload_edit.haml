@@ -1,5 +1,5 @@
 .upload_thumbnail{:id => "upload_#{upload.id}"}
-  -if upload.is_image?
+  -if upload.image?
     =upload_link_with_thumbnail(upload)
   -else
     = file_icon_image(upload,'16px')

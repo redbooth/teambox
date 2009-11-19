@@ -45,7 +45,6 @@ ActionController::Routing::Routes.draw do |map|
       comment.resources :uploads, :member => { :iframe => :get }
     end
 
-
     project.resources :uploads
 
     map.reorder_task_lists 'project/:project_id/reorder_task_lists', :controller => 'task_lists', :action => 'reorder', :method => :post
@@ -66,6 +65,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pages, :only => [ :index ]
   
   map.root :controller => 'projects', :action => 'index'
-  map.connect 'assets/:id/:style/:basename.:format', :controller => 'uploads', :action => 'download', :conditions => { :method => :get }  
+  map.connect 'assets/:id/:style/:basename.:format', :controller => 'uploads', :action => 'download', :conditions => { :method => :get } #:requirements => { :basename => /[a-z0-9_\-\+\ ]+\.[a-z0-9_\-\+\ ]*\.[a-z0-9_\-\+\ ]*/ }
+  map.connect 'assets/:id/:style/:basename', :controller => 'uploads', :action => 'download', :conditions => { :method => :get }  
   SprocketsApplication.routes(map)
 end

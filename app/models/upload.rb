@@ -1,5 +1,6 @@
 class Upload < ActiveRecord::Base
 
+
   ICONS = ["aac", "ai", "aiff", "avi", "bmp", "c", "cpp", "css", "dat", "dmg", "doc", "dotx", "dwg", "dxf", "eps", "exe", "flv", "gif", "h", "hpp", "html", "ics", "iso", "java", "jpg", "key", "mid", "mp3", "mp4", "mpg", "odf", "ods", "odt", "otp", "ots", "ott", "pdf", "php", "png", "ppt", "psd", "py", "qt", "rar", "rb", "rtf", "sql", "tga", "tgz", "tiff", "txt", "wav", "xls", "xlsx", "xml", "yml", "zip"]
     
   belongs_to :user
@@ -13,10 +14,17 @@ class Upload < ActiveRecord::Base
     :url  => "/assets/:id/:style/:basename.:extension",
     :path => ":rails_root/assets/:id/:style/:basename.:extension"
 
+  before_post_process :image?
+
   validates_attachment_size :asset, :less_than => 10.megabytes
 
+  def image?
+    !(asset_content_type =~ /^image.*/).nil?
+  end
+
   def url(*args)
-    asset.url(*args)
+    u = asset.url(*args)
+    u.sub(/\.$/,'')
   end
 
   def file_name
@@ -35,13 +43,10 @@ class Upload < ActiveRecord::Base
     true
   end
   
-  def is_image?
-    File.mime_type?(self.asset.path(:original))  == 'image/jpeg'
-  end
-
   def file_type
-    File.extname(file_name).sub('.','')
-    #File.mime_type?(self.asset.path(:original))
+    ext = File.extname(file_name).sub('.','')
+    ext = '...' if ext == ''
+    ext
   end
   
 end

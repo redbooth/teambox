@@ -10,8 +10,12 @@ class UploadsController < ApplicationController
     path = upload.asset.path(params[:style])
     head(:bad_request) and return unless File.exist?(path) && params[:format].to_s == File.extname(path).gsub(/^\.+/, '')
 
-    send_file_options = { :type => File.mime_type?(path) }
-
+    if upload.asset_content_type == 'application/octet-stream'
+      send_file_options = { :type => 'application/octet-stream' }
+    else
+      send_file_options = { :type => File.mime_type?(path) }
+    end  
+    
     case SEND_FILE_METHOD
       when :apache then send_file_options[:x_sendfile] = true
       when :nginx then head(:x_accel_redirect => path.gsub(Rails.root, ''), :content_type => send_file_options[:type]) and return
