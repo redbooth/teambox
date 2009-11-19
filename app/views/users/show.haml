@@ -4,7 +4,7 @@
 - content_for :column do
   = image_tag @user.avatar.url(:profile)
   - if current_user.can_view?(@user)
-    =render_card(@card)
+    = render_card(@card)
 
     =# list_projects(@user.projects)
 

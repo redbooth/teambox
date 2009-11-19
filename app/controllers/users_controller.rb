@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @card = current_user.card
+    @card = @user.card
     @activities = @user.activities_visible_to_user(@current_user)
     options = { :only => [:id, :login, :name, :language, :email, 'time-zone', 'created-at', 'updated-at'] }
     respond_to do |format|
