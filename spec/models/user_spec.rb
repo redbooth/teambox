@@ -126,19 +126,32 @@ describe User do
   
   describe "validation" do
     before do
-      @user = Factory.create(:user, :login => "Holden", :email => "HoldeN.Caulfield@pencey.edu")
+      @user = Factory.create(:user, :first_name => " holden ", :last_name => "  m. caulfield   ",
+                                    :login => "Holden", :email => "HoldeN.Caulfield@pencey.edu")
     end
 
-    it "should convert email to downcase" do
-      @user.email.should == @user.email.downcase
+    it "should capitalize first and last name on create" do
+      @user.name.should == "Holden M. Caulfield"
     end
 
-    it "should convert login to downcase" do
-      @user.login.should == @user.login.downcase
+    it "should convert email to downcase and strip spaces" do
+      @user.email.should == "holden.caulfield@pencey.edu"
     end
+
+    it "should convert login to downcase and strip spaces" do
+      @user.login.should == "holden"
+    end
+    
   end
   
   describe "signup and activation" do
+    it "should not accept duplicate logins or tildes" do
+      Factory.build(:user, :login => '.j0a-quIN_').save.should be_true
+      Factory.build(:user, :login => '.j0a-QUin_').save.should be_false
+      Factory.build(:user, :login => '.j0a-quín_').save.should be_false
+      Factory.build(:user, :login => '.j0a-quin+').save.should be_false
+    end
+    
     it "should send an activation email when signing up without an invitation" do
       @user = Factory.build(:user)
       Emailer.should_receive(:deliver_confirm_email).once

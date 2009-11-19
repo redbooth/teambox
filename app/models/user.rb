@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
   
   def before_create
     self.build_card
+    self.first_name = self.first_name.split(" ").collect(&:capitalize).join(" ")
+    self.last_name  = self.last_name.split(" ").collect(&:capitalize).join(" ")
   end
   
   def after_create

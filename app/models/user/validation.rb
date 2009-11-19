@@ -17,8 +17,8 @@ class User
 
   validates_associated :projects    # Ensure associated projects exist
 
-  def before_create
-    [self.first_name, self.last_name].each { |a| a.capitalize! }
+  def before_validate
+    [self.email, self.login, self.first_name, self.last_name].strip!
   end
 
   def login=(value)
