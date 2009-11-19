@@ -27,7 +27,7 @@
             - comment.uploads.each do |upload|
               %li
                 = t('emailer.notify_conversation.file')
-                = link_to h(upload.filename), project_upload_url(upload.project, upload.filename)
+                = link_to h(upload.file_name), project_upload_url(upload.project, upload.file_name)
                 = t('emailer.notify_conversation.uploaded_by')
                 = link_to upload.user.name, user_url(upload.user)
                 - if upload.description

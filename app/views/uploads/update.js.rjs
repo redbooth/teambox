@@ -1,5 +1,5 @@
 page["upload_#{@upload.id}"].down('.link_to_file').replace upload_text_link(@upload)
 page["upload_#{@upload.id}"].down('.description').replace content_tag(:div,h(@upload.description),:class => 'description')
 
-page["upload_#{@upload.id}"].down('.upload_filename').setValue @upload.filename
+page["upload_#{@upload.id}"].down('.upload_filename').setValue @upload.file_name
 page["upload_#{@upload.id}"].down('.upload_description').setValue @upload.description
