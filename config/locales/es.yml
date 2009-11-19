@@ -472,6 +472,10 @@ es:
       project_invitations: "Invitaciones ({{count}})"
       signup: Regístrate
       settings: Opciones
+    user_navigation:
+      account_settings: Cuenta y preferencias
+      profile_information: Información de Contacto
+      profile_picture: Imagen
     footer:
       help: Ayuda
 

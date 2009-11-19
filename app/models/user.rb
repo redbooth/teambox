@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
     self.first_name = self.first_name.split(" ").collect(&:capitalize).join(" ")
     self.last_name  = self.last_name.split(" ").collect(&:capitalize).join(" ")
   end
-  
+    
   def after_create
     self.send_activation_email unless self.confirmed_user
   end

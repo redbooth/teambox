@@ -2,19 +2,19 @@
 render_tabnav :user do 
 
     add_tab do |t|
-      t.named 'Account Settings'
+      t.named t('.account_settings')
       t.links_to account_settings_path
       t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'settings'
     end  
 
     add_tab do |t|
-      t.named 'Profile Information'
+      t.named t('.profile_information')
       t.links_to account_profile_path
       t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'profile'
     end
         
     add_tab do |t|
-      t.named 'Profile Picture'
+      t.named t('.profile_picture')
       t.links_to account_picture_path
       t.highlights_on :controller => 'avatars', :action => 'show'
     end

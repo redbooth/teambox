@@ -56,7 +56,11 @@ class UsersController < ApplicationController
   end
   
   def edit
-   @sub_action = params[:sub_action]
+    if params.has_key?(:sub_action)
+      @sub_action = params[:sub_action]
+    else
+      render :file => "#{RAILS_ROOT}/public/404.html", :status => 404
+    end
   end
   
   def update
@@ -65,7 +69,7 @@ class UsersController < ApplicationController
     respond_to do |f|
       if @current_user.update_attributes(params[:user])
         flash[:success] = t('users.update.updated')
-        f.html { redirect_to user_path(current_user) }
+        f.html { redirect_to account_settings_path }
       else
         flash[:error] = t('users.update.error')
         f.html { render 'edit' }
