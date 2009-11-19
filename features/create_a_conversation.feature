@@ -18,8 +18,9 @@ Feature Creating a conversation
     And I press "Create"
     Then I should see "Let's code the next big thing"
     And I should see "I’m having some ideas for an upcoming project: Getting Laid, the book."
-    And I should see "People watching this item: Mislav Marohnić"
-    And I should see "Stop watching this conversation"
+    And I should see "People watching:"
+    And I should see "Mislav Marohnić"
+    And I should see "Unwatch"
     Then I fill in "comment_body" with "A better, saucier and faster way of getting laid"
     And I press "Comment"
     # this response is ajax and should be tested
