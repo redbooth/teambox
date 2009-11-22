@@ -195,6 +195,12 @@ module ApplicationHelper
   def is_controller?(_controller, _action = nil)
     controller.controller_name == _controller.to_s and (_action == nil or controller.action_name == _action.to_s)
   end
+
+  def support_link
+    if APP_CONFIG.has_key? 'support_url'
+      link_to t('.support'), "#{APP_CONFIG['support_url']}/#{controller.controller_name}"
+    end
+  end
   
   def help_link
     if APP_CONFIG.has_key? 'help_url'

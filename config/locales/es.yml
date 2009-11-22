@@ -473,6 +473,7 @@ es:
       profile_information: Información de Contacto
       profile_picture: Imagen
     footer:
+      support: "¿Problemas? ¡Envía feedback!"
       help: Ayuda
     watchers:
       unwatch: Dejar de seguir

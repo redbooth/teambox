@@ -473,6 +473,7 @@ en:
       profile_information: Profile Information
       profile_picture: Profile Picture
     footer:
+      support: "Feedback and bugs"
       help: Help
     watchers:
       unwatch: Unwatch

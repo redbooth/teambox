@@ -18,14 +18,15 @@ defaults: &DEFAULTS
   home_url: http://www.teambox.com
   #tour_url: http://www.teambox.com/tour
   blog_url: http://blog.teambox.com
-  #help_url: http://help.teambox.com
+  help_url: http://help.teambox.com/faqs/using-teambox
+  support_url: http://help.teambox.com
   
   # [NOT IMPLEMENTED]
   # If false, the only way of having an account will be being invited by another user.
   allow_signups: true
   
   # Address where your users should write to ask for help. Accepts an email or website.
-  support: http://teambox.tenderapp.com
+  support: http://help.teambox.com
   
   time_zone: 'UTC'
 
