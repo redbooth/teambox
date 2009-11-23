@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
 
     def set_locale
       # if this is nil then I18n.default_locale will be used
-      I18n.locale = current_user.language if logged_in?
+      I18n.locale = logged_in? ? current_user.language : 'en'
     end
     
     def touch_user
