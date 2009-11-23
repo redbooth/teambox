@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require 'net/pop'
+require File.dirname(__FILE__) + '/../config/environment'
+
+logger = RAILS_DEFAULT_LOGGER
+
+puts 'Running Mail Importer...'
+Net::POP3.start(APP_CONFIG['incoming']['host'], nil, APP_CONFIG['incoming']['user'], APP_CONFIG['incoming']['pass']) do |pop|
+  if pop.mails.empty?
+    puts 'No mail.'
+  else
+    pop.mails.each do |email|
+      begin
+        puts ""
+        Emailer.receive(email.pop)
+        email.delete
+      rescue Exception => e
+        puts 'Error receiving email at ' + Time.current.to_s + '::: ' + e.message
+        email.delete
+      end
+    end
+  end
+end
+puts 'Finished Mail Importer.'

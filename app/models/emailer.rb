@@ -1,5 +1,6 @@
 class Emailer < ActionMailer::Base
   include ActionController::UrlWriter # Allows us to generate URLs
+  concerned_with :receive
 
   def confirm_email(user)
     recipients    user.email
@@ -55,57 +56,5 @@ class Emailer < ActionMailer::Base
     reply_to      "Teambox <#{project.permalink}+conversation+#{conversation.id}@#{APP_CONFIG['email_domain']}>"
     body          :project => project, :comment => comment, :conversation => conversation
   end
-
-  # Receives an email and performs the adequate action
-  #
-  # Emails can be sent to project@app.server.com or project+model+id@app.server.com
-  # Examples:
-  #
-  # keiretsu@app.server.com                  Will post a new conversation with the Subject in the project Keiretsu
-  # keiretsu+conversation+5@app.server.com   Will post a new comment in the conversation whose id is 5
-  #
-  # Invalid or malformed emails will be ignored
-  #
-  # TODO: Enhance mime and plain messages treatment
-  #       Parse html to textile
-  #       Strip the quoted text from email replies
-  def receive(email)
-    return unless email.to   and email.to.first
-    return unless email.from and email.from.first
-    
-    @to       = email.to.first.split('@').first.downcase
-    @to       = "keiretsu+conversation+3"
-    @body     = (email.multipart? ? email.parts.first.body : email.body).strip
-    @user     = User.find_by_email email.from.first
-    @subject  = email.subject
-    @project  = Project.find_by_permalink @to.split('+').first
-    
-    return unless @project and @user and @body
-
-    for attachment in email.attachments
-      # insert into the new comment
-    end
-    
-    extra_params = @to.split('+')
-
-    if extra_params.count == 3
-      case extra_params.second
-      when 'conversation'
-        if conversation = Conversation.find_by_id_and_project_id(extra_params.third, @project.id)
-          puts "Adding to #{conversation.name}"
-          comment = @project.new_comment(@user, conversation, { :body => @body })
-          comment.save
-        else
-          puts "Not found"
-        end
-      end
-    else
-      puts "Creating conversation #{@subject}"
-      # Find conversation, create it if it doesn't exist
-      # And add a comment to it      
-    end
-    
-  end
-
 
 end

@@ -12,9 +12,19 @@ defaults: &DEFAULTS
   # The domain for your outgoing email, as in no_reply@app.teambox.com
   email_domain: app.teambox.com
   
-  # If true, will include the "reply above this line" notice where relevant and accept emails.
+  # Set allow_incoming_email to true to allow the "reply to" feature for notifications.
+  # This will allow users to post answers and comments by email.
+  # When set to true, "reply above this line" notice will be displayed where relevant and accept emails.
+  # You will need to set up:
+  # * A catch-all address for email received for any username of the incoming mail server.
+  # * A cron job to run script/inbox periodically to get email.
   allow_incoming_email: false
+  incoming:
+    host: 
+    user:
+    pass:
 
+  # This links are used in the navigation bar for login and in every page's footer
   home_url: http://www.teambox.com
   #tour_url: http://www.teambox.com/tour
   blog_url: http://blog.teambox.com
