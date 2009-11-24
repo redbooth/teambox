@@ -62,7 +62,7 @@ class Emailer
   def get_target
     extra_params = @to.split('+')
 
-    case extra_params.count
+    case extra_params.size
       when 1 # projectname@mailserver.com
         @type = :conversation
         @target = Conversation.find_by_name_and_project_id(@subject, @project.id)
