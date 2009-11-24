@@ -39,7 +39,7 @@
 
   .footer{ :style => 'font-size: 10px; color: rgb(100,100,100)' }
     %p
-      = to_sentence @conversation.watchers.join(", ")
+      = to_sentence @conversation.watchers
       = t('.are_watching')
 
     %p
