@@ -9,19 +9,58 @@ form#new_comment
   .comment_body
     :height 4em
     :color rgb(0,0,0)
+
   .extra
     a#comment_upload_link
       :float left
-    .status
+    .assigned
+      :margin-left 10px
+      label
+        :display none
+    .statuses
+      label
+        :display none
       :float left
-      :width 210px
-      :font-size 12px
-      :padding
-        :left 5px
-        :top 3px
-      select
-        :margin 0px
-        :padding 0px
+      :margin-top 2px
+      :margin-left 4px
+      .status
+        :cursor pointer
+        :float left
+        :-moz-border-radius 4px
+        :-webkit-border-radius 4px
+        :border solid 1px rgb(200,200,200)
+        :background rgb(240,240,240)
+        :color rgb(80,80,80)
+        :font-size 11px
+        :text-align center
+        :text-transform uppercase
+        :padding 2px 5px
+        :margin-left 5px
+        input
+          :display none
+      .status:hover
+        :color rgb(255,255,255)
+      .active
+        :background rgb(140,140,140)
+        :border solid 1px rgb(0,0,0)
+        :color rgb(255,255,255)
+      .open:hover
+        :background rgb(100,100,200)
+        :border solid 1px rgb(100,100,200)
+      .hold:hover
+        :background rgb(200,200,100)
+        :border solid 1px rgb(200,200,100)
+      .resolved:hover
+        :background rgb(0,200,0)
+        :border solid 1px rgb(0,200,0)
+      .rejected:hover
+        :background rgb(200,0,0)
+        :border solid 1px rgb(200,0,0)
+    select
+      label 
+      :margin 0px
+        :left 10px
+      :padding 0px
     .submit
       :padding
         :top 3px

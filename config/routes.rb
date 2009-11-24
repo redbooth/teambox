@@ -14,7 +14,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reset_passwords
   map.resource :session
 
-  
+  map.project_my_task_lists '/projects/:project_id/my_task_lists/', :controller => 'task_lists', :action => 'index', :sub_action => 'mine'
+  map.project_archived_task_lists '/projects/:project_id/task_lists/archived', :controller => 'task_lists', :action => 'index', :sub_action => 'archived'
 
   map.account_settings '/account/settings', :controller => 'users', :action => 'edit', :sub_action => 'settings'
   map.account_picture '/account/picture', :controller => 'users', :action => 'edit', :sub_action => 'picture'

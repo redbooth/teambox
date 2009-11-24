@@ -1,4 +1,4 @@
-:asset_root: public
+:asset_root: public/javascripts
 :load_path:
   - app/javascripts
   - vendor/sprockets/*/src

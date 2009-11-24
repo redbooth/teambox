@@ -38,6 +38,11 @@ module ApplicationHelper
     render :partial => 'shared/header'
   end
 
+  def task_navigation(project)
+    render :partial => 'shared/task_navigation',
+      :locals => { :project => project }
+  end
+
   def project_navigation(project)
     render :partial => 'shared/project_navigation',
       :locals => { :project => project }

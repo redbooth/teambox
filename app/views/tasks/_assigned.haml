@@ -1,0 +1,3 @@
+.assignment#assigned
+  - if task.assigned?(user)
+    = t('.assigned_to', :user => link_to(task.assigned.user.name, user_path(user)))

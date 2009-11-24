@@ -124,7 +124,7 @@
     a:hover
       :background rgb(140,140,140)
       :color rgb(255,255,0)
-div.user_navigation
+div.user_navigation, div.task_navigation
   ul
     :list-style-type none
     :margin 0px
@@ -147,6 +147,10 @@ div.user_navigation
       :background rgb(0,0,200)
       :border solid 1px rgb(0,0,200)
       :text-decoration none
+
+div.task_navigation
+  :margin-top 15px
+  
 @media print
   div.navigation, div.global_navigation, div.project_navigation
     :display none

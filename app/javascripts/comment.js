@@ -37,5 +37,17 @@ Comment = {
       params = { show: 'hours' };
     }
     new Ajax.Request(comments_update_url, { method: 'get', parameters: $H(params).merge(comments_parameters) });
+  },
+  watch_status: function(){
+    $$('.statuses .status').each(function(e){ 
+      e.observe('click', Comment.change_status)
+    });
+  },
+  change_status: function(e){
+    $$('.statuses .active').each(function(ee){ ee.removeClassName('active') })
+    $$('.statuses input').each(function(ee){ ee.checked = false })
+    var ee = e.element()  
+    ee.down('input').checked = true;
+    ee.addClassName('active');
   }
 };

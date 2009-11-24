@@ -268,7 +268,7 @@ en:
   tasks:
     fields:
       name: Name
-    header:
+    assigned:
       assigned_to: "Assigned to {{user}}"
     edit:
       submit: Update Task
@@ -284,6 +284,8 @@ en:
       deleted: "The Task <b>{{name}}</b> was successfully deleted!"
     archive_message:  
       archived: "The Task <b>{{name}}</b> was successfully archived!"
+    unarchive_box:
+      unarchive: Unarchive
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?
@@ -375,7 +377,6 @@ en:
     column:
       new_task_list: New Task List
       subscribe: Subscribe to the news feed
-      view_archived: "View {{number}} Archived Tasks"
     show:
       title: "Task List: {{name}}"
     destroy_message:
@@ -472,6 +473,10 @@ en:
       account_settings: Account Settings
       profile_information: Profile Information
       profile_picture: Profile Picture
+    task_navigation:
+      all_tasks: All Tasks
+      my_tasks: "My {{count}} Tasks"
+      archived_tasks: "All {{count}} Archived Tasks"
     footer:
       support: "Feedback and bugs"
       help: Help

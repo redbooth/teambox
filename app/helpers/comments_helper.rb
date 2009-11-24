@@ -1,11 +1,15 @@
 module CommentsHelper
 
   def options_for_people(people)
-    people.map {|p| [ p.name, p.id ]}
+    p = [['--- Assigned to Nobody ---',nil]]
+    people.each {|person| p << [ person.name, person.id ]}
+    p
   end
   
   def options_for_task_statuses
-    Task::STATUSES.to_enum(:each_with_index).collect { |i,e| [i,e] }
+    t = []
+    Task::STATUSES.to_enum(:each_with_index).each { |e,i| t << [e,i] unless i == 0  }
+    t
   end
 
   def conversation_last_comment_text(comment)

@@ -2,18 +2,27 @@ class TaskListsController < ApplicationController
   before_filter :load_task_list, :only => [:update,:show,:destroy,:watch,:unwatch]
     
   def index
-    if @current_project
-      @task_lists = @current_project.task_lists.unarchived
+    if params.has_key?(:sub_action)
+      @sub_action = params[:sub_action]
+      if params[:sub_action] == 'mine'
+        @task_lists = @current_project.task_lists_assigned_to(current_user)
+      elsif params[:sub_action] == 'archived'
+        @task_lists = @current_project.task_lists.with_archived_tasks
+      end  
     else
-      @task_lists = []
-      current_user.projects.each do |project|
-        @task_lists |= project.task_lists.unarchived
+      @sub_action = 'all'
+      if @current_project
+        @task_lists = @current_project.task_lists.unarchived
+      else
+        @task_lists = []
+        current_user.projects.each {|p| @task_lists |= p.task_lists.unarchived }
+
       end
     end
 
     @chart_task_lists = []
     @task_lists.each do |task_list|
-      @chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name)
+      #@chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name)
     end
 
     @chart = GanttChart::Base.new(@chart_task_lists)
@@ -55,11 +64,7 @@ class TaskListsController < ApplicationController
       task_list.update_attribute(:position,idx.to_i)
     end
   end  
- 
-  def archived
-    @task_lists = @current_project.task_lists.with_archived_tasks
-  end
-  
+   
   def destroy
     @task_list.destroy if @task_list.owner?(current_user)
     respond_to do |format|

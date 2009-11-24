@@ -34,6 +34,18 @@ class Project < ActiveRecord::Base
   
   has_permalink :name
 
+  def task_lists_assigned_to(user)
+    t = []
+    task_lists.unarchived.each do |task_list| 
+      person = people.find_by_user_id(user.id)
+      if task_list.tasks.count(:conditions => { :assigned_id => person.id }) > 0
+        t << task_list 
+      end  
+    end
+    t
+  end
+
+
   def self.grab_name_by_permalink(permalink)
     e = self.find_by_permalink(permalink,:select => 'name')
     e = e.nil? ? '' : e.name

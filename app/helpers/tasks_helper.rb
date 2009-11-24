@@ -1,11 +1,11 @@
 module TasksHelper
 
-  def replace_task_column(project,task_lists,task)
-    page.replace_html 'column', task_list_column(project,task_lists,task)
+  def replace_task_column(project,task_lists,sub_action,task)
+    page.replace_html 'column', task_list_column(project,task_lists,sub_action,task)
   end
   
   def unarchive_task_button(project,task_list,task)
-    link_to_remote '<span>Raise this Task from the grave</span>', 
+    link_to_remote "<span>#{t('.unarchive')}</span>", 
       :url => unarchive_project_task_list_task_path(project,task_list,task), 
       :method => :put,
       :loading => loading_archive_task,
@@ -142,22 +142,50 @@ module TasksHelper
       :task => task } 
   end
 
-  def update_task_status(task)
-    page.replace 'task_status', task_status(task) if task.class.to_s == 'Task'
+  def render_assignment(task,user)
+    render :partial => 'tasks/assigned', 
+    :locals => {
+      :task => task,
+      :user => user }
+  end  
+
+
+  def update_task_assignment(task,user)
+    page.replace 'assigned', render_assignment(task,user)
+  end
+  
+  def update_task_status(task,status_type)
+    id = check_status_type(task,status_type)
+    page.replace id, task_status(task,status_type)
+  end
+
+  def check_status_type(task,status_type)
+    unless [:column,:content,:header].include?(status_type)
+      raise ArgumentError, "Invalid Status type, was expecting :column, :content or :header but got #{status_type}"
+    end
+    case status_type
+      when :column
+        id = "column_task_status_#{task.id}"
+      when :content
+        id = "content_task_status_#{task.id}"
+      when :header
+        id = "header_task_status_#{task.id}"
+    end    
   end
 
   def comment_task_status(comment)
     "<span class='task_status task_status_#{comment.status_name.underscore}'>#{comment.status_name}</span>"
   end
 
-  def task_status(task,status_text=false)
-    out = "<span class='task_status task_status_#{task.status_name.underscore}'>"
-    out << "#{task.status_name} &mdash; " if status_text
+  def task_status(task,status_type)
+    id = check_status_type(task,status_type)
+    out = "<span id='#{id}' class='task_status task_status_#{task.status_name.underscore}'>"
+    out << "#{task.status_name} &mdash; " unless status_type == :column
     out <<  "#{task.comments_count}</span>"
     out
   end
-    
-      
+
+
   def my_tasks_link
     link_to 'My Tasks', ''
   end
@@ -198,13 +226,14 @@ module TasksHelper
     drag_image if task.owner?(current_user)
   end
 
-  def list_tabular_tasks(project,task_list,tasks)
+  def list_tabular_tasks(project,task_list,tasks,sub_action)
     render :partial => 'tasks/td_task', 
       :collection => tasks,
       :as => :task,
       :locals => {
         :project => project,
-        :task_list => task_list }
+        :task_list => task_list,
+        :sub_action => sub_action }
   end
 
 
@@ -244,6 +273,7 @@ module TasksHelper
     item_id = task_id(:item,project,task_list,task)
     page.select('.task').invoke('removeClassName','active_task')
     page.select('.task_list').invoke('removeClassName','active_task_list')
+    page.select('.task_navigation .active').invoke('removeClassName','active')
     page[item_id].addClassName('active_task')
   end
   

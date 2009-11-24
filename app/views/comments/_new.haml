@@ -8,14 +8,28 @@
       = upload_area(comment)
     - unless target.nil?
       - if target.class.to_s == 'Task'
-        .status
-          = f.label :status, 'Change the status'
-          = f.select :status, options_for_task_statuses
+        -unless f.object.status == 0
+          .statuses
+            = f.label :status
+            .status.open
+              = f.radio_button :status, 1 # open
+              open              
+            .status.hold
+              = f.radio_button :status, 2 # hold
+              hold              
+            .status.resolved
+              = f.radio_button :status, 3 # resoloved
+              resolved              
+            .status.rejected
+              = f.radio_button :status, 4 # rejected
+              rejected
+            = javascript_tag "$$('.statuses input').each(function(e){ if (e.checked) { e.up('.status').addClassName('active') }; })"
+            = javascript_tag "Comment.watch_status();"
         - f.fields_for :target, target do |task_form|
           .assigned.select
             = task_form.label :assigned_id, t('.assigned_to')
-            = task_form.select :assigned_id, options_for_people(comment.project.people), { :include_blank => true }
+            = task_form.select :assigned_id, options_for_people(comment.project.people)
     .submit
       = f.submit t('.submit')
-  .clear
+
 = javascript_tag "$('new_comment').auto_focus()"

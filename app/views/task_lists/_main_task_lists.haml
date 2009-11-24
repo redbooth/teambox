@@ -1,3 +1,4 @@
+- tasks = assign_tasks(project,task_list,sub_action)
 %table.task_list{ :id => task_list_id(:with_main_tasks,project,task_list) }
   %thead
     %tr
@@ -5,4 +6,4 @@
         =show_comments_count(task_list)
         = the_task_list_link(task_list)
   %tbody{ :id => task_list_id(:the_main_tasks,project,task_list) }
-    = list_tabular_tasks(project,task_list,task_list.tasks.unarchived)
+    = list_tabular_tasks(project,task_list,tasks,sub_action)

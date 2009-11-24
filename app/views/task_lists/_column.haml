@@ -1,12 +1,10 @@
 - if project
   = task_list_link(project,TaskList.new)
   = task_list_form(project,TaskList.new)
+
+= task_navigation(project)
+
 #task_lists  
-  = list_task_lists(project,task_lists,current_target)
+  = list_task_lists(project,task_lists,sub_action,current_target)
 =# comments_settings
 =# reorder_task_list_link(project,task_lists)
-
-- unless project.tasks.archived.empty?
-  .column_settings
-    = archived_task_list_link(project)
-

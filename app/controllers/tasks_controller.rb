@@ -31,8 +31,15 @@ class TasksController < ApplicationController
   end
   
   def show
-    @task_lists = @current_project.task_lists
+    if @task.archived?    
+      @sub_action = 'archived'
+      @task_lists = @current_project.task_lists.with_archived_tasks
+    else
+      @task_lists = @current_project.task_lists
+      @sub_action = 'all'
+    end  
     @task = @current_project.tasks.find(params[:id])
+
     @comments = @task.comments
     @comment = @current_project.comments.new
     @comment.target = @task
@@ -80,8 +87,14 @@ class TasksController < ApplicationController
   end
   
   def unarchive
-    @task.update_attribute(:archived,false)
-    respond_to {|f|f.js}    
+    if @task.update_attribute(:archived,false)
+      @task_lists = @current_project.task_lists
+      @sub_action = 'all'
+      @comment = @current_project.comments.new
+      @comment.target = @task
+      @comment.status = @task.status
+    end
+    respond_to {|f|f.js}
   end
   
   def reorder

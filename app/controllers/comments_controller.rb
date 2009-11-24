@@ -11,8 +11,13 @@ class CommentsController < ApplicationController
       @comment = current_user.new_comment(current_user,@target,params[:comment])
     end
 
+    if @target.class.to_s == 'Task'
+      if @comment.status == 0 && @target.assigned_id != nil
+        @target.status, @comment.status = 1,1
+      end  
+    end  
+
     if @comment.save
-        
       @comment.save_uploads(params)
       if @target.class.to_s == 'Task'
         @comment.reload
@@ -20,7 +25,6 @@ class CommentsController < ApplicationController
         @new_comment = @current_project.comments.new
         @new_comment.target = @task
         @new_comment.status = @task.status
-                                   
       end
     end
     respond_to{|f|f.js}

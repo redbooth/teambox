@@ -269,7 +269,8 @@ es:
     fields:
       name: Nombre
     header:
-      assigned_to: "Asignado a {{user}}"
+    assigned:
+      assigned_to: "Assigned to {{user}}"
     edit:
       submit: Actualizar tarea
     new:
@@ -284,6 +285,8 @@ es:
       deleted: "La tarea <b>{{name}}</b> se ha borrado"
     archive_message:  
       archived: "La tarea <b>{{name}}</b> ha sido archivada!"
+    unarchive_box:
+      unarchive: Unarchive
   notes:
     actions:
       delete_confirm: Seguro que quieres borrar esta nota?
@@ -375,7 +378,6 @@ es:
     column:
       new_task_list: Nueva lista de tareas
       subscribe: Suscríbete a las tareas
-      view_archived: "Ver {{number}} tareas archivadas"
     show:
       title: "Lista de tareas: {{name}}"
     destroy_message:
@@ -472,6 +474,10 @@ es:
       account_settings: Cuenta y preferencias
       profile_information: Información de Contacto
       profile_picture: Imagen
+    task_navigation:
+      all_tasks: All Tasks
+      my_tasks: "My {{count}} Tasks"
+      archived_tasks: "All {{count}} Archived Tasks"
     footer:
       support: "¿Problemas? ¡Envía feedback!"
       help: Ayuda

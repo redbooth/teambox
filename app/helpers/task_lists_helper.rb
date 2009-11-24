@@ -1,16 +1,22 @@
 module TaskListsHelper
 
+  def assign_tasks(project,task_list,sub_action)
+    if sub_action == 'mine'
+      person = project.people.find_by_user_id(current_user.id)
+      task_list.tasks.unarchived.find(:all, :conditions => { :assigned_id => person.id} )
+    elsif sub_action == 'archived'
+      task_list.tasks.archived
+    elsif sub_action == 'all'
+      task_list.tasks.unarchived
+    end    
+  end
+  
   def archived_task_lists(project,task_lists)
     render :partial => 'task_lists/archived_task_list_with_tasks', 
       :as => :task_list,
       :collection => task_lists, :locals => { :project => project }
   end
   
-  def archived_task_list_link(project)
-    link_to t('.view_archived', :number => project.tasks.archived.size), archived_project_task_lists_path(project),
-      :class => 'archived_task_list_link'
-  end
-
   def render_task_list(project,task_list,current_target)
     render :partial => 'task_lists/task_list', :locals => {
       :project => project,
@@ -130,26 +136,29 @@ module TaskListsHelper
     end
   end
 
-  def main_task_list(project,task_lists)
+  def main_task_list(project,task_lists,sub_action)
     render :partial => 'task_lists/main_task_lists',
     :collection => task_lists,
     :as => :task_list,
     :locals => {
-      :project => project }    
+      :project => project,
+      :sub_action => sub_action }
   end
   
-  def task_list_column(project,task_lists,current_target = nil)
+  def task_list_column(project,task_lists,sub_action,current_target = nil)
     render :partial => 'task_lists/column', :locals => {
         :project => project,
         :task_lists => task_lists,
+        :sub_action => sub_action,
         :current_target => current_target }
   end
 
-  def list_task_lists(project,task_lists,current_target=nil)
+  def list_task_lists(project,task_lists,sub_action,current_target=nil)
     render :partial => 'task_lists/task_list_with_tasks',
       :collection => task_lists, :as => :task_list,
       :locals => {
         :project => project,
+        :sub_action => sub_action,
         :current_target => current_target }
   end
 

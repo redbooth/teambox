@@ -1,0 +1,24 @@
+<div class="task_navigation"><%  
+render_tabnav :user do 
+
+    add_tab do |t|
+      t.named t('.all_tasks')
+      t.links_to  project_task_lists_path(project)
+      t.highlights_on :controller => 'task_lists', :action => 'index', :sub_action => nil
+    end  
+
+    add_tab do |t|
+      ## This way I'm grabbing count is obviously gross and needs to be cleaned up.
+      t.named t('.my_tasks', :count => project.tasks.unarchived.find(:all, :conditions => { :assigned_id => project.people.find_by_user_id(current_user.id).id} ).size)
+      t.links_to project_my_task_lists_path(project)
+      t.highlights_on :controller => 'task_lists', :action => 'index', :sub_action => 'mine'
+    end
+        
+    add_tab do |t|
+      t.named t('.archived_tasks', :count => project.tasks.archived.size)
+      t.links_to project_archived_task_lists_path(project)
+      t.highlights_on :controller => 'task_lists', :action => 'index', :sub_action => 'archived'
+    end
+    
+end
+%><div class="clear"></div></div>

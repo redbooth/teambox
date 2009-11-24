@@ -1,10 +1,10 @@
 -content_for :column do
-  = task_list_column(@current_project,@task_lists,@task_list)
+  = task_list_column(@current_project,@task_lists,@sub_action,@task_list)
 
 .gantt
   = @chart.to_html(1, 22, 30, 0)
 
 - unless @task_lists.empty?
-  =main_task_list(@current_project,@task_lists)
+  =main_task_list(@current_project,@task_lists,@sub_action)
 - else
   = task_list_primer(@current_project)

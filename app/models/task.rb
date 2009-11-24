@@ -18,7 +18,8 @@ class Task < ActiveRecord::Base
 
   named_scope :archived, :conditions => {:archived => true}
   named_scope :unarchived, :conditions => {:archived => false}
-    
+  named_scope :assigned_to, lambda { |person_id| { :conditions => ['assigned_id > ?', person_id] } }
+      
   attr_accessible :name, :assigned_id, :status, :due_on
 
   STATUSES = ['new','open','hold','resolved','rejected']
