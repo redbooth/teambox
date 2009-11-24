@@ -1,4 +1,5 @@
 .note{:id => "note_#{note.id}"}
   = note_actions_link(note)
   %h3= note.name
-  = note.body_html
+  .textilized
+    = note.body_html

@@ -12,7 +12,7 @@
       = activity_comment_user_link(comment)
       = activity_project_link(comment.project)
       = activity_comment_target_link(comment)
-    .body
+    .body.textilized
       = comment.body_html
     - if comment.uploads.count > 0
       - if comment.uploads.all? { |upload| upload.image? }
