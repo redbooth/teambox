@@ -38,12 +38,23 @@ describe Comment do
       end
       
       it "should turn to links textile links" do
-        body = 'I loved that quote: "I like the Divers, but they want me want to go to a bar":http://www.shmoop.com/tender-is-the-night/tommy-barban.html. Great page, too.'
+        body = 'I loved that quote: "I like the Divers, but they want me want to go to a war":http://www.shmoop.com/tender-is-the-night/tommy-barban.html. Great page, too.'
         comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-        comment.body_html.should == "<p>I loved that quote: <a href=\"http://www.shmoop.com/tender-is-the-night/tommy-barban.html\">I like the Divers, but they want me want to go to a bar</a>. Great page, too.</p>"
+        comment.body_html.should == "<p>I loved that quote: <a href=\"http://www.shmoop.com/tender-is-the-night/tommy-barban.html\">I like the Divers, but they want me want to go to a war</a>. Great page, too.</p>"
+      end
+      
+      it "should add http:// in front of links to www.site.com" do
+        body = "I'd link my competitors' \"mistakes\":www.failblog.org, but that'd give them free traffic. So instead I link www.google.com."
+        comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+        comment.body_html.should == "<p>I&#8217;d link my competitors&#8217; <a href=\"http://www.failblog.org\">mistakes</a>, but that&#8217;d give them free traffic. So instead I link <a href=\"http://www.google.com\">www.google.com</a>.</p>"
       end
 
-      it "should preserve html links and images"
+      it "should preserve html links and images" do
+        body = 'Did you know the logo from Teambox has <a href="http://en.wikipedia.org/wiki/Color_theory">carefully selected colors</a>? <img src="http://app.teambox.com/images/header_logo_large.jpg"/>'
+        comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+        comment.body_html.should == "<p>Did you know the logo from Teambox has <a href=\"http://en.wikipedia.org/wiki/Color_theory\">carefully selected colors</a>? <img src=\"http://app.teambox.com/images/header_logo_large.jpg\" /></p>"
+      end
+      
       it "should preserve blocks of code and pre"
     end
 
