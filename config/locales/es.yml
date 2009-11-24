@@ -270,7 +270,7 @@ es:
       name: Nombre
     header:
     assigned:
-      assigned_to: "Assigned to {{user}}"
+      assigned_to: "Responsable: {{user}}"
     edit:
       submit: Actualizar tarea
     new:
@@ -286,7 +286,7 @@ es:
     archive_message:  
       archived: "La tarea <b>{{name}}</b> ha sido archivada!"
     unarchive_box:
-      unarchive: Unarchive
+      unarchive: Recuperar como una tarea activa
   notes:
     actions:
       delete_confirm: Seguro que quieres borrar esta nota?
@@ -475,9 +475,9 @@ es:
       profile_information: Información de Contacto
       profile_picture: Imagen
     task_navigation:
-      all_tasks: All Tasks
-      my_tasks: "My {{count}} Tasks"
-      archived_tasks: "All {{count}} Archived Tasks"
+      all_tasks: Todas
+      my_tasks: "Mías ({{count}})"
+      archived_tasks: "Archivadas ({{count}})"
     footer:
       support: "¿Problemas? ¡Envía feedback!"
       help: Ayuda
