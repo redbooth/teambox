@@ -1,6 +1,4 @@
 .conversation{:class => set_conversation_class(conversation,conversation)}
   = show_comments_count(conversation)
   = conversation_link(conversation)
-  %span.comment_count
-    = '(' + conversation.comments.size.to_s + ')'
 .clear
