@@ -24,10 +24,6 @@ class Task < ActiveRecord::Base
 
   STATUSES = ['new','open','hold','resolved','rejected']
 
-  def closed?
-    status == 3 || status == 4
-  end
-
   def status_name
     Task::STATUSES[status.to_i].underscore
   end
@@ -60,6 +56,30 @@ class Task < ActiveRecord::Base
   
   def owner?(u)
     user == u
+  end
+  
+  def overdue
+    (Time.now.to_date - due_on).to_i
+  end
+  
+  def overdue?
+    if due_on.nil?
+      false
+    else  
+      Time.now.to_date > due_on 
+    end  
+  end
+
+  def unassigned?
+    assigned.nil?
+  end
+    
+  def open?
+    status == 1
+  end
+  
+  def closed?
+    status == 3 || status == 4
   end
   
   def comments_count

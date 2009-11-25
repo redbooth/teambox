@@ -270,6 +270,8 @@ en:
       name: Name
     assigned:
       assigned_to: "Assigned to {{user}}"
+    due_on:
+      due_on: "Due on {{date}}"
     edit:
       submit: Update Task
     new:
@@ -286,6 +288,7 @@ en:
       archived: "The Task <b>{{name}}</b> was successfully archived!"
     unarchive_box:
       unarchive: Unarchive
+    overdue: "{{days}} Days Late"
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?

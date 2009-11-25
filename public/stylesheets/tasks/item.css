@@ -1,0 +1,11 @@
+div.task_list_wrap {
+  margin-top: 10px; }
+  div.task_list_wrap .tasks {
+    border-top: solid 1px rgb(210,210,210); }
+  div.task_list_wrap div.task_list a, div.task_list_wrap div.task a {
+    font-size: 12px; }
+  div.task_list_wrap div.active {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background: rgb(255,255,0);
+    border: solid 1px rgb(200,200,0); }

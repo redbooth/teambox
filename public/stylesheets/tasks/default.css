@@ -1,0 +1,48 @@
+#task_lists {
+  clear: both; }
+
+div.task_list_wrap_reorder {
+  margin-top: 0px; }
+
+div#sortable_task_lists {
+  margin: 10px 0px; }
+
+a.new_task_link {
+  font-size: 12px;
+  margin-left: 4px;
+  color: rgb(120,120,120); }
+
+span.task_status {
+  padding: 1px 5px;
+  text-transform: uppercase;
+  color: rgb(255,255,255);
+  font-size: 11px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px; }
+
+span.task_status_new {
+  background: rgb(200,200,200); }
+
+span.task_status_open {
+  background: rgb(100,100,200); }
+
+span.task_status_hold {
+  background: rgb(200,200,100); }
+
+span.task_status_resolved {
+  background: rgb(0,200,0); }
+
+span.task_status_rejected {
+  background: rgb(200,0,0); }
+
+.show_tasks .archive {
+  margin-top: 10px;
+  background: rgb(220,220,220);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding: 20px;
+  padding-top: 10px;
+  text-align: center; }
+  .show_tasks .archive p {
+    font-size: 13px;
+    margin-bottom: 10px; }

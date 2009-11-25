@@ -275,9 +275,9 @@ module TaskListsHelper
         :task_list => task_list }
 
     item_list_id = task_list_id(:item,project,task_list)
-    page.select('.task').invoke('removeClassName','active_task')
-    page.select('.task_list').invoke('removeClassName','active_task_list')
-    page[item_list_id].addClassName('active_task')
+    page.select('.task').invoke('removeClassName','active')
+    page.select('.task_list').invoke('removeClassName','active')
+    page[item_list_id].addClassName('active')
   end
 
   def list_sortable_task_lists(project,task_lists)

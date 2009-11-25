@@ -271,6 +271,8 @@ es:
     header:
     assigned:
       assigned_to: "Responsable: {{user}}"
+    due_on:
+      due_on: "Due on {{date}}"
     edit:
       submit: Actualizar tarea
     new:
@@ -287,6 +289,7 @@ es:
       archived: "La tarea <b>{{name}}</b> ha sido archivada!"
     unarchive_box:
       unarchive: Recuperar como una tarea activa
+    overdue: "{{days}} Days Late"
   notes:
     actions:
       delete_confirm: Seguro que quieres borrar esta nota?
