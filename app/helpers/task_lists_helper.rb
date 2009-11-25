@@ -30,12 +30,13 @@ module TaskListsHelper
       :task_list => task_list }
   end
 
-  def insert_task_list(project,task_list)  
+  def insert_task_list(project,task_list,sub_action)
     page.insert_html :top, "task_lists",
       :partial => 'task_lists/task_list_with_tasks', 
       :locals => {  
         :project => project, 
         :task_list => task_list,
+        :sub_action => sub_action,
         :current_target => nil }
   end
 

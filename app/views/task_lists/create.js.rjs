@@ -1,4 +1,4 @@
-page.insert_task_list(@current_project,@task_list)
+page.insert_task_list(@current_project,@task_list,@sub_action)
 
 link_id = task_list_id(:new_link,@current_project)
 form_id = task_list_id(:new_form,@current_project)
