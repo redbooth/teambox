@@ -22,7 +22,7 @@ class TaskListsController < ApplicationController
 
     @chart_task_lists = []
     @task_lists.each do |task_list|
-      #@chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name)
+      @chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name)
     end
 
     @chart = GanttChart::Base.new(@chart_task_lists)
@@ -51,6 +51,7 @@ class TaskListsController < ApplicationController
   end
   
   def show
+    @sub_action = 'all'
     @task_lists = @current_project.task_lists.unarchived
     @comments = @task_list.comments
   end
