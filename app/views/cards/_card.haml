@@ -30,7 +30,7 @@
           %br/
           = "#{address.city} #{address.state}, #{address.zip}"
           %br/          
-          = t("countries.#{address.country}")
+          = t("countries.#{address.country}") unless address.country.nil?
   -unless card.ims.empty?
     .ims
       %h3= t('.ims')
