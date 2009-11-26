@@ -225,32 +225,40 @@ en:
     new:
       submit: Send
   conversations:
+    actions:
+      confirm_delete: Are you sure you to delete this conversation?
+    link:
+      edit: Edit
     fields:
       name: Title
-      name_description: "As short as possible, this will appear in notification email's subjects"
-      first_message: First message
-      first_message_description: "Ask a question, tell your team what's new, start a discussion"
+      body: First comment
+      tooltips:
+        name: "As short as possible, this will appear in notification email's subjects"
+        body: "Ask a question, tell your team what's new, start a discussion"
     new:
       title: New Conversation
       submit: Create
+    watcher_fields:
       add_suscribers: Which people will be watching this conversation?
       subscribe_note: These people will be notified via email of this message and any following comments.<br/>They can unsubscribe at any moment.
       invite_users: You are the only user in this project!
       no_users_yet: "Conversations are more useful when shared. <a href='{{invite_link}}'>Invite some users</a> to this project now so they can access this conversation, answer and receive updates."
-    index:
-      rss:
-        title: "Conversations"
-        description: "Conversations for project {{name}}"
-      primer:
-        empty: This project doesn't have any conversations yet.
-        create_first: Create the first conversation in this project!
-        define: "Use conversations to <b>discuss decisions</b> and <b>update your team</b> in a centralized way.<br/>Each conversation is a thread of comments, which replace messy emails."
-        item1: "<b>Share files</b>. Comments can have attached files, too."
-        item2: "<b>Subscribe</b> to a conversation to be notified about future replies by email or RSS."
-        item3: "<b>Impress</b>. Any comment can be formatted with text styles."
-        item4: "<b>Inbox-driven?</b> You can answer to a conversation from your email to post a reply."
-        footer1: "Conversations are great to <b>share a design</b>, <b>decide a date</b> for meeting or <b>report</b> some news."
-        footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
+    edit:
+      submit: 'Update Conversation'
+      index:
+        rss:
+          title: "Conversations"
+          description: "Conversations for project {{name}}"
+    primer:
+      empty: This project doesn't have any conversations yet.
+      create_first: Create the first conversation in this project!
+      define: "Use conversations to <b>discuss decisions</b> and <b>update your team</b> in a centralized way.<br/>Each conversation is a thread of comments, which replace messy emails."
+      item1: "<b>Share files</b>. Comments can have attached files, too."
+      item2: "<b>Subscribe</b> to a conversation to be notified about future replies by email or RSS."
+      item3: "<b>Impress</b>. Any comment can be formatted with text styles."
+      item4: "<b>Inbox-driven?</b> You can answer to a conversation from your email to post a reply."
+      footer1: "Conversations are great to <b>share a design</b>, <b>decide a date</b> for meeting or <b>report</b> some news."
+      footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
     column:
       new_conversation: New Conversation
       subscribe: Subscribe to the news feed

@@ -1,6 +1,6 @@
-= conversation_column(@current_project, @conversations, :current_conversation => @conversation, :show_comments_settings => true)
-
+= conversation_column(@current_project, @conversations, :conversation => @conversation, :show_comments_settings => true)
 = conversation_header(@current_project,@conversation)
+= conversation_form(@current_project,@conversation)
 = people_watching(@current_project,current_user,@conversation)
 = new_comment_form(@current_project,@current_project.comments.new,:target => @conversation)
 

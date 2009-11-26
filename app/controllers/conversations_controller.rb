@@ -47,6 +47,11 @@ class ConversationsController < ApplicationController
 #    @project = @current_project
 #    render :file => 'emailer/notify_conversation', :layout => false
   end
+
+  def update
+    @conversation.update_attributes(params[:conversation])
+    respond_to{|f|f.js}
+  end
   
   def destroy
     flash[:success] = t('deleted.conversation', :name => @conversation.name)

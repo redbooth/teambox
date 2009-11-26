@@ -3,6 +3,14 @@ module TasksHelper
   def replace_task_column(project,task_lists,sub_action,task)
     page.replace_html 'column', task_list_column(project,task_lists,sub_action,task)
   end
+
+  def insert_archive_box(project,task)
+    page.insert_html :after, 'new_comment',  
+      :partial => 'tasks/archive_box', :locals => {
+      :project => project,
+      :task_list => task.task_list,
+      :task => task }
+  end
   
   def unarchive_task_button(project,task_list,task)
     link_to_remote "<span>#{t('.unarchive')}</span>", 

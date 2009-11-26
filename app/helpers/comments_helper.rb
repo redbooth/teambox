@@ -131,5 +131,28 @@ module CommentsHelper
       page.assign('comments_parameters', { :target_name => target.class.name, :target_id => target.id })
     end
   end
-  
+
+  def comments_count(target,status_type)
+    unless target.comments_count.nil?
+      id = comment_count_type(target,status_type)
+      render :partial => 'comments/comment_count',
+        :locals => {
+          :id => id,
+          :target => target,
+          :status_type => status_type }
+    end
+  end
+
+  def update_comment_count(conversation,status_type)
+    id = comment_count_type(conversation,status_type)
+    page.replace id, comments_count(conversation,status_type)
+  end
+
+  def comment_count_type(target,status_type)
+    unless [:column,:content,:header].include?(status_type)
+      raise ArgumentError, "Invalid Comment Count type, was expecting :column, :content or :header but got #{status_type}"
+    end
+    id = "#{js_id([target])}_#{status_type}_comments_count"
+  end
+
 end

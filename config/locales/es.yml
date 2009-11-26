@@ -225,32 +225,40 @@ es:
     new:
       submit: Enviar
   conversations:
+    actions:
+      confirm_delete: Are you sure you to delete this conversation?
+    link:
+      edit: Editar
     fields:
       name: Título
-      name_description: "Tan corto como puedas, ya que aparecerá en el título de los emails que se envíen."
-      first_message: Primer mensaje
-      first_message_description: "Pregunta algo, cuenta novedades, empieza un debate."
+      body: Primer mensaje
+      tooltips:
+        name: "Tan corto como puedas, ya que aparecerá en el título de los emails que se envíen."
+        body: "Pregunta algo, cuenta novedades, empieza un debate."
     new:
       title: Nueva conversación
       submit: Crear
+    watcher_fields:
       add_suscribers: ¿Quién seguirá esta conversación?
       subscribe_note: Estas personas serán notificadas via email de este mensaje y los comentarios posteriores.<br/>Pueden dejar de seguir la conversación en cualquier momento.
       invite_users: Eres el único usuario en este proyecto!
-      no_users_yet: "Conversar es más útil cuando no lo haces solo. <a href='{{invite_link}}'>Invita a algunos usuarios</a> a este proyecto para que puedan leer, comentar y recibir actualizaciones de esta conversación."
+      no_users_yet: "Conversar es más útil cuando no lo haces solo. <a href='{{invite_link}}'>Invita a algunos usuarios</a> a este proyecto para que puedan leer, comentar y recibir actualizaciones de esta conversación." 
     index:
       rss:
         title: "Conversaciones"
         description: "Conversaciones en el proyecto {{name}}"
-      primer:
-        empty: Aún no hay ninguna conversación en este proyecto.
-        create_first: Crea la primera conversación para este proyecto!
-        define: "<b>Conversa sobre decisiones</b> y <b>pon a tu equipo al día</b> de una forma centralizada.<br/>Cada conversación es una lista de mensajes, que reemplazan a los confusos mensajes."
-        item1: "<b>Comparte archivos</b>. Puedes adjuntar ficheros a cada mensaje."
-        item2: "<b>Suscríbete</b> a una conversación para recibir notificaciones de respuestas por email y RSS."
-        item3: "<b>Exprésate</b>. Puedes usar negrita, cursiva y estilos de texto."
-        item4: "<b>Integrado con tu email</b>. Puedes contestar desde tu email para publicar una respuesta."
-        footer1: "Las conversaciones son perfectas para <b>compartir un diseño</b>, <b>decidir una fecha</b> para reunirse o <b>informar</b> sobre las noticias del proyecto."
-        footer2: "Estando ordenadas por hilos, es fácil volver atrás en el tiempo y ver qué ficheros se enviaron y qué dijo cada miembro del equipo. En Teambox, <b>colaborar</b> genera una <b>trazabilidad</b> de qué se hizo."
+    primer:
+      empty: Aún no hay ninguna conversación en este proyecto.
+      create_first: Crea la primera conversación para este proyecto!
+      define: "<b>Conversa sobre decisiones</b> y <b>pon a tu equipo al día</b> de una forma centralizada.<br/>Cada conversación es una lista de mensajes, que reemplazan a los confusos mensajes."
+      item1: "<b>Comparte archivos</b>. Puedes adjuntar ficheros a cada mensaje."
+      item2: "<b>Suscríbete</b> a una conversación para recibir notificaciones de respuestas por email y RSS."
+      item3: "<b>Exprésate</b>. Puedes usar negrita, cursiva y estilos de texto."
+      item4: "<b>Integrado con tu email</b>. Puedes contestar desde tu email para publicar una respuesta."
+      footer1: "Las conversaciones son perfectas para <b>compartir un diseño</b>, <b>decidir una fecha</b> para reunirse o <b>informar</b> sobre las noticias del proyecto."
+      footer2: "Estando ordenadas por hilos, es fácil volver atrás en el tiempo y ver qué ficheros se enviaron y qué dijo cada miembro del equipo. En Teambox, <b>colaborar</b> genera una <b>trazabilidad</b> de qué se hizo."
+    edit:
+      sumbit: 'Actualizar conversación'
     column:
       new_conversation: Nueva conversación
       subscribe: Suscríbete al feed

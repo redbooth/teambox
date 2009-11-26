@@ -1,32 +1,10 @@
 - content_for :column do
-  %p= t 'conversations.index.primer.define'
-  %ul
-    %li= t 'conversations.index.primer.item1'
-    %li= t 'conversations.index.primer.item2'
-    %li= t 'conversations.index.primer.item3'
-    %li= t 'conversations.index.primer.item4'
-  %p= t 'conversations.index.primer.footer1' 
-  %p= t 'conversations.index.primer.footer2'
+  =conversations_primer
 
-%h2= t('.title')
+%h2.grande= t('.title')
 
 - form_for [@current_project,@conversation] do |f|
-  = conversation_fields(f)  
-
-  - if @current_project.users.size > 1
-    .watchers
-      %h3= t('.add_suscribers')
-      - for user in @current_project.users
-        - unless user == current_user
-          .user
-            = user_checkbox(user)
-      .clear
-      %p= t('.subscribe_note')
-  - else
-    .watchers
-      %h3= t('.invite_users')
-      .clear
-      %p= t('.no_users_yet', :invite_link => project_people_path(@current_project))
-    
+  = conversation_fields(f,@current_project,@conversation)
+  = conversation_watcher_fields(@current_project,@conversation)
   .submit
     = f.submit t('.submit')

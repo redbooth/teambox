@@ -1,11 +1,10 @@
-.name.text_field
-  .label
-    = f.label :name, t('.name')
-    .description= t('.name_description')
+.text_field.name
+  = f.label :name, t('.name')
   = f.text_field :name
+  = tooltip 'user_description', t('.name') if conversation.new_record?
 
-.body.text_area
-  .label
-    = f.label :body, t('.first_message')
-    .description= t('.first_message_description')
-  = f.text_area :body
+- if conversation.new_record?
+  .text_area.body
+    = f.label :body, t('.body')
+    = f.text_area :body
+    = tooltip 'user_body', t('.body')

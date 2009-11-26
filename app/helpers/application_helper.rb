@@ -190,13 +190,7 @@ module ApplicationHelper
   def reload_javascript_events
     page << "Event.addBehavior.reload()"
   end
-  
-  def show_comments_count(target)
-    unless target.comments_count.nil? 
-      "<span class='comments_count'>#{target.comments_count}</span>" if target.comments_count >= 0
-    end  
-  end
-  
+    
   def is_controller?(_controller, _action = nil)
     controller.controller_name == _controller.to_s and (_action == nil or controller.action_name == _action.to_s)
   end

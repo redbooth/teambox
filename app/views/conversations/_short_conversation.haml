@@ -1,3 +1,5 @@
 .conversation
-  %h2= conversation_link(short_conversation)
-  = conversation_comment(short_conversation)
+  %h2
+    =comments_count(conversation,:content)
+    = the_conversation_link(conversation)
+  = conversation_comment(conversation)

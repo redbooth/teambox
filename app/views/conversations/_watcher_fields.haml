@@ -1,0 +1,14 @@
+- if project.users.size > 1
+  .watchers
+    %h3= t('.add_suscribers')
+    - for user in project.users
+      - unless user == current_user
+        .user
+          = user_checkbox(user)
+    .clear
+    %p= t('.subscribe_note')
+- else
+  .watchers
+    %h3= t('.invite_users')
+    .clear
+    %p= t('.no_users_yet', :invite_link => project_people_path(project))

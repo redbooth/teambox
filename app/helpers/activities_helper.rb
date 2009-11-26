@@ -25,7 +25,7 @@ module ActivitiesHelper
           # BUT we should show new versions uploaded for existing files.        
           show_upload(target) unless target.comment_id
         when 'create_conversation'
-          show_activity_line(activity,conversation_link(target))
+          show_activity_line(activity,the_conversation_link(target))
         when 'create_task_list'
           show_activity_line(activity,the_task_list_link(target))
         when 'create_page'
