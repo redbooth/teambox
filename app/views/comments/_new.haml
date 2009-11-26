@@ -31,5 +31,6 @@
             = task_form.select :assigned_id, options_for_people(comment.project.people)
     .submit
       = f.submit t('.submit')
+    .clear  
 
 = javascript_tag "$('new_comment').auto_focus()"

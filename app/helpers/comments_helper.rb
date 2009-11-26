@@ -133,14 +133,13 @@ module CommentsHelper
   end
 
   def comments_count(target,status_type)
-    unless target.comments_count.nil?
-      id = comment_count_type(target,status_type)
-      render :partial => 'comments/comment_count',
-        :locals => {
-          :id => id,
-          :target => target,
-          :status_type => status_type }
-    end
+    target.comments_count ||= 0
+    id = comment_count_type(target,status_type)
+    render :partial => 'comments/comment_count',
+      :locals => {
+        :id => id,
+        :target => target,
+        :status_type => status_type }
   end
 
   def update_comment_count(conversation,status_type)

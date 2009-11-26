@@ -25,6 +25,8 @@ class CommentsController < ApplicationController
         @new_comment = @current_project.comments.new
         @new_comment.target = @task
         @new_comment.status = @task.status
+      elsif @target.class.to_s == 'TaskList'
+        @task_list = @comment.target
       elsif @target.class.to_s == 'Conversation'
         @conversation = @comment.target
       end

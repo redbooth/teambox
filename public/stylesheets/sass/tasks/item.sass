@@ -1,7 +1,19 @@
 div.task_list_wrap
   :margin-top 10px  
-  .tasks
-    :border-top solid 1px rgb(210,210,210)
+  .tasks_wrap
+    :background url(../images/task_arrow.png) no-repeat top left
+    :padding-top 8px
+    .tasks
+      :-moz-border-radius 5px
+      :-webkit-border-radius 5px
+      :border solid 1px rgb(210,210,210)
+      :background rgb(240,240,240)
+      :padding 0px 3px
   div.task_list, div.task
-    a
-      :font-size 12px
+    :font-size 12px
+  div.task_list
+    :margin-bottom 5px
+    :padding 0px 3px
+  div.task
+    :margin 4px 0px
+    

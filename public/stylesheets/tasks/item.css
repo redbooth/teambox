@@ -1,6 +1,18 @@
 div.task_list_wrap {
   margin-top: 10px; }
-  div.task_list_wrap .tasks {
-    border-top: solid 1px rgb(210,210,210); }
-  div.task_list_wrap div.task_list a, div.task_list_wrap div.task a {
+  div.task_list_wrap .tasks_wrap {
+    background: url(../images/task_arrow.png) no-repeat top left;
+    padding-top: 8px; }
+    div.task_list_wrap .tasks_wrap .tasks {
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      border: solid 1px rgb(210,210,210);
+      background: rgb(240,240,240);
+      padding: 0px 3px; }
+  div.task_list_wrap div.task_list, div.task_list_wrap div.task {
     font-size: 12px; }
+  div.task_list_wrap div.task_list {
+    margin-bottom: 5px;
+    padding: 0px 3px; }
+  div.task_list_wrap div.task {
+    margin: 4px 0px; }
