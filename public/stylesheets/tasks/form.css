@@ -1,7 +1,7 @@
 .task_form {
-  background: rgb(200,200,200);
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
+  background: rgb(210,210,210);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px; }
   .task_form .date_select {

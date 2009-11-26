@@ -4,11 +4,22 @@ div.task_list_wrap
     :background url(../images/task_arrow.png) no-repeat top left
     :padding-top 8px
     .tasks
-      :-moz-border-radius 5px
-      :-webkit-border-radius 5px
+      :-moz-border-radius
+        :topleft 5px
+        :topright 5px
+      :-webkit-border-top-left-radius 5px
+      :-webkit-border-top-right-radius 5px
       :border solid 1px rgb(210,210,210)
+        :bottom 0px
       :background rgb(240,240,240)
       :padding 0px 3px
+        :bottom 2px
+  .task_form
+    :-moz-border-radius
+      :topleft 0px
+      :topright 0px
+    :-webkit-border-top-left-radius 0px
+    :-webkit-border-top-right-radius 0px
   div.task_list, div.task
     :font-size 12px
   div.task_list
@@ -16,4 +27,3 @@ div.task_list_wrap
     :padding 0px 3px
   div.task
     :margin 4px 0px
-    

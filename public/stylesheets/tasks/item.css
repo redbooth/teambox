@@ -4,11 +4,20 @@ div.task_list_wrap {
     background: url(../images/task_arrow.png) no-repeat top left;
     padding-top: 8px; }
     div.task_list_wrap .tasks_wrap .tasks {
-      -moz-border-radius: 5px;
-      -webkit-border-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-topright: 5px;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
       border: solid 1px rgb(210,210,210);
+      border-bottom: 0px;
       background: rgb(240,240,240);
-      padding: 0px 3px; }
+      padding: 0px 3px;
+      padding-bottom: 2px; }
+  div.task_list_wrap .task_form {
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-topright: 0px;
+    -webkit-border-top-left-radius: 0px;
+    -webkit-border-top-right-radius: 0px; }
   div.task_list_wrap div.task_list, div.task_list_wrap div.task {
     font-size: 12px; }
   div.task_list_wrap div.task_list {

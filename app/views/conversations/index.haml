@@ -3,17 +3,6 @@
 - unless @conversations.empty?
   #conversations
     = list_short_conversations(@conversations)
-    
 - else
-  #primer
-    %p= t('conversations.primer.empty')
-    .box
-      %h2= link_to t('conversations.primer.create_first'), new_project_conversation_path(@current_project)
-      %p= t 'conversations.primer.define'
-      %ul
-        %li= t 'conversations.primer.item1'
-        %li= t 'conversations.primer.item2'
-        %li= t 'conversations.primer.item3'
-        %li= t 'conversations.primer.item4'
-      %p= t 'conversations.primer.footer1' 
-      %p= t 'conversations.primer.footer2'
+  =conversations_primer
+
