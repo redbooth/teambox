@@ -1,5 +1,11 @@
 module PeopleHelper
 
+  def invite_form(project,invitation)
+    render :partial => 'invitations/new', :locals => {
+      :project => project,
+      :invitation => invitation }
+  end
+
   def person_link(project,person)
     link_to "#{person.name}", user_path(person.user)
   end

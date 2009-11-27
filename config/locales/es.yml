@@ -226,6 +226,9 @@ es:
       title: Invitaciones pendientes
       no_invitations: "No tienes ninguna invitación pendiente."
     new:
+      username_or_email: "email o nombre de usuario"
+      invite_people: Invitar al proyecto
+      invite: Buscar e invitar
       submit: Enviar
   conversations:
     actions:
@@ -396,10 +399,6 @@ es:
     destroy_message:
       deleted: "La lista <b>{{name}}</b> ha sido borrada!"
   people:
-    index:
-      enter_username_or_email: "Introduce el email o nombre de usuario de tu compañero:"
-      invite_people: Invitar al proyecto
-      invite: Buscar e invitar
     person_list:
       owner: Propietario del proyecto
       remove: Expulsar del proyecto

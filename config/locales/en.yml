@@ -226,6 +226,9 @@ en:
       title: Pending invitations
       no_invitations: "You have no pending project invitations."
     new:
+      username_or_email: "username or email"
+      invite_people: Invite people to this project
+      invite: Invite      
       submit: Send
   conversations:
     actions:
@@ -396,10 +399,6 @@ en:
     destroy_message:
       deleted: "The Task List <b>{{name}}</b> was successfully deleted!"
   people:
-    index:
-      enter_username_or_email: "Enter your teammate's username or email:"
-      invite_people: Invite people to this project
-      invite: Invite
     person_list:
       owner: Project Owner
       remove: Remove from project

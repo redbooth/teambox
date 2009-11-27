@@ -1,12 +1,4 @@
-- content_for :column do
-  &nbsp;
-  
-- form_for [@current_project,Invitation.new], :person do |f|
-  %h2= t('.invite_people')
-  = hidden_field_tag 'people','true'
-  = f.label :user_or_email, t('.enter_username_or_email')
-  = f.text_field :user_or_email
-  = f.submit t('.invite')
+= invite_form(@current_project,Invitation.new)
 
 .people
   = list_people(@current_project.people)
