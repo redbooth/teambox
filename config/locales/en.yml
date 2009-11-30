@@ -399,9 +399,21 @@ en:
     destroy_message:
       deleted: "The Task List <b>{{name}}</b> was successfully deleted!"
   people:
-    person_list:
+    link:
+      edit: Edit
+    edit:
+      submit: Update Person
+    fields:
+      role: Role
+      observer: Observer
+      participant: Particpant
+      admin: Admin
+    person:
       owner: Project Owner
-      remove: Remove from project
+      observer: Observer
+      participant: Particpant
+      admin: Admin      
+      remove: Remove
       transfer: Transfer Ownership
       leave_project: Leave Project
       confirm_delete: Are you sure you want to remove this person from the project?

@@ -8,7 +8,22 @@ class Person < ActiveRecord::Base
   
 #  validates_uniqueness_of :user, :scope => :project
   validates_presence_of :user, :project   # Make sure they both exist and are set
-  
+
+  serialize :permissions
+
+  ROLES = [:observer,:participant,:admin]
+  PERMISSIONS = [:view,:edit,:delete,:all]
+
+  def before_destroy
+    log_activity(person,'delete')
+    user.recent_projects.delete(project.id)
+    user.save!    
+  end
+
+  def owner?
+    project.owner?(user)
+  end
+
   def name
     user.name
   end

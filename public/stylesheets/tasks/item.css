@@ -13,6 +13,10 @@ div.task_list_wrap {
       background: rgb(240,240,240);
       padding: 0px 3px;
       padding-bottom: 2px; }
+    div.task_list_wrap .tasks_wrap .read_only {
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      border: solid 1px rgb(210,210,210); }
   div.task_list_wrap .task_form {
     -moz-border-radius-topleft: 0px;
     -moz-border-radius-topright: 0px;

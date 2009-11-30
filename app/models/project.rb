@@ -108,19 +108,6 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def remove_user(user)
-    person = Person.find_by_user_id_and_project_id user.id, self.id
-    
-    if person
-      log_activity(person,'delete')
-      
-      person.destroy
-
-      user.recent_projects.delete self.id
-      user.save!      
-    end
-  end
-
   def after_create
     add_user(user)
   end
@@ -128,6 +115,23 @@ class Project < ActiveRecord::Base
   def to_param
     permalink
   end
+
+  def observer?(user)
+    if p = people.find(:first, :conditions => {:user_id => user.id})
+      p.role == 0 && p.owner? == false
+    else
+      false
+    end
+  end
+  
+  def editable?(user)
+    if p = people.find(:first, :conditions => {:user_id => user.id})
+      p.owner? || p.role > 0
+    else
+      false
+    end
+  end
+
   
   # Optimized way of getting activities for one or more project.
   # Can limit the number of records and page.

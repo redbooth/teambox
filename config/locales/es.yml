@@ -399,9 +399,18 @@ es:
     destroy_message:
       deleted: "La lista <b>{{name}}</b> ha sido borrada!"
   people:
+    link:
+      edit: Edit
+    edit:
+      submit: Update Person
+    fields:
+      role: Role
+      observer: Observer
+      participant: Particpant
+      admin: Admin      
     person_list:
       owner: Propietario del proyecto
-      remove: Expulsar del proyecto
+      remove: Expulsar
       transfer: Transferir el proyecto
       leave_project: Dejar el Proyecto
       confirm_delete: Seguro que quieres borrar a esta persona del proyecto?

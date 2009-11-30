@@ -65,7 +65,6 @@ class UsersController < ApplicationController
   
   def update
     @sub_action = params[:sub_action]
-
     respond_to do |f|
       if @current_user.update_attributes(params[:user])
         I18n.locale = @current_user.language

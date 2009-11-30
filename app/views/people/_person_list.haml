@@ -1,8 +1,0 @@
-.person{:class => "person_#{person.user.id}" }
-  = thumb_avatar(person.user)
-  = user_link(person.user)
-  .actions
-    = display_actions(person)
-  .status
-    = time_ago_in_words(person.user.updated_at)
-  .clear

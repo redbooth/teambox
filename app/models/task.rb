@@ -60,6 +60,14 @@ class Task < ActiveRecord::Base
   def assigned?(u)
     assigned.user.id == u.id if assigned
   end
+
+  def observer?(user)
+    project.observer?(user)
+  end
+      
+  def editable?(user)
+    project.editable?(user)
+  end
   
   def owner?(u)
     user == u

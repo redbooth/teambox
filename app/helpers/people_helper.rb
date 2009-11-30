@@ -1,38 +1,130 @@
 module PeopleHelper
 
+  def person_link(project,person)
+    action = person.new_record? ? 'new' : 'edit'
+
+    link_to_function t("people.link.#{action}"), show_person(project,person),
+      :class => "#{action}_person_link",
+      :id => person_id("#{action}_link",project,person)
+  end
+
+  def the_person_link(project,person)
+    link_to "#{person.name}", user_path(person.user)
+  end
+
+  def person_id(element,project,person)
+    if person.new_record?
+      "#{js_id([project,person])}_person_#{"#{element}" unless element.nil?}"
+    else  
+      "#{js_id([project,person])}_#{"#{element}" unless element.nil?}"
+    end
+  end
+
+  def show_person(project,person)
+    action = person.new_record? ? 'new' : 'edit'
+    
+    link_id = person_id("#{action}_link",project,person)
+    form_id = person_id("#{action}_form",project,person)
+    
+    update_page do |page|
+      page[link_id].hide
+      page[form_id].show
+      page << "Form.reset('#{form_id}')"
+    end
+  end  
+
+
+  def person_form(project,person)
+    render :partial => 'people/form', :locals => {
+      :project => project,
+      :person => person }
+  end
+
+  def person_fields(f,project,person)
+    render :partial => 'people/fields', :locals => {
+      :f => f,
+      :project => project,
+      :person => person }
+  end
+
+  def people_form_for(project,person,&proc)
+    raise ArgumentError, "Missing block" unless block_given?
+    action = person.new_record? ? 'new' : 'edit'
+      
+    remote_form_for([project,person],
+      :loading => person_form_loading(action,project,person),
+      :html => {
+        :id => person_id("#{action}_form",project,person), 
+        :class => 'person_form', 
+        :style => 'display: none;'}, 
+        &proc)
+  end
+
+  def person_form_loading(action,project,person)
+    update_page do |page|
+      page[person_id("#{action}_submit",project,person)].hide
+      page[person_id("#{action}_loading",project,person)].show
+    end        
+  end
+
   def invite_form(project,invitation)
     render :partial => 'invitations/new', :locals => {
       :project => project,
       :invitation => invitation }
   end
 
-  def person_link(project,person)
-    link_to "#{person.name}", user_path(person.user)
+
+
+   #can_transfer = (@current_user == person.project.user)
+   #t('.transfer') if can_transfer != owner
+  def remove_person_link(project,person,user)
+    if project.owner?(user) && person.owner? == false
+      delete_person_link(project,person) 
+    elsif person.user == user && person.owner? == false
+      leave_project_link(project,person)
+    end  
+  end  
+
+  def list_people(project,people)
+    render :partial => 'person', 
+    :collection => people, 
+    :as => :person, :locals => {
+      :project => project }
   end
   
-  def list_people(people)
-    render :partial => 'person_list', :collection => people, :as => :person
+  def person_role(project,person)
+    person.owner? ? t('.owner') : t(".#{Person::ROLES[person.role]}")
   end
   
-  def display_actions(person)
-    can_transfer = (@current_user == person.project.user)
-    owner = (person.project.user == person.user)
-    me = (@current_user == person.user)
-    actions = []
-    actions << t('.owner') if owner
-    actions << leave_project_link(person) if me and not owner
-    actions << delete_person_link(person) unless me or owner
-    actions << t('.transfer') if can_transfer and not owner
-    actions.join('<br/>')
-  end
-  
-  def delete_person_link(person)
-    link_to_remote t('.remove'), :url => project_person_path(@current_project,person.user.id), :method => :delete,
+  def delete_person_link(project,person)
+    link_to_remote t('.remove'), :url => project_person_path(project,person.user.id), :method => :delete,
       :confirm => t('.confirm_delete')
   end
 
-  def leave_project_link(person)
-    link_to_remote t('.leave_project'), :url => project_person_path(@current_project,person.user.id), :method => :delete,
+  def leave_project_link(project,person)
+    link_to_remote t('.leave_project'), 
+      :url => project_person_path(project,person.user.id), 
+      :method => :delete,
       :confirm => t('.confirm_delete')
   end
+  
+  def person_submit(project,person)
+    action = person.new_record? ? 'new' : 'edit'
+    submit_id = person_id("#{action}_submit",project,person)
+    loading_id = person_id("#{action}_loading",project,person)
+    submit_to_function t("people.#{action}.submit"), hide_person(project,person), submit_id, loading_id
+  end
+  
+  def hide_person(project,person)
+    action = person.new_record? ? 'new' : 'edit'
+
+    link_id = person_id("#{action}_link",project,person)
+    form_id = person_id("#{action}_form",project,person)
+
+    update_page do |page|
+      page[link_id].show
+      page[form_id].hide
+    end   
+  end
+
 end

@@ -77,12 +77,11 @@ class User < ActiveRecord::Base
                   :first_day_of_week,
                   :card_attributes,
                   :avatar
-
-
+        
   def can_view?(user)
     not projects_shared_with(user).empty?
   end
-
+  
   def projects_shared_with(user)
     self.projects & user.projects
   end

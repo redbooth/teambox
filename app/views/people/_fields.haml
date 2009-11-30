@@ -1,0 +1,28 @@
+.roles
+  = f.label :role, t('.role')
+  .role.view
+    = f.radio_button :role, 0
+    = t('.observer')
+  .role.edit
+    = f.radio_button :role, 1
+    = t('.participant')
+  .role.destroy
+    = f.radio_button :role, 2
+    = t('.admin')
+        
+-if false #Details Permissions
+  - f.fields_for :permissions, person.permissions do |sf|
+    .task_permissions
+      = sf.label :task
+      .task_permission.view
+        = sf.radio_button :task, 1
+        view              
+      .task_permission.edit
+        = sf.radio_button :task, 2
+        edit              
+      .task_permission.destroy
+        = sf.radio_button :task, 3
+        destroy              
+      .task_permission.all
+        = sf.radio_button :task, 4
+        all    

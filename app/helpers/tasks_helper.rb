@@ -29,12 +29,10 @@ module TasksHelper
         :task_list => task_list,
         :task => task }      
     else
-      if task.closed?
-        render :partial => 'tasks/archive_box', :locals => {
-          :project => project,
-          :task_list => task_list,
-          :task => task }
-      end
+      render :partial => 'tasks/archive_box', :locals => {
+        :project => project,
+        :task_list => task_list,
+        :task => task }
     end  
   end
 
@@ -238,7 +236,7 @@ module TasksHelper
 
 
   def task_drag_link(task)
-    drag_image if task.owner?(current_user)
+    drag_image if task.editable?(current_user)
   end
 
   def list_tabular_tasks(project,task_list,tasks,sub_action)

@@ -1,7 +1,7 @@
 .index_people
   .content
     :padding 5px
-  form
+  form.new_invitation
     :font-size 12px
     :border 1px rgb(220,220,220) solid
     :background-color rgb(240,240,240)
@@ -20,15 +20,27 @@
       :padding 5px
       :margin-bottom 5px
       :color rgb(80,80,80)
+      form.person_form
+        :padding 10px
+        :background rgb(200,200,200)
+        :-moz-border-radius 5px
+        :-webkit-border-radius 5px
+        :width 200px
+        :float right
+      .name
+        :float left
+        :width 300px
+        h2
+          :margin 0px
+          :font-size 14px
       .thumb_avatar
         :display block
         :margin
-          :right 20px
+          :right 10px
           :bottom 5px
         :float left
       .actions
         :float right
-        :text-align right
       .text
         :margin-left 68px
         .name
@@ -57,4 +69,3 @@
       :color rgb(50,120,50)
     &.stopped
       :color rgb(120,50,50)
-    

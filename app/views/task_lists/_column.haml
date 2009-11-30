@@ -1,4 +1,4 @@
-- if project
+- if project.editable?(current_user)
   = task_list_link(project,TaskList.new)
   = task_list_form(project,TaskList.new)
 

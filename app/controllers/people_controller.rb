@@ -1,6 +1,7 @@
 class PeopleController < ApplicationController
-
+  before_filter :load_person, :only => [:update,:destroy]
   def index
+    @people = @current_project.people
   end
   
   def create
@@ -18,12 +19,14 @@ class PeopleController < ApplicationController
     end
   end
   
+  def update
+    @person.update_attributes(params[:person])
+    respond_to {|f|f.js}
+  end
+  
   def destroy
-    @user = User.find params[:id]
-
-    if @user
-      @current_project.remove_user(@user)
-      
+    
+    if @person.destroy
       respond_to do |f|
         f.html {
           flash[:success] = "#{@user.name} has been removed from this project!"
@@ -40,4 +43,8 @@ class PeopleController < ApplicationController
     end
   end
   
+  protected
+    def load_person
+      @person = @current_project.people.find(params[:id])
+    end
 end

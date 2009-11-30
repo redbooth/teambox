@@ -43,5 +43,13 @@ class TaskList < ActiveRecord::Base
     self.project.log_activity(self,'create')
     self.add_watcher(self.user) 
   end
+
+  def observer?(user)
+    project.observer?(user)
+  end
+
+  def editable?(user)
+    project.editable?(user)
+  end
   
 end

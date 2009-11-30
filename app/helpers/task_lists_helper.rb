@@ -1,5 +1,9 @@
 module TaskListsHelper
 
+  def task_list_editable?(task_list,user,sub_action) 
+    sub_action != 'archived' && task_list.editable?(user)
+  end
+  
   def assign_tasks(project,task_list,sub_action)
     if sub_action == 'mine'
       person = project.people.find_by_user_id(current_user.id)
