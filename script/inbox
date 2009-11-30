@@ -16,7 +16,7 @@ Net::POP3.start(APP_CONFIG['incoming']['host'], nil, APP_CONFIG['incoming']['use
         email.delete
       rescue Exception => e
         puts 'Error receiving email at ' + Time.current.to_s + '::: ' + e.message
-        email.delete
+        #email.delete
       end
     end
   end
