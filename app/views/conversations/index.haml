@@ -6,14 +6,14 @@
     
 - else
   #primer
-    %p= t('.primer.empty')
+    %p= t('conversations.primer.empty')
     .box
-      %h2= link_to t('.primer.create_first'), new_project_conversation_path(@current_project)
-      %p= t '.primer.define'
+      %h2= link_to t('conversations.primer.create_first'), new_project_conversation_path(@current_project)
+      %p= t 'conversations.primer.define'
       %ul
-        %li= t '.primer.item1'
-        %li= t '.primer.item2'
-        %li= t '.primer.item3'
-        %li= t '.primer.item4'
-      %p= t '.primer.footer1' 
-      %p= t '.primer.footer2'
+        %li= t 'conversations.primer.item1'
+        %li= t 'conversations.primer.item2'
+        %li= t 'conversations.primer.item3'
+        %li= t 'conversations.primer.item4'
+      %p= t 'conversations.primer.footer1' 
+      %p= t 'conversations.primer.footer2'

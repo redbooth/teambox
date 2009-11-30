@@ -200,6 +200,8 @@ es:
       footer: Este proyecto te pertenecerá a ti. Puedes transferirlo a tus contactos en cualquier momento.
       limited: "En una cuenta gratuita, sólo puedes subir hasta 50 Mb de archivos adjuntos por proyecto."
       upgrade: Consigue una cuenta premium ahora!
+      created: Se ha creado el proyecto!
+      invalid_project: "Proyecto no válido, corrige los errores e inténtalo de nuevo."
     edit:
       submit: Guardar cambios
   invitations:
@@ -276,7 +278,6 @@ es:
   tasks:
     fields:
       name: Nombre
-    header:
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:
@@ -499,13 +500,35 @@ es:
       nobody_watching: "Nadie sigue los cambios de este elemento"
       started_watching: "Ahora recibirás emails con las actualizaciones de este elemento."
       stopped_watching: "Ya no recibirás más notificaciones de este elemento."
+
   date:
     yesterday: Ayer
     formats: 
-      default: ""
-      long: ""
-      short: ""
-    order: [ :day, :month, :year ]    
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+    order: [ :day, :month, :year ]
+
+    day_names: [Domingo, Lunes, Martes, Miércoles, Jueves, Viernes, Sábado]
+    abbr_day_names: [Dom, Lun, Mar, Mié, Jue, Vie, Sáb]
+
+    month_names: [~, Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre]
+    abbr_month_names: [~, Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dec]
+    order: [ :year, :month, :day ]
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      short: "%d %b %H:%M"
+      long: "%B %d, %Y %H:%M"
+    am: "am"
+    pm: "pm"
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " y "
+      last_word_connector: " y "
 
   emailer:
     common: 
@@ -561,7 +584,7 @@ es:
         biography_length_long:
           title: 'Expand your profile to 30 words'
   form:
-    cancel: Cancel
+    cancel: Cancelar
   page_title:
     show_projects: Resumen
     index_task_lists: Mis tareas

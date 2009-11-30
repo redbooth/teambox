@@ -13,8 +13,4 @@ module EmailerHelper
     when :big   then 'font-size: 18px; color: rgb(0,0,0)'
     end
   end
-
-  def to_sentence(array)
-    array.to_sentence(:two_words_connector => " #{t('common.and')} ", :last_word_connector => " #{t('common.and')} ")
-  end
 end
