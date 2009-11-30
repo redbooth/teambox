@@ -10,6 +10,7 @@
   
   
 - content_for :column do
+  .project_name= @current_project.name
   .people_list
     %h2= t '.people_in_project'
     = list_users_statuses(@current_project.users)

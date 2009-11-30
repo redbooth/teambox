@@ -37,7 +37,7 @@ class Task < ActiveRecord::Base
       last_position = self.task_list.tasks.first(:select => 'position')
       self.position = last_position.nil? ? 1 : last_position.position.succ
     end
-    unless self.watchers_ids and assigned.user and self.watchers_ids.include? assigned.user.id
+    if self.watchers_ids and assigned and assigned.user and not self.watchers_ids.include?(assigned.user.id)
       self.add_watcher(assigned.user)
     end
   end

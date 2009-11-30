@@ -122,6 +122,7 @@ end
 
 Then /^I should see "([^\"]*)"$/ do |text|
   response.should contain(text)
+  response.should_not have_tag('span.translation_missing'), :message => "Missing translation"
 end
 
 Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|

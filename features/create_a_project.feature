@@ -1,17 +1,19 @@
 Feature Creating a project
-
-  Scenario: Mislav successfully creates a new project
+  Background:
     Given I am logged in as mislav
-    When I go to the new project page
-    And I fill in "Name" with "Ruby Rockstars"
-    And I fill in "URL" with "ruby_rockstars"
-    And I press "Create project and start inviting people"
-    Then I should see "Ruby Rockstars"
+      And I go to the new project page
 
-  Scenario: Mislav fails to create a project
-    Given I am logged in as mislav
-    When I go to the new project page
-    And I fill in "Name" with "Fucking awesome group"
-    And I fill in "URL" with "!@#XFla#$@$*"
-    And I press "Create project and start inviting people"
-    Then I should not see "Fucking awesome group" 
+  Scenario Outline: Mislav creates two valid projects and fails to create an invalid project
+    When I fill in the following:
+      | Name  | <name>  |
+      | URL   | <url>   |
+      And I press "Create project and start inviting people"
+    Then I should see "<response>"
+    And I should see "<flash>"
+
+    Examples:
+      | name                      | url             | response          | flash                           |
+      | Title with ()_+&-         |                 | Title with ()_+&- | Your project has been created!  |
+      | Ruby Rockstars            | ruby_rockstars  | Ruby Rockstars    | Your project has been created!  |
+      | Fucking awesome group     | @XFla$@$*       | Invalid project   | Invalid project                 |
+    

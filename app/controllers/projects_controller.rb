@@ -29,10 +29,11 @@ class ProjectsController < ApplicationController
     
     respond_to do |f|
       if @project.save
-        flash[:notice] = 'Your project has been created.'
+        flash[:notice] = I18n.t('projects.new.created')
         f.html { redirect_to project_path(@project) }
       else
-        f.html { render :action => 'new' }
+        flash[:error] = I18n.t('projects.new.invalid_project')
+        f.html { render :new }
       end
     end
   end
