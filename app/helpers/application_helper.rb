@@ -226,7 +226,8 @@ module ApplicationHelper
       render :partial => 'shared/watchers', :locals => {
         :project => project,
         :user => user,
-        :target => target }
+        :target => target,
+        :state => :normal }
   end
   
   def to_sentence(array)
@@ -243,10 +244,11 @@ module ApplicationHelper
     id.join('_')
   end
 
-  def update_watching(project,user,target)
+  def update_watching(project,user,target,state = :normal)
     page.replace 'watching', :partial => 'shared/watchers', :locals => {
       :project => project,
       :user => user,
-      :target => target }
+      :target => target,
+      :state => state }
   end
 end

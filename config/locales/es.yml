@@ -497,6 +497,8 @@ es:
       watch: Seguir      
       people_watching: "Siguiendo este elemento: "
       nobody_watching: "Nadie sigue los cambios de este elemento"
+      started_watching: "Ahora recibirás emails con las actualizaciones de este elemento."
+      stopped_watching: "Ya no recibirás más notificaciones de este elemento."
   date:
     yesterday: Ayer
     formats: 

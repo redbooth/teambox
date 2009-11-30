@@ -496,6 +496,8 @@ en:
       watch: Watch      
       people_watching: "People watching: "
       nobody_watching: "Nobody is watching"
+      started_watching: "You will now be notified by email of updates."
+      stopped_watching: "You will no longer receive notifications for this item."
   date:
     yesterday: Yesterday
     formats: 

@@ -1,1 +1,1 @@
-page.update_watching(@current_project,current_user,@task_list)
+page.update_watching(@current_project,current_user,@task_list,:stopped_watching)
