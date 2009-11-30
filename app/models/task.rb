@@ -28,6 +28,10 @@ class Task < ActiveRecord::Base
     Task::STATUSES[status.to_i].underscore
   end
 
+  def after_create
+    self.add_watcher(self.user) 
+  end
+
   def before_save
     unless position
       last_position = self.task_list.tasks.first(:select => 'position')

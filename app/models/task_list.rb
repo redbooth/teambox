@@ -41,6 +41,7 @@ class TaskList < ActiveRecord::Base
   
   def after_create
     self.project.log_activity(self,'create')
+    self.add_watcher(self.user) 
   end
   
 end
