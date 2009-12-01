@@ -101,14 +101,13 @@ module GanttChart
       html << '<div class="ruler">'
       (0..days).each do |i|
         date = Time.current + i.day
-          five_spaces =  (i*day_width - (date.day > 9 ? 5 : 1)).to_s 
-          ten_spaces  =  (i*day_width - (date.day == 1 ? 10 : 0)).to_s
-          add_weight = date.wday == 1 ? 'font-weight:bold;' : ''
-          marker =  date.day == 1 ? Date::ABBR_MONTHNAMES[date.month] : ''
-          class_marker =  date.day == 1 ? 'no_mark' : 'with_mark'
-          
-          html << "<div class='date' style='left:#{five_spaces}px; #{add_weight}') '>#{date.day.to_s}</div>"
-          html << "<div class='mark #{class_marker}' style='left: #{ten_spaces}px;'>#{marker}</div>"
+          default = 10
+          five_spaces =  (i*day_width - (date.day > 9 ? 5 : 1) + default).to_s + 'px;'
+          ten_spaces  =  (i*day_width - (date.day == 1 ? 10 : 0)+ default).to_s + 'px;'
+          add_weight = date.wday == 1 ? 'font-weight:bold; color: rgb(100,100,100)' : ''
+          date_display = date.day == 1 ? Date::ABBR_MONTHNAMES[date.month] : date.day.to_s          
+          html << "<div class='date' style='left: #{five_spaces} #{add_weight}'>#{date_display}</div>"
+          html << "<div class='mark' style='left: #{ten_spaces}'></div>"
         end
       html << '</div>'
       return html
@@ -119,14 +118,14 @@ module GanttChart
       process start, final
 
       return if !@rows or @rows.empty?
-
+      default = 10
       html = ''
       html << ruler_to_html(final-start,day_width) if ruler
       @rows.each do |row|
-        html << "<div class='row' style='width: #{(final-start)*day_width}px;'>"
+        html << "<div class='row' style='width: #{(final-start)*day_width+1}px;'>"
         last_ended = nil
         row.each do |task|
-          html << "<div class='task' style='width: #{task.length * day_width}px; left: #{(task.start - start) * day_width}px'>#{task}</div>"
+          html << "<div class='task' style='width: #{task.length * day_width+1}px; left: #{(task.start - start) * day_width+default}px'>#{task}</div>"
           last_ended = task.final
         end
         html << '</div>'
