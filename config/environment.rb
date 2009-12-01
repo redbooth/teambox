@@ -13,17 +13,17 @@ Rails::Initializer.run do |config|
 
   config.action_mailer.default_url_options = { :host => APP_CONFIG['app_domain'] }
 
-  # Configure and uncomment the following lines for your email server
-  #
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = {
-  #   :address        => 'smtp.yourserver.com',
-  #   :port           => 25,
-  #   :domain         => 'your_desploy_server_app',
-  #   :user_name      => 'username',
-  #   :password       => 'password',
-  #   :authentication => :plain
-  # }
+  if APP_CONFIG['outgoing']['send']
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+     :address        => APP_CONFIG['outgoing']['host'],
+     :port           => APP_CONFIG['outgoing']['port'],
+     :domain         => APP_CONFIG['outgoing']['from'],
+     :user_name      => APP_CONFIG['outgoing']['user'],
+     :password       => APP_CONFIG['outgoing']['pass'],
+     :authentication => APP_CONFIG['outgoing']['auth'].to_sym
+    }
+  end
   
   require 'RedCloth'
   require 'mime/types'

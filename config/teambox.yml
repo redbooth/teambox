@@ -9,24 +9,32 @@ defaults: &DEFAULTS
   # The domain from where your app is served from.
   app_domain: app.teambox.com
   
-  # The domain for your outgoing email, as in no_reply@app.teambox.com
-  email_domain: app.teambox.com
+  # Configuration for outgoing mail
+  # By default, will send emails in production mode but not in development.
+  outgoing:
+    allow: true                 # will deliver emails in every environment if true
+    from: yourapp.com           # the domain your emails will come from, as in no_reply@app.teambox.com
+    host: localhost             # the actual SMTP server used to deliver emails. can be a local or remote server
+    user: username
+    pass: password
+    auth: plain                 # choose: plain, login, cram_md5    
+    port: 25
   
-  # Set allow_incoming_email to true to allow the "reply to" feature for notifications.
+  # Set allow to true to allow the "reply to" feature for notifications.
   # This will allow users to post answers and comments by email.
   # When set to true, "reply above this line" notice will be displayed where relevant and accept emails.
   # You will need to set up:
   # * A catch-all address for email received for any username of the incoming mail server.
   # * A cron job to run script/inbox periodically to get email.
-  allow_incoming_email: false
   incoming:
+    allow: false
     host: 
     user:
     pass:
 
   # This links are used in the navigation bar for login and in every page's footer
   home_url: http://www.teambox.com
-  #tour_url: http://www.teambox.com/tour
+  tour_url: http://www.teambox.com/tour
   blog_url: http://blog.teambox.com
   help_url: http://help.teambox.com/faqs/using-teambox
   support_url: http://help.teambox.com
@@ -38,11 +46,13 @@ defaults: &DEFAULTS
   # Address where your users should write to ask for help. Accepts an email or website.
   support: http://help.teambox.com
   
-  time_zone: 'UTC'
+  time_zone: UTC
 
 development:
   <<: *DEFAULTS
   app_domain: localhost:3000
+  outgoing:
+    allow: false
 
 production:
   <<: *DEFAULTS
@@ -51,6 +61,8 @@ production:
 test: &TEST
   <<: *DEFAULTS
   app_domain: 127.0.0.1
+  outgoing:
+    allow: false
 
 cucumber:
   <<: *TEST  
