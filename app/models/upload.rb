@@ -35,9 +35,6 @@ class Upload < ActiveRecord::Base
     asset_file_size
   end
 
-  def after_create
-    self.project.log_activity(self,'create')
-  end
 
   def downloadable?(user)
     true

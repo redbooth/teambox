@@ -57,9 +57,14 @@ class UploadsController < ApplicationController
       @comment = load_comment
       @upload.reload
       respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
+
     else
       respond_to do |f|          
-        flash[:error] = "Couldn't upload file" unless @upload.save
+        if @upload.save
+          @upload.project.log_activity(self,'create')
+        else
+          flash[:error] = "Couldn't upload file"
+        end   
         f.html { redirect_to(project_uploads_path(@current_project)) }
       end
     end
