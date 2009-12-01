@@ -78,15 +78,11 @@ class Task < ActiveRecord::Base
   end
   
   def overdue?
-    if due_on.nil?
-      false
-    else  
-      Time.now.to_date > due_on 
-    end  
+    due_on ? Time.now.to_date > due_on : false
   end
 
   def unassigned?
-    assigned.nil?
+    !assigned
   end
     
   def open?
@@ -94,7 +90,7 @@ class Task < ActiveRecord::Base
   end
   
   def closed?
-    status == 3 || status == 4
+    [3,4].include?(status)
   end
   
   def comments_count

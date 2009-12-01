@@ -11,7 +11,7 @@ class Person < ActiveRecord::Base
 
   serialize :permissions
 
-  ROLES = [:observer,:participant,:admin]
+  ROLES = [:observer,:commentor,:participant,:admin]
   PERMISSIONS = [:view,:edit,:delete,:all]
 
   def before_destroy
