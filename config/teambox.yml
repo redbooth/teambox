@@ -11,8 +11,8 @@ defaults: &DEFAULTS
   
   # Configuration for outgoing mail
   # By default, will send emails in production mode but not in development.
+  allow_outgoing_email: true
   outgoing:
-    allow: true                 # will deliver emails in every environment if true
     from: yourapp.com           # the domain your emails will come from, as in no_reply@app.teambox.com
     host: localhost             # the actual SMTP server used to deliver emails. can be a local or remote server
     user: username
@@ -26,8 +26,8 @@ defaults: &DEFAULTS
   # You will need to set up:
   # * A catch-all address for email received for any username of the incoming mail server.
   # * A cron job to run script/inbox periodically to get email.
+  allow_incoming_email: false
   incoming:
-    allow: false
     host: 
     user:
     pass:
@@ -51,8 +51,7 @@ defaults: &DEFAULTS
 development:
   <<: *DEFAULTS
   app_domain: localhost:3000
-  outgoing:
-    allow: false
+  allow_outgoing_email: false
 
 production:
   <<: *DEFAULTS
@@ -61,8 +60,7 @@ production:
 test: &TEST
   <<: *DEFAULTS
   app_domain: 127.0.0.1
-  outgoing:
-    allow: false
+  allow_outgoing_email: false
 
 cucumber:
   <<: *TEST  
