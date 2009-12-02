@@ -157,7 +157,6 @@ module TasksHelper
       :user => user }
   end  
 
-
   def render_assignment(task,user)
     render :partial => 'tasks/assigned', 
     :locals => {

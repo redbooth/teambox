@@ -11,6 +11,7 @@
       font-size: 12px; }
 
 .task_header span.due_on {
+  display: block;
   color: rgb(160,160,160);
   margin-right: 10px; }
 .task_header span.overdue {

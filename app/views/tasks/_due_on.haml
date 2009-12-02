@@ -1,6 +1,6 @@
 %span.due_on#due_on{ :class => "#{'overdue' if task.overdue? && task.open? }"}
-  - unless task.due_on.nil?
-    -if task.overdue?
-      =t('tasks.overdue',:days => task.overdue)
-    -else  
+  - if task.due_on
+    - if task.overdue?
+      = t('tasks.overdue', :days => task.overdue)
+    - else  
       = t('.due_on', :date => task.due_on.strftime('%b %d'))
