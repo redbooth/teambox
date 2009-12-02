@@ -129,4 +129,17 @@ class Project < ActiveRecord::Base
     permalink
   end
   
+  # Optimized way of getting activities for one or more project.
+  # Can limit the number of records and page.
+  def self.get_activities_for(projects, limit, after = nil)
+    if after
+      conditions = ["project_id IN (?) AND id < ?", Array(projects).collect{ |p| p.id }, after ]
+    else
+      conditions = ["project_id IN (?)", Array(projects).collect{ |p| p.id } ]
+    end
+    Activity.find(:all, :conditions => conditions,
+                        :order => 'created_at DESC', # could be faster to use 'id DESC'
+                        :limit => limit)
+  end
+  
 end

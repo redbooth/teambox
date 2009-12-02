@@ -9,6 +9,8 @@ defaults: &DEFAULTS
   # The domain from where your app is served from.
   app_domain: app.teambox.com
   
+  activities_per_page: 25
+  
   # Configuration for outgoing mail
   # By default, will send emails in production mode but not in development.
   allow_outgoing_email: true

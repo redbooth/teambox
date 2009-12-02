@@ -1,0 +1,9 @@
+page['activity_paginate_link'].remove
+page['activity_paginate_loading'].remove
+
+unless @activities.empty?
+  page.insert_html :bottom, :activities, :partial => 'activities/activity', :collection => @activities
+  if @activities.size == APP_CONFIG['activities_per_page']
+    page.insert_html :after, :activities, show_more_button(@activities)
+  end
+end

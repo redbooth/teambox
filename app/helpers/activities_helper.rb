@@ -54,4 +54,44 @@ module ActivitiesHelper
     link_to task.name, project_task_list_task_path(task.project, task.task_list,task)
   end
 
+  def activities_paginate_link(*args)
+    options = args.extract_options!
+
+    if location_name == 'index_projects'
+      url = show_more_path(options[:last_activity].id)
+    elsif location_name == 'show_more_activities' and params[:project_id].nil?
+      url = show_more_path(options[:last_activity].id)
+    elsif location_name == 'show_projects'
+      url = project_show_more_path(@current_project.id, options[:last_activity].id)
+    elsif location_name == 'show_more_activities' and params[:project_id]
+      url = project_show_more_path(params[:project_id], options[:last_activity].id)
+    else
+      raise "unexpected location #{location_name}"
+    end
+    link_to_remote content_tag(:span, t('common.show_more', :number => APP_CONFIG['activities_per_page'])),
+      :url => url,
+      :loading => activities_paginate_loading,
+      :html => {
+        :class => 'activity_paginate_link button',
+        :id => 'activity_paginate_link' }
+  end
+  
+  def activities_paginate_loading
+    update_page do |page|
+      page['activity_paginate_link'].hide
+      page['activity_paginate_loading'].show
+    end
+  end
+
+  def show_more(after)
+    update_page do |page|
+      page['activities'].insert list_activities(@activities)
+    end
+  end
+  
+  def show_more_button(activities)
+    if activities.size == APP_CONFIG['activities_per_page']
+      render :partial => 'activities/show_more'
+    end
+  end
 end

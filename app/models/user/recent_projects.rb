@@ -8,7 +8,7 @@ class User
       @recent_projects
     else
       self.recent_projects ||= []
-      @recent_projects = self.recent_projects.collect { |p| Project.find(p) }.compact
+      @recent_projects = Project.find(:all, :conditions => ["id IN (?)", self.recent_projects])
     end
   end
   

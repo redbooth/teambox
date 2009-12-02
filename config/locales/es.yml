@@ -10,6 +10,7 @@ es:
     decline: Rechazar
     cancel: Cancelar
     save: Guardar
+    show_more: Ver {{number}} más
   confirm:
     delete_task_list: ¿Seguro que quieres borrar esta lista de tareas?
     delete_task: ¿Seguro que quieres borrar esta tarrea?
@@ -525,6 +526,8 @@ es:
     pm: "pm"
 
   support:
+    select:
+      prompt: "Elige una opción"
     array:
       words_connector: ", "
       two_words_connector: " y "
@@ -614,39 +617,46 @@ es:
           tb: "Tb"
 
   datetime:
-      distance_in_words:
-        half_a_minute: "medio minuto" 
-        less_than_x_seconds:
-          one:  "menos de 1 segundo" 
-          other: "menos de {{count}} segundos"
-        x_seconds:
-          one:  "1 segundo" 
-          other: "{{count}} segundos" 
-        less_than_x_minutes:
-          one:  "menos de 1 minuto" 
-          other: "menos de {{count}} minutos" 
-        x_minutes:
-          one:  "1 minuto" 
-          other: "{{count}} minutos" 
-        about_x_hours:
-          one:  "alrededor de 1 hora" 
-          other: "alrededor de {{count}} horas" 
-        x_days:
-          one:  "1 día" 
-          other: "{{count}} días" 
-        about_x_months:
-          one:  "alrededor de 1 mes" 
-          other: "alrededor de {{count}} meses" 
-        x_months:
-          one:  "1 mes" 
-          other: "{{count}} meses" 
-        about_x_years:
-          one:  "alrededor de 1 año" 
-          other: "alrededor de {{count}} años" 
-        over_x_years:
-          one:  "más de 1 año" 
-          other: "más de {{count}} años"
-          
+    distance_in_words:
+      half_a_minute: "medio minuto" 
+      less_than_x_seconds:
+        one:  "menos de 1 segundo" 
+        other: "menos de {{count}} segundos"
+      x_seconds:
+        one:  "1 segundo" 
+        other: "{{count}} segundos" 
+      less_than_x_minutes:
+        one:  "menos de 1 minuto" 
+        other: "menos de {{count}} minutos" 
+      x_minutes:
+        one:  "1 minuto" 
+        other: "{{count}} minutos" 
+      about_x_hours:
+        one:  "alrededor de 1 hora" 
+        other: "alrededor de {{count}} horas" 
+      x_days:
+        one:  "1 día" 
+        other: "{{count}} días" 
+      about_x_months:
+        one:  "alrededor de 1 mes" 
+        other: "alrededor de {{count}} meses" 
+      x_months:
+        one:  "1 mes" 
+        other: "{{count}} meses" 
+      about_x_years:
+        one:  "alrededor de 1 año" 
+        other: "alrededor de {{count}} años" 
+      over_x_years:
+        one:  "más de 1 año" 
+        other: "más de {{count}} años"
+    prompts:
+      year:   "Year"
+      month:  "Month"
+      day:    "Day"
+      hour:   "Hour"
+      minute: "Minute"
+      second: "Seconds"
+
   activerecord:
     models:
       card: Tarjeta

@@ -7,7 +7,7 @@
 
 #activities
   = list_activities(@activities)
-  
+  = show_more_button(@activities)
   
 - content_for :column do
   .project_name= @current_project.name
@@ -19,6 +19,5 @@
   .subscribe
     = link_to t('.subscribe'), user_rss_token(project_path(@current_project, :format => :rss))
 
-- if false
-  = javascript_tag "FancyZoomBox.directory = 'http://localhost:3000/images/zoom';" 
-  = javascript_tag "$$('a.fancyzoom').each(function(e) { new FancyZoom(e) })"
+/   = javascript_tag "FancyZoomBox.directory = 'http://localhost:3000/images/zoom';" 
+/   = javascript_tag "$$('a.fancyzoom').each(function(e) { new FancyZoom(e) })"
