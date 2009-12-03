@@ -19,7 +19,7 @@ module UploadsHelper
 
   def show_upload(upload)
     # TODO: Find why some uploads get saved as with :file_type => nil
-    if upload and file_type.file_type
+    if upload and upload.file_type
       render :partial => 'uploads/upload', :locals => { :project => upload.project, :upload => upload }
     end
    end
