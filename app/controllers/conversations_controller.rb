@@ -41,8 +41,6 @@ class ConversationsController < ApplicationController
     @comments = @conversation.comments
     @conversations = @current_project.conversations
 
-    respond_to{|f|f.html}
-
 #   Use this snippet to test the notification emails that we send:
 #    @project = @current_project
 #    render :file => 'emailer/notify_conversation', :layout => false

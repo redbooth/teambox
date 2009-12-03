@@ -9,8 +9,31 @@ module EmailerHelper
 
   def email_text(size)
     case size
-    when :small then 'font-size: 10px; color: rgb(100,100,100)'
-    when :big   then 'font-size: 18px; color: rgb(0,0,0)'
+    when :small then 'font-size: 10px; color: rgb(100,100,100);'
+    when :normal then 'font-size: 14px; color: rgb(50,50,50);'
+    when :big   then 'font-size: 18px; color: rgb(0,0,0);'
     end
   end
+  
+  def email_answer_line
+    '-' * 29 + '=' * 2 + '-' * 29
+  end
+  
+  def answer_instructions
+    render :partial => 'emailer/answer'
+  end
+  
+  def emailer_list_comments(target)
+    render :partial => 'emailer/comment', :collection => target.comments, :locals => { :unread => target.comments.first }
+  end
+  
+  def emailer_recent_conversations(project)
+    render :partial => 'emailer/recent_conversations', :locals => { :project => project }
+  end
+
+  def emailer_recent_tasks(project)
+    render :partial => 'emailer/recent_tasks', :locals => { :project => project }
+  end
+  
+  include UploadsHelper
 end

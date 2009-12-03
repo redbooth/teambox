@@ -35,17 +35,13 @@ class Project < ActiveRecord::Base
   has_permalink :name
 
   def task_lists_assigned_to(user)
-    t = []
-    task_lists.unarchived.each do |task_list| 
+    task_lists.unarchived.inject([]) do |t, task_list|
       person = people.find_by_user_id(user.id)
-      if task_list.tasks.count(:conditions => { :assigned_id => person.id }) > 0
-        t << task_list 
-      end  
+      t << task_list if task_list.tasks.count(:conditions => { :assigned_id => person.id }) > 0
+      t
     end
-    t
   end
-
-
+  
   def self.grab_name_by_permalink(permalink)
     e = self.find_by_permalink(permalink,:select => 'name')
     e = e.nil? ? '' : e.name
@@ -138,6 +134,10 @@ class Project < ActiveRecord::Base
     end
   end
 
+  
+  def recent_conversations(get = 5)
+    conversations[0,get]
+  end
   
   # Optimized way of getting activities for one or more project.
   # Can limit the number of records and page.

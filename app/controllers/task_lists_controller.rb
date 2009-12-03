@@ -54,6 +54,10 @@ class TaskListsController < ApplicationController
     @sub_action = 'all'
     @task_lists = @current_project.task_lists.unarchived
     @comments = @task_list.comments
+    
+    #   Use this snippet to test the notification emails that we send:
+    # @project = @current_project
+    # render :file => 'emailer/notify_task_list', :layout => false
   end
   
   def sortable

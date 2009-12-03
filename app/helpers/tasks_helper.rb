@@ -150,13 +150,13 @@ module TasksHelper
   end
 
   def comment_task_status(comment)
-    "<span class='task_status task_status_#{comment.status_name.underscore}'>#{comment.status_name}</span>"
+    "<span class='task_status task_status_#{comment.status_name.underscore}'>#{localized_status_name(comment)}</span>"
   end
 
   def task_status(task,status_type)
     id = check_status_type(task,status_type)
     out = "<span id='#{id}' class='task_status task_status_#{task.status_name.underscore}'>"
-    out << "#{task.status_name} &mdash; " unless status_type == :column
+    out << "#{localized_status_name(task)} &mdash; " unless status_type == :column
     out <<  "#{task.comments_count}</span>"
     out
   end
@@ -207,6 +207,13 @@ module TasksHelper
         :sub_action => sub_action }
   end
 
+  def due_on(task)
+    if task.overdue?
+      t('tasks.overdue', :days => task.overdue) + " (#{I18n.l(task.due_on, :format => '%b %d')})"
+    else
+      I18n.l(task.due_on, :format => '%b %d')
+    end
+  end
 
   def list_tasks(project,task_list,tasks,current_target=nil)
     render :partial => 'tasks/task', 
@@ -276,5 +283,8 @@ module TasksHelper
         :task_list => task_list,
         :task => task }
   end
-   
+  
+  def localized_status_name(task)
+    t('tasks.status.' + Task::STATUSES[task.status.to_i].underscore)
+  end
 end

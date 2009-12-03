@@ -1,0 +1,17 @@
+- if Array(unread).include? comment
+  - unread = 'background: rgb(255,255,225)'
+- else
+  - unread = ''
+
+.comment{ :style => email_text(:normal) + 'border-bottom: 1px #555 dotted' }
+  .body{ :style => unread }
+    %p{ :style => 'font-size: 12px' }
+      %strong{ :style => 'color: rgb(50,50,50);' }
+        = comment.user.name + ', '
+      %span{ :style => 'color: rgb(150,150,150);' }
+        = I18n.l(comment.created_at, :format => "%b %d &mdash; %I:%M %p")
+      = comment.body_html
+
+    - unless comment.uploads.empty?
+      %ul
+        = render :partial => 'emailer/upload', :collection => comment.uploads

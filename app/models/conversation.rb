@@ -28,13 +28,12 @@ class Conversation < RoleRecord
     user == u
   end
 
-  def notify_new_comment(comment = nil)
+  def notify_new_comment
     comment ||= self.comments.last
     self.watchers.each do |user|
       unless user == comment.user
-        Emailer.deliver_notify_conversation(user.email, comment.project, comment, self)
+        Emailer.deliver_notify_conversation(user, self.project, self)
       end
     end
-  end
-  
+  end  
 end

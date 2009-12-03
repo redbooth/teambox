@@ -44,6 +44,10 @@ class TasksController < ApplicationController
     @comment = @current_project.comments.new
     @comment.target = @task
     @comment.status = @task.status
+    
+    #   Use this snippet to test the notification emails that we send:
+    #@project = @current_project
+    #render :file => 'emailer/notify_task', :layout => false
   end
   
   def new

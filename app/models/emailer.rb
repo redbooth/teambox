@@ -37,13 +37,37 @@ class Emailer < ActionMailer::Base
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
 
-  def notify_conversation(recipient, project, comment, conversation)
+  def notify_conversation(user, project, conversation)
     defaults
-    recipients    recipient
+    recipients    user.email
     from          from_address(project.permalink)
-    reply_to      from_address("#{project.permalink}+conversation+#{conversation.id}")
+    if APP_CONFIG['allow_incoming_email']
+      reply_to      from_address("#{project.permalink}+conversation+#{conversation.id}")
+    end
     subject       "[#{project.permalink}] #{conversation.name}"
-    body          :project => project, :comment => comment, :conversation => conversation
+    body          :project => project, :conversation => conversation
+  end
+
+  def notify_task(user, project, task)
+    defaults
+    recipients    user.email
+    from          from_address(project.permalink)
+    if APP_CONFIG['allow_incoming_email']
+      reply_to      from_address("#{project.permalink}+task+#{task.id}")
+    end
+    subject       "[#{project.permalink}] #{task.name}"
+    body          :project => project, :task => task, :task_list => task.task_list
+  end
+
+  def notify_task_list(user, project, task_list)
+    defaults
+    recipients    user.email
+    from          from_address(project.permalink)
+    if APP_CONFIG['allow_incoming_email']
+      reply_to      from_address("#{project.permalink}+task_list+#{task_list.id}")
+    end
+    subject       "[#{project.permalink}] #{task_list.name}"
+    body          :project => project, :task_list => task_list
   end
 
   private

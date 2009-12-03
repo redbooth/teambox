@@ -41,12 +41,12 @@ module UploadsHelper
   end
 
   def upload_link(project,upload)
-    if upload.file_name.length > 25
-      file_name = upload.file_name.sub(/^.+\./,truncate(upload.file_name,20,'~.'))
+    if upload.file_name.length > 40
+      file_name = upload.file_name.sub(/^.+\./,truncate(upload.file_name,38,'~.'))
     else
       file_name = upload.file_name
     end  
-      
+
     link_to file_name, upload.url, :class => 'upload_link'
   end
     

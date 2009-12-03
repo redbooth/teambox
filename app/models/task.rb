@@ -24,7 +24,7 @@ class Task < RoleRecord
   end
 
   def after_create
-    self.add_watcher(self.user) 
+    self.add_watcher(self.user)
   end
 
   def before_save
@@ -80,4 +80,12 @@ class Task < RoleRecord
     read_attribute(:comments_count) || 0
   end
   
+  def notify_new_comment
+    comment ||= self.comments.last
+    self.watchers.each do |user|
+      unless user == comment.user
+        Emailer.deliver_notify_task(user, self.project, self)
+      end
+    end
+  end
 end

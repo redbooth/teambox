@@ -145,7 +145,6 @@ module ApplicationHelper
     else
       datetime.in_time_zone(current_user.time_zone).strftime("%b %d %Y")
     end
-    # datetime.in_time_zone(current_user.time_zone).strftime("%I:%M %p &mdash; %b %d %Y")
   end
   def large_trash_image
     image_tag('trash_large.png', :class => 'trash_large')

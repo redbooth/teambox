@@ -13,16 +13,16 @@
             = f.label :status
             .status.open
               = f.radio_button :status, 1 # open
-              open              
+              = t('tasks.status.open')
             .status.hold
               = f.radio_button :status, 2 # hold
-              hold              
+              = t('tasks.status.hold')
             .status.resolved
               = f.radio_button :status, 3 # resoloved
-              resolved              
+              = t('tasks.status.resolved')
             .status.rejected
               = f.radio_button :status, 4 # rejected
-              rejected
+              = t('tasks.status.rejected')
             = javascript_tag "$$('.statuses input').each(function(e){ if (e.checked) { e.up('.status').addClassName('active') }; })"
             = javascript_tag "Comment.watch_status();"
         - f.fields_for :target, target do |task_form|

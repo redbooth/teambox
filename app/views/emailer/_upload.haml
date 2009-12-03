@@ -1,0 +1,7 @@
+%li
+  = t('.file')
+  = upload_link(@project,upload)
+  = t('.uploaded_by')
+  = link_to upload.user.name, user_url(upload.user)
+  - if upload.description
+    = '(' + h(upload.description) + ')'

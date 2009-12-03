@@ -33,5 +33,13 @@ class TaskList < RoleRecord
     self.project.log_activity(self,'create')
     self.add_watcher(self.user) 
   end
-
+  
+  def notify_new_comment
+    comment ||= self.comments.last
+    self.watchers.each do |user|
+      unless user == comment.user
+        Emailer.deliver_notify_task_list(user, self.project, self)
+      end
+    end
+  end
 end

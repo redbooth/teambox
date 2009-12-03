@@ -20,24 +20,24 @@ class Comment < ActiveRecord::Base
 
   def after_create
     self.target.reload
-    unless self.target_type == 'User'
+
+    if self.target_type == 'User'
+      self.activity = target.log_activity(self,'create')
+    else
       target.last_comment_id = id
       target.save(false)
     
       project.last_comment_id = id
       project.save(false)  
-    end
-    
 
-    if self.target_type == 'Conversation'
-      target.notify_new_comment(self)
-    end
-    
-    if self.target_type == 'User'
-      self.activity = target.log_activity(self,'create')
-    else  
       self.activity = project.log_activity(self,'create')
-    end  
+    end
+
+    case self.target_type
+    when 'Conversation' then target.notify_new_comment
+    when 'Task'         then target.notify_new_comment
+    when 'TaskList'     then target.notify_new_comment
+    end
   end
   
   def after_destroy
@@ -65,7 +65,7 @@ class Comment < ActiveRecord::Base
   end
 
   def day
-    self.created_at.strftime('%d')
+    I18n.l(self.created_at, :format => '%d')
   end
 
   def self.find_by_year(year=nil)

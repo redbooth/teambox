@@ -1,14 +1,14 @@
 module CommentsHelper
 
   def options_for_people(people)
-    p = [['--- Assigned to Nobody ---',nil]]
+    p = [[t('.assigned_to_nobody'),nil]]
     people.each {|person| p << [ person.name, person.id ]}
     p
   end
   
   def options_for_task_statuses
     t = []
-    Task::STATUSES.to_enum(:each_with_index).each { |e,i| t << [e,i] unless i == 0  }
+    Task::STATUSES.to_enum(:each_with_index).each { |e,i| t << [e,i] unless i == 0 }
     t
   end
 

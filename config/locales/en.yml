@@ -11,6 +11,9 @@ en:
     cancel: Cancel
     save: Save
     show_more: Show {{number}} more
+    comment:
+      one: "{{count}} comment"
+      other: "{{count}} comments"
   confirm:
     delete_task_list: Are you sure you want to delete this task list?
     delete_task: Are you sure you want to delete this task?
@@ -115,7 +118,7 @@ en:
     show:
       profile: Profile
       projects: Projects
-      recent_activity_for: Recent activity for {{user_name}}
+      recent_activity_for: "Recent activity for {{user_name}}"
     user:
       formatted_address: "{{street}}, {{city}} ({{country}})"
       remove_from_project: Remove from Project
@@ -302,7 +305,13 @@ en:
       archived: "The Task <b>{{name}}</b> was successfully archived!"
     unarchive_box:
       unarchive: Unarchive
-    overdue: "{{days}} Days Late"
+    overdue: "{{days}} days late"
+    status:
+      new: new
+      open: open
+      hold: hold
+      resolved: resolved
+      rejected: rejected
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?
@@ -425,6 +434,7 @@ en:
       commented_on_a_task_list: "-"
       confirm_delete: Are you sure you want to delete this comment?
     new:
+      assigned_to_nobody: '--- Assigned to Nobody ---'
       assigned_to: "Assigned to:"
       submit: Comment
     edit:
@@ -549,6 +559,7 @@ en:
   emailer:
     common: 
       do_not_answer: "Do not answer to this email."
+      answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
     invitation:
       collaborate_with: "{{name}} wants to collaborate with you on Teambox:"
       you_have_been_invited_to: "You have been invited to the project <b>{{project}}</b>"
@@ -572,14 +583,24 @@ en:
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You receive this message because you signed up for a Teambox account with {{email}}"
       problems: "If you have any problems, please contact us at {{support}}"
-    notify_conversation:
+    notify:
       project: "Teambox Project:"
-      file: "File:"
-      uploaded_by: uploaded by
       view_online: "You can <a href='{{link}}'>view this conversation online</a> to answer and attach files."
       reply: "You can also answer to this email to post a reply in the conversation."
-      are_watching: " are suscribed to this conversations, and will be notified of future replies."
-      notification_settings: "You can <a href='{{stop_watching_url}}'>stop watching this conversation</a> or change your <a href='{{notification_settings_url}}'>notification settings</a>."
+      are_watching: " are suscribed to this conversation, and will be notified of future replies."
+      notification_settings: "You can go go Teambox to <a href='{{stop_watching_url}}'>stop watching this conversation</a>."
+      conversation: "Conversation:"
+      task: "Task:"
+      task_list: "Task List:"
+      recent_conversations: "Recent conversations for {{project}}"
+      comments: "{{number}} comments"
+      assigned_to: "Assigned to <b>{{user}}</b>"
+      due_on: "Due on {{date}}"
+      status: "Status: {{status}}"
+      my_tasks: "More tasks assigned to you in {{project}}"
+    upload:
+      file: "File:"
+      uploaded_by: uploaded by
     
   weakling:
     default: Must be at least 5 characters

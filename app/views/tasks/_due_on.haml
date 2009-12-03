@@ -3,4 +3,4 @@
     - if task.overdue?
       = t('tasks.overdue', :days => task.overdue)
     - else  
-      = t('.due_on', :date => task.due_on.strftime('%b %d'))
+      = t('.due_on', :date => I18n.l(task.due_on, :format => '%b %d'))

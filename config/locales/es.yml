@@ -11,6 +11,9 @@ es:
     cancel: Cancelar
     save: Guardar
     show_more: Ver {{number}} más
+    comment:
+      one: "{{count}} comentario"
+      other: "{{count}} comentarios"
   confirm:
     delete_task_list: ¿Seguro que quieres borrar esta lista de tareas?
     delete_task: ¿Seguro que quieres borrar esta tarrea?
@@ -115,7 +118,7 @@ es:
     show:
       profile: Perfil
       projects: Proyectos
-      recent_activity_for: Actividad reciente de {{user_name}}
+      recent_activity_for: "Actividad reciente de {{user_name}}"
     user:
       formatted_address: "{{street}}, {{city}} ({{country}})"
       remove_from_project: Borrar del proyecto
@@ -302,7 +305,13 @@ es:
       archived: "La tarea <b>{{name}}</b> ha sido archivada!"
     unarchive_box:
       unarchive: Recuperar como una tarea activa
-    overdue: "{{days}} Days Late"
+    overdue: "{{days}} días tarde"
+    status:
+      new: nueva
+      open: abierta
+      hold: espera
+      resolved: completa
+      rejected: rechazada
   notes:
     actions:
       delete_confirm: Seguro que quieres borrar esta nota?
@@ -424,6 +433,7 @@ es:
       commented_on_a_task_list: "-"
       confirm_delete: Seguro que quieres borrar este comentario?
     new:
+      assigned_to_nobody: '--- Sin asignar ---'
       assigned_to: "Asignado a:"
       submit: Publicar
     edit:
@@ -548,6 +558,7 @@ es:
   emailer:
     common: 
       do_not_answer: "No contestes a este email."
+      answer_above_this_line: "CONTESTA POR ENCIMA DE ESTA LINEA PARA RESPONDER"
     invitation:
       collaborate_with: "{{name}} quiere colaborar contigo en Teambox:"
       you_have_been_invited_to: "Has sido invitado al proyecto <b>{{project}}</b>"
@@ -571,14 +582,24 @@ es:
       plaintext_link: "Si el enlace de arriba no funciona, copia y pega lo siguiente en la barra de direcciones de tu navegador:"
       report_abuse: "Recibes este mensaje porque te has registado en Teambox con la dirección {{email}}"
       problems: "Si tienes problemas, ponte en contacto con nosotros en {{support}}"
-    notify_conversation:
-      project: "Proyecto de Teambox:"
+    notify:
+      project: "Proyecto de Teambox:"      
+      view_online: "Puedes <a href='{{link}}'>entrar a Teambox</a> para contestar y adjuntar archivos."
+      reply: "También puedes contestar a este email para publicar una respuesta."
+      are_watching: " están suscritos a la conversación, y serán notificados de las respuestas futuras."
+      notification_settings: "Puedes <a href='{{stop_watching_url}}'>dejar de seguir esta conversación</a> en cualquier momento."
+      conversation: "Conversación:"
+      task: "Tarea:"
+      task_list: "Lista de tareas:"
+      recent_conversations: "Conversaciones recientes en {{project}}"
+      comments: "{{number}} comentarios"
+      assigned_to: "Asignada a <b>{{user}}</b>"
+      due_on: "Fecha límite: {{date}}"
+      status: "Estado: {{status}}"
+      my_tasks: "Otras tareas tuyas en {{project}}"
+    upload:
       file: "Archivo:"
       uploaded_by: subido por
-      view_online: "Puedes <a href='{{link}}'>ver esta conversación online</a> para contestar y adjuntar archivos."
-      reply: "También puedes contestar a este email para publicar una respuesta en la conversación."
-      are_watching: " están suscritos a la conversación, y serán notificados de las respuestas futuras."
-      notification_settings: "Puedes <a href='{{stop_watching_url}}'>dejar de seguir esta conversación</a> o cambiar tus <a href='{{notification_settings_url}}'>preferencias</a> en cualquier momento."
     
   weakling:
     default: Debe tener al menos 5 caracteres

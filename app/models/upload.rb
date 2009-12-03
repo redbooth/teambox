@@ -24,7 +24,8 @@ class Upload < RoleRecord
 
   def url(*args)
     u = asset.url(*args)
-    u.sub(/\.$/,'')
+    u = u.sub(/\.$/,'')
+    'http://' + APP_CONFIG['app_domain'] + u
   end
 
   def file_name
