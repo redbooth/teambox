@@ -76,10 +76,13 @@ module CommentsHelper
     target  = options[:target]  ||= nil
     if target.nil?
       form_url = [project,comment]
-    elsif target.class.to_s == 'Task'
+      return unless project.editable?(current_user)
+    elsif target.is_a?(Task)
       form_url = [project,target.task_list,target,comment]
+      return unless target.editable?(current_user)
     else
       form_url = [project,target,comment]
+      return unless target.editable?(current_user)
     end
     render :partial => 'comments/new',
       :locals => { :target => target,
@@ -151,7 +154,7 @@ module CommentsHelper
     unless [:column,:content,:header].include?(status_type)
       raise ArgumentError, "Invalid Comment Count type, was expecting :column, :content or :header but got #{status_type}"
     end
-    id = "#{js_id([target])}_#{status_type}_comments_count"
+    id = "#{js_id(target)}_#{status_type}_comments_count"
   end
 
 end

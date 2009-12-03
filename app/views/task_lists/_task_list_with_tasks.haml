@@ -6,6 +6,6 @@
       .tasks{ :id => task_list_id(:the_tasks,project,task_list), :class => "#{ 'read_only' unless task_list_editable?(task_list,current_user,sub_action)}" }
         = list_tasks(project,task_list,tasks,current_target)
     - if task_list_editable?(task_list,current_user,sub_action)
-      = task_link(project,task_list,Task.new)
+      = task_link(project,task_list)
       = task_form(project,task_list,Task.new)
       = tasks_sortable(project,task_list)

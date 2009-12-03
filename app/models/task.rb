@@ -1,20 +1,15 @@
-class Task < ActiveRecord::Base
-  include GrabName
-  include Watchable
-
+class Task < RoleRecord
+  
   default_scope :order => 'created_at DESC'
 
   serialize :watchers_ids
-  
-  belongs_to :project
-  belongs_to :user
+
   belongs_to :task_list,  :counter_cache => true
   belongs_to :page
   belongs_to :assigned, :class_name => 'Person'
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
   
   acts_as_list :scope => :task_list
-  acts_as_paranoid
 
   named_scope :archived, :conditions => {:archived => true}
   named_scope :unarchived, :conditions => {:archived => false}
@@ -59,18 +54,6 @@ class Task < ActiveRecord::Base
 
   def assigned?(u)
     assigned.user.id == u.id if assigned
-  end
-
-  def observer?(user)
-    project.observer?(user)
-  end
-      
-  def editable?(user)
-    project.editable?(user)
-  end
-  
-  def owner?(u)
-    user == u
   end
   
   def overdue

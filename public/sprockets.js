@@ -8865,16 +8865,6 @@ Event.addBehavior({
     image_source = $(this).src
     $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')
   },
-  ".column_settings:mouseout": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')
-  },
-  ".column_settings:mouseover": function(){
-    $(this).down('.toggle').className = 'toggle toggle_hover';
-  },
-  ".column_settings:mouseout": function(){
-    $$('.column_settings .toggle').each(function(e){ e.className = 'toggle'; });
-  },
   ".add_nested_item:click": function(e){
     link = $(this);
     template = eval(link.href.replace(/.*#/, ''))
@@ -9028,6 +9018,26 @@ function(e) {
   if (e.target.match('.foo #bar'))
 }
 */
+Person = {
+  watch_role: function(){
+    $$('.roles .role input').each(function(e){
+      e.observe('click', Person.change_role_by_radio)
+    });
+  },
+  change_role: function(e){
+    $$('.roles .active').each(function(ee){ ee.removeClassName('active') })
+    $$('.roles input').each(function(ee){ ee.checked = false })
+    var ee = e.element()
+    ee.down('input').checked = true;
+    ee.addClassName('active');
+  },
+  change_role_by_radio: function(e){
+    $$('.roles .active').each(function(ee){ ee.removeClassName('active') })
+    var ee = e.element()
+    ee.up('.role').addClassName('active');
+  }
+
+}
 Event.addBehavior({
   ".task:mouseover": function(e){
     $(this).down('img.drag').show();

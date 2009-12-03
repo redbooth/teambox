@@ -1,11 +1,6 @@
-class TaskList < ActiveRecord::Base
-  include GrabName
-  include Watchable
-
+class TaskList < RoleRecord
   default_scope :order => 'created_at DESC'
-  
-  belongs_to :user
-  belongs_to :project
+
   belongs_to :page
   
   has_many :tasks, :order => 'position', :dependent => :destroy
@@ -16,7 +11,6 @@ class TaskList < ActiveRecord::Base
   named_scope :unarchived, :conditions => {:archived => false}
   
   acts_as_list :scope => :project
-  acts_as_paranoid    
   attr_accessible :name, :start_on, :finish_on
 
   validates_length_of :name, :minimum => 3
@@ -34,22 +28,10 @@ class TaskList < ActiveRecord::Base
       end
     end
   end
-  
-  def owner?(u)
-    user == u
-  end
-  
+      
   def after_create
     self.project.log_activity(self,'create')
     self.add_watcher(self.user) 
   end
 
-  def observer?(user)
-    project.observer?(user)
-  end
-
-  def editable?(user)
-    project.editable?(user)
-  end
-  
 end

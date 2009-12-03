@@ -1,6 +1,6 @@
 require 'digest/sha1'
 
-class Invitation < ActiveRecord::Base
+class Invitation < RoleRecord
   belongs_to :user, :validate => true
   belongs_to :project, :validate => true
   belongs_to :invited_user, :class_name => 'User'

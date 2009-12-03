@@ -406,10 +406,14 @@ es:
     fields:
       role: Role
       observer: Observer
+      commenter: Commenter
       participant: Particpant
       admin: Admin      
-    person_list:
+    header:
       owner: Propietario del proyecto
+      observer: Observer
+      commenter: Commenter
+      participant: Particpant      
       remove: Expulsar
       transfer: Transferir el proyecto
       leave_project: Dejar el Proyecto

@@ -1,33 +1,39 @@
 module PeopleHelper
 
-  def person_link(project,person)
-    action = person.new_record? ? 'new' : 'edit'
+  def person_header(project,person)
+    render :partial => 'people/header', 
+      :locals => { 
+        :project => project,
+        :person => person }
+  end
 
-    link_to_function t("people.link.#{action}"), show_person(project,person),
-      :class => "#{action}_person_link",
-      :id => person_id("#{action}_link",project,person)
+  def person_link(project,person)
+    if !person.owner? && project.admin?(current_user)
+      action = person.new_record? ? 'new' : 'edit'
+
+      link_to_function t("people.link.#{action}"), show_person(project,person),
+        :class => "#{action}_person_link",
+        :id => person_id("#{action}_link",project,person)
+    end
   end
 
   def the_person_link(project,person)
     link_to "#{person.name}", user_path(person.user)
   end
-
-  def person_id(element,project,person)
-    if person.new_record?
-      "#{js_id([project,person])}_person_#{"#{element}" unless element.nil?}"
-    else  
-      "#{js_id([project,person])}_#{"#{element}" unless element.nil?}"
-    end
+  
+  def person_id(element,project,person=nil)
+    person ||= Person.new
+    js_id(element,project,person)
   end
-
+  
   def show_person(project,person)
     action = person.new_record? ? 'new' : 'edit'
-    
-    link_id = person_id("#{action}_link",project,person)
+
+    header_id = person_id("#{action}_header",project,person)
     form_id = person_id("#{action}_form",project,person)
     
     update_page do |page|
-      page[link_id].hide
+      page[header_id].hide
       page[form_id].show
       page << "Form.reset('#{form_id}')"
     end
@@ -67,20 +73,13 @@ module PeopleHelper
     end        
   end
 
-  def invite_form(project,invitation)
-    render :partial => 'invitations/new', :locals => {
-      :project => project,
-      :invitation => invitation }
-  end
-
-
-
    #can_transfer = (@current_user == person.project.user)
    #t('.transfer') if can_transfer != owner
   def remove_person_link(project,person,user)
-    if project.owner?(user) && person.owner? == false
+    return
+    if project.owner?(user) && !person.owner?
       delete_person_link(project,person) 
-    elsif person.user == user && person.owner? == false
+    elsif person.user == user && !person.owner?
       leave_project_link(project,person)
     end  
   end  
@@ -118,11 +117,11 @@ module PeopleHelper
   def hide_person(project,person)
     action = person.new_record? ? 'new' : 'edit'
 
-    link_id = person_id("#{action}_link",project,person)
+    header_id = person_id("#{action}_header",project,person)
     form_id = person_id("#{action}_form",project,person)
 
     update_page do |page|
-      page[link_id].show
+      page[header_id].show
       page[form_id].hide
     end   
   end

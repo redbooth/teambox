@@ -1,35 +1,35 @@
-.task_form {
+.task_form, .task_list_form {
   background: rgb(210,210,210);
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px; }
-  .task_form .date_select {
+  .task_form .date_select, .task_list_form .date_select {
     margin-bottom: 20px; }
-    .task_form .date_select label {
+    .task_form .date_select label, .task_list_form .date_select label {
       font-size: 12px; }
-  .task_form .start_on {
+  .task_form .start_on, .task_list_form .start_on {
     float: left;
     width: 300px; }
-  .task_form .finish_on {
+  .task_form .finish_on, .task_list_form .finish_on {
     float: right;
     width: 300px;
     text-align: right; }
-  .task_form .text_field {
+  .task_form .text_field, .task_list_form .text_field {
     padding-right: 10px; }
-    .task_form .text_field input {
+    .task_form .text_field input, .task_list_form .text_field input {
       width: 100%;
       border-top: solid 1px rgb(90,90,90);
       border-left: solid 1px rgb(150,150,150);
       border-bottom: solid 1px rgb(150,150,150);
       border-right: solid 1px rgb(90,90,90); }
-  .task_form .select label {
+  .task_form .select label, .task_list_form .select label {
     padding-top: 3px; }
-  .task_form .select input {
+  .task_form .select input, .task_list_form .select input {
     padding: 0px;
     margin: 0px; }
-  .task_form .submit {
+  .task_form .submit, .task_list_form .submit {
     width: 100%;
     text-align: right; }
-    .task_form .submit input {
+    .task_form .submit input, .task_list_form .submit input {
       float: none; }

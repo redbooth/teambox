@@ -138,7 +138,8 @@ module UploadsHelper
     content_tag(:input,nil,{ :name => name,:type => 'hidden',:value => upload.id.to_s })
   end
   
-  def add_upload_link
+  def add_upload_link(project)
+    return unless project.editable?(current_user)
     link_to_function content_tag(:span, t('.new_file')), show_new_upload_form, :class => 'add_button', :id => "add_upload_link"
   end
   
@@ -174,6 +175,7 @@ module UploadsHelper
   end
     
   def show_edit_upload_form(upload)
+    return unless upload.editable?(current_user)
     update_page do |page|
       page["upload_#{upload.id}"].down('.show_details').hide
       page["upload_#{upload.id}"].down('.edit_details').show

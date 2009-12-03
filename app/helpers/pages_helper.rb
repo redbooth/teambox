@@ -12,6 +12,7 @@ module PagesHelper
   end
   
   def new_page_link(project)
+    return unless project.editable?(current_user)
     link_to content_tag(:span,t('.new_page')), new_project_page_path(project), :class => 'add_button'
   end
   
@@ -28,11 +29,11 @@ module PagesHelper
     link_to h(page.name), project_page_path(page.project,page)
   end
   
-  def edit_page_link(project, page)
+  def edit_page_link(project,page)
     link_to t('common.edit'), edit_project_page_path(project,page)
   end
 
-  def delete_page_link(project, page)
+  def delete_page_link(project,page)
     link_to t('common.delete'), edit_project_page_path(project,page), :method => :delete
   end
   
@@ -52,10 +53,17 @@ module PagesHelper
     })
   end
   
-  def page_action_links(project, page)
+  def page_action_links(project,page)
+    return unless project.editable?(current_user)
     render :partial => 'pages/actions',
     :locals => { 
       :project => project,
       :page => page }
   end
+  
+  def page_buttons(project,page)
+    return unless project.editable?(current_user)
+    render :partial => 'pages/buttons', :locals => {}
+  end
+  
 end

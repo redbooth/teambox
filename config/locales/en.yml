@@ -406,11 +406,13 @@ en:
     fields:
       role: Role
       observer: Observer
+      commenter: Commenter
       participant: Particpant
       admin: Admin
-    person:
+    header:
       owner: Project Owner
       observer: Observer
+      commenter: Commenter
       participant: Particpant
       admin: Admin      
       remove: Remove

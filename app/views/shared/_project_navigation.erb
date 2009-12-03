@@ -94,14 +94,15 @@ render_tabnav :project do
         t.tab_index = 156
       end
 
-      add_tab do |t|
-        t.named t('.project_settings')
-        t.links_to  edit_project_path(project)
-        t.highlights_on :controller => :projects, :action => :edit
-        t.li_class = 'right_side'
-        t.tab_index = 155       
+      if project.owner?(current_user)
+        add_tab do |t|
+          t.named t('.project_settings')
+          t.links_to  edit_project_path(project)
+          t.highlights_on :controller => :projects, :action => :edit
+          t.li_class = 'right_side'
+          t.tab_index = 155       
+        end
       end
-
     end    
   end
 end

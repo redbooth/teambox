@@ -243,6 +243,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :email
     t.integer :invited_user_id
     t.string  :token
+    t.datetime :deleted_at
     t.timestamps
   end
  
@@ -254,6 +255,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string   :asset_file_name
     t.string   :asset_content_type
     t.integer  :asset_file_size
+    t.datetime :deleted_at
     t.timestamps
   end
  

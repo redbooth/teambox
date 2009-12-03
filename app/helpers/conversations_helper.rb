@@ -1,7 +1,33 @@
 module ConversationsHelper
 
-  def conversations_primer
-    render :partial => 'conversations/primer'
+  def conversation_id(element,project,conversation=nil)
+    conversation ||= project.conversations.new
+    js_id(element,project,conversation)
+  end
+  
+  def conversation_link(project,conversation)
+    conversation ||= project.conversations.new
+    app_link(project,conversation)
+  end
+
+  def conversation_form_for(project,conversation,&proc)
+    app_form_for(project,conversation,&proc)
+  end
+
+  def conversation_submit(project,conversation)
+    app_submit(project,conversation)
+  end
+
+  def conversation_form_loading(action,project,conversation)
+    app_form_loading(action,project,conversation)
+  end
+  
+  def show_conversation(project,conversation)
+    app_toggle(project,conversation)
+  end  
+
+  def hide_conversation(project,conversation)
+    app_toggle(project,conversation)
   end
 
   def conversation_form(project,conversation)
@@ -9,55 +35,25 @@ module ConversationsHelper
       :project => project,
       :conversation => conversation }
   end
-
-  def conversation_form_for(project,conversation,&proc)
-    raise ArgumentError, "Missing block" unless block_given?
-    action = conversation.new_record? ? 'new' : 'edit'
-      
-    remote_form_for([project,conversation],
-      :loading => conversation_form_loading(action,project,conversation),
-      :html => {
-        :id => conversation_id("#{action}_form",project,conversation), 
-        :class => 'conversation_form', 
-        :style => 'display: none;'}, 
-        &proc)
-  end
-
-  def conversation_submit(project,conversation)
-    action = conversation.new_record? ? 'new' : 'edit'
-    submit_id = conversation_id("#{action}_submit",project,conversation)
-    loading_id = conversation_id("#{action}_loading",project,conversation)
-    submit_to_function t("conversations.#{action}.submit"), hide_conversation(project,conversation), submit_id, loading_id
-  end
-
-  def hide_conversation(project,conversation)
-    action = conversation.new_record? ? 'new' : 'edit'
-    
-    header_id = conversation_id("#{action}_header",project,conversation)
-    link_id = conversation_id("#{action}_link",project,conversation)
-    form_id = conversation_id("#{action}_form",project,conversation)
-    
-    update_page do |page|
-      conversation.new_record? ? page[link_id].show : page[header_id].show
-      page[form_id].hide
-      page << "Form.reset('#{form_id}')"
-    end  
-  end
-
-
-  def conversation_link(project,conversation)
-    action = conversation.new_record? ? 'new' : 'edit'
-
-    link_to_function content_tag(:span,t("conversations.link.#{action}")), show_task_list(project,conversation),
-      :class => "#{action}_conversation_link",
-      :id => conversation_id("#{action}_link",project,conversation)
+  
+  def conversations_primer
+    render :partial => 'conversations/primer'
   end
   
-  def conversation_form_loading(action,project,conversation)
-    update_page do |page|
-      page[conversation_id("#{action}_submit",project,conversation)].hide
-      page[conversation_id("#{action}_loading",project,conversation)].show
-    end    
+  def new_conversation_link(project)
+    return unless project.editable?(current_user)
+    link_to content_tag(:span, t('.new_conversation')), new_project_conversation_path(project), 
+      :class => 'add_button', :title => 'new_conversation_link'
+  end
+    
+  def the_conversation_link(conversation)
+    link_to h(conversation.name), project_conversation_path(conversation.project,conversation), :class => 'conversation_link'
+  end
+  
+  def delete_conversation_link(project,conversation)
+    link_to t('common.delete'), project_conversation_path(project,conversation), 
+    :confirm => t('.confirm_delete'),
+    :method => :delete
   end
   
   def conversation_header(project,conversation)
@@ -95,10 +91,7 @@ module ConversationsHelper
     render :partial => 'conversations/settings'
   end
   
-  def new_conversation_link(project)
-    link_to content_tag(:span, t('.new_conversation')), new_project_conversation_path(project), 
-      :class => 'button', :title => 'new_conversation_link'
-  end
+
 
   def conversation_watcher_fields(project,conversation)
     render :partial => 'conversations/watcher_fields', 
@@ -122,20 +115,6 @@ module ConversationsHelper
       :locals => { 
         :project => project,
         :current_target => current_target }
-  end
-  
-  def the_conversation_link(conversation)
-    link_to h(conversation.name), project_conversation_path(conversation.project,conversation), :class => 'conversation_link'
-  end
-
-  def edit_conversation_link(project,conversation)
-    link_to t('common.edit'), edit_project_conversation_path(project,conversation)
-  end
-  
-  def delete_conversation_link(project,conversation)
-    link_to t('common.delete'), project_conversation_path(project,conversation), 
-    :confirm => t('.confirm_delete'),
-    :method => :delete
   end
   
   def conversation_comments_count(conversation)
@@ -175,15 +154,5 @@ module ConversationsHelper
         :project => project,
         :conversation => conversation }
   end
-
-
-  def conversation_id(element,project,conversation)
-    if conversation.new_record?
-      "#{js_id([project,conversation])}_conversation_#{"#{element}" unless element.nil?}"
-    else  
-      "#{js_id([project,conversation])}_#{"#{element}" unless element.nil?}"
-    end
-  end
-
 
 end

@@ -211,6 +211,10 @@ module ApplicationHelper
     '(' + text.to_s + ')'
   end
 
+  def to_sentence(array)
+    array.to_sentence(:two_words_connector => " #{t('common.and')} ", :last_word_connector => " #{t('common.and')} ")
+  end
+
   def watch_link(project,user,target)
     raise ArgumentError, "Invalid Model, was expecting Task, TaskList or Conversation but got #{target.class}" unless ['Task','TaskList','Conversation'].include?(target.class.to_s)
     target_name = target.class.to_s.tableize
@@ -230,16 +234,6 @@ module ApplicationHelper
         :state => :normal }
   end
   
-  def js_id(locals=[])
-    id = []
-    locals.each do |m|
-      if m
-        id << "#{m.class.to_s.underscore}_#{m.id}" unless m.new_record?
-      end  
-    end
-    id.join('_')
-  end
-
   def update_watching(project,user,target,state = :normal)
     page.replace 'watching', :partial => 'shared/watchers', :locals => {
       :project => project,

@@ -1,13 +1,5 @@
 .person{ :id => person_id(:item,project,person) }
   = thumb_avatar(person.user)
-  .name
-    %h2
-      = user_link(person.user)
-      = person_role(project,person)
-    %p  
-      = time_ago_in_words(person.user.updated_at)
-  .actions
-    = person_link(project,person)
-    = remove_person_link(project,person,current_user)
-    = person_form(project,person)
-  .clear
+  = person_header(project,person)
+  = person_form(project,person)
+  .clear  

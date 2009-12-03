@@ -1,18 +1,11 @@
-= page_column(@current_project, @pages, @page)
+= page_column(@current_project,@pages,@page)
 
 .page_header
-  = page_action_links(@current_project, @task_list)
+  = page_action_links(@current_project,@task_list)
   %h2= @page.name
   .description= @page.description
 
-.buttons#buttons
-  = new_page_note_link(@current_project, @page)
-  = new_page_divider_link(@current_project, @page)
-  = #new_page_task_list_link(@current_project, @page)
-  = #new_page_upload_link(@current_project, @page)
-
-= new_note_form(@current_project, @page)
-= new_divider_form(@current_project, @page)
+= page_buttons(@current_project,@page)
 
 #dividers
   = list_page_dividers(@page.dividers)

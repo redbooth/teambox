@@ -1,0 +1,10 @@
+.person_header{ :id => "#{person_id(:edit_header,project,person)}" }
+  .name
+    %h2
+      = user_link(person.user)
+      = person_role(project,person)
+    %p  
+      = time_ago_in_words(person.user.updated_at)
+  .actions
+    = person_link(project,person)
+    = remove_person_link(project,person,current_user)

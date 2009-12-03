@@ -1,4 +1,4 @@
-class Divider < ActiveRecord::Base
+class Divider < RoleRecord
   belongs_to :page
   belongs_to :project
   acts_as_paranoid

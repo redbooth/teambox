@@ -8,7 +8,8 @@
     = t('.pending')
     = t('.time_ago', :time_ago_in_words => time_ago_in_words(invitation.updated_at))
   .resend
-    = resend_invitation_link(invitation)
-    = loading('resend_invitation', invitation.id)
+    = resend_invitation_link(project,invitation)
+    = loading('resend_invitation',invitation.id)
   .actions
     = delete_invitation_link(invitation)
+  .clear  

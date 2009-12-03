@@ -1,5 +1,35 @@
 module TasksHelper
 
+  def task_id(element,project,task_list,task=nil)
+    task ||= project.tasks.build
+    js_id(element,project,task_list,task)
+  end
+
+  def task_link(project,task_list,task=nil)
+    task ||= project.tasks.build
+    app_link(project,task_list,task)
+  end
+
+  def task_form_for(project,task_list,task,&proc)
+    app_form_for(project,task_list,task,&proc)
+  end
+  
+  def task_submit(project,task_list,task)
+    app_submit(project,task_list,task)
+  end
+
+  def task_form_loading(action,project,task_list,task)
+    app_form_loading(action,project,task_list,task)
+  end
+
+  def show_task(project,task_list,task)    
+    app_toggle(project,task_list,task)
+  end  
+
+  def hide_task(project,task_list,task)
+    app_toggle(project,task_list,task)
+  end
+
   def replace_task_column(project,task_lists,sub_action,task)
     page.replace_html 'column', task_list_column(project,task_lists,sub_action,task)
   end
@@ -23,6 +53,7 @@ module TasksHelper
   end
   
   def task_archive_box(project,task_list,task)
+    return unless task.editable?(current_user)
     if task.archived
       render :partial => 'tasks/unarchive_box', :locals => {
         :project => project,
@@ -52,13 +83,6 @@ module TasksHelper
     end  
   end
 
-  def task_link(project,task_list,task)
-    action = task.new_record? ? 'new' : 'edit'
-
-    link_to_function t("tasks.link.#{action}"), show_task(project,task_list,task),
-      :class => "#{action}_task_link",
-      :id => task_id("#{action}_link",project,task_list,task)
-  end
 
   def show_archive_task_message(task)
     page.replace 'show_task', :partial => 'tasks/archive_message', :locals => {
@@ -70,76 +94,15 @@ module TasksHelper
       :task => task }
   end
 
-  def task_submit(project,task_list,task)
-    action = task.new_record? ? 'new' : 'edit'
-    submit_id = task_id("#{action}_submit",project,task_list,task)
-    loading_id = task_id("#{action}_loading",project,task_list,task)
-    submit_to_function t("tasks.#{action}.submit"), hide_task(project,task_list,task), submit_id, loading_id
-  end
   
-  def hide_task(project,task_list,task)
-    action = task.new_record? ? 'new' : 'edit'
-    
-    header_id = task_id("#{action}_header",project,task_list,task)
-    link_id = task_id("#{action}_link",project,task_list,task)
-    form_id = task_id("#{action}_form",project,task_list,task)
-    
-    update_page do |page|
-      task.new_record? ? page[link_id].show : page[header_id].show
-      page[form_id].hide
-      page << "Form.reset('#{form_id}')"
-    end  
-  end
-
   def task_form(project,task_list,task)
+    return unless task.editable?(current_user)
     render :partial => 'tasks/form', :locals => {
       :project => project,
       :task_list => task_list,
       :task => task }
   end
 
-  def show_task(project,task_list,task)    
-    action = task.new_record? ? 'new' : 'edit'
-    
-    header_id = task_id("#{action}_header",project,task_list,task)
-    link_id = task_id("#{action}_link",project,task_list,task)
-    form_id = task_id("#{action}_form",project,task_list,task)
-    
-    update_page do |page|
-      task.new_record? ? page[link_id].hide : page[header_id].hide
-      page[form_id].show
-      page << "Form.reset('#{form_id}')"
-      page << "$('#{form_id}').auto_focus()"
-    end
-  end  
-  
-  def task_form_for(project,task_list,task,&proc)
-    raise ArgumentError, "Missing block" unless block_given?
-    action = task.new_record? ? 'new' : 'edit'
-      
-    remote_form_for([project,task_list,task],
-      :loading => task_form_loading(action,project,task_list,task),
-      :html => {
-        :id => task_id("#{action}_form",project,task_list,task), 
-        :class => 'task_form', 
-        :style => 'display: none;'}, 
-        &proc)
-  end
-
-  def task_form_loading(action,project,task_list,task)
-    update_page do |page|
-      page[task_id("#{action}_submit",project,task_list,task)].hide
-      page[task_id("#{action}_loading",project,task_list,task)].show
-    end    
-  end
-
-  def task_id(element,project,task_list,task=nil)
-    if task.nil? or (task and task.new_record?)
-      "#{js_id([project,task_list,task])}_task_#{"#{element}" unless element.nil?}"
-    else  
-      "#{js_id([project,task_list,task])}_#{"#{element}" unless element.nil?}"
-    end
-  end
 
   def task_header(project,task_list,task)
     render :partial => 'tasks/header', :locals => {
@@ -196,11 +159,6 @@ module TasksHelper
     out << "#{task.status_name} &mdash; " unless status_type == :column
     out <<  "#{task.comments_count}</span>"
     out
-  end
-
-
-  def my_tasks_link
-    link_to 'My Tasks', ''
   end
 
   def delete_task_link(project,task_list,task)

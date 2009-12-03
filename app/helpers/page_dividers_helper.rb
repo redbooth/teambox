@@ -45,6 +45,7 @@ module PageDividersHelper
   end
   
   def divider_actions_link(divider)
+    return unless divider.editable?(current_user)
     render :partial => 'dividers/actions',
       :locals => { :divider => divider }
   end

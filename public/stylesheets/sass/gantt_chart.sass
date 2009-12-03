@@ -5,15 +5,18 @@
     :margin-bottom 1px
     :font-size 12px
     :height 19px
-  .task
+  .task_list
     :height 13px
     :font-size 11px
     :position absolute
-    :background rgb(200,200,200)
+    :background rgb(240,240,240)
+    :border solid 1px rgb(200,200,200)
     :white-space nowrap
     :overflow hidden
     :padding 3px 0px
     :text-indent .4em
+  .task:hover    
+    :overflow visible  
 .rcont 
   :display block
 .ruler 
@@ -40,4 +43,6 @@
     :padding-top 4px
     :width 1px
     :display block
-    
+  .major
+    :font-weight bold
+    :color rgb(100,100,100)

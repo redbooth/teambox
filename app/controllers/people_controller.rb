@@ -2,6 +2,7 @@ class PeopleController < ApplicationController
   before_filter :load_person, :only => [:update,:destroy]
   def index
     @people = @current_project.people
+    @invitations = @current_project.invitations
   end
   
   def create

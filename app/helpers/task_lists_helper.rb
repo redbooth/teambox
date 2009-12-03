@@ -1,5 +1,35 @@
 module TaskListsHelper
 
+  def task_list_id(element,project,task_list=nil)
+    task_list ||= project.task_lists.new
+    js_id(element,project,task_list)
+  end
+
+  def task_list_link(project,task_list=nil)
+    task_list ||= project.task_lists.new
+    app_link(project,task_list)
+  end
+
+  def task_list_form_for(project,task_list,&proc)
+    app_form_for(project,task_list,&proc)
+  end
+  
+  def task_list_submit(project,task_list)
+    app_submit(project,task_list)
+  end
+
+  def task_list_form_loading(action,project,task_list)
+    app_form_loading(action,project,task_list)
+  end
+
+  def hide_task_list(project,task_list)
+    app_toggle(project,task_list)
+  end
+  
+  def show_task_list(project,task_list)
+    app_toggle(project,task_list)
+  end
+
   def task_list_editable?(task_list,user,sub_action) 
     sub_action != 'archived' && task_list.editable?(user)
   end
@@ -43,86 +73,11 @@ module TaskListsHelper
         :sub_action => sub_action,
         :current_target => nil }
   end
-
-
-  def task_list_id(element,project,task_list=nil)
-    if task_list.nil? or (task_list and task_list.new_record?)
-      "#{js_id([project,task_list])}_task_list_#{"#{element}" unless element.nil?}"
-    else  
-      "#{js_id([project,task_list])}_#{"#{element}" unless element.nil?}"
-    end
-  end
-
-  def task_list_form_for(project,task_list,&proc)
-    raise ArgumentError, "Missing block" unless block_given?
-    action = task_list.new_record? ? 'new' : 'edit'
-
-    remote_form_for([project,task_list],
-      :loading => task_list_form_loading(action,project,task_list),
-      :html => {
-        :id => task_list_id("#{action}_form",project,task_list),
-        :class => 'task_form',
-        :style => 'display: none'},
-        &proc)
-  end
-
+  
   def render_task_list_with_tasks(project,task_list)
     render :partial => 'task_lists/show', :locals => { :project => project, :task_list => task_list }
   end
-  
-  def task_list_submit(project,task_list)
-    action = task_list.new_record? ? 'new' : 'edit'
-    submit_id = task_list_id("#{action}_submit", project,task_list)
-    loading_id = task_list_id("#{action}_loading",project,task_list)
-    submit_to_function t("task_lists.#{action}.submit"), hide_task_list(project,task_list), submit_id, loading_id
-  end
-
-  def task_list_form_loading(action,project,task_list)
-    update_page do |page|
-      submit_id  = task_list_id("#{action}_submit", project,task_list)
-      loading_id = task_list_id("#{action}_loading",project,task_list)
-      page[submit_id].hide
-      page[loading_id].show
-    end    
-  end
-
-  def hide_task_list(project,task_list)
-    action = task_list.new_record? ? 'new' : 'edit'
     
-    header_id = task_list_id("#{action}_header",project,task_list)
-    link_id = task_list_id("#{action}_link",project,task_list)
-    form_id = task_list_id("#{action}_form",project,task_list)
-    
-    update_page do |page|
-      task_list.new_record? ? page[link_id].show : page[header_id].show
-      page[form_id].hide
-      page << "Form.reset('#{form_id}')"
-    end  
-  end
-  
-  def show_task_list(project,task_list)
-    action = task_list.new_record? ? 'new' : 'edit'
-    
-    header_id = task_list_id("#{action}_header",project,task_list)
-    link_id = task_list_id("#{action}_link",project,task_list)
-    form_id = task_list_id("#{action}_form",project,task_list)
-    
-    update_page do |page|
-      task_list.new_record? ? page[link_id].hide : page[header_id].hide
-      page[form_id].show
-      page << "Form.reset('#{form_id}')"
-      page << "$('#{form_id}').auto_focus()"
-    end
-  end  
-  
-  def task_list_link(project,task_list)
-    action = task_list.new_record? ? 'new' : 'edit'
-
-    link_to_function content_tag(:span,t("task_lists.link.#{action}")), show_task_list(project,task_list),
-      :class => "#{action}_task_list_link",
-      :id => task_list_id("#{action}_link",project,task_list)
-  end
-
   def reorder_task_list_link(project,task_lists)
     link_to_remote content_tag(:span,t("task_lists.link.reorder")), 
       :url => sortable_project_task_lists_path(project),

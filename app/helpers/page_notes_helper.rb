@@ -45,6 +45,7 @@ module PageNotesHelper
   end
   
   def note_actions_link(note)
+    return unless note.editable?(current_user)
     render :partial => 'notes/actions',
       :locals => { :note => note }
   end

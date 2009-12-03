@@ -10,11 +10,10 @@ class UploadsController < ApplicationController
     path = upload.asset.path(params[:style])
     head(:bad_request) and return unless File.exist?(path) && params[:format].to_s == File.extname(path).gsub(/^\.+/, '')
 
-    if upload.asset_content_type == 'application/octet-stream'
-      send_file_options = { :type => 'application/octet-stream' }
-    else
-      send_file_options = { :type => File.mime_type?(path) }
-    end  
+    mime_type = File.mime_type?(path)
+    mime_type = 'application/octet-stream' if mime_type == 'unknown/unknown'
+
+    send_file_options = { :type => mime_type}
     
     case SEND_FILE_METHOD
       when :apache then send_file_options[:x_sendfile] = true
@@ -61,7 +60,7 @@ class UploadsController < ApplicationController
     else
       respond_to do |f|          
         if @upload.save
-          @upload.project.log_activity(self,'create')
+          @upload.project.log_activity(current_user,'create')
         else
           flash[:error] = "Couldn't upload file"
         end   

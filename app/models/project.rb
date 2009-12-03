@@ -1,7 +1,7 @@
 # A User model describes an actual user, with his password and personal info.
 # A Person model describes the relationship of a User that follows a Project.
 
-class Project < ActiveRecord::Base  
+class Project < ActiveRecord::Base
   include GrabName
   acts_as_paranoid
   
@@ -116,6 +116,12 @@ class Project < ActiveRecord::Base
     permalink
   end
 
+  def admin?(user)
+    if p = people.find(:first, :conditions => {:user_id => user.id})
+      p.role == 3 || p.owner?
+    end
+  end
+  
   def observer?(user)
     if p = people.find(:first, :conditions => {:user_id => user.id})
       p.role == 0 && p.owner? == false

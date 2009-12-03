@@ -1,11 +1,4 @@
-class Conversation < ActiveRecord::Base
-  include GrabName
-  include Watchable
-  acts_as_paranoid
-  
-  belongs_to :user
-  belongs_to :project
-  
+class Conversation < RoleRecord
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 

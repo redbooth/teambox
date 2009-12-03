@@ -68,7 +68,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pages, :only => [ :index ]
   
   map.root :controller => 'projects', :action => 'index'
-  map.connect 'assets/:id/:style/:basename.:format', :controller => 'uploads', :action => 'download', :conditions => { :method => :get } #:requirements => { :basename => /[a-z0-9_\-\+\ ]+\.[a-z0-9_\-\+\ ]*\.[a-z0-9_\-\+\ ]*/ }
+  map.connect 'assets/:id/:style/:basename.:format', :controller => 'uploads', :action => 'download', :conditions => { :method => :get } #:requirements => { :basename => /.*/ }
   map.connect 'assets/:id/:style/:basename', :controller => 'uploads', :action => 'download', :conditions => { :method => :get }  
   SprocketsApplication.routes(map)
 end

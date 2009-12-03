@@ -1,7 +1,9 @@
 #primer
   %p= t('.empty')
   .box
-    %h2= link_to_function t('.create_first'), show_task_list(project,TaskList.new)
+    - if task.editable?(current_user)
+      %h2= link_to_function t('.create_first'), show_task_list(project,TaskList.new)
+    
     %p= t '.define'
     %ul
       %li= t '.item1'
