@@ -10,7 +10,7 @@ en:
     decline: Decline
     cancel: Cancel
     save: Save
-    show_more: Show {{more}} more
+    show_more: Show {{number}} more
   confirm:
     delete_task_list: Are you sure you want to delete this task list?
     delete_task: Are you sure you want to delete this task?
