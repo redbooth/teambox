@@ -36,8 +36,8 @@ module ConversationsHelper
       :conversation => conversation }
   end
   
-  def conversations_primer
-    render :partial => 'conversations/primer'
+  def conversations_primer(project)
+    render :partial => 'conversations/primer', :locals => { :project => project }
   end
   
   def new_conversation_link(project)
