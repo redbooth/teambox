@@ -191,9 +191,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :user_id
     t.integer :last_read_comment_id
   end
-  
-  add_index :comments_read, [:target_type,:target_id,:user_id]
-  
+    
   create_table :conversations do |t|
     t.integer :project_id
     t.integer :user_id
@@ -260,7 +258,32 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
   add_index :sessions, :session_id
   add_index :sessions, :updated_at
  
-  add_index :users, ["login"], :name => "index_users_on_login", :unique => true
+  add_index :users,         :login, :unique => true
+  add_index :projects,      :permalink
+  add_index :activities,    :project_id
+  add_index :activities,    :created_at
+  add_index :people,        [:user_id,:project_id]
+  add_index :comments,      [:target_type,:target_id,:user_id]
+
+  add_index :activities,    :deleted_at
+  add_index :comments,      :deleted_at
+  add_index :conversations, :deleted_at
+  add_index :task_lists,    :deleted_at
+  add_index :tasks,         :deleted_at
+  add_index :pages,         :deleted_at
+  add_index :notes,         :deleted_at
+  add_index :projects,      :deleted_at
+  add_index :users,         :deleted_at
+
+  add_index :conversations, :project_id
+  add_index :task_lists,    :project_id
+  add_index :pages,         :project_id
+  add_index :tasks,         :project_id
+  add_index :tasks,         :task_list_id
+  
+  add_index :uploads,       :comment_id
+
+  add_index :comments_read, [:target_type,:target_id,:user_id]
   
   create_table :emails, :force => true do |t|
     t.string   :from
