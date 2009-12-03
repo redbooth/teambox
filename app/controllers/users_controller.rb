@@ -68,6 +68,7 @@ class UsersController < ApplicationController
 
     respond_to do |f|
       if @current_user.update_attributes(params[:user])
+        I18n.locale = @current_user.language
         flash[:success] = t('users.update.updated')
         f.html { redirect_to account_settings_path }
       else
