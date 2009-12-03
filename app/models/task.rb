@@ -58,7 +58,7 @@ class Task < ActiveRecord::Base
   end
 
   def assigned?(u)
-    assigned.user.id = u.id if assigned
+    assigned.user.id == u.id if assigned
   end
   
   def owner?(u)

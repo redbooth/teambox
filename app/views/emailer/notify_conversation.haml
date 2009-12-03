@@ -20,14 +20,15 @@
         %p
           %strong{ :style => 'font-size: 12px; color: rgb(50,50,50);' }
             = comment.user.name + ', '
-          %span{ :style => 'font-size: 12px; color: rgb(150,150,150);' }= comment.created_at.strftime("%b %d at %I:%M %p")
+          %span{ :style => 'font-size: 12px; color: rgb(150,150,150);' }
+            = comment.created_at.strftime("%b %d at %I:%M %p")
           = comment.body_html
         - if comment.uploads.count > 0
           %ul
             - comment.uploads.each do |upload|
               %li
                 = t('emailer.notify_conversation.file')
-                = link_to h(upload.file_name), project_upload_url(upload.project, upload.file_name)
+                = link_to h(upload.file_name), project_upload_url(upload.project.id, upload.file_name)
                 = t('emailer.notify_conversation.uploaded_by')
                 = link_to upload.user.name, user_url(upload.user)
                 - if upload.description
