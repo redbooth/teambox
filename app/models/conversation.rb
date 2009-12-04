@@ -28,6 +28,10 @@ class Conversation < RoleRecord
     user == u
   end
 
+  def after_comment(comment)
+    notify_new_comment
+  end
+
   def notify_new_comment
     comment ||= self.comments.last
     self.watchers.each do |user|

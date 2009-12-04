@@ -5,29 +5,24 @@ class CommentsController < ApplicationController
   
   def create
     if params.has_key?(:project_id)
-      @comment = @current_project.new_comment(current_user,@target,params[:comment])
+      @comment  = @current_project.new_comment(current_user,@target,params[:comment])
       @comments = @current_project.comments        
     else
       @comment = current_user.new_comment(current_user,@target,params[:comment])
     end
 
-    if @target.class.to_s == 'Task'
-      if @comment.status == 0 && @target.assigned_id != nil
-        @target.status, @comment.status = 1,1
-      end  
-    end  
-
     if @comment.save
       @comment.save_uploads(params)
-      if @target.class.to_s == 'Task'
+      
+      if @target.is_a? Task
         @comment.reload
         @task = @comment.target
         @new_comment = @current_project.comments.new
         @new_comment.target = @task
-        @new_comment.status = @task.status
-      elsif @target.class.to_s == 'TaskList'
+        @new_comment.status = @task.status    
+      elsif @target.is_a? TaskList
         @task_list = @comment.target
-      elsif @target.class.to_s == 'Conversation'
+      elsif @target.is_a? Conversation
         @conversation = @comment.target
       end
     end

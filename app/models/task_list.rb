@@ -40,6 +40,10 @@ class TaskList < RoleRecord
     self.project.log_activity(self,'create')
     self.add_watcher(self.user) 
   end
+
+  def after_comment(comment)
+    notify_new_comment
+  end
   
   def notify_new_comment
     comment ||= self.comments.last

@@ -33,11 +33,7 @@ class Comment < ActiveRecord::Base
       self.activity = project.log_activity(self,'create')
     end
 
-    case self.target_type
-    when 'Conversation' then target.notify_new_comment
-    when 'Task'         then target.notify_new_comment
-    when 'TaskList'     then target.notify_new_comment
-    end
+    target.after_comment(self) if target.respond_to?(:after_comment)
   end
   
   def after_destroy

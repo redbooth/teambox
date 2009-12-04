@@ -89,6 +89,17 @@ class Task < RoleRecord
     read_attribute(:comments_count) || 0
   end
   
+  def after_comment(comment)
+    if comment.status == 0 && self.assigned_id != nil
+      self.status, comment.status = 1,1
+    end
+    self.save!
+  end
+
+  def after_comment(comment)
+    notify_new_comment
+  end
+  
   def notify_new_comment
     comment ||= self.comments.last
     self.watchers.each do |user|
