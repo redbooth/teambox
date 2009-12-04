@@ -35,7 +35,10 @@ module Paperclip
 
     # Returns the filename, the same way as ":basename.:extension" would.
     def filename attachment, style
-      "#{basename(attachment, style)}.#{extension(attachment, style)}"
+      fn = []
+      fn << basename(attachment, style)
+      fn << extension(attachment, style) unless extension(attachment, style) == ''
+      fn.join('.')
     end
 
     # Returns the interpolated URL. Will raise an error if the url itself
