@@ -103,6 +103,15 @@ class Project < ActiveRecord::Base
       self.people.create(:user_id => user.id, :source_user_id => source_user.id)
     end
   end
+  
+  def remove_user(user)
+    if person = Person.find_by_user_id_and_project_id(user.id, self.id)
+      person.destroy
+
+      user.recent_projects.delete self.id
+      user.save!      
+    end
+  end
 
   def after_create
     add_user(user)

@@ -14,12 +14,6 @@ class Person < ActiveRecord::Base
   ROLES = [:observer,:commenter,:participant,:admin]
   PERMISSIONS = [:view,:edit,:delete,:all]
 
-  def before_destroy
-    log_activity(person,'delete')
-    user.recent_projects.delete(project.id)
-    user.save!    
-  end
-
   def owner?
     project.owner?(user)
   end
@@ -34,5 +28,11 @@ class Person < ActiveRecord::Base
   
   def after_create
     self.project.log_activity(self, 'create', self)
+  end
+  
+  def after_destroy
+    self.project.log_activity(self, 'delete')
+    user.recent_projects.delete(project.id)
+    user.save!
   end
 end

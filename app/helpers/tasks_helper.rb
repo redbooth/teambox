@@ -59,7 +59,7 @@ module TasksHelper
         :project => project,
         :task_list => task_list,
         :task => task }      
-    else
+    elsif task.closed?
       render :partial => 'tasks/archive_box', :locals => {
         :project => project,
         :task_list => task_list,
@@ -68,7 +68,7 @@ module TasksHelper
   end
 
   def archive_task_button(project,task_list,task)
-    link_to_remote '<span>Archive this Task</span>', 
+    link_to_remote content_tag(:span, t('.archive')), 
       :url => archive_project_task_list_task_path(project,task_list,task), 
       :method => :put,
       :loading => loading_archive_task,
@@ -285,6 +285,6 @@ module TasksHelper
   end
   
   def localized_status_name(task)
-    t('tasks.status.' + Task::STATUSES[task.status.to_i].underscore)
+    I18n.t('tasks.status.' + Task::STATUSES[task.status.to_i].underscore)
   end
 end

@@ -1,4 +1,8 @@
 module EmailerHelper
+
+  include UploadsHelper
+  include TasksHelper
+
   def email_global
     'font-size: 14px; color: rgb(50,50,50); font-family: Helvetica, Arial'
   end
@@ -35,5 +39,7 @@ module EmailerHelper
     render :partial => 'emailer/recent_tasks', :locals => { :project => project }
   end
   
-  include UploadsHelper
+  def emailer_answer_to_this_email
+    content_tag(:p,I18n.t('emailer.notify.reply')) if APP_CONFIG['allow_incoming_email']
+  end
 end

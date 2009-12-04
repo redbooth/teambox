@@ -15,7 +15,7 @@
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
     %p= t('emailer.notify.view_online', :link => project_conversation_url(@project, @conversation))
-    %p= t('emailer.notify.reply')
+    = emailer_answer_to_this_email
 
   .footer{ :style => email_text(:small) }
     %p

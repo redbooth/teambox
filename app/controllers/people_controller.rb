@@ -26,7 +26,6 @@ class PeopleController < ApplicationController
   end
   
   def destroy
-    
     if @person.destroy
       respond_to do |f|
         f.html {

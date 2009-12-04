@@ -303,7 +303,11 @@ es:
       deleted: "La tarea <b>{{name}}</b> se ha borrado"
     archive_message:  
       archived: "La tarea <b>{{name}}</b> ha sido archivada!"
+    archive_box:
+      you_are_done: Parece que ya has terminado con esta tarea.
+      archive: Archivar tarea
     unarchive_box:
+      task_is_closed: Esta tarea está cerrada y archivada
       unarchive: Recuperar como una tarea activa
     overdue: "{{days}} días tarde"
     status:

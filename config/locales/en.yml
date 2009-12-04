@@ -303,7 +303,11 @@ en:
       deleted: "The Task <b>{{name}}</b> was successfully deleted!"
     archive_message:  
       archived: "The Task <b>{{name}}</b> was successfully archived!"
+    archive_box:
+      you_are_done: It looks like you're done with this task!
+      archive: Archive this task
     unarchive_box:
+      task_is_closed: This task is closed and archived
       unarchive: Unarchive
     overdue: "{{days}} days late"
     status:
