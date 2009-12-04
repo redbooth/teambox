@@ -16,6 +16,13 @@ class TaskList < RoleRecord
   validates_length_of :name, :minimum => 3
   
   serialize :watchers_ids
+
+  def new_task(user, task=nil)
+    self.tasks.new(task) do |task|
+      task.project_id = self.project_id
+      task.user_id = user.id
+    end
+  end
   
   def before_save
     unless self.position

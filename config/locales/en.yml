@@ -346,7 +346,7 @@ en:
       item4: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
       footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
       footer2: "You can also attach files to any page inside each note. Enjoy!"
-    show:
+    buttons:
       new_note: Note
       new_divider: Divider
       new_upload: Upload

@@ -96,7 +96,6 @@ module TasksHelper
 
   
   def task_form(project,task_list,task)
-    return if task.new_record?
     return unless task.editable?(current_user)
     render :partial => 'tasks/form', :locals => {
       :project => project,

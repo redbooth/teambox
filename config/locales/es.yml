@@ -346,7 +346,7 @@ es:
       item4: "<b>Wiki</b>. Actúan como un wiki, dando toda información de tu proyecto."
       footer1: "Usa Teambox como una <b>pizarra compartida</b> para información de uso frecuente."
       footer2: "También puedes adjuntar archivos a cualquier página del proyecto. Disfruta!"
-    show:
+    buttons:
       new_note: Nota
       new_divider: Separador
       new_upload: Archivo

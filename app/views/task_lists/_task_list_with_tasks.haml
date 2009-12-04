@@ -7,5 +7,5 @@
         = list_tasks(project,task_list,tasks,current_target)
     - if task_list_editable?(task_list,current_user,sub_action)
       = task_link(project,task_list)
-      = task_form(project,task_list,Task.new)
+      = task_form(project,task_list,task_list.new_task(current_user))
       = tasks_sortable(project,task_list)
