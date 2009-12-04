@@ -7,6 +7,7 @@ class Task < RoleRecord
   belongs_to :task_list,  :counter_cache => true
   belongs_to :page
   belongs_to :assigned, :class_name => 'Person'
+
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
   
   acts_as_list :scope => :task_list
@@ -14,7 +15,15 @@ class Task < RoleRecord
   named_scope :archived, :conditions => {:archived => true}
   named_scope :unarchived, :conditions => {:archived => false}
   named_scope :assigned_to, lambda { |person_id| { :conditions => ['assigned_id > ?', person_id] } }
-      
+  
+  validates_length_of :name, :within => 1..255
+  
+  validates_each :assigned do |record, attr, value|
+    if value and not record.project.people.include?(value)
+      record.errors.add attr, "doesn't belong to the project"
+    end
+  end
+
   attr_accessible :name, :assigned_id, :status, :due_on
 
   STATUSES = ['new','open','hold','resolved','rejected']

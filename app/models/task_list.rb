@@ -13,7 +13,7 @@ class TaskList < RoleRecord
   acts_as_list :scope => :project
   attr_accessible :name, :start_on, :finish_on
 
-  validates_length_of :name, :minimum => 3
+  validates_length_of :name, :within => 1..255
   
   serialize :watchers_ids
 

@@ -1,7 +1,3 @@
-Factory.define :task do |task|
-  task.first_name 'Finish all the specs'
-end
-
 Factory.sequence :login do |n|
   "gandhi_#{n}"
 end
@@ -26,6 +22,19 @@ end
 Factory.define :project do |project|
   project.name { Factory.next(:name) }
   project.association(:user)
+end
+
+Factory.define :task_list do |task_list|
+  task_list.name 'Buy Groceries'
+  task_list.association(:user)
+  task_list.association(:project)
+end
+
+Factory.define :task do |task|
+  task.name 'Buy milk'
+  task.association(:user)
+  task.association(:project)
+  task.association(:task_list)
 end
 
 Factory.define :comment do |comment|
