@@ -196,7 +196,7 @@ module ApplicationHelper
 
   def support_link
     if APP_CONFIG.has_key? 'support_url'
-      link_to t('.support'), "#{APP_CONFIG['support_url']}/#{controller.controller_name}"
+      link_to t('.support'), APP_CONFIG['support_url']
     end
   end
   
