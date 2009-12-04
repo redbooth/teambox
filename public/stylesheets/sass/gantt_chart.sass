@@ -1,8 +1,37 @@
 .gantt 
-  .row 
+  :background rgb(230,245,255)
+  :padding-bottom 2px
+  .ruler
     :position relative
     :display block
-    :margin-bottom 1px
+    :height 26px
+    :background rgb(140,208,217)
+    :border-bottom solid 1px rgb(100,168,177)
+    :color rgb(80,80,80)
+    .mark
+      :position absolute
+      :font-size 10px
+      :top 18px
+      :height 10px
+      :width 5px
+      :text-indent .3em
+      :background  url(../images/mark.jpg) no-repeat left
+    .date
+      :position absolute
+      :font-family Courier, "Courier New", monospace
+      :text-transform uppercase
+      :font-size 12px
+      :top 0px
+      :padding-top 4px
+      :width 1px
+      :display block
+      &.major
+        :font-weight bold
+        :color rgb(160,160,160)
+  .row
+    :position relative
+    :display block
+    :margin 1px 0
     :font-size 12px
     :height 19px
   .task_list
@@ -15,34 +44,7 @@
     :overflow hidden
     :padding 3px 0px
     :text-indent .4em
-  .task:hover    
-    :overflow visible  
-.rcont 
-  :display block
-.ruler 
-  :position relative 
-  :display block
-  :height 26px
-  :background rgb(210,210,210)
-  :border-bottom solid 1px rgb(190,190,190)
-  :color rgb(255,255,255)
-  .mark 
-    :position absolute
-    :font-size 10px
-    :top 18px
-    :height 10px
-    :width 5px
-    :text-indent .3em
-    :background  url(../images/mark.jpg) no-repeat left
-  .date
-    :position absolute
-    :font-family Courier, "Courier New", monospace
-    :text-transform uppercase
-    :font-size 12px
-    :top 0px
-    :padding-top 4px
-    :width 1px
-    :display block
-  .major
-    :font-weight bold
-    :color rgb(100,100,100)
+    :-moz-border-radius 4px
+    :-webkit-border-radius 4px
+  .task:hover
+    :overflow visible
