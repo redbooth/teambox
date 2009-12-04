@@ -60,7 +60,7 @@ class UploadsController < ApplicationController
     else
       respond_to do |f|          
         if @upload.save
-          @upload.project.log_activity(current_user,'create')
+          @current_project.log_activity(@upload,'create')
         else
           flash[:error] = "Couldn't upload file"
         end   
