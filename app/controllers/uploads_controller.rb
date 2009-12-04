@@ -4,16 +4,21 @@ class UploadsController < ApplicationController
   SEND_FILE_METHOD = :default
 
   def download
+
     head(:not_found) and return if (upload = Upload.find_by_id(params[:id])).nil?
     head(:forbidden) and return unless upload.downloadable?(current_user)
 
     path = upload.asset.path(params[:style])
-    head(:bad_request) and return unless File.exist?(path) && params[:format].to_s == File.extname(path).gsub(/^\.+/, '')
+    unless File.exist?(path) && params[:filename].to_s == upload.asset_file_name
+      head(:bad_request)
+      raise "Unable to download file"
+    end  
 
-    mime_type = File.mime_type?(path)
+    mime_type = File.mime_type?(upload.asset_file_name)
+
     mime_type = 'application/octet-stream' if mime_type == 'unknown/unknown'
 
-    send_file_options = { :type => mime_type}
+    send_file_options = { :type => mime_type }
     
     case SEND_FILE_METHOD
       when :apache then send_file_options[:x_sendfile] = true

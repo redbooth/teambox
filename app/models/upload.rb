@@ -12,7 +12,7 @@ class Upload < RoleRecord
   has_attached_file :asset,
     :styles => { :thumb => "64x48#" },
     :url  => "/assets/:id/:style/:basename.:extension",
-    :path => ":rails_root/assets/:id/:style/:basename.:extension"
+    :path => ":rails_root/assets/:id/:style/:filename"
 
   before_post_process :image?
 
