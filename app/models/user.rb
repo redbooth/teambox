@@ -4,15 +4,41 @@ require 'digest/sha1'
 # A Person model describes the relationship of a User that follows a Project.
 
 class User < ActiveRecord::Base
-  concerned_with :activation, :authentication, :completeness, :recent_projects, :validation
+
   acts_as_paranoid
+  concerned_with :activation, :authentication, :completeness, :recent_projects, :validation, :avatar, :rss
   
   LANGUAGES = [['English', 'en'], ['Español', 'es']]
+    
+  has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
+  has_many :comments
+  has_many :people
+  has_many :projects, :through => :people
+  has_many :invitations, :foreign_key => 'invited_user_id'
+  has_many :activities      
+  has_many :uploads
+
+  has_one :card
+  accepts_nested_attributes_for :card
+
+  attr_accessible :login, 
+                  :email, 
+                  :first_name, 
+                  :last_name,
+                  :biography, 
+                  :password, 
+                  :password_confirmation, 
+                  :time_zone, 
+                  :language, 
+                  :conversations_first_comment, 
+                  :first_day_of_week,
+                  :card_attributes,
+                  :avatar
   
   def before_save
     self.update_profile_score
     self.recent_projects ||= []
-    self.rss_token = Digest::SHA1.hexdigest(rand(999999999).to_s) if self.rss_token.nil?
+    self.rss_token ||= generate_rss_token
   end
   
   def before_create
@@ -37,51 +63,7 @@ class User < ActiveRecord::Base
   def to_s
     self.name
   end
-
-  has_attached_file :avatar, 
-    :url  => "/avatars/:id/:style/:basename.:extension",
-    :path => ":rails_root/public/avatars/:id/:style/:basename.:extension",
-    :styles => { 
-      :micro => "24x24#", 
-      :thumb => "48x48#", 
-      :profile => "278x500>" }
-
-  validates_attachment_size :avatar, :less_than => 2.megabytes
-  validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/png']
-  
-    # :processors => [:cropper]
-  #attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
-  #after_update :reprocess_avatar, :if => :cropping?
-
-  has_one :card
-  accepts_nested_attributes_for :card
-  
-  has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
-  has_many :comments
-  has_many :people
-  has_many :projects, :through => :people
-  has_many :invitations, :foreign_key => 'invited_user_id'
-  has_many :activities      
-  has_many :uploads
-
-  attr_accessible :login, 
-                  :email, 
-                  :first_name, 
-                  :last_name,
-                  :biography, 
-                  :password, 
-                  :password_confirmation, 
-                  :time_zone, 
-                  :language, 
-                  :conversations_first_comment, 
-                  :first_day_of_week,
-                  :card_attributes,
-                  :avatar
-        
-  def can_view?(user)
-    not projects_shared_with(user).empty?
-  end
-  
+          
   def projects_shared_with(user)
     self.projects & user.projects
   end
@@ -92,22 +74,6 @@ class User < ActiveRecord::Base
     self.activities.all(:limit => 40, :order => 'created_at DESC').select do |activity|
       ids.include?(activity.project_id) || activity.comment_type == 'User'
     end
-  end
-  
-  def rss_token
-    if read_attribute(:rss_token).nil?
-      token = Digest::SHA1.hexdigest(rand(999999999).to_s)
-      self.update_attribute(:rss_token, token)
-      write_attribute(:rss_token, token)
-    end
-    
-    read_attribute(:rss_token)
-  end
-  
-  def self.find_by_rss_token(t)
-    token = t.slice!(0..39)
-    user_id = t
-    User.find_by_rss_token_and_id(token,user_id)
   end
     
   def new_comment(user,target,comment)
@@ -122,25 +88,10 @@ class User < ActiveRecord::Base
     Activity.log(nil, target, action, creator_id)
   end
 
-
-  def cropping?
-    !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
-  end
-  
-  def avatar_geometry(style = :original)
-    @geometry ||= {}
-    @geometry[style] ||= Paperclip::Geometry.from_file(avatar.path(style))
-  end
-  
   # Rewriting ActiveRecord's touch method
   # The original runs validations and loads associated models, being very inefficient
   def touch
     self.update_attribute(:updated_at, Time.now)
   end
-  
-  private
-  
-  def reprocess_avatar
-    avatar.reprocess!
-  end    
+
 end
