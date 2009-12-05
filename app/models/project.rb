@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
   include GrabName
   
   acts_as_paranoid
-  concerned_with :validation, :initializers, :example, :roles
+  concerned_with :validation, :initializers, :roles
 
 
   belongs_to :user
