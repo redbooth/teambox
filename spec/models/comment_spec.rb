@@ -56,6 +56,20 @@ describe Comment do
       end
       
       it "should preserve blocks of code and pre"
+      
+      it "should link to users page when mentioning @existing_username" do
+        user = Factory(:user, :login => 'existing_username')
+        User.find_by_login('existing_username').should_not be_nil
+        body = "Hey, @existing_username, take a look at this!"
+        comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+        comment.body_html.should == "<p>Hey, @<a href=\"/users/#{user.id}\">existing_username</a>, take a look at this!</p>"
+      end
+      
+      it "should not link to users page when typing @unexisting_username" do
+        body = "Hey, @unexisting_username, take a look at this!"
+        comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+        comment.body_html.should == "<p>Hey, @unexisting_username, take a look at this!</p>"
+      end
     end
 
     it "should post a comment to a conversation"
