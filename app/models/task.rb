@@ -97,13 +97,12 @@ class Task < RoleRecord
   end
 
   def after_comment(comment)
-    notify_new_comment
+    notify_new_comment(comment)
   end
   
-  def notify_new_comment
-    comment ||= self.comments.last
+  def notify_new_comment(comment)
     self.watchers.each do |user|
-      unless user == comment.user
+      if user != comment.user and user.notify_tasks
         Emailer.deliver_notify_task(user, self.project, self)
       end
     end

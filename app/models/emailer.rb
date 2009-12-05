@@ -1,5 +1,6 @@
 class Emailer < ActionMailer::Base
   include ActionController::UrlWriter # Allows us to generate URLs
+  include ActionView::Helpers::TextHelper
   concerned_with :receive
 
   def confirm_email(user)
@@ -35,6 +36,17 @@ class Emailer < ActionMailer::Base
     recipients    invitation.email
     subject       "#{invitation.user.name} shared [#{invitation.project.name}] with you"
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
+  end
+  
+  def notify_comment(user, project, comment)
+    defaults
+    recipients    user.email
+    from          from_address(project.permalink)
+    if APP_CONFIG['allow_incoming_email']
+      reply_to      from_address("#{project.permalink}")
+    end
+    subject       "[#{project.permalink}] #{truncate(comment.body, :length => 20)}"
+    body          :project => project, :comment => comment
   end
 
   def notify_conversation(user, project, conversation)

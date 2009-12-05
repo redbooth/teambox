@@ -10,7 +10,7 @@
     = t('emailer.notify.conversation')
     = link_to @conversation.name, project_conversation_url(@project, @conversation)
 
-  = emailer_list_comments(@conversation)
+  = emailer_list_comments(@conversation.comments)
   = emailer_recent_conversations(@project)
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }

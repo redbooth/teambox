@@ -593,6 +593,7 @@ en:
       reply: "You can also answer to this email to post a reply in the conversation."
       are_watching: " are suscribed to this conversation, and will be notified of future replies."
       notification_settings: "You can go go Teambox to <a href='{{stop_watching_url}}'>stop watching this conversation</a>."
+      comment: "Comment on project's wall: "
       conversation: "Conversation:"
       task: "Task:"
       task_list: "Task List:"

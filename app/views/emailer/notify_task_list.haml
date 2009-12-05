@@ -10,7 +10,7 @@
     = t('emailer.notify.task_list')
     = link_to @task_list.name, project_task_list_url(@project, @task_list)
 
-  = emailer_list_comments(@task_list)
+  = emailer_list_comments(@task_list.comments)
   = emailer_recent_tasks(@project)
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }

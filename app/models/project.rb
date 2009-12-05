@@ -64,15 +64,23 @@ class Project < ActiveRecord::Base
     permalink
   end
 
-  def recent_conversations(get = 5)
-    conversations[0,get]
-  end
-  
   def task_lists_assigned_to(user)
     task_lists.unarchived.inject([]) do |t, task_list|
       person = people.find_by_user_id(user.id)
       t << task_list if task_list.tasks.count(:conditions => { :assigned_id => person.id }) > 0
       t
+    end
+  end
+
+  def after_comment(comment)
+    notify_new_comment(comment)
+  end
+
+  def notify_new_comment(comment)
+    self.users.each do |user|
+      if user != comment.user and user.notify_mentions and " #{comment.body} ".match(/\s@#{user.login}\W/i)
+        Emailer.deliver_notify_comment(user, self, comment)
+      end
     end
   end
 
@@ -87,6 +95,12 @@ class Project < ActiveRecord::Base
     Activity.find(:all, :conditions => conditions,
                         :order => 'created_at DESC', # could be faster to use 'id DESC'
                         :limit => limit)
+  end
+  
+  def get_recent(model_class, limit = 5)
+    model_class.find(:all, :conditions => ["project_id = ?", id],
+                           :order => 'created_at DESC',
+                           :limit => limit)
   end
   
 end

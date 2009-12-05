@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   include ActionController::UrlWriter
 
   acts_as_paranoid
-  concerned_with :activation, :avatar, :authentication, :completeness, :example_project, :recent_projects, :rss, :validation
+  concerned_with :activation, :avatar, :authentication, :completeness, :example_project, :recent_projects, :roles, :rss, :validation
   
   LANGUAGES = [['English', 'en'], ['Español', 'es']]
     
@@ -37,6 +37,8 @@ class User < ActiveRecord::Base
                   :card_attributes,
                   :avatar
   
+  attr_accessor   :activate
+
   def before_save
     self.update_profile_score
     self.recent_projects ||= []

@@ -21,6 +21,11 @@ class ProjectsController < ApplicationController
     @last_activity = @activities.last
     @pending_projects = current_user.invitations
     
+    #   Use this snippet to test the notification emails that we send:
+    #@project = @current_project
+    #render :file => 'emailer/notify_comment', :layout => false
+    #return
+
     respond_to do |f|
       f.html
       f.rss  { render :layout => false }

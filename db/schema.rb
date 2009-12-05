@@ -90,8 +90,13 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.datetime :deleted_at
     t.string   :rss_token, :default => nil, :limit => 40
     t.boolean  :admin,    :default => false
-    t.integer :comments_count, :default => 0
-    
+    t.integer  :comments_count, :default => 0
+
+    t.boolean  :notify_mentions,      :default => true
+    t.boolean  :notify_conversations, :default => true
+    t.boolean  :notify_task_lists,    :default => true
+    t.boolean  :notify_tasks,         :default => true
+
     t.string  :avatar_file_name
     t.string  :avatar_content_type
     t.integer :avatar_file_size

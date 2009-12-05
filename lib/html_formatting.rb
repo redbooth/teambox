@@ -17,13 +17,13 @@ module HtmlFormatting
   
   # Get @username, like in Twitter, and link it to user path
   def format_usernames(text)
-    " #{text} ".gsub(/(\s)@([a-z0-9\.\-_]+)([\W])/i) do |match|
+    text.gsub(/([\s>])@([a-z0-9\.\-_]+)([\W])/i) do |match|
       if user = User.find_by_login(match[2..-2])
         match[0,2] + link_to(user.login, "/users/#{user.id}") + match[-1,1]
       else
         match
       end
-    end[1..-2]
+    end
   end
   
   def format_textile(text)

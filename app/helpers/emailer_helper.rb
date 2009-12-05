@@ -27,8 +27,8 @@ module EmailerHelper
     render :partial => 'emailer/answer'
   end
   
-  def emailer_list_comments(target)
-    render :partial => 'emailer/comment', :collection => target.comments, :locals => { :unread => target.comments.first }
+  def emailer_list_comments(comments)
+    render :partial => 'emailer/comment', :collection => comments, :locals => { :unread => comments.first }
   end
   
   def emailer_recent_conversations(project)

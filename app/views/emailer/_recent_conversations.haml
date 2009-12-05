@@ -1,6 +1,6 @@
 %h3{ :style => email_text(:normal) }
   = t('emailer.notify.recent_conversations', :project => project.name)
-  - for conversation in project.recent_conversations
+  - for conversation in project.get_recent(Conversation)
     %p{ :style => email_text(:small) }
       = link_to conversation.name, project_conversation_url(project, conversation), :style => 'color: rgb(50,50,50);padding-left:15px'
       %span
