@@ -5,8 +5,10 @@ require 'digest/sha1'
 
 class User < ActiveRecord::Base
 
+  include ActionController::UrlWriter
+
   acts_as_paranoid
-  concerned_with :activation, :authentication, :completeness, :recent_projects, :validation, :avatar, :rss
+  concerned_with :activation, :avatar, :authentication, :completeness, :example_project, :recent_projects, :rss, :validation
   
   LANGUAGES = [['English', 'en'], ['Español', 'es']]
     

@@ -638,6 +638,7 @@ es:
     welcome_users: ¡Bienvenido!
     new_projects: Nuevo proyecto
     archived_task_lists: Tareas archivadas
+    new_example_projects: Crear un proyecto de ejemplo
           
   number:
     # Used in number_with_delimiter()

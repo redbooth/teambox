@@ -639,6 +639,7 @@ en:
     welcome_users: Welcome!
     new_projects: New Project    
     archived_task_lists: Archived Tasks
+    new_example_projects: Create an Example Project
 
   number:
     # Used in number_with_delimiter()

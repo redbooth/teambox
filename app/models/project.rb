@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
   include GrabName
   
   acts_as_paranoid
-  concerned_with :validation, :initializers, :example
+  concerned_with :validation, :initializers
 
   belongs_to :user # project owner
 
@@ -42,8 +42,8 @@ class Project < ActiveRecord::Base
   
   def add_user(user, source_user=nil)
     unless Person.exists? :user_id => user.id, :project_id => self.id
-      source_user ||= user
-      self.people.create(:user_id => user.id, :source_user_id => source_user.id)
+      source_user_id = source_user.id if source_user
+      self.people.create(:user_id => user.id, :source_user_id => source_user_id)
     end
   end
   
