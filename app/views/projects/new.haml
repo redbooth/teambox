@@ -1,5 +1,8 @@
 %h2= t('.title')
 
+%p.new_example_project
+  = t('.create_an_example_project', :link => new_example_project_path)  
+
 - form_for @project do |f|
   = project_fields(f,@project)
   

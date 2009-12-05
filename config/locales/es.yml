@@ -206,6 +206,7 @@ es:
       upgrade: Consigue una cuenta premium ahora!
       created: Se ha creado el proyecto!
       invalid_project: "Proyecto no válido, corrige los errores e inténtalo de nuevo."
+      create_an_example_project: "¿Es tu primera vez en Teambox? <a href='{{link}}'>Crea un proyecto de ejemplo</a> para experimentar y aprender."
     edit:
       submit: Guardar cambios
   invitations:
@@ -413,20 +414,21 @@ es:
       deleted: "La lista <b>{{name}}</b> ha sido borrada!"
   people:
     link:
-      edit: Edit
+      edit: Editar
     edit:
-      submit: Update Person
+      submit: Modificar
     fields:
-      role: Role
-      observer: Observer
-      commenter: Commenter
-      participant: Particpant
-      admin: Admin      
+      role: Rol
+      observer: Observador
+      commenter: Comentador
+      participant: Participante
+      admin: Administrador
     header:
       owner: Propietario del proyecto
-      observer: Observer
-      commenter: Commenter
-      participant: Particpant      
+      observer: Observador
+      commenter: Comentador
+      participant: Participante
+      admin: Administrador
       remove: Expulsar
       transfer: Transferir el proyecto
       leave_project: Dejar el Proyecto
@@ -442,6 +444,14 @@ es:
       submit: Publicar
     edit:
       submit: Guardar
+  example_projects:
+    new:
+      learn: Proyecto Tutorial
+      line1: "Si es tu primera vez en Teambox, puedes crear un proyecto de ejemplo con algunos contenidos."
+      line2: "Navegando a través de ellos aprenderás cómo utilizar los proyectos, conversaciones y tareas."
+      line3: "No olvides <b>leer las instrucciones</b> y <b>experimentar</b> creando, editando y borrando elementos!"
+      create: Crear el proyecto tutorial
+      line4: "En este proyecto no podrás invitar a otros usuarios, pero sí puedes hacer todo lo demás."
   uploads:
     comment_upload_link: Adjunto
     new:

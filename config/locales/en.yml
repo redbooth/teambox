@@ -206,6 +206,7 @@ en:
       upgrade: Upgrade your account now!
       created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
+      create_an_example_project: "First time in Teambox? <a href='{{link}}'>Create an example project</a> to play around and learn."
     edit:
       submit: Save Changes
   invitations:
@@ -426,8 +427,8 @@ en:
       owner: Project Owner
       observer: Observer
       commenter: Commenter
-      participant: Particpant
-      admin: Admin      
+      participant: Participant
+      admin: Admin
       remove: Remove
       transfer: Transfer Ownership
       leave_project: Leave Project
@@ -443,6 +444,14 @@ en:
       submit: Comment
     edit:
       submit: Save
+  example_projects:
+    new:
+      learn: Learn by example!
+      line1: "If it's your first time using Teambox, you can create an example project with some contents."
+      line2: "Navigating through the pages will teach you how to use each part of Teambox."
+      line3: "Make sure you <b>read the instructions</b> and <b>experiment</b> creating, editing and deleting elements!"
+      create: Create an example project
+      line4: "In this project you won't be able to invite other users, but you can do all the rest."
   uploads:
     comment_upload_link: Attachment
     new:

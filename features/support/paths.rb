@@ -35,9 +35,6 @@ module NavigationHelpers
     when /the people page/
       "/projects/ruby_rockstars/people"
       
-    when /create an example project page/
-      "/example/new"
-      
     #when /the index page for (.+)/
     #  polymorphic_path(model($1))
     

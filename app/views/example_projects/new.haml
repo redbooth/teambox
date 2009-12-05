@@ -1,4 +1,11 @@
-.section.welcome_section
-  %h2.welcome= "Learn by example!"
-  = link_to "Create an example project!", create_example_project_path
+%h2= t('.learn')
+
+.section
+  %p= t('.line1')
+  %p= t('.line2')
+  %p= t('.line3')
+  %p.center
+    = link_to content_tag(:span, t('.create')), create_example_project_path, :class => 'button'
+  %p= t('.line4')
+    
     

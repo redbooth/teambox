@@ -1,9 +1,12 @@
 class User
   
-  def find_or_create_example_project
+  def find_or_create_example_project    
     @dagny = find_or_create_example_user('Dagny Taggart')
     @hank  = find_or_create_example_user('Hank Rearden')
     @ellis = find_or_create_example_user('Ellis Wyatt')
+
+    remember_notification_settings
+    disable_all_notifications
 
     @project = self.projects.find_by_name("John Galt Line")
 
@@ -21,14 +24,38 @@ class User
       example_comment(@project, @ellis, "Very nice! I also noticed I can post files to a project wall. I can use this to call attention on images or quick ideas.")
       example_comment(@project, @ellis, "I'm going to invite #{name} to the project, too.\nHey, @#{login}, read below to learn how Teambox works! Also take a look at \"Conversations\":#{project_conversations_path(@project)}, \"Task lists\":#{project_task_lists_path(@project)}, \"Pages\":#{project_pages_path(@project)} and \"Files\":#{project_uploads_path(@project)} to learn more about how each section works.")
       example_comment(@project, @dagny, "Welcome, @#{login}! This is the project wall, try posting a comment with the box on top. You can also attach files!\nIn this page you will find updated to your conversations, tasks and pages, so taking a look here will let you know what's new in your project.")
-    
+
       @project.activities.select { |a| a.target.is_a? Person }.each { |a| a.delete }
+      
+      restore_notification_settings
     end
 
     @project    
   end
   
   protected
+    def remember_notification_settings
+      @remember_notify_mentions      = self.notify_mentions
+      @remember_notify_conversations = self.notify_conversations
+      @remember_notify_task_lists    = self.notify_task_lists
+      @remember_notify_tasks         = self.notify_tasks      
+    end
+    
+    def restore_notification_settings
+      self.notify_mentions      = @remember_notify_mentions
+      self.notify_conversations = @remember_notify_conversations
+      self.notify_task_lists    = @remember_notify_task_lists
+      self.notify_tasks         = @remember_notify_tasks      
+    end
+    
+    def disable_all_notifications
+      self.notify_mentions      = false
+      self.notify_conversations = false
+      self.notify_task_lists    = false
+      self.notify_tasks         = false
+      self.save!
+    end
+
     def example_comment(target, user, body)
       comment = target.comments.new
       comment.target = target
@@ -55,13 +82,17 @@ class User
         user
       else
         pass = Digest::SHA1.hexdigest(rand(999999999).to_s)
-        user = User.create!(
+        user = User.new(
           :login => login,
           :email => email,
           :first_name => first_name,
           :last_name => last_name,
           :password => pass,
           :password_confirmation => pass)
+        user.notify_mentions = false
+        user.notify_conversations = false
+        user.notify_task_lists = false
+        user.notify_tasks = false
         user.activate!
       end
     end
