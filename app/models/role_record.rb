@@ -12,8 +12,8 @@ class RoleRecord < ActiveRecord::Base
     user == u
   end
   
-  def observer?(user)
-    project.observer?(user)
+  def observable?(user)
+    project.observable?(user)
   end
 
   def editable?(user)

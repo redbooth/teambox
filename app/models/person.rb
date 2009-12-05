@@ -11,11 +11,17 @@ class Person < ActiveRecord::Base
 
   serialize :permissions
 
-  ROLES = [:observer,:commenter,:participant,:admin]
+  ROLES = {:observer => 0, :commenter => 1, :participant => 2, :admin => 3}
   PERMISSIONS = [:view,:edit,:delete,:all]
 
   def owner?
     project.owner?(user)
+  end
+
+  def role_name
+    key = nil
+    ROLES.each{|k,v| key = k if role == v } 
+    key
   end
 
   def name

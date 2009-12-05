@@ -1,7 +1,7 @@
 - tasks = assign_tasks(project,task_list,sub_action)
 .task_list_wrap{ :id => "#{task_list_id(:with_tasks,project,task_list)}", :class => "task_list_#{task_list.id}" }
   = render_task_list(project,task_list,current_target)
-  - unless tasks.empty? && task_list.observer?(current_user)
+  - unless tasks.empty? && task_list.observable?(current_user)
     .tasks_wrap
       .tasks{ :id => task_list_id(:the_tasks,project,task_list), :class => "#{ 'read_only' unless task_list_editable?(task_list,current_user,sub_action)}" }
         = list_tasks(project,task_list,tasks,current_target)

@@ -1,15 +1,15 @@
 .roles
-  .role.view
-    = f.radio_button :role, 0
+  .role.observer
+    = f.radio_button :role, Person::ROLES[:observer]
     = t('.observer')
-  .role.edit
-    = f.radio_button :role, 1
+  .role.commenter
+    = f.radio_button :role, Person::ROLES[:commenter]
     = t('.commenter')
-  .role.edit
-    = f.radio_button :role, 2
+  .role.participant
+    = f.radio_button :role, Person::ROLES[:participant]
     = t('.participant')
-  .role.destroy
-    = f.radio_button :role, 3
+  .role.admin
+    = f.radio_button :role, Person::ROLES[:admin]
     = t('.admin')
         
 -if false #Details Permissions

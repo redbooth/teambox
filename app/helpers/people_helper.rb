@@ -92,7 +92,7 @@ module PeopleHelper
   end
   
   def person_role(project,person)
-    person.owner? ? t('.owner') : t(".#{Person::ROLES[person.role]}")
+    person.owner? ? t('.owner') : t(".#{person.role_name}")
   end
   
   def delete_person_link(project,person)

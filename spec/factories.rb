@@ -19,6 +19,11 @@ Factory.define :user do |user|
   user.password_confirmation 'dragons'
 end
 
+Factory.define :person do |person|
+  person.association(:project)
+  person.association(:user)
+end
+
 Factory.define :project do |project|
   project.name { Factory.next(:name) }
   project.association(:user)
