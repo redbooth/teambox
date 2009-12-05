@@ -43,5 +43,5 @@
       %h3= t('.social_networks')
       -for social_network in card.social_networks
         .social_network.item
-          %span.type= website.get_type
+          %span.type= "#{social_network.get_network_type} - #{social_network.get_type}"
           = social_network.name
