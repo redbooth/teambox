@@ -16,18 +16,19 @@ class User
 
   def activate!
     self.confirmed_user = true
-    self.save
+    self.save!
+    self
   end
   
   def generate_login_code!
     self.login_token = Digest::SHA1.hexdigest(rand(999999999).to_s + self.salt)
     self.login_token_expires_at = 1.month.from_now
-    self.save
+    self.save!
   end
   
   def expire_login_code!
     self.login_token_expires_at = 1.minute.ago
-    self.save
+    self.save!
   end
   
   def is_login_token_valid?(token)
