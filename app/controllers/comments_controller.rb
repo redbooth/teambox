@@ -26,7 +26,15 @@ class CommentsController < ApplicationController
         @conversation = @comment.target
       end
     end
-    respond_to{|f|f.js}
+    respond_to do |f|
+      case @target
+      when Project
+        f.html { redirect_to @target }
+      else
+        f.html { redirect_to @target.project, @target }
+      end
+      f.js
+    end
   end
 
   def show

@@ -3,13 +3,13 @@ class Activity < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
   acts_as_paranoid
-  
+
   named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_type = 'TaskList' || comment_type = 'Task'"
       
   def self.log(project,target,action,creator_id)
     project_id = project.nil? ? nil : project.id
 
-    if target.class.to_s == 'Comment'
+    if target.is_a? Comment
       comment_type = target.target_type
     else
       comment_type = nil

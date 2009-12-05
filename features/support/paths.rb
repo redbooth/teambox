@@ -23,6 +23,9 @@ module NavigationHelpers
     when /the forgot password page/
       "/forgot"
 
+    when /the project page/
+      "/projects/ruby_rockstars"
+
     when /the conversations page/
       "/projects/ruby_rockstars/conversations"
 

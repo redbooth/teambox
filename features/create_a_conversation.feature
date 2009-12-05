@@ -24,9 +24,6 @@ Feature Creating a conversation
 
     When I fill in "comment_body" with "A better, saucier and faster way of getting laid"
       And I press "Comment"
-    # this response is ajax and should be tested
-    Then I go to the conversations page
-      And I follow "Lets code the next big thing"
-    ##
+    # Using format.html which redirects, not .js
     Then I should see "Im having some ideas for an upcoming project: Getting Laid, the book."
       And I should see "A better, saucier and faster way of getting laid"
