@@ -8,24 +8,29 @@ class Project < ActiveRecord::Base
   acts_as_paranoid
   concerned_with :validation, :initializers, :roles
 
-  belongs_to :user # project owner
+  belongs_to :user
 
-  has_many :people, :dependent => :destroy # people invited to the project
-  has_many :users, :through => :people, :order => 'updated_at desc'
+  with_options :dependent => :destroy do |project|
+    project.has_many :people
+    project.has_many :task_lists, :conditions => { :page_id => nil }
+    project.has_many :tasks
+    project.has_many :uploads
+    project.has_many :invitations
+  end
+  
+  with_options :dependent => :destroy, :order => 'created_at DESC' do |project|
+    project.has_many :conversations
+    project.has_many :pages
+    project.has_many :comments
+    project.has_many :activities
+  end
 
-  has_many :task_lists, :conditions => { :page_id => nil }, :dependent => :destroy
-  has_many :tasks, :dependent => :destroy
-  has_many :invitations, :order => 'created_at DESC', :dependent => :destroy
-  has_many :conversations, :order => 'created_at DESC', :dependent => :destroy
-  has_many :pages, :order => 'created_at DESC', :dependent => :destroy
-  has_many :comments, :order => 'created_at DESC', :dependent => :destroy
-  has_many :uploads, :dependent => :destroy
-  has_many :activities, :order => 'created_at DESC', :dependent => :destroy
+  has_many :users, :through => :people, :order => 'updated_at DESC'
 
   has_permalink :name
 
   attr_accessible :name, :permalink  
-  
+
   def self.grab_name_by_permalink(permalink)
     e = self.find_by_permalink(permalink,:select => 'name')
     e = e.nil? ? '' : e.name
