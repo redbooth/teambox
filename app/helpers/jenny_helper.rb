@@ -53,7 +53,9 @@ module JennyHelper
     update_page do |page|
       target.new_record? ? page.toggle(form_id,link_id) : page.toggle(form_id,header_id)
       page << "Form.reset('#{form_id}')"
-      #page << "if($(#{form_id}).getStyle('display') == 'block'){$('#{form_id}').auto_focus()}"
+      page << "if($('#{form_id}').hasClassName('form_error')){ $('#{form_id}').removeClassName('form_error') }"
+      page.select("##{form_id} .error").each {|e|e.remove}
+      page << "if($(#{form_id}).getStyle('display') == 'block' && $(#{form_id}).down('.focus')){$('#{form_id}').auto_focus()}"
     end
   end
 
@@ -92,6 +94,22 @@ module JennyHelper
       loading_id = js_id("#{action}_loading",*args)
       page[submit_id].hide
       page[loading_id].show
+    end
+  end
+
+  def show_form_errors(target,form_id)
+    page.select("##{form_id} .error").each do |e|
+      e.remove
+    end
+    target.errors.each do |field,message|
+    errors = <<BLOCK
+e = $('#{form_id}').down('.#{field}');
+if(e.down('.error'))
+  e.down('.error').insert({bottom: "<br /><span>'#{message}'</span>"})
+else
+  e.insert({ bottom: "<p class='error'><span>#{message}</span></p>"})
+BLOCK
+      page << errors
     end
   end
 

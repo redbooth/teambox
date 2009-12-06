@@ -378,6 +378,10 @@ en:
     column:
       new_page: New Page
   task_lists:
+    errors:
+      name:
+        cant_be_blank: Name must not be blank
+        too_long: 'Name is must be shorter than 255 characters'
     archived:
       title: All Archived Tasks
       description: You're currently looking at archived tasks. These are tasks that have been closed.

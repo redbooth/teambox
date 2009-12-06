@@ -33,3 +33,6 @@
     text-align: right; }
     .task_form .submit input, .task_list_form .submit input {
       float: none; }
+
+.form_error {
+  background: rgb(255,200,200); }

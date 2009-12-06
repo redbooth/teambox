@@ -378,6 +378,10 @@ es:
     column:
       new_page: Nueva página
   task_lists:
+    errors:
+      name:
+        cant_be_blank: Name must not be blank
+        too_long: 'Name is must be shorter than 255 characters'
     archived:
       title: Todas las tareas archivadas
       description: "Estas son las tareas archivadas, al haber sido completadas o rechazadas."

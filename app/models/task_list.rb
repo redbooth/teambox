@@ -13,7 +13,8 @@ class TaskList < RoleRecord
   acts_as_list :scope => :project
   attr_accessible :name, :start_on, :finish_on
 
-  validates_length_of :name, :within => 1..255
+  validates_presence_of :name, :message => I18n.t('task_lists.errors.name.cant_be_blank')
+  validates_length_of   :name, :maximum => 255, :message => I18n.t('task_lists.errors.name.too_long')
   
   serialize :watchers_ids
 

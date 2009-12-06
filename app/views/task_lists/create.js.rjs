@@ -1,15 +1,21 @@
-page.insert_task_list(@current_project,@task_list,@sub_action)
-
 link_id = task_list_id(:new_link,@current_project)
 form_id = task_list_id(:new_form,@current_project)
 loading_id = task_list_id(:new_loading,@current_project)
 submit_id = task_list_id(:new_submit,@current_project)
 
-page[link_id].show
-page[form_id].hide
-page << "Form.reset('#{form_id}')"
+if @task_list.errors.empty?
+  page.insert_task_list(@current_project,@task_list,@sub_action)
+
+  page[link_id].show
+  page[form_id].hide
+  page << "Form.reset('#{form_id}')"
+
+  page.update_active_task_list(@current_project,@task_list)
+  page.reload_javascript_events
+else
+  page[form_id].addClassName('form_error')
+  page.show_form_errors(@task_list,form_id)
+end
+
 page[loading_id].hide
 page[submit_id].show
-
-page.update_active_task_list(@current_project,@task_list)
-page.reload_javascript_events
