@@ -654,6 +654,7 @@ es:
     new_projects: Nuevo proyecto
     archived_task_lists: Tareas archivadas
     new_example_projects: Crear un proyecto de ejemplo
+    new_conversations: Nueva Conversación
           
   number:
     # Used in number_with_delimiter()
