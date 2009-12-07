@@ -8,9 +8,10 @@ class User
       :thumb => "48x48#", 
       :profile => "278x500>" }
 
+  #validates_attachment_presence :avatar, :unless => Proc.new { |user| user.new_record? }
   validates_attachment_size :avatar, :less_than => 2.megabytes
   validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/png']
-
+  
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
   end

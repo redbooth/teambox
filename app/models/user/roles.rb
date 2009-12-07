@@ -1,7 +1,7 @@
 class User
   
-  def can_view?(user)
-    not projects_shared_with(user).empty?
+  def observable?(user)
+    !projects_shared_with(user).empty? || user == self
   end
   
 end

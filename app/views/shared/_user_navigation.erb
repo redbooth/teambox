@@ -19,10 +19,10 @@ render_tabnav :user do
       t.highlights_on :controller => 'avatars', :action => 'show'
     end
     
-    #add_tab do |t|
-    #  t.named 'Notifications'
-    #  t.links_to account_notifications_path
-    #  t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'notifications'
-    #end    
+    add_tab do |t|
+      t.named 'Notifications'
+      t.links_to account_notifications_path
+      t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'notifications'
+    end    
 end
 %><div class="clear"></div></div>

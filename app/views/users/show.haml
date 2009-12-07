@@ -1,13 +1,14 @@
 - content_for :banner do
-  %h2= "#{@user.name}<span>(#{@user.login})</span>"
+  %h2= "<span>#{@user.name}</span><span class='login'>@#{@user.login}</span>"
 
 - content_for :column do
-  = image_tag @user.avatar.url(:profile)
-  - if current_user.can_view?(@user)
+  = image_tag @user.avatar.url(:profile), :class => 'avatar'
+  - if current_user.observable?(@user)
+    %p.biography= current_user.biography
     = render_card(@card)
     =# list_projects(@user.projects)
 
-- if current_user.can_view?(@user)
+- if current_user.observable?(@user)
   =# new_comment_user_form(current_user)
   %h2= t('.recent_activity_for', :user_name => @user.name)
   #activities

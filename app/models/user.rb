@@ -8,7 +8,15 @@ class User < ActiveRecord::Base
   include ActionController::UrlWriter
 
   acts_as_paranoid
-  concerned_with :activation, :avatar, :authentication, :completeness, :example_project, :recent_projects, :roles, :rss, :validation
+  concerned_with  :activation, 
+                  :avatar, 
+                  :authentication, 
+                  :completeness, 
+                  :example_project, 
+                  :recent_projects, 
+                  :roles, 
+                  :rss, 
+                  :validation
   
   LANGUAGES = [['English', 'en'], ['Español', 'es']]
     
@@ -35,8 +43,12 @@ class User < ActiveRecord::Base
                   :conversations_first_comment, 
                   :first_day_of_week,
                   :card_attributes,
-                  :avatar
-  
+                  :avatar,
+                  :notify_mentions,
+                  :notify_conversations,
+                  :notify_task_lists,
+                  :notify_tasks
+                    
   attr_accessor   :activate
 
   def before_save

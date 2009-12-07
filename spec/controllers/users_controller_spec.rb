@@ -1,6 +1,12 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe UsersController do
+
+  route_matches("/account/settings", :get, :controller => "users", :action => "edit", :sub_action => 'settings')
+  route_matches("/account/profile", :get, :controller => "users", :action => "edit", :sub_action => 'profile')
+  route_matches("/account/profile", :get, :controller => "users", :action => "edit", :sub_action => 'profile')
+  route_matches("/account/notifications", :get, :controller => "users", :action => "edit", :sub_action => 'notifications')
+      
   it 'allows signup' do
     lambda do
       do_create

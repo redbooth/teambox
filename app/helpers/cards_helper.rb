@@ -1,5 +1,9 @@
 module CardsHelper
 
+  def options_for_card_type(types)
+    types.to_enum(:each_with_index).collect{|type,i|[type,i]}
+  end
+
   def render_card(card)
     render :partial => 'cards/card', :locals => { :card => card }
   end

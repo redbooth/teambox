@@ -120,9 +120,10 @@ When /^I attach the file at "([^\"]*)" to "([^\"]*)"$/ do |path, field|
   attach_file(field, path)
 end
 
-Then /^I should see "([^\"]*)"$/ do |text|
-  response.should contain(text)
-  response.should_not have_tag('span.translation_missing'), :message => "Missing translation"
+Then /^I should see an image "([^\"]*)" within "([^\"]*)"$/ do |src, selector|
+  within(selector) do |content|
+    content.should have_selector("img", :src => src)
+  end
 end
 
 Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
@@ -184,6 +185,7 @@ end
 Then /^I should be on (.+)$/ do |page_name|
   URI.parse(current_url).path.should == path_to(page_name)
 end
+
 
 Then /^show me the page$/ do
   save_and_open_page

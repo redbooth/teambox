@@ -32,3 +32,9 @@ end
 Given /I am the user (.*)$/ do |user_type|
   @user ||= Factory(user_type.to_sym)
 end  
+
+Then /^I should not see missing avatar image within "([^\"]*)"$/ do |selector|
+  within(selector) do |content|
+    content.should_not have_selector("img", :alt => 'Missing')
+  end
+end

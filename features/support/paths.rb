@@ -13,8 +13,8 @@ module NavigationHelpers
     when /the new project page/  
       "/projects/new"
 
-    when /my settings page/
-      "/settings"
+    when /the account settings page/
+      "/account/settings"
 
     when /the login page/
       "/login"

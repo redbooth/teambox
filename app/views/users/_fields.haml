@@ -25,18 +25,17 @@
     - if @invitation_token
       = hidden_field_tag 'invitation', @invitation_token
       
-
-#password_fields{:style => (user.new_record? ? "" : "display: none;")}
-  .password.text_field
-    = f.label :password
-    = f.password_field :password
-    = password_strength :password_strength, 'user_password'
-    = tooltip 'user_password', t('.tooltips.password')
-
-  .password.text_field
-    = f.label :password_confirmation, t('.confirm_password')
-    = f.password_field :password_confirmation
-
+- if user.new_record? || sub_action == 'settings'
+  #password_fields{ :style => "#{ 'display: none' unless user.new_record? }"}
+    .password.text_field
+      = f.label :password
+      = f.password_field :password
+      -unless sub_action == 'settings'
+        = password_strength :password_strength, 'user_password'
+        = tooltip 'user_password', t('.tooltips.password')
+    .password.text_field
+      = f.label :password_confirmation, t('.confirm_password')
+      = f.password_field :password_confirmation
 
 - unless user.new_record?
   -if sub_action == 'settings'
@@ -66,5 +65,26 @@
 -if @sub_action == 'picture'
   = f.label :avatar
   = f.file_field :avatar
+  - unless current_user.avatar.errors.empty?
+    %p
+      -if current_user.avatar.errors.has_key?(:presence)
+        %span=t('.avatar.presence')
+      -if current_user.avatar.errors.has_key?(:size)
+        %span=t('.avatar.max_size',:mb => current_user.avatar.errors[:size][:max])
+
+-if @sub_action == 'notifications'
+  .check_boxes.notifications
+    .check_box.notify
+      = f.check_box :notify_mentions
+      = f.label :notify_mentions, t('.notify_mentions', :login => current_user.login)
+    .check_box.notify
+      = f.check_box :notify_conversations
+      = f.label :notify_conversations, t('.notify_conversations')
+    .check_box.notify  
+      = f.check_box :notify_task_lists
+      = f.label :notify_task_lists, t('.notify_task_lists')
+    .check_box.notify
+      = f.check_box :notify_tasks
+      = f.label :notify_tasks, t('.notify_tasks')
 
 = hidden_field_tag 'sub_action', sub_action

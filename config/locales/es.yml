@@ -88,6 +88,13 @@ es:
       change_password: Cambiar contraseña
       confirm_password: Confirmar contraseña
       use_this_email: "Has sido invitado a Teambox con esta dirección de correo. Si quieres acceder a los proyectos de quien te invitó, no cambies la dirección de correo. Podrás cambiar tu email una vez estés dado de alta."
+      notify_mentions: "Notify me when I'm mentioned eg. Howdy @{{login}}! You'll recieve an email!"
+      notify_conversations: Notify me when I'm watching a conversation
+      notify_task_lists: Notify me when I'm watching a task list
+      notify_tasks: Notify me when I'm watching a task
+      avatar:
+        presence: "You can't upload a blank file"
+        max_size: "File size can't exceed {{mb}}"
       tooltips:
         login: "Puedes usar un nombre de usuario corto para entrar. Debe ser en minúsculas y sin espacios. Puedes usar _."
         first_name: Hasta 20 caracteres.
@@ -105,6 +112,7 @@ es:
       title_settings: Preferencias
       title_profile: Información de perfil
       title_picture: Imagen de perfil
+      title_notifications: Your Notifications
       submit: Actualizar
     update:
       updated: Perfil actualizado

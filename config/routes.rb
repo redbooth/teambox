@@ -23,7 +23,7 @@ ActionController::Routing::Routes.draw do |map|
   map.account_settings '/account/settings', :controller => 'users', :action => 'edit', :sub_action => 'settings'
   map.account_picture '/account/picture', :controller => 'users', :action => 'edit', :sub_action => 'picture'
   map.account_profile '/account/profile', :controller => 'users', :action => 'edit', :sub_action => 'profile'
-  map.account_notifications '/account/notications', :controller => 'users', :action => 'edit', :sub_action => 'notifications'
+  map.account_notifications '/account/notifications', :controller => 'users', :action => 'edit', :sub_action => 'notifications'
   
   map.resources :users, :has_many => [:invitations,:comments], :member => { 
                           :unconfirmed_email => :get,
