@@ -6,9 +6,9 @@
 # This block defines defaults, shared for all environments.
 # You can override them individually under development, test or production.
 defaults: &DEFAULTS
-  # The domain from where your app is served from.
+  # The domain from where your app is served from. 
   app_domain: app.teambox.com
-  
+
   activities_per_page: 25
   
   # Configuration for outgoing mail
@@ -50,6 +50,8 @@ defaults: &DEFAULTS
   
   time_zone: UTC
 
+  asset_max_file_size: 50
+
 development:
   <<: *DEFAULTS
   app_domain: localhost:3000
@@ -63,6 +65,6 @@ test: &TEST
   <<: *DEFAULTS
   app_domain: 127.0.0.1
   allow_outgoing_email: false
-
+  asset_max_file_size: 1
 cucumber:
   <<: *TEST  

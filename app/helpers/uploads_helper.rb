@@ -1,4 +1,16 @@
 module UploadsHelper
+
+  def upload_form_for(project,upload,&proc)
+    raise ArgumentError, "Missing block" unless block_given?
+    form_for [project,upload], 
+      :html => { 
+        :id => 'edit_upload', 
+        :multipart => true, 
+        :style => "#{ 'display: none' if upload.errors.empty?}", 
+        :class => "upload_form app_form #{'form_error' unless upload.errors.empty?}" },
+        &proc
+  end
+  
   def upload_primer(project)
     render :partial => 'uploads/primer', :locals => { :project => project }
   end
@@ -13,8 +25,8 @@ module UploadsHelper
       :comment => comment }    
   end
 
-  def edit_side_upload_form(project,upload)
-    render :partial => 'uploads/side_edit', :locals => { :project => project, :upload => upload }
+  def upload_form(project,upload)
+    render :partial => 'uploads/form', :locals => { :project => project, :upload => upload }
   end
 
   def show_upload(upload)

@@ -16,8 +16,9 @@ class Upload < RoleRecord
 
   before_post_process :image?
 
-  validates_attachment_size :asset, :less_than => 10.megabytes
-
+  validates_attachment_size :asset, :less_than => APP_CONFIG['asset_max_file_size'].to_i.megabytes
+  validates_attachment_presence :asset
+  
   def image?
     !(asset_content_type =~ /^image.*/).nil?
   end

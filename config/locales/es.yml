@@ -462,7 +462,9 @@ es:
       select_a_file: Selecciona un archivo
     index:
       new_file: Subir un archivo
-    new_upload:
+    form:
+      presence: "You can't upload a blank file"
+      max_size: "File size can't exceed {{mb}}"      
       select_file: Seleccionar archivo
       description: Descripción <i>(opcional)</i>
       upload: Subir archivo

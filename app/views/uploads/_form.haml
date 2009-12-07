@@ -1,0 +1,15 @@
+-upload_form_for(project,upload) do |f|
+  .description.text_field
+    = f.label :description, t('.description')
+    = f.text_field :description
+  .file
+    = f.label :asset, t('.select_file')
+    = f.file_field :asset, :size => 20
+    - unless upload.asset.errors.empty?
+      %p
+        -if upload.asset.errors.has_key?(:presence)
+          %span=t('.presence')
+        -if upload.asset.errors.has_key?(:size)
+          %span=t('.max_size',:mb => upload.asset.errors[:size][:max])
+  .submit
+    = submit_tag t('.upload')

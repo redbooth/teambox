@@ -35,6 +35,7 @@ class UploadsController < ApplicationController
   
   def index
     @uploads = @current_project.uploads
+    @upload  = @current_project.uploads.new
   end
   
   def edit
@@ -61,15 +62,15 @@ class UploadsController < ApplicationController
       @comment = load_comment
       @upload.reload
       respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
-
     else
       respond_to do |f|          
         if @upload.save
           @current_project.log_activity(@upload,'create')
+          f.html { redirect_to(project_uploads_path(@current_project)) }
         else
-          flash[:error] = "Couldn't upload file"
+          @uploads = @current_project.uploads
+          f.html { render :index } 
         end   
-        f.html { redirect_to(project_uploads_path(@current_project)) }
       end
     end
   end

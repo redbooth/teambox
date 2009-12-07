@@ -7,7 +7,8 @@ class Page < ActiveRecord::Base
   belongs_to :project
   has_many :notes, :order => 'position'
   has_many :dividers, :order => 'position'
-    
+  has_many :page_uploads, :order => 'position'
+      
   attr_accessible :name, :description, :note_attributes
   
   def build_note(note = {})
