@@ -7,7 +7,6 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-    
     when /the home\s?page/
       '/'
       
@@ -24,16 +23,15 @@ module NavigationHelpers
       "/forgot"
 
     when /the project page/
-      "/projects/ruby_rockstars"
-
+      project_path(@current_project)
     when /the conversations page/
-      "/projects/ruby_rockstars/conversations"
-
+      project_conversations_path(@current_project)
     when /the task lists page/
-      "/projects/ruby_rockstars/task_lists"
-
+      project_task_lists_path(@current_project)
     when /the people page/
-      "/projects/ruby_rockstars/people"
+      project_people_path(@current_project)
+    when /the uploads page/        
+      project_uploads_path(@current_project)
       
     #when /the index page for (.+)/
     #  polymorphic_path(model($1))
