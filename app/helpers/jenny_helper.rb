@@ -76,7 +76,7 @@ module JennyHelper
       :loading => app_form_loading(action,*args),
       :html => {
         :id => js_id("#{action}_form",*args),
-        :class => "#{singular_name}_form",
+        :class => "#{singular_name}_form app_form",
         :style => 'display: none'},
         &proc)
   end
