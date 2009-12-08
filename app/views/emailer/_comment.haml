@@ -10,7 +10,7 @@
         = comment.user.name + ', '
       %span{ :style => 'color: rgb(150,150,150);' }
         = I18n.l(comment.created_at, :format => "%b %d &mdash; %I:%M %p")
-      = comment.body_html
+      ~ comment.body_html
 
     - unless comment.uploads.empty?
       %ul
