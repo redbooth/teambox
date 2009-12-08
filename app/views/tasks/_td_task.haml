@@ -9,4 +9,4 @@
           = due_on(task)
         - unless sub_action == 'mine'
           = "-" unless task.assigned.nil? || task.due_on.nil?
-          = link_to task.assigned.name, user_path(task.assigned) unless task.assigned.nil?
+          = link_to task.assigned.name, user_path(task.assigned.user) unless task.assigned.nil?
