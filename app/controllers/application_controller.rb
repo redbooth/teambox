@@ -95,7 +95,7 @@ class ApplicationController < ActionController::Base
           when 'show_conversations'
             name = Conversations.grab_name(params[:id])
         end  
-        @page_title = "&rarr; #{project_name} &rarr; #{ name ? name : translate_location_name }"
+        @page_title = "#{project_name} &rarr; #{ name ? name : translate_location_name }"
       else
         name = nil
         user_name = nil
@@ -105,7 +105,7 @@ class ApplicationController < ActionController::Base
           when 'show_users'
             user_name = current_user.name            
         end    
-        @page_title = "&rarr; #{ "#{user_name} &rarr;" if user_name } #{translate_location_name}"
+        @page_title = "#{ "#{user_name} &rarr;" if user_name } #{translate_location_name}"
       end    
     end
 end
