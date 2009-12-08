@@ -100,7 +100,7 @@ es:
       you_are_logged_in: "Ya tienes una cuenta de Teambox. Si quieres entrar como otro usuario, cierra la sesión e inténtalo de nuevo."
     create:
       thanks: ¡Gracias por registrarte!
-      error: "No hemos podido registear esa cuenta, ¡lo sentimos! Inténtalo de nuevo."
+      error: "No hemos podido registrar esa cuenta, ¡lo sentimos! Inténtalo de nuevo."
     edit:
       title_settings: Preferencias
       title_profile: Información de perfil
@@ -175,6 +175,7 @@ es:
       footer: "Los proyectos son una forma centralizada de colaborar, para que nunca más tengas que enviar emails a tu equipo."
     show:
       update_your_status: "¿Qué estás haciendo?"
+      text_styling: Estilos de texto
       invite_people: 'Invitar a alguien más...'
       new_task_list_link: Nueva lista de tareas
       people_in_project: Personas en este proyecto

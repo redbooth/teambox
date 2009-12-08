@@ -175,6 +175,7 @@ en:
       footer: "Projects are a centralized way of collaborating, so you'll never need to email your team again."
     show:
       update_your_status: "Update your status..."
+      text_styling: Text Styling
       invite_people: 'Invite people...'
       new_task_list_link: New Task List
       people_in_project: People in this project

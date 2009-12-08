@@ -1,8 +1,11 @@
 - unless @pending_projects.empty?
   .invitations
     = list_pending_invites(@pending_projects)
+
 %h2{ :style => 'margin: 0px'}
-  =t('.update_your_status')
+  = t('.update_your_status')
+  %span.help
+    = link_to t('.text_styling'), 'http://help.teambox.com/faqs/advanced-features/textile', :target => '_blank'
 = new_comment_form(@current_project,@current_project.comments.new)
 
 #activities

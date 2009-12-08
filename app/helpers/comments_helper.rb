@@ -76,19 +76,18 @@ module CommentsHelper
     target  = options[:target]  ||= nil
     if target.nil?
       form_url = [project,comment]
-      return unless project.editable?(current_user)
     elsif target.is_a?(Task)
       form_url = [project,target.task_list,target,comment]
-      return unless target.editable?(current_user)
     else
       form_url = [project,target,comment]
-      return unless target.editable?(current_user)
     end
-    render :partial => 'comments/new',
-      :locals => { :target => target,
-        :message => message,
-        :form_url => form_url, 
-        :comment => comment }
+    if project.editable?(current_user)
+      render :partial => 'comments/new',
+        :locals => { :target => target,
+          :message => message,
+          :form_url => form_url, 
+          :comment => comment }
+    end
   end
   
   def list_comments(comments,target)
