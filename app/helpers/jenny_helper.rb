@@ -55,7 +55,7 @@ module JennyHelper
       page << "Form.reset('#{form_id}')"
       page << "if($('#{form_id}').hasClassName('form_error')){ $('#{form_id}').removeClassName('form_error') }"
       page.select("##{form_id} .error").each {|e|e.remove}
-      page << "if($(#{form_id}).getStyle('display') == 'block' && $(#{form_id}).down('.focus')){$('#{form_id}').auto_focus()}"
+      page << "if($('#{form_id}').getStyle('display') == 'block' && $('#{form_id}').down('.focus')){$('#{form_id}').auto_focus()}"
     end
   end
 
