@@ -86,6 +86,25 @@ describe Project do
     end
   end
   
+  describe "deleting projects" do
+    before do
+      @project = Factory(:project)
+      @project.new_comment(@project.user, @project, :body => 'wall comment').save!
+      @project.new_conversation(@project.user, :name => 'conversation', :body => 'body').save!
+      @project.new_task_list(@project.user, :name => 'task list').save!
+#      @project.new_page(@project.user, :name => 'project page').save!
+#      @project.new_upload(@project.user).save!
+      @project.reload
+      @project.comments.reload
+    end
+    
+    it "should have some elements" do
+      @project.comments.size.should == 2
+      @project.conversations.
+    end
+    
+  end
+
   describe "factories" do
     it "should generate Ruby Rockstars project with Mislav in it" do
       project = Factory.create(:ruby_rockstars)

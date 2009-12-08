@@ -4,17 +4,19 @@ class Conversation < RoleRecord
 
   serialize :watchers_ids
 
-  attr_accessible :name
+  attr_accessible :name, :body
   attr_accessor :body
 
   def after_create
     self.project.log_activity(self,'create')
     self.add_watcher(self.user) 
 
-    comment = self.comments.new do |comment|
-      comment.project_id = self.project_id
-      comment.user_id = self.user_id
-      comment.body = self.body
+    if body
+      comment = self.comments.new do |comment|
+        comment.project_id = self.project_id
+        comment.user_id = self.user_id
+        comment.body = self.body
+      end
     end
 
     comment.save!
