@@ -8,7 +8,7 @@ log/*.log
 tmp/*
 public/avatars/*
 public/stylesheets/*.css
-public/stylesheets/pages/
-public/stylesheets/tasks/
+public/stylesheets/pages/*.css
+public/stylesheets/tasks/*.css
 uploads/*
 webrat-*
