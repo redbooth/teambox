@@ -181,7 +181,7 @@ es:
       subscribe: Suscríbete a este proyecto
       rss:
         title: "{{name}}"
-        description: "Recent activities for the project {{name}}"
+        description: "Actividad reciente para {{name}}"
     fields:
       name: Nombre
       name_description: "Escoge un título breve y explicativo. Por ejemplo: Taggart Transcontinental"
@@ -215,7 +215,7 @@ es:
     invitation:
       invited_user: "{{inviter}} ha invitado a <b>{{invitee}}</b> al proyecto."
       invited_email: "{{inviter}} ha invitado a <b>{{email}}</b> al proyecto."
-      time_ago: "({{time_ago_in_words}} ago)"
+      time_ago: "(hace {{time_ago_in_words}})"
       resend: Reenviar email de invitación
       pending: "Se ha enviado un email a este usuario, pero aún no ha confirmado"
     sent:
@@ -236,7 +236,7 @@ es:
       submit: Enviar
   conversations:
     actions:
-      confirm_delete: Are you sure you to delete this conversation?
+      confirm_delete: Estar seguro de querer borrar esta conversación?
     link:
       edit: Editar
     fields:
@@ -268,7 +268,7 @@ es:
       footer1: "Las conversaciones son perfectas para <b>compartir un diseño</b>, <b>decidir una fecha</b> para reunirse o <b>informar</b> sobre las noticias del proyecto."
       footer2: "Estando ordenadas por hilos, es fácil volver atrás en el tiempo y ver qué ficheros se enviaron y qué dijo cada miembro del equipo. En Teambox, <b>colaborar</b> genera una <b>trazabilidad</b> de qué se hizo."
     edit:
-      sumbit: 'Actualizar conversación'
+      sumbit: Actualizar conversación
     column:
       new_conversation: Nueva conversación
       subscribe: Suscríbete al feed
@@ -338,7 +338,7 @@ es:
     index:
       pages_in_this_project: Páginas en este proyecto
       rss:
-        title: Pages
+        title: Páginas
         description: "Páginas del proyecto {{name}}"
     primer:
       empty: Aún no hay ninguna página en este proyecto.
@@ -380,8 +380,8 @@ es:
   task_lists:
     errors:
       name:
-        cant_be_blank: Name must not be blank
-        too_long: 'Name is must be shorter than 255 characters'
+        cant_be_blank: El nombre no puede estar vacío
+        too_long: 'El nombre no puede superar 255 caracteres'
     archived:
       title: Todas las tareas archivadas
       description: "Estas son las tareas archivadas, al haber sido completadas o rechazadas."
@@ -463,8 +463,8 @@ es:
     index:
       new_file: Subir un archivo
     form:
-      presence: "You can't upload a blank file"
-      max_size: "File size can't exceed {{mb}}"      
+      presence: "No puedes subir un archivo vacío"
+      max_size: "El tamaño máximo de archivo son {{mb}}"
       select_file: Seleccionar archivo
       description: Descripción <i>(opcional)</i>
       upload: Subir archivo
@@ -497,7 +497,7 @@ es:
       projects: Proyectos
     navigation:
       welcome: Bienvenido
-      all_projects: 'Proyectos'
+      all_projects: Proyectos
       new_project: +
     project_navigation:
       overview: Resumen
@@ -751,12 +751,12 @@ es:
         one:  "más de 1 año" 
         other: "más de {{count}} años"
     prompts:
-      year:   "Year"
-      month:  "Month"
-      day:    "Day"
-      hour:   "Hour"
-      minute: "Minute"
-      second: "Seconds"
+      year:   "Año"
+      month:  "Mes"
+      day:    "Día"
+      hour:   "Hora"
+      minute: "Minuto"
+      second: "Segundos"
 
   activerecord:
     models:
@@ -819,7 +819,7 @@ es:
         finish_on: Fecha fin
       task:
         name: Nombre
-        status: Status
+        status: Estado
         due_on: Fecha límite
       comment:
         body: Cuerpo
