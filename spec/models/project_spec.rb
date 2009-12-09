@@ -92,15 +92,29 @@ describe Project do
       @project.new_comment(@project.user, @project, :body => 'wall comment').save!
       @project.new_conversation(@project.user, :name => 'conversation', :body => 'body').save!
       @project.new_task_list(@project.user, :name => 'task list').save!
-#      @project.new_page(@project.user, :name => 'project page').save!
-#      @project.new_upload(@project.user).save!
+      @project.new_page(@project.user, :name => 'project page').save!
+      #@project.new_upload(@project.user).save!
       @project.reload
       @project.comments.reload
     end
     
     it "should have some elements" do
-      @project.comments.size.should == 2
-      @project.conversations.
+      Project.count.should == 1
+      Comment.count.should == 2
+      Conversation.count.should == 1
+      TaskList.count.should == 1
+      Page.count.should == 1
+      Person.count.should == 1
+    end
+    
+    it "destroy all its comments, conversations, task lists, pages, uploads and people" do
+      @project.destroy
+      Project.count.should == 0
+      Comment.count.should == 0
+      Conversation.count.should == 0
+      TaskList.count.should == 0
+      Page.count.should == 0
+      Person.count.should == 0
     end
     
   end

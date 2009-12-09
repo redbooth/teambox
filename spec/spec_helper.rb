@@ -61,3 +61,7 @@ def route_matches(path, method, params)
     params_from(method.to_sym, path).should == params
   end
 end
+
+def generate_file(filename, size = 1024)
+  File.open(filename,"wb") { |f| f.seek(size-1); f.write("\0") }
+end
