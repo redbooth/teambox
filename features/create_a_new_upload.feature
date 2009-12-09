@@ -17,6 +17,9 @@ Feature Uploading a file
      
    Scenario: Mislav tries to upload a file thats too big (that's what she said)
      Given I am on the uploads page
-      When I attach the file at "features/support/sample_files/dragon.jpg" to "upload_asset"
+      When I attach a large file called "rockets.jpg" to "upload_asset"
        And I press "Upload file"
-      Then I should see "File size can't exceed 1 bytes" within ".form_error"  
+      Then I should see "File size can't exceed 1 MB" within ".form_error"  
+      
+      
+      

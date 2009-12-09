@@ -120,10 +120,15 @@ When /^I attach the file at "([^\"]*)" to "([^\"]*)"$/ do |path, field|
   attach_file(field, path)
 end
 
-Then /^I should see an image "([^\"]*)" within "([^\"]*)"$/ do |src, selector|
-  within(selector) do |content|
-    content.should have_selector("img", :src => src)
-  end
+When /^I attach a large file called "([^\"]*)" to "([^\"]*)"$/ do |name,field|
+  size = (1024*1024)*5
+  File.open("#{RAILS_ROOT}/tmp/cucumber/example_files/#{name}","wb") { |f| f.seek(size-1); f.write("\0") }
+  attach_file(field, "#{RAILS_ROOT}/tmp/cucumber/example_files/#{name}")
+end
+
+Then /^I should see "([^\"]*)"$/ do |text|
+  response.should contain(text)
+  response.should_not have_tag('span.translation_missing'), :message => "Missing translation"
 end
 
 Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
@@ -185,7 +190,6 @@ end
 Then /^I should be on (.+)$/ do |page_name|
   URI.parse(current_url).path.should == path_to(page_name)
 end
-
 
 Then /^show me the page$/ do
   save_and_open_page

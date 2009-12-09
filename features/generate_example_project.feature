@@ -38,4 +38,3 @@ Feature Creating an example project
     Then I should see "Posting to the first example project"
 
   Scenario: I should not have the right to invite people to the example project
-    Then I should write the story for this
