@@ -19,6 +19,8 @@
     = list_users_statuses(@current_project.users)
     .invite_people
       = link_to t('.invite_people'), project_people_path(@current_project)
+  .tip
+    = t('.tip')
   .subscribe
     = link_to t('.subscribe'), user_rss_token(project_path(@current_project, :format => :rss))
 

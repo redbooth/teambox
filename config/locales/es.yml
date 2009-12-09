@@ -180,6 +180,7 @@ es:
       new_task_list_link: Nueva lista de tareas
       people_in_project: Personas en este proyecto
       subscribe: Suscríbete a este proyecto
+      tip: "Si mencionas el @usuario de alguien, recibirán un email con tu mensaje"
       rss:
         title: "{{name}}"
         description: "Actividad reciente para {{name}}"
