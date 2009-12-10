@@ -4,7 +4,7 @@ class SocialNetwork < ActiveRecord::Base
   TYPES = ['Personal','Business','Other']
 
   def get_network_type
-    NETWORK_TYPES[account_type]
+    NETWORK_TYPES[account_network_type]
   end
   
   def get_type
