@@ -1,4 +1,5 @@
 class InvitationsController < ApplicationController
+
   def index
     if @current_project
       @invitations = @current_project.invitations
@@ -18,17 +19,30 @@ class InvitationsController < ApplicationController
   end
   
   def create
-    @invitation = @current_project.invitations.new params[:invitation]
-    @invitation.user = current_user
+    if params[:login] # using a link to invite directly a user
+      @user = User.find(params[:login])
+      user_or_email = @user.login
+    elsif params[:invitation]
+      user_or_email = params[:invitation][:user_or_email]
+    else
+      flash[:error] = "Invalid invitation"
+      redirect_to project_people_path(@current_project)
+      return
+    end
     
+    @invitation = @current_project.invitations.new(:user_or_email => user_or_email)
+    @invitation.user = current_user
+
     respond_to do |f|
       if @invitation.save
         f.html { redirect_to project_people_path(@current_project) }
+        f.js
       else
         f.html do
           flash[:error] = @invitation.errors.full_messages.first
           redirect_to project_people_path(@current_project)
         end
+        f.js { render :text => "alert('Error inviting #{@user.name}. Maybe you are trying to invite an existing user.');" }
       end
     end
   end
@@ -74,4 +88,5 @@ class InvitationsController < ApplicationController
         redirect_to user_invitations_path(current_user)
       end
     end
+
 end

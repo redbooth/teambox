@@ -228,6 +228,7 @@ en:
       time_ago: "({{time_ago_in_words}} ago)"
       resend: Re-send invitation email
       pending: "An email was sent to this user, but they still haven't confirmed."
+      discard: Discard invitation
     sent:
       email_sent: "<b>We just sent a notification email to this user with a link to accept your project invitation</b>. If they can't find the email, make sure it was not classified as spam or try a different email address. If problems persist, please contact our staff."
     pending:
@@ -239,11 +240,13 @@ en:
     index_user:
       title: Pending invitations
       no_invitations: "You have no pending project invitations."
-    new:
-      username_or_email: "username or email"
+    search:
+      username_or_email: "Enter your teammate's username or email"
       invite_people: Invite people to this project
       invite: Invite      
       submit: Send
+    recent:
+      invite: Invite {{username}}
   conversations:
     actions:
       confirm_delete: Are you sure you to delete this conversation?

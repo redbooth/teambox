@@ -18,10 +18,11 @@ module InvitationsHelper
   end
   
   def delete_invitation_link(invitation)
-    return unless invitation.editable?(current_user)
-    link_to_remote trash_image,
-      :url => project_invitation_path(invitation.project,invitation),
-      :method => :delete
+    if invitation.editable?(current_user)
+      link_to_remote t('.discard'),
+        :url => project_invitation_path(invitation.project,invitation),
+        :method => :delete
+    end
   end
   
   def new_invitation_link(project)
@@ -29,11 +30,12 @@ module InvitationsHelper
   end
   
   def resend_invitation_link(project,invitation)
-    return unless invitation.editable?(current_user)
-    link_to_remote t('.resend'),
-      :url => resend_project_invitation_path(project,invitation),
-      :loading => show_loading('resend_invitation',invitation.id),
-      :html => { :id => "resend_invitation_#{invitation.id}_link" }
+    if invitation.editable?(current_user)
+      link_to_remote t('.resend'),
+        :url => resend_project_invitation_path(project,invitation),
+        :loading => show_loading('resend_invitation',invitation.id),
+        :html => { :id => "resend_invitation_#{invitation.id}_link" }
+    end
   end
   
   def invitation_sent(invitation)
@@ -42,11 +44,44 @@ module InvitationsHelper
   end
 
   def invite_form(project,invitation)
-    return unless project.editable?(current_user)
-    render :partial => 'invitations/new', :locals => {
-      :project => project,
-      :invitation => invitation }
+    if project.editable?(current_user)
+      render :partial => 'invitations/new',
+        :locals => {
+          :project => project,
+          :invitation => invitation }
+    end
   end
 
+  def invite_by_search(project,invitation)
+    render :partial => 'invitations/search',
+      :locals => {
+        :project => project,
+        :invitation => invitation }
+  end
+
+  def invite_recent(project,recent_users)
+    render :partial => 'invitations/recent',
+      :locals => {
+        :project => project,
+        :recent_users => recent_users }
+  end
   
+  def invite_user(project,user)
+    link_to_remote t('.invite', :username => user.name),
+      :url => create_project_invitation_path(project,user),
+      :loading => invite_user_loading(project,user),
+      :html => {
+        :method => :create,
+        :id => invitation_id(:item,project,user),
+        :class => 'invite_user_link' }
+  end
+  
+  def invite_user_loading(project,user)
+    update_page do |page|
+    end
+  end
+  
+  def invitation_id(element,project,user)
+    js_id(element,project,user)
+  end
 end

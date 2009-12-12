@@ -1,0 +1,6 @@
+.invite_recent
+  - for user in recent_users
+    .invite_user_link
+      = micro_avatar(user)
+      = invite_user(project,user)
+  .clear

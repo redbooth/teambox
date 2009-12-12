@@ -1,13 +1,17 @@
 class PeopleController < ApplicationController
   before_filter :load_person, :only => [:update,:destroy]
+
   def index
     @people = @current_project.people
     @invitations = @current_project.invitations
+    @contacts = @current_user.contacts_not_in_project(@current_project)
+    
+    invited_user_ids = @invitations.collect { |i| i.invited_user_id }
+    @contacts.reject! { |c| invited_user_ids.include?(c.id) }
   end
   
   def create
-    user   = User.find_by_email params[:search]
-    user ||= User.find_by_login params[:search]
+    user = User.find_by_email(params[:search]) || User.find_by_login(params[:search])
 
     if user
       @current_project.add_user(user,current_user)
@@ -19,7 +23,7 @@ class PeopleController < ApplicationController
       redirect_to project_people_path
     end
   end
-  
+
   def update
     @person.update_attributes(params[:person])
     respond_to {|f|f.js}

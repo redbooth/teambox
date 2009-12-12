@@ -93,6 +93,21 @@ div.upload_avatar
     a:hover
       :text-decoration none
 
+.new_user_avatar
+  :float left
+  :width 48px
+  :height 48px
+  :margin-right 10px
+  :background rgb(200,240,200)
+  :-moz-border-radius 8px
+  :-webkit-border-radius 8px
+  p
+    :color rgb(150,190,150)
+    :font-size 24px
+    :margin
+      :left 15px
+      :top 7px
+
 .thumb_avatar
   :float left
   :width 48px
@@ -102,6 +117,21 @@ div.upload_avatar
     :display block
     :width 48px
     :height 48px
+    :margin-right 5px
+    &.round_corners
+      :background url(/images/avatar_thumb_corners.png)
+    &.round_corners:hover
+      :background url(/images/avatar_thumb_corners_hover.png)
+
+.micro_avatar
+  :float left
+  :width 24px
+  :height 24px
+  :margin-right 10px
+  a
+    :display block
+    :width 24px
+    :height 24px
     :margin-right 5px
     &.round_corners
       :background url(/images/avatar_thumb_corners.png)

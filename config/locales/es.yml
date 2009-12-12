@@ -228,6 +228,7 @@ es:
       time_ago: "(hace {{time_ago_in_words}})"
       resend: Reenviar email de invitación
       pending: "Se ha enviado un email a este usuario, pero aún no ha confirmado"
+      discard: Descartar invitación
     sent:
       email_sent: "<b>Hemos enviado un email avisando al usuario para que acepte tu invitación</b>. Si no pueden encontrar el email, asegúrate de que no se ha clasificado como spam. Si el problema persiste, escríbenos un email."
     pending:
@@ -239,11 +240,13 @@ es:
     index_user:
       title: Invitaciones pendientes
       no_invitations: "No tienes ninguna invitación pendiente."
-    new:
-      username_or_email: "email o nombre de usuario"
-      invite_people: Invitar al proyecto
+    search:
+      username_or_email: "Introduce el email o nombre de usuario de tu compañero"
+      invite_people: Invitar usuarios al proyecto
       invite: Buscar e invitar
       submit: Enviar
+    recent:
+      invite: Invitar a {{username}}
   conversations:
     actions:
       confirm_delete: Estar seguro de querer borrar esta conversación?

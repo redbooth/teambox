@@ -35,7 +35,7 @@ module PageDividersHelper
   end
   
   def new_page_divider_link(project,page)
-    link_to_function "<span>#{t('.new_divider')}</span>", show_divider_form, :class => 'add_button', :id => 'divider_button'
+    link_to_function content_tag(:span,t('.new_divider')), show_divider_form, :class => 'add_button', :id => 'divider_button'
   end
   
   def new_loading_form

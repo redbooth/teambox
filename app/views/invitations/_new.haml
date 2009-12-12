@@ -1,9 +1,5 @@
-- form_for [project,invitation], :person do |f|
-  %h2= t('.invite_people')
-  .text_field
-    = hidden_field_tag 'people','true'
-    = f.label :user_or_email, t('.username_or_email')
-    = f.text_field :user_or_email
-  .submit
-    = f.submit t('.invite')
+.invite_box
+  = invite_by_search(project, invitation)
+  = invite_recent(project, Array(@contacts[0,4]))
+  = invite_recent(project, Array(@contacts[4,4]))
   .clear

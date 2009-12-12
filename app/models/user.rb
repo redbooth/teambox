@@ -110,4 +110,26 @@ class User < ActiveRecord::Base
     self.update_attribute(:updated_at, Time.now)
   end
 
+  def contacts_not_in_project(project)
+    conditions = ["project_id IN (?)", Array(self.projects).collect{ |p| p.id } ]
+
+    people = Person.find(:all,
+      :select => 'user_id',
+      :conditions => conditions,
+      :limit => 300)
+
+    user_ids_in_project = project.users.collect { |u| u.id }
+
+    user_ids = people.reject! do |p|
+      user_ids_in_project.include?(p.user_id)
+    end.collect { |p| p.user_id }.uniq
+    
+    conditions = ["id IN (?) AND deleted_at IS NULL", user_ids]
+    
+    User.find(:all,
+      :conditions => conditions,
+      :order => 'updated_at ASC',
+      :limit => 10)
+  end
+
 end

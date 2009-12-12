@@ -11,7 +11,7 @@ class Invitation < RoleRecord
   validates_presence_of :user
 
   validates_each :user_or_email do |record, attr, value|
-    invited_user = User.find_by_username_or_email value
+    invited_user ||= User.find_by_username_or_email value
     
     if invited_user
       # existing Teambox user

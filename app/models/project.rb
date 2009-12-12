@@ -26,7 +26,7 @@ class Project < ActiveRecord::Base
     project.has_many :activities
   end
 
-  has_many :users, :through => :people, :order => 'updated_at DESC'
+  has_many :users, :through => :people, :order => 'users.updated_at DESC'
 
   has_permalink :name
 
