@@ -200,7 +200,7 @@ es:
       permalink_prefix: "http://{{domain}}/projects/"
     new:
       title: Crear un proyecto
-      submit: Crear proyecto and empezar a invitar usuarios
+      submit: Crear proyecto y empezar a invitar usuarios
       new_project: Nuevo proyecto...
       define1: Un proyecto es un grupo compartido con tus contactos.
       define2: "Dentro de un proyecto, cada miembro puede:"
@@ -406,6 +406,7 @@ es:
       reorder: Reordenar
     index:
       add_link: Nueva lista de tareas
+      empty: No hay tareas en esta categoría
     primer:
       empty: Aún no hay ninguna conversación en este proyecto.
       create_first: Crea la primera lista de tareas!

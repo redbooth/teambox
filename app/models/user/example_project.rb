@@ -81,7 +81,7 @@ class User
       if user = User.find_by_login(login)
         user
       else
-        pass = Digest::SHA1.hexdigest(rand(999999999).to_s)
+        pass = ActiveSupport::SecureRandom.hex(10)
         user = User.new(
           :login => login,
           :email => email,

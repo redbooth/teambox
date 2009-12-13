@@ -21,7 +21,7 @@ class User
   end
   
   def generate_login_code!
-    self.login_token = Digest::SHA1.hexdigest(rand(999999999).to_s + self.salt)
+    self.login_token = ActiveSupport::SecureRandom.hex(20)
     self.login_token_expires_at = 1.month.from_now
     self.save!
   end

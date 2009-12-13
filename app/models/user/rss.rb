@@ -19,6 +19,6 @@ class User
   protected
   
     def generate_rss_token
-      Digest::SHA1.hexdigest(rand(999999999).to_s)
+      ActiveSupport::SecureRandom.hex(20)
     end
 end

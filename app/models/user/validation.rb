@@ -22,19 +22,19 @@ class User
   end
 
   def login=(value)
-    write_attribute :login, (value ? value.downcase : nil)
+    write_attribute :login, value.try(:downcase)
   end
 
   def email=(value)
-    write_attribute :email, (value ? value.downcase : nil)
+    write_attribute :email, value.try(:downcase)
   end
 
   def name
-    "#{self.first_name} #{self.last_name}"
+    "#{first_name} #{last_name}"
   end
 
   def short_name
-    "#{self.first_name[0,1]}. #{self.last_name}"
+    "#{first_name[0,1]}. #{last_name}"
   end
 
 end

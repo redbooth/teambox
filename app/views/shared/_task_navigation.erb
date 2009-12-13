@@ -13,11 +13,13 @@ render_tabnav :user do
       t.links_to project_my_task_lists_path(project)
       t.highlights_on :controller => 'task_lists', :action => 'index', :sub_action => 'mine'
     end
-        
-    add_tab do |t|
-      t.named t('.archived_tasks', :count => project.tasks.archived.size)
-      t.links_to project_archived_task_lists_path(project)
-      t.highlights_on :controller => 'task_lists', :action => 'index', :sub_action => 'archived'
+
+    if project.tasks.archived.size > 0
+      add_tab do |t|
+        t.named t('.archived_tasks', :count => project.tasks.archived.size)
+        t.links_to project_archived_task_lists_path(project)
+        t.highlights_on :controller => 'task_lists', :action => 'index', :sub_action => 'archived'
+      end
     end
     
 end

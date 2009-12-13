@@ -50,7 +50,7 @@ class Invitation < RoleRecord
   end
 
   def before_save
-    self.token ||= Digest::SHA1.hexdigest(rand(999999999).to_s) + Time.new.to_i.to_s
+    self.token ||= ActiveSupport::SecureRandom.hex(20)
   end
   
   def after_save

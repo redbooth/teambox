@@ -5,7 +5,9 @@
 -content_for :column do
   = task_list_column(@current_project,@task_lists,@sub_action,@task_list)
 
-- unless @task_lists.empty?
-  =main_task_list(@current_project,@task_lists,@sub_action)
-- else
+- if @task_lists.any?
+  = main_task_list(@current_project,@task_lists,@sub_action)
+- elsif @sub_action == 'all'
   = task_list_primer(@current_project)
+- else
+  %p= t('.empty')
