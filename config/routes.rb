@@ -39,6 +39,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.show_more 'activities/:id/show_more', :controller => 'activities', :action => 'show_more', :method => :get
+  map.show_new  'activities/:id/show_new',  :controller => 'activities', :action => 'show_new',  :method => :get
   
   map.resources :projects,
       :has_many => [:pages, :people],

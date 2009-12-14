@@ -27,6 +27,17 @@ module ProjectsHelper
    
   def project_primer
     render :partial => 'projects/primer'
-  end  
-  
+  end
+
+  def reset_autorefresh
+    "clearInterval(autorefresh)"
+  end
+
+  def autorefresh(activities)
+    ajax_request = remote_function(:url => show_new_path(@activities.first.id))
+        
+    interval = APP_CONFIG['autorefresh_interval']*1000
+
+    "autorefresh = setInterval(\"#{ajax_request}\", #{interval})"
+  end
 end

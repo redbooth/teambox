@@ -10,6 +10,7 @@ defaults: &DEFAULTS
   app_domain: app.teambox.com
 
   activities_per_page: 25
+  autorefresh_interval: 60 # seconds
   
   # Configuration for outgoing mail
   # By default, will send emails in production mode but not in development.

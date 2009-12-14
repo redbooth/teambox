@@ -9,9 +9,15 @@
     = list_pending_invites(@pending_projects)
 
 - unless @activities.empty? and @projects.empty?
-  %h2= t('.title')
+  %h2
+    = t('.title')
+    %span= t('.refreshes')
+
   #activities
     = list_activities(@activities)
     = show_more_button(@activities)
+
+  = javascript_tag autorefresh(@activities)
+
 - else
   = project_primer

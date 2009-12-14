@@ -3,6 +3,7 @@
 //= require <effects>
 //= require <controls>
 //= require <dragdrop>
+//= require <sound>
 //= require <lowpro>
 //= require <cropper>
 //= require <weakling>

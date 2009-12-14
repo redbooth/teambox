@@ -1,0 +1,9 @@
+if @activities.any?
+  page.insert_html :top, :activities, :partial => 'activities/activity', :collection => @activities
+  page[:activities].visual_effect :highlight, :duration => 3
+  
+  page << reset_autorefresh
+  page << autorefresh(@activities)
+  page << "Sound.play('/sounds/laser.wav')"
+  
+end

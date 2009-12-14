@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   
   def index
     @projects = current_user.projects.find :all #, :select => 'projects.id, name'
-    @activities = Project.get_activities_for @projects, APP_CONFIG['activities_per_page']
+    @activities = Project.get_activities_for @projects
     @last_activity = @activities.last
     @pending_projects = current_user.invitations
 
@@ -17,7 +17,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @activities = Project.get_activities_for @current_project, APP_CONFIG['activities_per_page']
+    @activities = Project.get_activities_for @current_project
     @last_activity = @activities.last
     @pending_projects = current_user.invitations
     

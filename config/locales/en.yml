@@ -167,6 +167,7 @@ en:
       projects: My Projects
       subscribe: Subscribe to the news feed
       new_project: New Project
+      refreshes: Refreshes every minute
       rss:
         title: Projects Overview
         description: Overview of all your projects

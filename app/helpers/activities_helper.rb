@@ -94,4 +94,5 @@ module ActivitiesHelper
       render :partial => 'activities/show_more'
     end
   end
+
 end

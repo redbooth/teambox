@@ -9,10 +9,26 @@ class ActivitiesController < ApplicationController
         return
       end
     else
-      @target = current_user.projects.find :all #, :select => 'projects.id, name'
+      @target = current_user.projects.find :all
     end
 
-    @activities = Project.get_activities_for @target, APP_CONFIG['activities_per_page'], params[:id]
+    @activities = Project.get_activities_for @target, :before => params[:id]
+    @last_activity = @activities.last
+    
+    respond_to { |f| f.js }
+  end
+
+  def show_new
+    if params[:project_id]
+      unless @target = @current_user.projects.find(params[:project_id])
+        not_found
+        return
+      end
+    else
+      @target = current_user.projects.find :all
+    end
+    
+    @activities = Project.get_activities_for @target, :after => params[:id]
     @last_activity = @activities.last
     
     respond_to { |f| f.js }

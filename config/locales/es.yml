@@ -167,6 +167,7 @@ es:
       projects: Mis proyectos
       subscribe: Suscríbete al feed de actividades
       new_project: Nuevo proyecto
+      refreshes: Actualiza cada minuto
       rss:
         title: Teambox
         description: Actividad en todos tus proyectos
