@@ -6,8 +6,6 @@
   = task_list_column(@current_project,@task_lists,@sub_action,@task_list)
 
 - if @task_lists.any?
-  = main_task_list(@current_project,@task_lists,@sub_action)
+  =tabular_task_lists(@current_project,@task_lists,@sub_action)
 - elsif @sub_action == 'all'
   = task_list_primer(@current_project)
-- else
-  %p= t('.empty')

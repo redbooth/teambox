@@ -14,13 +14,14 @@ class CommentsController < ApplicationController
     if @comment.save
       @comment.save_uploads(params)
       
-      if @target.is_a? Task
+      if @target.is_a?(Task)
         @comment.reload
         @task = @comment.target
+        @task_list = @task.task_list
         @new_comment = @current_project.comments.new
         @new_comment.target = @task
-        @new_comment.status = @task.status    
-      elsif @target.is_a? TaskList
+        @new_comment.status = @task.status
+      elsif @target.is_a?(TaskList)
         @task_list = @comment.target
       elsif @target.is_a? Conversation
         @conversation = @comment.target
@@ -75,13 +76,13 @@ class CommentsController < ApplicationController
     def assign_project_target
       if params.has_key?(:task_id)
         t = Task.find(params[:task_id])
+        t.previous_status = t.status
+        t.previous_assigned_id = t.assigned_id
         t.status = params[:comment][:status]
-        ## ~ AB 
-        ## I shouldn't have to assign the assigned person here
-        ## In comment.rb it should be accepting the accepts_nested_attributes_for :target
-        ## but it won't take it, maybe because its a polymorphic association?
-        ## If anyone could fix this it'd be much appreciated
         t.assigned_id = params[:comment][:target_attributes][:assigned_id]
+        #if t.archived? && [Task::STATUSES[:new],Task::STATUSES[:open],Task::STATUSES[:hold]].include?(t.status)
+        #  t.archived = false 
+        # end
         t
       elsif params.has_key?(:task_list_id)
         TaskList.find(params[:task_list_id])

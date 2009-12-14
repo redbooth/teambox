@@ -326,9 +326,11 @@ es:
     archive_box:
       you_are_done: Parece que ya has terminado con esta tarea.
       archive: Archivar tarea
+      reopen: Reopen this task
     unarchive_box:
       task_is_closed: Esta tarea está cerrada y archivada
       unarchive: Recuperar como una tarea activa
+      reopen: Reopen this task      
     overdue: "{{days}} días tarde"
     status:
       new: nueva
@@ -463,7 +465,7 @@ es:
       commented_on_a_task_list: "-"
       confirm_delete: Seguro que quieres borrar este comentario?
     new:
-      assigned_to_nobody: '--- Sin asignar ---'
+      assigned_to_nobody: 'Unassigned'
       assigned_to: "Asignado a:"
       submit: Publicar
     edit:

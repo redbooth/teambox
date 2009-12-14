@@ -4,11 +4,13 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
   belongs_to :target, :polymorphic => true, :counter_cache => true
+  belongs_to :assigned, :class_name => 'Person'
+  belongs_to :previous_assigned, :class_name => 'Person'  
   accepts_nested_attributes_for :target
   
   acts_as_paranoid
     
-  attr_accessible :body, :hours, :status, :user_id, :target_attributes
+  attr_accessible :body, :status, :previous_status, :user_id, :target_attributes, :assigned, :previous_assigned
   formats_attributes :body
 
   named_scope :ascending, :order => 'created_at ASC'
@@ -18,10 +20,18 @@ class Comment < ActiveRecord::Base
 
   attr_accessor :activity
 
+  def before_create
+    if self.target.is_a?(Task)
+      self.previous_status = target.previous_status
+      self.assigned = target.assigned
+      self.previous_assigned_id = target.previous_assigned_id
+    end  
+  end
+
   def after_create
     self.target.reload
 
-    if self.target_type == 'User'
+    if self.target.is_a?(User)
       self.activity = target.log_activity(self,'create')
     else
       target.last_comment_id = id
@@ -56,8 +66,48 @@ class Comment < ActiveRecord::Base
     end
   end
 
+  def previously_closed?
+    [Task::STATUSES[:rejected],Task::STATUSES[:resolved]].include?(previous_status)
+  end
+  
+  def transition?
+    status_transition? || assigned_transition?
+  end
+    
+  def assigned_transition?
+    assigned != previous_assigned
+  end
+  
+  def status_transition?
+    status != previous_status
+  end
+
+  def assigned?
+    !assigned.nil?    
+  end
+
+  def previous_assigned?
+    !previous_assigned.nil?
+  end
+
+  def status_open?
+    Task::STATUSES[:open] == status
+  end
+
+  def previous_status_open?
+    Task::STATUSES[:open] == previous_status
+  end
+  
   def status_name
-    Task::STATUSES[status.to_i].underscore
+    key = nil
+    Task::STATUSES.each{|k,v| key = k.to_s if status.to_i == v.to_i } 
+    key
+  end
+
+  def previous_status_name
+    key = nil
+    Task::STATUSES.each{|k,v| key = k.to_s if previous_status.to_i == v.to_i } 
+    key
   end
 
   def day

@@ -1,4 +1,6 @@
-.archive
+.archive#archive_box
   %p
     = t('.task_is_closed')
   = unarchive_task_button(project,task_list,task)
+  = t('common.or')
+  = reopen_task_button(project,task_list,task)

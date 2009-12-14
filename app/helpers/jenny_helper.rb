@@ -1,7 +1,6 @@
 module JennyHelper
   #### AB - THIS MODULE WILL BE REFACTORED INTO A PLUGIN
 
-
   ## This generates id paths to be used for javascript.
   ##
   ##  eg. js_id(:edit_header,@project,@tasklist) => project_21_task_list_12_edit_header

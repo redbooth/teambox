@@ -1,0 +1,5 @@
+page.replace 'archive_box', new_comment_form(@current_project,@comment,:target => @task) 
+page['new_comment'].addClassName('reopen')
+page.select('#new_comment .body').first.addClassName('reopen_body')
+page.select('#new_comment .body').first.removeClassName('body')
+page.insert_html :top, 'new_comment', content_tag(:h2,"Change the status to reopen this closed task")

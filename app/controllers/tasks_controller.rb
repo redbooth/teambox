@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder,:archive,:unarchive]
-  before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch]
+  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder,:archive,:unarchive,:reopen]
+  before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch,:reopen]
   
   def not_found
     
@@ -58,7 +58,7 @@ class TasksController < ApplicationController
     @task = @current_project.tasks.build(params[:task])
     @task.task_list = @task_list
     @task.user = current_user
-    if @task.save    
+    if @task.save
       @comment = @current_project.comments.new
       @comment.target = @task
       @comment.status = @task.status
@@ -98,6 +98,15 @@ class TasksController < ApplicationController
   
   def archive
     @task.update_attribute(:archived,true)
+    respond_to {|f|f.js}    
+  end
+
+  def reopen
+    @comment = @current_project.comments.new
+    @task.status = Task::STATUSES[:open]
+    @task.assigned = @current_project.people.find_by_user_id(current_user.id)    
+    @comment.target = @task
+    @comment.status = @task.status
     respond_to {|f|f.js}    
   end
   

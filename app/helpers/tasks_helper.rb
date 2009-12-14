@@ -41,9 +41,26 @@ module TasksHelper
       :task_list => task.task_list,
       :task => task }
   end
+
+  def reopen_task_button(project,task_list,task)
+    link_to_remote content_tag(:span,t('.reopen')), 
+      :url => reopen_project_task_list_task_path(project,task_list,task), 
+      :method => :get,
+      :loading => loading_reopen_task,
+      :html => {
+        :class => 'button', 
+        :id => 'reopen_task_button' }
+  end  
+  
+  def loading_reopen_task
+    update_page do |page|
+      page['reopen_task_button'].className = 'loading_button'
+      page['reopen_task_button'].writeAttribute('onclick','')      
+    end    
+  end  
   
   def unarchive_task_button(project,task_list,task)
-    link_to_remote "<span>#{t('.unarchive')}</span>", 
+    link_to_remote content_tag(:span,t('.unarchive')), 
       :url => unarchive_project_task_list_task_path(project,task_list,task), 
       :method => :put,
       :loading => loading_archive_task,
@@ -80,6 +97,7 @@ module TasksHelper
   def loading_archive_task
     update_page do |page|
       page['archive_button'].className = 'loading_button'
+      page['archive_button'].writeAttribute('onclick','')
     end  
   end
 
@@ -126,6 +144,15 @@ module TasksHelper
   end  
 
 
+  def update_task(task)
+    page.replace task_id(:item,task.project,task.task_list,task), 
+      :partial => 'tasks/task',
+      :locals => {
+        :project => task.project,
+        :task_list => task.task_list,
+        :current_target => task }
+  end
+
   def update_task_assignment(task,user)
     page.replace 'assigned', render_assignment(task,user)
   end
@@ -150,14 +177,26 @@ module TasksHelper
   end
 
   def comment_task_status(comment)
-    "<span class='task_status task_status_#{comment.status_name.underscore}'>#{localized_status_name(comment)}</span>"
+    out = ''
+    if comment.transition?
+      out << "<span class='task_status task_status_#{comment.previous_status_name}'>"
+      out << I18n.t('tasks.status.'+comment.previous_status_name) unless comment.previous_status_open? && comment.previous_assigned?
+      out << comment.previous_assigned.user.short_name if comment.previous_status_open? && comment.previous_assigned?      
+      out << "</span>"
+      out << "<span class='arr'>&rarr;</span>"
+    end
+    out << "<span class='task_status task_status_#{comment.status_name}'>"
+    out << I18n.t('tasks.status.'+comment.status_name) unless comment.status_open? && comment.assigned?
+    out << comment.assigned.user.short_name if comment.status_open? && comment.assigned?
+    out << "</span>"
+    out
   end
 
   def task_status(task,status_type)
     id = check_status_type(task,status_type)
-    out = "<span id='#{id}' class='task_status task_status_#{task.status_name.underscore}'>"
-    out << "#{localized_status_name(task)} &mdash; " unless status_type == :column
-    out <<  "#{task.comments_count}</span>"
+    out = "<span id='#{id}' class='task_status task_status_#{task.status_name}'>"
+    out << "#{localized_status_name(task)}&nbsp;&mdash;&nbsp;" unless status_type == :column
+    out <<  "#{task.comments_count}#{'&nbsp;' unless status_type == :column}</span>"
     out
   end
 
@@ -217,7 +256,8 @@ module TasksHelper
 
   def list_tasks(project,task_list,tasks,current_target=nil)
     render :partial => 'tasks/task', 
-      :collection => tasks,:locals => {
+      :collection => tasks,
+      :locals => {
         :project => project,
         :task_list => task_list,
         :current_target => current_target }
@@ -249,10 +289,16 @@ module TasksHelper
         :comment => comment }
 
     item_id = task_id(:item,project,task_list,task)
-    page.select('.task').invoke('removeClassName','active')
+    page.select('.task').each do |e|
+      e.removeClassName('active_new')
+      e.removeClassName('active_open')
+      e.removeClassName('active_hold')
+      e.removeClassName('active_resolved')
+      e.removeClassName('active_rejected')
+    end
     page.select('.task_list').invoke('removeClassName','active')
     page.select('.task_navigation .active').invoke('removeClassName','active')
-    page[item_id].addClassName('active')
+    page[item_id].addClassName("active_#{task.status_name}")
   end
   
   def insert_task(project,task_list,task)  
@@ -285,6 +331,15 @@ module TasksHelper
   end
   
   def localized_status_name(task)
-    I18n.t('tasks.status.' + Task::STATUSES[task.status.to_i].underscore)
+    I18n.t('tasks.status.' + task.status_name)
+  end
+  
+  def insert_task_form(project,task_list,task)
+    page.insert_html :after, 
+      task_id(:edit_header,project,task_list,task), 
+      :partial => 'tasks/form', :locals => {
+        :project => project,
+        :task_list => task_list,
+        :task => task }
   end
 end

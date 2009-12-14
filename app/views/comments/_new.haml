@@ -7,28 +7,30 @@
       = the_comment_upload_link(comment)
       = upload_area(comment)
     - if target
-      - if target.is_a? Task
-        - unless f.object.status == 0
-          .statuses
-            = f.label :status
-            .status.open
-              = f.radio_button :status, 1 # open
-              = t('tasks.status.open')
-            .status.hold
-              = f.radio_button :status, 2 # hold
-              = t('tasks.status.hold')
-            .status.resolved
-              = f.radio_button :status, 3 # resoloved
-              = t('tasks.status.resolved')
-            .status.rejected
-              = f.radio_button :status, 4 # rejected
-              = t('tasks.status.rejected')
-            = javascript_tag "$$('.statuses input').each(function(e){ if (e.checked) { e.up('.status').addClassName('active') }; })"
-            = javascript_tag "Comment.watch_status();"
-        - f.fields_for :target, target do |task_form|
-          .assigned.select
-            = task_form.label :assigned_id, t('.assigned_to')
-            = task_form.select :assigned_id, options_for_people(comment.project.people)
+      - if target.is_a?(Task)
+        .statuses
+          = f.label :status
+          - if target.status_new?
+            .status.new 
+              = f.radio_button :status, Task::STATUSES[:new]
+              = t('tasks.status.new')
+          .status.open
+            = f.radio_button :status, Task::STATUSES[:open]
+            = t('tasks.status.open')
+            - f.fields_for :target, target do |task_form|
+              = task_form.label :assigned_id, t('.assigned_to')
+              = task_form.select :assigned_id, options_for_people(comment.project.people)
+          .status.hold
+            = f.radio_button :status, Task::STATUSES[:hold]
+            = t('tasks.status.hold')
+          .status.resolved
+            = f.radio_button :status, Task::STATUSES[:resolved]
+            = t('tasks.status.resolved')
+          .status.rejected
+            = f.radio_button :status, Task::STATUSES[:rejected]
+            = t('tasks.status.rejected')
+          = javascript_tag "$$('.statuses input').each(function(e){ if (e.checked) { e.up('.status').addClassName('active') }; })"
+          = javascript_tag "Comment.watch_status();"
     .submit
       = f.submit t('.submit')
     .clear  

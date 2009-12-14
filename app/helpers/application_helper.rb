@@ -225,20 +225,21 @@ module ApplicationHelper
     link_to_remote "<span>#{t(".#{watch_status}")}</span>", :url => url, :html => { :id => 'watch_link', :class => 'button' }
   end
    
-  def people_watching(project,user,target)
+  def people_watching(project,user,target,state = :normal)
+      if target.is_a?(Task)
+        style_settings = target.closed? ? 'display:none' : ''
+      end
+        
       render :partial => 'shared/watchers', :locals => {
         :project => project,
         :user => user,
         :target => target,
-        :state => :normal }
+        :state => state,
+        :style_settings => style_settings}
   end
   
   def update_watching(project,user,target,state = :normal)
-    page.replace 'watching', :partial => 'shared/watchers', :locals => {
-      :project => project,
-      :user => user,
-      :target => target,
-      :state => state }
+    page.replace 'watching', people_watching(project,user,target,state)
   end
 
   def upgrade_browser

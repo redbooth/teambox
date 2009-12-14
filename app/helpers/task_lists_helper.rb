@@ -30,6 +30,13 @@ module TaskListsHelper
     app_toggle(project,task_list)
   end
 
+  def task_list_fields(f,project,task_list)
+    render :partial => 'task_lists/fields', :locals => { 
+      :f => f,
+      :project => project,
+      :task_list => task_list }
+  end
+
   def task_list_editable?(task_list,user,sub_action) 
     sub_action != 'archived' && task_list.editable?(user)
   end
@@ -96,14 +103,23 @@ module TaskListsHelper
     end
   end
 
-  def main_task_list(project,task_lists,sub_action)
-    render :partial => 'task_lists/main_task_lists',
+  def tabular_task_lists(project,task_lists,sub_action)
+    render :partial => 'task_lists/tabular_task_list',
     :collection => task_lists,
     :as => :task_list,
     :locals => {
       :project => project,
       :sub_action => sub_action }
   end
+
+  def tabular_task_list(project,task_list,sub_action)
+    render :partial => 'task_lists/tabular_task_list',
+    :locals => {
+      :project => project,
+      :task_list => task_list,
+      :sub_action =>  sub_action }
+  end
+
   
   def task_list_column(project,task_lists,sub_action,current_target = nil)
     render :partial => 'task_lists/column', :locals => {
@@ -145,14 +161,7 @@ module TaskListsHelper
       end
     end
   end
-    
-  def task_list_fields(f,project,task_list)
-    render :partial => 'task_lists/fields', :locals => { 
-      :f => f,
-      :project => project,
-      :task_list => task_list }
-  end
-      
+        
   
   def task_lists_sortable(project)
     update_page_tag do |page|
@@ -235,7 +244,13 @@ module TaskListsHelper
         :task_list => task_list }
 
     item_list_id = task_list_id(:item,project,task_list)
-    page.select('.task').invoke('removeClassName','active')
+    page.select('.task').each do |e|
+      e.removeClassName('active_new')
+      e.removeClassName('active_open')
+      e.removeClassName('active_hold')
+      e.removeClassName('active_resolved')
+      e.removeClassName('active_rejected')
+    end  
     page.select('.task_list').invoke('removeClassName','active')
     page[item_list_id].addClassName('active')
   end

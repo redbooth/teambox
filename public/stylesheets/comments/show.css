@@ -1,0 +1,71 @@
+.comment {
+  margin: 0px;
+  margin-top: 15px;
+  margin-bottom: 15px; }
+  .comment:hover p.actions {
+    visibility: visible; }
+  .comment p.actions {
+    visibility: hidden;
+    position: relative;
+    margin: 0px; }
+    .comment p.actions span {
+      overflow: auto;
+      position: absolute;
+      display: block;
+      width: 16px;
+      height: 40px; }
+  .comment .info {
+    width: 80px;
+    float: left; }
+    .comment .info .thumb_avatar {
+      float: right; }
+    .comment .info p.activity_icon {
+      position: relative; }
+      .comment .info p.activity_icon img {
+        overflow: auto;
+        position: absolute;
+        display: block; }
+    .comment .info .unread {
+      float: left;
+      position: relative;
+      margin-top: 20px;
+      width: 16px; }
+    .comment .info .hours {
+      padding-left: 1px;
+      padding-right: 10px;
+      clear: both;
+      font-size: 11px; }
+      .comment .info .hours img {
+        vertical-align: middle; }
+      .comment .info .hours span {
+        vertical-align: middle; }
+  .comment span.author, .comment span.project {
+    color: rgb(120,120,120); }
+    .comment span.author a, .comment span.project a {
+      color: rgb(80,80,80);
+      font-weight: normal; }
+  .comment span.arr {
+    color: rgb(140,140,140); }
+  .comment .block {
+    width: 560px;
+    float: right; }
+    .comment .block .name {
+      font-size: 12px;
+      border-bottom: solid 1px rgb(235,235,235); }
+      .comment .block .name a {
+        font-size: 12px;
+        font-weight: bold; }
+      .comment .block .name span.arr {
+        color: rgb(160,160,160);
+        padding: 0px 4px; }
+    .comment .block .date {
+      float: right;
+      font-size: 10px;
+      color: rgb(180,180,180); }
+    .comment .block .body {
+      margin-top: 5px; }
+
+.comment_hover .block .name {
+  border-bottom: solid 1px rgb(200,200,200); }
+.comment_hover .block .date {
+  color: rgb(0,0,0); }

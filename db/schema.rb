@@ -188,6 +188,9 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.float   :hours
     t.boolean :billable
     t.integer :status, :default => 0
+    t.integer :previous_status, :default => 0
+    t.integer :assigned_id
+    t.integer :previous_assigned_id    
     t.datetime :deleted_at    
     t.timestamps
   end

@@ -326,9 +326,11 @@ en:
     archive_box:
       you_are_done: It looks like you're done with this task!
       archive: Archive this task
+      reopen: Reopen this task
     unarchive_box:
       task_is_closed: This task is closed and archived
       unarchive: Unarchive
+      reopen: Reopen this task
     overdue: "{{days}} days late"
     status:
       new: new
@@ -463,7 +465,7 @@ en:
       commented_on_a_task_list: "-"
       confirm_delete: Are you sure you want to delete this comment?
     new:
-      assigned_to_nobody: '--- Assigned to Nobody ---'
+      assigned_to_nobody: 'Unassigned'
       assigned_to: "Assigned to:"
       submit: Comment
     edit:

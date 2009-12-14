@@ -1,0 +1,83 @@
+form#new_comment {
+  padding-bottom: 3px;
+  margin-bottom: 30px;
+  border-bottom: solid 1px rgb(220,220,220); }
+  form#new_comment .body {
+    margin-bottom: 5px; }
+    form#new_comment .body textarea {
+      width: 626px;
+      margin-bottom: 0px; }
+  form#new_comment .comment_body {
+    height: 4em;
+    color: rgb(0,0,0); }
+  form#new_comment a#comment_upload_link {
+    float: left; }
+  form#new_comment .statuses {
+    position: relative;
+    float: left;
+    margin-top: 2px;
+    margin-left: 4px; }
+    form#new_comment .statuses label {
+      display: none; }
+    form#new_comment .statuses .status {
+      cursor: pointer;
+      float: left;
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+      border: solid 1px rgb(200,200,200);
+      background: rgb(240,240,240);
+      color: rgb(80,80,80);
+      font-size: 11px;
+      text-align: center;
+      text-transform: uppercase;
+      padding: 4px 5px;
+      margin-left: 5px; }
+      form#new_comment .statuses .status input {
+        display: none; }
+    form#new_comment .statuses .status:hover {
+      color: rgb(255,255,255); }
+    form#new_comment .statuses .active {
+      background: rgb(140,140,140);
+      border: solid 1px rgb(0,0,0);
+      color: rgb(255,255,255); }
+    form#new_comment .statuses .open {
+      padding: 2px;
+      padding-left: 5px; }
+      form#new_comment .statuses .open select {
+        margin: 0px;
+        padding: 0px; }
+    form#new_comment .statuses .open:hover {
+      background: rgb(50,50,250);
+      border: solid 1px rgb(50,50,250); }
+    form#new_comment .statuses .hold:hover {
+      background: rgb(130,0,193);
+      border: solid 1px rgb(130,0,193); }
+    form#new_comment .statuses .resolved:hover {
+      background: rgb(0,200,0);
+      border: solid 1px rgb(0,200,0); }
+    form#new_comment .statuses .rejected:hover {
+      background: rgb(200,0,0);
+      border: solid 1px rgb(200,0,0); }
+  form#new_comment .submit {
+    padding-top: 3px;
+    text-align: right;
+    float: right;
+    width: 200px; }
+
+form.reopen {
+  background: rgb(255,255,200);
+  border: 1px rgb(220,220,150) solid;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding: 10px;
+  padding-top: 5px; }
+  form.reopen h2 {
+    margin: 0px;
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: rgb(33,33,27); }
+  form.reopen .reopen_body {
+    margin-bottom: 5px; }
+    form.reopen .reopen_body textarea {
+      width: 606px;
+      margin-bottom: 0px; }

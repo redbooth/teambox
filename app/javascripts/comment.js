@@ -40,14 +40,45 @@ Comment = {
   },
   watch_status: function(){
     $$('.statuses .status').each(function(e){ 
-      e.observe('click', Comment.change_status)
+      if(e.hasClassName('open'))
+        e.down('select').observe('change', Comment.change_assigned)
+      else
+        e.observe('click', Comment.change_status)
     });
   },
+  change_assigned: function(e){
+    Comment.unselect_all_statuses()
+    Comment.mark_status_for_assigned(e.element())
+  },
   change_status: function(e){
+    Comment.unselect_all_statuses()
+    Comment.assign_to_nobody()
+    Comment.mark_status(e.element())
+  },
+  unselect_all_statuses: function(){
     $$('.statuses .active').each(function(ee){ ee.removeClassName('active') })
-    $$('.statuses input').each(function(ee){ ee.checked = false })
-    var ee = e.element()  
-    ee.down('input').checked = true;
-    ee.addClassName('active');
+    $$('.statuses input').each(function(ee){ ee.checked = false })    
+  },
+  mark_status: function(e){
+    e.down('input').checked = true
+    e.addClassName('active')    
+  },
+  mark_status_for_assigned: function(e){
+    $$('#new_comment option').each(function(ee){ 
+      if(ee.value == ''){
+        if(ee.selected == true)
+          Comment.mark_status($('new_comment').down('.hold'))
+        else  
+          Comment.mark_status(e.up('.status'))
+      }
+    })
+  },
+  assign_to_nobody: function(){
+    $$('#new_comment option').each(function(e){ 
+      if(e.value == '')
+        e.selected = true
+      else
+        e.selected = false
+    })
   }
 };

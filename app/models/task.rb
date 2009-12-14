@@ -24,12 +24,20 @@ class Task < RoleRecord
     end
   end
 
-  attr_accessible :name, :assigned_id, :status, :due_on
+  attr_accessible :name, :assigned_id, :previous_status, :previous_assigned_id, :status, :due_on
 
-  STATUSES = ['new','open','hold','resolved','rejected']
+  attr_accessor :previous_status, :previous_assigned_id
 
+  STATUSES = {:new => 0, :open => 1, :hold => 2, :resolved => 3, :rejected => 4}
+  
+  def status_new?
+    STATUSES[:new] == status
+  end
+  
   def status_name
-    Task::STATUSES[status.to_i].underscore
+    key = nil
+    STATUSES.each{|k,v| key = k.to_s if status.to_i == v.to_i } 
+    key
   end
 
   def after_create
@@ -61,8 +69,12 @@ class Task < RoleRecord
     self.update_counter_cache
   end
 
-  def assigned?(u)
-    assigned.user.id == u.id if assigned
+  def assigned?
+    !assigned.nil?
+  end
+  
+  def assigned_to?(u)
+    assigned.user.id == u.id if assigned?
   end
   
   def overdue
@@ -82,7 +94,7 @@ class Task < RoleRecord
   end
   
   def closed?
-    [3,4].include?(status)
+    [STATUSES[:rejected],STATUSES[:resolved]].include?(status)
   end
   
   def comments_count

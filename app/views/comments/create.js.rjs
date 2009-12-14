@@ -1,41 +1,40 @@
-unless @comment.new_record?
-  page.ef('comments')
-    page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
-  page.esf('activities')    
-    page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
-  page.en
+if @comment.errors.empty?
+  unless @comment.new_record?
+    page.ef('comments')
+      page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
+    page.esf('activities')    
+      page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
+    page.en
 
-  if @task == @target
-    unless @task.closed?
-      page.replace 'new_comment', new_comment_form(@current_project,@new_comment,:target => @task)
+    if @task == @target
+      if @task.closed?
+        page.insert_archive_box(@current_project,@task)
+        page['new_comment'].remove
+        page['watching'].hide
+        page[task_id(:edit_form,@current_project,@task_list,@task)].remove
+      else
+        page.replace 'new_comment', new_comment_form(@current_project,@new_comment,:target => @task)
+        if @comment.previously_closed?
+          page['watching'].show
+          page.insert_task_form(@current_project,@task_list,@task)
+        end
+      end
+      page.update_watching(@current_project,current_user,@task)
+      page.update_task(@task)
+      page.replace_task_header(@current_project,@task_list,@task)
     else
-      page.insert_archive_box(@current_project,@task)
-      page['new_comment'].remove
-    end
-    page.update_watching(@current_project,current_user,@task)
-    page.update_task_status(@task,:header)
-    page.update_task_status(@task,:column)
-    page.update_task_assignment(@task,current_user)
-  elsif @task_list == @target
-    page.update_comment_count(@task_list,:header)
-    page.update_comment_count(@task_list,:column)
-    page << "Form.reset('new_comment')"
-    page.replace 'upload_area', upload_area(@comment)
-    page['comment_upload_link'].show    
-  elsif @conversation == @target
-    page.update_comment_count(@conversation,:header)
-    page.update_comment_count(@conversation,:column)
-    page << "Form.reset('new_comment')"
-    page.replace 'upload_area', upload_area(@comment)
-    page['comment_upload_link'].show
-  else
-    page << "Form.reset('new_comment')"
-    page.replace 'upload_area', upload_area(@comment)
-    page['comment_upload_link'].show  
-  end
+      if [TaskList,Conversation].include?(@target.class)
+        page.update_comment_count(@target,:header)
+        page.update_comment_count(@target,:column)    
+      end
+      page << "Form.reset('new_comment')"
+      page.replace 'upload_area', upload_area(@comment)
+      page['comment_upload_link'].show    
+    end  
   
-  page.reload_javascript_events
+    page.reload_javascript_events
 
+  end
+
+  page["comment_#{@comment.id}"].visual_effect :highlight, :duration => 2
 end
-
-page["comment_#{@comment.id}"].visual_effect :highlight, :duration => 2

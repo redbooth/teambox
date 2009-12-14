@@ -1,8 +1,8 @@
 #show_task
   = task_header(project,task_list,task)
   = task_form(project,task_list,task) unless task.closed?
-  = people_watching(project,current_user,task) unless task.archived
-  = new_comment_form(project,comment, :target => task)
+  = people_watching(project,current_user,task)
+  = new_comment_form(project,comment, :target => task) unless task.closed?
   = task_archive_box(project,task_list,task)
   #comments
     = list_comments(task.comments,task)
