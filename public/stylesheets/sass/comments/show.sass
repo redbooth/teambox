@@ -1,0 +1,75 @@
+.comment
+  :margin 0px
+    :top 15px
+    :bottom 15px
+  &:hover
+    p.actions
+      :visibility visible
+  p.actions
+    :visibility hidden
+    :position relative
+    :margin 0px
+    span
+      :overflow auto
+      :position absolute
+      :display block
+      :width 16px
+      :height 40px
+  .info  
+    :width 80px
+    :float left
+    .thumb_avatar
+      :float right
+    p.activity_icon
+      :position relative
+      img
+        :overflow auto
+        :position absolute
+        :display block      
+    .unread
+      :float left
+      :position relative
+      :margin-top 20px
+      :width 16px
+    .hours
+      :padding-left 1px
+      :padding-right 10px
+      :clear both
+      :font-size 11px
+      img
+        :vertical-align middle
+      span
+        :vertical-align middle
+  span.author, span.project
+    :color rgb(120,120,120)
+    a
+      :color rgb(80,80,80)
+      :font-weight normal
+  span.arr
+    :color rgb(140,140,140)
+  .block
+    :width 560px
+    :float right
+    .name
+      :font-size 12px
+      :border-bottom solid 1px rgb(235,235,235)      
+      a
+        :font-size 12px
+        :font-weight bold
+      span.arr
+        :color rgb(160,160,160)
+        :padding 0px 4px
+    .date
+      :float right
+      :font-size 10px
+      :color rgb(180,180,180)
+    .body
+      :margin-top 5px
+    .clear
+.comment_hover
+  .block
+    .name
+      :border-bottom solid 1px rgb(200,200,200)
+    .date
+      :color rgb(0,0,0)
+      

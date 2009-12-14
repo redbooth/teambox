@@ -32,3 +32,24 @@ div.task_list_wrap
     :padding 0px 3px
   div.task
     :margin 4px 0px
+
+.active_new,.active_open,.active_hold,.active_resolved,.active_rejected
+  :-moz-border-radius 5px
+  :-webkit-border-radius 5px
+  :padding 3px
+  a
+    :color rgb(255,255,255)
+  span
+    :padding
+      :left 2px
+      :right 0px
+.active_new
+  :background rgb(170,170,170)
+.active_open
+  :background rgb(50,50,250)
+.active_hold
+  :background rgb(130,0,193)
+.active_resolved
+  :background rgb(0,200,0)
+.active_rejected
+  :background rgb(200,0,0)

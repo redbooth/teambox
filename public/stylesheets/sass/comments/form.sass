@@ -1,0 +1,84 @@
+form#new_comment
+  :padding-bottom 3px
+  :margin-bottom 30px
+  :border-bottom solid 1px rgb(220,220,220)
+  .body
+    :margin-bottom 5px  
+    textarea
+      :width 626px
+      :margin-bottom 0px
+  .comment_body
+    :height 4em
+    :color rgb(0,0,0)
+  a#comment_upload_link
+    :float left
+  .statuses
+    :position relative  
+    label
+      :display none
+    :float left
+    :margin-top 2px
+    :margin-left 4px
+    .status
+      :cursor pointer
+      :float left
+      :-moz-border-radius 4px
+      :-webkit-border-radius 4px
+      :border solid 1px rgb(200,200,200)
+      :background rgb(240,240,240)
+      :color rgb(80,80,80)
+      :font-size 11px
+      :text-align center
+      :text-transform uppercase
+      :padding 4px 5px
+      :margin-left 5px
+      input
+        :display none
+    .status:hover
+      :color rgb(255,255,255)
+    .active
+      :background rgb(140,140,140)
+      :border solid 1px rgb(0,0,0)
+      :color rgb(255,255,255)
+    .open
+      :padding 2px
+        :left 5px
+      select
+        :margin 0px
+        :padding 0px
+    .open:hover
+      :background rgb(50,50,250)
+      :border solid 1px rgb(50,50,250)
+    .hold:hover
+      :background rgb(130,0,193)
+      :border solid 1px rgb(130,0,193)
+    .resolved:hover
+      :background rgb(0,200,0)
+      :border solid 1px rgb(0,200,0)
+    .rejected:hover
+      :background rgb(200,0,0)
+      :border solid 1px rgb(200,0,0)
+  .submit
+    :padding
+      :top 3px
+    :text-align right
+    :float right
+    :width 200px
+
+form.reopen
+  :background rgb(255,255,200)
+  :border 1px rgb(220,220,150) solid  
+  :-moz-border-radius 5px
+  :-webkit-border-radius 5px
+  :padding 10px
+    :top 5px
+  h2
+    :margin 0px
+      :bottom 5px
+    :font-size 13px
+    :color rgb(33,33,27)
+  .reopen_body
+    :margin-bottom 5px  
+    textarea
+      :width 606px
+      :margin-bottom 0px
