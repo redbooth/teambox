@@ -8,31 +8,29 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
     when /the home\s?page/
-      '/'
-      
+      root_path
     when /the new project page/  
-      "/projects/new"
-
+      new_project_path
     when /the account settings page/
-      "/account/settings"
-
+      account_settings_path
     when /the login page/
-      "/login"
-
+      login_path
     when /the forgot password page/
       "/forgot"
-
     when /the project page/
       project_path(@current_project)
     when /the conversations page/
       project_conversations_path(@current_project)
     when /the task lists page/
-      project_task_lists_path(@current_project)
+      project_task_lists_path(@current_project)      
     when /the people page/
       project_people_path(@current_project)
     when /the uploads page/        
       project_uploads_path(@current_project)
-      
+    when /its task list page/
+      project_task_list_path(@current_project,@task_list)
+    when /its task page/
+      project_task_list_task_path(@current_project,@task_list,@task)
     #when /the index page for (.+)/
     #  polymorphic_path(model($1))
     

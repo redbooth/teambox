@@ -183,7 +183,7 @@ module TasksHelper
       out << I18n.t('tasks.status.'+comment.previous_status_name) unless comment.previous_status_open? && comment.previous_assigned?
       out << comment.previous_assigned.user.short_name if comment.previous_status_open? && comment.previous_assigned?      
       out << "</span>"
-      out << "<span class='arr'>&rarr;</span>"
+      out << "<span class='arr status_arr'>&rarr;</span>"
     end
     out << "<span class='task_status task_status_#{comment.status_name}'>"
     out << I18n.t('tasks.status.'+comment.status_name) unless comment.status_open? && comment.assigned?

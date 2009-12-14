@@ -1,4 +1,3 @@
-@task.reload
 page.replace_task(@current_project,@task_list,@task)
 page.replace_task_header(@current_project,@task_list,@task)
 

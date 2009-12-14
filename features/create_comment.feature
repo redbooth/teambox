@@ -9,7 +9,7 @@ Feature Posting a comment on a project wall
     # Using format.html which redirects, not .js
     When I press "Comment"
     Then I should see "<formatted_body>"
-
+    And show me the page
   Examples:
     | body                                | formatted_body                  |
     | She *used* to _mean_ so much to ME! | She used to mean so much to ME! |

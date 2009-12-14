@@ -37,9 +37,8 @@ class TaskListsController < ApplicationController
     @task_list = @current_project.task_lists.new
   end
   
-  def create
-    @task_list = @current_project.new_task_list(current_user,params[:task_list])
-    if @task_list.save
+  def create    
+    if @task_list = @current_project.create_task_list(current_user,params[:task_list])
       @sub_action = 'all'
     end  
     respond_to {|f|f.js}

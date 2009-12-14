@@ -12,6 +12,16 @@ When /^I press "([^\"]*)"$/ do |button|
   click_button(button)
 end
 
+When /^I press "([^\"]*)" within "([^\"]*)"$/ do |button,selector|
+  within(:css,selector) do
+    click_button(button)
+  end  
+end
+
+When /^I click the element "([^\"]*)"$/ do |element|
+  click_element(element)
+end
+
 When /^I follow "([^\"]*)"$/ do |link|
   click_link(link)
 end

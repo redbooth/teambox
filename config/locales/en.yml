@@ -309,6 +309,7 @@ en:
       assigned_to: "Assigned to {{user}}"
     due_on:
       due_on: "Due on {{date}}"
+    create: Add Task
     edit:
       submit: Update Task
     new:
@@ -428,7 +429,7 @@ en:
     new:
       title: New Task List
       submit: Add Task List
-      submit: Create
+      submit: Add Task List
     edit:
       submit: Update Task List
     column:

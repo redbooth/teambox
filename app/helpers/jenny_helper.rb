@@ -60,9 +60,12 @@ module JennyHelper
 
   def app_submit(*args)
     target, action = shes_just_a_memory(*args)
+    
+    plural_name = target.class.to_s.tableize
+        
     submit_id = js_id("#{action}_submit",*args)
     loading_id = js_id("#{action}_loading",*args)
-    submit_to_function t("task_lists.#{action}.submit"), app_toggle(*args), submit_id, loading_id
+    submit_to_function t("#{plural_name}.#{action}.submit"), app_toggle(*args), submit_id, loading_id
   end
 
   def app_form_for(*args,&proc)

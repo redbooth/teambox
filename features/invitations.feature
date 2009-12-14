@@ -31,7 +31,7 @@ Feature Invite a user to a project
      And I fill in "First name" with "Edward"
      And I fill in "Last name" with "Bloom"
      And I fill in "Password" with "tellastory"
-     And I fill in "Confirm Password" with "tellastory"
+     And I fill in "Confirm password" with "tellastory"
      And I press "Create account"
     Then I should see "Ruby Rockstars"
      And I should see "Thanks for signing up!"

@@ -1,4 +1,10 @@
 module UsersHelper
+
+  def user_page_name(user)
+    content_tag :h2,
+      [content_tag(:span,user.name),
+      content_tag(:span,user.login, :class => 'login')].join('')
+  end
     
   def user_navigation
     render :partial => 'shared/user_navigation'

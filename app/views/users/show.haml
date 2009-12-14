@@ -1,5 +1,5 @@
 - content_for :banner do
-  %h2= "<span>#{@user.name}</span><span class='login'>@#{@user.login}</span>"
+  =user_page_name(@user)
 
 - content_for :column do
   = image_tag @user.avatar.url(:profile), :class => 'avatar'

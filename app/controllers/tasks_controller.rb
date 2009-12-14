@@ -2,34 +2,6 @@ class TasksController < ApplicationController
   before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder,:archive,:unarchive,:reopen]
   before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch,:reopen]
   
-  def not_found
-    
-  end
-
-  def filter
-    if params[:filter_action] == 'asc'
-      @comments = tasks.comments.ascending
-    elsif params[:filter_action] == 'desc'
-      @comments = tasks.comments.descending
-    else
-      @comments = tasks.comments
-    end
-      
-    respond_to{|f|f.js}
-  end
-
-  def sort
-    if params[:sort_action] == 'uploads'
-      @comments = tasks.comments.with_uploads
-    elsif params[:sort_action] == 'hours'
-      @comments = tasks.comments.with_hours
-    else
-      @comments = tasks.comments
-    end
-        
-    respond_to{|f|f.js}
-  end
-  
   def show
     if @task.archived?
       @sub_action = 'archived'
@@ -41,10 +13,7 @@ class TasksController < ApplicationController
     @task = @current_project.tasks.find(params[:id])
 
     @comments = @task.comments
-    @comment = @current_project.comments.new
-    @comment.target = @task
-    @comment.status = @task.status
-    
+    @comment = @current_project.new_task_comment(@task)
     #   Use this snippet to test the notification emails that we send:
     #@project = @current_project
     #render :file => 'emailer/notify_task', :layout => false
@@ -54,14 +23,9 @@ class TasksController < ApplicationController
     @task = @task_list.tasks.new
   end
   
-  def create
-    @task = @current_project.tasks.build(params[:task])
-    @task.task_list = @task_list
-    @task.user = current_user
-    if @task.save
-      @comment = @current_project.comments.new
-      @comment.target = @task
-      @comment.status = @task.status
+  def create    
+    if @task = @current_project.create_task(current_user,@task_list,params[:task])
+      @comment = @current_project.new_task_comment(@task)
     end      
     respond_to do |format|
       format.js
@@ -102,21 +66,17 @@ class TasksController < ApplicationController
   end
 
   def reopen
-    @comment = @current_project.comments.new
     @task.status = Task::STATUSES[:open]
     @task.assigned = @current_project.people.find_by_user_id(current_user.id)    
-    @comment.target = @task
-    @comment.status = @task.status
-    respond_to {|f|f.js}    
+    @comment = @current_project.new_task_comment(@task)
+    respond_to {|f|f.js}
   end
   
   def unarchive
     if @task.update_attribute(:archived,false)
       @task_lists = @current_project.task_lists
       @sub_action = 'all'
-      @comment = @current_project.comments.new
-      @comment.target = @task
-      @comment.status = @task.status
+      @comment = @current_project.new_task_comment(@task)
     end
     respond_to {|f|f.js}
   end
