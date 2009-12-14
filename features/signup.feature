@@ -9,7 +9,7 @@ Scenario: Mislav successfully signs up and confirms his email
     | Last name         | Marohnić                    |
     | Email             | mislav@fuckingawesome.com   |
     | Password          | makeabarrier                |
-    | Confirm Password  | makeabarrier                |
+    | Confirm password  | makeabarrier                |
     And I press "Create account"
   Then I should see "Confirm your email"
     And "mislav@fuckingawesome.com" should receive 1 email

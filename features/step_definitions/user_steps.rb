@@ -1,3 +1,8 @@
+Given /^I am the currently (.*)$/ do |user_type|
+  @current_user ||= User.find_by_login(user_type) || Factory(user_type.to_sym) 
+  @user = @current_user
+end
+
 Given /^I am logged in as (.*)$/ do |user_type|
   @current_user ||= User.find_by_login(user_type) || Factory(user_type.to_sym) 
   @user = @current_user

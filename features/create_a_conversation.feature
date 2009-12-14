@@ -15,15 +15,15 @@ Feature Creating a conversation
     When I fill in the following:
       | conversation_name | Lets code the next big thing                                            |
       | conversation_body | Im having some ideas for an upcoming project: *Getting Laid*, the book. |
-      And I press "Create"
-    Then I should see "Lets code the next big thing"
+     And I press "Create"
+     Then I should see "Lets code the next big thing"
       And I should see "Im having some ideas for an upcoming project: Getting Laid, the book."
       And I should see "People watching:"
       And I should see "Mislav Marohnić"
       And I should see "Unwatch"
 
-    When I fill in "comment_body" with "A better, saucier and faster way of getting laid"
+    When I fill in "comment_body" with "Rockets!"
       And I press "Comment"
     # Using format.html which redirects, not .js
     Then I should see "Im having some ideas for an upcoming project: Getting Laid, the book."
-      And I should see "A better, saucier and faster way of getting laid"
+     And I should see "Rockets!"

@@ -1,7 +1,11 @@
 Feature: Logging In
   Background:
-    Given I am logged in as mislav
-    
+    Given I am the currently mislav
+      And I go to the login page
+      And I fill in "Username or email" with "mislav"
+      And I fill in "Password" with "makeabarrier"
+      And I press "Login"
+
   Scenario: Mislav successfully logs in with a confirmed email
      Given I have confirmed my email
       When I go to the home page    

@@ -12,3 +12,4 @@ public/stylesheets/pages/*.css
 public/stylesheets/tasks/*.css
 uploads/*
 webrat-*
+capybara-*
