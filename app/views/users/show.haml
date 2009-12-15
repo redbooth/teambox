@@ -4,7 +4,7 @@
 - content_for :column do
   = image_tag @user.avatar.url(:profile), :class => 'avatar'
   - if current_user.observable?(@user)
-    %p.biography= current_user.biography
+    %p.biography= @user.biography
     = render_card(@card)
     =# list_projects(@user.projects)
 
