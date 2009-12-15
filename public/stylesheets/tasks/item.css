@@ -2,7 +2,8 @@ div.task_list_wrap {
   margin-top: 10px; }
   div.task_list_wrap .tasks_wrap {
     background: url(../images/task_arrow.png) no-repeat top left;
-    padding-top: 8px; }
+    padding-top: 8px;
+    overflow: hidden; }
     div.task_list_wrap .tasks_wrap .tasks {
       -moz-border-radius-topleft: 5px;
       -moz-border-radius-topright: 5px;
