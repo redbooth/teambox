@@ -1,10 +1,4 @@
-class Page < ActiveRecord::Base
-  include GrabName
-  include Watchable
-  acts_as_paranoid
-  
-  belongs_to :user
-  belongs_to :project
+class Page < RoleRecord
   has_many :notes, :order => 'position'
   has_many :dividers, :order => 'position'
   has_many :page_uploads, :order => 'position'
@@ -34,5 +28,9 @@ class Page < ActiveRecord::Base
   
   def after_create
     project.log_activity(self,'create')
+  end
+  
+  def to_s
+    name
   end
 end

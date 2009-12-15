@@ -17,8 +17,11 @@ es:
   confirm:
     delete_task_list: ¿Seguro que quieres borrar esta lista de tareas?
     delete_task: ¿Seguro que quieres borrar esta tarrea?
+    delete_upload: ¿Seguro que quieres borrar este archivo?
   deleted:
     conversation: "Se ha borrado la conversación <b>{{name}}</b>"
+    page: "Se ha borrado la página <b>{{name}}</b>"
+    upload: "Se ha borrado el archivo <b>{{name}}</b>"
   activities:
     activity_line:
       create_comment: ha comentado
@@ -477,6 +480,7 @@ es:
       select_a_file: Selecciona un archivo
     index:
       new_file: Subir un archivo
+      max_upload_size: "El tamaño máximo de archivo es de {{mb}} Mb"
     form:
       presence: "No puedes subir un archivo vacío"
       max_size: "El tamaño máximo de archivo son {{mb}}"
@@ -494,6 +498,8 @@ es:
     upload:
       uploaded_the_file: "ha subido el archivo"
       download: Descargar
+      uploaded_by: Subido por
+      remove: Eliminar
   sessions:
     fields:
       username_or_email: Usuario o email

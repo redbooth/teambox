@@ -14,6 +14,10 @@ module UploadsHelper
   def upload_primer(project)
     render :partial => 'uploads/primer', :locals => { :project => project }
   end
+  
+  def upload_description(upload)
+    "<br/>#{upload.description}" if upload.description
+  end
 
   def the_comment_upload_link(comment)
     link_to_function image_tag('attach_button.jpg'), show_upload_form(comment), :id => 'comment_upload_link'
@@ -141,6 +145,14 @@ module UploadsHelper
       link_to_function 'Remove', delete_upload(upload,target), :class => 'remove'
     end
   end
+  
+  def destroy_upload_link(project,upload)
+    link_to_remote t('.remove'),
+      :url => project_upload_path(project,upload),
+      :method => :delete,
+      :confirm => t('confirm.delete_upload'),
+      :html => { :class => 'remove' }
+  end
 
   def upload_form_params(comment)
     render :partial => 'uploads/iframe_upload', :locals => { :comment => comment, :upload => Upload.new }
@@ -181,7 +193,7 @@ module UploadsHelper
       end
     end
   end
-  
+
   def edit_upload_link(upload)
     link_to_function pencil_image, show_edit_upload_form(upload), :class => 'edit_upload_link'
   end

@@ -17,8 +17,11 @@ en:
   confirm:
     delete_task_list: Are you sure you want to delete this task list?
     delete_task: Are you sure you want to delete this task?
+    delete_upload: Are you sure you want to delete this file?
   deleted:
     conversation: "Deleted <b>{{name}}</b> conversation"
+    page: "Deleted <b>{{name}}</b> page"
+    upload: "Deleted <b>{{name}}</b> file"
   activities:
     activity_line:
       create_comment: posted a comment
@@ -477,6 +480,7 @@ en:
       select_a_file: Select a file
     index:
       new_file: Upload a File
+      max_upload_size: "Max upload size is {{mb}} Mb"
     form:
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed {{mb}}"
@@ -494,6 +498,8 @@ en:
     upload:
       uploaded_the_file: "uploaded the file"
       download: Download
+      uploaded_by: Uploaded by
+      remove: Delete
   sessions:
     fields:
       username_or_email: Username or email

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :load_page, :only => [ :show, :edit, :update ]
+  before_filter :load_page, :only => [ :show, :edit, :update, :destroy ]
   
   def index
     if @current_project
@@ -61,7 +61,23 @@ class PagesController < ApplicationController
       end
     end
   end
-  
+
+  def destroy
+     if @page.editable?(current_user)
+      @page.try(:destroy)
+
+      respond_to do |f|
+        flash[:success] = t('deleted.page', :name => @page.to_s)
+        f.html { redirect_to project_pages_path(@current_project) }
+      end
+    else
+      respond_to do |f|
+        flash[:error] = "You are not allowed to do that!"
+        f.html { redirect_to project_page_path(@current_project,@page) }
+      end
+    end
+  end
+
   private
     def load_page
       begin

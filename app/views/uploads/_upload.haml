@@ -1,16 +1,37 @@
 .upload{ :id => "upload_#{upload.id}" }
-  .info
-    = link_to upload.file_type, upload.url, :class => upload.file_type
-  .block
-    .filename.show_details
-      .date
-        = posted_date upload.created_at
-      .name
-        = link_to upload.user.name, user_path(upload.user)
-        = activity_project_link(upload.project)
-        = t('.uploaded_the_file')
-        = link_to upload.description, upload.url if upload.description
-      .body  
-        = upload_link(project,upload)
-        = number_to_human_size(upload.size)
+
+  - if controller_name == 'uploads' # view as an upload
+    .info
+      = link_to upload.file_type, upload.url, :class => upload.file_type
+    .block
+      .filename.show_details
+        .date
+          = posted_date upload.created_at          
+        .body  
+          = upload_link(project,upload)
+          = '(' + number_to_human_size(upload.size) + ')'
+          = upload_description(upload)
+          %br
+          = t('.uploaded_by')
+          = user_link(upload.user)
+          - if upload.editable?(current_user)
+            = " - "
+            = destroy_upload_link(project,upload)
+
+  - else # view as an activity  
+    .info
+      = link_to upload.file_type, upload.url, :class => upload.file_type
+    .block
+      .filename.show_details
+        .date
+          = posted_date upload.created_at
+        .name
+          = link_to upload.user.name, user_path(upload.user)
+          = activity_project_link(upload.project)
+          = t('.uploaded_the_file')
+          = link_to upload.description, upload.url if upload.description
+        .body  
+          = upload_link(project,upload)
+          = number_to_human_size(upload.size)
   .clear
+

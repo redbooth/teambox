@@ -37,11 +37,14 @@ class Upload < RoleRecord
     asset_file_size
   end
 
+  def to_s
+    file_name
+  end
 
   def downloadable?(user)
     true
   end
-  
+
   def file_type
     ext = File.extname(file_name).sub('.','')
     ext = '...' if ext == ''

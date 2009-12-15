@@ -48,6 +48,12 @@ Factory.define :comment do |comment|
   comment.body 'Just finished posting this comment'
 end
 
+Factory.define :page do |page|
+  page.association(:user)
+  page.association(:project)
+  page.name 'Keys to the Castle'
+end
+
 Factory.define :mislav, :class => 'User' do |user|
   user.login 'mislav'
   user.email 'mislav@fuckingawesome.com'

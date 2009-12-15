@@ -56,7 +56,6 @@ class UploadsController < ApplicationController
     @upload = @current_project.uploads.new(params[:upload])
     @upload.user = current_user
 
-    
     if is_iframe?
       @upload.save
       @comment = load_comment
@@ -75,7 +74,6 @@ class UploadsController < ApplicationController
     end
   end
 
-  
   def update
     @upload.update_attributes(params[:upload])
 
@@ -84,13 +82,27 @@ class UploadsController < ApplicationController
       format.html { redirect_to(project_uploads_path(@current_project)) }
     end
   end
-      
+
   def destroy
-    if @upload
-      @upload.destroy
+    if @upload.editable?(current_user)
+      @upload.try(:destroy)
+
+      respond_to do |f|
+        f.js
+        f.html do
+          flash[:success] = t('deleted.upload', :name => @upload.to_s)
+          redirect_to project_uploads_path(@current_project)
+        end
+      end
+    else
+      respond_to do |f|
+        error_message = "You are not allowed to do that!"
+        f.js   { render :text => "alert('#{error_message}')" }
+        f.html { render :text => "alert('#{error_message}')" }
+      end
     end
   end
-    
+  
   private
     def is_iframe?
       params[:iframe] != nil
