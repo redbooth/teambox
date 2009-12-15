@@ -34,7 +34,10 @@ module PagesHelper
   end
 
   def delete_page_link(project,page)
-    link_to t('common.delete'), project_page_path(project,page), :method => :delete, :class => 'remove'
+    link_to t('common.delete'), project_page_path(project,page),
+      :method => :delete,
+      :class => 'remove',
+      :confirm => t('confirm.delete_page')
   end
   
   def notes_sortable_tag(page)

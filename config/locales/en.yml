@@ -17,6 +17,7 @@ en:
   confirm:
     delete_task_list: Are you sure you want to delete this task list?
     delete_task: Are you sure you want to delete this task?
+    delete_page: Are you sure you want to delete this page?
     delete_upload: Are you sure you want to delete this file?
   deleted:
     conversation: "Deleted <b>{{name}}</b> conversation"
