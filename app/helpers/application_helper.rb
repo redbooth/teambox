@@ -240,4 +240,12 @@ module ApplicationHelper
       :target => target,
       :state => state }
   end
+
+  def upgrade_browser
+    render :partial => 'shared/upgrade_browser'
+  end
+
+  def latest_announcement
+    render :partial => 'shared/latest_announcement'
+  end
 end

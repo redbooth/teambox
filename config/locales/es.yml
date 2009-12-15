@@ -279,12 +279,12 @@ es:
       empty: Aún no hay ninguna conversación en este proyecto.
       create_first: Crea la primera conversación para este proyecto!
       define: "<b>Conversa sobre decisiones</b> y <b>pon a tu equipo al día</b> de una forma centralizada.<br/>Cada conversación es una lista de mensajes, que reemplazan a los confusos mensajes."
-      item1: "<b>Comparte archivos</b>. Puedes adjuntar ficheros a cada mensaje."
+      item1: "<b>Comparte archivos</b>. Puedes adjuntar archivos a cada mensaje."
       item2: "<b>Suscríbete</b> a una conversación para recibir notificaciones de respuestas por email y RSS."
       item3: "<b>Exprésate</b>. Puedes usar negrita, cursiva y estilos de texto."
       item4: "<b>Integrado con tu email</b>. Puedes contestar desde tu email para publicar una respuesta."
       footer1: "Las conversaciones son perfectas para <b>compartir un diseño</b>, <b>decidir una fecha</b> para reunirse o <b>informar</b> sobre las noticias del proyecto."
-      footer2: "Estando ordenadas por hilos, es fácil volver atrás en el tiempo y ver qué ficheros se enviaron y qué dijo cada miembro del equipo. En Teambox, <b>colaborar</b> genera una <b>trazabilidad</b> de qué se hizo."
+      footer2: "Estando ordenadas por hilos, es fácil volver atrás en el tiempo y ver qué archivos se enviaron y qué dijo cada miembro del equipo. En Teambox, <b>colaborar</b> genera una <b>trazabilidad</b> de qué se hizo."
     edit:
       sumbit: Actualizar conversación
     column:
@@ -495,7 +495,7 @@ es:
       define2: "Puedes subir archivos aquí o adjuntarlos a conversaciones, tareas o páginas."
       item1: "<b>Más capacidad</b>. Sube archivos de cualquier tamaño y olvida las limitaciones del email."
       item2: "<b>Versiones</b>. Sube versiones nuevas de archivos y guarda el histórico."
-      item3: "<b>Siempre disponibles</b>. Los ficheros no se borran, para que puedas consultarlos en el futuro."
+      item3: "<b>Siempre disponibles</b>. Los archivos permanecen en Teambox para que puedas consultarlos en el futuro."
     upload:
       uploaded_the_file: "ha subido el archivo"
       download: Descargar
@@ -565,6 +565,13 @@ es:
       nobody_watching: "Nadie sigue los cambios de este elemento"
       started_watching: "Ahora recibirás emails con las actualizaciones de este elemento."
       stopped_watching: "Ya no recibirás más notificaciones de este elemento."
+    upgrade_browser:
+      upgrade: Estás usando una versión anticuada de Internet Explorer. Puede que Teambox no funcione correctamente.
+      ie: Actualiza Internet Explorer
+      or_install: o instala
+      chrome: "Chrome,"
+      firefox: "Firefox"
+      safari: "Safari"
 
   date:
     yesterday: Ayer
