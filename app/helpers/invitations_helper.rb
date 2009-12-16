@@ -8,7 +8,7 @@ module InvitationsHelper
     render :partial => 'invitations/fields', :locals => { :f => f }
   end
   
-  def list_invitations(project,invitations)
+  def list_invitations_for_project(project,invitations)
     render :partial => 'invitations/invitation', :collection => invitations,
     :locals => { :project => project }
   end
