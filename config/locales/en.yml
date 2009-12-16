@@ -21,6 +21,7 @@ en:
     delete_upload: Are you sure you want to delete this file?
   deleted:
     conversation: "Deleted <b>{{name}}</b> conversation"
+    task: "Deleted <b>{{name}}</b> task"
     page: "Deleted <b>{{name}}</b> page"
     upload: "Deleted <b>{{name}}</b> file"
   activities:

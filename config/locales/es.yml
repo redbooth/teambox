@@ -16,11 +16,12 @@ es:
       other: "{{count}} comentarios"
   confirm:
     delete_task_list: ¿Seguro que quieres borrar esta lista de tareas?
-    delete_task: ¿Seguro que quieres borrar esta tarrea?
+    delete_task: ¿Seguro que quieres borrar esta tarea?
     delete_page: ¿Seguro que quieres borrar esta página?
     delete_upload: ¿Seguro que quieres borrar este archivo?
   deleted:
     conversation: "Se ha borrado la conversación <b>{{name}}</b>"
+    task: "Se ha borrado la tarea <b>{{name}}</b>"
     page: "Se ha borrado la página <b>{{name}}</b>"
     upload: "Se ha borrado el archivo <b>{{name}}</b>"
   activities:

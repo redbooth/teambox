@@ -31,7 +31,7 @@ class TasksController < ApplicationController
   end
   
   def show
-    if @task.archived?    
+    if @task.archived?
       @sub_action = 'archived'
       @task_lists = @current_project.task_lists.with_archived_tasks
     else
@@ -78,10 +78,21 @@ class TasksController < ApplicationController
   end
   
   def destroy
-    @task.destroy if @task.owner?(current_user)
-    respond_to do |format|
-      format.html { redirect_to project_task_lists_path(@current_project) }
-      format.js
+     if @task.editable?(current_user)
+      @task.try(:destroy)
+
+      respond_to do |f|
+        f.html do
+          flash[:success] = t('deleted.task', :name => @task.to_s)
+          redirect_to project_task_lists_path(@current_project)
+        end
+        f.js
+      end
+    else
+      respond_to do |f|
+        flash[:error] = "You are not allowed to do that!"
+        f.html { redirect_to project_task_lists_path(@current_project) }
+      end
     end
   end
   
@@ -126,6 +137,7 @@ class TasksController < ApplicationController
         @task_list = @current_project.task_lists.find(params[:task_list_id])
       rescue
         flash[:error] = "Task list #{params[:task_list_id]} not found in this project"
+        redirect_to project_task_lists_path(@current_project)
       end
     end
     
@@ -133,7 +145,8 @@ class TasksController < ApplicationController
       begin
         @task = @current_project.tasks.find(params[:id])
       rescue
-        flash[:error] = "Task #{params[:id]}not found in this project"
+        flash[:error] = "Task #{params[:id]} not found in this project"
+        redirect_to project_task_lists_path(@current_project)
       end
     end
 end
