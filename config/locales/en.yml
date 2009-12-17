@@ -1,6 +1,6 @@
 en:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "You're now using <b>Teambox 2</b>, lots of new features!</p><p>All the data from Teambox 1 has been migrated.</p><p>If you have an <b>existing account</b>, you'll need to get a new password. Get a new one by using Forgot your Password and you'll be using Teambox 2!</p><p>First time here? Create an account at Signup."
+  latest_announcement: "Now with <a href='http://blog.teambox.com/whiteness/'>light background</a> and <a href='http://blog.teambox.com/auto-refresh-activity-feed/'>auto-refresh</a>!"
   common:
     and: and
     or: or
