@@ -1,0 +1,92 @@
+.edit_users .content_wrap, .update_users .content_wrap {
+  float: right;
+  padding: 10px;
+  padding-left: 0px; }
+.edit_users .column_wrap, .update_users .column_wrap {
+  float: left; }
+  .edit_users .column_wrap .submit, .update_users .column_wrap .submit {
+    text-align: right; }
+.edit_users .column, .update_users .column {
+  -moz-border-radius-topleft: 5px;
+  -webkit-border-top-left-radius: 5px; }
+.edit_users .content h2, .update_users .content h2 {
+  font-size: 22px;
+  margin: 10px;
+  margin-right: 0px;
+  padding-bottom: 5px;
+  border-bottom: solid 2px rgb(240,240,240); }
+
+.edit_users h2, .update_users h2 {
+  margin-left: 20px;
+  margin-bottom: 15px; }
+.edit_users label, .update_users label {
+  float: left;
+  width: 120px;
+  text-align: right;
+  padding-right: 10px;
+  vertical-align: middle;
+  font-size: 12px; }
+.edit_users .text_area, .update_users .text_area {
+  padding: 5px 0px; }
+  .edit_users .text_area textarea, .update_users .text_area textarea {
+    height: 4em; }
+.edit_users #change_password_link, .update_users #change_password_link {
+  margin-bottom: 5px;
+  margin-left: 130px;
+  font-size: 12px; }
+.edit_users .many_fields, .update_users .many_fields {
+  padding-top: 10px;
+  border-top: solid 1px rgb(230,230,230);
+  clear: both; }
+  .edit_users .many_fields label, .update_users .many_fields label {
+    padding-bottom: 10px; }
+.edit_users .fields, .update_users .fields {
+  float: right;
+  width: 510px; }
+  .edit_users .fields input, .update_users .fields input {
+    width: 140px; }
+.edit_users .submit, .update_users .submit {
+  clear: both; }
+.edit_users .notifications label, .update_users .notifications label {
+  float: none; }
+.edit_users .notifications .notify, .update_users .notifications .notify {
+  padding-bottom: 7px; }
+
+div.upload_avatar .avatar {
+  float: left;
+  width: 48px;
+  height: 48px;
+  margin-right: 5px; }
+  div.upload_avatar .avatar a {
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin-right: 5px;
+    background: url(/images/avatar_thumb_corners.png); }
+  div.upload_avatar .avatar a:hover {
+    background: url(/images/avatar_thumb_corners_hover.png); }
+div.upload_avatar p.actions {
+  padding-top: 2px;
+  margin: 0px; }
+  div.upload_avatar p.actions a {
+    display: block;
+    font-size: 12px;
+    color: rgb(120,120,120);
+    margin-top: 5px;
+    text-decoration: underline; }
+  div.upload_avatar p.actions a:hover {
+    text-decoration: none; }
+
+.new_user_avatar {
+  float: left;
+  width: 48px;
+  height: 48px;
+  margin-right: 10px;
+  background: rgb(200,240,200);
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px; }
+  .new_user_avatar p {
+    color: rgb(150,190,150);
+    font-size: 24px;
+    margin-left: 15px;
+    margin-top: 7px; }

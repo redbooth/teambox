@@ -1,26 +1,12 @@
 %h2= t('.title')
 
 %p.new_example_project
-  = t('.create_an_example_project', :link => new_example_project_path)  
+  = t('.create_an_example_project', :link => new_example_project_path)
 
 - form_for @project do |f|
   = project_fields(f,@project)
-  
   .submit
     = f.submit t('.submit')
   
 - content_for :column do
-  %p= t '.define1'
-  %p= t '.define2'
-  %ul
-    %li= t '.feature1'
-    %li= t '.feature2'
-    %li= t '.feature3'
-    %li= t '.feature4'
-    %li= t '.feature5'
-    %li= t '.feature6'
-    %li= t '.feature7'
-  %p= t '.footer'
-  %p.hide_me
-    = t '.limited'
-    = link_to(t('.upgrade'), "")
+  = project_new_primer

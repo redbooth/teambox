@@ -81,7 +81,7 @@ module CommentsHelper
     else
       form_url = [project,target,comment]
     end
-    if project.editable?(current_user)
+    if project.editable?(current_user) && project.archived == false
       render :partial => 'comments/new',
         :locals => { :target => target,
           :message => message,

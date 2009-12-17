@@ -1,0 +1,11 @@
+.name.text_field
+  = f.label :name, t('projects.fields.name')
+  = f.text_field :name
+.permalink.text_field
+  = f.label :permalink, t('projects.fields.permalink')
+  = f.text_field :permalink
+  = permalink_example(project.permalink)
+  = watch_permalink_example
+.check_box.archived
+  = f.check_box :archived
+  = f.label :archived, t('projects.fields.archived')

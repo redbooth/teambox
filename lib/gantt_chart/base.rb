@@ -24,17 +24,39 @@ module GanttChart
       "<div class='ruler'>#{html}</div>"
     end
 
-    def to_html(start=1, final=10, day_width=30, margin=50, expanded=true)
+    def to_html(day_width=30, margin=50, expanded=true)
       @expanded = expanded
-      process(start,final) 
-
-      return if !@rows or @rows.empty?
       
-      html = ruler_to_html(final-start,day_width)
-      html << list_rows(start,final,day_width)
+      return if !@rows or @rows.empty?
+      html = ruler_to_html(@final-@start,day_width)
+      html << list_rows(@start,@final,day_width)
       html
     end
 
+    def process(start=1,final=10)
+      @start = start
+      @final = final
+      @rows = []
+
+      @task_lists.sort! do |a,b|
+        if !a.start; -1
+        elsif !b.start; 1
+        else a.start <=> b.start; end
+      end
+    
+      @task_lists.each do |task_list|
+        # Clip the task_list to the given time window
+        next if !task_list.start && !task_list.final
+        task_list.start = start if !task_list.start || task_list.start < start
+        task_list.final = final if !task_list.final || task_list.final > final
+        next if task_list.start > final
+        next if task_list.final < start
+
+        add_to_rows(task_list)
+      end
+      @rows.nil? || @rows.empty?
+    end
+        
     protected
       
       def list_rows(start,final,day_width)
@@ -69,27 +91,6 @@ module GanttChart
         end
       
         @rows << [task_list] # If no rows were suitable, a new one must be created
-      end
-    
-      def process(start,final)
-        @rows = []
-
-        @task_lists.sort! do |a,b|
-          if !a.start; -1
-          elsif !b.start; 1
-          else a.start <=> b.start; end
-        end
-      
-        @task_lists.each do |task_list|
-          # Clip the task_list to the given time window
-          next if !task_list.start && !task_list.final
-          task_list.start = start if !task_list.start || task_list.start < start
-          task_list.final = final if !task_list.final || task_list.final > final
-          next if task_list.start > final
-          next if task_list.final < start
-
-          add_to_rows(task_list)
-        end
       end
   end
 end

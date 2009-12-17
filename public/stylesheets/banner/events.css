@@ -1,0 +1,59 @@
+div.upcoming_events_banner {
+  padding: 10px; }
+  div.upcoming_events_banner table {
+    width: 100%; }
+  div.upcoming_events_banner th {
+    font-size: 11px;
+    padding: 4px;
+    padding-top: 10px;
+    border-bottom: 1px solid rgb(140,140,140); }
+  div.upcoming_events_banner th.today {
+    font-weight: bold;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-bottom: dashed 1px rgb(0,0,0); }
+  div.upcoming_events_banner td.today {
+    border: dashed 1px rgb(0,0,0); }
+  div.upcoming_events_banner td {
+    font-size: 11px;
+    padding: 0px; }
+    div.upcoming_events_banner td ul {
+      margin: 0px;
+      padding: 0px;
+      list-style-type: none; }
+      div.upcoming_events_banner td ul a {
+        display: block;
+        color: rgb(255,255,255);
+        padding: 3px 4px;
+        border-bottom: solid 1px rgb(255,255,255); }
+  div.upcoming_events_banner p.nada {
+    font-size: 12px;
+    padding-bottom: 0px; }
+
+div.banner_navigation ul {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+  margin-left: 15px; }
+div.banner_navigation li {
+  float: left;
+  display: block;
+  margin-right: 2px; }
+  div.banner_navigation li a {
+    float: left;
+    display: block;
+    color: rgb(48,48,48);
+    text-decoration: none;
+    padding: 3px 6px;
+    margin-right: 1px;
+    font-size: 12px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    background: rgb(235,235,235);
+    margin-left: 5px; }
+  div.banner_navigation li a:hover, div.banner_navigation li a.active {
+    background: rgb(210,210,210); }

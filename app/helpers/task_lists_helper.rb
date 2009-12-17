@@ -1,5 +1,14 @@
 module TaskListsHelper
 
+  def task_list_range(task_list)
+    start_on  = task_list.start_on.nil? ? task_list.start_on : nil
+    finish_on = task_list.finish_on.nil? ? task_list.finish_on : nil
+    
+    return unless (start_on.nil? && finish_on.nil?) || (start_on == finish_on)
+    out = [I18n.l(start_on, :format => '%b %d'),I18n.l(finish_on, :format => '%b %d')].join(" - ")
+    content_tag(:span,out,:class => 'range')
+  end
+
   def task_list_id(element,project,task_list=nil)
     task_list ||= project.task_lists.new
     js_id(element,project,task_list)
@@ -189,6 +198,7 @@ module TaskListsHelper
   end
   
   def task_list_primer(project)
+    return unless project.editable?(current_user)
     render :partial => 'task_lists/primer', :locals => { :project => project }
   end  
   

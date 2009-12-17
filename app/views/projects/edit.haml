@@ -1,6 +1,8 @@
 - content_for :column do
-  = @current_project.name
+  = project_settings_navigation
+
+%h2= t(".title_#{@sub_action}")
 
 - form_for @current_project do |f|
-  = project_fields(f,@current_project)
+  = project_fields(f,@current_project,@sub_action)
   = f.submit t('.submit')

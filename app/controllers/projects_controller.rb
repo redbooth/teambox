@@ -1,10 +1,12 @@
 class ProjectsController < ApplicationController
-
+  before_filter :load_task_lists, :only => [:show]
+  before_filter :load_banner, :only => [:show]
+  before_filter :load_projects, :only => [:index]
+  
   OPTIONS = { :include => [:target], :except => 'body_html' }
   
   def index
-    @projects = current_user.projects.find :all #, :select => 'projects.id, name'
-    @activities = Project.get_activities_for @projects
+    @activities = Project.get_activities_for(@projects)
     @last_activity = @activities.last
     @pending_projects = current_user.invitations
 
@@ -53,6 +55,7 @@ class ProjectsController < ApplicationController
   end
   
   def edit
+    @sub_action ||= 'settings'
   end
   
   def update
@@ -65,4 +68,19 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def load_task_lists
+    @task_lists = @current_project.task_lists.unarchived
+  end
+  
+  def load_projects
+    if params.has_key?(:sub_action)
+      @sub_action = params[:sub_action]
+      if @sub_action == 'archived'
+        @projects = current_user.projects.archived
+      end  
+    else
+      @sub_action = 'all'
+      @projects = current_user.projects.unarchived
+    end
+  end
 end

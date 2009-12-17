@@ -1,5 +1,27 @@
 module ProjectsHelper
 
+  def project_column_navigation
+    render :partial => 'shared/project_column_navigation'
+  end
+
+  def project_new_primer
+    render :partial => 'projects/new_primer'    
+  end
+
+  def permalink_example(permalink)
+    out = t('projects.fields.permalink_prefix', :domain => APP_CONFIG['app_domain'])
+    out << content_tag(:span, permalink, :id => 'handle', :class => 'good')
+    content_tag(:div, out, :id => 'preview')
+  end
+
+  def watch_permalink_example
+    javascript_tag "$('project_permalink').observe('keyup', function(e) { Project.valid_url(); })"    
+  end
+
+  def project_settings_navigation
+    render :partial => 'shared/project_settings_navigation'
+  end
+
   def list_users_statuses(users)
     render :partial => 'users/status', :collection => users, :as => :user
   end
@@ -18,8 +40,9 @@ module ProjectsHelper
     link_to content_tag(:span, t('.new_project')), new_project_path, :class => 'add_button', :id => 'new_project_link'
   end
 
-  def project_fields(f,project)
-    render :partial => 'fields', 
+  
+  def project_fields(f,project,sub_action='new')
+    render :partial => "projects/fields/#{sub_action}", 
       :locals => { 
         :f => f,
         :project => project }

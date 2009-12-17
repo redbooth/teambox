@@ -1,0 +1,94 @@
+@media screen {
+  .people_list .person, .people_list .invite_people {
+    font-size: 12px;
+    margin-left: 10px;
+    padding-left: 15px; }
+  .people_list .person {
+    background: transparent url(/images/grey_dot.png) no-repeat scroll 0 4px; }
+    .people_list .person .status {
+      display: inline; }
+    .people_list .person .last_login {
+      display: none; }
+  .people_list .person:hover .status {
+    display: none; }
+  .people_list .person:hover .last_login {
+    display: inline; }
+  .people_list a {
+    color: rgb(80,80,80);
+    text-decoration: none; }
+  .people_list a:hover {
+    text-decoration: underline; }
+  .people_list .status, .people_list .last_login {
+    float: right;
+    color: #777; }
+  .people_list .online {
+    background: transparent url(/images/green_dot.png) no-repeat scroll 0 4px; }
+    .people_list .online .status {
+      display: none; }
+
+  .project_list {
+    margin-top: 15px;
+    font-size: 12px; }
+    .project_list .project_link {
+      margin: 1px 0 2px 0; }
+      .project_list .project_link .unread_comment_count {
+        float: right;
+        font-weight: normal; }
+    .project_list .new_project_link a {
+      color: rgb(150,150,150); }
+
+  .subscribe {
+    margin-top: 15px; }
+    .subscribe a {
+      font-size: 12px;
+      padding-left: 25px;
+      background: url(/images/feed.png) no-repeat left; } }
+
+@media print {
+  .index_projects .column {
+    display: none; }
+  .index_projects .info {
+    display: none; }
+  .index_projects h2 {
+    font-size: 20px;
+    border-bottom: solid 3px rgb(0,0,0);
+    padding-bottom: 3px; }
+  .index_projects .comment {
+    clear: both; }
+    .index_projects .comment .block {
+      float: none;
+      width: 100%; }
+      .index_projects .comment .block .date {
+        color: rgb(0,0,0); }
+      .index_projects .comment .block .name {
+        border-bottom: solid 1px rgb(0,0,0); }
+        .index_projects .comment .block .name span {
+          color: rgb(0,0,0); }
+        .index_projects .comment .block .name a {
+          color: rgb(0,0,0);
+          text-decoration: none; }
+        .index_projects .comment .block .name span.task_status {
+          background: rgb(0,0,0);
+          color: rgb(255,255,255);
+          border: none;
+          -moz-border-radius: 0px;
+          -webkit-border-radius: 0px; }
+  .index_projects .activity {
+    clear: both;
+    color: rgb(0,0,0); }
+    .index_projects .activity .activity_icon {
+      display: none; }
+    .index_projects .activity span {
+      color: rgb(0,0,0); }
+    .index_projects .activity .clear {
+      border-bottom: solid 1px rgb(0,0,0);
+      margin: 0px; }
+    .index_projects .activity a {
+      color: rgb(0,0,0);
+      text-decoration: none; }
+    .index_projects .activity .date {
+      color: rgb(0,0,0); }
+  .index_projects .upload .info {
+    display: none; }
+  .index_projects .upload .thumbnail {
+    display: none; } }

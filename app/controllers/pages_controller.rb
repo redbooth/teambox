@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   before_filter :load_page, :only => [ :show, :edit, :update, :destroy ]
-  
+  before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy]
+    
   def index
     if @current_project
       @pages = @current_project.pages
@@ -90,4 +91,5 @@ class PagesController < ApplicationController
         redirect_to project_path(@current_project)
       end
     end
+    
 end

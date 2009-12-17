@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string   :rss_token, :default => nil, :limit => 40
     t.boolean  :admin,    :default => false
     t.integer  :comments_count, :default => 0
-
+        
     t.boolean  :notify_mentions,      :default => true
     t.boolean  :notify_conversations, :default => true
     t.boolean  :notify_task_lists,    :default => true
@@ -115,7 +115,8 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :permalink
     t.integer :last_comment_id, :null => true, :default => nil
     t.integer :comments_count, :default => 0
-    t.datetime :deleted_at
+    t.boolean  :archived, :default => false
+    t.datetime :deleted_at    
     t.timestamps
   end
   
@@ -161,7 +162,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.integer :assigned_id
     t.integer :status, :default => 0
     t.boolean :archived, :default => false
-    t.date :due_on
+    t.date    :due_on
     t.datetime :completed_at
     t.datetime :deleted_at    
     t.timestamps

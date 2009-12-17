@@ -24,10 +24,9 @@ module GanttChart
     end
 
     def set_destination(position)
-      tommorrow = Time.current.to_date + 1.day
       case position.class.to_s
         when 'Date'
-          (position - tommorrow).to_i
+          (position - Time.current.to_date).to_i + 1
         when 'Fixnum'
           position
         when 'NilClass'

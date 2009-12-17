@@ -1,7 +1,4 @@
--content_for :banner do
-  .gantt
-    = @chart.to_html(1, 32, 30, 0)
-
+= banner(@events,@chart)
 -content_for :column do
   = task_list_column(@current_project,@task_lists,@sub_action,@task_list)
 
@@ -9,3 +6,4 @@
   =tabular_task_lists(@current_project,@task_lists,@sub_action)
 - elsif @sub_action == 'all'
   = task_list_primer(@current_project)
+  

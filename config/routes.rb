@@ -19,12 +19,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reset_passwords
   map.resource :session
 
-  map.project_my_task_lists '/projects/:project_id/my_task_lists/', :controller => 'task_lists', :action => 'index', :sub_action => 'mine'
-  map.project_archived_task_lists '/projects/:project_id/task_lists/archived', :controller => 'task_lists', :action => 'index', :sub_action => 'archived'
-
   map.account_settings '/account/settings', :controller => 'users', :action => 'edit', :sub_action => 'settings'
-  map.account_picture '/account/picture', :controller => 'users', :action => 'edit', :sub_action => 'picture'
-  map.account_profile '/account/profile', :controller => 'users', :action => 'edit', :sub_action => 'profile'
+  map.account_picture '/account/picture',   :controller => 'users', :action => 'edit', :sub_action => 'picture'
+  map.account_profile '/account/profile',   :controller => 'users', :action => 'edit', :sub_action => 'profile'
   map.account_notifications '/account/notifications', :controller => 'users', :action => 'edit', :sub_action => 'notifications'
   
   map.resources :users, :has_many => [:invitations,:comments], :member => { 
@@ -40,12 +37,22 @@ ActionController::Routing::Routes.draw do |map|
 
   map.show_more 'activities/:id/show_more', :controller => 'activities', :action => 'show_more', :method => :get
   map.show_new  'activities/:id/show_new',  :controller => 'activities', :action => 'show_new',  :method => :get
+
+  map.project_archived 'projects/archived',  :controller => 'projects', :action => 'index', :sub_action => 'archived'  
   
   map.resources :projects,
       :has_many => [:pages, :people],
       :member => [:get_comments, :accept, :decline] do |project|
     #project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
     #project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
+
+    project.settings 'settings',  :controller => 'projects', :action => 'edit', :sub_action => 'settings'
+    project.picture  'picture',   :controller => 'projects', :action => 'edit', :sub_action => 'picture'
+    project.deletion 'deletion',  :controller => 'projects', :action => 'edit', :sub_action => 'deletion'
+
+    project.my_task_lists 'my_task_lists',             :controller => 'task_lists', :action => 'index', :sub_action => 'mine'
+    project.archived_task_lists 'task_lists/archived', :controller => 'task_lists', :action => 'index', :sub_action => 'archived'
+    
     project.resources :invitations, :member => [:accept,:decline,:resend]
         
     project.resources :comments do |comment|

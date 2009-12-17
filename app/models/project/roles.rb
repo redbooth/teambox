@@ -13,11 +13,11 @@ class Project
   end
   
   def editable?(user)
-    check_role(user,Person::ROLES[:participant])
+    check_role(user,Person::ROLES[:participant]) && archived == false
   end
 
   def admin?(user)
-    check_role(user,Person::ROLES[:admin]) || self.user == user
+    check_role(user,Person::ROLES[:admin]) && archived == false
   end
 
   protected

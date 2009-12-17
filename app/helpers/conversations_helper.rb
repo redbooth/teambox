@@ -37,6 +37,7 @@ module ConversationsHelper
   end
   
   def conversations_primer(project)
+    return unless project.editable?(current_user)
     render :partial => 'conversations/primer', :locals => { :project => project }
   end
   

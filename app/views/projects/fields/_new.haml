@@ -1,0 +1,11 @@
+.name.text_field
+  = f.label :name, t('projects.fields.name')
+  = f.text_field :name
+  = tooltip 'project_name', t('projects.fields.name_description')
+.permalink.text_field
+  = f.label :permalink, t('projects.fields.permalink')
+  = f.text_field :permalink
+  = tooltip 'project_permalink', t('projects.fields.permalink_description')
+  .preview
+    ="#{t('projects.fields.permalink_prefix', :domain => APP_CONFIG['app_domain'])}<span id='handle'></span>" 
+  = watch_permalink_example

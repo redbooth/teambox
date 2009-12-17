@@ -201,15 +201,19 @@ en:
         title: "{{name}}"
         description: "Recent activities for the project {{name}}"
     fields:
+      settings:
+        name: General Settings
+      picture:
+        name: Project Picture
+      deletion:
+        name: Delete Project
       name: Name
       name_description: "Choose a brief and descriptive title. For example: Taggart Transcontinental"
       permalink: URL
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
       permalink_prefix: "http://{{domain}}/projects/"
-    new:
-      title: Create a Project
-      submit: Create project and start inviting people
-      new_project: New Project...
+      archived: Archive this Project
+    new_primer:
       define1: A project is a shared group with your teammates.
       define2: "Inside a project, each team member can:"
       feature1: Post status updates.
@@ -222,10 +226,17 @@ en:
       footer: This project will belong to you. You can transfer this project to other contacts at any time.
       limited: "As a free account, you can only upload up to 50 Mb of attachments to this project."
       upgrade: Upgrade your account now!
+    new:
+      title: Create a Project
+      submit: Create project and start inviting people
+      new_project: New Project...
       created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
       create_an_example_project: "First time in Teambox? <a href='{{link}}'>Create an example project</a> to play around and learn."
     edit:
+      title_settings: General Settings
+      title_picture: Project Logo
+      title_deletion: Project Deletion
       submit: Save Changes
   invitations:
     fields:
@@ -521,12 +532,25 @@ en:
       welcome: Welcome to Teambox!
 
   shared:
+    strip:
+      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>"
+    gantt_banner_primer:
+      title: There are no task lists due to show on the gannt chart
+    upcoming_events_primer:
+      title: There are no tasks due to show on the calendar
     projects:
       projects: Projects
     navigation:
       welcome: Welcome
       all_projects: 'All Projects'
       new_project: +
+    project_column_navigation:
+      all: All Projects
+      archived: "{{count}} Archived Projects"
+    project_settings_navigation:
+      general: General Settings
+      picture: Project Picture
+      deletion: Delete Project
     project_navigation:
       overview: Overview
       all_conversations: All Conversations
@@ -685,6 +709,7 @@ en:
     index_uploads: All File Uploads
     create_uploads: File Upload
     index_projects: All Projects
+    edit_projects: Edit Project
     index_people: People
     edit_users: Edit
     welcome_users: Welcome!

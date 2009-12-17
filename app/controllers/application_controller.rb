@@ -7,12 +7,27 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :show_errors
   
   include AuthenticatedSystem
+  include BannerSystem
   filter_parameter_logging :password
 
-  before_filter :rss_token, :confirmed_user?, :load_project, :login_required, :set_locale, :touch_user, :recent_projects, :belongs_to_project?, :set_page_title
+  before_filter :rss_token, 
+                :confirmed_user?, 
+                :load_project, 
+                :login_required, 
+                :set_locale, 
+                :touch_user, 
+                :recent_projects, 
+                :belongs_to_project?, 
+                :set_page_title
   
   private
-  
+
+    def check_permissions
+      unless @current_project.editable?(current_user)
+        render :text => "You don't have permission to edit/update/delete within \"#{@current_project.name}\" project", :status => :forbidden
+      end
+    end
+    
     def show_errors
       render :partial => 'shared/record_not_found', :layout => 'application'
     end
@@ -32,9 +47,9 @@ class ApplicationController < ActionController::Base
     end
 
     def belongs_to_project?
-      if @current_project and current_user
-        unless Person.find_by_project_id_and_user_id(@current_project.id, current_user.id)
-          current_user.remove_recent_project @current_project
+      if @current_project && current_user
+        unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
+          current_user.remove_recent_project(@current_project)
           render :text => "You don't have permission to view this project", :status => :forbidden
         end
       end
@@ -108,4 +123,17 @@ class ApplicationController < ActionController::Base
         @page_title = "#{ "#{user_name} &rarr;" if user_name } #{translate_location_name}"
       end    
     end
+    
+    def split_events_by_date(events, start_date=nil)
+      start_date ||= Date.today.monday.to_date
+      return [] if events.empty?
+      split_events = Array.new(14)
+      events.each do |event|
+        if (event.due_on - start_date) >= 0
+          split_events[(event.due_on - start_date)] ||= []
+          split_events[(event.due_on - start_date)] << event
+        end
+      end
+      return split_events
+    end    
 end

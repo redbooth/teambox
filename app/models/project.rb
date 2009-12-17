@@ -6,39 +6,27 @@ class Project < ActiveRecord::Base
   include GrabName
   
   acts_as_paranoid
-  concerned_with :validation, :initializers, :roles
 
-  belongs_to :user
+  concerned_with :validation, 
+                 :initializers, 
+                 :roles, 
+                 :associations,
+                 :callbacks
+                 #:logo
 
-  with_options :dependent => :destroy do |project|
-    project.has_many :people
-    project.has_many :task_lists, :conditions => { :page_id => nil }
-    project.has_many :tasks
-    project.has_many :uploads
-    project.has_many :invitations
-  end
-  
-  with_options :dependent => :destroy, :order => 'created_at DESC' do |project|
-    project.has_many :conversations
-    project.has_many :pages
-    project.has_many :comments
-    project.has_many :activities
-  end
-
-  has_many :users, :through => :people, :order => 'users.updated_at DESC'
 
   has_permalink :name
 
-  attr_accessible :name, :permalink  
+  attr_accessible :name, :permalink, :archived
+
+  named_scope :archived, :conditions => {:archived => true}
+  named_scope :unarchived, :conditions => {:archived => false}
 
   def self.grab_name_by_permalink(permalink)
     p = self.find_by_permalink(permalink,:select => 'name')
     p.try(:name) || ''
   end
   
-  def after_create
-    add_user user
-  end
 
   def log_activity(target, action, creator_id=nil)
     creator_id = target.user_id unless creator_id
@@ -58,10 +46,6 @@ class Project < ActiveRecord::Base
       user.recent_projects.delete id
       user.save!      
     end
-  end
-
-  def after_create
-    add_user(user)
   end
   
   def to_param

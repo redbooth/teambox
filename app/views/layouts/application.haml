@@ -12,6 +12,7 @@
     - javascript_tag do
       = yield :js_templates
   %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
+    = strip(@current_project)
     .container
       = header
       = global_navigation

@@ -126,7 +126,7 @@
     a:hover
       :background rgb(140,140,140)
       :color rgb(255,255,0)
-div.user_navigation, div.task_navigation
+div.user_navigation, div.task_navigation, div.project_settings_navigation, div.project_column_navigation
   ul
     :list-style-type none
     :margin 0px
@@ -149,6 +149,17 @@ div.user_navigation, div.task_navigation
       :background rgb(0,0,200)
       :border solid 1px rgb(0,0,200)
       :text-decoration none
+
+div.project_settings_navigation
+  li.deletion
+    a
+      :color rgb(200,200,200)
+      :background rgb(250,250,250)
+      :border dashed 1px rgb(230,230,230)
+    a.active
+      :color rgb(255,255,0)
+      :background rgb(200,0,0)
+      :border solid 1px rgb(200,0,0)
   
 @media print
   div.navigation, div.global_navigation, div.project_navigation

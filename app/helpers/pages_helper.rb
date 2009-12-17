@@ -1,6 +1,7 @@
 module PagesHelper
 
   def page_primer(project)
+    return unless project.editable?(current_user)
     render :partial => 'pages/primer', :locals => { :project => project }
   end
 

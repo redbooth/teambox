@@ -1,5 +1,6 @@
 - content_for :column do
   = new_project_link
+  = project_column_navigation
   = list_projects(@projects)
   .subscribe
     = link_to t('.subscribe'), user_rss_token(projects_path(:format => :rss))
@@ -12,12 +13,9 @@
   %h2
     = t('.title')
     %span= t('.refreshes')
-
   #activities
     = list_activities(@activities)
     = show_more_button(@activities)
-
   = javascript_tag autorefresh(@activities)
-
 - else
-  = project_primer
+  = project_primer unless @sub_action == 'archived'

@@ -201,11 +201,18 @@ es:
         title: "{{name}}"
         description: "Actividad reciente para {{name}}"
     fields:
+      settings:
+        name: General Settings
+      picture:
+        name: Project Picture
+      deletion:
+        name: Delete Project
       name: Nombre
       name_description: "Escoge un título breve y explicativo. Por ejemplo: Taggart Transcontinental"
       permalink: URL
       permalink_description: "Esta será la dirección web de tu proyecto. Hazla tan breve como puedas y sin espacios."
       permalink_prefix: "http://{{domain}}/projects/"
+      archived: Archive this Project
     new:
       title: Crear un proyecto
       submit: Crear proyecto y empezar a invitar usuarios
@@ -520,12 +527,25 @@ es:
       welcome: Bienvenido a Teambox!
 
   shared:
+    strip:
+      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>"
+    gantt_banner_primer:
+      title: There are no task lists due to show on the gannt chart
+    upcoming_events_primer:
+      title: There are no tasks due to show on the calendar
     projects:
       projects: Proyectos
     navigation:
       welcome: Bienvenido
       all_projects: Proyectos
       new_project: +
+    project_column_navigation:
+      all: All Projects
+      archived: "{{count}} Archived Projects"
+    project_settings_navigation:
+      general: General Settings
+      picture: Project Picture
+      deletion: Delete Project
     project_navigation:
       overview: Resumen
       all_conversations: Mis conversaciones
@@ -684,6 +704,7 @@ es:
     index_uploads: Mis archivos
     create_uploads: Subir archivo
     index_projects: Proyectos
+    edit_projects: Edit Project
     index_people: Personas
     edit_users: Editar
     welcome_users: ¡Bienvenido!

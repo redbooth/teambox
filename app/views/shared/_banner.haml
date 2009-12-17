@@ -1,0 +1,8 @@
+-content_for :banner do
+  = upcoming_events(events)
+  = gannt_chart(chart)
+  .banner_navigation
+    %ul
+      %li= calendar_banner_link
+      %li= gannt_banner_link
+  .clear
