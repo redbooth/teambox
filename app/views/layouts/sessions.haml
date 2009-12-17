@@ -6,11 +6,12 @@
     %title
       Teambox
     = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'custom', :media => :screen
     = sprockets_include_tag
   %body{ :class => "splash #{location_name} #{I18n.locale}"}
     .container
       .header
-        = image_tag('header_logo_large.png')
+        = image_tag('header_logo_black_large.png')
       = global_navigation
       = hot_flashes(flash)
       .content
