@@ -22,6 +22,7 @@ class SessionsController < ApplicationController
       # reset_session
       self.current_user = user
       handle_remember_cookie! true
+      flash[:error] = nil
       redirect_back_or_default('/')
     else
       note_failed_signin
