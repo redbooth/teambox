@@ -8,7 +8,6 @@ class Project < ActiveRecord::Base
   acts_as_paranoid
   concerned_with :validation, :initializers, :roles
 
-
   belongs_to :user
 
   with_options :dependent => :destroy do |project|
@@ -33,12 +32,12 @@ class Project < ActiveRecord::Base
   attr_accessible :name, :permalink  
 
   def self.grab_name_by_permalink(permalink)
-    e = self.find_by_permalink(permalink,:select => 'name')
-    e = e.nil? ? '' : e.name
+    p = self.find_by_permalink(permalink,:select => 'name')
+    p.try(:name) || ''
   end
   
   def after_create
-    self.add_user self.user
+    add_user user
   end
 
   def log_activity(target, action, creator_id=nil)
@@ -47,17 +46,16 @@ class Project < ActiveRecord::Base
   end
   
   def add_user(user, source_user=nil)
-    unless Person.exists? :user_id => user.id, :project_id => self.id
-      source_user_id = source_user.id if source_user
-      self.people.create(:user_id => user.id, :source_user_id => source_user_id)
+    unless Person.exists? :user_id => user.id, :project_id => id
+      people.create(:user_id => user.id, :source_user_id => source_user.try(:id))
     end
   end
   
   def remove_user(user)
-    if person = Person.find_by_user_id_and_project_id(user.id, self.id)
+    if person = Person.find_by_user_id_and_project_id(user.id, id)
       person.destroy
 
-      user.recent_projects.delete self.id
+      user.recent_projects.delete id
       user.save!      
     end
   end
@@ -104,7 +102,7 @@ class Project < ActiveRecord::Base
     end
 
     Activity.find(:all, :conditions => conditions,
-                        :order => 'created_at DESC', # could be faster to use 'id DESC'
+                        :order => 'created_at DESC',
                         :limit => options[:limit] || APP_CONFIG['activities_per_page'])
   end
   
