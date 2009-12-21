@@ -76,7 +76,6 @@ module PeopleHelper
    #can_transfer = (@current_user == person.project.user)
    #t('.transfer') if can_transfer != owner
   def remove_person_link(project,person,user)
-    return
     if project.owner?(user) && !person.owner?
       delete_person_link(project,person) 
     elsif person.user == user && !person.owner?
@@ -101,8 +100,8 @@ module PeopleHelper
   end
 
   def leave_project_link(project,person)
-    link_to_remote t('.leave_project'), 
-      :url => project_person_path(project,person.user.id), 
+    link_to t('.leave_project'), 
+      project_person_path(project,person.id), 
       :method => :delete,
       :confirm => t('.confirm_delete')
   end

@@ -44,4 +44,4 @@ Feature Invite a user to a project
   Scenario: Mislav leaves a project
   Scenario: Mislav transfers ownership of a project
   Scenario: Mislav resends invitation email
-  Scenario: Mislav deletes an invitation that hasn't been accepted
+  Scenario: Mislav deletes an invitation that hasnt been accepted

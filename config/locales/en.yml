@@ -24,6 +24,8 @@ en:
     task: "Deleted <b>{{name}}</b> task"
     page: "Deleted <b>{{name}}</b> page"
     upload: "Deleted <b>{{name}}</b> file"
+    person: "{{name}} is no longer in the project"
+    left_project: "You are no longer in this project"
   activities:
     activity_line:
       create_comment: posted a comment

@@ -63,7 +63,7 @@ class PagesController < ApplicationController
   end
 
   def destroy
-     if @page.editable?(current_user)
+    if @page.editable?(current_user)
       @page.try(:destroy)
 
       respond_to do |f|

@@ -33,11 +33,14 @@ class Person < ActiveRecord::Base
   end
   
   def after_create
-    self.project.log_activity(self, 'create', self)
+    project.log_activity(self, 'create', self)
+    if project.user == user
+      update_attribute :role, ROLES[:admin]
+    end
   end
   
   def after_destroy
-    self.project.log_activity(self, 'delete')
+    project.log_activity(self, 'delete')
     user.recent_projects.delete(project.id)
     user.save!
   end

@@ -30,6 +30,7 @@ describe Project do
       @project.user.should == @owner
       @project.owner?(@owner).should be_true
       @project.users.should include(@owner)
+      @project.people.first.role.should == Person::ROLES[:admin]
       @owner.reload
       @owner.projects.should include(@project)
     end

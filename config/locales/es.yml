@@ -24,6 +24,8 @@ es:
     task: "Se ha borrado la tarea <b>{{name}}</b>"
     page: "Se ha borrado la página <b>{{name}}</b>"
     upload: "Se ha borrado el archivo <b>{{name}}</b>"
+    person: "{{name}} ya no pertenece al proyecto"
+    left_project: "Has dejado el proyecto"
   activities:
     activity_line:
       create_comment: ha comentado
