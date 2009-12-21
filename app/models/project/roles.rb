@@ -17,7 +17,7 @@ class Project
   end
 
   def admin?(user)
-    check_role(user,Person::ROLES[:admin])
+    check_role(user,Person::ROLES[:admin]) || self.user == user
   end
 
   protected

@@ -43,6 +43,7 @@ class PeopleController < ApplicationController
           flash[:success] = t('deleted.person', :name => @user.name)
           redirect_to project_people_path(@current_project)
         end
+        f.js
       end
     else
       flash[:error] = "You are not allowed to do that!"

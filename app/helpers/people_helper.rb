@@ -37,8 +37,7 @@ module PeopleHelper
       page[form_id].show
       page << "Form.reset('#{form_id}')"
     end
-  end  
-
+  end
 
   def person_form(project,person)
     render :partial => 'people/form', :locals => {
@@ -95,7 +94,7 @@ module PeopleHelper
   end
   
   def delete_person_link(project,person)
-    link_to_remote t('.remove'), :url => project_person_path(project,person.user.id), :method => :delete,
+    link_to_remote t('.remove'), :url => project_person_path(project,person), :method => :delete,
       :confirm => t('.confirm_delete')
   end
 
