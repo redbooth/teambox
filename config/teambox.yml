@@ -26,14 +26,15 @@ defaults: &DEFAULTS
   # Set allow to true to allow the "reply to" feature for notifications.
   # This will allow users to post answers and comments by email.
   # When set to true, "reply above this line" notice will be displayed where relevant and accept emails.
-  # You will need to set up:
-  # * A catch-all address for email received for any username of the incoming mail server.
-  # * A cron job to run script/inbox periodically to get email.
+  # You will need to:
+  # * Setup catch-all address for email received for any username of the incoming mail server.
+  # * Run ./script/inbox to start the receiving email daemon.
   allow_incoming_email: false
   incoming:
-    host: 
-    user:
-    pass:
+    type: pop
+    server: 
+    username: 
+    password: 
 
   # This links are used in the navigation bar for login and in every page's footer
   home_url: http://www.teambox.com

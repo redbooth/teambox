@@ -1,0 +1,9 @@
+Description:
+    Create a fetcher daemon
+    
+Example:
+    ./script/generate fetcher_daemon sms
+    
+    This will create:
+        /config/sms_fetcher.yml
+        /script/sms_fetcher

@@ -1,0 +1,17 @@
+development:
+  type: pop
+  server: localhost
+  username: username
+  password: password
+  
+test:
+  type: pop
+  server: localhost
+  username: username
+  password: password
+  
+production:
+  type: pop
+  server: localhost
+  username: username
+  password: password
