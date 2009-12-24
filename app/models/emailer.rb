@@ -3,6 +3,8 @@ class Emailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper
   concerned_with :receive
 
+  ANSWER_LINE = '-----------------------------==-----------------------------'
+
   def confirm_email(user)
     defaults
     recipients    user.email

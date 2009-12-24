@@ -20,7 +20,7 @@ module EmailerHelper
   end
   
   def email_answer_line
-    '-' * 29 + '=' * 2 + '-' * 29
+    Emailer::ANSWER_LINE
   end
   
   def answer_instructions

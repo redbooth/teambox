@@ -59,7 +59,8 @@ class Emailer
     raise "Invalid From field" unless email.from and email.from.first
 
     @to       = email.to.first.split('@').first.downcase
-    @body     = (email.multipart? ? email.parts.first.body : email.body).strip
+    @body     = (email.multipart? ? email.parts.first.body : email.body)
+    @body     = @body.split(ANSWER_LINE).first.split("<div class='email'").first.strip
     @user     = User.find_by_email email.from.first
     @subject  = email.subject.gsub(REPLY_REGEX, "")
     @project  = Project.find_by_permalink @to.split('+').first

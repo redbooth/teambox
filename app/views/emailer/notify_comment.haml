@@ -13,3 +13,7 @@
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
     %p= t('emailer.notify.view_online', :link => project_url(@project))
     = emailer_answer_to_this_email
+
+  .footer{ :style => email_text(:small) }
+    %p
+      = t('emailer.notify.notification_settings', :url => account_settings_url)

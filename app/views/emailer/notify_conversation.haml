@@ -23,4 +23,5 @@
       = t('emailer.notify.are_watching')
 
     %p
-      = t('emailer.notify.notification_settings', :stop_watching_url => project_conversation_url(@project, @conversation))
+      = t('emailer.notify.stop_watching', :stop_watching_url => project_conversation_url(@project, @conversation))
+      = t('emailer.notify.notification_settings', :url => account_settings_url)
