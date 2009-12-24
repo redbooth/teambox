@@ -95,5 +95,23 @@ class Project < ActiveRecord::Base
                            :order => 'created_at DESC',
                            :limit => limit)
   end
-  
+
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+    xml.project :id => id do
+      xml.tag! 'name', name
+      xml.tag! 'permalink', permalink
+      xml.tag! 'created-at', created_at.to_s(:db)
+      xml.tag! 'updated-at', updated_at.to_s(:db)
+      xml.tag! 'archived', archived
+      xml.tag! 'owner-user-id', user_id
+      xml.people :count => people.size do
+        for person in people
+          person.to_xml(options.merge({ :skip_instruct => true, :root => :person }))
+        end
+      end
+    end
+  end
 end

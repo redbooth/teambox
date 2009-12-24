@@ -2,9 +2,7 @@ class ProjectsController < ApplicationController
   before_filter :load_task_lists, :only => [:show]
   before_filter :load_banner, :only => [:show]
   before_filter :load_projects, :only => [:index]
-  
-  OPTIONS = { :include => [:target], :except => 'body_html' }
-  
+
   def index
     @activities = Project.get_activities_for(@projects)
     @last_activity = @activities.last
@@ -13,8 +11,7 @@ class ProjectsController < ApplicationController
     respond_to do |f|
       f.html
       f.rss  { render :layout => false }
-      f.xml  { render :xml  => @activities.to_xml(OPTIONS) }
-      f.json { render :json => @activities.to_json(OPTIONS) }
+      f.xml  { render :xml => @projects.to_xml }
     end
   end
 
@@ -31,8 +28,7 @@ class ProjectsController < ApplicationController
     respond_to do |f|
       f.html
       f.rss  { render :layout => false }
-      f.xml  { render :xml  => @activities.to_xml(OPTIONS) }
-      f.json { render :json => @activities.to_json(OPTIONS) }
+      f.xml  { render :xml => @current_project.to_xml }
     end
   end
   

@@ -60,4 +60,22 @@ class Activity < ActiveRecord::Base
     User.find_with_deleted(user_id)
   end
 
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+    xml.activity :id => id do
+      xml.tag! 'user-id', user_id
+      xml.tag! 'project-id', project_id
+      xml.tag! 'action', action
+      xml.tag! 'created-at', created_at.to_s(:db)
+      xml.tag! 'updated-at', updated_at.to_s(:db)
+      if target
+        xml.tag! 'target-id', target.id
+        xml.tag! 'target-type', target.class
+        target.to_xml(options.merge({ :skip_instruct => true, :root => :target }))
+      end
+    end
+  end
+
 end

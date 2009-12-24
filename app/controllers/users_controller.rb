@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   skip_before_filter :login_required,  :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password ]
   skip_before_filter :confirmed_user?, :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password, :unconfirmed_email ]
   skip_before_filter :load_project
-  
 
   def new
     if logged_in?
@@ -22,11 +21,9 @@ class UsersController < ApplicationController
   def show
     @card = @user.card
     @activities = @user.activities_visible_to_user(@current_user)
-    options = { :only => [:id, :login, :name, :language, :email, 'time-zone', 'created-at', 'updated-at'] }
     respond_to do |format|
       format.html
-      format.xml { render :xml => @user.to_xml(options) }
-      format.json { render :json => @user.to_json(options) }
+      format.xml { render :xml => @user.to_xml }
     end
   end
 

@@ -48,4 +48,13 @@ class Person < ActiveRecord::Base
   def user
     User.find_with_deleted(user_id)
   end
+
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+    xml.person :id => user.id do
+      xml.tag! 'username', user.login
+    end
+  end
 end

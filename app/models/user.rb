@@ -147,4 +147,21 @@ class User < ActiveRecord::Base
       :limit => 10)
   end
 
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+    xml.user :id => id do
+      xml.tag! 'first-name', first_name
+      xml.tag! 'last-name', last_name
+      # xml.tag! 'email', email
+      xml.tag! 'language', language
+      xml.tag! 'username', login
+      xml.tag! 'time_zone', time_zone
+      xml.tag! 'biography', biography
+      xml.tag! 'created-at', created_at.to_s(:db)
+      xml.tag! 'updated-at', updated_at.to_s(:db)
+      xml.tag! 'avatar-url', "http://#{APP_CONFIG['app_domain']}#{avatar.url(:thumb)}"
+    end
+  end
 end

@@ -164,4 +164,31 @@ class Comment < ActiveRecord::Base
     User.find_with_deleted(user_id)
   end
 
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+    xml.comment :id => id do
+      xml.tag! 'body', body
+      xml.tag! 'body-html', body_html
+      xml.tag! 'created-at', created_at.to_s(:db)
+      xml.tag! 'user-id', user_id
+      xml.tag! 'project-id', project_id
+      xml.tag! 'target-id', target.id
+      xml.tag! 'target-type', target.class
+      if target.is_a? Task
+        xml.tag! 'assigned-id', assigned_id
+        xml.tag! 'previous-assigned-id', previous_assigned_id
+        xml.tag! 'previous-status', previous_status
+        xml.tag! 'status', status
+      end
+      if uploads.any?
+        xml.files :count => uploads.size do
+          for upload in uploads
+            upload.to_xml(options.merge({ :skip_instruct => true, :root => :files }))
+          end
+        end
+      end
+    end
+  end
 end

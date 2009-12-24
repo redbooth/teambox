@@ -53,4 +53,21 @@ class Upload < RoleRecord
   def user
     User.find_with_deleted(user_id)
   end
+
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+    xml.file :id => id do
+      xml.tag! 'filename', asset_file_name
+      xml.tag! 'description', description
+      xml.tag! 'mime-type', asset_content_type
+      xml.tag! 'bytes', asset_file_size
+      xml.tag! 'download', url
+      xml.tag! 'created-at', created_at.to_s(:db)
+      xml.tag! 'updated-at', updated_at.to_s(:db)
+      xml.tag! 'user-id', user_id
+      xml.tag! 'comment-id', comment_id
+    end
+  end
 end

@@ -36,6 +36,11 @@ class UploadsController < ApplicationController
   def index
     @uploads = @current_project.uploads
     @upload  = @current_project.uploads.new
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @uploads.to_xml({:root => 'files'}) }
+    end
   end
   
   def edit

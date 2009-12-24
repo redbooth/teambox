@@ -35,8 +35,9 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
 
-  map.show_more 'activities/:id/show_more', :controller => 'activities', :action => 'show_more', :method => :get
-  map.show_new  'activities/:id/show_new',  :controller => 'activities', :action => 'show_new',  :method => :get
+  map.activities 'activities.:format',               :controller => 'activities', :action => 'show',      :method => :get
+  map.show_new   'activities/:id/show_new.:format',  :controller => 'activities', :action => 'show_new',  :method => :get
+  map.show_more  'activities/:id/show_more.:format', :controller => 'activities', :action => 'show_more', :method => :get
 
   map.project_archived 'projects/archived',  :controller => 'projects', :action => 'index', :sub_action => 'archived'  
   
@@ -59,7 +60,9 @@ ActionController::Routing::Routes.draw do |map|
       comment.resources :uploads, :member => { :iframe => :get }
     end
 
-    project.show_more 'activities/:id/show_more', :controller => 'activities', :action => 'show_more', :method => :get
+    project.activities 'activities.:format',               :controller => 'activities', :action => 'show',      :method => :get
+    project.show_new   'activities/:id/show_new.:format',  :controller => 'activities', :action => 'show_new',  :method => :get
+    project.show_more  'activities/:id/show_more.:format', :controller => 'activities', :action => 'show_more', :method => :get
 
     project.resources :uploads
 
