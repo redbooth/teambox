@@ -1,10 +1,13 @@
 # Receives an email and performs the adequate action
 #
 # Emails can be sent to project@app.server.com or project+model+id@app.server.com
-# Examples:
+# Cases:
 #
-# keiretsu@app.server.com                  Will post a new conversation with the Subject in the project Keiretsu
+# keiretsu@app.server.com                  Will post a new comment on the project's activity wall
+# keiretsu+conversation@app.server.com     Will create a new conversation with Subject as a title and Body as a comment
 # keiretsu+conversation+5@app.server.com   Will post a new comment in the conversation whose id is 5
+# keiretsu+task_list+8@app.server.com      Will post a new comment in the task list whose id is 8
+# keiretsu+task+12@app.server.com          Will post a new comment in the task whose id is 12
 #
 # Invalid or malformed emails will be ignored
 #
@@ -14,7 +17,7 @@
 
 class Emailer
 
-  REPLY_REGEX = /(Re: |RE: |Fwd: |FWD: )/
+  REPLY_REGEX = /(Re:|RE:|Fwd:|FWD:)/
 
   # for attachment in email.attachments
   
@@ -23,13 +26,26 @@ class Emailer
     get_target
     
     case @type
+    when :project
+      puts "Posting to project #{@target.id} '#{@subject}'"
+      post_to @target
     when :conversation
       if @target
         puts "Posting to conversation #{@target.id} '#{@subject}'"
-        post_to @target        
+        post_to @target
       else
         puts "Creating conversation '#{@subject}'"
-        create_conversation        
+        create_conversation
+      end
+    when :task_list
+      if @target
+        puts "Posting to task list #{@target.id} '#{@subject}'"
+        post_to @target        
+      end
+    when :task
+      if @target
+        puts "Posting to task #{@target.id} '#{@subject}'"
+        post_to @target
       end
     else
       raise "Invalid target type"
@@ -54,7 +70,7 @@ class Emailer
     
     raise "User does not belong to project" unless @user.projects.include? @project
     
-    puts "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@project.permalink}"
+    puts "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
   end
   
   # Decides which kind of object we'll be posting to (Conversation, Task, Task List..)
@@ -64,11 +80,11 @@ class Emailer
 
     case extra_params.size
       when 1 # projectname@mailserver.com
-        @type = :conversation
-        @target = Conversation.find_by_name_and_project_id(@subject, @project.id)
+        @type = :project
+        @target = @project
       when 2 # projectname+targetclass@mailserver.com
         case extra_params.second
-        when :conversation
+        when 'conversation'
           @type = :conversation
           @target = Conversation.find_by_name_and_project_id(@subject, @project.id)
         else
@@ -76,9 +92,15 @@ class Emailer
         end
       when 3 # projectname+targetclass+id@mailserver.com
         case extra_params.second
-        when :conversation
+        when 'conversation'
           @type = :conversation
           @target = Conversation.find_by_id_and_project_id(extra_params.third, @project.id)
+        when 'task_list'
+          @type = :task_list
+          @target = TaskList.find_by_id_and_project_id(extra_params.third, @project.id)
+        when 'task'
+          @type = :task
+          @target = Task.find_by_id_and_project_id(extra_params.third, @project.id)          
         else
           raise "Invalid target class"
         end
