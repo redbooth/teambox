@@ -158,7 +158,7 @@ es:
       title: Confirma tu dirección de email
       invitation_sent_to: "Hemos enviado una invitación a <i>{{email}}</i>, para verificar tu dirección de email."
       follow_the_link: Así que <b>abre este email y sigue el enlace que hay en él</b> para activar tu cuenta.
-      problems: Problemas?
+      problems_title: Problemas?
       resend: "¿No encuentras el email de confirmación? Pulsa <a href='{{link}}'>aquí</a> para reenviar el correo."
       spam: "Asegúrate de que el email no se ha clasificado como correo no deseado."
       wrong_address: "Dirección equivocada? Si escribiste mal tu dirección de email, <a href='{{link}}'>cancela el proceso</a> y vuelve a crear tu cuenta con un email válido."
@@ -213,10 +213,7 @@ es:
       permalink_description: "Esta será la dirección web de tu proyecto. Hazla tan breve como puedas y sin espacios."
       permalink_prefix: "http://{{domain}}/projects/"
       archived: Archive this Project
-    new:
-      title: Crear un proyecto
-      submit: Crear proyecto y empezar a invitar usuarios
-      new_project: Nuevo proyecto...
+    new_primer:
       define1: Un proyecto es un grupo compartido con tus contactos.
       define2: "Dentro de un proyecto, cada miembro puede:"
       feature1: Publicar qué está haciendo.
@@ -229,10 +226,17 @@ es:
       footer: Este proyecto te pertenecerá a ti. Puedes transferirlo a tus contactos en cualquier momento.
       limited: "En una cuenta gratuita, sólo puedes subir hasta 50 Mb de archivos adjuntos por proyecto."
       upgrade: Consigue una cuenta premium ahora!
+    new:
+      title: Crear un proyecto
+      submit: Crear proyecto y empezar a invitar usuarios
+      new_project: Nuevo proyecto...
       created: Se ha creado el proyecto!
       invalid_project: "Proyecto no válido, corrige los errores e inténtalo de nuevo."
       create_an_example_project: "¿Es tu primera vez en Teambox? <a href='{{link}}'>Crea un proyecto de ejemplo</a> para experimentar y aprender."
     edit:
+      title_settings: Preferencias Generales
+      title_picture: Logotipo del Proyecto
+      title_deletion: Borrar Proyecto
       submit: Guardar cambios
   invitations:
     fields:
@@ -318,6 +322,7 @@ es:
       assigned_to: "Responsable: {{user}}"
     due_on:
       due_on: "Due on {{date}}"
+    create: Añadir Tarea
     edit:
       submit: Actualizar tarea
     new:
