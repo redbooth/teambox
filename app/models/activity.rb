@@ -56,4 +56,8 @@ class Activity < ActiveRecord::Base
     target.type.to_s.downcase
   end
 
+  def user
+    User.find_with_deleted(user_id)
+  end
+
 end

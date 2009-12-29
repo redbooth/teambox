@@ -160,5 +160,8 @@ class Comment < ActiveRecord::Base
     end
   end
   
+  def user
+    User.find_with_deleted(user_id)
+  end
 
 end

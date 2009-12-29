@@ -29,7 +29,11 @@ module CommentsHelper
   end
 
   def activity_comment_user_link(comment)
-    "<span class='author'>#{link_to comment.user.name, user_path(comment.user)}</span>"
+    if comment.user.deleted_at
+      "<span class='author' style='text-decoration: line-through'>#{comment.user.name}</span>"
+    else
+      "<span class='author'>#{link_to comment.user.name, user_path(comment.user)}</span>"
+    end
   end
   
   def activity_comment_target_link(comment)

@@ -44,4 +44,8 @@ class Person < ActiveRecord::Base
     user.recent_projects.delete(project.id)
     user.save!
   end
+  
+  def user
+    User.find_with_deleted(user_id)
+  end
 end
