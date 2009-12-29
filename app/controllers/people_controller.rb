@@ -47,7 +47,7 @@ class PeopleController < ApplicationController
       end
     else
       flash[:error] = "You are not allowed to do that!"
-      f.html { redirect_to project_people_path(@current_project) }
+      redirect_to project_people_path(@current_project)
     end
   end
   
