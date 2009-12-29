@@ -314,6 +314,10 @@ en:
       comments: comments
   
   tasks:
+    errors:
+      name:
+        cant_be_blank: Name must not be blank
+        too_long: 'Name is must be shorter than 255 characters'
     fields:
       name: Name
     assigned:
