@@ -5,4 +5,4 @@
 
 - form_for @current_project do |f|
   = project_fields(f,@current_project,@sub_action)
-  = f.submit t('.submit')
+  = f.submit t('.submit') unless @sub_action == 'deletion'

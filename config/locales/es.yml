@@ -206,7 +206,9 @@ es:
       picture:
         name: Project Picture
       deletion:
-        name: Delete Project
+        name: Project Archiving/Deletion
+      archiving: "Archive this project"
+      forever: "Delete this project forever"        
       name: Nombre
       name_description: "Escoge un título breve y explicativo. Por ejemplo: Taggart Transcontinental"
       permalink: URL
@@ -214,6 +216,11 @@ es:
       permalink_prefix: "http://{{domain}}/projects/"
       archived: Archive this Project
     new_primer:
+      confirm_delete: Are you sure you'd want to delete this project forever?      
+    new:
+      title: Crear un proyecto
+      submit: Crear proyecto y empezar a invitar usuarios
+      new_project: Nuevo proyecto...
       define1: Un proyecto es un grupo compartido con tus contactos.
       define2: "Dentro de un proyecto, cada miembro puede:"
       feature1: Publicar qué está haciendo.
@@ -236,7 +243,7 @@ es:
     edit:
       title_settings: Preferencias Generales
       title_picture: Logotipo del Proyecto
-      title_deletion: Borrar Proyecto
+      title_deletion: Project Archiving/Deletion 
       submit: Guardar cambios
   invitations:
     fields:
@@ -550,7 +557,7 @@ es:
     project_settings_navigation:
       general: General Settings
       picture: Project Picture
-      deletion: Delete Project
+      deletion: Project Archiving/Deletion
     project_navigation:
       overview: Resumen
       all_conversations: Mis conversaciones

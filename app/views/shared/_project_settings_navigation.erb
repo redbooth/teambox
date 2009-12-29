@@ -11,12 +11,12 @@ render_tabnav :project do
     #  t.links_to project_picture_path
     #  t.highlights_on :controller => 'projects', :action => 'edit', :sub_action => 'picture'
     #end
-    #
-    #add_tab do |t|
-    #  t.named t('.deletion')
-    #  t.links_to project_deletion_path
-    #  t.highlights_on :controller => 'projects', :action => 'edit', :sub_action => 'deletion'
-    #  t.li_class = 'deletion'
-    #end    
+
+    add_tab do |t|
+      t.named t('.deletion')
+      t.links_to project_deletion_path
+      t.highlights_on :controller => 'projects', :action => 'edit', :sub_action => 'deletion'
+      t.li_class = 'deletion'
+    end    
 end
 %><div class="clear"></div></div>

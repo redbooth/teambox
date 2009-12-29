@@ -1,0 +1,6 @@
+- unless project.archived
+  = archive_project_link(project)
+  = t('common.or')
+
+= delete_project_link(project)
+= f.hidden_field :archived

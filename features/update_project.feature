@@ -9,5 +9,5 @@ Feature Update Project
         And I should see "General Settings" within "h2"
         When I check "project_archived"
         And I press "Save Changes"
-       Then I should see "This project is currently archived. If you want to edit or comment on this project you must unarchive it" within ".strip"
+       Then I should see "This project is archived. To edit or comment on this project you must unarchive it on the Project Settings page" within ".strip"
        

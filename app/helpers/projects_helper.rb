@@ -1,5 +1,19 @@
 module ProjectsHelper
 
+  def delete_project_link(project)
+    link_to content_tag(:span,t('projects.fields.forever')), 
+    project_path(project),
+    :method => :delete,
+    :class => 'button',
+    :confirm => t('projects.fields.confirm_delete')
+  end
+
+  def archive_project_link(project)
+    link_to_function content_tag(:span,t('projects.fields.archiving')), 
+    "$('project_archived').value = 1; $('content').down('.edit_project').submit();",
+    :class => 'button'
+  end
+  
   def project_column_navigation
     render :partial => 'shared/project_column_navigation'
   end

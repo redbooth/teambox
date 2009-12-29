@@ -120,6 +120,7 @@ en:
       title_profile: Your Profile Settings
       title_picture: Your Profile Picture
       title_notifications: Your Notifications
+      title_deletion: Project Archiving/Deletion
       submit: Update account
     update:
       updated: User profile updated!
@@ -201,18 +202,15 @@ en:
         title: "{{name}}"
         description: "Recent activities for the project {{name}}"
     fields:
-      settings:
-        name: General Settings
-      picture:
-        name: Project Picture
-      deletion:
-        name: Delete Project
+      archiving: "Archive this project"
+      forever: "Delete this project forever"
       name: Name
       name_description: "Choose a brief and descriptive title. For example: Taggart Transcontinental"
       permalink: URL
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
       permalink_prefix: "http://{{domain}}/projects/"
       archived: Archive this Project
+      confirm_delete: Are you sure you'd want to delete this project forever?
     new_primer:
       define1: A project is a shared group with your teammates.
       define2: "Inside a project, each team member can:"
@@ -236,7 +234,7 @@ en:
     edit:
       title_settings: General Settings
       title_picture: Project Logo
-      title_deletion: Project Deletion
+      title_deletion: Archive/Delete Project
       submit: Save Changes
   invitations:
     fields:
@@ -550,7 +548,7 @@ en:
     project_settings_navigation:
       general: General Settings
       picture: Project Picture
-      deletion: Delete Project
+      deletion: Project Archiving/Deletion
     project_navigation:
       overview: Overview
       all_conversations: All Conversations

@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
   end
   
   def edit
-    @sub_action ||= 'settings'
+    @sub_action = params.has_key?(:sub_action) ? params[:sub_action] : 'settings'
   end
   
   def update
@@ -65,6 +65,13 @@ class ProjectsController < ApplicationController
       else
         f.html { render :edit }
       end
+    end
+  end
+
+  def destroy
+    @current_project.destroy
+    respond_to do |f|
+      f.html { redirect_to projects_path }
     end
   end
 
