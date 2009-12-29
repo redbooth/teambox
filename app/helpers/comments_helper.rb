@@ -32,7 +32,10 @@ module CommentsHelper
     if comment.user.deleted_at
       "<span class='author' style='text-decoration: line-through'>#{comment.user.name}</span>"
     else
-      "<span class='author'>#{link_to comment.user.name, user_path(comment.user)}</span>"
+      content_tag :span,
+        link_to(comment.user.name, user_path(comment.user)),
+        :class => 'author'
+
     end
   end
   
