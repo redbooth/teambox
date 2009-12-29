@@ -6,12 +6,14 @@ xml.rss :version => "2.0" do
     xml.link user_rss_token(project_url(@current_project,:rss))
     
     for activity in @activities
-      xml.item do
-        xml.title t("activities.activity_line.#{activity.action_type}")
-        xml.description show_activity(@current_project,activity,activity.target)
-        xml.pubDate activity.posted_date.to_s(:rfc822)
-        xml.link project_url(@current_project, :anchor => "activity_#{activity.id}")
-        xml.guid project_url(@current_project, :anchor => "activity_#{activity.id}")
+      if activity.target
+        xml.item do
+          xml.title t("activities.activity_line.#{activity.action_type}")
+          xml.description show_activity(@current_project,activity,activity.target)
+          xml.pubDate activity.posted_date.to_s(:rfc822)
+          xml.link project_url(@current_project, :anchor => "activity_#{activity.id}")
+          xml.guid project_url(@current_project, :anchor => "activity_#{activity.id}")
+        end
       end
     end
   end
