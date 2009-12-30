@@ -4,5 +4,4 @@
   = people_watching(project,current_user,task)
   = new_comment_form(project,comment, :target => task) unless task.closed?
   = task_archive_box(project,task_list,task)
-  #comments
-    = list_comments(task.comments,task)
+  = list_comments(task.comments,task)

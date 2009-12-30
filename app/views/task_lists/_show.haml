@@ -4,6 +4,4 @@
   = tabular_task_list(project,task_list,'all')
   = people_watching(project,current_user,task_list)
   = new_comment_form(project,project.comments.new, :target => task_list)
-
-  #comments
-    = list_comments(task_list.comments,task_list)
+  = list_comments(task_list.comments,task_list)

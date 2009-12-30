@@ -98,7 +98,13 @@ module CommentsHelper
   end
   
   def list_comments(comments,target)
-    render :partial => 'comments/list_comments', :locals => { :comments => comments, :target => target }
+    content_tag :div,
+    render(:partial => 'comments/list_comments', 
+      :locals => { 
+        :comments => comments, 
+        :target => target }),
+      :class => 'comments',
+      :id => 'comment'
   end
   
   def show_comment(comment)
