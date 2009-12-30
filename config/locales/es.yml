@@ -95,13 +95,13 @@ es:
       change_password: Cambiar contraseña
       confirm_password: Confirmar contraseña
       use_this_email: "Has sido invitado a Teambox con esta dirección de correo. Si quieres acceder a los proyectos de quien te invitó, no cambies la dirección de correo. Podrás cambiar tu email una vez estés dado de alta."
-      notify_mentions: "Notify me when I'm mentioned eg. Howdy @{{login}}! You'll recieve an email!"
-      notify_conversations: Notify me when I'm watching a conversation
-      notify_task_lists: Notify me when I'm watching a task list
-      notify_tasks: Notify me when I'm watching a task
+      notify_mentions: "Notificarme cuando me mencionen en un comentario, por ejemplo: Hola @{{login}}!"
+      notify_conversations: Notificarme de conversaciones que sigo
+      notify_task_lists: Notificarme de comentarios en listas de tareas que sigo
+      notify_tasks: Notificarme de comentarios en tareas que sigo
       avatar:
-        presence: "You can't upload a blank file"
-        max_size: "File size can't exceed {{mb}}"
+        presence: No puedes subir un fichero vacío
+        max_size: El archivo no puede ser mayor de {{mb}}
       tooltips:
         login: "Puedes usar un nombre de usuario corto para entrar. Debe ser en minúsculas y sin espacios. Puedes usar _."
         first_name: Hasta 20 caracteres.
@@ -119,7 +119,8 @@ es:
       title_settings: Preferencias
       title_profile: Información de perfil
       title_picture: Imagen de perfil
-      title_notifications: Your Notifications
+      title_notifications: Notificaciones
+      title_deletion: Borrar o archivar proyecto
       submit: Actualizar
     update:
       updated: Perfil actualizado
@@ -201,26 +202,16 @@ es:
         title: "{{name}}"
         description: "Actividad reciente para {{name}}"
     fields:
-      settings:
-        name: General Settings
-      picture:
-        name: Project Picture
-      deletion:
-        name: Project Archiving/Deletion
-      archiving: "Archive this project"
-      forever: "Delete this project forever"        
+      archiving: Archivar este proyecto
+      forever: Borrar permanentemente este proyecto
       name: Nombre
-      name_description: "Escoge un título breve y explicativo. Por ejemplo: Taggart Transcontinental"
+      name_description: "Escoge un nombre breve y descriptivo. Por ejemplo: Taggart Transcontinental"
       permalink: URL
-      permalink_description: "Esta será la dirección web de tu proyecto. Hazla tan breve como puedas y sin espacios."
+      permalink_description: "Esto formará la dirección web de tu proyecto. Mantenla breve. No se permiten espacios"
       permalink_prefix: "http://{{domain}}/projects/"
-      archived: Archive this Project
+      archived: Archivar este proyecto
+      confirm_delete: "Estas seguro de que quieres borrar este proyecto definitivamente? NO HAY VUELTA ATRAS. Si quieres conservarlo, usa Archivar Proyecto."
     new_primer:
-      confirm_delete: Are you sure you'd want to delete this project forever?      
-    new:
-      title: Crear un proyecto
-      submit: Crear proyecto y empezar a invitar usuarios
-      new_project: Nuevo proyecto...
       define1: Un proyecto es un grupo compartido con tus contactos.
       define2: "Dentro de un proyecto, cada miembro puede:"
       feature1: Publicar qué está haciendo.
@@ -243,7 +234,7 @@ es:
     edit:
       title_settings: Preferencias Generales
       title_picture: Logotipo del Proyecto
-      title_deletion: Project Archiving/Deletion 
+      title_deletion: Archivar o borrar proyecto
       submit: Guardar cambios
   invitations:
     fields:
@@ -292,9 +283,11 @@ es:
       subscribe_note: Estas personas serán notificadas via email de este mensaje y los comentarios posteriores.<br/>Pueden dejar de seguir la conversación en cualquier momento.
       invite_users: Eres el único usuario en este proyecto!
       no_users_yet: "Conversar es más útil cuando no lo haces solo. <a href='{{invite_link}}'>Invita a algunos usuarios</a> a este proyecto para que puedan leer, comentar y recibir actualizaciones de esta conversación." 
+    edit:
+      submit: Modificar conversación
     index:
       rss:
-        title: "Conversaciones"
+        title: Conversaciones
         description: "Conversaciones en el proyecto {{name}}"
     primer:
       empty: Aún no hay ninguna conversación en este proyecto.
@@ -306,8 +299,6 @@ es:
       item4: "<b>Integrado con tu email</b>. Puedes contestar desde tu email para publicar una respuesta."
       footer1: "Las conversaciones son perfectas para <b>compartir un diseño</b>, <b>decidir una fecha</b> para reunirse o <b>informar</b> sobre las noticias del proyecto."
       footer2: "Estando ordenadas por hilos, es fácil volver atrás en el tiempo y ver qué archivos se enviaron y qué dijo cada miembro del equipo. En Teambox, <b>colaborar</b> genera una <b>trazabilidad</b> de qué se hizo."
-    edit:
-      sumbit: Actualizar conversación
     column:
       new_conversation: Nueva conversación
       subscribe: Suscríbete al feed
@@ -323,12 +314,16 @@ es:
       comments: respuestas
   
   tasks:
+    errors:
+      name:
+        cant_be_blank: El nombre no puede estar vacío
+        too_long: El nombre no puede superar los 255 caracteres
     fields:
       name: Nombre
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:
-      due_on: "Due on {{date}}"
+      due_on: "A completar antes de {{date}}"
     create: Añadir Tarea
     edit:
       submit: Actualizar tarea
@@ -347,11 +342,11 @@ es:
     archive_box:
       you_are_done: Parece que ya has terminado con esta tarea.
       archive: Archivar tarea
-      reopen: Reopen this task
+      reopen: Reabrir esta tarea
     unarchive_box:
       task_is_closed: Esta tarea está cerrada y archivada
       unarchive: Recuperar como una tarea activa
-      reopen: Reopen this task      
+      reopen: Reabrir esta tarea
     overdue: "{{days}} días tarde"
     status:
       new: nueva
@@ -423,7 +418,7 @@ es:
     errors:
       name:
         cant_be_blank: El nombre no puede estar vacío
-        too_long: 'El nombre no puede superar 255 caracteres'
+        too_long: El nombre no puede superar 255 caracteres
     archived:
       title: Todas las tareas archivadas
       description: "Estas son las tareas archivadas, al haber sido completadas o rechazadas."
@@ -507,7 +502,7 @@ es:
       new_file: Subir un archivo
       max_upload_size: "El tamaño máximo de archivo es de {{mb}} Mb"
     form:
-      presence: "No puedes subir un archivo vacío"
+      presence: No puedes subir un archivo vacío
       max_size: "El tamaño máximo de archivo son {{mb}}"
       select_file: Seleccionar archivo
       description: Descripción <i>(opcional)</i>
@@ -540,11 +535,11 @@ es:
 
   shared:
     strip:
-      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>"
+      archived: "Este proyecto está archivado. Para editarlo o comentar en él debes desarchivarlo en las <a href='{{link}}'>preferencias del proyecto</a>"
     gantt_banner_primer:
-      title: There are no task lists due to show on the gannt chart
+      title: No hay listas de tareas que mostrar en el diagrama
     upcoming_events_primer:
-      title: There are no tasks due to show on the calendar
+      title: No hay tareas que mostrar
     projects:
       projects: Proyectos
     navigation:
@@ -552,12 +547,12 @@ es:
       all_projects: Proyectos
       new_project: +
     project_column_navigation:
-      all: All Projects
-      archived: "{{count}} Archived Projects"
+      all: Todos los proyectos
+      archived: "{{count}} proyectos archivados"
     project_settings_navigation:
-      general: General Settings
-      picture: Project Picture
-      deletion: Project Archiving/Deletion
+      general: Datos del proyecto
+      picture: Imagen de proyecto
+      deletion: Archivar o borrar proyecto
     project_navigation:
       overview: Resumen
       all_conversations: Mis conversaciones
@@ -892,7 +887,7 @@ es:
       comment:
         body: Cuerpo
         hours: Horas
-        status: Status
+        status: Estado
       conversation:
         name: Nombre
       pages:
@@ -907,4 +902,3 @@ es:
         email: Email
       upload:
         description: Descripción
-          

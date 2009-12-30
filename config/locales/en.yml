@@ -210,7 +210,7 @@ en:
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
       permalink_prefix: "http://{{domain}}/projects/"
       archived: Archive this Project
-      confirm_delete: Are you sure you'd want to delete this project forever?
+      confirm_delete: "Are you sure you'd want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you want to keep it, use Archive Project instead."
     new_primer:
       define1: A project is a shared group with your teammates.
       define2: "Inside a project, each team member can:"
@@ -285,10 +285,10 @@ en:
       no_users_yet: "Conversations are more useful when shared. <a href='{{invite_link}}'>Invite some users</a> to this project now so they can access this conversation, answer and receive updates."
     edit:
       submit: 'Update Conversation'
-      index:
-        rss:
-          title: "Conversations"
-          description: "Conversations for project {{name}}"
+    index:
+      rss:
+        title: "Conversations"
+        description: "Conversations for project {{name}}"
     primer:
       empty: This project doesn't have any conversations yet.
       create_first: Create the first conversation in this project!
@@ -535,11 +535,11 @@ en:
 
   shared:
     strip:
-      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>"
+      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>" ####
     gantt_banner_primer:
-      title: There are no task lists due to show on the gannt chart
+      title: There are no task lists due to show on the gannt chart ####
     upcoming_events_primer:
-      title: There are no tasks due to show on the calendar
+      title: There are no tasks due to show on the calendar ####
     projects:
       projects: Projects
     navigation:
