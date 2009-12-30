@@ -184,19 +184,7 @@ module TaskListsHelper
       })
     end
   end
-  
-  def tasks_sortable(project,task_list)
-    update_page_tag do |page|    
-      page.sortable(task_list_id(:the_tasks,project,task_list),{
-        :tag => 'div',
-        :url => project_reorder_tasks_path(project,task_list),
-        :only => 'task',
-        :format => page.literal('/task_(\d+)/'),
-        :handle => 'img.drag',
-        :constraint => 'vertical' })
-    end      
-  end
-  
+    
   def task_list_primer(project)
     return unless project.editable?(current_user)
     render :partial => 'task_lists/primer', :locals => { :project => project }
