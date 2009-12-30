@@ -55,7 +55,7 @@ class Project < ActiveRecord::Base
   def task_lists_assigned_to(user)
     task_lists.unarchived.inject([]) do |t, task_list|
       person = people.find_by_user_id(user.id)
-      t << task_list if task_list.tasks.count(:conditions => { :assigned_id => person.id }) > 0
+      t << task_list if task_list.tasks.count(:conditions => {:assigned_id => person.id, :status => Task::STATUSES[:open]}) > 0 
       t
     end
   end
