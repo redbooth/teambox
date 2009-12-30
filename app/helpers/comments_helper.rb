@@ -1,5 +1,19 @@
 module CommentsHelper
 
+  def comment_form_for(form_url)
+    remote_form_for form_url, 
+      :loading => loading_new_comment_form,
+      :id => 'new_comment_form',
+      &proc
+  end
+
+  def loading_new_comment_form
+    update_page do |page|
+      page[js_id(:new_submit,Comment.new)].hide      
+      page[js_id(:new_loading,Comment.new)].show
+    end  
+  end
+
   def options_for_people(people)
     p = [[t('.assigned_to_nobody'),nil]]
     people.each {|person| p << [ person.name, person.id ]}

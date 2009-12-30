@@ -63,6 +63,8 @@ form#new_comment {
     text-align: right;
     float: right;
     width: 200px; }
+  form#new_comment .loading {
+    float: right; }
 
 form.reopen {
   background: rgb(255,255,200);

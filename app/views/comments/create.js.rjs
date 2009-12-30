@@ -38,3 +38,6 @@ if @comment.errors.empty?
 
   page["comment_#{@comment.id}"].visual_effect :highlight, :duration => 2
 end
+
+page[js_id(:new_submit,Comment.new)].show      
+page[js_id(:new_loading,Comment.new)].hide

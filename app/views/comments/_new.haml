@@ -1,4 +1,4 @@
-- remote_form_for form_url, :id => 'new_comment_form' do |f|
+-comment_form_for(form_url) do |f|
   = hidden_field_tag :original_controller, controller_name
   .body.text_area
     = f.text_area :body, :class => 'comment_body'
@@ -31,8 +31,9 @@
             = t('tasks.status.rejected')
           = javascript_tag "$$('.statuses input').each(function(e){ if (e.checked) { e.up('.status').addClassName('active') }; })"
           = javascript_tag "Comment.watch_status();"
-    .submit
+    .submit{ :id => js_id(:new_submit,Comment.new) }
       = f.submit t('.submit')
+    = loading_image(js_id(:new_loading,Comment.new))
     .clear  
 
 = javascript_tag "$('new_comment').auto_focus()"
