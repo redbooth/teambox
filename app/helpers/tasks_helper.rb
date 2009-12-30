@@ -218,13 +218,12 @@ module TasksHelper
   end
 
   def task_action_links(project,task_list,task)
-    if task.owner?(current_user)
-      render :partial => 'tasks/actions',
-      :locals => { 
-        :project => project,
-        :task_list => task_list,
-        :task => task }
-    end
+    return unless task.editable?(current_user)
+    render :partial => 'tasks/actions',
+    :locals => { 
+      :project => project,
+      :task_list => task_list,
+      :task => task }
   end
 
   def task_list_drag_link(task_list)
