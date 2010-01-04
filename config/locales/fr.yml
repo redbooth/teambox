@@ -91,17 +91,17 @@ fr:
       password_confirmation: Confirmer le mot de passe
       sunday: Dimanche
       monday: Lundi
-      first_day_of_week: La semaine commence le
+      first_day_of_week: Premier jour
       change_password: Changer de mot de passe
       confirm_password: Confirmer le mot de passe
       use_this_email: "Vous avez été invité à utiliser Teambox avec cette adresse mail. Si vous voulez accéder aux projets de la personne qui vous a invité, ne changez pas l'adresse mail. Vous pourrez changer d'adresse mail par la suite, une fois enregistré dans Teambox."
-      notify_mentions: "Notify me when I'm mentioned eg. Howdy @{{login}}! You'll recieve an email!" ####
-      notify_conversations: Notify me when I'm watching a conversation ####
-      notify_task_lists: Notify me when I'm watching a task list ####
-      notify_tasks: Notify me when I'm watching a task ####
+      notify_mentions: "Envoyez-moi une notification lorsque je suis mentionné, par exemple Bonjour @{{login}}! Vous recevrez un mail!" 
+      notify_conversations: Envoyez-moi une notification lorsque je regarde une conversation 
+      notify_task_lists: Envoyez-moi une notification lorsque je regarde une liste de tâches 
+      notify_tasks: Envoyez-moi une notification lorsque je regarde une tâche
       avatar:
-        presence: "You can't upload a blank file"
-        max_size: "File size can't exceed {{mb}}"
+        presence: "Il n'est pas possible de télécharger un fichier vide"
+        max_size: "La taille du fichier ne peut pas excéder {{mb}} Mb"
       tooltips:
         login: "Vous pouvez utiliser un nom d'utilisateur court pour vous connecter. Il doit être en minuscules et sans espace. Vous pouvez utiliser _."
         first_name: Jusqu'à 20 caractères.
@@ -120,7 +120,7 @@ fr:
       title_profile: Information de profil
       title_picture: Image de profil
       title_notifications: Notifications
-      title_deletion: Project Archiving/Deletion ####
+      title_deletion: Archivage/Suppression de projet
       submit: Actualiser
     update:
       updated: Profil actualisé
@@ -141,7 +141,7 @@ fr:
     welcome:
       get_started: Vous êtes à présent dans Teambox!
       intro1: "Vous êtes le dernier membre enregistré sur Teambox! Découvrez comment Teambox peut devenir le point de commencement de votre journée."
-      intro2: "Et maintenant? Créez un projet pour <b>collaborer</b>." #" an agenda to <b>keep track of contacts</b>:"
+      intro2: "Et maintenant? Créez un projet pour <b>collaborer</b>." # " un agenda pour <b>garder à jour vos contacts</b>:"
       projects:
         title: Projets
         share_and_collaborate: "Partagez et collaborez avec votre équipe! Notificacions, conversations, tâches, pages et fichiers."
@@ -149,7 +149,7 @@ fr:
       spread:
         title: Nous voulons vous être utile!
         reasons: "Nous travaillons depuis des années sur Teambox, en espérant vous apporter une aide dans votre organisation.<br/>Nous sommes des personnes comme vous, des personnes motivées qui ont le désir d'améliorer les choses."
-        help: Vous pouvez nous aider <b>ayudarnos</b> en racontant à vos amis comment vous utilisez Teambox sur
+        help: Vous pouvez <b>nous aider</b> en racontant à vos amis comment vous utilisez Teambox sur
         twitter: 'Twitter,'
         facebook: Facebook
         in_your_site: sur votre site web ou sur votre blog!
@@ -192,25 +192,25 @@ fr:
       footer: "Les projets sont une forme de collaboration centralisée, pour que vous n'ayez plus besoin d'envoyer de mails à votre équipe."
     show:
       update_your_status: "Que faites-vous actuellement?"
-      text_styling: Styles du texte
+      text_styling: Style du texte
       invite_people: Inviter une autre personne...
       new_task_list_link: Nouvelle liste de tâches
       people_in_project: Personnes dans ce projet
       subscribe: Souscrivez à ce projet
-      tip: "If you mention somebody's @username de alguien, they will receive an email with your message" ####
+      tip: "Si vous mentionnez le @nom d'utilisateur de quelqu'un, celui-ci recevra un mail avec votre message" 
       rss:
         title: "{{name}}"
         description: "Actualités récentes dans le projet {{name}}"
     fields:
-      archiving: Archive this project ####
-      forever: Delete permanently this project ####
+      archiving: Archiver ce projet 
+      forever: Supprimer de façon définitive ce projet 
       name: Nom
       name_description: "Chosissez un titre bref et explicite. Par exemple: Taggart Transcontinental"
       permalink: URL
       permalink_description: "Ceci sera l'adresse internet de votre projet. Choisissez-la concise et sans espace."
       permalink_prefix: "http://{{domain}}/projects/"
-      archived: Archive this Project ####
-      confirm_delete: "Are you sure you'd want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you want to keep it, use Archive Project instead." ####
+      archived: Archiver ce projet
+      confirm_delete: "Etes-vous certain de vouloir supprimer définitivement ce projet? IL SERA IMPOSSIBLE D'Y REVENIR. Si vous voulez le conserver, utilisez plutôt Archiver Projet." 
     new_primer:
       define1: Un projet est un groupe partagé avec vos contacts.
       define2: "A l'intérieur d'un projet, chaque membre a la possibilité de:"
@@ -232,9 +232,9 @@ fr:
       invalid_project: "Projet non valide, corrigez les éventuelles erreurs et essayez de nouveau."
       create_an_example_project: "C'est la première fois que vous utilisez Teambox? <a href='{{link}}'>Créez un projet-exemple</a> pour expérimenter toutes les possibilités et apprendre à vous servir de Teambox."
     edit:
-      title_settings: General Settings ####
-      title_picture: Project Logo ####
-      title_deletion: Archive/Delete Project ####
+      title_settings: Paramètres généraux
+      title_picture: Logo du projet
+      title_deletion: Archiver/Effacer le projet
       submit: Enregistrer les modifications
   invitations:
     fields:
@@ -245,7 +245,7 @@ fr:
       time_ago: "({{time_ago_in_words}} ago)"
       resend: Renvoyer un email d'invitation
       pending: "Un mail a été envoyé à cet utilisateur, mais celui-ci n'a pas encore accepté l'invitation"
-      discard: Discard invitation ####
+      discard: Ne plus montrer cette invitation
     sent:
       email_sent: "<b>Nous avons envoyé un mail à cet utilisateur pour qu'il accepte votre invitation</b>. S'il ne trouve pas ce mail dans sa boîte de réception, il faut s'assurer qu'il n'a pas été classé dans le courrier indésirable. Si le problème persiste, n'hésitez pas à nous envoyer un mail."
     pending:
@@ -316,15 +316,15 @@ fr:
   tasks:
     errors:
       name:
-        cant_be_blank: Name must not be blank ####
-        too_long: 'Name is must be shorter than 255 characters' ####
+        cant_be_blank: Le nom ne peut pas être vide
+        too_long: 'Le nom doit comporter moins de 255 caractères' 
     fields:
       name: Nom
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:
       due_on: "Echéance: {{date}}"
-    create: Add Task ####
+    create: Ajouter une tâche
     edit:
       submit: Actualiser tâche
     new:
@@ -342,11 +342,11 @@ fr:
     archive_box:
       you_are_done: Il semble que cette tâche soit terminée.
       archive: Archiver tâche
-      reopen: Reopen this task ####
+      reopen: Réouvrir cette tâche
     unarchive_box:
       task_is_closed: Cette tâche est fermée et archivée 
       unarchive: Réactiver cette tâche 
-      reopen: Reopen this task ####
+      reopen: Réouvrir cette tâche
     overdue: "{{days}} jours de retard"
     status:
       new: nouvelle
@@ -430,7 +430,7 @@ fr:
       reorder: Réordonner
     index:
       add_link: Nouvelle liste de tâches
-      empty: No tasks in this category! ####
+      empty: Aucune tâche dans cette catégorie!
     primer:
       empty: Ce projet ne contient pour l'instant aucune conversation.
       create_first: Créez la première liste de tâches!
@@ -500,10 +500,10 @@ fr:
       select_a_file: Sélectionnez un fichier
     index:
       new_file: Télécharger un fichier
-      max_upload_size: "Max upload size is {{mb}} Mb"
+      max_upload_size: "La taille maximale est de {{mb}} Mb"
     form:
       presence: "Vous ne pouvez pas joindre un fichier vide"
-      max_size: "La taille du fichier ne peut excéder{{mb}}"
+      max_size: "La taille du fichier ne peut excéder {{mb}} Mb"
       select_file: Sélectionner un fichier
       description: Description <i>(optionnel)</i>
       upload: Télécharger un fichier
@@ -518,8 +518,8 @@ fr:
     upload:
       uploaded_the_file: "a ajouté le fichier"
       download: Télécharger
-      uploaded_by: Uploaded by ####
-      remove: Delete ####
+      uploaded_by: Téléchargé par
+      remove: Supprimer
   sessions:
     fields:
       username_or_email: Nom d'utilisateur ou email
@@ -547,12 +547,12 @@ fr:
       all_projects: 'Projets'
       new_project: +
     project_column_navigation:
-      all: All Projects ####
-      archived: "{{count}} Archived Projects" ####
+      all: Tous les projets
+      archived: "{{count}} Projets archivés" 
     project_settings_navigation:
-      general: General Settings ####
-      picture: Project Picture ####
-      deletion: Project Archiving/Deletion ####
+      general: Paramètres généraux
+      picture: Image du projet
+      deletion: Archivage/Suppression de projet
     project_navigation:
       overview: Resumé
       all_conversations: Mes conversations
@@ -598,12 +598,12 @@ fr:
       started_watching: "Vous recevrez maintenant des notifications par mail pour toute modification de cet élément."
       stopped_watching: "Vous ne recevrez plus de notifications pour cet élément."
     upgrade_browser:
-      upgrade: You're using an outdated version of Internet Explorer. Teambox may not work properly under this version. ####
-      ie: Upgrade to Internet Explorer ####
-      or_install: or install ####
-      chrome: "Chrome," ####
-      firefox: "Firefox" ####
-      safari: "Safari" ####
+      upgrade: Vous utilisez actuellement une ancienne version d'Internet Explorer. Il est possible que Teambox ne fonctionne pas correctement avec cette version. 
+      ie: Mettez à jour Internet Explorer
+      or_install: ou installez
+      chrome: "Chrome," 
+      firefox: "Firefox" 
+      safari: "Safari" 
  
   date:
     yesterday: Hier
@@ -697,11 +697,11 @@ fr:
         biography_presence:
           title: 'Complétez votre profil'
         biography_length_short:
-          title: 'Expand your profile to 10 words'
+          title: "Jusqu'à 10 mots"
         biography_length_average:
-          title: 'Expand your profile to 20 words'
+          title: "Jusqu'à 20 mots"
         biography_length_long:
-          title: 'Expand your profile to 30 words'
+          title: "Jusqu'à 30 mots"
   form:
     cancel: Annuler
   page_title:
@@ -712,7 +712,7 @@ fr:
     index_uploads: Mes fichiers
     create_uploads: Ajouter un fichier
     index_projects: Projets
-    edit_projects: Edit Project ####
+    edit_projects: Editer Projet 
     index_people: Personnes
     edit_users: Editer
     welcome_users: Bienvenue!

@@ -772,7 +772,7 @@ en:
         format: "%n %u"
         units:
           byte:
-            one:   "byte"
+            one: "byte"
             other: "bytes"
           kb: "KB"
           mb: "MB"
