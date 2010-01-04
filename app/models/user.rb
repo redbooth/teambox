@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
   has_many :activities      
   has_many :uploads
 
+  belongs_to :invited_by, :class_name => 'User'
+
   has_one :card
   accepts_nested_attributes_for :card
 
@@ -61,10 +63,23 @@ class User < ActiveRecord::Base
     self.build_card
     self.first_name = self.first_name.split(" ").collect(&:capitalize).join(" ")
     self.last_name  = self.last_name.split(" ").collect(&:capitalize).join(" ")
+    
+    if invitation = Invitation.find_by_email(email)
+      self.invited_by = invitation.user
+      invitation.user.update_attribute :invited_count, (invitation.user.invited_count + 1)
+    end
   end
 
   def after_create
-    self.send_activation_email unless self.confirmed_user
+    send_activation_email unless self.confirmed_user
+
+    if invitations = Invitation.find_all_by_email(email)
+      for invitation in invitations
+        person = invitation.project.people.new(:user => self, :source_user_id => invitation.user)
+        person.save
+        invitation.destroy
+      end
+    end
   end
   
   def self.find_by_username_or_email(login)

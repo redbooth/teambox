@@ -100,6 +100,10 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.string  :avatar_file_name
     t.string  :avatar_content_type
     t.integer :avatar_file_size
+    
+    t.integer :invited_by_id, :null => true, :default => nil
+    t.integer :invited_count, :default => 0
+    
     t.timestamps
   end
  

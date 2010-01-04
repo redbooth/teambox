@@ -6,7 +6,7 @@ class Invitation < RoleRecord
   belongs_to :invited_user, :class_name => 'User'
   
   attr_accessor :user_or_email
-  attr_accessible :user_or_email, :user
+  attr_accessible :user_or_email, :user, :project
   
   validates_presence_of :user
 

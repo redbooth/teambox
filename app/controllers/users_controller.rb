@@ -33,16 +33,12 @@ class UsersController < ApplicationController
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
-    @user.confirmed_user = true if @invitation and @invitation.email == @user.email
+    @user.confirmed_user = true if @invitation && @invitation.email == @user.email
 
-    success = @user and @user.save
-    if success and @user.errors.empty?
+    if @user && @user.save && @user.errors.empty?
       self.current_user = @user
-      if @invitation
-        person = @invitation.project.people.new(:user => @user, :source_user_id => @invitation.user)
-        person.save
 
-        @invitation.destroy
+      if @invitation
         redirect_to(project_path(@invitation.project))
       else
         redirect_back_or_default('/')

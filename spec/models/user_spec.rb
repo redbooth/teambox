@@ -22,6 +22,29 @@ describe User do
   it { should validate_uniqueness_of   :email }
                       
 # it { should validate_associated :projects }  
+
+  describe "invited count" do
+    before do
+      @project = Factory(:project)
+      @user = @project.user
+      invitation = Invitation.new(:user => @user, :project => @project, :user_or_email => "invited@user.com")
+      invitation.save!
+      @new_user = Factory(:user, :email => "invited@user.com")
+      @user.reload
+    end
+
+    it "should increment invited_count when somebody accepts his invitation" do
+      @user.invited_count.should == 1
+    end
+
+    it "should have a nil invited_by_id field if he signed up by himself" do
+      @user.invited_by.should == nil
+    end
+
+    it "should set the invited by field to the person who invited the user" do
+      @new_user.invited_by.should == @user
+    end
+  end
   
   describe "authentication" do
     before do
