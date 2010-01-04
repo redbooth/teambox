@@ -669,7 +669,7 @@ fr:
       reply: "Vous pouvez également répondre à ce mail pour publier une réponse."
       are_watching: " ont souscrit à la conversation, et recevront des notifications des réponses futures."
       stop_watching: "<a href='{{stop_watching_url}}'>Stop watching</a> this thread to stop receiving email notifications."
-      notification_settings: "Vous pouvez <a href='{{stop_watching_url}}'>arrêter de suivre cette conversation</a> à tout moment."
+      notification_settings: "Vous pouvez <a href='{{url}}'>arrêter de suivre cette conversation</a> à tout moment."
       comment: "Commentaire sur le mur du projet: "
       conversation: "Conversation:"
       task: "Tâche:"
