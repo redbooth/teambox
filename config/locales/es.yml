@@ -482,7 +482,7 @@ es:
       commented_on_a_task_list: "-"
       confirm_delete: Seguro que quieres borrar este comentario?
     new:
-      assigned_to_nobody: 'Unassigned'
+      assigned_to_nobody: Sin asignar
       assigned_to: "Asignado a:"
       submit: Publicar
     edit:

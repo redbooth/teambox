@@ -19,7 +19,7 @@
       -for website in card.websites
         .website.item
           %span.type= website.get_type
-          = website.name
+          =link_to website.to_url, website.to_url, :target => '_blank'
   -unless card.addresses.empty?
     .addresses
       %h3= t('.addresses')
@@ -30,7 +30,7 @@
           %br/
           = "#{address.city} #{address.state}, #{address.zip}"
           %br/          
-          = t("countries.#{address.country}") unless [nil,''].include?(address.country)
+          = t("countries.#{address.country}") unless address.country.blank?
   -unless card.ims.empty?
     .ims
       %h3= t('.ims')
@@ -44,4 +44,7 @@
       -for social_network in card.social_networks
         .social_network.item
           %span.type= "#{social_network.get_network_type} - #{social_network.get_type}"
-          = social_network.name
+          - if social_network.to_url
+            = link_to social_network.name, social_network.to_url, :target => '_blank'
+          - else
+            = social_network.name

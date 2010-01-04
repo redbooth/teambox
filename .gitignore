@@ -13,3 +13,4 @@ public/stylesheets/tasks/*.css
 uploads/*
 webrat-*
 capybara-*
+*.esproj
