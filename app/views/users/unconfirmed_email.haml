@@ -5,7 +5,7 @@
 %h3= t('.problems_title')
 
 %ul
-  %li= link_to t('.resend', :link => unconfirmed_email_user_path(current_user, :resend => true))
+  %li= t('.resend', :link => unconfirmed_email_user_path(current_user, :resend => true))
   %li= t('.spam')
   %li= t('.wrong_address', :link => logout_path)
     
