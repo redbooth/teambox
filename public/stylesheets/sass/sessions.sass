@@ -1,58 +1,29 @@
-.new_sessions, .create_sessions, .new_users, .create_users, .new_reset_passwords, .create_reset_passwords, .reset_reset_passwords, .sent_reset_passwords, .update_after_forgetting_reset_passwords
-  div.flash_box
-    :float none
-    :margin-left 0px
-  h2
-    :font-size 14px
-    :margin 0px
-    :background rgb(160,228,237)
-    :padding 5px 10px
-      :bottom 7px
-    :-moz-border-radius
-      :topleft 5px
-      :topright 5px
-    :-webkit-border-top-left-radius 5px
-    :-webkit-border-top-right-radius 5px
-  .global_navigation
-    :float none
-    :margin 
-      :top 5px
-      :bottom 8px
-  .header
-    :margin-top 20px
-  .container
-    :width 400px
-    :margin 10px auto
-  .footer
+@import flash_box.sass
+@import forms.sass
+@import fyi.sass
+@import weakling.sass
+
+h2
+  :margin-bottom 15px
+  
+.new_session, .create_session
+  p.right_link
+    :float right
     :padding
-      :top 0px
-  form
-    :font-size 12px
-    :background rgb(255,255,255)
-    :-moz-border-radius
-      :bottomleft 5px
-      :bottomright 5px
-    :-webkit-border-bottom-left-radius 5px
-    :-webkit-border-bottom-right-radius 5px
-    :padding 10px
-      :left 20px
-      :right 30px
-    :margin-bottom 10px
-    h2
-    .text_field
-      :color rgb(100,100,100)
-      input
-        :width 100%
-  form.new_session
-    .password
-      :margin-top 5px
-      input
-        :width 170px
-      p  
-        :display block
-        :width 160px
-        :text-align right
-        :float right
-        :font-size 12px
-        :padding
-          :top 28px
+      :right 100px
+
+.flash_box
+  :display block
+  :margin 15px 0
+  :float none
+
+form
+  :margin 20px 0
+  
+div.box
+  :padding 10px
+  :font-size 12px
+  :margin 20px 0
+  p
+    :margin 5px 0
+    

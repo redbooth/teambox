@@ -1,7 +1,9 @@
 .login.text_field
   = label_tag :login, t('.username_or_email')
+  %p.right_link= link_to t('.signup'), signup_path, :tabindex => 202
   = text_field_tag 'login', @login, :class => 'focus', :tabindex => 200
+
 .password.text_field
-  %p= link_to t('.forgot'), forgot_password_path, :tabindex => 202
   = label_tag :password, t('.password')
+  %p.right_link= link_to t('.forgot'), forgot_password_path, :tabindex => 203
   = password_field_tag 'password', nil, :tabindex => 201

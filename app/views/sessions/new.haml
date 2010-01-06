@@ -1,10 +1,12 @@
 %h2= t('.title')
 
 - form_tag session_path, :class => 'new_session', :id => 'new_session' do
-
   = upgrade_browser
-  = latest_announcement
   = session_fields
   = submit_tag t('.submit')
 
 = javascript_tag("$('new_session').auto_focus();")
+
+- content_for :column do
+  = latest_announcement
+  

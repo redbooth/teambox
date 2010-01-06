@@ -36,13 +36,18 @@ defaults: &DEFAULTS
     username: 
     password: 
 
-  # This links are used in the navigation bar for login and in every page's footer
+  # This links are used for the login page. Delete the line to remove it from the interface.
   home_url: http://www.teambox.com
   tour_url: http://www.teambox.com/tour
+  users_url: http://www.teambox.com/testimonials
+  services_url: http://www.teambox.com/services
+  community_url: http://www.teambox.com/community
   blog_url: http://blog.teambox.com
-  help_url: http://help.teambox.com/faqs/using-teambox
+  help_url: http://www.teambox.com/help
   support_url: http://help.teambox.com
-  
+  privacy_url: http://www.teambox.com/privacy
+  terms_url: http://www.teambox.com/terms
+
   # [NOT IMPLEMENTED]
   # If false, the only way of having an account will be being invited by another user.
   allow_signups: true

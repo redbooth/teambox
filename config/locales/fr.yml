@@ -160,7 +160,7 @@ fr:
       title: Confirmez votre adresse mail
       invitation_sent_to: "Nous avons envoyé une invitation à l'adresse <i>{{email}}</i> afin de vérifier qu'il n'y a pas d'erreur dans l'adresse mail."
       follow_the_link: <b>Cliquez sur le lien qui se trouve dans ce mail</b> pour activer votre compte.
-      problems: Un problème?
+      problems_title: Un problème?
       resend: "Pas de mail de confirmation? Cliquez <a href='{{link}}'>ici</a> pour recevoir un nouveau mail de confirmation."
       spam: "Assurez-vous que ce mail n'ait pas été classé avec le courrier indésirable."
       wrong_address: "Une erreur dans l'adresse mail? Dans ce cas, <a href='{{link}}'>annulez</a> et recommencez la création du compte avec un email valide."
@@ -523,9 +523,10 @@ fr:
       remove: Supprimer
   sessions:
     fields:
-      username_or_email: Nom d'utilisateur ou email
+      username_or_email: Email ou nom d'utilisateur
       password: Mot de passe
       forgot: Vous avez oublié votre mot de passe?
+      signup: Créer un compte
     new:
       title: Entrer
       submit: Entrer
@@ -572,14 +573,19 @@ fr:
     global_navigation:
       project_invitations: Invitations
       home: Accueil
-      tour: Tour
-      blog: Blog
-      help: Aide
       logout: Quitter
       login: Login
       project_invitations: "Invitations ({{count}})"
-      signup: Enregistrez-vous
       settings: Options
+    public_navigation:
+      home: Teambox
+      tour: Tour
+      users: Utilisateurs
+      services: Services
+      community: Communauté
+      help: Aide
+      privacy: Privacité
+      terms: Conditions d'utilisation
     user_navigation:
       account_settings: Compte et préférences
       profile_information: Information de contact

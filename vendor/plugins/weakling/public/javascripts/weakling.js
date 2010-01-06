@@ -1,9 +1,9 @@
 Weakling = {
   check_password_strength: function(target,name,strengths){  
     var score = this.password_score($(target).value);
-    if(score == 5)
+    if(score > 3)
       $(name).innerHTML = "<span class='strong'>"+strengths['strong']+"</span>";
-    else if (score > 2)
+    else if (score > 1)
       $(name).innerHTML = "<span class='average'>"+strengths['average']+"</span>";
     else if (score > 0)
       $(name).innerHTML = "<span class='weak'>"+strengths['weak']+"</span>";

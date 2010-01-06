@@ -523,9 +523,10 @@ es:
       remove: Eliminar
   sessions:
     fields:
-      username_or_email: Usuario o email
+      username_or_email: Email o nombre de usuario
       password: Contraseña
       forgot: ¿No recuerdas tu contraseña?
+      signup: Crear una cuenta
     new:
       title: Entrar
       submit: Entrar
@@ -572,14 +573,19 @@ es:
     global_navigation:
       project_invitations: Invitaciones
       home: Home
-      tour: Tour
-      blog: Blog
-      help: Ayuda
       logout: Salir
       login: Login
       project_invitations: "Invitaciones ({{count}})"
-      signup: Regístrate
       settings: Opciones
+    public_navigation:
+      home: Teambox
+      tour: Tour
+      users: Testimonios
+      services: Servicios
+      community: Comunidad
+      help: Ayuda
+      privacy: Privacidad
+      terms: Condiciones de uso
     user_navigation:
       account_settings: Cuenta y preferencias
       profile_information: Información de Contacto

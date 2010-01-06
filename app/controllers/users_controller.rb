@@ -84,7 +84,7 @@ class UsersController < ApplicationController
     end
 
     @email = current_user.email
-    render :layout => 'action_required'
+    render :layout => 'sessions'
   end
   
   def confirm_email

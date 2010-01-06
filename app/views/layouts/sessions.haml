@@ -5,16 +5,33 @@
     %link{ :rel => "shortcut icon", :href => "/images/favicon.ico" }
     %title
       Teambox
-    = stylesheet_link_tag 'application'
-    = stylesheet_link_tag 'custom', :media => :screen
+    = stylesheet_link_tag 'http://teambox.com/css/basic.css', :media => :all
+    = stylesheet_link_tag 'sessions'
     = sprockets_include_tag
-  %body{ :class => "splash #{location_name} #{I18n.locale}"}
+
+  %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
     .container
-      .header
-        = image_tag('header_logo_black_large.png')
-      = global_navigation
-      = hot_flashes(flash)
-      .content
-        = yield
-      = footer
-    = javascripts
+      .navigation_wrap
+        .navigation
+          %ul
+            %li= link_to_public_page 'home'
+            %li= link_to_public_page 'tour'
+            %li= link_to_public_page 'users'
+            %li= link_to_public_page 'services'
+            %li= link_to_public_page 'community'
+            %li= link_to_public_page 'help'
+      .wrapper
+        .content
+          = hot_flashes(flash)
+          = yield
+        .column
+          #sidebar
+            %img{ :src => "http://s3.amazonaws.com/site_production/assets/4/logo_original.gif"}
+            = yield :column
+      .footer
+        %p.copyright Copyright &copy; 2010 Teambox. All rights reserved
+        %p.footer_nav
+          = link_to_public_page 'privacy'
+          &#183;
+          = link_to_public_page 'terms'
+      = javascripts

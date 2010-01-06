@@ -273,4 +273,10 @@ module ApplicationHelper
     end
     "<div style='color:red;font-weight:bold'>#{error}</div>"
   end
+  
+  def link_to_public_page(name)
+    if APP_CONFIG.has_key?("#{name}_url")
+      link_to t("shared.public_navigation.#{name}"), APP_CONFIG["#{name}_url"]
+    end
+  end
 end
