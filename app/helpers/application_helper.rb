@@ -265,4 +265,12 @@ module ApplicationHelper
   def latest_announcement
     render :partial => 'shared/latest_announcement'
   end
+  
+  def errors_for(model, field)
+    error = case errors = model.errors.on(field)
+    when Array then errors.first
+    when String then errors
+    end
+    "<div style='color:red;font-weight:bold'>#{error}</div>"
+  end
 end

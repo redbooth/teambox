@@ -112,6 +112,7 @@ en:
       title: Create an Account
       submit: Create account
       you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
+      existing_user: "If you already have an account, <a href='{{login_url}}'>log in</a> or <a href='{{forgot_url}}'>retrieve your password</a>."
     create:
       thanks: Thanks for signing up!
       error: "We couldn't set up that account, sorry. Please try again, or contact an admin (link is above)."
@@ -714,6 +715,8 @@ en:
     index_projects: All Projects
     edit_projects: Edit Project
     index_people: People
+    new_users: Signup
+    create_users: Signup
     edit_users: Edit
     welcome_users: Welcome!
     new_projects: New Project    

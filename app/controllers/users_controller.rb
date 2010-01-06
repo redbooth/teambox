@@ -50,7 +50,6 @@ class UsersController < ApplicationController
       
       flash[:success] = t('users.create.thanks')
     else
-      flash[:error] = @user.errors.full_messages.last
       render :action => :new, :layout => 'sessions'
     end
   end

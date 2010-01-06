@@ -112,6 +112,7 @@ fr:
       title: Créer un compte
       submit: Créer le compte
       you_are_logged_in: "Vous avez déjà un compte sur Teambox. Si vous voulez vous enregistrer comme autre utilisateur, fermez la session et essayez de nouveau."
+      existing_user: "Si vous avez déjà un compte, <a href='{{login_url}}'>identifiez-vous</a> ou <a href='{{forgot_url}}'>rétablissez votre mot de passe</a>."
     create:
       thanks: Votre compte a bien été créé! Merci!
       error: "Nous n'avons pas pu enregistrer ce compte, désolé! Essayez de nouveau."
@@ -714,6 +715,8 @@ fr:
     index_projects: Projets
     edit_projects: Editer Projet 
     index_people: Personnes
+    new_users: Créer un compte
+    create_users: Créer un compte
     edit_users: Editer
     welcome_users: Bienvenue!
     new_projects: Nouveau projet
