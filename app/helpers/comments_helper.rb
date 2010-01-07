@@ -118,7 +118,7 @@ module CommentsHelper
         :comments => comments, 
         :target => target }),
       :class => 'comments',
-      :id => 'comment'
+      :id => 'comments'
   end
   
   def show_comment(comment)
