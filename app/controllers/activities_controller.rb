@@ -9,7 +9,9 @@ class ActivitiesController < ApplicationController
     @last_activity = @activities.last
 
     respond_to do |format|
-      format.xml { render :xml => @activities.to_xml }
+      format.xml  { render :xml     => @activities.to_xml }
+      format.json { render :as_json => @activities.to_xml }
+      format.yaml { render :as_yaml => @activities.to_xml }
     end
   end
 
@@ -19,7 +21,9 @@ class ActivitiesController < ApplicationController
     
     respond_to do |format|
       format.js
-      format.xml { render :xml => @activities.to_xml }
+      format.xml  { render :xml     => @activities.to_xml }
+      format.json { render :as_json => @activities.to_xml }
+      format.yaml { render :as_yaml => @activities.to_xml }
     end
   end
 
@@ -29,7 +33,9 @@ class ActivitiesController < ApplicationController
     
     respond_to do |format|
       format.js
-      format.xml { render :xml => @activities.to_xml }
+      format.xml  { render :xml     => @activities.to_xml }
+      format.json { render :as_json => @activities.to_xml }
+      format.yaml { render :as_yaml => @activities.to_xml }
     end
   end
 

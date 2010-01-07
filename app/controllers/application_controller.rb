@@ -135,5 +135,36 @@ class ApplicationController < ActionController::Base
         end
       end
       return split_events
-    end    
+    end
+    
+    # http://www.coffeepowered.net/2009/02/16/powerful-easy-dry-multi-format-rest-apis-part-2/
+    def render(opts = nil, extra_options = {}, &block)
+    	if opts then
+    		if opts[:to_yaml] or opts[:as_yaml] then
+    			headers["Content-Type"] = "text/plain;"
+    			text = nil
+    			if opts[:as_yaml] then
+    				text = Hash.from_xml(opts[:as_yaml]).to_yaml
+    			else
+    				text = Hash.from_xml(render_to_string(:template => opts[:to_yaml], :layout => false)).to_yaml
+    			end
+    			super :text => text, :layout => false
+    		elsif opts[:to_json] or opts[:as_json] then
+    			content = nil
+    			if opts[:to_json] then
+    				content = Hash.from_xml(render_to_string(:template => opts[:to_json], :layout => false)).to_json
+    			elsif opts[:as_json] then
+    				content = Hash.from_xml(opts[:as_json]).to_json
+    			end
+    			cbparam = params[:callback] || params[:jsonp]
+    			content = "#{cbparam}(#{content})" unless cbparam.blank?
+    			super :json => content, :layout => false
+    		else
+    			super(opts, extra_options, &block)
+    		end
+    	else
+    		super(opts, extra_options, &block)
+    	end
+    end
+    
 end

@@ -10,8 +10,10 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       f.html
-      f.rss  { render :layout => false }
-      f.xml  { render :xml => @projects.to_xml }
+      f.rss  { render :layout  => false }
+      f.xml  { render :xml     => @projects.to_xml }
+      f.json { render :as_json => @projects.to_xml }
+      f.yaml { render :as_yaml => @projects.to_xml }
     end
   end
 
@@ -27,8 +29,10 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       f.html
-      f.rss  { render :layout => false }
-      f.xml  { render :xml => @current_project.to_xml }
+      f.rss  { render :layout  => false }
+      f.xml  { render :xml     => @current_project.to_xml }
+      f.json { render :as_json => @current_project.to_xml }
+      f.yaml { render :as_yaml => @current_project.to_xml }
     end
   end
   

@@ -4,7 +4,6 @@ class UploadsController < ApplicationController
   SEND_FILE_METHOD = :default
 
   def download
-
     head(:not_found) and return if (upload = Upload.find_by_id(params[:id])).nil?
     head(:forbidden) and return unless upload.downloadable?(current_user)
 
@@ -39,7 +38,9 @@ class UploadsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml { render :xml => @uploads.to_xml({:root => 'files'}) }
+      format.xml  { render :xml     => @uploads.to_xml({:root => 'files'}) }
+      format.json { render :as_json => @uploads.to_xml({:root => 'files'}) }
+      format.yaml { render :as_yaml => @uploads.to_xml({:root => 'files'}) }
     end
   end
   

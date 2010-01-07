@@ -34,7 +34,7 @@ class User
   end
 
   def short_name
-    "#{first_name[0,1]}. #{last_name}"
+    "#{first_name.chars.first}. #{last_name}"
   end
 
 end

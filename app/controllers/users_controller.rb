@@ -23,7 +23,9 @@ class UsersController < ApplicationController
     @activities = @user.activities_visible_to_user(@current_user)
     respond_to do |format|
       format.html
-      format.xml { render :xml => @user.to_xml }
+      format.xml  { render :xml => @user.to_xml }
+      format.json { render :as_json => @user.to_xml }
+      format.yaml { render :as_yaml => @user.to_xml }
     end
   end
 
