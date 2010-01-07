@@ -523,7 +523,7 @@ en:
       remove: Delete
   sessions:
     fields:
-      username_or_email: Email or username
+      username_or_email: Email or Username
       password: Password
       forgot: Forgot your password?
       signup: Sign up for an account

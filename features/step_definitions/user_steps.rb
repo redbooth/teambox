@@ -76,7 +76,7 @@ end
 Given /^I am logged in as (.*)$/ do |user_type|
   Given "I am the currently #{user_type}"
     And "I go to the login page"
-    And "I fill in \"Username or email\" with \"#{@current_user.email}\""
+    And "I fill in \"Email or Username\" with \"#{@current_user.email}\""
     And "I fill in \"Password\" with \"#{@current_user.password}\""
     And "I press \"Login\""
 end

@@ -2,7 +2,7 @@ Feature: Sigining up
 
 Scenario: Mislav successfully signs up and confirms his email
   Given I am on the home page
-    And I follow "Signup"
+    And I follow "Sign up for an account"
   When I fill in the following:
     | Username          | mislav                      |
     | First name        | Mislav                      |
