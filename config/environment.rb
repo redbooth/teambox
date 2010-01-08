@@ -10,9 +10,6 @@ Rails::Initializer.run do |config|
   config.gem 'completeness-fu'
   config.gem 'system_timer'
 
-  # Optional gems to enhance XML performance. Feel free to disable them.
-  ActiveSupport::XmlMini.backend = 'LibXML'
-
   config.time_zone = APP_CONFIG['time_zone']
 
   config.action_mailer.default_url_options = { :host => APP_CONFIG['app_domain'] }
@@ -32,3 +29,6 @@ Rails::Initializer.run do |config|
   require 'RedCloth'
   require 'mime/types'
 end
+
+# Optional gems to enhance XML performance. Feel free to disable them.
+ActiveSupport::XmlMini.backend = 'LibXML'

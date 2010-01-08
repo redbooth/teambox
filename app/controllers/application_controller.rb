@@ -139,7 +139,7 @@ class ApplicationController < ActionController::Base
     
     # http://www.coffeepowered.net/2009/02/16/powerful-easy-dry-multi-format-rest-apis-part-2/
     def render(opts = nil, extra_options = {}, &block)
-    	if opts then
+    	if opts && opts.is_a?(Hash) then
     		if opts[:to_yaml] or opts[:as_yaml] then
     			headers["Content-Type"] = "text/plain;"
     			text = nil
