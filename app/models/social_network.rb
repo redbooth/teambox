@@ -22,7 +22,7 @@ class SocialNetwork < ActiveRecord::Base
         when 'FriendFeed'   then "http://www.friendfeed.com/#{name}"
         when 'MySpace'      then "http://www.myspace.com/#{name}"
         when 'Seesmic'      then "http://www.seesmic.tv/#{name}"
-        when 'Delicius'     then "http://www.delicious.com/#{name}"
+        when 'Delicious'    then "http://www.delicious.com/#{name}"
         when 'Stumble Upon' then "http://#{name}.stumbleupon.com/"
       end
     end
