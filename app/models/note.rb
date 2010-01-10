@@ -8,6 +8,10 @@ class Note < RoleRecord
   attr_accessor :deleted
   attr_accessible :body, :deleted, :name
   
+  def to_s
+    name
+  end
+  
   def user
     User.find_with_deleted(user_id)
   end

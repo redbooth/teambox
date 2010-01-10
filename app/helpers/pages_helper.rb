@@ -22,8 +22,15 @@ module PagesHelper
   end
   
   def list_pages(pages,current_target)
-    render :partial => 'pages/page', :collection => pages, :locals => {
-      :current_target => current_target }
+    render :partial => 'pages/page_sidebar',
+      :collection => pages,
+      :as => :page,
+      :locals => {
+        :current_target => current_target }
+  end
+
+  def list_pages_with_toc(pages)
+    render :partial => 'pages/page', :collection => pages
   end
 
   def page_link(page)

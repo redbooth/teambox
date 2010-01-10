@@ -1,3 +1,7 @@
-.page{ :class => "#{ 'active_page' if current_target == page }" }
-  .title
-    = page_link(page)
+.page
+  %h3= page_link(page)
+  %p= page.description
+  - if page.notes.any?
+    %ul
+      - for note in page.notes
+        %li= note  

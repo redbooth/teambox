@@ -1,12 +1,9 @@
 = page_column(@current_project, @pages)
 
-- unless @pages.empty?
+- if @pages.any?
   #pages
     %h2= t('.pages_in_this_project')
-    - @pages.each do |page|
-      .page
-        %h3= page_link(page)
-        %p= page.description
+    = list_pages_with_toc(@pages)
 
 - else
-  =page_primer(@current_project)
+  = page_primer(@current_project)
