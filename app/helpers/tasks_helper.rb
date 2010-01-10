@@ -4,7 +4,7 @@ module TasksHelper
     task ||= project.tasks.build
     js_id(element,project,task_list,task)
   end
-
+  
   def task_link(project,task_list,task=nil)
     task ||= project.tasks.build
     app_link(project,task_list,task)
@@ -24,7 +24,7 @@ module TasksHelper
 
   def show_task(project,task_list,task)    
     app_toggle(project,task_list,task)
-  end  
+  end
 
   def hide_task(project,task_list,task)
     app_toggle(project,task_list,task)
@@ -222,7 +222,6 @@ module TasksHelper
   end
 
   def task_action_links(project,task_list,task)
-    return unless task.editable?(current_user)
     render :partial => 'tasks/actions',
     :locals => { 
       :project => project,
@@ -357,5 +356,4 @@ module TasksHelper
         :constraint => 'vertical' })
     end
   end
-
 end

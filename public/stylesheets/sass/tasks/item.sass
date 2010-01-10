@@ -56,6 +56,9 @@ div.task_list_wrap
     :margin 4px 0px
     img.drag
       :padding 0 4px
+    &.task_item_open
+      a.mine        
+        :background-color rgb(255,255,150)
 
 .active_new,.active_open,.active_hold,.active_resolved,.active_rejected
   :-moz-border-radius 5px
@@ -83,4 +86,3 @@ div.task_list_wrap
     :text-decoration line-through
     :font-style italic
     :color rgb(60,60,60)
-  
