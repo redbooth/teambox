@@ -64,14 +64,11 @@ module ConversationsHelper
   end
 
   def conversation_action_links(project,conversation)
-    if conversation.owner?(current_user)
-      render :partial => 'conversations/actions',
-      :locals => { 
-        :project => project,
-        :conversation => conversation }
-    end
+    render :partial => 'conversations/actions',
+    :locals => { 
+      :project => project,
+      :conversation => conversation }
   end
-
 
   def conversation_comment(conversation)
     if current_user.conversations_first_comment

@@ -41,4 +41,8 @@ class Conversation < RoleRecord
       end
     end
   end
+  
+  def to_s
+    name
+  end
 end

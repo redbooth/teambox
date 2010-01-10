@@ -52,10 +52,21 @@ class ConversationsController < ApplicationController
   end
   
   def destroy
-    flash[:success] = t('deleted.conversation', :name => @conversation.name)
-    @conversation.destroy
-    respond_to do |f|
-      f.html { redirect_to project_conversations_path(@current_project) }
+    if @conversation.editable?(current_user)
+      @conversation.try(:destroy)
+
+      respond_to do |f|
+        f.html do
+          flash[:success] = t('deleted.conversation', :name => @conversation.to_s)
+          redirect_to project_conversations_path(@current_project)
+        end
+        f.js
+      end
+    else
+      respond_to do |f|
+        flash[:error] = "You are not allowed to do that!"
+        f.html { redirect_to project_conversations_path(@current_project) }
+      end
     end
   end
   
