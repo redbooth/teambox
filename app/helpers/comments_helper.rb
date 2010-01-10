@@ -53,7 +53,7 @@ module CommentsHelper
     end
   end
   
-  def activity_comment_target_link(comment)
+  def activity_comment_target_link(comment, connector = "&rarr;")
     link = case comment.target_type
       when 'Conversation'
         link_to_conversation(comment.target.target)
@@ -63,7 +63,7 @@ module CommentsHelper
         link_to_task_list(comment.target.target)
     end
     
-    "<span class='arr target_arr'>&rarr;</span> <span class='target'>#{link}</span>" if link
+    "<span class='arr target_arr'>#{connector}</span> <span class='target'>#{link}</span>" if link
   end
 
   def comment_actions_link(comment)

@@ -150,6 +150,7 @@ class Comment < ActiveRecord::Base
     params[:uploads].if_defined.each do |upload_id|
       if upload = Upload.find(upload_id)
         upload.comment_id = self.id
+        upload.description = truncate(h(upload.comment.body), :length => 80)
         upload.save(false)
       end
     end

@@ -1,8 +1,7 @@
-fade_duration = 2
 upload_item_id = "upload_#{@upload.id}"
 
-page[upload_item_id].visual_effect :fade, :duration => fade_duration
+page[upload_item_id].dropOut
 
-page.delay(fade_duration) do
+page.delay(3) do
   page[upload_item_id].remove
 end

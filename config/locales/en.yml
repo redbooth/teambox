@@ -521,6 +521,7 @@ en:
       download: Download
       uploaded_by: Uploaded by
       remove: Delete
+      on_: "on"
   sessions:
     fields:
       username_or_email: Email or Username

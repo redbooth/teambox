@@ -521,6 +521,7 @@ fr:
       download: Télécharger
       uploaded_by: Téléchargé par
       remove: Supprimer
+      on_: "dans"
   sessions:
     fields:
       username_or_email: Email ou nom d'utilisateur
