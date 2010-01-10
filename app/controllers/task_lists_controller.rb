@@ -48,12 +48,23 @@ class TaskListsController < ApplicationController
       task_list.update_attribute(:position,idx.to_i)
     end
   end  
-   
+
   def destroy
-    @task_list.destroy if @task_list.owner?(current_user)
-    respond_to do |format|
-      format.html { redirect_to project_task_lists_path(@current_project) }
-      format.js
+    if @task_list.editable?(current_user)
+      @task_list.try(:destroy)
+
+      respond_to do |f|
+        f.html do
+          flash[:success] = t('deleted.task_list', :name => @task_list.to_s)
+          redirect_to project_task_lists_path(@current_project)
+        end
+        f.js
+      end
+    else
+      respond_to do |f|
+        flash[:error] = "You are not allowed to do that!"
+        f.html { redirect_to project_task_lists_path(@current_project) }
+      end
     end
   end
   

@@ -1,5 +1,4 @@
 .task_header{ :id => "#{task_list_id(:edit_header,project,task_list)}" }
   = task_list_action_links(project,task_list)
   %h2
-    = comments_count(task_list,:header)
     = task_list.name

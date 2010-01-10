@@ -42,7 +42,7 @@ class TasksController < ApplicationController
   end
   
   def destroy
-     if @task.editable?(current_user)
+    if @task.editable?(current_user)
       @task.try(:destroy)
 
       respond_to do |f|

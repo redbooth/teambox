@@ -195,8 +195,12 @@ module TasksHelper
   def task_status(task,status_type)
     id = check_status_type(task,status_type)
     out = "<span id='#{id}' class='task_status task_status_#{task.status_name}'>"
-    out << "#{localized_status_name(task)}&nbsp;&mdash;&nbsp;" unless status_type == :column
-    out <<  "#{task.comments_count}#{'&nbsp;' unless status_type == :column}</span>"
+    out << case status_type
+    when :column  then task.comments_count.to_s
+    when :content then task.comments_count.to_s
+    when :header  then "#{localized_status_name(task)} &mdash #{task.comments_count}"
+    end
+    out << "</span>"
     out
   end
 

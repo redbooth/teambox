@@ -28,6 +28,10 @@ class Person < ActiveRecord::Base
     user.name
   end
   
+  def short_name
+    user.short_name
+  end
+  
   def login
     user.login
   end

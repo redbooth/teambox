@@ -152,12 +152,10 @@ module TaskListsHelper
   end
 
   def task_list_action_links(project,task_list)
-    if task_list.owner?(current_user)
-      render :partial => 'task_lists/actions',
-      :locals => { 
-        :project => project,
-        :task_list => task_list }
-    end
+    render :partial => 'task_lists/actions',
+    :locals => { 
+      :project => project,
+      :task_list => task_list }
   end
 
   def task_list_partial_action_links(project, task_list)
@@ -170,8 +168,7 @@ module TaskListsHelper
       end
     end
   end
-        
-  
+
   def task_lists_sortable(project)
     update_page_tag do |page|
       page.sortable("sortable_task_lists",{

@@ -1,25 +1,34 @@
 table.task_list
   :width 100%
-  :margin-bottom 10px
+  :margin-bottom 20px
   th
     :font-size 14px
     :border-bottom solid 1px rgb(200,200,200)
     :padding-bottom 5px    
   td
     :padding 4px 5px
-    :border-bottom solid 1px rgb(240,240,240)
     span.task_status
       :font-size 11px
-      :padding 1px 5px
   td.status
     :text-align right
-    :padding-right 0px
-    :width 1%
+    :width 30px
+    :padding-top 6px
     span
-      :padding-right 0px
+      :display block
+      :width 23px
+      :padding 0
+      :text-align center
   .comments_count
-    :width 1%
-    :text-align right
+    :float right
+    :padding 0
+      :top 4px
+    :text-transform none
+    :font-size 11px
+    :-moz-border-radius 0
+    :-webkit-border-radius 0px
+    :color rgb(150,150,150)
+    :background rgb(255,255,255)
+    :border none
   thead
     tr
       span
@@ -58,7 +67,6 @@ table.task_list
     tr.mine
       td
         :background rgb(255,255,210)
-        :border-bottom solid 1px rgb(230,230,240)
       td.name
         a
           :font-weight bold

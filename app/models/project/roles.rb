@@ -13,15 +13,15 @@ class Project
   end
   
   def editable?(user)
-    check_role(user,Person::ROLES[:participant]) && archived == false
+    check_role(user,Person::ROLES[:participant]) && !archived
   end
 
   def admin?(user)
-    check_role(user,Person::ROLES[:admin]) && archived == false
+    check_role(user,Person::ROLES[:admin]) && !archived
   end
 
   protected
     def check_role(user,role)
-      p = people.find_by_user_id(user.id) and (p.role >= role or p.owner?)
+      p = people.find_by_user_id(user.id) and (p.role >= role || p.owner?)
     end
 end
