@@ -1,5 +1,4 @@
 .conversation_header{ :id => "#{conversation_id(:edit_header,project,conversation)}" }
   = conversation_action_links(project,conversation)
   %h2
-    = comments_count(conversation,:header)
     = conversation.name
