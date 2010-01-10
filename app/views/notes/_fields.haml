@@ -1,6 +1,7 @@
 .name.text_field
-  = f.label :name, t('.title')
+  = f.label :name, t('.title'), :size => 74
   = f.text_field :name, :class => 'focus'
 .body.text_area
   = f.label :body, t('.body')
-  = f.text_area :body
+  = f.text_area :body, :id => :note_body
+  = autoresize :note_body

@@ -279,4 +279,8 @@ module ApplicationHelper
       link_to t("shared.public_navigation.#{name}"), APP_CONFIG["#{name}_url"]
     end
   end
+  
+  def autoresize(id)
+    javascript_tag "activateResize('#{id.to_s}')"
+  end
 end

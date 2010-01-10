@@ -1,10 +1,11 @@
 .text_field.name
   = f.label :name, t('.name')
   = f.text_field :name
-  = tooltip 'user_description', t('.name') if conversation.new_record?
 
 - if conversation.new_record?
+  = tooltip 'user_description', t('.name')
   .text_area.body
     = f.label :body, t('.body')
-    = f.text_area :body
+    = f.text_area :body, :id => :conversation_body
     = tooltip 'user_body', t('.body')
+    = autoresize :conversation_body

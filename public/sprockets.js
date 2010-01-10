@@ -9352,6 +9352,21 @@ Project = {
   }
 }
 
+function activateResize(element) {
+  Event.observe(element, 'keyup', function() {
+    updateSize(element)
+  });
+  updateSize(element)
+}
+
+function updateSize(element) {
+  if(Element.getHeight(element)<$(element).scrollHeight&&Element.getHeight(element)<document.viewport.getHeight()) {
+    $(element).style.height = $(element).getHeight()+15+'px'
+    if(Element.getHeight(element)<$(element).scrollHeight) {
+      window.setTimeout("updateSize('"+element+"')",5)
+    }
+  }
+}
 Event.addBehavior({
   ".comment:mouseover": function(e){
     $(this).className = 'comment comment_hover'
