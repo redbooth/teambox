@@ -27,17 +27,22 @@ fr:
     person: "{{name}} n'appartient plus au projet"
     left_project: "Vous avez quitté le project"
   activities:
-    activity_line:
-      create_comment: a posté un commentaire
-      create_upload: a ajouté un fichier
+    create_upload: a ajouté un fichier
+    create_conversation: 
       create_conversation: a créé la conversation
+    create_task_list:
       create_task_list: a créé la liste de tâches
+    create_task:
+      create_task: a créé la tâche
+    create_page:
       create_page: a créé la page
-      create_person: a rejoint le projet
-    user_remove:
-      removed_from_project: "{{user}} a été éliminé du projet"
-    user_add:
-      added_to_project: "{{user}} a été ajouté au projet"
+    create_person:
+      create_person: a été invité au projet
+      by: par
+    delete_person:
+      delete_person: a été éliminé du projet
+      by: par
+      left: a quitté le projet
   avatars:
     new:
       title: Télécharger un avatar

@@ -29,7 +29,7 @@ class Project < ActiveRecord::Base
   
 
   def log_activity(target, action, creator_id=nil)
-    creator_id = target.user_id unless creator_id
+    creator_id ||= target.user_id
     Activity.log(self, target, action, creator_id)
   end
   
@@ -86,13 +86,13 @@ class Project < ActiveRecord::Base
     end
 
     Activity.find(:all, :conditions => conditions,
-                        :order => 'created_at DESC',
+                        :order => 'id DESC',
                         :limit => options[:limit] || APP_CONFIG['activities_per_page'])
   end
   
   def get_recent(model_class, limit = 5)
     model_class.find(:all, :conditions => ["project_id = ?", id],
-                           :order => 'created_at DESC',
+                           :order => 'id DESC',
                            :limit => limit)
   end
 

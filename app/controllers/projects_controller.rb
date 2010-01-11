@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
   def index
     @activities = Project.get_activities_for(@projects)
     @last_activity = @activities.last
-    @pending_projects = current_user.invitations
+    @pending_projects = @current_user.invitations.reload # adding reload to avoid a strange bug
 
     respond_to do |f|
       f.html
@@ -21,7 +21,7 @@ class ProjectsController < ApplicationController
   def show
     @activities = Project.get_activities_for @current_project
     @last_activity = @activities.last
-    @pending_projects = current_user.invitations
+    @pending_projects = @current_user.invitations.reload
     
     #   Use this snippet to test the notification emails that we send:
     #@project = @current_project

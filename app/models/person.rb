@@ -3,8 +3,10 @@
 
 class Person < ActiveRecord::Base
   belongs_to :user
-  belongs_to :project  
+  belongs_to :project
   belongs_to :source_user, :class_name => 'User'
+
+  acts_as_paranoid
   
 #  validates_uniqueness_of :user, :scope => :project
   validates_presence_of :user, :project   # Make sure they both exist and are set
@@ -24,6 +26,10 @@ class Person < ActiveRecord::Base
     key
   end
 
+  def to_s
+    name
+  end
+
   def name
     user.name
   end
@@ -37,7 +43,7 @@ class Person < ActiveRecord::Base
   end
   
   def after_create
-    project.log_activity(self, 'create', self)
+    project.log_activity(self, 'create', source_user.try(:id) || self)
     if project.user == user
       update_attribute :role, ROLES[:admin]
     end

@@ -1,0 +1,10 @@
+.activity
+  = thumb_avatar(person.user, false)
+  .container
+    .date= posted_date activity.posted_date
+    %span.user= person.user.name
+    = t(".#{activity.action_type}") # was removed from the project
+    = link_to activity.project, activity.project
+    = t(".by")
+    = activity.user
+  .clear

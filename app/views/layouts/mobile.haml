@@ -5,7 +5,7 @@
   %meta{ :name => 'viewport', :content => 'width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' }
   = stylesheet_link_tag 'mobile', :media => :all
 
-%body
+%body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
   #header
     #topbar
       %table{ :width => '100%' }

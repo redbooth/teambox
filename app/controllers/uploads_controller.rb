@@ -62,11 +62,13 @@ class UploadsController < ApplicationController
     @upload = @current_project.uploads.new(params[:upload])
     @upload.user = current_user
 
-    if is_iframe?
+    if is_iframe? # uploads attached to a comment
       @upload.save
       @comment = load_comment
       @upload.reload
-      respond_to{|f|f.html {render :template => 'uploads/create', :layout => 'upload_iframe'} }
+      respond_to do |f|
+        f.html { render :template => 'uploads/create', :layout => 'upload_iframe' }
+      end
     else
       respond_to do |f|          
         if @upload.save

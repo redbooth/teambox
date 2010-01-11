@@ -1,14 +1,4 @@
 #page
   #activities
     - for activity in @activities
-      .activity
-        = thumb_avatar(activity.user, false)
-        .container
-          %span.user= activity.user
-          = activity.project
-          &rarr;
-          = activity.target
-          %br
-          %br
-      .activity
-        = mobile_show_activity(activity)
+      = show_activity(activity)

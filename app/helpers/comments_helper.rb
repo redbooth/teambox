@@ -121,10 +121,6 @@ module CommentsHelper
       :id => 'comments'
   end
   
-  def show_comment(comment)
-    render :partial => 'comments/comment', :locals => { :comment => comment }
-  end
-
   def comment_fields(f,comment,show_hours)
     render :partial => 'comments/fields', :locals => { :f => f, :comment => comment, :show_hours => show_hours }
   end

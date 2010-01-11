@@ -115,7 +115,7 @@ class User < ActiveRecord::Base
   end
 
   def log_activity(target, action, creator_id=nil)
-    creator_id = target.user_id unless creator_id
+    creator_id ||= target.user_id
     Activity.log(nil, target, action, creator_id)
   end
 

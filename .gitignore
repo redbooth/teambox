@@ -10,6 +10,7 @@ public/avatars/*
 public/stylesheets/*.css
 public/stylesheets/pages/*.css
 public/stylesheets/tasks/*.css
+public/stylesheets/projects/*.css
 public/stylesheets/users/*.css
 uploads/*
 webrat-*

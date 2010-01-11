@@ -7,7 +7,7 @@ class Activity < ActiveRecord::Base
   named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_type = 'TaskList' || comment_type = 'Task'"
       
   def self.log(project,target,action,creator_id)
-    project_id = project.nil? ? nil : project.id
+    project_id = project.try(:id)
 
     if target.is_a? Comment
       comment_type = target.target_type
@@ -21,8 +21,9 @@ class Activity < ActiveRecord::Base
       :action => action,
       :user_id => creator_id,
       :created_at => target.created_at,
-      :comment_type => comment_type)
+      :comment_type => comment_type)      
     activity.save
+    
     activity
   end
 
@@ -56,6 +57,19 @@ class Activity < ActiveRecord::Base
     target.type.to_s.downcase
   end
 
+  def target
+    case target_type
+    when 'Person'       then begin; Person.find_with_deleted(target_id); rescue; nil; end
+    when 'Comment'      then begin; Comment.find_with_deleted(target_id); rescue; nil; end
+    when 'Conversation' then begin; Conversation.find_with_deleted(target_id); rescue; nil; end
+    when 'TaskList'     then begin; TaskList.find_with_deleted(target_id); rescue; nil; end
+    when 'Task'         then begin; Task.find_with_deleted(target_id); rescue; nil; end
+    when 'Page'         then begin; Page.find_with_deleted(target_id); rescue; nil; end
+    when 'Note'         then begin; Note.find_with_deleted(target_id); rescue; nil; end
+    when 'Upload'       then begin; Upload.find_with_deleted(target_id); rescue; nil; end
+    end
+  end
+
   def user
     User.find_with_deleted(user_id)
   end
@@ -77,5 +91,4 @@ class Activity < ActiveRecord::Base
       end
     end
   end
-
 end

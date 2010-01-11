@@ -31,7 +31,7 @@ class Comment < ActiveRecord::Base
   def after_create
     self.target.reload
 
-    if self.target.is_a?(User)
+    if target.is_a?(User)
       self.activity = target.log_activity(self,'create')
     else
       target.last_comment_id = id

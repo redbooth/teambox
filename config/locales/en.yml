@@ -27,17 +27,22 @@ en:
     person: "{{name}} is no longer in the project"
     left_project: "You are no longer in this project"
   activities:
-    activity_line:
-      create_comment: posted a comment
-      create_upload: uploaded a file
-      create_conversation: created the conversation
+    create_upload: uploaded a file
+    create_conversation:
+      create_conversation: started the conversation
+    create_task_list:
       create_task_list: created the task list
+    create_task:
+      create_task: created the task
+    create_page:
       create_page: created the page
-      create_person: was added to the project
-    user_remove:
-      removed_from_project: "{{user}} was removed from this project"
-    user_add:
-      added_to_project: "{{user}} was added to this project"
+    create_person:
+      create_person: was invited to the project
+      by: by
+    delete_person:
+      delete_person: was removed to the project
+      by: by
+      left: left the project
   avatars:
     new:
       title: Upload an avatar

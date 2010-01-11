@@ -13,7 +13,7 @@
       = comment_task_status(comment) if comment.target_type == 'Task'
     .body.textilized
       ~ comment.body_html
-    - if comment.uploads.count > 0
+    - if comment.uploads.any?
       - if comment.uploads.all? { |upload| upload.image? }
         .upload_images
           = list_uploads_inline_with_thumbnails(comment.uploads)

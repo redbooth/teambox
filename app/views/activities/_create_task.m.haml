@@ -1,0 +1,10 @@
+.activity
+  = thumb_avatar(activity.user, false)
+  .container
+    %span.user= activity.user.short_name
+    = t(".#{activity.action_type}")
+    = activity_project_link(activity.project,:after)
+    = link_to task, project_task_list_task_path(task.project, task.task_list, task)
+    .date
+      = posted_date activity.posted_date
+  .clear

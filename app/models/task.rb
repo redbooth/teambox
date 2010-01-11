@@ -85,7 +85,11 @@ class Task < RoleRecord
       end
     end
   end
-  
+
+  def to_s
+    name
+  end
+
   def user
     User.find_with_deleted(user_id)
   end

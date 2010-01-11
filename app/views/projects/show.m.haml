@@ -1,17 +1,10 @@
-#page_menu
-  = link_to "Conversations"
-  = link_to "Tasks"
-  = link_to "Pages"
-  = link_to "Files"
-  = link_to "People"
+/ #page_menu
+/   = link_to "Conversations"
+/   = link_to "Tasks"
+/   = link_to "Pages"
+/   = link_to "Files"
+/   = link_to "People"
 #page
   #activities
     - for activity in @activities
-      .activity
-        = thumb_avatar(activity.user, false)
-        .container
-          %span.user= activity.user
-          = activity.target
-          %br
-          %br
-          %br
+      = show_activity(activity)

@@ -27,9 +27,9 @@ body
     :position relative
     a
       :-webkit-box-sizing border-box
-      :background-color #D8DFEA
-      :border 1px solid #D8DFEA
-      :color #3B5998
+      :background-color #B0E1Ed
+      :border 1px solid #B0E1Ed
+      :color #0083A2
       :display block
       :float left
       :font-size 14px
@@ -81,6 +81,9 @@ body
   #page
     :font-size 14px
     #activities
+      a
+        :text-decoration none
+        :color black
       .activity
         :display block
         :padding 10px
@@ -110,6 +113,11 @@ body
           :text-decoration none
           :display block
           :padding 10px
+
+.show_projects
+  .comment, .activity
+    .project, .project_arr
+      :display none
 
 #footer
   :border-top 1px solid #BDBFC4

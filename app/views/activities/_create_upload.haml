@@ -1,0 +1,16 @@
+.upload{ :id => "upload_#{upload.id}" }
+  .info
+    = link_to upload.file_type, upload.url, :class => upload.file_type
+  .block
+    .filename.show_details
+      .date
+        = posted_date upload.created_at
+      .name
+        = link_to upload.user.name, user_path(upload.user)
+        = t('uploads.upload.uploaded_the_file')
+        = activity_project_link(upload.project,:after)
+        = link_to upload.description, upload.url if upload.description
+      .body  
+        = upload_link(upload.project,upload)
+        = number_to_human_size(upload.size)
+  .clear

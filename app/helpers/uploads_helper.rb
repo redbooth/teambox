@@ -15,10 +15,6 @@ module UploadsHelper
     render :partial => 'uploads/primer', :locals => { :project => project }
   end
   
-  def upload_description(upload)
-    "<br/>#{upload.description}" if upload.description
-  end
-
   def the_comment_upload_link(comment)
     link_to_function image_tag('attach_button.jpg'), show_upload_form(comment), :id => 'comment_upload_link'
   end
@@ -38,7 +34,7 @@ module UploadsHelper
     if upload and upload.file_type
       render :partial => 'uploads/upload', :locals => { :project => upload.project, :upload => upload }
     end
-   end
+  end
 
   def list_uploads(project,uploads)
     render :partial => 'uploads/upload', :collection => uploads, :as => :upload, :locals => { :project => project }    

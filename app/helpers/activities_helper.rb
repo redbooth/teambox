@@ -1,57 +1,54 @@
 module ActivitiesHelper
 
-  def activity_project_link(project)
-    unless project.nil?
-      out = "<span class='arr project_arr'>&rarr;</span> " 
+  def activity_project_link(project, arrow_pos = :before)
+    if project
+      out = ""
+      out << " <span class='arr project_arr'>&rarr;</span> " if arrow_pos == :before
       out << "<span class='project'>"
-      out <<  link_to(project.name, project_path(project))
+      out <<   link_to(project, project_path(project))
       out << "</span>"
+      out << " <span class='arr project_arr'>&rarr;</span> " if arrow_pos == :after
       out
     end  
   end
 
+  # TODO for activities create_note, create_divider, edit and delete
+  ActivityTypes = %w( create_comment 
+                      create_conversation
+                      create_task_list
+                      create_task
+                      create_page
+                      create_upload
+                      create_person delete_person)
+
   def list_activities(activities)
-    render :partial => 'activities/activity', :collection => activities
-  end
-  
-  def show_activity(activity)
-    if target = activity.target #dirty hack for when activities exist and there target doesn't
-      case activity.action_type  
-        when 'create_comment'
-          show_comment(target)
-        when 'create_upload'
-          # Uploads will already be shown in their parent comment.
-          # We will only show them if they're not attached to a comment.
-          # BUT we should show new versions uploaded for existing files.        
-          show_upload(target) unless target.comment_id
-        when 'create_conversation'
-          show_activity_line(activity,the_conversation_link(target))
-        when 'create_task_list'
-          show_activity_line(activity,the_task_list_link(target))
-        when 'create_page'
-          show_activity_line(activity,'') #edit_page_link(project,target))
-        when 'create_person'
-          show_activity_line(activity,the_person_link(activity.project,target))
-        else  
-          render 'activities/deleted'
-      end
-    end  
+    activities.collect { |a| show_activity(a) }
   end
 
-  def show_activity_line(activity,action_link)
-    render :partial => "activities/activity_line", :locals => { :activity => activity, :action_link => action_link }
+  def show_activity(activity)
+    # Activity#target is redefined so it finds deleted elements too
+    if activity.target && ActivityTypes.include?(activity.action_type)
+      render_activity_partial(activity,activity.target)
+    end
+  end
+  
+  def render_activity_partial(activity,target)
+    render :partial => "activities/#{activity.action_type}",
+      :locals => {
+        :activity => activity,
+        activity.target_type.underscore.to_sym => target }
   end
   
   def link_to_conversation(conversation)
-    link_to conversation.name, project_conversation_path(conversation.project, conversation)
+    link_to conversation, project_conversation_path(conversation.project, conversation)
   end
   
   def link_to_task_list(task_list)
-    link_to task_list.name, project_task_list_path(task_list.project, task_list)
+    link_to task_list, project_task_list_path(task_list.project, task_list)
   end
 
   def link_to_task(task)
-    link_to task.name, project_task_list_task_path(task.project, task.task_list,task)
+    link_to task, project_task_list_task_path(task.project, task.task_list,task)
   end
 
   def activities_paginate_link(*args)
