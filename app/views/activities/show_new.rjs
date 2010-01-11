@@ -4,5 +4,8 @@ if @activities.any?
   
   page << reset_autorefresh
   page << autorefresh(@activities)
-  page << "Sound.play('/sounds/laser.wav')"
+
+  unless @activities.all? { |a| a.user_id == current_user.id }
+    page << "Sound.play('/sounds/laser.wav')"
+  end
 end
