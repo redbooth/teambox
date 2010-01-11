@@ -164,6 +164,10 @@ class Comment < ActiveRecord::Base
   def user
     User.find_with_deleted(user_id)
   end
+  
+  def to_s
+    body[0,80]
+  end
 
   def to_xml(options = {})
     options[:indent] ||= 2

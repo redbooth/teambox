@@ -96,6 +96,10 @@ class Project < ActiveRecord::Base
                            :limit => limit)
   end
 
+  def to_s
+    name
+  end
+
   def to_xml(options = {})
     options[:indent] ||= 2
     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
