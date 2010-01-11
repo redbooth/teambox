@@ -1,0 +1,5 @@
+#page
+  #projects
+    - for project in @projects
+      .project
+        = link_to project, project_path(project, :format => :m)

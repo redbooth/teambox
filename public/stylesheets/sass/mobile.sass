@@ -1,0 +1,124 @@
+body
+  :margin 0
+  :font-family Helvetica
+  :overflow-x hidden
+  :color #333
+  :-webkit-user-select none
+  :-webkit-text-size-adjust none
+  :background-color #EDEFF4
+
+#header
+  h1
+    :font-size 16px
+    :margin 0
+      :top 2px
+      :left 5px
+    a
+      :text-decoration none
+      :color #444
+  small
+    :font-size 10px
+    :color #999
+  #menubar
+    :-webkit-box-sizing border-box
+    :background-color #EDEFF4
+    :border-bottom 1px solid #D8DFEA
+    :height 34px
+    :position relative
+    a
+      :-webkit-box-sizing border-box
+      :background-color #D8DFEA
+      :border 1px solid #D8DFEA
+      :color #3B5998
+      :display block
+      :float left
+      :font-size 14px
+      :font-weight bold
+      :height 28px
+      :line-height 28px
+      :margin-left 2%
+      :margin-top 6px
+      :text-align center
+      :text-decoration none
+      :overflow hidden
+      :width 31%
+    a.selected
+      :background-color white
+      :border-bottom 1px solid white
+
+#content
+  :background-color #FFFFFF
+  :padding
+    :top 10px
+    :bottom 20px
+  #page_menu
+    :-webkit-box-sizing border-box
+    :height 30px
+    :position relative
+    a
+      :-webkit-box-sizing border-box
+      :background-color #D8DFEA
+      :border 1px solid #D8DFEA
+      :color #3B5998
+      :display block
+      :float left
+      :font
+        :size 12px
+        :weight bold
+      :height 22px
+      :line-height 20px
+      :width 18%
+      :margin
+        :left 2%
+        :top 2px
+        :bottom 6px
+      :text
+        :align center
+        :decoration none
+    a.selected
+      :background-color white
+      :border-bottom 1px solid white
+  #page
+    :font-size 14px
+    #activities
+      .activity
+        :display block
+        :padding 10px
+        :border-bottom 1px solid #ddd
+        :min-height 50px
+        .thumb_avatar
+          :float left
+          :width 48px
+          :height 48px
+          :margin-right 10px
+        .container
+          :padding-left 60px
+          :word-wrap break-word
+          span.user
+            :font-weight bold
+        .date
+          :float right
+          :font-size 10px
+          :color #999
+    #projects
+      .project
+        :font-size 16px
+        :display block
+        :border-bottom 1px solid #ddd
+        a
+          :color #3B5998
+          :text-decoration none
+          :display block
+          :padding 10px
+
+#footer
+  :border-top 1px solid #BDBFC4
+  a
+    :-webkit-box-sizing border-box
+    :font-size 12px
+    :color #555
+    :display block
+    :float left
+    :text-align center
+    :width 48%
+    :padding 15px 0

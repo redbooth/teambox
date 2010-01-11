@@ -9,7 +9,7 @@ xml.rss :version => "2.0" do
       if activity.target
         xml.item do
           xml.title ["[#{activity.project.permalink}]", activity.user.short_name, t("activities.activity_line.#{activity.action_type}")].join(' ')
-          xml.description show_activity(@current_project,activity,activity.target)
+          xml.description show_activity(activity)
           xml.pubDate activity.posted_date.to_s(:rfc822)
           xml.link projects_url(:anchor => "activity_#{activity.id}")
           xml.guid projects_url(:anchor => "activity_#{activity.id}")

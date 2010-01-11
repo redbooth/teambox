@@ -14,8 +14,8 @@ module ActivitiesHelper
     render :partial => 'activities/activity', :collection => activities
   end
   
-  def show_activity(project,activity,target)
-    if target #dirty hack for when activities exist and there target doesn't
+  def show_activity(activity)
+    if target = activity.target #dirty hack for when activities exist and there target doesn't
       case activity.action_type  
         when 'create_comment'
           show_comment(target)
@@ -31,7 +31,7 @@ module ActivitiesHelper
         when 'create_page'
           show_activity_line(activity,'') #edit_page_link(project,target))
         when 'create_person'
-          show_activity_line(activity,the_person_link(project,target))
+          show_activity_line(activity,the_person_link(activity.project,target))
         else  
           render 'activities/deleted'
       end

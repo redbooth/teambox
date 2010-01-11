@@ -1,0 +1,31 @@
+%html{ :xmlns => "http://www.w3.org/1999/xhtml" }
+%head
+  %title Teambox
+  %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
+  %meta{ :name => 'viewport', :content => 'width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' }
+  = stylesheet_link_tag 'mobile', :media => :all
+
+%body
+  #header
+    #topbar
+      %table{ :width => '100%' }
+        %tr
+          %td
+            %h1= link_to "Teambox Mobile", activities_path(:format => :m)
+          %td{ :style => 'text-align: right' }
+            %small
+              Signed in as
+              = current_user
+    #menubar
+      = link_to "Overview", activities_path(:format => :m), :class => (controller.controller_name == 'activities' ? 'selected' : '')
+      = link_to "My projects", projects_path(:format => :m), :class => (controller.controller_name == 'projects' && !@current_project ? 'selected' : '')
+      - if @current_project
+        = link_to @current_project, projects_path(:format => :m), :class => (controller.controller_name == 'projects' ? 'selected' : '')
+      = #link_to "My tasks"
+
+  #content
+    = yield
+  
+  #footer
+    = link_to "Use full Teambox", '/'
+    = link_to "Log out"

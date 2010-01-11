@@ -9,6 +9,8 @@ class ActivitiesController < ApplicationController
     @last_activity = @activities.last
 
     respond_to do |format|
+      format.html { redirect_to projects_path }
+      format.m    { render :layout  => 'mobile' }
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }
