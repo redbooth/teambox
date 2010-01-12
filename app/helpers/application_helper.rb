@@ -216,6 +216,10 @@ module ApplicationHelper
     end
   end
   
+  def mobile_link
+    link_to t('.mobile'), activities_path(:format => :m)
+  end
+  
   def help_link
     if APP_CONFIG.has_key? 'help_url'
       link_to t('.help'), "#{APP_CONFIG['help_url']}/#{controller.controller_name}"

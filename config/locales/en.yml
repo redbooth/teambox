@@ -601,7 +601,8 @@ en:
       my_tasks: "My {{count}} Tasks"
       archived_tasks: "All {{count}} Archived Tasks"
     footer:
-      support: "Feedback and bugs"
+      support: Feedback and bugs
+      mobile: Mobile version
       help: Help
     watchers:
       unwatch: Unwatch

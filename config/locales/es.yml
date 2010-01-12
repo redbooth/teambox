@@ -601,7 +601,8 @@ es:
       my_tasks: "Mías ({{count}})"
       archived_tasks: "Archivadas ({{count}})"
     footer:
-      support: "¿Problemas? ¡Envía feedback!"
+      support: ¿Problemas? ¡Envía feedback!
+      mobile: Versión móvil
       help: Ayuda
     watchers:
       unwatch: Dejar de seguir

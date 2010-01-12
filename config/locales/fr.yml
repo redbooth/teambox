@@ -601,7 +601,8 @@ fr:
       my_tasks: "Mes tâches ({{count}})"
       archived_tasks: "Archivées ({{count}})"
     footer:
-      support: "Un problème? Envoyez-nous un feedback!"
+      support: Un problème? Envoyez-nous un feedback!
+      mobile: Version Mobile
       help: Aide
     watchers:
       unwatch: Arrêter de suivre
