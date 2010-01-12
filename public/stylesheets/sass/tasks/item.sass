@@ -59,6 +59,10 @@ div.task_list_wrap
     &.task_item_open
       a.mine        
         :background-color rgb(255,255,150)
+    &.active_new,&.active_open,&.active_hold,&.active_resolved,&.active_rejected
+      a.mine        
+        :background transparent
+    
 
 .active_new,.active_open,.active_hold,.active_resolved,.active_rejected
   :-moz-border-radius 5px
