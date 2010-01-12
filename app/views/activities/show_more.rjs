@@ -2,7 +2,7 @@ page['activity_paginate_link'].remove
 page['activity_paginate_loading'].remove
 
 if @activities.any?
-  page.insert_html :bottom, :activities, :partial => 'activities/activity', :collection => @activities
+  page.insert_html :bottom, :activities, list_activities(@activities)
   if @activities.size == APP_CONFIG['activities_per_page']
     page.insert_html :after, :activities, show_more_button(@activities)
   end

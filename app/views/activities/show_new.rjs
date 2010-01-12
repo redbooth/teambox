@@ -1,5 +1,5 @@
 if @activities.any?
-  page.insert_html :top, :activities, :partial => 'activities/activity', :collection => @activities
+  page.insert_html :top, :activities, list_activities(@activities)
   page[:activities].visual_effect :highlight, :duration => 3
   
   page << reset_autorefresh

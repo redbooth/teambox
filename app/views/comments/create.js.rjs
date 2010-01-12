@@ -2,8 +2,8 @@ if @comment.errors.empty?
   unless @comment.new_record?
     page.ef('comments')
       page.insert_html :top, :comments, :partial => 'comments/comment', :locals => { :comment => @comment, :project => @current_project }
-    page.esf('activities')    
-      page.insert_html :top, :activities, :partial => 'activities/activity', :locals => { :activity => @comment.activity, :project => @current_project }
+    page.esf('activities')
+      page.insert_html :top, :activities, show_activity(@comment.activity)
     page.en
 
     if @task == @target
@@ -35,5 +35,9 @@ if @comment.errors.empty?
   page["comment_#{@comment.id}"].visual_effect :highlight, :duration => 2
 end
 
-page[js_id(:new_submit,Comment.new)].show      
-page[js_id(:new_loading,Comment.new)].hide
+page.ef(js_id(:new_submit,Comment.new))
+  page[js_id(:new_submit,Comment.new)].show      
+page.en
+page.ef(js_id(:new_loading,Comment.new))
+  page[js_id(:new_loading,Comment.new)].hide
+page.en
