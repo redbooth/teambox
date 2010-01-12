@@ -18,7 +18,8 @@ class ApplicationController < ActionController::Base
                 :touch_user, 
                 :recent_projects, 
                 :belongs_to_project?, 
-                :set_page_title
+                :set_page_title,
+                :use_iphone
   
   private
 
@@ -122,6 +123,12 @@ class ApplicationController < ActionController::Base
         end    
         @page_title = "#{ "#{user_name} &rarr;" if user_name } #{translate_location_name}"
       end    
+    end
+
+    def use_iphone
+      if request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/(iPhone|iPod)/]
+        request.format = :m
+      end
     end
     
     def split_events_by_date(events, start_date=nil)
