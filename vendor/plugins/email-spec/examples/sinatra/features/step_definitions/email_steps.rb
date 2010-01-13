@@ -1,1 +1,0 @@
-../../../rails_root/features/step_definitions/email_steps.rb

@@ -1,1 +1,0 @@
-../../rails_root/features/errors.feature
