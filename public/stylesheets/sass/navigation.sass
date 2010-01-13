@@ -8,7 +8,7 @@
   div.global_navigation
     :-moz-border-radius 4px
     :-webkit-border-radius 4px
-    :background rgb(76,74,74)
+    :background rgb(220,220,220)
     :float right
     :padding 5px
     :margin-bottom 10px
@@ -22,11 +22,13 @@
         a  
           :float left
           :display block
-          :color rgb(255,255,255)
+          :color rgb(70,70,70)
           :font-size 12px
           :margin 0px 7px
         a:hover,a.active
-          :color rgb(255,255,0)
+          :color rgb(90,158,167)
+        a.active
+          :font-weight bold          
       li.right_side
         :float right
   div.navigation
@@ -45,15 +47,16 @@
       a  
         :float left
         :display block
-        :color rgb(255,255,255)
+        :color rgb(120,120,120)
         :text-decoration none
         :padding 5px 8px
         :margin-right 1px
         :font-size 15px
         +round_corners
       a:hover
-        :color rgb(48,48,48)
-        :background rgb(160,228,237)
+        :color rgb(20,20,20)
+        :background rgb(245,245,245)
+        :text-decoration underline
       a.active
         :color rgb(48,48,48)
         :background rgb(160,228,237)

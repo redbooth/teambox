@@ -73,8 +73,8 @@ module ProjectsHelper
 
   def subscribe_to_project_link(project)
     content_tag(:div, 
-      link_to(t('common.print'), user_rss_token(project_path(@current_project, :format => :rss))),
-      :class => :print)
+      link_to(t('.subscribe'), user_rss_token(project_path(@current_project, :format => :rss))),
+      :class => :subscribe)
   end
   
   def print_projects_link
