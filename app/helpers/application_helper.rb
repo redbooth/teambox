@@ -2,10 +2,9 @@
 module ApplicationHelper
 
   def strip(project)
-    return if project.nil?
-    return unless project.archived
-    render :partial => 'shared/strip', :locals => {
-      :project => project }
+    if project && project.archived
+      render :partial => 'shared/strip', :locals => { :project => project }
+    end
   end
 
   def themed_stylesheet_link_tag

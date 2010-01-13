@@ -10,11 +10,12 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       f.html
-      f.m    { render :layout  => 'mobile' }
-      f.rss  { render :layout  => false }
-      f.xml  { render :xml     => @projects.to_xml }
-      f.json { render :as_json => @projects.to_xml }
-      f.yaml { render :as_yaml => @projects.to_xml }
+      f.m     { render :layout  => 'mobile' }
+      f.rss   { render :layout  => false }
+      f.xml   { render :xml     => @projects.to_xml }
+      f.json  { render :as_json => @projects.to_xml }
+      f.yaml  { render :as_yaml => @projects.to_xml }
+      f.print { render :layout  => 'print' }
     end
   end
 
@@ -30,11 +31,12 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       f.html
-      f.m    { render :layout  => 'mobile' }
-      f.rss  { render :layout  => false }
-      f.xml  { render :xml     => @current_project.to_xml }
-      f.json { render :as_json => @current_project.to_xml }
-      f.yaml { render :as_yaml => @current_project.to_xml }
+      f.m     { render :layout  => 'mobile' }
+      f.rss   { render :layout  => false }
+      f.xml   { render :xml     => @current_project.to_xml }
+      f.json  { render :as_json => @current_project.to_xml }
+      f.yaml  { render :as_yaml => @current_project.to_xml }
+      f.print { render :layout  => 'print' }
     end
   end
   

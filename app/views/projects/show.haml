@@ -1,8 +1,6 @@
 = banner(@events,@chart)
 
-
-
-- unless @pending_projects.empty?
+- if @pending_projects.any?
   .invitations
     = list_pending_invites(@pending_projects)
 
@@ -26,8 +24,8 @@
   - if @current_project.users.size > 1
     .tip
       = t('.tip')
-  .subscribe
-    = link_to t('.subscribe'), user_rss_token(project_path(@current_project, :format => :rss))
+  = subscribe_to_project_link(@current_project)
+  = #print_project_link(@current_project)
 
 /   = javascript_tag "FancyZoomBox.directory = 'http://localhost:3000/images/zoom';" 
 /   = javascript_tag "$$('a.fancyzoom').each(function(e) { new FancyZoom(e) })"

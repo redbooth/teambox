@@ -7,7 +7,8 @@ class TaskListsController < ApplicationController
   def index
     respond_to do |f|
       f.html
-      f.rss { render :layout => false }
+      f.rss   { render :layout => false }
+      f.print { render :layout => 'print' }
     end
   end
 

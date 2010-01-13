@@ -11,6 +11,7 @@ en:
     cancel: Cancel
     save: Save
     show_more: Show {{number}} more
+    print: Print this page
     comment:
       one: "{{count}} comment"
       other: "{{count}} comments"

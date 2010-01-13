@@ -11,6 +11,7 @@ fr:
     cancel: Annuler
     save: Enregistrer
     show_more: "Afficher les {{number}} suivants"
+    print: Imprimer cette page
     comment:
       one: "{{count}} commentaire"
       other: "{{count}} commentaires"

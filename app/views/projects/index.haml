@@ -2,8 +2,8 @@
   = new_project_link
   = project_column_navigation
   = list_projects(@projects)
-  .subscribe
-    = link_to t('.subscribe'), user_rss_token(projects_path(:format => :rss))
+  = subscribe_to_projects_link
+  = #print_projects_link
 
 - if @pending_projects.any?
   .invitations

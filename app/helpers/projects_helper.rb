@@ -54,7 +54,6 @@ module ProjectsHelper
     link_to content_tag(:span, t('.new_project')), new_project_path, :class => 'add_button', :id => 'new_project_link'
   end
 
-  
   def project_fields(f,project,sub_action='new')
     render :partial => "projects/fields/#{sub_action}", 
       :locals => { 
@@ -64,6 +63,30 @@ module ProjectsHelper
    
   def project_primer
     render :partial => 'projects/primer'
+  end
+  
+  def subscribe_to_projects_link
+    content_tag(:div, 
+      link_to(t('.subscribe'), user_rss_token(projects_path(:format => :rss))),
+      :class => :subscribe)
+  end
+
+  def subscribe_to_project_link(project)
+    content_tag(:div, 
+      link_to(t('common.print'), user_rss_token(project_path(@current_project, :format => :rss))),
+      :class => :print)
+  end
+  
+  def print_projects_link
+    content_tag(:div, 
+      link_to(t('common.print'), projects_path(:format => :print)),
+      :class => :print)
+  end
+
+  def print_project_link(project)
+    content_tag(:div, 
+      link_to(t('common.print'), project_path(project,:format => :print)),
+      :class => :print)
   end
 
   def reset_autorefresh

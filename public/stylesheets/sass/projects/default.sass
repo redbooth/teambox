@@ -46,7 +46,14 @@
       :font-size 12px
       :padding-left 25px
       :background url(/images/feed.png) no-repeat left
-
+      
+  .print
+    :margin-top 15px
+    a
+      :font-size 12px
+      :padding-left 25px
+      :background url(http://www.bcn.cl/img_iconos/print_icon.gif) no-repeat left
+      
 @media print
   .index_projects
     .column
@@ -57,6 +64,8 @@
       :font-size 20px
       :border-bottom solid 3px rgb(0,0,0)
       :padding-bottom 3px
+      span
+        :display none
     .comment
       :clear both
       .block
@@ -78,6 +87,8 @@
             :-moz-border-radius 0px
             :-webkit-border-radius 0px
     .activity
+      :display block
+      :width 100%
       :clear both
       :color rgb(0,0,0)
       .activity_icon
@@ -96,4 +107,4 @@
       .info
         :display none
       .thumbnail  
-        :display none      
+        :display none

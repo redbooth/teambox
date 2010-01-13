@@ -11,6 +11,7 @@ es:
     cancel: Cancelar
     save: Guardar
     show_more: Ver {{number}} más
+    print: Imprimir esta página
     comment:
       one: "{{count}} comentario"
       other: "{{count}} comentarios"
