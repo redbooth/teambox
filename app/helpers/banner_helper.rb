@@ -1,13 +1,13 @@
 module BannerHelper
 
-  def gannt_chart(chart)
+  def gantt_chart(chart)
     
     unless chart.process(1,32)
       content_tag :div,
         chart.to_html(30,0),
         :class => 'gantt banner_item',
-        :id => 'gannt_banner',
-        :style => "#{'display: none' unless current_banner?(:gannt)}"
+        :id => 'gantt_banner',
+        :style => "#{'display: none' unless current_banner?(:gantt)}"
     else
       render :partial => 'shared/gantt_banner_primer'
     end
@@ -43,20 +43,20 @@ module BannerHelper
       :class => "#{'active' if current_banner?(:calendar)}" }
   end
 
-  def gannt_banner_link
-    link_to_remote 'Gannt Chart', 
+  def gantt_banner_link
+    link_to_remote 'Gantt Chart', 
       :url => '',
-      :loading => gannt_banner_loading,
+      :loading => gantt_banner_loading,
       :html => { 
-        :id => 'gannt_banner_link', 
-        :class => "#{'active' if current_banner?(:gannt)}" }
+        :id => 'gantt_banner_link', 
+        :class => "#{'active' if current_banner?(:gantt)}" }
   end
      
-  def gannt_banner_loading
+  def gantt_banner_loading
     update_page do |page|
       page.hide_banner_items
-      page['gannt_banner'].show
-      page['gannt_banner_link'].addClassName('active')
+      page['gantt_banner'].show
+      page['gantt_banner_link'].addClassName('active')
     end
   end  
   

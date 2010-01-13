@@ -1,13 +1,13 @@
 module BannerSystem
   protected
-    BANNER_SETTINGS = { :gannt => 0, :calendar => 1 }
+    BANNER_SETTINGS = { :gantt => 0, :calendar => 1 }
 
     def current_banner?(setting)
       current_banner == BANNER_SETTINGS[setting]
     end
         
     def current_banner
-      @current_banner ||= BANNER_SETTINGS[:gannt]
+      @current_banner ||= BANNER_SETTINGS[:gantt]
     end
     
     def current_banner=(setting)    

@@ -10,8 +10,8 @@ module GanttChart
 
     # Checks if two events overlap in time
     def overlaps?(task_list)
-      return true if task_list.start < self.final and self.final <= task_list.final
-      return true if self.start < task_list.final and task_list.final <= self.final
+      return true if task_list.start < self.final && self.final <= task_list.final
+      return true if self.start < task_list.final && task_list.final <= self.final
       return false
     end
 
@@ -24,12 +24,12 @@ module GanttChart
     end
 
     def set_destination(position)
-      case position.class.to_s
-        when 'Date'
+      case position
+        when Date
           (position - Time.current.to_date).to_i + 1
-        when 'Fixnum'
+        when Fixnum
           position
-        when 'NilClass'
+        when NilClass
           nil
         else
           raise "Invalid date"

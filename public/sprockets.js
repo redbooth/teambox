@@ -9070,7 +9070,6 @@ CalendarDateSelect.prototype = {
 
     buttons_div.build("span", {innerHTML: "&#160;"});
     buttons_div.build("a", { innerHTML: _translations["Today"], href: "#", onclick: function() {this.today(false); return false;}.bindAsEventListener(this) });
-    buttons_div.build("a", { innerHTML: _translations["Now"], href: "#", onclick: function() {this.today(true); return false}.bindAsEventListener(this) });
     buttons_div.build("a", { innerHTML: _translations["Clear"], href: "#", onclick: function() {this.clearDate(); if (!this.options.get("embedded")) this.close(); return false;}.bindAsEventListener(this) });
   },
   refresh: function ()

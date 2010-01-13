@@ -546,7 +546,7 @@ fr:
     strip:
       archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>"
     gantt_banner_primer:
-      title: There are no task lists due to show on the gannt chart
+      title: There are no task lists due to show on the gantt chart
     upcoming_events_primer:
       title: There are no tasks due to show on the calendar
     projects:

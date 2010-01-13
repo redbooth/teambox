@@ -8,8 +8,9 @@ log/*.log
 tmp/*
 public/avatars/*
 public/stylesheets/*.css
-public/stylesheets/pages/*.css
+public/stylesheets/conversations/*.css
 public/stylesheets/tasks/*.css
+public/stylesheets/pages/*.css
 public/stylesheets/projects/*.css
 public/stylesheets/users/*.css
 uploads/*

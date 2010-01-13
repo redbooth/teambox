@@ -1,6 +1,6 @@
 .name.text_field
   = f.text_field :name, :class => 'focus'
 - unless task.new_record?
-  .date_select
+  .pick_date
     = f.label :due_on
-    = f.date_select :due_on, :start_year => Time.current.year, :order => [:day,:month,:year]
+    = date_picker(f, :due_on)

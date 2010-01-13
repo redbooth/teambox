@@ -1,7 +1,7 @@
 class TaskListsController < ApplicationController
   before_filter :load_task_list, :only => [:update,:show,:destroy,:watch,:unwatch]
-  before_filter :load_task_lists, :only => [:index]
-  before_filter :load_banner, :only => [:index]
+  before_filter :load_task_lists, :only => [:index, :show]
+  before_filter :load_banner, :only => [:index, :show]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy]
     
   def index

@@ -1,34 +1,23 @@
 .calendar_date_select
+  :background white
   :display block
-  :width 325px
+  :width 250px
   th 
     :font-size 11px
     :text-align center
     :padding-top 5px
-
   .cds_buttons 
-    :float left 
-    :width 80px 
+    :float left
+    :width 250px
+    :text-align center
     :padding 2px 0px
     a 
-      :color  black
-      :font-size  12px    
+      :color #000096
+      :font-size 12px    
       :padding 0px 4px
-  .cds_footer 
-    :float left
-    :width 180px
-    :padding 3px
-    :font-size 11px
-    :margin-bottom 10px
-    :background rgb(255,255,0)
-    :padding 5px 10px
-    :border
-      :right solid 1px rgb(200,200,0)
-      :bottom solid 1px rgb(200,200,0)
-    :text-align center
-    table 
-      :margin 0px
-      :padding 0px
+      :text-decoration underline
+  .cds_footer
+    :display none
   .greyed      
     :background rgb(200,200,200)  
     :border
@@ -67,9 +56,10 @@
       :margin-right 5px
     select.year 
       :width 61px
-      :margin 0px 5px      
-  td 
-
+      :margin 0px 5px
+    span.seperator, select.minute, select.hour
+      :display none
+  td
     :font-size 11px
     :text-align center
     :vertical-align  middle
@@ -85,16 +75,30 @@
       :color #ccc
   td.selected, td.selected:hover
     div 
-      :background-color rgb(0,0,255)
+      :background-color #000096
       :color rgb(255,255,255)
   td:hover 
     div
       :background-color rgb(160,160,160)
       :color rgb(255,255,255)      
   td.today 
-    :border 1px dashed #999
+    :border 1px dashed #000096
   td.disabled div 
     :color #e6e6e6
+
+.pick_date
+  label
+    :display inline
+    :padding-left 10px
+    :font-size 12px
+  .date_picker
+    :display inline
+    input
+      :border 0
+      :background transparent
+      :font-size 12px
+    img
+      :float left
 
 .fieldWithErrors .calendar_date_select 
   :border 2px solid red

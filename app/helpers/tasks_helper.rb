@@ -356,4 +356,16 @@ module TasksHelper
         :constraint => 'vertical' })
     end
   end
+
+  def date_picker(f, field)
+    content_tag(:div,
+      f.calendar_date_select(field, {
+        :popup => :force,
+        :first_day_of_week => 1,
+        :footer => false,
+        :year_range => 2.years.ago..10.years.from_now, 
+        :time => false,
+        :buttons => false }),
+      :class => 'date_picker')
+  end
 end
