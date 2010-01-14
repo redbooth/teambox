@@ -45,13 +45,13 @@ module BannerHelper
   end
 
   def gantt_banner_link
-    # link_to 'Gantt Chart', "#", :id => 'gantt_banner_link'
-    link_to_remote 'Gantt Chart', 
-      :url => '',
-      :loading => gantt_banner_loading,
-      :html => { 
-        :id => 'gantt_banner_link', 
-        :class => "#{'active' if current_banner?(:gantt)}" }
+    link_to 'Gantt Chart', "#", :id => 'gantt_banner_link'
+    # link_to_remote 'Gantt Chart', 
+    #   :url => '',
+    #   :loading => gantt_banner_loading,
+    #   :html => { 
+    #     :id => 'gantt_banner_link', 
+    #     :class => "#{'active' if current_banner?(:gantt)}" }
   end
      
   def gantt_banner_loading
