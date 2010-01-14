@@ -36,14 +36,16 @@ module BannerHelper
   end
   
   def calendar_banner_link
-    link_to_remote 'Calendar', 
-      :url => '',
-      :loading => calendar_banner_loading,
-      :html => { :id => 'calendar_banner_link',
-      :class => "#{'active' if current_banner?(:calendar)}" }
+    link_to "Calendar", "#", :id => 'calendar_banner_link'
+    # link_to_remote 'Calendar', 
+    #   :url => '',
+    #   :loading => calendar_banner_loading,
+    #   :html => { :id => 'calendar_banner_link',
+    #   :class => "#{'active' if current_banner?(:calendar)}" }
   end
 
   def gantt_banner_link
+    # link_to 'Gantt Chart', "#", :id => 'gantt_banner_link'
     link_to_remote 'Gantt Chart', 
       :url => '',
       :loading => gantt_banner_loading,
@@ -59,14 +61,14 @@ module BannerHelper
       page['gantt_banner_link'].addClassName('active')
     end
   end  
-  
-  def calendar_banner_loading
-    update_page do |page|
-      page.hide_banner_items
-      page['upcoming_events_banner'].show
-      page['calendar_banner_link'].addClassName('active')
-    end
-  end  
+  # 
+  # def calendar_banner_loading
+  #   update_page do |page|
+  #     page.hide_banner_items
+  #     page['upcoming_events_banner'].show
+  #     page['calendar_banner_link'].addClassName('active')
+  #   end
+  # end  
   
   def hide_banner_items
     page.select('.banner_navigation a').invoke('removeClassName','active')

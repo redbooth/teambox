@@ -9367,6 +9367,20 @@ function updateSize(element) {
   }
 }
 Event.addBehavior({
+  ".banner_navigation li.calendar:click": function(e){
+    $$(".banner_navigation a").each(function(link){
+      link.removeClassName("active");
+    })
+    $$(".banner_item").invoke("hide");
+
+    $("upcoming_events_banner").show();
+    $("calendar_banner_link").addClassName("active");
+    alert("hello from calendar!");
+  }
+
+
+});
+Event.addBehavior({
   ".comment:mouseover": function(e){
     $(this).className = 'comment comment_hover'
   },
