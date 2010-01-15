@@ -30,9 +30,11 @@ class CommentsController < ApplicationController
     respond_to do |f|
       case @target
       when Project
-        f.html { redirect_to @target }
+        f.html { redirect_to project_path(@target) }
+        f.m    { redirect_to project_path(@target) }
       else
         f.html { redirect_to @target.project, @target }
+        f.m    { redirect_to @target.project, @target }
       end
       f.js
     end

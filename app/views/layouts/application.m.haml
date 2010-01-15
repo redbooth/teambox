@@ -11,16 +11,16 @@
       %table{ :width => '100%' }
         %tr
           %td
-            %h1= link_to image_tag('/images/header_logo_white.png'), activities_path(:format => :m)
+            %h1= link_to image_tag('/images/header_logo_white.png'), activities_path
           %td{ :style => 'text-align: right' }
             %small
               Signed in as
               = current_user
     #menubar
-      = link_to "Overview", activities_path(:format => :m), :class => (controller.controller_name == 'activities' ? 'selected' : '')
-      = link_to "My projects", projects_path(:format => :m), :class => (controller.controller_name == 'projects' && !@current_project ? 'selected' : '')
+      = link_to "Overview", activities_path, :class => (controller.controller_name == 'activities' ? 'selected' : '')
+      = link_to "My projects", projects_path, :class => (controller.controller_name == 'projects' && !@current_project ? 'selected' : '')
       - if @current_project
-        = link_to @current_project, projects_path(:format => :m), :class => (controller.controller_name == 'projects' ? 'selected' : '')
+        = link_to @current_project, projects_path, :class => (controller.controller_name == 'projects' ? 'selected' : '')
       = #link_to "My tasks"
 
   #content
