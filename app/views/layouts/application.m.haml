@@ -11,7 +11,7 @@
       %table{ :width => '100%' }
         %tr
           %td
-            %h1= link_to "Teambox Mobile", activities_path(:format => :m)
+            %h1= link_to image_tag('/images/header_logo_white.png'), activities_path(:format => :m)
           %td{ :style => 'text-align: right' }
             %small
               Signed in as
@@ -27,5 +27,5 @@
     = yield
   
   #footer
-    = link_to "Use full Teambox", '/'
-    = link_to "Log out"
+    =# link_to "Use full Teambox", '/'
+    = link_to "Log out", logout_path

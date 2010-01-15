@@ -10,7 +10,7 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to projects_path }
-      format.m    { render :layout  => 'mobile' }
+      format.m
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }

@@ -7,6 +7,7 @@ class ResetPasswordsController < ApplicationController
     respond_to do |format|
       format.html
       format.xml  { render :xml => @reset_password }
+      format.m
     end
   end
 
@@ -18,6 +19,7 @@ class ResetPasswordsController < ApplicationController
       if @reset_password.save
         Emailer.deliver_forgot_password(@reset_password)
         format.html { redirect_to sent_password_path(:email => @reset_password.email) }
+        format.m    { redirect_to sent_password_path(:email => @reset_password.email) }
         #format.xml  { render :xml => @reset_password, :status => :created, :location => @password }
       else
         if @reset_password.errors.on(:user)
@@ -26,6 +28,7 @@ class ResetPasswordsController < ApplicationController
                                   {:email => @reset_password.email, :support => APP_CONFIG['support']})
         end
         format.html { render :new }
+        format.m    { render :new }
         #format.xml  { render :xml => @reset_password.errors, :status => :unprocessable_entity }
       end
     end
@@ -50,13 +53,15 @@ class ResetPasswordsController < ApplicationController
           @reset_password.destroy
           Emailer.deliver_reset_password(@user)
           flash[:success] = I18n.t('reset_passwords.create.password_updated')
-          format.html { redirect_to login_path}
+          format.html { redirect_to login_path }
+          format.m    { redirect_to login_path }
         else
           format.html { render :action => :reset, :reset_code => params[:reset_code] }
         end
       else
         flash[:notice] = I18n.t('reset_passwords.create.invalid', :support => APP_CONFIG['support'])
         format.html { render :action => :new, :reset_code => params[:reset_code] }
+        format.m    { render :action => :new, :reset_code => params[:reset_code] }
       end  
     end
   end

@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       f.html
-      f.m     { render :layout  => 'mobile' }
+      f.m
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @projects.to_xml }
       f.json  { render :as_json => @projects.to_xml }
@@ -31,7 +31,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       f.html
-      f.m     { render :layout  => 'mobile' }
+      f.m
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @current_project.to_xml }
       f.json  { render :as_json => @current_project.to_xml }

@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
                 :recent_projects, 
                 :belongs_to_project?, 
                 :set_page_title,
-                :use_mobile
+                :set_client
   
   private
 
@@ -127,7 +127,7 @@ class ApplicationController < ActionController::Base
 
     MobileClients = /(iPhone|iPod|Android|Opera mini|Blackberry|Palm|Windows CE|Opera mobi|iemobile)/i
 
-    def use_mobile
+    def set_client
       mobile =   request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][MobileClients]
       mobile ||= request.env["HTTP_PROFILE"] || request.env["HTTP_X_WAP_PROFILE"]
       if mobile

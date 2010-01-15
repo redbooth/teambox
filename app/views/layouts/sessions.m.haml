@@ -1,0 +1,15 @@
+%html{ :xmlns => "http://www.w3.org/1999/xhtml" }
+%head
+  %title Teambox
+  %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
+  %meta{ :name => 'viewport', :content => 'width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' }
+  = stylesheet_link_tag 'mobile', :media => :all
+
+%body{ :class => "layout_sessions #{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
+
+  #content
+    %h1= image_tag '/images/header_logo_white.png'
+    = yield
+  
+  #footer
+    =# link_to "Use full Teambox", '/'

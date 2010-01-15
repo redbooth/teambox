@@ -9,6 +9,11 @@ class SessionsController < ApplicationController
 
   def new
     redirect_to '/' if logged_in?
+    
+    respond_to do |format|
+      format.html
+      format.m
+    end
   end
 
   def create

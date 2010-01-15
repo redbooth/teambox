@@ -1,0 +1,8 @@
+%h2= t('.title')
+
+- form_tag session_path, :class => 'new_session', :id => 'new_session' do
+  = session_fields
+  = submit_tag t('.submit')
+  
+  %p= link_to t('sessions.fields.signup'), signup_path, :tabindex => 202
+  %p= link_to t('sessions.fields.forgot'), forgot_password_path, :tabindex => 203
