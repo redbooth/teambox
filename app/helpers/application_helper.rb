@@ -7,15 +7,6 @@ module ApplicationHelper
     end
   end
 
-  def themed_stylesheet_link_tag
-    if current_user
-      stylesheet_link_tag current_user.theme_name, :media => :screen
-    else
-      stylesheet_link_tag 'light', :media => :screen
-    end  
-  end
-  
-
   def submit(name,path,id = nil)
     submit_id = "submit_#{id}" if id
     render :partial => 'shared/submit', :locals => { 
