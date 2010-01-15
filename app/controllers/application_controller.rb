@@ -64,7 +64,9 @@ class ApplicationController < ActionController::Base
         @current_project = Project.find_by_permalink(project_id)
         
         if @current_project
-          current_user.add_recent_project(@current_project) if current_user
+          if current_user && !@current_project.archived?
+            current_user.add_recent_project(@current_project)
+          end
         else        
           flash[:error] = "The project <i>#{h(project_id)}</i> doesn't exist."
           redirect_to projects_path, :status => 301

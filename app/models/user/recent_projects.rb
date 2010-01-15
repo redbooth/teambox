@@ -24,7 +24,6 @@ class User
   
   def remove_recent_project(project)
     self.recent_projects ||= []
-    
     if self.recent_projects.include?(project.id)
       self.recent_projects.delete(project.id)
       @recent_projects = nil

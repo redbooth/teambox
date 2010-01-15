@@ -4,12 +4,12 @@
 class Project < ActiveRecord::Base
 
   include GrabName
-  
+
   acts_as_paranoid
 
-  concerned_with :validation, 
-                 :initializers, 
-                 :roles, 
+  concerned_with :validation,
+                 :initializers,
+                 :roles,
                  :associations,
                  :callbacks
                  #:logo
@@ -22,32 +22,34 @@ class Project < ActiveRecord::Base
   named_scope :archived, :conditions => {:archived => true}
   named_scope :unarchived, :conditions => {:archived => false}
 
+  after_save :remove_from_recent_projects
+
   def self.grab_name_by_permalink(permalink)
     p = self.find_by_permalink(permalink,:select => 'name')
     p.try(:name) || ''
   end
-  
+
 
   def log_activity(target, action, creator_id=nil)
     creator_id ||= target.user_id
     Activity.log(self, target, action, creator_id)
   end
-  
+
   def add_user(user, source_user=nil)
     unless Person.exists? :user_id => user.id, :project_id => id
       people.create(:user_id => user.id, :source_user_id => source_user.try(:id))
     end
   end
-  
+
   def remove_user(user)
     if person = Person.find_by_user_id_and_project_id(user.id, id)
       person.destroy
 
       user.recent_projects.delete id
-      user.save!      
+      user.save!
     end
   end
-  
+
   def to_param
     permalink
   end
@@ -55,7 +57,7 @@ class Project < ActiveRecord::Base
   def task_lists_assigned_to(user)
     task_lists.unarchived.inject([]) do |t, task_list|
       person = people.find_by_user_id(user.id)
-      t << task_list if task_list.tasks.count(:conditions => {:assigned_id => person.id, :status => Task::STATUSES[:open]}) > 0 
+      t << task_list if task_list.tasks.count(:conditions => {:assigned_id => person.id, :status => Task::STATUSES[:open]}) > 0
       t
     end
   end
@@ -89,7 +91,7 @@ class Project < ActiveRecord::Base
                         :order => 'id DESC',
                         :limit => options[:limit] || APP_CONFIG['activities_per_page'])
   end
-  
+
   def get_recent(model_class, limit = 5)
     model_class.find(:all, :conditions => ["project_id = ?", id],
                            :order => 'id DESC',
@@ -116,6 +118,17 @@ class Project < ActiveRecord::Base
           person.to_xml(options.merge({ :skip_instruct => true, :root => :person }))
         end
       end
+    end
+  end
+
+  def archive!
+    update_attribute(:archived, true)
+  end
+
+  private
+  def remove_from_recent_projects
+    if archived?
+      self.user.remove_recent_project(self)
     end
   end
 end
