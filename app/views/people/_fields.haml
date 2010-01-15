@@ -12,7 +12,7 @@
     = f.radio_button :role, Person::ROLES[:admin]
     = t('.admin')
         
--if false #Details Permissions
+- if false #Details Permissions
   - f.fields_for :permissions, person.permissions do |sf|
     .task_permissions
       = sf.label :task

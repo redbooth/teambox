@@ -1,7 +1,7 @@
 #primer
   %p= t('.empty') if location_name?('index_conversations')
   %div{ :class => "#{ 'box' if location_name?('index_conversations')}"} 
-    -if project.editable?(current_user) && location_name?('index_conversations')
+    - if project.editable?(current_user) && location_name?('index_conversations')
       %h2= link_to t('.create_first'), new_project_conversation_path(project)
     %p= t('.define')
     %ul

@@ -90,6 +90,7 @@ es:
       login: Nombre de usuario
       first_name: Nombre
       last_name: Apellidos
+      biography: Biografía
       time_zone: Zona horaria
       language: Idioma
       email: Email
@@ -106,8 +107,9 @@ es:
       notify_task_lists: Notificarme de comentarios en listas de tareas que sigo
       notify_tasks: Notificarme de comentarios en tareas que sigo
       avatar:
+        field: Tu icono
         presence: No puedes subir un fichero vacío
-        max_size: El archivo no puede ser mayor de {{mb}}
+        max_size: "El archivo no puede ser mayor de {{mb}}"
       tooltips:
         login: "Puedes usar un nombre de usuario corto para entrar. Debe ser en minúsculas y sin espacios. Puedes usar _."
         first_name: Hasta 20 caracteres.
@@ -597,6 +599,7 @@ es:
       account_settings: Cuenta y preferencias
       profile_information: Información de Contacto
       profile_picture: Imagen
+      notifications: Notificaciones
     task_navigation:
       all_tasks: Todas
       my_tasks: "Mías ({{count}})"

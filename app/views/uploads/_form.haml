@@ -7,9 +7,9 @@
     = f.file_field :asset, :size => 20
     - unless upload.asset.errors.empty?
       %p
-        -if upload.asset.errors.has_key?(:presence)
+        - if upload.asset.errors.has_key?(:presence)
           %span=t('.presence')
-        -if upload.asset.errors.has_key?(:size)
+        - if upload.asset.errors.has_key?(:size)
           %span=t('.max_size',:mb => upload.asset.errors[:size][:max])
   .submit
     = submit_tag t('.upload')

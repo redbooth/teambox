@@ -90,6 +90,7 @@ en:
       login: Username
       first_name: First name
       last_name: Last name
+      biography: Biography
       time_zone: Time Zone
       language: Language
       email: Email
@@ -106,6 +107,7 @@ en:
       notify_task_lists: Notify me when I'm watching a task list
       notify_tasks: Notify me when I'm watching a task
       avatar:
+        field: Your avatar
         presence: "You can't upload a blank file"
         max_size: "File size can't exceed {{mb}}"
       tooltips:
@@ -597,6 +599,7 @@ en:
       account_settings: Account Settings
       profile_information: Profile Information
       profile_picture: Profile Picture
+      notifications: Notifications
     task_navigation:
       all_tasks: All Tasks
       my_tasks: "My {{count}} Tasks"

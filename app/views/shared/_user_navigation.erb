@@ -1,6 +1,5 @@
 <div class="user_navigation"><%  
 render_tabnav :user do 
-
     add_tab do |t|
       t.named t('.account_settings')
       t.links_to account_settings_path
@@ -20,7 +19,7 @@ render_tabnav :user do
     end
     
     add_tab do |t|
-      t.named 'Notifications'
+      t.named t('.notifications')
       t.links_to account_notifications_path
       t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'notifications'
     end    

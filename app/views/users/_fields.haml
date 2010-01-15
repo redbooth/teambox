@@ -1,11 +1,11 @@
 - if user.new_record? or sub_action != nil
-  -if user.new_record? or sub_action == 'settings'
+  - if user.new_record? or sub_action == 'settings'
     .login.text_field
       = f.label :login, t('.login')
       = errors_for user, :login
       = f.text_field :login
       = tooltip 'user_login', t('.tooltips.login')
-  -if user.new_record? or sub_action == 'profile'
+  - if user.new_record? or sub_action == 'profile'
     .first_name.text_field
       = f.label :first_name, t('.first_name')
       = errors_for user, :first_name
@@ -16,7 +16,7 @@
       = errors_for user, :last_name
       = f.text_field :last_name
     = tooltip 'user_last_name', t('.tooltips.last_name')
-  -if user.new_record? or sub_action == 'settings'
+  - if user.new_record? or sub_action == 'settings'
     .email.text_field
       = f.label :email, t('.email')
       = errors_for user, :email
@@ -32,10 +32,10 @@
 - if user.new_record? || sub_action == 'settings'
   #password_fields{ :style => "#{ 'display: none' unless user.new_record? }"}
     .password.text_field
-      = f.label :password
+      = f.label :password, t('.password')
       = errors_for user, :password
       = f.password_field :password
-      -unless sub_action == 'settings'
+      - unless sub_action == 'settings'
         = password_strength :password_strength, 'user_password'
         = tooltip 'user_password', t('.tooltips.password')
     .password.text_field
@@ -44,7 +44,7 @@
       = f.password_field :password_confirmation
 
 - unless user.new_record?
-  -if sub_action == 'settings'
+  - if sub_action == 'settings'
     #change_password_link
       = link_to_function t('.change_password'), show_user_password_fields
       
@@ -56,29 +56,29 @@
       = f.label :first_day_of_week, t('.first_day_of_week')
       = f.select :first_day_of_week, [[t('.sunday'), 'sunday'],[t('.monday'), 'monday']]
     
--if user.new_record? || sub_action == 'settings'
+- if user.new_record? || sub_action == 'settings'
   .language.select
     = f.label :language, t('.language')
     = f.select :language, User::LANGUAGES
               
 - if sub_action == 'profile'
   .description.text_area
-    = f.label :biography
+    = f.label :biography, t('.biography')
     = f.text_area :biography
 
   = list_card_fields(f,%w(phone_numbers email_addresses websites addresses ims social_networks))
 
--if @sub_action == 'picture'
-  = f.label :avatar
+- if @sub_action == 'picture'
+  = f.label :avatar, t('.avatar.field')
   = f.file_field :avatar
   - unless current_user.avatar.errors.empty?
     %p
-      -if current_user.avatar.errors.has_key?(:presence)
+      - if current_user.avatar.errors.has_key?(:presence)
         %span=t('.avatar.presence')
-      -if current_user.avatar.errors.has_key?(:size)
+      - if current_user.avatar.errors.has_key?(:size)
         %span=t('.avatar.max_size',:mb => current_user.avatar.errors[:size][:max])
 
--if @sub_action == 'notifications'
+- if @sub_action == 'notifications'
   .check_boxes.notifications
     .check_box.notify
       = f.check_box :notify_mentions

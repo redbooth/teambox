@@ -1,7 +1,7 @@
 #upcoming_events_banner.upcoming_events_banner.banner_item{:style => "#{ 'display: none' unless current_banner?(:calendar)}"}
   %table
     - for table_row in [(0..6),(7..13)]
-      -unless table_row.all?{|i|events[i].nil?}
+      - unless table_row.all?{|i|events[i].nil?}
         %tr
           - for i in table_row
             %th{ :class => event_css(i) }
