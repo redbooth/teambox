@@ -110,6 +110,8 @@ en:
         field: Your avatar
         presence: "You can't upload a blank file"
         max_size: "File size can't exceed {{mb}}"
+        we_have_this_avatar: "This is the avatar we currently have of you:"
+        upload_here_or_at_gravatar: "You can upload a new avatar here, or upload it to <a href='http://gravatar.com'>Gravatar</a> for a global avatar you can use with Teambox and many other websites."
       tooltips:
         login: "You need a username to login. People will be able to find you by username. Must be all lowercase, no spaces. You can use undescores."
         first_name: Up to 20 characters.

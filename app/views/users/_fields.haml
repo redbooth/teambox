@@ -69,6 +69,12 @@
   = list_card_fields(f,%w(phone_numbers email_addresses websites addresses ims social_networks))
 
 - if @sub_action == 'picture'
+  %p= t('.avatar.we_have_this_avatar')
+  %p
+    = image_tag current_user.avatar_or_gravatar_url(:profile)
+    = image_tag current_user.avatar_or_gravatar_url(:thumb)
+    = image_tag current_user.avatar_or_gravatar_url(:micro)
+  %p= t('.avatar.upload_here_or_at_gravatar')
   = f.label :avatar, t('.avatar.field')
   = f.file_field :avatar
   - unless current_user.avatar.errors.empty?

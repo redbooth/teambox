@@ -1,2 +1,2 @@
-.micro_avatar{ :style => "background: url(#{user.avatar.url(:micro)}) no-repeat;" }
+.micro_avatar{ :style => "background: url(#{user.avatar_or_gravatar_url(:micro)}) no-repeat;" }
   %a{ :href => "#{user_path(user)}" }

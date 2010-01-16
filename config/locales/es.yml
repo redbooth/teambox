@@ -110,6 +110,8 @@ es:
         field: Tu icono
         presence: No puedes subir un fichero vacío
         max_size: "El archivo no puede ser mayor de {{mb}}"
+        we_have_this_avatar: "Esta es la imagen que tenemos de ti:"
+        upload_here_or_at_gravatar: "Puedes subir un nuevo avatar en Teambox, o crear un <a href='http://gravatar.com'>Gravatar</a> que puedes usar en Teambox y otra webs."
       tooltips:
         login: "Puedes usar un nombre de usuario corto para entrar. Debe ser en minúsculas y sin espacios. Puedes usar _."
         first_name: Hasta 20 caracteres.
