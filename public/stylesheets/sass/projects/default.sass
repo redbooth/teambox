@@ -3,18 +3,14 @@
     .person, .invite_people
       :font-size 12px
       :margin-left 10px
-      :padding-left 15px
+      :height 30px
+    .invite_people
+      :margin-top 10px
     .person
-      :background transparent url(/images/grey_dot.png) no-repeat scroll 0 4px
       .status
         :display inline
       .last_login
         :display none
-    .person:hover
-      .status
-        :display none
-      .last_login
-        :display inline
     a
       :color rgb(80,80,80)
       :text-decoration none
@@ -23,10 +19,6 @@
     .status, .last_login
       :float right
       :color #777
-    .online
-      :background transparent url(/images/green_dot.png) no-repeat scroll 0 4px
-      .status
-        :display none
   
   .project_list
     :margin-top 15px

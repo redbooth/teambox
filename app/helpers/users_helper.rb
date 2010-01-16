@@ -36,10 +36,6 @@ module UsersHelper
         :user => user }
   end
 
-  def user_status(user)
-    t('.online') if user.updated_at > 5.minutes.ago
-  end
-
   def user_link(user)
     if user.name.blank?
       link_to h(user.login), user_path(user)

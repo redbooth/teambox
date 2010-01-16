@@ -21,7 +21,7 @@
     %h2= t '.people_in_project'
     = list_users_statuses(@current_project.users)
     .invite_people
-      = link_to t('.invite_people'), project_people_path(@current_project)
+      = link_to "+ #{t('.invite_people')}", project_people_path(@current_project)
   - if @current_project.users.size > 1
     .tip
       = t('.tip')

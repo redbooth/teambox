@@ -1,4 +1,5 @@
-.person{:id => "person_#{user.id}", :class => user_status(user) }
+.person{:id => "person_#{user.id}"}
+  = micro_avatar(user)
   = user_link(user)
   .status
     = "@#{user.login}"

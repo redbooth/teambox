@@ -2,7 +2,7 @@
   = user_page_name(@user)
 
 - content_for :column do
-  = image_tag @user.avatar.url(:profile), :class => 'avatar'
+  = image_tag @user.avatar_or_gravatar_url(:profile), :class => 'avatar'
   - if current_user.observable?(@user)
     %p.biography= @user.biography
     = render_card(@card)
