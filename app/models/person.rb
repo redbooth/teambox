@@ -51,8 +51,7 @@ class Person < ActiveRecord::Base
   
   def after_destroy
     project.log_activity(self, 'delete')
-    user.recent_projects.delete(project.id)
-    user.save!
+    user.remove_recent_project(project)
   end
   
   def user
