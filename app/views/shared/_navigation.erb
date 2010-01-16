@@ -30,7 +30,7 @@ if logged_in?
       t.tab_index = 102
     end
   
-    unless current_user.get_recent_projects.empty?
+    if current_user.get_recent_projects.any?
       tab_index = 103
       for project in current_user.get_recent_projects
         add_tab do |t|
