@@ -19,7 +19,7 @@ Teambox: Project Management and Collaboration software
 - GitHub: <http://github.com/michokest/Teambox-2>
 - Lighthouse tickets: <http://teambox.lighthouseapp.com>
 - Original developer: Pablo Villalba (pablo@teambox.com, michokest@gmail.com)
-- Copyright: (cc) 2009 Teambox Desarrollos S.L.
+- Copyright: (cc) 2010 Teambox Desarrollos S.L.
 
 
 GET ROLLING!
