@@ -197,10 +197,11 @@ describe User do
 
   describe "signup and activation" do
     it "should not accept duplicate logins or tildes" do
-      Factory.build(:user, :login => '.j0a-quIN_').save.should be_true
-      Factory.build(:user, :login => '.j0a-QUin_').save.should be_false
-      Factory.build(:user, :login => '.j0a-quín_').save.should be_false
-      Factory.build(:user, :login => '.j0a-quin+').save.should be_false
+      Factory.build(:user, :login => '_j0aquIN').save.should be_true
+      Factory.build(:user, :login => '_j0aQUin').save.should be_false
+      Factory.build(:user, :login => '_j0a-QUin').save.should be_false
+      Factory.build(:user, :login => '_j0aquín').save.should be_false
+      Factory.build(:user, :login => '_j0aquin+').save.should be_false
     end
 
     it "should send an activation email when signing up without an invitation" do

@@ -122,7 +122,7 @@ class UsersController < ApplicationController
   
   private
     def find_user
-      unless @user = User.find_by_id(params[:id])
+      unless @user = User.find_by_login(params[:id])
         flash[:error] = "User does not exist"
         redirect_to '/'
       end

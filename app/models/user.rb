@@ -92,7 +92,11 @@ class User < ActiveRecord::Base
   end
   
   def to_s
-    self.name
+    name
+  end
+  
+  def to_param
+    login
   end
           
   def projects_shared_with(user)
