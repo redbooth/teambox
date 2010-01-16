@@ -922,3 +922,9 @@ es:
         email: Email
       upload:
         description: Descripción
+    errors:
+      models:
+        user:
+          attributes:
+            avatar:
+              attachment_content_type_invalid: Sube una imagen JPEG o PNG.

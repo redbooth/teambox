@@ -922,3 +922,9 @@ fr:
         email: Email
       upload:
         description: Description
+    errors:
+      models:
+        user:
+          attributes:
+            avatar:
+              attachment_content_type_invalid: Seules les images JPEG ou PNG son acceptés.
