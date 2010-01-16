@@ -64,7 +64,7 @@ fr:
       invalid: "Le lien que vous avez suivi pour réinitialiser votre mot de passe n'est pas valide ou a expiré. Essayez à nouveau depuis la page d'accueil.<br/>Si cela ne fonctionne pas, n'hésitez pas à nous contacter: {{support}}"
       password_updated: "Vous avez changé votre mot de passe. Vous pouvez à présent utiliser Teambox."
     sent:
-      title: Réinitialiser mot de passe
+      title: Réinitialisation du mot de passe
       login_link_sent: "Nous vous avons envoyé un mail à {{email}} pour que vous puissiez changer votre mot de passe."
       follow_the_link: "Suivez le lien qui se trouve dans le mail pour entrer dans Teambox! Si vous ne trouvez pas le mail dans votre boîte de réception, vérifiez qu'il ne se trouve pas dans le courrier indésirable. "
       not_found: "L'adresse mail <b>{{email}}</b> n'appartient à aucun utilisateur de Teambox. Peut-être l'avez-vous mal écrite."
@@ -572,7 +572,7 @@ fr:
       conversations: Conversations
       task_lists: Tâches
       all_task_lists: Mes listes de tâches
-      project_settings: Mon compte
+      project_settings: Paramètre du projet
       all_pages: Mes pages
       people: Personnes
       pages: Pages
@@ -867,7 +867,7 @@ fr:
       card:
         street: Rue
         city: Ville
-        state: Département/Province/Etat
+        state: Département/Province/État
         zip: Code Postal
         country: Pays
       email_address:
