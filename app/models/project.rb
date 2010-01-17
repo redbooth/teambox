@@ -3,32 +3,17 @@
 
 class Project < ActiveRecord::Base
 
-  include GrabName
-
   acts_as_paranoid
 
   concerned_with :validation,
                  :initializers,
                  :roles,
                  :associations,
-                 :callbacks
-                 #:logo
+                 :callbacks,
+                 :archival,
+                 :permalink
 
-
-  has_permalink :name
-
-  attr_accessible :name, :permalink, :archived
-
-  named_scope :archived, :conditions => {:archived => true}
-  named_scope :unarchived, :conditions => {:archived => false}
-
-  after_save :remove_from_recent_projects
-
-  def self.grab_name_by_permalink(permalink)
-    p = self.find_by_permalink(permalink,:select => 'name')
-    p.try(:name) || ''
-  end
-
+  attr_accessible :name
 
   def log_activity(target, action, creator_id=nil)
     creator_id ||= target.user_id
@@ -50,10 +35,6 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def to_param
-    permalink
-  end
-
   def task_lists_assigned_to(user)
     task_lists.unarchived.inject([]) do |t, task_list|
       person = people.find_by_user_id(user.id)
@@ -63,7 +44,7 @@ class Project < ActiveRecord::Base
   end
 
   def notify_new_comment(comment)
-    self.users.each do |user|
+    users.each do |user|
       if user != comment.user and user.notify_mentions and " #{comment.body} ".match(/\s@#{user.login}\W/i)
         Emailer.deliver_notify_comment(user, self, comment)
       end
@@ -97,6 +78,10 @@ class Project < ActiveRecord::Base
   def to_s
     name
   end
+  
+  def to_param
+    permalink
+  end
 
   def to_xml(options = {})
     options[:indent] ||= 2
@@ -117,14 +102,4 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def archive!
-    update_attribute(:archived, true)
-  end
-
-  private
-  def remove_from_recent_projects
-    if archived?
-      self.user.remove_recent_project(self)
-    end
-  end
 end
