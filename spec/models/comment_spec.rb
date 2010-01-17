@@ -113,12 +113,21 @@ describe Comment do
   end
 
   describe "comments mentioning @user" do
-    it "should link to users page when mentioning @existing_username" do
+    it "should link to users page when mentioning @existing_username if they are in the project" do
       user = Factory(:user, :login => 'existing_username')
       User.find_by_login('existing_username').should_not be_nil
+      @project.add_user(user)
       body = "@existing_username, hey, @existing_username"
       comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>@<a href=\"/users/#{user.id}\">existing_username</a>, hey, @<a href=\"/users/#{user.id}\">existing_username</a></p>"
+      comment.body_html.should == "<p>@<a href=\"/users/#{user.login}\">existing_username</a>, hey, @<a href=\"/users/#{user.login}\">existing_username</a></p>"
+    end
+
+    it "should not link to users page when mentioning @existing_username if they are not in the project" do
+      user = Factory(:user, :login => 'existing_username')
+      User.find_by_login('existing_username').should_not be_nil
+      body = "@existing_username is a cool guy, but he is not in this project"
+      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+      comment.body_html.should == "<p>@existing_username is a cool guy, but he is not in this project</p>"
     end
     
     it "should not link to users page when typing @unexisting_username" do

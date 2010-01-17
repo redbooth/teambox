@@ -18,12 +18,17 @@ module HtmlFormatting
   # Get @username, like in Twitter, and link it to user path
   def format_usernames(text)
     text.gsub(/([\s>])@([a-z0-9\.\-_]+)([\W])/i) do |match|
-      if user = User.find_by_login(match[2..-2])
-        match[0,2] + link_to(user.login, "/users/#{user.id}") + match[-1,1]
+      user = User.find_by_login(match[2..-2])
+      if user && is_in_project?(user)
+        match[0,2] + link_to(user.login, "/users/#{user.login}") + match[-1,1]
       else
         match
       end
     end
+  end
+  
+  def is_in_project?(user)
+     Person.exists?(:user_id => user.id, :project_id => project.id)
   end
   
   def format_textile(text)
@@ -36,4 +41,5 @@ module HtmlFormatting
     linked = auto_link(text) { |text| truncate(text, :length => 40) }
     linked.gsub(/href=\"www/i) { |s| "href=\"http://www" }
   end
+  
 end

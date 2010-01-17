@@ -43,7 +43,7 @@ class Person < ActiveRecord::Base
   end
   
   def after_create
-    project.log_activity(self, 'create', source_user.try(:id) || self)
+    project.log_activity(self, 'create', source_user.try(:id) || self.user_id)
     if project.user == user
       update_attribute :role, ROLES[:admin]
     end

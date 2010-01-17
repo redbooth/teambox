@@ -20,7 +20,7 @@ describe Project do
   it { should validate_length_of      :name, :minimum => 3 }
   it { should validate_length_of      :permalink, :minimum => 5 }
 
-  describe "creating" do 
+  describe "creating a project" do 
     before do
       @owner = Factory.create(:user)
       @project = Factory.create(:project, :user_id => @owner.id)
@@ -34,38 +34,74 @@ describe Project do
       @owner.reload
       @owner.projects.should include(@project)
     end
+  end
     
-    it "should add users to the project, only once" do
-      user = Factory.create(:user)
-      person = @project.add_user(user)
-      person.user.should == user
+  describe "inviting users" do 
+    before do
+      @owner = Factory.create(:user)
+      @project = Factory.create(:project, :user_id => @owner.id)
+      @user = Factory.create(:user)
+    end
+
+    it "should add users only once" do
+      person = @project.add_user(@user)
+      person.user.should == @user
       person.project.should == @project
       @project.should have(2).users
-      lambda { @project.add_user(user) }.should_not change(@project, :users)
+      lambda { @project.add_user(@user) }.should_not change(@project, :users)
+    end
+    
+    it "should log when a user is added without being invited" do
+      person = @project.add_user(@user)
       Activity.last.project.should == @project
       Activity.last.comment_type.should == nil
       Activity.last.target.should == person
       Activity.last.action.should == 'create'
-      Activity.last.user.should == user
+      Activity.last.user.should == @user
+      person.reload.source_user.should be_nil
     end
     
-    it "should log when a user is added to a project" do
-      user = Factory.create(:user)
+    it "should log when a user is added being invited" do
+      person = @project.add_user(@user,@owner)
+      Activity.last.project.should == @project
+      Activity.last.comment_type.should == nil
+      Activity.last.target.should == person
+      Activity.last.action.should == 'create'
+      Activity.last.user.should == @owner
+      person.reload.source_user.should == @owner      
     end
-    
+  end
+
+  describe "removing users" do 
+    before do
+      @owner = Factory.create(:user)
+      @project = Factory.create(:project, :user_id => @owner.id)
+      @user = Factory.create(:user)
+      @person = @project.add_user(@user)
+    end
+  
     it "should remove users" do
-      user = Factory.create(:user)
-      person = @project.add_user(user)
       @project.should have(2).users
-      @project.reload.remove_user(user)
+      @project.reload.remove_user(@user)
       @project.should have(1).users
-      @project.users.should_not include(user)
-      user.reload.projects.should_not include(@project)
-#      Activity.last.project.should == @project
-#      Activity.last.comment_type.should == nil
-#      Activity.last.target.should == person
-#      Activity.last.action.should == 'delete'
-#      Activity.last.user.should == user
+      @project.users.should_not include(@user)
+      @user.reload.projects.should_not include(@project)
+    end
+    
+    it "should log he's leaving the project" do
+      @project.reload.remove_user(@user)
+      Activity.last.project.should == @project
+      Activity.last.comment_type.should == nil
+      Activity.last.target.should == @person
+      Activity.last.action.should == 'delete'
+      Activity.last.user.should == @user      
+    end
+    
+    it "should remove the project from their recent projects" do
+      @user.add_recent_project(@project)
+      @user.reload.recent_projects.should include(@project.id)
+      @project.reload.remove_user(@user)
+      @user.reload.recent_projects.should_not include(@project.id)
     end
     
     it "make sure activities still work when the object is deleted"
