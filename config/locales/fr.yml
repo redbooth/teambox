@@ -16,10 +16,10 @@ fr:
       one: "{{count}} commentaire"
       other: "{{count}} commentaires"
   confirm:
-    delete_task_list: Etes-vous sûr de vouloir supprimer cette liste de tâches?
-    delete_task: Etes-vous sûr de vouloir supprimer cette tâche?
-    delete_page: Etes-vous sûr de vouloir supprimer cette page?
-    delete_upload: Etes-vous sûr de vouloir supprimer ce fichier?
+    delete_task_list: Êtes-vous sûr de vouloir supprimer cette liste de tâches?
+    delete_task: Êtes-vous sûr de vouloir supprimer cette tâche?
+    delete_page: Êtes-vous sûr de vouloir supprimer cette page?
+    delete_upload: Êtes-vous sûr de vouloir supprimer ce fichier?
   deleted:
     conversation: "La conversation <b>{{name}}</b> a été effacée"
     task: "La tâche <b>{{name}}</b> a été effacée"
@@ -148,7 +148,7 @@ fr:
       recent_activity_for: "Activité récente de {{user_name}}"
     user:
       formatted_address: "{{street}}, {{city}} ({{country}})"
-      remove_from_project: Eliminer du projet
+      remove_from_project: Éliminer du projet
     welcome:
       get_started: Vous êtes à présent dans Teambox!
       intro1: "Vous êtes le dernier membre enregistré sur Teambox! Découvrez comment Teambox peut devenir le point de commencement de votre journée."
@@ -572,7 +572,7 @@ fr:
       conversations: Conversations
       task_lists: Tâches
       all_task_lists: Mes listes de tâches
-      project_settings: Paramètre du projet
+      project_settings: Paramètres du projet
       all_pages: Mes pages
       people: Personnes
       pages: Pages
