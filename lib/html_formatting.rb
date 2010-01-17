@@ -20,6 +20,10 @@ module HtmlFormatting
     text.gsub(/([\s>])@([a-z0-9\.\-_]+)([\W])/i) do |match|
       user = User.find_by_login(match[2..-2])
       if user && is_in_project?(user)
+        if is_a? Comment
+          @mentioned ||= []
+          @mentioned |= [user]
+        end
         match[0,2] + link_to(user.login, "/users/#{user.login}") + match[-1,1]
       else
         match

@@ -18,9 +18,12 @@ class Comment < ActiveRecord::Base
   named_scope :with_uploads, :conditions => 'hours > 0'
   named_scope :with_hours, :conditions => 'hours > 0'
 
+  attr_accessor :mentioned # used by format_usernames to set who's being mentioned
   attr_accessor :activity
 
   def before_create
+    self.target ||= project
+
     if self.target.is_a?(Task)
       self.previous_status = target.previous_status
       self.assigned = target.assigned
@@ -44,6 +47,8 @@ class Comment < ActiveRecord::Base
     end
 
     target.after_comment(self) if target.respond_to?(:after_comment)
+    target.notify_new_comment(self) if target.respond_to?(:notify_new_comment)
+    target.add_watchers(@mentioned) if target.respond_to?(:add_watchers)
   end
   
   def after_destroy

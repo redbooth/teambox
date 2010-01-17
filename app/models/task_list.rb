@@ -10,10 +10,6 @@ class TaskList < RoleRecord
                  :associations,
                  :callbacks
 
-  def after_comment(comment)
-    notify_new_comment(comment)
-  end
-  
   def notify_new_comment(comment)
     self.watchers.each do |user|
       if user != comment.user and user.notify_task_lists

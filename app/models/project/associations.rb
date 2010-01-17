@@ -9,7 +9,7 @@ class Project
     project.has_many :invitations
   end
   
-  with_options :dependent => :destroy, :order => 'created_at DESC' do |project|
+  with_options :dependent => :destroy, :order => 'id DESC' do |project|
     project.has_many :conversations
     project.has_many :pages
     project.has_many :comments

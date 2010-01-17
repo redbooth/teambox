@@ -23,8 +23,8 @@ fr:
   deleted:
     conversation: "La conversation <b>{{name}}</b> a été effacée"
     task: "La tâche <b>{{name}}</b> a été effacée"
-    page: "Pa page <b>{{name}}</b>"
-    upload: "Le fichier <b>{{name}}</b>"
+    page: "La page <b>{{name}}</b> a été effacée"
+    upload: "Le fichier <b>{{name}}</b> a été effacé"
     person: "{{name}} n'appartient plus au projet"
     left_project: "Vous avez quitté le project"
   activities:

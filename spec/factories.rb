@@ -29,6 +29,12 @@ Factory.define :project do |project|
   project.association(:user)
 end
 
+Factory.define :conversation do |conversation|
+  conversation.name 'The Master Plan'
+  conversation.association(:user)
+  conversation.association(:project)
+end
+
 Factory.define :task_list do |task_list|
   task_list.name 'Buy Groceries'
   task_list.association(:user)

@@ -2,25 +2,29 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Comment do
 
-  before do
-    @project = Factory(:project)
-    @user = @project.user
-  end
-
-  it "should generate a valid comment" do
-    comment = Factory.build(:comment, :project => @project, :user => @user, :target => @project)
-    comment.save.should be_true
-    comment.user.should == @user
-    comment.target.should == @project    
-    @project.comments.last.should == comment
-    @user.comments.last.should == comment
+  describe "factories" do
+    it "should generate a valid comment" do
+      @project = Factory(:project)
+      @user = @project.user
+      comment = Factory.build(:comment, :project => @project, :user => @user, :target => @project)
+      comment.save.should be_true
+      comment.user.should == @user
+      comment.target.should == @project    
+      @project.comments.last.should == comment
+      @user.comments.last.should == comment
+    end
   end
 
   describe "posting to a project" do
-    it "should add it as an activity" #do
-    #  comment = Factory(:comment, :project => @project, :user => @user, :target => @project)
-    #  @project.activities.last.comment.should == comment
-    #end
+    before do
+      @project = Factory(:project)
+      @user = @project.user
+    end
+    
+    it "should add it as an activity" do
+      comment = Factory(:comment, :project => @project, :user => @user, :target => @project)
+      @project.reload.activities.first.target.should == comment
+    end
     
     it "should notify mentioned @user in the project" do
       @mentioned = Factory(:user)
@@ -63,7 +67,6 @@ describe Comment do
       Emailer.should_not_receive(:deliver_notify_comment)
       comment.save!
     end
-    
   end
 
   #describe "posting to a conversation"
@@ -73,6 +76,11 @@ describe Comment do
   #describe "marking as read"
 
   describe "formatting" do
+    before do
+      @project = Factory(:project)
+      @user = @project.user
+    end
+    
     it "should format text" do
       body = "She *used* to _mean_ so much to ME!"
       comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
@@ -113,28 +121,46 @@ describe Comment do
   end
 
   describe "comments mentioning @user" do
-    it "should link to users page when mentioning @existing_username if they are in the project" do
-      user = Factory(:user, :login => 'existing_username')
-      User.find_by_login('existing_username').should_not be_nil
-      @project.add_user(user)
-      body = "@existing_username, hey, @existing_username"
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>@<a href=\"/users/#{user.login}\">existing_username</a>, hey, @<a href=\"/users/#{user.login}\">existing_username</a></p>"
-    end
-
-    it "should not link to users page when mentioning @existing_username if they are not in the project" do
-      user = Factory(:user, :login => 'existing_username')
-      User.find_by_login('existing_username').should_not be_nil
-      body = "@existing_username is a cool guy, but he is not in this project"
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>@existing_username is a cool guy, but he is not in this project</p>"
+    before do
+      @project = Factory(:project)
+      @user = Factory(:user, :login => 'existing')
     end
     
-    it "should not link to users page when typing @unexisting_username" do
-      body = "Hey, @unexisting_username, take a look at this!"
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>Hey, @unexisting_username, take a look at this!</p>"
+    it "should link to users page when mentioning @existing if they are in the project" do
+      @project.add_user(@user)
+      body = "@existing, hey, @existing"
+      comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
+      comment.body_html.should == "<p>@<a href=\"/users/existing\">existing</a>, hey, @<a href=\"/users/existing\">existing</a></p>"
+      comment.mentioned.should == [@user]
+    end
+    
+    it "should add the mentioned @user to watchers of a Conversation, Task List or Task" do
+      @project.add_user(@user)
+
+      %w(conversation task_list task).each do |model|
+        element = Factory(model, :project => @project, :user => @project.user)
+        element.watchers.should_not include(@user)
+
+        body = "I would like to add @existing to this thread, but not @unexisting."
+        comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => element)
+        comment.mentioned.should == [@user]
+      
+        element.reload.watchers.collect(&:id).should == [@project.user, @user].collect(&:id)
+      end
+    end
+
+    it "should not link to users page when mentioning @existing if they are not in the project" do
+      body = "@existing is a cool guy, but he is not in this project"
+      comment = Factory.create(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
+      comment.body_html.should == "<p>@existing is a cool guy, but he is not in this project</p>"
+      comment.mentioned.should == nil
+    end
+    
+    it "should not link to users page when typing @unexisting" do
+      body = "Hey, @unexisting, take a look at this!"
+      comment = Factory.create(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
+      comment.body_html.should == "<p>Hey, @unexisting, take a look at this!</p>"
+      comment.mentioned.should == nil
     end
   end
-
 end

@@ -126,18 +126,15 @@ describe Project do
   describe "deleting projects" do
     before do
       @project = Factory(:project)
-      @project.new_comment(@project.user, @project, :body => 'wall comment').save!
-      @project.new_conversation(@project.user, :name => 'conversation', :body => 'body').save!
-      @project.new_task_list(@project.user, :name => 'task list').save!
-      @project.new_page(@project.user, :name => 'project page').save!
-      #@project.new_upload(@project.user).save!
-      @project.reload
-      @project.comments.reload
+      %w(comment conversation task_list page).each do |model|
+        Factory(model, :project => @project, :user => @project.user)
+      end
+      @project.reload.comments.reload
     end
     
     it "should have some elements" do
       Project.count.should == 1
-      Comment.count.should == 2
+      Comment.count.should == 1
       Conversation.count.should == 1
       TaskList.count.should == 1
       Page.count.should == 1

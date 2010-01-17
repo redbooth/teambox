@@ -62,10 +62,6 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def after_comment(comment)
-    notify_new_comment(comment)
-  end
-
   def notify_new_comment(comment)
     self.users.each do |user|
       if user != comment.user and user.notify_mentions and " #{comment.body} ".match(/\s@#{user.login}\W/i)
