@@ -1,9 +1,11 @@
 Given /^I have a task list called "([^\"]*)"$/ do |name|
-  @task_list = @current_project.create_task_list(@current_user,{:name => name})
+  @task_list = (@current_project || Factory(:project)).create_task_list(@current_user,{:name => name})
 end
 
 Given /^I have a task called "([^\"]*)"$/ do |name|
-  @task = @current_project.create_task(@current_user,@task_list,{:name => name})
+  task_list = @task_list || Factory(:task_list)
+  project = @current_project || Factory(:project)
+  @task = project.create_task(@current_user, task_list, {:name => name})
 end
 
 Given /^I have a task on open$/ do
@@ -110,4 +112,8 @@ Then /^I should not see missing avatar image within "([^\"]*)"$/ do |selector|
   within(:css,selector) do
     page.should_not have_content("missing.jpg")
   end
+end
+
+Given /^I have the daily task reminders turned on$/ do
+  @current_user.update_attribute(:wants_task_reminder, true)
 end

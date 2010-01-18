@@ -8,24 +8,24 @@ class User < ActiveRecord::Base
   include ActionController::UrlWriter
 
   acts_as_paranoid
-  concerned_with  :activation, 
-                  :avatar, 
-                  :authentication, 
-                  :completeness, 
-                  :example_project, 
-                  :recent_projects, 
-                  :roles, 
-                  :rss, 
+  concerned_with  :activation,
+                  :avatar,
+                  :authentication,
+                  :completeness,
+                  :example_project,
+                  :recent_projects,
+                  :roles,
+                  :rss,
                   :validation
-  
+
   LANGUAGES = [['English', 'en'], ['Español', 'es'], ['Français', 'fr']]
-    
+
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
   has_many :people
   has_many :projects, :through => :people, :order => 'name ASC'
   has_many :invitations, :foreign_key => 'invited_user_id'
-  has_many :activities      
+  has_many :activities
   has_many :uploads
 
   belongs_to :invited_by, :class_name => 'User'
@@ -33,16 +33,16 @@ class User < ActiveRecord::Base
   has_one :card
   accepts_nested_attributes_for :card
 
-  attr_accessible :login, 
-                  :email, 
-                  :first_name, 
+  attr_accessible :login,
+                  :email,
+                  :first_name,
                   :last_name,
-                  :biography, 
-                  :password, 
-                  :password_confirmation, 
-                  :time_zone, 
-                  :language, 
-                  :conversations_first_comment, 
+                  :biography,
+                  :password,
+                  :password_confirmation,
+                  :time_zone,
+                  :language,
+                  :conversations_first_comment,
                   :first_day_of_week,
                   :card_attributes,
                   :avatar,
@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
                   :notify_conversations,
                   :notify_task_lists,
                   :notify_tasks
-                    
+
   attr_accessor   :activate
 
   def before_save
@@ -58,12 +58,12 @@ class User < ActiveRecord::Base
     self.recent_projects_ids ||= []
     self.rss_token ||= generate_rss_token
   end
-  
+
   def before_create
     self.build_card
     self.first_name = self.first_name.split(" ").collect(&:capitalize).join(" ")
     self.last_name  = self.last_name.split(" ").collect(&:capitalize).join(" ")
-    
+
     if invitation = Invitation.find_by_email(email)
       self.invited_by = invitation.user
       invitation.user.update_attribute :invited_count, (invitation.user.invited_count + 1)
@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
+
   def self.find_by_username_or_email(login)
     return unless login
     if login.include? '@' # usernames are not allowed to contain '@'
@@ -90,27 +90,27 @@ class User < ActiveRecord::Base
       find_by_login(login.downcase)
     end
   end
-  
+
   def to_s
     name
   end
-  
+
   def to_param
     login
   end
-          
+
   def projects_shared_with(user)
     self.projects & user.projects
   end
 
   def activities_visible_to_user(user)
     ids = projects_shared_with(user).collect { |project| project.id }
-    
+
     self.activities.all(:limit => 40, :order => 'created_at DESC').select do |activity|
       ids.include?(activity.project_id) || activity.comment_type == 'User'
     end
   end
-    
+
   def new_comment(user,target,comment)
     self.comments.new(comment) do |comment|
       comment.user_id = user.id
@@ -142,9 +142,9 @@ class User < ActiveRecord::Base
     user_ids = people.reject! do |p|
       user_ids_in_project.include?(p.user_id)
     end.collect { |p| p.user_id }.uniq
-    
+
     conditions = ["id IN (?) AND deleted_at IS NULL", user_ids]
-    
+
     User.find(:all,
       :conditions => conditions,
       :order => 'updated_at ASC',
@@ -167,5 +167,16 @@ class User < ActiveRecord::Base
       xml.tag! 'updated-at', updated_at.to_s(:db)
       xml.tag! 'avatar-url', "http://#{APP_CONFIG['app_domain']}#{avatar.url(:thumb)}"
     end
+  end
+
+  # def self.send_daily_task_reminders
+  #   all(:conditions => { :wants_task_reminder => true }).each do |user|
+  #     all(:conditions => { :status => [STATUSES[:new], STATUSES[:open]] }).each do |task|
+  #       Emailer.deliver_daily_task_reminder
+  #     end
+  # end
+
+  def assigned_tasks(project)
+    people.map { |person| person.project.tasks }.flatten.select { |task| task.active? }
   end
 end

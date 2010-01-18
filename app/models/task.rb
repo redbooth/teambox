@@ -20,6 +20,9 @@ class Task < RoleRecord
 
   STATUSES = {:new => 0, :open => 1, :hold => 2, :resolved => 3, :rejected => 4}
   
+  ACTIVE_STATUS_NAMES = [ :new, :open ]
+  ACTIVE_STATUS_CODES = ACTIVE_STATUS_NAMES.map { |status_name| STATUSES[status_name] }
+  
   def status_new?
     STATUSES[:new] == status
   end
@@ -59,6 +62,10 @@ class Task < RoleRecord
     status == 1
   end
   
+  def active?
+    ACTIVE_STATUS_CODES.include?(status)
+  end
+
   def closed?
     [STATUSES[:rejected],STATUSES[:resolved]].include?(status)
   end
@@ -89,4 +96,5 @@ class Task < RoleRecord
   def user
     User.find_with_deleted(user_id)
   end
+  
 end

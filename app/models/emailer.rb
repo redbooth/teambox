@@ -84,6 +84,15 @@ class Emailer < ActionMailer::Base
     body          :project => project, :task_list => task_list
   end
 
+  def daily_task_reminder(project, tasks)
+    defaults
+    recipients    user.email
+    recipients    user.email
+    from          from_address(project.permalink)
+    subject       "Your tasks for today"
+    body          :project => project, :tasks_for_today => tasks
+  end
+
   private
   
     def from_address(recipient = "no-reply", name = "Teambox")

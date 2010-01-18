@@ -246,4 +246,34 @@ describe User do
     end
   end
 
+  describe "when fetching tasks" do
+    before do
+      @user = Factory(:user)
+      @interesting_project = Factory(:project, :user => @user, :name => "DataMapper")
+      @boring_project = Factory(:project, :user => @user, :name => "Collecting stamps")
+    end
+
+    it "should return all the tasks assigned to a user when called with :all" do
+      interesting_task = Factory(:task, :project => @interesting_project)
+      boring_task = Factory(:task, :project => @boring_project)
+      user_tasks = @user.assigned_tasks(:all)
+      user_tasks.should include(interesting_task, boring_task)
+    end
+
+    it "should not return a held task" do
+      held_task = Factory(:held_task, :project => @interesting_project)
+      @user.assigned_tasks(:all).should_not include(held_task)
+    end
+
+    it "should not return a resolved task" do
+      resolved_task = Factory(:resolved_task, :project => @interesting_project)
+      @user.assigned_tasks(:all).should_not include(resolved_task)
+    end
+
+    it "should not return a rejected task" do
+      rejected_task = Factory(:rejected_task, :project => @interesting_project)
+      @user.assigned_tasks(:all).should_not include(rejected_task)
+    end
+
+  end
 end
