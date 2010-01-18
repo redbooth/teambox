@@ -246,8 +246,8 @@ module TaskListsHelper
       e.removeClassName('active_resolved')
       e.removeClassName('active_rejected')
     end  
-    page.select('.task_list').invoke('removeClassName','active')
-    page[item_list_id].addClassName('active')
+    page.select('.task_list').invoke('removeClassName','active_list')
+    page[item_list_id].addClassName('active_list')
   end
 
   def list_sortable_task_lists(project,task_lists)
