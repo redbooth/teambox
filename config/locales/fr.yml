@@ -111,7 +111,7 @@ fr:
         presence: "Il n'est pas possible de télécharger un fichier vide"
         max_size: "La taille du fichier ne peut pas excéder {{mb}} Mb"
         we_have_this_avatar: "Voici votre image d'utilisateur:"
-        upload_here_or_at_gravatar: "Ajoutez une nouvelle image ici ou créez un <a href='http://gravatar.com'>Gravatar</a> pour partager votre image avec des autres webs."
+        upload_here_or_at_gravatar: "Ajoutez une nouvelle image ici ou créez un <a href='http://gravatar.com'>Gravatar</a> qui deviendra votre image de profil sur teambox."
       tooltips:
         login: "Vous pouvez utiliser un nom d'utilisateur court pour vous connecter. Il doit être en minuscules et sans espace. Vous pouvez utiliser _."
         first_name: Jusqu'à 20 caractères.
@@ -929,4 +929,4 @@ fr:
         user:
           attributes:
             avatar:
-              attachment_content_type_invalid: Seules les images JPEG ou PNG son acceptés.
+              attachment_content_type_invalid: Seules les images JPEG ou PNG son acceptées.
