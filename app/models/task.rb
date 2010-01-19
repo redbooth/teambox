@@ -45,7 +45,12 @@ class Task < RoleRecord
   def assigned_to?(u)
     assigned.user.id == u.id if assigned?
   end
-  
+
+  def assign_to(u)
+    self.assigned = u.in_project(self.project)
+    save(false)
+  end
+
   def overdue
     (Time.now.to_date - due_on).to_i
   end

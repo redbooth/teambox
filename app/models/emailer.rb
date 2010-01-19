@@ -84,13 +84,11 @@ class Emailer < ActionMailer::Base
     body          :project => project, :task_list => task_list
   end
 
-  def daily_task_reminder(project, tasks)
+  def daily_task_reminder(user, tasks)
     defaults
     recipients    user.email
-    recipients    user.email
-    from          from_address(project.permalink)
     subject       "Your tasks for today"
-    body          :project => project, :tasks_for_today => tasks
+    body          :user => user, :tasks_for_today => tasks
   end
 
   private

@@ -246,11 +246,11 @@ describe User do
     end
   end
 
-  describe "when fetching tasks" do
+  describe "when fetching assigned tasks" do
     before do
       @user = Factory(:user)
-      @interesting_project = Factory(:project, :user => @user, :name => "DataMapper")
-      @boring_project = Factory(:project, :user => @user, :name => "Collecting stamps")
+      @interesting_project = Factory(:project, :user => Factory(:user), :name => "DataMapper")
+      @boring_project = Factory(:project, :user => Factory(:user), :name => "Collecting stamps")
     end
 
     it "should return all the tasks assigned to a user when called with :all" do
@@ -274,6 +274,23 @@ describe User do
       rejected_task = Factory(:rejected_task, :project => @interesting_project)
       @user.assigned_tasks(:all).should_not include(rejected_task)
     end
+  end
+  
+  describe "when fetching the user in a project" do
+    before do
+      @user = Factory(:user)
+      @project = Factory(:project)
+      @person = Factory(:person, :project => @project, :user => @user)
+      @project.reload
+      @user.reload      
+    end
 
+    it "should return the person the user belongs to in the passed project" do
+      @user.in_project(@project).should == @person
+    end
+    
+    it "should return nil if the user is not part of the project" do
+      Factory(:user).in_project(@project).should be_nil
+    end
   end
 end

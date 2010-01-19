@@ -169,14 +169,19 @@ class User < ActiveRecord::Base
     end
   end
 
-  # def self.send_daily_task_reminders
-  #   all(:conditions => { :wants_task_reminder => true }).each do |user|
-  #     all(:conditions => { :status => [STATUSES[:new], STATUSES[:open]] }).each do |task|
-  #       Emailer.deliver_daily_task_reminder
-  #     end
-  # end
+  def self.send_daily_task_reminders
+    all(:conditions => { :wants_task_reminder => true }).each do |user|
+      tasks = user.assigned_tasks(:all)
+      Emailer.deliver_daily_task_reminder(user, tasks) unless tasks.empty?
+    end
+  end
 
   def assigned_tasks(project)
     people.map { |person| person.project.tasks }.flatten.select { |task| task.active? }
   end
+  
+  def in_project(project)
+    project.people.select { |person| person.user == self }.first
+  end
+
 end

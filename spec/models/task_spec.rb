@@ -8,7 +8,7 @@ describe Task do
   it { should belong_to(:assigned) }
   it { should have_many(:comments) }
 
-  it { should validate_length_of :name, :within => 1..255 }
+  it { should validate_length_of(:name, :within => 1..255) }
 
   describe "a new task" do
     before { @task = Factory(:task) }
@@ -52,6 +52,17 @@ describe Task do
     it "should send an email to the responsible"
   end
 
+  describe "when assigning a task to a user" do
+    it "the person belonging to the user should be assigned" do
+      user = Factory(:user)
+      project = Factory(:project)
+      task = Factory(:task, :project => project)
+      project.add_user(user)
+      task.assign_to(user)
+      task.should be_assigned_to(user)
+    end
+  end
+  
   describe "factories" do
     it "should generate a valid task" do
       task = Factory.create(:task)
