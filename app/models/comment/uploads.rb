@@ -9,12 +9,12 @@ class Comment
       end
     end
 
-    clean_deleted_uploads
+    clean_deleted_uploads(params)
   end
   
   protected
   
-    def clean_deleted_uploads
+    def clean_deleted_uploads(params)
       params[:uploads_deleted].if_defined.each do |upload_id|
         upload = Upload.find(upload_id)
         upload.destroy if upload
