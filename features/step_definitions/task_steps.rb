@@ -19,6 +19,14 @@ Given /^the task called "([^\"]*)" is assigned to me$/ do |name|
   task.assign_to(@user)
 end
 
+Given /^the task called "([^\"]*)" is assigned to "([^\"]*)"$/ do |task_name, login|
+  Given %(there is a task called "#{task_name}")
+  task = Task.find_by_name(task_name)
+  user = User.find_by_login(login)
+  task.project.add_user(user)
+  task.assign_to(user)
+end
+
 Given /^I have no tasks assigned to me$/ do
   @current_user.assigned_tasks(:all).each { |task| task.destroy }
 end

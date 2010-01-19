@@ -19,6 +19,16 @@ Factory.define :user do |user|
   user.password_confirmation 'dragons'
 end
 
+Factory.define :confirmed_user, :class => User do |user|
+  user.login { Factory.next(:login) }
+  user.email { Factory.next(:email) }
+  user.first_name 'Andrew'
+  user.last_name 'Wiggin'
+  user.password 'dragons'
+  user.password_confirmation 'dragons'
+  user.confirmed_user true
+end
+
 Factory.define :person do |person|
   person.association(:project)
   person.association(:user)

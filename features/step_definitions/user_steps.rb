@@ -104,8 +104,12 @@ Given /I am currently in the project (.*)$/ do |project_type|
   visit(projects_path(@current_project))
 end
 
-Given /I am the user (.*)$/ do |user_type|
-  @user ||= Factory(user_type.to_sym)
+Given /^there is a user called "([^\"]*)"$/ do |login|
+  Factory(:user, :login => login)
+end
+
+Given /I am the user (.*)$/ do |login|
+  @user ||= Factory(login.to_sym)
 end
 
 Then /^I should not see missing avatar image within "([^\"]*)"$/ do |selector|
