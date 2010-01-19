@@ -1,8 +1,10 @@
 .name.text_field
   = f.label :name, t('projects.fields.name')
+  = errors_for project, :name
   = f.text_field :name
 .permalink.text_field
   = f.label :permalink, t('projects.fields.permalink')
+  = errors_for project, :permalink
   = f.text_field :permalink
   = permalink_example(project.permalink)
   = watch_permalink_example

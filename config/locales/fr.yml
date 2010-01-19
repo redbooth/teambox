@@ -624,38 +624,7 @@ fr:
       chrome: "Chrome," 
       firefox: "Firefox" 
       safari: "Safari" 
- 
-  date:
-    yesterday: Hier
-    formats:
-      default: "%Y-%m-%d"
-      short: "%b %d"
-      long: "%B %d, %Y"
-    order: [ :day, :month, :year ]
- 
-    day_names: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
-    abbr_day_names: [Dim, Lun, Mar, Mer, Jeu, Ven, Sam]
- 
-    month_names: [~, Janvier, Février, Mars, Avril, Mai, Juin, Juillet, Août, Septembre, Octobre, Novembre, Décembre]
-    abbr_month_names: [~, Jan, Fév, Mar, Avr, Mai, Juin, Juil, Août, Sep, Oct, Nov, Dec]
-    order: [ :year, :month, :day ]
- 
-  time:
-    formats:
-      default: "%a, %d %b %Y %H:%M:%S %z"
-      short: "%d %b %H:%M"
-      long: "%B %d, %Y %H:%M"
-    am: "am"
-    pm: "pm"
- 
-  support:
-    select:
-      prompt: "Choisissez une option"
-    array:
-      words_connector: ", "
-      two_words_connector: " et "
-      last_word_connector: " et "
- 
+
   emailer:
     common:
       do_not_answer: "Ne pas répondre à ce mail."
@@ -724,6 +693,7 @@ fr:
           title: "Jusqu'à 30 mots"
   form:
     cancel: Annuler
+
   page_title:
     show_projects: Résumé
     index_task_lists: Mes tâches
@@ -794,12 +764,12 @@ fr:
         format: "%n %u"
         units:
           byte:
-            one: "byte"
-            other: "bytes"
-          kb: "KB"
-          mb: "MB"
-          gb: "GB"
-          tb: "TB"
+            one: "octet"
+            other: "octets"
+          kb: "ko"
+          mb: "Mo"
+          gb: "Go"
+          tb: "To"
  
   # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
   datetime:
@@ -852,7 +822,6 @@ fr:
       website: Site Internet
       im: Messagerie instantannée
       social_network: Réseau social
-      user: Utilisateur
       project: Projet
       task_list: Liste de tâches
       task: Tâche
@@ -863,6 +832,10 @@ fr:
       note: Note
       invitation: Invitation
       upload: Archive
+      user:
+        attributes:
+          avatar:
+            attachment_content_type_invalid: Seules les images JPEG ou PNG son acceptées.
     attributes:
       card:
         street: Rue
@@ -925,8 +898,55 @@ fr:
       upload:
         description: Description
     errors:
-      models:
-        user:
-          attributes:
-            avatar:
-              attachment_content_type_invalid: Seules les images JPEG ou PNG son acceptées.
+      messages:
+        inclusion: "n'est pas inclus(e) dans la liste"
+        exclusion: "n'est pas disponible"
+        invalid: "n'est pas valide"
+        confirmation: "ne concorde pas avec la confirmation"
+        accepted: "doit être accepté(e)"
+        empty: "doit être rempli(e)"
+        blank: "doit être rempli(e)"
+        too_long: "est trop long (pas plus de {{count}} caractères)"
+        too_short: "est trop court (au moins {{count}} caractères)"
+        wrong_length: "ne fait pas la bonne longueur (doit comporter {{count}} caractères)"
+        taken: "n'est pas disponible"
+        not_a_number: "n'est pas un nombre"
+        greater_than: "doit être supérieur à {{count}}"
+        greater_than_or_equal_to: "doit être supérieur ou égal à {{count}}"
+        equal_to: "doit être égal à {{count}}"
+        less_than: "doit être inférieur à {{count}}"
+        less_than_or_equal_to: "doit être inférieur ou égal à {{count}}"
+        odd: "doit être impair"
+        even: "doit être pair"
+        record_invalid: "La validation a échoué : {{errors}}"
+              
+  date:
+    yesterday: Hier
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+    order: [ :day, :month, :year ]
+
+    day_names: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
+    abbr_day_names: [Dim, Lun, Mar, Mer, Jeu, Ven, Sam]
+
+    month_names: [~, Janvier, Février, Mars, Avril, Mai, Juin, Juillet, Août, Septembre, Octobre, Novembre, Décembre]
+    abbr_month_names: [~, Jan, Fév, Mar, Avr, Mai, Juin, Juil, Août, Sep, Oct, Nov, Dec]
+    order: [ :year, :month, :day ]
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      short: "%d %b %H:%M"
+      long: "%B %d, %Y %H:%M"
+    am: "am"
+    pm: "pm"
+
+  support:
+    select:
+      prompt: "Choisissez une option"
+    array:
+      words_connector: ", "
+      two_words_connector: " et "
+      last_word_connector: " et "

@@ -59,7 +59,7 @@ class ProjectsController < ApplicationController
   end
   
   def edit
-    @sub_action = params.has_key?(:sub_action) ? params[:sub_action] : 'settings'
+    @sub_action = params[:sub_action] || 'settings'
   end
   
   def update
@@ -67,7 +67,10 @@ class ProjectsController < ApplicationController
       if @current_project.update_attributes(params[:project])
         f.html { redirect_to project_path(@current_project) }
       else
-        f.html { render :edit }
+        f.html {
+          @sub_action = params.has_key?(:sub_action) ? params[:sub_action] : 'settings'
+          render :edit
+        }
       end
     end
   end

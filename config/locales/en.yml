@@ -626,37 +626,6 @@ en:
       firefox: "Firefox"
       safari: "Safari"
 
-  date:
-    yesterday: Yesterday
-    formats: 
-      default: "%Y-%m-%d"
-      short: "%b %d"
-      long: "%B %d, %Y"
-    order: [ :day, :month, :year ]
-
-    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
-    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
-
-    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
-    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
-    order: [ :year, :month, :day ]
-
-  time:
-    formats:
-      default: "%a, %d %b %Y %H:%M:%S %z"
-      short: "%d %b %H:%M"
-      long: "%B %d, %Y %H:%M"
-    am: "am"
-    pm: "pm"
-
-  support:
-    select:
-      prompt: "Please select"
-    array:
-      words_connector: ", "
-      two_words_connector: " and "
-      last_word_connector: ", and "
-
   emailer:
     common: 
       do_not_answer: "Do not answer to this email."
@@ -725,6 +694,7 @@ en:
           title: 'Expand your profile to 30 words'
   form:
     cancel: Cancel
+
   page_title:
     show_projects: Overview
     index_task_lists: All Task Lists
@@ -853,7 +823,6 @@ en:
       website: Web
       im: IM
       social_network: Social network
-      user: User
       project: Project
       task_list: Task List
       task: Task
@@ -864,6 +833,10 @@ en:
       note: Note
       invitation: Invitation
       upload: Upload
+      user:
+        attributes:
+          avatar:
+            attachment_content_type_invalid: Upload only JPEG and PNG files.
     attributes:
       card:
         street: Street
@@ -926,8 +899,55 @@ en:
       upload:
         description: Description
     errors:
-      models:
-        user:
-          attributes:
-            avatar:
-              attachment_content_type_invalid: Upload only JPEG and PNG files.
+      messages:
+        inclusion: "is not included in the list"
+        exclusion: "is reserved"
+        invalid: "is invalid"
+        confirmation: "doesn't match confirmation"
+        accepted: "must be accepted"
+        empty: "can't be empty"
+        blank: "can't be blank"
+        too_long: "is too long (maximum is {{count}} characters)"
+        too_short: "is too short (minimum is {{count}} characters)"
+        wrong_length: "is the wrong length (should be {{count}} characters)"
+        taken: "has already been taken"
+        not_a_number: "is not a number"
+        greater_than: "must be greater than {{count}}"
+        greater_than_or_equal_to: "must be greater than or equal to {{count}}"
+        equal_to: "must be equal to {{count}}"
+        less_than: "must be less than {{count}}"
+        less_than_or_equal_to: "must be less than or equal to {{count}}"
+        odd: "must be odd"
+        even: "must be even"
+        record_invalid: "Validation failed: {{errors}}"
+       
+  date:
+    yesterday: Yesterday
+    formats: 
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+    order: [ :day, :month, :year ]
+
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    order: [ :year, :month, :day ]
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      short: "%d %b %H:%M"
+      long: "%B %d, %Y %H:%M"
+    am: "am"
+    pm: "pm"
+
+  support:
+    select:
+      prompt: "Please select"
+    array:
+      words_connector: ", "
+      two_words_connector: " and "
+      last_word_connector: ", and "
