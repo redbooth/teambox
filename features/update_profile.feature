@@ -1,3 +1,4 @@
+@wip
 Feature Update a profile
   Background:
     Given I am logged in as mislav
@@ -32,6 +33,7 @@ Feature Update a profile
    When I uncheck "user_notify_conversations"
    When I check "user_notify_task_lists"
    When I check "user_notify_tasks"
+   When I check "Notify me daily of tasks assigned to me"
     And I press "Update account"
    Then I should see "User profile updated!" within ".flash_success"
      And I follow "Notifications"
@@ -40,6 +42,7 @@ Feature Update a profile
     And the "Notify me when I'm watching a conversation" checkbox should not be checked
     And the "Notify me when I'm watching a task list" checkbox should be checked
     And the "Notify me when I'm watching a task" checkbox should be checked
+    And the "Notify me daily of tasks assigned to me" checkbox should be checked
 
   Scenario: Mislav updates his username
      Given I follow "Account Settings"

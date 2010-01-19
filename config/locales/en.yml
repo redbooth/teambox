@@ -106,6 +106,7 @@ en:
       notify_conversations: Notify me when I'm watching a conversation
       notify_task_lists: Notify me when I'm watching a task list
       notify_tasks: Notify me when I'm watching a task
+      wants_task_reminder: "Notify me daily of tasks assigned to me"
       avatar:
         field: Your avatar
         presence: "You can't upload a blank file"

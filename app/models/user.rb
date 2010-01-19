@@ -49,7 +49,8 @@ class User < ActiveRecord::Base
                   :notify_mentions,
                   :notify_conversations,
                   :notify_task_lists,
-                  :notify_tasks
+                  :notify_tasks,
+                  :wants_task_reminder
 
   attr_accessor   :activate
 
