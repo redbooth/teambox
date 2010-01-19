@@ -13,6 +13,10 @@ Given /^the task called "([^\"]*)" is assigned to me$/ do |name|
   task.assign_to(@user)
 end
 
-Then /^when the daily reminders for tasks are sent$/ do
+Given /^I have no tasks assigned to me$/ do
+  @current_user.assigned_tasks(:all).each { |task| task.destroy }
+end
+
+When /^the daily reminders for tasks are sent$/ do
   User.send_daily_task_reminders
 end

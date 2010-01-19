@@ -117,3 +117,7 @@ end
 Given /^I have the daily task reminders turned on$/ do
   @current_user.update_attribute(:wants_task_reminder, true)
 end
+
+Given /^I have the daily task reminders turned off$/ do
+  @current_user.update_attribute(:wants_task_reminder, false)
+end
