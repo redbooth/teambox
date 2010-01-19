@@ -180,7 +180,9 @@ class User < ActiveRecord::Base
   end
 
   def assigned_tasks(project_filter)
-    people.map { |person| person.project.tasks }.flatten.select { |task| task.active? }
+    people.map { |person| person.project.tasks }.flatten.
+      select { |task| task.active? }.
+      select { |task| task.assigned_to?(self) }
   end
   
   def in_project(project)
