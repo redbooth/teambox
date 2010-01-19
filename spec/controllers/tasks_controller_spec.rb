@@ -10,7 +10,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 #  describe "POST create" do
 #
 #    it "should build a new task" do
-#      Task.should_recieve(:new).
+#      Task.should_receive(:new).
 #           with(:name => 'Fixing foo bar').
 #           and_return(@task)
 #    end  

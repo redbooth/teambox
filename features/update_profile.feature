@@ -38,7 +38,7 @@ Feature Update a profile
    Then I should see "User profile updated!" within ".flash_success"
      And I follow "Notifications"
      And I should see "Your Notifications" 
-    And the "Notify me when I'm mentioned eg. Howdy @mislav! You'll recieve an email!" checkbox should be checked
+    And the "Notify me when I'm mentioned eg. Howdy @mislav! You'll receive an email!" checkbox should be checked
     And the "Notify me when I'm watching a conversation" checkbox should not be checked
     And the "Notify me when I'm watching a task list" checkbox should be checked
     And the "Notify me when I'm watching a task" checkbox should be checked
