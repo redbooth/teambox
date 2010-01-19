@@ -1,9 +1,15 @@
+Given /^there is a task called "([^\"]*)"$/ do |name|
+  Task.find_by_name(name) || Factory(:task, :name => name)
+end
+
 Given /^the task called "([^\"]*)" is due today$/ do |name|
+  Given %(there is a task called "#{name}")
   Task.find_by_name(name).update_attribute(:due_on, Date.today)
 end
 
-Given /^there is a task called "([^\"]*)"$/ do |name|
-  Task.find_by_name(name) || Factory(:task, :name => name)
+Given /^the task called "([^\"]*)" is due tomorrow$/ do |name|
+  Given %(there is a task called "#{name}")
+  Task.find_by_name(name).update_attribute(:due_on, Date.today + 1)
 end
 
 Given /^the task called "([^\"]*)" is assigned to me$/ do |name|

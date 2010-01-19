@@ -3,6 +3,11 @@ class Task
   named_scope :archived, :conditions => {:archived => true}
   named_scope :unarchived, :conditions => {:archived => false}
   named_scope :assigned_to, lambda { |person_id| { :conditions => ['assigned_id > ?', person_id] } }
+  named_scope :due_today,
+    :conditions => ["due_on = ? AND tasks.completed_at is null", 
+                   Date.today], 
+                  :include => :task_list
+  
   named_scope :upcoming, 
     :conditions => ["due_on >= ? AND due_on <= ? AND tasks.completed_at is null", 
                    Date.today.monday, Date.today.monday + 2.weeks], 

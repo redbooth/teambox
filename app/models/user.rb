@@ -173,11 +173,13 @@ class User < ActiveRecord::Base
   def self.send_daily_task_reminders
     all(:conditions => { :wants_task_reminder => true }).each do |user|
       tasks = user.assigned_tasks(:all)
+      # only tasks for today are included in the notif. email
+      tasks = tasks.select { |task| task.due_on == Date.today }
       Emailer.deliver_daily_task_reminder(user, tasks) unless tasks.empty?
     end
   end
 
-  def assigned_tasks(project)
+  def assigned_tasks(project_filter)
     people.map { |person| person.project.tasks }.flatten.select { |task| task.active? }
   end
   

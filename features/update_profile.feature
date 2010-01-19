@@ -1,4 +1,3 @@
-@wip
 Feature Update a profile
   Background:
     Given I am logged in as mislav

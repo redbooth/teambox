@@ -70,4 +70,14 @@ describe Task do
     end
   end
   
+  describe "when fetching through the due_today scope" do
+    before do
+      @for_today = Factory(:task, :due_on => Date.today)
+      @for_tomorrow = Factory(:task, :due_on => Date.today + 1)
+    end
+    it "should return tasks that are due today" do
+      Task.due_today.should include(@for_today)
+      Task.due_today.should_not include(@for_tomorrow)
+    end
+  end
 end
