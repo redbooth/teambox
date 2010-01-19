@@ -9,6 +9,7 @@ Rails::Initializer.run do |config|
   config.gem 'sprockets'
   config.gem 'completeness-fu'
   config.gem 'system_timer'
+  config.gem 'whenever', :lib => false, :source => 'http://gemcutter.org/'
 
   config.time_zone = APP_CONFIG['time_zone']
 
