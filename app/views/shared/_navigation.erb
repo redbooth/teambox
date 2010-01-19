@@ -30,9 +30,9 @@ if logged_in?
       t.tab_index = 102
     end
   
-    if current_user.get_recent_projects.any?
+    if current_user.recent_projects.any?
       tab_index = 103
-      for project in current_user.get_recent_projects
+      for project in current_user.recent_projects
         add_tab do |t|
           t.named truncate(project.name, :length => 20)
           t.links_to project_path(project)

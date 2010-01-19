@@ -79,19 +79,22 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def load_task_lists
-    @task_lists = @current_project.task_lists.unarchived
-  end
+  protected
   
-  def load_projects
-    if params.has_key?(:sub_action)
-      @sub_action = params[:sub_action]
-      if @sub_action == 'archived'
-        @projects = current_user.projects.archived
-      end  
-    else
-      @sub_action = 'all'
-      @projects = current_user.projects.unarchived
+    def load_task_lists
+      @task_lists = @current_project.task_lists.unarchived
     end
-  end
+  
+    def load_projects
+      if params.has_key?(:sub_action)
+        @sub_action = params[:sub_action]
+        if @sub_action == 'archived'
+          @projects = current_user.projects.archived
+        end  
+      else
+        @sub_action = 'all'
+        @projects = current_user.projects.unarchived
+      end
+    end
+
 end

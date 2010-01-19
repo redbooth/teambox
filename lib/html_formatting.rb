@@ -17,7 +17,7 @@ module HtmlFormatting
   
   # Get @username, like in Twitter, and link it to user path
   def format_usernames(text)
-    text.gsub(/([\s>])@([a-z0-9\.\-_]+)([\W])/i) do |match|
+    text.gsub(/([\s>])@([a-z0-9_]+)([\W])/i) do |match|
       user = User.find_by_login(match[2..-2])
       if user && is_in_project?(user)
         if is_a? Comment

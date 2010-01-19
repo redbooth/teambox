@@ -77,7 +77,7 @@ describe User do
       @user = Factory.create(:user)
     end
 
-    it "should be active on creation" do
+    it "should not be active on creation" do
       @user.is_active?.should be_false
     end
 
@@ -113,7 +113,7 @@ describe User do
     end
 
     it "should have an empty array for a new user" do
-      @user.get_recent_projects.should be_empty
+      @user.recent_projects.should be_empty
     end
 
     it "should add some tabs" do
@@ -123,7 +123,7 @@ describe User do
         projects << project
         @user.add_recent_project(project)
       end
-      @user.get_recent_projects.should include(projects.first, projects.second, projects.third)
+      @user.recent_projects.should include(projects.first, projects.second, projects.third)
     end
 
     it "should properly remove tabs" do
@@ -133,9 +133,10 @@ describe User do
         projects << project
         @user.add_recent_project(project)
       end
+      @user.recent_projects.should == projects
       @user.remove_recent_project(projects.second)
-      @user.get_recent_projects.should include(projects.first, projects.third)
-      @user.get_recent_projects.should_not include(projects.second)
+      @user.recent_projects.should include(projects.first, projects.third)
+      @user.recent_projects.should_not include(projects.second)
     end
 
     it "shouldn't add dozens of projects to the bar" do
@@ -143,32 +144,47 @@ describe User do
         project = Factory(:project)
         @user.add_recent_project(project)
       end
-      @user.get_recent_projects.size.should_not == 20
+      @user.recent_projects.size.should_not == 20
     end
 
     describe "the recent projects" do
       before do
         @projects = []
+        @invited = Factory(:user)
         3.times do
           project = Factory(:project, :user => @user)
+          project.add_user(@invited)
           @projects << project
           @user.add_recent_project(project)
+          @invited.add_recent_project(project)
         end
       end
 
       describe "when a project is archived" do
         it "should be removed from the tab" do
+          [@user,@invited].each do |user|
+            user.recent_projects.should == @projects
+          end
           @projects.first.archive!
-          @user.get_recent_projects.should include(@projects.second, @projects.third)
-          @user.get_recent_projects.should_not include(@projects.first)
+          [@user,@invited].each do |user|
+            user.reload
+            user.recent_projects.should include(@projects.second, @projects.third)
+            user.recent_projects.should_not include(@projects.first)
+          end
         end
       end
 
       describe "when a project is deleted" do
         it "should be removed from the tab" do
+          [@user,@invited].each do |user|
+            user.recent_projects.should == @projects
+          end
           @projects.first.destroy
-          @user.get_recent_projects.should include(@projects.second, @projects.third)
-          @user.get_recent_projects.should_not include(@projects.first)
+          [@user,@invited].each do |user|
+            user.reload
+            user.recent_projects.should include(@projects.second, @projects.third)
+            user.recent_projects.should_not include(@projects.first)
+          end
         end
       end
     end

@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
                 :login_required, 
                 :set_locale, 
                 :touch_user, 
-                :recent_projects, 
                 :belongs_to_project?, 
                 :set_page_title,
                 :set_client
@@ -43,7 +42,7 @@ class ApplicationController < ActionController::Base
     def rss_token
       unless params[:rss_token].nil? or params[:format] != 'rss'
         user = User.find_by_rss_token(params[:rss_token])
-        set_current_user user unless user.nil?
+        set_current_user user if user
       end
     end
 
@@ -74,16 +73,6 @@ class ApplicationController < ActionController::Base
       end
     end
     
-    def recent_projects
-      if logged_in?
-        if current_user.recent_projects
-          @recent_projects = current_user.recent_projects
-        else
-          @recent_projects = []
-        end
-      end
-    end
-
     def set_locale
       # if this is nil then I18n.default_locale will be used
       I18n.locale = logged_in? ? current_user.language : 'en'

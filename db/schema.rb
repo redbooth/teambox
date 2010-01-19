@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(:version => 20090825190238) do
     t.datetime :remember_token_expires_at
     t.string   :time_zone,          :default => "Eastern Time (US & Canada)"
     t.string   :language,           :default => "en"
-    t.text     :recent_projects
+    t.text     :recent_projects_ids
     t.boolean  :conversations_first_comment, :default => true
     t.string   :first_day_of_week, :default => 'sunday'
     t.integer  :invitations_count, :default => 0

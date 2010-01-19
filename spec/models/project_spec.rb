@@ -99,9 +99,9 @@ describe Project do
     
     it "should remove the project from their recent projects" do
       @user.add_recent_project(@project)
-      @user.reload.recent_projects.should include(@project.id)
+      @user.recent_projects.should include(@project)
       @project.reload.remove_user(@user)
-      @user.reload.recent_projects.should_not include(@project.id)
+      @user.reload.recent_projects.should_not include(@project)
     end
     
     it "make sure activities still work when the object is deleted"

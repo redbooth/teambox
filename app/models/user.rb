@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
 
   def before_save
     self.update_profile_score
-    self.recent_projects ||= []
+    self.recent_projects_ids ||= []
     self.rss_token ||= generate_rss_token
   end
   

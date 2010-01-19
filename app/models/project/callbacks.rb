@@ -1,6 +1,12 @@
 class Project  
   
-  after_save :remove_from_recent_projects
+  def after_destroy
+    remove_from_recent_projects
+  end
+  
+  def after_save
+    remove_from_recent_projects if archived?
+  end
   
   def after_create
     add_user(user)
@@ -9,10 +15,8 @@ class Project
   private
 
     def remove_from_recent_projects
-      if archived?
-        user.each do |user|
-          user.remove_recent_project(self)
-        end
+      users.each do |u|
+        u.remove_recent_project(self)
       end
     end
 

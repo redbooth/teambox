@@ -13,7 +13,7 @@ class Project < ActiveRecord::Base
                  :archival,
                  :permalink
 
-  attr_accessible :name
+  attr_accessible :name, :permalink, :archived
 
   def log_activity(target, action, creator_id=nil)
     creator_id ||= target.user_id
@@ -29,9 +29,6 @@ class Project < ActiveRecord::Base
   def remove_user(user)
     if person = Person.find_by_user_id_and_project_id(user.id, id)
       person.destroy
-
-      user.recent_projects.delete id
-      user.save!
     end
   end
 
