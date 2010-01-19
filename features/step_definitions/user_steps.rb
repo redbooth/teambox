@@ -30,7 +30,7 @@ Given /^I have a task on hold$/ do
    And "I should see \"hold\" within \".task_status_hold\""
    And "I should see \"I need to wait till the engine cools down\" within \".body\""
    And "I should see \"hold\" within \".task_header h2\""
-   And "I should see \"1\" within \".active_hold\""  
+   And "I should see \"1\" within \".active_hold\""
 end
 
 
@@ -45,7 +45,7 @@ Given /^I have a task on resolved$/ do
    And "I should see \"resolved\" within \".task_header h2\""
    And "I should see \"1\" within \".active_resolved\""
 end
-    
+
 Given /^I have a task on rejected$/ do
   When "I fill in \"comment_body\" with \"I need to wait till the engine cools down\""
    And "I click the element \"status_rejected\""
@@ -66,17 +66,17 @@ Then /^I should see for task status tag with (.*) and (.*)$/ do |current_status,
   unless current_status == status
     Then "I should see \"#{current_status_text}\" within \".task_status_#{current_status}\""
     And "I should see \"→\" within \".comment .status_arr\""
-  end  
-  Then "I should see \"#{status_text}\" within \".task_status_#{status}\""    
-end  
+  end
+  Then "I should see \"#{status_text}\" within \".task_status_#{status}\""
+end
 
-Given /^I am the currently (.*)$/ do |user_type|
-  @current_user ||= User.find_by_login(user_type) || Factory(user_type.to_sym) 
+Given /^I am currently "([^\"]*)"$/ do |login|
+  @current_user ||= User.find_by_login(login) || Factory(login.to_sym)
   @user = @current_user
 end
 
-Given /^I am logged in as (.*)$/ do |user_type|
-  Given "I am the currently #{user_type}"
+Given /^I am logged in as (.*)$/ do |login|
+  Given %(I am currently "#{login}")
     And "I go to the login page"
     And "I fill in \"Email or Username\" with \"#{@current_user.email}\""
     And "I fill in \"Password\" with \"#{@current_user.password}\""
@@ -102,11 +102,11 @@ end
 Given /I am currently in the project (.*)$/ do |project_type|
   @current_project ||= Factory(project_type.to_sym)
   visit(projects_path(@current_project))
-end    
+end
 
 Given /I am the user (.*)$/ do |user_type|
   @user ||= Factory(user_type.to_sym)
-end  
+end
 
 Then /^I should not see missing avatar image within "([^\"]*)"$/ do |selector|
   within(:css,selector) do

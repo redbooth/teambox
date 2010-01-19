@@ -1,6 +1,6 @@
 Feature: Logging In
   Background:
-    Given I am the currently mislav
+    Given I am currently "mislav"
       And I go to the login page
       And I fill in "Email or Username" with "mislav"
       And I fill in "Password" with "makeabarrier"
