@@ -15,17 +15,17 @@ describe Project do
   it { should have_many(:uploads) }
   it { should have_many(:activities) }
 
-  it { should validate_presence_of    :user }
+  it { should validate_presence_of(:user) }
   # it { should validate_associated     :people }
-  it { should validate_length_of      :name, :minimum => 3 }
-  it { should validate_length_of      :permalink, :minimum => 5 }
+  it { should validate_length_of(:name, :minimum => 3) }
+  it { should validate_length_of(:permalink, :minimum => 5) }
 
-  describe "creating a project" do 
+  describe "creating a project" do
     before do
       @owner = Factory.create(:user)
       @project = Factory.create(:project, :user_id => @owner.id)
     end
-    
+
     it "should belong to its owner" do
       @project.user.should == @owner
       @project.owner?(@owner).should be_true
@@ -35,8 +35,8 @@ describe Project do
       @owner.projects.should include(@project)
     end
   end
-    
-  describe "inviting users" do 
+
+  describe "inviting users" do
     before do
       @owner = Factory.create(:user)
       @project = Factory.create(:project, :user_id => @owner.id)
@@ -50,7 +50,7 @@ describe Project do
       @project.should have(2).users
       lambda { @project.add_user(@user) }.should_not change(@project, :users)
     end
-    
+
     it "should log when a user is added without being invited" do
       person = @project.add_user(@user)
       Activity.last.project.should == @project
@@ -60,7 +60,7 @@ describe Project do
       Activity.last.user.should == @user
       person.reload.source_user.should be_nil
     end
-    
+
     it "should log when a user is added being invited" do
       person = @project.add_user(@user,@owner)
       Activity.last.project.should == @project
@@ -68,18 +68,18 @@ describe Project do
       Activity.last.target.should == person
       Activity.last.action.should == 'create'
       Activity.last.user.should == @owner
-      person.reload.source_user.should == @owner      
+      person.reload.source_user.should == @owner
     end
   end
 
-  describe "removing users" do 
+  describe "removing users" do
     before do
       @owner = Factory.create(:user)
       @project = Factory.create(:project, :user_id => @owner.id)
       @user = Factory.create(:user)
       @person = @project.add_user(@user)
     end
-  
+
     it "should remove users" do
       @project.should have(2).users
       @project.reload.remove_user(@user)
@@ -87,26 +87,28 @@ describe Project do
       @project.users.should_not include(@user)
       @user.reload.projects.should_not include(@project)
     end
-    
+
     it "should log he's leaving the project" do
       @project.reload.remove_user(@user)
       Activity.last.project.should == @project
       Activity.last.comment_type.should == nil
       Activity.last.target.should == @person
       Activity.last.action.should == 'delete'
-      Activity.last.user.should == @user      
+      Activity.last.user.should == @user
     end
-    
+
     it "should remove the project from their recent projects" do
       @user.add_recent_project(@project)
       @user.recent_projects.should include(@project)
-      @project.reload.remove_user(@user)
-      @user.reload.recent_projects.should_not include(@project)
+      @project.remove_user(@user)
+      @project.people.each do |person|
+        person.user.recent_projects.should_not include(@project)
+      end
     end
-    
+
     it "make sure activities still work when the object is deleted"
   end
-  
+
   describe "permalinks" do
     it "should use the given permalink if not taken" do
       project1 = Factory.create(:project, {:name => 'Alice Lidell', :permalink => 'mad-hatter'})
@@ -114,7 +116,7 @@ describe Project do
       project2 = Factory.create(:project, {:name => 'Lorina Lidell', :permalink => 'mad-hatter'})
       project2.permalink.should == 'mad-hatter-2'
     end
-    
+
     it "should generate a unique permalink if none is given" do
       project1 = Factory.create(:project, :name => 'Cheshire   Cat!!')
       project1.permalink.should == 'cheshire-cat'
@@ -122,7 +124,7 @@ describe Project do
       project2.permalink.should == 'cheshire-cat-2'
     end
   end
-  
+
   describe "deleting projects" do
     before do
       @project = Factory(:project)
@@ -131,7 +133,7 @@ describe Project do
       end
       @project.reload.comments.reload
     end
-    
+
     it "should have some elements" do
       Project.count.should == 1
       Comment.count.should == 1
@@ -140,7 +142,7 @@ describe Project do
       Page.count.should == 1
       Person.count.should == 1
     end
-    
+
     it "destroy all its comments, conversations, task lists, pages, uploads and people" do
       @project.destroy
       Project.count.should == 0
@@ -150,7 +152,7 @@ describe Project do
       Page.count.should == 0
       Person.count.should == 0
     end
-    
+
   end
 
   describe "factories" do

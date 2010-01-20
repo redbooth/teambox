@@ -147,7 +147,7 @@ describe User do
       @user.recent_projects.size.should_not == 20
     end
 
-    describe "the recent projects" do
+    describe "recent projects method" do
       before do
         @projects = []
         @invited = Factory(:user)
@@ -160,14 +160,17 @@ describe User do
         end
       end
 
+      it "should return all projects of the user" do
+        [@user, @invited].each do |user|
+          user.recent_projects.should == @projects
+        end
+      end
+
       describe "when a project is archived" do
-        it "should be removed from the tab" do
-          [@user,@invited].each do |user|
-            user.recent_projects.should == @projects
-          end
+        it "it should be removed" do
+          project_people = @projects.first.users
           @projects.first.archive!
-          [@user,@invited].each do |user|
-            user.reload
+          project_people.each do |user|
             user.recent_projects.should include(@projects.second, @projects.third)
             user.recent_projects.should_not include(@projects.first)
           end
@@ -175,13 +178,10 @@ describe User do
       end
 
       describe "when a project is deleted" do
-        it "should be removed from the tab" do
-          [@user,@invited].each do |user|
-            user.recent_projects.should == @projects
-          end
+        it "it should be removed" do
+          project_people = @projects.first.users
           @projects.first.destroy
-          [@user,@invited].each do |user|
-            user.reload
+          project_people.each do |user|
             user.recent_projects.should include(@projects.second, @projects.third)
             user.recent_projects.should_not include(@projects.first)
           end
@@ -252,7 +252,7 @@ describe User do
       @interesting_project = Factory(:project, :user => Factory(:user), :name => "DataMapper")
       @boring_project = Factory(:project, :user => Factory(:user), :name => "Collecting stamps")
       @interesting_project.add_user(@user)
-      @boring_project.add_user(@user)      
+      @boring_project.add_user(@user)
     end
 
     it "should return all the tasks assigned to a user when called with :all" do
@@ -272,7 +272,7 @@ describe User do
 
     it "should not return a resolved task" do
       resolved_task = Factory(:resolved_task, :project => @interesting_project)
-      resolved_task.assign_to(@user)      
+      resolved_task.assign_to(@user)
       @user.assigned_tasks(:all).should_not include(resolved_task)
     end
 
@@ -282,20 +282,20 @@ describe User do
       @user.assigned_tasks(:all).should_not include(rejected_task)
     end
   end
-  
+
   describe "when fetching the user in a project" do
     before do
       @user = Factory(:user)
       @project = Factory(:project)
       @person = Factory(:person, :project => @project, :user => @user)
       @project.reload
-      @user.reload      
+      @user.reload
     end
 
     it "should return the person the user belongs to in the passed project" do
       @user.in_project(@project).should == @person
     end
-    
+
     it "should return nil if the user is not part of the project" do
       Factory(:user).in_project(@project).should be_nil
     end
