@@ -1,5 +1,5 @@
 Banner = {
-  disactivate_links: function() {
+  deactivate_links: function() {
     $$(".banner_navigation a").each(function(link){
       link.removeClassName("active");
     })
@@ -19,14 +19,14 @@ Banner = {
 Event.addBehavior({
   ".banner_navigation li.calendar:click": function(e){
     // $$(".banner_navigation a").invoke("removeClassName", "active");
-    Banner.disactivate_links();
+    Banner.deactivate_links();
     Banner.hide_banner_items();
     Banner.show_banner("upcoming_events_banner");
     Banner.activate_link("calendar_banner_link")
   },
   ".banner_navigation li.gantt_chart:click": function(e){
     // $$(".banner_navigation a").invoke("removeClassName", "active");
-    Banner.disactivate_links();
+    Banner.deactivate_links();
     Banner.hide_banner_items();
     Banner.show_banner("gantt_banner");
     Banner.activate_link("gantt_banner_link")
