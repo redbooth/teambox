@@ -376,6 +376,7 @@ en:
     fields:
       title: Title
       body: Body
+      text_styling: Text Styling
   dividers:
     actions:
       delete_confirm: Are you sure you want to delete this divider?

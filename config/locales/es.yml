@@ -375,6 +375,7 @@ es:
     fields:
       title: Título
       body: Cuerpo
+      text_styling: Estilos de texto
   dividers:
     actions:
       delete_confirm: Seguro que quieres borrar este separador?

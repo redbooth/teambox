@@ -375,6 +375,7 @@ fr:
     fields:
       title: Titre
       body: Contenu
+      text_styling: Style du texte
   dividers:
     actions:
       delete_confirm: Etes-vous sûr de vouloir supprimer ce séparateur?

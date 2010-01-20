@@ -7,7 +7,7 @@
 %h2{ :style => 'margin: 0px'}
   = t('.update_your_status')
   %span.help
-    = link_to t('.text_styling'), 'http://help.teambox.com/faqs/advanced-features/textile', :target => '_blank'
+    = textile_documentation_link
 
 = new_comment_form(@current_project,@current_project.comments.new)
 

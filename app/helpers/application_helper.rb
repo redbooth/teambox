@@ -274,6 +274,10 @@ module ApplicationHelper
     end
   end
   
+  def textile_documentation_link
+    link_to t('.text_styling'), 'http://help.teambox.com/faqs/advanced-features/textile', :target => '_blank'
+  end
+  
   def autoresize(id)
     javascript_tag "activateResize('#{id.to_s}')"
   end
