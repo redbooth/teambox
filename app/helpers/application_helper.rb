@@ -145,7 +145,7 @@ module ApplicationHelper
     if datetime > Time.current.beginning_of_day
       datetime.in_time_zone(current_user.time_zone).strftime("%I:%M %p")
     elsif datetime > 1.day.ago.beginning_of_day
-      t 'date.yesterday'
+      t('date.yesterday') + ' ' + datetime.in_time_zone(current_user.time_zone).strftime("%I %p")
     elsif datetime > Time.current.beginning_of_year
       datetime.in_time_zone(current_user.time_zone).strftime("%b %d")
     else
