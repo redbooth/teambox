@@ -833,10 +833,6 @@ fr:
       note: Note
       invitation: Invitation
       upload: Archive
-      user:
-        attributes:
-          avatar:
-            attachment_content_type_invalid: Seules les images JPEG ou PNG son acceptées.
     attributes:
       card:
         street: Rue

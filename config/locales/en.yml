@@ -834,10 +834,6 @@ en:
       note: Note
       invitation: Invitation
       upload: Upload
-      user:
-        attributes:
-          avatar:
-            attachment_content_type_invalid: Upload only JPEG and PNG files.
     attributes:
       card:
         street: Street
