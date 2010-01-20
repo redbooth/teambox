@@ -833,10 +833,6 @@ es:
       note: Nota
       invitation: Invitación
       upload: Archivo
-      user:
-        attributes:
-          avatar:
-            attachment_content_type_invalid: Sube una imagen JPEG o PNG.
     attributes:
       card:
         street: Calle
