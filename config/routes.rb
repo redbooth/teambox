@@ -39,7 +39,7 @@ ActionController::Routing::Routes.draw do |map|
   map.show_new   'activities/:id/show_new.:format',  :controller => 'activities', :action => 'show_new',  :method => :get
   map.show_more  'activities/:id/show_more.:format', :controller => 'activities', :action => 'show_more', :method => :get
 
-  map.project_archived 'projects/archived',  :controller => 'projects', :action => 'index', :sub_action => 'archived'  
+  map.project_archived 'projects/archived.:format',  :controller => 'projects', :action => 'index', :sub_action => 'archived'  
   
   map.resources :projects,
       :has_many => [:pages, :people],

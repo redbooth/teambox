@@ -106,6 +106,7 @@ es:
       notify_conversations: Notificarme de conversaciones que sigo
       notify_task_lists: Notificarme de comentarios en listas de tareas que sigo
       notify_tasks: Notificarme de comentarios en tareas que sigo
+      wants_task_reminder: Recibir un email diario con mis tareas
       avatar:
         field: Tu icono
         presence: No puedes subir un fichero vacío
@@ -190,6 +191,7 @@ es:
       rss:
         title: Teambox
         description: Actividad en todos tus proyectos
+      archived: "Mostrar {{count}} proyectos archivados..."
     primer:
       empty: Aún no perteneces a ningún proyecto
       create_first: Crea tu primer proyecto!
@@ -556,13 +558,12 @@ es:
       title: No hay tareas que mostrar
     projects:
       projects: Proyectos
+    archived_projects:
+      archived_projects: Proyectos archivados
     navigation:
       welcome: Bienvenido
       all_projects: Proyectos
       new_project: +
-    project_column_navigation:
-      all: Todos los proyectos
-      archived: "{{count}} proyectos archivados"
     project_settings_navigation:
       general: Datos del proyecto
       picture: Imagen de proyecto

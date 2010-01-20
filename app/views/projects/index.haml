@@ -1,7 +1,9 @@
 - content_for :column do
   = new_project_link
-  = project_column_navigation
   = list_projects(@projects)
+  - unless @sub_action == 'archived'
+    = list_archived_projects(@archived_projects)
+
   = subscribe_to_projects_link
   = #print_projects_link
 

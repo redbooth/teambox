@@ -41,8 +41,15 @@ module ProjectsHelper
   end
   
   def list_projects(projects)
-    unless @projects.empty?
-    render :partial => 'shared/projects', :locals => { :projects => projects }
+    if projects.any?
+      render :partial => 'shared/projects', :locals => { :projects => projects }
+    end
+  end
+
+  def list_archived_projects(projects)
+    if projects.any?
+      out =  link_to(t('.archived', :count => projects.size), project_archived_path, :id => 'project_archived_link')
+      out << render(:partial => 'shared/archived_projects', :locals => { :projects => projects })
     end
   end
   

@@ -106,6 +106,7 @@ fr:
       notify_conversations: Envoyez-moi une notification lorsque je regarde une conversation 
       notify_task_lists: Envoyez-moi une notification lorsque je regarde une liste de tâches 
       notify_tasks: Envoyez-moi une notification lorsque je regarde une tâche
+      wants_task_reminder: "Send me a daily email of my tasks"
       avatar:
         field: Votre image
         presence: "Il n'est pas possible de télécharger un fichier vide"
@@ -190,6 +191,7 @@ fr:
       rss:
         title: Teambox
         description: Activité dans tous vos projets
+      archived: "Montrer {{count}} projets archivés..."
     primer:
       empty: Vous n'appartenez pour l'instant à aucun projet
       create_first: Créez votre premier projet!
@@ -409,10 +411,10 @@ fr:
       title: Nouvelle page
       define1: "Vous pouvez ici <b>partager des infomations utiles</b> avec votre équipe: plan, liens intéressants, instructions, modèles de mails..."
       define2: "Editer une page est simple et amusant, avec des éléments que vous pouvez éditer sur le site par glisser-déposer."
-      item1: "<b>Partagez</b>. Tous les membres du projet peuvent les voir et les éditer."
-      item2: "<b>Publiez</b>. Publication instantannée sur internet avec les pages partagées. Créez une page web en quelques secondes."
-      item3: "<b>Imprimez</b>. Les pages sont préparées pour être imprimées. Vous pouvez les imprimez ou les exporter comme PDF!"
-      item4: "<b>Wiki</b>. Elles fonctionnent comme un wiki, en donnant un accès rapide à toute l'information du projet."
+      feature1: "<b>Partagez</b>. Tous les membres du projet peuvent les voir et les éditer."
+      feature2: "<b>Publiez</b>. Publication instantannée sur internet avec les pages partagées. Créez une page web en quelques secondes."
+      feature3: "<b>Imprimez</b>. Les pages sont préparées pour être imprimées. Vous pouvez les imprimez ou les exporter comme PDF!"
+      feature4: "<b>Wiki</b>. Elles fonctionnent comme un wiki, en donnant un accès rapide à toute l'information du projet."
       footer1: "Utilisez Teambox comme un <b>tableau partagé</b> pour les informations d'usage fréquent."
       footer2: "Vous pouvez également joindre des fichiers à toute page du projet. Profitez-en!"
       submit: Créer
@@ -556,13 +558,12 @@ fr:
       title: There are no tasks due to show on the calendar
     projects:
       projects: Projets
+    archived_projects:
+      archived_projects: Projets Archivés
     navigation:
       welcome: Bienvenue
       all_projects: 'Projets'
       new_project: +
-    project_column_navigation:
-      all: Tous les projets
-      archived: "{{count}} Projets archivés" 
     project_settings_navigation:
       general: Paramètres généraux
       picture: Image du projet

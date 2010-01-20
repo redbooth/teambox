@@ -9610,3 +9610,14 @@ Event.addBehavior({
     });
   }
 });
+
+Event.addBehavior({
+  ".column a#project_archived_link:click": function(e){
+    $(this).remove()
+    $$('.archived_project_list').each(function(e){
+      e.show()
+    });
+    event.preventDefault();
+  }
+});
+

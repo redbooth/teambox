@@ -106,7 +106,7 @@ en:
       notify_conversations: Notify me when I'm watching a conversation
       notify_task_lists: Notify me when I'm watching a task list
       notify_tasks: Notify me when I'm watching a task
-      wants_task_reminder: "Notify me daily of tasks assigned to me"
+      wants_task_reminder: "Send me a daily email of my tasks"
       avatar:
         field: Your avatar
         presence: "You can't upload a blank file"
@@ -191,6 +191,7 @@ en:
       rss:
         title: Projects Overview
         description: Overview of all your projects
+      archived: "Show {{count}} Archived Projects..."
     primer:
       empty: You don't own or belong to any projects yet.
       create_first: Create your first project!
@@ -476,7 +477,7 @@ en:
       role: Role
       observer: Observer
       commenter: Commenter
-      participant: Particpant
+      participant: Participant
       admin: Admin
     header:
       owner: Project Owner
@@ -557,13 +558,12 @@ en:
       title: There are no tasks due to show on the calendar ####
     projects:
       projects: Projects
+    archived_projects:
+      archived_projects: Archived Projects
     navigation:
       welcome: Welcome
       all_projects: 'All Projects'
       new_project: +
-    project_column_navigation:
-      all: All Projects
-      archived: "{{count}} Archived Projects"
     project_settings_navigation:
       general: General Settings
       picture: Project Picture

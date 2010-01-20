@@ -7,6 +7,8 @@ class ProjectsController < ApplicationController
     @activities = Project.get_activities_for(@projects)
     @last_activity = @activities.last
     @pending_projects = @current_user.invitations.reload # adding reload to avoid a strange bug
+    
+    @archived_projects = @current_user.projects.archived
 
     respond_to do |f|
       f.html
