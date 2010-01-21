@@ -1,11 +1,13 @@
+- content_for :js_includes do
+  = javascript_include_tag "reorder_tasks"
 - tasks = assign_tasks(project,task_list,sub_action)
 .task_list_wrap{ :id => "#{task_list_id(:with_tasks,project,task_list)}", :class => "task_list_#{task_list.id}" }
   = render_task_list(project,task_list,current_target)
   - unless !task_list.editable?(current_user) && tasks.empty?
     .tasks_wrap
-      .tasks{ :id => task_list_id(:the_tasks,project,task_list), :class => "#{ 'read_only' unless task_list_editable?(task_list,current_user,sub_action)}" }
+      .tasks{ :id => task_list_id(:the_tasks,project,task_list), :class => "#{ 'read_only' unless task_list_editable?(task_list,current_user,sub_action)}", :reorder_url => project_reorder_tasks_path(project, task_list) }
         = list_tasks(project,task_list,tasks,current_target)
     - if task_list_editable?(task_list,current_user,sub_action)
       = task_link(project,task_list)
       = task_form(project,task_list,task_list.new_task(current_user))
-      = tasks_sortable(project,task_list)
+      / = tasks_sortable(project,task_list)

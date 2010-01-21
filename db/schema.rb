@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
   add_index "conversations", ["deleted_at"], :name => "index_conversations_on_deleted_at"
   add_index "conversations", ["project_id"], :name => "index_conversations_on_project_id"
 
@@ -296,7 +297,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "remember_token_expires_at"
     t.string   "time_zone",                                  :default => "Eastern Time (US & Canada)"
     t.string   "language",                                   :default => "en"
-    t.text     "recent_projects_ids"
     t.boolean  "conversations_first_comment",                :default => true
     t.string   "first_day_of_week",                          :default => "sunday"
     t.integer  "invitations_count",                          :default => 0
@@ -324,6 +324,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "wants_task_reminder",                        :default => true
+    t.text     "recent_projects_ids"
   end
 
   add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"
