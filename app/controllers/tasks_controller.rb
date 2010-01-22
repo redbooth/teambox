@@ -83,7 +83,9 @@ class TasksController < ApplicationController
   
   def reorder
     @task_list_id = "project_#{@current_project.id}_task_list_#{@task_list.id}_the_tasks"
-    params[@task_list_id].reject { |task_id| task_id.blank? }.each_with_index do |task_id,idx|
+    new_task_ids_for_task_list = params[@task_list_id].reject { |task_id| task_id.blank? }
+    @task_list.update_attribute(:task_ids, new_task_ids_for_task_list)
+    new_task_ids_for_task_list.each_with_index do |task_id,idx|
       task = @task_list.tasks.find(task_id)
       task.update_attribute(:position,idx.to_i)
     end
