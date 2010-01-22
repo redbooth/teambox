@@ -43,7 +43,7 @@ defaults: &DEFAULTS
   services_url: http://www.teambox.com/services
   community_url: http://www.teambox.com/community
   blog_url: http://blog.teambox.com
-  help_url: http://www.teambox.com/help
+  help_url: http://help.teambox.com/faqs/using-teambox
   support_url: http://help.teambox.com
   privacy_url: http://www.teambox.com/privacy
   terms_url: http://www.teambox.com/terms
