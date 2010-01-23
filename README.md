@@ -16,14 +16,19 @@ Teambox: Project Management and Collaboration software
 -------
 
 - Website: <http://www.teambox.com/>
-- GitHub: <http://github.com/michokest/Teambox-2>
+- GitHub: <http://github.com/micho/teambox>
 - Lighthouse tickets: <http://teambox.lighthouseapp.com>
 - Original developer: Pablo Villalba (pablo@teambox.com, michokest@gmail.com)
-- Copyright: (cc) 2010 Teambox Desarrollos S.L.
+- Copyright: (cc) 2010 Teambox Technologies S.L.
+
+<a href="http://www.teambox.com"><img src="http://teambox.com/images/screenshots/overview.png" /></a>
 
 
 GET ROLLING!
 -------
+
+You can also [use Teambox online](http://www.teambox.com/ "Teambox"). If you've chosen to run your own copy,
+then follow these simple steps!
 
 Install missing gems:
 
@@ -60,8 +65,8 @@ to a migration file. So you'll only have migration files for major revisions.
 TODO (Version 2)
 -----
 
-* being able to delete comments and files
-* fixture data, so when were in development we can load up a project quickly
+* being able to delete comments
+* seed data, so when were in development we can load up a project quickly
 
 TODO (Version 2.1)
 -----
