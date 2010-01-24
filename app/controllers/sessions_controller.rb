@@ -7,11 +7,9 @@ class SessionsController < ApplicationController
   skip_before_filter :confirmed_user?
   skip_before_filter :load_project
 
-  def new
-    redirect_to '/' if logged_in?
-    
+  def new  
     respond_to do |format|
-      format.html
+      format.html { redirect_to '/' if logged_in? }
       format.m
     end
   end
