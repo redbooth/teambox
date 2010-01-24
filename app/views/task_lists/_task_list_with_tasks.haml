@@ -1,4 +1,4 @@
-- if task_list_with_tasks_counter.zero?
+- if true #FIXME: task_list_with_tasks_counter.zero?
   - content_for :js_includes do
     = javascript_include_tag "reorder_tasks"
 - tasks = assign_tasks(project,task_list,sub_action)
