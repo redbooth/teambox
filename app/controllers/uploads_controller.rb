@@ -128,7 +128,7 @@ class UploadsController < ApplicationController
       if params[:id].match /^\d+$/
         @upload = @current_project.uploads.find(params[:id])
       else
-        @upload = @current_project.uploads.find_by_upload_file_name(params[:id])
+        @upload = @current_project.uploads.find_by_asset_file_name(params[:id])
       end
       
     end
