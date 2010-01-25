@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder,:archive,:unarchive,:reopen]
   before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch,:reopen]
-  
+
   def show
     if @task.archived?
       @sub_action = 'archived'
@@ -9,7 +9,7 @@ class TasksController < ApplicationController
     else
       @task_lists = @current_project.task_lists
       @sub_action = 'all'
-    end  
+    end
     @task = @current_project.tasks.find(params[:id])
 
     @comments = @task.comments
@@ -18,29 +18,29 @@ class TasksController < ApplicationController
     #@project = @current_project
     #render :file => 'emailer/notify_task', :layout => false
   end
-  
+
   def new
     @task = @task_list.tasks.new
   end
-  
-  def create    
+
+  def create
     if @task = @current_project.create_task(current_user,@task_list,params[:task])
       @comment = @current_project.new_task_comment(@task)
-    end      
+    end
     respond_to do |format|
       format.js
     end
   end
-  
+
   def edit
     respond_to{|f|f.js}
   end
-  
+
   def update
     @task.update_attributes(params[:task])
     respond_to {|f|f.js}
   end
-  
+
   def destroy
     if @task.editable?(current_user)
       @task.try(:destroy)
@@ -59,19 +59,19 @@ class TasksController < ApplicationController
       end
     end
   end
-  
+
   def archive
     @task.update_attribute(:archived,true)
-    respond_to {|f|f.js}    
+    respond_to {|f|f.js}
   end
 
   def reopen
     @task.status = Task::STATUSES[:open]
-    @task.assigned = @current_project.people.find_by_user_id(current_user.id)    
+    @task.assigned = @current_project.people.find_by_user_id(current_user.id)
     @comment = @current_project.new_task_comment(@task)
     respond_to {|f|f.js}
   end
-  
+
   def unarchive
     if @task.update_attribute(:archived,false)
       @task_lists = @current_project.task_lists
@@ -80,7 +80,7 @@ class TasksController < ApplicationController
     end
     respond_to {|f|f.js}
   end
-  
+
   def reorder
     @task_list_id = "project_#{@current_project.id}_task_list_#{@task_list.id}_the_tasks"
     new_task_ids_for_task_list = params[@task_list_id].reject { |task_id| task_id.blank? }
@@ -93,19 +93,19 @@ class TasksController < ApplicationController
       task.update_attribute(:position,idx.to_i)
     end
   end
-  
+
   def watch
     @task.add_watcher(current_user)
     respond_to{|f|f.js}
   end
-  
+
   def unwatch
     @task.remove_watcher(current_user)
     respond_to{|f|f.js}
   end
-  
+
   private
-    
+
     def find_task_list
       begin
         @task_list = @current_project.task_lists.find(params[:task_list_id])
@@ -114,7 +114,7 @@ class TasksController < ApplicationController
         redirect_to project_task_lists_path(@current_project)
       end
     end
-    
+
     def find_task
       begin
         @task = @current_project.tasks.find(params[:id])

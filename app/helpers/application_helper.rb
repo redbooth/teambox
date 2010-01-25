@@ -9,20 +9,28 @@ module ApplicationHelper
 
   def submit(name,path,id = nil)
     submit_id = "submit_#{id}" if id
-    render :partial => 'shared/submit', :locals => { 
-      :name => name, 
-      :path => path, 
+    render :partial => 'shared/submit', :locals => {
+      :name => name,
+      :path => path,
       :submit_id => id }
   end
-  
+
   def submit_to_function(name, code,submit_id,loading_id)
     render :partial => 'shared/submit_to_function', :locals => {
-      :name => name, 
-      :code => code, 
-      :submit_id => submit_id, 
+      :name => name,
+      :code => code,
+      :submit_id => submit_id,
       :loading_id => loading_id }
   end
-  
+
+  # this is the unobtrusive pair of the submit_to_function
+  def submit_or_cancel(name, submit_id, loading_id)
+    render :partial => 'shared/submit_or_cancel', :locals => {
+      :name => name,
+      :submit_id => submit_id,
+      :loading_id => loading_id }
+  end
+
   def hot_flashes(flash)
     show_flash_bar = true
     if flash[:success]
@@ -34,12 +42,12 @@ module ApplicationHelper
     elsif flash[:notice]
       class_name = 'notice'
       text = flash[:notice]
-    else  
+    else
       show_flash_bar = false
     end
     "<div class='flash_box flash_#{class_name}'><div>#{text}</div></div>" if show_flash_bar
   end
-  
+
   def header
     render :partial => 'shared/header'
   end
@@ -53,22 +61,22 @@ module ApplicationHelper
     render :partial => 'shared/project_navigation',
       :locals => { :project => project }
   end
-  
+
   def navigation(project,recent_projects)
     render :partial => 'shared/navigation',
-      :locals => { 
-        :project => project, 
+      :locals => {
+        :project => project,
         :recent_projects => recent_projects }
   end
 
   def global_navigation
     render :partial => 'shared/global_navigation'
   end
-  
+
   def footer
     render :partial => 'shared/footer'
   end
-  
+
   def javascripts
     render :partial => 'shared/javascripts'
   end
@@ -76,11 +84,11 @@ module ApplicationHelper
   def location_name?(names)
     names.any?{ |name| name == location_name }
   end
-    
+
   def location_name
     "#{action_name}_#{controller.controller_name}"
   end
-   
+
   def ef(e)
     page << "if($('#{e}')){"
   end
@@ -100,15 +108,15 @@ module ApplicationHelper
   def loading_image(id)
     image_tag('loading.gif', :id => id, :class => 'loading', :style => 'display: none')
   end
-  
+
   def loading(action,id=nil)
     if id
       image_tag('loading.gif', :id => "#{action}_loading_#{id}", :class => 'loading', :style => 'display: none')
-    else  
+    else
       image_tag('loading.gif', :id => "#{action}_loading", :class => 'loading', :style => 'display: none')
     end
   end
-  
+
   def show_loading(action,id=nil)
     update_page do |page|
       if id
@@ -124,7 +132,7 @@ module ApplicationHelper
       end
     end
   end
-  
+
   def hide_loading(action,id=nil)
     update_page do |page|
       if id
@@ -140,7 +148,7 @@ module ApplicationHelper
       end
     end
   end
-  
+
   def posted_date(datetime)
     if datetime > Time.current.beginning_of_day
       datetime.in_time_zone(current_user.time_zone).strftime("%I:%M %p")
@@ -159,7 +167,7 @@ module ApplicationHelper
   def large_pencil_image
     image_tag('pencil_large.png', :class => 'pencil_large')
   end
-    
+
   def trash_image
     image_tag('trash.jpg', :class => 'trash')
   end
@@ -171,11 +179,11 @@ module ApplicationHelper
   def time_image
     image_tag('time.jpg', :class => 'time')
   end
-    
+
   def hour_image
     image_tag('hours.jpg', :class => 'hour')
   end
-  
+
   def drag_image
     image_tag('drag.png', :class => 'drag', :style => 'display: none')
   end
@@ -187,11 +195,11 @@ module ApplicationHelper
   def add_image
     image_tag('add_button.jpg', :class => 'add')
   end
-  
+
   def loading_action_image(e=nil)
     image_tag('loading_action.gif', :id => "loading_action#{ "_#{e}" if e}")
   end
-  
+
   def reload_javascript_events
     page << "Event.addBehavior.reload()"
   end
@@ -209,11 +217,11 @@ module ApplicationHelper
       link_to t('.support'), APP_CONFIG['support_url']
     end
   end
-  
+
   def mobile_link
     link_to t('.mobile'), activities_path(:format => :m)
   end
-  
+
   def help_link
     if APP_CONFIG.has_key? 'help_url'
       link_to t('.help'), "#{APP_CONFIG['help_url']}/#{controller.controller_name}"
@@ -233,17 +241,17 @@ module ApplicationHelper
     target_name = target.class.to_s.tableize
     task_list_url = target.class.to_s == 'Task' ? "task_lists/#{target.task_list.id}/" : ''
     watch_status =  target.watching?(user) ? 'unwatch' : 'watch'
-    
+
     url = "/projects/#{project.permalink}/#{task_list_url}#{target_name}/#{target.id}/#{watch_status}"
-        
+
     link_to_remote "<span>#{t(".#{watch_status}")}</span>", :url => url, :html => { :id => 'watch_link', :class => 'button' }
   end
-   
+
   def people_watching(project,user,target,state = :normal)
       if target.is_a?(Task)
         style_settings = target.closed? ? 'display:none' : ''
       end
-        
+
       render :partial => 'shared/watchers', :locals => {
         :project => project,
         :user => user,
@@ -251,7 +259,7 @@ module ApplicationHelper
         :state => state,
         :style_settings => style_settings}
   end
-  
+
   def update_watching(project,user,target,state = :normal)
     page.replace 'watching', people_watching(project,user,target,state)
   end
@@ -263,7 +271,7 @@ module ApplicationHelper
   def latest_announcement
     render :partial => 'shared/latest_announcement'
   end
-  
+
   def errors_for(model, field)
     error = case errors = model.errors.on(field)
     when Array then errors.first
@@ -271,17 +279,17 @@ module ApplicationHelper
     end
     "<div style='color:red;font-weight:bold'>#{error}</div>"
   end
-  
+
   def link_to_public_page(name)
     if APP_CONFIG.has_key?("#{name}_url")
       link_to t("shared.public_navigation.#{name}"), APP_CONFIG["#{name}_url"]
     end
   end
-  
+
   def textile_documentation_link
     link_to t('.text_styling'), 'http://help.teambox.com/faqs/advanced-features/textile', :target => '_blank'
   end
-  
+
   def autoresize(id)
     javascript_tag "activateResize('#{id.to_s}')"
   end

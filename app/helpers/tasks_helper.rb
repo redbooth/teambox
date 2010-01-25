@@ -4,25 +4,25 @@ module TasksHelper
     task ||= project.tasks.build
     js_id(element,project,task_list,task)
   end
-  
+
   def task_link(project,task_list,task=nil)
     task ||= project.tasks.build
     app_link(project,task_list,task)
   end
 
   def task_form_for(project,task_list,task,&proc)
-    app_form_for(project,task_list,task,&proc)
+    unobtrusive_app_form_for(project,task_list,task,&proc)
   end
-  
+
   def task_submit(project,task_list,task)
-    app_submit(project,task_list,task)
+    unobtrusive_app_submit(project,task_list,task)
   end
 
   def task_form_loading(action,project,task_list,task)
     app_form_loading(action,project,task_list,task)
   end
 
-  def show_task(project,task_list,task)    
+  def show_task(project,task_list,task)
     app_toggle(project,task_list,task)
   end
 
@@ -35,7 +35,7 @@ module TasksHelper
   end
 
   def insert_archive_box(project,task)
-    page.insert_html :after, 'new_comment',  
+    page.insert_html :after, 'new_comment',
       :partial => 'tasks/archive_box', :locals => {
       :project => project,
       :task_list => task.task_list,
@@ -43,54 +43,54 @@ module TasksHelper
   end
 
   def reopen_task_button(project,task_list,task)
-    link_to_remote content_tag(:span,t('.reopen')), 
-      :url => reopen_project_task_list_task_path(project,task_list,task), 
+    link_to_remote content_tag(:span,t('.reopen')),
+      :url => reopen_project_task_list_task_path(project,task_list,task),
       :method => :get,
       :loading => loading_reopen_task,
       :html => {
-        :class => 'button', 
+        :class => 'button',
         :id => 'reopen_task_button' }
-  end  
-  
+  end
+
   def loading_reopen_task
     update_page do |page|
       page['reopen_task_button'].className = 'loading_button'
-      page['reopen_task_button'].writeAttribute('onclick','')      
-    end    
-  end  
-  
+      page['reopen_task_button'].writeAttribute('onclick','')
+    end
+  end
+
   def unarchive_task_button(project,task_list,task)
-    link_to_remote content_tag(:span,t('.unarchive')), 
-      :url => unarchive_project_task_list_task_path(project,task_list,task), 
+    link_to_remote content_tag(:span,t('.unarchive')),
+      :url => unarchive_project_task_list_task_path(project,task_list,task),
       :method => :put,
       :loading => loading_archive_task,
       :html => {
-        :class => 'button', 
+        :class => 'button',
         :id => 'archive_button' }
   end
-  
+
   def task_archive_box(project,task_list,task)
     return unless task.editable?(current_user)
     if task.archived
       render :partial => 'tasks/unarchive_box', :locals => {
         :project => project,
         :task_list => task_list,
-        :task => task }      
+        :task => task }
     elsif task.closed?
       render :partial => 'tasks/archive_box', :locals => {
         :project => project,
         :task_list => task_list,
         :task => task }
-    end  
+    end
   end
 
   def archive_task_button(project,task_list,task)
-    link_to_remote content_tag(:span, t('.archive')), 
-      :url => archive_project_task_list_task_path(project,task_list,task), 
+    link_to_remote content_tag(:span, t('.archive')),
+      :url => archive_project_task_list_task_path(project,task_list,task),
       :method => :put,
       :loading => loading_archive_task,
       :html => {
-        :class => 'button', 
+        :class => 'button',
         :id => 'archive_button' }
   end
 
@@ -98,7 +98,7 @@ module TasksHelper
     update_page do |page|
       page['archive_button'].className = 'loading_button'
       page['archive_button'].writeAttribute('onclick','')
-    end  
+    end
   end
 
 
@@ -106,13 +106,13 @@ module TasksHelper
     page.replace 'show_task', :partial => 'tasks/archive_message', :locals => {
       :task => task }
   end
-  
+
   def show_destroy_task_message(task)
     page.replace 'show_task', :partial => 'tasks/destroy_message', :locals => {
       :task => task }
   end
 
-  
+
   def task_form(project,task_list,task)
     return unless task.editable?(current_user)
     render :partial => 'tasks/form', :locals => {
@@ -126,26 +126,26 @@ module TasksHelper
     render :partial => 'tasks/header', :locals => {
       :project => project,
       :task_list => task_list,
-      :task => task } 
+      :task => task }
   end
 
   def render_due_on(task,user)
-    render :partial => 'tasks/due_on', 
+    render :partial => 'tasks/due_on',
     :locals => {
       :task => task,
       :user => user }
-  end  
+  end
 
   def render_assignment(task,user)
-    render :partial => 'tasks/assigned', 
+    render :partial => 'tasks/assigned',
     :locals => {
       :task => task,
       :user => user }
-  end  
+  end
 
 
   def update_task(task)
-    page.replace task_id(:item,task.project,task.task_list,task), 
+    page.replace task_id(:item,task.project,task.task_list,task),
       :partial => 'tasks/task',
       :locals => {
         :project => task.project,
@@ -156,7 +156,7 @@ module TasksHelper
   def update_task_assignment(task,user)
     page.replace 'assigned', render_assignment(task,user)
   end
-  
+
   def update_task_status(task,status_type)
     id = check_status_type(task,status_type)
     page.replace id, task_status(task,status_type)
@@ -173,7 +173,7 @@ module TasksHelper
         id = "content_task_status_#{task.id}"
       when :header
         id = "header_task_status_#{task.id}"
-    end    
+    end
   end
 
   def comment_task_status(comment)
@@ -181,7 +181,7 @@ module TasksHelper
     if comment.transition?
       out << "<span class='task_status task_status_#{comment.previous_status_name}'>"
       out << I18n.t('tasks.status.'+comment.previous_status_name) unless comment.previous_status_open? && comment.previous_assigned?
-      out << comment.previous_assigned.user.short_name if comment.previous_status_open? && comment.previous_assigned?      
+      out << comment.previous_assigned.user.short_name if comment.previous_status_open? && comment.previous_assigned?
       out << "</span>"
       out << "<span class='arr status_arr'>&rarr;</span>"
     end
@@ -205,10 +205,10 @@ module TasksHelper
   end
 
   def delete_task_link(project,task_list,task)
-    link_to_remote t('common.delete'), 
+    link_to_remote t('common.delete'),
       :url => project_task_list_task_path(project,task_list,task),
       :loading => delete_task_loading(project,task_list,task),
-      :confirm => t('confirm.delete_task'), 
+      :confirm => t('confirm.delete_task'),
       :method => :delete
   end
 
@@ -218,12 +218,12 @@ module TasksHelper
     update_page do |page|
       page[edit_actions_id].hide
       page[delete_loading_id].show
-    end  
+    end
   end
 
   def task_action_links(project,task_list,task)
     render :partial => 'tasks/actions',
-    :locals => { 
+    :locals => {
       :project => project,
       :task_list => task_list,
       :task => task }
@@ -239,7 +239,7 @@ module TasksHelper
   end
 
   def list_tabular_tasks(project,task_list,tasks,sub_action)
-    render :partial => 'tasks/td_task', 
+    render :partial => 'tasks/td_task',
       :collection => tasks,
       :as => :task,
       :locals => {
@@ -257,7 +257,7 @@ module TasksHelper
   end
 
   def list_tasks(project,task_list,tasks,current_target=nil)
-    render :partial => 'tasks/task', 
+    render :partial => 'tasks/task',
       :collection => tasks,
       :locals => {
         :project => project,
@@ -266,7 +266,7 @@ module TasksHelper
   end
 
   def task_fields(f,project,task_list,task)
-    render :partial => 'tasks/fields', :locals => { 
+    render :partial => 'tasks/fields', :locals => {
       :f => f,
       :project => project,
       :task_list => task_list,
@@ -274,17 +274,17 @@ module TasksHelper
   end
 
   def render_task(project,task_list,task,comment)
-    render :partial => 'tasks/show', 
-      :locals => { 
-        :project => project, 
-        :task_list => task_list, 
+    render :partial => 'tasks/show',
+      :locals => {
+        :project => project,
+        :task_list => task_list,
         :task => task,
         :comment => comment }
   end
 
   def update_active_task(project,task_list,task,comment)
-    page.replace_html 'content', :partial => 'tasks/show', 
-      :locals => { 
+    page.replace_html 'content', :partial => 'tasks/show',
+      :locals => {
         :project => project,
         :task_list => task_list,
         :task => task,
@@ -302,21 +302,21 @@ module TasksHelper
     page.select('.task_navigation .active').invoke('removeClassName','active')
     page[item_id].addClassName("active_#{task.status_name}")
   end
-  
-  def insert_task(project,task_list,task)  
+
+  def insert_task(project,task_list,task)
     page.insert_html :bottom, task_list_id(:the_tasks,project,task_list),
-      :partial => 'tasks/task', 
-      :locals => {  
+      :partial => 'tasks/task',
+      :locals => {
         :task => task,
-        :project => project, 
+        :project => project,
         :task_list => task_list,
         :current_target => nil }
-  end  
-  
+  end
+
   def replace_task(project,task_list,task)
     page.replace task_id(:item,project,task_list,task),
-      :partial => 'tasks/task', 
-      :locals => { 
+      :partial => 'tasks/task',
+      :locals => {
         :project => project,
         :task_list => task_list,
         :task => task,
@@ -325,20 +325,20 @@ module TasksHelper
 
   def replace_task_header(project,task_list,task)
     page.replace task_id(:edit_header,project,task_list,task),
-      :partial => 'tasks/header', 
-      :locals => { 
+      :partial => 'tasks/header',
+      :locals => {
         :project => project,
         :task_list => task_list,
         :task => task }
   end
-  
+
   def localized_status_name(task)
     I18n.t('tasks.status.' + task.status_name)
   end
-  
+
   def insert_task_form(project,task_list,task)
-    page.insert_html :after, 
-      task_id(:edit_header,project,task_list,task), 
+    page.insert_html :after,
+      task_id(:edit_header,project,task_list,task),
       :partial => 'tasks/form', :locals => {
         :project => project,
         :task_list => task_list,
@@ -346,7 +346,7 @@ module TasksHelper
   end
 
   def tasks_sortable(project,task_list)
-    update_page_tag do |page|    
+    update_page_tag do |page|
       page.sortable(task_list_id(:the_tasks,project,task_list),{
         :tag => 'div',
         :url => project_reorder_tasks_path(project,task_list),
@@ -363,7 +363,7 @@ module TasksHelper
         :popup => :force,
         :first_day_of_week => 1,
         :footer => false,
-        :year_range => 2.years.ago..10.years.from_now, 
+        :year_range => 2.years.ago..10.years.from_now,
         :time => false,
         :buttons => false }),
       :class => 'date_picker')

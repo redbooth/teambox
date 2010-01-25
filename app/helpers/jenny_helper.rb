@@ -18,7 +18,7 @@ module JennyHelper
     end
     generate_js_path(element,models)
   end
-  
+
   def generate_js_path(element,models)
     path = []
     models.each do |model|
@@ -27,24 +27,24 @@ module JennyHelper
     end
     path << element unless element.nil?
     path.join('_')
-  end  
-  
+  end
+
   def app_link(*args)
     target, action = shes_just_a_memory(*args)
     return unless target.editable?(current_user)
-    
+
     singular_name = target.class.to_s.underscore
     plural_name = target.class.to_s.tableize
 
-    link_to_function content_tag(:span,t("#{plural_name}.link.#{action}")), 
+    link_to_function content_tag(:span,t("#{plural_name}.link.#{action}")),
       send("show_#{singular_name}".to_sym,*args),
       :class => "#{action}_#{singular_name}_link",
       :id => js_id("#{action}_link",*args)
   end
-    
+
   def app_toggle(*args)
     target, action = shes_just_a_memory(*args)
-    
+
     header_id = js_id("#{action}_header",*args)
     link_id   = js_id("#{action}_link",*args)
     form_id   = js_id("#{action}_form",*args)
@@ -60,20 +60,30 @@ module JennyHelper
 
   def app_submit(*args)
     target, action = shes_just_a_memory(*args)
-    
+
     plural_name = target.class.to_s.tableize
-        
+
     submit_id = js_id("#{action}_submit",*args)
     loading_id = js_id("#{action}_loading",*args)
     submit_to_function t("#{plural_name}.#{action}.submit"), app_toggle(*args), submit_id, loading_id
   end
 
+  def unobtrusive_app_submit(*args)
+    target, action = shes_just_a_memory(*args)
+
+    plural_name = target.class.to_s.tableize
+
+    submit_id = js_id("#{action}_submit",*args)
+    loading_id = js_id("#{action}_loading",*args)
+    submit_or_cancel t("#{plural_name}.#{action}.submit"), submit_id, loading_id
+  end
+
   def app_form_for(*args,&proc)
     raise ArgumentError, "Missing block" unless block_given?
     target, action = shes_just_a_memory(*args)
-    
+
     singular_name = target.class.to_s.underscore
-    
+
     remote_form_for(args,
       :loading => app_form_loading(action,*args),
       :html => {
@@ -82,7 +92,20 @@ module JennyHelper
         :style => 'display: none'},
         &proc)
   end
-  
+
+  def unobtrusive_app_form_for(*args, &proc)
+    raise ArgumentError, "Missing block" unless block_given?
+    target, action = shes_just_a_memory(*args)
+
+    singular_name = target.class.to_s.underscore
+    form_for(args,
+      :html => {
+        :id => js_id("#{action}_form",*args),
+        :class => "#{singular_name}_form app_form xxx",
+        :style => 'display: none'},
+        &proc)
+  end
+
   def shes_just_a_memory(*args)
     #And she use to mean so much to me...
     target = args.last
@@ -115,4 +138,4 @@ BLOCK
     end
   end
 
-end  
+end

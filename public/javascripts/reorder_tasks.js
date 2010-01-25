@@ -20,4 +20,12 @@ document.observe("dom:loaded", function(){
       }
     })
   })
+
+  $$(".inline_form_submit").each(function(submit_button){
+    submit_button.observe('click', function(event){
+      //TODO: create task via Ajax req. here
+      // new Ajax.Request()
+      event.stop();
+    })
+  })
 });

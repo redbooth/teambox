@@ -25,7 +25,7 @@ if @task.errors.empty?
   #FIXME: This gives a css class to the newly created task
   # so that it stands out but it throws an RJS error
   # debugger
-  # page.update_active_task(@current_project,@task_list,@task,@comment)
+  page.update_active_task(@current_project,@task_list,@task,@comment)
   page.reload_javascript_events
 else
   page[form_id].addClassName('form_error')
