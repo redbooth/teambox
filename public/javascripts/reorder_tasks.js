@@ -23,8 +23,31 @@ document.observe("dom:loaded", function(){
 
   $$(".inline_form_submit").each(function(submit_button){
     submit_button.observe('click', function(event){
-      //TODO: create task via Ajax req. here
-      // new Ajax.Request()
+      var form = event.findElement("form");
+      var submit_url = form.readAttribute("action");
+      new Ajax.Request(submit_url, {
+        asynchronous: true,
+        evalScripts: true,
+        parameters: form.serialize(),
+        onLoading: function() {
+          // show loading bubbles
+          form.down('.loading').show();
+        },
+        onSuccess: function(response){
+          form.down('.loading').hide();
+          // make the form disappear
+          form.hide();
+          // make the Add task link appear
+          form.up().down(".new_task_link").show();
+          // add a new task in the task list box, to the bottom
+          var task_item_html = response.responseText;
+          var list_of_tasks = form.up().down(".tasks");
+          list_of_tasks.insert({ bottom: task_item_html })
+          var new_task = list_of_tasks.select('.task').last(); // up().
+          new_task.addClassName('active_new');
+        }
+      })
+      // console.log(submit_url);
       event.stop();
     })
   })

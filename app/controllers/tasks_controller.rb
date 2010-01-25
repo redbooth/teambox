@@ -28,7 +28,15 @@ class TasksController < ApplicationController
       @comment = @current_project.new_task_comment(@task)
     end
     respond_to do |format|
-      format.js
+      format.js do
+        # render :text => @task.to_json
+        render :partial => 'tasks/task',
+        :locals => {
+          :task => @task,
+          :project => @current_project,
+          :task_list => @task_list,
+          :current_target => nil }        
+      end
     end
   end
 
