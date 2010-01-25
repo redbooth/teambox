@@ -12,8 +12,7 @@ module PageDividersHelper
   end  
 
   def hide_divider_form
-    page["new_divider_form"].hide
-    page << "Form.reset('new_divider_form');"
+    page.call "InsertionBar.clearWidgetForm"
   end
 
   def show_divider_form(in_bar)

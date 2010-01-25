@@ -12,8 +12,7 @@ module PageNotesHelper
   end  
 
   def hide_note_form
-    page["new_note_form"].hide
-    page << "Form.reset('new_note_form');"
+    page.call "InsertionBar.clearWidgetForm"
   end
 
   def show_note_form(in_bar)

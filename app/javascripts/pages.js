@@ -16,11 +16,14 @@ Event.addBehavior({
     });
   },
   "#pageInsert:click": function(e) {
-    InsertionBar.show();
-    
-    InsertionMarker.setEnabled(false);
-    InsertionMarker.hide();
-    
+	if (InsertionBar.current_form) {
+	  InsertionBar.place();
+	} else {
+      InsertionBar.show();
+	  InsertionMarker.setEnabled(false);
+	  InsertionMarker.hide();
+    }
+
     return false;
   },
   "#pageInsertItemCancel a:click": function(e) {
@@ -64,6 +67,7 @@ var InsertionBar = {
   init: function() {
     this.element = $('pageInsertItems');
     this.element_bar  = $('pageInsertItemsBar');
+    this.current_form = null;
   },
 
   show: function() {
