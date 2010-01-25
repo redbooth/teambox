@@ -28,7 +28,7 @@ defaults: &DEFAULTS
   # When set to true, "reply above this line" notice will be displayed where relevant and accept emails.
   # You will need to:
   # * Setup catch-all address for email received for any username of the incoming mail server.
-  # * Run './script/inbox start' to start the receiving email daemon.
+  # * Run './script/inbox' periodically from cron to process incoming emails.
   allow_incoming_email: false
   incoming:
     type: pop

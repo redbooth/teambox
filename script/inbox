@@ -1,30 +1,28 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../config/environment.rb'
+require 'net/pop'
+require File.dirname(__FILE__) + '/../config/environment'
 
 logger = RAILS_DEFAULT_LOGGER
 
-class MailerDaemonFetcherDaemon < Daemon::Base
-  
-  @config = APP_CONFIG['incoming'].to_options
-  
-  @sleep_time = @config.delete(:sleep_time) || 30
-    @fetcher = Fetcher.create({:receiver => Emailer}.merge(@config))
-  
-  def self.start
-    puts "Starting MailerDaemonFetcherDaemon"
-    @fetcher = Fetcher.create({:receiver => Emailer}.merge(@config))
+puts 'Running Mail Importer...'
 
-    loop do
-      @fetcher.fetch
-      sleep(@sleep_time)
+@config = APP_CONFIG['incoming']
+
+Net::POP3.start(@config['server'], nil, @config['username'], @config['password']) do |pop|
+  if pop.mails.empty?
+    puts 'No mail.'
+  else
+    pop.mails.each do |email|
+      begin
+        puts 'Receiving mail...'
+        Emailer.receive(email.pop)
+      rescue Exception => e
+        puts 'Error receiving email at ' + Time.current.to_s + '::: ' + e.message
+      end
+      email.delete
     end
   end
-  
-  def self.stop
-    puts "Stopping MailerDaemonFetcherDaemon"
-  end
-  
 end
+puts 'Finished Mail Importer.'
 
-MailerDaemonFetcherDaemon.daemonize
