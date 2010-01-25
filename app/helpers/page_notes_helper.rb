@@ -16,9 +16,13 @@ module PageNotesHelper
     page << "Form.reset('new_note_form');"
   end
 
-  def show_note_form
+  def show_note_form(in_bar)
     update_page do |page|
-      page["new_note_form"].show
+      unless in_bar
+        page.call "InsertionMarker.set", nil, true
+        page.call "InsertionBar.place"
+      end
+      page.call "InsertionBar.setWidgetForm", "new_note_form"
       page << "new Effect.Highlight('new_note_form',{ startcolor: '#F0F0F0', endcolor: '#F5F5F5', restorecolor: '#F5F5F5'})"
       page << "Form.reset('new_note_form');"
       page.hide_loading_note_form
@@ -34,8 +38,8 @@ module PageNotesHelper
     render :partial => 'notes/note', :collection => notes
   end
   
-  def new_page_note_link(project,page)
-    link_to_function "<span>#{t('.new_note')}</span>", show_note_form, :class => 'add_button', :id => 'note_button'
+  def new_page_note_link(project,page,in_bar)
+    link_to_function "<span>#{t('.new_note')}</span>", show_note_form(in_bar), :class => 'add_button', :id => 'note_button'
   end
   
   def new_loading_form

@@ -1,1 +1,1 @@
-page["divider_#{@divider.id}"].remove
+page["page_slot_#{@divider.page_slot.id}"].remove

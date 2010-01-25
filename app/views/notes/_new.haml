@@ -1,4 +1,5 @@
 - remote_form_for [project,page,note], :loading => show_loading_note_form, :html => { :id => "new_note_form", :style => 'display: none' } do |f|
+  = page_slot_fields("new_note_form")
   = note_fields(f)
   .submit{ :id => "note_submit" }
     = f.submit t('.submit')

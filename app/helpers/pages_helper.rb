@@ -72,9 +72,18 @@ module PagesHelper
       :page => page }
   end
   
+  def page_slot_fields(formName)
+    render :partial => 'pages/slot_fields', :locals => {:formName => formName}
+  end
+  
   def page_buttons(project,page)
     return unless project.editable?(current_user)
-    render :partial => 'pages/buttons', :locals => { :project => project, :page => page }
+    render :partial => 'pages/buttons', :locals => { :project => project, :page => page, :in_bar => false }
+  end
+
+  def page_bar_buttons(project,page)
+    return unless project.editable?(current_user)
+    render :partial => 'pages/buttons', :locals => { :project => project, :page => page, :in_bar => true }
   end
   
 end

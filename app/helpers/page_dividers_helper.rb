@@ -16,9 +16,13 @@ module PageDividersHelper
     page << "Form.reset('new_divider_form');"
   end
 
-  def show_divider_form
+  def show_divider_form(in_bar)
     update_page do |page|
-      page["new_divider_form"].show
+      unless in_bar
+        page.call "InsertionMarker.set", nil, true
+        page.call "InsertionBar.place"
+      end
+      page.call "InsertionBar.setWidgetForm", "new_divider_form"
       #page << "new Effect.Highlight('new_divider_form',{ startcolor: '#F0F0F0', endcolor: '#F5F5F5', restorecolor: '#FFFFFF'})"
       page << "Form.reset('new_divider_form');"
       page.hide_loading_divider_form
@@ -34,8 +38,8 @@ module PageDividersHelper
     render :partial => 'dividers/divider', :collection => dividers
   end
   
-  def new_page_divider_link(project,page)
-    link_to_function content_tag(:span,t('.new_divider')), show_divider_form, :class => 'add_button', :id => 'divider_button'
+  def new_page_divider_link(project,page,in_bar)
+    link_to_function content_tag(:span,t('.new_divider')), show_divider_form(in_bar), :class => 'add_button', :id => 'divider_button'
   end
   
   def new_loading_form

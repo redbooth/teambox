@@ -5,9 +5,27 @@
   %h2= @page
   .description= @page.description
 
+- content_for :js_templates do
+  = "document.observe(\"dom:loaded\", function() {Page.init(false)});"
+
 = page_buttons(@current_project,@page)
 
-#slots
-  - @page.slots.each do |slot|
-    .pageSlot{:id => "page_slot_#{slot.id}", :slot => slot.id}
-      = render :partial => 'slot', :locals => {:object => slot.rel_object, :page_slot => slot}
+#slots.pageSlots
+  -# Util widgets
+  #pageInsert{:style => 'display:none'}
+    %p#PIB= "Insert Here"
+    
+  #pageInsertItems
+    #pageInsertItemsBar{:style => 'display:none'}
+      #pageInsertItemCancel
+        %a{:href => '#'}= "Cancel"
+      #pageInsertItemWidgets
+        = page_bar_buttons(@current_project,@page)
+      
+    #pageForms
+      = new_note_form(@current_project,@page)
+      = new_divider_form(@current_project,@page)
+  
+  = render :partial => 'slot', :collection => @page.slots
+  
+  .pageSlot.pageFooter#page_slot_footer{:slot => -1}

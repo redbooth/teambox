@@ -1,5 +1,6 @@
-page.insert_html :top, :notes, :partial => 'notes/note', :locals => { :note => @note }
+page.insert_html((@insert_before ? :before : :after), @insert_element, :partial => 'pages/slot', :object => @note.page_slot)
 page.hide_note_form
 page["note_#{@note.id}"].highlight
 #page.notes_sortable(project_page_path(@note.page.project,@note.page))
 page.reload_javascript_events
+

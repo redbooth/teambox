@@ -1,4 +1,4 @@
-page.insert_html :top, :dividers, :partial => 'dividers/divider', :locals => { :divider => @divider }
+page.insert_html (@insert_before ? :before : :after), @insert_element, :partial => 'pages/slot', :object => @divider.page_slot
 page.hide_divider_form
 page["divider_#{@divider.id}"].highlight
 #page.dividers_sortable(project_page_path(@divider.page.project,@divider.page))

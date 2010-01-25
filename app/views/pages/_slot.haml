@@ -1,4 +1,4 @@
-- cname = object.class.to_s.downcase
+- cname = slot.rel_object.class.to_s.downcase
 
-.pageWidget{}
-  != render :partial => "#{cname.pluralize}/#{cname}", :locals => {:object => object}
+.pageSlot{:id => "page_slot_#{slot.id}", :slot => slot.id}
+  = render :partial => "#{cname.pluralize}/#{cname}", :locals => {:object => slot.rel_object}
