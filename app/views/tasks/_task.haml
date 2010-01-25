@@ -1,4 +1,4 @@
-.task{ :id => "task_#{task.id}", :class => "#{ "active_#{task.status_name}" if current_target == task } task_item task_item_#{task.status_name}" }
+.task{ :id => "task_#{task.id}", :class => "#{ "active_#{task.status_name}" if current_target == task } task_item task_item_#{task.status_name}", :show_in_main_content_url => show_in_main_content_project_task_list_task_path(project, task_list, task) }
   = task_status(task,:column)
   = task_drag_link(task)
   - mine = (task.assigned.try(:user_id) == current_user.id) ? 'mine' : ''

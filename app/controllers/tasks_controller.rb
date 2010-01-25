@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder,:archive,:unarchive,:reopen]
-  before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch,:reopen]
+  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder,:archive,:unarchive,:reopen, :show_in_main_content]
+  before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch,:reopen,:show_in_main_content]
 
   def show
     if @task.archived?
@@ -29,13 +29,12 @@ class TasksController < ApplicationController
     end
     respond_to do |format|
       format.js do
-        # render :text => @task.to_json
         render :partial => 'tasks/task',
         :locals => {
           :task => @task,
           :project => @current_project,
           :task_list => @task_list,
-          :current_target => nil }        
+          :current_target => nil }
       end
     end
   end
@@ -100,6 +99,16 @@ class TasksController < ApplicationController
       task = @task_list.tasks.find(task_id)
       task.update_attribute(:position,idx.to_i)
     end
+  end
+
+  def show_in_main_content
+    @comment = @current_project.new_task_comment(@task)
+    render :partial => 'tasks/show',
+      :locals => {
+        :project => @current_project,
+        :task_list => @task_list,
+        :task => @task,
+        :comment => @comment }
   end
 
   def watch

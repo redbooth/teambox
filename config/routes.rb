@@ -1,4 +1,4 @@
-ActionController::Routing::Routes.draw do |map|  
+ActionController::Routing::Routes.draw do |map|
   map.logout            '/logout',              :controller => 'sessions',    :action => 'destroy'
   map.login             '/login',               :controller => 'sessions',    :action => 'new'
   map.register          '/register',            :controller => 'users',       :action => 'create'
@@ -13,9 +13,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.new_example_project    '/example/new',    :controller => 'example_projects', :action => 'new'
   map.create_example_project '/example/create', :controller => 'example_projects', :action => 'create'
-  
+
   map.create_project_invitation '/projects/:project_id/invite/:login', :controller => 'invitations', :action => 'create', :method => :post
-  
+
   map.resources :reset_passwords
   map.resource :session
 
@@ -23,8 +23,8 @@ ActionController::Routing::Routes.draw do |map|
   map.account_picture '/account/picture',   :controller => 'users', :action => 'edit', :sub_action => 'picture'
   map.account_profile '/account/profile',   :controller => 'users', :action => 'edit', :sub_action => 'profile'
   map.account_notifications '/account/notifications', :controller => 'users', :action => 'edit', :sub_action => 'notifications'
-  
-  map.resources :users, :has_many => [:invitations,:comments], :member => { 
+
+  map.resources :users, :has_many => [:invitations,:comments], :member => {
                           :unconfirmed_email => :get,
                           :confirm_email => :get,
                           :contact_importer => :get } do |user|
@@ -39,8 +39,8 @@ ActionController::Routing::Routes.draw do |map|
   map.show_new   'activities/:id/show_new.:format',  :controller => 'activities', :action => 'show_new',  :method => :get
   map.show_more  'activities/:id/show_more.:format', :controller => 'activities', :action => 'show_more', :method => :get
 
-  map.project_archived 'projects/archived.:format',  :controller => 'projects', :action => 'index', :sub_action => 'archived'  
-  
+  map.project_archived 'projects/archived.:format',  :controller => 'projects', :action => 'index', :sub_action => 'archived'
+
   map.resources :projects,
       :has_many => [:pages, :people],
       :member => [:get_comments, :accept, :decline] do |project|
@@ -53,9 +53,9 @@ ActionController::Routing::Routes.draw do |map|
 
     project.my_task_lists 'my_task_lists',             :controller => 'task_lists', :action => 'index', :sub_action => 'mine'
     project.archived_task_lists 'task_lists/archived', :controller => 'task_lists', :action => 'index', :sub_action => 'archived'
-    
+
     project.resources :invitations, :member => [:accept,:decline,:resend]
-        
+
     project.resources :comments do |comment|
       comment.resources :uploads, :member => { :iframe => :get }
     end
@@ -68,21 +68,21 @@ ActionController::Routing::Routes.draw do |map|
 
     project.reorder_task_lists 'reorder_task_lists', :controller => 'task_lists', :action => 'reorder', :method => :post
     project.reorder_tasks 'task_lists/:task_list_id/reorder_task_list', :controller => 'tasks', :action => 'reorder', :method => :post
-    
+
     project.resources :task_lists, :has_many => [:comments], :collection => { :sortable => :get, :archived => :get  }, :member => [:watch,:unwatch] do |task_lists|
-        task_lists.resources :tasks, :has_many => [:comments], :member => { :watch => :post, :unwatch => :post, :archive => :put, :unarchive => :put, :reopen => :get  }
+        task_lists.resources :tasks, :has_many => [:comments], :member => { :watch => :post, :unwatch => :post, :archive => :put, :unarchive => :put, :reopen => :get, :show_in_main_content => :get }
     end
-    
+
     project.resources :people, :member => { :destroy => :get }
     project.resources :conversations, :has_many => [:comments,:uploads], :member => [:watch,:unwatch]
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }
   end
-  
+
   map.resources :comments
   map.resources :task_lists, :only => [ :index ]
   map.resources :conversations, :only => [ :index ]
   map.resources :pages, :only => [ :index ]
-  
+
   map.root :controller => 'projects', :action => 'index'
   map.connect 'assets/:id/:style/:filename', :controller => 'uploads', :action => 'download', :conditions => { :method => :get }, :requirements => { :filename => /.*/ }
   SprocketsApplication.routes(map)

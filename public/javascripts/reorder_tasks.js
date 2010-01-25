@@ -43,11 +43,20 @@ document.observe("dom:loaded", function(){
           var task_item_html = response.responseText;
           var list_of_tasks = form.up().down(".tasks");
           list_of_tasks.insert({ bottom: task_item_html })
-          var new_task = list_of_tasks.select('.task').last(); // up().
+          var new_task = list_of_tasks.select('.task').last();
           new_task.addClassName('active_new');
+          var show_in_main_content_url = new_task.readAttribute('show_in_main_content_url');
+          // load the new task into the main content area
+          new Ajax.Request(show_in_main_content_url, {
+            asynchronous: true,
+            evalScripts: true,
+            method: 'get',
+            onSuccess: function(response){
+              Element.replace('content', response.responseText);
+            }
+          })
         }
       })
-      // console.log(submit_url);
       event.stop();
     })
   })
