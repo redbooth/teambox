@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
                 :belongs_to_project?, 
                 :set_page_title,
                 :set_client,
-                :set_current_user
+                :set_user
   
   private
 
@@ -170,7 +170,7 @@ class ApplicationController < ActionController::Base
     	end
     end
     
-    def set_current_user
+    def set_user
       @current_user = current_user || nil
     end
 end
