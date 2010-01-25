@@ -2,8 +2,10 @@ class NotesController < ApplicationController
   before_filter :load_page
   
   def create
+    calculate_position
+    
     @note = @page.build_note(params[:note])
-    @note.save
+    save_slot(@note) if @note.save
     respond_to{|f|f.js}
   end
   
@@ -20,6 +22,7 @@ class NotesController < ApplicationController
   
   def destroy
     @note = @page.notes.find(params[:id])
+    @slot_id = @note.page_slot.id if @note
     @note.destroy if @note
     respond_to{|f|f.js}    
   end

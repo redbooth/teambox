@@ -2,8 +2,14 @@ class Page < RoleRecord
   has_many :notes, :order => 'position'
   has_many :dividers, :order => 'position'
   has_many :page_uploads, :order => 'position'
-      
+  
+  has_many :slots, :class_name => 'PageSlot', :order => 'position ASC'
+  
   attr_accessible :name, :description, :note_attributes
+  
+  def self.widgets
+     [Note, Divider]
+  end
   
   def build_note(note = {})
     self.notes.build(note) do |note|
@@ -24,6 +30,37 @@ class Page < RoleRecord
       note.project_id = self.project_id
       note.page_id = self.id
     end
+  end
+  
+  def new_slot(insert_id, insert_before, widget)
+     PageSlot.transaction do
+       # Calculate correct position
+       if !insert_id.nil? and insert_id != 0
+         old_slot = PageSlot.find(insert_id)
+         insert_pos = insert_before ? old_slot.position : old_slot.position+1
+       else
+         if self.slots.empty?
+           insert_pos = 0
+         else
+           insert_pos = insert_before ? self.slots[0].position : 
+                                        self.slots[self.slots.length-1].position+1
+         end
+       end
+       
+       # Bump up all other slots
+       self.slots.each do |slot|
+         if slot.position >= insert_pos
+           slot.position += 1
+           slot.save
+         end
+       end
+       
+       # Make the new slot, damnit!
+       slot = PageSlot.new(:page => self, :position => insert_pos, :rel_object => widget)
+       slot.save
+       
+       slot
+     end      
   end
   
   def after_create

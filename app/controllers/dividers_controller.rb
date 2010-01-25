@@ -2,7 +2,10 @@ class DividersController < ApplicationController
   before_filter :load_page
   
   def create
+    calculate_position
+    
     @divider = @page.build_divider(params[:divider])
+    save_slot(@divider) if @divider.save
     @divider.save
     respond_to{|f|f.js}
   end
@@ -20,6 +23,7 @@ class DividersController < ApplicationController
   
   def destroy
     @divider = @page.dividers.find(params[:id])
+    @slot_id = @divider.page_slot.id if @divider
     @divider.destroy if @divider
     respond_to{|f|f.js}    
   end

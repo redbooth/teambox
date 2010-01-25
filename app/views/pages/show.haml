@@ -7,7 +7,7 @@
 
 = page_buttons(@current_project,@page)
 
-#dividers
-  = list_page_dividers(@page.dividers)
-#notes
-  = list_page_notes(@page.notes)
+#slots
+  - @page.slots.each do |slot|
+    .pageSlot{:id => "page_slot_#{slot.id}", :slot => slot.id}
+      = render :partial => 'slot', :locals => {:object => slot.rel_object, :page_slot => slot}

@@ -1,12 +1,19 @@
 class Note < RoleRecord
   belongs_to :page
   belongs_to :project
+  has_one :page_slot, :as => :rel_object
   acts_as_paranoid
+  
+  before_destroy :clear_slot
     
   formats_attributes :body
     
   attr_accessor :deleted
   attr_accessible :body, :deleted, :name
+  
+  def clear_slot
+    page_slot.update_attributes(:page_id => nil)
+  end
   
   def to_s
     name
