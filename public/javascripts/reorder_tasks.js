@@ -70,6 +70,25 @@ Task = {
     })
   },
 
+  update: function(form, url) {
+    new Ajax.Request(url, {
+      asynchronous: true,
+      evalScripts: true,
+      parameters: form.serialize(),
+      onLoading: function() {
+        // show loading bubbles
+        form.down('.loading').show();
+      },
+      onSuccess: function(response){
+        form.down('.loading').hide();
+        // make the form disappear
+        form.hide();
+        // make the Add task link appear
+        form.up().down(".new_task_link").show();
+      }
+    })
+  },
+
   highlight_last_as_new: function(list_of_tasks) {
     var new_task = list_of_tasks.select('.task').last();
     list_of_tasks.select('.task').each(function(task){
@@ -90,11 +109,22 @@ Task = {
   },
 
   bind_creation: function() {
-    $$(".inline_form_submit").each(function(submit_button){
+    $$(".inline_form_create").each(function(submit_button){
       submit_button.observe('click', function(event){
         var form = event.findElement("form");
         var submit_url = form.readAttribute("action");
         Task.create(form, submit_url);
+        event.stop();
+      })
+    })
+  },
+
+  bind_update: function() {
+    $$(".inline_form_update").each(function(submit_button){
+      submit_button.observe('click', function(event){
+        var form = event.findElement("form");
+        var submit_url = form.readAttribute("action");
+        Task.update(form, submit_url);
         event.stop();
       })
     })
@@ -105,4 +135,5 @@ document.observe("dom:loaded", function(){
   Task.make_all_sortable();
   Task.make_cancel_links();
   Task.bind_creation();
+  Task.bind_update();
 });

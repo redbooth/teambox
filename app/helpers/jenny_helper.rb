@@ -75,7 +75,7 @@ module JennyHelper
 
     submit_id = js_id("#{action}_submit",*args)
     loading_id = js_id("#{action}_loading",*args)
-    submit_or_cancel t("#{plural_name}.#{action}.submit"), submit_id, loading_id
+    submit_or_cancel target, t("#{plural_name}.#{action}.submit"), submit_id, loading_id
   end
 
   def app_form_for(*args,&proc)

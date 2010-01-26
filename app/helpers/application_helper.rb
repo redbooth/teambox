@@ -24,8 +24,9 @@ module ApplicationHelper
   end
 
   # this is the unobtrusive pair of the submit_to_function
-  def submit_or_cancel(name, submit_id, loading_id)
+  def submit_or_cancel(object, name, submit_id, loading_id)
     render :partial => 'shared/submit_or_cancel', :locals => {
+      :object => object,
       :name => name,
       :submit_id => submit_id,
       :loading_id => loading_id }
