@@ -92,6 +92,9 @@ Task = {
       method: 'get',
       onSuccess: function(response){
         Element.replace('content', response.responseText);
+        Task.bind_cancel_links_on_update_forms();
+        Task.bind_creation();
+        Task.bind_update();
       }
     })
   },
@@ -119,21 +122,18 @@ Task = {
   },
 
   bind_cancel_links_on_create_forms: function() {
-    $$(".inline_form_create_cancel").each(function(cancel_link){
-      cancel_link.observe('click', function(event){
-        var form = event.findElement("form");
-        form.up().down(".new_task_link").show();
-        // hide the form
-        form.hide();
-      })
-    })
+    Task.bind_cancel_links(".inline_form_create_cancel", ".new_task_link");
   },
 
   bind_cancel_links_on_update_forms: function() {
-    $$(".inline_form_update_cancel").each(function(cancel_link){
+    Task.bind_cancel_links(".inline_form_update_cancel", ".task_header");
+  },
+
+  bind_cancel_links: function(classToBind, classToShow) {
+    $$(classToBind).each(function(cancel_link){
       cancel_link.observe('click', function(event){
         var form = event.findElement("form");
-        form.up().down(".task_header").show();
+        form.up().down(classToShow).show();
         form.hide();
       })
     })
