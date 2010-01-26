@@ -8,13 +8,17 @@ class CreatePageSlots < ActiveRecord::Migration
     end
     
     # Make slots for all notes and dividers
-    Pages.each do |page|
-      page.notes.each do |note|
-        PageSlot.create(:page => page, :position => note.position, :rel_object => note)
-      end
+    Page.find(:all).each do |page|
+      pos = 0
       
       page.dividers.each do |divider|
-        PageSlot.create(:page => page, :position => divider.position, :rel_object => divider)
+        PageSlot.create(:page => page, :position => pos, :rel_object => divider)
+        pos += 1
+      end
+      
+      page.notes.each do |note|
+        PageSlot.create(:page => page, :position => pos, :rel_object => note)
+        pos += 1
       end
     end
   end
