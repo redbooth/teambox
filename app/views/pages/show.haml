@@ -6,7 +6,7 @@
   .description= @page.description
 
 - content_for :js_templates do
-  = "document.observe(\"dom:loaded\", function() {Page.init(false)});"
+  = "document.observe(\"dom:loaded\", function() {Page.init(false, \"#{project_page_path(@current_project,@page)}\", \"#{form_authenticity_token}\"); Page.makeSortable();});"
 
 = page_buttons(@current_project,@page)
 

@@ -40,9 +40,10 @@ var Page = {
   SLOT_VERGE: 20,
   READONLY: false,
 
-  init: function(readonly) {
-    console.log("PAGE INIT");
+  init: function(readonly, url, auth) {
     this.READONLY = readonly;
+	this.url = url;
+	this.auth = auth;
     if (!readonly) {
       InsertionMarker.init();
       InsertionBar.init();
@@ -54,7 +55,18 @@ var Page = {
 
   makeSortable: function() {
     if (this.READONLY)
-      return;		
+      return;
+
+    Sortable.create('slots', {handle: 'slot_handle', tag: 'div', only: 'pageSlot',
+      onUpdate: function() {
+        new Ajax.Request(Page.url + '/reorder',
+        {
+          asynchronous:true, evalScripts:true,
+          onComplete:function(request) {},
+          parameters:Sortable.serialize('slots', {name: 'slots'}) + '&authenticity_token=' + Page.auth
+        });
+      } 
+	});		
   }
 }
 

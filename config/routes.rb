@@ -75,7 +75,7 @@ ActionController::Routing::Routes.draw do |map|
     
     project.resources :people, :member => { :destroy => :get }
     project.resources :conversations, :has_many => [:comments,:uploads], :member => [:watch,:unwatch]
-    project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads]
+    project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }
   end
   
   map.resources :comments

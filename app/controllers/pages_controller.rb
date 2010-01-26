@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
-  before_filter :load_page, :only => [ :show, :edit, :update, :destroy ]
-  before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy]
+  before_filter :load_page, :only => [ :show, :edit, :update, :reorder, :destroy ]
+  before_filter :check_permissions, :only => [:new,:create,:edit,:update,:reorder,:destroy]
     
   def index
     if @current_project
@@ -41,25 +41,40 @@ class PagesController < ApplicationController
   end
   
   def update
-    if params[:notes]
-      position = 0
-      params[:notes].each do |note_id|
-        note = @page.notes.detect { |n| n.id == note_id.to_i }
-        if note
-          note.position = position
-          note.save(false)
-          position += 1
-        end
+    respond_to do |f|
+      if @page.update_attributes(params[:page])
+        f.html { redirect_to project_page_path(@current_project,@page)}
+      else
+        f.html { render :edit }
       end
-      respond_to{|f|f.js}
-    else
-      respond_to do |f|
-        if @page.update_attributes(params[:page])
-          f.html { redirect_to project_page_path(@current_project,@page)}
-        else
-          f.html { render :edit }
-        end
-      end
+    end
+  end
+  
+  def reorder
+    order = params[:slots].collect { |id| id.to_i }
+    current = @page.slots.map { |slot| slot.id }
+    
+    # Handle orphaned elements
+    # [1,3,4,5o (4),6o (5),7,8]
+    # 1,4,3,8,7 NEW
+    # << 1,4,3,8,7
+    # insert 1,4,|5|,|6|,3,8,7
+    orphans = (current - order).map { |o| 
+      idx = current.index(o)
+      oid = idx == 0 ? -1 : current[idx-1]
+      [@page.slots[idx], oid]
+    }
+    
+    # Insert orphans back into order list
+    orphans.each { |o| order.insert(o[1], (order.index(o[0]) || -1)+1) }
+    
+    @page.slots.each do |slot|
+      slot.position = order.index(slot.id)
+      slot.save!
+    end
+    
+    respond_to do |f|
+      f.js
     end
   end
 

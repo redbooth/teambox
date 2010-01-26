@@ -76,6 +76,10 @@ module PagesHelper
     render :partial => 'pages/slot_fields', :locals => {:formName => formName}
   end
   
+  def drag_widget_handle(widget)
+    link_to pencil_image, '#', :class => 'slot_handle'
+  end
+  
   def page_buttons(project,page)
     return unless project.editable?(current_user)
     render :partial => 'pages/buttons', :locals => { :project => project, :page => page, :in_bar => false }
