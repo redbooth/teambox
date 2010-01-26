@@ -59,7 +59,11 @@ document.observe("dom:loaded", function(){
           var task_item_html = response.responseText;
           var list_of_tasks = form.up().down(".tasks");
           list_of_tasks.insert({ bottom: task_item_html })
+          // highlight the new task
           var new_task = list_of_tasks.select('.task').last();
+          list_of_tasks.select('.task').each(function(task){
+            task.removeClassName('active_new');
+          })
           new_task.addClassName('active_new');
           make_all_tasks_sortable();
           var show_in_main_content_url = new_task.readAttribute('show_in_main_content_url');
