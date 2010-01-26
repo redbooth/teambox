@@ -1,26 +1,33 @@
-document.observe("dom:loaded", function(){
+function make_task_sortable(task_div_id, task_div_ids){
+  Sortable.create(task_div_id, {
+    constraint:'vertical',
+    containment: task_div_ids,
+    format: /.*task_(\d+)_item/,
+    handle:'img.drag',
+    // that makes the task disappear when it leaves its original task list
+    // only:'task',
+    tag:'div',
+    onUpdate: function(){
+      new Ajax.Request($(task_div_id).readAttribute("reorder_url"), {
+        asynchronous: true,
+        evalScripts: true,
+        parameters: Sortable.serialize(task_div_id)
+      })
+    }
+  })
+}
+
+function make_all_tasks_sortable() {
   var task_div_ids = $$(".tasks").map(function(task_div){
     return task_div.identify();
   })
   task_div_ids.each(function(task_div_id){
-    Sortable.create(task_div_id, {
-      constraint:'vertical',
-      containment: task_div_ids,
-      format: /.*task_(\d+)_item/,
-      handle:'img.drag',
-      // that makes the task disappear when it leaves its original task list
-      // only:'task',
-      tag:'div',
-      onUpdate: function(){
-        new Ajax.Request($(task_div_id).readAttribute("reorder_url"), {
-          asynchronous: true,
-          evalScripts: true,
-          parameters: Sortable.serialize(task_div_id)
-        })
-      }
-    })
+    make_task_sortable(task_div_id, task_div_ids);
   })
+}
 
+document.observe("dom:loaded", function(){
+  make_all_tasks_sortable();
   $$(".inline_form_submit").each(function(submit_button){
     submit_button.observe('click', function(event){
       var form = event.findElement("form");
@@ -45,6 +52,7 @@ document.observe("dom:loaded", function(){
           list_of_tasks.insert({ bottom: task_item_html })
           var new_task = list_of_tasks.select('.task').last();
           new_task.addClassName('active_new');
+          make_all_tasks_sortable();
           var show_in_main_content_url = new_task.readAttribute('show_in_main_content_url');
           // load the new task into the main content area
           new Ajax.Request(show_in_main_content_url, {
