@@ -28,6 +28,15 @@ function make_all_tasks_sortable() {
 
 document.observe("dom:loaded", function(){
   make_all_tasks_sortable();
+  $$(".inline_form_cancel").each(function(cancel_link){
+    cancel_link.observe('click', function(event){
+      var form = event.findElement("form");
+      // make the Add task link appear
+      form.up().down(".new_task_link").show();
+      // hide the form
+      form.hide();
+    })
+  })
   $$(".inline_form_submit").each(function(submit_button){
     submit_button.observe('click', function(event){
       var form = event.findElement("form");
