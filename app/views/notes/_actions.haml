@@ -2,4 +2,6 @@
   %span
     = edit_note_link(note)
     = delete_note_link(note)
-    =# drag_image
+%p.actions.handle{ :style => "display: none;" }
+  %span
+    = drag_widget_handle(note)

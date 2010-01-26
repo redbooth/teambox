@@ -2,3 +2,4 @@ page["edit_divider_#{@divider.id}"].remove
 page.replace "divider_#{@divider.id}", :partial => 'dividers/divider', :locals => { :divider => @divider }
 page["divider_#{@divider.id}"].show
 page.reload_javascript_events
+page.reload_page_sort

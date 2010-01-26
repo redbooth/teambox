@@ -1,6 +1,8 @@
 Event.addBehavior({
   ".note:mouseover": function(e){
-    $(this).down('p.actions').show();
+    $(this).select('p.actions').each(function(e) {
+      e.show();
+    });
   },
   ".note:mouseout": function(e){
     $$(".note p.actions").each(function(e){ 
@@ -8,7 +10,9 @@ Event.addBehavior({
     });
   },
   ".divider:mouseover": function(e){
-    $(this).down('p.actions').show();
+    $(this).select('p.actions').each(function(e) {
+      e.show();
+    });
   },
   ".divider:mouseout": function(e){
     $$(".divider p.actions").each(function(e){ 
@@ -112,7 +116,7 @@ var InsertionBar = {
 
       // Set insertion position
       $(id + 'Before').writeAttribute('value', Page.insert_before ? '1' : '0');
-      $(id + 'Slot').writeAttribute('value', Page.insert_element.readAttribute('slot'));
+      $(id + 'Slot').writeAttribute('value', Page.insert_element ? Page.insert_element.readAttribute('slot') : '-1');
 
       // Form should go in the insertion bar, so we can change the insertion location and maintain
       // state
@@ -140,6 +144,7 @@ var InsertionMarker = {
     this.element = $('pageInsert');
     this.enabled = true;
     this.visible = false;
+    Page.insert_element = null;
   },
 
   setEnabled: function(val) {
@@ -150,24 +155,55 @@ var InsertionMarker = {
     this.visible = true;
     this.set(el, insert_before);
     this.element.show();
+    this.updateSlot(true);
   },
 
   hide: function() {
     if (this.visible) {
       this.element.hide();
       this.visible = false;
+      this.updateSlot(false);
       if (this.enabled)
         this.set(null, true);
       }
   },
 
+  updateSlot: function(active) {
+    if (Page.insert_element == null)
+      return;
+    var el = Page.insert_before ? Page.insert_element : Page.next_element;
+    if (el == null)
+      return;
+    if (active) {
+      el.addClassName("InsertBefore");
+    } else {
+      el.removeClassName("InsertBefore");
+    }
+  },
+
+  nextSlot: function() {
+	if (Page.insert_element == null)
+		return;
+    var next = Page.insert_element.next();
+    while (next != null && next.readAttribute('slot') == null) {
+      next = next.next();
+    }
+    return next;
+  },
+
   set: function(element, insert_before) {
     var el = element == null ? $(Element.getElementsBySelector($('slots'), '.pageSlot')[0]) : element;
-
+    
+    this.updateSlot(false);
     Page.insert_element = el;
-    Page.insert_before = insert_before;
+    Page.next_element = this.nextSlot();
+    Page.insert_before = el ? insert_before : true;
+    if (this.visible)
+      this.updateSlot(true);
 
-    if (insert_before)
+    if (el == null)
+      $('slots').insert({bottom: this.element});
+    else if (insert_before)
       el.insert({before: this.element});
     else
       el.insert({after: this.element});
@@ -180,9 +216,8 @@ var InsertionMarkerFunc = function(evt){
     return;
 
   var el = $(evt.target);
-  var pt = [evt.clientX, evt.clientY];
-  pt.x = pt[0]; pt.y = pt[1];
-  var offset = el.positionedOffset();
+  var pt = evt.pointer();
+  var offset = el.cumulativeOffset();
 
   if (!(pt.x - offset.left > Page.MARGIN))
   {
@@ -206,13 +241,9 @@ var InsertionMarkerFunc = function(evt){
   }
   else
   {
-    // console.log('ID=' + el.readAttribute('id'));
-    // Handle offset when hovering over insert bar
+    // Ignore the insertion marker
     if (el.readAttribute('id') == "PIB") 
-    {return;
-      if (!(pt.x - offset.left > (90+Page.MARGIN)))
-        return;
-    }
+      return;
 
     InsertionMarker.hide(); // *poof*
   }

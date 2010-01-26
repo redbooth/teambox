@@ -195,6 +195,10 @@ module ApplicationHelper
   def reload_javascript_events
     page << "Event.addBehavior.reload()"
   end
+  
+  def reload_page_sort
+    page.call "Page.makeSortable"
+  end
     
   def is_controller?(_controller, _action = nil)
     controller.controller_name == _controller.to_s and (_action == nil or controller.action_name == _action.to_s)

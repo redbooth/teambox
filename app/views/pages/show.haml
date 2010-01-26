@@ -10,11 +10,11 @@
 
 = page_buttons(@current_project,@page)
 
-#slots.pageSlots
+.pageSlots
   -# Util widgets
   #pageInsert{:style => 'display:none'}
     %p#PIB= "Insert Here"
-    
+  
   #pageInsertItems
     #pageInsertItemsBar{:style => 'display:none'}
       #pageInsertItemCancel
@@ -26,6 +26,7 @@
       = new_note_form(@current_project,@page)
       = new_divider_form(@current_project,@page)
   
-  = render :partial => 'slot', :collection => @page.slots
+  #slots
+    = render :partial => 'slot', :collection => @page.slots
   
   .pageSlot.pageFooter#page_slot_footer{:slot => -1}

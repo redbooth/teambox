@@ -77,7 +77,7 @@ module PagesHelper
   end
   
   def drag_widget_handle(widget)
-    link_to pencil_image, '#', :class => 'slot_handle'
+    image_tag('drag.png', :class => 'slot_handle')
   end
   
   def page_buttons(project,page)

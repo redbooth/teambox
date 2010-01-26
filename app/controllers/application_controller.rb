@@ -198,10 +198,10 @@ class ApplicationController < ActionController::Base
       @slot = @page.new_slot(@insert_id, @insert_before, obj)
 
       if @insert_footer
-        @insert_element = 'page_slot_footer'
+        @insert_element = nil
         @insert_before = true
       else
-        @insert_element = @insert_id == 0 ? 'page_slot_footer' : "page_slot_#{@insert_id}"
+        @insert_element = @insert_id == 0 ? nil : "page_slot_#{@insert_id}"
       end
     end
     
