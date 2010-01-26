@@ -28,18 +28,6 @@ Task = {
     })
   },
 
-  make_cancel_links: function() {
-    $$(".inline_form_cancel").each(function(cancel_link){
-      cancel_link.observe('click', function(event){
-        var form = event.findElement("form");
-        // make the Add task link appear
-        form.up().down(".new_task_link").show();
-        // hide the form
-        form.hide();
-      })
-    })
-  },
-
   create: function(form, url) {
     new Ajax.Request(url, {
       asynchronous: true,
@@ -128,12 +116,35 @@ Task = {
         event.stop();
       })
     })
+  },
+
+  bind_cancel_links_on_create_forms: function() {
+    $$(".inline_form_create_cancel").each(function(cancel_link){
+      cancel_link.observe('click', function(event){
+        var form = event.findElement("form");
+        form.up().down(".new_task_link").show();
+        // hide the form
+        form.hide();
+      })
+    })
+  },
+
+  bind_cancel_links_on_update_forms: function() {
+    $$(".inline_form_update_cancel").each(function(cancel_link){
+      cancel_link.observe('click', function(event){
+        var form = event.findElement("form");
+        form.up().down(".task_header").show();
+        form.hide();
+      })
+    })
   }
+
 }
 
 document.observe("dom:loaded", function(){
   Task.make_all_sortable();
-  Task.make_cancel_links();
+  Task.bind_cancel_links_on_create_forms();
+  Task.bind_cancel_links_on_update_forms();
   Task.bind_creation();
   Task.bind_update();
 });

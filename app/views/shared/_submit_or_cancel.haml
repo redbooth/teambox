@@ -3,4 +3,4 @@
 .submit{ :id => submit_id }
   = submit_tag name, :class => (object.new_record? ? "inline_form_create" : "inline_form_update")
   = t('common.or')
-  = link_to t('form.cancel'), "#", :class => "inline_form_cancel"
+  = link_to t('form.cancel'), "#", :class => (object.new_record? ? "inline_form_create_cancel" : "inline_form_update_cancel")

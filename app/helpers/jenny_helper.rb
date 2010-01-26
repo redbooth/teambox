@@ -101,7 +101,7 @@ module JennyHelper
     form_for(args,
       :html => {
         :id => js_id("#{action}_form",*args),
-        :class => "#{singular_name}_form app_form xxx",
+        :class => "#{singular_name}_form app_form",
         :style => 'display: none'},
         &proc)
   end
