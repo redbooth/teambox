@@ -426,6 +426,8 @@ en:
       name_description: Choose a short and descriptive title
       description: Description
       description_description: "Optional. Enter any information that people reading or editing this page should know."
+    slots:
+      insert_here: Insert Here
     column:
       new_page: New Page
   task_lists:

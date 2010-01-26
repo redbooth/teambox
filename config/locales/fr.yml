@@ -426,6 +426,8 @@ fr:
       name_description: Choisissez un titre bref et explicite
       description: Description
       description_description: "Optionnel. Toute information utile pour les personnes qui lisent ou éditent cette page."
+    slots:
+      insert_here: Insérez Ici
     column:
       new_page: Nouvelle page
   task_lists:

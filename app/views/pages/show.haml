@@ -13,12 +13,12 @@
 .pageSlots
   -# Util widgets
   #pageInsert{:style => 'display:none'}
-    %p#PIB= "Insert Here"
+    %p#PIB= t('pages.slots.insert_here')
   
   #pageInsertItems
     #pageInsertItemsBar{:style => 'display:none'}
       #pageInsertItemCancel
-        %a{:href => '#'}= "Cancel"
+        %a{:href => '#'}= t('common.cancel')
       #pageInsertItemWidgets
         = page_bar_buttons(@current_project,@page)
       
