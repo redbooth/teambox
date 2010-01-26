@@ -6,7 +6,7 @@ document.observe("dom:loaded", function(){
     Sortable.create(task_div_id, {
       constraint:'vertical',
       containment: task_div_ids,
-      format:/task_(\d+)/,
+      format: /.*task_(\d+)_item/,
       handle:'img.drag',
       // that makes the task disappear when it leaves its original task list
       // only:'task',
