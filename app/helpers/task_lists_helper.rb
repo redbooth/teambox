@@ -57,7 +57,7 @@ module TaskListsHelper
     elsif sub_action == 'archived'
       task_list.tasks.archived
     elsif sub_action == 'all'
-      task_list.tasks.unarchived
+      task_list.tasks
     end    
   end
   
