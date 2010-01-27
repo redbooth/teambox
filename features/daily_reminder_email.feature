@@ -1,4 +1,3 @@
-@wip
 Feature: Daily reminder for tasks email
   In order to have a summary of what I should do that day
   As a user
