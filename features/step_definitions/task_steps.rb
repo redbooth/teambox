@@ -2,6 +2,13 @@ Given /^there is a task called "([^\"]*)"$/ do |name|
   Task.find_by_name(name) || Factory(:task, :name => name)
 end
 
+Given /^the task called "([^\"]*)" belongs to the task list called "([^\"]*)"$/ do |task_name, task_list_name|
+  Given %(there is a task called "#{task_name}")
+  Given %(there is a task list called "#{task_list_name}")
+  task_list = TaskList.find_by_name(task_list_name)
+  Task.find_by_name(task_name).update_attribute(:task_list, task_list)
+end
+
 Given /^the task called "([^\"]*)" is due today$/ do |name|
   Given %(there is a task called "#{name}")
   Task.find_by_name(name).update_attribute(:due_on, Date.today)
@@ -29,6 +36,18 @@ end
 
 Given /^I have no tasks assigned to me$/ do
   @current_user.assigned_tasks(:all).each { |task| task.destroy }
+end
+
+Given /^the task called "([^\"]*)" is open$/ do |name|
+  Task.find_by_name(name).update_attribute(:status, Task::STATUSES[:open])
+end
+
+Given /^the task called "([^\"]*)" is not archived$/ do |name|
+  Task.find_by_name(name).update_attribute(:archived, false)
+end
+
+Given /^the task called "([^\"]*)" is archived$/ do |name|
+  Task.find_by_name(name).update_attribute(:archived, true)
 end
 
 When /^the daily reminders for tasks are sent$/ do

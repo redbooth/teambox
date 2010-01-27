@@ -104,6 +104,12 @@ Given /I am currently in the project (.*)$/ do |project_type|
   visit(projects_path(@current_project))
 end
 
+Given /I am in the project called "([^\"]*)"$/ do |name|
+  Given %(there is a project called "#{name}")
+  project = Project.find_by_name(name)
+  project.add_user(@current_user)
+end
+
 Given /^there is a user called "([^\"]*)"$/ do |login|
   Factory(:user, :login => login)
 end
