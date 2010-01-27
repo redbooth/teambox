@@ -16,9 +16,4 @@ class TaskList
     self.add_watcher(self.user)
   end
 
-  #TODO: this should go once :dependent => :destroy
-  # is restored to the association
-  def before_destroy
-    self.tasks.each { |task| task.destroy }
-  end
 end
