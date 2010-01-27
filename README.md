@@ -50,7 +50,7 @@ Edit config files
 Run the server with ./script/server and go to http://localhost to start using Teambox!
 
 
-Plugins were using you need to know about
+Plugins we use that you need to know about
 -------
 
 Auto Migrations
