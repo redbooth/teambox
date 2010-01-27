@@ -14,16 +14,17 @@ class CommentsController < ApplicationController
     if @comment.save
       @comment.save_uploads(params)
       
-      if @target.is_a?(Task)
+      case @target
+      when Task
         @comment.reload
         @task = @comment.target
         @task_list = @task.task_list
         @new_comment = @current_project.comments.new
         @new_comment.target = @task
         @new_comment.status = @task.status
-      elsif @target.is_a?(TaskList)
+      when TaskList
         @task_list = @comment.target
-      elsif @target.is_a? Conversation
+      when Conversation
         @conversation = @comment.target
       end
     end
