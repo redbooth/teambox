@@ -6,6 +6,7 @@ Task = {
       containment: all_task_ids,
       format: /.*task_(\d+)_item/,
       handle:'img.drag',
+      dropOnEmpty: true,
       // that makes the task disappear when it leaves its original task list
       // only:'task',
       tag:'div',

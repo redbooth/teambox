@@ -9782,6 +9782,7 @@ Task = {
       containment: all_task_ids,
       format: /.*task_(\d+)_item/,
       handle:'img.drag',
+      dropOnEmpty: true,
       tag:'div',
       onUpdate: function(){
         new Ajax.Request($(task_id).readAttribute("reorder_url"), {
