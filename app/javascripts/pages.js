@@ -19,6 +19,20 @@ Event.addBehavior({
       e.hide();
     });
   },
+  ".pageSlot .upload:mouseover": function(e){
+    $(this).select('p.slotActions').each(function(e) {
+      e.show();
+    });
+  },
+  ".pageSlot .upload:mouseout": function(e){
+    $$(".pageSlot .upload p.slotActions").each(function(e){ 
+      e.hide();
+    });
+  },
+  ".pageForm a.cancel:click": function(e){
+    e.element().up('.pageForm').remove();
+    return false;
+  },
   "#pageInsert:click": function(e) {
 	if (InsertionBar.current_form) {
 	  InsertionBar.place();
@@ -48,6 +62,7 @@ var Page = {
     this.READONLY = readonly;
 	this.url = url;
 	this.auth = auth;
+	document.currentPage = this;
     if (!readonly) {
       InsertionMarker.init();
       InsertionBar.init();
@@ -71,6 +86,31 @@ var Page = {
         });
       } 
 	});		
+  },
+
+  refreshEvents: function() {
+    Event.addBehavior.reload();
+  },
+
+  removeIFrameForm: function(frameDoc) {
+	$$('iframe').each(function(element) {
+		if (Page.uploaderDocument(element) == frameDoc) {
+			$(element).up('.pageForm').remove();
+			throw $break;
+		}
+	});
+  },
+
+  uploaderDocument: function(iframe) {
+    var doc = iframe.contentDocument;
+    if (!doc) { 
+	  var wnd = iframe.contentWindow; 
+	  doc = wnd ? wnd.document : null;  
+	}
+	if (!doc) {
+		return iframe.document
+	}
+	return doc;
   }
 }
 
@@ -122,6 +162,25 @@ var InsertionBar = {
       // state
       this.current_form = template;
       this.revealForm();
+  },
+
+  insertTempForm: function(template) {
+    var el = null;
+    var before = Page.insert_before ? '1' : '0';
+    var slot = Page.insert_element ? Page.insert_element.readAttribute('slot') : '-1';
+    var content = template.replace(/\{POS\}/, 'position[slot]=' + slot + '&position[before]=' + before);
+
+    if (Page.insert_element == null) {
+      el = $('slots').insert({bottom: content}).next();
+    } else if (Page.insert_before) {
+      el = Page.insert_element.insert({before: content}).previous();
+    } else {
+      el = Page.insert_element.insert({after: content}).next();
+    }
+
+    this.hide();
+    el.auto_focus();
+    return el;
   },
 
   clearWidgetForm: function() {

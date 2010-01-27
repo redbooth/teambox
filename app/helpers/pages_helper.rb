@@ -72,8 +72,8 @@ module PagesHelper
       :page => page }
   end
   
-  def page_slot_fields(formName)
-    render :partial => 'pages/slot_fields', :locals => {:formName => formName}
+  def page_slot_fields(formName=nil, slot=0, before=0)
+    render :partial => 'pages/slot_fields', :locals => {:formName => formName, :pos_slot => slot, :pos_before => before}
   end
   
   def drag_widget_handle(widget)

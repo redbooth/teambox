@@ -12,4 +12,8 @@ class Divider < RoleRecord
   def clear_slot
     page_slot.update_attributes(:page_id => nil)
   end
+
+  def slot_view
+    'dividers/divider'
+  end
 end

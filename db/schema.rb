@@ -281,6 +281,7 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.integer  "user_id"
     t.integer  "project_id"
     t.integer  "comment_id"
+    t.integer  "page_id"
     t.text     "description"
     t.string   "asset_file_name"
     t.string   "asset_content_type"

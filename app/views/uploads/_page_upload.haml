@@ -1,0 +1,7 @@
+.pageForm
+  .upload_area{}
+    = cancel_page_upload_link
+    %h3#upload_header
+      Upload
+    %iframe.upload_form#upload_form{:src => page_upload_url_for(@page) + "?iframe=true&{POS}", :scrolling => 'no', :frameborder => 0}
+      &nbsp;

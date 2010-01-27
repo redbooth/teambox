@@ -74,7 +74,7 @@ Element.addMethods({
     var field;
     if (field = element.down(".focus")) { (function() { try { field.select() } catch (e) { } }).defer(); }
     return element;
-  }  
+  }
 });
 
 Project = {

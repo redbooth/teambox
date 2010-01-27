@@ -1,4 +1,2 @@
-- cname = slot.rel_object.class.to_s.downcase
-
 .pageSlot{:id => "page_slot_#{slot.id}", :slot => slot.id}
-  = render :partial => "#{cname.pluralize}/#{cname}", :locals => {:object => slot.rel_object}
+  = render :partial => "#{slot.rel_object.slot_view}", :locals => {:object => slot.rel_object, :page => page, :project => project}

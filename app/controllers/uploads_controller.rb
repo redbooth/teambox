@@ -1,5 +1,6 @@
 class UploadsController < ApplicationController
   before_filter :find_upload, :only => [:destroy,:update,:thumbnail,:show]
+  before_filter :load_page, :only => [:new, :create, :destroy]
   skip_before_filter :load_project, :only => [:download]
   SEND_FILE_METHOD = :default
 
@@ -50,6 +51,7 @@ class UploadsController < ApplicationController
   
   def new
     @comment = load_comment
+    calculate_position if @page
     @upload = @current_project.uploads.new(:user_id => current_user.id)
     if is_iframe?
       respond_to { |f| f.html { render :layout => 'upload_iframe' }}
@@ -61,18 +63,22 @@ class UploadsController < ApplicationController
   def create
     @upload = @current_project.uploads.new(params[:upload])
     @upload.user = current_user
+    @upload.page = @page
+    calculate_position if @page
 
     if is_iframe? # uploads attached to a comment
       @upload.save
-      @comment = load_comment
+      save_slot(@upload) if @page
+      @comment = load_comment unless @page
       @upload.reload
       respond_to do |f|
-        f.html { render :template => 'uploads/create', :layout => 'upload_iframe' }
+        f.html { render :template => @page.nil? ? 'uploads/create' : 'uploads/create_page', :layout => 'upload_iframe' }
       end
     else
       respond_to do |f|          
         if @upload.save
           @current_project.log_activity(@upload,'create')
+          save_slot(@upload) if @page
           f.html { redirect_to(project_uploads_path(@current_project)) }
         else
           @uploads = @current_project.uploads
@@ -121,6 +127,12 @@ class UploadsController < ApplicationController
         Comment.find(params[:comment_id])
       else
         @current_project.comments.new(:user_id => current_user.id)
+      end
+    end
+    
+    def load_page
+      if params[:page_id]
+        @page = @current_project.pages.find(params[:page_id])
       end
     end
     

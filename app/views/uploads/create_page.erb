@@ -1,0 +1,15 @@
+<%=
+update_page_tag do |page|
+  slot_html = render :partial => 'pages/slot', :object => @upload.page_slot, :locals => {:page => @page, :project => @current_project}
+  insert_pos = @insert_before ? :before : :after
+  if @insert_element.nil?
+    page << "top.$('slots').insert({top:\"#{escape_javascript slot_html}\"})";
+  else
+    page << "top.$('#{@insert_element}').insert({#{insert_pos}:\"#{escape_javascript slot_html}\"})";
+  end
+  
+  page << "top.document.currentPage.refreshEvents();"
+  page << "top.document.currentPage.makeSortable();"
+  page << "top.document.currentPage.removeIFrameForm(this.document);"
+end
+%>

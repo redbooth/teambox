@@ -1,2 +1,2 @@
-%input{:id => "#{formName}Before", :type => 'hidden', :name => "position[before]", :value => '0'}/
-%input{:id => "#{formName}Slot", :type => 'hidden', :name => "position[slot]", :value => '0'}/
+%input{:id => formName.nil? ? nil : "#{formName}Before", :type => 'hidden', :name => "position[before]", :value => pos_before}/
+%input{:id => formName.nil? ? nil : "#{formName}Slot", :type => 'hidden', :name => "position[slot]", :value => pos_slot}/

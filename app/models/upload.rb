@@ -5,6 +5,9 @@ class Upload < RoleRecord
   belongs_to :user
   belongs_to :comment
   belongs_to :project
+  belongs_to :page
+  has_one    :page_slot, :as => :rel_object
+  before_destroy :clear_slot
 
   default_scope :order => 'created_at DESC'
 
@@ -34,6 +37,14 @@ class Upload < RoleRecord
 
   def size
     asset_file_size
+  end
+
+  def clear_slot
+    page_slot.update_attributes(:page_id => nil) if page and page_slot
+  end
+  
+  def slot_view
+    'uploads/upload_slot'
   end
 
   def to_s

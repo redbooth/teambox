@@ -95,12 +95,33 @@ module UploadsHelper
     end
   end
   
+  def page_upload_form_url_for(page)
+    project_page_uploads_url(page.project, page)
+  end
+  
   def upload_url_for(comment)
     if comment.new_record?
       new_project_upload_url(comment.project)
     else
       new_project_comment_upload_url(comment.project,comment)
     end
+  end
+
+  def page_upload_url_for(page)
+    new_project_page_upload_path(page.project, page)
+  end
+  
+  def page_upload_actions_link(page, upload)
+    return unless upload.editable?(current_user)
+    render :partial => 'uploads/slot_actions',
+      :locals => { :upload => upload, :page => page }
+  end
+  
+  def delete_page_upload_loading_action(upload)
+    update_page do |page|
+      page.insert_html :after, "delete_upload_#{upload.id}_link", loading_action_image("upload_#{upload.id}")
+      page["delete_upload_#{upload.id}_link"].hide
+    end  
   end
   
   def list_uploads_edit(uploads,target)
@@ -148,6 +169,15 @@ module UploadsHelper
       :method => :delete,
       :confirm => t('confirm.delete_upload'),
       :html => { :class => 'remove' }
+  end
+  
+  def destroy_page_upload_link(page, upload)
+    link_to_remote trash_image,
+      :url => project_page_upload_url(page.project,page,upload),
+      :loading => delete_page_upload_loading_action(upload),
+      :method => :delete,
+      :confirm => t('confirm.delete_upload'),
+      :html => { :id => "delete_upload_#{upload.id}_link" }
   end
 
   def upload_form_params(comment)

@@ -1,7 +1,7 @@
 class Page < RoleRecord
   has_many :notes, :order => 'position'
   has_many :dividers, :order => 'position'
-  has_many :page_uploads, :order => 'position'
+  has_many :uploads, :order => 'position'
   
   has_many :slots, :class_name => 'PageSlot', :order => 'position ASC'
   

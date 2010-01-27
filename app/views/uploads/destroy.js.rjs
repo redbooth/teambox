@@ -1,7 +1,13 @@
 upload_item_id = "upload_#{@upload.id}"
+if !@page.nil?
+  upload_slot_id = "page_slot_#{@upload.page_slot.id}"
+else
+  upload_slot_id = nil
+end
 
 page[upload_item_id].dropOut
 
 page.delay(3) do
   page[upload_item_id].remove
+  page[upload_slot_id].remove unless upload_slot_id.nil?
 end

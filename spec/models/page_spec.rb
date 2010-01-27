@@ -6,7 +6,7 @@ describe Page do
   it { should belong_to(:project) }
   it { should have_many(:notes) }
   it { should have_many(:dividers) }
-  it { should have_many(:page_uploads) }
+  it { should have_many(:uploads) }
 
   describe "factories" do
     it "should generate a valid page" do

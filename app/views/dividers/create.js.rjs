@@ -1,7 +1,14 @@
 if @insert_element.nil?
-  page.insert_html(:bottom, 'slots', :partial => 'pages/slot', :object => @divider.page_slot)
+  page.insert_html(:bottom, 'slots', 
+                   :partial => 'pages/slot', 
+                   :object => @divider.page_slot, 
+                   :locals => {:page => @page, :project => @current_project})
 else
-  page.insert_html((@insert_before ? :before : :after), @insert_element, :partial => 'pages/slot', :object => @divider.page_slot)
+  page.insert_html((@insert_before ? :before : :after), 
+                   @insert_element, 
+                   :partial => 'pages/slot', 
+                   :object => @divider.page_slot, 
+                   :locals => {:page => @page, :project => @current_project})
 end
 page.hide_divider_form
 page["divider_#{@divider.id}"].highlight

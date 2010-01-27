@@ -15,6 +15,10 @@ class Note < RoleRecord
     page_slot.update_attributes(:page_id => nil)
   end
   
+  def slot_view
+    'notes/note'
+  end
+  
   def to_s
     name
   end

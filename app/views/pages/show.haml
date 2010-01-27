@@ -27,6 +27,6 @@
       = new_divider_form(@current_project,@page)
   
   #slots
-    = render :partial => 'slot', :collection => @page.slots
+    = render :partial => 'slot', :collection => @page.slots, :locals => {:page => @page, :project => @current_project}
   
   .pageSlot.pageFooter#page_slot_footer{:slot => -1}
