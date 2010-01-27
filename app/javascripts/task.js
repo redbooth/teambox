@@ -129,11 +129,13 @@ Task = {
     Task.bind_cancel_links(".inline_form_update_cancel", ".task_header");
   },
 
-  bind_cancel_links: function(cancel_link, classToShow) {
-    cancel_link.observe('click', function(event){
-      var form = event.findElement("form");
-      form.up().down(classToShow).show();
-      form.hide();
+  bind_cancel_links: function(cancelLinkClass, classToShow) {
+    $$(cancelLinkClass).each(function(cancel_link){
+      cancel_link.observe('click', function(event){
+        var form = event.findElement("form");
+        form.up().down(classToShow).show();
+        form.hide();
+      })
     })
   }
 

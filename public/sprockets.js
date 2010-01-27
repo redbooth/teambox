@@ -9888,11 +9888,21 @@ Task = {
     })
   },
 
-  bind_cancel_links: function(cancel_link, classToShow) {
-    cancel_link.observe('click', function(event){
-      var form = event.findElement("form");
-      form.up().down(classToShow).show();
-      form.hide();
+  bind_cancel_links_on_create_forms: function() {
+    Task.bind_cancel_links(".inline_form_create_cancel", ".new_task_link");
+  },
+
+  bind_cancel_links_on_update_forms: function() {
+    Task.bind_cancel_links(".inline_form_update_cancel", ".task_header");
+  },
+
+  bind_cancel_links: function(cancelLinkClass, classToShow) {
+    $$(cancelLinkClass).each(function(cancel_link){
+      cancel_link.observe('click', function(event){
+        var form = event.findElement("form");
+        form.up().down(classToShow).show();
+        form.hide();
+      })
     })
   }
 
@@ -9907,16 +9917,6 @@ Event.addBehavior({
     $$(".task img.drag").each(function(e){ e.hide(); });
     $$(".task span.task_status").each(function(e){ e.show(); });
   },
-  ".inline_form_create_cancel:click": function(e){
-    var form = e.findElement("form");
-    form.up().down(".new_task_link").show();
-    form.hide();
-  },
-  ".inline_form_update_cancel:click": function(e){
-    var form = e.findElement("form");
-    form.up().down(".task_header").show();
-    form.hide();
-  }
 });
 ToolTips = {
   hide_all: function(){
