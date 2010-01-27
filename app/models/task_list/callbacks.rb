@@ -10,9 +10,15 @@ class TaskList
       end
     end
   end
-      
+
   def after_create
     self.project.log_activity(self,'create')
-    self.add_watcher(self.user) 
+    self.add_watcher(self.user)
+  end
+
+  #TODO: this should go once :dependent => :destroy
+  # is restored to the association
+  def before_destroy
+    self.tasks.each { |task| task.destroy }
   end
 end
