@@ -9861,6 +9861,8 @@ Task = {
       onSuccess: function(response){
         Element.replace('content', response.responseText);
         Task.bind_cancel_links_on_update_forms();
+        Task.bind_creation();
+        Task.bind_update();
       }
     })
   },
