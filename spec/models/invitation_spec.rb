@@ -67,9 +67,24 @@ describe Invitation do
       invitation.save
     end
     
-    it "should be invalid if is not an email or login" do
-      invitation = @project.invitations.new(:user_or_email => "definitely not an email or username")
+    it "should be invalid if the invited user string has spaces" do
+      invitation = @project.invitations.new(:user_or_email => "joe the plumber", :user => @inviter)
       invitation.should_not be_valid
+    end
+
+    it "should be invalid if it is not a proper login but not a valid email either" do
+      invitation = @project.invitations.new(:user_or_email => "sigmund freud@gmail.com", :user => @inviter)
+      invitation.should_not be_valid
+    end
+
+    it "should be valid if it's a valid login" do
+      invitation = @project.invitations.new(:user_or_email => "sigmund_freud", :user => @inviter)
+      invitation.should be_valid
+    end
+
+    it "should be valid if it's a valid email" do
+      invitation = @project.invitations.new(:user_or_email => "sigmund.freud@gmail.com", :user => @inviter)
+      invitation.should be_valid
     end
     
     it "should not create duplicate invitations for a project" do

@@ -26,7 +26,7 @@ class Invitation < RoleRecord
       end
     else
       # unexisting Teambox user
-      if value =~ /[a-z0-9_\-\+\.]+@[a-z0-9_\-\.]+/i
+      if value =~ Authentication.login_regex || value =~ Authentication.email_regex
         if Invitation.exists?(:project_id => record.project.id, :email => value)
           record.errors.add attr, 'already has a pending invitation'
         else
