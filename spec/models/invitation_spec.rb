@@ -69,7 +69,7 @@ describe Invitation do
     
     it "should be invalid if is not an email or login" do
       invitation = @project.invitations.new(:user_or_email => "definitely not an email or username")
-      invitation.valid?.should be_false
+      invitation.should_not be_valid
     end
     
     it "should not create duplicate invitations for a project" do
@@ -77,17 +77,17 @@ describe Invitation do
       invitation = @project.invitations.create(:user_or_email => user.email, :user => @inviter)
       Invitation.count.should == 1
       invitation = @project.invitations.new(:user_or_email => user.email, :user => @inviter)
-      invitation.valid?.should be_false
+      invitation.should_not be_valid
     end
 
     it "should not invite people already in the project when giving their email" do
       invitation = @project.invitations.create(:user_or_email => @project.users.first.email, :user => @inviter)
-      invitation.valid?.should be_false
+      invitation.should_not be_valid
     end
 
     it "should not invite people already in the project when giving their username" do
       invitation = @project.invitations.create(:user_or_email => @project.users.first.login, :user => @inviter)
-      invitation.valid?.should be_false
+      invitation.should_not be_valid
     end
   end
   
