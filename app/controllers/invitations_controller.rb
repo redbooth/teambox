@@ -30,7 +30,7 @@ class InvitationsController < ApplicationController
       return
     end
     
-    @invitation = @current_project.invitations.new(:user_or_email => user_or_email)
+    @invitation = @current_project.invitations.new(:user_or_email => user_or_email.strip)
     @invitation.user = current_user
 
     respond_to do |f|
