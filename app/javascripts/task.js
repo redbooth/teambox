@@ -1,6 +1,6 @@
 Task = {
 
-  make_sortable: function(task_id, all_task_ids) {
+  makeSortable: function(task_id, all_task_ids) {
     Sortable.create(task_id, {
       constraint:'vertical',
       containment: all_task_ids,
@@ -25,7 +25,7 @@ Task = {
       return task_div.identify();
     })
     task_div_ids.each(function(task_div_id){
-      Task.make_sortable(task_div_id, task_div_ids);
+      Task.makeSortable(task_div_id, task_div_ids);
     })
   },
 
@@ -93,6 +93,10 @@ Task = {
       method: 'get',
       onSuccess: function(response){
         Element.replace('content', response.responseText);
+        //TODO: These 3 calls would not be necessary if
+        // low-pro would rebind behaviors to new
+        // DOM elements as I understand it
+        // http://www.danwebb.net/2006/9/3/low-pro-unobtrusive-scripting-for-prototype
         Task.bind_cancel_links_on_update_forms();
         Task.bind_creation();
         Task.bind_update();
@@ -151,16 +155,26 @@ Event.addBehavior({
     $$(".task img.drag").each(function(e){ e.hide(); });
     $$(".task span.task_status").each(function(e){ e.show(); });
   },
-  // FIXME: use these and remove bind_cancel_links_on_update_forms
-  // bind_cancel_links_on_update_forms
-  // ".inline_form_create_cancel:click": function(e){
-  //   var form = e.findElement("form");
-  //   form.up().down(".new_task_link").show();
-  //   form.hide();
-  // },
-  // ".inline_form_update_cancel:click": function(e){
-  //   var form = e.findElement("form");
-  //   form.up().down(".task_header").show();
-  //   form.hide();
-  // }
+  ".inline_form_create:click": function(e) {
+    var form = e.findElement("form");
+    var submit_url = form.readAttribute("action");
+    Task.create(form, submit_url);
+    e.stop();
+  },
+  ".inline_form_update:click": function(e) {
+    var form = e.findElement("form");
+    var submit_url = form.readAttribute("action");
+    Task.update(form, submit_url);
+    e.stop();
+  },
+  ".inline_form_create_cancel:click": function(e){
+    var form = e.findElement("form");
+    form.up().down(".new_task_link").show();
+    form.hide();
+  },
+  ".inline_form_update_cancel:click": function(e){
+    var form = e.findElement("form");
+    form.up().down(".task_header").show();
+    form.hide();
+  }
 });

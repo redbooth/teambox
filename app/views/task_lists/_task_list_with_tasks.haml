@@ -1,6 +1,6 @@
 - if defined?(task_list_with_tasks_counter) && task_list_with_tasks_counter.zero?
-  - content_for :js_includes do
-    = javascript_include_tag "reorder_tasks"
+  - content_for :js_templates do
+    = "document.observe(\"dom:loaded\", function() { Task.make_all_sortable() });"
 - tasks = assign_tasks(project,task_list,'all_with_archived')
 .task_list_wrap{ :id => "#{task_list_id(:with_tasks,project,task_list)}", :class => "task_list_#{task_list.id}" }
   = render_task_list(project,task_list,current_target)
