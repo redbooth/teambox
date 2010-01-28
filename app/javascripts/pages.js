@@ -56,6 +56,7 @@ Event.addBehavior({
 var Page = {
   MARGIN: 20,
   SLOT_VERGE: 20,
+  SLOT_GAP: 36,
   READONLY: false,
 
   init: function(readonly, url, auth) {
@@ -128,7 +129,7 @@ var InsertionBar = {
 
   show: function() {
     this.place();
-    this.element_bar.setStyle({'height': '32px'}).show();//.animate({"height": "25px"}, "fast");
+    this.element_bar.setStyle({'height': '32px'}).blindDown({duration: 0.3});
   },
 
   place: function() {
@@ -278,7 +279,10 @@ var InsertionMarkerFunc = function(evt){
   var pt = evt.pointer();
   var offset = el.cumulativeOffset();
 
-  if (!(pt.x - offset.left > Page.MARGIN))
+  pt.x -= Page.SLOT_GAP;
+  var delta = pt.x - offset.left;
+
+  if (!(delta < 0 || delta > Page.MARGIN))
   {
     // Show bar here *if* we are within the slot
     if (el.hasClassName('pageSlot'))

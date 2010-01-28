@@ -54,13 +54,12 @@ module PageNotesHelper
   end
   
   def edit_note_link(note)
-    link_to_remote t('common.edit'),
+    link_to_remote pencil_image,
       :url => edit_project_page_note_path(note.project,note.page,note),
       :loading => edit_note_loading_action(note),
       :method => :get, 
       :html => { :id => "edit_note_#{note.id}_link"}
   end
-
   
   def edit_note_loading_action(note)
     update_page do |page|
@@ -77,12 +76,12 @@ module PageNotesHelper
   end  
   
   def delete_note_link(note)
-    link_to_remote t('common.delete'),
+    link_to_remote trash_image,
       :url => project_page_note_path(note.project,note.page,note),
       :loading => delete_note_loading_action(note),
       :method => :delete,
       :confirm => t('.delete_confirm'),
-      :html => { :class => 'delete', :id => "delete_note_#{note.id}_link" }
+      :html => { :id => "delete_note_#{note.id}_link" }
   end
   
   def remove_form(show_element=nil)

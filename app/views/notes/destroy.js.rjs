@@ -1,1 +1,4 @@
-page["page_slot_#{@note.page_slot.id}"].remove
+page["note_#{@note.id}"].dropOut
+page.delay(3) do
+  page["page_slot_#{@note.page_slot.id}"].remove
+end
