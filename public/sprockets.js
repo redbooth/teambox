@@ -9919,50 +9919,7 @@ Task = {
       method: 'get',
       onSuccess: function(response){
         Element.replace('content', response.responseText);
-        Task.bind_cancel_links_on_update_forms();
-        Task.bind_creation();
-        Task.bind_update();
       }
-    })
-  },
-
-  bind_creation: function() {
-    $$(".inline_form_create").each(function(submit_button){
-      submit_button.observe('click', function(event){
-        var form = event.findElement("form");
-        var submit_url = form.readAttribute("action");
-        Task.create(form, submit_url);
-        event.stop();
-      })
-    })
-  },
-
-  bind_update: function() {
-    $$(".inline_form_update").each(function(submit_button){
-      submit_button.observe('click', function(event){
-        var form = event.findElement("form");
-        var submit_url = form.readAttribute("action");
-        Task.update(form, submit_url);
-        event.stop();
-      })
-    })
-  },
-
-  bind_cancel_links_on_create_forms: function() {
-    Task.bind_cancel_links(".inline_form_create_cancel", ".new_task_link");
-  },
-
-  bind_cancel_links_on_update_forms: function() {
-    Task.bind_cancel_links(".inline_form_update_cancel", ".task_header");
-  },
-
-  bind_cancel_links: function(cancelLinkClass, classToShow) {
-    $$(cancelLinkClass).each(function(cancel_link){
-      cancel_link.observe('click', function(event){
-        var form = event.findElement("form");
-        form.up().down(classToShow).show();
-        form.hide();
-      })
     })
   }
 
@@ -10000,6 +9957,8 @@ Event.addBehavior({
     form.hide();
   }
 });
+
+Event.addBehavior.reassignAfterAjax = true;
 ToolTips = {
   hide_all: function(){
     $$('.tooltip').each(function(e){e.hide();})
