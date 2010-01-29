@@ -9369,7 +9369,7 @@ Element.addMethods({
       }
     }
 
-    updater = new Ajax.PeriodicalFormUpdater(previewBox, form, {
+    updater = new Ajax.PeriodicalFormUpdater(previewBox, form, form.readAttribute('preview'), {
       method: 'post',
       frequency: 2,
       decay: 2,
@@ -9403,9 +9403,9 @@ Element.addMethods({
 });
 
 Ajax.PeriodicalFormUpdater = Class.create(Ajax.PeriodicalUpdater, {
-  initialize: function($super, container, form, options) {
+  initialize: function($super, container, form, url, options) {
     this.form = form;
-    $super(container, form.readAttribute('action') + '/preview', options);
+    $super(container, url, options);
   },
 
   onTimerEvent: function() {
