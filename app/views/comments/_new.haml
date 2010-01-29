@@ -3,6 +3,7 @@
   .body.text_area
     = f.text_area :body, :class => 'comment_body', :id => 'comment_body'
     = autoresize :comment_body
+    .previewBox.textilized{:style => 'display:none'}
   .extra
     - if comment.project
       = the_comment_upload_link(comment)
@@ -33,6 +34,11 @@
           = javascript_tag "$$('.statuses input').each(function(e){ if (e.checked) { e.up('.status').addClassName('active') }; })"
           = javascript_tag "Comment.watch_status();"
     .submit{ :id => js_id(:new_submit,Comment.new) }
+      %span.showPreview
+        %button{}
+          %span.default= "Preview"
+          %span.showing{:style => "display:none"}= "..."
+        %a{:href => '#', :style => 'display:none'}= "Close"
       = f.submit t('.submit')
     = loading_image(js_id(:new_loading,Comment.new))
     .clear  

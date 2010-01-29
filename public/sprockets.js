@@ -9337,6 +9337,18 @@ Element.addMethods({
   }
 });
 
+Ajax.PeriodicalFormUpdater = Class.create(Ajax.PeriodicalUpdater, {
+  initialize: function($super, container, form, options) {
+    this.form = form;
+    $super(container, form.readAttribute('action') + '/preview', options);
+  },
+
+  onTimerEvent: function() {
+    this.options.parameters = Form.serialize(this.form);
+    this.updater = new Ajax.Updater(this.container, this.url, this.options);
+  }
+});
+
 Project = {
   valid_url: function(){
     var title = $F('project_permalink');
@@ -9419,6 +9431,67 @@ Event.addBehavior({
   },
   "#sort_hours:click": function(e){
     Comment.update();
+  },
+  "form .showPreview button:click": function(e){
+    var el = $(this);
+    var block = el.up();
+    if (block.readAttribute('showing') == '1')
+      return false;
+
+    block.writeAttribute('showing', '1');
+    el.disabled = true;
+    el.down('.default').hide();
+    el.down('.showing').show();
+    if (block.readAttribute('removing') == '1') {
+      block.writeAttribute('removing', '0');
+      return false;
+    }
+
+    var form = block.up('form');
+    var previewBox = form.down('.previewBox');
+    var updater = null;
+    var updaterCallback = function(transport) {
+      console.log("WOOOOO");
+      if (block.readAttribute('removing') == '1') {
+        block.writeAttribute('removing', '0');
+        updater.stop();
+      } else {
+        previewBox.innerHTML = transport.responseText;
+        if (!previewBox.visible()) {
+          previewBox.blindDown({duration: 0.3});
+          el.hide();
+          el.up().down('a').show();
+        }
+      }
+    }
+
+    updater = new Ajax.PeriodicalFormUpdater(previewBox, form, {
+      method: 'post',
+      frequency: 2,
+      decay: 2,
+      onSuccess: updaterCallback,
+      onFailure: updaterCallback
+    });
+
+    return false;
+  },
+  "form .showPreview a:click": function(e){
+    var el = $(this);
+    var block = el.up();
+    var previewBox = block.up('form').down('.previewBox');
+
+    var button = el.up().down('button');
+    el.hide();
+    button.down('.default').show();
+    button.down('.showing').hide();
+    button.show().disabled = false;
+
+    block.writeAttribute('showing', '0');
+    block.writeAttribute('removing', '1');
+    if (previewBox.visible())
+      previewBox.blindUp({duration: 0.15});
+
+    return false;
   }
 });
 

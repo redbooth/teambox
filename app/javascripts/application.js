@@ -77,6 +77,18 @@ Element.addMethods({
   }
 });
 
+Ajax.PeriodicalFormUpdater = Class.create(Ajax.PeriodicalUpdater, {
+  initialize: function($super, container, form, options) {
+    this.form = form;
+    $super(container, form.readAttribute('action') + '/preview', options);
+  },
+
+  onTimerEvent: function() {
+    this.options.parameters = Form.serialize(this.form);
+    this.updater = new Ajax.Updater(this.container, this.url, this.options);
+  }
+});
+
 Project = {
   valid_url: function(){
     var title = $F('project_permalink'); 

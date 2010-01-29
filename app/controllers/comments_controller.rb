@@ -57,6 +57,16 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
   end
+  
+  def preview
+    if params.has_key?(:project_id)
+      @comment  = @current_project.new_comment(current_user,@target,params[:comment])     
+    else
+      @comment = current_user.new_comment(current_user,@target,params[:comment])
+    end
+    
+    render :text => textilize(@comment.body)
+  end
 
   private
   
