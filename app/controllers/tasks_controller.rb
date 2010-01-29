@@ -29,12 +29,16 @@ class TasksController < ApplicationController
     end
     respond_to do |format|
       format.js do
-        render :partial => 'tasks/task',
-        :locals => {
-          :task => @task,
-          :project => @current_project,
-          :task_list => @task_list,
-          :current_target => nil }
+        if @task.valid?
+          render :partial => 'tasks/task',
+          :locals => {
+            :task => @task,
+            :project => @current_project,
+            :task_list => @task_list,
+            :current_target => nil }
+        else
+          render :text => @task.errors.full_messages.join(" "), :status => 403
+        end
       end
     end
   end

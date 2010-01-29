@@ -9973,6 +9973,13 @@ Task = {
         var new_task = list_of_tasks.select('.task').last();
         var show_in_main_content_url = new_task.readAttribute('show_in_main_content_url');
         Task.show_in_main_content(show_in_main_content_url);
+      },
+      on403: function(response){
+        form.down('.loading').hide();
+        form.down('#task_name').focus();
+        $$(".global_navigation").first().insert({
+          after: '<div class="flash_box flash_error"><div>'+ response.responseText +'</div></div>'
+        });
       }
     })
   },

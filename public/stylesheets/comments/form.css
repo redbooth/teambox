@@ -7,6 +7,10 @@ form#new_comment {
     form#new_comment .body textarea {
       width: 626px;
       margin-bottom: 0px; }
+    form#new_comment .body .previewBox {
+      margin: 4px;
+      padding: 4px;
+      border: solid 2px rgb(235,235,235); }
   form#new_comment .comment_body {
     height: 4em;
     color: rgb(0,0,0); }
