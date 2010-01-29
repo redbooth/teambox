@@ -9,6 +9,7 @@ tmp/*
 public/avatars/*
 public/stylesheets/*.css
 public/stylesheets/conversations/*.css
+public/stylesheets/comments/*.css
 public/stylesheets/tasks/*.css
 public/stylesheets/pages/*.css
 public/stylesheets/projects/*.css
