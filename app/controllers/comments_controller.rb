@@ -65,7 +65,8 @@ class CommentsController < ApplicationController
       @comment = current_user.new_comment(current_user,@target,params[:comment])
     end
     
-    render :text => textilize(@comment.body)
+    @comment.send(:format_attributes)
+    render :text => @comment.body_html
   end
 
   private

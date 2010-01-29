@@ -11,6 +11,7 @@ module CommentsHelper
     update_page do |page|
       page[js_id(:new_submit,Comment.new)].hide      
       page[js_id(:new_loading,Comment.new)].show
+      page['new_comment'].closePreview
     end  
   end
 
