@@ -1,23 +1,24 @@
-.comment{:id => "comment_#{comment.id}" }
-  .info
-    = #comment_actions_link(comment)
-    = thumb_avatar(comment.user)
-  .block
-    .date
-      = posted_date comment.created_at
-    .name
-      = conversation_last_comment_text(comment)
-      = activity_comment_user_link(comment)
-      = activity_project_link(comment.project)
-      = activity_comment_target_link(comment)
-      = comment_task_status(comment) if comment.target_type == 'Task'
-    .body.textilized
-      ~ comment.body_html
-    - if comment.uploads.any?
-      - if comment.uploads.all? { |upload| upload.image? }
-        .upload_images
-          = list_uploads_inline_with_thumbnails(comment.uploads)
-      - else
-        .upload_list
-          = list_uploads_inline(comment.uploads)
-  .clear
+- cache "#{@current_user.language}_comment_#{comment.id}" do
+  .comment{:id => "comment_#{comment.id}" }
+    .info
+      = #comment_actions_link(comment)
+      = thumb_avatar(comment.user)
+    .block
+      .date
+        = posted_date comment.created_at
+      .name
+        = conversation_last_comment_text(comment)
+        = activity_comment_user_link(comment)
+        = activity_project_link(comment.project)
+        = activity_comment_target_link(comment)
+        = comment_task_status(comment) if comment.target_type == 'Task'
+      .body.textilized
+        ~ comment.body_html
+      - if comment.uploads.any?
+        - if comment.uploads.all? { |upload| upload.image? }
+          .upload_images
+            = list_uploads_inline_with_thumbnails(comment.uploads)
+        - else
+          .upload_list
+            = list_uploads_inline(comment.uploads)
+    .clear

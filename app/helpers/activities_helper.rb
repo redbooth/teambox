@@ -22,7 +22,7 @@ module ActivitiesHelper
                       create_person delete_person)
 
   def list_activities(activities)
-    activities.collect { |a| show_activity(a) }
+    render :partial => "activities/activity", :collection => activities
   end
 
   def show_activity(activity)
