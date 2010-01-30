@@ -182,11 +182,12 @@ class User < ActiveRecord::Base
   def assigned_tasks(project_filter)
     people.map { |person| person.project.tasks }.flatten.
       select { |task| task.active? }.
-      select { |task| task.assigned_to?(self) }
+      select { |task| task.assigned_to?(self) }.
+      sort { |a,b| (a.due_on || 1.year.from_now) <=> (b.due_on || 1.year.from_now) }
   end
   
   def in_project(project)
-    project.people.select { |person| person.user == self }.first
+    project.people.select { |person| person.user_id == self.id }.first
   end
 
 end

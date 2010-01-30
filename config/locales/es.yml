@@ -336,7 +336,9 @@ es:
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:
-      due_on: "A completar antes de {{date}}"
+      due_on: Fecha
+      today: Hoy
+      tomorrow: Mañana
     create: Añadir Tarea
     edit:
       submit: Actualizar tarea

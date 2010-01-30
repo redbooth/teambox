@@ -58,6 +58,14 @@ class Task < RoleRecord
   def overdue?
     due_on ? Time.now.to_date > due_on : false
   end
+  
+  def due_today?
+    due_on == Time.current.to_date
+  end
+  
+  def due_tomorrow?
+    due_on == (Time.current + 1.day).to_date
+  end
 
   def unassigned?
     !assigned

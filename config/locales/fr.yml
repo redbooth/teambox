@@ -336,7 +336,9 @@ fr:
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:
-      due_on: "Echéance: {{date}}"
+      due_on: Echéance
+      today: Aujourd'hui
+      tomorrow: Demain
     create: Ajouter une tâche
     edit:
       submit: Actualiser tâche

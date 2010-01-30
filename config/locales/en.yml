@@ -336,7 +336,9 @@ en:
     assigned:
       assigned_to: "Assigned to {{user}}"
     due_on:
-      due_on: "Due on {{date}}"
+      due_on: Due on
+      today: Today
+      tomorrow: Tomorrow
     create: Add Task
     edit:
       submit: Update Task
