@@ -1,0 +1,8 @@
+%h2= t('.my_tasks')
+.task_list_wrap
+  - for task in tasks
+    .task{ :class => task.overdue? ? 'overdue' : '' }
+      = task_status(task,:column)
+      = render_due_on(task,current_user)
+      = link_to task.name, project_task_list_task_path(task.project.permalink,task.task_list.id,task), :class => "name"
+    .clear

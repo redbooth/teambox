@@ -367,6 +367,8 @@ es:
       hold: espera
       resolved: completa
       rejected: rechazada
+    my_tasks:
+      my_tasks: Mis tares
   notes:
     actions:
       delete_confirm: Seguro que quieres borrar esta nota?

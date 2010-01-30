@@ -61,7 +61,11 @@ div.task_list_wrap
     &.active_new,&.active_open,&.active_hold,&.active_resolved,&.active_rejected
       a.mine        
         :background transparent
-    
+    span.due_on
+      :color rgb(150,150,150)
+    span.due_on.overdue
+      :color red
+      :font-weight bold
 
 .active_new,.active_open,.active_hold,.active_resolved,.active_rejected
   :-moz-border-radius 5px
@@ -89,3 +93,9 @@ div.task_list_wrap
     :text-decoration line-through
     :font-style italic
     :color rgb(60,60,60)
+    
+.index_projects
+  div.task_list_wrap
+    :-webkit-box-shadow none
+    :-moz-box-shadow none
+    :box-shadow none

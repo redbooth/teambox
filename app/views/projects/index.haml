@@ -1,5 +1,6 @@
 - content_for :column do
   = new_project_link
+  = my_tasks(current_user.assigned_tasks(:all))
   = list_projects(@projects)
   - unless @sub_action == 'archived'
     = list_archived_projects(@archived_projects)

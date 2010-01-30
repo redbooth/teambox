@@ -367,6 +367,8 @@ fr:
       hold: en attente
       resolved: terminée
       rejected: rejetée
+    my_tasks:
+      my_tasks: Mes tâches
   notes:
     actions:
       delete_confirm: Etes-vous sûr de vouloir effacer cette note?

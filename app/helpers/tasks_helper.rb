@@ -101,6 +101,9 @@ module TasksHelper
     end
   end
 
+  def my_tasks(tasks)
+    render :partial => 'tasks/my_tasks', :locals => { :tasks => tasks }
+  end
 
   def show_archive_task_message(task)
     page.replace 'show_task', :partial => 'tasks/archive_message', :locals => {

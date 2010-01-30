@@ -367,6 +367,8 @@ en:
       hold: hold
       resolved: resolved
       rejected: rejected
+    my_tasks:
+      my_tasks: My tasks
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?
