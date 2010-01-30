@@ -183,7 +183,7 @@ class User < ActiveRecord::Base
     people.map { |person| person.project.tasks }.flatten.
       select { |task| task.active? }.
       select { |task| task.assigned_to?(self) }.
-      sort { |a,b| (a.due_on || 1.year.from_now) <=> (b.due_on || 1.year.from_now) }
+      sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
   end
   
   def in_project(project)
