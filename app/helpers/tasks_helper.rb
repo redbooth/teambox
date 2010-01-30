@@ -102,7 +102,9 @@ module TasksHelper
   end
 
   def my_tasks(tasks)
-    render :partial => 'tasks/my_tasks', :locals => { :tasks => tasks }
+    if tasks.any?
+      render :partial => 'tasks/my_tasks', :locals => { :tasks => tasks }
+    end
   end
 
   def show_archive_task_message(task)

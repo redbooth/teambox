@@ -10,18 +10,19 @@ You can [use Teambox online](http://www.teambox.com/ "Teambox") to understand ho
 
 Visit the product's site for documentation, community and support: <http://www.teambox.com/>
 
-<img src="http://blog.teambox.com/rails_features.jpg"/>
+<a href="http://www.teambox.com"><img src="http://teambox.com/images/screenshots/overview.png" /></a>
+
 
 Teambox: Project Management and Collaboration software
 -------
 
 - Website: <http://www.teambox.com/>
 - GitHub: <http://github.com/micho/teambox>
-- Lighthouse tickets: <http://teambox.lighthouseapp.com>
+- Mailing List for developers: <http://groups.google.com/group/teambox>
 - Original developer: Pablo Villalba (pablo@teambox.com, michokest@gmail.com)
 - Copyright: (cc) 2010 Teambox Technologies S.L.
 
-<a href="http://www.teambox.com"><img src="http://teambox.com/images/screenshots/overview.png" /></a>
+<img src="http://blog.teambox.com/rails_features.jpg"/>
 
 
 GET ROLLING!

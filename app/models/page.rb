@@ -6,6 +6,8 @@ class Page < RoleRecord
   has_many :slots, :class_name => 'PageSlot', :order => 'position ASC'
   
   attr_accessible :name, :description, :note_attributes
+
+  validates_length_of :name, :minimum => 1
   
   def self.widgets
      [Note, Divider]
