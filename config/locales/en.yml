@@ -1,6 +1,6 @@
 en:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "Now with <a href='http://blog.teambox.com/whiteness/'>light background</a> and <a href='http://blog.teambox.com/auto-refresh-activity-feed/'>auto-refresh</a>!"
+  latest_announcement: "Now with <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile Site, French locale and API</a>!"
   common:
     and: and
     or: or
@@ -549,6 +549,7 @@ en:
       signup: Sign up for an account
     new:
       title: Login
+      video: What's Teambox about?
       submit: Login
 
   email:
