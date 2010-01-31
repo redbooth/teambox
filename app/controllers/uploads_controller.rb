@@ -68,7 +68,7 @@ class UploadsController < ApplicationController
 
     if is_iframe? # uploads attached to a comment
       @upload.save
-      save_slot(@upload) if @page
+      save_slot(@upload) if !@upload.new_record? and @page
       @comment = load_comment unless @page
       @upload.reload
       respond_to do |f|
