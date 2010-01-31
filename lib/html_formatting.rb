@@ -7,7 +7,7 @@ module HtmlFormatting
     self.class.formatted_attributes.each do |attr|
       raw = read_attribute attr
 
-      text = format_textile(raw)
+      text = format_textile(raw || '')
       text = format_usernames(text)
       text = format_links(text)
       
