@@ -3,6 +3,7 @@
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
+  helper_method :current_user
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   rescue_from ActiveRecord::RecordNotFound, :with => :show_errors
   

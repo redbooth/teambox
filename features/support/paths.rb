@@ -36,15 +36,10 @@ module NavigationHelpers
     when /the list of tasks page of the project called "(.+)"/
       project = Project.find_by_name($1)
       project_task_lists_path(project)
+    when /my settings page/
+      account_settings_path
     #when /the index page for (.+)/
     #  polymorphic_path(model($1))
-
-    # Add more mappings here.
-    # Here is a more fancy example:
-    #
-    #   when /^(.*)'s profile page$/i
-    #     user_profile_path(User.find_by_login($1))
-
     else
       raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
         "Now, go and add a mapping in #{__FILE__}"

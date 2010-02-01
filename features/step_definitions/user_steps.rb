@@ -70,18 +70,40 @@ Then /^I should see for task status tag with (.*) and (.*)$/ do |current_status,
   Then "I should see \"#{status_text}\" within \".task_status_#{status}\""
 end
 
+#TODO: I think this should go once we have the CI server is set up,
+# it is more straightforward to pass the login
+# when creating users (see Given I am "..." step) than to create a factory
+# for each username, in my opinion.
 Given /^I am currently "([^\"]*)"$/ do |login|
   @current_user ||= User.find_by_login(login) || Factory(login.to_sym)
   @user = @current_user
 end
 
-Given /^I am logged in as (.*)$/ do |login|
+#TODO: I think this should go once we have the CI server is set up,
+# it is more straightforward to pass the login
+# when creating users (see Given I am "..." step) than to create a factory
+# for each username, in my opinion.
+Given /^I am logged in as ([^'"]*)$/ do |login|
   Given %(I am currently "#{login}")
     And "I go to the login page"
     And "I fill in \"Email or Username\" with \"#{@current_user.email}\""
     And "I fill in \"Password\" with \"#{@current_user.password}\""
     And "I press \"Login\""
 end
+
+Given /^I am "([^\"]*)"$/ do |login|
+  @current_user ||= User.find_by_login(login) || Factory(:user, :login => login, :email => "#{login}@example.com")
+  @user = @current_user
+end
+
+Given /^I am logged in as "([^\"]*)"$/ do |login|
+  Given %(I am "#{login}")
+    And "I go to the login page"
+    And "I fill in \"Email or Username\" with \"#{login}\""
+    And "I fill in \"Password\" with \"dragons\""
+    And "I press \"Login\""
+end
+
 
 Given /^I log out$/ do
   visit(logout_path)
@@ -111,7 +133,11 @@ Given /I am in the project called "([^\"]*)"$/ do |name|
 end
 
 Given /^there is a user called "([^\"]*)"$/ do |login|
-  Factory(:user, :login => login)
+  Factory(:user, :login => login, :email => "#{login}@example.com")
+end
+
+Given /^the user called "([^\"]*)" is confirmed$/ do |login|
+  User.find_by_login(login).update_attribute(:confirmed_user, true)
 end
 
 Given /I am the user (.*)$/ do |login|

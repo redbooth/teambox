@@ -3,9 +3,9 @@
     
 %h2= t(".title_#{@sub_action}")
 
-- form_for @current_user, :html => { :multipart => true, :id => 'edit_user', :class => "#{'form_error' unless @current_user.errors.empty?}" } do |f|
-  = f.error_messages
-  = user_fields(f,@current_user,:sub_action => @sub_action)
+- form_tag user_path(:id => @current_user.id), :html => { :multipart => true, :method => :put, :id => 'edit_user', :class => "#{'form_error' unless @current_user.errors.empty?}" } do |f|
+  / = f.error_messages
+  = user_fields(f,current_user,:sub_action => @sub_action)
   .submit
     = submit_tag t('.submit')
 

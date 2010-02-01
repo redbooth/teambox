@@ -20,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
 
   map.account_settings '/account/settings', :controller => 'users', :action => 'edit', :sub_action => 'settings'
+  map.update_account_settings '/account/settings', :controller => 'users', :action => 'update', :sub_action => 'settings', :conditions => { :method => :get }
   map.account_picture '/account/picture',   :controller => 'users', :action => 'edit', :sub_action => 'picture'
   map.account_profile '/account/profile',   :controller => 'users', :action => 'edit', :sub_action => 'profile'
   map.account_notifications '/account/notifications', :controller => 'users', :action => 'edit', :sub_action => 'notifications'

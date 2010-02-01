@@ -1,4 +1,3 @@
-@wip
 Feature: List tasks in project broken down by task list
 
   Background:
