@@ -1,4 +1,3 @@
-@wip
 Feature: Edit user settings
   In order to save a ton of time
   As a Teambox admin

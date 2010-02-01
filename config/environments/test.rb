@@ -9,4 +9,5 @@ config.action_mailer.delivery_method = :test
 config.gem 'rspec',       :lib => false, :version => '>=1.2.8' unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec'))
 config.gem 'rspec-rails', :lib => false, :version => '>=1.2.7.1' unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
 
-config.gem 'thoughtbot-factory_girl', :lib => 'factory_girl', :source => 'http://gems.github.com'
+config.gem "factory_girl", :version => ">= 1.2.3", :source => "http://gemcutter.org"
+config.gem "pickle", :version => ">= 0.2.1", :source => "http://gemcutter.org"

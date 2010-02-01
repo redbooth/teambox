@@ -83,7 +83,7 @@ end
 # it is more straightforward to pass the login
 # when creating users (see Given I am "..." step) than to create a factory
 # for each username, in my opinion.
-Given /^I am logged in as ([^'"]*)$/ do |login|
+Given /^I am logged in as ([^\"]*)$/ do |login|
   Given %(I am currently "#{login}")
     And "I go to the login page"
     And "I fill in \"Email or Username\" with \"#{@current_user.email}\""
@@ -130,6 +130,12 @@ Given /I am in the project called "([^\"]*)"$/ do |name|
   Given %(there is a project called "#{name}")
   project = Project.find_by_name(name)
   project.add_user(@current_user)
+end
+
+Given /^all the users are in the project with name: "([^\"]*)"$/ do |name|
+  Given %(there is a project called "#{name}")
+  project = Project.find_by_name(name)
+  User.all.each { |user| project.add_user(user) }
 end
 
 Given /^there is a user called "([^\"]*)"$/ do |login|

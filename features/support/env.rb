@@ -48,3 +48,6 @@ DatabaseCleaner.strategy = :truncation
 require 'cucumber/rails/rspec'
 
 require 'email_spec/cucumber'
+
+require File.join(File.dirname(__FILE__), 'factory_girl.rb')
+require File.join(File.dirname(__FILE__), 'pickle.rb')
