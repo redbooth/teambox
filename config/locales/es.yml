@@ -107,7 +107,7 @@ es:
       notify_task_lists: Notificarme de comentarios en listas de tareas que sigo
       notify_tasks: Notificarme de comentarios en tareas que sigo
       wants_task_reminder: Recibir un email diario con mis tareas
-      invalid_login: "use only letters, numbers and _"
+      invalid_login: "usa sólo letras, números y _"
       avatar:
         field: Tu icono
         presence: No puedes subir un fichero vacío
@@ -218,8 +218,8 @@ es:
     fields:
       archiving: Archivar este proyecto
       forever: Borrar permanentemente este proyecto
-      owner: "Owner"
-      owner_description: "The owner is the only person that can modify this projects settings. Once you change the owner, you will no longer be able to modify project settings."
+      owner: Propietario
+      owner_description: "El propietario es el máximo responsable de un proyecto. No puede expulsarse del proyecto, a menos que otro usuario sea nombrado propietario."
       name: Nombre
       name_description: "Escoge un nombre breve y descriptivo. Por ejemplo: Taggart Transcontinental"
       permalink: URL
@@ -251,11 +251,11 @@ es:
       title_settings: Preferencias Generales
       title_picture: Logotipo del Proyecto
       title_deletion: Archivar o borrar proyecto
-      title_ownership: Ownership
+      title_ownership: Propietario
       submit: Guardar cambios
-      change_owner: Change owner
-      transferred: "Project ownership has been transferred."
-      invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
+      change_owner: Cambiar propietario
+      transferred: "Se ha transferido el proyecto al nuevo propietario."
+      invalid_transferred: "No se ha podido transferir el proyecto. Revisa los errores e inténtalo de nuevo."
   invitations:
     fields:
       user_or_email: "Introduce el email o usuario de tu compañero:"
@@ -582,7 +582,7 @@ es:
       general: Datos del proyecto
       picture: Imagen de proyecto
       deletion: Archivar o borrar proyecto
-      ownership: Ownership
+      ownership: Propietario
     project_navigation:
       overview: Resumen
       all_conversations: Mis conversaciones
