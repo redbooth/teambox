@@ -63,10 +63,11 @@ module ApplicationHelper
       :locals => { :project => project }
   end
 
-  def navigation(project,recent_projects)
+  def navigation(project,projects,recent_projects)
     render :partial => 'shared/navigation',
       :locals => {
         :project => project,
+        :projects => projects,
         :recent_projects => recent_projects }
   end
 

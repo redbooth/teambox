@@ -60,6 +60,10 @@ module ProjectsHelper
   def new_project_link
     link_to content_tag(:span, t('.new_project')), new_project_path, :class => 'add_button', :id => 'new_project_link'
   end
+  
+  def projects_tab_list(projects)
+    render :partial => "shared/projects_dropdown", :locals => {:projects => projects}
+  end
 
   def project_fields(f,project,sub_action='new')
     render :partial => "projects/fields/#{sub_action}", 
@@ -94,6 +98,30 @@ module ProjectsHelper
     content_tag(:div, 
       link_to(t('common.print'), project_path(project,:format => :print)),
       :class => :print)
+  end
+  
+  def quicklink_conversations(project)
+    desc = t('shared.project_navigation.conversations')
+    link_to image_tag('drop_conv.png',
+                      :alt => desc,
+                      :title => desc), 
+                      project_conversations_path(project)
+  end
+  
+  def quicklink_tasks(project)
+    desc = t('shared.project_navigation.task_lists')
+    link_to image_tag('drop_tasklist.png', 
+                      :alt => desc,
+                      :title => desc), 
+                      project_task_lists_path(project)
+  end
+  
+  def quicklink_pages(project)
+    desc = t('shared.project_navigation.pages')
+    link_to image_tag('drop_page.png',
+                      :alt => desc,
+                      :title => desc), 
+                      project_pages_path(project)
   end
 
   def reset_autorefresh

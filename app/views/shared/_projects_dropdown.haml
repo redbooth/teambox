@@ -1,6 +1,8 @@
-.projects_dropdown_wrap
-  =image_tag('dropdown_arrow.png')
-  .projects_dropdown{ :style => 'display: none'}
-    -for project in current_user.projects
-      .project_dropdown
-        = link_to project.name, project_path(project)
+%ul#projects_tab_list
+  - projects.each do |project|
+    %li
+      = link_to(truncate(project.name, :length => 30), project_url(project), :style => 'width:220px;', :class => 'proj')
+      .quicklinks
+        = quicklink_conversations(project)
+        = quicklink_tasks(project)
+        = quicklink_pages(project)

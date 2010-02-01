@@ -14,11 +14,13 @@ if logged_in?
       end
     end
     
-    add_tab do |t|
+    add_tab({:html => {:id => (@current_project.nil? ? nil : 'projects_tab'), 
+	                   :li_end => (@current_project.nil? ? nil : 
+	                               projects_tab_list(current_user.projects))}
+	}) do |t|
       t.named "#{t('.all_projects')}"
       t.links_to projects_path
       t.highlights_on :controller => :projects, :action => :index
-      #t.li_end "#{render :partial => 'shared/projects_dropdown'}"
       t.tab_index = 101
     end
 
