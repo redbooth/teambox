@@ -156,6 +156,7 @@ div.project_settings_navigation
   :float none
 
 #projects_tab_list
+  :z-index 250
   li
     :float none	
     :-moz-border-radius 0px
@@ -163,18 +164,25 @@ div.project_settings_navigation
     :max-width 300px
     :width 300px
     :margin-right 1px
+    :font-size 12px
     a
       :padding 0px
       :-moz-border-radius 0px
       :-webkit-border-radius 0px
     a.proj
-      :padding 3px 5px
+      :padding 4px 5px
       :width 220px
     .quicklinks
       :float right
       :padding 3px 0px
+      :display none
       img
         margin: 0px 2px
+
+#projects_tab_list
+  li:hover
+    .quicklinks
+      display: block
 
 #projects_tab_container
   ul
