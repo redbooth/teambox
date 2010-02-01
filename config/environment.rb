@@ -13,6 +13,8 @@ Rails::Initializer.run do |config|
 
   config.time_zone = APP_CONFIG['time_zone']
 
+  config.i18n.default_locale = :en
+
   config.action_mailer.default_url_options = { :host => APP_CONFIG['app_domain'] }
 
   if APP_CONFIG['allow_outgoing_email']

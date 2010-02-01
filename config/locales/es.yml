@@ -370,7 +370,7 @@ es:
       resolved: completa
       rejected: rechazada
     my_tasks:
-      my_tasks: Mis tares
+      my_tasks: Mis tareas
   notes:
     actions:
       delete_confirm: Seguro que quieres borrar esta nota?

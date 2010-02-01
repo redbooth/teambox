@@ -83,7 +83,7 @@ module ApplicationHelper
   end
 
   def location_name?(names)
-    names.any?{ |name| name == location_name }
+    Array(names).any?{ |name| name == location_name }
   end
 
   def location_name
