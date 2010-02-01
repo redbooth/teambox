@@ -107,6 +107,7 @@ es:
       notify_task_lists: Notificarme de comentarios en listas de tareas que sigo
       notify_tasks: Notificarme de comentarios en tareas que sigo
       wants_task_reminder: Recibir un email diario con mis tareas
+      invalid_login: "use only letters, numbers and _"
       avatar:
         field: Tu icono
         presence: No puedes subir un fichero vacío
@@ -301,7 +302,7 @@ es:
       add_suscribers: ¿Quién seguirá esta conversación?
       subscribe_note: Estas personas serán notificadas via email de este mensaje y los comentarios posteriores.<br/>Pueden dejar de seguir la conversación en cualquier momento.
       invite_users: Eres el único usuario en este proyecto!
-      no_users_yet: "Conversar es más útil cuando no lo haces solo. <a href='{{invite_link}}'>Invita a algunos usuarios</a> a este proyecto para que puedan leer, comentar y recibir actualizaciones de esta conversación." 
+      no_users_yet: "Conversar es más útil cuando no lo haces solo. <a href='{{invite_link}}'>Invita a algunos usuarios</a> a este proyecto para que puedan leer, comentar y recibir actualizaciones de esta conversación."
     edit:
       submit: Modificar conversación
     index:
@@ -331,7 +332,7 @@ es:
     short_conversation:
       comment: respuesta
       comments: respuestas
-  
+
   tasks:
     errors:
       name:
@@ -358,7 +359,7 @@ es:
       edit: Editar
     destroy_message:
       deleted: "La tarea <b>{{name}}</b> se ha borrado"
-    archive_message:  
+    archive_message:
       archived: "La tarea <b>{{name}}</b> ha sido archivada!"
     archive_box:
       you_are_done: Parece que ya has terminado con esta tarea.
@@ -628,7 +629,7 @@ es:
       help: Ayuda
     watchers:
       unwatch: Dejar de seguir
-      watch: Seguir      
+      watch: Seguir
       people_watching: "Siguiendo este elemento: "
       nobody_watching: "Nadie sigue los cambios de este elemento"
       started_watching: "Ahora recibirás emails con las actualizaciones de este elemento."
@@ -642,7 +643,7 @@ es:
       safari: "Safari"
 
   emailer:
-    common: 
+    common:
       do_not_answer: "No contestes a este email."
       answer_above_this_line: "CONTESTA POR ENCIMA DE ESTA LINEA PARA RESPONDER"
     invitation:
@@ -669,7 +670,7 @@ es:
       report_abuse: "Recibes este mensaje porque te has registado en Teambox con la dirección {{email}}"
       problems: "Si tienes problemas, ponte en contacto con nosotros en {{support}}"
     notify:
-      project: "Proyecto de Teambox:"      
+      project: "Proyecto de Teambox:"
       view_online: "Puedes <a href='{{link}}'>entrar a Teambox</a> para contestar y adjuntar archivos."
       reply: "También puedes contestar a este email para publicar una respuesta."
       are_watching: " están suscritos a la conversación, y serán notificados de las respuestas futuras."
@@ -688,14 +689,14 @@ es:
     upload:
       file: "Archivo:"
       uploaded_by: subido por
-    
+
   weakling:
     default: Debe tener al menos 5 caracteres
     error: demasiado corto
     weak: débil
     average: normal
     strong: fuerte
-    
+
   completeness_scoring:
     models:
       user:
@@ -728,7 +729,7 @@ es:
     archived_task_lists: Tareas archivadas
     new_example_projects: Crear un proyecto de ejemplo
     new_conversations: Nueva Conversación
-          
+
   number:
     # Used in number_with_delimiter()
     # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
@@ -755,9 +756,9 @@ es:
     percentage:
       format:
         # These three are to override number.format and are optional
-        # separator: 
+        # separator:
         delimiter: ""
-        # precision: 
+        # precision:
 
     # Used in number_to_precision()
     precision:
@@ -771,7 +772,7 @@ es:
     human:
       format:
         # These three are to override number.format and are optional
-        # separator: 
+        # separator:
         delimiter: ""
         precision: 1
       storage_units:
@@ -790,36 +791,36 @@ es:
   # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
   datetime:
     distance_in_words:
-      half_a_minute: "medio minuto" 
+      half_a_minute: "medio minuto"
       less_than_x_seconds:
-        one:  "menos de 1 segundo" 
+        one:  "menos de 1 segundo"
         other: "menos de {{count}} segundos"
       x_seconds:
-        one:  "1 segundo" 
-        other: "{{count}} segundos" 
+        one:  "1 segundo"
+        other: "{{count}} segundos"
       less_than_x_minutes:
-        one:  "menos de 1 minuto" 
-        other: "menos de {{count}} minutos" 
+        one:  "menos de 1 minuto"
+        other: "menos de {{count}} minutos"
       x_minutes:
-        one:  "1 minuto" 
-        other: "{{count}} minutos" 
+        one:  "1 minuto"
+        other: "{{count}} minutos"
       about_x_hours:
-        one:  "alrededor de 1 hora" 
-        other: "alrededor de {{count}} horas" 
+        one:  "alrededor de 1 hora"
+        other: "alrededor de {{count}} horas"
       x_days:
-        one:  "1 día" 
-        other: "{{count}} días" 
+        one:  "1 día"
+        other: "{{count}} días"
       about_x_months:
-        one:  "alrededor de 1 mes" 
-        other: "alrededor de {{count}} meses" 
+        one:  "alrededor de 1 mes"
+        other: "alrededor de {{count}} meses"
       x_months:
-        one:  "1 mes" 
-        other: "{{count}} meses" 
+        one:  "1 mes"
+        other: "{{count}} meses"
       about_x_years:
-        one:  "alrededor de 1 año" 
-        other: "alrededor de {{count}} años" 
+        one:  "alrededor de 1 año"
+        other: "alrededor de {{count}} años"
       over_x_years:
-        one:  "más de 1 año" 
+        one:  "más de 1 año"
         other: "más de {{count}} años"
     prompts:
       year:   "Año"
@@ -911,9 +912,9 @@ es:
         description: Descripción
     errors:
       messages:
-        inclusion: "no está incluido en la lista" 
-        exclusion: "está reservado" 
-        invalid: "no es válido" 
+        inclusion: "no está incluido en la lista"
+        exclusion: "está reservado"
+        invalid: "no es válido"
         confirmation: "no coincide con la confirmación"
         accepted: "debe ser aceptado"
         empty: "no puede estar vacío"
@@ -931,10 +932,10 @@ es:
         odd: "debe ser impar"
         even: "debe ser par"
         record_invalid: "La validación falló: {{errors}}"
-        
+
   date:
     yesterday: Ayer
-    formats: 
+    formats:
       default: "%Y-%m-%d"
       short: "%b %d"
       long: "%B %d, %Y"
@@ -954,7 +955,7 @@ es:
       long: "%B %d, %Y %H:%M"
     am: "am"
     pm: "pm"
-    
+
   support:
     select:
       prompt: "Elige una opción"

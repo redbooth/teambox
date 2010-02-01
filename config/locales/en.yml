@@ -68,7 +68,7 @@ en:
       login_link_sent: "We just sent you an email to {{email}} so you can retrieve your password."
       follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
       not_found: "The email <b>{{email}}</b> doesn't belong to any Teambox user. Maybe you mispelt it?"
-      change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"      
+      change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"
   cards:
     card:
       phone_numbers: Phone Numbers
@@ -101,12 +101,13 @@ en:
       first_day_of_week: Week starts on
       change_password: Change password
       confirm_password: Confirm password
-      use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."      
+      use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
       notify_mentions: "Notify me when I'm mentioned eg. Howdy @{{login}}! You'll receive an email!"
       notify_conversations: Notify me when I'm watching a conversation
       notify_task_lists: Notify me when I'm watching a task list
       notify_tasks: Notify me when I'm watching a task
       wants_task_reminder: "Send me a daily email of my tasks"
+      invalid_login: "use only letters, numbers and _"
       avatar:
         field: Your avatar
         presence: "You can't upload a blank file"
@@ -268,7 +269,7 @@ en:
     sent:
       email_sent: "<b>We just sent a notification email to this user with a link to accept your project invitation</b>. If they can't find the email, make sure it was not classified as spam or try a different email address. If problems persist, please contact our staff."
     pending:
-      to_access_or: to access the project or 
+      to_access_or: to access the project or
       invited_to_join: "{{by}} has invited you to join the project {{project}}."
     resend:
       resent: "The invitation has been resent to {{recipient}}. If the email is not received make sure to check the spam folder."
@@ -279,7 +280,7 @@ en:
     search:
       username_or_email: "Enter your teammate's username or email"
       invite_people: Invite people to this project
-      invite: Invite      
+      invite: Invite
       submit: Send
     recent:
       invite: Invite {{username}}
@@ -331,7 +332,7 @@ en:
     short_conversation:
       comment: comment
       comments: comments
-  
+
   tasks:
     errors:
       name:
@@ -358,7 +359,7 @@ en:
       edit: Edit
     destroy_message:
       deleted: "The Task <b>{{name}}</b> was successfully deleted!"
-    archive_message:  
+    archive_message:
       archived: "The Task <b>{{name}}</b> was successfully archived!"
     archive_box:
       you_are_done: It looks like you're done with this task!
@@ -540,7 +541,7 @@ en:
       define2: "You can upload files here or attach documents to conversations, tasks or pages. "
       item1: "<b>Bigger files</b>. Upload files of any size and forget about email limitations."
       item2: "<b>Versioning</b>. Upload new versions of a file and keep track of changes."
-      item3: "<b>Always available</b>. Files stay in context in the project for future reference."      
+      item3: "<b>Always available</b>. Files stay in context in the project for future reference."
     upload:
       uploaded_the_file: "uploaded the file"
       download: Download
@@ -628,7 +629,7 @@ en:
       help: Help
     watchers:
       unwatch: Unwatch
-      watch: Watch      
+      watch: Watch
       people_watching: "People watching: "
       nobody_watching: "Nobody is watching"
       started_watching: "You will now be notified by email of updates."
@@ -642,7 +643,7 @@ en:
       safari: "Safari"
 
   emailer:
-    common: 
+    common:
       do_not_answer: "Do not answer to this email."
       answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
     invitation:
@@ -672,7 +673,7 @@ en:
       project: "Teambox Project:"
       view_online: "You can <a href='{{link}}'>view this conversation online</a> to answer and attach files."
       reply: "You can also answer to this email to post a reply in the conversation."
-      are_watching: " are suscribed to this conversation, and will be notified of future replies."      
+      are_watching: " are suscribed to this conversation, and will be notified of future replies."
       stop_watching: "<a href='{{stop_watching_url}}'>Stop watching</a> this thread to stop receiving email notifications."
       notification_settings: "You can change your <a href='{{url}}'>notification settings</a> for further emails."
       comment: "Comment on project's wall: "
@@ -688,14 +689,14 @@ en:
     upload:
       file: "File:"
       uploaded_by: uploaded by
-    
+
   weakling:
     default: Must be at least 5 characters
     error: too short
     weak: weak
     average: average
     strong: strong
-    
+
   completeness_scoring:
     models:
       user:
@@ -724,7 +725,7 @@ en:
     create_users: Signup
     edit_users: Edit
     welcome_users: Welcome!
-    new_projects: New Project    
+    new_projects: New Project
     archived_task_lists: Archived Tasks
     new_example_projects: Create an Example Project
     new_conversations: New Conversation
@@ -755,9 +756,9 @@ en:
     percentage:
       format:
         # These three are to override number.format and are optional
-        # separator: 
+        # separator:
         delimiter: ""
-        # precision: 
+        # precision:
 
     # Used in number_to_precision()
     precision:
@@ -771,7 +772,7 @@ en:
     human:
       format:
         # These three are to override number.format and are optional
-        # separator: 
+        # separator:
         delimiter: ""
         precision: 1
       storage_units:
@@ -931,10 +932,10 @@ en:
         odd: "must be odd"
         even: "must be even"
         record_invalid: "Validation failed: {{errors}}"
-       
+
   date:
     yesterday: Yesterday
-    formats: 
+    formats:
       default: "%Y-%m-%d"
       short: "%b %d"
       long: "%B %d, %Y"

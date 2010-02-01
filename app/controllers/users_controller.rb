@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   skip_before_filter :login_required,  :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password ]
   skip_before_filter :confirmed_user?, :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password, :unconfirmed_email ]
   skip_before_filter :load_project
-  # before_filter :fix_invalid_logins_for_url_generation, :only => [ :update, :edit ]
 
   def new
     if logged_in?
@@ -43,13 +42,13 @@ class UsersController < ApplicationController
       else
         redirect_back_or_default('/')
       end
-      
+
       flash[:success] = t('users.create.thanks')
     else
       render :action => :new, :layout => 'sessions'
     end
   end
-  
+
   def edit
     if params.has_key?(:sub_action)
       @sub_action = params[:sub_action]
@@ -57,7 +56,7 @@ class UsersController < ApplicationController
       render :file => "#{RAILS_ROOT}/public/404.html", :status => 404
     end
   end
-  
+
   def update
     @sub_action = params[:sub_action]
     respond_to do |f|
@@ -72,7 +71,7 @@ class UsersController < ApplicationController
     end
 
   end
-  
+
   def unconfirmed_email
     if params[:resend]
       current_user.send_activation_email
@@ -82,7 +81,7 @@ class UsersController < ApplicationController
     @email = current_user.email
     render :layout => 'sessions'
   end
-  
+
   def confirm_email
     logout_keeping_session!
     if @user
@@ -113,14 +112,14 @@ class UsersController < ApplicationController
       end
     end
   end
-  
+
   def close_welcome
     @current_user.update_attribute(:welcome,true)
     respond_to do |format|
       format.html { redirect_to projects_path }
     end
   end
-  
+
   private
     def find_user
       unless @user = User.find_by_login(params[:id])
@@ -128,18 +127,11 @@ class UsersController < ApplicationController
         redirect_to '/'
       end
     end
-    
+
     def load_invitation
       if params[:invitation]
         @invitation = Invitation.find_by_token(params[:invitation])
         @invitation_token = params[:invitation] if @invitation
       end
     end
-
-    # def fix_invalid_logins_for_url_generation
-    #   alias_method :old_user_path, :user_path
-    #   define_method(:user_path) do |args|
-    #     old_user_path(:id => @current_user.id)
-    #   end
-    # end
 end

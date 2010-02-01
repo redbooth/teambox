@@ -1,10 +1,10 @@
 - content_for :column do
   = user_navigation
-    
+
 %h2= t(".title_#{@sub_action}")
 
-- form_tag user_path(:id => @current_user.id), :html => { :multipart => true, :method => :put, :id => 'edit_user', :class => "#{'form_error' unless @current_user.errors.empty?}" } do |f|
-  / = f.error_messages
+- form_for :user, @current_user, :url => user_path(:id => @current_user.id), :html => { :multipart => true, :method => :put, :id => 'edit_user', :class => "#{'form_error' unless @current_user.errors.empty?}" } do |f|
+  = f.error_messages
   = user_fields(f,current_user,:sub_action => @sub_action)
   .submit
     = submit_tag t('.submit')

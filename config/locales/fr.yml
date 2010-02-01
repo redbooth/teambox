@@ -29,7 +29,7 @@ fr:
     left_project: "Vous avez quitté le project"
   activities:
     create_upload: a ajouté un fichier
-    create_conversation: 
+    create_conversation:
       create_conversation: a créé la conversation
     create_task_list:
       create_task_list: a créé la liste de tâches
@@ -90,7 +90,7 @@ fr:
       login: Nom d'utilisateur
       first_name: Prénom
       last_name: Nom
-      biography: Biographie      
+      biography: Biographie
       time_zone: Fuseau horaire
       language: Langue
       email: Email
@@ -102,11 +102,12 @@ fr:
       change_password: Changer de mot de passe
       confirm_password: Confirmer le mot de passe
       use_this_email: "Vous avez été invité à utiliser Teambox avec cette adresse mail. Si vous voulez accéder aux projets de la personne qui vous a invité, ne changez pas l'adresse mail. Vous pourrez changer d'adresse mail par la suite, une fois enregistré dans Teambox."
-      notify_mentions: "Envoyez-moi une notification lorsque je suis mentionné, par exemple Bonjour @{{login}}! Vous recevrez un mail!" 
-      notify_conversations: Envoyez-moi une notification lorsque je regarde une conversation 
-      notify_task_lists: Envoyez-moi une notification lorsque je regarde une liste de tâches 
+      notify_mentions: "Envoyez-moi une notification lorsque je suis mentionné, par exemple Bonjour @{{login}}! Vous recevrez un mail!"
+      notify_conversations: Envoyez-moi une notification lorsque je regarde une conversation
+      notify_task_lists: Envoyez-moi une notification lorsque je regarde une liste de tâches
       notify_tasks: Envoyez-moi une notification lorsque je regarde une tâche
       wants_task_reminder: "Send me a daily email of my tasks"
+      invalid_login: "use only letters, numbers and _"
       avatar:
         field: Votre image
         presence: "Il n'est pas possible de télécharger un fichier vide"
@@ -210,7 +211,7 @@ fr:
       new_task_list_link: Nouvelle liste de tâches
       people_in_project: Personnes dans ce projet
       subscribe: Souscrivez à ce projet
-      tip: "Si vous mentionnez le @nom d'utilisateur de quelqu'un, celui-ci recevra un mail avec votre message" 
+      tip: "Si vous mentionnez le @nom d'utilisateur de quelqu'un, celui-ci recevra un mail avec votre message"
       rss:
         title: "{{name}}"
         description: "Actualités récentes dans le projet {{name}}"
@@ -225,7 +226,7 @@ fr:
       permalink_description: "Ceci sera l'adresse internet de votre projet. Choisissez-la concise et sans espace."
       permalink_prefix: "http://{{domain}}/projects/"
       archived: Archiver ce projet
-      confirm_delete: "Etes-vous certain de vouloir supprimer définitivement ce projet? IL SERA IMPOSSIBLE D'Y REVENIR. Si vous voulez le conserver, utilisez plutôt Archiver Projet." 
+      confirm_delete: "Etes-vous certain de vouloir supprimer définitivement ce projet? IL SERA IMPOSSIBLE D'Y REVENIR. Si vous voulez le conserver, utilisez plutôt Archiver Projet."
     new_primer:
       define1: Un projet est un groupe partagé avec vos contacts.
       define2: "A l'intérieur d'un projet, chaque membre a la possibilité de:"
@@ -331,12 +332,12 @@ fr:
     short_conversation:
       comment: réponse
       comments: réponses
-  
+
   tasks:
     errors:
       name:
         cant_be_blank: Le nom ne peut pas être vide
-        too_long: 'Le nom doit comporter moins de 255 caractères' 
+        too_long: 'Le nom doit comporter moins de 255 caractères'
     fields:
       name: Nom
     assigned:
@@ -365,8 +366,8 @@ fr:
       archive: Archiver tâche
       reopen: Réouvrir cette tâche
     unarchive_box:
-      task_is_closed: Cette tâche est fermée et archivée 
-      unarchive: Réactiver cette tâche 
+      task_is_closed: Cette tâche est fermée et archivée
+      unarchive: Réactiver cette tâche
       reopen: Réouvrir cette tâche
     overdue: "{{days}} jours de retard"
     status:
@@ -557,11 +558,11 @@ fr:
       title: Entrer
       video: Teambox
       submit: Entrer
- 
+
   email:
     user:
       welcome: Bienvenue sur Teambox!
- 
+
   shared:
     strip:
       archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>"
@@ -634,12 +635,12 @@ fr:
       started_watching: "Vous recevrez maintenant des notifications par mail pour toute modification de cet élément."
       stopped_watching: "Vous ne recevrez plus de notifications pour cet élément."
     upgrade_browser:
-      upgrade: Vous utilisez actuellement une ancienne version d'Internet Explorer. Il est possible que Teambox ne fonctionne pas correctement avec cette version. 
+      upgrade: Vous utilisez actuellement une ancienne version d'Internet Explorer. Il est possible que Teambox ne fonctionne pas correctement avec cette version.
       ie: Mettez à jour Internet Explorer
       or_install: ou installez
-      chrome: "Chrome," 
-      firefox: "Firefox" 
-      safari: "Safari" 
+      chrome: "Chrome,"
+      firefox: "Firefox"
+      safari: "Safari"
 
   emailer:
     common:
@@ -688,14 +689,14 @@ fr:
     upload:
       file: "Fichier:"
       uploaded_by: ajouté par
-    
+
   weakling:
     default: Doit comporter au moins 5 caractères
     error: trop court
     weak: faible
     average: normal
     strong: fort
-    
+
   completeness_scoring:
     models:
       user:
@@ -718,7 +719,7 @@ fr:
     index_uploads: Mes fichiers
     create_uploads: Ajouter un fichier
     index_projects: Projets
-    edit_projects: Editer Projet 
+    edit_projects: Editer Projet
     index_people: Personnes
     new_users: Créer un compte
     create_users: Créer un compte
@@ -728,7 +729,7 @@ fr:
     archived_task_lists: Tâches archivées
     new_example_projects: Créer un projet-exemple
     new_conversations: Nouvelle conversation
-          
+
   number:
     # Used in number_with_delimiter()
     # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
@@ -739,7 +740,7 @@ fr:
       delimiter: ","
       # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
       precision: 3
- 
+
     # Used in number_to_currency()
     currency:
       format:
@@ -750,7 +751,7 @@ fr:
         separator: "."
         delimiter: ","
         precision: 2
- 
+
     # Used in number_to_percentage()
     percentage:
       format:
@@ -758,7 +759,7 @@ fr:
         # separator:
         delimiter: ""
         # precision:
- 
+
     # Used in number_to_precision()
     precision:
       format:
@@ -766,7 +767,7 @@ fr:
         # separator:
         delimiter: ""
         # precision:
- 
+
     # Used in number_to_human_size()
     human:
       format:
@@ -786,7 +787,7 @@ fr:
           mb: "Mo"
           gb: "Go"
           tb: "To"
- 
+
   # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
   datetime:
     distance_in_words:
@@ -828,7 +829,7 @@ fr:
       hour: "Hour"
       minute: "Minute"
       second: "Seconds"
- 
+
   activerecord:
     models:
       card: Carte
@@ -864,7 +865,7 @@ fr:
       website:
         name: Adresse internet
       im:
-        name: Adresse 
+        name: Adresse
         account_im_type: Service
         account_type: Type
       social_network:
@@ -931,7 +932,7 @@ fr:
         odd: "doit être impair"
         even: "doit être pair"
         record_invalid: "La validation a échoué : {{errors}}"
-              
+
   date:
     yesterday: Hier
     formats:
