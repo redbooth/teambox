@@ -3,7 +3,7 @@
 
 %h2= t(".title_#{@sub_action}")
 
-- sub_params = @sub_action == 'ownership' ? transfer_project_path(@current_project) : {}
+- sub_params = @sub_action == 'ownership' ? transfer_project_path(@current_project) : nil
 
 - form_for @current_project, :url => sub_params do |f|
   = project_fields(f,@current_project,@sub_action)
