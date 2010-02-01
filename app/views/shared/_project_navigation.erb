@@ -94,7 +94,7 @@ render_tabnav :project do
         t.tab_index = 156
       end
 
-      if project.owner?(current_user)
+      if project.admin?(current_user)
         add_tab do |t|
           t.named t('.project_settings')
           t.links_to  project_settings_path(project)
