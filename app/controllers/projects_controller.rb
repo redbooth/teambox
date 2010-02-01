@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_filter :owns_project?, :only => [:create, :edit, :update, :transfer, :destroy]
+  before_filter :owns_project?, :only => [:edit, :update, :transfer, :destroy]
   before_filter :load_task_lists, :only => [:show]
   before_filter :load_banner, :only => [:show]
   before_filter :load_projects, :only => [:index]
