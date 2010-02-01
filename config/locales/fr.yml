@@ -217,6 +217,8 @@ fr:
     fields:
       archiving: Archiver ce projet 
       forever: Supprimer de façon définitive ce projet 
+      owner: "Owner"
+      owner_description: "The owner is the only person that can modify this projects settings. Once you change the owner, you will no longer be able to modify project settings."
       name: Nom
       name_description: "Chosissez un titre bref et explicite. Par exemple: Taggart Transcontinental"
       permalink: URL
@@ -248,7 +250,11 @@ fr:
       title_settings: Paramètres généraux
       title_picture: Logo du projet
       title_deletion: Archiver/Effacer le projet
+      title_ownership: Ownership
       submit: Enregistrer les modifications
+      change_owner: Change owner
+      transferred: "Project ownership has been transferred."
+      invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
   invitations:
     fields:
       user_or_email: "Rentrez le mail ou nom d'utilisateur de la personne que vous souhaitez inviter:"
@@ -575,6 +581,7 @@ fr:
       general: Paramètres généraux
       picture: Image du projet
       deletion: Archivage/Suppression de projet
+      ownership: Ownership
     project_navigation:
       overview: Resumé
       all_conversations: Mes conversations

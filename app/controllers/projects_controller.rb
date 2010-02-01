@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_filter :owns_project?, :only => [:create, :edit, :update, :transfer, :destroy]
   before_filter :load_task_lists, :only => [:show]
   before_filter :load_banner, :only => [:show]
   before_filter :load_projects, :only => [:index]
@@ -76,6 +77,31 @@ class ProjectsController < ApplicationController
       end
     end
   end
+  
+  def transfer
+    # Grab new owner
+    user_id = params[:project][:user_id] rescue nil
+    user = User.find(user_id)
+    saved = false
+    
+    # Transfer!
+    unless user.nil?
+      @current_project.user = user
+      saved = @current_project.save
+    end
+    
+    if saved
+      respond_to do |f|
+        flash[:notice] = I18n.t('projects.edit.transferred')
+        f.html { redirect_to project_path(@current_project) }
+      end
+    else
+      respond_to do |f|
+        flash[:error] = I18n.t('projects.edit.invalid_transferred')
+        f.html { redirect_to project_path(@current_project) }
+      end
+    end
+  end
 
   def destroy
     @current_project.destroy
@@ -88,6 +114,18 @@ class ProjectsController < ApplicationController
   
     def load_task_lists
       @task_lists = @current_project.task_lists.unarchived
+    end
+    
+    def owns_project?
+      if !@current_project.owner?(current_user)
+          respond_to do |f|
+            flash[:error] = "You are not allowed to do that!"
+            f.html { redirect_to projects_path }
+          end
+        return false
+      end
+      
+      true
     end
   
     def load_projects

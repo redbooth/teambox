@@ -43,13 +43,14 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :projects,
       :has_many => [:pages, :people],
-      :member => [:get_comments, :accept, :decline] do |project|
+      :member => {:get_comments => :get, :accept => :post, :decline => :post, :transfer => :put} do |project|
     #project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
     #project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
 
     project.settings 'settings',  :controller => 'projects', :action => 'edit', :sub_action => 'settings'
     project.picture  'picture',   :controller => 'projects', :action => 'edit', :sub_action => 'picture'
     project.deletion 'deletion',  :controller => 'projects', :action => 'edit', :sub_action => 'deletion'
+    project.ownership 'ownership', :controller => 'projects', :action => 'edit', :sub_action => 'ownership'
 
     project.my_task_lists 'my_task_lists',             :controller => 'task_lists', :action => 'index', :sub_action => 'mine'
     project.archived_task_lists 'task_lists/archived', :controller => 'task_lists', :action => 'index', :sub_action => 'archived'

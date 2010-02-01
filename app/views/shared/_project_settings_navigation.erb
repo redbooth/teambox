@@ -17,6 +17,13 @@ render_tabnav :project do
       t.links_to project_deletion_path :project_id => @current_project.permalink
       t.highlights_on :controller => 'projects', :action => 'edit', :sub_action => 'deletion'
       t.li_class = 'deletion'
-    end    
+    end  
+
+    add_tab do |t|
+      t.named t('.ownership')
+      t.links_to project_ownership_path :project_id => @current_project.permalink
+      t.highlights_on :controller => 'projects', :action => 'edit', :sub_action => 'ownership'
+      t.li_class = 'ownership'
+    end  
 end
 %><div class="clear"></div></div>

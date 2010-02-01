@@ -107,4 +107,10 @@ module ProjectsHelper
 
     "autorefresh = setInterval(\"#{ajax_request}\", #{interval})"
   end
+  
+  def options_for_owner(people)
+    p = []
+    people.each {|person| p << [ person.name, person.id ]}
+    p
+  end
 end

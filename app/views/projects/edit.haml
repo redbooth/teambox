@@ -3,6 +3,12 @@
 
 %h2= t(".title_#{@sub_action}")
 
-- form_for @current_project do |f|
+- sub_params = @sub_action == 'ownership' ? transfer_project_path(@current_project) : {}
+
+- form_for @current_project, :url => sub_params do |f|
   = project_fields(f,@current_project,@sub_action)
-  = f.submit t('.submit') unless @sub_action == 'deletion'
+  - unless @sub_action == 'deletion'
+    - if @sub_action == 'ownership'
+      = f.submit t('.change_owner')
+    - else
+      = f.submit t('.submit')

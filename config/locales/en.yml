@@ -217,6 +217,8 @@ en:
     fields:
       archiving: "Archive this project"
       forever: "Delete this project forever"
+      owner: "Owner"
+      owner_description: "The owner is the only person that can modify this projects settings. Once you change the owner, you will no longer be able to modify project settings."
       name: Name
       name_description: "Choose a brief and descriptive title. For example: Taggart Transcontinental"
       permalink: URL
@@ -248,7 +250,11 @@ en:
       title_settings: General Settings
       title_picture: Project Logo
       title_deletion: Archive/Delete Project
+      title_ownership: Ownership
       submit: Save Changes
+      change_owner: Change owner
+      transferred: "Project ownership has been transferred."
+      invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
   invitations:
     fields:
       user_or_email: "Enter your teammate's username or email:"
@@ -575,6 +581,7 @@ en:
       general: General Settings
       picture: Project Picture
       deletion: Project Archiving/Deletion
+      ownership: Ownership
     project_navigation:
       overview: Overview
       all_conversations: All Conversations
