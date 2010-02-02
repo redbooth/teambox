@@ -1,6 +1,6 @@
 es:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "Novedades: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versión Móvil, traducción al francés y API</a>"
+  latest_announcement: "Novedades: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versión Móvil, traducción al francés y alemán y API</a>"
   common:
     and: y
     or: o

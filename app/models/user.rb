@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
                   :rss,
                   :validation
 
-  LANGUAGES = [['English', 'en'], ['Español', 'es'], ['Français', 'fr']]
+  LANGUAGES = [['English', 'en'], ['Español', 'es'], ['Français', 'fr'], ['Deutsche', 'de']]
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
