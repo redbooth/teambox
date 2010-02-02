@@ -17,7 +17,7 @@ render_tabnav :global do
   if current_user.invitations.count > 0
     add_tab do |t|
       t.named t('.project_invitations', :count => current_user.invitations.count)
-      t.links_to user_invitations_path(:id => current_user.id)
+      t.links_to user_invitations_path(current_user)
       t.highlights_on :controller => :users, :action => :invitations
       t.tab_index = '52'
     end
