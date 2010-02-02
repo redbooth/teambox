@@ -56,6 +56,10 @@ Then /^(?:I|they|"([^"]*?)") should have (an|no|\d+) emails?$/ do |address, amou
   mailbox_for(address).size.should == parse_email_count(amount)
 end
 
+Then /^(?:I|they|"([^"]*?)") should receive (an|no|\d+) emails? with subject "([^"]*?)"$/ do |address, amount, subject|
+  unread_emails_for(address).select { |m| m.subject =~ Regexp.new(subject) }.size.should == parse_email_count(amount)
+end
+
 # DEPRECATED
 # The following methods are left in for backwards compatibility and
 # should be removed by version 0.3.5.
