@@ -89,12 +89,13 @@ class ProjectsController < ApplicationController
     
     # Grab new owner
     user_id = params[:project][:user_id] rescue nil
-    user = User.find(user_id)
+    person = @current_project.people.find_by_user_id(user_id)
     saved = false
     
     # Transfer!
-    unless user.nil?
-      @current_project.user = user
+    unless person.nil?
+      @current_project.user = person.user
+      person.update_attribute(:role, Person::ROLES[:admin]) # owners need to be admin!
       saved = @current_project.save
     end
     

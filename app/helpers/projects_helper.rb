@@ -137,8 +137,6 @@ module ProjectsHelper
   end
   
   def options_for_owner(people)
-    p = []
-    people.each {|person| p << [ person.name, person.id ]}
-    p
+    people.map {|person| [ person.name, person.user_id ]}
   end
 end

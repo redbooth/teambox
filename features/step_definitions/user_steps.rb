@@ -132,6 +132,18 @@ Given /I am in the project called "([^\"]*)"$/ do |name|
   project.add_user(@current_user)
 end
 
+Given /^"([^\"]*)" is in the project called "([^\"]*)"$/ do |username,name|
+  Given %(there is a project called "#{name}")
+  project = Project.find_by_name(name)
+  project.add_user User.find_by_login(username)
+end
+
+Given /^"([^\"]*)" is not in the project called "([^\"]*)"$/ do |username,name|
+  Given %(there is a project called "#{name}")
+  project = Project.find_by_name(name)
+  project.remove_user User.find_by_login(username)
+end
+
 Given /^all the users are in the project with name: "([^\"]*)"$/ do |name|
   Given %(there is a project called "#{name}")
   project = Project.find_by_name(name)
@@ -144,6 +156,18 @@ end
 
 Given /^the user called "([^\"]*)" is confirmed$/ do |login|
   User.find_by_login(login).update_attribute(:confirmed_user, true)
+end
+
+Then /^the user called "([^\"]*)" should administrate the project called "([^\"]*)"/ do |login,name|
+  Given %(there is a project called "#{name}")
+  project = Project.find_by_name(name)
+  project.admin?(User.find_by_login(login))
+end
+
+Then /^the user called "([^\"]*)" should not administrate the project called "([^\"]*)"/ do |login,name|
+  Given %(there is a project called "#{name}")
+  project = Project.find_by_name(name)
+  !project.admin?(User.find_by_login(login))
 end
 
 Given /I am the user (.*)$/ do |login|
