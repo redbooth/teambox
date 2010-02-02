@@ -18,6 +18,7 @@ class User
     unless self.recent_projects_ids.include?(project.id)
       self.recent_projects_ids = self.recent_projects_ids.unshift(project.id).slice(0,5)
       @recent_projects = nil
+      @projects = nil
       self.save(false)
     end
   end
