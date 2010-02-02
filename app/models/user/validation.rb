@@ -37,4 +37,8 @@ class User
     "#{first_name.chars.first}. #{last_name}"
   end
 
+  def password_required?
+    crypted_password.blank? || !password.blank? || ResetPassword.exists?(:user_id => self.id)
+  end
+
 end

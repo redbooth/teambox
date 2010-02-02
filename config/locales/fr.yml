@@ -64,6 +64,7 @@ fr:
       not_found: "Nous n'avons pas trouvé d'utilisateur enregistré avec le mail: {{email}}<br/>Vérifiez qu'il n'y a pas d'erreur dans l'adresse mail et essayez de nouveau. Si cela ne fonctionne toujours pas, contactez-nous: {{support}}"
       invalid: "Le lien que vous avez suivi pour réinitialiser votre mot de passe n'est pas valide ou a expiré. Essayez à nouveau depuis la page d'accueil.<br/>Si cela ne fonctionne pas, n'hésitez pas à nous contacter: {{support}}"
       password_updated: "Vous avez changé votre mot de passe. Vous pouvez à présent utiliser Teambox."
+      password_not_updated: "New password is not valid. Try again."
     sent:
       title: Réinitialisation du mot de passe
       login_link_sent: "Nous vous avons envoyé un mail à {{email}} pour que vous puissiez changer votre mot de passe."

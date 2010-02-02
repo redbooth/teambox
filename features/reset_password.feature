@@ -40,5 +40,14 @@ Scenario: Mislav forgot his password, so he will recover it using the form
     And I press "Login"
    Then I should see "You don't own or belong to any projects yet"
 
-# test what happens if a user already logged in uses a code  
-# test for invalid or expired things  
+# test what happens if a user already logged in uses a code
+# test for invalid or expired things
+
+@wip
+Scenario: User leaves the (new) password field blank
+  Given a confirmed user exists with login: "balint", email: "balint@codigoergosum.com"
+  And the user with login: "balint" has asked to reset his password
+  When I follow the reset password link
+  And I press "Reset password!"
+  Then I should see an error message: "New password is not valid. Try again."
+  And I should see "Please enter a new password and confirm it"

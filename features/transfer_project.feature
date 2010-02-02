@@ -1,5 +1,5 @@
 Feature Transfer Project
-  Background:	
+  Background:
        Given the following confirmed users exist
          | login  | email                     | first_name | last_name |
          | balint | balint.erdi@gmail.com     | Balint     | Erdi      |
@@ -25,5 +25,4 @@ Feature Transfer Project
         And I am logged in as "balint"
         And I go to project settings path
        Then I should see "Ownership"
-       
 

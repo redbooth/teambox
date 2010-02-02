@@ -64,6 +64,7 @@ de:
       not_found: "Wir finden keine Benutzer mit dieser Email Adresse: {{email}}<br/>Bitte prüfen Sie die Email-Adresse und versuchen Sie es noch einmal. Wenn das nicht hilft, kontaktieren Sie uns unter {{support}}"
       invalid: "Die URL zur Änderung des Passwortes ist ungültig oder abgelaufen. Versuchen Sie bitte noch einmal auf der Homepage 'Ich habe mein Passwort vergessen'. <br/>Wenn das nicht hilft, kontaktieren Sie uns unter {{support}}"
       password_updated: "Das Passwort wurde erfolgreich geändert. Bitte melden Sie sich an."
+      password_not_updated: "New password is not valid. Try again."
     sent:
       title: "Passwort zurücksetzen"
       login_link_sent: "Wir haben Ihnen eine Email an {{email}} gesendet. Sie erhalten damit Ihr Passwort."

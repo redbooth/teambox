@@ -101,7 +101,7 @@ Factory.define :mislav, :class => 'User' do |user|
   user.last_name 'Marohnić'
   user.password 'makeabarrier'
   user.password_confirmation 'makeabarrier'
-  user.confirmed_user true  
+  user.confirmed_user true
 end
 
 Factory.define :geoffrey, :class => 'User' do |user|
@@ -111,7 +111,7 @@ Factory.define :geoffrey, :class => 'User' do |user|
   user.last_name 'Grosenbach'
   user.password 'smoothlistening'
   user.password_confirmation 'smoothlistening'
-  user.confirmed_user true  
+  user.confirmed_user true
 end
 
 Factory.define :ruby_rockstars, :class => 'Project' do |project|
@@ -120,4 +120,10 @@ Factory.define :ruby_rockstars, :class => 'Project' do |project|
   project.user_id do
     (User.find_by_login('mislav') || Factory(:mislav)).id
   end
+end
+
+Factory.define :reset_password do |reset_pw|
+  reset_pw.reset_code "d1b9547cb3ec99180acfe951c807ec567c8b9252"
+  reset_pw.email { Factory.next(:email) }
+  reset_pw.association(:user)
 end

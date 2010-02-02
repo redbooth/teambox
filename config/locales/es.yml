@@ -64,6 +64,7 @@ es:
       not_found: "No se ha encontrado ningún usuario con el email: {{email}}<br/>Comprueba que lo has escrito bien e inténtalo de nuevo. Si sigue sin funcionar, escríbenos: {{support}}"
       invalid: "El enlace que has seguido para recuperar contraseña no es válido o ha expirado. Intenta usar recordar contraseña de nuevo desde la página principal.<br/>Si eso no funciona, escríbenos: {{support}}"
       password_updated: "Has cambiado tu contraseña. Ya puedes entrar a Teambox."
+      password_not_updated: "New password is not valid. Try again."
     sent:
       title: Restablecer contraseña
       login_link_sent: "Te hemos enviado un email a {{email}} para que puedas cambiar tu contraseña."
