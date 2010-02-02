@@ -107,7 +107,7 @@ fr:
       notify_task_lists: Envoyez-moi une notification lorsque je regarde une liste de tâches
       notify_tasks: Envoyez-moi une notification lorsque je regarde une tâche
       wants_task_reminder: "Send me a daily email of my tasks"
-      invalid_login: "use only letters, numbers and _"
+      invalid_login: "utilisez uniquement des lettres, des chiffres et _"
       avatar:
         field: Votre image
         presence: "Il n'est pas possible de télécharger un fichier vide"
@@ -218,8 +218,8 @@ fr:
     fields:
       archiving: Archiver ce projet 
       forever: Supprimer de façon définitive ce projet 
-      owner: "Owner"
-      owner_description: "The owner is the only person that can modify this projects settings. Once you change the owner, you will no longer be able to modify project settings."
+      owner: Propriétaire
+      owner_description: "Le propriétaire du projet est la seule personne qui peut modifier les paramètres de ce projet. Une fois que vous aurez transférer le projet à quelqu’un d’autre, vous ne serez plus autorisé à modifier les paramètres du projet."
       name: Nom
       name_description: "Chosissez un titre bref et explicite. Par exemple: Taggart Transcontinental"
       permalink: URL
@@ -251,11 +251,11 @@ fr:
       title_settings: Paramètres généraux
       title_picture: Logo du projet
       title_deletion: Archiver/Effacer le projet
-      title_ownership: Ownership
+      title_ownership: Propriété
       submit: Enregistrer les modifications
-      change_owner: Change owner
-      transferred: "Project ownership has been transferred."
-      invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
+      change_owner: Changer de propriétaire
+      transferred: "Le projet a été transféré au nouveau propriétaire."
+      invalid_transferred: "Le projet n’a pas pu être transféré au nouveau propriétaire, corrigez les erreurs et essayez à nouveau."
   invitations:
     fields:
       user_or_email: "Rentrez le mail ou nom d'utilisateur de la personne que vous souhaitez inviter:"
