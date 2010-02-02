@@ -1,734 +1,736 @@
-de:
+# Translated by Diane Kurtsoglou
+fr:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "Now with <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile Site, French and German locales and API</a>!"
+  latest_announcement: "Teambox est désormais disponible en français!"
   common:
-    and: und
-    or: oder
-    delete: "Löschen"
-    edit: Bearbeiten
-    accept: Annehmen
-    decline: Ablehnen
-    cancel: Abbrechen
-    save: Speichern
-    show_more: Zeige {{number}} mehr
-    print: Seite drucken
+    and: et
+    or: ou
+    delete: Effacer
+    edit: Editer
+    accept: Accepter
+    decline: Refuser
+    cancel: Annuler
+    save: Enregistrer
+    show_more: "Afficher les {{number}} suivants"
+    print: Imprimer cette page
     comment:
-      one: "{{count}} Kommentar"
-      other: "{{count}} Kommentare"
+      one: "{{count}} commentaire"
+      other: "{{count}} commentaires"
   confirm:
-    delete_task_list: "Sind Sie sicher, dass Sie diese Aufgabenliste löschen wollen?"
-    delete_task: "Sind Sie sicher, dass Sie diese Aufgabe löschen wollen?"
-    delete_page: "Sind Sie sicher, dass Sie diese Seite löschen wollen?"
-    delete_upload: "Sind Sie sicher, dass Sie diese Datei löschen wollen?"
+    delete_task_list: Êtes-vous sûr de vouloir supprimer cette liste de tâches?
+    delete_task: Êtes-vous sûr de vouloir supprimer cette tâche?
+    delete_page: Êtes-vous sûr de vouloir supprimer cette page?
+    delete_upload: Êtes-vous sûr de vouloir supprimer ce fichier?
   deleted:
-    conversation: "Konversation <b>{{name}}</b> gelöscht"
-    task: "Aufgabe <b>{{name}}</b> gelöscht"
-    page: "Seite <b>{{name}}</b> gelöscht"
-    upload: "Datei <b>{{name}}</b> gelöscht"
-    person: "{{name}} ist nicht mehr Teilnehmer in diesem Projekt"
-    left_project: "Sie haben dieses Projekt verlassen"
+    conversation: "La conversation <b>{{name}}</b> a été effacée"
+    task: "La tâche <b>{{name}}</b> a été effacée"
+    page: "La page <b>{{name}}</b> a été effacée"
+    upload: "Le fichier <b>{{name}}</b> a été effacé"
+    person: "{{name}} n'appartient plus au projet"
+    left_project: "Vous avez quitté le project"
   activities:
-    create_upload: Datei hochgeladen
+    create_upload: a ajouté un fichier
     create_conversation:
-      create_conversation: erstellte die Konversation
+      create_conversation: a créé la conversation
     create_task_list:
-      create_task_list: erstellte die Aufgabenliste
+      create_task_list: a créé la liste de tâches
     create_task:
-      create_task: erstellte die Aufgabe
+      create_task: a créé la tâche
     create_page:
-      create_page: erstellte die Seite
+      create_page: a créé la page
     create_person:
-      create_person: wurde zu diesem Projekt eingeladen
-      by: by
+      create_person: a été invité au projet
+      by: par
     delete_person:
-      delete_person: wurde aus dem Projekt entfernt
-      by: von
-      left: hat das Projekt verlassen
+      delete_person: a été éliminé du projet
+      by: par
+      left: a quitté le projet
   avatars:
     new:
-      title: Einen Avatar hochladen
-      upload: Hochladen
+      title: Télécharger un avatar
+      upload: Envoyer
     edit:
-      upload_new_image: "Laden Sie ein neues Bild für Ihren Avatar hoch"
-      upload: Laden Sie diesen Avatar hoch
+      upload_new_image: Télécharger une nouvelle image pour votre avatar
+      upload: Télécharger cette image
     show:
-      save: "Änderungen speichern"
+      save: Enregistrer les changements
   reset_passwords:
     new:
-      title: Sie haben Ihr Passwort vergessen?
-      email: Mit welcher Email haben Sie sich angemeldet?
-      back: "Zurück zur Login-Seite"
-      submit: "Schicken Sie mir einen Link, um mein Passwort zurückzusetzen"
+      title: Vous avez oublié votre mot de passe?
+      email: Avec quel mail vous êtes-vous inscrit sur Teambox?
+      back: Retourner à l'écran Login
+      submit: Envoyez-moi un email pour réinitialiser mon mot de passe
     create:
-      not_found: "Wir finden keine Benutzer mit dieser Email Adresse: {{email}}<br/>Bitte prüfen Sie die Email-Adresse und versuchen Sie es noch einmal. Wenn das nicht hilft, kontaktieren Sie uns unter {{support}}"
-      invalid: "Die URL zur Änderung des Passwortes ist ungültig oder abgelaufen. Versuchen Sie bitte noch einmal auf der Homepage 'Ich habe mein Passwort vergessen'. <br/>Wenn das nicht hilft, kontaktieren Sie uns unter {{support}}"
-      password_updated: "Das Passwort wurde erfolgreich geändert. Bitte melden Sie sich an."
+      not_found: "Nous n'avons pas trouvé d'utilisateur enregistré avec le mail: {{email}}<br/>Vérifiez qu'il n'y a pas d'erreur dans l'adresse mail et essayez de nouveau. Si cela ne fonctionne toujours pas, contactez-nous: {{support}}"
+      invalid: "Le lien que vous avez suivi pour réinitialiser votre mot de passe n'est pas valide ou a expiré. Essayez à nouveau depuis la page d'accueil.<br/>Si cela ne fonctionne pas, n'hésitez pas à nous contacter: {{support}}"
+      password_updated: "Vous avez changé votre mot de passe. Vous pouvez à présent utiliser Teambox."
     sent:
-      title: "Passwort zurücksetzen"
-      login_link_sent: "Wir haben Ihnen eine Email an {{email}} gesendet. Sie erhalten damit Ihr Passwort."
-      follow_the_link: "Folgen Sie dem Link in der Email, um sich bei Teambox anzumelden! Wenn Sie die Email nicht finden, schauen Sie bitte auch in Ihrem Spam-Ordner nach."
-      not_found: "Die Email <b>{{email}}</b> gehört zu keinem Teambox-Benutzer. Haben Sie sich vielleicht vertippt?"
-      change_password_now: "Sie sind jetzt angemeldet. <b>Geben Sie ein neues Passwort ein</b> und merken Sie es sich bitte!"
+      title: Réinitialisation du mot de passe
+      login_link_sent: "Nous vous avons envoyé un mail à {{email}} pour que vous puissiez changer votre mot de passe."
+      follow_the_link: "Suivez le lien qui se trouve dans le mail pour entrer dans Teambox! Si vous ne trouvez pas le mail dans votre boîte de réception, vérifiez qu'il ne se trouve pas dans le courrier indésirable. "
+      not_found: "L'adresse mail <b>{{email}}</b> n'appartient à aucun utilisateur de Teambox. Peut-être l'avez-vous mal écrite."
+      change_password_now: "Bienvenue de nouveau! Il est temps de <b>choisir un nouveau mot de passe</b> dont vous vous souviendrez."
   cards:
     card:
-      phone_numbers: Telefonnummer
-      email_addresses: "Email Adresse"
-      websites: Webseiten
-      addresses: Adressen
-      ims: IM
-      social_networks: Soziale Netzwerke
-      vcard: vCard herunterladen
+      phone_numbers: Téléphones
+      email_addresses: Adresses e-mail
+      websites: Sites web
+      addresses: Adresses
+      ims: Chat
+      social_networks: Réseaux sociaux
+      vcard: Télécharger vCard
     field:
-      add_phone_numbers: "Telefonnummer hinzufügen"
-      add_email_addresses: "Email hinzufügen"
-      add_websites: "Webseite hinzufügen"
-      add_addresses: "Adresse hinzufügen"
-      add_ims: "IM hinzufügen"
-      add_social_networks: "Soziale Netwerke hinzufügen"
+      add_phone_numbers: Ajouter un numéro de téléphone
+      add_email_addresses: Ajouter une adresse email
+      add_websites: Ajouter un site web
+      add_addresses: Ajouter une adresse
+      add_ims: Ajouter Chat
+      add_social_networks: Ajouter un profil
   users:
     fields:
-      login: Benutzername
-      first_name: Vorname
-      last_name: Nachname
-      biography: Lebenslauf
-      time_zone: Zeitzone
-      language: Sprache
+      login: Nom d'utilisateur
+      first_name: Prénom
+      last_name: Nom
+      biography: Biographie
+      time_zone: Fuseau horaire
+      language: Langue
       email: Email
-      password: Passwort
-      password_confirmation: "Passwort bestätigen"
-      sunday: Sonntag
-      monday: Montag
-      first_day_of_week: Die Woche beginnt am
-      change_password: "Passwort ändern"
-      confirm_password: "Passwort bestätigen"
-      use_this_email: "Sie haben für diese Email Einladungen zur Teilnahme an Projekten. Wenn Sie an den Projekten teilnehmen wollen, ändern Sie diese Email Adresse nicht. Sie können sie ändern, nachdem sie die Anmeldung erledigt haben."
-      notify_mentions: "Benachrichtigen Sie mich, wenn ich angesprochen werde z.B. Hallo @{{login}}! Sie haben eine neue Email!"
-      notify_conversations: "Benachrichtigen Sie mich, wenn ich eine Konversation verfolge"
-      notify_task_lists: "Benachrichtigen Sie mich, wenn ich eine Aufgabenliste verfolge"
-      notify_tasks: "Benachrichtigen Sie mich, wenn ich eine Aufgabe verfolge"
-      wants_task_reminder: "Senden Sie mir täglich eine Email mit meinen Aufgaben"
+      password: Mot de passe
+      password_confirmation: Confirmer le mot de passe
+      sunday: Dimanche
+      monday: Lundi
+      first_day_of_week: Premier jour
+      change_password: Changer de mot de passe
+      confirm_password: Confirmer le mot de passe
+      use_this_email: "Vous avez été invité à utiliser Teambox avec cette adresse mail. Si vous voulez accéder aux projets de la personne qui vous a invité, ne changez pas l'adresse mail. Vous pourrez changer d'adresse mail par la suite, une fois enregistré dans Teambox."
+      notify_mentions: "Envoyez-moi une notification lorsque je suis mentionné, par exemple Bonjour @{{login}}! Vous recevrez un mail!"
+      notify_conversations: Envoyez-moi une notification lorsque je regarde une conversation
+      notify_task_lists: Envoyez-moi une notification lorsque je regarde une liste de tâches
+      notify_tasks: Envoyez-moi une notification lorsque je regarde une tâche
+      wants_task_reminder: "Send me a daily email of my tasks"
+      invalid_login: "utilisez uniquement des lettres, des chiffres et _"
       avatar:
-        field: Ihr Avatar
-        presence: "Sie können keine leere Datei hochladen"
-        max_size: "Die Datei ist gröﬂer als {{mb}}"
-        we_have_this_avatar: "Dies ist ihr momentaner Avatar: "
-        upload_here_or_at_gravatar: "Sie können hier einen neuen Avator hochladen, oder Sie laden ihren globalen Avatar hoch zu der Adresse <a href='http://gravatar.com'>Gravatar</a>, um ihn für Teambox und für viele andere Webseiten zu benutzen."
+        field: Votre image
+        presence: "Il n'est pas possible de télécharger un fichier vide"
+        max_size: "La taille du fichier ne peut pas excéder {{mb}} Mb"
+        we_have_this_avatar: "Voici votre image d'utilisateur:"
+        upload_here_or_at_gravatar: "Ajoutez une nouvelle image ici ou créez un <a href='http://gravatar.com'>Gravatar</a> qui deviendra votre image de profil sur teambox."
       tooltips:
-        login: "Für die Anmeldung brauchen Sie einen Benutzernamen. Mitglieder können Sie über den Benutzernamen suchen. Der Benutzername darf nur aus Kleinbuchstaben bestehen. Leerzeichen sind nicht erlaubt. Sie können Unterstriche benutzen."
-        first_name: Maximal 20 Zeichen.
-        last_name: Maximal 20 Zeichen.
-        email: "Geben Sie Ihre echte Email Adresse ein, damit Ihre Team-Mitglieder sie anschreiben können."
-        password: "Eine Kombination aus Groﬂbuchstaben, Kleinbuchstaben und Zahlen wird für ein sicheres Passwort empfohlen."
+        login: "Vous pouvez utiliser un nom d'utilisateur court pour vous connecter. Il doit être en minuscules et sans espace. Vous pouvez utiliser _."
+        first_name: Jusqu'à 20 caractères.
+        last_name: Jusqu'à 20 caractères.
+        email: "Utilisez une adresse mail fonctionnelle. Sinon, vos collègues ne pourront pas vous contacter."
+        password: "Combiner des lettres, des chiffres, des majuscules et des minuscules est une bonne idée."
     new:
-      title: Erstellen eines Benutzerkontos
-      submit: Erstellen Benutzerkonto
-      you_are_logged_in: "Sie haben bereits ein Benutzerkonto. Melden Sie sich ab, um sich als anderer Benutzer anzumelden."
-      existing_user: "Wenn Sie bereits ein Benutzerkonto haben, <a href='{{login_url}}'> melden Sie sich an</a> oder <a href='{{forgot_url}}'>lassen Sie sich Ihr Passwort zusenden</a>."
+      title: Créer un compte
+      submit: Créer le compte
+      you_are_logged_in: "Vous avez déjà un compte sur Teambox. Si vous voulez vous enregistrer comme autre utilisateur, fermez la session et essayez de nouveau."
+      existing_user: "Si vous avez déjà un compte, <a href='{{login_url}}'>identifiez-vous</a> ou <a href='{{forgot_url}}'>rétablissez votre mot de passe</a>."
     create:
-      thanks: "Danke für die Anmeldung!"
-      error: "Entschuldigung, wir konnten Ihr Benutzerkonto nicht einrichten. Versuchen Sie es bitte noch einmal oder nehmen Sie Kontakt mit einem Administrator auf (Link siehe oben)."
+      thanks: Votre compte a bien été créé! Merci!
+      error: "Nous n'avons pas pu enregistrer ce compte, désolé! Essayez de nouveau."
     edit:
-      title_settings: Ihre Konto Einstellungen
-      title_profile: Ihre Profil Einstellungen
-      title_picture: Ihr Profil Bild
-      title_notifications: Ihre Benachrichtigungen
-      title_deletion: "Projekt Archivieren/Löschen"
-      submit: Konto aktualisieren
+      title_settings: Préférences
+      title_profile: Information de profil
+      title_picture: Image de profil
+      title_notifications: Notifications
+      title_deletion: Archivage/Suppression de projet
+      submit: Actualiser
     update:
-      updated: "Benutzerprofil wurde geändert!"
-      error: "Das geänderte Profil konnte nicht gespeichert werden. Bitte korrigieren Sie die Fehler und versuchen Sie es noch einmal."
+      updated: Profil actualisé
+      error: "Il n'a pas été possible d'actualiser le profil. Corrigez les erreurs et essayez de nouveau."
     activation:
-      resent: "Wir haben die Aktvierungs-Email noch einmal versendet. Schauen Sie bitte in Ihren Posteingang!"
-      already_done: "Sie haben Ihre Email schon bestätigt! Sie können Teambox jetzt nutzen."
-      activated: "Ihr Benutzerkonto wurde aktiviert! Willkommen bei Teambox :)"
-      invalid: "<p>Ungültiger oder abgelaufener Zugangs-Link. Melden Sie sich mit Ihrer Email-Adresse und Ihrem Passwort an. </p><p>Wenn Sie Ihre Anmeldedaten vergessen haben, folgen Sie dem Link 'Passwort vergessen'.</p>"
-      invalid_user: "Ungültiger Benutzer"
+      resent: "Nous vous avons envoyé le mail pour l'activation du compte. Il doit actuellement se trouver dans votre boîte de réception!"
+      already_done: "Vous êtes déjà un utilisateur confirmé de Teambox!"
+      activated: "Votre compte a bien été activé! Bienvenue sur Teambox :)"
+      invalid: "<p>Vous avez utilisé un lien invalide pour entrer dans Teambox. Connectez-vous avec votre nom d'utilisateur et votre mot de passe depuis la page d'accueil.</p><p>Si vous avez oublié vos identifiants, cliquez sur le lien Réinitialiser mot de passe.</p>"
+      invalid_user: Nom d'utilisateur invalide
     show:
       profile: Profil
-      projects: Projekte
-      recent_activity_for: "Kürzliche Aktivitäten für {{user_name}}"
+      projects: Projets
+      recent_activity_for: "Activité récente de {{user_name}}"
     user:
       formatted_address: "{{street}}, {{city}} ({{country}})"
-      remove_from_project: Aus dem Projekt entfernen
+      remove_from_project: Éliminer du projet
     welcome:
-      get_started: Starten Sie mit Teambox!
-      intro1: "Sie sind das neueste Mitglied! Sie werden bald erleben, wie Sie Teambox zum Ausgangspukt für Ihre tägliche Aufgaben machen können."
-      intro2: "Was können Sie jetzt tun? Erstellen Sie ein Projekt zum <b>Zusammenarbeiten</b>:" # oder eine Agenda, um <b>Ihre Kontakte im Blick zu haben</b>:"
+      get_started: Vous êtes à présent dans Teambox!
+      intro1: "Vous êtes le dernier membre enregistré sur Teambox! Découvrez comment Teambox peut devenir le point de commencement de votre journée."
+      intro2: "Et maintenant? Créez un projet pour <b>collaborer</b>." # " un agenda pour <b>garder à jour vos contacts</b>:"
       projects:
-        title: Projekte
-        share_and_collaborate: "Erstellen Sie Freigaben und arbeiten Sie mit Ihrem Team zusammen! Updates von Projektständen, Konversationen, Aufgaben, Seiten und Dateien."
-        create_your_first_project: "Eine Veranstaltung, ein Design, ein Produkt... Starten Sie und <a href='{{link}}'>erstellen Sie Ihr erstes Projekt</a> jetzt!"
+        title: Projets
+        share_and_collaborate: "Partagez et collaborez avec votre équipe! Notificacions, conversations, tâches, pages et fichiers."
+        create_your_first_project: "Un événement, un design, un produit..? <a href='{{link}}'>Créez votre premier projet</a> dès maintenant!"
       spread:
-        title: Lieben Sie uns auch?
-        reasons: "Wir haben jahrelang an Teambox gearbeitet in der Hoffnung, dass es nützlich für Sie ist. <br/>Wir sind reale Menschen, motivierte Entwickler mit viel Engagement, genau wie Sie!"
-        help: "Sie können <b>uns helfen</b>, indem Sie Ihren Freunden erzählen, wie viel Spaﬂ die Arbeit mit Teambox macht auf "
+        title: Nous voulons vous être utile!
+        reasons: "Nous travaillons depuis des années sur Teambox, en espérant vous apporter une aide dans votre organisation.<br/>Nous sommes des personnes comme vous, des personnes motivées qui ont le désir d'améliorer les choses."
+        help: Vous pouvez <b>nous aider</b> en racontant à vos amis comment vous utilisez Teambox sur
         twitter: 'Twitter,'
         facebook: Facebook
-        in_your_site: auf Ihrer Webseite!
-        tell_us: "Wenn Ihnen Teambox gefällt, überlegen Sie, <a href='mailto:{{address}}'> uns davon zu erzählen</a> in einer Email!"
-      stop_welcome: Diesen Willkommenstab nicht mehr zeigen
+        in_your_site: sur votre site web ou sur votre blog!
+        tell_us: "Vous utilisez Teambox quotidiennement? Racontez-nous <a href='mailto:{{address}}'>comment vous l'utilisez</a> dans un email!"
+      stop_welcome: Ne plus montrer la page de bienvenue
     unconfirmed_email:
-      title: "Bestätigen Sie Ihre Email"
-      invitation_sent_to: "Eine Email-Einladung wurde gesendet an <i>{{email}}</i>, damit Sie Ihre EMail Adresse bestätigen können."
-      follow_the_link: "Bitte <b>öffnen Sie diese Email und folgen Sie dem enthaltenen Link</b>, um Ihr Benutzerkonto zu aktvieren."
-      problems_title: Probleme?
-      resend: "Sie finden die Email nicht? Klicken Sie <a href='{{link}}'>hier</a>, um die Aktivierungs-Email erneut zu versenden."
-      spam: "Prüfen Sie, dass die Email nicht durch Ihr Mail-Programm als Spam eingestuft wurde."
-      wrong_address: "Falsche Adresse? Wenn Sie sich bei ihrer Email Adresse vertippt haben, <a href='{{link}}'>brechen Sie die Anmeldung ab</a> und erstellen Sie ein neues Benutzerkonto mit einer gültigen Email Adresse."
-      problems: "Wenn immer noch Probleme auftreten, kontaktieren Sie uns über {{support}}"
+      title: Confirmez votre adresse mail
+      invitation_sent_to: "Nous avons envoyé une invitation à l'adresse <i>{{email}}</i> afin de vérifier qu'il n'y a pas d'erreur dans l'adresse mail."
+      follow_the_link: <b>Cliquez sur le lien qui se trouve dans ce mail</b> pour activer votre compte.
+      problems_title: Un problème?
+      resend: "Pas de mail de confirmation? Cliquez <a href='{{link}}'>ici</a> pour recevoir un nouveau mail de confirmation."
+      spam: "Assurez-vous que ce mail n'ait pas été classé avec le courrier indésirable."
+      wrong_address: "Une erreur dans l'adresse mail? Dans ce cas, <a href='{{link}}'>annulez</a> et recommencez la création du compte avec un email valide."
+      problems: "Si des problèmes persistent, n'hésitez pas à nous contacter! {{support}}"
     profile_completeness:
-      title: "Profil Vervollständigung"
-      complete_your_profile: "Vervollständigen Sie Ihr Profil, damit Ihr Team Sie über Ihre Kontaktdaten auf dem Laufenden halten kann!"
-      completeness: "{{percentage}}% vollständig"
-      to_get_to: zu erhalten
+      title: Complétez votre profil
+      complete_your_profile: Ainsi vos collègues pourront-ils être à jour .
+      completeness: "Effectué à {{percentage}}%"
+      to_get_to: pour
   projects:
     index:
-      title: "Nachrichten Feeds für alle eigenen Projekte"
-      projects: Meine Projekte
-      subscribe: Nachrichten Feed abonnieren
-      new_project: Neues Projekt
-      refreshes: Aktualisiert jede Minute
+      title: Activité dans tous vos projets
+      projects: Mes projets
+      subscribe: Souscrivez au fil d'activités
+      new_project: Nouveau projet
+      refreshes: Mis à jour chaque minute
       rss:
-        title: "Projekte Übersicht"
-        description: "Übersicht über alle eigenen Projekte"
-      archived: "Zeige {{count}} archivierte Projekte..."
+        title: Teambox
+        description: Activité dans tous vos projets
+      archived: "Montrer {{count}} projets archivés..."
     primer:
-      empty: Sie haben keine Projekte oder nehmen bisher an keinem Projekt teil.
-      create_first: Erstellen Sie Ihr erstes Projekt!
-      define1: "Nutzen Sie Projekte für die <b>Zusammenarbeit</b> mit Gruppen von Mitgliedern: Eine Webseite, eine Party organisieren, Arbeiten für Kunden..."
-      define2: "Sie können <b>so viele Projekte erstellen, wie Sie wollen</b>, um sie mit anderen Nutzern online zu teilen."
-      item1: "<b>Erstellen Sie ein Projekt</b>, benenne sie es und<b>laden Sie Ihre Kontakte</b> ein."
-      item2: "<b>Kommentare</b> zu allen eigenen, momentanen Tätigkeiten in der Projekt Timeline."
-      item3: "<b>Diskutieren Sie</b> über wichtige Entscheidungen mit Konversationen."
-      item4: "<b>Planen Sie</b> was zu tun ist und erstellen Sie aktualisieren Sie Pläne mit Aufgaben."
-      item5: "<b>Teilen Sie Informationen</b> mit einfach zu bearbeitenden Seiten für jedes Projekt."
-      footer: "Projekte sind eine zentralisierte Art der Zusammenarbeit, damit Sie nie mehr Emails an Ihr Team versenden müssen."
+      empty: Vous n'appartenez pour l'instant à aucun projet
+      create_first: Créez votre premier projet!
+      define1: "<b>Collaborez</b> avec votre équipe pour tous vos projets: un site web, organisation d'une soirée, travail pour des clients..."
+      define2: "Vous pouvez créer <b>autant de projets que vous le souhaitez</b> et y accéder en ligne."
+      item1: "<b>Créez un projet</b>, donnez-lui un nom et <b> invitez vos contacts</b> à le rejoindre."
+      item2: "<b>Commentez</b> ce que vous faites à tout moment sur le mur du projet."
+      item3: "<b>Echangez</b> sur les décisions importantes avec les Conversations."
+      item4: "<b>Planifiez</b>ce que vous devez faire avec les Tâches."
+      item5: "<b>Partagez des informations</b> avec les Pages pour chaque projet."
+      footer: "Les projets sont une forme de collaboration centralisée, pour que vous n'ayez plus besoin d'envoyer de mails à votre équipe."
     show:
-      update_your_status: "Aktualisieren Sie Ihren Status..."
-      text_styling: Text Formatierung
-      invite_people: 'Teilnehmer einladen...'
-      new_task_list_link: Neue Aufgabenliste
-      people_in_project: Teilnehmer in diesem Projekt
-      subscribe: Abonnieren Sie den Nachrichten Feed
-      tip: "Erwähnen Sie jemand @benutzername, erhält der Benutzer eine Email mit Ihrer Nachricht"
+      update_your_status: "Que faites-vous actuellement?"
+      text_styling: Style du texte
+      invite_people: Inviter une autre personne...
+      new_task_list_link: Nouvelle liste de tâches
+      people_in_project: Personnes dans ce projet
+      subscribe: Souscrivez à ce projet
+      tip: "Si vous mentionnez le @nom d'utilisateur de quelqu'un, celui-ci recevra un mail avec votre message"
       rss:
         title: "{{name}}"
-        description: "Kürzliche Aktivitäten im Projekt {{name}}"
+        description: "Actualités récentes dans le projet {{name}}"
     fields:
-      archiving: "Dieses Projekt archivieren"
-      forever: "Dieses Projekt endgültig löschen"
-      owner: "Besitzer"
-      owner_description: "Der Besitzer ist die einzige Person, die die Projekteinstellungen ändern kann. Wenn Sie den Besitzer ändern, können Sie die Projekteinstellungen nicht mehr ändern."
-      name: Name
-      name_description: "Wählen Sie einen kurzen und aussagekräfigen Titel. Zum Beispiel: Taggart Transcontinental"
+      archiving: Archiver ce projet 
+      forever: Supprimer de façon définitive ce projet 
+      owner: Propriétaire
+      owner_description: "Le propriétaire du projet est la seule personne qui peut modifier les paramètres de ce projet. Une fois que vous aurez transférer le projet à quelqu’un d’autre, vous ne serez plus autorisé à modifier les paramètres du projet."
+      name: Nom
+      name_description: "Chosissez un titre bref et explicite. Par exemple: Taggart Transcontinental"
       permalink: URL
-      permalink_description: "Dies wird die Web-Adresse Ihres Projektes. Machen Sie sie so kurz wie möglich. Leerzeichen sind nicht erlaubt."
+      permalink_description: "Ceci sera l'adresse internet de votre projet. Choisissez-la concise et sans espace."
       permalink_prefix: "http://{{domain}}/projects/"
-      archived: Dieses Projekt archivieren
-      confirm_delete: "Sind Sie sicher, dass Sie dieses Projekt endgültig löschen wollen? DIES KANN NICHT RÜCKGÄNGIG GEMACHT WERDEN! Wenn Sie das Projekt behalten wollen, nutzen Sie bitte 'Dieses Projekt archivieren'."
+      archived: Archiver ce projet
+      confirm_delete: "Etes-vous certain de vouloir supprimer définitivement ce projet? IL SERA IMPOSSIBLE D'Y REVENIR. Si vous voulez le conserver, utilisez plutôt Archiver Projet."
     new_primer:
-      define1: Ein Projekt ist eine freigegebene Gruppe mit Ihren Teammitgliedern.
-      define2: "In einem Projekt kann jedes Teammitglied:"
-      feature1: Den Status aktualisieren.
-      feature2: Konversationen starten oder beantworten.
-      feature3: "Anhänge senden."
-      feature4: "Aufgaben zuordnen und überprüfen."
-      feature5: Aufgaben kommentieren.
-      feature6: "Den Zeitaufwand für jede Tätigkeit erfassen."
-      feature7: "Seiten erstellen, bearbeiten und ansehen."
-      footer: "Dieses Projekt gehört Ihnen. Sie können dieses Projekt jederzeit an einen anderen Benutzer übertragen."
-      limited: "Bei einem kostenlosen Benutzerkonto können Sie maximal 50 MB an Anhängen für dieses Projekt hochladen."
-      upgrade: Kaufen Sie jetzt die Premium-Version!
+      define1: Un projet est un groupe partagé avec vos contacts.
+      define2: "A l'intérieur d'un projet, chaque membre a la possibilité de:"
+      feature1: Publier ce qu'il est en train de faire.
+      feature2: Commencer une conversation ou répondre à une conversation en cours.
+      feature3: Ajouter des archives.
+      feature4: Assigner une tâche à quelqu'un et planifier des tâches.
+      feature5: Commenter des tâches.
+      feature6: Faire du <i>time-tracking</i>.
+      feature7: "Créer et éditer des pages à partager."
+      footer: Ce projet vous appartient. Vous pouvez le transférer à vos contacts à tout moment.
+      limited: "Dans un compte gratuit, vous pouvez télécharger jusqu'à 50 Mb seulement de fichiers par projet."
+      upgrade: Obtenez un compte premium maintenant!
     new:
-      title: Ein neues Projekt erstellen
-      submit: Neues Projekt erstellen und Teilnehmer einladen
-      new_project: Neues Project...
-      created: Ihr Projekt wurde erstellt!
-      invalid_project: "Ungültiges Projekt, bitte Fehler korrigieren und noch einmal versuchen."
-      create_an_example_project: "Zum ersten Mal bei Teambox? <a href='{{link}}'>Erstellen Sie ein Beispiel-Projekt</a>zum Ausprobieren und Lernen."
+      title: Créer un projet
+      submit: Créer un projet et commencer à inviter des utilisateurs
+      new_project: Nouveau projet
+      created: Le projet a été créé!
+      invalid_project: "Projet non valide, corrigez les éventuelles erreurs et essayez de nouveau."
+      create_an_example_project: "C'est la première fois que vous utilisez Teambox? <a href='{{link}}'>Créez un projet-exemple</a> pour expérimenter toutes les possibilités et apprendre à vous servir de Teambox."
     edit:
-      title_settings: Generelle Einstellungen
-      title_picture: Projekt Logo
-      title_deletion: "Projekt Archivieren/Löschen"
-      title_ownership: Besitzer
-      submit: "Änderungen speichern"
-      change_owner: "Besitzer ändern"
-      transferred: "Projekt Besitz wurde übertragen."
-      invalid_transferred: "Der Projekt Besitz konnte nicht übertragen werden, bitte Fehler korrigieren und noch einmal versuchen."
+      title_settings: Paramètres généraux
+      title_picture: Logo du projet
+      title_deletion: Archiver/Effacer le projet
+      title_ownership: Propriété
+      submit: Enregistrer les modifications
+      change_owner: Changer de propriétaire
+      transferred: "Le projet a été transféré au nouveau propriétaire."
+      invalid_transferred: "Le projet n’a pas pu être transféré au nouveau propriétaire, corrigez les erreurs et essayez à nouveau."
   invitations:
     fields:
-      user_or_email: "Geben Sie den Benutzernamen des Teammitglieds oder die Email ein:"
+      user_or_email: "Rentrez le mail ou nom d'utilisateur de la personne que vous souhaitez inviter:"
     invitation:
-      invited_user: "{{inviter}} hat <b>{{invitee}}</b> eingeladen am Projekt teilzunehmen."
-      invited_email: "{{inviter}} hat <b>{{email}}</b> eingeladen am Projekt teilzunehmen."
-      time_ago: "({{time_ago_in_words}} vorher)"
-      resend: Einladungs-Email noch einmal versenden
-      pending: "Eine Email wurde an den Benutzer versendet, aber sie wurde noch nicht bestätigt."
-      discard: Einladung verwerfen
+      invited_user: "{{inviter}} a invité <b>{{invitee}}</b> à rejoindre le projet."
+      invited_email: "{{inviter}} a invité <b>{{email}}</b> à rejoindre le projet."
+      time_ago: "({{time_ago_in_words}} ago)"
+      resend: Renvoyer un email d'invitation
+      pending: "Un mail a été envoyé à cet utilisateur, mais celui-ci n'a pas encore accepté l'invitation"
+      discard: Ne plus montrer cette invitation
     sent:
-      email_sent: "<b>Wir haben diesem Benutzer gerade eine Benachrichtigungs-Email gesendet mit einem Link, um die Einladung anzunehmen</b>. Wenn sie die Email nicht erhalten haben, stellen Sie sicher, dass sie nicht als Spam eingestuft wurde oder wählen Sie eine andere Email Adresse. Wenn weiterhin Probleme bestehen, nehmen Sie bitte Kontakt zu unserem Team auf."
+      email_sent: "<b>Nous avons envoyé un mail à cet utilisateur pour qu'il accepte votre invitation</b>. S'il ne trouve pas ce mail dans sa boîte de réception, il faut s'assurer qu'il n'a pas été classé dans le courrier indésirable. Si le problème persiste, n'hésitez pas à nous envoyer un mail."
     pending:
-      to_access_or: um das Projekt aufzurufen oder
-      invited_to_join: "{{by}} hat Sie eingeladen an dem Projekt {{project}} teilzunehmen."
+      to_access_or: pour accéder au projet ou
+      invited_to_join: "{{by}} vous a invité à rejoindre le projet {{project}}."
     resend:
-      resent: "Die Einladung wurde erneut versendet an {{recipient}}. Wenn die Email nicht erhalten wurde, kontrollieren Sie bitte den Spam-Ordner."
-      return: "Zurück"
+      resent: "Nous avons renvoyé une invitation à {{recipient}}. S'il ne trouve pas ce mail dans sa boîte de réception, il faut s'assurer qu'il n'a pas été classé dans le courrier indésirable."
+      return: Revenir à la page précédente
     index_user:
-      title: Offene Einladungen
-      no_invitations: "Sie haben keine offenen Projekt Einladungen."
+      title: Invitations en attente de réponse
+      no_invitations: "Vous n'avez aucune invitation en attente de réponse."
     search:
-      username_or_email: "Geben Sie den Benutzernamen des Teammitglieds oder die Email ein:"
-      invite_people: Laden Sie Teilnehmer für dieses Projekt ein
-      invite: Einladen
-      submit: Versenden
+      username_or_email: "email ou nom d'utilisateur"
+      invite_people: Inviter au projet
+      invite: Chercher et Inviter
+      submit: Envoyer
     recent:
-      invite: Einladen von {{username}}
+      invite: Inviter {{username}}
   conversations:
     actions:
-      confirm_delete: "Sind Sie sicher, dass Sie diese Konversation löschen wollen?"
+      confirm_delete: Etes-vous sûr de vouloir effacer cette conversation?
     link:
-      edit: Bearbeiten
+      edit: Editer
     fields:
-      name: Titel
-      body: Erster Kommentar
+      name: Titre
+      body: Premier message
       tooltips:
-        name: "So kurz wie möglich, dies wird in den Betreff der Bestätigungs Eamil eingefügt"
-        body: "Stellen Sie eine Frage, teilen Sie dem Team Neues mit, beginnen Sie eine Diskussion"
+        name: "Aussi court que possible, car il apparaîtra dans l'objet des mails envoyés."
+        body: "Demandez quelque chose, annoncez une nouvelle, commencez une discussion."
     new:
-      title: Neue Konversation
-      submit: Erstellen
+      title: Nouvelle conversation
+      submit: Créer
     watcher_fields:
-      add_suscribers: Welche Teilnehmer verfolgen diese Konversation?
-      subscribe_note: "Diese Teilnehmer werden über diese Nachricht und alle folgenden Kommentare per Email informiert.<br/> Sie können die Benachrichtigung jederzeit abbestellen."
-      invite_users: Sie sind der einzige Benutzer in diesem Projekt!
-      no_users_yet: "Konversationen sind nützlicher wenn sie geteilt werden. <a href='{{invite_link}}'>Laden Sie Benutzer ein</a> zu diesem Projekt, so dass sie diese Konversation lesen können, Antworten senden können und Aktualisierungen erhalten."
+      add_suscribers: Qui suivra cette conversation?
+      subscribe_note: Ces personnes recevront une notification par mail de ce message et des commentaires ultérieurs.<br/>Vous pouvez arrêter de suivre cette conversation à tout moment.
+      invite_users: Vous êtes l'unique utilisateur dans ce projet!
+      no_users_yet: "Les conversations sont plus utiles lorsqu'il y a plusieurs personnes. <a href='{{invite_link}}'>Invitez d'autres personnes</a> à se joindre à ce projet afin qu'ils puissent lire, commenter et recevoir les actualisations de cette conversation."
     edit:
-      submit: 'Konversation aktualisieren'
+      submit: 'Modifier'
     index:
       rss:
-        title: "Konversationen"
-        description: "Konversationen für Projekt {{name}}"
+        title: "Conversations"
+        description: "Conversations du projet {{name}}"
     primer:
-      empty: Dieses Projekt hat bisher keine Konversationen.
-      create_first: Erstellen Sie die erste Konversation in diesem Projekt!
-      define: "Nutzen Sie Konversationen, um <b>Entscheidungen zu diskutieren</b> und <b>ihr Team zu informieren</b> auf einer zentralen Plattform.<br/> Jede Konversation ist ein Kommentarbaum, der viele Emails überflüssig macht."
-      item1: "<b>Dateien hochladen</b>. An Kommentare können auch Dateien angehängt werden."
-      item2: "<b>Abonnieren</b> Sie eine Konversation um über zukünftige Antworten per Email oder RSS informiert zu werden."
-      item3: "<b>Formatieren</b>. Jeder Kommentar kann mit Textstilen formatiert werden."
-      item4: "<b>Posteingangs-Junkie?</b> Sie können eine Konversation mit einer Email beantworten."
-      footer1: "Konversationen sind groﬂartig, um <b>ein Design zu bearbeiten</b>, <b>einen Termin zu entscheiden</b> für ein Treffen oder um Neuigkeitn <b>mitzuteilen</b>."
-      footer2: "Durch die Baumanordnung ist es einfach, den zeitlichen Ablauf zu verfolgen, zu sehen welche Dateien gesendet worden sind und die Meinungen jedes Teilnehmers  zu kennen. In Teambox heiﬂt <b>zusammearbeiten auch kommunizieren</b>."
+      empty: Il n'y a pour l'instant aucune conversation dans ce projet.
+      create_first: Créez la première conversation de ce projet!
+      define: "<b>Discutez au sujet des décisions</b> et <b>mettez votre équipe au courant</b> des dernières nouvelles de manière centralisée.<br/>Chaque conversation est une liste de messages remplaçant les emails confus."
+      item1: "<b>Partagez des fichiers</b>. Vous pouvez joindre des fichiers à chaque message."
+      item2: "<b>Souscrivez</b> à une conversation pour recevoir les notifications de réponses par email et RSS."
+      item3: "<b>Exprimez-vous</b>. Il est possible d'utiliser différents styles d'écriture, gras, italique..."
+      item4: "<b>Intégré à votre email</b>. Vous pouvez répondre directement à partir de votre boîte mail pour publier une réponse."
+      footer1: "Les conversations sont l'outil parfait pour <b>partager un design</b>, <b>décider d'une date</b> de réunion ou <b>informer</b> les autres des nouvelles d'un projet."
+      footer2: "Etant ordonnées par fils, il est facile de retourner en arrière dans le temps pour voir quels fichiers ont été envoyés et ce qui a été dit par chaque membre de l'équipe. Dans Teambox, <b>collaborer</b> génère une <b>traçabilité</b> de ce qui a été fait."
     column:
-      new_conversation: Neue Konversation
-      subscribe: Abonnieren Sie den Nachrichten Feed
+      new_conversation: Nouvelle conversation
+      subscribe: Souscrivez au fil d'actualités
     conversation_with_extract:
-      posted_by: "Veröffentlicht von"
+      posted_by: Publié par
     show:
-      started_by: Erstellt von
-      edit: Titel bearbeiten
-      message: Nachricht
-      messages: Nachrichten
+      started_by: Commencé par
+      edit: Editer un titre
+      message: message
+      messages: messages
     short_conversation:
-      comment: Kommentar
-      comments: Kommentare
-  
+      comment: réponse
+      comments: réponses
+
   tasks:
     errors:
       name:
-        cant_be_blank: 'darf nicht leer sein'
-        too_long: 'muss kürzer als 255 Zeichen sein'
+        cant_be_blank: Le nom ne peut pas être vide
+        too_long: 'Le nom doit comporter moins de 255 caractères'
     fields:
-      name: Name
+      name: Nom
     assigned:
-      assigned_to: "Zugeordnet zu {{user}}"
+      assigned_to: "Responsable: {{user}}"
     due_on:
-      due_on: "Fällig am"
-      today: Heute
-      tomorrow: Morgen
-    create: "Aufgabe hinzufügen"
+      due_on: Echéance
+      today: Aujourd'hui
+      tomorrow: Demain
+    create: Ajouter une tâche
     edit:
-      submit: Aufgabe aktualisieren
+      submit: Actualiser tâche
     new:
-      title: Neue Aufgabe
-      submit: "Aufgabe hinzufügen"
+      title: Nouvelle tâche
+      submit: Créer
     show:
-      title: "Aufgabe: {{name}}"
+      title: "Tâche: {{name}}"
     link:
-      new: + Aufgabe hinzufügen
-      edit: Bearbeiten
+      new: + Nouvelle tâche
+      edit: Editer
     destroy_message:
-      deleted: "Die Aufgabe <b>{{name}}</b> wurde erfolgreich gelöscht!"
+      deleted: "La tâche <b>{{name}}</b> a été supprimée"
     archive_message:
-      archived: "Die Aufgabe <b>{{name}}</b> wurde erfolgreich archiviert!"
+      archived: "La tâche <b>{{name}}</b> a été archivée!"
     archive_box:
-      you_are_done: Die Aufgabe scheint erledigt zu sein!
-      archive: Diese Aufgabe archivieren
-      reopen: "Diese Aufgabe wieder öffnen"
+      you_are_done: Il semble que cette tâche soit terminée.
+      archive: Archiver tâche
+      reopen: Réouvrir cette tâche
     unarchive_box:
-      task_is_closed: Diese Aufgabe ist geschlossen und archiviert
-      unarchive: Aus dem Archiv wieder herstellen
-      reopen: "Diese Aufgabe wieder öffnen"
-    overdue: "{{days}} Tage überfällig"
+      task_is_closed: Cette tâche est fermée et archivée
+      unarchive: Réactiver cette tâche
+      reopen: Réouvrir cette tâche
+    overdue: "{{days}} jours de retard"
     status:
-      new: neu
-      open: "öffnen"
-      hold: halten
-      resolved: "gelöst"
-      rejected: abgelehnt
+      new: nouvelle
+      open: ouverte
+      hold: en attente
+      resolved: terminée
+      rejected: rejetée
     my_tasks:
-      my_tasks: Meine Aufgaben
+      my_tasks: Mes tâches
   notes:
     actions:
-      delete_confirm: "Sind Sie sicher, dass Sie diese Notiz löschen wollen?"
+      delete_confirm: Etes-vous sûr de vouloir effacer cette note?
     new:
-      submit: "Notiz hinzufügen"
+      submit: Nouvelle note
     edit:
-      submit: Notiz aktualisieren
+      submit: Actualiser la note
     fields:
-      title: Titel
-      body: "Textkörper"
-      text_styling: Text Formatierung
+      title: Titre
+      body: Contenu
+      text_styling: Style du texte
   dividers:
     actions:
-      delete_confirm: "Sind Sie sicher, dass Sie diesen Trenner löschen wollen?"
+      delete_confirm: Etes-vous sûr de vouloir supprimer ce séparateur?
     new:
-      submit: "Hinzufügen"
+      submit: Ajouter
     edit:
-      submit: Aktualisieren
+      submit: Actualiser
   pages:
     index:
-      pages_in_this_project: Seiten in diesem Projekt
+      pages_in_this_project: Pages dans ce projet
       rss:
-        title: Seiten
-        description: "Seiten im Projekt {{name}}"
+        title: Pages
+        description: "Pages du projet {{name}}"
     primer:
-      empty: Dieses Projekt hat bisher keine Seiten.
-      create_first: "Erstellen Sie die erste Seite für dieses Projekt!"
-      define1: "Hier können Sie <b>nützliche Informationen mitteilen</b> für Ihr Team: Eine Roadmap, interessante Links, Anleitungen, Email Vorlagen..."
-      define2: "Eine Seite zu bearbeiten ist sehr einfach, mit Drag-and-Drop können Sie Elemente genau platzieren."
-      item1: "<b>Freigeben</b>. Alle Teammitglieder können die Projektseiten lesen und bearbeiten."
-      item2: "<b>Veröffentlichen</b>. Sofortiges Veröffentlichen der freigegebenen Seiten im Web. Zeigen Sie sie der Welt."
-      item3: "<b>Drucken</b>. Seiten sind druckerfreundlich. Versuchen Sie zu drucken oder exportieren Sie zu PDF!"
-      item4: "<b>Wiki</b>. Seiten funktionieren wie ein Wiki, sie geben schnellen Zugriff auf die Projektinformationen."
-      footer1: "Nutzen Sie Teambox als Ihr <b>öffentliches Whiteboard</b> für häufig gebrauchte Informationen."
-      footer2: "Sie können auch Dateien auf jeder Seite zu jeder Notiz hinzufügen. Genieﬂen Sie es!"
+      empty: Il n'y a aucune page dans ce projet.
+      create_first: Créez la première page!
+      define1: "Vous pouvez ici <b>partager des infomations utiles</b> avec votre équipe: plan, liens intéressants, instructions, modèles de mails..."
+      define2: "Editer une page est simple et amusant, avec des éléments que vous pouvez éditer sur le site par glisser-déposer."
+      item1: "<b>Partagez</b>. Tous les membres du projet peuvent les voir et les éditer."
+      item2: "<b>Publiez</b>. Publication instantannée sur internet avec les pages partagées. Créez une page web en quelques secondes."
+      item3: "<b>Imprimez</b>. Les pages sont préparées pour être imprimées. Vous pouvez les imprimez ou les exporter comme PDF!"
+      item4: "<b>Wiki</b>. Elles fonctionnent comme un wiki, en donnant un accès rapide à toute l'information du projet."
+      footer1: "Utilisez Teambox comme un <b>tableau partagé</b> pour les informations d'usage fréquent."
+      footer2: "Vous pouvez également joindre des fichiers à toute page du projet. Profitez-en!"
     buttons:
-      new_note: Notiz
-      new_divider: Trenner
-      new_upload: Hochladen
-      new_task_list: Aufgabenliste
+      new_note: Note
+      new_divider: Séparateur
+      new_upload: Fichier
+      new_task_list: Liste de tâches
     new:
-      title: Neue Seite
-      define1: "Hier können Sie <b>nützliche Informationen mitteilen</b> für Ihr Team: Eine Roadmap, interessante Links, Anleitungen, Email Vorlagen..."
-      define2: "Eine Seite zu bearbeiten ist sehr einfach, mit Drag-and-Drop können Sie Elemente genau platzieren."
-      feature1: "<b>Freigeben</b>. Alle Teammitglieder können die Projektseiten lesen und bearbeiten."
-      feature2: "<b>Veröffentlichen</b>. Sofortiges Veröffentlichen der freigegebenen Seiten im Web. Zeigen Sie sie der Welt."
-      feature3: "<b>Drucken</b>. Seiten sind druckerfreundlich. Versuchen Sie zu drucken oder exportieren Sie zu PDF!"
-      feature4: "<b>Wiki</b>. Seiten funktionieren wie ein Wiki, sie geben schnellen Zugriff auf die Projektinformationen."
-      footer1: "Nutzen Sie Teambox als Ihr <b>öffentliches Whiteboard</b> für häufig gebrauchte Informationen."
-      footer2: "Sie können auch Dateien auf jeder Seite zu jeder Notiz hinzufügen. Genieﬂen Sie es!"
-      submit: Erstellen
+      title: Nouvelle page
+      define1: "Vous pouvez ici <b>partager des infomations utiles</b> avec votre équipe: plan, liens intéressants, instructions, modèles de mails..."
+      define2: "Editer une page est simple et amusant, avec des éléments que vous pouvez éditer sur le site par glisser-déposer."
+      feature1: "<b>Partagez</b>. Tous les membres du projet peuvent les voir et les éditer."
+      feature2: "<b>Publiez</b>. Publication instantannée sur internet avec les pages partagées. Créez une page web en quelques secondes."
+      feature3: "<b>Imprimez</b>. Les pages sont préparées pour être imprimées. Vous pouvez les imprimez ou les exporter comme PDF!"
+      feature4: "<b>Wiki</b>. Elles fonctionnent comme un wiki, en donnant un accès rapide à toute l'information du projet."
+      footer1: "Utilisez Teambox comme un <b>tableau partagé</b> pour les informations d'usage fréquent."
+      footer2: "Vous pouvez également joindre des fichiers à toute page du projet. Profitez-en!"
+      submit: Créer
     edit:
-      title: Seite bearbeiten
-      submit: Aktualisieren
+      title: Editer une page
+      submit: Actualiser
     fields:
-      name: Name
-      name_description: "Wählen Sie einen kurzen und aussagekräftigen Titel"
-      description: Beschreibung
-      description_description: "Optional. Geben Sie jegliche Information ein, die alle Personen wissen sollten, die diese Seite lesen oder bearbeiten."
+      name: Nom
+      name_description: Choisissez un titre bref et explicite
+      description: Description
+      description_description: "Optionnel. Toute information utile pour les personnes qui lisent ou éditent cette page."
     slots:
-      insert_here: "Hier einfügen"
+      insert_here: Insérez Ici
     column:
-      new_page: Neue Seite
+      new_page: Nouvelle page
   task_lists:
     errors:
       name:
-        cant_be_blank: Name darf nicht leer sein
-        too_long: 'Name darf nicht länger als 255 Zeichen sein'
+        cant_be_blank: Le nom ne peut pas être
+        too_long: 'Le nom doit comporter moins de 255 caractères'
     archived:
-      title: Alle archivierten Aufgaben
-      description: Sie sehen momentan alle archivierten Aufgaben. Diese sind geschlossen worden.
+      title: Toutes les tâches archivées
+      description: "Ce sont les tâches archivées, qui ont été soit achevées soit annulées."
     fields:
-      name: Name
+      name: Nom
     link:
-      new: Neue Aufgabenliste
-      edit: Bearbeiten
-      reorder: Neu anordnen
+      new: Nouvelle liste de tâches
+      edit: Editer
+      reorder: Réordonner
     index:
-      add_link: Neue Aufgabenliste
-      empty: Keine Aufgaben in dieser Kategorie!
+      add_link: Nouvelle liste de tâches
+      empty: Aucune tâche dans cette catégorie!
     primer:
-      empty: Dieses Projekt hat bisher keine Aufgabenlisten.
-      create_first: Erstellen Sie die erste Aufgabenliste in diesem Projekt!
-      define: "Nutzen Sie Aufgaben, um <b>vorauszuplanen</b>, <b>Fortschrite zu erfassen</b> und <b>nachzuvollziehen, was gemacht worden ist</b>.<br/><i>Was? Wer? Wann?</i> Aufgaben können einen Status haben, eine zugeordnete Person und ein Fälligkeitsdatum."
-      item1: "<b>Planen</b>. Erstellen Sie Aufgaben in jeder Liste und ordnen Sie sie den Teammitgliedern zu."
-      item2: "<b>Mitteilen</b>. Erstellen Sie Kommentare für jede Aufgabe. Hängen Sie Dateien daran. Fragen Sie nach Feedback."
-      item3: "<b>Verfolgen</b>. Erhalten Sie Benachrichtigungen für Tasks, die Sie betreffen."
-      item4: "<b>Nachvollziehen</b>. Eine beendete Aufgabe wird nicht gelöscht, damit Sie auch später noch auf die Nachrichten und Dateien zugreifen können."
-      footer1: "Aufgaben sind ein einfacher und agiler Weg, um <b>Sachen zu erledigen</b> und das anderen mitzuteilen."
-      footer2: "Es ist an der Zeit, die Excel Planungstabellen und komplexen GANTT-Charts abzulösen!"
+      empty: Ce projet ne contient pour l'instant aucune conversation.
+      create_first: Créez la première liste de tâches!
+      define: "Utilisez les tâches pour <b>planifier</b>, <b>voir ce qui a été fait</b> et <b>ne pas oublier des idées pour le futur</b>.<br/><i>Quoi? Qui? Quand?</i> Les tâches peuvent avoir un état, un responsable et une échéance."
+      item1: "<b>Planifiez</b>. Créez des tâches à l'intérieur de chaque liste et assignez-les à vos contacts."
+      item2: "<b>Informez</b>. Publiez des commentaires pour chaque tâche avec les avancées. Joignez des fichiers. Demandez des avis."
+      item3: "<b>Tenez-vous à jour</b>. Recevez des notifications pour les tâches qui vous concernent."
+      item4: "<b>Revoyez</b>. Une tâche terminée ne s'efface pas, de façon à ce que vous puissiez ensuite revoir ce qui a été fait."
+      footer1: "C'est une façon simple et habile de <b>faire les choses</b> et de le faire savoir."
+      footer2: "Il est maintenant temps d'oublier les plannings sur Excel et les diagrammes de GANTT trop complexes!"
     new:
-      title: Neue Aufgabenliste
-      submit: "Aufgabenliste hinzufügen"
-      submit: "Aufgabenliste hinzufügen"
+      title: Nouvelle liste de tâches
+      submit: Ajouter
+      submit: Créer
     edit:
-      submit: Aufgabenliste aktualisieren
+      submit: Actualiser
     column:
-      new_task_list: Neue Aufgabenliste
-      subscribe: Abonnieren Sie den Nachrichten Feed
+      new_task_list: Nouvelle liste de tâches
+      subscribe: Souscrivez à ces tâches
     show:
-      title: "Aufgabenliste: {{name}}"
+      title: "Liste de tâches: {{name}}"
     destroy_message:
-      deleted: "Die Aufgabenliste <b>{{name}}</b> wurde erfolgreich gelöscht!"
+      deleted: "La liste <b>{{name}}</b> a été effacée!"
   people:
     link:
-      edit: Bearbeiten
+      edit: Editer
     edit:
-      submit: Person aktualisieren
+      submit: Modifier
     fields:
-      role: Rolle
-      observer: Beobachter
-      commenter: Kommentator
-      participant: Teilnehmer
-      admin: Admin
+      role: Rôle
+      observer: Observateur
+      commenter: Commentateur
+      participant: Participant
+      admin: Administrateur
     header:
-      owner: Projekt Besitzer
-      observer: Beobachter
-      commenter: Kommentator
-      participant: Teilnehmer
-      admin: Admin
-      remove: Entfernen
-      transfer: "Besitz übertragen"
-      leave_project: Projekt verlassen
-      confirm_delete: "Sind Sie sicher, dass Sie diese Person aus dem Projekt entfernen wollen?"
+      owner: Propiétaire du projet
+      observer: Observateur
+      commenter: Commentateur
+      participant: Participant
+      admin: Administrateur
+      remove: Expulser
+      transfer: Transférer le projet
+      leave_project: Quitter le projet
+      confirm_delete: Etes-vous sûr de vouloir éliminer cette personne du projet?
   comments:
     comment:
       commented_on: "-"
       commented_on_a_task_list: "-"
-      confirm_delete: "Sind Sie sicher, dass Sie diesen Kommentar löschen wollen?"
+      confirm_delete: Etes-vous sûr de vouloir effacer ce commentaire?
     new:
-      assigned_to_nobody: 'Nicht zugeordnet'
-      assigned_to: "Zugeordnet zu:"
-      submit: Kommentar
+      assigned_to_nobody: 'Assignée à personne'
+      assigned_to: "Assigné à:"
+      submit: Publier
     edit:
-      submit: Speichern
+      submit: Enregistrer
   example_projects:
     new:
-      learn: Lernen Sie an einem Beispiel!
-      line1: "Wenn Sie das erste Mal Teambox nutzen, können Sie ein Beispiel-Projekt mit beliebigen Inhalten erstellen."
-      line2: "Das Navigieren durch die Seiten lehrt Sie, wie Sie jeden Bestandteil von Teambox nutzen."
-      line3: "Stellen Sie sicher, dass Sie <b>die Anleitungen lesen</b> und <b>experimentieren</b> Sie mit dem Erstellen, Bearbeiten und Löschen von Elementen!"
-      create: Erstellen Sie ein Beispiel-Projekt
-      line4: "In diesem Projekt können Sie keine anderen Benutzer einladen, aber Sie können alles andere ausprobieren."
+      learn: Apprenez par l'exemple
+      line1: "Si c'est la première fois que vous utilisez Teambox, vous pouvez créer un projet-exemple avec un peu de contenu."
+      line2: "En naviguant dans les différentes pages vous apprendrez comment utiliser projets, conversations et tâches."
+      line3: "N'oubliez pas de <b>lire les instructions</b> et <b>expérimenter</b> les possiblités en créant, éditant et effaçant des éléments!"
+      create: Créer le projet-exemple
+      line4: "Dans ce projet vous ne pourrez pas inviter d'autres utilisateurs, mais vous pourrez utiliser toutes les autres possibilités."
   uploads:
-    comment_upload_link: Anhang
+    comment_upload_link: Fichier joint
     new:
-      select_a_file: "Wählen Sie eine Datei"
+      select_a_file: Sélectionnez un fichier
     index:
-      new_file: Eine Datei hochladen
-      max_upload_size: "Max Anhang-Gröﬂe ist {{mb}} Mb"
+      new_file: Télécharger un fichier
+      max_upload_size: "La taille maximale est de {{mb}} Mb"
     form:
-      presence: "Sie können keine leere Datei hochladen"
-      max_size: "Dateigröﬂe darf nicht gröﬂer sein als {{mb}}"
-      select_file: "Datei auswählen"
-      description: Titel <i>(optional)</i>
-      upload: Datei hochladen
+      presence: "Vous ne pouvez pas joindre un fichier vide"
+      max_size: "La taille du fichier ne peut excéder {{mb}} Mb"
+      select_file: Sélectionner un fichier
+      description: Description <i>(optionnel)</i>
+      upload: Télécharger un fichier
     primer:
-      empty: Dieses Projekt hat bisher keine Dateien.
-      create_first: "Laden Sie zuerst Dateine für dieses Projekt hoch!"
-      define1: "Hatten Sie jemals Probleme mit dem Freigeben von Dateien für Ihr Team? Teambox macht das Freigeben sehr einfach."
-      define2: "Sie können Dateien hier hochladen oder Dateien an Konversationen, Aufgaben oder Seiten anhängen."
-      item1: "<b>Gröﬂere Dateien</b>. Laden Sie Dateien jeder Gröﬂe hoch und vergessen Sie die Grenzen von Emails."
-      item2: "<b>Versionierung</b>. Laden Sie neue Versionen von Dateien hoch und erkennen Sie alle Änderungen."
-      item3: "<b>Immer verfügbar</b>. Dateien stehen für zukünftige Referenzen im Zusammenhang mit dem Projekt."
+      empty: Ce projet ne contient aucun fichier pour l'instant
+      create_first: Téléchargez le premier fichier!
+      define1: "Il vous est déjà arrivé d'avoir des difficultés à partager un fichier? Avec Teambox, rien de plus facile."
+      define2: "Vous pouvez ajouter des fichiers ici ou bien les joindre à des conversations, tâches ou pages."
+      item1: "<b>Plus de capacité</b>. Ajoutez des fichiers de toutes tailles et oubliez les limitations des emails."
+      item2: "<b>Versions</b>. Ajoutez de nouvelles versions des fichiers et sauvegarder l'historique."
+      item3: "<b>Toujours disponibles</b>. Les fichiers sont archivés dans Teambox, afin que vous puissiez les consulter dans le futur."
     upload:
-      uploaded_the_file: "Laden Sie die Datei hoch"
-      download: Download
-      uploaded_by: Hochgeladen von
-      remove: "Löschen"
-      on_: "an"
+      uploaded_the_file: "a ajouté le fichier"
+      download: Télécharger
+      uploaded_by: Téléchargé par
+      remove: Supprimer
+      on_: "dans"
   sessions:
     fields:
-      username_or_email: Email oder Benutzername
-      password: Passwort
-      forgot: Haben Sie Ihr Passwort vergessen?
-      signup: "Registrieren Sie sich für ein Benutzerkonto"
+      username_or_email: Email ou nom d'utilisateur
+      password: Mot de passe
+      forgot: Vous avez oublié votre mot de passe?
+      signup: Créer un compte
     new:
-      title: Anmelden
-      video: "Um was geht es in Teambox?"
-      submit: Anmelden
- 
+      title: Entrer
+      video: Teambox
+      submit: Entrer
+
   email:
     user:
-      welcome: Willkommen zu Teambox!
- 
+      welcome: Bienvenue sur Teambox!
+
   shared:
     strip:
-      archived: "Dieses Projekt ist archiviert. Um dieses Projekt zu bearbeiten oder zu kommentieren, müssen Sie es aus dem Archiv holen auf der Seite <a href='{{link}}'>Projekt Einstellungen</a> ####"
+      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>"
     gantt_banner_primer:
-      title: "Es gibt keine fälligen Aufgaben für das GANTT Chart"
+      title: There are no task lists due to show on the gantt chart
     upcoming_events_primer:
-      title: "Es gibt keine fälligen Aufgaben für den Kalender"
+      title: There are no tasks due to show on the calendar
     projects:
-      projects: Projekte
+      projects: Projets
     archived_projects:
-      archived_projects: Archivierte Projekte
+      archived_projects: Projets Archivés
     navigation:
-      welcome: Willkommen
-      all_projects: 'Alle Projekte'
+      welcome: Bienvenue
+      all_projects: 'Projets'
       new_project: +
     project_settings_navigation:
-      general: Generelle Einstellungen
-      picture: Projektbild
-      deletion: "Projekt Archivieren/Löschen"
-      ownership: Besitz
+      general: Paramètres généraux
+      picture: Image du projet
+      deletion: Archivage/Suppression de projet
+      ownership: Ownership
     project_navigation:
-      overview: "Übersicht"
-      all_conversations: Alle Konversationen
-      conversations: Konversationen
-      task_lists: Aufgabenlisten
-      all_task_lists: Alle Aufgabenlisten
-      project_settings: Projekt Einstellungen
-      all_pages: Alle Seiten
-      people: Personen
-      pages: Seiten
-      time_tracking: Zeiterfassung
-      login: Anmelden
-      signup: Registrieren
-      files: Dateien
-      invitations: Einladungen
+      overview: Resumé
+      all_conversations: Mes conversations
+      conversations: Conversations
+      task_lists: Tâches
+      all_task_lists: Mes listes de tâches
+      project_settings: Paramètres du projet
+      all_pages: Mes pages
+      people: Personnes
+      pages: Pages
+      time_tracking: Time Tracking
+      login: Login
+      signup: Créer un compte
+      files: Fichiers
+      invitations: Invitations
     global_navigation:
-      project_invitations: Projekt Einladungen
-      home: Home
-      logout: Ausloggen
-      login: Anmelden
-      project_invitations: "Einladungen ({{count}})"
-      settings: Einstellungen
+      project_invitations: Invitations
+      home: Accueil
+      logout: Quitter
+      login: Login
+      project_invitations: "Invitations ({{count}})"
+      settings: Options
     public_navigation:
       home: Teambox
       tour: Tour
-      users: Unsere Benutzer
+      users: Utilisateurs
       services: Services
-      community: Community
-      help: Hilfe and Support
-      privacy: "Privatsphäre"
-      terms: Nutzungsbedingungen
+      community: Communauté
+      help: Aide
+      privacy: Privacité
+      terms: Conditions d'utilisation
     user_navigation:
-      account_settings: Kontoeinstellungen
-      profile_information: Profil Information
-      profile_picture: Profil Bild
-      notifications: Benachrichtigungen
+      account_settings: Compte et préférences
+      profile_information: Information de contact
+      profile_picture: Image
+      notifications: Notifications
     task_navigation:
-      all_tasks: Alle Aufgaben
-      my_tasks: "Meine {{count}} Aufgaben"
-      archived_tasks: "Alle {{count}} archivierten Aufgaben"
+      all_tasks: Toutes
+      my_tasks: "Mes tâches ({{count}})"
+      archived_tasks: "Archivées ({{count}})"
     footer:
-      support: Feedback and Fehler
-      mobile: Mobile Version
-      help: Hilfe
+      support: Un problème? Envoyez-nous un feedback!
+      mobile: Version Mobile
+      help: Aide
     watchers:
-      unwatch: Nicht mehr verfolgen
-      watch: Verfolgen
-      people_watching: "Personen verfolgen: "
-      nobody_watching: "Niemand verfolgt"
-      started_watching: "Sie werden ab sofort über Aktualisierung per Email benachrichtigt."
-      stopped_watching: "Sie werden keine weitern Benachrichtigungen hierüber erhalten."
+      unwatch: Arrêter de suivre
+      watch: Suivre
+      people_watching: "Qui suivent cet élément: "
+      nobody_watching: "Personne ne suit les changements de cet élément"
+      started_watching: "Vous recevrez maintenant des notifications par mail pour toute modification de cet élément."
+      stopped_watching: "Vous ne recevrez plus de notifications pour cet élément."
     upgrade_browser:
-      upgrade: "Sie benutzen eine alte Version des Internet Explorer. Teambox wird nicht zuverlässig mit dieser Version funktionieren."
-      ie: Aktualisieren Sie Internet Explorer
-      or_install: oder installieren Sie
+      upgrade: Vous utilisez actuellement une ancienne version d'Internet Explorer. Il est possible que Teambox ne fonctionne pas correctement avec cette version.
+      ie: Mettez à jour Internet Explorer
+      or_install: ou installez
       chrome: "Chrome,"
       firefox: "Firefox"
       safari: "Safari"
- 
+
   emailer:
     common:
-      do_not_answer: "Antworten Sie nicht auf diese Email."
-      answer_above_this_line: "ANTWORTEN SIE ÜBER DIESEM LINK, UM EINE ANTWORT ZU SENDEN"
+      do_not_answer: "Ne pas répondre à ce mail."
+      answer_above_this_line: "ECRIVEZ AU-DESSUS DE CETTE LIGNE POUR REPONDRE"
     invitation:
-      collaborate_with: "{{name}} will mit Ihnen auf Teambox zusammenarbeiten:"
-      you_have_been_invited_to: "Sie sind eingeladen worden zu dem Projekt <b>{{project}}</b>"
-      accept_the_invitation: "Nehmen Sie die Einladung an, um mit der Zusammenarbeit zu beginnen"
-      current_users: "Benutzer aktuell in diesem Projekt:"
-      plaintext_link: "Wenn der obige Link nicht funktioniert, kopieren Sie den folgenden Code und fügen Sie Ihn in die Adresszeile Ihres Browser ein: "
-      teambox_is_a_pm_platform: "Teambox ist eine Projekt Management Plattform, die für die Echtzeit Zusammenarbeit entwickelt wurde."
-      plan_share_and_collaborate: "Planen Sie, Geben Sie frei and erfassen Sie was gemacht werden soll. So einfach, wie es sein soll."
-      report_abuse: "Diese Email wurde versendet auf den Wunsch einer Ihrer Kontakte. Teilen Sie uns bitte jeglichen Missbrauch mit. ."
+      collaborate_with: "{{name}} veut collaborer avec vous sur Teambox:"
+      you_have_been_invited_to: "Vous avez été invité à rejoindre le projet <b>{{project}}</b>"
+      accept_the_invitation: Acceptez l'invitation pour commencer à collaborer
+      current_users: "Utilisateurs de ce projet:"
+      plaintext_link: "Si le lien ci-dessus ne fonctionne pas, copiez et collez le lien suivant dans la barre d'adresse de votre navigateur:"
+      teambox_is_a_pm_platform: "Teambox est une plateforme de gestion de projets pensée pour le monde réel."
+      plan_share_and_collaborate: "Planifiez, partagez y tenez-vous à jour de ce qui a été fait. Aussi facile que cela devrait l'être."
+      report_abuse: "Ce mail vous a été envoyé suite à une demande de votre contact. Contactez-nous en cas d'abus."
     confirm:
-      hey: "Hallo {{user_name}}!"
-      follow_the_link: "Um die <b>Anmeldung für Teambox zu vervollständigen</b>, melden Sie sich an per Klick hierhin:"
-      log_in: "Jetzt bei Teambox anmelden!"
-      plaintext_link: "Wenn dieses nicht funktioniert, kopieren Sie den folgenden Link und fügen Sie ihn in die Adresszeile Ihres Browsers ein:"
-      report_abuse: "Sie erhalten dieses Email, weil Sie sichr für ein Teambox-Benutzerkonto registriert haben mit {{email}}"
-      problems: "Wenn Sie irgendwelche Probleme haben, kontaktieren Sie uns unter {{support}}"
+      hey: "Bonjour {{user_name}}!"
+      follow_the_link: "Pour <b>terminer de vous enregistrer</b> dans Teambox il vous suffit de suivre ce lien:"
+      log_in: "Entrez dans Teambox maintenant!"
+      plaintext_link: "Si le lien ci-dessus ne fonctionne pas, copiez et collez le lien suivant dans la barre d'adresses de votre navigateur internet:"
+      report_abuse: "Vous recevez ce message car vous vous êtes enregistré dans Teambox avec l'adresse mail {{email}}"
+      problems: "Si vous rencontrez un problème, n'hésitez pas à nous contacter {{support}}"
     reset_password:
-      hey: "Hallo {{user_name}}!"
-      follow_the_link: "Um ein <b>neues Passwort einzugeben</b> für Teambox, melden Sie sich bitte über den folgenden Link an:"
-      log_in: "Melden Sie sich jetzt bei Teambox an!"
-      plaintext_link: "Wenn dieses nicht funktioniert, kopieren Sie den folgenden Link und fügen Sie ihn in die Adresszeile Ihres Browsers ein:"
-      report_abuse: "Sie erhalten dieses Email, weil Sie sichr für ein Teambox-Benutzerkonto registriert haben mit {{email}}"
-      problems: "Wenn Sie irgendwelche Probleme haben, kontaktieren Sie uns unter {{support}}"
+      hey: "Bonjour {{user_name}}!"
+      follow_the_link: "Pour <b>rétablir votre mot de passe</b> dans Teambox il vous suffit de suivre ce lien:"
+      log_in: "Entrez maintenant dans Teambox!"
+      plaintext_link: "Si le lien ci-dessus ne fonctionne pas, copiez et collez le lien suivant dans la barre d'adresses de votre navigateur internet:"
+      report_abuse: "Vous recevez ce message car vous vous êtes enregistré dans Teambox avec l'adresse {{email}}"
+      problems: "Si avez un problème, n'hésitez pas à nous contacter {{support}}"
     notify:
-      project: "Teambox Projekt:"
-      view_online: "Sie können <a href='{{link}}'>diese Konversation online aufrufen</a>, um zu antworten und Dateien hochzuladen."
-      reply: "Sie können auch eine Email senden um auf die Konversation zu antworten."
-      are_watching: " haben diese Konversation abonniert und werden über zukünftige Antworten benachrichtigt."
-      stop_watching: "<a href='{{stop_watching_url}}'>Abbestellen</a> der Email Benachrichtigungen für diesen Baum."
-      notification_settings: "Sie können Ihre <a href='{{url}}'>Benachrichtigungseinstellungen hier</a> für weitere Emails ändern."
-      comment: "Kommentar auf der Projektseite: "
-      conversation: "Konversation:"
-      task: "Aufgabe:"
-      task_list: "Aufgabenliste:"
-      recent_conversations: "Kürzliche Konversationen für {{project}}"
-      comments: "{{number}} Kommentare"
-      assigned_to: "Zugeordnet zu <b>{{user}}</b>"
-      due_on: "Fällig am {{date}}"
-      status: "Status: {{status}}"
-      my_tasks: "Mehr Aufgaben, die Ihnen zugeordnet sind in {{project}}"
+      project: "Projet de Teambox:"
+      view_online: "Vous pouvez <a href='{{link}}'>entrer dans Teambox</a> pour répondre et ajouter des fichiers."
+      reply: "Vous pouvez également répondre à ce mail pour publier une réponse."
+      are_watching: " ont souscrit à la conversation, et recevront des notifications des réponses futures."
+      stop_watching: "<a href='{{stop_watching_url}}'>Stop watching</a> this thread to stop receiving email notifications."
+      notification_settings: "Vous pouvez <a href='{{url}}'>arrêter de suivre cette conversation</a> à tout moment."
+      comment: "Commentaire sur le mur du projet: "
+      conversation: "Conversation:"
+      task: "Tâche:"
+      task_list: "Liste de tâches:"
+      recent_conversations: "conversations récentes dans{{project}}"
+      comments: "{{number}} commentaires"
+      assigned_to: "Assignée à <b>{{user}}</b>"
+      due_on: "Echéance: {{date}}"
+      status: "Etat: {{status}}"
+      my_tasks: "Tes autres tâches dans {{project}}"
     upload:
-      file: "Datei:"
-      uploaded_by: hochgeladen von
-    
+      file: "Fichier:"
+      uploaded_by: ajouté par
+
   weakling:
-    default: muss mindestens 5 Zeichen haben
-    error: zu kurz
-    weak: schwach
-    average: mittel
-    strong: stark
-    
+    default: Doit comporter au moins 5 caractères
+    error: trop court
+    weak: faible
+    average: normal
+    strong: fort
+
   completeness_scoring:
     models:
       user:
         biography_presence:
-          title: 'Geben Sie Ihr Profil ein'
+          title: 'Complétez votre profil'
         biography_length_short:
-          title: 'Erweitern Sie Ihr Profil auf 10 Worte'
+          title: "Jusqu'à 10 mots"
         biography_length_average:
-          title: 'Erweitern Sie Ihr Profil auf 20 Worte'
+          title: "Jusqu'à 20 mots"
         biography_length_long:
-          title: 'Erweitern Sie Ihr Profil auf 30 Worte'
+          title: "Jusqu'à 30 mots"
   form:
-    cancel: Abbrechen
- 
+    cancel: Annuler
+
   page_title:
-    show_projects: "Übersicht"
-    index_task_lists: Alle Aufgabenlisten
-    index_conversations: Alle Konversationen
-    index_pages: Alle Seiten
-    index_uploads: Alle hochgeladenen Dateien
-    create_uploads: Datei hochladen
-    index_projects: Alle Projekte
-    edit_projects: Projekt bearbeiten
-    index_people: Personen
-    new_users: Registrieren
-    create_users: Registrieren
-    edit_users: Bearbeiten
-    welcome_users: Willkommen!
-    new_projects: Neues Projekt
-    archived_task_lists: Archivierte Aufgaben
-    new_example_projects: Erstellen Sie ein Beispiel-Projekt
-    new_conversations: Neue Konversation
- 
+    show_projects: Résumé
+    index_task_lists: Mes tâches
+    index_conversations: Mes conversations
+    index_pages: Mes pages
+    index_uploads: Mes fichiers
+    create_uploads: Ajouter un fichier
+    index_projects: Projets
+    edit_projects: Editer Projet
+    index_people: Personnes
+    new_users: Créer un compte
+    create_users: Créer un compte
+    edit_users: Editer
+    welcome_users: Bienvenue!
+    new_projects: Nouveau projet
+    archived_task_lists: Tâches archivées
+    new_example_projects: Créer un projet-exemple
+    new_conversations: Nouvelle conversation
+
   number:
     # Used in number_with_delimiter()
     # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
@@ -739,18 +741,18 @@ de:
       delimiter: ","
       # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
       precision: 3
- 
+
     # Used in number_to_currency()
     currency:
       format:
         # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
-        format: "%u%n"
-        unit: "Ä"
+        format: "%n%u"
+        unit: "$"
         # These three are to override number.format and are optional
-        separator: ","
-        delimiter: "."
+        separator: "."
+        delimiter: ","
         precision: 2
- 
+
     # Used in number_to_percentage()
     percentage:
       format:
@@ -758,7 +760,7 @@ de:
         # separator:
         delimiter: ""
         # precision:
- 
+
     # Used in number_to_precision()
     precision:
       format:
@@ -766,7 +768,7 @@ de:
         # separator:
         delimiter: ""
         # precision:
- 
+
     # Used in number_to_human_size()
     human:
       format:
@@ -780,173 +782,173 @@ de:
         format: "%n %u"
         units:
           byte:
-            one: "byte"
-            other: "bytes"
-          kb: "KB"
-          mb: "MB"
-          gb: "GB"
-          tb: "TB"
- 
+            one: "octet"
+            other: "octets"
+          kb: "ko"
+          mb: "Mo"
+          gb: "Go"
+          tb: "To"
+
   # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
   datetime:
     distance_in_words:
-      half_a_minute: "halbe Minute"
+      half_a_minute: "30 secondes"
       less_than_x_seconds:
-        one: "weniger als 1 Sekunde"
-        other: "weniger als {{count}} Sekunden"
+        one: "moins d'une seconde"
+        other: "moins de {{count}} secondes"
       x_seconds:
-        one: "1 Sekunde"
-        other: "{{count}} Sekunden"
+        one: "1 seconde"
+        other: "{{count}} secondes"
       less_than_x_minutes:
-        one: "weniger als 1 Minute"
-        other: "weniger als {{count}} Minuten"
+        one: "moins d'une minute"
+        other: "moins de {{count}} minutes"
       x_minutes:
-        one: "1 Minute"
-        other: "{{count}} Minuten"
+        one: "1 minute"
+        other: "{{count}} minutes"
       about_x_hours:
-        one: "circa 1 Stunde"
-        other: "circa {{count}} Stunden"
+        one: "environ 1 heure"
+        other: "environ {{count}} heures"
       x_days:
-        one: "1 Tag"
-        other: "{{count}} Tage"
+        one: "un jour"
+        other: "{{count}} jours"
       about_x_months:
-        one: "circa 1 Monat"
-        other: "circa {{count}} Monate"
+        one: "environ un mois"
+        other: "environ {{count}} mois"
       x_months:
-        one: "1 Monat"
-        other: "{{count}} Monate"
+        one: "1 mois"
+        other: "{{count}} mois"
       about_x_years:
-        one: "circa 1 Jahr"
-        other: "circa {{count}} Jahre"
+        one: "environ 1 an"
+        other: "environ {{count}} ans"
       over_x_years:
-        one: "über 1 Jahr"
-        other: "über {{count}} Jahre"
+        one: "plus d'un an"
+        other: "plus de {{count}} ans"
     prompts:
-      year: "Jahr"
-      month: "Monat"
-      day: "Tag"
-      hour: "Stunde"
+      year: "Year"
+      month: "Month"
+      day: "Day"
+      hour: "Hour"
       minute: "Minute"
-      second: "Sekunde"
- 
+      second: "Seconds"
+
   activerecord:
     models:
-      card: Karte
+      card: Carte
       address: Adresse
       email_address: Email
-      phone_number: Telefon
-      website: Webseite
-      im: IM
-      social_network: Soziales Netzwerk
-      project: Projekt
-      task_list: Aufgabenliste
-      task: Aufgabe
-      comment: Kommentar
-      conversation: Konversation
-      page: Seite
-      divider: Trenner
-      note: Notiz
-      invitation: Einladung
-      upload: Hochladen
+      phone_number: Téléphone
+      website: Site Internet
+      im: Messagerie instantannée
+      social_network: Réseau social
+      project: Projet
+      task_list: Liste de tâches
+      task: Tâche
+      comment: Commentaire
+      conversation: Conversation
+      page: Page
+      divider: Séparateur
+      note: Note
+      invitation: Invitation
+      upload: Archive
     attributes:
       card:
-        street: Straﬂe
-        city: Stadt
-        state: Bundesland
-        zip: PLZ
-        country: Land
+        street: Rue
+        city: Ville
+        state: Département/Province/État
+        zip: Code Postal
+        country: Pays
       email_address:
-        name: Adresse
-        account_type: Typ
+        name: Adresse mail
+        account_type: Type
       phone_number:
-        name: Telefon
-        account_type: Typ
+        name: Numéro
+        account_type: Type
       website:
-        name: Webseite
+        name: Adresse internet
       im:
         name: Adresse
         account_im_type: Service
-        account_type: Typ
+        account_type: Type
       social_network:
         name: Adresse
-        account_network_type: Netzwerk
-        account_type: Typ
+        account_network_type: Réseau
+        account_type: Type
       user:
-        login: Benutzername
-        first_name: Vorname
-        last_name: Nachname
-        biography: Lebenslauf
+        login: Nom d'utilisateur
+        first_name: Prénom
+        last_name: Nom
+        biography: Biographie
         email: Email
-        time_zone: Zeitzone
-        language: Sprache
-        first_day_of_week: Erster Tag der Woche
+        time_zone: Fuseau horaire
+        language: Langue
+        first_day_of_week: Premier jour de la semaine
       project:
-        name: Name
-        permalink: Permalink
+        name: Nom
+        permalink: Adresse internet
       task_list:
-        name: Name
-        start_on: Startdatum
-        finish_on: Enddatum
+        name: Nom
+        start_on: Date de début
+        finish_on: Date de fin
       task:
-        name: Name
-        status: Status
-        due_on: "Fälligkeitsdatum"
+        name: Nom
+        status: Statut
+        due_on: Echéance
       comment:
-        body: "Körper"
-        hours: Stunden
-        status: Status
+        body: Contenu
+        hours: Heures
+        status: Statut
       conversation:
-        name: Name
+        name: Nom
       pages:
-        name: Seite
-        description: Beschreibung
+        name: Nom
+        description: Description
       divider:
-        name: Name
+        name: Nom
       note:
-        name: Name
-        body: "Körper"
+        name: Nom
+        body: Contenu
       invitation:
         email: Email
       upload:
-        description: Beschreibung
+        description: Description
     errors:
       messages:
-        inclusion: "ist nicht in dieser Liste"
-        exclusion: "ist reserviert"
-        invalid: "ist ungültig"
-        confirmation: "entspricht nicht der Bestätigung"
-        accepted: "muss angenommen werden"
-        empty: "darf nicht leer sein"
-        blank: "darf nicht leer sein"
-        too_long: "ist zu lang (Maximum ist {{count}} Zeichen)"
-        too_short: "ist zu kurz (Minimum ist {{count}} Zeichen)"
-        wrong_length: "hat die falsche Länge (sollte {{count}} Zeichen sein)"
-        taken: "ist schon vergeben"
-        not_a_number: "ist keine Nummer"
-        greater_than: "muss gröﬂer sein als {{count}}"
-        greater_than_or_equal_to: "muss gröﬂer oder gleich sein wie {{count}}"
-        equal_to: "muss gleich groﬂ sein wie {{count}}"
-        less_than: "muss kleiner sein als {{count}}"
-        less_than_or_equal_to: "muss kleiner oder gleich sein wie {{count}}"
-        odd: "muss ungerade sein"
-        even: "muss gerade sein"
-        record_invalid: "Überprüfung fehlgeschlagen: {{errors}}"
-       
+        inclusion: "n'est pas inclus(e) dans la liste"
+        exclusion: "n'est pas disponible"
+        invalid: "n'est pas valide"
+        confirmation: "ne concorde pas avec la confirmation"
+        accepted: "doit être accepté(e)"
+        empty: "doit être rempli(e)"
+        blank: "doit être rempli(e)"
+        too_long: "est trop long (pas plus de {{count}} caractères)"
+        too_short: "est trop court (au moins {{count}} caractères)"
+        wrong_length: "ne fait pas la bonne longueur (doit comporter {{count}} caractères)"
+        taken: "n'est pas disponible"
+        not_a_number: "n'est pas un nombre"
+        greater_than: "doit être supérieur à {{count}}"
+        greater_than_or_equal_to: "doit être supérieur ou égal à {{count}}"
+        equal_to: "doit être égal à {{count}}"
+        less_than: "doit être inférieur à {{count}}"
+        less_than_or_equal_to: "doit être inférieur ou égal à {{count}}"
+        odd: "doit être impair"
+        even: "doit être pair"
+        record_invalid: "La validation a échoué : {{errors}}"
+
   date:
-    yesterday: Gestern
+    yesterday: Hier
     formats:
       default: "%Y-%m-%d"
       short: "%b %d"
       long: "%B %d, %Y"
-    order: [ :Tag, :Monat, :Jahr ]
- 
-    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
-    abbr_day_names: [Son, Mon, Die, Mit, Don, Fre, Sam]
- 
-    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
-    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
-    order: [ :Jahr, :Monat, :Tag ]
- 
+    order: [ :day, :month, :year ]
+
+    day_names: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
+    abbr_day_names: [Dim, Lun, Mar, Mer, Jeu, Ven, Sam]
+
+    month_names: [~, Janvier, Février, Mars, Avril, Mai, Juin, Juillet, Août, Septembre, Octobre, Novembre, Décembre]
+    abbr_month_names: [~, Jan, Fév, Mar, Avr, Mai, Juin, Juil, Août, Sep, Oct, Nov, Dec]
+    order: [ :year, :month, :day ]
+
   time:
     formats:
       default: "%a, %d %b %Y %H:%M:%S %z"
@@ -954,11 +956,11 @@ de:
       long: "%B %d, %Y %H:%M"
     am: "am"
     pm: "pm"
- 
+
   support:
     select:
-      prompt: "Bitte wählen Sie"
+      prompt: "Choisissez une option"
     array:
       words_connector: ", "
-      two_words_connector: " und "
-      last_word_connector: ", und "
+      two_words_connector: " et "
+      last_word_connector: " et "
