@@ -2,7 +2,7 @@
 render_tabnav :global do 
   add_tab do |t|
     t.named "#{current_user.login}"
-    t.links_to user_path(:id => current_user.id)
+    t.links_to user_path(current_user)
     t.highlights_on :controller => :users, :action => :show
     t.tab_index = '50'
   end
