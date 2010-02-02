@@ -566,9 +566,9 @@ de:
     strip:
       archived: "Dieses Projekt ist archiviert. Um dieses Projekt zu bearbeiten oder zu kommentieren, müssen Sie es aus dem Archiv holen auf der Seite <a href='{{link}}'>Projekt Einstellungen</a> ####"
     gantt_banner_primer:
-      title: "Es gibt keine fälligen Aufgaben für das GANTT Chart ####"
+      title: "Es gibt keine fälligen Aufgaben für das GANTT Chart"
     upcoming_events_primer:
-      title: "Es gibt keine fälligen Aufgaben für den Kalender ####"
+      title: "Es gibt keine fälligen Aufgaben für den Kalender"
     projects:
       projects: Projekte
     archived_projects:
