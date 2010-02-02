@@ -113,7 +113,7 @@ de:
       avatar:
         field: Ihr Avatar
         presence: "Sie können keine leere Datei hochladen"
-        max_size: "Die Datei ist grösser als {{mb}}"
+        max_size: "Die Datei ist größer als {{mb}}"
         we_have_this_avatar: "Dies ist ihr momentaner Avatar: "
         upload_here_or_at_gravatar: "Sie können hier einen neuen Avator hochladen, oder Sie laden ihren globalen Avatar hoch zu der Adresse <a href='http://gravatar.com'>Gravatar</a>, um ihn für Teambox und für viele andere Webseiten zu benutzen."
       tooltips:
@@ -121,7 +121,7 @@ de:
         first_name: Maximal 20 Zeichen.
         last_name: Maximal 20 Zeichen.
         email: "Geben Sie Ihre echte Email Adresse ein, damit Ihre Team-Mitglieder sie anschreiben können."
-        password: "Eine Kombination aus Grossbuchstaben, Kleinbuchstaben und Zahlen wird für ein sicheres Passwort empfohlen."
+        password: "Eine Kombination aus Großbuchstaben, Kleinbuchstaben und Zahlen wird für ein sicheres Passwort empfohlen."
     new:
       title: Erstellen eines Benutzerkontos
       submit: Erstellen Benutzerkonto
@@ -164,7 +164,7 @@ de:
       spread:
         title: Lieben Sie uns auch?
         reasons: "Wir haben jahrelang an Teambox gearbeitet in der Hoffnung, dass es für Sie nützlich ist. <br/>Wir sind reale Menschen, motivierte Entwickler mit viel Engagement, genau wie Sie!"
-        help: "Sie können <b>uns helfen</b>, indem Sie Ihren Freunden erzählen, wie viel Spass die Arbeit mit Teambox macht auf"
+        help: "Sie können <b>uns helfen</b>, indem Sie Ihren Freunden erzählen, wie viel Spaß die Arbeit mit Teambox macht auf"
         twitter: 'Twitter,'
         facebook: Facebook
         in_your_site: auf Ihrer Webseite!
@@ -320,7 +320,7 @@ de:
       item3: "<b>Formatieren</b>. Jeder Kommentar kann mit Textstilen formatiert werden."
       item4: "<b>Posteingangs-Junkie?</b> Sie können eine Konversation mit einer Email beantworten."
       footer1: "Konversationen sind hervorragend, um <b>ein Design zu bearbeiten</b>, <b>einen Termin zu entscheiden</b> für ein Treffen oder um Neuigkeiten <b>mitzuteilen</b>."
-      footer2: "Durch die Baumanordnung ist es einfach, den zeitlichen Ablauf zu verfolgen, zu sehen welche Dateien gesendet worden sind und die Meinungen jedes Teilnehmers  zu kennen. In Teambox heisst <b>zusammenarbeiten auch kommunizieren</b>."
+      footer2: "Durch die Baumanordnung ist es einfach, den zeitlichen Ablauf zu verfolgen, zu sehen welche Dateien gesendet worden sind und die Meinungen jedes Teilnehmers  zu kennen. In Teambox heißt <b>zusammenarbeiten auch kommunizieren</b>."
     column:
       new_conversation: Neue Konversation
       subscribe: Abonnieren Sie den Nachrichten Feed
@@ -529,10 +529,10 @@ de:
       select_a_file: "Wählen Sie eine Datei"
     index:
       new_file: Eine Datei hochladen
-      max_upload_size: "Max Anhang-Grösse ist {{mb}} Mb"
+      max_upload_size: "Max Anhang-Größe ist {{mb}} Mb"
     form:
       presence: "Sie können keine leere Datei hochladen"
-      max_size: "Dateigrösse darf nicht grösser sein als {{mb}}"
+      max_size: "Dateigröße darf nicht größer sein als {{mb}}"
       select_file: "Datei auswählen"
       description: Titel <i>(optional)</i>
       upload: Datei hochladen
@@ -541,7 +541,7 @@ de:
       create_first: "Laden Sie zuerst Dateine für dieses Projekt hoch!"
       define1: "Hatten Sie jemals Probleme mit dem Freigeben von Dateien für Ihr Team? Teambox macht das Freigeben sehr einfach."
       define2: "Sie können Dateien hier hochladen oder Dateien an Konversationen, Aufgaben oder Seiten anhängen."
-      item1: "<b>Grössere Dateien</b>. Laden Sie Dateien jeder Grösse hoch und vergessen Sie die Grenzen von Emails."
+      item1: "<b>Größere Dateien</b>. Laden Sie Dateien jeder Größe hoch und vergessen Sie die Grenzen von Emails."
       item2: "<b>Versionierung</b>. Laden Sie neue Versionen von Dateien hoch und erkennen Sie alle Änderungen."
       item3: "<b>Immer verfügbar</b>. Dateien stehen für zukünftige Referenzen im Zusammenhang mit dem Projekt."
     upload:
@@ -853,7 +853,7 @@ de:
       upload: Hochladen
     attributes:
       card:
-        street: Strasse
+        street: Straße
         city: Stadt
         state: Bundesland
         zip: PLZ
@@ -926,9 +926,9 @@ de:
         wrong_length: "hat die falsche Länge (sollte {{count}} Zeichen sein)"
         taken: "ist schon vergeben"
         not_a_number: "ist keine Nummer"
-        greater_than: "muss grösser sein als {{count}}"
-        greater_than_or_equal_to: "muss grösser oder gleich sein wie {{count}}"
-        equal_to: "muss gleich gross sein wie {{count}}"
+        greater_than: "muss größer sein als {{count}}"
+        greater_than_or_equal_to: "muss größer oder gleich sein wie {{count}}"
+        equal_to: "muss gleich groß sein wie {{count}}"
         less_than: "muss kleiner sein als {{count}}"
         less_than_or_equal_to: "muss kleiner oder gleich sein wie {{count}}"
         odd: "muss ungerade sein"
