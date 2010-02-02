@@ -31,7 +31,7 @@ class User
 
   def avatar_or_gravatar_url(size)
     if avatar_file_name
-      avatar.url(size)
+      "http://#{APP_CONFIG['app_domain']}#{avatar.url(size)}"
     else
       gravatar(size)
     end
