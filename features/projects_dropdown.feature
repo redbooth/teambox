@@ -1,4 +1,3 @@
-@wip
 Feature Projects Dropdown
  Background:
    Given I am logged in as mislav
