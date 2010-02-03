@@ -9,6 +9,13 @@ Given /^the task called "([^\"]*)" belongs to the task list called "([^\"]*)"$/ 
   Task.find_by_name(task_name).update_attribute(:task_list, task_list)
 end
 
+Given /^the task called "([^\"]*)" belongs to the project called "([^\"]*)"$/ do |task_name, project_name|
+  Given %(there is a task called "#{task_name}")
+  Given %(there is a project called "#{project_name}")
+  project = Project.find_by_name(project_name)
+  Task.find_by_name(task_name).update_attribute(:project, project)
+end
+
 Given /^the task called "([^\"]*)" is due today$/ do |name|
   Given %(there is a task called "#{name}")
   Task.find_by_name(name).update_attribute(:due_on, Date.today)

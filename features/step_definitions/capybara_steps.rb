@@ -15,7 +15,7 @@ end
 When /^I press "([^\"]*)" within "([^\"]*)"$/ do |button,selector|
   within(:css,selector) do
     click_button(button)
-  end  
+  end
 end
 
 When /^I click the element "([^\"]*)"$/ do |element|
@@ -155,6 +155,7 @@ Then /^I should not see "([^\"]*)"$/ do |text|
 end
 
 Then /^I should not see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
+  debugger
   within(:css,selector) do
     page.should_not have_content(text)
   end

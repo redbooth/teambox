@@ -23,7 +23,7 @@ module NavigationHelpers
       project_path(Project.find_by_name($1))
     when /the conversations page/
       project_conversations_path(@current_project)
-    when /the task lists page/
+    when /the task lists page$/
       project_task_lists_path(@current_project)
     when /the people page/
       project_people_path(@current_project)
