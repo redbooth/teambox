@@ -1,19 +1,22 @@
 #task_lists
   :clear both
-  
+
 div.task_list_wrap_reorder
   :margin-top 0px
-  
+
 div#sortable_task_lists
   :margin 10px 0px
-      
-a.new_task_link
+
+=task_panel_link
   :display block
   :background rgb(240,240,240)
   :font-size 12px
   :color rgb(120,120,120)
   :padding 4px
     :top 0px
+
+a.new_task_link
+  +task_panel_link
   :border solid 1px rgb(210,210,210)
     :top none
   :-moz-border-radius
@@ -21,7 +24,10 @@ a.new_task_link
     :bottomright 5px
   :-webkit-border-bottom-left-radius 5px
   :-webkit-border-bottom-right-radius 5px
-  
+
+a.show_archived_tasks_link
+  +task_panel_link
+
 span.task_status, span.current_task_status
   :padding 0 3px
   :text-transform uppercase
@@ -40,10 +46,13 @@ span.task_status, span.current_task_status
 .task_status_rejected
   :background rgb(200,0,0)
 
+.tasks
+  .archived_task
+    :color rgb(120,120,120)
 
 .archive
   :background rgb(255,255,200)
-  :border 1px rgb(220,220,150) solid  
+  :border 1px rgb(220,220,150) solid
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
   :padding 20px

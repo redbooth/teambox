@@ -10051,7 +10051,16 @@ Event.addBehavior({
     var form = e.findElement("form");
     form.up().down(".task_header").show();
     form.hide();
+  },
+  ".show_archived_tasks_link:click": function(e) {
+    e.findElement(".tasks").select(".archived_task").each(function(task){
+      task.toggle();
+    })
+    var link_text = $(this).innerHTML;
+    $(this).update(link_text == "Hide archived tasks" ? "Show archived tasks" : "Hide archived tasks");
+    e.stop();
   }
+
 });
 
 Event.addBehavior.reassignAfterAjax = true;

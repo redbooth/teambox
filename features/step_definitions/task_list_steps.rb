@@ -9,17 +9,25 @@ Given /^the task list called "([^\"]*)" belongs to the project called "([^\"]*)"
   TaskList.find_by_name(task_list_name).update_attribute(:project, project)
 end
 
+When /^I follow "([^\"]*)" in the "([^\"]*)" task list panel$/ do |link_text, task_list_name|
+  task_list = TaskList.find_by_name(task_list_name)
+  project = task_list.project
+  When %(I follow "#{link_text}" within "#project_#{project.id}_task_list_#{task_list.id}_with_tasks")
+end
+
 Then /^I should see the task called "([^\"]*)" in the "([^\"]*)" task list panel$/ do |task_name, task_list_name|
   task = Task.find_by_name(task_name)
   task_list = TaskList.find_by_name(task_list_name)
   project = task_list.project
-  page.should have_css("#project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}_item")
+  sleep(1)
+  page.should have_xpath(%(//*[@id = "project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}_item"][not(contains(@style,'display: none'))]))
 end
 
 Then /^the task called "([^\"]*)" in the "([^\"]*)" task list panel should be hidden$/ do |task_name, task_list_name|
   task = Task.find_by_name(task_name)
   task_list = TaskList.find_by_name(task_list_name)
   project = task_list.project
+  sleep(1)
   page.should have_xpath(%(//*[@id = "project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}_item"][contains(@style,'display: none')]))
 end
 
@@ -27,5 +35,6 @@ Then /^I should not see the task called "([^\"]*)" in the "([^\"]*)" task list p
   task = Task.find_by_name(task_name)
   task_list = TaskList.find_by_name(task_list_name)
   project = task_list.project
+  sleep(1)
   page.should_not have_css("#project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}_item")
 end

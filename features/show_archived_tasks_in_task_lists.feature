@@ -23,3 +23,6 @@ Feature: Show archived tasks in task lists
     When I go to the list of tasks page of the project called "Market Teambox"
     Then I should see the task called "Tell the tech bloggers" in the "This week" task list panel
     And the task called "Tell my friends" in the "This week" task list panel should be hidden
+    When I follow "Show archived tasks" in the "This week" task list panel
+    Then I should see the task called "Tell the tech bloggers" in the "This week" task list panel
+    And I should see the task called "Tell my friends" in the "This week" task list panel
