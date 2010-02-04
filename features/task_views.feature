@@ -42,3 +42,4 @@ Feature: See tasks in different, common groupings
     And I should see the task called "Tell my friends" in the "This week" task list panel
     And I should see the task called "Post on Digg and Hacker News" in the "This week" task list panel
     And I should see the task called "Beg Apple to approve of the iPhone app" in the "Later" task list panel
+    And I should see "Unarchived Tasks"
