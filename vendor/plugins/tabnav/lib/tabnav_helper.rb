@@ -48,9 +48,11 @@ module TabnavHelper
     @_tabnav.tabs.each do |tab|
 
       if tab.disabled?
-        tab.html[:class] = 'disabled'
+        tab.html[:class] ||= ""
+        tab.html[:class] += ' disabled'
       elsif tab.highlighted?(params)
-        tab.html[:class] = 'active'
+        tab.html[:class] ||= ""
+        tab.html[:class] += ' active'
       end
 
       li_options = {} 
