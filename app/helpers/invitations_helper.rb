@@ -71,9 +71,7 @@ module InvitationsHelper
       :url => create_project_invitation_path(project,user),
       :loading => invite_user_loading(project,user),
       :html => {
-        :method => :create,
-        :id => invitation_id(:item,project,user),
-        :class => 'invite_user_link' }
+        :method => :create }
   end
   
   def invite_user_loading(project,user)

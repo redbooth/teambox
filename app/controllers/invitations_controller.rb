@@ -1,5 +1,6 @@
 class InvitationsController < ApplicationController
-
+  before_filter :admins_project?, :except => [:index, :accept, :decline]
+              
   def index
     if @current_project
       @invitations = @current_project.invitations
@@ -20,7 +21,7 @@ class InvitationsController < ApplicationController
   
   def create
     if params[:login] # using a link to invite directly a user
-      @user = User.find(params[:login])
+      @user = User.find_by_login(params[:login])
       user_or_email = @user.login
     elsif params[:invitation]
       user_or_email = params[:invitation][:user_or_email]
@@ -89,4 +90,15 @@ class InvitationsController < ApplicationController
       end
     end
 
+    def admins_project?
+      if !(@current_project.owner?(current_user) or @current_project.admin?(current_user))
+          respond_to do |f|
+            flash[:error] = "You are not allowed to do that!"
+            f.html { redirect_to project_path(@current_project) }
+          end
+        return false
+      end
+      
+      true
+    end
 end
