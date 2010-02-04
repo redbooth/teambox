@@ -625,6 +625,7 @@ es:
       all_tasks: Todas
       unarchived_tasks: "Unarchived Tasks"
       my_tasks: "Mías ({{count}})"
+      everybodys_tasks: "Everybody's tasks"
       archived_tasks: "Archivadas ({{count}})"
     footer:
       support: ¿Problemas? ¡Envía feedback!

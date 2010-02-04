@@ -1,3 +1,4 @@
+<% num_of_my_tasks = project.tasks.unarchived.find(:all, :conditions => { :assigned_id => project.people.find_by_user_id(current_user.id).id} ).size %>
 <div class="task_navigation"><%
 render_tabnav :user do
 
@@ -7,9 +8,9 @@ render_tabnav :user do
       t.highlights_on :controller => 'task_lists', :action => 'index', :sub_action => nil
     end
 
-    add_tab(:html => { :id => "global_show_my_tasks_link" }) do |t|
+    add_tab(:html => { :id => "global_show_my_tasks_link", :show => 'mine' }) do |t|
       ## This way I'm grabbing count is obviously gross and needs to be cleaned up.
-      t.named t('.my_tasks', :count => project.tasks.unarchived.find(:all, :conditions => { :assigned_id => project.people.find_by_user_id(current_user.id).id} ).size)
+      t.named t('.my_tasks', :count => num_of_my_tasks)
       t.links_to project_my_task_lists_path(project)
       t.highlights_on :controller => 'task_lists', :action => 'index', :sub_action => 'mine'
     end
@@ -25,4 +26,6 @@ render_tabnav :user do
 end
 %>
 <%= content_tag "div", [t('.all_tasks'), t('.unarchived_tasks')].join("##"), :id => "global_show_all_tasks_link_texts", :style => "display:none" %>
+<%= content_tag "div", [t('.my_tasks', :count => num_of_my_tasks), t('.everybodys_tasks')].join("##"), :id => "global_show_my_tasks_link_texts", :style => "display:none" %>
+
 <div class="clear"></div></div>

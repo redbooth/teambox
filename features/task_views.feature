@@ -1,4 +1,3 @@
-@wip
 Feature: See tasks in different, common groupings
   In order to see just the tasks the user needs and quickly
   As a Teambox developer
@@ -33,13 +32,34 @@ Feature: See tasks in different, common groupings
     And the task called "Beg Apple to approve of the iPhone app" is rejected
     And I am logged in as "balint"
     When I go to the list of tasks page of the project called "Market Teambox"
-    Then I should see the task called "Tell the tech bloggers" in the "This week" task list panel
+    Then I should see the following tasks:
+      | task_list_name   | task_name                              |
+      | This week        | Tell the tech bloggers                 |
+      | This week        | Post on Digg and Hacker News           |
+      | Later            | Beg Apple to approve of the iPhone app |
     And the task called "Tell my friends" in the "This week" task list panel should be hidden
-    And I should see the task called "Post on Digg and Hacker News" in the "This week" task list panel
-    And I should see the task called "Beg Apple to approve of the iPhone app" in the "Later" task list panel
     When I follow "All Tasks"
-    Then I should see the task called "Tell the tech bloggers" in the "This week" task list panel
-    And I should see the task called "Tell my friends" in the "This week" task list panel
-    And I should see the task called "Post on Digg and Hacker News" in the "This week" task list panel
-    And I should see the task called "Beg Apple to approve of the iPhone app" in the "Later" task list panel
+    Then I should see the following tasks:
+      | task_list_name   | task_name                              |
+      | This week        | Tell my friends                        |
+      | This week        | Tell the tech bloggers                 |
+      | This week        | Post on Digg and Hacker News           |
+      | Later            | Beg Apple to approve of the iPhone app |
     And I should see "Unarchived Tasks"
+
+  @wip
+  Scenario: See only my tasks
+    Given I am logged in as "balint"
+    And the task called "Tell my friends" is assigned to me
+    And the task called "Post on Digg and Hacker News" is assigned to me
+    When I go to the list of tasks page of the project called "Market Teambox"
+    And I follow "My 2 Tasks"
+    Then I should see the following tasks:
+      | task_list_name   | task_name                              |
+      | This week        | Tell my friends                        |
+      | This week        | Post on Digg and Hacker News           |
+    And the following tasks should be hidden:
+      | task_list_name   | task_name                              |
+      | This week        | Tell the tech bloggers                 |
+      | Later            | Beg Apple to approve of the iPhone app |
+    And I should see "Everybody's tasks"
