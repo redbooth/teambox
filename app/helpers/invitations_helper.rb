@@ -44,7 +44,7 @@ module InvitationsHelper
   end
 
   def invite_form(project,invitation)
-    if project.editable?(current_user)
+    if project.admin?(current_user)
       render :partial => 'invitations/new',
         :locals => {
           :project => project,
