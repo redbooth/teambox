@@ -622,7 +622,8 @@ en:
       profile_picture: Profile Picture
       notifications: Notifications
     task_navigation:
-      all_tasks: All Tasks
+      all_tasks: "All Tasks"
+      unarchived_tasks: "Unarchived Tasks"
       my_tasks: "My {{count}} Tasks"
       archived_tasks: "All {{count}} Archived Tasks"
     footer:

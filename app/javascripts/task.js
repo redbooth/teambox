@@ -145,10 +145,12 @@ Event.addBehavior({
     $(this).update(link_text == "Hide archived tasks" ? "Show archived tasks" : "Hide archived tasks");
     e.stop();
   },
-  ".show_all_tasks_link:click": function(e) {
+  "#global_show_all_tasks_link:click": function(e) {
     $$(".archived_task").each(function(task) { task.toggle() });
-    var link_text = $(this).innerHTML;
-    $(this).update(link_text == "All Tasks" ? "Unarchived Tasks" : "All Tasks");    
+    var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
+    var currentText = $(this).innerHTML;
+    var nextIndex = (linkTexts.indexOf(currentText) + 1) % linkTexts.length;
+    $(this).update(linkTexts[nextIndex]);
     e.stop();
   }
 
