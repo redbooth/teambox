@@ -126,7 +126,7 @@ class ProjectsController < ApplicationController
     end
     
     def can_modify?
-      if !@current_project.admin?(current_user)
+      if !(@current_project.owner?(current_user) or @current_project.admin?(current_user))
           respond_to do |f|
             flash[:error] = "You are not allowed to do that!"
             f.html { redirect_to projects_path }
