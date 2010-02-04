@@ -141,8 +141,10 @@ Event.addBehavior({
     e.findElement(".tasks").select(".archived_task").each(function(task){
       task.toggle();
     })
-    var link_text = $(this).innerHTML;
-    $(this).update(link_text == "Hide archived tasks" ? "Show archived tasks" : "Hide archived tasks");
+    var linkTexts = $($(this).readAttribute('texts_id')).innerHTML.split("##");
+    var currentText = $(this).innerHTML;
+    var nextIndex = (linkTexts.indexOf(currentText) + 1) % linkTexts.length;
+    $(this).update(linkTexts[nextIndex]);
     e.stop();
   },
   "#global_show_all_tasks_link:click": function(e) {

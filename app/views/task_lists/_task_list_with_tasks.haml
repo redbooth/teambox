@@ -1,4 +1,5 @@
 - if defined?(task_list_with_tasks_counter) && task_list_with_tasks_counter.zero?
+  = content_tag "div", [t('tasks.link.show_archived_tasks'), t('tasks.link.hide_archived_tasks')].join("##"), :id => "show_archived_tasks_link_texts", :style => "display:none"
   - content_for :js_templates do
     = "document.observe(\"dom:loaded\", function() { Task.make_all_sortable() });"
 - tasks = assign_tasks(project,task_list,'all_with_archived')
@@ -8,7 +9,7 @@
     .tasks_wrap
       .tasks{ :id => task_list_id(:the_tasks,project,task_list), :class => "#{ 'read_only' unless task_list_editable?(task_list,current_user,sub_action)}", :reorder_url => project_reorder_tasks_path(project, task_list) }
         = list_tasks(project,task_list,tasks,current_target)
-        = link_to "Show archived tasks", project_archived_task_lists_path(project), :class => "show_archived_tasks_link"
+        = link_to "Show archived tasks", "#", :class => "show_archived_tasks_link", :texts_id => "show_archived_tasks_link_texts"
     - if task_list_editable?(task_list,current_user,sub_action)
       = task_link(project,task_list)
       = task_form(project,task_list,task_list.new_task(current_user))
