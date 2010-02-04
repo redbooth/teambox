@@ -45,8 +45,8 @@ Given /^I have no tasks assigned to me$/ do
   @current_user.assigned_tasks(:all).each { |task| task.destroy }
 end
 
-Given /^the task called "([^\"]*)" is open$/ do |name|
-  Task.find_by_name(name).update_attribute(:status, Task::STATUSES[:open])
+Given /^the task called "([^\"]*)" is (new|hold|open|resolved|rejected)$/ do |name, status|
+  Task.find_by_name(name).update_attribute(:status, Task::STATUSES[status.to_sym])
 end
 
 Given /^the task called "([^\"]*)" is not archived$/ do |name|
