@@ -5,6 +5,10 @@ describe Invitation do
     before do
       @project = Factory.create(:project)
       @inviter = Factory.create(:user)
+      @invitee = Factory.create(:user)
+      @observer = Factory.create(:user)
+      @project.add_user(@inviter).update_attribute(:role, Person::ROLES[:admin])
+      @project.add_user(@observer).update_attribute(:role, Person::ROLES[:observer])
     end
 
     it "should initialize properly entering non-existing users' emails" do
@@ -78,8 +82,13 @@ describe Invitation do
     end
 
     it "should be valid if it's a valid login" do
-      invitation = @project.invitations.new(:user_or_email => "sigmund_freud", :user => @inviter)
+      invitation = @project.invitations.new(:user_or_email => @invitee.login, :user => @inviter)
       invitation.should be_valid
+    end
+    
+    it "should be invalid if it's an invalid login" do
+      invitation = @project.invitations.new(:user_or_email => "mokngiodngiojdiogjvdkjvg", :user => @inviter)
+      invitation.should_not be_valid
     end
 
     it "should be valid if it's a valid email" do
@@ -102,6 +111,19 @@ describe Invitation do
 
     it "should not invite people already in the project when giving their username" do
       invitation = @project.invitations.create(:user_or_email => @project.users.first.login, :user => @inviter)
+      invitation.should_not be_valid
+    end
+    
+    it "should be not valid if an observer creates it" do
+      invitation = @project.invitations.new(:user_or_email => "sigmund.freud@gmail.com", :user => @observer)
+      invitation.should_not be_valid
+    end
+    
+    it "should be not valid if a deleted user creates it" do
+      uname = @inviter.login
+      @inviter.destroy
+      @inviter = User.find_by_login(uname)
+      invitation = @project.invitations.new(:user_or_email => "sigmund.freud@gmail.com", :user => @inviter)
       invitation.should_not be_valid
     end
   end

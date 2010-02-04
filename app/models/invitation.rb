@@ -5,48 +5,54 @@ class Invitation < RoleRecord
   belongs_to :project
   belongs_to :invited_user, :class_name => 'User'
   
-  attr_accessor :user_or_email
+  attr_reader :user_or_email
   attr_accessible :user_or_email, :user, :project
   
-  validate :check_project
+  validate :check_invite
   
-  def check_project
+  def check_invite
     if project.nil?
       @errors.add_to_base('Must belong to a project')
       return
     end
     @errors.add_to_base('Must belong to a valid user') if user.nil? or user.deleted? or !project.admin?(user)
-  end
-
-  validates_each :user_or_email do |record, attr, value|
-    invited_user ||= User.find_by_username_or_email value
     
-    if invited_user
-      # existing Teambox user
-      record.invited_user_id = invited_user.id
-      if Person.exists?(:project_id => record.project_id, :user_id => record.invited_user_id)
-        record.errors.add attr, 'is already a member of the project'
-      elsif Invitation.exists?(:project_id => record.project_id, :invited_user_id => invited_user.id)
-        record.errors.add attr, 'already has a pending invitation'
-      else
-        record.invited_user = invited_user
-        record.email = invited_user.email
-      end
-    else
-      # unexisting Teambox user
-      if value =~ Authentication.login_regex || value =~ Authentication.email_regex
-        if Invitation.exists?(:project_id => record.project_id, :email => value)
-          record.errors.add attr, 'already has a pending invitation'
-        else
-          record.invited_user = nil
-          record.email = value
-        end
-      else
-        record.errors.add attr, 'is not a valid username or email'
+    # Check user
+    check_user = invited_user
+    unless check_user.nil?
+      if Person.exists?(:project_id => project_id, :user_id => check_user.id)
+        @errors.add :user_or_email, 'is already a member of the project'
+        return
+      elsif Invitation.exists?(:project_id => project_id, :invited_user_id => check_user.id)
+        @errors.add :user_or_email, 'already has a pending invitation'
+        return
       end
     end
-    # SHOULD ONLY BE ABLE TO INVITE TO PROJECTS WHERE THE INVITING USER IS ALLOWED
-    # TODO: IMPLEMENT User#can_invite?(project) AND USE IT HERE
+    
+    # Check email (for non-existent users)
+    if check_user.nil?
+      if email =~ Authentication.email_regex
+        # One final check: do we have an invite for this email?
+        if Invitation.exists?(:project_id => project_id, :email => email)
+          @errors.add :user_or_email, 'already has a pending invitation'
+        end
+      else
+        @errors.add :user_or_email, 'is not a valid username or email'
+      end
+    end
+  end
+  
+  def user_or_email=(value)
+    user_to_invite = User.find_by_username_or_email value
+    
+    if user_to_invite
+      self.email = user_to_invite.email
+    else
+      self.email = value
+    end
+    
+    self.invited_user = user_to_invite
+    @user_or_email = value
   end
   
   def send_email
