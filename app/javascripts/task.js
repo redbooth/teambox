@@ -142,19 +142,15 @@ Event.addBehavior({
       task.toggle();
     })
     var linkTexts = $($(this).readAttribute('texts_id')).innerHTML.split("##");
-    var currentText = $(this).innerHTML;
-    var nextIndex = (linkTexts.indexOf(currentText) + 1) % linkTexts.length;
-    $(this).update(linkTexts[nextIndex]);
+    $(this).update($(this).nextText(linkTexts));
     e.stop();
   },
   "#global_show_all_tasks_link:click": function(e) {
     $$(".archived_task").each(function(task) { task.toggle() });
     var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
-    var currentText = $(this).innerHTML;
-    var nextIndex = (linkTexts.indexOf(currentText) + 1) % linkTexts.length;
-    $(this).update(linkTexts[nextIndex]);
+    $(this).update($(this).nextText(linkTexts));
     e.stop();
-  }
+  },
 
 });
 

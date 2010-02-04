@@ -9400,6 +9400,12 @@ Element.addMethods({
       previewBox.blindUp({duration: 0.15});
     return element;
   },
+  nextText: function(element, texts) {
+    element = $(element);
+    var currentText = element.innerHTML;
+    var nextIndex = (texts.indexOf(currentText) + 1) % texts.length;
+    return texts[nextIndex];
+  },
 });
 
 Ajax.PeriodicalFormUpdater = Class.create(Ajax.PeriodicalUpdater, {
@@ -10056,21 +10062,16 @@ Event.addBehavior({
     e.findElement(".tasks").select(".archived_task").each(function(task){
       task.toggle();
     })
-    console.log("clicked!");
     var linkTexts = $($(this).readAttribute('texts_id')).innerHTML.split("##");
-    var currentText = $(this).innerHTML;
-    var nextIndex = (linkTexts.indexOf(currentText) + 1) % linkTexts.length;
-    $(this).update(linkTexts[nextIndex]);
+    $(this).update($(this).nextText(linkTexts));
     e.stop();
   },
   "#global_show_all_tasks_link:click": function(e) {
     $$(".archived_task").each(function(task) { task.toggle() });
     var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
-    var currentText = $(this).innerHTML;
-    var nextIndex = (linkTexts.indexOf(currentText) + 1) % linkTexts.length;
-    $(this).update(linkTexts[nextIndex]);
+    $(this).update($(this).nextText(linkTexts));
     e.stop();
-  }
+  },
 
 });
 

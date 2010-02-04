@@ -22,7 +22,7 @@ Event.addBehavior({
   },
   ".remove:mouseout": function(e){
     image_source = $(this).src
-    $(this).src = image_source.sub(/remove.*\.png/,'remove.png')    
+    $(this).src = image_source.sub(/remove.*\.png/,'remove.png')
   },
   ".drag:mouseover": function(e){
     image_source = $(this).src
@@ -30,7 +30,7 @@ Event.addBehavior({
   },
   ".drag:mouseout": function(e){
     image_source = $(this).src
-    $(this).src = image_source.sub(/drag.*\.png/,'drag.png')    
+    $(this).src = image_source.sub(/drag.*\.png/,'drag.png')
   },
   ".pencil:mouseover": function(e){
     image_source = $(this).src
@@ -38,7 +38,7 @@ Event.addBehavior({
   },
   ".pencil:mouseout": function(e){
     image_source = $(this).src
-    $(this).src = image_source.sub(/pencil.*\.jpg/,'pencil.jpg')    
+    $(this).src = image_source.sub(/pencil.*\.jpg/,'pencil.jpg')
   },
   ".trash:mouseover": function(e){
     image_source = $(this).src
@@ -46,7 +46,7 @@ Event.addBehavior({
   },
   ".trash:mouseout": function(e){
     image_source = $(this).src
-    $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')    
+    $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')
   },
   ".add_nested_item:click": function(e){
     link = $(this);
@@ -59,7 +59,7 @@ Event.addBehavior({
     target = link.href.replace(/.*#/, '.')
     link.up(target).hide();
     if(hidden_input = link.previous("input[type=hidden]")) hidden_input.value = '1'
-  }      
+  }
 });
 
 Element.addMethods({
@@ -98,7 +98,7 @@ Element.addMethods({
     var previewBox = form.down('.previewBox');
     var updater = null;
     var updaterCallback = function(transport) {
-      if (block.readAttribute('removing') == '1') {	
+      if (block.readAttribute('removing') == '1') {
         block.writeAttribute('removing', '0');
         updater.stop();
       } else {
@@ -111,8 +111,8 @@ Element.addMethods({
       }
     }
 
-    updater = new Ajax.PeriodicalFormUpdater(previewBox, form, form.readAttribute('preview'), { 
-      method: 'post', 
+    updater = new Ajax.PeriodicalFormUpdater(previewBox, form, form.readAttribute('preview'), {
+      method: 'post',
       frequency: 2,
       decay: 2,
       onSuccess: updaterCallback,
@@ -142,6 +142,12 @@ Element.addMethods({
       previewBox.blindUp({duration: 0.15});
     return element;
   },
+  nextText: function(element, texts) {
+    element = $(element);
+    var currentText = element.innerHTML;
+    var nextIndex = (texts.indexOf(currentText) + 1) % texts.length;
+    return texts[nextIndex];
+  },
 });
 
 Ajax.PeriodicalFormUpdater = Class.create(Ajax.PeriodicalUpdater, {
@@ -158,15 +164,15 @@ Ajax.PeriodicalFormUpdater = Class.create(Ajax.PeriodicalUpdater, {
 
 Project = {
   valid_url: function(){
-    var title = $F('project_permalink'); 
-    var class_name = ''; 
+    var title = $F('project_permalink');
+    var class_name = '';
     if(title.match(/^[a-z0-9_\-\.]{5,}$/))
       class_name = 'good'
     else
       class_name = 'bad'
-      
-    $('handle').className = class_name; 
-    Element.update('handle',title) 
+
+    $('handle').className = class_name;
+    Element.update('handle',title)
   }
 }
 
