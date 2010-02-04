@@ -334,7 +334,7 @@ de:
     short_conversation:
       comment: Kommentar
       comments: Kommentare
-  
+
   tasks:
     errors:
       name:
@@ -560,11 +560,11 @@ de:
       title: Anmelden
       video: "Um was geht es in Teambox?"
       submit: Anmelden
- 
+
   email:
     user:
       welcome: Willkommen zu Teambox!
- 
+
   shared:
     strip:
       archived: "Dieses Projekt ist archiviert. Um dieses Projekt zu bearbeiten oder zu kommentieren, müssen Sie es aus dem Archiv holen auf der Seite <a href='{{link}}'>Projekt Einstellungen</a>"
@@ -622,7 +622,8 @@ de:
       profile_picture: Profil Bild
       notifications: Benachrichtigungen
     task_navigation:
-      all_tasks: Alle Aufgaben
+      all_tasks: "Alle Aufgaben"
+      unarchived_tasks: "Unarchived Tasks"
       my_tasks: "Meine {{count}} Aufgaben"
       archived_tasks: "Alle {{count}} archivierten Aufgaben"
     footer:
@@ -643,7 +644,7 @@ de:
       chrome: "Chrome,"
       firefox: "Firefox"
       safari: "Safari"
- 
+
   emailer:
     common:
       do_not_answer: "Antworten Sie nicht auf diese Email."
@@ -691,14 +692,14 @@ de:
     upload:
       file: "Datei:"
       uploaded_by: hochgeladen von
-    
+
   weakling:
     default: muss mindestens 5 Zeichen haben
     error: zu kurz
     weak: schwach
     average: mittel
     strong: stark
-    
+
   completeness_scoring:
     models:
       user:
@@ -712,7 +713,7 @@ de:
           title: 'Erweitern Sie Ihr Profil auf 30 Worte'
   form:
     cancel: Abbrechen
- 
+
   page_title:
     show_projects: "Übersicht"
     index_task_lists: Alle Aufgabenlisten
@@ -731,7 +732,7 @@ de:
     archived_task_lists: Archivierte Aufgaben
     new_example_projects: Erstellen Sie ein Beispiel-Projekt
     new_conversations: Neue Konversation
- 
+
   number:
     # Used in number_with_delimiter()
     # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
@@ -742,7 +743,7 @@ de:
       delimiter: ","
       # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
       precision: 3
- 
+
     # Used in number_to_currency()
     currency:
       format:
@@ -753,7 +754,7 @@ de:
         separator: ","
         delimiter: "."
         precision: 2
- 
+
     # Used in number_to_percentage()
     percentage:
       format:
@@ -761,7 +762,7 @@ de:
         # separator:
         delimiter: ""
         # precision:
- 
+
     # Used in number_to_precision()
     precision:
       format:
@@ -769,7 +770,7 @@ de:
         # separator:
         delimiter: ""
         # precision:
- 
+
     # Used in number_to_human_size()
     human:
       format:
@@ -789,7 +790,7 @@ de:
           mb: "MB"
           gb: "GB"
           tb: "TB"
- 
+
   # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
   datetime:
     distance_in_words:
@@ -831,7 +832,7 @@ de:
       hour: "Stunde"
       minute: "Minute"
       second: "Sekunde"
- 
+
   activerecord:
     models:
       card: Karte
@@ -934,7 +935,7 @@ de:
         odd: "muss ungerade sein"
         even: "muss gerade sein"
         record_invalid: "Überprüfung fehlgeschlagen: {{errors}}"
-       
+
   date:
     yesterday: Gestern
     formats:
@@ -942,14 +943,14 @@ de:
       short: "%b %d"
       long: "%B %d, %Y"
     order: [ :Tag, :Monat, :Jahr ]
- 
+
     day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
     abbr_day_names: [Son, Mon, Die, Mit, Don, Fre, Sam]
- 
+
     month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
     abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
     order: [ :Jahr, :Monat, :Tag ]
- 
+
   time:
     formats:
       default: "%a, %d %b %Y %H:%M:%S %z"
@@ -957,7 +958,7 @@ de:
       long: "%B %d, %Y %H:%M"
     am: "am"
     pm: "pm"
- 
+
   support:
     select:
       prompt: "Bitte wählen Sie"

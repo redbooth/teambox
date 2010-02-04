@@ -218,8 +218,8 @@ fr:
         title: "{{name}}"
         description: "Actualités récentes dans le projet {{name}}"
     fields:
-      archiving: Archiver ce projet 
-      forever: Supprimer de façon définitive ce projet 
+      archiving: Archiver ce projet
+      forever: Supprimer de façon définitive ce projet
       owner: Propriétaire
       owner_description: "Le propriétaire du projet est la seule personne qui peut modifier les paramètres de ce projet. Une fois que vous aurez transférer le projet à quelqu’un d’autre, vous ne serez plus autorisé à modifier les paramètres du projet."
       name: Nom
@@ -623,6 +623,7 @@ fr:
       notifications: Notifications
     task_navigation:
       all_tasks: Toutes
+      unarchived_tasks: "Unarchived Tasks"
       my_tasks: "Mes tâches ({{count}})"
       archived_tasks: "Archivées ({{count}})"
     footer:
