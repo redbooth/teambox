@@ -1,5 +1,7 @@
 class User
   
+  attr_accessor :performing_reset
+  
   def send_activation_email
     self.generate_login_code!
     Emailer.deliver_confirm_email self

@@ -38,7 +38,7 @@ class User
   end
 
   def password_required?
-    crypted_password.blank? || !password.blank? || ResetPassword.exists?(:user_id => self.id)
+    crypted_password.blank? || !password.blank? || performing_reset
   end
 
 end

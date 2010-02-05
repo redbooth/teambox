@@ -45,10 +45,11 @@ class ResetPasswordsController < ApplicationController
 
   def update_after_forgetting
     @reset_password = ResetPassword.find_by_reset_code(params[:reset_code])
-
+    
     respond_to do |format|
       unless @reset_password.nil?
         @user = @reset_password.user
+        @user.performing_reset = true
         if @user.update_attributes(params[:user])
           @reset_password.destroy
           Emailer.deliver_reset_password(@user)
