@@ -1,3 +1,4 @@
+@wip
 Feature: See tasks in different, common groupings
   In order to see just the tasks the user needs and quickly
   As a Teambox developer
@@ -7,22 +8,16 @@ Feature: See tasks in different, common groupings
     Given a project exists with name: "Market Teambox"
     And a confirmed user exists with login: "balint"
     And "balint" is in the project called "Market Teambox"
-    And a task list exists with name: "This week"
-    And the task list called "This week" belongs to the project called "Market Teambox"
-    And a task list exists with name: "Later"
-    And the task list called "Later" belongs to the project called "Market Teambox"
-    And a task exists with name: "Tell my friends"
-    And a task exists with name: "Tell the tech bloggers"
-    And a task exists with name: "Post on Digg and Hacker News"
-    And a task exists with name: "Beg Apple to approve of the iPhone app"
-    And the task called "Tell my friends" belongs to the task list called "This week"
-    And the task called "Tell the tech bloggers" belongs to the task list called "This week"
-    And the task called "Post on Digg and Hacker News" belongs to the task list called "This week"
-    And the task called "Beg Apple to approve of the iPhone app" belongs to the task list called "Later"
-    And the task called "Tell my friends" belongs to the project called "Market Teambox"
-    And the task called "Tell the tech bloggers" belongs to the project called "Market Teambox"
-    And the task called "Post on Digg and Hacker News" belongs to the project called "Market Teambox"
-    And the task called "Beg Apple to approve of the iPhone app" belongs to the project called "Market Teambox"
+    And the following task lists with associations exist:
+      | name      | project        |
+      | This week | Market Teambox |
+      | Later     | Market Teambox |
+    And the following tasks with associations exist:
+      | name                                   | task_list | project        |
+      | Tell my friends                        | This week | Market Teambox |
+      | Tell the tech bloggers                 | This week | Market Teambox |
+      | Post on Digg and Hacker News           | This week | Market Teambox |
+      | Beg Apple to approve of the iPhone app | Later     | Market Teambox |
 
   Scenario: See all the tasks
     Given the task called "Tell my friends" is resolved
