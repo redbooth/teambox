@@ -9,7 +9,7 @@
     .tasks_wrap
       .tasks{ :id => task_list_id(:the_tasks,project,task_list), :class => "#{ 'read_only' unless task_list_editable?(task_list,current_user,sub_action)}", :reorder_url => project_reorder_tasks_path(project, task_list) }
         = list_tasks(project,task_list,tasks,current_target)
-        = link_to "Show archived tasks", "#", :class => "show_archived_tasks_link", :texts_id => "show_archived_tasks_link_texts"
+        = link_to "Show archived tasks", "#", :class => "show_archived_tasks_link", :texts_id => "show_archived_tasks_link_texts",  :show => 'all'
     - if task_list_editable?(task_list,current_user,sub_action)
       = task_link(project,task_list)
       = task_form(project,task_list,task_list.new_task(current_user))

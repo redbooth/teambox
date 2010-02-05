@@ -92,25 +92,22 @@ Then /^I should not see the task called "([^\"]*)" in the "([^\"]*)" task list p
   task_list = TaskList.find_by_name(task_list_name)
   project = task_list.project
   sleep(1)
-  page.should_not have_css("#project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}_item")
+  page.should have_xpath(%(//*[@id = "project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}_item"][contains(@style,'display: none')]))
 end
 
 Then /^I should see the following tasks:$/ do |table|
-  # table is a Cucumber::Ast::Table
   table.hashes.each do |hash|
     Then %(I should see the task called "#{hash['task_name']}" in the "#{hash['task_list_name']}" task list panel)
   end
 end
 
 Then /^the following tasks should be hidden:$/ do |table|
-  # table is a Cucumber::Ast::Table
   table.hashes.each do |hash|
     Then %(the task called "#{hash['task_name']}" in the "#{hash['task_list_name']}" task list panel should be hidden)
   end
 end
 
 Then /^I should not see the following tasks:$/ do |table|
-  # table is a Cucumber::Ast::Table
   table.hashes.each do |hash|
     Then %(I should not see the task called "#{hash['task_name']}" in the "#{hash['task_list_name']}" task list panel)
   end

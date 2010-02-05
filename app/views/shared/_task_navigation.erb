@@ -3,7 +3,7 @@
 <div class="task_navigation"><%
 render_tabnav :user do
 
-    add_tab(:html => { :id => "global_show_all_tasks_link" }) do |t|
+    add_tab(:html => { :id => "global_show_all_tasks_link", :show => 'all' }) do |t|
       t.named t('.all_tasks')
       t.links_to  project_task_lists_path(project)
       t.highlights_on :controller => 'task_lists', :action => 'index', :sub_action => nil
@@ -17,7 +17,7 @@ render_tabnav :user do
     end
 
     if project.tasks.archived.size > 0
-      add_tab(:html => { :id => "global_show_archived_tasks_link", :show => 'archived'}) do |t|
+      add_tab(:html => { :id => "global_show_archived_tasks_link", :show => 'archived' }) do |t|
         t.named t('.show_archived_tasks', :count => num_archived_tasks)
         t.links_to project_archived_task_lists_path(project)
         t.highlights_on :controller => 'task_lists', :action => 'index', :sub_action => 'archived'

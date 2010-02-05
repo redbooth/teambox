@@ -1,4 +1,3 @@
-@wip
 Feature: See tasks in different, common groupings
   In order to see just the tasks the user needs and quickly
   As a Teambox developer
@@ -32,7 +31,7 @@ Feature: See tasks in different, common groupings
       | This week        | Tell the tech bloggers                 |
       | This week        | Post on Digg and Hacker News           |
       | Later            | Beg Apple to approve of the iPhone app |
-    And the task called "Tell my friends" in the "This week" task list panel should be hidden
+    But I should not see the task called "Tell my friends" in the "This week" task list panel
     When I follow "All Tasks"
     Then I should see the following tasks:
       | task_list_name   | task_name                              |
@@ -57,7 +56,7 @@ Feature: See tasks in different, common groupings
     Then I should see the following tasks:
       | task_list_name   | task_name                              |
       | This week        | Post on Digg and Hacker News           |
-    And the following tasks should be hidden:
+    But I should not see the following tasks:
       | task_list_name   | task_name                              |
       | This week        | Tell the tech bloggers                 |
       | Later            | Beg Apple to approve of the iPhone app |
@@ -79,7 +78,7 @@ Feature: See tasks in different, common groupings
       | task_list_name   | task_name                              |
       | This week        | Tell my friends                        |
       | This week        | Post on Digg and Hacker News           |
-    And the following tasks should be hidden:
+    But I should not see the following tasks:
       | task_list_name   | task_name                              |
       | This week        | Tell the tech bloggers                 |
       | Later            | Beg Apple to approve of the iPhone app |
@@ -88,7 +87,7 @@ Feature: See tasks in different, common groupings
       | task_list_name   | task_name                              |
       | This week        | Tell the tech bloggers                 |
       | Later            | Beg Apple to approve of the iPhone app |
-    And the following tasks should be hidden:
+    But I should not see the following tasks:
       | task_list_name   | task_name                              |
       | This week        | Tell my friends                        |
       | This week        | Post on Digg and Hacker News           |

@@ -10059,15 +10059,21 @@ Event.addBehavior({
     form.hide();
   },
   ".show_archived_tasks_link:click": function(e) {
+    var show = $(this).readAttribute("show");
     e.findElement(".tasks").select(".archived_task").each(function(task){
-      task.toggle();
+      'all' == show ? task.show() : task.hide();
     })
+    $(this).writeAttribute("show", 'all' == show ? 'unarchived' : 'all');
     var linkTexts = $($(this).readAttribute('texts_id')).innerHTML.split("##");
     $(this).update($(this).nextText(linkTexts));
     e.stop();
   },
   "#global_show_all_tasks_link:click": function(e) {
-    $$(".archived_task").each(function(task) { task.toggle() });
+    var show = $(this).readAttribute("show");
+    $$(".archived_task").each(function(task){
+      'all' == show ? task.show() : task.hide();
+    })
+    $(this).writeAttribute("show", 'all' == show ? 'unarchived' : 'all');
     var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
     $(this).update($(this).nextText(linkTexts));
     e.stop();
@@ -10083,7 +10089,6 @@ Event.addBehavior({
     $(this).update($(this).nextText(linkTexts));
     e.stop();
   },
-
   "#global_show_archived_tasks_link:click": function(e) {
     var show = $(this).readAttribute("show");
     $$(".task").each(function(task){
