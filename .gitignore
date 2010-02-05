@@ -4,8 +4,10 @@
 assets/*
 coverage/*
 db/*.sqlite3
-log/*.log
+db/sphinx
+log/*
 tmp/*
+config/*.sphinx.conf
 public/avatars/*
 public/stylesheets/*.css
 public/stylesheets/conversations/*.css
