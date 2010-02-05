@@ -58,6 +58,14 @@ Factory.define :task do |task|
   task.association(:task_list)
 end
 
+Factory.define :archived_task, :class => Task do |task|
+  task.name 'Buy milk'
+  task.association(:user)
+  task.association(:project)
+  task.association(:task_list)
+  task.archived true
+end
+
 Factory.define :held_task, :class => Task do |task|
   task.name 'Buy milk'
   task.association(:user)

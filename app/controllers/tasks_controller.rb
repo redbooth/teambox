@@ -77,8 +77,9 @@ class TasksController < ApplicationController
   end
 
   def reopen
-    @task.status = Task::STATUSES[:open]
+    @task.reopen
     @task.assigned = @current_project.people.find_by_user_id(current_user.id)
+    @task.save
     @comment = @current_project.new_task_comment(@task)
     respond_to {|f|f.js}
   end

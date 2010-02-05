@@ -92,3 +92,14 @@ Feature: See tasks in different, common groupings
       | This week        | Tell my friends                        |
       | This week        | Post on Digg and Hacker News           |
 
+  Scenario: See reopened task
+    Given I am logged in as "balint"
+    And the task called "Tell my friends" is archived
+    When I go to the list of tasks page of the project called "Market Teambox"
+    And I follow "All Tasks"
+    And I follow "Tell my friends"
+    And I follow "Reopen this task"
+    And I fill in "comment_body" with "Got some new friends"
+    And I press "Comment"
+    And I go to the list of tasks page of the project called "Market Teambox"
+    Then I should see the task called "Tell my friends" in the "This week" task list panel
