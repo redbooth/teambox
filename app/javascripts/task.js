@@ -106,6 +106,19 @@ Task = {
 
 }
 
+Element.addMethods({
+  toggleAttribute: function(element, attr, values) {
+    element = $(element);
+    var value = element.readAttribute(attr);
+    var newIndex = (values.indexOf(value) + 1) % values.length;
+    element.writeAttribute(attr, values[newIndex]);
+  },
+  toggleShowAttribute: function(element, values) {
+    element.toggleAttribute("show", values);
+  },
+})
+
+
 Event.addBehavior({
   ".task:mouseover": function(e){
     $(this).down('img.drag').show();
@@ -142,7 +155,7 @@ Event.addBehavior({
     e.findElement(".tasks").select(".archived_task").each(function(task){
       'all' == show ? task.show() : task.hide();
     })
-    $(this).writeAttribute("show", 'all' == show ? 'unarchived' : 'all');
+    $(this).toggleShowAttribute(new Array('all', 'unarchived'));
     var linkTexts = $($(this).readAttribute('texts_id')).innerHTML.split("##");
     $(this).update($(this).nextText(linkTexts));
     e.stop();
@@ -152,7 +165,7 @@ Event.addBehavior({
     $$(".archived_task").each(function(task){
       'all' == show ? task.show() : task.hide();
     })
-    $(this).writeAttribute("show", 'all' == show ? 'unarchived' : 'all');
+    $(this).toggleShowAttribute(new Array('all', 'unarchived'));
     var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
     $(this).update($(this).nextText(linkTexts));
     e.stop();
@@ -164,7 +177,7 @@ Event.addBehavior({
       if ('all' == show && !task.hasClassName("archived_task")) task.show();
       if ('mine' == show && !task.hasClassName("my_task") ) task.hide();
     })
-    $(this).writeAttribute("show", 'all' == show ? 'mine' : 'all');
+    $(this).toggleShowAttribute(new Array('mine', 'all'));
     var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
     $(this).update($(this).nextText(linkTexts));
     e.stop();
@@ -175,7 +188,7 @@ Event.addBehavior({
       if ('archived' == show) task.hasClassName("archived_task") ? task.show() : task.hide();
       if ('unarchived' == show) task.hasClassName("archived_task") ? task.hide() : task.show();
     })
-    $(this).writeAttribute("show", 'archived' == show ? 'unarchived' : 'archived');
+    $(this).toggleShowAttribute(new Array('archived', 'unarchived'));
     var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
     $(this).update($(this).nextText(linkTexts));
     e.stop();
