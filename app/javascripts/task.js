@@ -154,7 +154,8 @@ Event.addBehavior({
   "#global_show_my_tasks_link:click": function(e) {
     var show = $(this).readAttribute("show");
     $$(".task").each(function(task){
-      if ('all' == show ) task.show();
+      // archived tasks should not be shown, mine or someone else's
+      if ('all' == show && !task.hasClassName("archived_task")) task.show();
       if ('mine' == show && !task.hasClassName("my_task") ) task.hide();
     })
     $(this).writeAttribute("show", 'all' == show ? 'mine' : 'all');

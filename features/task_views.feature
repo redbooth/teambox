@@ -51,15 +51,16 @@ Feature: See tasks in different, common groupings
   Scenario: See only my tasks
     Given I am logged in as "balint"
     And the task called "Tell my friends" is assigned to me
+    And the task called "Tell my friends" is archived
     And the task called "Post on Digg and Hacker News" is assigned to me
     When I go to the list of tasks page of the project called "Market Teambox"
-    And I follow "My 2 Tasks"
+    And I follow "My 1 Task(s)"
     Then I should see the following tasks:
       | task_list_name   | task_name                              |
-      | This week        | Tell my friends                        |
       | This week        | Post on Digg and Hacker News           |
     And the following tasks should be hidden:
       | task_list_name   | task_name                              |
       | This week        | Tell the tech bloggers                 |
       | Later            | Beg Apple to approve of the iPhone app |
+      | This week        | Tell my friends                        |
     And I should see "Everybody's tasks"
