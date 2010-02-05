@@ -77,8 +77,23 @@ class ApplicationController < ActionController::Base
     
     def set_locale
       # if this is nil then I18n.default_locale will be used
-      I18n.locale = logged_in? ? current_user.language : 'en'
+      I18n.locale = logged_in? ? current_user.language : get_browser_locale
     end
+    
+    def get_browser_locale
+      preferred_locale = nil
+
+      if browser_locale = request.headers['HTTP_ACCEPT_LANGUAGE']
+        preferred_locale = ['en', 'es'].
+                            select { |i| browser_locale.include?(i) }.
+                            collect { |i| [i, browser_locale.index(i)] }.
+                            sort { |a,b| a[1] <=> b[1] }.
+                            first
+      end
+      
+      preferred_locale.try(:first) || 'en'
+    end
+    
     
     def touch_user
       current_user.touch if logged_in?
@@ -205,5 +220,5 @@ class ApplicationController < ActionController::Base
         @insert_element = @insert_id == 0 ? nil : "page_slot_#{@insert_id}"
       end
     end
-    
+        
 end

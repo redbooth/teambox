@@ -359,8 +359,8 @@ de:
     link:
       new: + Aufgabe hinzufügen
       edit: Bearbeiten
-      show_archived_tasks: "Show archived tasks"
-      hide_archived_tasks: "Hide archived tasks"
+      show_archived_tasks: "Zeige archivierte Aufgaben"
+      hide_archived_tasks: "Blende archivierte Aufgaben aus"
     destroy_message:
       deleted: "Die Aufgabe <b>{{name}}</b> wurde erfolgreich gelöscht!"
     archive_message:
