@@ -159,7 +159,18 @@ Event.addBehavior({
       if ('mine' == show && !task.hasClassName("my_task") ) task.hide();
     })
     $(this).writeAttribute("show", 'all' == show ? 'mine' : 'all');
+    var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
+    $(this).update($(this).nextText(linkTexts));
+    e.stop();
+  },
 
+  "#global_show_archived_tasks_link:click": function(e) {
+    var show = $(this).readAttribute("show");
+    $$(".task").each(function(task){
+      if ('archived' == show) task.hasClassName("archived_task") ? task.show() : task.hide();
+      if ('unarchived' == show) task.hasClassName("archived_task") ? task.hide() : task.show();
+    })
+    $(this).writeAttribute("show", 'archived' == show ? 'unarchived' : 'archived');
     var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
     $(this).update($(this).nextText(linkTexts));
     e.stop();

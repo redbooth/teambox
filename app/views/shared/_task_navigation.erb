@@ -1,4 +1,5 @@
 <% num_of_my_tasks = project.tasks.unarchived.find(:all, :conditions => { :assigned_id => project.people.find_by_user_id(current_user.id).id} ).size %>
+<% num_archived_tasks = project.tasks.archived.size %>
 <div class="task_navigation"><%
 render_tabnav :user do
 
@@ -16,8 +17,8 @@ render_tabnav :user do
     end
 
     if project.tasks.archived.size > 0
-      add_tab(:html => { :id => "global_show_archived_tasks_link" }) do |t|
-        t.named t('.archived_tasks', :count => project.tasks.archived.size)
+      add_tab(:html => { :id => "global_show_archived_tasks_link", :show => 'archived'}) do |t|
+        t.named t('.show_archived_tasks', :count => num_archived_tasks)
         t.links_to project_archived_task_lists_path(project)
         t.highlights_on :controller => 'task_lists', :action => 'index', :sub_action => 'archived'
       end
@@ -27,5 +28,6 @@ end
 %>
 <%= content_tag "div", [t('.all_tasks'), t('.unarchived_tasks')].join("##"), :id => "global_show_all_tasks_link_texts", :style => "display:none" %>
 <%= content_tag "div", [t('.my_tasks', :count => num_of_my_tasks), t('.everybodys_tasks')].join("##"), :id => "global_show_my_tasks_link_texts", :style => "display:none" %>
+<%= content_tag "div", [t('.show_archived_tasks', :count => num_archived_tasks), t('.hide_archived_tasks')].join("##"), :id => "global_show_archived_tasks_link_texts", :style => "display:none" %>
 
 <div class="clear"></div></div>

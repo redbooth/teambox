@@ -45,9 +45,13 @@ Feature: See tasks in different, common groupings
       | This week        | Tell the tech bloggers                 |
       | This week        | Post on Digg and Hacker News           |
       | Later            | Beg Apple to approve of the iPhone app |
-    And I should see "Unarchived Tasks"
+    When I follow "Unarchived Tasks"
+    Then I should see the following tasks:
+      | task_list_name   | task_name                              |
+      | This week        | Tell the tech bloggers                 |
+      | This week        | Post on Digg and Hacker News           |
+      | Later            | Beg Apple to approve of the iPhone app |
 
-  @wip
   Scenario: See only my tasks
     Given I am logged in as "balint"
     And the task called "Tell my friends" is assigned to me
@@ -63,4 +67,34 @@ Feature: See tasks in different, common groupings
       | This week        | Tell the tech bloggers                 |
       | Later            | Beg Apple to approve of the iPhone app |
       | This week        | Tell my friends                        |
-    And I should see "Everybody's tasks"
+    When I follow "Everybody's Tasks"
+    Then I should see the following tasks:
+      | task_list_name   | task_name                              |
+      | This week        | Post on Digg and Hacker News           |
+      | This week        | Tell the tech bloggers                 |
+      | Later            | Beg Apple to approve of the iPhone app |
+
+  Scenario: See archived tasks
+    Given I am logged in as "balint"
+    And the task called "Tell my friends" is archived
+    And the task called "Post on Digg and Hacker News" is archived
+    When I go to the list of tasks page of the project called "Market Teambox"
+    And I follow "Show 2 Archived Task(s)"
+    Then I should see the following tasks:
+      | task_list_name   | task_name                              |
+      | This week        | Tell my friends                        |
+      | This week        | Post on Digg and Hacker News           |
+    And the following tasks should be hidden:
+      | task_list_name   | task_name                              |
+      | This week        | Tell the tech bloggers                 |
+      | Later            | Beg Apple to approve of the iPhone app |
+    When I follow "Hide Archived Task(s)"
+    Then I should see the following tasks:
+      | task_list_name   | task_name                              |
+      | This week        | Tell the tech bloggers                 |
+      | Later            | Beg Apple to approve of the iPhone app |
+    And the following tasks should be hidden:
+      | task_list_name   | task_name                              |
+      | This week        | Tell my friends                        |
+      | This week        | Post on Digg and Hacker News           |
+
