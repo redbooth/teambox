@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
       preferred_locale = nil
 
       if browser_locale = request.headers['HTTP_ACCEPT_LANGUAGE']
-        preferred_locale = ['en', 'es'].
+        preferred_locale = %w(en es fr de).
                             select { |i| browser_locale.include?(i) }.
                             collect { |i| [i, browser_locale.index(i)] }.
                             sort { |a,b| a[1] <=> b[1] }.
