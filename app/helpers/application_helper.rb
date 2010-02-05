@@ -68,6 +68,10 @@ module ApplicationHelper
     render 'shared/project_navigation', :project => project
   end
 
+  def search_bar
+    render :partial => 'shared/search_bar'
+  end
+
   def footer
     render :partial => 'shared/footer'
   end

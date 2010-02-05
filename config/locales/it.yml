@@ -730,6 +730,7 @@ it:
     index_task_lists: "I miei compiti"
     index_uploads: "I miei files"
     new_conversations: "Nuova Conversazione"
+    results_search: Ricerca
     new_example_projects: "Creare un progetto di esempio"
     new_projects: "Nuovo progetto"
     new_users: "Crea account"

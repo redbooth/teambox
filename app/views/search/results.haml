@@ -1,0 +1,8 @@
+.results
+  %p= "Showing #{@comments.size} results"
+
+  - form_tag search_path do
+    = text_field_tag :search, params[:search]
+    = submit_tag "Search again"
+
+= render :partial => 'comments/comment', :collection => @comments

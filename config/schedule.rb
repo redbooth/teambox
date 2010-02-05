@@ -7,3 +7,7 @@ end
 every 1.minutes do
   rake "mail:inbox", :environment => :production
 end
+
+every 30.minutes do
+  rake "ts:rebuild", :environment => :production
+end
