@@ -359,6 +359,8 @@ de:
     link:
       new: + Aufgabe hinzufügen
       edit: Bearbeiten
+      show_archived_tasks: "Show archived tasks"
+      hide_archived_tasks: "Hide archived tasks"
     destroy_message:
       deleted: "Die Aufgabe <b>{{name}}</b> wurde erfolgreich gelöscht!"
     archive_message:
@@ -626,7 +628,8 @@ de:
       unarchived_tasks: "Unarchived Tasks"
       my_tasks: "Meine {{count}} Aufgaben"
       everybodys_tasks: "Everybody's tasks"
-      archived_tasks: "Alle {{count}} archivierten Aufgaben"
+      show_archived_tasks: "Show {{count}} Archived Tasks" ####
+      hide_archived_tasks: "Hide Archived Tasks" ####
     footer:
       support: Feedback and Fehler
       mobile: Mobile Version

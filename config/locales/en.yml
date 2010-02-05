@@ -628,8 +628,8 @@ en:
       unarchived_tasks: "Unarchived Tasks"
       my_tasks: "My {{count}} Task(s)"
       everybodys_tasks: "Everybody's Tasks"
-      show_archived_tasks: "Show {{count}} Archived Task(s)"
-      hide_archived_tasks: "Hide Archived Task(s)"
+      show_archived_tasks: "Show {{count}} Archived Tasks"
+      hide_archived_tasks: "Hide Archived Tasks"
     footer:
       support: Feedback and bugs
       mobile: Mobile version

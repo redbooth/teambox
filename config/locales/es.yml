@@ -359,6 +359,8 @@ es:
     link:
       new: + Nueva tarea
       edit: Editar
+      show_archived_tasks: "Show archived tasks"
+      hide_archived_tasks: "Hide archived tasks"
     destroy_message:
       deleted: "La tarea <b>{{name}}</b> se ha borrado"
     archive_message:
@@ -626,7 +628,8 @@ es:
       unarchived_tasks: "Unarchived Tasks"
       my_tasks: "Mías ({{count}})"
       everybodys_tasks: "Everybody's tasks"
-      archived_tasks: "Archivadas ({{count}})"
+      show_archived_tasks: "Mostrar {{count}} tareas archivadas"
+      hide_archived_tasks: "Ocultar tareas archivadas"
     footer:
       support: ¿Problemas? ¡Envía feedback!
       mobile: Versión móvil
