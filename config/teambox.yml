@@ -22,7 +22,8 @@ defaults: &DEFAULTS
     pass: password
     auth: plain                 # choose: plain, login, cram_md5    
     port: 25
-  
+    enable_starttls_auto: false # Set to true for gmail smtp server
+      
   # Set allow to true to allow the "reply to" feature for notifications.
   # This will allow users to post answers and comments by email.
   # When set to true, "reply above this line" notice will be displayed where relevant and accept emails.
