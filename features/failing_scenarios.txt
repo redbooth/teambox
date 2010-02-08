@@ -1,0 +1,19 @@
+Failing Scenarios:
+cucumber features/create_upload.feature:8 # Scenario: Mislav uploads a valid file with success
+cucumber features/create_upload.feature:14 # Scenario: Mislav tries to upload a file with no asset and fails
+cucumber features/create_upload.feature:19 # Scenario: Mislav tries to upload a file thats too big (that's what she said)
+cucumber features/invitations.feature:6 # Scenario: Mislav invites some friends to a project
+cucumber features/reset_password.feature:18 # Scenario: Mislav forgot his password, so he will recover it using the form
+cucumber features/signup.feature:3 # Scenario: Mislav successfully signs up and confirms his email
+cucumber features/status_task.feature:9 # Scenario: Mislav doesn't change task (new -> new)
+cucumber features/status_task.feature:31 # Scenario: Mislav changes task (new -> hold)
+cucumber features/status_task.feature:42 # Scenario: Mislav changes task (new -> resolved)
+cucumber features/status_task.feature:53 # Scenario: Mislav changes task (new -> rejected)
+cucumber features/status_task.feature:66 # Scenario: Mislav changes task (hold -> resolved)
+cucumber features/status_task.feature:78 # Scenario: Mislav changes task (hold -> rejected)
+cucumber features/status_task.feature:93 # Scenario: Mislav changes task (rejected -> hold)
+cucumber features/status_task.feature:105 # Scenario: Mislav changes task (rejected -> resolved)
+cucumber features/status_task.feature:121 # Scenario: Mislav changes task (resolved -> rejected)
+cucumber features/task_views.feature:71 # Scenario: See archived tasks
+cucumber features/update_profile.feature:6 # Scenario: Mislav updates his profile
+cucumber features/update_profile.feature:28 # Scenario: Mislav updates his notifications

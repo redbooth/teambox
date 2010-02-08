@@ -157,7 +157,6 @@ Then /^I should not see "([^\"]*)"$/ do |text|
 end
 
 Then /^I should not see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
-  #debugger
   within(:css,selector) do
     page.should_not have_content(text)
   end

@@ -338,8 +338,8 @@ en:
   tasks:
     errors:
       name:
-        cant_be_blank: ' must not be blank'
-        too_long: ' must be shorter than 255 characters'
+        cant_be_blank: 'must not be blank'
+        too_long: 'must be shorter than 255 characters'
     fields:
       name: Name
     assigned:

@@ -38,6 +38,13 @@ module NavigationHelpers
     when /the list of tasks page of the project called "(.+)"/
       project = Project.find_by_name($1)
       project_task_lists_path(project)
+    when /the "([^\"]*)" task list page of the "([^\"]*)" project/
+      task_list = TaskList.find_by_name($1)
+      project = Project.find_by_name($2)
+      project_task_list_path(project, task_list)
+    when /the "([^\"]*)" task page/
+      task = Task.find_by_name($1)
+      project_task_list_task_path(task.project, task.task_list, task)
     when /my settings page/
       account_settings_path
     #when /the index page for (.+)/
