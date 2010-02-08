@@ -1,15 +1,15 @@
 Feature Posting a comment on a project wall
   Background:
-    Given I am logged in as mislav
-      And I am currently in the project ruby_rockstars
+    Given a project exists with name: "Ruby Rockstars"
+    And I am logged in as "mislav"
+    And I am in the project called "Ruby Rockstars"
 
   Scenario Outline: I post a comment to the project wall
-    Given I go to the project page
+    When I go to the page of the project called "Ruby Rockstars"
       And I fill in "comment_body" with "<body>"
-    # Using format.html which redirects, not .js
-    When I press "Comment"
-    Then I should see "<formatted_body>"
-    And show me the page
+      And I press "Comment"
+      And I wait for 1 second
+      Then I should see "<formatted_body>"
   Examples:
     | body                                | formatted_body                  |
     | She *used* to _mean_ so much to ME! | She used to mean so much to ME! |

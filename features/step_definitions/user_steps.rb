@@ -98,6 +98,7 @@ end
 
 Given /^I am logged in as "([^\"]*)"$/ do |login|
   Given %(I am "#{login}")
+  Given %(I have confirmed my email)
     And "I go to the login page"
     And "I fill in \"Email or Username\" with \"#{login}\""
     And "I fill in \"Password\" with \"dragons\""

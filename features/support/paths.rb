@@ -19,7 +19,7 @@ module NavigationHelpers
       "/forgot"
     when /the project page/
       project_path(@current_project)
-    when /the page of the project with name: "([^\"]*)/
+    when /the page of the project called "([^\"]*)/
       project_path(Project.find_by_name($1))
     when /the conversations page/
       project_conversations_path(@current_project)
