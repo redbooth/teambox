@@ -58,12 +58,12 @@ class ResetPasswordsController < ApplicationController
           format.m    { redirect_to login_path }
         else
           format.html do
-            flash[:error] = I18n.t("reset_passwords.create.password_not_updated")
+            flash.now[:error] = I18n.t("reset_passwords.create.password_not_updated")
             render :action => :reset, :reset_code => params[:reset_code]
           end
         end
       else
-        flash[:notice] = I18n.t('reset_passwords.create.invalid', :support => APP_CONFIG['support'])
+        flash.now[:notice] = I18n.t('reset_passwords.create.invalid', :support => APP_CONFIG['support'])
         format.html { render :action => :new, :reset_code => params[:reset_code] }
         format.m    { render :action => :new, :reset_code => params[:reset_code] }
       end  
