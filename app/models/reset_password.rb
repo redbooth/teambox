@@ -3,10 +3,11 @@ require 'digest/sha1'
 class ResetPassword < ActiveRecord::Base
   belongs_to :user
   attr_accessor :email
-  validates_presence_of :email
-  validates_format_of :email, :unless => Proc.new{|p|p.email.blank?}, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => 'is not a valid email address'
-  validates_presence_of :user, :unless => Proc.new{|p|p.errors.on(:email)}, :message => 'doesn\'t exist in the system.'
-  validates_associated :user
+  validates_presence_of :email, :on => :create
+  validates_format_of :email, :on => :create, :unless => Proc.new{|p|p.email.blank?}, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => 'is not a valid email address'
+  validates_each :user, :unless => Proc.new{|p|p.errors.on(:email)} do |record, attr, value|
+    record.errors.add attr, "doesn\'t exist in the system." if record.user.nil? or record.user.deleted?
+  end
 
   protected
   def before_create

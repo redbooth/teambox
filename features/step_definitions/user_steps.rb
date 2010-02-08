@@ -170,6 +170,11 @@ Then /^the user called "([^\"]*)" should not administrate the project called "([
   !project.admin?(User.find_by_login(login))
 end
 
+Given /^the user with login: "([^\"]*)" is deleted$/ do |login|
+  user = User.find_by_login(login)
+  user.destroy unless user.nil?
+end
+
 Given /I am the user (.*)$/ do |login|
   @user ||= Factory(login.to_sym)
 end

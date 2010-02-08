@@ -37,17 +37,18 @@ class ResetPasswordsController < ApplicationController
   def reset
     begin
       @user = ResetPassword.find(:first, :conditions => ['reset_code = ? and expiration_date > ?', params[:reset_code], Time.current]).user
+      throw ActiveRecord::RecordInvalid if @user.nil? or @user.deleted?
     rescue
       flash[:error] = I18n.t('reset_passwords.create.invalid', :support => APP_CONFIG['support'])
       redirect_to('/')
-    end    
+    end
   end
 
   def update_after_forgetting
     @reset_password = ResetPassword.find_by_reset_code(params[:reset_code])
     
     respond_to do |format|
-      unless @reset_password.nil?
+      if !@reset_password.nil? and @reset_password.valid?
         @user = @reset_password.user
         @user.performing_reset = true
         if @user.update_attributes(params[:user])
@@ -64,9 +65,10 @@ class ResetPasswordsController < ApplicationController
         end
       else
         flash.now[:notice] = I18n.t('reset_passwords.create.invalid', :support => APP_CONFIG['support'])
+        @reset_password = ResetPassword.new
         format.html { render :action => :new, :reset_code => params[:reset_code] }
         format.m    { render :action => :new, :reset_code => params[:reset_code] }
-      end  
+      end
     end
   end
   

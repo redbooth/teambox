@@ -2,6 +2,10 @@ Feature: Resetting passwords
   In order to reset their passwords
   Users should be able to
   enter their email and receive a reset password link
+  Background:
+    Given the following confirmed users exist
+      | login  | email                     | first_name | last_name |
+      | pablo  | pablo@teambox.com         | Pablo      | Villalba  |
 
 Scenario: I visit forgot password page
   Given I am on the home page
@@ -50,3 +54,19 @@ Scenario: User leaves the (new) password field blank
   And I press "Reset password!"
   Then I should see an error message: "New password is not valid. Try again."
   And I should see "Please enter a new password and confirm it"
+
+Scenario: Deleted user tries to reset password
+  Given the user with login: "pablo" is deleted
+    And I am on the forgot password page
+  When I fill in "Email" with "pablo@teambox.com"
+	And I press "Send me a link to reset my password"
+  Then I should see "We can't find a user with that email"
+    And "pablo@teambox.com" should receive 0 emails
+
+Scenario: Deleted user tries to use a previously generated reset code
+  Given the user with login: "pablo" has asked to reset his password
+    And the user with login: "pablo" is deleted
+  When I follow the reset password link
+  Then I should see "The change password URL you visited is either invalid or expired"
+
+
