@@ -1,10 +1,12 @@
 Feature Invite a user to a project
   Background:
-   Given I am logged in as mislav
-     And I am currently in the project ruby_rockstars
+    Given a project exists with name: "Ruby Rockstars"
+    And a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić"
+    And "mislav" is the owner of the project "Ruby Rockstars"
 
   Scenario: Mislav invites some friends to a project
-    When I go to the people page
+   Given I am logged in as "mislav"
+    When I go to the people page of the project "Ruby Rockstars"
     Then I should see "Invite people to this project"
      And I should see "Mislav Marohnić"
      And I should see "Project Owner"
@@ -19,13 +21,13 @@ Feature Invite a user to a project
      And I press "Invite"
     Then I should see "mislav invited ed_bloom@spectre.com to join the project"
      And I should see "An email was sent to this user, but they still haven't confirmed"
-     And "ed_bloom@spectre.com" should receive 1 emails
-    When I open the email
-     And I should see "Mislav Marohnić wants to collaborate with you on Teambox" in the email body
-     And I should see "Ruby Rockstars" in the email body    
-     And I follow "Accept the invitation to start collaborating" in the email
-    Then I should see "You already have an account. Log out first to sign up as a different user"
-    When I log out
+     And "ed_bloom@spectre.com" should receive an email
+
+  Scenario: User creates account and joins project from invitation
+    Given "mislav" sent an invitation to "ed_bloom@spectre.com" for the project "Ruby Rockstars"
+    When "ed_bloom@spectre.com" opens the email with subject "Ruby Rockstars"
+     And they should see "Mislav Marohnić wants to collaborate with you on Teambox" in the email body
+     And I should see "Ruby Rockstars" in the email body
      And I follow "Accept the invitation to start collaborating" in the email
     When I fill in "Username" with "bigfish"
      And I fill in "First name" with "Edward"
@@ -35,11 +37,10 @@ Feature Invite a user to a project
      And I press "Create account"
     Then I should see "Ruby Rockstars"
      And I should see "Thanks for signing up!"
-    When I go to the people page
+    When I go to the people page of the project "Ruby Rockstars"
     Then I should see "Edward Bloom"
      And I should see "Mislav Marohnić"
-      #When I follow "Leave Project"
-      
+
   Scenario: Mislav invites existing teambox users to a project
   Scenario: Mislav leaves a project
   Scenario: Mislav transfers ownership of a project

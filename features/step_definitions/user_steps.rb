@@ -92,7 +92,7 @@ Given /^I am logged in as ([^\"]*)$/ do |login|
 end
 
 Given /^I am "([^\"]*)"$/ do |login|
-  @current_user ||= User.find_by_login(login) || Factory(:user, :login => login, :email => "#{login}@example.com")
+  @current_user = User.find_by_login(login) || Factory(:user, :login => login, :email => "#{login}@example.com")
   @user = @current_user
 end
 

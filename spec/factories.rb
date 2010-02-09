@@ -135,3 +135,9 @@ Factory.define :reset_password do |reset_pw|
   reset_pw.email { Factory.next(:email) }
   reset_pw.association(:user)
 end
+
+Factory.define :invitation do |i|
+  i.association(:user)
+  i.association(:project)
+  i.email { Factory.next(:email) }
+end

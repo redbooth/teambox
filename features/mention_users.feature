@@ -15,7 +15,7 @@ Feature: Send email to users mentioned in comments
   Given a project exists with name: "Surpass Basecamp"
   And all the users are in the project with name: "Surpass Basecamp"
   When I am logged in as "balint"
-  And I go to the page of the project called "Surpass Basecamp"
+  And I go to the page of the project "Surpass Basecamp"
   And I fill in "comment_body" with "@pablo @james Check this out!"
   And I press "Comment"
   And I wait for 3 seconds
