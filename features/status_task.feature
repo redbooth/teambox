@@ -1,3 +1,4 @@
+@wip
 Feature Changing Task Status from New
   Background:
     Given I am logged in as mislav
@@ -91,30 +92,18 @@ Feature Changing Task Status from New
   Scenario: Mislav shouldn't be able to change task (rejected -> new)
   Scenario: Mislav doesn't change task (rejected -> rejected)
   Scenario: Mislav changes task (rejected -> open:Mislav)
-  @wip
+
   Scenario: Mislav changes task (rejected -> hold)
     Given I have a task on rejected
-     When I fill in "comment_body" with "done!"
-      And I click the element "status_hold"
-      And I press "Comment"
-      And I should see "rejected" within ".task_status_rejected"
-      And I should see "→" within ".comment .status_arr"
-      And I should see "hold" within ".task_status_hold"
-      And I should see "done!" within ".body"
-      And I should see "hold" within ".task_header h2"
-      And I should see "2" within ".active_hold"
+     Then I should see "Archive this task"
+     Then I should see "Reopen this task"
+      But I should not see ".comment_body"
 
   Scenario: Mislav changes task (rejected -> resolved)
     Given I have a task on rejected
-     When I fill in "comment_body" with "done!"
-      And I click the element "status_resolved"
-      And I press "Comment"
-      And I should see "rejected" within ".task_status_rejected"
-      And I should see "→" within ".comment .status_arr"
-      And I should see "resolved" within ".task_status_resolved"
-      And I should see "done!" within ".body"
-      And I should see "resolved" within ".task_header h2"
-      And I should see "2" within ".active_resolved"
+     Then I should see "Archive this task"
+     Then I should see "Reopen this task"
+      But I should not see ".comment_body"
 
   Scenario: Mislav shouldn't be able to change task (resolved -> new)
   Scenario: Mislav changes task (resolved -> open:Mislav)
@@ -122,12 +111,6 @@ Feature Changing Task Status from New
   Scenario: Mislav doesn't change task (resolved -> resolved)
   Scenario: Mislav changes task (resolved -> rejected)
     Given I have a task on resolved
-     When I fill in "comment_body" with "done!"
-      And I click the element "status_rejected"
-      And I press "Comment"
-      And I should see "resolved" within ".task_status_resolved"
-      And I should see "→" within ".comment .status_arr"
-      And I should see "rejected" within ".task_status_rejected"
-      And I should see "done!" within ".body"
-      And I should see "rejected" within ".task_header h2"
-      And I should see "2" within ".active_rejected"
+     Then I should see "Archive this task"
+     Then I should see "Reopen this task"
+      But I should not see ".comment_body"
