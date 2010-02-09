@@ -42,7 +42,7 @@ module NavigationHelpers
       task_list = TaskList.find_by_name($1)
       project = Project.find_by_name($2)
       project_task_list_path(project, task_list)
-    when /the "([^\"]*)" task page/
+    when /the page of the task "([^\"]*)"/
       task = Task.find_by_name($1)
       project_task_list_task_path(task.project, task.task_list, task)
     when /my settings page/

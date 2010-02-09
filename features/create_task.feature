@@ -31,7 +31,7 @@ Feature Creating a task
      Given a task exists with name: "Ohhh ya"
        And the task called "Ohhh ya" belongs to the task list called "Awesome Ruby Yahh"
        And the task called "Ohhh ya" belongs to the project called "Ruby Rockstars"
-      When I go to the "Ohhh ya" task page
+      When I go to the page of the task "Ohhh ya"
       When I follow "Edit"
        And I fill in "task_name" with "Uh Ohhh ya"
        And I press "Update Task"
