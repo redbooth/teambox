@@ -1,4 +1,4 @@
-Feature: Sigining up
+Feature: Signing up
 
 Scenario: Mislav successfully signs up and confirms his email
   Given I am on the home page
@@ -12,7 +12,7 @@ Scenario: Mislav successfully signs up and confirms his email
     | Confirm password  | makeabarrier                |
     And I press "Create account"
   Then I should see "Confirm your email"
-    And "mislav@fuckingawesome.com" should receive 1 email
+    And "mislav@fuckingawesome.com" should receive an email
 
   When I open the email
   Then I should see "Hey, Mislav Marohnić!" in the email body

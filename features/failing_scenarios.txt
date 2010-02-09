@@ -1,5 +1,4 @@
 Failing Scenarios:
-cucumber features/reset_password.feature:18 # Scenario: Mislav forgot his password, so he will recover it using the form
 cucumber features/signup.feature:3 # Scenario: Mislav successfully signs up and confirms his email
 cucumber features/status_task.feature:9 # Scenario: Mislav doesn't change task (new -> new)
 cucumber features/status_task.feature:31 # Scenario: Mislav changes task (new -> hold)
