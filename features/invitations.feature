@@ -6,7 +6,7 @@ Feature Invite a user to a project
 
   Scenario: Mislav invites some friends to a project
    Given I am logged in as "mislav"
-    When I go to the people page of the project "Ruby Rockstars"
+    When I go to the people page of the "Ruby Rockstars" project
     Then I should see "Invite people to this project"
      And I should see "Mislav Marohnić"
      And I should see "Project Owner"
@@ -37,7 +37,7 @@ Feature Invite a user to a project
      And I press "Create account"
     Then I should see "Ruby Rockstars"
      And I should see "Thanks for signing up!"
-    When I go to the people page of the project "Ruby Rockstars"
+    When I go to the people page of the "Ruby Rockstars" project
     Then I should see "Edward Bloom"
      And I should see "Mislav Marohnić"
 

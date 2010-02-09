@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+  class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   before_filter :find_user, :only => [ :show, :confirm_email, :login_from_reset_password ]
   before_filter :load_invitation, :only => [ :new, :create ]

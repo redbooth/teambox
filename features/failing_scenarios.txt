@@ -1,8 +1,4 @@
 Failing Scenarios:
-cucumber features/create_upload.feature:8 # Scenario: Mislav uploads a valid file with success
-cucumber features/create_upload.feature:14 # Scenario: Mislav tries to upload a file with no asset and fails
-cucumber features/create_upload.feature:19 # Scenario: Mislav tries to upload a file thats too big (that's what she said)
-cucumber features/invitations.feature:6 # Scenario: Mislav invites some friends to a project
 cucumber features/reset_password.feature:18 # Scenario: Mislav forgot his password, so he will recover it using the form
 cucumber features/signup.feature:3 # Scenario: Mislav successfully signs up and confirms his email
 cucumber features/status_task.feature:9 # Scenario: Mislav doesn't change task (new -> new)

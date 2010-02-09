@@ -19,16 +19,19 @@ module NavigationHelpers
       "/forgot"
     when /the project page/
       project_path(@current_project)
-    when /the page of the project "([^\"]*)/
+    when /the page of the "([^\"]*)" project/
       project_path(Project.find_by_name($1))
     when /the conversations page/
       project_conversations_path(@current_project)
     when /the task lists page$/
       project_task_lists_path(@current_project)
-    when /the people page of the project "([^\"]*)"$/
-      project_people_path(Project.find_by_name($1))
-    when /the uploads page/
+    when /the uploads page$/
       project_uploads_path(@current_project)
+    when /the people page of the "([^\"]*)" project$/
+      project_people_path(Project.find_by_name($1))
+    when /the uploads page of the "([^\"]*)" project$/
+      project = Project.find_by_name($1)
+      project_uploads_path(project)
     when /its task list page/
       project_task_list_path(@current_project,@task_list)
     when /its task page/
@@ -42,7 +45,7 @@ module NavigationHelpers
       task_list = TaskList.find_by_name($1)
       project = Project.find_by_name($2)
       project_task_list_path(project, task_list)
-    when /the page of the task "([^\"]*)"/
+    when /the page of the "([^\"]*)" task/
       task = Task.find_by_name($1)
       project_task_list_task_path(task.project, task.task_list, task)
     when /my settings page/

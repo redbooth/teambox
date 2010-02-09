@@ -19,7 +19,6 @@ Feature Creating a task
        And I follow "+ Add Task"
        And I fill in "task_name" with "<name>"
        And I press "Add Task" within ".task_form"
-      Then show me the page
       Then I should see "mislav"
       Then I should see an error message: "<error_message>"
    Examples:
@@ -31,7 +30,7 @@ Feature Creating a task
      Given a task exists with name: "Ohhh ya"
        And the task called "Ohhh ya" belongs to the task list called "Awesome Ruby Yahh"
        And the task called "Ohhh ya" belongs to the project called "Ruby Rockstars"
-      When I go to the page of the task "Ohhh ya"
+      When I go to the page of the "Ohhh ya" task
       When I follow "Edit"
        And I fill in "task_name" with "Uh Ohhh ya"
        And I press "Update Task"

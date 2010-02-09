@@ -5,7 +5,7 @@ Feature Posting a comment on a project wall
     And I am in the project called "Ruby Rockstars"
 
   Scenario Outline: I post a comment to the project wall
-    When I go to the page of the project "Ruby Rockstars"
+    When I go to the page of the "Ruby Rockstars" project
       And I fill in "comment_body" with "<body>"
       And I press "Comment"
       And I wait for 1 second
