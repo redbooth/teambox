@@ -1,4 +1,3 @@
-@wip
 Feature Changing Task Status from New
   Background:
     Given I am logged in as mislav

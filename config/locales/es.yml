@@ -626,9 +626,13 @@ es:
     task_navigation:
       all_tasks: Todas
       unarchived_tasks: "Unarchived Tasks"
-      my_tasks: "Mías ({{count}})"
+      my_tasks:
+        one: "Mía"
+        other: "Mías ({{count}})"
       everybodys_tasks: "Everybody's tasks"
-      show_archived_tasks: "Mostrar {{count}} tareas archivadas"
+      show_archived_tasks:
+        one: "Mostrar 1 tarea archivada"
+        other: "Mostrar {{count}} tareas archivadas"
       hide_archived_tasks: "Ocultar tareas archivadas"
     footer:
       support: ¿Problemas? ¡Envía feedback!

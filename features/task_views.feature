@@ -52,7 +52,7 @@ Feature: See tasks in different, common groupings
     And the task called "Tell my friends" is archived
     And the task called "Post on Digg and Hacker News" is assigned to me
     When I go to the list of tasks page of the project called "Market Teambox"
-    And I follow "My 1 Task(s)"
+    And I follow "My 1 Task"
     Then I should see the following tasks:
       | task_list_name   | task_name                              |
       | This week        | Post on Digg and Hacker News           |
@@ -73,7 +73,7 @@ Feature: See tasks in different, common groupings
     And the task called "Tell my friends" is archived
     And the task called "Post on Digg and Hacker News" is archived
     When I go to the list of tasks page of the project called "Market Teambox"
-    And I follow "Show 2 Archived Task(s)"
+    And I follow "Show 2 Archived Tasks"
     Then I should see the following tasks:
       | task_list_name   | task_name                              |
       | This week        | Tell my friends                        |
@@ -82,7 +82,7 @@ Feature: See tasks in different, common groupings
       | task_list_name   | task_name                              |
       | This week        | Tell the tech bloggers                 |
       | Later            | Beg Apple to approve of the iPhone app |
-    When I follow "Hide Archived Task(s)"
+    When I follow "Hide Archived Tasks"
     Then I should see the following tasks:
       | task_list_name   | task_name                              |
       | This week        | Tell the tech bloggers                 |

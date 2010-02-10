@@ -626,9 +626,13 @@ de:
     task_navigation:
       all_tasks: "Alle Aufgaben"
       unarchived_tasks: "Unarchived Tasks"
-      my_tasks: "Meine {{count}} Aufgaben"
-      everybodys_tasks: "Everybody's tasks"
-      show_archived_tasks: "Show {{count}} Archived Tasks" ####
+      my_tasks:
+        one: "Meine Aufgabe"
+        other: "Meine {{count}} Aufgaben"
+      everybodys_tasks: "Everybody's tasks" ####
+      show_archived_tasks:
+        one: "Show 1 Archived Task" ####
+        other: "Show {{count}} Archived Tasks" ####
       hide_archived_tasks: "Hide Archived Tasks" ####
     footer:
       support: Feedback and Fehler
