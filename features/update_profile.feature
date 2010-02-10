@@ -1,4 +1,3 @@
-@wip
 Feature Update a profile
   Background:
     Given a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić"

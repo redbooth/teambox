@@ -1,3 +1,4 @@
 Failing Scenarios:
-cucumber features/update_profile.feature:6 # Scenario: Mislav updates his profile
-cucumber features/update_profile.feature:28 # Scenario: Mislav updates his notifications
+Failing Scenarios:
+cucumber features/signup.feature:3 # Scenario: Mislav successfully signs up and confirms his email
+cucumber features/status_task.feature:9 # Scenario: Mislav doesn't change task (new -> new)

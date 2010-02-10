@@ -122,8 +122,7 @@
 
   private
     def find_user
-      unless @user = User.find_by_id(params[:id])
-        debugger
+      unless @user = ( User.find_by_login(params[:id]) || User.find_by_id(params[:id]) )
         flash[:error] = "User does not exist"
         redirect_to '/'
       end
