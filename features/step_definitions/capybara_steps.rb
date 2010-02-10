@@ -108,11 +108,11 @@ When /^I select "([^\"]*)" as the "([^\"]*)" date$/ do |date, date_label|
 end
 
 When /^I check "([^\"]*)"$/ do |field|
-  check(field)
+  check(field) unless find_field(field)[:checked]
 end
 
 When /^I uncheck "([^\"]*)"$/ do |field|
-  uncheck(field)
+  uncheck(field) if find_field(field)[:checked]
 end
 
 When /^I choose "([^\"]*)"$/ do |field|
@@ -183,11 +183,11 @@ Then /^the "([^\"]*)" field should not contain "([^\"]*)"$/ do |field, value|
 end
 
 Then /^the "([^\"]*)" checkbox should be checked$/ do |label|
-  field_labeled(label).should be_checked
+  field_labeled(label)[:checked].should == true
 end
 
 Then /^the "([^\"]*)" checkbox should not be checked$/ do |label|
-  field_labeled(label).should_not be_checked
+  field_labeled(label)[:checked].should == false
 end
 
 Then /^I should be on (.+)$/ do |page_name|
