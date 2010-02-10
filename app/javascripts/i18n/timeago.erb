@@ -1,0 +1,24 @@
+// <%= I18n.locale %>
+
+function do_timeAgoInWords_<%= I18n.locale %>(){
+  $$('.timeago').each(
+    function(c){
+    c.update(
+      timeAgoInWords_<%= I18n.locale %>(c.readAttribute('alt'))
+      );
+    }
+  )
+}
+
+
+function timeAgoInWords_<%= I18n.locale %>(from) {
+  seconds_ago = ((new Date().getTime()  - from) / 1000);
+  minutes_ago = Math.floor(seconds_ago / 60);
+
+  if(minutes_ago == 0) { return "<%= I18n.t 'datetime.distance_in_words.less_than_x_minutes.one' %>"; }
+  if(minutes_ago == 1) { return "<%= I18n.t 'datetime.distance_in_words.x_minutes.one' %>"; }
+  if(minutes_ago < 60) { return ""+"<%= I18n.t 'datetime.distance_in_words.x_minutes', :count => '" + minutes_ago + "' %>"+""; }
+  if(minutes_ago < 90) { return "<%= I18n.t 'datetime.distance_in_words.about_x_hours.one' %>"; }
+  hours_ago  = Math.floor(minutes_ago / 60);
+  return " <%= I18n.t 'datetime.distance_in_words.about_x_hours', :count => '" + hours_ago + "' %> ";
+}

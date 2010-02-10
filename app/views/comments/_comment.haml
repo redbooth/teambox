@@ -1,11 +1,11 @@
-.comment{:id => "comment_#{comment.id}" }
-  .info
-    = #comment_actions_link(comment)
-    = thumb_avatar(comment.user)
-  .block
-    .date
-      = posted_date comment.created_at
-    - cache "part_#{@current_user.language}_comment_#{comment.id}" do
+- cache "#{@current_user.language}_#{@current_user.time_zone}_comment_#{comment.id}" do
+  .comment{:id => "comment_#{comment.id}" }
+    .info
+      = #comment_actions_link(comment)
+      = thumb_avatar(comment.user)
+    .block
+      .date
+        = posted_date comment.created_at
       .name
         = conversation_last_comment_text(comment)
         = activity_comment_user_link(comment)
