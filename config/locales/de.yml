@@ -172,7 +172,7 @@ de:
       stop_welcome: Diesen Willkommenstab nicht mehr zeigen
     unconfirmed_email:
       title: "Bestätigen Sie Ihre Email"
-      invitation_sent_to: "Eine Email-Einladung wurde gesendet an <i>{{email}}</i>, damit Sie Ihre EMail Adresse bestätigen können."
+      invitation_sent_to: "Eine Email-Einladung wurde gesendet an <i>{{email}}</i>, damit Sie Ihre Email Adresse bestätigen können."
       follow_the_link: "Bitte <b>öffnen Sie diese Email und folgen Sie dem enthaltenen Link</b>, um Ihr Benutzerkonto zu aktvieren."
       problems_title: Probleme?
       resend: "Sie finden die Email nicht? Klicken Sie <a href='{{link}}'>hier</a>, um die Aktivierungs-Email erneut zu versenden."
