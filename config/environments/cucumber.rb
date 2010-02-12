@@ -20,7 +20,7 @@ config.action_controller.allow_forgery_protection    = false
 config.action_mailer.delivery_method = :test
 
 config.gem 'cucumber',     :lib => false, :version => '>=0.4.2' unless File.directory?(File.join(Rails.root, 'vendor/plugins/cucumber'))
-config.gem 'capybara',     :lib => false, :version => '=0.2.0'
+config.gem 'capybara',     :lib => false, :version => '=0.3.0'
 config.gem 'rspec',        :lib => false, :version => '>=1.2.8' unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec'))
 config.gem 'rspec-rails',  :lib => false, :version => '>=1.2.7.1' unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
 config.gem 'database_cleaner'
