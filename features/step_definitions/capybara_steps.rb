@@ -19,7 +19,7 @@ When /^I press "([^\"]*)" within "([^\"]*)"$/ do |button,selector|
 end
 
 When /^I click the element "([^\"]*)"$/ do |element|
-  click_element(element)
+  find(%(//*[@id="#{element}"])).click
 end
 
 When /^I follow "([^\"]*)"$/ do |link|

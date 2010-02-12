@@ -10,7 +10,6 @@ Feature: Send email to users mentioned in comments
       | pablo  | pablo@teambox.com         | Pablo      | Villalba  |
       | james  | james.urquhart@gmail.com  | James      | Urquhart  |
 
-
   Scenario: Mention several users in one comment
   Given a project exists with name: "Surpass Basecamp"
   And all the users are in the project with name: "Surpass Basecamp"
@@ -18,6 +17,6 @@ Feature: Send email to users mentioned in comments
   And I go to the page of the "Surpass Basecamp" project
   And I fill in "comment_body" with "@pablo @james Check this out!"
   And I press "Comment"
-  And I wait for 3 seconds
+  And I wait for 1 second
   Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"
   And "james.urquhart@gmail.com" should receive an email with subject "surpass-basecamp"

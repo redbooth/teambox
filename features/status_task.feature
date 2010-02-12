@@ -10,8 +10,8 @@ Feature Changing Task Status from New
        When I fill in "comment_body" with "I need to wait till the engine cools down"
         And I click the element "status_new"
         And I press "Comment"
+        And I wait for 0.1 second
        Then I should see "new" within ".task_status_new"
-        And I should not see "→" within "#comments"
         And I should see "I need to wait till the engine cools down" within ".body"
         And I should see "new" within ".task_header h2"
         And I should see "1" within ".active_new"
