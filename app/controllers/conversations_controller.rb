@@ -5,7 +5,7 @@ class ConversationsController < ApplicationController
     @conversation = @current_project.conversations.new
   end
   
-  def create    
+  def create
     @conversation = @current_project.new_conversation(current_user,params[:conversation])
     @conversation.body = params[:conversation][:body]
 

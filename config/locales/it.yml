@@ -100,7 +100,7 @@ it:
       password_confirmation: Conferma password
       sunday: Domenica
       monday: Lunedì
-      first_day_of_week: La settimana inizia di
+      first_day_of_week: La settimana inizia
       change_password: Modifica la password
       confirm_password: Conferma la password
       use_this_email: "Sei stato invitato in Teambox con questo indirizzo email. Se vuoi accedere ai progetti di chi ti ha invitato, non cambiare l'inidirzzo emal. Potrai cambiare la tua mail una volta che avrai terminato il processo d'iscrizione."

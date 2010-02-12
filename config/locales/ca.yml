@@ -100,7 +100,7 @@ ca:
       password_confirmation: Confirmar Contrasenya
       sunday: Diumenge
       monday: Dilluns
-      first_day_of_week: Setmana comença en
+      first_day_of_week: Setmana comença
       change_password: Canviar contrasenya
       confirm_password: Confirmar contrasenya
       use_this_email: "Has estat convidat a Teambox amb aquesta adreça de correu. Si vols accedir als projectes de qui et va convidar, no canviïs l'adreça de correu. Podràs canviar el teu correu una vegada estiguis donat d'alta."
