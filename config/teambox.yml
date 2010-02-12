@@ -61,6 +61,13 @@ defaults: &DEFAULTS
   time_zone: UTC
 
   asset_max_file_size: 50
+  
+  # Set enabled: true to use S3 storage instead of local filesystem storage.
+  amazon_s3:
+    enabled: false
+    bucket_development: teambox_dev_assets
+    bucket_test: teambox_test_assets
+    bucket_production: teambox_assets
 
 development:
   <<: *DEFAULTS

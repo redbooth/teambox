@@ -1,0 +1,12 @@
+login: &login
+  access_key_id: 
+  secret_access_key: 
+
+development:
+  <<: *login
+
+test:
+  <<: *login
+
+production:
+  <<: *login
