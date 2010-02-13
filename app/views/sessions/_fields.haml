@@ -1,6 +1,7 @@
 .login.text_field
   = label_tag :login, t('.username_or_email')
-  %p.right_link= link_to t('.signup'), signup_path, :tabindex => 202
+  - if @signups_enabled
+    %p.right_link= link_to t('.signup'), signup_path, :tabindex => 202
   = text_field_tag 'login', @login, :class => 'focus', :tabindex => 200
 
 .password.text_field

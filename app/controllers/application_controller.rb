@@ -220,5 +220,9 @@ class ApplicationController < ActionController::Base
         @insert_element = @insert_id == 0 ? nil : "page_slot_#{@insert_id}"
       end
     end
+    
+    def signups_enabled?
+      APP_CONFIG['allow_signups'] || User.count == 0
+    end
         
 end

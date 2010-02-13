@@ -1,5 +1,5 @@
 development:
-  adapter: sqlite3
+  adapter: mysql
   server: localhost
   username: root 
   password:

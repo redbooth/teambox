@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
   skip_before_filter :load_project
 
   def new  
+    @signups_enabled = signups_enabled?
     respond_to do |format|
       format.html { redirect_to '/' if logged_in? }
       format.m
@@ -15,6 +16,7 @@ class SessionsController < ApplicationController
   end
 
   def create
+    @signups_enabled = signups_enabled?
     logout_keeping_session!
     
     user = User.authenticate(params[:login], params[:password])

@@ -49,8 +49,10 @@ defaults: &DEFAULTS
   privacy_url: http://www.teambox.com/privacy
   terms_url: http://www.teambox.com/terms
 
-  # [NOT IMPLEMENTED]
-  # If false, the only way of having an account will be being invited by another user.
+  # To disable signups, set allow_signups: false.
+  #   If signups are disabled, the only way to create an account will be being invited
+  #   by another user. If there are no users in the system, you will be asked to
+  #   create the first one.
   allow_signups: true
   
   # Address where your users should write to ask for help. Accepts an email or website.
