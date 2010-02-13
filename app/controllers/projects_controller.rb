@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
         flash[:notice] = I18n.t('projects.new.created')
         f.html { redirect_to project_path(@project) }
       else
-        flash[:error] = I18n.t('projects.new.invalid_project')
+        flash.now[:error] = I18n.t('projects.new.invalid_project')
         f.html { render :new }
       end
     end
