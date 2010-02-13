@@ -51,7 +51,7 @@ class User
       Digest::MD5.hexdigest(gravatar_email)
     end
 
-    def gravatar(size, default='wavatar')
+    def gravatar(size, default='identicon')
       url = "http://www.gravatar.com/avatar/#{gravatar_id}?s=#{AvatarSizes[size][0]}"
       url += "&d=#{default}" if default
       url
