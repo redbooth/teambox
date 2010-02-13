@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   before_filter :find_user, :only => [ :show, :confirm_email, :login_from_reset_password ]
   before_filter :load_invitation, :only => [ :new, :create ]
-  before_filter :allow_signups?, :only => [ :new, :create ]
   skip_before_filter :login_required,  :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password ]
   skip_before_filter :confirmed_user?, :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password, :unconfirmed_email ]
   skip_before_filter :load_project
@@ -34,6 +33,12 @@ class UsersController < ApplicationController
     logout_keeping_session!
     @user = User.new(params[:user])
     @user.confirmed_user = true if @invitation && @invitation.email == @user.email
+    
+    unless @invitation || signups_enabled?
+      flash[:error] = "Public signups are not allowed in this system"
+      redirect_to '/'
+      return
+    end
 
     if @user && @user.save && @user.errors.empty?
       self.current_user = @user
@@ -133,13 +138,6 @@ class UsersController < ApplicationController
       if params[:invitation]
         @invitation = Invitation.find_by_token(params[:invitation])
         @invitation_token = params[:invitation] if @invitation
-      end
-    end
-    
-    def allow_signups?
-      unless signups_enabled?
-        flash[:error] = "Signups are not allowed in this system"
-        redirect_to '/'
       end
     end
 end
