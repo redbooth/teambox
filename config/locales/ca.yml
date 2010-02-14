@@ -226,7 +226,6 @@ ca:
       name_description: "Escull un nom breu i descriptiu. Per exemple: Taggart Transcontinental"
       permalink: URL
       permalink_description: "Això formarà l'adreça web del teu projecte. L'has de mantenir breu. No es permeten espais"
-      permalink_prefix: "http://{{domain}}/projects/"
       archived: Arxivar aquest projecte
       confirm_delete: "Estàs segur de que vols esborrar aquest projecte definitivament? NO HI HA UN PAS ENRERE. Si el vols conservar, utilitza Arxivar Projecte."
     new_primer:

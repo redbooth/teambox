@@ -224,5 +224,5 @@ class ApplicationController < ActionController::Base
     def signups_enabled?
       APP_CONFIG['allow_signups'] || User.count == 0
     end
-        
+
 end

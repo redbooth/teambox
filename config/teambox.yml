@@ -6,9 +6,10 @@
 # This block defines defaults, shared for all environments.
 # You can override them individually under development, test or production.
 defaults: &DEFAULTS
-  # The domain from where your app is served from. 
+  # The domain from where your app is served.
   app_domain: app.teambox.com
 
+  # How many activities should activity feeds display?
   activities_per_page: 25
   autorefresh_interval: 60 # seconds
   
@@ -58,11 +59,13 @@ defaults: &DEFAULTS
   # Address where your users should write to ask for help. Accepts an email or website.
   support: http://help.teambox.com
   
+  # Server's timezone
   time_zone: UTC
 
-  asset_max_file_size: 50
+  asset_max_file_size: 50 # Mb
   
   # Set enabled: true to use S3 storage instead of local filesystem storage.
+  # If enabled, configure your access keys in amazon_s3.yml
   amazon_s3:
     enabled: false
     bucket_development: teambox_dev_assets

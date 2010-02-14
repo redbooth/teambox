@@ -23,7 +23,7 @@ module ProjectsHelper
   end
 
   def permalink_example(permalink)
-    out = t('projects.fields.permalink_prefix', :domain => APP_CONFIG['app_domain'])
+    out = host_with_protocol + projects_path + '/'
     out << content_tag(:span, permalink, :id => 'handle', :class => 'good')
     content_tag(:div, out, :id => 'preview')
   end

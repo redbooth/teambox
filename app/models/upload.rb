@@ -30,7 +30,7 @@ class Upload < RoleRecord
   def url(*args)
     u = asset.url(*args)
     u = u.sub(/\.$/,'')
-    (APP_CONFIG['amazon_s3']['enabled'] ? u : 'http://' + APP_CONFIG['app_domain'] + u)
+    u
   end
 
   def file_name

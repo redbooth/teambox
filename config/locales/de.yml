@@ -226,7 +226,6 @@ de:
       name_description: "Wählen Sie einen kurzen und aussagekräfigen Titel. Zum Beispiel: Koslowski Design"
       permalink: URL
       permalink_description: "Dies wird die Web-Adresse Ihres Projektes. Machen Sie sie so kurz wie möglich. Leerzeichen sind nicht erlaubt."
-      permalink_prefix: "http://{{domain}}/projects/"
       archived: Dieses Projekt archivieren
       confirm_delete: "Sind Sie sicher, dass Sie dieses Projekt endgültig löschen wollen? DIES KANN NICHT RÜCKGÄNGIG GEMACHT WERDEN! Wenn Sie das Projekt behalten wollen, nutzen Sie bitte 'Dieses Projekt archivieren'."
     new_primer:

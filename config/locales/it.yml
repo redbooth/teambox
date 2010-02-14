@@ -226,7 +226,6 @@ it:
       name_description: "Imposta nome breve e descrittivo. Per esempio: Taggart Transcontinental"
       permalink: URL
       permalink_description: "Questo sarà l'indirizzo web del tuo progetto. Mantienilo breve. Non si accettano spazi"
-      permalink_prefix: "http://{{domain}}/projects/"
       archived: Archivia questo progetto
       confirm_delete: "Sei sicuro di voler eliminare questo progetto definitivamente? L'OPERAZIONE E' IRREVERSIBILE. Se vuoi conservarlo, usa Archivia il Progetto."
     new_primer:

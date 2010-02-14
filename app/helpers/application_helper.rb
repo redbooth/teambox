@@ -299,4 +299,8 @@ module ApplicationHelper
   def autoresize(id)
     javascript_tag "activateResize('#{id.to_s}')"
   end
+  
+  def host_with_protocol
+    request.protocol + request.host + request.port_string
+  end
 end
