@@ -11,8 +11,9 @@ class User
     @project = self.projects.find_by_name("John Galt Line")
 
     unless @project
-      @project = self.projects.create!(:name => 'John Galt Line', :user_id => id )
-
+      @project = self.projects.new(:name => 'John Galt Line', :user_id => id )
+      @project.save!
+      
       [@dagny, @hank, @ellis].each { |u| @project.add_user(u) }
 
       example_comment(@project, @dagny, "Hey guys, I'm setting up a project on Teambox to build the John Galt line. Hope it helps!")
