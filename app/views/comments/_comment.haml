@@ -1,4 +1,4 @@
-- cache "#{@current_user.language}_#{@current_user.time_zone}_comment_#{comment.id}" do
+- cache "#{@current_user.language}_#{@current_user.time_zone.gsub(/\W/,'')}_comment_#{comment.id}" do
   .comment{:id => "comment_#{comment.id}" }
     .info
       = #comment_actions_link(comment)
