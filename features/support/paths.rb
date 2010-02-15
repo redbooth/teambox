@@ -48,6 +48,9 @@ module NavigationHelpers
     when /the page of the "([^\"]*)" task/
       task = Task.find_by_name($1)
       project_task_list_task_path(task.project, task.task_list, task)
+    when /the profile of "([^\"]*)"/
+      user = User.find_by_login($1)
+      user_path(user)
     when /my settings page/
       account_settings_path
     #when /the index page for (.+)/

@@ -20,12 +20,21 @@ class UsersController < ApplicationController
 
   def show
     @card = @user.card
+    projects_shared = @user.projects_shared_with(@current_user)
     @activities = @user.activities_visible_to_user(@current_user)
+    
     respond_to do |format|
-      format.html
-      format.xml  { render :xml => @user.to_xml }
-      format.json { render :as_json => @user.to_xml }
-      format.yaml { render :as_yaml => @user.to_xml }
+      if @user != @current_user and projects_shared.empty?
+        format.html {
+          flash[:error] = t('users.activation.invalid_user')
+          redirect_to '/'
+        }
+      else
+        format.html
+        format.xml  { render :xml => @user.to_xml }
+        format.json { render :as_json => @user.to_xml }
+        format.yaml { render :as_yaml => @user.to_xml }
+      end
     end
   end
 
@@ -104,7 +113,7 @@ class UsersController < ApplicationController
         flash[:error] = t('users.activation.invalid')
       end
     else
-      flash[:error] = t('users.invalid_user')
+      flash[:error] = t('users.activation.invalid_user')
     end
     redirect_to '/'
   end
