@@ -4,6 +4,7 @@
  *  Heavily based on Facebox by Chris Wanstrath - http://famspam.com/facebox
  *  First ported to Prototype by Phil Burrows - http://blog.philburrows.com
  *  Additional modifications by James Urquhart - http://jamesu.net
+ *  Contains code from facybox, Copyright 2009 Mauricio Wolff [ chris@ozmm.org ]
  *
  *  Licensed under the MIT:
  *  http://www.opensource.org/licenses/mit-license.php
@@ -27,6 +28,8 @@ var Facebox = Class.create({
     
     this.container = $('facebox');
     this.contentHolder = $$('#facebox .content').first();
+    this.footer = $$('#facebox .footer').first();
+    this.is_image = false;
     
     this.documentEventHandler = this.onDocumentEvent.bindAsEventListener(this);
     
@@ -38,11 +41,18 @@ var Facebox = Class.create({
       this.hide();
     }.bindAsEventListener(this));
 
-	Event.observe($$('#facebox .download').first(), 'click', function(e) {
+	Event.observe($$('#facebox .footer').first(), 'click', function(e) {
+	  if (!this.is_image)
+	    return false;
       Event.stop(e);
       document.location = this.href;
       this.hide();
     }.bindAsEventListener(this));
+  },
+
+  fitContent: function(size) {
+	var size = size ? size : this.contentHolder.getDimensions();
+	this.footer.setStyle({'width': size.width + 'px', 'height': size.height + 'px'});	
   },
   
   onAnchorClick: function(anchor) {
@@ -62,20 +72,27 @@ var Facebox = Class.create({
       content.innerHTML = target.innerHTML;
       
       this.setContent(content, className);
+      this.centralize();
+      this.is_image = false;
     } 
     else if (anchor.href.match(/\.(png|jpg|jpeg|gif)$/i)) {
       var image = new Image();
-      image.src = anchor.href;      
+      this.is_image = true;
       image.onload = function() {
         this.setContent('<div class="image"><img src="' + image.src + '" /></div>', className);
+        this.centralize();
+        this.fitContent({width:image.width, height:image.height});
       }.bind(this);
-      
+	  image.src = anchor.href;
     } 
     else {
+      this.is_image = false;
       new Ajax.Request(anchor.href, {
         method: 'get',
         onComplete: function(transport) {
           this.setContent(transport.responseText, className);
+          this.centralize();
+          this.fitContent();
         }.bind(this)
       });
     }
@@ -87,6 +104,14 @@ var Facebox = Class.create({
       this.hide();
     }
   },
+
+  centralize: function() {
+	var pageScroll = document.viewport.getScrollOffsets();
+	this.container.setStyle({
+      'top': pageScroll.top + (document.viewport.getHeight() / 10) + 'px',
+      'left': document.viewport.getWidth() / 2 - (this.container.getWidth() / 2) + 'px'
+    });	
+  },
   
   setLoading: function() {
     if (this.currentClassName) {
@@ -95,13 +120,7 @@ var Facebox = Class.create({
     }
     
     this.contentHolder.update('<div class="loading">Loading...</div>');
-    
-    var pageScroll = document.viewport.getScrollOffsets();
-    
-    this.container.setStyle({
-      'top': pageScroll.top + (document.viewport.getHeight() / 10) + 'px',
-      'left': document.viewport.getWidth() / 2 - (this.container.getWidth() / 2) + 'px'
-    });
+    this.centralize();
     
     return this;
   },
@@ -113,12 +132,9 @@ var Facebox = Class.create({
     }
     
     this.contentHolder.update(content);
+    this.centralize();
     
-    this.container.setStyle({
-      'left': document.viewport.getWidth() / 2 - (this.container.getWidth() / 2) + 'px'
-    });
-    
-    $$('#facebox .body').first().childElements().invoke('show');
+    this.footer.childElements().invoke('show');
     
     return this;
   },
