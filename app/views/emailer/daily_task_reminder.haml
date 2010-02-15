@@ -5,3 +5,4 @@
   = tasks_for_daily_reminder(@tasks[:late], @user, I18n.t('users.daily_task_reminder_email.late_tasks'))
   = tasks_for_daily_reminder(@tasks[:today], @user, I18n.t('users.daily_task_reminder_email.tasks_for_today'))
   = tasks_for_daily_reminder(@tasks[:tomorrow], @user, I18n.t('users.daily_task_reminder_email.tasks_for_tomorrow'))
+  = tasks_for_daily_reminder(@tasks[:for_next_two_weeks], @user, I18n.t('users.daily_task_reminder_email.tasks_for_next_two_weeks'))

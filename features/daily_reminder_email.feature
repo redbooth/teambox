@@ -47,6 +47,19 @@ Feature: Daily reminder for tasks email
     Then I should see "Tasks for tomorrow" in the email body
     Then I should see "Give water to the flowers" in the email body
 
+  @wip
+  Scenario: User with a task due some time in the next two weeks
+    Given I am currently "mislav"
+    And I have the daily task reminders turned on
+    And there is a task called "Give water to the flowers"
+    And the task called "Give water to the flowers" is assigned to me
+    And the task called "Give water to the flowers" is due in 4 days
+    When the daily reminders for tasks are sent
+    When I open the email with subject "Daily task reminder"
+    Then I should see "Tasks for next two weeks" in the email body
+    Then I should see "Give water to the flowers" in the email body
+    But I should not see "Tasks for tomorrow" in the email body
+
   Scenario: User in a project that has a task due today but not assigned that task
     Given I am currently "mislav"
     And there is a user called "balint"

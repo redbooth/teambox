@@ -189,6 +189,7 @@ en:
       late_tasks: "Late tasks"
       tasks_for_today: "Tasks for today"
       tasks_for_tomorrow: "Tasks for tomorrow"
+      tasks_for_next_two_weeks: "Tasks for next two weeks"
   projects:
     index:
       title: News feed for all your projects

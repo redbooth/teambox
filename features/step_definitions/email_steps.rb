@@ -99,6 +99,10 @@ Then /^(?:I|they) should see "([^"]*?)" in the email body$/ do |text|
   current_email.body.should =~ Regexp.new(text)
 end
 
+Then /^(?:I|they) should not see "([^"]*?)" in the email body$/ do |text|
+  current_email.body.should_not =~ Regexp.new(text)
+end
+
 # DEPRECATED
 # The following methods are left in for backwards compatibility and
 # should be removed by version 0.3.5.

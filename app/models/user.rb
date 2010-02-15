@@ -186,6 +186,9 @@ class User < ActiveRecord::Base
         elsif Date.today + 1 == task.due_on
           tasks[:tomorrow] ||= []
           tasks[:tomorrow].push(task)
+        elsif task.due_on > Date.today and task.due_on < Date.today + 15
+          tasks[:for_next_two_weeks] ||= []
+          tasks[:for_next_two_weeks].push(task)
         elsif Date.today > task.due_on
           tasks[:late] ||= []
           tasks[:late].push(task)
