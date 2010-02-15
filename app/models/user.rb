@@ -179,7 +179,8 @@ class User < ActiveRecord::Base
   def self.send_daily_task_reminders
     all(:conditions => { :wants_task_reminder => true }).each do |user|
       assigned_tasks = user.assigned_tasks(:all)
-      tasks_by_dueness = assigned_tasks.inject({}) do |tasks, task|
+      tasks_without_due_date, tasks_with_due_date  = assigned_tasks.partition { |task| task.due_on.nil? }
+      tasks_by_dueness = tasks_with_due_date.inject({}) do |tasks, task|
         if Date.today == task.due_on
           tasks[:today] ||= []
           tasks[:today].push(task)
@@ -195,6 +196,7 @@ class User < ActiveRecord::Base
         end
         tasks
       end
+      tasks_by_dueness[:no_due_date] = tasks_without_due_date if [1, 4].include?(Date.today.wday)
       Emailer.deliver_daily_task_reminder(user, tasks_by_dueness) unless tasks_by_dueness.values.flatten.empty?
     end
   end

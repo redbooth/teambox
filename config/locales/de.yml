@@ -184,6 +184,13 @@ de:
       complete_your_profile: "Vervollständigen Sie Ihr Profil, damit Ihr Team Sie über Ihre Kontaktdaten auf dem Laufenden halten kann!"
       completeness: "{{percentage}}% vollständig"
       to_get_to: zu erhalten
+    daily_task_reminder_email:
+      daily_task_reminder: "Daily task reminder"
+      late_tasks: "Late tasks"
+      tasks_for_today: "Tasks for today"
+      tasks_for_tomorrow: "Tasks for tomorrow"
+      tasks_for_next_two_weeks: "Tasks for next two weeks"
+      tasks_without_a_due_date: "Tasks without a due date"
   projects:
     index:
       title: "Nachrichten Feeds für alle eigenen Projekte"

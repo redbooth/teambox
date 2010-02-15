@@ -184,6 +184,13 @@ es:
       complete_your_profile: Así tus compañeros estarán al día de tus datos de contacto.
       completeness: "Completo al {{percentage}}%"
       to_get_to: para
+    daily_task_reminder_email:
+      daily_task_reminder: "Daily task reminder"
+      late_tasks: "Late tasks"
+      tasks_for_today: "Tasks for today"
+      tasks_for_tomorrow: "Tasks for tomorrow"
+      tasks_for_next_two_weeks: "Tasks for next two weeks"
+      tasks_without_a_due_date: "Tasks without a due date"
   projects:
     index:
       title: Actividad en todos tus proyectos

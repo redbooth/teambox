@@ -25,7 +25,7 @@ Feature: Daily reminder for tasks email
     Then I should receive an email
     When I open the email with subject "Daily task reminder"
     Then I should see "Tasks for today" in the email body
-    Then I should see "Give water to the flowers" in the email body
+    And I should see "Give water to the flowers" in the email body
 
   Scenario: User with the task reminders turned off
     Given I am currently "mislav"
@@ -45,9 +45,8 @@ Feature: Daily reminder for tasks email
     When the daily reminders for tasks are sent
     When I open the email with subject "Daily task reminder"
     Then I should see "Tasks for tomorrow" in the email body
-    Then I should see "Give water to the flowers" in the email body
+    And I should see "Give water to the flowers" in the email body
 
-  @wip
   Scenario: User with a task due some time in the next two weeks
     Given I am currently "mislav"
     And I have the daily task reminders turned on
@@ -57,8 +56,41 @@ Feature: Daily reminder for tasks email
     When the daily reminders for tasks are sent
     When I open the email with subject "Daily task reminder"
     Then I should see "Tasks for next two weeks" in the email body
-    Then I should see "Give water to the flowers" in the email body
+    And I should see "Give water to the flowers" in the email body
     But I should not see "Tasks for tomorrow" in the email body
+
+  Scenario Outline: User assigned a task without a due date - today is Monday or Thursday
+    Given I am currently "mislav"
+    And I have the daily task reminders turned on
+    And there is a task called "Give water to the flowers"
+    And the task called "Give water to the flowers" is assigned to me
+    And the task called "Give water to the flowers" does not have a due date
+    And today is "<date>"
+    When the daily reminders for tasks are sent
+    When I open the email with subject "Daily task reminder"
+    Then I should see "Tasks without a due date" in the email body
+    And I should see "Give water to the flowers" in the email body
+
+    Examples:
+      | date        |
+      | 2010/02/15  |
+      | 2010/02/18  |
+
+  Scenario Outline: User assigned a task without a due date - today is NOT Monday or Thursday
+    Given I am currently "mislav"
+    And I have the daily task reminders turned on
+    And there is a task called "Give water to the flowers"
+    And the task called "Give water to the flowers" is assigned to me
+    And the task called "Give water to the flowers" does not have a due date
+    And today is "<date>"
+    When the daily reminders for tasks are sent
+    Then I should receive no emails
+
+    Examples:
+      | date        |
+      | 2010/02/16  |
+      | 2010/02/17  |
+      | 2010/02/20  |
 
   Scenario: User in a project that has a task due today but not assigned that task
     Given I am currently "mislav"

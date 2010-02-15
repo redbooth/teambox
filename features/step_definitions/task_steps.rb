@@ -46,6 +46,11 @@ Given /^the task called "([^\"]*)" is due in (\d+) days?$/ do |name, in_days|
   Task.find_by_name(name).update_attribute(:due_on, Date.today + in_days.to_i)
 end
 
+Given /^the task called "([^\"]*)" does not have a due date$/ do |name|
+  Given %(there is a task called "#{name}")
+  Task.find_by_name(name).update_attribute(:due_on, nil)
+end
+
 Given /^the task called "([^\"]*)" is assigned to me$/ do |name|
   Given %(there is a task called "#{name}")
   task = Task.find_by_name(name)
