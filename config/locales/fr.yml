@@ -358,8 +358,12 @@ fr:
     link:
       new: + Nouvelle tâche
       edit: Editer
-      show_archived_tasks: "Show archived tasks"
-      hide_archived_tasks: "Hide archived tasks"
+      show_archived_tasks:
+        one: "Montrer 1 tâche archivée"
+        other: "Montrer {{count}} tâches archivées"
+      hide_archived_tasks:
+        one: "Cacher 1 tâche archivée"
+        other: "Cacher {{count}} tâches archivées"
     destroy_message:
       deleted: "La tâche <b>{{name}}</b> a été supprimée"
     archive_message:

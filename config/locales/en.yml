@@ -358,8 +358,12 @@ en:
     link:
       new: + Add Task
       edit: Edit
-      show_archived_tasks: "Show archived tasks"
-      hide_archived_tasks: "Hide archived tasks"
+      show_archived_tasks:
+        one: "Show 1 archived task"
+        other: "Show {{count}} archived tasks"
+      hide_archived_tasks:
+        one: "Hide 1 archived task"
+        other: "Hide {{count}} archived tasks"
     destroy_message:
       deleted: "The Task <b>{{name}}</b> was successfully deleted!"
     archive_message:

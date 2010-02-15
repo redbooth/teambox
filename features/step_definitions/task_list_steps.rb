@@ -23,3 +23,9 @@ When /^I follow "([^\"]*)" in the "([^\"]*)" task list panel$/ do |link_text, ta
   project = task_list.project
   When %(I follow "#{link_text}" within "#project_#{project.id}_task_list_#{task_list.id}_with_tasks")
 end
+
+Then /^I should not see "([^\"]*)" in the "([^\"]*)" task list panel$/ do |link_text, task_list_name|
+  task_list = TaskList.find_by_name(task_list_name)
+  project = task_list.project
+  Then %(I should not see "#{link_text}" within "#project_#{project.id}_task_list_#{task_list.id}_with_tasks")
+end

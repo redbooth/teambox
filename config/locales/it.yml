@@ -358,8 +358,12 @@ it:
     link:
       new: + Nuovo compito
       edit: Modifica
-      show_archived_tasks: "Mostra i compiti archiviati"
-      hide_archived_tasks: "Nascondi i compiti archiviati"
+      show_archived_tasks:
+        one: "Mostra 1 compito archiviato"
+        other: "Mostra {{count}} compiti archiviati"
+      hide_archived_tasks:
+        one: "Nascondi 1 compito archiviato"
+        other: "Nascondi {{count}} compiti archiviati"
     destroy_message:
       deleted: "Il compito <b>{{name}}</b> è stato cancellato con successo!"
     archive_message:
@@ -626,9 +630,9 @@ it:
       all_tasks: Tutti i compiti
       unarchived_tasks: "Compiti non archiviati"
       my_tasks: "I miei compiti ({{count}})"
-      everybodys_tasks: "Compiti di tutti"	  
+      everybodys_tasks: "Compiti di tutti"
       show_archived_tasks: "Mostra {{count}} compiti archiviati"
-      hide_archived_tasks: "Nascondi i compiti archiviati"	  
+      hide_archived_tasks: "Nascondi i compiti archiviati"
     footer:
       support: Problemi? Invia feedback!
       mobile: Versione mobile

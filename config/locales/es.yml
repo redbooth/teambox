@@ -358,8 +358,12 @@ es:
     link:
       new: + Nueva tarea
       edit: Editar
-      show_archived_tasks: "Show archived tasks"
-      hide_archived_tasks: "Hide archived tasks"
+      show_archived_tasks:
+        one: "Muestra 1 tarea archivada"
+        other: "Muestra {{count}} tareas archivadas"
+      hide_archived_tasks:
+        one: "Oculta 1 tarea archivada"
+        other: "Oculta {{count}} tareas archivadas"
     destroy_message:
       deleted: "La tarea <b>{{name}}</b> se ha borrado"
     archive_message:
