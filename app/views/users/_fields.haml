@@ -48,10 +48,6 @@
     #change_password_link
       = link_to_function t('.change_password'), show_user_password_fields
       
-    .time_zone.text_field
-      = f.label :time_zone, t('.time_zone')
-      = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"
-
     .first_day_of_week.select
       = f.label :first_day_of_week, t('.first_day_of_week')
       = f.select :first_day_of_week, [[t('.sunday'), 'sunday'],[t('.monday'), 'monday']]
@@ -60,7 +56,11 @@
   .language.select
     = f.label :language, t('.language')
     = f.select :language, User::LANGUAGES
-              
+    
+  .time_zone.text_field
+    = f.label :time_zone, t('.time_zone')
+    = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"    
+
 - if sub_action == 'profile'
   .description.text_area
     = f.label :biography, t('.biography')
