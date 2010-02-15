@@ -10,6 +10,7 @@ ca:
     accept: Acceptar
     decline: Rebutjar
     cancel: Cancel.lar
+    close: Close
     save: Guardar
     show_more: "Veure {{number}} més"
     print: Imprimir aquesta pàgina

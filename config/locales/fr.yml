@@ -10,6 +10,7 @@ fr:
     accept: Accepter
     decline: Refuser
     cancel: Annuler
+    close: Close
     save: Enregistrer
     show_more: "Afficher les {{number}} suivants"
     print: Imprimer cette page

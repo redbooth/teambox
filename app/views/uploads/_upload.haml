@@ -1,6 +1,6 @@
 .upload{ :id => "upload_#{upload.id}" }
   .info
-    = link_to upload.file_type, upload.url, :class => upload.file_type
+    = link_to upload.file_type, upload.url, :class => upload.file_type, :rel => (upload.image? ? 'facebox' : '')
   .block
     .filename.show_details
       .date

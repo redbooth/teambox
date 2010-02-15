@@ -1,0 +1,20 @@
+#facebox{:style => 'display:none'}
+  .popup
+    %table
+      %tbody
+        %tr
+          %td.nw
+          %td.n
+          %td.ne
+        %tr
+          %td.w
+          %td.body
+            .footer
+              %a.download{:href => '#'}= t('uploads.upload.download')
+            %a.close{:href => '#', :alt => t('common.close')}
+            .content
+          %td.e
+        %tr
+          %td.sw
+          %td.s
+          %td.se

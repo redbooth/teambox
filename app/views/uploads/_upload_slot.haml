@@ -1,7 +1,7 @@
 .upload{ :id => "upload_#{upload_slot.id}" }
   = page_upload_actions_link(page,upload_slot)
   .info
-    = link_to upload_slot.file_type, upload_slot.url, :class => upload_slot.file_type
+    = link_to upload_slot.file_type, upload_slot.url, :class => upload_slot.file_type, :rel => (upload.image? ? 'facebox' : '')
   .block
     .filename.show_details
       .date

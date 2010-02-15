@@ -9,6 +9,7 @@
 //= require <weakling>
 //= require <fyi>
 //= require <calendar_date_select>
+//= require <facebox>
 
 replace_ids = function(s){
   var new_id = new Date().getTime();

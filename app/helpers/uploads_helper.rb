@@ -65,7 +65,7 @@ module UploadsHelper
   def upload_link_with_thumbnail(upload)
     link_to image_tag(upload.asset(:thumb)),
       upload.url,
-      :class => 'link_to_upload'
+      :class => 'link_to_upload', :rel => 'facebox'
   end
 
   def upload_area(comment)

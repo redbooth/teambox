@@ -277,6 +277,10 @@ module ApplicationHelper
   def latest_announcement
     render :partial => 'shared/latest_announcement'
   end
+  
+  def face_box
+    render :partial => 'shared/facebox'
+  end
 
   def errors_for(model, field)
     error = case errors = model.errors.on(field)

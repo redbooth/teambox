@@ -10,6 +10,7 @@ it:
     accept: Accetta
     decline: Rifiuta
     cancel: Annulla
+    close: Close
     save: Salva
     show_more: "Mostra {{number}} in più"
     print: Stampa la pagina

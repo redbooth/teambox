@@ -10,6 +10,7 @@ en:
     accept: Accept
     decline: Decline
     cancel: Cancel
+    close: Close
     save: Save
     show_more: Show {{number}} more
     print: Print this page

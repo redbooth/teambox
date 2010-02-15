@@ -10,6 +10,7 @@ de:
     accept: Annehmen
     decline: Ablehnen
     cancel: Abbrechen
+    close: Close
     save: Speichern
     show_more: Zeige {{number}} mehr
     print: Seite drucken
