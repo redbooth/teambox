@@ -6,7 +6,7 @@ module EmailerHelper
   def email_global
     'font-size: 14px; color: rgb(50,50,50); font-family: Helvetica, Arial'
   end
-  
+
   def email_box
     'background-color: rgb(255,255,200); margin: 10px; padding: 10px; border: 1px rgb(220,220,150) solid'
   end
@@ -18,19 +18,19 @@ module EmailerHelper
     when :big   then 'font-size: 18px; color: rgb(0,0,0);'
     end
   end
-  
+
   def email_answer_line
     Emailer::ANSWER_LINE
   end
-  
+
   def answer_instructions
     render :partial => 'emailer/answer'
   end
-  
+
   def emailer_list_comments(comments)
     render :partial => 'emailer/comment', :collection => comments, :locals => { :unread => comments.first }
   end
-  
+
   def emailer_recent_conversations(project)
     render :partial => 'emailer/recent_conversations', :locals => { :project => project }
   end
@@ -38,8 +38,15 @@ module EmailerHelper
   def emailer_recent_tasks(project)
     render :partial => 'emailer/recent_tasks', :locals => { :project => project }
   end
-  
+
   def emailer_answer_to_this_email
     content_tag(:p,I18n.t('emailer.notify.reply')) if APP_CONFIG['allow_incoming_email']
   end
+
+  def tasks_for_daily_reminder(tasks, user, header)
+    if tasks && !tasks.empty?
+      render :partial => 'emailer/tasks_for_daily_reminder', :locals => { :tasks => tasks, :user => user, :header_text => header }
+    end
+  end
+
 end

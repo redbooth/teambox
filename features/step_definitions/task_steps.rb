@@ -31,6 +31,11 @@ Given /^the task called "([^\"]*)" is due today$/ do |name|
   Task.find_by_name(name).update_attribute(:due_on, Date.today)
 end
 
+Given /^the task called "([^\"]*)" was due (\d+) days ago$/ do |name, days_ago|
+  Given %(there is a task called "#{name}")
+  Task.find_by_name(name).update_attribute(:due_on, Date.today - days_ago.to_i)
+end
+
 Given /^the task called "([^\"]*)" is due tomorrow$/ do |name|
   Given %(there is a task called "#{name}")
   Task.find_by_name(name).update_attribute(:due_on, Date.today + 1)
@@ -112,3 +117,5 @@ Then /^I should not see the following tasks:$/ do |table|
     Then %(I should not see the task called "#{hash['task_name']}" in the "#{hash['task_list_name']}" task list panel)
   end
 end
+
+## daily task reminder email steps

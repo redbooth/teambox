@@ -178,10 +178,21 @@ class User < ActiveRecord::Base
 
   def self.send_daily_task_reminders
     all(:conditions => { :wants_task_reminder => true }).each do |user|
-      tasks = user.assigned_tasks(:all)
-      # only tasks for today are included in the notif. email
-      tasks = tasks.select { |task| task.due_on == Date.today }
-      Emailer.deliver_daily_task_reminder(user, tasks) unless tasks.empty?
+      assigned_tasks = user.assigned_tasks(:all)
+      tasks_by_dueness = assigned_tasks.inject({}) do |tasks, task|
+        if Date.today == task.due_on
+          tasks[:today] ||= []
+          tasks[:today].push(task)
+        elsif Date.today + 1 == task.due_on
+          tasks[:tomorrow] ||= []
+          tasks[:tomorrow].push(task)
+        elsif Date.today > task.due_on
+          tasks[:late] ||= []
+          tasks[:late].push(task)
+        end
+        tasks
+      end
+      Emailer.deliver_daily_task_reminder(user, tasks_by_dueness) unless tasks_by_dueness.values.flatten.empty?
     end
   end
 
@@ -191,7 +202,7 @@ class User < ActiveRecord::Base
       select { |task| task.assigned_to?(self) }.
       sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
   end
-  
+
   def in_project(project)
     project.people.select { |person| person.user_id == self.id }.first
   end

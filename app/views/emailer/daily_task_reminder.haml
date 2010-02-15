@@ -2,9 +2,6 @@
 
   = answer_instructions
 
-  %h2 Your tasks for today
-  
-  %ul{ :style => email_text(:normal) }
-    - @tasks_for_today.each do |task|
-      %li
-        = link_to task.name, user_task_list_task_url(:user_id => @user, :task_list_id => task.task_list, :id => task)
+  = tasks_for_daily_reminder(@tasks[:late], @user, I18n.t('users.daily_task_reminder_email.late_tasks'))
+  = tasks_for_daily_reminder(@tasks[:today], @user, I18n.t('users.daily_task_reminder_email.tasks_for_today'))
+  = tasks_for_daily_reminder(@tasks[:tomorrow], @user, I18n.t('users.daily_task_reminder_email.tasks_for_tomorrow'))

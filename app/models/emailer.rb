@@ -39,7 +39,7 @@ class Emailer < ActionMailer::Base
     subject       "#{invitation.user.name} shared [#{invitation.project.name}] with you"
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
-  
+
   def notify_comment(user, project, comment)
     defaults
     recipients    user.email
@@ -87,12 +87,12 @@ class Emailer < ActionMailer::Base
   def daily_task_reminder(user, tasks)
     defaults
     recipients    user.email
-    subject       "Your tasks for today"
-    body          :user => user, :tasks_for_today => tasks
+    subject       I18n.t("users.daily_task_reminder_email.daily_task_reminder")
+    body          :user => user, :tasks => tasks
   end
 
   private
-  
+
     def from_address(recipient = "no-reply", name = "Teambox")
       "#{name} <#{recipient}@#{APP_CONFIG['outgoing']['from']}>"
     end

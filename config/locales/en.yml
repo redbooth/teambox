@@ -108,7 +108,7 @@ en:
       notify_conversations: Notify me when I'm watching a conversation
       notify_task_lists: Notify me when I'm watching a task list
       notify_tasks: Notify me when I'm watching a task
-      wants_task_reminder: "Send me a daily email of my tasks"
+      wants_task_reminder: "Send me a 22 email of my tasks"
       invalid_login: "use only letters, numbers and _"
       avatar:
         field: Your avatar
@@ -184,6 +184,11 @@ en:
       complete_your_profile: Complete your profile so your team can keep in touch with your contact information!
       completeness: "{{percentage}}% complete"
       to_get_to: to get to
+    daily_task_reminder_email:
+      daily_task_reminder: "Daily task reminder"
+      late_tasks: "Late tasks"
+      tasks_for_today: "Tasks for today"
+      tasks_for_tomorrow: "Tasks for tomorrow"
   projects:
     index:
       title: News feed for all your projects

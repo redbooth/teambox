@@ -1,0 +1,6 @@
+%h2= header_text
+
+%ul{ :style => email_text(:normal) }
+  - tasks.each do |task|
+    %li
+      = link_to task.name, user_task_list_task_url(:user_id => user, :task_list_id => task.task_list, :id => task)
