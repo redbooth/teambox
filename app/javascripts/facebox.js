@@ -104,6 +104,7 @@ var Facebox = Class.create({
         this.setContent('<div class="image"><img src="' + image.src + '" /></div>', className);
         this.centralize();
         this.fitContent({width:image.width, height:image.height});
+        setTimeout(function(){this.centralize();}, 0);
       }.bind(this);
 	  image.src = anchor.href;
     } 
