@@ -9326,6 +9326,28 @@ var Facebox = Class.create({
 	this.footer.setStyle({'width': size.width + 'px', 'height': size.height + 'px'});
   },
 
+  showOverlay: function() {
+	if(!$('facebox_overlay')){
+      $(document.body).insert({bottom:'<div id="facebox_overlay" class="facebox_hide"></div>'});
+    }
+
+    var overlay = $('facebox_overlay');
+    overlay.hide().addClassName("facebox_overlayBG").setStyle({
+      'opacity': 0.3});
+    Effect.Appear(overlay, { duration: .3, to:0.3 });
+  },
+
+  hideOverlay: function() {
+	var overlay = $('facebox_overlay');
+    Effect.Fade(overlay, { duration: .3, from:0.3,
+	  afterFinish: function(){
+	    overlay.removeClassName("facebox_overlayBG").
+	            addClassName("facebox_hide").
+	            remove();
+      }
+    });
+  },
+
   onAnchorClick: function(anchor) {
     this.setLoading();
     this.show();
@@ -9349,8 +9371,8 @@ var Facebox = Class.create({
       this.is_image = true;
       image.onload = function() {
         this.setContent('<div class="image"><img src="' + image.src + '" /></div>', className);
-	    this.centralize();
-		this.fitContent({width:image.width, height:image.height});
+        this.centralize();
+        this.fitContent({width:image.width, height:image.height});
       }.bind(this);
 	  image.src = anchor.href;
     }
@@ -9361,7 +9383,7 @@ var Facebox = Class.create({
         onComplete: function(transport) {
           this.setContent(transport.responseText, className);
           this.centralize();
-		  this.fitContent();
+          this.fitContent();
         }.bind(this)
       });
     }
@@ -9374,11 +9396,24 @@ var Facebox = Class.create({
   },
 
   centralize: function() {
+	var pageDim = document.viewport.getDimensions();
 	var pageScroll = document.viewport.getScrollOffsets();
-	this.container.setStyle({
-      'top': pageScroll.top + (document.viewport.getHeight() / 10) + 'px',
-      'left': document.viewport.getWidth() / 2 - (this.container.getWidth() / 2) + 'px'
-    });
+	var size = this.container.getDimensions();
+
+	var wl = (pageDim.width/2) - (size.width / 2);
+	var fh = size.height;
+
+	if (pageDim.height > fh) {
+		this.container.setStyle({
+	      'left': wl + 'px',
+	      'top': (pageScroll.top + ((pageDim.height - fh)/2)) + 'px'
+	    });
+    } else {
+		this.container.setStyle({
+	      'left': wl + 'px',
+	      'top': (pageScroll.top + (pageDim.height/10)) + 'px'
+	    });
+    }
   },
 
   setLoading: function() {
@@ -9413,6 +9448,7 @@ var Facebox = Class.create({
 
   show: function() {
     if (!this.visible()) {
+	  this.showOverlay();
       new Effect.Appear(this.container, { duration: .3 });
     }
 
@@ -9421,6 +9457,7 @@ var Facebox = Class.create({
 
   hide: function() {
     if (this.visible()) {
+	  this.hideOverlay();
       new Effect.Fade(this.container, { duration: .3 });
     }
 
