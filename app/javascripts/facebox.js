@@ -21,10 +21,13 @@ var Facebox = Class.create({
   initialize: function() {
     this.preloadImages = [];
     
-    $$('#facebox .b:first, #facebox .bl, #facebox .br, #facebox .tl, #facebox .tr, #facebox .loading, #facebox .close').each(function(element) {
+    var elements = $('facebox').select('.n, .s, .w, .e, .nw, .ne, .sw, .se, .loading, .close');
+    elements.each(function(element) {
       this.preloadImages.push(new Image());
       this.preloadImages.last().src = element.getStyle('background-image').replace(/url\((.+)\)/, '$1');
     }.bind(this));
+    if (Prototype.Browser.IE)
+      this.fixPNG($('facebox').select('.n, .s, .w, .e, .nw, .ne, .sw, .se'));
     
     this.container = $('facebox');
     this.contentHolder = $$('#facebox .content').first();
@@ -48,6 +51,24 @@ var Facebox = Class.create({
       document.location = this.href;
       this.hide();
     }.bindAsEventListener(this));
+  },
+
+  fixPNG: function(elements) {
+    return elements.each(function (el) {
+	  var element = $(el);
+      var image = element.getStyle('background-image');
+
+      if (image.match(/^url\(["']?(.*\.png)["']?\)$/i)) {
+        image = RegExp.$1;
+        element.setStyle({
+          'background-image': 'none',
+          'filter': "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=" + (element.getStyle('background-repeat') == 'no-repeat' ? 'crop' : 'scale') + ", src='" + image + "')"
+        });
+        var position = element.getStyle('position');
+        if (position != 'absolute' && position != 'relative')
+          element.setStyle({'position': 'relative'});
+      }
+    });
   },
 
   fitContent: function(size) {
@@ -99,12 +120,14 @@ var Facebox = Class.create({
     } 
     else if (anchor.href.match(/\.(png|jpg|jpeg|gif)$/i)) {
       var image = new Image();
-      this.is_image = true;
+      var ref = this;
+      ref.is_image = true;
+      var timeoutFunc = function(){ref.centralize();};
       image.onload = function() {
-        this.setContent('<div class="image"><img src="' + image.src + '" /></div>', className);
-        this.centralize();
-        this.fitContent({width:image.width, height:image.height});
-        setTimeout(function(){this.centralize();}, 0);
+        ref.setContent('<div class="image"><img src="' + image.src + '" /></div>', className);
+        ref.centralize();
+        ref.fitContent({width:image.width, height:image.height});
+        setTimeout(timeoutFunc, 0);
       }.bind(this);
 	  image.src = anchor.href;
     } 
