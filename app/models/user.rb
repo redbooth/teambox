@@ -1,4 +1,5 @@
 require 'digest/sha1'
+require 'time_zone'
 
 # A User model describes an actual user, with his password and personal info.
 # A Person model describes the relationship of a User that follows a Project.
@@ -6,6 +7,7 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
 
   include ActionController::UrlWriter
+  extend TimeZone
 
   acts_as_paranoid
   concerned_with  :activation,
@@ -16,6 +18,7 @@ class User < ActiveRecord::Base
                   :recent_projects,
                   :roles,
                   :rss,
+                  :scopes,
                   :validation
 
   # After adding a new locale, run "rake import:country_select 'de'" where de is your locale.
@@ -177,7 +180,8 @@ class User < ActiveRecord::Base
   end
 
   def self.send_daily_task_reminders
-    all(:conditions => { :wants_task_reminder => true }).each do |user|
+    tzs = time_zones_to_send_daily_task_reminders_to
+    in_time_zone(tzs.map(&:name)).wants_task_reminder_email.each do |user|
       assigned_tasks = user.assigned_tasks(:all)
       tasks_without_due_date, tasks_with_due_date  = assigned_tasks.partition { |task| task.due_on.nil? }
       tasks_by_dueness = tasks_with_due_date.inject({}) do |tasks, task|
@@ -199,6 +203,11 @@ class User < ActiveRecord::Base
       tasks_by_dueness[:no_due_date] = tasks_without_due_date if [1, 4].include?(Date.today.wday)
       Emailer.deliver_daily_task_reminder(user, tasks_by_dueness) unless tasks_by_dueness.values.flatten.empty?
     end
+  end
+
+  def self.time_zones_to_send_daily_task_reminders_to
+    sending_hour = Time.parse(APP_CONFIG["daily_task_reminder_email_time"]).hour
+    time_zones_with_time(sending_hour)
   end
 
   def assigned_tasks(project_filter)

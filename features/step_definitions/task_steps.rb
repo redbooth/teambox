@@ -82,10 +82,6 @@ Given /^the task called "([^\"]*)" is archived$/ do |name|
   Task.find_by_name(name).update_attribute(:archived, true)
 end
 
-When /^the daily reminders for tasks are sent$/ do
-  User.send_daily_task_reminders
-end
-
 Then /^I should see the task called "([^\"]*)" in the "([^\"]*)" task list panel$/ do |task_name, task_list_name|
   task = Task.find_by_name(task_name)
   task_list = TaskList.find_by_name(task_list_name)

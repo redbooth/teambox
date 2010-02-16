@@ -328,4 +328,21 @@ describe User do
       @me.contacts_not_in_project(@project).should include(user)
     end
   end
+
+  describe "in time zone" do
+    before do
+      @amsterdam_user = Factory(:user, :time_zone => "Amsterdam")
+      @budapest_user = Factory(:user, :time_zone => "Budapest")
+      @new_york_user = Factory(:user, :time_zone => "Eastern Time (US & Canada)")
+      @users_in_tzs = User.in_time_zone(["Amsterdam", "Eastern Time (US & Canada)"])
+    end
+    it "returns all users in one of the time zones" do
+      @users_in_tzs.should include(@amsterdam_user)
+      @users_in_tzs.should include(@new_york_user)
+    end
+    it "does not return a user that's not in one of the time zones" do
+      @users_in_tzs.should_not include(@budapest_user)
+    end
+  end
+
 end

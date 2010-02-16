@@ -72,6 +72,7 @@ defaults: &DEFAULTS
     bucket_test: teambox_test_assets
     bucket_production: teambox_assets
 
+  daily_task_reminder_email_time: "06:00"
 development:
   <<: *DEFAULTS
   app_domain: localhost:3000
