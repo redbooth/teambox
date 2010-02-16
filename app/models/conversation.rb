@@ -31,11 +31,12 @@ class Conversation < RoleRecord
   end
 
   def notify_new_comment(comment)
-    watchers.each do |user|
+    self.watchers.each do |user|
       if user != comment.user and user.notify_conversations
         Emailer.deliver_notify_conversation(user, self.project, self)
       end
     end
+    self.sync_watchers
   end
   
   def to_s

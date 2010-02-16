@@ -105,6 +105,7 @@ class Task < RoleRecord
         Emailer.deliver_notify_task(user, self.project, self)
       end
     end
+    self.sync_watchers
   end
 
   def to_s
