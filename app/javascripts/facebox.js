@@ -44,9 +44,9 @@ var Facebox = Class.create({
       this.hide();
     }.bindAsEventListener(this));
 
-	Event.observe($$('#facebox .footer').first(), 'click', function(e) {
-	  if (!this.is_image)
-	    return false;
+    Event.observe($$('#facebox .footer').first(), 'click', function(e) {
+      if (!this.is_image)
+        return false;
       Event.stop(e);
       document.location = this.href;
       this.hide();
@@ -55,7 +55,7 @@ var Facebox = Class.create({
 
   fixPNG: function(elements) {
     return elements.each(function (el) {
-	  var element = $(el);
+      var element = $(el);
       var image = element.getStyle('background-image');
 
       if (image.match(/^url\(["']?(.*\.png)["']?\)$/i)) {
@@ -72,12 +72,12 @@ var Facebox = Class.create({
   },
 
   fitContent: function(size) {
-	var size = size ? size : this.contentHolder.getDimensions();
-	this.footer.setStyle({'width': size.width + 'px', 'height': size.height + 'px'});	
+    var size = size ? size : this.contentHolder.getDimensions();
+    this.footer.setStyle({'width': size.width + 'px', 'height': size.height + 'px'});	
   },
 
   showOverlay: function() {
-	if(!$('facebox_overlay')){
+    if(!$('facebox_overlay')){
       $(document.body).insert({bottom:'<div id="facebox_overlay" class="facebox_hide"></div>'});
     }
     
@@ -88,12 +88,12 @@ var Facebox = Class.create({
   },
 
   hideOverlay: function() {
-	var overlay = $('facebox_overlay');
+    var overlay = $('facebox_overlay');
     Effect.Fade(overlay, { duration: .3, from:0.3,
-	  afterFinish: function(){
-	    overlay.removeClassName("facebox_overlayBG").
-	            addClassName("facebox_hide").
-	            remove();
+      afterFinish: function(){
+        overlay.removeClassName("facebox_overlayBG").
+                addClassName("facebox_hide").
+                remove();
       }
     });
   },
@@ -129,7 +129,7 @@ var Facebox = Class.create({
         ref.fitContent({width:image.width, height:image.height});
         setTimeout(timeoutFunc, 0);
       }.bind(this);
-	  image.src = anchor.href;
+      image.src = anchor.href;
     } 
     else {
       this.is_image = false;
@@ -152,23 +152,23 @@ var Facebox = Class.create({
   },
 
   centralize: function() {
-	var pageDim = document.viewport.getDimensions();
-	var pageScroll = document.viewport.getScrollOffsets();
-	var size = this.container.getDimensions();
-	
-	var wl = (pageDim.width/2) - (size.width / 2);
-	var fh = size.height;
-	
-	if (pageDim.height > fh) {
-		this.container.setStyle({
-	      'left': wl + 'px',
-	      'top': (pageScroll.top + ((pageDim.height - fh)/2)) + 'px'
-	    });
+    var pageDim = document.viewport.getDimensions();
+    var pageScroll = document.viewport.getScrollOffsets();
+    var size = this.container.getDimensions();
+    
+    var wl = (pageDim.width/2) - (size.width / 2);
+    var fh = size.height;
+    
+    if (pageDim.height > fh) {
+      this.container.setStyle({
+          'left': wl + 'px',
+          'top': (pageScroll.top + ((pageDim.height - fh)/2)) + 'px'
+        });
     } else {
-		this.container.setStyle({
-	      'left': wl + 'px',
-	      'top': (pageScroll.top + (pageDim.height/10)) + 'px'
-	    });	 
+        this.container.setStyle({
+          'left': wl + 'px',
+          'top': (pageScroll.top + (pageDim.height/10)) + 'px'
+        });	
     }
   },
   
@@ -204,7 +204,7 @@ var Facebox = Class.create({
   
   show: function() {
     if (!this.visible()) {
-	  this.showOverlay();
+      this.showOverlay();
       new Effect.Appear(this.container, { duration: .3 });
     }
     
@@ -213,7 +213,7 @@ var Facebox = Class.create({
   
   hide: function() {
     if (this.visible()) {
-	  this.hideOverlay();
+      this.hideOverlay();
       new Effect.Fade(this.container, { duration: .3 });
     }
     
@@ -230,10 +230,10 @@ var Facebox = Class.create({
 });
 
 Event.addBehavior({
-	"a[rel=facebox]:click": function(e) {
-        Event.stop(e);
-		window.facebox.onAnchorClick($(this));
-	}
+  "a[rel=facebox]:click": function(e) {
+    Event.stop(e);
+    window.facebox.onAnchorClick($(this));
+  }
 });
 
 document.observe('dom:loaded', function() {
