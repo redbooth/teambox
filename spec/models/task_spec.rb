@@ -11,8 +11,8 @@ describe Task do
   it { should validate_length_of(:name, :within => 1..255) }
 
   describe "a new task" do
-    before { @task = Factory(:task) }
-
+    before { @task = Factory(:task); @task.project.add_user(@task.user) }
+    
     it "should add the task creator as a watcher" do
       @task.watchers.should include(@task.user)
     end

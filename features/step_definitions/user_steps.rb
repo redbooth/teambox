@@ -145,6 +145,26 @@ Given /^"([^\"]*)" is not in the project called "([^\"]*)"$/ do |username,name|
   project.remove_user User.find_by_login(username)
 end
 
+Given /^"([^\"]*)" is watching the conversation "([^\"]*)"$/ do |username,name|
+  conversation = Conversation.find_by_name(name)
+  conversation.add_watcher User.find_by_login(username)
+end
+
+Then /^"([^\"]*)" should be watching the conversation "([^\"]*)"$/ do |username,name|
+  conversation = Conversation.find_by_name(name)
+  conversation.watching?(User.find_by_login(username))
+end
+
+Given /^"([^\"]*)" stops watching the conversation "([^\"]*)"$/ do |username,name|
+  conversation = Conversation.find_by_name(name)
+  conversation.remove_watcher User.find_by_login(username)
+end
+
+Then /^"([^\"]*)" should not be watching the conversation "([^\"]*)"$/ do |username,name|
+  conversation = Conversation.find_by_name(name)
+  !conversation.watching?(User.find_by_login(username))
+end
+
 Given /^all the users are in the project with name: "([^\"]*)"$/ do |name|
   Given %(there is a project called "#{name}")
   project = Project.find_by_name(name)
