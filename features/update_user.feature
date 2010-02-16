@@ -7,6 +7,14 @@ Feature: Edit user settings
     Given there is a user called "balint"
     And the user called "balint" is confirmed
 
+  Scenario: User changes time zone
+    Given I am logged in as "balint"
+    When I go to my settings page
+    And I select "(GMT+01:00) Budapest" from "Time Zone"
+    And I press "Update account"
+    Then I should see "User profile updated!"
+    And I should see "(GMT+01:00) Budapest"
+
   Scenario: Failed because of bad login
     Given I am logged in as "balint"
     When I go to my settings page
