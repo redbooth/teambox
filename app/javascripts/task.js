@@ -156,7 +156,8 @@ Event.addBehavior({
       'all' == show ? task.show() : task.hide();
     })
     $(this).toggleShowAttribute(new Array('all', 'unarchived'));
-    var linkTexts = $($(this).readAttribute('texts_id')).innerHTML.split("##");
+    var textClass = $(this).readAttribute('texts_class');
+    var linkTexts = $(this).up().down("." + textClass).innerHTML.split("##");
     $(this).update($(this).nextText(linkTexts));
     e.stop();
   },
