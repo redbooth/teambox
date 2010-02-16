@@ -62,6 +62,10 @@ class Invitation < RoleRecord
       Emailer.deliver_signup_invitation self
     end
   end
+  
+  def editable?(user)
+    project.admin?(user) or self.user_id == user.id or self.invited_user_id == user.id
+  end
 
   def before_save
     self.token ||= ActiveSupport::SecureRandom.hex(20)
