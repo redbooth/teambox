@@ -18,7 +18,7 @@ Feature Watchable Objects
     Given "pablo" is watching the conversation "Politics"
     Given "james" is watching the conversation "Politics"
 
-  Scenario: New conversation
+  Scenario: New conversation watchers
     When I go to the new conversation page
       And I fill in the following:
         | conversation_name | Talk!     |
@@ -32,40 +32,28 @@ Feature Watchable Objects
     Then "balint.erdi@gmail.com" should receive an email
     Then "pablo@teambox.com" should receive an email
     Then "james.urquhart@gmail.com" should receive an email
-    Given "balint" stops watching the conversation "Talk!"
-    When I fill in "comment_body" with "Parrots!"
-      And I press "Comment"
-    Then "balint.erdi@gmail.com" should receive no emails
-      And "balint" should not be watching the conversation "Talk!"
-    Then "pablo@teambox.com" should receive an email
-    Then "james.urquhart@gmail.com" should receive an email
-    Given "pablo" is not in the project called "Ruby Rockstars"
-    When I fill in "comment_body" with "Squark!"
-      And I press "Comment"
-    Then "pablo@teambox.com" should not receive an email
-      And "pablo" should not be watching the conversation "Talk!"
 
-  Scenario: Existing conversation
+  Scenario: Existing conversation with modified watchers	
+    Given "balint" stops watching the conversation "Politics"
     When I go to the conversations page
       And I follow "Politics"
-    Then "balint" should be watching the conversation "Politics"
-    Then "pablo" should be watching the conversation "Politics"
-    Then "james" should be watching the conversation "Politics"
     When I fill in "comment_body" with "Senators!"
       And I press "Comment"
-    Then "balint.erdi@gmail.com" should receive an email
+    When I fill in "comment_body" with "Rockets!"
+      And I press "Comment"
+    Then "balint.erdi@gmail.com" should receive no emails
     Then "pablo@teambox.com" should receive an email
     Then "james.urquhart@gmail.com" should receive an email
-    Given "balint" stops watching the conversation "Politics"
+
+  Scenario: User leaves project
+    Given "pablo" is not in the project called "Ruby Rockstars"
+    When I go to the conversations page
+      And I follow "Politics"
     When I fill in "comment_body" with "Celebrities!"
       And I press "Comment"
-    Then "balint.erdi@gmail.com" should not receive an email
-      And "balint" should not be watching the conversation "Politics"
-    Then "pablo@teambox.com" should receive an email
-    Then "james.urquhart@gmail.com" should receive an email
-    Given "pablo" is not in the project called "Ruby Rockstars"
-    When I fill in "comment_body" with "Scandal!"
+    When I fill in "comment_body" with "Controversy!"
       And I press "Comment"
+    Then "balint.erdi@gmail.com" should receive an email
     Then "pablo@teambox.com" should receive no emails
-      And "pablo" should not be watching the conversation "Politics"
-
+    Then "james.urquhart@gmail.com" should receive an email
+    
