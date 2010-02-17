@@ -11,10 +11,9 @@ Rails::Initializer.run do |config|
   config.gem 'system_timer'
   config.gem 'whenever', :lib => false, :source => 'http://gemcutter.org/'
 
+  config.action_view.sanitized_allowed_tags = 'table', 'th', 'tr', 'td'
   config.time_zone = APP_CONFIG['time_zone']
-
   config.i18n.default_locale = :en
-
   config.action_mailer.default_url_options = { :host => APP_CONFIG['outgoing']['from'] }
 
   if APP_CONFIG['allow_outgoing_email']
