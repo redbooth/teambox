@@ -19,6 +19,7 @@ Feature Watchable Objects
     Given "james" is watching the conversation "Politics"
 
   Scenario: New conversation watchers
+    Given a clear email queue
     When I go to the new conversation page
       And I fill in the following:
         | conversation_name | Talk!     |
@@ -33,7 +34,8 @@ Feature Watchable Objects
     Then "pablo@teambox.com" should receive an email
     Then "james.urquhart@gmail.com" should receive an email
 
-  Scenario: Existing conversation with modified watchers	
+  Scenario: Existing conversation with modified watchers
+    Given a clear email queue	
     Given "balint" stops watching the conversation "Politics"
     When I go to the conversations page
       And I follow "Politics"
@@ -46,6 +48,7 @@ Feature Watchable Objects
     Then "james.urquhart@gmail.com" should receive an email
 
   Scenario: User leaves project
+    Given a clear email queue
     Given "pablo" is not in the project called "Ruby Rockstars"
     When I go to the conversations page
       And I follow "Politics"
