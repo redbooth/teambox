@@ -1,4 +1,3 @@
-@wip
 Feature: Show archived tasks in task lists
   In order to cut down on page load time
   As a Teambox developer

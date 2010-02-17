@@ -115,7 +115,7 @@ When /^I uncheck "([^\"]*)"$/ do |field|
   uncheck(field) if find_field(field)[:checked]
 end
 
-When /^I choose "([^\"]*)"$/ do |field|
+When /^s "([^\"]*)"$/ do |field|
   choose(field)
 end
 

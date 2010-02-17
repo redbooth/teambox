@@ -192,6 +192,8 @@ it:
       tasks_for_tomorrow: "Tasks for tomorrow"
       tasks_for_next_two_weeks: "Tasks for next two weeks"
       tasks_without_a_due_date: "Tasks without a due date"
+      disable_this_reminder: "You can disable this daily reminder on your {{link}}"
+      settings_page: "settings page"
   projects:
     index:
       title: Attività in tutti i tuoi progetti
