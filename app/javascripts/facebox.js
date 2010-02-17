@@ -20,16 +20,18 @@
 var Facebox = Class.create({
   initialize: function() {
     this.preloadImages = [];
-    
-    var elements = $('facebox').select('.n, .s, .w, .e, .nw, .ne, .sw, .se, .loading, .close');
+    this.container = $('facebox');
+    if (!this.container)
+      return;
+
+    var elements = this.container.select('.n, .s, .w, .e, .nw, .ne, .sw, .se, .loading, .close');
     elements.each(function(element) {
       this.preloadImages.push(new Image());
       this.preloadImages.last().src = element.getStyle('background-image').replace(/url\((.+)\)/, '$1');
     }.bind(this));
     if (Prototype.Browser.IE)
-      this.fixPNG($('facebox').select('.n, .s, .w, .e, .nw, .ne, .sw, .se'));
+      this.fixPNG(this.container.select('.n, .s, .w, .e, .nw, .ne, .sw, .se'));
     
-    this.container = $('facebox');
     this.contentHolder = $$('#facebox .content').first();
     this.footer = $$('#facebox .footer').first();
     this.is_image = false;
@@ -99,6 +101,8 @@ var Facebox = Class.create({
   },
   
   onAnchorClick: function(anchor) {
+    if (!this.container)
+      return;
     this.setLoading();
     this.show();
     this.href = anchor.href;
@@ -231,8 +235,10 @@ var Facebox = Class.create({
 
 Event.addBehavior({
   "a[rel=facebox]:click": function(e) {
-    Event.stop(e);
-    window.facebox.onAnchorClick($(this));
+    if (window.facebox.container) {
+      Event.stop(e);
+      window.facebox.onAnchorClick($(this));
+    }
   }
 });
 
