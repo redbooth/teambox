@@ -32,7 +32,11 @@ class User
 
   def avatar_or_gravatar_url(size)
     if avatar_file_name
-      "http://#{APP_CONFIG['app_domain']}#{avatar.url(size)}"
+      if APP_CONFIG['amazon_s3']['enabled']
+        avatar.url(size)
+      else
+        "http://#{APP_CONFIG['app_domain']}#{avatar.url(size)}"
+      end
     else
       gravatar(size)
     end
