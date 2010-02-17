@@ -29,6 +29,7 @@ class Emailer < ActionMailer::Base
   def project_invitation(invitation)
     defaults
     recipients    invitation.email
+    from          invitation.user.email
     subject       "#{invitation.user.name} shared [#{invitation.project.name}] with you"
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
@@ -43,7 +44,7 @@ class Emailer < ActionMailer::Base
   def notify_comment(user, project, comment)
     defaults
     recipients    user.email
-    from          from_address(project.permalink)
+    from          comment.user.email
     if APP_CONFIG['allow_incoming_email']
       reply_to      from_address("#{project.permalink}")
     end
@@ -54,7 +55,7 @@ class Emailer < ActionMailer::Base
   def notify_conversation(user, project, conversation)
     defaults
     recipients    user.email
-    from          from_address(project.permalink)
+    from          conversation.comments.last.user.email
     if APP_CONFIG['allow_incoming_email']
       reply_to      from_address("#{project.permalink}+conversation+#{conversation.id}")
     end
@@ -65,7 +66,7 @@ class Emailer < ActionMailer::Base
   def notify_task(user, project, task)
     defaults
     recipients    user.email
-    from          from_address(project.permalink)
+    from          task.comments.last.user.email
     if APP_CONFIG['allow_incoming_email']
       reply_to      from_address("#{project.permalink}+task+#{task.id}")
     end
@@ -76,7 +77,7 @@ class Emailer < ActionMailer::Base
   def notify_task_list(user, project, task_list)
     defaults
     recipients    user.email
-    from          from_address(project.permalink)
+    from          task_list.comments.last.user.email
     if APP_CONFIG['allow_incoming_email']
       reply_to      from_address("#{project.permalink}+task_list+#{task_list.id}")
     end
