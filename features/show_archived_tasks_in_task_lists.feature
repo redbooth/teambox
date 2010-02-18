@@ -26,6 +26,7 @@ Feature: Show archived tasks in task lists
       | This week        | Tell my friends                        |
       | This week        | Tell the tech bloggers                 |
 
+  @wip
   Scenario: No archived tasks in a task list
     Given a task list exists with name: "Next month"
     And the task list called "Next month" belongs to the project called "Market Teambox"
@@ -33,7 +34,7 @@ Feature: Show archived tasks in task lists
       | name                         | task_list  | project        |
       | Post on Digg and Hacker News | Next month | Market Teambox |
     When I go to the list of tasks page of the project called "Market Teambox"
-    Then I should not see "Show 0 archived tasks" in the "Next month" task list panel
+    Then I should not see a "Show 0 archived tasks" link in the "Next month" task list panel
 
 
   Scenario: Task panel's "See archived tasks" clicked after global "All tasks"

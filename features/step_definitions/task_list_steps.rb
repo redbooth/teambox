@@ -24,8 +24,9 @@ When /^I follow "([^\"]*)" in the "([^\"]*)" task list panel$/ do |link_text, ta
   When %(I follow "#{link_text}" within "#project_#{project.id}_task_list_#{task_list.id}_with_tasks")
 end
 
-Then /^I should not see "([^\"]*)" in the "([^\"]*)" task list panel$/ do |link_text, task_list_name|
+Then /^I should not see a "([^\"]*)" link in the "([^\"]*)" task list panel$/ do |link_text, task_list_name|
   task_list = TaskList.find_by_name(task_list_name)
   project = task_list.project
-  Then %(I should not see "#{link_text}" within "#project_#{project.id}_task_list_#{task_list.id}_with_tasks")
+  page.should_not have_xpath(%(//*[@id = "project_#{project.id}_task_list_#{task_list.id}_with_tasks"]//a[text()="#{link_text}"]))
+  # Then %(I should not see "#{link_text}" within "#project_#{project.id}_task_list_#{task_list.id}_with_tasks")
 end

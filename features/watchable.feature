@@ -1,4 +1,3 @@
-@wip
 Feature Watchable Objects
   Background:
     Given the following confirmed users exist
