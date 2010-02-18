@@ -13,7 +13,7 @@ class TaskList < RoleRecord
   def notify_new_comment(comment)
     self.watchers.each do |user|
       if user != comment.user and user.notify_task_lists
-        Emailer.deliver_notify_task_list(user, self.project, self)
+        Emailer.send_with_language(:notify_task_list, user.language, user, self.project, self) # deliver_notify_task_list
       end
     end
     self.sync_watchers
