@@ -43,7 +43,7 @@ class Project < ActiveRecord::Base
   def notify_new_comment(comment)
     users.each do |user|
       if user != comment.user and user.notify_mentions and " #{comment.body} ".match(/\s@#{user.login}\W/i)
-        Emailer.deliver_notify_comment(user, self, comment)
+        Emailer.send_with_language(:notify_comment, user.language, user, self, comment) # deliver_notify_comment
       end
     end
   end
@@ -75,7 +75,7 @@ class Project < ActiveRecord::Base
   def to_s
     name
   end
-  
+
   def to_param
     permalink
   end

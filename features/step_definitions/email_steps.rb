@@ -91,15 +91,15 @@ end
 # Inspect the Email Contents
 #
 
-Then /^(?:I|they) should see "([^"]*?)" in the email subject$/ do |text|
+Then /^(?:I|they|he|she) should see "([^"]*?)" in the email subject$/ do |text|
   current_email.should have_subject(Regexp.new(text))
 end
 
-Then /^(?:I|they) should see "([^"]*?)" in the email body$/ do |text|
+Then /^(?:I|they|he|she) should see "([^"]*?)" in the email body$/ do |text|
   current_email.body.should =~ Regexp.new(text)
 end
 
-Then /^(?:I|they) should not see "([^"]*?)" in the email body$/ do |text|
+Then /^(?:I|they|he|she) should not see "([^"]*?)" in the email body$/ do |text|
   current_email.body.should_not =~ Regexp.new(text)
 end
 

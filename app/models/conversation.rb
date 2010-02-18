@@ -33,7 +33,7 @@ class Conversation < RoleRecord
   def notify_new_comment(comment)
     self.watchers.each do |user|
       if user != comment.user and user.notify_conversations
-        Emailer.deliver_notify_conversation(user, self.project, self)
+        Emailer.send_with_language(:notify_conversation, user.language, user, self.project, self) # deliver_notify_conversation
       end
     end
     self.sync_watchers
