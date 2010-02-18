@@ -28,22 +28,22 @@ Feature Update a profile
   Scenario: Mislav fails to update his profile picture because its too big
 
   Scenario: Mislav updates his notifications
-   When I follow "Notifications"
-   Then I should see "Your Notifications"
-   When I check "Notify me when I'm mentioned e.g. Howdy @mislav! You'll receive an email!"
-    And I uncheck "Notify me when I'm watching a conversation"
-    And I check "Notify me when I'm watching a task list"
-    And I check "Notify me when I'm watching a task"
-    And I check "Send me a daily email of my tasks"
-    And I press "Update account"
-   Then I should see "User profile updated!" within ".flash_success"
-   When I follow "Notifications"
-   Then I should see "Your Notifications"
-    And the "Notify me when I'm mentioned e.g. Howdy @mislav! You'll receive an email!" checkbox should be checked
-    And the "Notify me when I'm watching a conversation" checkbox should not be checked
-    And the "Notify me when I'm watching a task list" checkbox should be checked
-    And the "Notify me when I'm watching a task" checkbox should be checked
-    And the "Send me a daily email of my tasks" checkbox should be checked
+     When I follow "Notifications"
+     Then I should see "Your Notifications"
+     When I check "Notify me when I'm mentioned e.g. Howdy @mislav! You'll receive an email!"
+      And I uncheck "Notify me when I'm watching a conversation"
+      And I check "Notify me when I'm watching a task list"
+      And I check "Notify me when I'm watching a task"
+      And I check "Send me a daily email of my tasks"
+      And I press "Update account"
+     Then I should see "User profile updated!" within ".flash_success"
+     When I follow "Notifications"
+     Then I should see "Your Notifications"
+      And the "Notify me when I'm mentioned e.g. Howdy @mislav! You'll receive an email!" checkbox should be checked
+      And the "Notify me when I'm watching a conversation" checkbox should not be checked
+      And the "Notify me when I'm watching a task list" checkbox should be checked
+      And the "Notify me when I'm watching a task" checkbox should be checked
+      And the "Send me a daily email of my tasks" checkbox should be checked
 
   Scenario: Mislav updates his username
       When I follow "Account Settings"

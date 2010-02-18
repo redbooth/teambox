@@ -26,7 +26,6 @@ Feature: Show archived tasks in task lists
       | This week        | Tell my friends                        |
       | This week        | Tell the tech bloggers                 |
 
-  @wip
   Scenario: No archived tasks in a task list
     Given a task list exists with name: "Next month"
     And the task list called "Next month" belongs to the project called "Market Teambox"

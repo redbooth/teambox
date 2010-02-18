@@ -109,7 +109,7 @@ en:
       notify_conversations: Notify me when I'm watching a conversation
       notify_task_lists: Notify me when I'm watching a task list
       notify_tasks: Notify me when I'm watching a task
-      wants_task_reminder: "Send me a 22 email of my tasks"
+      wants_task_reminder: "Send me a daily email of my tasks"
       invalid_login: "use only letters, numbers and _"
       avatar:
         field: Your avatar
