@@ -92,6 +92,14 @@ class Emailer < ActionMailer::Base
     body          :user => user, :tasks => tasks
   end
 
+  def self.send_with_language(template, language, *args)
+    meth = "deliver_#{template.to_s}"
+    old_locale = I18n.locale
+    I18n.locale = language
+    send(meth, *args)
+    I18n.locale = old_locale
+  end
+
   private
 
     def from_address(recipient = "no-reply", name = "Teambox")
