@@ -1,6 +1,7 @@
 class PeopleController < ApplicationController
   before_filter :load_person, :only => [:update,:destroy]
-
+  before_filter :set_page_title
+  
   def index
     @people = @current_project.people
     @invitations = @current_project.invitations

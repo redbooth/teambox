@@ -2,6 +2,8 @@ class UploadsController < ApplicationController
   before_filter :find_upload, :only => [:destroy,:update,:thumbnail,:show]
   before_filter :load_page, :only => [:new, :create, :destroy]
   skip_before_filter :load_project, :only => [:download]
+  before_filter :set_page_title
+  
   SEND_FILE_METHOD = :default
 
   def download

@@ -1,6 +1,8 @@
 class ResetPasswordsController < ApplicationController
   skip_before_filter :login_required
+  before_filter :set_page_title
   layout "sessions"
+  
   def new
     @reset_password = ResetPassword.new
     

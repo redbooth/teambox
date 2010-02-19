@@ -17,8 +17,7 @@ class ApplicationController < ActionController::Base
                 :login_required, 
                 :set_locale, 
                 :touch_user, 
-                :belongs_to_project?, 
-                :set_page_title,
+                :belongs_to_project?,
                 :set_client,
                 :set_user
   
@@ -101,25 +100,23 @@ class ApplicationController < ActionController::Base
 
     def set_page_title
       location_name = "#{params[:action]}_#{params[:controller]}"
-      translate_location_name = t("page_title.#{location_name}")
+      translate_location_name = t("page_title.#{location_name}", :default => '')
 
-      if params.has_key?(:id) && (location_name == 'show_projects' || 'edit_projects')
-        #### I dont know why but this is breaking
-        ##        
-        #project_name = Project.find(params[:id],:select => 'name').name #Not working for some reason - .grab_name(params[:id])
-        #@page_title = "&rarr; #{project_name} &rarr; #{translate_location_name}"
+      if params.has_key?(:id) && ['show_projects','edit_projects'].include?(location_name)
+        project_name = @current_project.name
+        @page_title = "#{html_escape(project_name)} &rarr; #{translate_location_name}"
       elsif params.has_key?(:project_id)
-        project_name = Project.grab_name_by_permalink(params[:project_id])
+        project_name = @current_project.name
         name = nil
         case location_name
           when 'show_tasks'
-            name = Task.grab_name(params[:id])
+            name = @task ? @task.name : nil
           when 'show_task_lists'
-            name = TaskList.grab_name(params[:id])
+            name = @task_list ? @task_list.name : nil
           when 'show_conversations'
-            name = Conversations.grab_name(params[:id])
-        end  
-        @page_title = "#{project_name} &rarr; #{ name ? name : translate_location_name }"
+            name = @conversation ? @conversation.name : nil
+        end
+        @page_title = "#{html_escape(project_name)} &rarr; #{ name ? html_escape(name) : translate_location_name }"
       else
         name = nil
         user_name = nil
@@ -129,7 +126,7 @@ class ApplicationController < ActionController::Base
           when 'show_users'
             user_name = current_user.name            
         end    
-        @page_title = "#{ "#{user_name} &rarr;" if user_name } #{translate_location_name}"
+        @page_title = "#{ "#{html_escape user_name} &rarr;" if user_name } #{translate_location_name}"
       end    
     end
 

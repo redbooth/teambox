@@ -1,6 +1,8 @@
 class ConversationsController < ApplicationController
   before_filter :load_conversation, :only => [:show,:edit,:update,:destroy,:update_comments,:watch,:unwatch]
-  before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy]  
+  before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy]
+  before_filter :set_page_title
+    
   def new
     @conversation = @current_project.conversations.new
   end

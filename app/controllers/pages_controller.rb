@@ -1,7 +1,8 @@
 class PagesController < ApplicationController
   before_filter :load_page, :only => [ :show, :edit, :update, :reorder, :destroy ]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:reorder,:destroy]
-    
+  before_filter :set_page_title
+  
   def index
     if @current_project
       @pages = @current_project.pages

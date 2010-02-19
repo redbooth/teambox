@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_filter :load_comment, :only => [:edit, :update, :show, :destroy]
   before_filter :load_target, :only => [:create]
   before_filter :load_orginal_controller, :only => [:create]  
+  before_filter :set_page_title
 
   def create
     if params.has_key?(:project_id)

@@ -1,6 +1,7 @@
 class InvitationsController < ApplicationController
   before_filter :admins_project?, :except => [:index, :accept, :decline]
-              
+  before_filter :set_page_title
+  
   def index
     if @current_project
       @invitations = @current_project.invitations

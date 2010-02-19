@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   skip_before_filter :login_required,  :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password ]
   skip_before_filter :confirmed_user?, :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password, :unconfirmed_email ]
   skip_before_filter :load_project
+  before_filter :set_page_title
 
   def new
     if logged_in?

@@ -1,5 +1,6 @@
 class HoursController < ApplicationController
-
+  before_filter :set_page_title
+  
   def index
     go_to_default_path = !(params.has_key?(:year) && params.has_key?(:month))
     @current_date = Time.current

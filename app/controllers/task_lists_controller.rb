@@ -3,7 +3,8 @@ class TaskListsController < ApplicationController
   before_filter :load_task_lists, :only => [:index, :show]
   before_filter :load_banner, :only => [:index, :show]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy]
-    
+  before_filter :set_page_title
+  
   def index
     respond_to do |f|
       f.html

@@ -1,7 +1,8 @@
 class TasksController < ApplicationController
   before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder,:archive,:unarchive,:reopen, :show_in_main_content]
   before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch,:reopen,:show_in_main_content]
-
+  before_filter :set_page_title
+  
   def show
     if @task.archived?
       @sub_action = 'archived'

@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
   skip_before_filter :login_required, :except => [ :destroy ]
   skip_before_filter :confirmed_user?
   skip_before_filter :load_project
+  before_filter :set_page_title
 
   def new  
     @signups_enabled = signups_enabled?

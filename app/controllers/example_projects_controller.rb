@@ -1,4 +1,5 @@
 class ExampleProjectsController < ApplicationController
+  before_filter :set_page_title
 
   def new
   end
