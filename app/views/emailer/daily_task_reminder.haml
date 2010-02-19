@@ -1,4 +1,5 @@
 .email{ :style => email_global }
+  %p= I18n.t("users.daily_task_reminder_email.daily_task_reminder_from_teambox")
 
   = tasks_for_daily_reminder(@tasks[:late], @user, I18n.t('users.daily_task_reminder_email.late_tasks'))
   = tasks_for_daily_reminder(@tasks[:today], @user, I18n.t('users.daily_task_reminder_email.tasks_for_today'))
@@ -7,3 +8,7 @@
   = tasks_for_daily_reminder(@tasks[:no_due_date], @user, I18n.t('users.daily_task_reminder_email.tasks_without_a_due_date'))
 
   = I18n.t("users.daily_task_reminder_email.disable_this_reminder", :link => link_to(I18n.t("users.daily_task_reminder_email.settings_page"), account_notifications_url))
+
+.footer{ :style => email_text(:small) }
+  %p= I18n.t('emailer.confirm.report_abuse', :email => @user.email)
+  %p= I18n.t('emailer.confirm.problems', :support => APP_CONFIG['support'])

@@ -187,6 +187,7 @@ en:
       to_get_to: to get to
     daily_task_reminder_email:
       daily_task_reminder: "Daily task reminder"
+      daily_task_reminder_from_teambox: "This is the daily task reminder email from Teambox"
       late_tasks: "Late tasks"
       tasks_for_today: "Tasks for today"
       tasks_for_tomorrow: "Tasks for tomorrow"
