@@ -193,7 +193,7 @@ es:
       tasks_for_tomorrow: "Tasks for tomorrow"
       tasks_for_next_two_weeks: "Tasks for next two weeks"
       tasks_without_a_due_date: "Tasks without a due date"
-      you_receive_this_message: "You receive this message because you signup up to it. You can disable it on your {{link}}"
+      you_receive_this_message: "You receive this message because you signup up for it. You can disable it on your {{link}}"
       settings_page: "settings page"
   projects:
     index:
