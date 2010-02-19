@@ -50,6 +50,12 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.new(params[:project])
     
+    unless current_user.can_create_project?
+      flash[:error] = "You can't create any projects with your current account."
+      redirect_to root_path
+      return
+    end
+    
     respond_to do |f|
       if @project.save
         flash[:notice] = I18n.t('projects.new.created')

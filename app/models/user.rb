@@ -221,4 +221,12 @@ class User < ActiveRecord::Base
     project.people.select { |person| person.user_id == self.id }.first
   end
 
+  def active_projects_count
+    projects.unarchived.count
+  end
+  
+  def can_create_project?
+    true
+  end
+
 end
