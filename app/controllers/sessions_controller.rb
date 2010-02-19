@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
   def new  
     @signups_enabled = signups_enabled?
     respond_to do |format|
-      format.html { redirect_to '/' if logged_in? }
+      format.html { redirect_to root_path if logged_in? }
       format.m
     end
   end
@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
       self.current_user = user
       handle_remember_cookie! true
       flash[:error] = nil
-      redirect_back_or_default('/')
+      redirect_back_or_default root_path
     else
       note_failed_signin
       @login       = params[:login]
@@ -39,7 +39,7 @@ class SessionsController < ApplicationController
 
   def destroy
     logout_killing_session!
-    redirect_back_or_default('/')
+    redirect_back_or_default root_path
   end
 
 protected

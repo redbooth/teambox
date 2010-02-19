@@ -27,7 +27,7 @@ class UsersController < ApplicationController
       if @user != @current_user and projects_shared.empty?
         format.html {
           flash[:error] = t('users.activation.invalid_user')
-          redirect_to '/'
+          redirect_to root_path
         }
       else
         format.html
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     
     unless @invitation || signups_enabled?
       flash[:error] = "Public signups are not allowed in this system"
-      redirect_to '/'
+      redirect_to root_path
       return
     end
 
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
       if @invitation
         redirect_to(project_path(@invitation.project))
       else
-        redirect_back_or_default('/')
+        redirect_back_or_default root_path
       end
 
       flash[:success] = t('users.create.thanks')
@@ -115,7 +115,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = t('users.activation.invalid_user')
     end
-    redirect_to '/'
+    redirect_to root_path
   end
 
   def welcome
@@ -139,7 +139,7 @@ class UsersController < ApplicationController
     def find_user
       unless @user = ( User.find_by_login(params[:id]) || User.find_by_id(params[:id]) )
         flash[:error] = "User does not exist"
-        redirect_to '/'
+        redirect_to root_path
       end
     end
 

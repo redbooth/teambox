@@ -85,7 +85,7 @@ class ProjectsController < ApplicationController
   end
   
   def transfer
-    if !@current_project.owner?(current_user)
+    unless @current_project.owner?(current_user)
         respond_to do |f|
           flash[:error] = "You are not allowed to do that!"
           f.html { redirect_to projects_path }
