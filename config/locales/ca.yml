@@ -186,15 +186,15 @@ ca:
       completeness: "Complert en un {{percentage}}%"
       to_get_to: per a
     daily_task_reminder_email:
-      daily_task_reminder: "Daily task reminder"
-      daily_task_reminder_from_teambox: "This is the daily task reminder email from Teambox"
-      late_tasks: "Late tasks"
-      tasks_for_today: "Tasks for today"
-      tasks_for_tomorrow: "Tasks for tomorrow"
-      tasks_for_next_two_weeks: "Tasks for next two weeks"
-      tasks_without_a_due_date: "Tasks without a due date"
-      you_receive_this_message: "You receive this message because you signup up for it. You can disable it on your {{link}}"
-      settings_page: "settings page"
+      daily_task_reminder: "Recordatori de tasques"
+      daily_task_reminder_from_teambox: "Aquest és el teu correu recordatori de tasquer per a Teambox"
+      late_tasks: "Amb retard"
+      tasks_for_today: "Las teves tasques per avui"
+      tasks_for_tomorrow: "Tasques per a demà"
+      tasks_for_next_two_weeks: "Per a les properes dues setmanes"
+      tasks_without_a_due_date: "Sense data"
+      you_receive_this_message: "Pots deshabilitar aquest recordatori a la teva {{link}}"
+      settings_page: "pàgina d'usuari"
   projects:
     index:
       title: Activitat en tots els teus projectes
@@ -371,11 +371,11 @@ ca:
       new: + Nova tasca
       edit: Editar
       show_archived_tasks:
-        one: "Show 1 archived task"
-        other: "Show {{count}} archived tasks"
+        one: "Hi ha una tasca arxivada"
+        other: "Hi ha {{count}} tasques arxivades"
       hide_archived_tasks:
-        one: "Hide 1 archived task"
-        other: "Hide {{count}} archived tasks"
+        one: "Amagar la tasca arxivada"
+        other: "Amagar les {{count}} tasques arxivades"
     destroy_message:
       deleted: "La tasca <b>{{name}}</b> s'ha esborrat"
     archive_message:
@@ -741,7 +741,7 @@ ca:
     index_uploads: Els meus arxius
     create_uploads: Pujar arxiu
     index_projects: Projectes
-    edit_projects: Edit Project
+    edit_projects: Edità Projecte
     index_people: Persones
     new_users: Crear compte
     create_users: Crear compte

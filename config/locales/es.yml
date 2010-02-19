@@ -187,14 +187,14 @@ es:
       to_get_to: para
     daily_task_reminder_email:
       daily_task_reminder: "Daily task reminder"
-      daily_task_reminder_from_teambox: "This is the daily task reminder email from Teambox"
-      late_tasks: "Late tasks"
-      tasks_for_today: "Tasks for today"
-      tasks_for_tomorrow: "Tasks for tomorrow"
-      tasks_for_next_two_weeks: "Tasks for next two weeks"
-      tasks_without_a_due_date: "Tasks without a due date"
-      you_receive_this_message: "You receive this message because you signup up for it. You can disable it on your {{link}}"
-      settings_page: "settings page"
+      daily_task_reminder_from_teambox: "Este es tu recordatio de tareas en Teambox"
+      late_tasks: "Retrasadas"
+      tasks_for_today: "Tareas para hoy"
+      tasks_for_tomorrow: "Tareas para mañana"
+      tasks_for_next_two_weeks: "En las próximas dos semanas"
+      tasks_without_a_due_date: "Sin fecha fija"
+      you_receive_this_message: "Puedes desactivar estas notificaciones en {{link}}"
+      settings_page: "tu página de usuario"
   projects:
     index:
       title: Actividad en todos tus proyectos
@@ -371,11 +371,11 @@ es:
       new: + Nueva tarea
       edit: Editar
       show_archived_tasks:
-        one: "Muestra 1 tarea archivada"
-        other: "Muestra {{count}} tareas archivadas"
+        one: "Mostrar 1 tarea archivada"
+        other: "Mostrar {{count}} tareas archivadas"
       hide_archived_tasks:
-        one: "Oculta 1 tarea archivada"
-        other: "Oculta {{count}} tareas archivadas"
+        one: "Ocultar 1 tarea archivada"
+        other: "Ocultar {{count}} tareas archivadas"
     destroy_message:
       deleted: "La tarea <b>{{name}}</b> se ha borrado"
     archive_message:
@@ -745,7 +745,7 @@ es:
     index_uploads: Mis archivos
     create_uploads: Subir archivo
     index_projects: Proyectos
-    edit_projects: Edit Project
+    edit_projects: Editar Proyecto
     index_people: Personas
     new_users: Crear cuenta
     new_pages: Página nueva
