@@ -1,6 +1,8 @@
 - if project.users.size > 1
   .watchers
     %h3= t('.add_suscribers')
+    .user_all
+      = all_users_checkbox
     - for user in project.users
       - unless user == current_user
         .user

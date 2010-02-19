@@ -11,7 +11,11 @@ class ConversationsController < ApplicationController
 
     respond_to do |f|
       if @conversation.save
-        add_watchers params[:user]
+        if (params[:user_all] || 0).to_i == 1
+          @conversation.add_watchers @current_project.users
+        else
+          add_watchers params[:user]
+        end
         @conversation.notify_new_comment(@conversation.comments.first)
         
         f.html { redirect_to project_conversation_path(@current_project,@conversation) }

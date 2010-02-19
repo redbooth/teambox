@@ -314,6 +314,7 @@ ca:
       subscribe_note: Aquestes persones rebran una notificació via email d´aquest missatge i els comentaris posteriors.<br/>Poden deixar de seguir la conversa en qualsevol moment.
       invite_users: Ets l'unic usuari en aquest projecte!
       no_users_yet: "Conversar es més útil quan no ho fas sol. <a href='{{invite_link}}'>Convida a alguns usuaris</a> en aquest projecte per que puguin llegir, comentar i rebre actualitzacions d'aquesta conversa."
+      people_all: "All people in project"
     edit:
       submit: Modificar conversa
     index:

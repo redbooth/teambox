@@ -314,6 +314,7 @@ it:
       subscribe_note: Queste persone verranno notificate via mail di questo messaggio e di tutti i commenti seguenti.<br/>Possono scegliere di smettere di seguire la conversazione in qualunque momento.
       invite_users: Sei l'unico utente in questo progetto!
       no_users_yet: "Conversare è più utile quando non lo fai da solo. <a href='{{invite_link}}'>Invita alcuni utenti</a> a questo progetto perchè possano leggere, commentare e ricevere aggiornamenti su questa conversazione."
+      people_all: "All people in project"
     edit:
       submit: Modifica la conversazione
     index:

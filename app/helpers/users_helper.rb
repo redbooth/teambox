@@ -43,6 +43,12 @@ module UsersHelper
       link_to h(user.name), user_path(user)
     end
   end
+  
+  def all_users_checkbox
+    text =  check_box_tag("user_all", "1", false, :name => "user_all")
+    text << ' '
+    text << label_tag("user_all", t('conversations.watcher_fields.people_all'))
+  end
 
   def user_checkbox(user)
     text =  check_box_tag("user_#{user.id}", "1", true, :name => "user[#{user.id}]") 
