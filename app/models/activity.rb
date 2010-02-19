@@ -53,6 +53,10 @@ class Activity < ActiveRecord::Base
     target.created_at
   end
 
+  def deleted_date
+    target.deleted_at
+  end
+
   def downcase_type
     target.type.to_s.downcase
   end
