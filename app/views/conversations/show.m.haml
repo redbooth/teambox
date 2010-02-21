@@ -1,0 +1,9 @@
+%h2= @conversation
+
+= conversation_form(@current_project,@conversation)
+= people_watching(@current_project,current_user,@conversation)
+= new_comment_form(@current_project,@current_project.comments.new,:target => @conversation)
+
+#page
+  #activities
+    = render :partial => 'comments/comment', :collection => @comments

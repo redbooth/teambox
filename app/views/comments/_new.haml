@@ -1,4 +1,4 @@
--comment_form_for(form_url) do |f|
+- comment_form_for(form_url) do |f|
   = hidden_field_tag :original_controller, controller_name
   .body.text_area
     = f.text_area :body, :class => 'comment_body', :id => 'comment_body'
@@ -41,6 +41,6 @@
         %a{:href => '#', :style => 'display:none'}= "Close"
       = f.submit t('.submit')
     = loading_image(js_id(:new_loading,Comment.new))
-    .clear  
+    .clear
 
 = javascript_tag "$('new_comment').auto_focus()"

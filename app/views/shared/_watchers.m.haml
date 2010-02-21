@@ -1,0 +1,7 @@
+.watching#watching{ :style => "#{style_settings}"}
+  - if target.watchers.empty?
+    = t('.nobody_watching')
+  - else
+    = t('.people_watching')
+    = target.watchers.to_sentence
+  = watch_link(project,user,target,false)

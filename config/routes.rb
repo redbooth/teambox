@@ -79,10 +79,10 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }
   end
 
-  map.resources :comments
-  map.resources :task_lists, :only => [ :index ]
-  map.resources :conversations, :only => [ :index ]
-  map.resources :pages, :only => [ :index ]
+  # map.resources :comments
+  # map.resources :task_lists, :only => [ :index ]
+  # map.resources :conversations, :only => [ :index ]
+  # map.resources :pages, :only => [ :index ]
 
   map.root :controller => 'projects', :action => 'index'
   map.connect 'assets/:id/:style/:filename', :controller => 'uploads', :action => 'download', :conditions => { :method => :get }, :requirements => { :filename => /.*/ }

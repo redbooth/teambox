@@ -1,10 +1,30 @@
-- comment_form_for(form_url) do |f|
+- non_js_comment_form_for(form_url) do |f|
   = hidden_field_tag :original_controller, controller_name
   .body.text_area
     = f.text_area :body, :class => 'comment_body', :id => 'comment_body', :style => 'margin-left: 10px; height: 50px; width: 95%'
   .extra
+    - if target && target.is_a?(Task)
+      .statuses
+        = f.label :status
+        - if target.status_new?
+          .status.new#status_new
+            = f.radio_button :status, Task::STATUSES[:new]
+            = t('tasks.status.new')
+        .status.open#status_open
+          = f.radio_button :status, Task::STATUSES[:open]
+          = t('tasks.status.open')
+          - f.fields_for :target, target do |task_form|
+            = task_form.label :assigned_id, t('.assigned_to')
+            = task_form.select :assigned_id, options_for_people(comment.project.people)
+        .status.hold#status_hold
+          = f.radio_button :status, Task::STATUSES[:hold]
+          = t('tasks.status.hold')
+        .status.resolved#status_resolved
+          = f.radio_button :status, Task::STATUSES[:resolved]
+          = t('tasks.status.resolved')
+        .status.rejected#status_rejected
+          = f.radio_button :status, Task::STATUSES[:rejected]
+          = t('tasks.status.rejected')
     .submit{ :id => js_id(:new_submit,Comment.new) }
       = f.submit t('.submit'), :style => 'margin-left: 10px'
-    .clear  
-
-= javascript_tag "$('new_comment').auto_focus()"
+    .clear

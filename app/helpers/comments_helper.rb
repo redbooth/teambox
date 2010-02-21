@@ -8,9 +8,17 @@ module CommentsHelper
       &proc
   end
 
+  def non_js_comment_form_for(form_url,&proc)
+    form_for form_url, 
+      :loading => loading_new_comment_form,
+      :id => 'new_comment_form',
+      :html => {:preview => preview_project_comments_path(@current_project)},
+      &proc
+  end
+
   def loading_new_comment_form
     update_page do |page|
-      page[js_id(:new_submit,Comment.new)].hide      
+      page[js_id(:new_submit,Comment.new)].hide
       page[js_id(:new_loading,Comment.new)].show
       page['new_comment'].closePreview
     end  
@@ -115,9 +123,9 @@ module CommentsHelper
   
   def list_comments(comments,target)
     content_tag :div,
-    render(:partial => 'comments/list_comments', 
-      :locals => { 
-        :comments => comments, 
+    render(:partial => 'comments/list_comments',
+      :locals => {
+        :comments => comments,
         :target => target }),
       :class => 'comments',
       :id => 'comments'

@@ -70,7 +70,7 @@ en:
       title: Reset Password
       login_link_sent: "We just sent you an email to {{email}} so you can retrieve your password."
       follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
-      not_found: "The email <b>{{email}}</b> doesn't belong to any Teambox user. Maybe you mispelt it?"
+      not_found: "The email <b>{{email}}</b> doesn't belong to any Teambox user. Maybe you misspelt it?"
       change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"
   cards:
     card:

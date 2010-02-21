@@ -2,47 +2,39 @@ class ConversationsController < ApplicationController
   before_filter :load_conversation, :only => [:show,:edit,:update,:destroy,:update_comments,:watch,:unwatch]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy]
   before_filter :set_page_title
-    
+
   def new
     @conversation = @current_project.conversations.new
   end
-  
+
   def create
     @conversation = @current_project.new_conversation(current_user,params[:conversation])
     @conversation.body = params[:conversation][:body]
 
-    respond_to do |f|
-      if @conversation.save
-        if (params[:user_all] || 0).to_i == 1
-          @conversation.add_watchers @current_project.users
-        else
-          add_watchers params[:user]
-        end
-        @conversation.notify_new_comment(@conversation.comments.first)
-        
-        f.html { redirect_to project_conversation_path(@current_project,@conversation) }
+    if @conversation.save
+      if (params[:user_all] || 0).to_i == 1
+        @conversation.add_watchers @current_project.users
       else
-        f.html { render :action => 'new' }
+        add_watchers params[:user]
       end
+      @conversation.notify_new_comment(@conversation.comments.first)
+      
+      redirect_to project_conversation_path(@current_project,@conversation)
+    else
+      render :new
     end
   end
-  
+
   def index
-    if @current_project
-      @conversations = @current_project.conversations
-    else
-      @conversations = []
-      current_user.projects.each do |project|
-        @conversations |= project.conversations
-      end
-    end
-    
+    @conversations = @current_project.conversations
+
     respond_to do |f|
       f.html
+      f.m
       f.rss { render :layout => false }
     end
   end
-  
+
   def show
     @comments = @conversation.comments
     @conversations = @current_project.conversations
@@ -54,9 +46,13 @@ class ConversationsController < ApplicationController
 
   def update
     @conversation.update_attributes(params[:conversation])
-    respond_to{|f|f.js}
+    respond_to do |f|
+      f.js
+      f.m    { redirect_to project_conversation_path(@current_project, @conversation) }
+      f.html { redirect_to project_conversation_path(@current_project, @conversation) }
+    end
   end
-  
+
   def destroy
     if @conversation.editable?(current_user)
       @conversation.try(:destroy)
@@ -66,26 +62,36 @@ class ConversationsController < ApplicationController
           flash[:success] = t('deleted.conversation', :name => @conversation.to_s)
           redirect_to project_conversations_path(@current_project)
         end
+        f.m { redirect_to project_conversations_path(@current_project) }
         f.js
       end
     else
       respond_to do |f|
         flash[:error] = "You are not allowed to do that!"
-        f.html { redirect_to project_conversations_path(@current_project) }
+        f.html { redirect_to project_conversation_path(@current_project, @conversation) }
+        f.m    { redirect_to project_conversation_path(@current_project, @conversation) }
       end
     end
   end
-  
+
   def watch
     @conversation.add_watcher(current_user)
-    respond_to{|f|f.js}
+    respond_to do |f|
+      f.js
+      f.m    { redirect_to project_conversation_path(@current_project, @conversation) }
+      f.html { redirect_to project_conversation_path(@current_project, @conversation) }
+    end
   end
-  
+
   def unwatch
     @conversation.remove_watcher(current_user)
-    respond_to{|f|f.js}
+    respond_to do |f|
+      f.js
+      f.m    { redirect_to project_conversation_path(@current_project, @conversation) }
+      f.html { redirect_to project_conversation_path(@current_project, @conversation) }
+    end
   end
-  
+
   private
     def load_conversation
       begin
@@ -96,7 +102,7 @@ class ConversationsController < ApplicationController
       
       redirect_to project_path(@current_project) unless @conversation
     end
-    
+
     def add_watchers(hash)
       hash.if_defined.each do |user_id, should_notify|
         if should_notify == "1" and Person.exists? :project_id => @conversation.project_id, :user_id => user_id

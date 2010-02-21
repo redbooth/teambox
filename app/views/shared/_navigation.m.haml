@@ -1,0 +1,6 @@
+#menubar
+  = link_to "Overview", activities_path, :class => (controller.controller_name == 'activities' ? 'selected' : '')
+  = link_to "My projects", projects_path, :class => (controller.controller_name == 'projects' && !@current_project ? 'selected' : '')
+  - if @current_project
+    = link_to @current_project, project_path(@current_project), :class => (@current_project ? 'selected' : '')
+  = #link_to "My tasks"

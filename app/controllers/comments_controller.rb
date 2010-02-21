@@ -16,6 +16,10 @@ class CommentsController < ApplicationController
       @comment.save_uploads(params)
       
       case @target
+      when Conversation
+        @conversation = @comment.target
+      when TaskList
+        @task_list = @comment.target
       when Task
         @comment.reload
         @task = @comment.target
@@ -23,10 +27,6 @@ class CommentsController < ApplicationController
         @new_comment = @current_project.comments.new
         @new_comment.target = @task
         @new_comment.status = @task.status
-      when TaskList
-        @task_list = @comment.target
-      when Conversation
-        @conversation = @comment.target
       end
     end
     respond_to do |f|

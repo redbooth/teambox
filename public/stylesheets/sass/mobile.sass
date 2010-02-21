@@ -11,11 +11,39 @@ label, input
   :margin 2px 0
   :display block
 
+.clear
+  :clear both
+
 input
   :margin-bottom 10px
 
 form
   :margin 10px 0
+  :padding-left 5px
+  .text_field, .text_area
+    :margin-bottom 10px
+    input
+      :font-size 16px
+      :padding 5px
+      :font-family "Lucida Grande","Helvetica Neue",Verdana,Arial,Helvetica,sans-serif
+    input, textarea
+      :width 95%
+      :border
+        :top solid 1px rgb(196,196,196)
+        :left solid 1px rgb(233,233,233)
+        :bottom solid 1px rgb(233,233,233)
+        :right solid 1px rgb(196,196,196)
+    .label
+      :display block
+      :margin
+        :top 10px
+        :bottom 5px
+      label
+        :display inline
+        :font-weight bold
+
+h2
+  :padding-left 10px
 
 #header
   h1
@@ -87,7 +115,6 @@ form
         :decoration none
     a.selected
       :background-color white
-      :border-bottom 1px solid white
   #page
     :font-size 14px
     #activities
@@ -113,8 +140,8 @@ form
           :float right
           :font-size 10px
           :color #999
-    #projects
-      .project
+    #projects, #conversations
+      .project, .conversation
         :font-size 16px
         :display block
         :border-bottom 1px solid #ddd
@@ -123,6 +150,9 @@ form
           :text-decoration none
           :display block
           :padding 10px
+        a.new
+          :color #555
+        
 
 .show_projects
   .comment, .activity
@@ -135,6 +165,20 @@ form
   a, a:hover
     :color rgb(150,150,150)
     :text-decoration none
+
+.new_conversations, .create_conversations
+  .watchers
+    .user
+      :float left
+      :width 100%
+      input, label
+        :display inline
+
+.watching
+  :padding-left 10px
+  :font-size 12px
+  a
+    :color #999
 
 #footer
   :border-top 1px solid #BDBFC4

@@ -1,18 +1,1 @@
-.activity
-  = thumb_avatar(activity.user, false)
-  .container
-    .date= posted_date activity.posted_date
-    %span.user= activity.user.short_name
-    = activity_project_link(comment.project)
-    = activity_comment_target_link(comment)
-    = comment_task_status(comment) if comment.target_type == 'Task'
-    ~ comment.body_html
-
-    - if comment.uploads.any?
-      - if comment.uploads.all? { |upload| upload.image? }
-        .upload_images
-          = list_uploads_inline_with_thumbnails(comment.uploads)
-      - else
-        .upload_list
-          = list_uploads_inline(comment.uploads)
-  .clear
+= render :partial => 'comments/comment', :locals => { :comment => comment }

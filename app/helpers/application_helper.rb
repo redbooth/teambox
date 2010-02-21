@@ -153,9 +153,9 @@ module ApplicationHelper
 
   def posted_date(datetime)
     datetime = datetime.in_time_zone(current_user.time_zone)
-    
-    content_tag(:span, l(datetime, :format => 'long'), :id => "date_#{datetime.to_i}", 
-    :class => 'timeago', :alt => (datetime.to_i * 1000)) << javascript_tag("format_posted_date_#{I18n.locale}()")
+
+    content_tag(:span, l(datetime, :format => 'short'), :id => "date_#{datetime.to_i}",
+      :class => 'timeago', :alt => (datetime.to_i * 1000)) << javascript_tag("format_posted_date_#{I18n.locale}()")
   end
 
   def large_trash_image
@@ -234,7 +234,7 @@ module ApplicationHelper
     array.to_sentence(:two_words_connector => " #{t('common.and')} ", :last_word_connector => " #{t('common.and')} ")
   end
 
-  def watch_link(project,user,target)
+  def watch_link(project,user,target,js=true)
     raise ArgumentError, "Invalid Model, was expecting Task, TaskList or Conversation but got #{target.class}" unless ['Task','TaskList','Conversation'].include?(target.class.to_s)
     target_name = target.class.to_s.tableize
     task_list_url = target.class.to_s == 'Task' ? "task_lists/#{target.task_list.id}/" : ''
@@ -242,7 +242,11 @@ module ApplicationHelper
 
     url = "/projects/#{project.permalink}/#{task_list_url}#{target_name}/#{target.id}/#{watch_status}"
 
-    link_to_remote "<span>#{t(".#{watch_status}")}</span>", :url => url, :html => { :id => 'watch_link', :class => 'button' }
+    if js
+      link_to_remote "<span>#{t(".#{watch_status}")}</span>", :url => url, :html => { :id => 'watch_link', :class => 'button' }
+    else
+      link_to "<span>#{t(".#{watch_status}")}</span>", url
+    end
   end
 
   def people_watching(project,user,target,state = :normal)

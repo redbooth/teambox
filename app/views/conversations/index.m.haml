@@ -1,0 +1,7 @@
+#page
+  #conversations
+    .conversation
+      = link_to "New conversation", new_project_conversation_path(@current_project), :class => 'new'
+    - for conversation in @conversations
+      .conversation
+        = link_to conversation, project_conversation_path(@current_project, conversation)

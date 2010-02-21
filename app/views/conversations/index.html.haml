@@ -1,8 +1,7 @@
 = conversation_column(@current_project,@conversations, :show_conversation_settings => true)
 
-- unless @conversations.empty?
+- if @conversations.any?
   #conversations
     = list_short_conversations(@conversations)
 - else
-  =conversations_primer(@current_project)
-
+  = conversations_primer(@current_project)

@@ -1,0 +1,28 @@
+%h2= t('.title')
+
+- form_for [@current_project,@conversation] do |f|
+
+  .text_field.name
+    = f.label :name, t('conversations.fields.name')
+    = f.text_field :name
+
+  .text_area.body
+    = f.label :body, t('conversations.fields.body')
+    = f.text_area :body, :id => :conversation_body
+    = autoresize :conversation_body
+
+  .watchers
+    - if @current_project.users.size > 1
+      %h3= t('conversations.watcher_fields.add_suscribers')
+      - for user in @current_project.users
+        - unless user == current_user
+          .user
+            = user_checkbox(user)
+          .clear
+      %p= t('conversations.watcher_fields.subscribe_note')
+    - else
+      %h3= t('conversations.watcher_fields.invite_users')
+      %p= t('conversations.watcher_fields.no_users_yet', :invite_link => project_people_path(@current_project))
+
+  .submit
+    = f.submit t('.submit')
