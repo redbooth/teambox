@@ -153,17 +153,9 @@ module ApplicationHelper
 
   def posted_date(datetime)
     datetime = datetime.in_time_zone(current_user.time_zone)
-    datetime_now = Time.current.in_time_zone(current_user.time_zone)
-    if datetime > datetime_now.beginning_of_day
-      content_tag(:span, datetime.strftime("%I:%M %p"), :id => "date_#{datetime.to_i}", :class => 'timeago', :alt => (datetime.to_i * 1000)) <<
-      javascript_tag("$('date_#{datetime.to_i}').update(timeAgoInWords_#{I18n.locale}(#{(datetime.to_i * 1000).to_json}))")
-    elsif datetime > 1.day.ago.beginning_of_day
-      t('date.yesterday') + ' ' + datetime.strftime("%I %p")
-    elsif datetime > datetime_now.beginning_of_year
-      datetime.strftime("%b %d")
-    else
-      datetime.strftime("%b %d %Y")
-    end
+    
+    content_tag(:span, l(datetime, :format => 'long'), :id => "date_#{datetime.to_i}", 
+    :class => 'timeago', :alt => (datetime.to_i * 1000)) << javascript_tag("format_posted_date_#{I18n.locale}()")
   end
 
   def large_trash_image

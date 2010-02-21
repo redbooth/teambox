@@ -1,0 +1,32 @@
+// http://github.com/Caged/javascript-bits/blob/master/datetime/format.js + i18n
+// strftime_<%= I18n.locale %>
+
+Object.extend(Date.prototype, {
+  strftime_<%= I18n.locale %>: function(format) {
+    var day = this.getUTCDay(), month = this.getUTCMonth();
+    var hours = this.getUTCHours(), minutes = this.getUTCMinutes();
+    function pad(num) { return num.toPaddedString(2); };
+
+    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
+      switch(part[1]) {
+        case 'a': return $w("<%= I18n.t('date.abbr_day_names').join(" ") %>")[day]; break;
+        case 'A': return $w("<%= I18n.t('date.day_names').join(" ") %>")[day]; break;
+        case 'b': return $w("<%= I18n.t('date.abbr_month_names').join(" ") %>")[month]; break;
+        case 'B': return $w("<%= I18n.t('date.month_names').join(" ") %>")[month]; break;
+        case 'c': return this.toString(); break;
+        case 'd': return this.getUTCDate(); break;
+        case 'D': return pad(this.getUTCDate()); break;
+        case 'H': return pad(hours); break;
+        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
+        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
+        case 'm': return pad(month + 1); break;
+        case 'M': return pad(minutes); break;
+        case 'p': return hours > 11 ? '<%= I18n.t('time.pm').upcase %>' : '<%= I18n.t('time.am').upcase %>'; break;
+        case 'S': return pad(this.getUTCSeconds()); break;
+        case 'w': return day; break;
+        case 'y': return pad(this.getUTCFullYear() % 100); break;
+        case 'Y': return this.getUTCFullYear().toString(); break;
+      }
+    }.bind(this));
+  }
+});

@@ -1,144 +1,174 @@
-// render from /Users/charles/Documents/Rails/teambox/app/javascripts/i18n/timeago.erb// de
+// render from /Users/charles/Documents/Rails/teambox-master/app/javascripts/i18n/timeago.erb// de
 
-function do_timeAgoInWords_de(){
-  $$('.timeago').each(
-    function(c){
-    c.update(
-      timeAgoInWords_de(c.readAttribute('alt'))
-      );
-    }
-  )
+function format_posted_date_de()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date-posted_date) / (1000 * 60 * 60 * 24));
+
+    if(minutes < 60)    { c.update(minutesAgoInWords_de(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_de("%I:%M %p")); }
+    else if(days <= 1)  { c.update('Gestern ' + posted_date.strftime_de("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_de("%A %b %d")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_de("%b %d")); }
+    else c.update(posted_date.strftime_de("%B %d, %Y"));    
+  }
+  );
 }
 
 
-function timeAgoInWords_de(from) {
-  seconds_ago = ((new Date().getTime()  - from) / 1000);
-  minutes_ago = Math.floor(seconds_ago / 60);
 
-  if(minutes_ago == 0) { return "weniger als 1 Minute"; }
-  if(minutes_ago == 1) { return "1 Minute"; }
-  if(minutes_ago < 60) { return ""+"" + minutes_ago + " Minuten"+""; }
-  if(minutes_ago < 90) { return "circa 1 Stunde"; }
-  hours_ago  = Math.floor(minutes_ago / 60);
-  return " circa " + hours_ago + " Stunden ";
-}
+function minutesAgoInWords_de(minutes) {
+  if(minutes == 0) { return "weniger als 1 Minute vorher"; }
+  if(minutes == 1) { return "1 Minute vorher"; }
+  return ""+"" + minutes + " Minuten vorher"+"";
+  }
 // es
 
-function do_timeAgoInWords_es(){
-  $$('.timeago').each(
-    function(c){
-    c.update(
-      timeAgoInWords_es(c.readAttribute('alt'))
-      );
-    }
-  )
+function format_posted_date_es()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date-posted_date) / (1000 * 60 * 60 * 24));
+
+    if(minutes < 60)    { c.update(minutesAgoInWords_es(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_es("%I:%M %p")); }
+    else if(days <= 1)  { c.update('Ayer ' + posted_date.strftime_es("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_es("%A %b %d")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_es("%b %d")); }
+    else c.update(posted_date.strftime_es("%B %d, %Y"));    
+  }
+  );
 }
 
 
-function timeAgoInWords_es(from) {
-  seconds_ago = ((new Date().getTime()  - from) / 1000);
-  minutes_ago = Math.floor(seconds_ago / 60);
 
-  if(minutes_ago == 0) { return "menos de 1 minuto"; }
-  if(minutes_ago == 1) { return "1 minuto"; }
-  if(minutes_ago < 60) { return ""+"" + minutes_ago + " minutos"+""; }
-  if(minutes_ago < 90) { return "alrededor de 1 hora"; }
-  hours_ago  = Math.floor(minutes_ago / 60);
-  return " alrededor de " + hours_ago + " horas ";
-}
+function minutesAgoInWords_es(minutes) {
+  if(minutes == 0) { return "Hace menos de 1 minuto"; }
+  if(minutes == 1) { return "Hace 1 minuto"; }
+  return ""+"Hace " + minutes + " minutos"+"";
+  }
 // en
 
-function do_timeAgoInWords_en(){
-  $$('.timeago').each(
-    function(c){
-    c.update(
-      timeAgoInWords_en(c.readAttribute('alt'))
-      );
-    }
-  )
+function format_posted_date_en()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date-posted_date) / (1000 * 60 * 60 * 24));
+
+    if(minutes < 60)    { c.update(minutesAgoInWords_en(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_en("%I:%M %p")); }
+    else if(days <= 1)  { c.update('Yesterday ' + posted_date.strftime_en("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_en("%A %b %d")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_en("%b %d")); }
+    else c.update(posted_date.strftime_en("%B %d, %Y"));    
+  }
+  );
 }
 
 
-function timeAgoInWords_en(from) {
-  seconds_ago = ((new Date().getTime()  - from) / 1000);
-  minutes_ago = Math.floor(seconds_ago / 60);
 
-  if(minutes_ago == 0) { return "less than a minute"; }
-  if(minutes_ago == 1) { return "1 minute"; }
-  if(minutes_ago < 60) { return ""+"" + minutes_ago + " minutes"+""; }
-  if(minutes_ago < 90) { return "about 1 hour"; }
-  hours_ago  = Math.floor(minutes_ago / 60);
-  return " about " + hours_ago + " hours ";
-}
+function minutesAgoInWords_en(minutes) {
+  if(minutes == 0) { return "less than a minute ago"; }
+  if(minutes == 1) { return "1 minute ago"; }
+  return ""+"" + minutes + " minutes ago"+"";
+  }
 // it
 
-function do_timeAgoInWords_it(){
-  $$('.timeago').each(
-    function(c){
-    c.update(
-      timeAgoInWords_it(c.readAttribute('alt'))
-      );
-    }
-  )
+function format_posted_date_it()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date-posted_date) / (1000 * 60 * 60 * 24));
+
+    if(minutes < 60)    { c.update(minutesAgoInWords_it(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_it("%I:%M %p")); }
+    else if(days <= 1)  { c.update('Ieri ' + posted_date.strftime_it("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_it("%A %b %d")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_it("%b %d")); }
+    else c.update(posted_date.strftime_it("%B %d, %Y"));    
+  }
+  );
 }
 
 
-function timeAgoInWords_it(from) {
-  seconds_ago = ((new Date().getTime()  - from) / 1000);
-  minutes_ago = Math.floor(seconds_ago / 60);
 
-  if(minutes_ago == 0) { return "meno di 1 minuto"; }
-  if(minutes_ago == 1) { return "1 minuto"; }
-  if(minutes_ago < 60) { return ""+"" + minutes_ago + " minuti"+""; }
-  if(minutes_ago < 90) { return "circa 1 ora"; }
-  hours_ago  = Math.floor(minutes_ago / 60);
-  return " circa " + hours_ago + " ore ";
-}
+function minutesAgoInWords_it(minutes) {
+  if(minutes == 0) { return "meno di 1 minuto fa"; }
+  if(minutes == 1) { return "1 minuto fa"; }
+  return ""+"" + minutes + " minuti fa"+"";
+  }
 // fr
 
-function do_timeAgoInWords_fr(){
-  $$('.timeago').each(
-    function(c){
-    c.update(
-      timeAgoInWords_fr(c.readAttribute('alt'))
-      );
-    }
-  )
+function format_posted_date_fr()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date-posted_date) / (1000 * 60 * 60 * 24));
+
+    if(minutes < 60)    { c.update(minutesAgoInWords_fr(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_fr("%I:%M %p")); }
+    else if(days <= 1)  { c.update('Hier ' + posted_date.strftime_fr("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_fr("%A %d %b")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_fr("%d %b")); }
+    else c.update(posted_date.strftime_fr("%d %B %Y"));    
+  }
+  );
 }
 
 
-function timeAgoInWords_fr(from) {
-  seconds_ago = ((new Date().getTime()  - from) / 1000);
-  minutes_ago = Math.floor(seconds_ago / 60);
 
-  if(minutes_ago == 0) { return "moins d'une minute"; }
-  if(minutes_ago == 1) { return "1 minute"; }
-  if(minutes_ago < 60) { return ""+"" + minutes_ago + " minutes"+""; }
-  if(minutes_ago < 90) { return "environ 1 heure"; }
-  hours_ago  = Math.floor(minutes_ago / 60);
-  return " environ " + hours_ago + " heures ";
-}
+function minutesAgoInWords_fr(minutes) {
+  if(minutes == 0) { return "Il y a moins d'une minute"; }
+  if(minutes == 1) { return "Il y a 1 minute"; }
+  return ""+"Il y a " + minutes + " minutes"+"";
+  }
 // ca
 
-function do_timeAgoInWords_ca(){
-  $$('.timeago').each(
-    function(c){
-    c.update(
-      timeAgoInWords_ca(c.readAttribute('alt'))
-      );
-    }
-  )
+function format_posted_date_ca()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date-posted_date) / (1000 * 60 * 60 * 24));
+
+    if(minutes < 60)    { c.update(minutesAgoInWords_ca(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_ca("%I:%M %p")); }
+    else if(days <= 1)  { c.update('Ahir ' + posted_date.strftime_ca("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_ca("%A %b %d")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_ca("%b %d")); }
+    else c.update(posted_date.strftime_ca("%B %d, %Y"));    
+  }
+  );
 }
 
 
-function timeAgoInWords_ca(from) {
-  seconds_ago = ((new Date().getTime()  - from) / 1000);
-  minutes_ago = Math.floor(seconds_ago / 60);
 
-  if(minutes_ago == 0) { return "menys d'1 minut"; }
-  if(minutes_ago == 1) { return "1 minut"; }
-  if(minutes_ago < 60) { return ""+"" + minutes_ago + " minuts"+""; }
-  if(minutes_ago < 90) { return "al voltant d'1 hora"; }
-  hours_ago  = Math.floor(minutes_ago / 60);
-  return " al voltant de " + hours_ago + " hores ";
-}
+function minutesAgoInWords_ca(minutes) {
+  if(minutes == 0) { return "Hace menys d'1 minut"; }
+  if(minutes == 1) { return "Hace 1 minut"; }
+  return ""+"Hace " + minutes + " minuts"+"";
+  }

@@ -4,9 +4,9 @@ namespace :teambox do
   namespace :i18n do
     desc "render javascript for each locales"
     task :javascript do
-      Dir.glob("#{RAILS_ROOT}/app/javascripts/i18n/*.erb").each  do |view| 
+      views = Dir.glob("#{RAILS_ROOT}/app/javascripts/i18n/*.erb").each  do |view| 
         write = "// render from #{view}\r"
-        render = ERB.new File.new("#{RAILS_ROOT}/app/javascripts/i18n/timeago.erb").read
+        render = ERB.new File.new(view).read
         puts "read #{File.basename(view)}"
         I18n.backend.available_locales.each do |locale|
           I18n.locale = locale

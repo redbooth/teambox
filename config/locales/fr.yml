@@ -274,7 +274,7 @@ fr:
     invitation:
       invited_user: "{{inviter}} a invité <b>{{invitee}}</b> à rejoindre le projet."
       invited_email: "{{inviter}} a invité <b>{{email}}</b> à rejoindre le projet."
-      time_ago: "({{time_ago_in_words}} ago)"
+      time_ago: "(Il y a {{time_ago_in_words}})"
       resend: Renvoyer un email d'invitation
       pending: "Un mail a été envoyé à cet utilisateur, mais celui-ci n'a pas encore accepté l'invitation"
       discard: Ne plus montrer cette invitation
@@ -817,6 +817,7 @@ fr:
 
   # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
   datetime:
+    time_ago: "Il y a {{time_ago_in_words}}"
     distance_in_words:
       half_a_minute: "30 secondes"
       less_than_x_seconds:
@@ -964,8 +965,8 @@ fr:
     yesterday: Hier
     formats:
       default: "%Y-%m-%d"
-      short: "%b %d"
-      long: "%B %d, %Y"
+      short: "%d %b"
+      long: "%d %B %Y"
     order: [ :day, :month, :year ]
 
     day_names: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
@@ -979,7 +980,7 @@ fr:
     formats:
       default: "%a, %d %b %Y %H:%M:%S %z"
       short: "%d %b %H:%M"
-      long: "%B %d, %Y %H:%M"
+      long: "%d %B, %Y %H:%M"
     am: "am"
     pm: "pm"
 

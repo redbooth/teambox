@@ -1,24 +1,36 @@
 // <%= I18n.locale %>
 
-function do_timeAgoInWords_<%= I18n.locale %>(){
-  $$('.timeago').each(
-    function(c){
-    c.update(
-      timeAgoInWords_<%= I18n.locale %>(c.readAttribute('alt'))
-      );
-    }
-  )
+function format_posted_date_<%= I18n.locale %>()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date-posted_date) / (1000 * 60 * 60 * 24));
+
+    if(minutes < 60)    { c.update(minutesAgoInWords_<%= I18n.locale %>(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_<%= I18n.locale %>("%I:%M %p")); }
+    else if(days <= 1)  { c.update('<%= I18n.t 'date.yesterday' %> ' + posted_date.strftime_<%= I18n.locale %>("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_<%= I18n.locale %>("%A <%= I18n.t('date.formats.short')%>")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_<%= I18n.locale %>("<%= I18n.t('date.formats.short')%>")); }
+    else c.update(posted_date.strftime_<%= I18n.locale %>("<%= I18n.t('date.formats.long')%>"));    
+  }
+  );
 }
 
+<% 
+  less_than_one = I18n.t('datetime.distance_in_words.less_than_x_minutes.one')
+  less_than_one_ago = I18n.t('datetime.time_ago', :time_ago_in_words => less_than_one)
+  one_minute = I18n.t('datetime.distance_in_words.x_minutes.one')
+  one_minute_ago = I18n.t('datetime.time_ago', :time_ago_in_words => one_minute)
+  minutes = I18n.t('datetime.distance_in_words.x_minutes', :count => '" + minutes + "')
+  minutes_ago = I18n.t('datetime.time_ago', :time_ago_in_words => minutes)
+%>
 
-function timeAgoInWords_<%= I18n.locale %>(from) {
-  seconds_ago = ((new Date().getTime()  - from) / 1000);
-  minutes_ago = Math.floor(seconds_ago / 60);
-
-  if(minutes_ago == 0) { return "<%= I18n.t 'datetime.distance_in_words.less_than_x_minutes.one' %>"; }
-  if(minutes_ago == 1) { return "<%= I18n.t 'datetime.distance_in_words.x_minutes.one' %>"; }
-  if(minutes_ago < 60) { return ""+"<%= I18n.t 'datetime.distance_in_words.x_minutes', :count => '" + minutes_ago + "' %>"+""; }
-  if(minutes_ago < 90) { return "<%= I18n.t 'datetime.distance_in_words.about_x_hours.one' %>"; }
-  hours_ago  = Math.floor(minutes_ago / 60);
-  return " <%= I18n.t 'datetime.distance_in_words.about_x_hours', :count => '" + hours_ago + "' %> ";
-}
+function minutesAgoInWords_<%= I18n.locale %>(minutes) {
+  if(minutes == 0) { return "<%= less_than_one_ago %>"; }
+  if(minutes == 1) { return "<%= one_minute_ago %>"; }
+  return ""+"<%= minutes_ago %>"+"";
+  }
