@@ -483,6 +483,8 @@ it:
     index:
       add_link: Nuova lista di compiti
       empty: Non ci sono compiti in questa categoria
+      #####
+      tasks_for_all_projects: Tasks across all projects
     primer:
       empty: Non c'è ancora alcuna conversazione in questo progetto.
       create_first: Crea la prima lista di compiti!

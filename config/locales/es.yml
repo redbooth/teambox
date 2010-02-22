@@ -482,6 +482,7 @@ es:
     index:
       add_link: Nueva lista de tareas
       empty: No hay tareas en esta categoría
+      tasks_for_all_projects: Tareas para todos los proyectos
     primer:
       empty: Aún no hay ninguna conversación en este proyecto.
       create_first: Crea la primera lista de tareas!

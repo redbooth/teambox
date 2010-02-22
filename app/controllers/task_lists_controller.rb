@@ -4,7 +4,7 @@ class TaskListsController < ApplicationController
   before_filter :load_banner, :only => [:index, :show]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy]
   before_filter :set_page_title
-  
+
   def index
     respond_to do |f|
       f.html
@@ -94,8 +94,12 @@ class TaskListsController < ApplicationController
         if @current_project
           @task_lists = @current_project.task_lists.unarchived
         else
-          @task_lists = []
-          current_user.projects.each {|p| @task_lists |= p.task_lists.unarchived }
+          @projects = current_user.projects.unarchived
+          @task_lists = @projects.collect { |p| p.task_lists.unarchived(:include => :tasks) }.flatten
+          @tasks = @task_lists.
+                    collect { |list| list.tasks.unarchived }.
+                    flatten.
+                    sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
         end
       end      
     end

@@ -1,10 +1,15 @@
-= banner(@events,@chart)
+- if @current_project
+  = banner(@events,@chart)
 
-- content_for :column do
-  - if @current_project
+  - if @task_lists.any?
+    = tabular_task_lists(@current_project,@task_lists,@sub_action)
+  - else
+    = task_list_primer(@current_project)
+  
+  - content_for :column do
     = task_list_column(@current_project,@task_lists,@sub_action,@task_list)
 
-- if @task_lists.any?
-  = tabular_task_lists(@current_project,@task_lists,@sub_action)
-- elsif @sub_action == 'all'
-  = task_list_primer(@current_project)
+- else
+  %h2= t('.tasks_for_all_projects')
+
+  = tasks_for_all_projects(@tasks)

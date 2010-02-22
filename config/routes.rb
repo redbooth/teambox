@@ -80,7 +80,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # map.resources :comments
-  # map.resources :task_lists, :only => [ :index ]
+  map.resources :task_lists, :only => [ :index ]
   # map.resources :conversations, :only => [ :index ]
   # map.resources :pages, :only => [ :index ]
 

@@ -272,4 +272,8 @@ module TaskListsHelper
       :class => :print)
   end
 
+  def tasks_for_all_projects(tasks)
+    render :partial => 'task_lists/tasks_for_all_projects', :locals => { :tasks => tasks }
+  end
+
 end

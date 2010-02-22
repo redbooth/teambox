@@ -483,6 +483,7 @@ ca:
     index:
       add_link: Nova llista de tasques
       empty: No hi ha tasques en aquesta categoria
+      tasks_for_all_projects: Tasques per a tots els projectes
     primer:
       empty: Encara no hi ha cap conversa en aquest projecte.
       create_first: Crea la primera llista de tasques!

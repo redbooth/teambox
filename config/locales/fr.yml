@@ -483,6 +483,7 @@ fr:
     index:
       add_link: Nouvelle liste de tâches
       empty: Aucune tâche dans cette catégorie!
+      tasks_for_all_projects: Tâches pour tous vos projets
     primer:
       empty: Ce projet ne contient pour l'instant aucune conversation.
       create_first: Créez la première liste de tâches!

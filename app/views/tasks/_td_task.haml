@@ -1,4 +1,4 @@
-%tr{ :class => "#{'overdue' if task.overdue? && task.open? } #{ 'mine' if task.assigned_to?(current_user) && task.open?}"}
+%tr{ :class => "#{'overdue' if task.overdue? } #{ 'mine' if task.assigned_to?(current_user) && task.open?}"}
   %td.status
     = task_status(task,:content)
   %td.name{ :class => "task_item_#{task.status_name}"}

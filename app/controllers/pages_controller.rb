@@ -7,10 +7,7 @@ class PagesController < ApplicationController
     if @current_project
       @pages = @current_project.pages
     else
-      @pages = []
-      current_user.projects.each do |project|
-        @pages |= project.pages
-      end
+      @pages = current_user.projects.collect { |p| p.pages }
     end
     
     respond_to do |f|

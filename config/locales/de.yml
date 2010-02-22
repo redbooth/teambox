@@ -483,6 +483,8 @@ de:
     index:
       add_link: Neue Aufgabenliste
       empty: Keine Aufgaben in dieser Kategorie!
+      #####
+      tasks_for_all_projects: Tasks across all projects
     primer:
       empty: Dieses Projekt hat bisher keine Aufgabenlisten.
       create_first: Erstellen Sie die erste Aufgabenliste in diesem Projekt!

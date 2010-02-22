@@ -482,6 +482,7 @@ en:
     index:
       add_link: New Task List
       empty: No tasks in this category!
+      tasks_for_all_projects: Tasks across all projects
     primer:
       empty: This project doesn't have any conversations yet.
       create_first: Create the first task list in this project!

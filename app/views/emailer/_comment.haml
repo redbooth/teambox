@@ -12,6 +12,6 @@
         = I18n.l(comment.created_at, :format => "%b %d &mdash; %I:%M %p")
       ~ comment.body_html
 
-    - unless comment.uploads.empty?
+    - if comment.uploads.any?
       %ul
         = render :partial => 'emailer/upload', :collection => comment.uploads
