@@ -10580,7 +10580,8 @@ Task = {
         form.up().down(".new_task_link").show();
         var list_of_tasks = form.up().down(".tasks");
         var task_item_html = response.responseText;
-        list_of_tasks.insert({ bottom: task_item_html })
+        var last_task_item = list_of_tasks.select('.task').select(Element.visible).last();
+        last_task_item.insert({ after: task_item_html });
 
         Task.highlight_last_as_new(list_of_tasks);
         Task.make_all_sortable();
