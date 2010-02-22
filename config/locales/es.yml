@@ -201,6 +201,7 @@ es:
       title: Actividad en todos tus proyectos
       projects: Mis proyectos
       subscribe: Suscríbete al feed de actividades
+      calendars: Calendario de todos los proyectos
       new_project: Nuevo proyecto
       refreshes: Actualiza cada minuto
       rss:
@@ -226,6 +227,7 @@ es:
       people_in_project: Personas en este proyecto
       subscribe: Suscríbete a este proyecto
       tip: "Si mencionas el @usuario de alguien, recibirán un email con tu mensaje"
+      calendar: Calendario para este proyecto
       rss:
         title: "{{name}}"
         description: "Actividad reciente para {{name}}"

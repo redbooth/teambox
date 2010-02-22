@@ -13,3 +13,6 @@
   %h2= t('.tasks_for_all_projects')
 
   = tasks_for_all_projects(@tasks)
+
+  %div{ :style => 'padding-left: 20px; padding-bottom: 40px' }
+    = subscribe_to_calendars_link

@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     end
     
     def rss_token
-      unless params[:rss_token].nil? or params[:format] != 'rss'
+      unless params[:rss_token].nil? or !%w(rss ics).include?(params[:format])
         user = User.find_by_rss_token(params[:rss_token])
         set_current_user user if user
       end

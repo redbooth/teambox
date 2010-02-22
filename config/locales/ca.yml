@@ -201,6 +201,8 @@ ca:
       title: Activitat en tots els teus projectes
       projects: Els meus projectes
       subscribe: Subscriu-te al feed d'activitats
+      #####
+      calendars: Calendar for all projects
       new_project: Cap Projecte
       refreshes: Actualiza't cada minut
       rss:
@@ -226,6 +228,8 @@ ca:
       people_in_project: Persones en aquest projecte
       subscribe: Subscriu-te en aquest projecte
       tip: "Si esmentes l'@usuari d'algú, rebran un email amb el teu missatge"
+      #####
+      calendar: Calendar for this project's tasks
       rss:
         title: "{{name}}"
         description: "Activitat recent per a {{name}}"

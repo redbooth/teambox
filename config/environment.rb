@@ -10,6 +10,7 @@ Rails::Initializer.run do |config|
   config.gem 'completeness-fu'
   config.gem 'system_timer'
   config.gem 'whenever', :lib => false, :source => 'http://gemcutter.org/'
+  config.gem 'icalendar'
 
   config.action_view.sanitized_allowed_tags = 'table', 'th', 'tr', 'td'
   config.time_zone = APP_CONFIG['time_zone']

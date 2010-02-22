@@ -77,25 +77,37 @@ module ProjectsHelper
   end
   
   def subscribe_to_projects_link
-    content_tag(:div, 
+    content_tag(:div,
       link_to(t('.subscribe'), user_rss_token(projects_path(:format => :rss))),
       :class => :subscribe)
   end
 
   def subscribe_to_project_link(project)
-    content_tag(:div, 
+    content_tag(:div,
       link_to(t('.subscribe'), user_rss_token(project_path(@current_project, :format => :rss))),
       :class => :subscribe)
   end
+
+  def subscribe_to_calendars_link
+    content_tag(:div,
+      link_to(t('projects.index.calendars'), user_rss_token(projects_path(:format => :ics))),
+      :class => :calendars)
+  end
+
+  def subscribe_to_calendar_link(project)
+    content_tag(:div,
+      link_to(t('projects.show.calendar'), user_rss_token(project_path(project, :format => :ics))),
+      :class => :calendars)
+  end
   
   def print_projects_link
-    content_tag(:div, 
+    content_tag(:div,
       link_to(t('common.print'), projects_path(:format => :print)),
       :class => :print)
   end
 
   def print_project_link(project)
-    content_tag(:div, 
+    content_tag(:div,
       link_to(t('common.print'), project_path(project,:format => :print)),
       :class => :print)
   end
@@ -115,7 +127,7 @@ module ProjectsHelper
                       :title => desc), 
                       project_task_lists_path(project)
   end
-  
+
   def quicklink_pages(project)
     desc = t('shared.project_navigation.pages')
     link_to image_tag('drop_page.png',
@@ -130,12 +142,12 @@ module ProjectsHelper
 
   def autorefresh(activities)
     ajax_request = remote_function(:url => show_new_path(@activities.first.id))
-        
+
     interval = APP_CONFIG['autorefresh_interval']*1000
 
     "autorefresh = setInterval(\"#{ajax_request}\", #{interval})"
   end
-  
+
   def options_for_owner(people)
     people.map {|person| [ person.name, person.user_id ]}
   end

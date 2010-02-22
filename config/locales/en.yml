@@ -201,6 +201,7 @@ en:
       title: News feed for all your projects
       projects: My Projects
       subscribe: Subscribe to the news feed
+      calendars: Calendar for all projects
       new_project: New Project
       refreshes: Refreshes every minute
       rss:
@@ -226,6 +227,7 @@ en:
       people_in_project: People in this project
       subscribe: Subscribe to the news feed
       tip: Mentioning somebody's @username they will receive an email with your message
+      calendar: Calendar for this project's tasks
       rss:
         title: "{{name}}"
         description: "Recent activities for the project {{name}}"

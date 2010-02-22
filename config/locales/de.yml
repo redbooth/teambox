@@ -201,6 +201,8 @@ de:
       title: "Nachrichten Feeds für alle eigenen Projekte"
       projects: Meine Projekte
       subscribe: Nachrichten Feed abonnieren
+      #####
+      calendars: Calendar for all projects
       new_project: Neues Projekt
       refreshes: Aktualisiert jede Minute
       rss:
@@ -226,6 +228,8 @@ de:
       people_in_project: Teilnehmer in diesem Projekt
       subscribe: Abonnieren Sie den Nachrichten Feed
       tip: "Erwähnen Sie jemand @benutzername, erhält der Benutzer eine Email mit Ihrer Nachricht"
+      #####
+      calendar: Calendar for this project's tasks
       rss:
         title: "{{name}}"
         description: "Kürzliche Aktivitäten im Projekt {{name}}"

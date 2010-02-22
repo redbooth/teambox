@@ -99,4 +99,30 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def to_ical
+    ical = Icalendar::Calendar.new
+    ical.product_id = "-//Teambox//iCal 2.0//EN"
+    ical.custom_property("X-WR-CALNAME;VALUE=TEXT", "Teambox - All Projects")
+    ical.custom_property("METHOD","PUBLISH")
+    tasks.each do |task|
+      if event = task.to_ical_event
+        ical.add_event(event)
+      end
+    end
+    ical.to_ical
+  end
+
+  def self.to_ical(projects)
+    ical = Icalendar::Calendar.new
+    ical.product_id = "-//Teambox//iCal 2.0//EN"
+    ical.custom_property("X-WR-CALNAME;VALUE=TEXT", "Teambox - All Projects")
+    ical.custom_property("METHOD","PUBLISH")
+    projects.collect { |p| p.tasks }.flatten.each do |task|
+      if event = task.to_ical_event
+        ical.add_event(event)
+      end
+    end
+    ical.to_ical
+  end
+
 end
