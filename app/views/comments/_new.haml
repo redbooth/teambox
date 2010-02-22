@@ -1,7 +1,7 @@
 - comment_form_for(form_url) do |f|
   = hidden_field_tag :original_controller, controller_name
   .body.text_area
-    = f.text_area :body, :class => 'comment_body', :id => 'comment_body'
+    = comment_text_area(f, target)
     = autoresize :comment_body
     .previewBox.textilized{:style => 'display:none'}
   .extra

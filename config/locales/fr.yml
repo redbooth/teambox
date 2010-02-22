@@ -1,4 +1,5 @@
 # Translated by Diane Kurtsoglou
+# Mark missing translations by adding ##### at the end of the line
 fr:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Teambox est désormais disponible en français!"
@@ -352,7 +353,8 @@ fr:
         cant_be_blank: Le nom ne peut pas être vide
         too_long: 'Le nom doit comporter moins de 255 caractères'
     fields:
-      name: Nom
+      name: "What needs to be done?" ######
+      due_on: "Needs to be done before... <i>(optional)</i>" #####
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:
@@ -530,6 +532,10 @@ fr:
       assigned_to_nobody: 'Assignée à personne'
       assigned_to: "Assigné à:"
       submit: Publier
+      project: "What are you doing? Share ideas, links, updates." #####
+      conversation: "Send a message to the rest of the group." #####
+      task_list: "Share ideas for this task list. To create and assign tasks, use the sidebar." #####
+      task: "Define what needs to be done by commenting. Assign this task to somebody. Post updates. Attach results." #####
     edit:
       submit: Enregistrer
   example_projects:

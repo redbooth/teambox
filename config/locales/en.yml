@@ -1,4 +1,5 @@
 # Original translation
+# Mark missing translations by adding ##### at the end of the line
 en:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Now with <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile Site, French and German locales and API</a>!"
@@ -352,7 +353,8 @@ en:
         cant_be_blank: 'must not be blank'
         too_long: 'must be shorter than 255 characters'
     fields:
-      name: Name
+      name: What needs to be done?
+      due_on: Needs to be done before... <i>(optional)</i>
     assigned:
       assigned_to: "Assigned to {{user}}"
     due_on:
@@ -530,6 +532,10 @@ en:
       assigned_to_nobody: 'Unassigned'
       assigned_to: "Assigned to:"
       submit: Comment
+      project: "What are you doing? Share ideas, links, updates."
+      conversation: "Send a message to the rest of the group."
+      task_list: "Share ideas for this task list. To create and assign tasks, use the sidebar."
+      task: "Define what needs to be done by commenting. Assign this task to somebody. Post updates. Attach results."
     edit:
       submit: Save
   example_projects:

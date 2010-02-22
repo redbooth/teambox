@@ -1,4 +1,5 @@
 # übersetzt von Armin Ziesmann
+# Mark missing translations by adding ##### at the end of the line
 de:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Now with <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile Site, French and German locales and API</a>!"
@@ -352,7 +353,8 @@ de:
         cant_be_blank: 'darf nicht leer sein'
         too_long: 'muss kürzer als 255 Zeichen sein'
     fields:
-      name: Name
+      name: "What needs to be done?" ######
+      due_on: "Needs to be done before... <i>(optional)</i>" #####
     assigned:
       assigned_to: "Zugeordnet zu {{user}}"
     due_on:
@@ -530,6 +532,10 @@ de:
       assigned_to_nobody: 'Nicht zugeordnet'
       assigned_to: "Zugeordnet zu:"
       submit: Kommentar
+      project: "What are you doing? Share ideas, links, updates." #####
+      conversation: "Send a message to the rest of the group." #####
+      task_list: "Share ideas for this task list. To create and assign tasks, use the sidebar." #####
+      task: "Define what needs to be done by commenting. Assign this task to somebody. Post updates. Attach results." #####
     edit:
       submit: Speichern
   example_projects:

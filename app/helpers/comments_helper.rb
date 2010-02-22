@@ -184,4 +184,15 @@ module CommentsHelper
     id = "#{js_id(target)}_#{status_type}_comments_count"
   end
 
+  def comment_text_area(f, target)
+    placeholder = case target
+    when Conversation then t('.conversation')
+    when TaskList then t('.task_list')
+    when Task then t('.task')
+    else t('.project')
+    end
+
+    f.text_area :body, :class => 'comment_body', :id => 'comment_body', :placeholder => placeholder
+  end
+
 end

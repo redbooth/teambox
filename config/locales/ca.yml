@@ -1,4 +1,5 @@
 # Translated by David Niubò
+# Mark missing translations by adding ##### at the end of the line
 ca:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Novetats: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versió Mòbil, traducció al català i API</a>"
@@ -352,7 +353,8 @@ ca:
         cant_be_blank: El nom no pot estar buit
         too_long: El nom no pot superar els 255 caràcters
     fields:
-      name: Nom
+      name: "What needs to be done?" ######
+      due_on: Needs to be done before... <i>(optional)</i> #####
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:
@@ -530,6 +532,10 @@ ca:
       assigned_to_nobody: Sense assignar
       assigned_to: "Assignat a:"
       submit: Publicar
+      project: "What are you doing? Share ideas, links, updates." #####
+      conversation: "Send a message to the rest of the group." #####
+      task_list: "Share ideas for this task list. To create and assign tasks, use the sidebar." #####
+      task: "Define what needs to be done by commenting. Assign this task to somebody. Post updates. Attach results." #####
     edit:
       submit: Guardar
   example_projects:

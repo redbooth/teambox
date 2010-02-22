@@ -1,4 +1,5 @@
 # Translated by Pablo Villalba
+# Mark missing translations by adding ##### at the end of the line
 es:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Novedades: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versión Móvil, traducción al francés y alemán y API</a>"
@@ -352,7 +353,8 @@ es:
         cant_be_blank: El nombre no puede estar vacío
         too_long: El nombre no puede superar los 255 caracteres
     fields:
-      name: Nombre
+      name: ¿Qué debe hacerse?
+      due_on: Debe estar listo antes de... <i>(opcional)</i>
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:
@@ -530,6 +532,10 @@ es:
       assigned_to_nobody: Sin asignar
       assigned_to: "Asignado a:"
       submit: Publicar
+      project: "¿Qué estás haciendo? Comparte ideas, enlaces, logros."
+      conversation: "Envía un mensaje al resto del grupo."
+      task_list: "Comparte ideas para esta lista de tareas. Para crear y asignar tareas, usa la barra lateral."
+      task: "Define qué debe hacerse en un comentario. Asigna un responsable. Publica actualizaciones. Adjunta resultados."
     edit:
       submit: Guardar
   example_projects:
