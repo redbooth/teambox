@@ -471,7 +471,10 @@ es:
       title: Todas las tareas archivadas
       description: "Estas son las tareas archivadas, al haber sido completadas o rechazadas."
     fields:
-      name: Nombre
+      task_list: Una lista de tareas define un hito en el proyecto. Dentro puedes crear Tareas y asignarlas a otras personas.
+      name: Lista de Tareas
+      start_on: Empieza el... <i>opcional</i>
+      finish_on: Termina el... <i>opcional</i>
     link:
       new: Nueva lista de tareas
       edit: Editar

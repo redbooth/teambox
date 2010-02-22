@@ -471,7 +471,10 @@ en:
       title: All Archived Tasks
       description: You're currently looking at archived tasks. These are tasks that have been closed.
     fields:
-      name: Name
+      task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
+      name: Task List name
+      start_on: Starts on... <i>optional</i>
+      finish_on: End on... <i>optional</i>
     link:
       new: New Task List
       edit: Edit

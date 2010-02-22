@@ -471,7 +471,11 @@ it:
       title: Tutti i compiti archiviati
       description: "Questi sono i compiti archiviati, dopo essere stati completati o rifiutati."
     fields:
-      name: Nome
+      #####
+      task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
+      name: Task List name
+      start_on: Starts on... <i>optional</i>
+      finish_on: End on... <i>optional</i>
     link:
       new: Nuova lista di compiti
       edit: Edita

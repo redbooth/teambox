@@ -471,7 +471,11 @@ de:
       title: Alle archivierten Aufgaben
       description: Sie sehen momentan alle archivierten Aufgaben. Diese sind geschlossen worden.
     fields:
-      name: Name
+      #####
+      task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
+      name: Task List name
+      start_on: Starts on... <i>optional</i>
+      finish_on: End on... <i>optional</i>
     link:
       new: Neue Aufgabenliste
       edit: Bearbeiten

@@ -1,9 +1,10 @@
+%p= t('.task_list')
 .name.text_field
-  = f.text_field :name, :class => 'focus'
-- unless task_list.new_record?
-  .pick_date
-    = f.label :start_on
-    = date_picker(f, :start_on)
-  .pick_date
-    = f.label :finish_on
-    = date_picker(f, :finish_on)
+  = f.label :name, t('.name')
+  = f.text_field :name, :class => 'focus', :autofocus => 'true'
+.pick_date
+  = f.label :start_on, t('.start_on')
+  = date_picker(f, :start_on)
+.pick_date
+  = f.label :finish_on, t('.finish_on')
+  = date_picker(f, :finish_on)
