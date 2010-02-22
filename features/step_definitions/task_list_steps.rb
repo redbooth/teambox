@@ -28,5 +28,13 @@ Then /^I should not see a "([^\"]*)" link in the "([^\"]*)" task list panel$/ do
   task_list = TaskList.find_by_name(task_list_name)
   project = task_list.project
   page.should_not have_xpath(%(//*[@id = "project_#{project.id}_task_list_#{task_list.id}_with_tasks"]//a[text()="#{link_text}"]))
-  # Then %(I should not see "#{link_text}" within "#project_#{project.id}_task_list_#{task_list.id}_with_tasks")
+end
+
+When /^I fill in "([^\"]*)" with "([^\"]*)" in the new task form of the "([^\"]*)" task list$/ do |field, value, task_list_name|
+  task_list = TaskList.find_by_name(task_list_name)
+  project = task_list.project
+  task_form_id = "project_#{project.id}_task_list_#{task_list.id}_task_new_form"
+  within(:css, "##{task_form_id}") do
+    fill_in(field, :with => value)
+  end
 end

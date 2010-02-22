@@ -36,3 +36,14 @@ Feature Creating a task
        And I press "Update Task"
        And I wait for 1 second
       Then I should see "Uh Ohhh ya" within ".task_header h2"
+
+  Scenario: User creates multiple tasks one after the other
+    When I go to the "Awesome Ruby Yahh" task list page of the "Ruby Rockstars" project
+     And I follow "+ Add Task"
+     And I fill in "task_name" with "Metaprogramming" in the new task form of the "Awesome Ruby Yahh" task list
+     And I press "Add Task" within ".task_form"
+    Then I should see "Metaprogramming" within ".task_header h2"
+    When I follow "+ Add Task"
+     And I fill in "task_name" with "Leaking block closures" in the new task form of the "Awesome Ruby Yahh" task list
+     And I press "Add Task" within ".task_form"
+    Then I should see "Leaking block closures" within ".task_header h2"

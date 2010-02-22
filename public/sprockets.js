@@ -10629,7 +10629,7 @@ Task = {
       evalScripts: true,
       method: 'get',
       onSuccess: function(response){
-        Element.replace('content', response.responseText);
+        $('content').update(response.responseText);
       }
     })
   }
