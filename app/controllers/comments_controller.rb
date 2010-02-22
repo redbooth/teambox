@@ -94,7 +94,9 @@ class CommentsController < ApplicationController
         t.previous_status = t.status
         t.previous_assigned_id = t.assigned_id
         t.status = params[:comment][:status]
-        t.assigned_id = params[:comment][:target_attributes][:assigned_id]
+        unless params[:comment][:target_attributes].nil?
+          t.assigned_id = params[:comment][:target_attributes][:assigned_id]
+        end
         #if t.archived? && [Task::STATUSES[:new],Task::STATUSES[:open],Task::STATUSES[:hold]].include?(t.status)
         #  t.archived = false 
         # end
