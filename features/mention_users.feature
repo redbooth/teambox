@@ -11,17 +11,32 @@ Feature: Send email to users mentioned in comments
       | james  | james.urquhart@gmail.com  | James      | Urquhart  | en       |
 
   Scenario: Mention several users in one comment
-  Given a project exists with name: "Surpass Basecamp"
-  And all the users are in the project with name: "Surpass Basecamp"
-  When I am logged in as "balint"
-  And I go to the page of the "Surpass Basecamp" project
-  And I fill in "comment_body" with "@pablo @james Check this out!"
-  And I press "Pubblica"
-  And I wait for 1 second
-  Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"
-  When "pablo@teambox.com" opens the email with subject "surpass-basecamp"
-  Then he should see "Comentario en la pared del proyecto" in the email body
-  And "james.urquhart@gmail.com" should receive an email with subject "surpass-basecamp"
-  When "james.urquhart@gmail.com" opens the email with subject "surpass-basecamp"
-  Then he should see "Comment on project's wall" in the email body
+    Given a project exists with name: "Surpass Basecamp"
+    And all the users are in the project with name: "Surpass Basecamp"
+    When I am logged in as "balint"
+    And I go to the page of the "Surpass Basecamp" project
+    And I fill in "comment_body" with "@pablo @james Check this out!"
+    And I press "Pubblica"
+    And I wait for 1 second
+    Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"
+    When "pablo@teambox.com" opens the email with subject "surpass-basecamp"
+    Then he should see "Comentario en la pared del proyecto" in the email body
+    And "james.urquhart@gmail.com" should receive an email with subject "surpass-basecamp"
+    When "james.urquhart@gmail.com" opens the email with subject "surpass-basecamp"
+    Then he should see "Comment on project's wall" in the email body
 
+  @wip
+  Scenario: Mention all users by using @all in a comment in a project
+    Given a project exists with name: "Surpass Basecamp"
+    And all the users are in the project with name: "Surpass Basecamp"
+    And I am logged in as "balint"
+    And I go to the page of the "Surpass Basecamp" project
+    And I fill in "comment_body" with "@all Check this out!"
+    And I press "Pubblica"
+    And I wait for 1 second
+    Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"
+    When "pablo@teambox.com" opens the email with subject "surpass-basecamp"
+    Then he should see "Comentario en la pared del proyecto" in the email body
+    And "james.urquhart@gmail.com" should receive an email with subject "surpass-basecamp"
+    When "james.urquhart@gmail.com" opens the email with subject "surpass-basecamp"
+    Then he should see "Comment on project's wall" in the email body

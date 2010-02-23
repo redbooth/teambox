@@ -42,7 +42,7 @@ class Project < ActiveRecord::Base
 
   def notify_new_comment(comment)
     users.each do |user|
-      if user != comment.user and user.notify_mentions and " #{comment.body} ".match(/\s@#{user.login}\W/i)
+      if user.notify_of_comment?(comment)
         Emailer.send_with_language(:notify_comment, user.language, user, self, comment) # deliver_notify_comment
       end
     end

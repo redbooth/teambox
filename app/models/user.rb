@@ -224,9 +224,15 @@ class User < ActiveRecord::Base
   def active_projects_count
     projects.unarchived.count
   end
-  
+
   def can_create_project?
     true
+  end
+
+  def notify_of_comment?(comment)
+    self.notify_mentions &&
+      comment.user != self &&
+      !!( comment.body =~ /@all/i || comment.body =~ /@#{self.login}[^a-z0-9_]/i )
   end
 
 end

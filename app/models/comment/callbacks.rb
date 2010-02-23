@@ -14,8 +14,8 @@ class Comment
     @activity = project.log_activity(self,'create')
 
     target.after_comment(self)      if target.respond_to?(:after_comment)
-    target.notify_new_comment(self) if target.respond_to?(:notify_new_comment)
     target.add_watchers(@mentioned) if target.respond_to?(:add_watchers)
+    target.notify_new_comment(self) if target.respond_to?(:notify_new_comment)
   end
   
   def after_destroy

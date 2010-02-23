@@ -26,6 +26,9 @@ module HtmlFormatting
         end
         match[0,1] + link_to(user.login, "/users/#{user.login}")
       else
+        if "all" == match[1..-1].downcase
+          @mentioned = User.confirmed
+        end
         match
       end
     end

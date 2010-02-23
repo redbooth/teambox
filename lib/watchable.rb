@@ -9,6 +9,7 @@ module Watchable
   end
   
   def add_watchers(users)
+    Rails.logger.info "Adding watchers to #{self}: #{Array(users).inspect}"
     Array(users).each do |user|
       self.add_watcher user
     end
