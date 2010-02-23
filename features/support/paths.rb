@@ -27,6 +27,9 @@ module NavigationHelpers
       new_project_conversation_path(@current_project)
     when /the task lists page$/
       project_task_lists_path(@current_project)
+    when /the page of the "([^\"]*)" conversation/
+      conv = Conversation.find_by_name($1)
+      project_conversation_path(conv.project, conv)
     when /the uploads page$/
       project_uploads_path(@current_project)
     when /the people page of the "([^\"]*)" project$/

@@ -55,3 +55,21 @@ Feature: Send email to users mentioned in comments
     And I should see "Pablo Villalba"
     Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"
     And "james.urquhart@gmail.com" should receive an email with subject "surpass-basecamp"
+
+
+  Scenario: Mention all users by using @all in a conversation comment
+    Given a project exists with name: "Surpass Basecamp"
+    And all the users are in the project with name: "Surpass Basecamp"
+    And the following conversation with associations exist:
+      | name               | project          | user   |
+      | Long-term strategy | Surpass Basecamp | balint |
+    And I am logged in as "balint"
+   When I go to the page of the "Long-term strategy" conversation
+    And I fill in "comment_body" with "@all Think outside of the box!"
+    And I press "Pubblica"
+    And I wait for 3 seconds
+   Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"
+    And "james.urquhart@gmail.com" should receive an email with subject "surpass-basecamp"
+   When I go to the page of the "Long-term strategy" conversation  #FIXME: this should not be needed, it should display the new followers right away (probably a watchings_ids caching issue)
+   Then I should see "James Urquhart"
+    And I should see "Pablo Villalba"
