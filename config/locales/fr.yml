@@ -129,6 +129,8 @@ fr:
       submit: Créer le compte
       you_are_logged_in: "Vous avez déjà un compte sur Teambox. Si vous voulez vous enregistrer comme autre utilisateur, fermez la session et essayez de nouveau."
       existing_user: "Si vous avez déjà un compte, <a href='{{login_url}}'>identifiez-vous</a> ou <a href='{{forgot_url}}'>rétablissez votre mot de passe</a>."
+      #####
+      you_already_have_an_account: "You already have a Teambox account for the address {{email}}. <a href='{{login_link}}'>Log in with this email</a> or <a href='{{reset_password_link}}'>reset your password</a> if you forgot it."
     create:
       thanks: Votre compte a bien été créé! Merci!
       error: "Nous n'avons pas pu enregistrer ce compte, désolé! Essayez de nouveau."

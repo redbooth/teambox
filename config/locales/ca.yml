@@ -129,6 +129,8 @@ ca:
       submit: Crear un compte
       you_are_logged_in: "Ja tens un compte de Teambox. Si vols entrar com un altre usuari, tanca la sessió i intenta-ho de nou."
       existing_user: "Si ja tens un compte, <a href='{{login_url}}'>identifíca't</a> o <a href='{{forgot_url}}'>restableix la teva contrasenya</a>."
+      #####
+      you_already_have_an_account: "You already have a Teambox account for the address {{email}}. <a href='{{login_link}}'>Log in with this email</a> or <a href='{{reset_password_link}}'>reset your password</a> if you forgot it."
     create:
       thanks: ¡Gràcies per registrarte!
       error: "No hem pogur registrar aquest compte ¡ens sap greu! intenta-ho de nou."

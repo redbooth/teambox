@@ -24,7 +24,8 @@
       = tooltip 'user_email', t('.tooltips.email')
 
     - if @invitation
-      .use_this_email= t('.use_this_email')
+      .use_this_email{ :style => 'margin: 10px; padding: 10px; border: 1px rgb(220,220,150) solid; background-color: rgb(255,255,200)' }
+        = t('.use_this_email')
 
     - if @invitation_token
       = hidden_field_tag 'invitation', @invitation_token

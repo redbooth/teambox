@@ -129,6 +129,8 @@ it:
       submit: Crea account
       you_are_logged_in: "Hai già un account di Teambox. Se voi entrare con un'altro utente, esci e riprova l'accesso."
       existing_user: "Se hai già un account, <a href='{{login_url}}'>entra</a> o <a href='{{forgot_url}}'>reimposta la tua password</a>."
+      #####
+      you_already_have_an_account: "You already have a Teambox account for the address {{email}}. <a href='{{login_link}}'>Log in with this email</a> or <a href='{{reset_password_link}}'>reset your password</a> if you forgot it."
     create:
       thanks: Grazie per esserti registrato!
       error: "Non è stato possible registrare l'account, siamo spiacenti! Ritenta."

@@ -129,6 +129,8 @@ de:
       submit: Erstellen Benutzerkonto
       you_are_logged_in: "Sie haben bereits ein Benutzerkonto. Melden Sie sich ab, um sich als anderer Benutzer anzumelden."
       existing_user: "Wenn Sie bereits ein Benutzerkonto haben, <a href='{{login_url}}'> melden Sie sich an</a> oder <a href='{{forgot_url}}'>lassen Sie sich Ihr Passwort zusenden</a>."
+      #####
+      you_already_have_an_account: "You already have a Teambox account for the address {{email}}. <a href='{{login_link}}'>Log in with this email</a> or <a href='{{reset_password_link}}'>reset your password</a> if you forgot it."
     create:
       thanks: "Danke für die Anmeldung!"
       error: "Entschuldigung, wir konnten Ihr Benutzerkonto nicht einrichten. Versuchen Sie es bitte noch einmal oder nehmen Sie Kontakt mit einem Administrator auf (Link siehe oben)."
