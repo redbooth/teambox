@@ -10,7 +10,7 @@ Feature: Send email to users mentioned in comments
       | pablo  | pablo@teambox.com         | Pablo      | Villalba  | es       |
       | james  | james.urquhart@gmail.com  | James      | Urquhart  | en       |
 
-  Scenario: Mention several users in one comment
+  Scenario: Mention several users
     Given a project exists with name: "Surpass Basecamp"
     And all the users are in the project with name: "Surpass Basecamp"
     When I am logged in as "balint"
@@ -25,8 +25,7 @@ Feature: Send email to users mentioned in comments
     When "james.urquhart@gmail.com" opens the email with subject "surpass-basecamp"
     Then he should see "Comment on project's wall" in the email body
 
-  @wip
-  Scenario: Mention all users by using @all in a comment in a project
+  Scenario: Mention all users by using @all in a project comment
     Given a project exists with name: "Surpass Basecamp"
     And all the users are in the project with name: "Surpass Basecamp"
     And I am logged in as "balint"
@@ -40,3 +39,19 @@ Feature: Send email to users mentioned in comments
     And "james.urquhart@gmail.com" should receive an email with subject "surpass-basecamp"
     When "james.urquhart@gmail.com" opens the email with subject "surpass-basecamp"
     Then he should see "Comment on project's wall" in the email body
+
+  Scenario: Mention all users by using @all in a task comment
+    Given a project exists with name: "Surpass Basecamp"
+    And all the users are in the project with name: "Surpass Basecamp"
+    And the task list called "Urgent" belongs to the project called "Surpass Basecamp"
+    And the following task with associations exist:
+      | name          | task_list         | project          |
+      | Lure DHH      | Urgent            | Surpass Basecamp |
+    And I am logged in as "balint"
+   When I go to the page of the "Lure DHH" task
+    And I fill in "comment_body" with "@all That would be cool!"
+    And I press "Pubblica"
+   Then I should see "James Urquhart"
+    And I should see "Pablo Villalba"
+    Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"
+    And "james.urquhart@gmail.com" should receive an email with subject "surpass-basecamp"

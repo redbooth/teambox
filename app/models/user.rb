@@ -229,7 +229,7 @@ class User < ActiveRecord::Base
     true
   end
 
-  def notify_of_comment?(comment)
+  def notify_of_project_comment?(comment)
     self.notify_mentions &&
       comment.user != self &&
       !!( comment.body =~ /@all/i || comment.body =~ /@#{self.login}[^a-z0-9_]/i )
