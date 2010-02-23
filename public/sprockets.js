@@ -10577,11 +10577,16 @@ Task = {
       onSuccess: function(response){
         form.down('.loading').hide();
         form.hide();
-        form.up().down(".new_task_link").show();
+        var new_task_link = form.up().down(".new_task_link");
+        new_task_link.show();
         var list_of_tasks = form.up().down(".tasks");
         var task_item_html = response.responseText;
         var last_task_item = list_of_tasks.select('.task').select(Element.visible).last();
-        last_task_item.insert({ after: task_item_html });
+        if ( last_task_item !== undefined ) {
+          last_task_item.insert({ after: task_item_html });
+        } else {
+          list_of_tasks.insert({ top: task_item_html });
+        }
 
         Task.highlight_last_as_new(list_of_tasks);
         Task.make_all_sortable();

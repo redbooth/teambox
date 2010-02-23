@@ -42,13 +42,18 @@ Task = {
         form.down('.loading').hide();
         // make the form disappear
         form.hide();
+        var new_task_link = form.up().down(".new_task_link");
         // make the Add task link appear
-        form.up().down(".new_task_link").show();
+        new_task_link.show();
         // add a new task in the task list box to the bottom
         var list_of_tasks = form.up().down(".tasks");
         var task_item_html = response.responseText;
         var last_task_item = list_of_tasks.select('.task').select(Element.visible).last();
-        last_task_item.insert({ after: task_item_html });
+        if ( last_task_item !== undefined ) {
+          last_task_item.insert({ after: task_item_html });
+        } else {
+          list_of_tasks.insert({ top: task_item_html });
+        }
 
         Task.highlight_last_as_new(list_of_tasks);
         Task.make_all_sortable();
