@@ -8,7 +8,6 @@
   div.global_navigation
     :-moz-border-radius 4px
     :-webkit-border-radius 4px
-    :background rgb(220,220,220)
     :float right
     :padding 5px
     :margin-bottom 10px
@@ -22,8 +21,8 @@
         a  
           :float left
           :display block
-          :color rgb(70,70,70)
-          :font-size 12px
+          :color rgb(120,120,120)
+          :font-size 11px
           :margin 0px 7px
         a:hover,a.active
           :color rgb(90,158,167)
@@ -50,20 +49,18 @@
       a  
         :float left
         :display block
-        :color rgb(120,120,120)
+        :color rgb(70,70,70)
         :text-decoration none
         :padding 5px 8px
         :margin-right 1px
         :font-size 12px
-        :text-shadow white 0px 1px 1px
         +round_corners
       a:hover
         :color rgb(20,20,20)
-        :background rgb(245,245,245)
         :text-decoration underline
       a.active
         :color rgb(48,48,48)
-        :background rgb(160,228,237)
+        :background #78acd7
 
     li.welcome, li.new
       a.active
@@ -78,7 +75,7 @@
         :background rgb(211,209,209)
       
   div.project_navigation
-    :background rgb(160,228,237)
+    :background #78acd7
     +round_corners  
     :padding 5px 10px
     ul
@@ -92,18 +89,18 @@
       a  
         :float left
         :display block
-        :color rgb(26,149,168)
+        :color #49759d
         :text-decoration none
         :padding 4px 10px 6px 8px
         :margin-bottom 0px
         :font-size 12px
-        :text-shadow white 0px 1px 1px
         +round_corners
       a:hover
         :color rgb(0,0,0)
         :text-decoration underline
       a.active
-        :color rgb(0,0,0)
+        :font-weight bold
+        :color white
     li.right_side
       :float right
       :margin
@@ -116,7 +113,7 @@
         :vertical-align middle
       span  
         :vertical-align middle
-div.user_navigation, div.task_navigation, div.project_settings_navigation, div.project_column_navigation
+div.user_navigation, div.project_settings_navigation, div.project_column_navigation
   ul
     :list-style-type none
     :margin 0px
@@ -139,6 +136,15 @@ div.user_navigation, div.task_navigation, div.project_settings_navigation, div.p
       :background rgb(0,0,200)
       :border solid 1px rgb(0,0,200)
       :text-decoration none
+
+div.task_navigation
+  ul
+    :list-style-type none
+    :margin 0px
+      :bottom 10px
+    :padding 0px
+    a
+      :font-size 12px
 
 div.project_settings_navigation
   li.deletion
