@@ -59,7 +59,7 @@ module UploadsHelper
       file_name = upload.file_name
     end  
 
-    link_to file_name, upload.url, :class => 'upload_link'
+    link_to file_name, upload.url, :class => 'upload_link', :rel => (upload.image? ? 'facebox' : nil)
   end
     
   def upload_link_with_thumbnail(upload)
