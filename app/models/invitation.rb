@@ -31,7 +31,7 @@ class Invitation < RoleRecord
     
     # Check email (for non-existent users)
     if check_user.nil?
-      if email =~ Authentication.email_regex
+      if valid_email?(email)
         # One final check: do we have an invite for this email?
         if Invitation.exists?(:project_id => project_id, :email => email)
           @errors.add :user_or_email, 'already has a pending invitation'
