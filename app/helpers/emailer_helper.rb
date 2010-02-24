@@ -44,9 +44,41 @@ module EmailerHelper
   end
 
   def tasks_for_daily_reminder(tasks, user, header)
-    if tasks && !tasks.empty?
+    if tasks && tasks.any?
       render :partial => 'emailer/tasks_for_daily_reminder', :locals => { :tasks => tasks, :user => user, :header_text => header }
     end
+  end
+
+  def task_status_style(task)
+    styles = []
+    styles << "display: table-cell"
+    styles << "border-radius: 4px"
+    styles << "font-size: 11px"
+    styles << "color: white"
+    styles << "width: 23px"
+    styles << "text-align: center"
+    bg_color = case task.status_name
+    when "new"
+      "rgb(170,170,170)"
+    when "open"
+      "rgb(50,50,250)"
+    when "hold"
+      "rgb(130,0,193)"
+    when "resolved"
+      "rgb(0,200,0)"
+    when "rejected"
+      "rgb(200,0,0)"
+    end
+    styles << "background-color:#{bg_color}"
+    styles.join(";")
+  end
+
+  def task_due_on_style(task)
+    styles = []
+    # styles << "font-size: 11px"
+    styles << "display: table-cell"
+    styles << "color: rgb(200,0,0)"
+    styles.join(";")
   end
 
 end

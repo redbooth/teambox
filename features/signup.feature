@@ -1,5 +1,4 @@
 Feature: Signing up
-  @wip
   Scenario: Mislav successfully signs up and confirms his email
     When I go to the signup page
     And I fill in the following:
