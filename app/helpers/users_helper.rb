@@ -2,7 +2,7 @@ module UsersHelper
 
   def user_page_name(user)
     content_tag :h2,
-      [content_tag(:span,user.name),
+      [user.name,
       content_tag(:span,"@#{user.login}", :class => 'login')].join('')
   end
     

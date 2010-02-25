@@ -1,6 +1,13 @@
 .comment
-  :margin 30px 0px
+  :padding 25px 0px
+  :border
+    :top 1px solid white
+    :bottom 1px solid white
   &:hover
+    :border
+      :top 1px solid #dbe1e6
+      :bottom 1px solid #dbe1e6
+    :background-color #f6f6f6
     p.actions
       :visibility visible
   p.actions
@@ -66,8 +73,6 @@
 
 .comment:hover
   .block
-    .name
-      :border-bottom solid 1px rgb(200,200,200)
     .date
       :color rgb(0,0,0)
       

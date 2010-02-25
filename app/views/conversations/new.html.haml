@@ -1,7 +1,7 @@
 - content_for :column do
   = conversations_primer(@current_project)
 
-%h2.grande= t('.title')
+%h2= t('.title')
 
 - form_for [@current_project,@conversation] do |f|
   = conversation_fields(f,@current_project,@conversation)

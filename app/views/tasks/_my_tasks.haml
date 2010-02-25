@@ -1,5 +1,5 @@
 %h2= t('.my_tasks')
-.task_list_wrap
+.my_tasks
   - for task in tasks
     .task{ :class => task.overdue? ? 'overdue' : '' }
       = render_due_on(task,current_user)

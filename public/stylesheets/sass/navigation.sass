@@ -121,21 +121,41 @@ div.user_navigation, div.project_settings_navigation, div.project_column_navigat
     a
       :display block
       :-moz-border-radius 8px
+      :-webkit-border-radius 8px  
+      :border solid 1px rgb(200,200,200)
+      :background rgb(240,240,240)
+      :color rgb(80,80,80)
+      :padding 5px 10px
+      :margin-bottom 5px
+      :font-size 14px
+      &:hover
+        :color #555
+        :background #ffe967
+        :border solid 1px #dfa927
+        :text-decoration none
+      &.active
+        :color #555
+        :background #ffc947
+        :border solid 1px #dfa927
+
+    .a_ignoreme
+      :display block
+      :-moz-border-radius 8px
       :-webkit-border-radius 8px    
       :background rgb(240,240,240)
       :border solid 1px rgb(200,200,200)
       :padding 5px 10px
       :margin-bottom 5px
       :font-size 14px
-    a:hover
-      :color rgb(255,255,0)
-      :background rgb(0,0,200)
-      :border solid 1px rgb(0,0,200)
-    a.active
-      :color rgb(255,255,255)
-      :background rgb(0,0,200)
-      :border solid 1px rgb(0,0,200)
-      :text-decoration none
+      &:hover
+        :color rgb(255,255,0)
+        :background rgb(0,0,200)
+        :border solid 1px rgb(0,0,200)
+      &.active
+        :color rgb(255,255,255)
+        :background rgb(0,0,200)
+        :border solid 1px rgb(0,0,200)
+        :text-decoration none
 
 div.task_navigation
   ul
@@ -149,13 +169,7 @@ div.task_navigation
 div.project_settings_navigation
   li.deletion
     a
-      :color rgb(200,200,200)
-      :background rgb(250,250,250)
       :border dashed 1px rgb(230,230,230)
-    a.active
-      :color rgb(255,255,0)
-      :background rgb(200,0,0)
-      :border solid 1px rgb(200,0,0)
 
 #projects_tab
   :display block

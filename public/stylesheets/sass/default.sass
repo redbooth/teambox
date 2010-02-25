@@ -15,8 +15,20 @@
   h1,h2,h3,h4,h5,h6,p,textarea
     :font-family "Lucida Grande","Helvetica Neue",Verdana,Arial,Helvetica,sans-serif
   h2
-    :font-size 1em
-  img 
+    :font-size 20px
+    :margin
+      :left 10px
+      :top 10px
+    :padding-bottom 3px
+    :font-weight normal
+    :border-bottom solid 2px rgb(240,240,240)
+    span
+      :font-weight normal
+      :font-size 12px
+      :color rgb(180,180,180)
+      :float right
+      :padding-top 9px
+  img
     :border none
   table
     :border-collapse collapse 
@@ -36,9 +48,10 @@
   div.clear 
     :clear both
   a
-    :color rgb(0,0,150)
+    :color #259bad
     :text-decoration none
   a:hover
+    :color #df5249
     :text-decoration underline
     
   div.container
@@ -79,16 +92,6 @@
       :display inline
     .on_hover
       :display block
-
-
-h2.grande
-  :font-size 22px
-  :margin 10px
-    :top 0px
-    :right 0px
-  :padding
-    :bottom 5px
-  :border-bottom solid 2px rgb(240,240,240)
 
 .strip_wrap
   :background rgb(213,213,213)

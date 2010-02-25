@@ -13,7 +13,7 @@ div.task_list_wrap
     .read_only    
       :-moz-border-radius 5px
       :-webkit-border-radius 5px
-      :border solid 1px rgb(210,210,210)      
+      :border solid 1px rgb(210,210,210)
   .task_form
     :-moz-border-radius
       :topleft 0px
@@ -34,13 +34,13 @@ div.task_list_wrap
       :top-left-radius 5px
       :top-right-radius 5px
     a
-      :text-shadow rgb(180,180,180) 1px 1px 1px
+      :color #222
     .comments_count
       :float right
       :color rgb(180,180,180)
       :background none
     &.active_list
-      :background rgb(50,50,250)
+      :background #259bad
       :border 0
       a
         :color white
@@ -53,6 +53,8 @@ div.task_list_wrap
 
   div.task
     :margin 4px 0px
+    a
+      :color #222
     img.drag
       :padding 0 4px
     &.task_item_open
@@ -98,7 +100,7 @@ div.task_list_wrap
   a.name
     :text-decoration line-through
     :font-style italic
-    :color rgb(60,60,60)
+    :color #999
     
 .index_projects
   div.task_list_wrap
