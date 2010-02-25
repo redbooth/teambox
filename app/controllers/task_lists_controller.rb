@@ -99,6 +99,7 @@ class TaskListsController < ApplicationController
           @tasks = @task_lists.
                     collect { |list| list.tasks.unarchived }.
                     flatten.
+                    select { |task| task.active? }.
                     sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
         end
       end      
