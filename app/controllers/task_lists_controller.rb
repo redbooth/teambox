@@ -95,10 +95,8 @@ class TaskListsController < ApplicationController
           @task_lists = @current_project.task_lists.unarchived
         else
           @projects = current_user.projects.unarchived
-          @task_lists = @projects.collect { |p| p.task_lists.unarchived(:include => :tasks) }.flatten
-          @tasks = @task_lists.
-                    collect { |list| list.tasks.unarchived }.
-                    flatten.
+          conditions = ["project_id IN (?)", Array(@projects).collect{ |p| p.id } ]
+          @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user]).
                     select { |task| task.active? }.
                     sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
         end
