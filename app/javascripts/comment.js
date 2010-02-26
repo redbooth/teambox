@@ -76,5 +76,8 @@ Comment = {
       else
         e.selected = false
     })
+  },
+  make_autocomplete: function(element_id, items){
+    new Autocompleter.Local(element_id, element_id + '_list', items, {tokens:[' ']});
   }
 };

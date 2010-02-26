@@ -3,6 +3,7 @@
   .body.text_area
     = comment_text_area(f, target)
     = autoresize :comment_body
+    #comment_body_list.autocomplete{:style => 'display:none'}
     .previewBox.textilized{:style => 'display:none'}
   .extra
     - if comment.project
@@ -44,3 +45,4 @@
     .clear
 
 = javascript_tag "$('new_comment').auto_focus()"
+= make_autocompletable('comment_body')

@@ -78,4 +78,30 @@ form
   :margin-bottom 15px
 
 .form_error
-  :background rgb(255,200,200)  
+  :background rgb(255,200,200)
+
+div.autocomplete
+  :position absolute
+  :width 250px
+  :background-color white
+  :border 1px solid #EBEBEB
+  :margin 0
+  :padding 0
+  :z-index 10
+
+div.autocomplete ul
+  :list-style-type none
+  :margin 0
+  :padding 0
+
+div.autocomplete ul li.selected
+  :background-color #EBEBEB
+
+div.autocomplete ul li
+  :list-style-type none
+  :display block
+  :margin 0
+  :padding 2px
+  :height 32px
+  :cursor pointer
+  :border-bottom 1px solid #ccc

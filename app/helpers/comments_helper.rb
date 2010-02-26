@@ -183,6 +183,11 @@ module CommentsHelper
     end
     id = "#{js_id(target)}_#{status_type}_comments_count"
   end
+  
+  def make_autocompletable(element_id)
+    people_list = @current_project.people.map{|m| "'@#{m.login}'"}.join(',')
+    javascript_tag "Comment.make_autocomplete('comment_body', [#{people_list}]);"
+  end
 
   def comment_text_area(f, target)
     placeholder = case target
