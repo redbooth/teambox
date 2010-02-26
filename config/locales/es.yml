@@ -438,7 +438,7 @@ es:
       footer1: "Usa Teambox como una <b>pizarra compartida</b> para información de uso frecuente."
       footer2: "También puedes adjuntar archivos a cualquier página del proyecto. Disfruta!"
     buttons:
-      new_note: Nota
+      new_note: Texto
       new_divider: Separador
       new_upload: Archivo
       new_task_list: Lista de Tareas
@@ -887,7 +887,7 @@ es:
       conversation: Conversación
       page: Página
       divider: Separador
-      note: Nota
+      note: Texto
       invitation: Invitación
       upload: Archivo
     attributes:

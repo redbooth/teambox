@@ -438,7 +438,7 @@ en:
       footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
       footer2: "You can also attach files to any page inside each note. Enjoy!"
     buttons:
-      new_note: Note
+      new_note: Text
       new_divider: Divider
       new_upload: Upload
       new_task_list: Task List
@@ -887,7 +887,7 @@ en:
       conversation: Conversation
       page: Page
       divider: Divider
-      note: Note
+      note: Text
       invitation: Invitation
       upload: Upload
     attributes:

@@ -441,7 +441,7 @@ de:
       footer1: "Nutzen Sie Teambox als Ihr <b>öffentliches Whiteboard</b> für häufig gebrauchte Informationen."
       footer2: "Sie können auf jeder Seite zu jeder Notiz auch Dateien hinzufügen. Probieren Sie es einfach aus!"
     buttons:
-      new_note: Notiz
+      new_note: Text
       new_divider: Trenner
       new_upload: Hochladen
       new_task_list: Aufgabenliste
@@ -892,7 +892,7 @@ de:
       conversation: Konversation
       page: Seite
       divider: Trenner
-      note: Notiz
+      note: Text
       invitation: Einladung
       upload: Hochladen
     attributes:

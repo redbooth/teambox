@@ -441,7 +441,7 @@ fr:
       footer1: "Utilisez Teambox comme un <b>tableau partagé</b> pour les informations d'usage fréquent."
       footer2: "Vous pouvez également joindre des fichiers à toute page du projet. Profitez-en!"
     buttons:
-      new_note: Note
+      new_note: Texte
       new_divider: Séparateur
       new_upload: Fichier
       new_task_list: Liste de tâches
@@ -891,7 +891,7 @@ fr:
       conversation: Conversation
       page: Page
       divider: Séparateur
-      note: Note
+      note: Texte
       invitation: Invitation
       upload: Archive
     attributes:

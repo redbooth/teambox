@@ -441,7 +441,7 @@ it:
       footer1: "Usa Teambox come una <b>bacheca condivisa</b> per informazioni di uso frequente."
       footer2: "Puoi anche allegare files in qualsiasi pagina del progetto."
     buttons:
-      new_note: Nota
+      new_note: Testo
       new_divider: Separatore
       new_upload: File
       new_task_list: Lista di compiti
@@ -887,7 +887,7 @@ it:
       conversation: Conversazione
       page: Pagina
       divider: Separatore
-      note: Nota
+      note: Testo
       invitation: Invito
       upload: File
     attributes:
