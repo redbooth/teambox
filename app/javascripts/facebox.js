@@ -24,10 +24,12 @@ var Facebox = Class.create({
     if (!this.container)
       return;
 
+    var url_strip = /((?:url\()|['"\)])/gi;
     var elements = this.container.select('.n, .s, .w, .e, .nw, .ne, .sw, .se, .loading, .close');
     elements.each(function(element) {
       this.preloadImages.push(new Image());
-      this.preloadImages.last().src = element.getStyle('background-image').replace(/url\((.+)\)/, '$1');
+      var match = element.getStyle('background-image').replace(url_strip, "");
+	  this.preloadImages.last().src = match;
     }.bind(this));
     if (Prototype.Browser.IE)
       this.fixPNG(this.container.select('.n, .s, .w, .e, .nw, .ne, .sw, .se'));
@@ -56,15 +58,17 @@ var Facebox = Class.create({
   },
 
   fixPNG: function(elements) {
-    return elements.each(function (el) {
+	var url_strip = /((?:url\()|['"\)])/gi;
+	var url_png = /^url\(["']?(.*\.png)["']?\)$/i;
+    elements.each(function (el) {
       var element = $(el);
       var image = element.getStyle('background-image');
 
-      if (image.match(/^url\(["']?(.*\.png)["']?\)$/i)) {
-        image = RegExp.$1;
+      if (image.match(url_png)) {
+        var match = image.replace(url_strip, "");
         element.setStyle({
           'background-image': 'none',
-          'filter': "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=" + (element.getStyle('background-repeat') == 'no-repeat' ? 'crop' : 'scale') + ", src='" + image + "')"
+          'filter': "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=" + (element.getStyle('background-repeat') == 'no-repeat' ? 'crop' : 'scale') + ", src=\'" + match + "\')"
         });
         var position = element.getStyle('position');
         if (position != 'absolute' && position != 'relative')
