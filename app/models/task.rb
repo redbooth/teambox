@@ -60,7 +60,7 @@ class Task < RoleRecord
   end
 
   def assigned_to?(u)
-    assigned.user.id == u.id if assigned?
+    assigned.try(:user_id) == u.id
   end
 
   def assign_to(u)

@@ -57,6 +57,9 @@ div.task_list_wrap
       :color #222
     img.drag
       :padding 0 4px
+    a.late
+      :font-weight bold
+      :color red
     &.task_item_open
       a.mine        
         :background-color rgb(255,255,150)
@@ -107,3 +110,6 @@ div.task_list_wrap
     :-webkit-box-shadow none
     :-moz-box-shadow none
     :box-shadow none
+  span.due_on.overdue
+    :color red
+    :font-weight bold
