@@ -183,9 +183,10 @@ module CommentsHelper
     end
     id = "#{js_id(target)}_#{status_type}_comments_count"
   end
-  
+
   def make_autocompletable(element_id)
-    people_list = @current_project.people.map{|m| "'@#{m.login} <span class=\"informal\">#{h(m.name)}</span>'"}.join(',')
+    base_list = ["'@all <span class=\"informal\">#{t('conversations.watcher_fields.people_all')}</span>'"]
+    people_list = (base_list + @current_project.people.map{|m| "'@#{m.login} <span class=\"informal\">#{h(m.name)}</span>'"}).join(',')
     javascript_tag "Comment.make_autocomplete('comment_body', [#{people_list}]);"
   end
 
