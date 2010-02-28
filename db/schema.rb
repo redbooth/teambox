@@ -343,5 +343,9 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.string  "name"
     t.integer "account_type", :default => 0
   end
+  
+  create_table "schema_migrations", :force => true do |t|
+    t.string  "version"
+  end
 
 end
