@@ -42,4 +42,21 @@ class Conversation < RoleRecord
   def to_s
     name
   end
+  
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+    xml.conversation :id => id do
+      xml.tag! 'project-id',      project_id
+      xml.tag! 'user-id',         user_id
+      xml.tag! 'name',            name
+      xml.tag! 'created-at',      created_at.to_s(:db)
+      xml.tag! 'updated-at',      updated_at.to_s(:db)
+      xml.tag! 'watchers',        watchers_ids.join(',')
+      if Array(options[:include]).include? :comments
+        comments.to_xml(options.merge({ :skip_instruct => true }))
+      end
+    end
+  end
 end

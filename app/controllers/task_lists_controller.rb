@@ -10,7 +10,26 @@ class TaskListsController < ApplicationController
       f.html
       f.rss   { render :layout => false }
       f.print { render :layout => 'print' }
+      f.xml   { render :xml     => @task_lists.to_xml(:include => :tasks) }
+      f.json  { render :as_json => @task_lists.to_xml(:include => :tasks) }
+      f.yaml  { render :as_yaml => @task_lists.to_xml(:include => :tasks) }
     end
+  end
+  
+  def show
+    @sub_action = 'all'
+    @task_lists = @current_project.task_lists.unarchived
+    @comments = @task_list.comments
+
+    respond_to do |f|
+      f.html
+      f.xml   { render :xml     => @task_list.to_xml(:include => [:tasks, :comments]) }
+      f.json  { render :as_json => @task_list.to_xml(:include => [:tasks, :comments]) }
+      f.yaml  { render :as_yaml => @task_list.to_xml(:include => [:tasks, :comments]) }
+    end
+    #   Use this snippet to test the notification emails that we send:
+    # @project = @current_project
+    # render :file => 'emailer/notify_task_list', :layout => false
   end
 
   def new
@@ -27,16 +46,6 @@ class TaskListsController < ApplicationController
   def update
     @task_list.update_attributes(params[:task_list])
     respond_to {|f|f.js}
-  end
-  
-  def show
-    @sub_action = 'all'
-    @task_lists = @current_project.task_lists.unarchived
-    @comments = @task_list.comments
-    
-    #   Use this snippet to test the notification emails that we send:
-    # @project = @current_project
-    # render :file => 'emailer/notify_task_list', :layout => false
   end
   
   def sortable

@@ -15,6 +15,14 @@ class TasksController < ApplicationController
 
     @comments = @task.comments
     @comment = @current_project.new_task_comment(@task)
+
+    respond_to do |f|
+      f.html
+      f.xml  { render :xml     => @task.to_xml }
+      f.json { render :as_json => @task.to_xml }
+      f.yaml { render :as_yaml => @task.to_xml }
+    end
+      
     #   Use this snippet to test the notification emails that we send:
     #@project = @current_project
     #render :file => 'emailer/notify_task', :layout => false

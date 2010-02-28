@@ -32,12 +32,22 @@ class ConversationsController < ApplicationController
       f.html
       f.m
       f.rss { render :layout => false }
+      f.xml   { render :xml     => @conversations.to_xml }
+      f.json  { render :as_json => @conversations.to_xml }
+      f.yaml  { render :as_yaml => @conversations.to_xml }
     end
   end
 
   def show
     @comments = @conversation.comments
     @conversations = @current_project.conversations
+
+    respond_to do |f|
+      f.html
+      f.xml   { render :xml     => @conversation.to_xml(:include => :comments) }
+      f.json  { render :as_json => @conversation.to_xml(:include => :comments) }
+      f.yaml  { render :as_yaml => @conversation.to_xml(:include => :comments) }
+    end
 
 #   Use this snippet to test the notification emails that we send:
 #    @project = @current_project

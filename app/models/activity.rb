@@ -82,17 +82,28 @@ class Activity < ActiveRecord::Base
     options[:indent] ||= 2
     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
     xml.instruct! unless options[:skip_instruct]
+
     xml.activity :id => id do
-      xml.tag! 'user-id', user_id
-      xml.tag! 'project-id', project_id
       xml.tag! 'action', action
       xml.tag! 'created-at', created_at.to_s(:db)
       xml.tag! 'updated-at', updated_at.to_s(:db)
-      if target
-        xml.tag! 'target-id', target.id
-        xml.tag! 'target-type', target.class
-        target.to_xml(options.merge({ :skip_instruct => true, :root => :target }))
+
+      xml.user :id => user_id do
+        xml.tag! 'username',   user.login
+        xml.tag! 'first-name', user.first_name
+        xml.tag! 'last-name',  user.last_name
+        xml.tag! 'avatar-url', user.avatar_or_gravatar_url(:thumb)
       end
+
+      xml.project :id => project_id do
+        xml.tag! 'name',       project.name
+        xml.tag! 'permalink',  project.permalink
+      end
+
+      xml.target :id => target.id do
+        xml.tag! 'type', target.class
+        target.to_xml(options.merge({ :skip_instruct => true }))
+      end if target
     end
   end
 end

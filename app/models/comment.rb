@@ -36,9 +36,11 @@ class Comment < ActiveRecord::Base
       xml.tag! 'body-html', body_html
       xml.tag! 'created-at', created_at.to_s(:db)
       xml.tag! 'user-id', user_id
-      xml.tag! 'project-id', project_id
-      xml.tag! 'target-id', target.id
-      xml.tag! 'target-type', target.class
+      unless Array(options[:include]).include? :comments
+        xml.tag! 'project-id', project_id
+        xml.tag! 'target-id', target.id
+        xml.tag! 'target-type', target.class
+      end
       if target.is_a? Task
         xml.tag! 'assigned-id', assigned_id
         xml.tag! 'previous-assigned-id', previous_assigned_id
@@ -46,11 +48,7 @@ class Comment < ActiveRecord::Base
         xml.tag! 'status', status
       end
       if uploads.any?
-        xml.files :count => uploads.size do
-          for upload in uploads
-            upload.to_xml(options.merge({ :skip_instruct => true, :root => :files }))
-          end
-        end
+        uploads.to_xml(options.merge({ :skip_instruct => true, :root => :files }))
       end
     end
   end
