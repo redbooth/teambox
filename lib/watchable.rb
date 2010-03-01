@@ -1,10 +1,14 @@
 module Watchable
-
+  def touch_watchers
+    @watch_touch = (@watch_touch || 0) + 1
+  end
+  
   def add_watcher(user)
     @cached_watchers = nil
     self.watchers_ids ||= []
     self.watchers_ids << user.id
     self.watchers_ids.uniq!
+    touch_watchers
     self.save(false)
   end
   
@@ -23,6 +27,7 @@ module Watchable
     @cached_watchers = nil
     self.watchers_ids ||= []
     self.watchers_ids.delete user.id
+    touch_watchers
     self.save(false)
   end
   
@@ -34,9 +39,10 @@ module Watchable
   
   def watchers
     # Handle caching
-    reloaded = @last_watchers != self.watchers_ids
+    reloaded = @last_watchers != self.watchers_ids or @watch_touch != @last_watch_touch
     self.watchers_ids ||= []
     @last_watchers = self.watchers_ids
+    @last_watch_touch = @watch_touch
     
     if reloaded or @cached_watchers.nil?
       # Find all users with a join on People to the objects project

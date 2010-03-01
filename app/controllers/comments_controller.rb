@@ -14,6 +14,7 @@ class CommentsController < ApplicationController
 
     if @comment.save
       @comment.save_uploads(params)
+      @target = @comment.target
       
       case @target
       when Conversation
