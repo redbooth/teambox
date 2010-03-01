@@ -109,7 +109,7 @@ it:
       notify_mentions: "Mandami una notifica quando mi nominano in un commento, per esempio: Ciao @{{login}}!"
       notify_conversations: Mandami una notifica delle conversazioni che seguo
       notify_task_lists: Mandami una notifica dei commenti nelle liste di compiti che seguo
-      notify_tasks: Mandami una noficia dei commenti nei compiti che seguo
+      notify_tasks: Mandami una notifica dei commenti nei compiti che seguo
       wants_task_reminder: Voglio ricevere una mail giornaliera dei miei compiti
       invalid_login: "usa solo lettere, numeri e _"
       avatar:
@@ -190,13 +190,12 @@ it:
       completeness: "Completo al {{percentage}}%"
       to_get_to: per
     daily_task_reminder_email:
-      daily_task_reminder: "Daily task reminder"
-      daily_task_reminder_from_teambox: "This is the daily task reminder email from Teambox"
-      late_tasks: "Late tasks"
-      tasks_for_today: "Tasks for today"
-      tasks_for_tomorrow: "Tasks for tomorrow"
-      tasks_for_next_two_weeks: "Tasks for next two weeks"
-      tasks_without_a_due_date: "Tasks without a due date"
+      daily_task_reminder: "Promoria giornaliero dei compiti"
+      late_tasks: "Compiti passati"
+      tasks_for_today: "Compiti per oggi"
+      tasks_for_tomorrow: "Compiti per domani"
+      tasks_for_next_two_weeks: "Compiti per le prossime due settimane"
+      tasks_without_a_due_date: "Compiti senza scadenza"
       you_receive_this_message: "You receive this message because you signed up for it. You can disable it on your {{link}}"
       settings_page: "settings page"
   projects:
@@ -229,7 +228,7 @@ it:
       invite_people: "Invita qualcun altro..."
       new_task_list_link: Nuova lista di compiti
       people_in_project: Persone in questo progetto
-      subscribe: Iscriviti a qusto progetto
+      subscribe: Iscriviti a questo progetto
       tip: "Se nomini l'@account di qualcuno, riceverà una mail con il tuo messaggio"
       #####
       calendar: Calendar for this project's tasks
@@ -262,7 +261,7 @@ it:
       upgrade: Acquista un account premium!
     new:
       title: Crea un progetto
-      submit: Crea un progetto ed inizia ad invitare it tuoi colleghi
+      submit: Crea un progetto ed inizia ad invitare i tuoi colleghi
       new_project: Nuovo progetto...
       created: Il progetto è stato creato!
       invalid_project: "Progetto non valido, correggi gli errori e riprova."
@@ -626,7 +625,7 @@ it:
       all_conversations: Tutte le conversazioni
       conversations: Conversazioni
       task_lists: Compiti
-      all_task_lists: Tutte i compiti
+      all_task_lists: Tutte le liste di compiti
       project_settings: Progetto
       all_pages: Tutte le pagine
       people: Persone
@@ -654,7 +653,7 @@ it:
       terms: "Condizioni d'uso"
     user_navigation:
       account_settings: Impostazioni account
-      profile_information: Informaziioni di profilo
+      profile_information: Informazioni di profilo
       profile_picture: Immagine
       notifications: Notifiche
     task_navigation:
