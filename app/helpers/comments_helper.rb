@@ -26,7 +26,7 @@ module CommentsHelper
 
   def options_for_people(people)
     p = [[t('.assigned_to_nobody'),nil]]
-    people.each {|person| p << [ person.name, person.id ]}
+    people.sort_by{|a| a.name}.each {|person| p << [ person.name, person.id ]}
     p
   end
   
