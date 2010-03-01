@@ -48,7 +48,11 @@ class Comment < ActiveRecord::Base
         xml.tag! 'status', status
       end
       if uploads.any?
-        uploads.to_xml(options.merge({ :skip_instruct => true, :root => :files }))
+        xml.files :count => uploads.size do
+          for upload in uploads
+            upload.to_xml(options.merge({ :skip_instruct => true }))
+          end
+        end
       end
     end
   end
