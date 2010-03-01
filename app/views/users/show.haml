@@ -1,6 +1,11 @@
 - content_for :banner do
   = user_page_name(@user)
 
+- if @shares_invited_projects
+  #primer
+    .box
+      %p= t('.pending_invite', :name => @user.name)
+
 - content_for :column do
   = image_tag @user.avatar_or_gravatar_url(:profile), :class => 'avatar'
   - if current_user.observable?(@user)

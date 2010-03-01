@@ -22,10 +22,11 @@ class UsersController < ApplicationController
   def show
     @card = @user.card
     projects_shared = @user.projects_shared_with(@current_user)
+    @shares_invited_projects = projects_shared.empty? && @user.shares_invited_projects_with?(@current_user)
     @activities = @user.activities_visible_to_user(@current_user)
     
     respond_to do |format|
-      if @user != @current_user and projects_shared.empty?
+      if @user != @current_user and (!@shares_invited_projects and projects_shared.empty?)
         format.html {
           flash[:error] = t('users.activation.invalid_user')
           redirect_to root_path

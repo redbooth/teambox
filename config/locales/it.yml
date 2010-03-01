@@ -154,6 +154,7 @@ it:
       profile: Profilo
       projects: Progetti
       recent_activity_for: "Attività recenti di {{user_name}}"
+      pending_invite: "{{name}} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
     user:
       formatted_address: "{{street}}, {{city}} ({{country}})"
       remove_from_project: Rimuovi dal progetto
