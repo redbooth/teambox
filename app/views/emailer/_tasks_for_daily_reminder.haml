@@ -2,14 +2,14 @@
   %thead
     %th{ :colspan => "2", :style => "text-align: left"}= header_text
   %tbody
-  - tasks.each do |task|
-    %tr
-      %td{ :style => "width: 20%"}
-        %span{ :style => task_status_style(task) }= task.comments_count.to_s
-      %td{ :style => "width: 80%; white-space: nowrap"}
-        - if task.due_on
-          %span{ :style => task_due_on_style(task) }
-            = due_on(task) if task.due_on
+    - tasks.each do |task|
+      %tr
+        %td{ :style => "width:30px"}
+          %span{ :style => task_status_style(task) }= task.comments_count.to_s
+        %td{ :style => "width:600px"}
+          - if task.due_on
+            %span{ :style => task_due_on_style(task) }
+              = due_on(task) if task.due_on
+              = link_to task.name, project_task_list_task_url(task.project, task.task_list, task)
+          - else
             = link_to task.name, project_task_list_task_url(task.project, task.task_list, task)
-        - else
-          = link_to task.name, project_task_list_task_url(task.project, task.task_list, task)
