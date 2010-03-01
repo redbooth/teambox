@@ -8,6 +8,7 @@ logger = RAILS_DEFAULT_LOGGER
 Rails.logger.info 'Running Mail Importer...'
 
 @config = APP_CONFIG['incoming']
+Rails.logger.info "POP3 server: #{@config['server']} User: #{@config['username']} Pwd: #{@config['password']}}"
 
 Net::POP3.start(@config['server'], nil, @config['username'], @config['password']) do |pop|
   if pop.mails.empty?
