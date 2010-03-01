@@ -239,6 +239,11 @@ module ApplicationHelper
     target_name = target.class.to_s.tableize
     task_list_url = target.class.to_s == 'Task' ? "task_lists/#{target.task_list.id}/" : ''
     watch_status =  target.watching?(user) ? 'unwatch' : 'watch'
+    
+    # Bail if assigned
+    if target.class == Task and user.in_project(project).id == target.assigned_id
+      return ""
+    end
 
     url = "/projects/#{project.permalink}/#{task_list_url}#{target_name}/#{target.id}/#{watch_status}"
 
