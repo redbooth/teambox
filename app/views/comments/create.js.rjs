@@ -6,7 +6,7 @@ if @comment.errors.empty?
       page.insert_html :top, :activities, show_activity(@comment.activity)
     page.en
     
-    no_watchers = false
+    no_watchers = (@target.class == Project)
     
     if @task == @target
       if @task.closed?
