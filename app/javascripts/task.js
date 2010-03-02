@@ -182,7 +182,7 @@ Event.addBehavior({
     $$(".task").each(function(task){
       // archived tasks should not be shown, mine or someone else's
       if ('all' == show && !task.hasClassName("archived_task")) task.show();
-      if ('mine' == show && !task.hasClassName("my_task") ) task.hide();
+      if ('mine' == show && !task.hasClassName("mine") ) task.hide();
     })
     $(this).toggleShowAttribute(new Array('mine', 'all'));
     var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");

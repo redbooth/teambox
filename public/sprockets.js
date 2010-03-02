@@ -10792,7 +10792,7 @@ Event.addBehavior({
     var show = $(this).readAttribute("show");
     $$(".task").each(function(task){
       if ('all' == show && !task.hasClassName("archived_task")) task.show();
-      if ('mine' == show && !task.hasClassName("my_task") ) task.hide();
+      if ('mine' == show && !task.hasClassName("mine") ) task.hide();
     })
     $(this).toggleShowAttribute(new Array('mine', 'all'));
     var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
