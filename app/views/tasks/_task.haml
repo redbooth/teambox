@@ -1,8 +1,9 @@
 - active = (current_target == task) ? "active_#{task.status_name}" : nil
 - archived = task.archived? ? "archived_task" : nil
 - mine = task.assigned_to?(current_user) ? "mine" : nil
+- assigned_to = task.assigned? ? "assigned_to_#{task.assigned.user.login}" : "unassigned"
 - late = task.overdue? ? "late" : nil
-.task{ :id => task_id(:item,project,task_list,task), :class => "#{active} task_item task_item_#{task.status_name} #{archived} #{mine}", :show_in_main_content_url => show_in_main_content_project_task_list_task_path(project, task_list, task), :style => ("display:none" if task.archived?) }
+.task{ :id => task_id(:item,project,task_list,task), :class => "#{assigned_to} #{active} task_item task_item_#{task.status_name} #{archived}", :show_in_main_content_url => show_in_main_content_project_task_list_task_path(project, task_list, task), :style => ("display:none" if task.archived?) }
   = task_status(task,:column)
   = task_drag_link(task)
   - mine = (task.assigned.try(:user_id) == current_user.id) ? 'mine' : ''

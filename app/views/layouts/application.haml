@@ -27,6 +27,7 @@
             = yield :banner
         %div{ :class => @content_for_column.nil? ? 'content_wrap_single' : 'content_wrap' }
           .content#content
+            = render :partial => "shared/current_user"
             = yield
         - if @content_for_column
           .column_wrap

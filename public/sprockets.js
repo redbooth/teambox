@@ -10791,8 +10791,12 @@ Event.addBehavior({
   "#global_show_my_tasks_link:click": function(e) {
     var show = $(this).readAttribute("show");
     $$(".task").each(function(task){
-      if ('all' == show && !task.hasClassName("archived_task")) task.show();
-      if ('mine' == show && !task.hasClassName("mine") ) task.hide();
+      if ('all' == show && !task.hasClassName("archived_task")) {
+        task.show();
+      }
+      if ('mine' == show && !task.hasClassName("assigned_to_" + User.current_user_login())) {
+        task.hide();
+      }
     })
     $(this).toggleShowAttribute(new Array('mine', 'all'));
     var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
@@ -10856,3 +10860,8 @@ Event.addBehavior({
     });
   }
 });
+User = {
+  current_user_login: function() {
+    return $('current_user_login').readAttribute("value");
+  }
+}

@@ -4,9 +4,9 @@ class TaskList < RoleRecord
 
   serialize :watchers_ids
 
-  concerned_with :validation, 
-                 :initializers, 
-                 :scopes, 
+  concerned_with :validation,
+                 :initializers,
+                 :scopes,
                  :associations,
                  :callbacks
 
@@ -50,5 +50,9 @@ class TaskList < RoleRecord
         comments.to_xml(options.merge({ :skip_instruct => true }))
       end
     end
+  end
+
+  def cache_key_for_sidebar_panel(locale=I18n.locale)
+    [self.id, locale].join(':')
   end
 end

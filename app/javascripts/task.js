@@ -181,8 +181,12 @@ Event.addBehavior({
     var show = $(this).readAttribute("show");
     $$(".task").each(function(task){
       // archived tasks should not be shown, mine or someone else's
-      if ('all' == show && !task.hasClassName("archived_task")) task.show();
-      if ('mine' == show && !task.hasClassName("mine") ) task.hide();
+      if ('all' == show && !task.hasClassName("archived_task")) {
+        task.show();
+      }
+      if ('mine' == show && !task.hasClassName("assigned_to_" + User.current_user_login())) {
+        task.hide();
+      }
     })
     $(this).toggleShowAttribute(new Array('mine', 'all'));
     var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
