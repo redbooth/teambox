@@ -27,10 +27,10 @@ class User
       example_comment(@project, @dagny, "Welcome, @#{login}! This is the project wall, try posting a comment with the box on top. You can also attach files!\nIn this page you will find updated to your conversations, tasks and pages, so taking a look here will let you know what's new in your project.")
 
       @project.activities.select { |a| a.target.is_a? Person }.each { |a| a.delete }
-      
-      restore_notification_settings
     end
-
+    
+    restore_notification_settings
+    
     @project    
   end
   
