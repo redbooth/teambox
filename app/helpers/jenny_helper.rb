@@ -137,5 +137,11 @@ BLOCK
       page << errors
     end
   end
+  
+  def remove_form_errors(target,form_id)
+    page.select("##{form_id} .error").each do |e|
+      e.remove
+    end
+  end
 
 end

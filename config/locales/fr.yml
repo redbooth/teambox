@@ -978,6 +978,13 @@ fr:
         odd: "doit être impair"
         even: "doit être pair"
         record_invalid: "La validation a échoué : {{errors}}"
+      ####
+      models:
+        comment:
+          attributes:
+            body:
+              no_body_generic: "Please write about what you have done in the box above."
+              no_body_task: "Please write about what you have done for this task in the box above."
 
   date:
     yesterday: Hier

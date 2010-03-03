@@ -15,9 +15,20 @@ class Comment < ActiveRecord::Base
   named_scope :with_hours, :conditions => 'hours > 0'
 
   attr_accessible :status, :previous_status, :assigned, :previous_assigned
+  validate :check_body
 
   attr_accessor :mentioned # used by format_usernames to set who's being mentioned
   attr_accessor :activity
+  
+  def check_body
+    if !self.body.nil? and self.body.strip.empty?
+      if self.target.class == Task
+        @errors.add :body, :no_body_task
+      else
+        @errors.add :body, :no_body_generic
+      end
+    end
+  end
   
   def user
     User.find_with_deleted(user_id)

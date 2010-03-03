@@ -973,6 +973,13 @@ it:
         odd: "deve essere dispari"
         even: "deve essere pari"
         record_invalid: "Validazione non valida: {{errors}}"
+      ####
+      models:
+        comment:
+          attributes:
+            body:
+              no_body_generic: "Please write about what you have done in the box above."
+              no_body_task: "Please write about what you have done for this task in the box above."
 
   date:
     yesterday: Ieri
