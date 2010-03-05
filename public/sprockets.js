@@ -6469,25 +6469,28 @@ Autocompleter.Local = Class.create(Autocompleter.Base, {
         var partial   = []; // Inside matches
         var entry     = instance.getToken();
         var count     = 0;
+        var tagStrip  = /([^<]*)/;
 
         for (var i = 0; i < instance.options.array.length &&
           ret.length < instance.options.choices ; i++) {
 
-          var elem = instance.options.array[i];
+          var elem_rep = instance.options.array[i];
+          var elem = tagStrip.exec(elem_rep)[1];
+          elem = elem ? elem : "";
           var foundPos = instance.options.ignoreCase ?
             elem.toLowerCase().indexOf(entry.toLowerCase()) :
             elem.indexOf(entry);
 
           while (foundPos != -1) {
             if (foundPos == 0 && elem.length != entry.length) {
-              ret.push("<li><strong>" + elem.substr(0, entry.length) + "</strong>" +
-                elem.substr(entry.length) + "</li>");
+              ret.push("<li><strong>" + elem_rep.substr(0, entry.length) + "</strong>" +
+                elem_rep.substr(entry.length) + "</li>");
               break;
             } else if (entry.length >= instance.options.partialChars &&
               instance.options.partialSearch && foundPos != -1) {
-              if (instance.options.fullSearch || /\s/.test(elem.substr(foundPos-1,1))) {
-                partial.push("<li>" + elem.substr(0, foundPos) + "<strong>" +
-                  elem.substr(foundPos, entry.length) + "</strong>" + elem.substr(
+              if (instance.options.fullSearch || /\s/.test(elem_rep.substr(foundPos-1,1))) {
+                partial.push("<li>" + elem_rep.substr(0, foundPos) + "<strong>" +
+                  elem_rep.substr(foundPos, entry.length) + "</strong>" + elem_rep.substr(
                   foundPos + entry.length) + "</li>");
                 break;
               }
@@ -6496,7 +6499,6 @@ Autocompleter.Local = Class.create(Autocompleter.Base, {
             foundPos = instance.options.ignoreCase ?
               elem.toLowerCase().indexOf(entry.toLowerCase(), foundPos + 1) :
               elem.indexOf(entry, foundPos + 1);
-
           }
         }
         if (partial.length)
