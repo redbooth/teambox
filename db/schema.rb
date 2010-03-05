@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "last_comment_id"
-    t.integer  "comments_count",  :default => 0
+    t.integer  "comments_count", :default => 0, :null => false
     t.text     "watchers_ids"
     t.datetime "deleted_at"
     t.datetime "created_at"
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.string   "name"
     t.string   "permalink"
     t.integer  "last_comment_id"
-    t.integer  "comments_count",  :default => 0
+    t.integer  "comments_count",  :default => 0, :null => false
     t.boolean  "archived",        :default => false
     t.datetime "deleted_at"
     t.datetime "created_at"
@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.string   "name"
     t.integer  "position"
     t.integer  "last_comment_id"
-    t.integer  "comments_count",       :default => 0
+    t.integer  "comments_count",       :default => 0, :null => false
     t.text     "watchers_ids"
     t.boolean  "archived",             :default => false
     t.datetime "deleted_at"
@@ -260,7 +260,7 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "position"
-    t.integer  "comments_count",  :default => 0
+    t.integer  "comments_count",  :default => 0, :null => false
     t.integer  "last_comment_id"
     t.text     "watchers_ids"
     t.integer  "assigned_id"
@@ -319,7 +319,7 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.datetime "deleted_at"
     t.string   "rss_token",                   :limit => 40
     t.boolean  "admin",                                      :default => false
-    t.integer  "comments_count",                             :default => 0
+    t.integer  "comments_count",                             :default => 0,     :null => false
     t.boolean  "notify_mentions",                            :default => true
     t.boolean  "notify_conversations",                       :default => true
     t.boolean  "notify_task_lists",                          :default => true
