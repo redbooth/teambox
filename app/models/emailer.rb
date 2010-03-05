@@ -55,7 +55,7 @@ class Emailer < ActionMailer::Base
   def notify_conversation(user, project, conversation)
     defaults
     recipients    user.email
-    from          conversation.comments.last.user.email
+    from          conversation.comments.first.user.email
     if APP_CONFIG['allow_incoming_email']
       reply_to      from_address("#{project.permalink}+conversation+#{conversation.id}")
     end
@@ -66,7 +66,7 @@ class Emailer < ActionMailer::Base
   def notify_task(user, project, task)
     defaults
     recipients    user.email
-    from          task.comments.last.user.email
+    from          task.comments.first.user.email
     if APP_CONFIG['allow_incoming_email']
       reply_to      from_address("#{project.permalink}+task+#{task.id}")
     end
@@ -77,7 +77,7 @@ class Emailer < ActionMailer::Base
   def notify_task_list(user, project, task_list)
     defaults
     recipients    user.email
-    from          task_list.comments.last.user.email
+    from          task_list.comments.first.user.email
     if APP_CONFIG['allow_incoming_email']
       reply_to      from_address("#{project.permalink}+task_list+#{task_list.id}")
     end
