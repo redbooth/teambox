@@ -5,25 +5,25 @@ require File.dirname(__FILE__) + '/../config/environment'
 
 logger = RAILS_DEFAULT_LOGGER
 
-Rails.logger.info 'Running Mail Importer...'
+puts 'Running Mail Importer...'
 
 @config = APP_CONFIG['incoming']
 Rails.logger.info "POP3 server: #{@config['server']} User: #{@config['username']} Pwd: #{@config['password']}}"
 
 Net::POP3.start(@config['server'], nil, @config['username'], @config['password']) do |pop|
   if pop.mails.empty?
-    Rails.logger.info 'No mail.'
+    puts 'No mail.'
   else
     pop.mails.each do |email|
       begin
-        Rails.logger.info 'Receiving mail...'
+        puts 'Receiving mail...'
         Emailer.receive(email.pop)
       rescue Exception => e
-        Rails.logger.info 'Error receiving email at ' + Time.current.to_s + '::: ' + e.message
+        puts 'Error receiving email at ' + Time.current.to_s + '::: ' + e.message
       end
       email.delete
     end
   end
 end
-Rails.logger.info 'Finished Mail Importer.'
+puts 'Finished Mail Importer.'
 

@@ -9,8 +9,3 @@ end
 every 5.minutes do
   rake "ts:rebuild"
 end
-
-every 1.minutes do
-  #FIXME: make the 'inbox' script into a rake task so that it's not installation specific
-  command "/data/Teambox2/current/script/inbox"
-end
