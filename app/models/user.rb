@@ -86,6 +86,7 @@ class User < ActiveRecord::Base
     if invitations = Invitation.find_all_by_email(email)
       for invitation in invitations
         person = invitation.project.people.new(:user => self, :source_user_id => invitation.user)
+        person.role = invitation.role || 2
         person.save
         invitation.destroy
       end

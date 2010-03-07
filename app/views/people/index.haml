@@ -3,3 +3,6 @@
 #people.people
   = list_invitations_for_project(@current_project,@invitations)
   = list_people(@current_project,@people)
+
+- content_for :column do
+  = render :partial => 'column'

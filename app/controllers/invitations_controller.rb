@@ -69,6 +69,7 @@ class InvitationsController < ApplicationController
   def accept
     person = @invitation.project.people.new(
       :user => current_user,
+      :role => @invitation.role || 2,
       :source_user => @invitation.user)
     person.save
     @invitation.destroy

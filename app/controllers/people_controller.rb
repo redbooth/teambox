@@ -5,10 +5,6 @@ class PeopleController < ApplicationController
   def index
     @people = @current_project.people
     @invitations = @current_project.invitations
-    @contacts = @current_user.contacts_not_in_project(@current_project)
-    
-    invited_user_ids = @invitations.collect { |i| i.invited_user_id }
-    @contacts.reject! { |c| invited_user_ids.include?(c.id) }
   end
   
   def create

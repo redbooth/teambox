@@ -93,6 +93,10 @@ module PeopleHelper
     person.owner? ? t('.owner') : t(".#{person.role_name}")
   end
   
+  def people_role_options
+    Person::ROLES.map {|k,v| [ t("people.fields.#{k}"), v ] }.sort{|a,b| a[1] <=> b[1]}
+  end
+  
   def delete_person_link(project,person)
     link_to_remote t('.remove'), :url => project_person_path(project,person), :method => :delete,
       :confirm => t('.confirm_delete')
