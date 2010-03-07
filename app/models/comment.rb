@@ -21,8 +21,8 @@ class Comment < ActiveRecord::Base
   attr_accessor :activity
   
   def check_body
-    if !self.body.nil? and self.body.strip.empty?
-      if self.target.class == Task
+    if body and body.strip.empty?
+      if target.is_a? Task
         @errors.add :body, :no_body_task
       else
         @errors.add :body, :no_body_generic

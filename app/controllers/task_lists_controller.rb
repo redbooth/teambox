@@ -10,6 +10,7 @@ class TaskListsController < ApplicationController
   def index
     respond_to do |f|
       f.html
+      f.m
       f.rss   { render :layout => false }
       f.print { render :layout => 'print' }
       f.xml   { render :xml     => @task_lists.to_xml(:include => :tasks) }
@@ -25,6 +26,7 @@ class TaskListsController < ApplicationController
 
     respond_to do |f|
       f.html
+      f.m
       f.xml   { render :xml     => @task_list.to_xml(:include => [:tasks, :comments]) }
       f.json  { render :as_json => @task_list.to_xml(:include => [:tasks, :comments]) }
       f.yaml  { render :as_yaml => @task_list.to_xml(:include => [:tasks, :comments]) }
@@ -36,13 +38,20 @@ class TaskListsController < ApplicationController
 
   def new
     @task_list = @current_project.task_lists.new
+    respond_to do |f|
+      f.m
+      f.js
+    end
   end
 
   def create
     if @task_list = @current_project.create_task_list(current_user,params[:task_list])
       @sub_action = 'all'
     end
-    respond_to {|f|f.js}
+    respond_to do |f|
+      f.m   { redirect_to project_task_lists_path(@current_project) }
+      f.js
+    end
   end
 
   def update

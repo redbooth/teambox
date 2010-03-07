@@ -1,0 +1,7 @@
+%h2
+  = task.name
+= render_due_on(task,current_user)
+= render_assignment(task,current_user)
+%p.status
+  Task status:
+  = task_status(task,:header)

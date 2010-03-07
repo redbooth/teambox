@@ -500,7 +500,6 @@ en:
     new:
       title: New Task List
       submit: Add Task List
-      submit: Add Task List
     edit:
       submit: Update Task List
     column:

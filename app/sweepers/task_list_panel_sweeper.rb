@@ -4,8 +4,11 @@ class TaskListPanelSweeper < ActionController::Caching::Sweeper
   def after_save(record)
     if expire_cache?(record)
       %w(en es fr de).each do |lang|
-        cache_key = task_list_for_record(record).cache_key_for_sidebar_panel(lang)
-        expire_fragment(cache_key)
+        task_list = task_list_for_record(record)
+        if task_list
+          cache_key = task_list.cache_key_for_sidebar_panel(lang)
+          expire_fragment(cache_key)
+        end
       end
     end
   end
@@ -22,12 +25,10 @@ class TaskListPanelSweeper < ActionController::Caching::Sweeper
     end
 
     def task_list_for_record(record)
-      if record.is_a?(TaskList)
-        record
-      elsif record.is_a?(Task)
-        record.task_list
-      else
-        record.target.task_list
+      case record
+      when TaskList then record
+      when Task     then record.task_list
+      when Comment  then nil #record.target.try(:task_list)
       end
     end
 end

@@ -24,8 +24,8 @@ module CommentsHelper
     end  
   end
 
-  def options_for_people(people)
-    p = [[t('.assigned_to_nobody'),nil]]
+  def options_for_people(people, include_nobody = true)
+    p = include_nobody ? [[t('.assigned_to_nobody'),nil]] : []
     people.sort_by{|a| a.name}.each {|person| p << [ person.name, person.id ]}
     p
   end

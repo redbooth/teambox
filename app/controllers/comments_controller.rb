@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController  
+class CommentsController < ApplicationController
   before_filter :load_comment, :only => [:edit, :update, :show, :destroy]
   before_filter :load_target, :only => [:create]
   before_filter :load_orginal_controller, :only => [:create]  
@@ -19,8 +19,10 @@ class CommentsController < ApplicationController
       case @target
       when Conversation
         @conversation = @comment.target
+        redirect_path = project_conversation_path(@current_project, @conversation)
       when TaskList
         @task_list = @comment.target
+        redirect_path = project_task_list_path(@current_project, @task_list)
       when Task
         @comment.reload
         @task = @comment.target
@@ -28,17 +30,15 @@ class CommentsController < ApplicationController
         @new_comment = @current_project.comments.new
         @new_comment.target = @task
         @new_comment.status = @task.status
+        redirect_path = project_task_list_task_path(@current_project, @task_list, @task)
+      else
+        redirect_path = project_path(@target)
       end
     end
+
     respond_to do |f|
-      case @target
-      when Project
-        f.html { redirect_to project_path(@target) }
-        f.m    { redirect_to project_path(@target) }
-      else
-        f.html { redirect_to @target.project, @target }
-        f.m    { redirect_to @target.project, @target }
-      end
+      f.html { redirect_to redirect_path }
+      f.m    { redirect_to redirect_path }
       f.js
     end
   end
@@ -95,7 +95,7 @@ class CommentsController < ApplicationController
         t.previous_status = t.status
         t.previous_assigned_id = t.assigned_id
         t.status = params[:comment][:status]
-        unless params[:comment][:target_attributes].nil?
+        if params[:comment][:target_attributes]
           t.assigned_id = params[:comment][:target_attributes][:assigned_id]
         end
         #if t.archived? && [Task::STATUSES[:new],Task::STATUSES[:open],Task::STATUSES[:hold]].include?(t.status)

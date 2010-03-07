@@ -6,4 +6,4 @@
 
 #page
   #activities
-    = render :partial => 'comments/comment', :collection => @comments
+    = list_comments(@comments,@conversation)

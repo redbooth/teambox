@@ -31,7 +31,7 @@ class ConversationsController < ApplicationController
     respond_to do |f|
       f.html
       f.m
-      f.rss { render :layout => false }
+      f.rss   { render :layout => false }
       f.xml   { render :xml     => @conversations.to_xml }
       f.json  { render :as_json => @conversations.to_xml }
       f.yaml  { render :as_yaml => @conversations.to_xml }
@@ -44,6 +44,7 @@ class ConversationsController < ApplicationController
 
     respond_to do |f|
       f.html
+      f.m
       f.xml   { render :xml     => @conversation.to_xml(:include => :comments) }
       f.json  { render :as_json => @conversation.to_xml(:include => :comments) }
       f.yaml  { render :as_yaml => @conversation.to_xml(:include => :comments) }

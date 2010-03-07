@@ -15,7 +15,7 @@
           = t('tasks.status.open')
           - f.fields_for :target, target do |task_form|
             = task_form.label :assigned_id, t('.assigned_to')
-            = task_form.select :assigned_id, options_for_people(comment.project.people)
+            = task_form.select :assigned_id, options_for_people(comment.project.people, false)
         .status.hold#status_hold
           = f.radio_button :status, Task::STATUSES[:hold]
           = t('tasks.status.hold')

@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:show,:destroy,:create,:update,:reorder,:archive,:unarchive,:reopen, :show_in_main_content]
+  before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:update,:reorder,:archive,:unarchive,:reopen, :show_in_main_content]
   before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch,:reopen,:show_in_main_content]
   before_filter :set_page_title
   
@@ -18,6 +18,7 @@ class TasksController < ApplicationController
 
     respond_to do |f|
       f.html
+      f.m
       f.xml  { render :xml     => @task.to_xml }
       f.json { render :as_json => @task.to_xml }
       f.yaml { render :as_yaml => @task.to_xml }
@@ -30,6 +31,9 @@ class TasksController < ApplicationController
 
   def new
     @task = @task_list.tasks.new
+    respond_to do |f|
+      f.m
+    end
   end
 
   def create
@@ -37,6 +41,7 @@ class TasksController < ApplicationController
       @comment = @current_project.new_task_comment(@task)
     end
     respond_to do |format|
+      format.m { redirect_to project_task_lists_path(@current_project) }
       format.js do
         if @task.valid?
           render :partial => 'tasks/task',

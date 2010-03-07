@@ -1,0 +1,13 @@
+#page
+  #task_lists
+    .task_list
+      = link_to t('task_lists.link.new'), new_project_task_list_path(@current_project), :class => 'new'
+    - for task_list in @task_lists
+      .task_list
+        .title
+          = link_to task_list, project_task_list_path(@current_project, task_list)
+        .tasks
+          - for task in task_list.tasks.unarchived
+            = link_to task, project_task_list_task_path(@current_project, task_list, task)
+        .new
+          = link_to t('tasks.link.new'), new_project_task_list_task_path(@current_project, task_list), :class => 'new'
