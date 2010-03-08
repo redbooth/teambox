@@ -18,7 +18,7 @@ class SocialNetwork < ActiveRecord::Base
       case get_network_type
         when 'Twitter'      then "http://www.twitter.com/#{name}"
         when 'Facebook'     then "http://www.facebook.com/#{name}"
-        when 'Linked In'    then "http://www.us.linkedin.com/in/#{name}"
+        when 'Linked In'    then "http://www.linkedin.com/in/#{name}"
         when 'FriendFeed'   then "http://www.friendfeed.com/#{name}"
         when 'MySpace'      then "http://www.myspace.com/#{name}"
         when 'Seesmic'      then "http://www.seesmic.tv/#{name}"
