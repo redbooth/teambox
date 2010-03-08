@@ -28,7 +28,9 @@ class TaskListPanelSweeper < ActionController::Caching::Sweeper
       case record
       when TaskList then record
       when Task     then record.task_list
-      when Comment  then nil #record.target.try(:task_list)
+      when Comment  then
+         tgt = record.target
+         tgt.task_list if tgt.respond_to?(:task_list)
       end
     end
 end
