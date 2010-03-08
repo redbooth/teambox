@@ -302,6 +302,10 @@ de:
       invite_people: Laden Sie Teilnehmer für dieses Projekt ein
       invite: Einladen
       submit: Versenden
+      ####
+      role: "Select a role"
+      ####
+      invite_from_project: "Invite from Project"
     recent:
       invite: Einladen von {{username}}
   conversations:

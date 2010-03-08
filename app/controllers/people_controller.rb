@@ -5,10 +5,6 @@ class PeopleController < ApplicationController
   def index
     @people = @current_project.people
     @invitations = @current_project.invitations
-    @contacts = @current_user.contacts_not_in_project(@current_project)
-    
-    invited_user_ids = @invitations.collect { |i| i.invited_user_id }
-    @contacts.reject! { |c| invited_user_ids.include?(c.id) }
   end
   
   def create
@@ -49,6 +45,20 @@ class PeopleController < ApplicationController
     else
       flash[:error] = "You are not allowed to do that!"
       redirect_to project_people_path(@current_project)
+    end
+  end
+  
+  def contacts
+    @other_project = Project.find_by_id(params[:pid]) rescue nil
+    
+    if current_user.in_project(@other_project)
+      @contacts = @other_project ? @other_project.users - @current_project.users : []
+    else
+      @contacts = []
+    end
+    
+    respond_to do |f|
+      f.js {}
     end
   end
   

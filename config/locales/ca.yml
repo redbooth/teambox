@@ -302,6 +302,10 @@ ca:
       invite_people: Convidar usuaris al projecte
       invite: Buscar i convidar
       submit: Enviar
+      ####
+      role: "Select a role"
+      ####
+      invite_from_project: "Invite from Project"
     recent:
       invite: Convidar a {{username}}
   conversations:

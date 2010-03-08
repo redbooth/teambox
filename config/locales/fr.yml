@@ -302,6 +302,10 @@ fr:
       invite_people: Inviter au projet
       invite: Chercher et Inviter
       submit: Envoyer
+      ####
+      role: "Select a role"
+      ####
+      invite_from_project: "Invite from Project"
     recent:
       invite: Inviter {{username}}
   conversations:
