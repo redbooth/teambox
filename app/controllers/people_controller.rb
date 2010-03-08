@@ -49,13 +49,22 @@ class PeopleController < ApplicationController
   end
   
   def contacts
-    @other_project = Project.find_by_id(params[:pid]) rescue nil
+    begin
+      @other_project = Project.find_by_id(params[:pid])
+    rescue
+      @other_project = nil
+    end
     
     if current_user.in_project(@other_project)
-      @contacts = @other_project ? @other_project.users - @current_project.users : []
-    else
-      @contacts = []
+      # Strip invited people
+      if @other_project
+        invited_ids = @current_project.invitations.find(:all, :select => 'invited_user_id').map(&:invited_user_id).compact
+        @contacts = @other_project.users.find(:all, :conditions => ['users.id NOT IN (?)', invited_ids]) - @current_project.users
+        @contacts = @contacts.reject{|c| invited_ids.include?(c.id)}
+      end
     end
+    
+    @contacts ||= []
     
     respond_to do |f|
       f.js {}

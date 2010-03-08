@@ -55,7 +55,7 @@ module PeopleHelper
   def people_form_for(project,person,&proc)
     raise ArgumentError, "Missing block" unless block_given?
     action = person.new_record? ? 'new' : 'edit'
-      
+    
     remote_form_for([project,person],
       :loading => person_form_loading(action,project,person),
       :html => {

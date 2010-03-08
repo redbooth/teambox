@@ -67,11 +67,7 @@ module InvitationsHelper
   end
   
   def invite_user(project,user)
-    link_to_remote t('.invite', :username => user.name),
-      :url => create_project_invitation_path(project,user),
-      :loading => invite_user_loading(project,user),
-      :html => {
-        :method => :create }
+    link_to t('.invite', :username => user.name), '#', :class => 'invite_user', :login => user.login
   end
   
   def invite_user_loading(project,user)

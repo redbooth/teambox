@@ -1,9 +1,11 @@
-invitation_item_id = invitation_id(:item,@current_project,@user)
-fade_duration = 1
+if @user
+  invitation_item_id = invitation_id(:item,@current_project,@user)
+  fade_duration = 1
 
-page[invitation_item_id].visual_effect :fade, :duration => fade_duration
-page.delay(fade_duration) do
-  page[invitation_item_id].remove
+  page[invitation_item_id].visual_effect :fade, :duration => fade_duration
+  page.delay(fade_duration) do
+    page[invitation_item_id].remove
+  end
 end
 
 page.insert_html :top,

@@ -40,6 +40,7 @@ class InvitationsController < ApplicationController
 
     respond_to do |f|
       if @invitation.save
+        @user = @invitation.invited_user
         f.html { redirect_to project_people_path(@current_project) }
         f.js
       else
@@ -47,7 +48,8 @@ class InvitationsController < ApplicationController
           flash[:error] = @invitation.errors.full_messages.first
           redirect_to project_people_path(@current_project)
         end
-        f.js { render :text => "alert('Error inviting #{@user.name}. Maybe you are trying to invite an existing user.');" }
+        name = @user ? @user.name : 'user'
+        f.js { render :text => "alert('Error inviting #{user}. Maybe you are trying to invite an existing user.');" }
       end
     end
   end

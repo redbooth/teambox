@@ -10622,6 +10622,18 @@ Event.addBehavior({
 	  });
 	  $('people_project_load').show();
     }
+  },
+  "a.invite_user:click": function(e){
+    var el = $(this);
+    var form = $('new_invitation');
+    var role = $('invitation_role').getValue();
+    new Ajax.Request(form.readAttribute('action'), {
+      asynchronous: true,
+      evalScripts: true,
+      method: 'post',
+      parameters:{'invitation[user_or_email]':el.readAttribute('login') , 'invitation[role]':role}
+    });
+	Effect.DropOut(el.up('.invite_user_link'));
   }
 });
 
