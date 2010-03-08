@@ -299,6 +299,10 @@ es:
       invite_people: Invitar usuarios al proyecto
       invite: Buscar e invitar
       submit: Enviar
+      ####
+      role: "Select a role"
+      ####
+      invite_from_project: "Invite from Project"
     recent:
       invite: Invitar a {{username}}
   conversations:

@@ -151,4 +151,8 @@ module ProjectsHelper
   def options_for_owner(people)
     people.map {|person| [ person.name, person.user_id ]}
   end
+  
+  def options_for_projects(projects)
+    projects.map {|project| [ project.name, project.id ]}
+  end
 end

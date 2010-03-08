@@ -48,9 +48,14 @@ class PeopleController < ApplicationController
     end
   end
   
-  def project
+  def contacts
     @other_project = Project.find_by_id(params[:pid]) rescue nil
-    @contacts = @other_project ? @other_project.users - @current_project.users : []
+    
+    if current_user.in_project(@other_project)
+      @contacts = @other_project ? @other_project.users - @current_project.users : []
+    else
+      @contacts = []
+    end
     
     respond_to do |f|
       f.js {}

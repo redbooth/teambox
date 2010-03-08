@@ -298,7 +298,9 @@ en:
       username_or_email: "Enter your teammate's username or email"
       invite_people: Invite people to this project
       invite: Invite
+      role: "Select a role"
       submit: Send
+      invite_from_project: "Invite from Project"
     recent:
       invite: Invite {{username}}
   conversations:

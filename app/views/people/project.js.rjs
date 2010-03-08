@@ -1,1 +1,0 @@
-page.replace_html "sidebar_people", :text => invite_recent(@contacts)

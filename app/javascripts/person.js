@@ -1,3 +1,28 @@
+Event.addBehavior({
+  "#people_project_select:change": function(e){
+	var el = $(this);
+    var value = el.getValue();
+    if (value == 0)
+    {
+      $('sidebar_people').update('');
+      $('people_project_load').hide();
+    }
+    else
+    {
+      new Ajax.Request(el.readAttribute('people_url'), {
+	    asynchronous: true,
+	    evalScripts: true,
+	    method: 'get',
+	    parameters:'pid='+value,
+	    onComplete:function(e){
+	      $('people_project_load').hide();
+	    } 
+	  });
+	  $('people_project_load').show();
+    }
+  }
+});
+
 Person = {
   watch_role: function(){
     //$$('.roles .role').each(function(e){ 
@@ -19,5 +44,4 @@ Person = {
     var ee = e.element()  
     ee.up('.role').addClassName('active');
   }
-
 }

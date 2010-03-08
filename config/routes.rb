@@ -73,7 +73,8 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :task_lists, :has_many => [:comments], :collection => { :sortable => :get, :archived => :get  }, :member => [:watch,:unwatch] do |task_lists|
         task_lists.resources :tasks, :has_many => [:comments], :member => { :watch => :post, :unwatch => :post, :archive => :put, :unarchive => :put, :reopen => :get, :show_in_main_content => :get }
     end
-
+    
+    project.contacts 'contacts', :controller => :people, :action => :contacts, :method => :get
     project.resources :people, :member => { :destroy => :get }
     project.resources :conversations, :has_many => [:comments,:uploads], :member => [:watch,:unwatch]
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }

@@ -5,7 +5,7 @@
       = f.label :user_or_email, t('.username_or_email')
       = f.text_field :user_or_email
     .text_field
-      = f.label :role, "Select a role"
+      = f.label :role, t('.role')
       = f.select :role, people_role_options
     .submit
       = f.submit t('.invite')

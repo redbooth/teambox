@@ -97,6 +97,10 @@ module PeopleHelper
     Person::ROLES.map {|k,v| [ t("people.fields.#{k}"), v ] }.sort{|a,b| a[1] <=> b[1]}
   end
   
+  def person_project_select_options(project)
+    {:id => 'people_project_select', :people_url => project_contacts_path(project)}
+  end
+  
   def delete_person_link(project,person)
     link_to_remote t('.remove'), :url => project_person_path(project,person), :method => :delete,
       :confirm => t('.confirm_delete')

@@ -24,8 +24,10 @@ class InvitationsController < ApplicationController
     if params[:login] # using a link to invite directly a user
       @user = User.find_by_login(params[:login])
       user_or_email = @user.login
+      role = 2
     elsif params[:invitation]
       user_or_email = params[:invitation][:user_or_email]
+      role = params[:invitation][:role] || 2
     else
       flash[:error] = "Invalid invitation"
       redirect_to project_people_path(@current_project)
@@ -33,6 +35,7 @@ class InvitationsController < ApplicationController
     end
     
     @invitation = @current_project.invitations.new(:user_or_email => user_or_email.strip)
+    @invitation.role = role
     @invitation.user = current_user
 
     respond_to do |f|
