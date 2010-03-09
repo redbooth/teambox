@@ -136,7 +136,7 @@ describe Project do
 
     it "should have some elements" do
       Project.count.should == 1
-      Comment.count.should == 1
+      Comment.count.should == 2  # Remember: a new conversation makes a comment!
       Conversation.count.should == 1
       TaskList.count.should == 1
       Page.count.should == 1

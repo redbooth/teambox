@@ -19,9 +19,19 @@ class ConversationsController < ApplicationController
       end
       @conversation.notify_new_comment(@conversation.comments.first)
       
-      redirect_to project_conversation_path(@current_project,@conversation)
+      respond_to do |f|
+        f.html { redirect_to project_conversation_path(@current_project,@conversation) }
+        f.xml  { redirect_to project_conversation_path(@current_project,@conversation) }
+        f.json { redirect_to project_conversation_path(@current_project,@conversation) }
+        f.yaml { redirect_to project_conversation_path(@current_project,@conversation) }
+      end
     else
-      render :new
+      respond_to do |f|
+        f.html  { render :action => :new }
+        f.xml   { render :xml => @conversation.errors.to_xml }
+        f.json  { render :as_json => @conversation.errors.to_xml }
+        f.yaml  { render :as_yaml => @conversation.errors.to_xml }
+      end
     end
   end
 

@@ -7,6 +7,9 @@ class Conversation < RoleRecord
   attr_accessible :name
   attr_accessor :body
 
+  validates_presence_of :name, :message => :no_title
+  validates_presence_of :body, :message => :no_body_generic, :on => :create
+
   def after_create
     project.log_activity(self,'create')
     add_watcher(self.user) 
@@ -21,7 +24,7 @@ class Conversation < RoleRecord
       comment.save!
     end
   end
-  
+
   def after_destroy
     Activity.destroy_all  :target_id => self.id, :target_type => self.class.to_s
   end

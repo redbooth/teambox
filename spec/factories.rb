@@ -41,6 +41,7 @@ end
 
 Factory.define :conversation do |conversation|
   conversation.name 'The Master Plan'
+  conversation.body 'I left it somewhere round here!'
   conversation.association(:user)
   conversation.association(:project)
 end
