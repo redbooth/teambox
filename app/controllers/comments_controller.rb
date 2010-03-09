@@ -35,6 +35,8 @@ class CommentsController < ApplicationController
       else
         redirect_path = project_path(@target)
       end
+    else
+      redirect_path = project_path(@current_project)
     end
 
     respond_to do |f|
