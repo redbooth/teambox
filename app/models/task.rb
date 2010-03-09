@@ -111,22 +111,6 @@ class Task < RoleRecord
   def to_s
     name
   end
-  
-  def to_ical_event
-    if due_on
-      event = Icalendar::Event.new
-      date = due_on.to_date
-      event.klass       project.name
-      event.dtstart     Date.new(date.year, date.month, date.day)
-      event.summary     name
-      event.description ""
-      event.location    ""
-      event.dtstamp     created_at
-      #event.url         project_task_list_task_url(project, task_list, self)
-      event.uid         "task-#{id}"
-      event
-    end
-  end
 
   def user
     User.find_with_deleted(user_id)

@@ -100,29 +100,35 @@ class Project < ActiveRecord::Base
   end
 
   def to_ical
-    ical = Icalendar::Calendar.new
-    ical.product_id = "-//Teambox//iCal 2.0//EN"
-    ical.custom_property("X-WR-CALNAME;VALUE=TEXT", "Teambox - All Projects")
-    ical.custom_property("METHOD","PUBLISH")
-    tasks.each do |task|
-      if event = task.to_ical_event
-        ical.add_event(event)
-      end
-    end
-    ical.to_ical
+    self.calendar_for_tasks(tasks)
   end
 
   def self.to_ical(projects)
-    ical = Icalendar::Calendar.new
-    ical.product_id = "-//Teambox//iCal 2.0//EN"
-    ical.custom_property("X-WR-CALNAME;VALUE=TEXT", "Teambox - All Projects")
-    ical.custom_property("METHOD","PUBLISH")
-    projects.collect { |p| p.tasks }.flatten.each do |task|
-      if event = task.to_ical_event
-        ical.add_event(event)
-      end
-    end
-    ical.to_ical
+    tasks = projects.collect{ |p| p.tasks }.flatten
+    self.calendar_for_tasks(tasks)
   end
+  
+  protected
+
+    def self.calendar_for_tasks(tasks)
+      ical = Icalendar::Calendar.new
+      ical.product_id = "-//Teambox//iCal 2.0//EN"
+      ical.custom_property("X-WR-CALNAME;VALUE=TEXT", "Teambox - All Projects")
+      ical.custom_property("METHOD","PUBLISH")
+      tasks.each do |task|
+        next unless task.due_on
+        date = task.due_on.to_date
+        ical.event do
+          dtstart       Date.new(date.year, date.month, date.day)
+          dtend         Date.new(date.year, date.month, date.day) + 1.day
+          summary       task.name
+          klass         task.project.name
+          dtstamp       task.created_at
+          #url           project_task_list_task_url(task.project, task.task_list, task)
+          uid           "task-#{id}"
+        end
+      end
+      ical.to_ical
+    end
 
 end
