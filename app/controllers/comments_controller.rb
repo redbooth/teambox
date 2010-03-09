@@ -26,6 +26,7 @@ class CommentsController < ApplicationController
       when Task
         @comment.reload
         @task = @comment.target
+        @target = @task
         @task_list = @task.task_list
         @new_comment = @current_project.comments.new
         @new_comment.target = @task
