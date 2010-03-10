@@ -31,7 +31,7 @@ Rails::Initializer.run do |config|
     }
   end
 
-  #config.active_record.observers = :task_list_panel_sweeper
+  config.active_record.observers = :task_list_panel_sweeper
 
   require 'RedCloth'
   require 'mime/types'
