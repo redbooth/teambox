@@ -2,7 +2,9 @@ class TasksController < ApplicationController
   before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:update,:reorder,:archive,:unarchive,:reopen, :show_in_main_content]
   before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch,:reopen,:show_in_main_content]
   before_filter :set_page_title
-  
+
+  cache_sweeper :task_list_panel_sweeper, :only => [:create]
+
   def show
     if @task.archived?
       @sub_action = 'archived'
@@ -23,7 +25,7 @@ class TasksController < ApplicationController
       f.json { render :as_json => @task.to_xml }
       f.yaml { render :as_yaml => @task.to_xml }
     end
-      
+
     #   Use this snippet to test the notification emails that we send:
     #@project = @current_project
     #render :file => 'emailer/notify_task', :layout => false

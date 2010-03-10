@@ -53,6 +53,6 @@ class TaskList < RoleRecord
   end
 
   def cache_key_for_sidebar_panel(locale=I18n.locale)
-    [self.id, locale].join(':')
+    { :controller => "task_lists", :action => "index", :key => ["TaskListPanel", self.id, locale].join('/') }
   end
 end

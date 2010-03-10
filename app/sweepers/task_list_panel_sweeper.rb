@@ -3,19 +3,26 @@ class TaskListPanelSweeper < ActionController::Caching::Sweeper
 
   def after_save(record)
     if expire_cache?(record)
-      %w(en es fr de).each do |lang|
-        task_list = task_list_for_record(record)
-        if task_list
-          cache_key = task_list.cache_key_for_sidebar_panel(lang)
-          expire_fragment(cache_key)
-        end
-      end
+      expire_task_list_panel(record)
     end
   end
 
   private
+    def expire_task_list_panel(record)
+      task_list = task_list_for_record(record)
+      # Rails.logger.info("XXX fragment Task list is #{task_list.inspect}")
+      if task_list
+        %w[en es fr de].each do |lang|
+          cache_key = task_list.cache_key_for_sidebar_panel(lang)
+          if fragment_exist?(cache_key)
+            expire_fragment(cache_key)
+          end
+        end
+      end
+    end
+
     def expire_cache?(record)
-      # if the name of task list changes, it has to be reflected on the task list panel
+      # if the name of task list changes, it has to be reflected in the task list panel
       # a new task or a task with a changed name must appear on the task list panel
       # new comment on a Task changes the task count on the task list panel
       task_list_name_changed = record.is_a?(TaskList) and (not record.new_record?)
