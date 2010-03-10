@@ -100,7 +100,7 @@ class Project < ActiveRecord::Base
   end
 
   def to_ical
-    self.calendar_for_tasks(tasks)
+    Project.calendar_for_tasks(tasks)
   end
 
   def self.to_ical(projects)
