@@ -9671,7 +9671,7 @@ Element.addMethods({
     var currentText = element.innerHTML;
     var nextIndex = (texts.indexOf(currentText) + 1) % texts.length;
     return texts[nextIndex];
-  },
+  }
 });
 
 Ajax.PeriodicalFormUpdater = Class.create(Ajax.PeriodicalUpdater, {
