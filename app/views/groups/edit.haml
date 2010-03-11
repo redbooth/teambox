@@ -1,0 +1,10 @@
+%h2= @group.name
+
+- form_for @group do |f|
+  = f.error_messages
+  = render :partial => 'groups/fields', :locals => { :f => f }
+  %iframe{:src => logo_group_path(@group), :scrolling => 'no', :frameborder => 0, :style => 'height:240px'}
+  .submit
+    = f.submit t('.submit')
+
+= groups_column

@@ -33,12 +33,27 @@ class Emailer < ActionMailer::Base
     subject       "#{invitation.user.name} shared [#{invitation.project.name}] with you"
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
+  
+  def group_invitation(invitation)
+    defaults
+    recipients    invitation.email
+    from          invitation.user.email
+    subject       "#{invitation.user.name} shared [#{invitation.group.name}] with you"
+    body          :referral => invitation.user, :group => invitation.group, :invitation => invitation
+  end
 
   def signup_invitation(invitation)
     defaults
     recipients    invitation.email
     subject       "#{invitation.user.name} shared [#{invitation.project.name}] with you"
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
+  end
+
+  def signup_group_invitation(invitation)
+    defaults
+    recipients    invitation.email
+    subject       "#{invitation.user.name} shared [#{invitation.group.name}] with you"
+    body          :referral => invitation.user, :group => invitation.group, :invitation => invitation
   end
 
   def notify_comment(user, project, comment)

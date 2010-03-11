@@ -1,0 +1,6 @@
+.group
+  = group_icon(group)
+  .details
+    %h3= link_to(h(group.name), group_path(group))
+    %p= group.description
+  .clear

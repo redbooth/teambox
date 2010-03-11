@@ -1,0 +1,10 @@
+if @removed_member_ids
+  @removed_member_ids.each do |mid|
+    user_partial_id = "user_#{mid}"
+    page[user_partial_id].remove
+  end
+end
+
+if @removed_member_ids.include? current_user.id
+  page.redirect_to groups_path
+end

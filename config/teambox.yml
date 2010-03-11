@@ -56,6 +56,9 @@ defaults: &DEFAULTS
   #   create the first one.
   allow_signups: true
   
+  # Enable user groups
+  allow_groups: true
+  
   # Address where your users should write to ask for help. Accepts an email or website.
   support: http://help.teambox.com
   

@@ -198,6 +198,46 @@ es:
       tasks_without_a_due_date: "Sin fecha fija"
       you_receive_this_message: "Puedes desactivar estas notificaciones en {{link}}"
       settings_page: "tu página de usuario"
+  ####
+  groups:
+    index:
+      title: Groups
+      groups_in: "Groups you are in"
+      your_group: "Your group"
+      no_groups: "You do not belong to any groups."
+      description: "Use groups to share resources with others, and to band together projects under a single name!"
+      submit_project: Add
+      remove_project: Remove
+    primer:
+      no_group_create: "You do not own a group. {{link}}."
+      create_group: "Create a group"
+    header:
+      leave: Leave
+      remove: Remove
+    logo_fields:
+      current: Current logo
+      delete: Remove
+      description: This logo will appear on all projects belonging to this group
+      upload: Upload
+    search:
+      username_or_email: Username or email
+      invite: Invite
+      invite_people: Invite people to the group
+    fields:
+      name: Name
+      description: Description
+      permalink: Permalink
+      permalink_description: Domain your group can be accessed from
+    new:
+      submit: Create
+      explain: You can only have one group.
+      title: Create group
+      created: Your group has been created
+    edit:
+      submit: Update
+    show:
+      edit: Edit
+      add_project: Add a project
   projects:
     index:
       title: Actividad en todos tus proyectos
@@ -283,11 +323,19 @@ es:
       resend: Reenviar email de invitación
       pending: "Se ha enviado un email a este usuario, pero aún no ha confirmado"
       discard: Descartar invitación
+    ####
+    group_invitation:
+      invited_user: "{{inviter}} invited <b>{{invitee}}</b> to join the group."
+      invited_email: "{{inviter}} invited <b>{{email}}</b> to join the group."
     sent:
       email_sent: "<b>Hemos enviado un email avisando al usuario para que acepte tu invitación</b>. Si no pueden encontrar el email, asegúrate de que no se ha clasificado como spam. Si el problema persiste, escríbenos un email."
     pending:
       to_access_or: para acceder al proyecto o
+      ####
+      to_access_or_group: to access the group or
       invited_to_join: "{{by}} te ha invitado a unirte al proyecto {{project}}."
+      ####
+      invited_to_join_group: "{{by}} has invited you to join the group {{group}}."
     resend:
       resent: "Hemos reenviado la invitación a {{recipient}}. Si no pueden encontrar el email, asegúrate de que no se ha clasificado como spam."
       return: Volver atrás
@@ -635,6 +683,8 @@ es:
       signup: Crear cuenta
       files: Archivos
       invitations: Invitaciones
+      ####
+      groups: Project Groups
     global_navigation:
       project_invitations: Invitaciones
       home: Home
@@ -699,6 +749,9 @@ es:
       teambox_is_a_pm_platform: "Teambox es una plataforma de gestión de proyectos pensada para el mundo real."
       plan_share_and_collaborate: "Planifica, comparte y manténte al día de lo que se ha hecho. Tan fácil como debería ser."
       report_abuse: "Este email se te ha enviado por petición de tu amigo. Si ha habido un intento de abuso, contáctanos."
+    ####
+    invitation_group:
+      you_have_been_invited_to: "You have been invited to the group <b>{{group}}</b>"
     confirm:
       hey: "Hola, {{user_name}}!"
       follow_the_link: "Para <b>completar tu registro</b> en Teambox sólo tienes que seguir este enlace:"

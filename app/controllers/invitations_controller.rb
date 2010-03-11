@@ -1,10 +1,12 @@
 class InvitationsController < ApplicationController
-  before_filter :admins_project?, :except => [:index, :accept, :decline]
+  skip_before_filter :load_project
+  before_filter :load_group_or_project
+  before_filter :admins_target?, :except => [:index, :accept, :decline]
   before_filter :set_page_title
   
   def index
-    if @current_project
-      @invitations = @current_project.invitations
+    if @invite_target
+      @invitations = @invite_target.invitations
       respond_to do |f|
         f.html { render :action => 'index_project' }
       end
@@ -17,7 +19,7 @@ class InvitationsController < ApplicationController
   end
 
   def new
-    @invitation = @current_project.invitations.new
+    @invitation = @invite_target.invitations.new
   end
   
   def create
@@ -30,23 +32,23 @@ class InvitationsController < ApplicationController
       role = params[:invitation][:role] || 2
     else
       flash[:error] = "Invalid invitation"
-      redirect_to project_people_path(@current_project)
+      redirect_to target_people_path
       return
     end
     
-    @invitation = @current_project.invitations.new(:user_or_email => user_or_email.strip)
+    @invitation = @invite_target.invitations.new(:user_or_email => user_or_email.strip)
     @invitation.role = role
     @invitation.user = current_user
 
     respond_to do |f|
       if @invitation.save
         @user = @invitation.invited_user
-        f.html { redirect_to project_people_path(@current_project) }
+        f.html { redirect_to target_people_path }
         f.js
       else
         f.html do
           flash[:error] = @invitation.errors.full_messages.first
-          redirect_to project_people_path(@current_project)
+          redirect_to target_people_path
         end
         name = @user ? @user.name : 'user'
         f.js { render :text => "alert('Error inviting #{user}. Maybe you are trying to invite an existing user.');" }
@@ -72,13 +74,13 @@ class InvitationsController < ApplicationController
   skip_before_filter :belongs_to_project?, :only => [ :accept, :decline ]
   
   def accept
-    person = @invitation.project.people.new(
-      :user => current_user,
-      :role => @invitation.role || 2,
-      :source_user => @invitation.user)
-    person.save
+    @invitation.accept(current_user)
     @invitation.destroy
-    redirect_to(project_path(@invitation.project))
+    if @invitation.project
+      redirect_to(project_path(@invitation.project))
+    else
+      redirect_to(group_path(@invitation.group))
+    end
   end
   
   def decline
@@ -87,21 +89,59 @@ class InvitationsController < ApplicationController
   end
   
   private
+    def load_group_or_project
+      project_id = params[:project_id]
+      group_id = params[:group_id]
+
+      if project_id
+        load_project
+      elsif group_id
+        load_group
+      end
+      
+      @invite_target = @current_group || @current_project
+      return !@invite_target.nil?
+    end
+    
     def load_user_invitation
-      @invitation = Invitation.find(:first,:conditions => {
-        :project_id => @current_project.id,
-        :invited_user_id => current_user.id})
+      conds = if @current_project
+        { :project_id => @current_project.id,
+          :invited_user_id => current_user.id}
+      else
+        { :group_id => @current_group.id,
+          :invited_user_id => current_user.id}
+      end
+      
+      @invitation = Invitation.find(:first,:conditions => conds)
       unless @invitation
         flash[:error] = "Invalid invitation code"
         redirect_to user_invitations_path(current_user)
       end
     end
+    
+    def target
+      @current_project || @current_group
+    end
+    
+    def target_people_path
+      if @current_project
+        project_people_path(@current_project)
+      else
+        group_path(@current_group)
+      end
+    end
 
-    def admins_project?
-      if !(@current_project.owner?(current_user) or @current_project.admin?(current_user))
+    def admins_target?
+      if !(@invite_target.owner?(current_user) or @invite_target.admin?(current_user))
           respond_to do |f|
             flash[:error] = "You are not allowed to do that!"
-            f.html { redirect_to project_path(@current_project) }
+            f.html {
+              if @current_project
+                redirect_to project_path(@current_project)
+              else
+                redirect_to group_path(@current_group)
+              end 
+            }
           end
         return false
       end

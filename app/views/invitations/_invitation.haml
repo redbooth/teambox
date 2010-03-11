@@ -11,7 +11,7 @@
     = t('.time_ago', :time_ago_in_words => time_ago_in_words(invitation.updated_at))
   .links
     - if invitation.editable?(current_user)
-      = resend_invitation_link(project,invitation)
+      = resend_invitation_link(target,invitation)
       = loading('resend_invitation',invitation.id)
       = t('common.or')
       %span.discard= delete_invitation_link(invitation)

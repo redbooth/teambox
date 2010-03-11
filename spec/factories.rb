@@ -10,6 +10,10 @@ Factory.sequence :name do |n|
   "Teambox ##{n}"
 end
 
+Factory.sequence :permalink do |n|
+  "teambox#{n}"
+end
+
 Factory.define :user do |user|
   user.login { Factory.next(:login) }
   user.email { Factory.next(:email) }
@@ -37,6 +41,12 @@ end
 Factory.define :project do |project|
   project.name { Factory.next(:name) }
   project.association(:user)
+end
+
+Factory.define :group do |group|
+  group.name { Factory.next(:name) }
+  group.permalink { Factory.next(:permalink) }
+  group.association(:user)
 end
 
 Factory.define :conversation do |conversation|

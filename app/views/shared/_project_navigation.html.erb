@@ -25,6 +25,17 @@ render_tabnav :project do
        t.highlights_on :controller => :task_lists, :action => :index
       end
 
+      if groups_enabled?
+        add_tab do |t|
+         t.named t('.groups')
+         t.links_to groups_path
+         t.highlights_on :controller => :groups
+         t.li_class = 'groups'
+         t.li_class = 'right_side'
+         t.tab_index = 102
+        end
+      end
+
       #add_tab do |t|
       #  t.named t('.all_pages')
       #  t.links_to pages_path
@@ -88,7 +99,7 @@ render_tabnav :project do
           t.links_to  project_settings_path(project)
           t.highlights_on :controller => :projects, :action => :edit
           t.li_class = 'right_side'
-          t.tab_index = 155       
+          t.tab_index = 155
         end
       end
     end    

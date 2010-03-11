@@ -308,4 +308,8 @@ module ApplicationHelper
   def host_with_protocol
     request.protocol + request.host + request.port_string
   end
+  
+  def groups_enabled?
+    APP_CONFIG['allow_groups'] || false
+  end
 end

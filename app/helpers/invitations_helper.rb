@@ -10,7 +10,12 @@ module InvitationsHelper
   
   def list_invitations_for_project(project,invitations)
     render :partial => 'invitations/invitation', :collection => invitations,
-    :locals => { :project => project }
+    :locals => { :group => nil, :project => project, :target => project }
+  end
+  
+  def list_invitations_for_group(group,invitations)
+    render :partial => 'invitations/group_invitation', :collection => invitations,
+    :locals => { :group => group, :project => nil, :target => group }
   end
 
   def list_pending_invites(invitations)
@@ -19,8 +24,10 @@ module InvitationsHelper
   
   def delete_invitation_link(invitation)
     if invitation.editable?(current_user)
-      link_to_remote t('.discard'),
-        :url => project_invitation_path(invitation.project,invitation),
+      target = invitation.target
+      link = target.class == Project ? project_invitation_path(target,invitation) : group_invitation_path(target,invitation)
+      link_to_remote t('invitations.invitation.discard'),
+        :url => link,
         :method => :delete
     end
   end
@@ -29,10 +36,11 @@ module InvitationsHelper
     link_to 'Invite someone', new_project_invitation_path(project)
   end
   
-  def resend_invitation_link(project,invitation)
+  def resend_invitation_link(target,invitation)
     if invitation.editable?(current_user)
-      link_to_remote t('.resend'),
-        :url => resend_project_invitation_path(project,invitation),
+      link = target.class == Project ? resend_project_invitation_path(target,invitation) : resend_group_invitation_path(target,invitation)
+      link_to_remote t('invitations.invitation.resend'),
+        :url => link,
         :loading => show_loading('resend_invitation',invitation.id),
         :html => { :id => "resend_invitation_#{invitation.id}_link" }
     end
@@ -52,10 +60,10 @@ module InvitationsHelper
     end
   end
 
-  def invite_by_search(project,invitation)
+  def invite_by_search(target,invitation)
     render :partial => 'invitations/search',
       :locals => {
-        :project => project,
+        :target => target,
         :invitation => invitation }
   end
 

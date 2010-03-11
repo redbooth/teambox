@@ -55,7 +55,11 @@ class UsersController < ApplicationController
       self.current_user = @user
 
       if @invitation
-        redirect_to(project_path(@invitation.project))
+        if @invitation.project
+          redirect_to(project_path(@invitation.project))
+        else
+          redirect_to(group_path(@invitation.group))
+        end
       else
         redirect_back_or_default root_path
       end

@@ -1,0 +1,18 @@
+- content_for :column do
+  - if @group.has_logo?
+    %img{:src => @group.logo.url(:top), :alt => @group.name, :style => "height:24px"}/
+  - else
+    %img{:src => "/images/header_logo_black.png", :alt => @group.name, :style => "height:24px"}/
+  
+  .description
+    = @group.description
+
+  %h2= "Projects"
+  #projects
+    = list_group_projects(@group)
+  - if @group.admin?(current_user)
+    = add_group_project_link
+    = group_project_form
+
+  %h2= "Your Groups"
+  = render :partial => 'group_column', :collection => current_user.groups

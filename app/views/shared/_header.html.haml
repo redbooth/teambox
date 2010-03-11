@@ -1,3 +1,7 @@
 .header
   %h1
-    = link_to '<span>Teambox</span>', root_path, :tabindex => 1
+    - header_group = (@current_project ? @current_project.group : nil) || @group
+    - if header_group and header_group.has_logo?
+      = link_to '<span>Teambox</span>', root_path, :tabindex => 1, :style => "background-image:url(#{header_group.logo.url(:top)})"
+    - else
+      = link_to '<span>Teambox</span>', root_path, :tabindex => 1

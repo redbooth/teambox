@@ -36,6 +36,8 @@ class User < ActiveRecord::Base
   has_many :invitations, :foreign_key => 'invited_user_id'
   has_many :activities
   has_many :uploads
+  has_one :group
+  has_and_belongs_to_many :groups
 
   belongs_to :invited_by, :class_name => 'User'
 
@@ -85,9 +87,7 @@ class User < ActiveRecord::Base
 
     if invitations = Invitation.find_all_by_email(email)
       for invitation in invitations
-        person = invitation.project.people.new(:user => self, :source_user_id => invitation.user)
-        person.role = invitation.role || 2
-        person.save
+        invitation.accept(self)
         invitation.destroy
       end
     end

@@ -1,5 +1,6 @@
 class Project
   belongs_to :user
+  belongs_to :group
 
   with_options :dependent => :destroy do |project|
     project.has_many :people

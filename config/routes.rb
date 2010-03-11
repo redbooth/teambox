@@ -79,7 +79,11 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :conversations, :has_many => [:comments,:uploads], :member => [:watch,:unwatch]
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }
   end
-
+  
+  map.resources :groups, :member => { :logo => :any, :projects => :any, :members => :any} do |group|
+    group.resources :invitations, :member => [:accept,:decline,:resend]
+  end
+  
   # map.resources :comments
   map.resources :task_lists, :only => [ :index ]
   # map.resources :conversations, :only => [ :index ]

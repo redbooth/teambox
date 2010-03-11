@@ -1,0 +1,25 @@
+.email{ :style => email_global }
+  %p{ :style => email_text(:small) }
+    = t('emailer.common.do_not_answer')
+
+  %p= t('emailer.invitation.teambox_is_a_pm_platform')
+  %p= t('emailer.invitation.plan_share_and_collaborate')
+
+  .box{ :style => email_box }
+    %p= t('emailer.invitation.collaborate_with', :name => @referral.name)
+    %p{ :style => email_text(:big) }
+      = t('emailer.group_invitation.you_have_been_invited_to', :group => @group.name)
+    %h2{ :style => email_text(:big) }
+      = link_to t('emailer.invitation.accept_the_invitation'), new_user_url(:invitation => @invitation.token)
+    %p
+      %strong
+        = t('emailer.invitation.current_users')
+      = @group.users.collect { |p| p.name }.to_sentence
+
+  %p{ :style => email_text(:small) }
+    = t('emailer.invitation.plaintext_link')
+    %br
+    = link_to new_user_url(:invitation => @invitation.token), new_user_url(:invitation => @invitation.token)
+
+  .footer{ :style => email_text(:small) }
+    %p= t('emailer.invitation.report_abuse')
