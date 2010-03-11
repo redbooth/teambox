@@ -276,4 +276,12 @@ module TaskListsHelper
     render :partial => 'task_lists/tasks_for_all_projects', :locals => { :tasks => tasks }
   end
 
+  def maybe_cache_task_list_panel(task_list, current_target, &block)
+    if current_target.nil? or current_target.task_list != task_list
+      cache(task_list.cache_key_for_sidebar_panel, &block)
+    else
+      block.call
+    end
+  end
+
 end

@@ -3,7 +3,7 @@
     = "document.observe(\"dom:loaded\", function() { Task.make_all_sortable() });"
 - num_archived_tasks = task_list.tasks.archived.count
 - tasks = assign_tasks(project,task_list,'all_with_archived')
-- cache(task_list.cache_key_for_sidebar_panel) do
+- maybe_cache_task_list_panel(task_list, current_target) do
   .task_list_wrap{ :id => "#{task_list_id(:with_tasks,project,task_list)}", :class => "task_list_#{task_list.id}" }
     = render_task_list(project,task_list,current_target)
     - unless !task_list.editable?(current_user) && tasks.empty?
