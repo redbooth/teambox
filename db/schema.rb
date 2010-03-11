@@ -242,8 +242,8 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.text     "watchers_ids"
     t.boolean  "archived",             :default => false
     t.datetime "deleted_at"
-    t.integer  "archived_tasks_count", :default => 0
-    t.integer  "tasks_count",          :default => 0
+    t.integer  "archived_tasks_count", :default => 0, :null => false
+    t.integer  "tasks_count",          :default => 0, :null => false
     t.datetime "completed_at"
     t.date     "start_on"
     t.date     "finish_on"
@@ -308,7 +308,7 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.string   "language",                                   :default => "en"
     t.boolean  "conversations_first_comment",                :default => true
     t.string   "first_day_of_week",                          :default => "sunday"
-    t.integer  "invitations_count",                          :default => 0
+    t.integer  "invitations_count",                          :default => 0,   :null => false
     t.float    "profile_score",                              :default => 0.0
     t.float    "profile_percent",                            :default => 0.0
     t.string   "profile_grade"
@@ -329,11 +329,13 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.integer  "invited_by_id"
-    t.integer  "invited_count",                              :default => 0
+    t.integer  "invited_count",                              :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "wants_task_reminder",                        :default => true
     t.text     "recent_projects_ids"
+    t.string   "feature_level",                              :default => ""
+    t.string   "spreedly_token",                             :default => ""
   end
 
   add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"
