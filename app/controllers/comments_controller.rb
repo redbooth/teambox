@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
       @task_list = @comment.target
       redirect_path = project_task_list_path(@current_project, @task_list)
     when Task
-      @comment.reload
+      @comment.reload unless @comment.new_record?
       @task = @comment.target
       @target = @task
       @task_list = @task.task_list
