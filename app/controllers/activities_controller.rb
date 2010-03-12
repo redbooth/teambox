@@ -22,6 +22,7 @@ class ActivitiesController < ApplicationController
     @last_activity = @activities.last
     
     respond_to do |format|
+      format.html { redirect_to projects_path }
       format.js
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
@@ -34,6 +35,7 @@ class ActivitiesController < ApplicationController
     @last_activity = @activities.last
     
     respond_to do |format|
+      format.html { redirect_to projects_path }
       format.js
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
