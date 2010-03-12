@@ -1,0 +1,10 @@
+- if @current_project
+  = banner(@events,@chart)
+
+  - if @task_lists.any?
+    = tabular_task_lists(@current_project,@task_lists,@sub_action)
+  
+- else
+  %h2= t('.tasks_for_all_projects')
+
+  = tasks_for_all_projects(@tasks)

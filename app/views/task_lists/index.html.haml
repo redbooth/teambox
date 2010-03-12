@@ -14,5 +14,8 @@
 
   = tasks_for_all_projects(@tasks)
 
-  %div{ :style => 'padding-left: 20px; padding-bottom: 40px' }
+  %div{ :style => 'padding-left: 20px; padding-bottom: 10px' }
     = subscribe_to_calendars_link
+
+  %div{ :style => 'padding-left: 20px; padding-bottom: 40px' }
+    = content_tag(:div, link_to(t('common.print'), task_lists_path(:format => :print)), :class => :print)
