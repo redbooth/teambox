@@ -85,6 +85,10 @@ class GroupsController < ApplicationController
     list = (params[:group][:project_ids] || []) rescue []
     list = list.map(&:to_i)
     
+    # Filter out projects we don't own
+    projects = current_user.projects.find(:all, :conditions => {:id => list, :user_id => current_user.id})
+    list = projects.map(&:id)
+    
     case request.method
     when :put
       @group.project_ids = (@group.project_ids + list).uniq

@@ -155,4 +155,8 @@ module ProjectsHelper
   def options_for_projects(projects)
     projects.map {|project| [ project.name, project.id ]}
   end
+  
+  def options_for_owned_projects(user, projects)
+    projects.reject{|p| p.user_id != user.id}.map {|p| [ p.name, p.id ]}
+  end
 end
