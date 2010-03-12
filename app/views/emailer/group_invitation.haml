@@ -5,9 +5,9 @@
   .box{ :style => email_box }
     %p= t('emailer.invitation.collaborate_with', :name => @referral.name)
     %p{ :style => email_text(:big) }
-      = t('emailer.group_invitation.you_have_been_invited_to', :group => @group.name)
+      = t('emailer.invitation_group.you_have_been_invited_to', :group => @group.name)
     %h2{ :style => email_text(:big) }
-      = link_to t('emailer.invitation.accept_the_invitation'), groups_url(:invitation => @invitation.token)
+      = link_to t('emailer.invitation.accept_the_invitation'), projects_url(:invitation => @invitation.token)
     %p
       %strong
         = t('emailer.invitation.current_users')
