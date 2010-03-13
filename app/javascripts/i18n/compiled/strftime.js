@@ -1,94 +1,4 @@
-// render from /Users/charles/Documents/Rails/teambox/app/javascripts/i18n/strftime.erb// es
-
-Object.extend(Date.prototype, {
-  strftime_es: function(format) {
-    var day = this.getDay(), month = this.getMonth();
-    var hours = this.getHours(), minutes = this.getMinutes();
-    function pad(num) { return num.toPaddedString(2); };
-
-    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
-      switch(part[1]) {
-        case 'a': return $w("Dom Lun Mar Mié Jue Vie Sáb")[day]; break;
-        case 'A': return $w("Domingo Lunes Martes Miércoles Jueves Viernes Sábado")[day]; break;
-        case 'b': return $w(" Ene Feb Mar Abr May Jun Jul Ago Sep Oct Nov Dec")[month]; break;
-        case 'B': return $w(" Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre")[month]; break;
-        case 'c': return this.toString(); break;
-        case 'd': return this.getDate(); break;
-        case 'D': return pad(this.getDate()); break;
-        case 'H': return pad(hours); break;
-        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
-        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
-        case 'm': return pad(month + 1); break;
-        case 'M': return pad(minutes); break;
-        case 'p': return hours > 11 ? 'PM' : 'AM'; break;
-        case 'S': return pad(this.getSeconds()); break;
-        case 'w': return day; break;
-        case 'y': return pad(this.getFullYear() % 100); break;
-        case 'Y': return this.getFullYear().toString(); break;
-      }
-    }.bind(this));
-  }
-});// it
-
-Object.extend(Date.prototype, {
-  strftime_it: function(format) {
-    var day = this.getDay(), month = this.getMonth();
-    var hours = this.getHours(), minutes = this.getMinutes();
-    function pad(num) { return num.toPaddedString(2); };
-
-    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
-      switch(part[1]) {
-        case 'a': return $w("Dom Lun Mar Mer Gio Ven Sab")[day]; break;
-        case 'A': return $w("Domenica Lunedì Martedì Mercoledì Giovedì Venerdì Sabato")[day]; break;
-        case 'b': return $w(" Gen Feb Mar Apr Mag Giu Lug Ago Set Ott Nov Dic")[month]; break;
-        case 'B': return $w(" Gennaio Febbraio Marzo Aprile Maggio Giugno Luglio Agosto Settembre Ottobre Novembre Dicembre")[month]; break;
-        case 'c': return this.toString(); break;
-        case 'd': return this.getDate(); break;
-        case 'D': return pad(this.getDate()); break;
-        case 'H': return pad(hours); break;
-        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
-        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
-        case 'm': return pad(month + 1); break;
-        case 'M': return pad(minutes); break;
-        case 'p': return hours > 11 ? 'PM' : 'AM'; break;
-        case 'S': return pad(this.getSeconds()); break;
-        case 'w': return day; break;
-        case 'y': return pad(this.getFullYear() % 100); break;
-        case 'Y': return this.getFullYear().toString(); break;
-      }
-    }.bind(this));
-  }
-});// en
-
-Object.extend(Date.prototype, {
-  strftime_en: function(format) {
-    var day = this.getDay(), month = this.getMonth();
-    var hours = this.getHours(), minutes = this.getMinutes();
-    function pad(num) { return num.toPaddedString(2); };
-
-    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
-      switch(part[1]) {
-        case 'a': return $w("Sun Mon Tue Wed Thu Fri Sat")[day]; break;
-        case 'A': return $w("Sunday Monday Tuesday Wednesday Thursday Friday Saturday")[day]; break;
-        case 'b': return $w(" Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec")[month]; break;
-        case 'B': return $w(" January February March April May June July August September October November December")[month]; break;
-        case 'c': return this.toString(); break;
-        case 'd': return this.getDate(); break;
-        case 'D': return pad(this.getDate()); break;
-        case 'H': return pad(hours); break;
-        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
-        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
-        case 'm': return pad(month + 1); break;
-        case 'M': return pad(minutes); break;
-        case 'p': return hours > 11 ? 'PM' : 'AM'; break;
-        case 'S': return pad(this.getSeconds()); break;
-        case 'w': return day; break;
-        case 'y': return pad(this.getFullYear() % 100); break;
-        case 'Y': return this.getFullYear().toString(); break;
-      }
-    }.bind(this));
-  }
-});// ca
+// render from /var/www/apps/teambox/app/javascripts/i18n/strftime.erb// ca
 
 Object.extend(Date.prototype, {
   strftime_ca: function(format) {
@@ -148,6 +58,36 @@ Object.extend(Date.prototype, {
       }
     }.bind(this));
   }
+});// es
+
+Object.extend(Date.prototype, {
+  strftime_es: function(format) {
+    var day = this.getDay(), month = this.getMonth();
+    var hours = this.getHours(), minutes = this.getMinutes();
+    function pad(num) { return num.toPaddedString(2); };
+
+    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
+      switch(part[1]) {
+        case 'a': return $w("Dom Lun Mar Mié Jue Vie Sáb")[day]; break;
+        case 'A': return $w("Domingo Lunes Martes Miércoles Jueves Viernes Sábado")[day]; break;
+        case 'b': return $w(" Ene Feb Mar Abr May Jun Jul Ago Sep Oct Nov Dec")[month]; break;
+        case 'B': return $w(" Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre")[month]; break;
+        case 'c': return this.toString(); break;
+        case 'd': return this.getDate(); break;
+        case 'D': return pad(this.getDate()); break;
+        case 'H': return pad(hours); break;
+        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
+        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
+        case 'm': return pad(month + 1); break;
+        case 'M': return pad(minutes); break;
+        case 'p': return hours > 11 ? 'PM' : 'AM'; break;
+        case 'S': return pad(this.getSeconds()); break;
+        case 'w': return day; break;
+        case 'y': return pad(this.getFullYear() % 100); break;
+        case 'Y': return this.getFullYear().toString(); break;
+      }
+    }.bind(this));
+  }
 });// de
 
 Object.extend(Date.prototype, {
@@ -162,6 +102,96 @@ Object.extend(Date.prototype, {
         case 'A': return $w("Sonntag Montag Dienstag Mittwoch Donnerstag Freitag Samstag")[day]; break;
         case 'b': return $w(" Jan Feb Mär Apr Mai Jun Jul Aug Sep Okt Nov Dez")[month]; break;
         case 'B': return $w(" Januar Februar März April Mai Juni Juli August September Oktober November Dezember")[month]; break;
+        case 'c': return this.toString(); break;
+        case 'd': return this.getDate(); break;
+        case 'D': return pad(this.getDate()); break;
+        case 'H': return pad(hours); break;
+        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
+        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
+        case 'm': return pad(month + 1); break;
+        case 'M': return pad(minutes); break;
+        case 'p': return hours > 11 ? 'PM' : 'AM'; break;
+        case 'S': return pad(this.getSeconds()); break;
+        case 'w': return day; break;
+        case 'y': return pad(this.getFullYear() % 100); break;
+        case 'Y': return this.getFullYear().toString(); break;
+      }
+    }.bind(this));
+  }
+});// en
+
+Object.extend(Date.prototype, {
+  strftime_en: function(format) {
+    var day = this.getDay(), month = this.getMonth();
+    var hours = this.getHours(), minutes = this.getMinutes();
+    function pad(num) { return num.toPaddedString(2); };
+
+    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
+      switch(part[1]) {
+        case 'a': return $w("Sun Mon Tue Wed Thu Fri Sat")[day]; break;
+        case 'A': return $w("Sunday Monday Tuesday Wednesday Thursday Friday Saturday")[day]; break;
+        case 'b': return $w(" Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec")[month]; break;
+        case 'B': return $w(" January February March April May June July August September October November December")[month]; break;
+        case 'c': return this.toString(); break;
+        case 'd': return this.getDate(); break;
+        case 'D': return pad(this.getDate()); break;
+        case 'H': return pad(hours); break;
+        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
+        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
+        case 'm': return pad(month + 1); break;
+        case 'M': return pad(minutes); break;
+        case 'p': return hours > 11 ? 'PM' : 'AM'; break;
+        case 'S': return pad(this.getSeconds()); break;
+        case 'w': return day; break;
+        case 'y': return pad(this.getFullYear() % 100); break;
+        case 'Y': return this.getFullYear().toString(); break;
+      }
+    }.bind(this));
+  }
+});// ru
+
+Object.extend(Date.prototype, {
+  strftime_ru: function(format) {
+    var day = this.getDay(), month = this.getMonth();
+    var hours = this.getHours(), minutes = this.getMinutes();
+    function pad(num) { return num.toPaddedString(2); };
+
+    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
+      switch(part[1]) {
+        case 'a': return $w("Вс Пн Вт Ср Чт Пт Сб")[day]; break;
+        case 'A': return $w("Воскресенье Понедельник Вторник Среда Четверг Пятница Суббота")[day]; break;
+        case 'b': return $w(" Янв Фев Мар Апр Май Июн Июл Авг Сен Окт Ноя Дек")[month]; break;
+        case 'B': return $w(" Январь Февраль Март Апрель Май Июнь Июль Август Сентабрь Октябрь Ноябрь Декабрь")[month]; break;
+        case 'c': return this.toString(); break;
+        case 'd': return this.getDate(); break;
+        case 'D': return pad(this.getDate()); break;
+        case 'H': return pad(hours); break;
+        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
+        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
+        case 'm': return pad(month + 1); break;
+        case 'M': return pad(minutes); break;
+        case 'p': return hours > 11 ? 'PM' : 'AM'; break;
+        case 'S': return pad(this.getSeconds()); break;
+        case 'w': return day; break;
+        case 'y': return pad(this.getFullYear() % 100); break;
+        case 'Y': return this.getFullYear().toString(); break;
+      }
+    }.bind(this));
+  }
+});// it
+
+Object.extend(Date.prototype, {
+  strftime_it: function(format) {
+    var day = this.getDay(), month = this.getMonth();
+    var hours = this.getHours(), minutes = this.getMinutes();
+    function pad(num) { return num.toPaddedString(2); };
+
+    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
+      switch(part[1]) {
+        case 'a': return $w("Dom Lun Mar Mer Gio Ven Sab")[day]; break;
+        case 'A': return $w("Domenica Lunedì Martedì Mercoledì Giovedì Venerdì Sabato")[day]; break;
+        case 'b': return $w(" Gen Feb Mar Apr Mag Giu Lug Ago Set Ott Nov Dic")[month]; break;
+        case 'B': return $w(" Gennaio Febbraio Marzo Aprile Maggio Giugno Luglio Agosto Settembre Ottobre Novembre Dicembre")[month]; break;
         case 'c': return this.toString(); break;
         case 'd': return this.getDate(); break;
         case 'D': return pad(this.getDate()); break;

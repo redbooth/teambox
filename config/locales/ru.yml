@@ -76,7 +76,7 @@ ru:
   cards:
     card:
       phone_numbers: Телефонные номера
-      email_addresses: Электронные адрес
+      email_addresses: Электронные адреса
       websites: Веб-сайты
       addresses: Адреса
       ims: Обмен сообщениями
@@ -102,7 +102,7 @@ ru:
       password_confirmation: Подтверждение пароля
       sunday: Воскресенье
       monday: Понедельник
-      first_day_of_week: Неделя начинается с
+      first_day_of_week: Начало недели
       change_password: Сменить пароль
       confirm_password: Подтвердить пароль
       use_this_email: "У вас есть приглашения для участия в проектах на эту электронную почту. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
@@ -837,13 +837,13 @@ ru:
         one:   "меньше секунды"
         other: "меньше {{count}} секунд"
       x_seconds:
-        one:   "секунда"
+        one:   "секунду"
         other: "{{count}} секунд"
       less_than_x_minutes:
         one:   "меньше минуты"
         other: "меньше {{count}} минут"
       x_minutes:
-        one:   "минута"
+        one:   "минуту"
         other: "{{count}} минут"
       about_x_hours:
         one:   "около часа"
@@ -997,9 +997,9 @@ ru:
 
   time:
     formats:
-      default: "%Y-%b-%d, %a %H:%M:%S %z"
-      short: "%d %b %H:%M"
-      long: "%d %b %Y %H:%M"
+      default: "%Y-%b-%d, %a %H:%M:%S"
+      short: "%H:%M"
+      long: "%d %b %Y, %H:%M"
     am: "am"
     pm: "pm"
 
