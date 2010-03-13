@@ -12,7 +12,7 @@ class TaskListPanelSweeper < ActionController::Caching::Sweeper
       task_list = task_list_for_record(record)
       # Rails.logger.info("XXX fragment Task list is #{task_list.inspect}")
       if task_list
-        %w[en es fr de].each do |lang|
+        I18n.backend.available_locales.each do |lang|
           cache_key = task_list.cache_key_for_sidebar_panel(lang)
           if fragment_exist?(cache_key)
             expire_fragment(cache_key)
