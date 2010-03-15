@@ -45,6 +45,18 @@ Feature: Daily reminder for tasks email
     When the daily task reminders go out at "09:00"
     Then I should receive no emails
 
+  Scenario Outline: User with a task due some time in the next two weeks - today is a weekend day
+    Given today is "<date>"
+    And the task called "Give water to the flowers" is assigned to me
+    And the task called "Give water to the flowers" is due in 3 days
+    When the daily task reminders go out at "05:00"
+    Then I should receive no emails
+
+    Examples:
+      | date        |
+      | 2010/02/13  |
+      | 2010/02/14  |
+
   Scenario: User with the task reminders turned off
     Given I have the daily task reminders turned off
     And the task called "Give water to the flowers" is assigned to me

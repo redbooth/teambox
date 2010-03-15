@@ -205,6 +205,7 @@ class User < ActiveRecord::Base
   end
 
   def tasks_for_daily_reminder_email
+    return {} if [0, 6].include?(Date.today.wday)
     assigned_tasks = assigned_tasks(:all)
     tasks_without_due_date, tasks_with_due_date  = assigned_tasks.partition { |task| task.due_on.nil? }
     tasks_by_dueness = tasks_with_due_date.inject({}) do |tasks, task|
