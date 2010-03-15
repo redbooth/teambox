@@ -189,23 +189,23 @@ fr:
       completeness: "Effectué à {{percentage}}%"
       to_get_to: pour
     daily_task_reminder_email:
-      daily_task_reminder: "Rappel quotidien de vos tâches"      
-      daily_task_reminder_from_teambox: "Ceci est un mail de rappel pour vos tâche sur Teambox"
+      daily_task_reminder: "Rappel quotidien de vos tâches"
+      daily_task_reminder_from_teambox: "Ceci est un mail de rappel pour vos tâches sur Teambox"
       late_tasks: "Tâches en retard"
       tasks_for_today: "Tâches pour aujourd'hui"
       tasks_for_tomorrow: "Tâches pour demain"
-      tasks_for_next_two_weeks: "Tâches pour les deux prochaines semaine"
+      tasks_for_next_two_weeks: "Tâches pour les deux prochaines semaines"
       tasks_without_a_due_date: "Tâches sans échéance"
-      you_receive_this_message: "Vous recevez ce message parce que vous vous y êtes inscrit. Vous pouvez désactivé cette fonctionnalité depuis votre {{link}}"
+      you_receive_this_message: "Vous recevez ce message parce que vous vous y êtes inscrit. Vous pouvez désactiver cette fonctionnalité depuis votre {{link}}"
       settings_page: "page d'options"
   groups:
     index:
       title: Groupes
-      groups_in: "Groupes dont vous faite partie"
+      groups_in: "Groupes dont vous faites partie"
       your_group: "Votre groupe"
-      no_groups: "Vous ne faite partie d'aucun groupes."
-      description: "Utilisé les groupes pour partagé des resources avec les autres, et regroupé vos projects ensemble sous un seul nom!"
-      submit_project: Ajouté
+      no_groups: "Vous ne faites partie d'aucun groupes."
+      description: "Utilisez les groupes pour partager des resources avec les autres, et regroupez vos projects ensemble sous un seul nom!"
+      submit_project: Ajouter
       remove_project: Supprimer
     primer:
       no_group_create: "Vous ne possédez pas de groupe. {{link}}."
@@ -236,7 +236,7 @@ fr:
       submit: Actualiser
     show:
       edit: Editer
-      add_project: Ajouté un projet
+      add_project: Ajouter un projet
   projects:
     index:
       title: Activité dans tous vos projets
@@ -589,7 +589,7 @@ fr:
       project: "Que faites-vous? Partagez des idées, liens, mises à jour."
       conversation: "Envoyer un message au reste du groupe."
       task_list:  "Partager des idées pour cette liste de tâches. Pour créer et attribuer des tâches, utilisez la barre latérale."
-      task: Définir ce qui doit être fait par un commentaire. Confier cette tâche à quelqu'un. Posté des mises à jour. Attaché les résultats.
+      task: Définir ce qui doit être fait par un commentaire. Confier cette tâche à quelqu'un. Poster des mises à jour. Attacher les résultats.
     edit:
       submit: Enregistrer
   example_projects:
@@ -701,7 +701,7 @@ fr:
       notifications: Notifications
     task_navigation:
       all_tasks: Toutes
-      unarchived_tasks: "Tâches réactivé"
+      unarchived_tasks: "Tâches réactivés"
       my_tasks:
         one: "Ma tâche"
         other: "Mes tâches ({{count}})"
@@ -753,7 +753,7 @@ fr:
       problems: "Si vous rencontrez un problème, n'hésitez pas à nous contacter {{support}}"
     reset_password:
       hey: "Bonjour {{user_name}}!"
-      follow_the_link: "Pour <b>réinitialisé votre mot de passe</b> dans Teambox il vous suffit de suivre ce lien:"
+      follow_the_link: "Pour <b>réinitialiser votre mot de passe</b> dans Teambox il vous suffit de suivre ce lien:"
       log_in: "Entrez maintenant dans Teambox!"
       plaintext_link: "Si le lien ci-dessus ne fonctionne pas, copiez et collez le lien suivant dans la barre d'adresses de votre navigateur internet:"
       report_abuse: "Vous recevez ce message car vous vous êtes enregistré dans Teambox avec l'adresse {{email}}"
@@ -1034,7 +1034,7 @@ fr:
             body:
               no_body_generic: "S'il vous plaît écrivez un commentaire pour entamer la conversation."
             name:
-              no_title: "S'il vous plaît donner un titre de cette conversation"
+              no_title: "S'il vous plaît donnez un titre de cette conversation"
 
   date:
     yesterday: Hier
