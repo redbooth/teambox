@@ -50,8 +50,12 @@ class ApplicationController < ActionController::Base
     def belongs_to_project?
       if @current_project && current_user
         unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-          current_user.remove_recent_project(@current_project)
-          render :text => "You don't have permission to view this project", :status => :forbidden
+          if Invitation.exists?(:project_id => @current_project.id, :invited_user_id => current_user.id)
+            redirect_to project_invitations_path(@current_project)
+          else 
+            current_user.remove_recent_project(@current_project)
+            render :text => "You don't have permission to view this project", :status => :forbidden
+          end
         end
       end
     end

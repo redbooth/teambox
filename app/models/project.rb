@@ -31,6 +31,10 @@ class Project < ActiveRecord::Base
       person.destroy
     end
   end
+  
+  def has_member?(user)
+    Person.exists?(:project_id => self.id, :user_id => user.id)
+  end
 
   def task_lists_assigned_to(user)
     task_lists.unarchived.inject([]) do |t, task_list|

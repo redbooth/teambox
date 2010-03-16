@@ -1,10 +1,10 @@
 - content_for :column do
   - if @invitations
-    = new_invitation_link(@current_project)
+    = new_invitation_link(@current_group)
 
 .invitations
   - if @invitation
     = list_pending_invites([@invitation])
   - else
-    = list_invitations(@invitations)
+    = list_invitations_for_group(@current_group, @invitations)
 .clear

@@ -15,6 +15,15 @@ Given /^"([^\"]*)" sent an invitation to "([^\"]*)" for the project "([^\"]*)"$/
   Factory(:invitation, :user => user, :email => email, :project => project)
 end
 
+Given /^the owner of the project "([^\"]*)" sent an invitation to "([^\"]*)"$/ do |project_name, login|
+  user = User.find_by_login(login)
+  project = Project.find_by_name(project_name)
+  invite = Invitation.new(:user_or_email => user.login)
+  invite.project = project
+  invite.user = project.user
+  invite.save!
+end
+
 # create models from a table in a project
 Given(/^the following conversations exist in the project "([^\"]*)" owned by ([a-z]+):?$/) do |project, username, table|
   project = Project.find_by_name(project)

@@ -6,9 +6,29 @@ class InvitationsController < ApplicationController
   
   def index
     if @invite_target
-      @invitations = @invite_target.invitations
+      if @invite_target.has_member?(current_user)
+        @invited_to_project = false
+      else
+        # Do we have an invite?
+        @invitation = @invite_target.invitations.find(:first, :conditions => {:invited_user_id => current_user.id})
+        if @invitation.nil?
+          if @current_group
+            render :text => "You don't have permission to view this group", :status => :forbidden
+          else
+            render :text => "You don't have permission to view this project", :status => :forbidden
+          end
+          
+          return
+        end
+      end
+      
+      # Viewing invites?
+      unless @invitation
+        @invitations = @invite_target.invitations
+      end
+      
       respond_to do |f|
-        f.html { render :action => 'index_project' }
+        f.html { render :action => (@current_project ? 'index_project' : 'index_group') }
       end
     else
       @invitations = current_user.invitations

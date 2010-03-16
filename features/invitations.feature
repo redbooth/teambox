@@ -41,8 +41,18 @@ Feature Invite a user to a project
     Then I should see "Edward Bloom"
      And I should see "Mislav Marohnić"
 
+  Scenario: Mislav is invited to a project by someone else
+    Given I am logged in as "mislav"
+    Given there is a project called "Teambox Roulette"
+    When I go to the page of the "Teambox Roulette" project
+    Then I should not see "Teambox Roulette"
+
+    Given the owner of the project "Teambox Roulette" sent an invitation to "mislav"
+    When I go to the page of the "Teambox Roulette" project
+    And I press "Accept"
+    Then I should see "Teambox Roulette"
+
   Scenario: Mislav invites existing teambox users to a project
   Scenario: Mislav leaves a project
-  Scenario: Mislav transfers ownership of a project
   Scenario: Mislav resends invitation email
   Scenario: Mislav deletes an invitation that hasnt been accepted
