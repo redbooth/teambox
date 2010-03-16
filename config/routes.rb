@@ -44,8 +44,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :projects,
       :has_many => [:pages, :people],
       :member => {:get_comments => :get, :accept => :post, :decline => :post, :transfer => :put} do |project|
-    #project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
-    #project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
+    project.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
+    project.time 'time', :controller => 'hours', :action => 'index'
 
     project.settings 'settings',  :controller => 'projects', :action => 'edit', :sub_action => 'settings'
     project.picture  'picture',   :controller => 'projects', :action => 'edit', :sub_action => 'picture'

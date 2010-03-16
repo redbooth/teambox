@@ -71,12 +71,14 @@ render_tabnav :project do
         t.highlights_on :controller => :pages
         t.tab_index = 153
       end
-      
-      #add_tab do |t|
-      #  t.named t('.time_tracking')
-      #  t.links_to  project_time_tracking_path(project)
-      #  t.highlights_on :controller => :hours
-      #end
+
+      if project.tracks_time
+        add_tab do |t|
+          t.named t('.time_tracking')
+          t.links_to  project_time_path(project)
+          t.highlights_on :controller => :hours
+        end
+      end
 
       add_tab do |t|
         t.named t('.files')
@@ -84,7 +86,7 @@ render_tabnav :project do
         t.highlights_on :controller => :uploads
         t.tab_index = 154
       end
-      
+
       add_tab do |t|
         t.named t('.people')
         t.links_to  project_people_path(project)

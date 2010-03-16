@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.integer  "last_comment_id"
     t.integer  "comments_count",  :default => 0, :null => false
     t.boolean  "archived",        :default => false
+    t.boolean  "tracks_time",     :default => false
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"

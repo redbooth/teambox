@@ -120,7 +120,6 @@ class InvitationsController < ApplicationController
       end
       
       @invite_target = @current_group || @current_project
-      return !@invite_target.nil?
     end
     
     def load_user_invitation

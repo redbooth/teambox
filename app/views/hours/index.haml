@@ -2,11 +2,12 @@
   =calendar_nav(@current_project,@year,@month)
   .calendar#calendar
     = build_calendar(@comments,@year,@month)
+  = hours_js(@comments)
 
 -content_for :column do
   %select#user_filter
     =list_hour_users(@users_displayed)
   =observe_user_filter
  
-= new_hour_comment_form(@current_project)
+= new_hour_comment_form(@current_project, Comment.new)
 = list_comments(@comments,@current_project)

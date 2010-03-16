@@ -12,6 +12,7 @@
     - if target
       = last_comment_input
       - if target.is_a?(Task)
+        = add_hours_link(f)
         .statuses
           = f.label :status
           - if target.status_new?

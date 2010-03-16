@@ -9907,6 +9907,57 @@ function onEndCrop(coords, dimensions){
   $('crop_width').value = dimensions.width;
   $('crop_height').value = dimensions.height;
 }
+var Hours = {
+	init: function() {
+		this.hours = [];
+		this.filteredSet = [];
+	},
+
+	addHour: function(comment) {
+		var record = {
+			id: comment.id,
+			date: comment.date,
+			week: comment.week,
+			user_id: comment.userid,
+			task_id: comment.task_id,
+			hours: comment.hours
+		};
+		this.hours.push(record);
+	},
+
+	addHours: function(comments) {
+		comments.forEach(function(comment){
+			var record = {
+				id: comment.id,
+				date: comment.date,
+				week: comment.week,
+				user_id: comment.userid,
+				task_id: comment.task_id,
+				hours: comment.hours
+			};
+
+			Hours.hours.push(record);
+		});
+	},
+
+	filterByFunc: function(func) {
+		this.filteredSet = this.hours.select(func);
+	},
+
+	clearSet: function() {
+		var len = this.filteredSet.length;
+		while (len-- != 0) {
+			this.filteredSet.pop();
+		}
+	},
+
+	clear: function() {
+		var len = this.hours.length;
+		while (len-- != 0) {
+			this.hours.pop();
+		}
+	}
+};
 
 Object.extend(Date.prototype, {
   strftime_ca: function(format) {

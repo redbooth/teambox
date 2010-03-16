@@ -61,6 +61,14 @@ class Comment < ActiveRecord::Base
     end
   end
   
+  def day
+    if self.created_at.mday.to_s.length == 1
+      current_day = "0#{self.created_at.mday.to_s}"
+    else
+      current_day =  self.created_at.mday.to_s
+    end
+  end
+  
   def to_s
     body[0,80]
   end
