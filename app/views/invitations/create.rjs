@@ -12,7 +12,7 @@ page.insert_html :top,
   :people,
   :partial => 'invitations/invitation',
   :locals => {
-    :project => @current_project,
+    :target => @invite_target,
     :invitation => @invitation }
 
 invitation_partial_id = "invitation_#{@invitation.id}"

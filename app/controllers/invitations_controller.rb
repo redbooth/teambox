@@ -22,13 +22,13 @@ class InvitationsController < ApplicationController
         end
       end
       
-      # Viewing invites?
-      unless @invitation
-        @invitations = @invite_target.invitations
-      end
-      
       respond_to do |f|
-        f.html { render :action => (@current_project ? 'index_project' : 'index_group') }
+        f.html { 
+          if @invitation
+            render :action => (@current_project ? 'index_project' : 'index_group')
+          else
+            redirect_to @current_project ? project_people_path(@current_project) : group_path(@current_group)
+          end }
       end
     else
       @invitations = current_user.invitations
