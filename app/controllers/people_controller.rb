@@ -59,8 +59,8 @@ class PeopleController < ApplicationController
       # Strip invited people
       if @other_project
         invited_ids = @current_project.invitations.find(:all, :select => 'invited_user_id').map(&:invited_user_id).compact
-        @contacts = @other_project.users.find(:all, :conditions => ['users.id NOT IN (?)', invited_ids]) - @current_project.users
-        @contacts = @contacts.reject{|c| invited_ids.include?(c.id)}
+        conds = invited_ids.empty? ? [] : ['users.id NOT IN (?)', invited_ids]
+        @contacts = @other_project.users.find(:all, :conditions => conds) - @current_project.users
       end
     end
     
