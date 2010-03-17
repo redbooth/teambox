@@ -112,7 +112,7 @@ module CommentsHelper
     else
       form_url = [project,target,comment]
     end
-    if project.editable?(current_user) && project.archived == false
+    if project.commentable?(current_user) && project.archived == false
       render :partial => 'comments/new',
         :locals => { :target => target,
           :message => message,
@@ -137,21 +137,63 @@ module CommentsHelper
   
   def cancel_edit_comment_link(comment)
     link_to_remote t('common.cancel'),
-      :url => comment_path(comment),
-      :method => :get
+      :url => project_comment_path(comment.project, comment),
+      :method => :get,
+      :loading => show_loading_comment_form(comment.id)
   end
 
   def edit_comment_link(comment)
+    return unless comment.user_id == current_user.id
     link_to_remote pencil_image,
-      :url => edit_comment_path(comment),
-      :method => :get
+      :url => edit_project_comment_path(comment.project, comment),
+      :loading => edit_comment_loading_action(comment),
+      :method => :get,
+      :html => {:id => "edit_comment_#{comment.id}_link"}
   end
     
   def delete_comment_link(comment)
     link_to_remote trash_image,
-      :url => comment_path(comment),
+      :url => project_comment_path(comment.project, comment),
+      :loading => delete_comment_loading_action(comment),
       :method => :delete,
-      :confirm => t('.confirm_delete')
+      :confirm => t('.confirm_delete'),
+      :html => {:id => "delete_comment_#{comment.id}_link"}
+  end
+  
+  def show_loading_comment_form(id)
+    update_page do |page|
+      page["comment_form_loading_#{id}"].show
+      page["comment_submit_#{id}"].hide
+    end
+  end
+  
+  def hide_loading_comment_form(id)
+    page.remove "comment_form_loading_#{id}"
+    page["comment_submit_#{id}"].show
+  end
+  
+  def loading_comment_form(toggle,id)
+    if toggle
+      page["note_form_loading#{"_#{id}" if id}"].show
+      page["note_submit#{"_#{id}" if id}"].hide
+    else
+      page["note_form_loading#{"_#{id}" if id}"].hide
+      page["note_submit#{"_#{id}" if id}"].show
+    end
+  end
+  
+  def edit_comment_loading_action(comment)
+    update_page do |page|
+      page.insert_html :after, "edit_comment_#{comment.id}_link", loading_action_image("comment_#{comment.id}")
+      page["edit_comment_#{comment.id}_link"].hide
+    end  
+  end
+  
+  def delete_comment_loading_action(comment)
+    update_page do |page|
+      page.insert_html :after, "delete_comment_#{comment.id}_link", loading_action_image("comment_#{comment.id}")
+      page["delete_comment_#{comment.id}_link"].hide
+    end  
   end
   
   def last_comment_input

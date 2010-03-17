@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_filter :load_comment, :only => [:edit, :update, :show, :destroy]
   before_filter :load_target, :only => [:create]
   before_filter :load_orginal_controller, :only => [:create]
+  before_filter :check_permissions, :only => [:create, :edit, :update, :destroy]
   before_filter :set_page_title
 
   cache_sweeper :task_list_panel_sweeper, :only => [:create]
@@ -66,6 +67,10 @@ class CommentsController < ApplicationController
 
   def update
     @comment.save_uploads(params) if @comment.update_attributes(params[:comment])
+    
+    # Expire cache
+    expire_fragment("#{current_user.language}_#{current_user.time_zone.gsub(/\W/,'')}_comment_#{@comment.id}")
+    
     respond_to{|f|f.js}
   end
 
@@ -91,7 +96,7 @@ class CommentsController < ApplicationController
     end
 
     def load_comment
-      @comment = Comment.find(params[:id])
+      @comment = @current_project.comments.find(params[:id])
     end
 
     def load_target
@@ -101,10 +106,35 @@ class CommentsController < ApplicationController
         @target = User.find(params[:user_id])
       end
     end
+    
+    def check_permissions
+      # Can they even create comments?
+      if @comment.nil?
+        unless @current_project.commentable?(current_user)
+          respond_to do |f|
+            flash[:error] = "You are not allowed to do that!"
+            f.html { redirect_to project_path(@current_project) }
+          end
+          return false
+        end
+      end
+      
+      if @comment and @comment.user_id != current_user.id
+        # Admins can delete comments
+        return if action_name == 'destroy' and @comment.project.admin?(current_user)
+        
+        # Process of elimination: don't allow this!
+        respond_to do |f|
+          flash[:error] = "You are not allowed to do that!"
+          f.html { redirect_to project_path(@comment.project) }
+        end
+        return false
+      end
+    end
 
     def assign_project_target
       if params.has_key?(:task_id)
-        t = Task.find(params[:task_id])
+        t = @current_project.tasks.find(params[:task_id])
         t.previous_status = t.status
         t.previous_assigned_id = t.assigned_id
         t.status = params[:comment][:status]
@@ -116,9 +146,9 @@ class CommentsController < ApplicationController
         # end
         t
       elsif params.has_key?(:task_list_id)
-        TaskList.find(params[:task_list_id])
+        @current_project.task_lists.find(params[:task_list_id])
       elsif params.has_key?(:conversation_id)
-        Conversation.find(params[:conversation_id])
+        @current_project.conversations.find(params[:conversation_id])
       else
         @current_project
       end

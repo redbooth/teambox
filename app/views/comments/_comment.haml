@@ -1,11 +1,12 @@
 - cache "#{@current_user.language}_#{@current_user.time_zone.gsub(/\W/,'')}_comment_#{comment.id}" do
   .comment{:id => "comment_#{comment.id}" }
     .info
-      = #comment_actions_link(comment)
       = thumb_avatar(comment.user)
     .block
       .date
         = posted_date comment.created_at
+      - if current_user.id == comment.user_id or comment.project.admin?(current_user)
+        = comment_actions_link(comment)
       .name
         = conversation_last_comment_text(comment)
         = activity_comment_user_link(comment)
