@@ -44,7 +44,15 @@ class CommentsController < ApplicationController
     respond_to do |f|
       f.html { redirect_to redirect_path }
       f.m    { redirect_to redirect_path }
-      f.js
+      f.js {
+        # Fetch new comments
+        if params[:last_comment_id]
+          @last_id = params[:last_comment_id].to_i
+          new_id = @comment.new_record? ? 0 : @comment.id
+          @new_comments = @target.comments.find(:all, :conditions => ['comments.id != ? AND comments.id > ?', new_id, @last_id])
+          @last_id = @new_comments[0].id unless @new_comments.empty?
+        end
+      }
     end
   end
 

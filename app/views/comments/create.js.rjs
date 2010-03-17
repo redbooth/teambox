@@ -1,3 +1,9 @@
+# Add new comments
+if @new_comments
+  page.insert_html :top, :comments, :text => list_comments(@new_comments, @comment.target)
+  page << "$('last_comment_id').writeAttribute('value', #{@last_id})"
+end
+
 if @comment.errors.empty?
   unless @comment.new_record?
     page.ef('comments')

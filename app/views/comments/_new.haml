@@ -10,6 +10,7 @@
       = the_comment_upload_link(comment)
       = upload_area(comment)
     - if target
+      = last_comment_input
       - if target.is_a?(Task)
         .statuses
           = f.label :status

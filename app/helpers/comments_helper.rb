@@ -154,6 +154,21 @@ module CommentsHelper
       :confirm => t('.confirm_delete')
   end
   
+  def last_comment_input
+    hidden_field_tag 'last_comment_id', '0'
+  end
+  
+  def comment_update_last_id
+    javascript_tag <<-EOS
+      var last = $$('#comments .comment:first');
+      if (last.length > 0)
+      {
+        var val = $(last[0]).readAttribute('id').split('_')[1];
+        $('last_comment_id').writeAttribute('value', val);
+      }
+    EOS
+  end
+  
   def comments_script(target)
     if target.is_a? Project
       project = target
