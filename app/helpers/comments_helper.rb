@@ -184,14 +184,14 @@ module CommentsHelper
   
   def edit_comment_loading_action(comment)
     update_page do |page|
-      page.insert_html :after, "edit_comment_#{comment.id}_link", loading_action_image("comment_#{comment.id}")
+      page.insert_html :after, "edit_comment_#{comment.id}_link", loading_action_image("edit_comment_#{comment.id}")
       page["edit_comment_#{comment.id}_link"].hide
     end  
   end
   
   def delete_comment_loading_action(comment)
     update_page do |page|
-      page.insert_html :after, "delete_comment_#{comment.id}_link", loading_action_image("comment_#{comment.id}")
+      page.insert_html :after, "delete_comment_#{comment.id}_link", loading_action_image("delete_comment_#{comment.id}")
       page["delete_comment_#{comment.id}_link"].hide
     end  
   end

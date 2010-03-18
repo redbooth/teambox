@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   before_filter :load_comment, :only => [:edit, :update, :show, :destroy]
   before_filter :load_target, :only => [:create]
   before_filter :load_orginal_controller, :only => [:create]
-  before_filter :check_permissions, :only => [:create, :edit, :update, :destroy]
+  before_filter :check_permissions, :only => [:create, :edit, :update]
   before_filter :set_page_title
 
   cache_sweeper :task_list_panel_sweeper, :only => [:create]
@@ -66,8 +66,10 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment.save_uploads(params) if @comment.update_attributes(params[:comment])
-    
+    if @has_permission
+      @comment.save_uploads(params) if @comment.update_attributes(params[:comment])
+    end
+  
     # Expire cache
     expire_fragment("#{current_user.language}_#{current_user.time_zone.gsub(/\W/,'')}_comment_#{@comment.id}")
     
@@ -75,7 +77,12 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment.destroy
+    if @comment.can_destroy?(current_user)
+      @comment.destroy
+      @has_permission = true
+    else  
+      @has_permission = false
+    end
   end
 
   def preview
@@ -112,20 +119,29 @@ class CommentsController < ApplicationController
       if @comment.nil?
         unless @current_project.commentable?(current_user)
           respond_to do |f|
-            flash[:error] = "You are not allowed to do that!"
+            flash[:error] = t('common.not_allowed')
             f.html { redirect_to project_path(@current_project) }
           end
           return false
         end
       end
       
-      if @comment and @comment.user_id != current_user.id
-        # Admins can delete comments
-        return if action_name == 'destroy' and @comment.project.admin?(current_user)
+      if @comment
+        @has_permission = true
+        
+        if action_name == 'destroy'
+          return if @comment.can_destroy?(current_user)
+        else
+          return if @comment.can_edit?(current_user)
+        end
+        
+        # Error update handled in rjs handlers
+        @has_permission = false
+        return if request.format == :js
         
         # Process of elimination: don't allow this!
         respond_to do |f|
-          flash[:error] = "You are not allowed to do that!"
+          flash[:error] = t('comments.errors.cannot_update')
           f.html { redirect_to project_path(@comment.project) }
         end
         return false

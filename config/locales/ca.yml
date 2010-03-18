@@ -18,6 +18,8 @@ ca:
     comment:
       one: "{{count}} comentari"
       other: "{{count}} comentaris"
+    ####
+    not_allowed: You are not allowed to do that!
   confirm:
     delete_task_list: Segur que vols esborrar aquesta llista de tasques?
     delete_task: Segur que vols esborrar aquesta tasca?
@@ -603,6 +605,8 @@ ca:
     edit:
       submit: Guardar
     ####
+    errors:
+      cannot_update: You do not have permission to update this comment
     actions:
       confirm_delete: Are you sure you want to delete this comment?
   example_projects:

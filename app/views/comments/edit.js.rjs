@@ -1,1 +1,8 @@
-page.replace_html "comment_#{@comment.id}", :partial => 'comments/edit', :locals => { :comment => @comment }
+if @has_permission
+  page.replace_html "comment_#{@comment.id}", :partial => 'comments/edit', :locals => { :comment => @comment }
+else
+  # Alert!!
+  error_msg = t('comments.errors.cannot_update')
+  page["loading_action_edit_comment_#{@comment.id}"].hide
+  page << "alert(\"#{error_msg}\");"
+end

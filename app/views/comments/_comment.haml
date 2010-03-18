@@ -5,8 +5,7 @@
     .block
       .date
         = posted_date comment.created_at
-      - if current_user.id == comment.user_id or comment.project.admin?(current_user)
-        = comment_actions_link(comment)
+      = comment_actions_link(comment)
       .name
         = conversation_last_comment_text(comment)
         = activity_comment_user_link(comment)

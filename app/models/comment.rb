@@ -34,6 +34,33 @@ class Comment < ActiveRecord::Base
     User.find_with_deleted(user_id)
   end
   
+  def can_edit?(current_user)
+    # Only the owner can edit their comment
+    if self.user_id != current_user.id
+      return false
+    end
+    
+    # We can only edit / delete up to 15 minutes after creation
+    if Time.now < (self.created_at + 15.minutes)
+      true
+    else
+      false
+    end
+  end
+  
+  def can_destroy?(current_user)
+    if self.user_id != current_user.id
+      return false unless self.project.admin?(current_user)
+    end
+    
+    # 15 minutes restriction
+    if Time.now < (self.created_at + 15.minutes)
+      true
+    else
+      false
+    end
+  end
+  
   def to_s
     body[0,80]
   end

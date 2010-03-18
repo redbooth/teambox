@@ -18,6 +18,8 @@ es:
     comment:
       one: "{{count}} comentario"
       other: "{{count}} comentarios"
+    ####
+    not_allowed: You are not allowed to do that!
   confirm:
     delete_task_list: ¿Seguro que quieres borrar esta lista de tareas?
     delete_task: ¿Seguro que quieres borrar esta tarea?
@@ -599,6 +601,8 @@ es:
     edit:
       submit: Guardar
     ####
+    errors:
+      cannot_update: You do not have permission to update this comment
     actions:
       confirm_delete: Are you sure you want to delete this comment?
   example_projects:

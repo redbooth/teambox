@@ -1,1 +1,8 @@
-page["comment_#{@comment.id}"].remove
+if @has_permission
+  page["comment_#{@comment.id}"].remove
+else
+  # Alert!!
+  error_msg = t('comments.errors.cannot_update')
+  page["loading_action_delete_comment_#{@comment.id}"].hide
+  page << "alert(\"#{error_msg}\");"
+end
