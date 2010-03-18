@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     @user.confirmed_user = true if @invitation && @invitation.email == @user.email
     
     unless @invitation || signups_enabled?
-      flash[:error] = "Public signups are not allowed in this system"
+      flash[:error] = t('users.new.no_public_signup')
       redirect_to root_path
       return
     end
@@ -144,7 +144,7 @@ class UsersController < ApplicationController
   private
     def find_user
       unless @user = ( User.find_by_login(params[:id]) || User.find_by_id(params[:id]) )
-        flash[:error] = "User does not exist"
+        flash[:error] = t('not_found.user')
         redirect_to root_path
       end
     end

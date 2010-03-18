@@ -51,7 +51,7 @@ class InvitationsController < ApplicationController
       user_or_email = params[:invitation][:user_or_email]
       role = params[:invitation][:role] || 2
     else
-      flash[:error] = "Invalid invitation"
+      flash[:error] = t('invitations.errors.invalid')
       redirect_to target_people_path
       return
     end
@@ -134,7 +134,7 @@ class InvitationsController < ApplicationController
       
       @invitation = Invitation.find(:first,:conditions => conds)
       unless @invitation
-        flash[:error] = "Invalid invitation code"
+        flash[:error] = t('invitations.errors.invalid_code')
         redirect_to user_invitations_path(current_user)
       end
     end
@@ -154,7 +154,7 @@ class InvitationsController < ApplicationController
     def admins_target?
       if !(@invite_target.owner?(current_user) or @invite_target.admin?(current_user))
           respond_to do |f|
-            flash[:error] = "You are not allowed to do that!"
+            flash[:error] = t('common.not_allowed')
             f.html {
               if @current_project
                 redirect_to project_path(@current_project)

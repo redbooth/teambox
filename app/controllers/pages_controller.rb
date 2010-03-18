@@ -86,7 +86,7 @@ class PagesController < ApplicationController
       end
     else
       respond_to do |f|
-        flash[:error] = "You are not allowed to do that!"
+        flash[:error] = t('common.not_allowed')
         f.html { redirect_to project_page_path(@current_project,@page) }
       end
     end
@@ -97,7 +97,7 @@ class PagesController < ApplicationController
       begin
         @page = @current_project.pages.find(params[:id])
       rescue
-        flash[:error] = "Page #{params[:id]} not found in this project"
+        flash[:error] = t('not_found.page', :id => h(params[:id]))
       end
       
       unless @page

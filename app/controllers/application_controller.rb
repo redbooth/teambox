@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     
     def confirmed_user?
       if current_user and not current_user.is_active?
-        flash[:error] = "You need to activate your account first"
+        flash[:error] = t('sessions.new.activation')
         redirect_to unconfirmed_email_user_path(current_user)
       end
     end
@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
         if @current_group
           # ...
         else
-          flash[:error] = "The group <i>#{h(group_id)}</i> doesn't exist."
+          flash[:error] = t('not_found.group', :id => h(group_id))
           redirect_to groups_path, :status => 301
         end
       end
@@ -87,7 +87,7 @@ class ApplicationController < ActionController::Base
             current_user.add_recent_project(@current_project)
           end
         else        
-          flash[:error] = "The project <i>#{h(project_id)}</i> doesn't exist."
+          flash[:error] = t('not_found.project', :id => h(project_id))
           redirect_to projects_path, :status => 301
         end
       end

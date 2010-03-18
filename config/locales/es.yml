@@ -25,6 +25,15 @@ es:
     delete_task: ¿Seguro que quieres borrar esta tarea?
     delete_page: ¿Seguro que quieres borrar esta página?
     delete_upload: ¿Seguro que quieres borrar este archivo?
+  ####
+  not_found:
+    user: "User does not exist."
+    conversation: "Conversation {{id}} not found in this project."
+    project: "The project {{id}} doesn't exist."
+    group: "The group {{id}} doesn't exist."
+    page: "Page {{id}} not found in this project."
+    task_list: "Task list {{id}} not found in this project."
+    task: "Task {{id}} not found in this project."
   deleted:
     conversation: "Se ha borrado la conversación <b>{{name}}</b>"
     task: "Se ha borrado la tarea <b>{{name}}</b>"
@@ -129,6 +138,8 @@ es:
     new:
       title: Crear una cuenta
       submit: Crear cuenta
+      ####
+      no_public_signup: "Public signups are not allowed in this system."
       you_are_logged_in: "Ya tienes una cuenta de Teambox. Si quieres entrar como otro usuario, cierra la sesión e inténtalo de nuevo."
       existing_user: "Si ya tienes una cuenta, <a href='{{login_url}}'>identifícate</a> o <a href='{{forgot_url}}'>restablece tu contraseña</a>."
       you_already_have_an_account: "Ya tienes una cuenta de Teambox en {{email}}. <a href='{{login_link}}'>Accede a tu cuenta</a> o <a href='{{reset_password_link}}'>recupera tu contraseña</a> si la has olvidado."
@@ -240,6 +251,12 @@ es:
     show:
       edit: Edit
       add_project: Add a project
+    ####
+    errors:
+      already_own: "You already own a group!"
+      not_enabled: "Groups are not enabled on this system"
+      not_admin: "You cannot admin this group"
+      no_edit: "You cannot edit this group"
   projects:
     index:
       title: Actividad en todos tus proyectos
@@ -306,6 +323,8 @@ es:
       created: Se ha creado el proyecto!
       invalid_project: "Proyecto no válido, corrige los errores e inténtalo de nuevo."
       create_an_example_project: "¿Es tu primera vez en Teambox? <a href='{{link}}'>Crea un proyecto de ejemplo</a> para experimentar y aprender."
+      ####
+      not_allowed: "You can't create any projects with your current account."
     edit:
       title_settings: Preferencias Generales
       title_picture: Logotipo del Proyecto
@@ -355,6 +374,10 @@ es:
       invite_from_project: "Invite from Project"
     recent:
       invite: Invitar a {{username}}
+    ####
+    errors:
+      invalid: "Invalid invitation"
+      invalid_code: "Invalid invitation code"
   conversations:
     actions:
       confirm_delete: Estar seguro de querer borrar esta conversación?
@@ -585,6 +608,9 @@ es:
       transfer: Transferir el proyecto
       leave_project: Dejar el Proyecto
       confirm_delete: Seguro que quieres borrar a esta persona del proyecto?
+    ####
+    errors:
+      user_or_email: "User not found. Enter his username or email."
   comments:
     comment:
       commented_on: "-"
@@ -613,6 +639,9 @@ es:
       line3: "No olvides <b>leer las instrucciones</b> y <b>experimentar</b> creando, editando y borrando elementos!"
       create: Crear el proyecto tutorial
       line4: "En este proyecto no podrás invitar a otros usuarios, pero sí puedes hacer todo lo demás."
+      ####
+      error: "Could not create example project."
+      error_list: "Could not create example project. The following projects are invalid: {{list}}."
   uploads:
     comment_upload_link: Adjunto
     new:
@@ -650,6 +679,9 @@ es:
       title: Entrar
       video: Breve introducción a Teambox
       submit: Entrar
+      ####
+      activation: "You need to activate your account first"
+      login_failed: "Couldn't log you in as {{login}}"
 
   email:
     user:

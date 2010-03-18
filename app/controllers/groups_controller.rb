@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
   
   def create
     unless current_user.group.nil?
-      flash[:error] = "You already own a group!"
+      flash[:error] = t('groups.errors.already_own')
       redirect_to groups_path
       return
     end
@@ -129,7 +129,7 @@ private
   def check_groups
     # No groups? bah!
     unless groups_enabled?
-      flash[:error] = "Groups are not enabled on this system"
+      flash[:error] = t('groups.errors.not_enabled')
       redirect_to root_path
       return false
     end
@@ -137,7 +137,7 @@ private
   
   def check_admin
     unless @group.admin?(current_user)
-      flash[:error] = "Cannot admin this group"
+      flash[:error] = t('groups.errors.not_admin')
       redirect_to root_path
       return false
     end
@@ -145,7 +145,7 @@ private
   
   def check_edit
     unless @group.owner?(current_user)
-      flash[:error] = "Cannot edit this group"
+      flash[:error] = t('groups.errors.no_edit')
       redirect_to root_path
       return false
     end
@@ -154,14 +154,14 @@ private
   def load_group
     # No groups? bah!
     unless groups_enabled?
-      flash[:error] = "Groups are not enabled on this system"
+      flash[:error] = t('groups.errors.not_enabled')
       redirect_to root_path
       return false
     end
     
     @group = current_user.groups.find_by_permalink(params[:id])
     unless @group
-      flash[:error] = "Could not find group #{params[:id]}"
+      flash[:error] = t('not_found.group', :id => h(params[:id]))
       redirect_to groups_path
       return false
     end

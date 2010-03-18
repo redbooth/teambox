@@ -16,7 +16,7 @@ class PeopleController < ApplicationController
 
       redirect_to project_people_path
     else
-      flash[:error] = "User not found. Enter his username or email."
+      flash[:error] = t('people.errors.user_or_email')
       redirect_to project_people_path
     end
   end
@@ -43,7 +43,7 @@ class PeopleController < ApplicationController
         f.js
       end
     else
-      flash[:error] = "You are not allowed to do that!"
+      flash[:error] = t('common.not_allowed')
       redirect_to project_people_path(@current_project)
     end
   end

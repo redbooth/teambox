@@ -81,7 +81,7 @@ class TasksController < ApplicationController
       end
     else
       respond_to do |f|
-        flash[:error] = "You are not allowed to do that!"
+        flash[:error] = t('common.not_allowed')
         f.html { redirect_to project_task_lists_path(@current_project) }
       end
     end
@@ -148,7 +148,7 @@ class TasksController < ApplicationController
       begin
         @task_list = @current_project.task_lists.find(params[:task_list_id])
       rescue
-        flash[:error] = "Task list #{params[:task_list_id]} not found in this project"
+        flash[:error] = t('not_found.task_list', :id => h(params[:task_list_id]))
         redirect_to project_task_lists_path(@current_project)
       end
     end
@@ -157,7 +157,7 @@ class TasksController < ApplicationController
       begin
         @task = @current_project.tasks.find(params[:id])
       rescue
-        flash[:error] = "Task #{params[:id]} not found in this project"
+        flash[:error] = t('not_found.task', :id => h(params[:id]))
         redirect_to project_task_lists_path(@current_project)
       end
     end

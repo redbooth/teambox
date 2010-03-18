@@ -84,7 +84,7 @@ class TaskListsController < ApplicationController
       end
     else
       respond_to do |f|
-        flash[:error] = "You are not allowed to do that!"
+        flash[:error] = t('common.not_allowed')
         f.html { redirect_to project_task_lists_path(@current_project) }
       end
     end

@@ -25,6 +25,15 @@ it:
     delete_task: Sicuro di voler cancellare questo compito?
     delete_page: Sicuro di voler cancellare questa pagina?
     delete_upload: Sicuro di voler cancellare questo file?
+  ####
+  not_found:
+    user: "User does not exist."
+    conversation: "Conversation {{id}} not found in this project."
+    project: "The project {{id}} doesn't exist."
+    group: "The group {{id}} doesn't exist."
+    page: "Page {{id}} not found in this project."
+    task_list: "Task list {{id}} not found in this project."
+    task: "Task {{id}} not found in this project."
   deleted:
     conversation: "La conversazione <b>{{name}}</b> è stata cancellata"
     task: "Il compito <b>{{name}}</b> è stato cancellato"
@@ -129,6 +138,8 @@ it:
     new:
       title: Crea un account
       submit: Crea account
+      ####
+      no_public_signup: "Public signups are not allowed in this system."
       you_are_logged_in: "Hai già un account di Teambox. Se voi entrare con un'altro utente, esci e riprova l'accesso."
       existing_user: "Se hai già un account, <a href='{{login_url}}'>entra</a> o <a href='{{forgot_url}}'>reimposta la tua password</a>."
       #####
@@ -240,6 +251,12 @@ it:
     show:
       edit: Edit
       add_project: Add a project
+    ####
+    errors:
+      already_own: "You already own a group!"
+      not_enabled: "Groups are not enabled on this system"
+      not_admin: "You cannot admin this group"
+      no_edit: "You cannot edit this group"
   projects:
     index:
       title: Attività in tutti i tuoi progetti
@@ -308,6 +325,8 @@ it:
       created: Il progetto è stato creato!
       invalid_project: "Progetto non valido, correggi gli errori e riprova."
       create_an_example_project: "Questa è la tua prima volta in Teambox? <a href='{{link}}'>Crea un progetto di esempio</a> per sperimentare e imparare."
+      ####
+      not_allowed: "You can't create any projects with your current account."
     edit:
       title_settings: Preferenze Generali
       title_picture: Logo del Progetto
@@ -357,6 +376,10 @@ it:
       invite_from_project: "Invite from Project"
     recent:
       invite: Invita {{username}}
+    ####
+    errors:
+      invalid: "Invalid invitation"
+      invalid_code: "Invalid invitation code"
   conversations:
     actions:
       confirm_delete: Sei sicuro di voler cancellare questa conversazione?
@@ -589,6 +612,9 @@ it:
       transfer: Trasferisci il progetto
       leave_project: Lascia il Progetto
       confirm_delete: Sicuro di voler rimuovere questa persona dal pogetto?
+    ####
+    errors:
+      user_or_email: "User not found. Enter his username or email."
   comments:
     comment:
       commented_on: "-"
@@ -617,6 +643,9 @@ it:
       line3: "Non dimenticare di <b>leggere le istruzioni</b> e <b>sperimentare</b> creando, modificando e cancellando elementi!"
       create: Crea il progetto tutorial
       line4: "In questo progetto non potrai invitare altre persone, però puoi fare tutto il resto."
+      ####
+      error: "Could not create example project."
+      error_list: "Could not create example project. The following projects are invalid: {{list}}."
   uploads:
     comment_upload_link: Allegato
     new:
@@ -654,6 +683,9 @@ it:
       title: Entra
       video: Breve introduzione a Teambox
       submit: Entra
+      ####
+      activation: "You need to activate your account first"
+      login_failed: "Couldn't log you in as {{login}}"
 
   email:
     user:

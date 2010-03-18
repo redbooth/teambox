@@ -88,7 +88,7 @@ class ConversationsController < ApplicationController
       end
     else
       respond_to do |f|
-        flash[:error] = "You are not allowed to do that!"
+        flash[:error] = t('common.not_allowed')
         f.html { redirect_to project_conversation_path(@current_project, @conversation) }
         f.m    { redirect_to project_conversation_path(@current_project, @conversation) }
       end
@@ -118,7 +118,7 @@ class ConversationsController < ApplicationController
       begin
         @conversation = @current_project.conversations.find(params[:id])
       rescue
-        flash[:error] = "Conversation #{params[:id]} not found in this project"
+        flash[:error] = t('not_found.conversation', :id => h(params[:id]))
       end
       
       redirect_to project_path(@current_project) unless @conversation

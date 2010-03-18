@@ -54,7 +54,7 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.new(params[:project])
     
     unless current_user.can_create_project?
-      flash[:error] = "You can't create any projects with your current account."
+      flash[:error] = t('projects.new.not_allowed')
       redirect_to root_path
       return
     end
@@ -90,7 +90,7 @@ class ProjectsController < ApplicationController
   def transfer
     unless @current_project.owner?(current_user)
         respond_to do |f|
-          flash[:error] = "You are not allowed to do that!"
+          flash[:error] = t('common.not_allowed')
           f.html { redirect_to projects_path }
         end
       return
@@ -137,7 +137,7 @@ class ProjectsController < ApplicationController
     def can_modify?
       if !(@current_project.owner?(current_user) or @current_project.admin?(current_user))
           respond_to do |f|
-            flash[:error] = "You are not allowed to do that!"
+            flash[:error] = t('common.not_allowed')
             f.html { redirect_to projects_path }
           end
         return false

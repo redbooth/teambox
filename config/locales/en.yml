@@ -24,6 +24,14 @@ en:
     delete_task: Are you sure you want to delete this task?
     delete_page: Are you sure you want to delete this page?
     delete_upload: Are you sure you want to delete this file?
+  not_found:
+    user: "User does not exist."
+    conversation: "Conversation {{id}} not found in this project."
+    project: "The project {{id}} doesn't exist."
+    group: "The group {{id}} doesn't exist."
+    page: "Page {{id}} not found in this project."
+    task_list: "Task list {{id}} not found in this project."
+    task: "Task {{id}} not found in this project."
   deleted:
     conversation: "Deleted <b>{{name}}</b> conversation"
     task: "Deleted <b>{{name}}</b> task"
@@ -128,6 +136,8 @@ en:
     new:
       title: Create an Account
       submit: Create account
+      ####
+      no_public_signup: "Public signups are not allowed in this system."
       you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
       existing_user: "If you already have an account, <a href='{{login_url}}'>log in</a> or <a href='{{forgot_url}}'>retrieve your password</a>."
       you_already_have_an_account: "You already have a Teambox account for the address {{email}}. <a href='{{login_link}}'>Log in with this email</a> or <a href='{{reset_password_link}}'>reset your password</a> if you forgot it."
@@ -238,6 +248,11 @@ en:
     show:
       edit: Edit
       add_project: Add a project
+    errors:
+      already_own: "You already own a group!"
+      not_enabled: "Groups are not enabled on this system"
+      not_admin: "You cannot admin this group"
+      no_edit: "You cannot edit this group"
   projects:
     index:
       title: News feed for all your projects
@@ -304,6 +319,7 @@ en:
       created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
       create_an_example_project: "First time in Teambox? <a href='{{link}}'>Create an example project</a> to play around and learn."
+      not_allowed: "You can't create any projects with your current account."
     edit:
       title_settings: General Settings
       title_picture: Project Logo
@@ -348,6 +364,9 @@ en:
       invite_from_project: "Invite from Project"
     recent:
       invite: Invite {{username}}
+    errors:
+      invalid: "Invalid invitation"
+      invalid_code: "Invalid invitation code"
   conversations:
     actions:
       confirm_delete: Are you sure you to delete this conversation?
@@ -577,6 +596,8 @@ en:
       transfer: Transfer Ownership
       leave_project: Leave Project
       confirm_delete: Are you sure you want to remove this person from the project?
+    errors:
+      user_or_email: "User not found. Enter his username or email."
   comments:
     comment:
       commented_on: "-"
@@ -604,6 +625,8 @@ en:
       line3: "Make sure you <b>read the instructions</b> and <b>experiment</b> creating, editing and deleting elements!"
       create: Create an example project
       line4: "In this project you won't be able to invite other users, but you can do all the rest."
+      error: "Could not create example project."
+      error_list: "Could not create example project. The following projects are invalid: {{list}}."
   uploads:
     comment_upload_link: Attachment
     new:
@@ -641,6 +664,8 @@ en:
       title: Login
       video: What's Teambox about?
       submit: Login
+      activation: "You need to activate your account first"
+      login_failed: "Couldn't log you in as {{login}}"
 
   email:
     user:
