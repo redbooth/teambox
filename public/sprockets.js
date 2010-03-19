@@ -9479,7 +9479,7 @@ var Facebox = Class.create({
       this.currentClassName = null;
     }
 
-    this.contentHolder.update('<div class="loading">Loading...</div>');
+    this.contentHolder.update('<div class="loading"></div>');
     this.centralize();
 
     return this;
