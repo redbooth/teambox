@@ -14,6 +14,10 @@ gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
 group :plugins do
   gem 'sprockets-rails', '~> 0.0.1'
   gem 'completeness-fu', '~> 0.5.2'
+  gem 'acts-as-list', '~> 0.1.2', :require => 'acts_as_list'
+  # gem 'acts_as_paranoid', '~> 0.3.1' # => too old!
+  gem 'calendar_date_select', '~> 1.15'
+  gem 'paperclip', '~> 2.3.1.1'
 end
 
 group :testing do
