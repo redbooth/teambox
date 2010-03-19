@@ -118,7 +118,11 @@ class Emailer < ActionMailer::Base
   private
 
     def from_address(recipient = "no-reply", name = "Teambox")
-      "#{name} <#{recipient}@#{APP_CONFIG['outgoing']['from']}>"
+      if APP_CONFIG['outgoing']['safe_from']
+        "#{recipient}@#{APP_CONFIG['outgoing']['from']}"
+      else
+        "#{name} <#{recipient}@#{APP_CONFIG['outgoing']['from']}>"
+      end
     end
 
     def defaults
