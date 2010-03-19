@@ -9417,9 +9417,18 @@ var Facebox = Class.create({
       ref.is_image = true;
       var timeoutFunc = function(){ref.centralize();};
       image.onload = function() {
-        ref.setContent('<div class="image"><img src="' + image.src + '" /></div>', className);
+        var real_width = image.width;
+        var real_height = image.height;
+        var border = 48*2;
+        var dim = document.viewport.getDimensions();
+        if (real_width+border > dim.width) {
+          var ratio = real_height / real_width;
+          real_width = Math.round(dim.width - border);
+          real_height = Math.round(real_width * ratio);
+        }
+        ref.setContent('<div class="image"><img src="' + image.src + '" style="width:'+real_width+'px;height:'+real_height+'px"/></div>', className);
+        ref.fitContent({width:real_width, height:real_height});
         ref.centralize();
-        ref.fitContent({width:image.width, height:image.height});
         setTimeout(timeoutFunc, 0);
       }.bind(this);
       image.src = anchor.href;
@@ -9448,7 +9457,7 @@ var Facebox = Class.create({
     var pageScroll = document.viewport.getScrollOffsets();
     var size = this.container.getDimensions();
 
-    var wl = (pageDim.width/2) - (size.width / 2);
+    var wl = Math.round((pageDim.width/2) - (size.width / 2)) + 20;
     var fh = size.height;
 
     if (pageDim.height > fh) {
