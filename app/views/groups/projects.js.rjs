@@ -1,3 +1,3 @@
 page.hide "group_project_form"
 page.show "group_project_link"
-page.replace_html "projects", :partial => 'group/projects', :collection => @group.projects
+page.replace_html "projects", :partial => 'group/project', :collection => @group.projects, :locals => {:group => @group}
