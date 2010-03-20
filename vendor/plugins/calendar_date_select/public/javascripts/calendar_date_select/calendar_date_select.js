@@ -74,6 +74,14 @@ CalendarDateSelect.prototype = {
     if (!this.target_element) { alert("Target element " + target_element + " not found!"); return false;}
     if (this.target_element.tagName != "INPUT") this.target_element = this.target_element.down("INPUT")
     
+    //apply user's first_day_of_week
+    Date.first_day_of_week = options.first_day_of_week;
+    //generate user's days of week from localized strftime
+    var days = (Date.first_day_of_week == 1) ? [1,2,3,4,5,6,7] : [0,1,2,3,4,5,6];
+    Date.weekdays = days.map(function(day) { return (new Date(day+7+' Jan 1990'))[options.strftime]('%a'); });
+    //generate user's months of week from localized strftime
+    Date.months = [1,2,3,4,5,6,7,8,9,10,11,12].map(function(mon) { return (new Date('1990/'+mon+'/1'))[options.strftime]('%B') });
+
     this.target_element.calendar_date_select = this;
     this.last_click_at = 0;
     // initialize the date control
