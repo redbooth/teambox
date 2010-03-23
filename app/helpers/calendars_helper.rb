@@ -1,23 +1,29 @@
 module CalendarsHelper
 
-  def list_hour_users(users)
-     render :partial => 'hours/user_filter', :locals => { :users => users.uniq }
-   end
+  def list_hour_filters(project)
+     render :partial => 'hours/filter'
+  end
   
-   def observe_user_filter
-     update_page_tag do |page|
-       page['user_filter'].observe('change') { |page| page.apply_user_filter }
-     end
+  def list_hour_reports
+     render :partial => 'hours/report_list'
+  end
+  
+   def observe_hour_filter
+     
+   end
+   
+   def observe_hour_reports
+      update_page_tag do |page|
+        page['report_list'].observe('change') { |page| page.apply_report_list }
+      end
+   end
+   
+   def apply_report_list
+     page << "Hours.currentReport = this.getValue(); Hours.update();"
    end
    
    def apply_user_filter
-     page << "if (this.selectedIndex == 0) {"
-       page.select('.hour').invoke('show')
-     page.els
-       page['total_sum'].hide
-       page.select('.hour').invoke('hide')
-       page << "$$('.hour_' + this.getValue()).invoke('show');"
-     page.en
+     
    end
   
    def day_hours(comments)
@@ -45,68 +51,68 @@ module CalendarsHelper
      build_calendar(comments,year,month,true)
    end
    
-   def build_calendar(comments,year,month,small=false)
+   def start_of_calendar(year, month)
      first = Date.civil(year,month, 1)
      last = Date.civil(year,month, -1)
+     weekdays = calendar_weekdays(first, last)
+     first_weekday, last_weekday = weekdays[0], weekdays[1]
+     beginning_of_week(first, first_weekday)
+   end
+   
+   def calendar_weekdays(first, last)
      if current_user.first_day_of_week == 'monday'
-       first_weekday = first_day_of_week(1)
-       last_weekday = last_day_of_week(1)
-     else
-       first_weekday = first_day_of_week(0)
-       last_weekday = last_day_of_week(0)
-     end
-  
+        first_weekday = first_day_of_week(1)
+        last_weekday = last_day_of_week(1)
+      else
+        first_weekday = first_day_of_week(0)
+        last_weekday = last_day_of_week(0)
+      end
+      
+      return [first_weekday, last_weekday]
+   end
+   
+   def build_calendar(year,month,small=false)
+     first = Date.civil(year,month, 1)
+     last = Date.civil(year,month, -1)
+     weekdays = calendar_weekdays(first, last)
+     first_weekday, last_weekday = weekdays[0], weekdays[1]
+     
      cal = ''
      cal << print_previous_month_days(first_weekday,first,small)
      
      week_tally = {}
      total_tally = {}
      total_sum = 0
+     week_count = 0
      
      first.upto(last) do |cur|
        current_day = add_zero_for_first_week(cur)
        
-       day_hours = day_hours(comments)
-       if day_hours.has_key?(current_day)
-         cell_text  ||= "#{cur.mday}"
-         tally = {}
-         day_hours[current_day].each do |c|
-           hours =  (c.hours || 0)
-           tally[c.user.login] ||= 0; tally[c.user.login] += hours
-           week_tally[c.user.login] ||= 0; week_tally[c.user.login] += hours
-           total_tally[c.user.login] ||= 0; total_tally[c.user.login] += hours
-           total_sum += hours
-         end
-         
-         tally.each { |i,c|
-           cell_text << content_tag(:p,"#{i} #{c} hrs", :class => user_class_name(i,'hours')) }
-       else
-         cell_text  ||= cur.mday
-       end
+       cell_text = cur.mday
        cell_attrs = {}
        cell_attrs[:class] = "day this_month #{'today' if (cur == Time.current.to_date)} "
-       cell_attrs[:id] = "day_#{cur.mday}"
+       cell_attrs[:id] = "day_#{cur.month}_#{cur.mday}"
   
        #if markable?(calendar,marked,year,month,cell_text)
        # cell_attrs[:class] += 'markable'
        # cell_attrs[:onclick] = "Mark.mark_calendar_block('#{form_authenticity_token}','#{calendar.permalink}',#{cell_text},#{month},#{year});"
        #end
-  
-       cal << assign_day(cell_attrs,cell_text,last_weekday,cur,week_tally,last)
+       cal << assign_day(cell_attrs,cell_text,last_weekday,cur,week_tally,week_count,last)
        if cur.wday == last_weekday
          week_tally = {}
+         week_count += 1
        end
      end
-     cal << print_next_month_days(first_weekday,last_weekday,week_tally,last,total_tally,total_sum)
+     cal << print_next_month_days(first_weekday,last_weekday,week_tally,week_count,last,total_tally,total_sum)
    end
   
    private
   
-   def assign_day(cell_attrs,cell_text,last_weekday,cur,week_tally,last)
+   def assign_day(cell_attrs,cell_text,last_weekday,cur,week_tally,week_count,last)
      cell_attrs = cell_attrs.map {|k, v| %(#{k}="#{v}") }.join(" ")
      cal = "<td #{cell_attrs}>#{cell_text}</td>"
      if cur.wday == last_weekday
-       cal << "<td class='total'>"
+       cal << "<td class='total' id='week_#{week_count}'>"
        week_tally.each { |i,w|
          cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'week_total') ) }
        cal << "</td></tr><tr>"
@@ -142,21 +148,21 @@ module CalendarsHelper
      cal << "<th>Weekly Total</th></tr><tr>"
    
      beginning_of_week(first, first_weekday).upto(first - 1) do |d|
-       cal << %(<td class="previous_month)
+       cal << %(<td id="day_#{d.month}_#{d.mday}" class="previous_month)
        cal << " weekendDay" if weekend?(d)
        cal << %(">#{d.day}</td>)
      end unless first.wday == first_weekday   
      return cal 
    end
   
-   def print_next_month_days(first_weekday,last_weekday,week_tally,last,total_tally,total_sum)
+   def print_next_month_days(first_weekday,last_weekday,week_tally,week_count,last,total_tally,total_sum)
      cal = ''
      (last + 1).upto(beginning_of_week(last + 7, first_weekday) - 1)  do |d|
        cal << %(<td class="next_month)
        cal << " weekendDay" if weekend?(d)
        cal << %(">#{d.day}</td>)        
      end unless last.wday == last_weekday
-     cal << "<td class='total'>"
+     cal << "<td class='total' id='week_#{week_count}'>"
      week_tally.each { |i,w| 
        cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'week_total') ) }
      cal << "</td></tr><tr>"
@@ -227,18 +233,37 @@ module CalendarsHelper
      link_to '&rarr;', project_hours_by_month_url(project,year,month)
    end
 
-   def hours_js(comments)
+   def hours_js(year, month, comments)
+     taskmap = {}
+     projectmap = {}
+     
      args = @comments.map do |comment|
+       date = comment.created_at
+       task = (comment.target && comment.target.class == Task) ? comment.target : nil
+       projectmap[comment.project_id] ||= comment.project.name
+       taskmap[task_id] ||= task.name unless task.nil?
        { :id => comment.id,
-         :date => comment.created_at.to_date.to_s,
-         :week => (comment.created_at.day-1) / 7,
+         :date => date,
+         :project_id => comment.project_id,
          :user_id => comment.user_id,
-         :task_id => comment.target_id,
+         :task_id => task ? task.id : 0,
          :hours => comment.hours || 0
        }.to_json
      end
      
-     javascript_tag "Hours.init(); Hours.addHours([#{args.join(',')}]);"
+     usermap = {}
+     @current_project.users.each {|u| usermap[u.id] = u.login}
+   
+     start_date = start_of_calendar(year, month)
+     start = "new Date(#{start_date.year}, #{start_date.month-1}, #{start_date.day})"
+     javascript_tag <<-EOS
+      Hours.init(#{start});
+      Hours.addHours([#{args.join(',')}]);
+      Hours.userMap = #{usermap.to_json};
+      Hours.taskMap = #{taskmap.to_json};
+      Hours.projectMap = #{projectmap.to_json};
+      Hours.update();
+     EOS
    end
   
    def calendar_nav(project,year,month)
