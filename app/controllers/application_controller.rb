@@ -246,5 +246,9 @@ class ApplicationController < ActionController::Base
     def groups_enabled?
       APP_CONFIG['allow_groups'] || false
     end
+    
+    def time_tracking_enabled?
+      APP_CONFIG['allow_time_tracking'] || false
+    end
 
 end

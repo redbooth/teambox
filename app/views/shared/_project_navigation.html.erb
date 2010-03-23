@@ -72,7 +72,7 @@ render_tabnav :project do
         t.tab_index = 153
       end
 
-      if project.tracks_time
+      if time_tracking_enabled? and project.tracks_time
         add_tab do |t|
           t.named t('.time_tracking')
           t.links_to  project_time_path(project)

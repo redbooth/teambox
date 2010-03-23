@@ -19,7 +19,7 @@ class HoursController < ApplicationController
   
 private
   def check_project
-    unless @current_project.tracks_time
+    unless @current_project.tracks_time and time_tracking_enabled?
       flash[:error] = "Time tracking disabled"
       redirect_to project_path(@current_project)
     end
