@@ -241,7 +241,7 @@ module CalendarsHelper
        date = comment.created_at
        task = (comment.target && comment.target.class == Task) ? comment.target : nil
        projectmap[comment.project_id] ||= comment.project.name
-       taskmap[task_id] ||= task.name unless task.nil?
+       taskmap[task.id] ||= task.name unless task.nil?
        { :id => comment.id,
          :date => date,
          :project_id => comment.project_id,
@@ -257,12 +257,14 @@ module CalendarsHelper
      start_date = start_of_calendar(year, month)
      start = "new Date(#{start_date.year}, #{start_date.month-1}, #{start_date.day})"
      javascript_tag <<-EOS
+     document.observe('dom:loaded', function(e){
       Hours.init(#{start});
       Hours.addHours([#{args.join(',')}]);
       Hours.userMap = #{usermap.to_json};
       Hours.taskMap = #{taskmap.to_json};
       Hours.projectMap = #{projectmap.to_json};
       Hours.update();
+     });
      EOS
    end
   

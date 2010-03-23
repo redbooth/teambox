@@ -14,7 +14,7 @@ class Comment < ActiveRecord::Base
 
   named_scope :with_hours, :conditions => 'hours > 0'
 
-  attr_accessible :status, :previous_status, :assigned, :previous_assigned
+  attr_accessible :status, :previous_status, :assigned, :previous_assigned, :hours
   validate :check_body
 
   attr_accessor :mentioned # used by format_usernames to set who's being mentioned

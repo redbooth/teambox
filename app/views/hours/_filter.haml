@@ -1,3 +1,15 @@
-%div
-  %p= "FILTER HERE"
-  
+#filter_list
+  #user_filters
+    = check_box_tag "filter_allusers", 0, true
+    = label "filter_allusers", "All Users"
+    - @current_project.users.each do |user|
+      .filter
+        = check_box_tag "ufilter_#{user.id}", user.id, false
+        = label "ufilter_#{user.id}", "#{h(user.name)} (#{user.login})"
+  #task_filters
+    = check_box_tag "filter_alltasks", 0, true
+    = label "filter_alltasks", "All Tasks"
+    - @current_project.tasks.each do |task|
+      .filter
+        = check_box_tag "tfilter_#{task.id}", task.id, false
+        = label "tfilter_#{task.id}", "#{h(task.name)}"

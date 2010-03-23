@@ -15,7 +15,126 @@ var Hours = {
 		
 		this.currentReport = 'user';
 		
-		// i.e. week_row = (comment.date - this.start_date) / (day*7)
+		// Link in filter checkboxes
+		$$('#user_filters input').each(function(e){
+			e.observe('click', Hours.userFilterHandler);
+		});
+		$$('#task_filters input').each(function(e){
+			e.observe('click', Hours.taskFilterHandler);
+		});
+		$$('#project_filters input').each(function(e){
+			e.observe('click', Hours.projectFilterHandler);
+		});
+		
+		this.setProjectFilter(0, true);
+		this.setUserFilter(0, true);
+		this.setTaskFilter(0, true);
+	},
+	
+	clearAll: function(selector, enabled) {
+		$$(selector).each(function(e){
+			e.checked = false;
+			e.disabled = !enabled;
+		});
+	},
+	
+	setProjectFilter: function(id, enabled) {
+		if (id == 0)
+		{
+			// All projects
+			if (enabled)
+			{
+				this.clearAll('#project_filters .filter input', false);
+				this.filters.project = null;
+			}
+			else
+			{
+				this.clearAll('#project_filters .filter input', true);
+				this.filters.project = [];
+			}
+		}
+		else
+		{
+			if (enabled)
+				this.filters.project.push(id);
+			else
+				this.filters.project = Hours.filters.project.without(id);
+		}
+	},
+	
+	setUserFilter: function(id, enabled) {
+		if (id == 0)
+		{
+			// All projects
+			if (enabled)
+			{
+				Hours.clearAll('#user_filters .filter input', false);
+				Hours.filters.user = null;
+			}
+			else
+			{
+				Hours.clearAll('#user_filters .filter input', true);
+				Hours.filters.user = [];
+			}
+		}
+		else
+		{
+			if (enabled)
+				Hours.filters.user.push(id);
+			else
+				Hours.filters.user = Hours.filters.user.without(id);
+		}
+	},
+	
+	setTaskFilter: function(id, enabled) {
+		if (id == 0)
+		{
+			// All projects
+			if (enabled)
+			{
+				Hours.clearAll('#task_filters .filter input', false);
+				Hours.filters.task = null;
+			}
+			else
+			{
+				Hours.clearAll('#task_filters .filter input', true);
+				Hours.filters.task = [];
+			}
+		}
+		else
+		{
+			if (enabled)
+				Hours.filters.task.push(id);
+			else
+				Hours.filters.task = Hours.filters.task.without(id);
+		}
+	},
+	
+	projectFilterHandler: function(evt) {
+		var el = $(this);
+		var id = parseInt(el.readAttribute('value'));
+		
+		Hours.setProjectFilter(id, el.checked);
+		Hours.update();
+		return true;
+	},
+	
+	userFilterHandler: function(evt) {
+		var el = $(this);
+		var id = parseInt(el.readAttribute('value'));
+		
+		Hours.setUserFilter(id, el.checked);
+		Hours.update();
+		return true;
+	},
+	
+	taskFilterHandler: function(evt) {
+		var el = $(this);
+		var id = parseInt(el.readAttribute('value'));
+		
+		Hours.setTaskFilter(id, el.checked);
+		Hours.update();
+		return true;
 	},
 	
 	addHour: function(comment) {
