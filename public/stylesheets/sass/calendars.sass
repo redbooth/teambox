@@ -1,15 +1,17 @@
 div.calendar
   :padding 10px
   table
-    :width 100%
+    :width 630px
   th
     :font-weight normal
     :font-size 11px
+    :width 90px
   td
     :vertical-align top
     :font-size 10px
     :padding 4px
     :border solid 1px rgb(100,100,100)
+    :width 90px
     p
       :background rgb(0,0,255)
       :color rgb(255,255,255)
@@ -54,4 +56,24 @@ div.calendar_navigation
         :bottom 3px
     a:hover
       :color rgb(255,255,255)
-      :background rgb(0,0,255)  
+      :background rgb(0,0,255)
+
+div.weektable
+  table
+    :width 630px
+  table.weektable4
+    td, th
+      :width 25%
+  table.weektable5
+    td, th
+      :width 20%
+  table.weektable6
+    td, th
+      :width 0.16%
+  p
+    :background rgb(0,0,255)
+    :color rgb(255,255,255)
+    :padding 4px
+    :margin-top 4px
+    :font-size 12px
+    :text-align center

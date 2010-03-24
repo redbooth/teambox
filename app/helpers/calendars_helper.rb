@@ -59,6 +59,15 @@ module CalendarsHelper
      beginning_of_week(first, first_weekday)
    end
    
+   def end_of_calendar(year, month)
+     dm = month+1 > 12 ? 1 : month+1
+     first = Date.civil(year,dm, 1)
+     last = Date.civil(year,dm, -1)
+     weekdays = calendar_weekdays(first, last)
+     first_weekday, last_weekday = weekdays[0], weekdays[1]
+     beginning_of_week(first, first_weekday) + 7
+   end
+   
    def calendar_weekdays(first, last)
      if current_user.first_day_of_week == 'monday'
         first_weekday = first_day_of_week(1)
@@ -105,6 +114,29 @@ module CalendarsHelper
      end
      cal << print_next_month_days(first_weekday,last_weekday,week_tally,week_count,last,total_tally,total_sum)
    end
+   
+   def build_weektable(year, month)
+      first = start_of_calendar(year, month)
+      last = end_of_calendar(year, month)
+      weeks = ((last - first) / 7).ceil
+      
+      wk = "<table class=\"weektable#{weeks}\"><tr>"
+      
+      wk << (0...weeks).map do |week|
+        "<th>Week #{week+1}</th>"
+      end.join('')
+      wk << "<th>Total</th>"
+      
+      wk << '</tr><tr>'
+      wk << (0...weeks).map do |week|
+        "<td id=\"week_#{week}\"></td>"
+      end.join('')
+      wk << "<td class=\"max_total total\">"
+      wk << "<p id='total_sum' class='hour'>Total: 0</p>"
+
+      wk << '</td></tr><tr>'
+      wk << '</tr></table>' 
+   end
   
    private
   
@@ -112,11 +144,12 @@ module CalendarsHelper
      cell_attrs = cell_attrs.map {|k, v| %(#{k}="#{v}") }.join(" ")
      cal = "<td #{cell_attrs}>#{cell_text}</td>"
      if cur.wday == last_weekday
-       cal << "<td class='total' id='week_#{week_count}'>"
-       week_tally.each { |i,w|
-         cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'week_total') ) }
-       cal << "</td></tr><tr>"
-     end  
+        cal << "</tr></tr>"
+     #  cal << "<td class='total' id='week_#{week_count}'>"
+     #  week_tally.each { |i,w|
+     #    cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'week_total') ) }
+     #  cal << "</td></tr><tr>"
+     end
      return cal
    end
   
@@ -145,7 +178,8 @@ module CalendarsHelper
          "<th>#{d}</th>"         
        end
      end.join('')
-     cal << "<th>Weekly Total</th></tr><tr>"
+     #cal << "<th>Weekly Total</th>"
+     cal << "</tr><tr>"
    
      beginning_of_week(first, first_weekday).upto(first - 1) do |d|
        cal << %(<td id="day_#{d.month}_#{d.mday}" class="previous_month)
@@ -162,15 +196,16 @@ module CalendarsHelper
        cal << " weekendDay" if weekend?(d)
        cal << %(">#{d.day}</td>)        
      end unless last.wday == last_weekday
-     cal << "<td class='total' id='week_#{week_count}'>"
-     week_tally.each { |i,w| 
-       cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'week_total') ) }
-     cal << "</td></tr><tr>"
-     cal << "<tr><td class='blank' colspan='7'></td><td class='max_total total'>"
-     total_tally.each { |i,w|
-       cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'month_total') ) }
-     cal << "<p id='total_sum' class='hour'>Total: #{total_sum}"
-     cal << "</td></tr>"
+     #cal << "<td class='total' id='week_#{week_count}'>"
+     #week_tally.each { |i,w| 
+     #  cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'week_total') ) }
+     #cal << "</td></tr><tr>"
+     #cal << "<tr><td class='blank' colspan='7'></td><td class='max_total total'>"
+     #total_tally.each { |i,w|
+     #  cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'month_total') ) }
+     #cal << "<p id='total_sum' class='hour'>Total: #{total_sum}"
+     #cal << "</td></tr>"
+     cal << "</tr></tr>"
      cal << "</table>"
    end
   
