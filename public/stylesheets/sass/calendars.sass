@@ -3,42 +3,49 @@ div.calendar
   table
     :width 630px
   th
-    :font-weight normal
+    :background-color #dedede
     :font-size 11px
     :width 90px
   td
     :vertical-align top
     :font-size 10px
-    :padding 4px
-    :border solid 1px rgb(100,100,100)
+    :padding 0px
+    :border solid 1px rgb(220,220,220)
     :width 90px
+    .cd
+      :background-color rgb(250,250,250)
     p
-      :background rgb(0,0,255)
+      :background rgb(102, 140, 217)
       :color rgb(255,255,255)
-      :padding 4px
+      :padding 4px 2px 4px 2px
       :margin-top 4px
-      :font-size 12px
+      :font-size 11px
+      :font-weight bold
       :text-align center
+      :-moz-border-radius 3px
+      :-webkit-border-radius 3px
   td.this_month
-    :border solid 1px rgb(100,100,100)
+    :border solid 1px rgb(220,220,220)
   td.previous_month
-    :border solid 1px rgb(200,200,200)
-    :border-bottom solid 1px rgb(100,100,100)
+    :border solid 1px rgb(220,220,220)
+    .cd
+      :background-color rgb(253,253,253)
   td.next_month
-    :border solid 1px rgb(200,200,200)
-    :border-top solid 1px rgb(100,100,100)
+    :border solid 1px rgb(220,220,220)
+    .cd
+      :background-color rgb(253,253,253)
   td.total
     :background rgb(240,240,240)
     :border
-      :right solid 1px rgb(200,200,200)
-      :top solid 1px rgb(200,200,200)
-      :bottom solid 1px rgb(200,200,200)
+      :right solid 1px rgb(250,250,250)
+      :top solid 1px rgb(250,250,250)
+      :bottom solid 1px rgb(250,250,250)
   td.blank
     :border-left none
     :border-bottom none
-    :border-right solid 1px rgb(200,200,200)
+    :border-right solid 1px rgb(250,250,250)
   td.max_total
-    :border solid 1px rgb(200,200,200)
+    :border solid 1px rgb(250,250,250)
 div.calendar_navigation
   :font-size 12px
   p.month_value
@@ -59,6 +66,8 @@ div.calendar_navigation
       :background rgb(0,0,255)
 
 div.weektable
+  :margin-bottom 10px
+  :padding 10px
   table
     :width 630px
   table.weektable4
@@ -70,10 +79,19 @@ div.weektable
   table.weektable6
     td, th
       :width 0.16%
-  p
-    :background rgb(0,0,255)
+  th
+    :background-color #dedede
+    :font-size 11px
+    :width 90px
+  td
+    :border solid 1px rgb(220,220,220)
+  p	
+    :background rgb(102, 140, 217)
     :color rgb(255,255,255)
-    :padding 4px
+    :padding 4px 2px 4px 2px
     :margin-top 4px
-    :font-size 12px
+    :font-size 11px
+    :font-weight bold
     :text-align center
+    :-moz-border-radius 3px
+    :-webkit-border-radius 3px

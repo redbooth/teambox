@@ -97,7 +97,7 @@ module CalendarsHelper
      first.upto(last) do |cur|
        current_day = add_zero_for_first_week(cur)
        
-       cell_text = cur.mday
+       cell_text = "<div class=\"cd\">#{cur.mday}</div>"
        cell_attrs = {}
        cell_attrs[:class] = "day this_month #{'today' if (cur == Time.current.to_date)} "
        cell_attrs[:id] = "day_#{cur.month}_#{cur.mday}"
@@ -131,7 +131,9 @@ module CalendarsHelper
       wk << (0...weeks).map do |week|
         "<td id=\"week_#{week}\"></td>"
       end.join('')
-      wk << "<td class=\"max_total total\">"
+      wk << "<td id=\"hour_total\" class=\"max_total total\">"
+      wk << '</tr><tr>'
+      wk << "<td colspan=\"#{weeks}\" class=\"blank\"></td><td class=\"max_total total\">"
       wk << "<p id='total_sum' class='hour'>Total: 0</p>"
 
       wk << '</td></tr><tr>'
@@ -184,7 +186,7 @@ module CalendarsHelper
      beginning_of_week(first, first_weekday).upto(first - 1) do |d|
        cal << %(<td id="day_#{d.month}_#{d.mday}" class="previous_month)
        cal << " weekendDay" if weekend?(d)
-       cal << %(">#{d.day}</td>)
+       cal << %("><div class=\"cd\">#{d.day}</div></td>)
      end unless first.wday == first_weekday   
      return cal 
    end
@@ -194,7 +196,7 @@ module CalendarsHelper
      (last + 1).upto(beginning_of_week(last + 7, first_weekday) - 1)  do |d|
        cal << %(<td class="next_month)
        cal << " weekendDay" if weekend?(d)
-       cal << %(">#{d.day}</td>)        
+       cal << %("><div class=\"cd\">#{d.day}</div></td>)        
      end unless last.wday == last_weekday
      #cal << "<td class='total' id='week_#{week_count}'>"
      #week_tally.each { |i,w| 

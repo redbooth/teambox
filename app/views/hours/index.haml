@@ -2,7 +2,7 @@
   =calendar_nav(@current_project,@year,@month)
   .calendar#calendar
     = build_calendar(@year,@month)
-  .calendar.weektable
+  .weektable
     = build_weektable(@year, @month)
   = hours_js(@year,@month,@comments)
 

@@ -253,7 +253,7 @@ var Hours = {
 		
 		for (var key in totalSum) {
 			var code = "<p class=\"hours\">" + map[key] + '=' + totalSum[key] + "hrs</p>";
-			$('total_sum').insert({before:code});
+			$('hour_total').insert({top:code});
 		}
 		$('total_sum').innerHTML = weekTotal + 'hrs';
 		
@@ -261,7 +261,7 @@ var Hours = {
 		this.insertCommentBlocks(comments, function(v, list, block){
 			list.keys().forEach(function(key){
 				var code = "<p class=\"hours\">" +  map[key] + "=" + list.get(key) + " hrs</p>";
-				block.insert({top:code});
+				block.insert({bottom:code});
 			});
 		});
 		
