@@ -297,7 +297,7 @@ ca:
         description: "Activitat recent per a {{name}}"
     fields:
       ####
-      tracks_time: "Time tracking"
+      tracks_time: "Enable time tracking"
       archiving: Arxivar aquest projecte
       forever: Borrar permanentment aquest projecte
       owner: Propietari

@@ -289,7 +289,7 @@ en:
         title: "{{name}}"
         description: "Recent activities for the project {{name}}"
     fields:
-      tracks_time: "Time tracking"
+      tracks_time: "Enable time tracking"
       archiving: "Archive this project"
       forever: "Delete this project forever"
       owner: "Owner"

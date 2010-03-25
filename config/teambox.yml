@@ -63,7 +63,7 @@ defaults: &DEFAULTS
   # Enable user groups
   allow_groups: true
   
-  # Enable user groups
+  # Enable time tracking
   allow_time_tracking: true
   
   # Address where your users should write to ask for help. Accepts an email or website.

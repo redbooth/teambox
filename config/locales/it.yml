@@ -296,7 +296,7 @@ it:
         description: "Attività recenti per {{name}}"
     fields:
       ####
-      tracks_time: "Time tracking"
+      tracks_time: "Enable time tracking"
       archiving: Archivia questo progetto
       forever: Elimina definitivamente questo progetto
       owner: "Proprietario"
