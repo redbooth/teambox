@@ -602,6 +602,8 @@ es:
       participant: Participante
       admin: Administrador
     header:
+      ####
+      tracks_time: "Time tracking"
       owner: Propietario del proyecto
       observer: Observador
       commenter: Comentador

@@ -288,6 +288,8 @@ ru:
         title: "{{name}}"
         description: "Последние действия по проекту {{name}}"
     fields:
+      ####
+      tracks_time: "Time tracking"
       archiving: "Архивировать этот проект"
       forever: "Удалить этот проект навсегда"
       owner: "Владелец"

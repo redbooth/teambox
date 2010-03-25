@@ -292,6 +292,8 @@ fr:
         title: "{{name}}"
         description: "Actualités récentes dans le projet {{name}}"
     fields:
+      ####
+      tracks_time: "Time tracking"
       archiving: Archiver ce projet
       forever: Supprimer de façon définitive ce projet
       owner: Propriétaire

@@ -13,7 +13,7 @@ class Project < ActiveRecord::Base
                  :archival,
                  :permalink
 
-  attr_accessible :name, :permalink, :archived, :group_id
+  attr_accessible :name, :permalink, :archived, :group_id, :tracks_time
 
   def log_activity(target, action, creator_id=nil)
     creator_id ||= target.user_id

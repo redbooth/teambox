@@ -296,6 +296,8 @@ de:
         title: "{{name}}"
         description: "Kürzliche Aktivitäten im Projekt {{name}}"
     fields:
+      ####
+      tracks_time: "Time tracking"
       archiving: "Dieses Projekt archivieren"
       forever: "Dieses Projekt endgültig löschen"
       owner: "Besitzer"
