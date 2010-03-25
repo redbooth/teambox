@@ -99,7 +99,7 @@ module CalendarsHelper
        
        cell_text = "<div class=\"cd\">#{cur.mday}</div>"
        cell_attrs = {}
-       cell_attrs[:class] = "day this_month #{'today' if (cur == Time.current.to_date)} "
+       cell_attrs[:class] = "day this_month cal_wd#{cur.wday} #{'today' if (cur == Time.current.to_date)} "
        cell_attrs[:id] = "day_#{cur.month}_#{cur.mday}"
   
        #if markable?(calendar,marked,year,month,cell_text)
@@ -146,17 +146,14 @@ module CalendarsHelper
      cell_attrs = cell_attrs.map {|k, v| %(#{k}="#{v}") }.join(" ")
      cal = "<td #{cell_attrs}>#{cell_text}</td>"
      if cur.wday == last_weekday
-        cal << "</tr></tr>"
-     #  cal << "<td class='total' id='week_#{week_count}'>"
-     #  week_tally.each { |i,w|
-     #    cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'week_total') ) }
-     #  cal << "</td></tr><tr>"
+        cal << "</tr><tr>"
      end
      return cal
    end
   
    def day_names(first_weekday)
-     dn = I18n.translate('date.day_names')    
+     c = -1
+     dn = I18n.translate('date.day_names').map {|d| c += 1; [d, c]}
      first_weekday.times do
        dn.push(dn.shift)
      end
@@ -174,17 +171,19 @@ module CalendarsHelper
    def print_previous_month_days(first_weekday,first,abbreviate=false)
      cal = %(<table><tr>)
      cal << day_names(first_weekday).collect do |d| 
-       if abbreviate
-         "<th>#{truncate(d, :length => 1, :omission => '')}</th>" 
-       else  
-         "<th>#{d}</th>"         
+       val = if abbreviate
+         truncate(d[0], :length => 1, :omission => '')
+       else
+         d[0]
        end
+       
+       "<th class=\"cal_wd#{d[1]}\">#{val}</th>"
      end.join('')
      #cal << "<th>Weekly Total</th>"
      cal << "</tr><tr>"
    
      beginning_of_week(first, first_weekday).upto(first - 1) do |d|
-       cal << %(<td id="day_#{d.month}_#{d.mday}" class="previous_month)
+       cal << %(<td id="day_#{d.month}_#{d.mday}" class="previous_month cal_wd#{d.wday})
        cal << " weekendDay" if weekend?(d)
        cal << %("><div class=\"cd\">#{d.day}</div></td>)
      end unless first.wday == first_weekday   
@@ -194,20 +193,11 @@ module CalendarsHelper
    def print_next_month_days(first_weekday,last_weekday,week_tally,week_count,last,total_tally,total_sum)
      cal = ''
      (last + 1).upto(beginning_of_week(last + 7, first_weekday) - 1)  do |d|
-       cal << %(<td class="next_month)
+       cal << %(<td class="next_month cal_wd#{d.wday})
        cal << " weekendDay" if weekend?(d)
        cal << %("><div class=\"cd\">#{d.day}</div></td>)        
      end unless last.wday == last_weekday
-     #cal << "<td class='total' id='week_#{week_count}'>"
-     #week_tally.each { |i,w| 
-     #  cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'week_total') ) }
-     #cal << "</td></tr><tr>"
-     #cal << "<tr><td class='blank' colspan='7'></td><td class='max_total total'>"
-     #total_tally.each { |i,w|
-     #  cal << content_tag(:p,"#{i} #{w}", :class => user_class_name(i,'month_total') ) }
-     #cal << "<p id='total_sum' class='hour'>Total: #{total_sum}"
-     #cal << "</td></tr>"
-     cal << "</tr></tr>"
+     cal << "</tr>"
      cal << "</table>"
    end
   
@@ -280,7 +270,7 @@ module CalendarsHelper
        projectmap[comment.project_id] ||= comment.project.name
        taskmap[task.id] ||= task.name unless task.nil?
        { :id => comment.id,
-         :date => date,
+         :date => [date.year, date.month-1, date.day],
          :project_id => comment.project_id,
          :user_id => comment.user_id,
          :task_id => task ? task.id : 0,

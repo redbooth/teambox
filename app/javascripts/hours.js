@@ -2,10 +2,12 @@ var Hours = {
 	init: function(start_date) {
 		this.hours = [];
 		this.start_date = start_date;
+		this.weekends = [0,6];
 		
 		this.userMap = {};
 		this.taskMap = {};
 		this.projectMap = {};
+		this.showWeekends = false;
 		
 		this.filters = {
 			'user': null,
@@ -140,7 +142,7 @@ var Hours = {
 	addHour: function(comment) {
 		var record = {
 			id: comment.id,
-			date: new Date(Date.parse(comment.date)),
+			date: new Date(comment.date[0], comment.date[1], comment.date[2],0,0,0,0),
 			week: comment.week,
 			project_id: comment.project_id,
 			user_id: comment.user_id,
@@ -157,7 +159,7 @@ var Hours = {
 		comments.forEach(function(comment){
 			var record = {
 				id: comment.id,
-				date: new Date(Date.parse(comment.date)),
+				date: new Date(comment.date[0], comment.date[1], comment.date[2],0,0,0,0),
 				week: comment.week,
 				project_id: comment.project_id,
 				user_id: comment.user_id,
@@ -201,6 +203,7 @@ var Hours = {
 		var weekSum = [{},{},{},{},{},{}];
 		var totalSum = {};
 		var weekTotal = 0;
+		this.showWeekends = false;
 		
 		comments = this.reduceComments(comments, function(key, values){
 			var item = {};
@@ -218,6 +221,14 @@ var Hours = {
 					list[id] = c.hours;
 				else 
 					list[id] += c.hours;
+				
+				// Weekday?
+				if (!Hours.showWeekends)
+				{
+					var day = c.date.getDay();
+					if (day == 0 || day == 6)
+						Hours.showWeekends = true;
+				}
 				
 				// Total week
 				var week = Math.floor((c.date - Hours.start_date) / (86400000 * 7));
@@ -264,6 +275,15 @@ var Hours = {
 				block.insert({bottom:code});
 			});
 		});
+		
+		// Toggle weekends
+		if (this.showWeekends) {
+			$$('.cal_wd' + this.weekends[0] + ', .cal_wd' + this.weekends[1]).each(function(e) {e.show();});
+			$('calendar').removeClassName('calendar5');
+		} else {
+				$$('.cal_wd' + this.weekends[0] + ', .cal_wd' + this.weekends[1]).each(function(e) {e.hide();});
+			$('calendar').addClassName('calendar5');
+		}
 		
 		return comments;
 	},
