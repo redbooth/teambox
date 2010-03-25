@@ -15,6 +15,8 @@ zh:
     save: 保存
     show_more: 显示{{number}}的更多信息
     print: 打印此页
+    prev: Previous
+    next: Next
     comment:
       one: "{{count}}条评论"
       other: "{{count}}条评价"

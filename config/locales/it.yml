@@ -15,6 +15,8 @@ it:
     save: Salva
     show_more: "Mostra {{number}} in più"
     print: Stampa la pagina
+    prev: Previous
+    next: Next
     comment:
       one: "{{count}} commento"
       other: "{{count}} commenti"
@@ -433,7 +435,7 @@ it:
       comments: risposte
   ####
   hours:
-    comments: Comments
+    comments: Time Entries
     filter_by: Filter by
     report: Report
     week_num: Week {{num}}

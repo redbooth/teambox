@@ -15,6 +15,8 @@ es:
     save: Guardar
     show_more: Ver {{number}} más
     print: Imprimir esta página
+    prev: Anterior
+    next: Siguiente
     comment:
       one: "{{count}} comentario"
       other: "{{count}} comentarios"
@@ -417,7 +419,7 @@ es:
       comment: respuesta
       comments: respuestas
   hours:
-    comments: Comentarios
+    comments: Entradas
     filter_by: Filtrar por
     report: Informe
     week_num: Semana {{num}}

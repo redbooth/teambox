@@ -15,6 +15,8 @@ fr:
     save: Enregistrer
     show_more: "Afficher les {{number}} suivants"
     print: Imprimer cette page
+    prev: Previous
+    next: Next
     comment:
       one: "{{count}} commentaire"
       other: "{{count}} commentaires"
@@ -425,7 +427,7 @@ fr:
       comments: réponses
   ####
   hours:
-    comments: Comments
+    comments: Time Entries
     filter_by: Filter by
     report: Report
     week_num: Week {{num}}

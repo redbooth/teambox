@@ -15,6 +15,8 @@ ru:
     save: Сохранить
     show_more: Показать ещё {{number}}
     print: Распечатать страницу
+    prev: Previous
+    next: Next
     comment:
       one: "{{count}} комментарий"
       other: "{{count}} комментариев"
@@ -419,7 +421,7 @@ ru:
       comments: комментариев
   ####
   hours:
-    comments: Comments
+    comments: Time Entries
     filter_by: Filter by
     report: Report
     week_num: Week {{num}}
