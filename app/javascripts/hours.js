@@ -158,7 +158,7 @@ var Hours = {
 	},
 	
 	addHours: function(comments) {
-		comments.forEach(function(comment){
+		comments.each(function(comment){
 			var record = {
 				id: comment.id,
 				date: new Date(comment.date[0], comment.date[1], comment.date[2],0,0,0,0),
@@ -218,7 +218,7 @@ var Hours = {
 				item.date = null;
 			
 			var list = {};
-			values.forEach(function(c){
+			values.each(function(c){
 				// Total day
 				var value = list[c.user_id];
 				var id = c[field];
@@ -277,7 +277,7 @@ var Hours = {
 		
 		// Insert comments into the calendar
 		this.insertCommentBlocks(comments, function(v, list, block){
-			list.keys().forEach(function(key){
+			list.keys().each(function(key){
 				var code = "<p class=\"hours\">" +  map[key] + "<br/>" + list.get(key) + ' ' + Hours.l_hours + " </p>";
 				block.insert({bottom:code});
 			});
