@@ -24,6 +24,12 @@ Teambox: Project Management and Collaboration software
 
 <img src="http://blog.teambox.com/rails_features.jpg"/>
 
+INSTALLATION GUIDES
+-------
+
+Take a looks at [our wiki](http://wiki.github.com/micho/teambox/ "Install Teambox") to learn how to install
+Teambox on different platforms.
+
 
 GET ROLLING!
 -------
@@ -62,17 +68,3 @@ files you modify the schema file and the run a rake that figures out what it
 has to do. Its saves alot of time in development. Then when you're ready to
 share you app for deployment there is a rake to convert your current schema
 to a migration file. So you'll only have migration files for major revisions.
-
-TODO (Version 2)
------
-
-* being able to delete comments
-* seed data, so when were in development we can load up a project quickly
-
-TODO (Version 2.1)
------
-
-* project drop down
-* time tracking
-* column filters
-* file revision uploads
