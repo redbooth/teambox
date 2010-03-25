@@ -7,14 +7,14 @@
   = hours_js(@year,@month,@comments)
 
 -content_for :column do
-  %h2= "Report"
+  %h2= t('hours.report')
   %select#report_list
     =list_hour_reports
   =observe_hour_reports
-  %h2= "Filter By"
+  %h2= t('hours.filter_by')
   #user_filter
     =list_hour_filters(@current_project)
   =observe_hour_filter
- 
-= new_hour_comment_form(@current_project, Comment.new)
+
+%h2= "Comments"
 = list_comments(@comments,@current_project)

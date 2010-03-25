@@ -430,6 +430,21 @@ ca:
     short_conversation:
       comment: resposta
       comments: respostes
+  ####
+  hours:
+    comments: Comments
+    filter_by: Filter by
+    report: Report
+    week_num: Week {{num}}
+    entry_hours: hrs
+    entry_total: Total
+    week_total: Total
+    all_tasks: All tasks
+    all_users: All users
+    reports:
+      user: Users
+      project: Projects
+      task: Tasks
 
   tasks:
     errors:

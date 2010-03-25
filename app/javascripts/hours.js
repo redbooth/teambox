@@ -9,6 +9,8 @@ var Hours = {
 		this.projectMap = {};
 		this.showWeekends = false;
 		
+		this.l_hours = 'hrs';
+		
 		this.filters = {
 			'user': null,
 			'task': null,
@@ -205,6 +207,9 @@ var Hours = {
 		var weekTotal = 0;
 		this.showWeekends = false;
 		
+		// Hide all comments
+		$$('div.comment').each(function(e){e.hide();});
+		
 		comments = this.reduceComments(comments, function(key, values){
 			var item = {};
 			if (values.length > 0)
@@ -221,6 +226,8 @@ var Hours = {
 					list[id] = c.hours;
 				else 
 					list[id] += c.hours;
+					
+				$('comment_' + c.id).show();
 				
 				// Weekday?
 				if (!Hours.showWeekends)
@@ -257,21 +264,21 @@ var Hours = {
 		for (var i=0; i<5; i++) {
 			var values = weekSum[i];
 			for (var key in values) {
-				var code = "<p class=\"hours\">" + map[key] + '=' + values[key] + "hrs</p>";
+				var code = "<p class=\"hours\">" + map[key] + '<br/>' + values[key] + ' ' + this.l_hours + "</p>";
 				$('week_' + i).insert({top:code});
 			}
 		}
 		
 		for (var key in totalSum) {
-			var code = "<p class=\"hours\">" + map[key] + '=' + totalSum[key] + "hrs</p>";
+			var code = "<p class=\"hours\">" + map[key] + '<br/>' + totalSum[key] + ' ' + this.l_hours + "</p>";
 			$('hour_total').insert({top:code});
 		}
-		$('total_sum').innerHTML = weekTotal + 'hrs';
+		$('total_sum').innerHTML = weekTotal + ' ' + this.l_hours;
 		
 		// Insert comments into the calendar
 		this.insertCommentBlocks(comments, function(v, list, block){
 			list.keys().forEach(function(key){
-				var code = "<p class=\"hours\">" +  map[key] + "=" + list.get(key) + " hrs</p>";
+				var code = "<p class=\"hours\">" +  map[key] + "<br/>" + list.get(key) + ' ' + Hours.l_hours + " </p>";
 				block.insert({bottom:code});
 			});
 		});

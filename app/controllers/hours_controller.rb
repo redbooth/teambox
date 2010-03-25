@@ -37,6 +37,6 @@ private
     end
   
     end_month = start_month + 1.month
-    @comments = Comment.find(:all, :conditions => ['project_id = ? AND created_at >= ? AND created_at < ?', @current_project.id, start_month, end_month])
+    @comments = Comment.find(:all, :conditions => ['project_id = ? AND created_at >= ? AND created_at < ? AND hours > 0', @current_project.id, start_month, end_month])
   end
 end  

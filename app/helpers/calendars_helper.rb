@@ -123,9 +123,9 @@ module CalendarsHelper
       wk = "<table class=\"weektable#{weeks}\"><tr>"
       
       wk << (0...weeks).map do |week|
-        "<th>Week #{week+1}</th>"
+        "<th>#{t('hours.week_num', :num => week+1)}</th>"
       end.join('')
-      wk << "<th>Total</th>"
+      wk << "<th>#{t('hours.week_total')}</th>"
       
       wk << '</tr><tr>'
       wk << (0...weeks).map do |week|
@@ -134,7 +134,7 @@ module CalendarsHelper
       wk << "<td id=\"hour_total\" class=\"max_total total\">"
       wk << '</tr><tr>'
       wk << "<td colspan=\"#{weeks}\" class=\"blank\"></td><td class=\"max_total total\">"
-      wk << "<p id='total_sum' class='hour'>Total: 0</p>"
+      wk << "<p id='total_sum' class='hour'>0#{t('hours.entry_hours')}</p>"
 
       wk << '</td></tr><tr>'
       wk << '</tr></table>' 
@@ -286,6 +286,7 @@ module CalendarsHelper
      javascript_tag <<-EOS
      document.observe('dom:loaded', function(e){
       Hours.init(#{start});
+      Hours.l_hours = '#{t('hours.entry_hours')}';
       Hours.addHours([#{args.join(',')}]);
       Hours.userMap = #{usermap.to_json};
       Hours.taskMap = #{taskmap.to_json};

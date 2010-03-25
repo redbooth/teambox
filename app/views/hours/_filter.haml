@@ -1,14 +1,14 @@
 #filter_list
   #user_filters
     = check_box_tag "filter_allusers", 0, true
-    = label "filter_allusers", "All Users"
+    = label "filter_allusers", t('hours.all_users')
     - @current_project.users.each do |user|
       .filter
         = check_box_tag "ufilter_#{user.id}", user.id, false
         = label "ufilter_#{user.id}", "#{h(user.name)} (#{user.login})"
   #task_filters
     = check_box_tag "filter_alltasks", 0, true
-    = label "filter_alltasks", "All Tasks"
+    = label "filter_alltasks", t('hours.all_tasks')
     - @current_project.tasks.each do |task|
       .filter
         = check_box_tag "tfilter_#{task.id}", task.id, false
