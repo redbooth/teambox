@@ -3,8 +3,9 @@ class PeopleController < ApplicationController
   before_filter :set_page_title
   
   def index
-    @people = @current_project.people
+    @people = @current_project.people.sort { |a,b| b.user.updated_at <=> a.user.updated_at }
     @invitations = @current_project.invitations
+    @admins = @current_project.people.admins
   end
   
   def create

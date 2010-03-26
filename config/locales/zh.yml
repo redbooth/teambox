@@ -600,6 +600,17 @@ zh:
       confirm_delete: 您确信要把此人从项目中移除？
     errors:
       user_or_email: "用户没有找到。请输入他的用户名或Email。"
+    #####
+    column:
+      inviting: "Inviting other users"
+      only_admins_can_invite: "Only admins can invite people to this project."
+      contact_admins:
+        one: "In this project, only {{admins}} can invite new members."
+        other: "In this project, only {{admins}} can invite new members."
+      leaving: "Leaving the project"
+      you_can_leave: "You can leave this project at any moment. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
+      leave_project: "Leave this project"
+      confirm_delete: Are you sure you want to leave this project?
   comments:
     comment:
       commented_on: "-"

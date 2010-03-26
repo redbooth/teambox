@@ -15,6 +15,8 @@ class Person < ActiveRecord::Base
 
   ROLES = {:observer => 0, :commenter => 1, :participant => 2, :admin => 3}
   PERMISSIONS = [:view,:edit,:delete,:all]
+  
+  named_scope :admins, :conditions => "role = #{ROLES[:admin]}"
 
   def owner?
     project.owner?(user)

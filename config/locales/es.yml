@@ -615,6 +615,16 @@ es:
       confirm_delete: Seguro que quieres borrar a esta persona del proyecto?
     errors:
       user_or_email: "No se ha encontrado al usuario. Introduce su email o nombre de usuario."
+    column:
+      inviting: "Invitar a otros usuarios"
+      only_admins_can_invite: "Sólo un administrador puede invitar personas al proyecto."
+      contact_admins:
+        one: "En este proyecto, sólo {{admins}} puede invitar a nuevos miembros."
+        other: "En este proyecto, sólo {{admins}} pueden invitar a nuevos miembros."        
+      leaving: "Dejar el proyecto"
+      you_can_leave: "Puedes dejar este projecto en cualquier momento. Si lo haces, no podrás acceder a él ni recibirás notificaciones de actividad. El resto del equipo podrá acceder al proyecto, y no se perderá ninguna información."
+      leave_project: "Dejar este proyecto"
+      confirm_delete: ¿Estás seguro de querer dejar este proyecto?
   comments:
     comment:
       commented_on: "-"

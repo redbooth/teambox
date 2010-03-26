@@ -77,8 +77,6 @@ module PeopleHelper
   def remove_person_link(project,person,user)
     if project.owner?(user) && !person.owner?
       delete_person_link(project,person) 
-    elsif person.user == user && !person.owner?
-      leave_project_link(project,person)
     end  
   end  
 
