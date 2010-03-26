@@ -157,6 +157,11 @@ module ApplicationHelper
     content_tag(:span, l(datetime, :format => 'short'), :id => "date_#{datetime.to_i}",
       :class => 'timeago', :alt => (datetime.to_i * 1000)) << javascript_tag("format_posted_date_#{I18n.locale}()")
   end
+  
+  def datetime_ms(datetime)
+    datetime = datetime.in_time_zone(current_user.time_zone)
+    (datetime.to_i * 1000)
+  end
 
   def large_trash_image
     image_tag('trash_large.png', :class => 'trash_large')

@@ -79,5 +79,45 @@ Comment = {
   },
   make_autocomplete: function(element_id, items){
     new Autocompleter.Local(element_id, element_id + '_list', items, {tokens:[' ']});
+  },
+
+  check_edit: function(){
+    var list = Comment.edit_watch_list;
+    var len = list.length;
+    var now = new Date();
+    Comment.edit_watch_list = list.reject(function(c){
+      if (now > c.date) {
+        var el = $(c.id);
+        if (el)
+          el.down('.actions').hide();
+        return true;
+      }
+      return false;
+    });
+    
+    if (Comment.edit_watch_list.length > 0)
+      Comment.edit_watch_timer = setTimeout(Comment.check_edit, 1000);
+  },
+  cancel_watch_edit: function(){
+    if (Comment.edit_watch_timer)
+      clearTimeout(Comment.edit_watch_timer);
+    Comment.edit_watch_timer = null;
+  },
+  watch_edit: function(){
+    this.cancel_watch_edit();
+    var date = new Date();
+    
+    Comment.edit_watch_list = $$('div.comment').map(function(c){
+        var time = new Date();
+        time.setTime(c.readAttribute('immutable_at'));
+        return {id: c.readAttribute('id'), date:time};
+    }).reject(function(c){
+        if (date >= c.date) {
+          $(c.id + '_actions').hide();
+          return true;
+        }
+        return false;
+    });
+    Comment.check_edit();
   }
 };
