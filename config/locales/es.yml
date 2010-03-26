@@ -599,10 +599,10 @@ es:
       submit: Modificar
     fields:
       role: Rol
-      observer: Observador
-      commenter: Comentador
-      participant: Participante
-      admin: Administrador
+      observer: Observador. Acceso de sólo lectura al proyecto.
+      commenter: "Comentador. Puede publicar comentarios, pero no crear elementos nuevos."
+      participant: "Participante. Puede hacer todo, excepto invitar usuarios al proyecto."
+      admin: Administrador. Puede invitar a usuarios.
     header:
       owner: Propietario del proyecto
       observer: Observador

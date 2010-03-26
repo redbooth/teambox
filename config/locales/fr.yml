@@ -607,10 +607,11 @@ fr:
       submit: Modifier
     fields:
       role: Rôle
-      observer: Observateur
-      commenter: Commentateur
-      participant: Participant
-      admin: Administrateur
+      #####
+      observer: Observer. Read-only access to the project.
+      commenter: "Commenter. Can comment, but not create new elements."
+      participant: "Participant. Can do everything, but not invite users."
+      admin: Administrador. Can invite users to the project.
     header:
       owner: Propiétaire du projet
       observer: Observateur

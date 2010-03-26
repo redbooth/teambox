@@ -600,10 +600,11 @@ ru:
       submit: Обновить данные
     fields:
       role: Роль
-      observer: Наблюдатель
-      commenter: Комментатор
-      participant: Участник
-      admin: Администратор
+      #####
+      observer: Observer. Read-only access to the project.
+      commenter: "Commenter. Can comment, but not create new elements."
+      participant: "Participant. Can do everything, but not invite users."
+      admin: Administrador. Can invite users to the project.
     header:
       owner: Владелец проекта
       observer: Наблюдатель

@@ -617,10 +617,11 @@ ca:
       submit: Modificar
     fields:
       role: Rol
-      observer: Observador
-      commenter: Comentarista
-      participant: Participant
-      admin: Administrador
+      #####
+      observer: Observer. Read-only access to the project.
+      commenter: "Commenter. Can comment, but not create new elements."
+      participant: "Participant. Can do everything, but not invite users."
+      admin: Administrador. Can invite users to the project.
     header:
       owner: Propietari del projecte
       observer: Observador

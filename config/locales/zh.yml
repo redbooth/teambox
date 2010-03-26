@@ -584,16 +584,13 @@ zh:
       submit: 更新人员
     fields:
       role: 角色
-      observer: 观察者
-      commenter: 评论者
-      participant: 参与者
-      admin: 管理员
+      #####
+      observer: Observer. Read-only access to the project.
+      commenter: "Commenter. Can comment, but not create new elements."
+      participant: "Participant. Can do everything, but not invite users."
+      admin: Administrador. Can invite users to the project.
     header:
       owner: 项目所有者
-      observer: 观察者
-      commenter: 评论者
-      participant: 参与者
-      admin: 管理员
       remove: 移除
       transfer: 改变所有者
       leave_project: 离开项目

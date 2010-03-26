@@ -1,16 +1,16 @@
 .roles
   .role.observer
     = f.radio_button :role, Person::ROLES[:observer]
-    = t('.observer')
+    = f.label :role, t('.observer')
   .role.commenter
     = f.radio_button :role, Person::ROLES[:commenter]
-    = t('.commenter')
+    = f.label :role, t('.commenter')
   .role.participant
     = f.radio_button :role, Person::ROLES[:participant]
-    = t('.participant')
+    = f.label :role, t('.participant')
   .role.admin
     = f.radio_button :role, Person::ROLES[:admin]
-    = t('.admin')
+    = f.label :role, t('.admin')
         
 - if false #Details Permissions
   - f.fields_for :permissions, person.permissions do |sf|
