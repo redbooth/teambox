@@ -623,7 +623,7 @@ en:
     new:
       assigned_to_nobody: 'Unassigned'
       assigned_to: "Assigned to:"
-      submit: Comment
+      submit: Save
       project: "What are you doing? Share ideas, links, updates."
       conversation: "Send a message to the rest of the group."
       task_list: "Share ideas for this task list. To create and assign tasks, use the sidebar."
