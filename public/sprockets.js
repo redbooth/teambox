@@ -9856,6 +9856,46 @@ Comment = {
   },
   make_autocomplete: function(element_id, items){
     new Autocompleter.Local(element_id, element_id + '_list', items, {tokens:[' ']});
+  },
+
+  check_edit: function(){
+    var list = Comment.edit_watch_list;
+    var len = list.length;
+    var now = new Date();
+    Comment.edit_watch_list = list.reject(function(c){
+      if (now > c.date) {
+        var el = $(c.id);
+        if (el)
+          el.down('.actions').hide();
+        return true;
+      }
+      return false;
+    });
+
+    if (Comment.edit_watch_list.length > 0)
+      Comment.edit_watch_timer = setTimeout(Comment.check_edit, 1000);
+  },
+  cancel_watch_edit: function(){
+    if (Comment.edit_watch_timer)
+      clearTimeout(Comment.edit_watch_timer);
+    Comment.edit_watch_timer = null;
+  },
+  watch_edit: function(){
+    this.cancel_watch_edit();
+    var date = new Date();
+
+    Comment.edit_watch_list = $$('div.comment').map(function(c){
+        var time = new Date();
+        time.setTime(c.readAttribute('immutable_at'));
+        return {id: c.readAttribute('id'), date:time};
+    }).reject(function(c){
+        if (date >= c.date) {
+          $(c.id + '_actions').hide();
+          return true;
+        }
+        return false;
+    });
+    Comment.check_edit();
   }
 };
 Event.addBehavior({
@@ -9908,69 +9948,379 @@ function onEndCrop(coords, dimensions){
   $('crop_height').value = dimensions.height;
 }
 var Hours = {
-	init: function() {
+	init: function(start_date) {
 		this.hours = [];
-		this.filteredSet = [];
+		this.start_date = start_date;
+		this.weekends = [0,6];
+
+		this.userMap = {};
+		this.taskMap = {};
+		this.projectMap = {};
+		this.showWeekends = false;
+
+		this.l_hours = 'hrs';
+
+		this.filters = {
+			'user': null,
+			'task': null,
+			'project': null
+		};
+
+		this.currentReport = 'user';
+
+		$$('#user_filters input').each(function(e){
+			e.observe('click', Hours.userFilterHandler);
+		});
+		$$('#task_filters input').each(function(e){
+			e.observe('click', Hours.taskFilterHandler);
+		});
+		$$('#project_filters input').each(function(e){
+			e.observe('click', Hours.projectFilterHandler);
+		});
+
+		this.setProjectFilter(0, true);
+		this.setUserFilter(0, true);
+		this.setTaskFilter(0, true);
+	},
+
+	clearAll: function(selector, enabled) {
+		$$(selector).each(function(e){
+			e.checked = false;
+			e.disabled = !enabled;
+		});
+	},
+
+	setProjectFilter: function(id, enabled) {
+		if (id == 0)
+		{
+			if (enabled)
+			{
+				this.clearAll('#project_filters .filter input', false);
+				this.filters.project = null;
+			}
+			else
+			{
+				this.clearAll('#project_filters .filter input', true);
+				this.filters.project = [];
+			}
+		}
+		else
+		{
+			if (enabled)
+				this.filters.project.push(id);
+			else
+				this.filters.project = Hours.filters.project.without(id);
+		}
+	},
+
+	setUserFilter: function(id, enabled) {
+		if (id == 0)
+		{
+			if (enabled)
+			{
+				Hours.clearAll('#user_filters .filter input', false);
+				Hours.filters.user = null;
+			}
+			else
+			{
+				Hours.clearAll('#user_filters .filter input', true);
+				Hours.filters.user = [];
+			}
+		}
+		else
+		{
+			if (enabled)
+				Hours.filters.user.push(id);
+			else
+				Hours.filters.user = Hours.filters.user.without(id);
+		}
+	},
+
+	setTaskFilter: function(id, enabled) {
+		if (id == 0)
+		{
+			if (enabled)
+			{
+				Hours.clearAll('#task_filters .filter input', false);
+				Hours.filters.task = null;
+			}
+			else
+			{
+				Hours.clearAll('#task_filters .filter input', true);
+				Hours.filters.task = [];
+			}
+		}
+		else
+		{
+			if (enabled)
+				Hours.filters.task.push(id);
+			else
+				Hours.filters.task = Hours.filters.task.without(id);
+		}
+	},
+
+	projectFilterHandler: function(evt) {
+		var el = $(this);
+		var id = parseInt(el.readAttribute('value'));
+
+		Hours.setProjectFilter(id, el.checked);
+		Hours.update();
+		return true;
+	},
+
+	userFilterHandler: function(evt) {
+		var el = $(this);
+		var id = parseInt(el.readAttribute('value'));
+
+		Hours.setUserFilter(id, el.checked);
+		Hours.update();
+		return true;
+	},
+
+	taskFilterHandler: function(evt) {
+		var el = $(this);
+		var id = parseInt(el.readAttribute('value'));
+
+		Hours.setTaskFilter(id, el.checked);
+		Hours.update();
+		return true;
 	},
 
 	addHour: function(comment) {
 		var record = {
 			id: comment.id,
-			date: comment.date,
+			date: new Date(comment.date[0], comment.date[1], comment.date[2],0,0,0,0),
 			week: comment.week,
-			user_id: comment.userid,
+			project_id: comment.project_id,
+			user_id: comment.user_id,
 			task_id: comment.task_id,
 			hours: comment.hours
 		};
+
+		var d = record.date;
+		record.key = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
 		this.hours.push(record);
 	},
 
 	addHours: function(comments) {
-		comments.forEach(function(comment){
+		comments.each(function(comment){
 			var record = {
 				id: comment.id,
-				date: comment.date,
+				date: new Date(comment.date[0], comment.date[1], comment.date[2],0,0,0,0),
 				week: comment.week,
-				user_id: comment.userid,
+				project_id: comment.project_id,
+				user_id: comment.user_id,
 				task_id: comment.task_id,
 				hours: comment.hours
 			};
 
+			var d = record.date;
+			record.key = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
 			Hours.hours.push(record);
 		});
 	},
 
-	filterByFunc: function(func) {
-		this.filteredSet = this.hours.select(func);
+	setReport: function(report) {
+		this.currentReport = report;
+		this.update();
 	},
 
-	clearSet: function() {
-		var len = this.filteredSet.length;
-		while (len-- != 0) {
-			this.filteredSet.pop();
-		}
+	update: function() {
+		this['report_' + this.currentReport]();
 	},
 
-	clear: function() {
-		var len = this.hours.length;
-		while (len-- != 0) {
-			this.hours.pop();
+	insertCommentBlocks: function(comments, func){
+		comments.keys().each(function(key){
+			var v = comments.get(key);
+			var date = v.date;
+			if (date) {
+				var calBlock = $("day_" + (date.getMonth()+1) + "_" + date.getDate());
+				func(v, v.list, calBlock);
+			}
+		});
+	},
+
+	clearCommentBlocks: function(){
+		$$('p.hours').each(function(e){e.remove();});
+	},
+
+	sumByHours: function(field, map) {
+		var comments = this.getFilteredComments();
+		var weekSum = [{},{},{},{},{},{}];
+		var totalSum = {};
+		var weekTotal = 0;
+		this.showWeekends = false;
+
+		$$('div.comment').each(function(e){e.hide();});
+
+		comments = this.reduceComments(comments, function(key, values){
+			var item = {};
+			if (values.length > 0)
+				item.date = values[0].date;
+			else
+				item.date = null;
+
+			var list = {};
+			values.each(function(c){
+				var value = list[c.user_id];
+				var id = c[field];
+				if (value == null || value == undefined)
+					list[id] = c.hours;
+				else
+					list[id] += c.hours;
+
+				$('comment_' + c.id).show();
+
+				if (!Hours.showWeekends)
+				{
+					var day = c.date.getDay();
+					if (day == 0 || day == 6)
+						Hours.showWeekends = true;
+				}
+
+				var week = Math.floor((c.date - Hours.start_date) / (86400000 * 7));
+				var sum = weekSum[week][id];
+				if (sum == null || sum == undefined)
+					weekSum[week][id] = c.hours;
+				else
+					weekSum[week][id] += c.hours;
+
+				sum = totalSum[id];
+				if (sum == null || sum == undefined)
+					totalSum[id] = c.hours;
+				else
+					totalSum[id] += c.hours;
+
+				weekTotal += c.hours;
+			});
+
+			item.list = $H(list);
+			return item;
+		});
+
+		this.clearCommentBlocks();
+
+		for (var i=0; i<5; i++) {
+			var values = weekSum[i];
+			for (var key in values) {
+				var code = "<p class=\"hours\">" + map[key] + '<br/>' + values[key] + ' ' + this.l_hours + "</p>";
+				$('week_' + i).insert({top:code});
+			}
 		}
+
+		for (var key in totalSum) {
+			var code = "<p class=\"hours\">" + map[key] + '<br/>' + totalSum[key] + ' ' + this.l_hours + "</p>";
+			$('hour_total').insert({top:code});
+		}
+		$('total_sum').innerHTML = weekTotal + ' ' + this.l_hours;
+
+		this.insertCommentBlocks(comments, function(v, list, block){
+			list.keys().each(function(key){
+				var code = "<p class=\"hours\">" +  map[key] + "<br/>" + list.get(key) + ' ' + Hours.l_hours + " </p>";
+				block.insert({bottom:code});
+			});
+		});
+
+		if (this.showWeekends) {
+			$$('.cal_wd' + this.weekends[0] + ', .cal_wd' + this.weekends[1]).each(function(e) {e.show();});
+			$('calendar').removeClassName('calendar5');
+		} else {
+				$$('.cal_wd' + this.weekends[0] + ', .cal_wd' + this.weekends[1]).each(function(e) {e.hide();});
+			$('calendar').addClassName('calendar5');
+		}
+
+		return comments;
+	},
+
+	report_user: function(){
+		return this.sumByHours('user_id', this.userMap);
+	},
+
+	report_task: function(){
+		return this.sumByHours('task_id', this.taskMap);
+	},
+
+	report_project: function(){
+		return this.sumByHours('project_id', this.projectMap);
+	},
+
+	getFilteredComments: function(){
+		var projectFilters = this.filters.project;
+		var userFilters = this.filters.user;
+		var taskFilters = this.filters.task;
+
+		return this.mapComments(this.hours, function(c) {
+			if (!Hours.applyFilter(c,
+				                  projectFilters,
+				                  userFilters,
+				                  taskFilters))
+				return null;
+
+			return {key:c.key, value:c};
+		});
+	},
+
+	mapComments: function(comments, func){
+		var set = {};
+		comments.each(function(c){
+			var res = func(c);
+			if (res == null)
+				return;
+
+			var key = res.key;
+			var value = res.value;
+
+			var sv = set[key];
+			if (sv == null || sv == undefined)
+				set[key] = [value];
+			else
+				sv.push(value);
+		});
+
+		return $H(set);
+	},
+
+	reduceComments: function(comments, func){
+		var res = $H();
+		comments.keys().each(function(key){
+			var values = comments.get(key);
+			res.set(key, func(key, values));
+		});
+		return res;
+	},
+
+	applyFilter: function(hour, projectFilters, userFilters, taskFilters){
+		if (projectFilters != null) {
+			if (projectFilters.indexOf(hour.project_id) == -1)
+				return false;
+		}
+
+		if (userFilters != null) {
+			if (userFilters.indexOf(hour.user_id) == -1)
+				return false;
+		}
+
+		if (taskFilters != null) {
+			if (taskFilters.indexOf(hour.task_id) == -1)
+				return false;
+		}
+
+		return true;
 	}
 };
 
 Object.extend(Date.prototype, {
-  strftime_ca: function(format) {
+  strftime_it: function(format) {
     var day = this.getDay(), month = this.getMonth();
     var hours = this.getHours(), minutes = this.getMinutes();
     function pad(num) { return num.toPaddedString(2); };
 
     return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
       switch(part[1]) {
-        case 'a': return $w("Dg Di Dm Dc Dj Dv Ds")[day]; break;
-        case 'A': return $w("Diumenge Dilluns Dimarts Dimecres Dijous Divendres Dissabte")[day]; break;
-        case 'b': return $w(" Gen Feb Mar Abr Maig Jun Jul Ago Sep Oct Nov Dec")[month]; break;
-        case 'B': return $w(" Gener Febrer Març Abril Maig Juny Juliol Agost Setembre Octubre Novembre Desembre")[month]; break;
+        case 'a': return $w("Dom Lun Mar Mer Gio Ven Sab")[day]; break;
+        case 'A': return $w("Domenica Lunedì Martedì Mercoledì Giovedì Venerdì Sabato")[day]; break;
+        case 'b': return $w(" Gen Feb Mar Apr Mag Giu Lug Ago Set Ott Nov Dic")[month]; break;
+        case 'B': return $w(" Gennaio Febbraio Marzo Aprile Maggio Giugno Luglio Agosto Settembre Ottobre Novembre Dicembre")[month]; break;
         case 'c': return this.toString(); break;
         case 'd': return this.getDate(); break;
         case 'D': return pad(this.getDate()); break;
@@ -9980,6 +10330,96 @@ Object.extend(Date.prototype, {
         case 'm': return pad(month + 1); break;
         case 'M': return pad(minutes); break;
         case 'p': return hours > 11 ? 'PM' : 'AM'; break;
+        case 'S': return pad(this.getSeconds()); break;
+        case 'w': return day; break;
+        case 'y': return pad(this.getFullYear() % 100); break;
+        case 'Y': return this.getFullYear().toString(); break;
+      }
+    }.bind(this));
+  }
+});// ru
+
+Object.extend(Date.prototype, {
+  strftime_ru: function(format) {
+    var day = this.getDay(), month = this.getMonth();
+    var hours = this.getHours(), minutes = this.getMinutes();
+    function pad(num) { return num.toPaddedString(2); };
+
+    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
+      switch(part[1]) {
+        case 'a': return $w("Вс Пн Вт Ср Чт Пт Сб")[day]; break;
+        case 'A': return $w("Воскресенье Понедельник Вторник Среда Четверг Пятница Суббота")[day]; break;
+        case 'b': return $w(" Янв Фев Мар Апр Май Июн Июл Авг Сен Окт Ноя Дек")[month]; break;
+        case 'B': return $w(" Январь Февраль Март Апрель Май Июнь Июль Август Сентабрь Октябрь Ноябрь Декабрь")[month]; break;
+        case 'c': return this.toString(); break;
+        case 'd': return this.getDate(); break;
+        case 'D': return pad(this.getDate()); break;
+        case 'H': return pad(hours); break;
+        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
+        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
+        case 'm': return pad(month + 1); break;
+        case 'M': return pad(minutes); break;
+        case 'p': return hours > 11 ? 'вечера' : 'утра'; break;
+        case 'S': return pad(this.getSeconds()); break;
+        case 'w': return day; break;
+        case 'y': return pad(this.getFullYear() % 100); break;
+        case 'Y': return this.getFullYear().toString(); break;
+      }
+    }.bind(this));
+  }
+});// en
+
+Object.extend(Date.prototype, {
+  strftime_en: function(format) {
+    var day = this.getDay(), month = this.getMonth();
+    var hours = this.getHours(), minutes = this.getMinutes();
+    function pad(num) { return num.toPaddedString(2); };
+
+    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
+      switch(part[1]) {
+        case 'a': return $w("Sun Mon Tue Wed Thu Fri Sat")[day]; break;
+        case 'A': return $w("Sunday Monday Tuesday Wednesday Thursday Friday Saturday")[day]; break;
+        case 'b': return $w(" Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec")[month]; break;
+        case 'B': return $w(" January February March April May June July August September October November December")[month]; break;
+        case 'c': return this.toString(); break;
+        case 'd': return this.getDate(); break;
+        case 'D': return pad(this.getDate()); break;
+        case 'H': return pad(hours); break;
+        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
+        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
+        case 'm': return pad(month + 1); break;
+        case 'M': return pad(minutes); break;
+        case 'p': return hours > 11 ? 'PM' : 'AM'; break;
+        case 'S': return pad(this.getSeconds()); break;
+        case 'w': return day; break;
+        case 'y': return pad(this.getFullYear() % 100); break;
+        case 'Y': return this.getFullYear().toString(); break;
+      }
+    }.bind(this));
+  }
+});// zh
+
+Object.extend(Date.prototype, {
+  strftime_zh: function(format) {
+    var day = this.getDay(), month = this.getMonth();
+    var hours = this.getHours(), minutes = this.getMinutes();
+    function pad(num) { return num.toPaddedString(2); };
+
+    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
+      switch(part[1]) {
+        case 'a': return $w("日 一 二 三 四 五 六")[day]; break;
+        case 'A': return $w("周日 周一 周二 周三 周四 周五 周六")[day]; break;
+        case 'b': return $w(" 一 二 三 四 五 六 七 八 九 十 十一 十二")[month]; break;
+        case 'B': return $w(" 一月 二月 三月 四月 五月 六月 七月 八月 九月 十月 十一月 十二月")[month]; break;
+        case 'c': return this.toString(); break;
+        case 'd': return this.getDate(); break;
+        case 'D': return pad(this.getDate()); break;
+        case 'H': return pad(hours); break;
+        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
+        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
+        case 'm': return pad(month + 1); break;
+        case 'M': return pad(minutes); break;
+        case 'p': return hours > 11 ? '下午' : '上午'; break;
         case 'S': return pad(this.getSeconds()); break;
         case 'w': return day; break;
         case 'y': return pad(this.getFullYear() % 100); break;
@@ -10001,36 +10441,6 @@ Object.extend(Date.prototype, {
         case 'A': return $w("Dimanche Lundi Mardi Mercredi Jeudi Vendredi Samedi")[day]; break;
         case 'b': return $w(" Jan Fév Mar Avr Mai Juin Juil Août Sep Oct Nov Dec")[month]; break;
         case 'B': return $w(" Janvier Février Mars Avril Mai Juin Juillet Août Septembre Octobre Novembre Décembre")[month]; break;
-        case 'c': return this.toString(); break;
-        case 'd': return this.getDate(); break;
-        case 'D': return pad(this.getDate()); break;
-        case 'H': return pad(hours); break;
-        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
-        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
-        case 'm': return pad(month + 1); break;
-        case 'M': return pad(minutes); break;
-        case 'p': return hours > 11 ? 'PM' : 'AM'; break;
-        case 'S': return pad(this.getSeconds()); break;
-        case 'w': return day; break;
-        case 'y': return pad(this.getFullYear() % 100); break;
-        case 'Y': return this.getFullYear().toString(); break;
-      }
-    }.bind(this));
-  }
-});// es
-
-Object.extend(Date.prototype, {
-  strftime_es: function(format) {
-    var day = this.getDay(), month = this.getMonth();
-    var hours = this.getHours(), minutes = this.getMinutes();
-    function pad(num) { return num.toPaddedString(2); };
-
-    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
-      switch(part[1]) {
-        case 'a': return $w("Dom Lun Mar Mié Jue Vie Sáb")[day]; break;
-        case 'A': return $w("Domingo Lunes Martes Miércoles Jueves Viernes Sábado")[day]; break;
-        case 'b': return $w(" Ene Feb Mar Abr May Jun Jul Ago Sep Oct Nov Dec")[month]; break;
-        case 'B': return $w(" Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre")[month]; break;
         case 'c': return this.toString(); break;
         case 'd': return this.getDate(); break;
         case 'D': return pad(this.getDate()); break;
@@ -10077,20 +10487,20 @@ Object.extend(Date.prototype, {
       }
     }.bind(this));
   }
-});// en
+});// ca
 
 Object.extend(Date.prototype, {
-  strftime_en: function(format) {
+  strftime_ca: function(format) {
     var day = this.getDay(), month = this.getMonth();
     var hours = this.getHours(), minutes = this.getMinutes();
     function pad(num) { return num.toPaddedString(2); };
 
     return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
       switch(part[1]) {
-        case 'a': return $w("Sun Mon Tue Wed Thu Fri Sat")[day]; break;
-        case 'A': return $w("Sunday Monday Tuesday Wednesday Thursday Friday Saturday")[day]; break;
-        case 'b': return $w(" Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec")[month]; break;
-        case 'B': return $w(" January February March April May June July August September October November December")[month]; break;
+        case 'a': return $w("Dg Di Dm Dc Dj Dv Ds")[day]; break;
+        case 'A': return $w("Diumenge Dilluns Dimarts Dimecres Dijous Divendres Dissabte")[day]; break;
+        case 'b': return $w(" Gen Feb Mar Abr Maig Jun Jul Ago Sep Oct Nov Dec")[month]; break;
+        case 'B': return $w(" Gener Febrer Març Abril Maig Juny Juliol Agost Setembre Octubre Novembre Desembre")[month]; break;
         case 'c': return this.toString(); break;
         case 'd': return this.getDate(); break;
         case 'D': return pad(this.getDate()); break;
@@ -10107,50 +10517,20 @@ Object.extend(Date.prototype, {
       }
     }.bind(this));
   }
-});// ru
+});// es
 
 Object.extend(Date.prototype, {
-  strftime_ru: function(format) {
+  strftime_es: function(format) {
     var day = this.getDay(), month = this.getMonth();
     var hours = this.getHours(), minutes = this.getMinutes();
     function pad(num) { return num.toPaddedString(2); };
 
     return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
       switch(part[1]) {
-        case 'a': return $w("Вс Пн Вт Ср Чт Пт Сб")[day]; break;
-        case 'A': return $w("Воскресенье Понедельник Вторник Среда Четверг Пятница Суббота")[day]; break;
-        case 'b': return $w(" Янв Фев Мар Апр Май Июн Июл Авг Сен Окт Ноя Дек")[month]; break;
-        case 'B': return $w(" Январь Февраль Март Апрель Май Июнь Июль Август Сентабрь Октябрь Ноябрь Декабрь")[month]; break;
-        case 'c': return this.toString(); break;
-        case 'd': return this.getDate(); break;
-        case 'D': return pad(this.getDate()); break;
-        case 'H': return pad(hours); break;
-        case 'i': return (hours === 12 || hours === 0) ? 12 : (hours + 12) % 12; break;
-        case 'I': return pad((hours === 12 || hours === 0) ? 12 : (hours + 12) % 12); break;
-        case 'm': return pad(month + 1); break;
-        case 'M': return pad(minutes); break;
-        case 'p': return hours > 11 ? 'PM' : 'AM'; break;
-        case 'S': return pad(this.getSeconds()); break;
-        case 'w': return day; break;
-        case 'y': return pad(this.getFullYear() % 100); break;
-        case 'Y': return this.getFullYear().toString(); break;
-      }
-    }.bind(this));
-  }
-});// it
-
-Object.extend(Date.prototype, {
-  strftime_it: function(format) {
-    var day = this.getDay(), month = this.getMonth();
-    var hours = this.getHours(), minutes = this.getMinutes();
-    function pad(num) { return num.toPaddedString(2); };
-
-    return format.gsub(/\%([aAbBcdDHiImMpSwyY])/, function(part) {
-      switch(part[1]) {
-        case 'a': return $w("Dom Lun Mar Mer Gio Ven Sab")[day]; break;
-        case 'A': return $w("Domenica Lunedì Martedì Mercoledì Giovedì Venerdì Sabato")[day]; break;
-        case 'b': return $w(" Gen Feb Mar Apr Mag Giu Lug Ago Set Ott Nov Dic")[month]; break;
-        case 'B': return $w(" Gennaio Febbraio Marzo Aprile Maggio Giugno Luglio Agosto Settembre Ottobre Novembre Dicembre")[month]; break;
+        case 'a': return $w("Dom Lun Mar Mié Jue Vie Sáb")[day]; break;
+        case 'A': return $w("Domingo Lunes Martes Miércoles Jueves Viernes Sábado")[day]; break;
+        case 'b': return $w(" Ene Feb Mar Abr May Jun Jul Ago Sep Oct Nov Dec")[month]; break;
+        case 'B': return $w(" Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre")[month]; break;
         case 'c': return this.toString(); break;
         case 'd': return this.getDate(); break;
         case 'D': return pad(this.getDate()); break;
@@ -10169,7 +10549,7 @@ Object.extend(Date.prototype, {
   }
 });
 
-function format_posted_date_ca()
+function format_posted_date_it()
 {
   $$('span.timeago').each(function(c){
     current_date  = new Date();
@@ -10190,182 +10570,27 @@ function format_posted_date_ca()
     minutes = Math.floor((current_date-posted_date) / (1000 * 60));
     days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
 
-    if(minutes < 60)    { c.update(minutesAgoInWords_ca(minutes)); }
-    else if(days == 0)  { c.update(posted_date.strftime_ca("%I:%M %p")); }
-    else if(days == 1)  { c.update('Ahir ' + posted_date.strftime_ca("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_ca("%A %b %d")); }
-    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_ca("%b %d")); }
-    else c.update(posted_date.strftime_ca("%B %d, %Y"));
+		if (minutes < 0) {
+			var time_error = true
+		};
+
+		if (typeof(time_error) != "undefined") { return }
+    else if(minutes < 60)    { c.update(minutesAgoInWords_it(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_it("%I:%M %p")); }
+    else if(days == 1)  { c.update('Ieri ' + posted_date.strftime_it("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_it("%A %b %d")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_it("%b %d")); }
+    else c.update(posted_date.strftime_it("%B %d, %Y"));
   }
   );
 }
 
 
 
-function minutesAgoInWords_ca(minutes) {
-  if(minutes == 0) { return "Hace menys d'1 minut"; }
-  if(minutes == 1) { return "Hace 1 minut"; }
-  return ""+"Hace " + minutes + " minuts"+"";
-  }
-
-
-function format_posted_date_fr()
-{
-  $$('span.timeago').each(function(c){
-    current_date  = new Date();
-    posted_date  = new Date();
-    posted_date.setTime(c.readAttribute('alt'));
-
-		posted_date_beginning_of_day = new Date(posted_date), current_date_beginning_of_day = new Date(current_date);
-
-		posted_date_beginning_of_day.setHours(0);
-		posted_date_beginning_of_day.setMinutes(0);
-		posted_date_beginning_of_day.setSeconds(0);
-
-		current_date_beginning_of_day.setHours(0);
-		current_date_beginning_of_day.setMinutes(0);
-		current_date_beginning_of_day.setSeconds(0);
-
-
-    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
-    days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
-
-    if(minutes < 60)    { c.update(minutesAgoInWords_fr(minutes)); }
-    else if(days == 0)  { c.update(posted_date.strftime_fr("%I:%M %p")); }
-    else if(days == 1)  { c.update('Hier ' + posted_date.strftime_fr("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_fr("%A %d %b")); }
-    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_fr("%d %b")); }
-    else c.update(posted_date.strftime_fr("%d %B %Y"));
-  }
-  );
-}
-
-
-
-function minutesAgoInWords_fr(minutes) {
-  if(minutes == 0) { return "Il y a moins d'une minute"; }
-  if(minutes == 1) { return "Il y a 1 minute"; }
-  return ""+"Il y a " + minutes + " minutes"+"";
-  }
-
-
-function format_posted_date_es()
-{
-  $$('span.timeago').each(function(c){
-    current_date  = new Date();
-    posted_date  = new Date();
-    posted_date.setTime(c.readAttribute('alt'));
-
-		posted_date_beginning_of_day = new Date(posted_date), current_date_beginning_of_day = new Date(current_date);
-
-		posted_date_beginning_of_day.setHours(0);
-		posted_date_beginning_of_day.setMinutes(0);
-		posted_date_beginning_of_day.setSeconds(0);
-
-		current_date_beginning_of_day.setHours(0);
-		current_date_beginning_of_day.setMinutes(0);
-		current_date_beginning_of_day.setSeconds(0);
-
-
-    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
-    days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
-
-    if(minutes < 60)    { c.update(minutesAgoInWords_es(minutes)); }
-    else if(days == 0)  { c.update(posted_date.strftime_es("%I:%M %p")); }
-    else if(days == 1)  { c.update('Ayer ' + posted_date.strftime_es("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_es("%A %b %d")); }
-    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_es("%b %d")); }
-    else c.update(posted_date.strftime_es("%B %d, %Y"));
-  }
-  );
-}
-
-
-
-function minutesAgoInWords_es(minutes) {
-  if(minutes == 0) { return "Hace menos de 1 minuto"; }
-  if(minutes == 1) { return "Hace 1 minuto"; }
-  return ""+"Hace " + minutes + " minutos"+"";
-  }
-
-
-function format_posted_date_de()
-{
-  $$('span.timeago').each(function(c){
-    current_date  = new Date();
-    posted_date  = new Date();
-    posted_date.setTime(c.readAttribute('alt'));
-
-		posted_date_beginning_of_day = new Date(posted_date), current_date_beginning_of_day = new Date(current_date);
-
-		posted_date_beginning_of_day.setHours(0);
-		posted_date_beginning_of_day.setMinutes(0);
-		posted_date_beginning_of_day.setSeconds(0);
-
-		current_date_beginning_of_day.setHours(0);
-		current_date_beginning_of_day.setMinutes(0);
-		current_date_beginning_of_day.setSeconds(0);
-
-
-    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
-    days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
-
-    if(minutes < 60)    { c.update(minutesAgoInWords_de(minutes)); }
-    else if(days == 0)  { c.update(posted_date.strftime_de("%I:%M %p")); }
-    else if(days == 1)  { c.update('Gestern ' + posted_date.strftime_de("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_de("%A %b %d")); }
-    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_de("%b %d")); }
-    else c.update(posted_date.strftime_de("%B %d, %Y"));
-  }
-  );
-}
-
-
-
-function minutesAgoInWords_de(minutes) {
-  if(minutes == 0) { return "weniger als 1 Minute vorher"; }
-  if(minutes == 1) { return "1 Minute vorher"; }
-  return ""+"" + minutes + " Minuten vorher"+"";
-  }
-
-
-function format_posted_date_en()
-{
-  $$('span.timeago').each(function(c){
-    current_date  = new Date();
-    posted_date  = new Date();
-    posted_date.setTime(c.readAttribute('alt'));
-
-		posted_date_beginning_of_day = new Date(posted_date), current_date_beginning_of_day = new Date(current_date);
-
-		posted_date_beginning_of_day.setHours(0);
-		posted_date_beginning_of_day.setMinutes(0);
-		posted_date_beginning_of_day.setSeconds(0);
-
-		current_date_beginning_of_day.setHours(0);
-		current_date_beginning_of_day.setMinutes(0);
-		current_date_beginning_of_day.setSeconds(0);
-
-
-    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
-    days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
-
-    if(minutes < 60)    { c.update(minutesAgoInWords_en(minutes)); }
-    else if(days == 0)  { c.update(posted_date.strftime_en("%I:%M %p")); }
-    else if(days == 1)  { c.update('Yesterday ' + posted_date.strftime_en("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_en("%A %b %d")); }
-    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_en("%b %d")); }
-    else c.update(posted_date.strftime_en("%B %d, %Y"));
-  }
-  );
-}
-
-
-
-function minutesAgoInWords_en(minutes) {
-  if(minutes == 0) { return "less than a minute ago"; }
-  if(minutes == 1) { return "1 minute ago"; }
-  return ""+"" + minutes + " minutes ago"+"";
+function minutesAgoInWords_it(minutes) {
+  if(minutes == 0) { return "meno di 1 minuto fa"; }
+  if(minutes == 1) { return "1 minuto fa"; }
+  return ""+"" + minutes + " minuti fa"+"";
   }
 
 
@@ -10390,7 +10615,12 @@ function format_posted_date_ru()
     minutes = Math.floor((current_date-posted_date) / (1000 * 60));
     days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
 
-    if(minutes < 60)    { c.update(minutesAgoInWords_ru(minutes)); }
+		if (minutes < 0) {
+			var time_error = true
+		};
+
+		if (typeof(time_error) != "undefined") { return }
+    else if(minutes < 60)    { c.update(minutesAgoInWords_ru(minutes)); }
     else if(days == 0)  { c.update(posted_date.strftime_ru("%H:%M")); }
     else if(days == 1)  { c.update('Вчера ' + posted_date.strftime_ru("%H:%M")); }
     else if(days <= 7)       { c.update(posted_date.strftime_ru("%A %d %b")); }
@@ -10409,7 +10639,7 @@ function minutesAgoInWords_ru(minutes) {
   }
 
 
-function format_posted_date_it()
+function format_posted_date_en()
 {
   $$('span.timeago').each(function(c){
     current_date  = new Date();
@@ -10430,22 +10660,252 @@ function format_posted_date_it()
     minutes = Math.floor((current_date-posted_date) / (1000 * 60));
     days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
 
-    if(minutes < 60)    { c.update(minutesAgoInWords_it(minutes)); }
-    else if(days == 0)  { c.update(posted_date.strftime_it("%I:%M %p")); }
-    else if(days == 1)  { c.update('Ieri ' + posted_date.strftime_it("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_it("%A %b %d")); }
-    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_it("%b %d")); }
-    else c.update(posted_date.strftime_it("%B %d, %Y"));
+		if (minutes < 0) {
+			var time_error = true
+		};
+
+		if (typeof(time_error) != "undefined") { return }
+    else if(minutes < 60)    { c.update(minutesAgoInWords_en(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_en("%I:%M %p")); }
+    else if(days == 1)  { c.update('Yesterday ' + posted_date.strftime_en("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_en("%A %b %d")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_en("%b %d")); }
+    else c.update(posted_date.strftime_en("%B %d, %Y"));
   }
   );
 }
 
 
 
-function minutesAgoInWords_it(minutes) {
-  if(minutes == 0) { return "meno di 1 minuto fa"; }
-  if(minutes == 1) { return "1 minuto fa"; }
-  return ""+"" + minutes + " minuti fa"+"";
+function minutesAgoInWords_en(minutes) {
+  if(minutes == 0) { return "less than a minute ago"; }
+  if(minutes == 1) { return "1 minute ago"; }
+  return ""+"" + minutes + " minutes ago"+"";
+  }
+
+
+function format_posted_date_zh()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+		posted_date_beginning_of_day = new Date(posted_date), current_date_beginning_of_day = new Date(current_date);
+
+		posted_date_beginning_of_day.setHours(0);
+		posted_date_beginning_of_day.setMinutes(0);
+		posted_date_beginning_of_day.setSeconds(0);
+
+		current_date_beginning_of_day.setHours(0);
+		current_date_beginning_of_day.setMinutes(0);
+		current_date_beginning_of_day.setSeconds(0);
+
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
+
+		if (minutes < 0) {
+			var time_error = true
+		};
+
+		if (typeof(time_error) != "undefined") { return }
+    else if(minutes < 60)    { c.update(minutesAgoInWords_zh(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_zh("%m-%d %H:%M")); }
+    else if(days == 1)  { c.update('昨天 ' + posted_date.strftime_zh("%m-%d %H:%M")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_zh("%A %m-%d")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_zh("%m-%d")); }
+    else c.update(posted_date.strftime_zh("%Y-%m-%d"));
+  }
+  );
+}
+
+
+
+function minutesAgoInWords_zh(minutes) {
+  if(minutes == 0) { return "少于1分钟以前"; }
+  if(minutes == 1) { return "1分钟以前"; }
+  return ""+"" + minutes + "分钟以前"+"";
+  }
+
+
+function format_posted_date_fr()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+		posted_date_beginning_of_day = new Date(posted_date), current_date_beginning_of_day = new Date(current_date);
+
+		posted_date_beginning_of_day.setHours(0);
+		posted_date_beginning_of_day.setMinutes(0);
+		posted_date_beginning_of_day.setSeconds(0);
+
+		current_date_beginning_of_day.setHours(0);
+		current_date_beginning_of_day.setMinutes(0);
+		current_date_beginning_of_day.setSeconds(0);
+
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
+
+		if (minutes < 0) {
+			var time_error = true
+		};
+
+		if (typeof(time_error) != "undefined") { return }
+    else if(minutes < 60)    { c.update(minutesAgoInWords_fr(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_fr("%I:%M %p")); }
+    else if(days == 1)  { c.update('Hier ' + posted_date.strftime_fr("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_fr("%A %d %b")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_fr("%d %b")); }
+    else c.update(posted_date.strftime_fr("%d %B %Y"));
+  }
+  );
+}
+
+
+
+function minutesAgoInWords_fr(minutes) {
+  if(minutes == 0) { return "Il y a moins d'une minute"; }
+  if(minutes == 1) { return "Il y a 1 minute"; }
+  return ""+"Il y a " + minutes + " minutes"+"";
+  }
+
+
+function format_posted_date_de()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+		posted_date_beginning_of_day = new Date(posted_date), current_date_beginning_of_day = new Date(current_date);
+
+		posted_date_beginning_of_day.setHours(0);
+		posted_date_beginning_of_day.setMinutes(0);
+		posted_date_beginning_of_day.setSeconds(0);
+
+		current_date_beginning_of_day.setHours(0);
+		current_date_beginning_of_day.setMinutes(0);
+		current_date_beginning_of_day.setSeconds(0);
+
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
+
+		if (minutes < 0) {
+			var time_error = true
+		};
+
+		if (typeof(time_error) != "undefined") { return }
+    else if(minutes < 60)    { c.update(minutesAgoInWords_de(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_de("%I:%M %p")); }
+    else if(days == 1)  { c.update('Gestern ' + posted_date.strftime_de("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_de("%A %b %d")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_de("%b %d")); }
+    else c.update(posted_date.strftime_de("%B %d, %Y"));
+  }
+  );
+}
+
+
+
+function minutesAgoInWords_de(minutes) {
+  if(minutes == 0) { return "weniger als 1 Minute vorher"; }
+  if(minutes == 1) { return "1 Minute vorher"; }
+  return ""+"" + minutes + " Minuten vorher"+"";
+  }
+
+
+function format_posted_date_ca()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+		posted_date_beginning_of_day = new Date(posted_date), current_date_beginning_of_day = new Date(current_date);
+
+		posted_date_beginning_of_day.setHours(0);
+		posted_date_beginning_of_day.setMinutes(0);
+		posted_date_beginning_of_day.setSeconds(0);
+
+		current_date_beginning_of_day.setHours(0);
+		current_date_beginning_of_day.setMinutes(0);
+		current_date_beginning_of_day.setSeconds(0);
+
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
+
+		if (minutes < 0) {
+			var time_error = true
+		};
+
+		if (typeof(time_error) != "undefined") { return }
+    else if(minutes < 60)    { c.update(minutesAgoInWords_ca(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_ca("%I:%M %p")); }
+    else if(days == 1)  { c.update('Ahir ' + posted_date.strftime_ca("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_ca("%A %b %d")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_ca("%b %d")); }
+    else c.update(posted_date.strftime_ca("%B %d, %Y"));
+  }
+  );
+}
+
+
+
+function minutesAgoInWords_ca(minutes) {
+  if(minutes == 0) { return "Hace menys d'1 minut"; }
+  if(minutes == 1) { return "Hace 1 minut"; }
+  return ""+"Hace " + minutes + " minuts"+"";
+  }
+
+
+function format_posted_date_es()
+{
+  $$('span.timeago').each(function(c){
+    current_date  = new Date();
+    posted_date  = new Date();
+    posted_date.setTime(c.readAttribute('alt'));
+
+		posted_date_beginning_of_day = new Date(posted_date), current_date_beginning_of_day = new Date(current_date);
+
+		posted_date_beginning_of_day.setHours(0);
+		posted_date_beginning_of_day.setMinutes(0);
+		posted_date_beginning_of_day.setSeconds(0);
+
+		current_date_beginning_of_day.setHours(0);
+		current_date_beginning_of_day.setMinutes(0);
+		current_date_beginning_of_day.setSeconds(0);
+
+
+    minutes = Math.floor((current_date-posted_date) / (1000 * 60));
+    days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24));
+
+		if (minutes < 0) {
+			var time_error = true
+		};
+
+		if (typeof(time_error) != "undefined") { return }
+    else if(minutes < 60)    { c.update(minutesAgoInWords_es(minutes)); }
+    else if(days == 0)  { c.update(posted_date.strftime_es("%I:%M %p")); }
+    else if(days == 1)  { c.update('Ayer ' + posted_date.strftime_es("%I:%M %p")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_es("%A %b %d")); }
+    else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_es("%b %d")); }
+    else c.update(posted_date.strftime_es("%B %d, %Y"));
+  }
+  );
+}
+
+
+
+function minutesAgoInWords_es(minutes) {
+  if(minutes == 0) { return "Hace menos de 1 minuto"; }
+  if(minutes == 1) { return "Hace 1 minuto"; }
+  return ""+"Hace " + minutes + " minutos"+"";
   }
 
 Event.addBehavior({
