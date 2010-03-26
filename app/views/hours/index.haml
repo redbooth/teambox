@@ -1,20 +1,20 @@
 %div
-  =calendar_nav(@current_project,@year,@month)
+  = calendar_nav(@current_project,@year,@month)
   .calendar#calendar
     = build_calendar(@year,@month)
   .weektable
     = build_weektable(@year, @month)
   = hours_js(@year,@month,@comments)
 
--content_for :column do
+- content_for :column do
   %h2= t('hours.report')
   %select#report_list
-    =list_hour_reports
-  =observe_hour_reports
+    = list_hour_reports
+  = observe_hour_reports
   %h2= t('hours.filter_by')
   #user_filter
-    =list_hour_filters(@current_project)
-  =observe_hour_filter
+    = list_hour_filters(@current_project)
+  = observe_hour_filter
 
 %h2= t('hours.comments')
 = list_comments(@comments,@current_project)
