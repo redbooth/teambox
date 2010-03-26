@@ -15,27 +15,25 @@ fr:
     save: Enregistrer
     show_more: "Afficher les {{number}} suivants"
     print: Imprimer cette page
-    prev: Previous
-    next: Next
+    prev: Précédent
+    next: Suivant
     comment:
       one: "{{count}} commentaire"
       other: "{{count}} commentaires"
-    ####
-    not_allowed: You are not allowed to do that!
+    not_allowed: "Vous n'êtes pas autorisé à faire ça!"
   confirm:
     delete_task_list: Êtes-vous sûr de vouloir supprimer cette liste de tâches?
     delete_task: Êtes-vous sûr de vouloir supprimer cette tâche?
     delete_page: Êtes-vous sûr de vouloir supprimer cette page?
     delete_upload: Êtes-vous sûr de vouloir supprimer ce fichier?
-  ####
   not_found:
-    user: "User does not exist."
-    conversation: "Conversation {{id}} not found in this project."
-    project: "The project {{id}} doesn't exist."
-    group: "The group {{id}} doesn't exist."
-    page: "Page {{id}} not found in this project."
-    task_list: "Task list {{id}} not found in this project."
-    task: "Task {{id}} not found in this project."
+    user: "L'utilisateur n'existe pas."
+    conversation: "La conversation {{id}} n'a pas été trouvée dans ce projet."
+    project: "Le projet {{id}} n'existe pas."
+    group: "Le group {{id}} n'existe pas."
+    page: "La page {{id}} n'a pas été trouvée dans ce projet."
+    task_list: "La liste de tâches {{id}} n'a pas été trouvée dans ce projet."
+    task: "La tâche {{id}} n'a pas été trouvée dans ce projet."
   deleted:
     conversation: "La conversation <b>{{name}}</b> a été effacée"
     task: "La tâche <b>{{name}}</b> a été effacée"
@@ -140,8 +138,7 @@ fr:
     new:
       title: Créer un compte
       submit: Créer le compte
-      ####
-      no_public_signup: "Public signups are not allowed in this system."
+      no_public_signup: "Le publique n'est pas autorisé à s'inscrire sur ce système."
       you_are_logged_in: "Vous avez déjà un compte sur Teambox. Si vous voulez vous enregistrer comme autre utilisateur, fermez la session et essayez de nouveau."
       existing_user: "Si vous avez déjà un compte, <a href='{{login_url}}'>identifiez-vous</a> ou <a href='{{forgot_url}}'>réinitialisé votre mot de passe</a>."
       you_already_have_an_account: "Vous avez déjà un compte Teambox pour l'adresse {{email}}. <a href='{{login_link}}'>Connecté vous avec cet adresse</a> ou <a href='{{reset_password_link}}'>réinitialisé votre mot de passe</a> si vous l'avez oublié."
@@ -252,12 +249,11 @@ fr:
     show:
       edit: Editer
       add_project: Ajouter un projet
-    ####
     errors:
-      already_own: "You already own a group!"
-      not_enabled: "Groups are not enabled on this system"
-      not_admin: "You cannot admin this group"
-      no_edit: "You cannot edit this group"
+      already_own: "Vous possédez déjà un groupe!"
+      not_enabled: "Les groupes ne sont pas activés sur ce système"
+      not_admin: "Vous ne pouvez pas administrer ce groupe"
+      no_edit: "Vous ne pouvez pas modifier ce groupe"
   projects:
     index:
       title: Activité dans tous vos projets
@@ -294,8 +290,7 @@ fr:
         title: "{{name}}"
         description: "Actualités récentes dans le projet {{name}}"
     fields:
-      ####
-      tracks_time: "Enable time tracking"
+      tracks_time: Activer time-tracking
       archiving: Archiver ce projet
       forever: Supprimer de façon définitive ce projet
       owner: Propriétaire
@@ -326,8 +321,7 @@ fr:
       created: Le projet a été créé!
       invalid_project: "Projet non valide, corrigez les éventuelles erreurs et essayez de nouveau."
       create_an_example_project: "C'est la première fois que vous utilisez Teambox? <a href='{{link}}'>Créez un projet-exemple</a> pour expérimenter toutes les possibilités et apprendre à vous servir de Teambox."
-      ####
-      not_allowed: "You can't create any projects with your current account."
+      not_allowed: "Vous ne pouvez pas à créer des projets avec votre compte actuel."
     edit:
       title_settings: Paramètres généraux
       title_picture: Logo du projet
@@ -372,10 +366,9 @@ fr:
       invite_from_project: "Inviter d'un Projet"
     recent:
       invite: Inviter {{username}}
-    ####
     errors:
-      invalid: "Invalid invitation"
-      invalid_code: "Invalid invitation code"
+      invalid: "Invitation invalide"
+      invalid_code: "Code d'invitation invalide"
   conversations:
     actions:
       confirm_delete: Êtes-vous sûr de vouloir effacer cette conversation?
@@ -425,22 +418,20 @@ fr:
     short_conversation:
       comment: réponse
       comments: réponses
-  ####
   hours:
-    comments: Time Entries
-    filter_by: Filter by
-    report: Report
-    week_num: Week {{num}}
+    comments: Entrées de temps
+    filter_by: Filtrer par
+    report: Rapport
+    week_num: Semaine {{num}}
     entry_hours: hrs
     entry_total: Total
     week_total: Total
-    all_tasks: All tasks
-    all_users: All users
+    all_tasks: Toutes les tâches
+    all_users: Tous les utilisateurs
     reports:
-      user: Users
-      project: Projects
-      task: Tasks
-
+      user: Utilisateurs
+      project: Projets
+      task: Tâches
   tasks:
     errors:
       name:
@@ -622,9 +613,9 @@ fr:
       transfer: Transférer le projet
       leave_project: Quitter le projet
       confirm_delete: Etes-vous sûr de vouloir éliminer cette personne du projet?
-    ####
     errors:
-      user_or_email: "User not found. Enter his username or email."
+      user_or_email: "Utilisateur introuvable. Entrez son nom d'utilisateur ou email."
+      #####
     column:
       inviting: "Inviting other users"
       only_admins_can_invite: "Only admins can invite people to this project."
@@ -650,11 +641,10 @@ fr:
       task: Définir ce qui doit être fait par un commentaire. Confier cette tâche à quelqu'un. Poster des mises à jour. Attacher les résultats.
     edit:
       submit: Enregistrer
-    ####
     errors:
-      cannot_update: You do not have permission to update this comment
+      cannot_update: Vous n'avez pas la permission de modifier ce commentaire
     actions:
-      confirm_delete: Are you sure you want to delete this comment?
+      confirm_delete: Êtes vous sûr de vouloir effacer ce commentaire?
   example_projects:
     new:
       learn: Apprenez par l'exemple
@@ -663,9 +653,8 @@ fr:
       line3: "N'oubliez pas de <b>lire les instructions</b> et <b>expérimenter</b> les possiblités en créant, éditant et effaçant des éléments!"
       create: Créer le projet-exemple
       line4: "Dans ce projet vous ne pourrez pas inviter d'autres utilisateurs, mais vous pourrez utiliser toutes les autres possibilités."
-      ####
-      error: "Could not create example project."
-      error_list: "Could not create example project. The following projects are invalid: {{list}}."
+      error: "Le projet-exemple n'a pu être créé."
+      error_list: "Le projet-exemple n'a pu être créé. Les projet suivant sont invalides: {{list}}."
   uploads:
     comment_upload_link: Fichier joint
     new:
@@ -703,9 +692,8 @@ fr:
       title: Entrer
       video: Teambox
       submit: Entrer
-      ####
-      activation: "You need to activate your account first"
-      login_failed: "Couldn't log you in as {{login}}"
+      activation: "Vous devez d'abord activer votre compte"
+      login_failed: "Impossible de vous connecter en tant que {{login}}"
 
   email:
     user:
@@ -812,7 +800,7 @@ fr:
       plan_share_and_collaborate: "Planifiez, partagez y tenez-vous à jour de ce qui a été fait. Aussi facile que cela devrait l'être."
       report_abuse: "Ce mail vous a été envoyé suite à une demande de votre contact. Contactez-nous en cas d'abus."
     invitation_group:
-      you_have_been_invited_to: "You have been invited to the group <b>{{group}}</b>"
+      you_have_been_invited_to: "Vous avez été invité à rejoindre le projet <b>{{project}}</b>"
     confirm:
       hey: "Bonjour {{user_name}}!"
       follow_the_link: "Pour <b>terminer de vous enregistrer</b> dans Teambox il vous suffit de suivre ce lien:"
