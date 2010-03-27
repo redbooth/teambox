@@ -33,6 +33,7 @@ class UsersController < ApplicationController
         }
       else
         format.html
+        format.m
         format.xml  { render :xml => @user.to_xml }
         format.json { render :as_json => @user.to_xml }
         format.yaml { render :as_yaml => @user.to_xml }

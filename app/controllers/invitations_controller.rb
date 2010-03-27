@@ -64,13 +64,13 @@ class InvitationsController < ApplicationController
       if @invitation.save
         @user = @invitation.invited_user
         f.html { redirect_to target_people_path }
+        f.m    { redirect_to target_people_path }
         f.js
       else
-        f.html do
-          flash[:error] = @invitation.errors.full_messages.first
-          redirect_to target_people_path
-        end
-        name = @user ? @user.name : 'user'
+        flash[:error] = @invitation.errors.full_messages.first
+        f.html { redirect_to target_people_path }
+        f.m    { redirect_to target_people_path }
+        name = @user ? @user.name : 'user' # This line is doing something?
         f.js { render :text => "alert('Error inviting #{user}. Maybe you are trying to invite an existing user.');" }
       end
     end
