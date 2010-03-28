@@ -2,9 +2,9 @@
 # Mark missing translations by adding ##### at the end of the line
 zh:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "Now with <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile Site, French and German locales and API</a>!"
+  latest_announcement: "现在访问<a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile站点，法文和德文本地包及API</a>!"
   common:
-    and: and
+    and: 和
     or: 或者
     delete: 删除
     edit: 编辑
@@ -15,8 +15,8 @@ zh:
     save: 保存
     show_more: 显示{{number}}的更多信息
     print: 打印此页
-    prev: Previous
-    next: Next
+    prev: 上一个
+    next: 下一个
     comment:
       one: "{{count}}条评论"
       other: "{{count}}条评价"
@@ -116,25 +116,25 @@ zh:
       first_day_of_week: 一周开始于
       change_password: 修改密码
       confirm_password: 确认密码
-      use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
-      notify_mentions: "Notify me when I'm mentioned e.g. Howdy @{{login}}! You'll receive an email!"
-      notify_conversations: Notify me when I'm watching a conversation
-      notify_task_lists: Notify me when I'm watching a task list
-      notify_tasks: Notify me when I'm watching a task
-      wants_task_reminder: "Send me a daily email of my tasks"
-      invalid_login: "use only letters, numbers and _"
+      use_this_email: "您已经被邀请使用此电子邮件地址共享使用项目。如果您希望使用这些项目，请不要修改此邮件地址。在您完成注册过程后，您可以修改您的邮件地址。"
+      notify_mentions: "在消息中提及我时通知我。例如：“你好，@{{login}}!”您将收到一封提醒的电子邮件"
+      notify_conversations: 在我关注的话题变化时通知我
+      notify_task_lists: 在我关注的任务列表变化时通知我
+      notify_tasks: 在我关注的任务变化时通知我
+      wants_task_reminder: "发送我的任务每日情况报告"
+      invalid_login: "只能使用字母，数字和下划线_"
       avatar:
         field: 您的头像
         presence: "您不能上传空文件"
         max_size: "文件大小不能超过{{mb}}"
         we_have_this_avatar: "当前您的头像："
-        upload_here_or_at_gravatar: "You can upload a new avatar here, or upload it to <a href='http://gravatar.com'>Gravatar</a> for a global avatar you can use with Teambox and many other websites."
+        upload_here_or_at_gravatar: "您可以在这里上传新的头像，或上传到<a href='http://gravatar.com'>Gravatar</a>作为一个通用的头像，用于Teambox或其它网站。"
       tooltips:
-        login: "You need a username to login. People will be able to find you by username. Must be all lowercase, no spaces. You can use undescores."
+        login: "您需要用户名才能登录。其他人通过用户名可以找到你。必须全为小写字母，不能有空格，可以使用下划线。"
         first_name: 最多20个字符.
         last_name: 最多20个字符.
-        email: Enter your real email so your team-mates can contact you.
-        password: "Combining letters, numbers, uppercase and lowercase is a good idea."
+        email: 请输入真实的Email地址，你的队友可以通过邮件联系您。
+        password: "组合字母，数字，大小写混合是个好注意。"
     new:
       title: 创建新帐号
       submit: 创建帐号
@@ -157,11 +157,11 @@ zh:
       updated: 用户个性设置已更新！
       error: "不能保存修改的个性设置，请修正错误并重试。"
     activation:
-      resent: "We've re-sent the activation email. Take a look at your inbox!"
-      already_done: "You had already confirmed your email! You can now use Teambox."
-      activated: "Your account has been activated! Welcome to Teambox :)"
-      invalid: "<p>Invalid or expired access link. Login with your email and password.</p><p>If you don't remember your login data, follow the Forgot your Password link.</p>"
-      invalid_user: Invalid user
+      resent: "我们已经重新发送了激活邮件。请检查您的收件箱！"
+      already_done: "您已经确认了您的email地址！现在您可以使用Teambox了。"
+      activated: "您的帐号已经激活！欢迎使用Teambox :)"
+      invalid: "<p>无效或已经过期的链接。请使用您的email和密码登录。</p><p>如果您忘记了您的登录密码，请点击下面的“忘记密码”链接。</p>"
+      invalid_user: 无效用户
     show:
       profile: 个性设置
       projects: 项目
@@ -172,35 +172,35 @@ zh:
       remove_from_project: 从项目中移除
     welcome:
       get_started: 开始使用Teambox!
-      intro1: "You're our newest member! You'll soon see how Teambox can become your day's starting point."
-      intro2: "Where can you go now? Create a project to <b>collaborate</b>:" # or an agenda to <b>keep track of contacts</b>:"
+      intro1: "欢迎您成为我们的新成员！您将了解到Teambox如何成为您每日工作的起点。"
+      intro2: "接下来怎么做？创建一个项目进行<b>协作</b>：" # or an agenda to <b>keep track of contacts</b>:"
       projects:
         title: 项目
-        share_and_collaborate: "Share and collaborate with your team! Project's wall updates, conversations, tasks, pages and files."
-        create_your_first_project: "An event, a design, a product... Go ahead and <a href='{{link}}'>create your first project</a> now!"
+        share_and_collaborate: "与您的团队进行分享和协作！项目的日常更新，话题，任务，页面和文件。"
+        create_your_first_project: "事件，设计，产品... 现在开始<a href='{{link}}'>创建您的第一个项目</a>！"
       spread:
-        title: 您也喜欢我们吗？
-        reasons: "We've been working on Teambox for years, hoping it can be useful for you.<br/>We're real people, motivated developers with a mission, just like you!"
-        help: You can <b>help us</b> by telling your friends how you enjoy Teambox on
+        title: 您也喜欢我们的产品吗？
+        reasons: "我们已经在Teambox工作多年时间，希望它可以对您有所帮助。<br/>我们和您一样，是真实的人，为目标为激情工作的开发者！"
+        help: 您可以<b>帮肋我们</b>，通过告诉您的朋友您对Teambox的喜爱
         twitter: 'Twitter,'
         facebook: Facebook
-        in_your_site: in your site!
-        tell_us: "If you enjoy using Teambox, also consider <a href='mailto:{{address}}'>telling us about it</a> in an email!"
+        in_your_site: 在您的网站！
+        tell_us: "如果您喜欢使用Teambox，也请考虑<a href='mailto:{{address}}'>通过Email告诉我们</a>！"
       stop_welcome: 不再显示此欢迎页签
     unconfirmed_email:
       title: 确认您的邮件
-      invitation_sent_to: "An email invitation was sent to <i>{{email}}</i>, in order to verify your email address."
-      follow_the_link: Please <b>open this email and follow the link inside it</b> to activate your account.
-      problems_title: Problems?
-      resend: "Can't find the email? Press <a href='{{link}}'>here</a> to re-send the activation email."
-      spam: "Make sure the email wasn't classified as spam by your email client."
-      wrong_address: "Wrong address? If you mistyped your email address, <a href='{{link}}'>cancel the signup process</a> and re-create your account with a valid address."
-      problems: "If you're still having problems, please contact us at {{support}}"
+      invitation_sent_to: "已经向<i>{{email}}</i>发出一封邮件邀请，以确认您的邮件地址。"
+      follow_the_link: 请<b>打开此邮件并点击邮件中的链接</b>，以激活您的帐号。
+      problems_title: 问题？
+      resend: "没有收到邮件？请点击<a href='{{link}}'>这里</a>重新发布激活邮件。"
+      spam: "请确保在您的邮件客户端程序中，此邮件没有被标识为垃圾邮件。"
+      wrong_address: "不正确的邮件地址？如果您的邮件地址拼写错误，<a href='{{link}}'>取消注册过程</a>并使用一个有效的邮件地址重新创建您的帐号。"
+      problems: "如果还有其它问题，请通过{{support}}联系我们"
     profile_completeness:
       title: 完整的个人信息
       complete_your_profile: 填写完整您的个人信息，有助于您的团队可以通过您的信息与您保持联系！
       completeness: "完整程序：{{percentage}}%"
-      to_get_to: to get to
+      to_get_to: 以得到
     daily_task_reminder_email:
       daily_task_reminder: "每日任务提醒"
       daily_task_reminder_from_teambox: "这是来自Teambox的每日任务提醒邮件。"
@@ -209,7 +209,7 @@ zh:
       tasks_for_tomorrow: "明日任务"
       tasks_for_next_two_weeks: "下两周任务"
       tasks_without_a_due_date: "无截止日期任务"
-      you_receive_this_message: "您收到此邮件是因为您设置了要求收到提醒。您通过{{link}}禁用它。"
+      you_receive_this_message: "您收到此邮件是因为您设置了提醒选项。您可以通过{{link}}不再收到这些邮件"
       settings_page: "设置页"
   groups:
     index:
@@ -270,14 +270,14 @@ zh:
     primer:
       empty: 您还不能拥有或属于任何项目。
       create_first: 创建您第一个项目!
-      define1: "Use projects to <b>collaborate</b> with groups of people: A website, organizing a party, client work..."
-      define2: "You can create <b>as many projects as you wish</b> to share with different users online."
-      item1: "<b>Create a project</b>, name it and <b>invite some contacts</b> to it."
-      item2: "<b>Comment</b> about what you're doing at each moment in the general timeline."
-      item3: "<b>Discuss</b> about important decisions with Conversations."
-      item4: "<b>Plan</b> what needs to be done and post updates with Tasks."
-      item5: "<b>Share information</b> by easily editable Pages for each project."
-      footer: "Projects are a centralized way of collaborating, so you'll never need to email your team again."
+      define1: "项目用户与一组人进行<b>协作</b>：建立网站，组织一次聚会，客户工作..."
+      define2: "您可以创建<b>您需要多少就多少个项目</b>，以便和不同的在线用户分享。"
+      item1: "<b>创建一个项目</b>，命名它，然后<b>邀请一些相关人士</b>使用它。"
+      item2: "<b>评论</b>您所做的每一件事，在任何时候都可以。"
+      item3: "<b>讨论</b>关于任何重要的决定（话题）"
+      item4: "<b>计划</b>需要完成的任何及发布对任务的更新。"
+      item5: "<b>分享信息</b>于多个项目，通过易于修改的页面。"
+      footer: "项目是一个集中化协作的通用方式，所以您不再需要发送电子邮件给您的团队。"
     show:
       update_your_status: "更新您的状态..."
       text_styling: 文本样式
@@ -291,16 +291,17 @@ zh:
         title: "{{name}}"
         description: "项目{{name}}的近期活动"
     fields:
+      tracks_time: "启用时间跟踪"
       archiving: "存档此项目"
       forever: "永久删除此项目"
       owner: "所有者"
       owner_description: "所有者是一个项目的主要负责人，他不能被从此项目中移除，除非先行指定另一个所有者。"
       name: 名称
-      name_description: "Choose a brief and descriptive title. For example: Taggart Transcontinental"
+      name_description: "请选择一个简短明确的标题。如：Taggart Transcontinental"
       permalink: URL
-      permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
+      permalink_description: "这是您项目的网址。请尽量简短，不允许有空格。"
       archived: 存档此项目
-      confirm_delete: "Are you sure you'd want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you want to keep it, use Archive Project instead."
+      confirm_delete: "您确信要永久删除此项目？此操作不可恢复。如果您还想保留它，请使用存档项目操作。"
     new_primer:
       define1: 项目是一个与您的团队成员共享的群。
       define2: "在项目中，每个项目成员可以："
@@ -321,6 +322,7 @@ zh:
       created: 您的项目已经创建成功！
       invalid_project: "无效的项目，请修正错误并重试"
       create_an_example_project: "第一次使用Teambox？可以先<a href='{{link}}'>创建一个样例项目</a>以尝试并熟悉Teambox。"
+      not_allowed: "您的当前帐号不能创建任何项目。"
     edit:
       title_settings: 一般设置
       title_picture: 项目Logo
@@ -328,34 +330,34 @@ zh:
       title_ownership: 所有者
       submit: 保存修改
       change_owner: 修改所有者
-      transferred: "Project ownership has been transferred."
-      invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
+      transferred: "项目所有者已经被移交。"
+      invalid_transferred: "项目所有者不能移交，请修正错误并重试。"
   invitations:
     fields:
-      user_or_email: "Enter your teammate's username or email:"
+      user_or_email: "请输入你队友的用户名或email："
     invitation:
-      invited_user: "{{inviter}} invited <b>{{invitee}}</b> to join the project."
-      invited_email: "{{inviter}} invited <b>{{email}}</b> to join the project."
-      time_ago: "({{time_ago_in_words}} ago)"
-      resend: Re-send invitation email
-      pending: "An email was sent to this user, but they still haven't confirmed."
-      discard: Discard invitation
+      invited_user: "{{inviter}}邀请<b>{{invitee}}</b>加入这个项目。"
+      invited_email: "{{inviter}}邀请<b>{{email}}</b>加入这个项目。"
+      time_ago: "({{time_ago_in_words}}以前)"
+      resend: 重新发送邀请邮件
+      pending: "已经向此用户发送邀请邮件，但对方还没有确认邀请。"
+      discard: 放弃邀请
     group_invitation:
-      invited_user: "{{inviter}} invited <b>{{invitee}}</b> to join the group."
-      invited_email: "{{inviter}} invited <b>{{email}}</b> to join the group."
+      invited_user: "{{inviter}}邀请<b>{{invitee}}</b>加入这个小组。"
+      invited_email: "{{inviter}}邀请<b>{{email}}</b>加入这个小组。"
     sent:
-      email_sent: "<b>We just sent a notification email to this user with a link to accept your project invitation</b>. If they can't find the email, make sure it was not classified as spam or try a different email address. If problems persist, please contact our staff."
+      email_sent: "<b>我们刚刚发布了一个提醒邮件给此用户，邮件中包含了一个接受您项目邀请的链接。</b>. 如果他们不能收到此邮件，请确保此邮件不会作为垃圾邮件处理，或者尝试换一个邮件地址。如果还有问题，请联系我们。"
     pending:
-      to_access_or: to access the project or
-      to_access_or_group: to access the group or
-      invited_to_join: "{{by}} has invited you to join the project {{project}}."
-      invited_to_join_group: "{{by}} has invited you to join the group {{group}}."
+      to_access_or: 访问项目或者
+      to_access_or_group: 访问小组或者
+      invited_to_join: "{{by}}已邀请您加入项目{{project}}."
+      invited_to_join_group: "{{by}}已邀请您加入小组{{group}}."
     resend:
-      resent: "The invitation has been resent to {{recipient}}. If the email is not received make sure to check the spam folder."
+      resent: "邀请已经重新发送给{{recipient}}。如果没有收到邮件，请先查看一下垃圾邮件目录。"
       return: 返回
     index_user:
       title: 待确认的邀请
-      no_invitations: "You have no pending project invitations."
+      no_invitations: "您没有未处理的项目邀请。"
     search:
       username_or_email: "请输入您的团队成员的用户名或email"
       invite_people: 邀请其他人加入此项目
@@ -377,16 +379,16 @@ zh:
       name: 标题
       body: 第一条评论
       tooltips:
-        name: "As short as possible, this will appear in notification email's subjects"
-        body: "Ask a question, tell your team what's new, start a discussion"
+        name: "尽量简短，这些内容将作为提醒邮件的标题"
+        body: "提出问题，告诉您的团队成员最新动态，开始一个讨论"
     new:
       title: 新的话题
       submit: 创建
     watcher_fields:
-      add_suscribers: Which people will be watching this conversation?
-      subscribe_note: These people will be notified via email of this message and any following comments.<br/>They can unsubscribe at any moment.
+      add_suscribers: 哪些人将关注这个话题？
+      subscribe_note: 这些人将通过email得到这个消息及相关评论的提醒。<br/>他们可以随时取消订阅。
       invite_users: 您是这个项目的唯一成员！
-      no_users_yet: "Conversations are more useful when shared. <a href='{{invite_link}}'>Invite some users</a> to this project now so they can access this conversation, answer and receive updates."
+      no_users_yet: "话题因分享而更有用。现在就<a href='{{invite_link}}'>邀请某人</a>加入此项目，以便他们可以读取这个话题，解答问题或收到更新提示。"
       people_all: "所有项目成员"
     edit:
       submit: '更新话题'
@@ -397,20 +399,20 @@ zh:
     primer:
       empty: 当前项目还没有任何话题。
       create_first: 在这个项目中创建第一个话题！
-      define: "Use conversations to <b>discuss decisions</b> and <b>update your team</b> in a centralized way.<br/>Each conversation is a thread of comments, which replace messy emails."
-      item1: "<b>Share files</b>. Comments can have attached files, too."
-      item2: "<b>Subscribe</b> to a conversation to be notified about future replies by email or RSS."
-      item3: "<b>Impress</b>. Any comment can be formatted with text styles."
-      item4: "<b>Inbox-driven?</b> You can answer to a conversation from your email to post a reply."
-      footer1: "Conversations are great to <b>share a design</b>, <b>decide a date</b> for meeting or <b>report</b> some news."
-      footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
+      define: "使用话题作为一个集中的方式<b>讨论决定</b>和<b>同步您的团队</b>。<br/>每个话题是一系列的评论，用于代替成堆的邮件。"
+      item1: "<b>分享文件</b>. 评论也可以包含附件。"
+      item2: "<b>订阅</b>一个话题可以通过Email或RSS得到将来回复的通知。"
+      item3: "<b>加深印象</b>. 任何评论都可以使用文本样式进行格式化。"
+      item4: "<b>收件箱驱动?</b> 您可以通过回复您的邮件的方式，向一个话题发表回复。"
+      footer1: "话题是一个很好的方式，用于<b>分享设计</b>, <b>决定会议日期</b>或者<b>报告新闻动态</b>。"
+      footer2: "因为话题是线程式的，它很容易回溯了解到某个文件已经发布，每个成员说过的内容。在Teambox中，<b>协作也是汇报的过程</b>."
     column:
       new_conversation: 新的话题
       #####
       cant_create: You don't have permission to create conversations in this project
       subscribe: 订阅动态反馈
     conversation_with_extract:
-      posted_by: Posted by
+      posted_by: 发表者：
     show:
       started_by: 开始于
       edit: 修改标题
@@ -419,6 +421,20 @@ zh:
     short_conversation:
       comment: 评论
       comments: 评论
+  hours:
+    comments: 时间输入
+    filter_by: 过滤于
+    report: 报告
+    week_num: 第{{num}}周
+    entry_hours: 小时
+    entry_total: 合计
+    week_total: 周合计
+    all_tasks: 全部任务
+    all_users: 所有用户
+    reports:
+      user: 用户
+      project: 项目
+      task: 任务
 
   tasks:
     errors:
@@ -450,20 +466,20 @@ zh:
         other: "显示{{count}}条已存档的任务"
       hide_archived_tasks:
         one: "隐藏一条已存档的任务"
-        other: "Hide {{count}} archived tasks"
+        other: "隐藏{{count}}条已存档的任务"
     destroy_message:
-      deleted: "The Task <b>{{name}}</b> was successfully deleted!"
+      deleted: "任务 <b>{{name}}</b>已经成功删除！"
     archive_message:
-      archived: "The Task <b>{{name}}</b> was successfully archived!"
+      archived: "任务 <b>{{name}}</b>已经成功存档！"
     archive_box:
-      you_are_done: It looks like you're done with this task!
-      archive: Archive this task
-      reopen: Reopen this task
+      you_are_done: 看上去您已经完成了这个任务！
+      archive: 存档此任务
+      reopen: 重新打开任务
     unarchive_box:
-      task_is_closed: This task is closed and archived
-      unarchive: Unarchive
-      reopen: Reopen this task
-    overdue: "{{days}} days late"
+      task_is_closed: 此任务已经关闭并存档
+      unarchive: 取消存档
+      reopen: 重新打开任务
+    overdue: "{{days}}天以后"
     status:
       new: 新建
       open: 未分配
@@ -485,7 +501,7 @@ zh:
       text_styling: 文本样式
   dividers:
     actions:
-      delete_confirm: Are you sure you want to delete this divider?
+      delete_confirm: 您确认要删除此Divider?
     new:
       submit: 新增
     edit:
@@ -499,14 +515,14 @@ zh:
     primer:
       empty: 这个项目还没有任何页面。
       create_first: 在这个项目中创建第一个页面！
-      define1: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
-      define2: "编辑ing a page is easy and fun, with drag-and-drop elements you can edit in place."
-      item1: "<b>Share</b>. All your teammates can view and edit the project's pages."
-      item2: "<b>Publish</b>. Instant web publishing with shared pages. Show the world."
-      item3: "<b>Print</b>. Pages are printer-friendly. Try printing or exporting a PDF!"
-      item4: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
-      footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
-      footer2: "You can also attach files to any page inside each note. Enjoy!"
+      define1: "这里您可以和您的团队<b>分享有用的信息</b>：路线图，有意思的链接，规定，邮件模板等等..."
+      define2: "修改一个项目是相当容易和有趣的事，通过拖曳元素您可以即时修改页面。"
+      item1: "<b>分享</b>. 所有您的团队成员都可以查看和修改项目的页面。"
+      item2: "<b>发布</b>. 通过共享页面进行即时网络发布，全世界都可以看到。"
+      item3: "<b>打印</b>. 页面是打印友好的，请尝试一下打印或导出为PDF！"
+      item4: "<b>Wiki</b>. 页面就象是wiki，提供了一种快速访问项目信息的方式。"
+      footer1: "使用Teambox作为您的频繁使用的<b>共享白板</b>。"
+      footer2: "您也可以添加附件到任何页面。使用愉快！"
     buttons:
       new_note: 备注
       new_divider: Divider
@@ -514,15 +530,15 @@ zh:
       new_task_list: 任务列表
     new:
       title: 新增页面
-      define1: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
-      define2: "Editing a page is easy and fun, with drag-and-drop elements you can edit in place."
-      feature1: "<b>Share</b>. All your teammates can view and edit the project's pages."
-      feature2: "<b>Publish</b>. Instant web publishing with shared pages. Show the world."
-      feature3: "<b>Print</b>. Pages are printer-friendly. Try printing or exporting a PDF!"
-      feature4: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
-      footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
-      footer2: "You can also attach files to any page inside each note. Enjoy!"
-      submit: Create
+      define1: "这里您可以和您的团队<b>分享有用的信息</b>：路线图，有意思的链接，规定，邮件模板等等..."
+      define2: "修改一个项目是相当容易和有趣的事，通过拖曳元素您可以即时修改页面。"
+      item1: "<b>分享</b>. 所有您的团队成员都可以查看和修改项目的页面。"
+      item2: "<b>发布</b>. 通过共享页面进行即时网络发布，全世界都可以看到。"
+      item3: "<b>打印</b>. 页面是打印友好的，请尝试一下打印或导出为PDF！"
+      item4: "<b>Wiki</b>. 页面就象是wiki，提供了一种快速访问项目信息的方式。"
+      footer1: "使用Teambox作为您的频繁使用的<b>共享白板</b>。"
+      footer2: "您也可以添加附件到任何页面。使用愉快！"
+      submit: 创建
     edit:
       title: 修改页面
       submit: 更新
@@ -530,7 +546,7 @@ zh:
       name: 标题
       name_description: 请使用简短清晰的标题
       description: 说明
-      description_description: "Optional. Enter any information that people reading or editing this page should know."
+      description_description: "可选。可以输入任何其他人在阅读或修改此页面时需要了解的信息。"
     slots:
       insert_here: 插入在这里
     column:
@@ -561,16 +577,15 @@ zh:
     primer:
       empty: 这个项目还没有任何话题。
       create_first: 在这个项目中创建第一个任务列表！
-      define: "Use tasks to <b>plan ahead</b>, <b>keep track of progress</b> and <b>review what's been done</b>.<br/><i>What? Who? When?</i> Tasks can have a status, an assigned person and due dates."
-      item1: "<b>Plan</b>. Create tasks inside each list and assign them to your teammates."
-      item2: "<b>Report</b>. Post comments for each task. Attach files. Ask for feedback."
-      item3: "<b>Follow</b>. Receive notifications for tasks related to you."
-      item4: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
-      footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others now."
-      footer2: "It's time to forget about excel planning sheets and complex GANTT charts!"
+      define: "使用任务进行<b>事前计划</b>, <b>跟踪进程</b>和<b>了解已经完成的工作</b>。<br/><i>何事？何人？何时？</i> 任务可以有状态，执行者和截止日期。"
+      item1: "<b>计划</b>. 在列表中创建任务并分配给您的团队成员。"
+      item2: "<b>报告</b>. 发表评论到每个任务，添加附件，回复反馈信息。"
+      item3: "<b>跟进</b>. 得到与您相关任务的提醒。"
+      item4: "<b>预览</b>. 已经完成的任务不会被删除，您可以在将来继续读取到这些消息和文件。"
+      footer1: "任务是一个简单而敏捷的方式去<b>完成事情</b>，所以，马上使用它吧。"
+      footer2: "是时候忘记Excel计划表和复杂的甘特图了！"
     new:
       title: 创建任务列表
-      submit: 创建任务列表
       submit: 创建任务列表
     edit:
       submit: 更新任务列表
@@ -590,39 +605,39 @@ zh:
       submit: 更新人员
     fields:
       role: 角色
-      #####
-      observer: Observer. Read-only access to the project.
-      commenter: "Commenter. Can comment, but not create new elements."
-      participant: "Participant. Can do everything, but not invite users."
-      admin: Administrador. Can invite users to the project.
+      observer: 观察者。对项目只有只读权限。
+      commenter: "评论者。可以评论，但不能创建新的元素。"
+      participant: "参与者。可以做任何事，但不能邀请用户。"
+      admin: "管理员。可以邀请新用户加入此项目。"
     header:
       owner: 项目所有者
+      observer: 观察者
+      commenter: 评论者
+      participant: 参与者
+      admin: 管理员
       remove: 移除
       transfer: 改变所有者
       leave_project: 离开项目
       confirm_delete: 您确信要把此人从项目中移除？
     errors:
       user_or_email: "用户没有找到。请输入他的用户名或Email。"
-    #####
     column:
-      inviting: "Inviting other users"
-      only_admins_can_invite: "Only admins can invite people to this project."
-      contact_admins:
-        one: "In this project, only {{admins}} can invite new members."
-        other: "In this project, only {{admins}} can invite new members."
-      leaving: "Leaving the project"
-      you_can_leave: "You can leave this project at any moment. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
-      leave_project: "Leave this project"
-      confirm_delete: Are you sure you want to leave this project?
+      inviting: "邀请其它用户"
+      only_admins_can_invite: "只有管理员才可以邀请其他人加入此项目。"
+      contact_admins: "在这个项目中，只有{{admins}}可以邀请新成员加入。"
+      leaving: "离开项目"
+      you_can_leave: "您可以在任何时候离开这个项目。如果这样做，你将不能访问任何数据，不能收到任何提醒邮件。其他人仍然可以使用此项目，不会丢失任何数据。"
+      leave_project: 离开项目
+      confirm_delete: 您确信要把此人从项目中移除？
   comments:
     comment:
       commented_on: "-"
       commented_on_a_task_list: "-"
-      confirm_delete: 您砍要删除这条评论？
+      confirm_delete: 您确信要删除这条评论？
     new:
       assigned_to_nobody: '未分配'
       assigned_to: "分配给:"
-      submit: 评论
+      submit: 保存
       project: "您在做什么？分享想法，链接，更新。"
       conversation: "发送消息给群里其他成员。"
       task_list: "分享这个任务列表的想法。需要创建和分配任务，请使用侧务条。"
@@ -636,11 +651,11 @@ zh:
   example_projects:
     new:
       learn: 通过例子学习！
-      line1: "If it's your first time using Teambox, you can create an example project with some contents."
-      line2: "Navigating through the pages will teach you how to use each part of Teambox."
-      line3: "Make sure you <b>read the instructions</b> and <b>experiment</b> creating, editing and deleting elements!"
+      line1: "如果您是第一次使用Teambox，您可以创建一个包含一些内容的样例项目。"
+      line2: "浏览这些页面将引导您使用Teambox的各个部分。"
+      line3: "确保您<b>阅读介绍</b>和<b>试验</b>如何创建、修改和删除元素！"
       create: 创建一个样例项目
-      line4: "In this project you won't be able to invite other users, but you can do all the rest."
+      line4: "在这个项目您不能邀请其它用户，但您可以做其它任何事。"
       error: "不能创建样例项目。"
       error_list: "不能创建样例项目。以下项目是无效的：{{list}}。"
   uploads:
@@ -661,11 +676,11 @@ zh:
     primer:
       empty: 这个项目还没有任何文件。
       create_first: 在这个项目中上传第一个文件！
-      define1: "Ever had problems sharing a file with your team? Teambox makes sharing easy again."
-      define2: "You can upload files here or attach documents to conversations, tasks or pages. "
-      item1: "<b>Bigger files</b>. Upload files of any size and forget about email limitations."
-      item2: "<b>Versioning</b>. Upload new versions of a file and keep track of changes."
-      item3: "<b>Always available</b>. Files stay in context in the project for future reference."
+      define1: "还有与您的团队分享文件的问题？Teambox再次让分享更容易。"
+      define2: "您可以在这里上传文件，或者附加文件到话题，任务或页面。"
+      item1: "<b>更大的文件</b>. 上传任意大小的文件，忘记电子邮件附件大小的限制吧。"
+      item2: "<b>版本</b>. 上传新版本的文件，同时保留旧版本的变更记录。"
+      item3: "<b>永远可用</b>. 文件保存在项目上下文相关的地方，将来查找引用更方便。"
     upload:
       uploaded_the_file: "已上传文件"
       download: 下载
@@ -739,8 +754,8 @@ zh:
       services: 服务
       community: 社区
       help: 帮助和支持
-      privacy: Privacy
-      terms: Terms of use
+      privacy: 隐私
+      terms: 使用条款
     user_navigation:
       account_settings: 帐号设置
       profile_information: 个人信息
@@ -754,9 +769,9 @@ zh:
         other: "我的{{count}}个任务"
       everybodys_tasks: "所有人的任务"
       show_archived_tasks:
-        one: "Show 1 Archived Task"
-        other: "Show {{count}} Archived Tasks"
-      hide_archived_tasks: "Hide Archived Tasks"
+        one: "显示一条已归档的任务"
+        other: "显示{{count}}条已归档的任务"
+      hide_archived_tasks: "隐藏归档任务"
     footer:
       support: 反馈和缺陷
       mobile: 移动版
@@ -778,41 +793,41 @@ zh:
 
   emailer:
     common:
-      do_not_answer: "Do not answer to this email."
-      answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
+      do_not_answer: "请不要回复此邮件。"
+      answer_above_this_line: "回复此行以发表回复"
     invitation:
-      collaborate_with: "{{name}} wants to collaborate with you on Teambox:"
-      you_have_been_invited_to: "You have been invited to the project <b>{{project}}</b>"
-      accept_the_invitation: Accept the invitation to start collaborating
-      current_users: "Current users in this project:"
-      plaintext_link: "If the above link doesn't work, copy and paste the following code into your browser bar: "
-      teambox_is_a_pm_platform: "Teambox is a project management platform made for real-world collaboration."
-      plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
-      report_abuse: "This email was sent to you by your contact's request. Please report any abuse."
+      collaborate_with: "{{name}}希望通过Teambox与您协作："
+      you_have_been_invited_to: "您已经被邀请加入项目<b>{{project}}</b>"
+      accept_the_invitation: 接受邀请开始协作
+      current_users: "此项目中的当前用户列表："
+      plaintext_link: "如果以上链接不能工作，复制并粘贴以下代码到您的浏览器地址栏："
+      teambox_is_a_pm_platform: "Teambox是一个用于真实世界协作的项目管理平台。"
+      plan_share_and_collaborate: "计划，分享和跟踪需要做的工作。足够简单。"
+      report_abuse: "此邮件应您的朋友要求而发送给您。如有滥用请及时报告。"
     invitation_group:
-      you_have_been_invited_to: "You have been invited to the group <b>{{group}}</b>"
+      you_have_been_invited_to: "您已被邀请加入小组<b>{{group}}</b>"
     confirm:
-      hey: "Hey, {{user_name}}!"
-      follow_the_link: "In order to <b>complete your signup</b> for Teambox, we need you to log in by clicking here:"
-      log_in: "Log into Teambox now!"
-      plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
-      report_abuse: "You receive this message because you signed up for a Teambox account with {{email}}"
-      problems: "If you have any problems, please contact us at {{support}}"
+      hey: "您好, {{user_name}}!"
+      follow_the_link: "为了<b>完成您的Teambox注册</b>，我们需要您通过点击这里登录："
+      log_in: "现在就登录Teambox！"
+      plaintext_link: "如果出现问题，复制并粘贴以下链接到您的浏览器地址栏："
+      report_abuse: "您收到此邮件是因为您使用了{{email}}注册了一个Teambox帐号"
+      problems: "如果您有任何问题，请通过{{support}}联系我们"
     reset_password:
-      hey: "Hey, {{user_name}}!"
-      follow_the_link: "In order to <b>set a new password</b> for Teambox, we need you to log in with the following link:"
-      log_in: "Log into Teambox now!"
-      plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
-      report_abuse: "You receive this message because you signed up for a Teambox account with {{email}}"
-      problems: "If you have any problems, please contact us at {{support}}"
+      hey: "您好, {{user_name}}!"
+      follow_the_link: "为了<b>设置新的Teambox密码</b>，我们需要您通过以下链接进行登录："
+      log_in: "现在就登录Teambox！"
+      plaintext_link: "如果出现问题，复制并粘贴以下链接到您的浏览器地址栏："
+      report_abuse: "您收到此邮件是因为您使用了{{email}}注册了一个Teambox帐号"
+      problems: "如果您有任何问题，请通过{{support}}联系我们"
     notify:
       project: "Teambox项目:"
-      view_online: "You can <a href='{{link}}'>view this conversation online</a> to answer and attach files."
-      reply: "You can also answer to this email to post a reply in the conversation."
-      are_watching: " are suscribed to this conversation, and will be notified of future replies."
-      stop_watching: "<a href='{{stop_watching_url}}'>Stop watching</a> this thread to stop receiving email notifications."
-      notification_settings: "You can change your <a href='{{url}}'>notification settings</a> for further emails."
-      comment: "Comment on project's wall: "
+      view_online: "您可以<a href='{{link}}'>在线查看这个话题</a>，进行答复，也可以附加文件。"
+      reply: "您也可以通过回复此邮件来发表您对这个话题的答复。"
+      are_watching: "已经订阅了此话题，将能够收到回复的提醒。"
+      stop_watching: "<a href='{{stop_watching_url}}'>停止订阅</a>这一话题将中止收到邮件提醒。"
+      notification_settings: "您可以通过<a href='{{url}}'>提醒设置</a>修改更多邮件相关设置。"
+      comment: "在项目公告板上评论："
       conversation: "话题:"
       task: "任务:"
       task_list: "任务列表:"
@@ -837,13 +852,13 @@ zh:
     models:
       user:
         biography_presence:
-          title: 'Write your profile'
+          title: '写下您的个人信息'
         biography_length_short:
-          title: 'Expand your profile to 10 words'
+          title: '10个字以内的个人简介'
         biography_length_average:
-          title: 'Expand your profile to 20 words'
+          title: '扩展到20个字的个人简介'
         biography_length_long:
-          title: 'Expand your profile to 30 words'
+          title: '扩展到30个字的个人简介'
   form:
     cancel: 取消
 
@@ -1050,26 +1065,26 @@ zh:
         description: 说明
     errors:
       messages:
-        inclusion: "is not included in the list"
-        exclusion: "is reserved"
-        invalid: "is invalid"
-        confirmation: "doesn't match confirmation"
-        accepted: "must be accepted"
-        empty: "can't be empty"
-        blank: "can't be blank"
-        too_long: "is too long (maximum is {{count}} characters)"
-        too_short: "is too short (minimum is {{count}} characters)"
-        wrong_length: "is the wrong length (should be {{count}} characters)"
-        taken: "has already been taken"
-        not_a_number: "is not a number"
-        greater_than: "must be greater than {{count}}"
-        greater_than_or_equal_to: "must be greater than or equal to {{count}}"
-        equal_to: "must be equal to {{count}}"
-        less_than: "must be less than {{count}}"
-        less_than_or_equal_to: "must be less than or equal to {{count}}"
-        odd: "must be odd"
-        even: "must be even"
-        record_invalid: "Validation failed: {{errors}}"
+        inclusion: "不包含于列表中"
+        exclusion: "是保留关键字"
+        invalid: "是无效的"
+        confirmation: "与确认值不匹配"
+        accepted: "必须是可被接受的"
+        empty: "不能留空"
+        blank: "不能为空字符"
+        too_long: "过长（最长为 {{count}} 个字符）"
+        too_short: "过短（最短为 {{count}} 个字符）"
+        wrong_length: "长度非法（必须为 {{count}} 个字符）"
+        taken: "已经被使用"
+        not_a_number: "不是数字"
+        greater_than: "必须大于 {{count}}"
+        greater_than_or_equal_to: "必须大于或等于 {{count}}"
+        equal_to: "必须等于 {{count}}"
+        less_than: "必须小于 {{count}}"
+        less_than_or_equal_to: "必须小于或等于 {{count}}"
+        odd: "必须为单数"
+        even: "必须为双数"
+        record_invalid: "校验失败: {{errors}}"
       ####
       models:
         comment:
