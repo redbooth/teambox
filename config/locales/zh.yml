@@ -406,6 +406,8 @@ zh:
       footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
     column:
       new_conversation: 新的话题
+      #####
+      cant_create: You don't have permission to create conversations in this project
       subscribe: 订阅动态反馈
     conversation_with_extract:
       posted_by: Posted by
@@ -533,6 +535,8 @@ zh:
       insert_here: 插入在这里
     column:
       new_page: 新增页面
+      #####
+      cant_create: You don't have permission to create pages in this project
   task_lists:
     errors:
       name:
@@ -572,6 +576,8 @@ zh:
       submit: 更新任务列表
     column:
       new_task_list: 创建任务列表
+      #####
+      cant_create: You don't have permission to create tasks in this project
       subscribe: 订阅动态反馈
     show:
       title: "任务列表: {{name}}"
@@ -643,6 +649,8 @@ zh:
       select_a_file: 选择文件
     index:
       new_file: 上传文件
+      #####
+      cant_create: You don't have permission to upload files to this project
       max_upload_size: "最大上传文件大小是{{mb}}Mb"
     form:
       presence: "您不能上传空文件"

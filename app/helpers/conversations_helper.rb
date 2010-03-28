@@ -42,7 +42,6 @@ module ConversationsHelper
   end
   
   def new_conversation_link(project)
-    return unless project.editable?(current_user)
     link_to content_tag(:span, t('.new_conversation')), new_project_conversation_path(project), 
       :class => 'add_button', :title => 'new_conversation_link'
   end

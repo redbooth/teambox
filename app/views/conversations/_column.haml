@@ -1,4 +1,7 @@
 - content_for :column do
-  = new_conversation_link(project)
+  - if project.editable?(current_user)
+    = new_conversation_link(project)
+  - else
+    %p= t('.cant_create')
   .conversations
     = list_conversations(project,conversations,conversation)

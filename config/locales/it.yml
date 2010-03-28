@@ -422,6 +422,8 @@ it:
       footer2: "Essendo tutto collegato, è facile tornare indietro nel temppo e vedere quali file sono stati inviati e cosa ha detto ciascun membro del team. In Teambox, <b>collaborare</b> genera una <b>tracciabilità</b> di quel che si è fatto."
     column:
       new_conversation: Nuova conversazione
+      #####
+      cant_create: You don't have permission to create conversations in this project
       subscribe: Iscriviti al feed
     conversation_with_extract:
       posted_by: Pubblicato da
@@ -564,6 +566,8 @@ it:
       insert_here: Inserisci qui
     column:
       new_page: Nuova pagina
+      #####
+      cant_create: You don't have permission to create pages in this project
   task_lists:
     errors:
       name:
@@ -605,6 +609,8 @@ it:
       submit: Aggiorna
     column:
       new_task_list: Nuova lista di compiti
+      #####
+      cant_create: You don't have permission to create tasks in this project
       subscribe: Iscriviti ai compiti
     show:
       title: "Lista di compiti: {{name}}"
@@ -682,6 +688,8 @@ it:
       select_a_file: Scegli un file
     index:
       new_file: Carica un file
+      #####
+      cant_create: You don't have permission to upload files to this project
       max_upload_size: "La dimensione massima di un file è di {{mb}} Mb"
     form:
       presence: Non puoi caricare un file vuoto

@@ -423,6 +423,8 @@ de:
       footer2: "Durch die Baumanordnung ist es einfach, den zeitlichen Ablauf zu verfolgen, zu sehen welche Dateien gesendet worden sind und die Meinungen jedes Teilnehmers  zu kennen. In Teambox heißt <b>zusammenarbeiten auch kommunizieren</b>."
     column:
       new_conversation: Neue Konversation
+      #####
+      cant_create: You don't have permission to create conversations in this project
       subscribe: Abonnieren Sie den Nachrichten Feed
     conversation_with_extract:
       posted_by: "Veröffentlicht von"
@@ -565,6 +567,8 @@ de:
       insert_here: "Hier einfügen"
     column:
       new_page: Neue Seite
+      #####
+      cant_create: You don't have permission to create pages in this project
   task_lists:
     errors:
       name:
@@ -606,6 +610,8 @@ de:
       submit: Aufgabenliste aktualisieren
     column:
       new_task_list: Neue Aufgabenliste
+      #####
+      cant_create: You don't have permission to create tasks in this project
       subscribe: Abonnieren Sie den Nachrichten Feed
     show:
       title: "Aufgabenliste: {{name}}"
@@ -683,6 +689,8 @@ de:
       select_a_file: "Wählen Sie eine Datei"
     index:
       new_file: Eine Datei hochladen
+      #####
+      cant_create: You don't have permission to uploads files to this project
       max_upload_size: "Max Anhang-Größe ist {{mb}} Mb"
     form:
       presence: "Sie können keine leere Datei hochladen"

@@ -407,6 +407,8 @@ fr:
       footer2: "Etant ordonnées par fils, il est facile de retourner en arrière dans le temps pour voir quels fichiers ont été envoyés et ce qui a été dit par chaque membre de l'équipe. Dans Teambox, <b>collaborer</b> génère une <b>traçabilité</b> de ce qui a été fait."
     column:
       new_conversation: Nouvelle conversation
+      #####
+      cant_create: You don't have permission to create conversations in this project
       subscribe: Souscrivez au fil d'actualités
     conversation_with_extract:
       posted_by: Publié par
@@ -547,6 +549,8 @@ fr:
       insert_here: Insérez Ici
     column:
       new_page: Nouvelle page
+      #####
+      cant_create: You don't have permission to create pages in this project
   task_lists:
     errors:
       name:
@@ -586,6 +590,8 @@ fr:
       submit: Actualiser
     column:
       new_task_list: Nouvelle liste de tâches
+      #####
+      cant_create: You don't have permission to create tasks in this project
       subscribe: Souscrivez à ces tâches
     show:
       title: "Liste de tâches: {{name}}"
@@ -612,7 +618,7 @@ fr:
       remove: Expulser
       transfer: Transférer le projet
       leave_project: Quitter le projet
-      confirm_delete: Etes-vous sûr de vouloir éliminer cette personne du projet?
+      confirm_delete: Êtes-vous sûr de vouloir éliminer cette personne du projet?
     errors:
       user_or_email: "Utilisateur introuvable. Entrez son nom d'utilisateur ou email."
       #####
@@ -661,6 +667,8 @@ fr:
       select_a_file: Sélectionnez un fichier
     index:
       new_file: Télécharger un fichier
+      #####
+      cant_create: You don't have permission to upload files to this project
       max_upload_size: "La taille maximale est de {{mb}} Mb"
     form:
       presence: "Vous ne pouvez pas joindre un fichier vide"

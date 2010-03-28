@@ -408,6 +408,7 @@ en:
       footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
     column:
       new_conversation: New Conversation
+      cant_create: You don't have permission to create conversations in this project
       subscribe: Subscribe to the news feed
     conversation_with_extract:
       posted_by: Posted by
@@ -549,6 +550,7 @@ en:
       insert_here: Insert Here
     column:
       new_page: New Page
+      cant_create: You don't have permission to create pages in this project
   task_lists:
     errors:
       name:
@@ -587,6 +589,7 @@ en:
       submit: Update Task List
     column:
       new_task_list: New Task List
+      cant_create: You don't have permission to create tasks in this project
       subscribe: Subscribe to the news feed
     show:
       title: "Task List: {{name}}"
@@ -658,6 +661,7 @@ en:
       select_a_file: Select a file
     index:
       new_file: Upload a File
+      cant_create: You don't have permission to upload files to this project
       max_upload_size: "Max upload size is {{mb}} Mb"
     form:
       presence: "You can't upload a blank file"

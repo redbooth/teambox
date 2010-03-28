@@ -407,6 +407,7 @@ es:
       footer2: "Estando ordenadas por hilos, es fácil volver atrás en el tiempo y ver qué archivos se enviaron y qué dijo cada miembro del equipo. En Teambox, <b>colaborar</b> genera una <b>trazabilidad</b> de qué se hizo."
     column:
       new_conversation: Nueva conversación
+      cant_create: No tienes permiso para crear conversaciones en este proyecto.
       subscribe: Suscríbete al feed
     conversation_with_extract:
       posted_by: Publicado por
@@ -548,6 +549,7 @@ es:
       insert_here: Insertar Aquí
     column:
       new_page: Nueva página
+      cant_create: No tienes permiso para crear páginas en este proyecto.
   task_lists:
     errors:
       name:
@@ -587,6 +589,7 @@ es:
       submit: Actualizar
     column:
       new_task_list: Nueva lista de tareas
+      cant_create: No tienes permiso para crear tareas en este proyecto.
       subscribe: Suscríbete a las tareas
     show:
       title: "Lista de tareas: {{name}}"
@@ -661,6 +664,7 @@ es:
     index:
       new_file: Subir un archivo
       max_upload_size: "El tamaño máximo de archivo es de {{mb}} Mb"
+      cant_create: No tienes permiso para subir archivos a este proyecto.
     form:
       presence: No puedes subir un archivo vacío
       max_size: "El tamaño máximo de archivo son {{mb}}"

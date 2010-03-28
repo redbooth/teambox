@@ -423,6 +423,8 @@ ca:
       footer2: "S'ordenen per fils, es fàcil tornar enrere en el temps i veure quins arxius es van enviar i què van dir els membres de l'equip. A Teambox, <b>col.laborar</b> genera una <b>traçabilitat</b> del que s'ha fet."
     column:
       new_conversation: Nova conversa
+      #####
+      cant_create: You don't have permission to create conversations in this project
       subscribe: Subscriu-te al feed
     conversation_with_extract:
       posted_by: Publicat per
@@ -565,6 +567,8 @@ ca:
       insert_here: Insertar Aquí
     column:
       new_page: Nova pàgina
+      #####
+      cant_create: You don't have permission to create pages in this project
   task_lists:
     errors:
       name:
@@ -605,6 +609,8 @@ ca:
       submit: Actualitzar
     column:
       new_task_list: Nova llista de tasques
+      #####
+      cant_create: You don't have permission to create tasks in this project
       subscribe: Subscriu-te a les tasques
     show:
       title: "Llista de tasques: {{name}}"
@@ -682,6 +688,7 @@ ca:
       select_a_file: Selecciona un arxiu
     index:
       new_file: Pujar un arxiu
+      cant_create: You don't have permission to upload files to this project
       max_upload_size: "El tamany màxim d'arxiu és de {{mb}} Mb"
     form:
       presence: No pots pujar un arxiu buit

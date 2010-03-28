@@ -4,12 +4,13 @@
   .invitations
     = list_pending_invites(@pending_projects)
 
-%h2
-  = t('.update_your_status')
-  %span.help
-    = textile_documentation_link
+- if @current_project.commentable?(current_user) && @current_project.archived == false
+  %h2
+    = t('.update_your_status')
+    %span.help
+      = textile_documentation_link
 
-= new_comment_form(@current_project,@current_project.comments.new)
+  = new_comment_form(@current_project,@current_project.comments.new)
 
 #activities
   = list_activities(@activities)

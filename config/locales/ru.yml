@@ -408,6 +408,8 @@ ru:
       footer2: "Поскольку все сообщения в ленте, можно легко вернуться во времени и посмотреть, какие файлы посланы и что сказал каждый участник. В Teambox, <b>сотрудничество — это также отчётность</b>."
     column:
       new_conversation: Новое обсуждение
+      #####
+      cant_create: You don't have permission to create conversations in this project
       subscribe: Подписаться на новости
     conversation_with_extract:
       posted_by: Написан участником
@@ -550,6 +552,8 @@ ru:
       insert_here: Добавить сюда
     column:
       new_page: Новая страница
+      #####
+      cant_create: You don't have permission to create pages in this project
   task_lists:
     errors:
       name:
@@ -588,6 +592,8 @@ ru:
       submit: Обновить список задач
     column:
       new_task_list: Новый список задач
+      #####
+      cant_create: You don't have permission to create pages in this project
       subscribe: Подписаться на новости
     show:
       title: "Список задач: {{name}}"
@@ -663,6 +669,8 @@ ru:
       select_a_file: Выбрать файл
     index:
       new_file: Загрузить файл
+      #####
+      cant_create: You don't have permission to upload files to this project
       max_upload_size: "Максимальный размер {{mb}} МБ"
     form:
       presence: "Нельзя загружать пустые файлы"
