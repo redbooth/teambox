@@ -1,9 +1,6 @@
 =round_corners
-  :-moz-border-radius
-    :topleft 5px
-    :topright 5px
-  :-webkit-border-top-left-radius 5px
-  :-webkit-border-top-right-radius 5px
+  :-moz-border-radius 5px
+  :-webkit-border-radius 5px
 
 div.upcoming_events_banner 
   :padding 10px
@@ -59,6 +56,8 @@ div.banner_navigation
       :font-size 12px
       +round_corners
       :background rgb(235,235,235)
-      :margin-left 5px
+      :margin
+        :left 5px
+        :bottom 2px
     a:hover, a.active
       :background rgb(210,210,210)
