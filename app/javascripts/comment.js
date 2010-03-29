@@ -115,6 +115,8 @@ Comment = {
         if (date >= c.date) {
           $(c.id + '_actions').hide();
           return true;
+        } else {
+          $(c.id + '_actions').show();
         }
         return false;
     });
