@@ -314,6 +314,15 @@ module ApplicationHelper
     request.protocol + request.host + request.port_string
   end
   
+  def friendly_hours_value(hours)
+    hours_i = hours.to_i
+    if hours - hours_i > 0
+      hours
+    else
+      hours_i
+    end
+  end
+  
   def groups_enabled?
     APP_CONFIG['allow_groups'] || false
   end

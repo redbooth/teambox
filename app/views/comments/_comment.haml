@@ -12,6 +12,9 @@
         = activity_project_link(comment.project)
         = activity_comment_target_link(comment)
         = comment_task_status(comment) if comment.target_type == 'Task'
+        - if !comment.hours.nil? and comment.hours > 0
+          %span.hours
+            = t('.hours_hrs', :hours => friendly_hours_value(comment.hours))
       .body.textilized
         ~ comment.body_html
       - if comment.uploads.any?
