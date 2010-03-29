@@ -1,3 +1,5 @@
+require 'gantt_chart'
+
 module BannerSystem
   protected
     BANNER_SETTINGS = { :gantt => 0, :calendar => 1 }
