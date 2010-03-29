@@ -22,10 +22,10 @@ ru:
       other: "{{count}} комментариев"
     not_allowed: Вам нельзя это делать!
   confirm:
-    delete_task_list: "Вы уверены, что хотите удалить этот список задач?"
-    delete_task: "Вы уверены, что хотите удалить эту задачу?"
-    delete_page: "Вы уверены, что хотите удалить эту страницу?"
-    delete_upload: "Вы уверены, что хотите удалить этот файл?"
+    delete_task_list: "Вы действительно хотите удалить этот список задач?"
+    delete_task: "Вы действительно хотите удалить эту задачу?"
+    delete_page: "Вы действительно хотите удалить эту страницу?"
+    delete_upload: "Вы действительно хотите удалить этот файл?"
   not_found:
     user: "Пользователь не существует."
     conversation: "Обсуждение {{id}} не найдено в этом проекте."
@@ -44,20 +44,20 @@ ru:
   activities:
     create_upload: файл загружен
     create_conversation:
-      create_conversation: ": начато обсуждение"
+      create_conversation: "начинает обсуждение"
     create_task_list:
-      create_task_list: ": создан список задач"
+      create_task_list: "создаёт список задач"
     create_task:
-      create_task: ": создана задача"
+      create_task: "создаёт задачу"
     create_page:
-      create_page: ": создана страница"
+      create_page: "создаёт страницу"
     create_person:
-      create_person: приглашён в проект
+      create_person: приглашается в проект
       by: от имени
     delete_person:
-      delete_person: отстранён от проекта
+      delete_person: отстраняется от проекта
       by: от имени
-      left: покинул проект
+      left: покидает проект
   avatars:
     new:
       title: Загрузить аватар
@@ -290,8 +290,7 @@ ru:
         title: "{{name}}"
         description: "Последние действия по проекту {{name}}"
     fields:
-      ####
-      tracks_time: "Enable time tracking"
+      tracks_time: "Включить слежение по времени"
       archiving: "Архивировать этот проект"
       forever: "Удалить этот проект навсегда"
       owner: "Владелец"
@@ -301,7 +300,7 @@ ru:
       permalink: Адрес
       permalink_description: "Это будет в адресе вашего проекта. Как можно короче и без пробелов."
       archived: Архивировать этот проект
-      confirm_delete: "Вы уверены, что хотите навсегда удалить этот проект? ВОССТАНОВИТЬ ЕГО БУДЕТ НЕЛЬЗЯ. Если вы хотите просто скрыть или отложить его, используйте архивирование."
+      confirm_delete: "Вы действительно хотите навсегда удалить этот проект? ВОССТАНОВИТЬ ЕГО БУДЕТ НЕЛЬЗЯ. Если вы хотите просто скрыть или отложить его, используйте архивирование."
     new_primer:
       define1: "Проект — это группа, разделённая с вашими колегами."
       define2: "Внутри проекта каждый участник может:"
@@ -336,22 +335,22 @@ ru:
     fields:
       user_or_email: "Введите логин или электронную почту участника:"
     invitation:
-      invited_user: "{{inviter}} пригласил <b>{{invitee}}</b> участвовать в проекте."
-      invited_email: "{{inviter}} пригласил <b>{{email}}</b> участвовать в проекте."
+      invited_user: "{{inviter}} приглашает <b>{{invitee}}</b> участвовать в проекте."
+      invited_email: "{{inviter}} приглашает <b>{{email}}</b> участвовать в проекте."
       time_ago: "({{time_ago_in_words}} назад)"
       resend: Послать приглашение заново
       pending: "Письмо послано этому пользователю, но он ещё не подтвердил его."
       discard: Отменить приглашение
     group_invitation:
-      invited_user: "{{inviter}} пригласил <b>{{invitee}}</b> присоединиться к группе."
-      invited_email: "{{inviter}} пригласил <b>{{email}}</b> присоединиться к группе."
+      invited_user: "{{inviter}} приглашает <b>{{invitee}}</b> присоединиться к группе."
+      invited_email: "{{inviter}} приглашает <b>{{email}}</b> присоединиться к группе."
     sent:
       email_sent: "<b>Мы только что послали уведомление со ссылкой подтверждения этому пользователю with</b>. Если они не нашли письмо, проверьте, не упало ли оно в спам или попробуйте другой адрес электронной почты. Если проблема не исчезнет, свяжитесь с администрацией."
     pending:
       to_access_or: участвовать в проекте или
       to_access_or_group: присоединиться к группе или
-      invited_to_join: "{{by}} пригласил вас участвовать в проекте {{project}}."
-      invited_to_join_group: "{{by}} пригласил вас присоединиться к группе {{group}}."
+      invited_to_join: "{{by}} приглашает вас участвовать в проекте {{project}}."
+      invited_to_join_group: "{{by}} приглашает вас присоединиться к группе {{group}}."
     resend:
       resent: "Приглашение отправлено получателю {{recipient}}. Если письмо не дошло, перечитайте его ещё раз."
       return: Назад
@@ -372,7 +371,7 @@ ru:
       invalid_code: "Неверный код приглашение"
   conversations:
     actions:
-      confirm_delete: Вы уверены, что хотите удалить это обсуждение?
+      confirm_delete: Вы действительно хотите удалить это обсуждение?
     link:
       edit: Редактировать
     fields:
@@ -408,8 +407,7 @@ ru:
       footer2: "Поскольку все сообщения в ленте, можно легко вернуться во времени и посмотреть, какие файлы посланы и что сказал каждый участник. В Teambox, <b>сотрудничество — это также отчётность</b>."
     column:
       new_conversation: Новое обсуждение
-      #####
-      cant_create: You don't have permission to create conversations in this project
+      cant_create: Вы не можете создавать обсуждения в этом проекте
       subscribe: Подписаться на новости
     conversation_with_extract:
       posted_by: Написан участником
@@ -421,21 +419,20 @@ ru:
     short_conversation:
       comment: комментарий
       comments: комментариев
-  ####
   hours:
-    comments: Time Entries
-    filter_by: Filter by
-    report: Report
-    week_num: Week {{num}}
-    entry_hours: hrs
-    entry_total: Total
-    week_total: Total
-    all_tasks: All tasks
-    all_users: All users
+    comments: Записи времени
+    filter_by: Фильтровать по
+    report: Отчёт
+    week_num: Неделя {{num}}
+    entry_hours: час.
+    entry_total: Всего
+    week_total: Всего
+    all_tasks: Все задачи
+    all_users: Все пользователи
     reports:
-      user: Users
-      project: Projects
-      task: Tasks
+      user: Пользователи
+      project: Проекты
+      task: Задачи
 
   tasks:
     errors:
@@ -491,7 +488,7 @@ ru:
       my_tasks: Мои задачи
   notes:
     actions:
-      delete_confirm: Вы уверены, что хотите удалить этот текст?
+      delete_confirm: Вы действительно хотите удалить этот текст?
     new:
       submit: Добавить текст
     edit:
@@ -502,7 +499,7 @@ ru:
       text_styling: Оформление текста
   dividers:
     actions:
-      delete_confirm: Вы уверены, что хотите удалить этот разделитель?
+      delete_confirm: Вы действительно хотите удалить этот разделитель?
     new:
       submit: Добавить
     edit:
@@ -552,8 +549,7 @@ ru:
       insert_here: Добавить сюда
     column:
       new_page: Новая страница
-      #####
-      cant_create: You don't have permission to create pages in this project
+      cant_create: Вы не можете создавать страницы в этом проекте
   task_lists:
     errors:
       name:
@@ -592,8 +588,7 @@ ru:
       submit: Обновить список задач
     column:
       new_task_list: Новый список задач
-      #####
-      cant_create: You don't have permission to create pages in this project
+      cant_create: Вы не можете создавать списки задач в этом проекте
       subscribe: Подписаться на новости
     show:
       title: "Список задач: {{name}}"
@@ -606,11 +601,10 @@ ru:
       submit: Обновить данные
     fields:
       role: Роль
-      #####
-      observer: Observer. Read-only access to the project.
-      commenter: "Commenter. Can comment, but not create new elements."
-      participant: "Participant. Can do everything, but not invite users."
-      admin: Administrador. Can invite users to the project.
+      observer: Наблюдатель. Доступ к проекту только для чтения.
+      commenter: "Комментатор. Может комментировать, но не создавать новые элементы."
+      participant: "Участник. Может делать всё, кроме приглашения новых пользователей."
+      admin: Администратор. Может приглашать пользователей в проект.
     header:
       owner: Владелец проекта
       observer: Наблюдатель
@@ -620,26 +614,25 @@ ru:
       remove: Убрать
       transfer: Передать владение
       leave_project: Покинуть проект
-      confirm_delete: Вы уверены, что хотите выгнать этого милого человека из проекта?
+      confirm_delete: Вы действительно хотите выгнать этого милого человека из проекта?
     errors:
       user_or_email: "Пользователь не найден. Введине его логин или электронный адрес."
-    #####
     column:
-      inviting: "Inviting other users"
-      only_admins_can_invite: "Only admins can invite people to this project."
+      inviting: "Приглашение других пользователей"
+      only_admins_can_invite: "Только администраторы могут приглашать новых пользователей в проект."
       contact_admins:
-        one: "In this project, only {{admins}} can invite new members."
-        other: "In this project, only {{admins}} can invite new members."
-      leaving: "Leaving the project"
-      you_can_leave: "You can leave this project at any moment. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
-      leave_project: "Leave this project"
-      confirm_delete: Are you sure you want to leave this project?
+        one: "В этом проекте только {{admins}} может приглашать новых участников."
+        other: "В этом проекте только {{admins}} могут приглашать новых участников."
+      leaving: "Выход из проекта"
+      you_can_leave: "Вы можете покинуть проект в любой момент. Если покинете, вы больше не будете иметь доступ к данным проекта и не будете получать уведомлений. Другие участники по-прежнему смогут участвовать в проекте, данные не будут потеряны."
+      leave_project: "Покинуть проект"
+      confirm_delete: Вы действительно хотите покинуть этот проект?
   comments:
     comment:
       commented_on: "-"
       commented_on_a_task_list: "-"
-      confirm_delete: Вы уверены, что хотите удалить этот комментарий?
       hours_hrs: "{{hours}}H"
+      confirm_delete: Вы действительно хотите удалить этот комментарий?
     new:
       assigned_to_nobody: 'Не назначен'
       assigned_to: "Назначен:"
@@ -653,7 +646,7 @@ ru:
     errors:
       cannot_update: У вас нет прав обновлять этот комментарий
     actions:
-      confirm_delete: Вы уверены, что хотите удалить этот комментарий?
+      confirm_delete: Вы действительно хотите удалить этот комментарий?
   example_projects:
     new:
       learn: Учитесь на примере!
@@ -670,8 +663,7 @@ ru:
       select_a_file: Выбрать файл
     index:
       new_file: Загрузить файл
-      #####
-      cant_create: You don't have permission to upload files to this project
+      cant_create: Вы не можете загружать файлы в этот проект
       max_upload_size: "Максимальный размер {{mb}} МБ"
     form:
       presence: "Нельзя загружать пустые файлы"
@@ -688,9 +680,9 @@ ru:
       item2: "<b>Версии</b>. Загружайте новые версии файла и следите за изменениями."
       item3: "<b>Всегда доступны</b>. Файлы всегда остаются в проекте, на них можно ссылаться в будущем."
     upload:
-      uploaded_the_file: "загрузил файл"
+      uploaded_the_file: "загружает файл"
       download: Скачать
-      uploaded_by: Загрузил
+      uploaded_by: Загружен
       remove: Удалить
       on_: "в"
   sessions:
