@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :sprockets, :only => [:index, :show]
+  
   map.logout            '/logout',              :controller => 'sessions',    :action => 'destroy'
   map.login             '/login',               :controller => 'sessions',    :action => 'new'
   map.register          '/register',            :controller => 'users',       :action => 'create'
@@ -91,5 +93,4 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => 'projects', :action => 'index'
   map.connect 'assets/:id/:style/:filename', :controller => 'uploads', :action => 'download', :conditions => { :method => :get }, :requirements => { :filename => /.*/ }
-  SprocketsApplication.routes(map)
 end
