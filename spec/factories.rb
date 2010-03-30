@@ -1,3 +1,5 @@
+require 'factory_girl'
+
 Factory.sequence :login do |n|
   "gandhi_#{n}"
 end

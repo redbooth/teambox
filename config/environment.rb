@@ -1,17 +1,12 @@
-RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
-require File.join(File.dirname(__FILE__), 'boot')
+require File.expand_path('../boot', __FILE__)
 
-APP_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/teambox.yml")[RAILS_ENV]
+Bundler.require(:default, RAILS_ENV)
+
+APP_CONFIG = YAML.load_file(RAILS_ROOT + '/config/teambox.yml')[RAILS_ENV]
 
 Rails::Initializer.run do |config|
-  config.load_paths += %W( #{Rails.root}/app/sweepers )
+  config.load_paths << Rails.root + 'app/sweepers'
   config.action_controller.session_store = :active_record_store
-  config.gem 'haml'
-  config.gem 'sprockets'
-  config.gem 'completeness-fu'
-  config.gem 'system_timer'
-  config.gem 'whenever', :lib => false, :source => 'http://gemcutter.org/'
-  config.gem 'icalendar'
 
   config.action_view.sanitized_allowed_tags = 'table', 'th', 'tr', 'td'
   config.time_zone = APP_CONFIG['time_zone']
@@ -32,10 +27,13 @@ Rails::Initializer.run do |config|
   end
 
   config.active_record.observers = :task_list_panel_sweeper
-
-  require 'RedCloth'
-  require 'mime/types'
+  
+  config.after_initialize do
+    require 'haml/helpers/action_view_mods'
+    require 'haml/helpers/action_view_extensions'
+    require 'haml/template'
+    require 'sass'
+    require 'sass/plugin'
+    ActiveSupport::XmlMini.backend = 'LibXML'
+  end
 end
-
-# Optional gems to enhance XML performance. Feel free to disable them.
-ActiveSupport::XmlMini.backend = 'LibXML'

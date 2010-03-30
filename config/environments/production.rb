@@ -28,6 +28,4 @@ config.action_view.cache_template_loading            = true
 config.action_mailer.delivery_method = :smtp
 
 # Enable threaded mode
-# config.threadsafe!
-
-Haml::Template::options[:ugly] = true
+config.threadsafe!
