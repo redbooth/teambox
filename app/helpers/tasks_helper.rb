@@ -366,8 +366,6 @@ module TasksHelper
     content_tag(:div,
       f.calendar_date_select(field, {
         :popup => :force,
-        :first_day_of_week => (current_user.first_day_of_week == 'monday') ? 1 : 0,
-        :strftime => "'strftime_#{current_user.language}'",
         :footer => false,
         :year_range => 2.years.ago..10.years.from_now,
         :time => false,

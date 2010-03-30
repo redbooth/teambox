@@ -1,3 +1,6 @@
+// CalendarDateSelect version 1.15 - a prototype based date picker
+// Questions, comments, bugs? - see the project page: http://code.google.com/p/calendardateselect
+
 Element.addMethods({
   purgeChildren: function(element) { $A(element.childNodes).each(function(e){$(e).remove();}); },
   build: function(element, type, options, style) {
@@ -69,14 +72,6 @@ CalendarDateSelect.prototype = {
     if (!this.target_element) { alert("Target element " + target_element + " not found!"); return false;}
     if (this.target_element.tagName != "INPUT") this.target_element = this.target_element.down("INPUT")
     
-    //apply user's first_day_of_week
-    Date.first_day_of_week = options.first_day_of_week;
-    //generate user's days of week from localized strftime
-    var days = (Date.first_day_of_week == 1) ? [1,2,3,4,5,6,7] : [0,1,2,3,4,5,6];
-    Date.weekdays = days.map(function(day) { return (new Date(day+7+' Jan 1990'))[options.strftime]('%a'); });
-    //generate user's months of week from localized strftime
-    Date.months = [1,2,3,4,5,6,7,8,9,10,11,12].map(function(mon) { return (new Date('1990/'+mon+'/1'))[options.strftime]('%B') });
-
     this.target_element.calendar_date_select = this;
     this.last_click_at = 0;
     // initialize the date control
@@ -133,10 +128,9 @@ CalendarDateSelect.prototype = {
     this.calendar_div = $(parent).build('div', {className: "calendar_date_select"}, style);
     
     var that = this;
-
     // create the divs
-    $w("top footer buttons header body bottom").each(function(name) {
-      eval("var " + name + "_div = that." + name + "_div = that.calendar_div.build('div', { className: 'cds_"+name+"' }, { } ); ");
+    $w("top header body buttons footer bottom").each(function(name) {
+      eval("var " + name + "_div = that." + name + "_div = that.calendar_div.build('div', { className: 'cds_"+name+"' }, { clear: 'left'} ); ");
     });
     
     this.initHeaderDiv();
@@ -150,24 +144,16 @@ CalendarDateSelect.prototype = {
   initHeaderDiv: function() {
     var header_div = this.header_div;
     this.close_button = header_div.build("a", { innerHTML: "x", href:"#", onclick:function () { this.close(); return false; }.bindAsEventListener(this), className: "close" });
-    this.next_month_button = header_div.build("a", { innerHTML: "&rarr;", href:"#", onclick:function () { this.navMonth(this.date.getMonth() + 1 ); return false; }.bindAsEventListener(this), className: "next" });
-    this.prev_month_button = header_div.build("a", { innerHTML: "&larr;", href:"#", onclick:function () { this.navMonth(this.date.getMonth() - 1 ); return false; }.bindAsEventListener(this), className: "prev" });
+    this.next_month_button = header_div.build("a", { innerHTML: "&gt;", href:"#", onclick:function () { this.navMonth(this.date.getMonth() + 1 ); return false; }.bindAsEventListener(this), className: "next" });
+    this.prev_month_button = header_div.build("a", { innerHTML: "&lt;", href:"#", onclick:function () { this.navMonth(this.date.getMonth() - 1 ); return false; }.bindAsEventListener(this), className: "prev" });
     
-    this.month_select = new SelectBox(header_div, $R(0,11).map(function(m){return [Date.months[m], m]}), {className: "month", onchange: function () { this.navMonth(this.month_select.getValue()) }.bindAsEventListener(this)}); 
-    this.year_select = new SelectBox(header_div, [], {className: "year", onchange: function () { this.navYear(this.year_select.getValue()) }.bindAsEventListener(this)}); 
-
-
-    var blank_time = $A([" - ", ""]);
-      
-    var t = new Date();
-    
-    this.hour_select = new SelectBox(header_div, blank_time.concat($R(0,23).map(function(x) {t.setHours(x); return $A([t.getAMPMHour()+ " " + t.getAMPM(),x])} )), { calendar_date_select: this, onchange: function() { this.calendar_date_select.updateSelectedDate( { hour: this.value });}, className: "hour"  });    
-    header_div.build("span", {innerHTML:":", className: "seperator"});    
-    var that = this;
-    this.minute_select = new SelectBox(header_div, blank_time.concat($R(0,59).select(function(x){return (x % that.options.get('minute_interval')==0)}).map(function(x){ return $A([ Date.padded2(x), x]); } ) ), { calendar_date_select: this, onchange: function() { this.calendar_date_select.updateSelectedDate( {minute: this.value }) }, className: "minute" } );
-
-
-    this.populateYearRange();
+    if (this.options.get("month_year")=="dropdowns") {
+      this.month_select = new SelectBox(header_div, $R(0,11).map(function(m){return [Date.months[m], m]}), {className: "month", onchange: function () { this.navMonth(this.month_select.getValue()) }.bindAsEventListener(this)}); 
+      this.year_select = new SelectBox(header_div, [], {className: "year", onchange: function () { this.navYear(this.year_select.getValue()) }.bindAsEventListener(this)}); 
+      this.populateYearRange();
+    } else {
+      this.month_year_label = header_div.build("span")
+    }
   },
   initCalendarGrid: function() {
     var body_div = this.body_div;
@@ -201,11 +187,59 @@ CalendarDateSelect.prototype = {
   initButtonsDiv: function()
   {
     var buttons_div = this.buttons_div;
+    if (this.options.get("time"))
+    {
+      var blank_time = $A(this.options.get("time")=="mixed" ? [[" - ", ""]] : []);
+      buttons_div.build("span", {innerHTML:"@", className: "at_sign"});
+      
+      var t = new Date();
+      this.hour_select = new SelectBox(buttons_div,
+        blank_time.concat($R(0,23).map(function(x) {t.setHours(x); return $A([t.getAMPMHour()+ " " + t.getAMPM(),x])} )),
+        { 
+          calendar_date_select: this, 
+          onchange: function() { this.calendar_date_select.updateSelectedDate( { hour: this.value });},
+          className: "hour" 
+        }
+      );
+      buttons_div.build("span", {innerHTML:":", className: "seperator"});
+      var that = this;
+      this.minute_select = new SelectBox(buttons_div,
+        blank_time.concat($R(0,59).select(function(x){return (x % that.options.get('minute_interval')==0)}).map(function(x){ return $A([ Date.padded2(x), x]); } ) ),
+        { 
+          calendar_date_select: this, 
+          onchange: function() { this.calendar_date_select.updateSelectedDate( {minute: this.value }) }, 
+          className: "minute" 
+        }
+      );
+      
+    } else if (! this.options.get("buttons")) buttons_div.remove();
     
-    buttons_div.build("span", {innerHTML: "&#160;"});
-    buttons_div.build("a", { innerHTML: _translations["Today"], href: "#", onclick: function() {this.today(false); return false;}.bindAsEventListener(this) });
-    //buttons_div.build("a", { innerHTML: _translations["Now"], href: "#", onclick: function() {this.today(true); return false}.bindAsEventListener(this) });    
-    buttons_div.build("a", { innerHTML: _translations["Clear"], href: "#", onclick: function() {this.clearDate(); if (!this.options.get("embedded")) this.close(); return false;}.bindAsEventListener(this) });
+    if (this.options.get("buttons")) {
+      buttons_div.build("span", {innerHTML: "&#160;"});
+      if (this.options.get("time")=="mixed" || !this.options.get("time")) b = buttons_div.build("a", {
+          innerHTML: _translations["Today"],
+          href: "#",
+          onclick: function() {this.today(false); return false;}.bindAsEventListener(this)
+        });
+      
+      if (this.options.get("time")=="mixed") buttons_div.build("span", {innerHTML: "&#160;|&#160;", className:"button_seperator"})
+      
+      if (this.options.get("time")) b = buttons_div.build("a", {
+        innerHTML: _translations["Now"],
+        href: "#",
+        onclick: function() {this.today(true); return false}.bindAsEventListener(this)
+      });
+      
+      if (!this.options.get("embedded") && !this.closeOnClick())
+      {
+        buttons_div.build("span", {innerHTML: "&#160;|&#160;", className:"button_seperator"})
+        buttons_div.build("a", { innerHTML: _translations["OK"], href: "#", onclick: function() {this.close(); return false;}.bindAsEventListener(this) });
+      }
+      if (this.options.get('clear_button')) {
+        buttons_div.build("span", {innerHTML: "&#160;|&#160;", className:"button_seperator"})
+        buttons_div.build("a", { innerHTML: _translations["Clear"], href: "#", onclick: function() {this.clearDate(); if (!this.options.get("embedded")) this.close(); return false;}.bindAsEventListener(this) });
+      }
+    }
   },
   refresh: function ()
   {
