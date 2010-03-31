@@ -245,6 +245,7 @@ en:
       explain: You can only have one group.
       title: Create group
       created: Your group has been created
+      invalid_group: Invalid group
     edit:
       submit: Update
     show:

@@ -1,0 +1,1130 @@
+# Original translation
+# Mark missing translations by adding ##### at the end of the line
+ja:
+  # if latest_announcement is less than 5 characters, it will not be displayed
+  latest_announcement: "Now with <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile Site, French and German locales and API</a>!"
+  common:
+    and: と
+    or: または 
+    delete: 削除
+    edit: 編集
+    accept: Accept
+    decline: Decline
+    cancel: キャンセル
+    close: 閉じる
+    save: 保存
+    show_more: 次の{{number}}を見る
+    print: このページを印刷する
+    prev: Previous
+    next: Next
+    comment:
+      one: "{{count}} 個のコメント"
+      other: "{{count}} 個のコメント"
+    not_allowed: この操作は許可されていません。
+  confirm:
+    delete_task_list: このタスクリストを削除しますか?
+    delete_task: このタスクを削除しますか?
+    delete_page: このページを削除しますか?
+    delete_upload: このファイルを削除しますか?
+  not_found:
+    user: "ユーザーが存在しません"
+    conversation: "チャット {{id}} はこのプロジェクトにはありません"
+    project: "プロジェクト {{id}} は存在しません。"
+    group: "グループ {{id}} は存在しません。"
+    page: "ページ {{id}} はこのプロジェクトにはありません。"
+    task_list: "タスクリスト {{id}} はこのプロジェクトにはありません。"
+    task: "タスク {{id}} はこのプロジェクトにはありません。"
+  deleted:
+    conversation: "削除されたチャット <b>{{name}}</b> "
+    task: "削除されたタスク <b>{{name}}</b>"
+    page: "削除されたページ <b>{{name}}</b> "
+    upload: "削除されたファイル <b>{{name}}</b> "
+    person: "{{name}} はもうこのプロジェクトには属していません。"
+    left_project: "あなたはもうこのプロジェクトのメンバーではありません。"
+  activities:
+    create_upload: ファイルをアップロードしました。
+    create_conversation:
+      create_conversation: チャットを開始しました。
+    create_task_list:
+      create_task_list: タスクリストを作成しました。
+    create_task:
+      create_task: タスクを作成しました。
+    create_page:
+      create_page: ページを作成しました。
+    create_person:
+      create_person: はプロジェクトに招待されました
+      by: by 
+    delete_person:
+      delete_person: はプロジェクトを離れました
+      by: by 
+      left: プロジェクトを離れました
+  avatars:
+    new:
+      title: アバターをアップロード
+      upload: アップロード
+    edit:
+      upload_new_image: アバターの画像をアップロードする
+      upload: このアバターをアップロード
+    show:
+      save: 変更を保存
+  reset_passwords:
+    new:
+      title: パスワードを忘れましたか?
+      email: サインアップしたeメールアドレス
+      back: ログイン画面に戻る
+      submit: パスワードリセットのリンクを送信する
+    create:
+      not_found: "このeメールのユーザーを見つけられませんでした: {{email}}<br/>eメールアドレスを確認して再度実行してください。うまくいかないときは、{{support}} に連絡してください。"
+      invalid: "このパスワード変更のURLは、無効もしくは失効しています。ホームページから再度パスワード再発行を行ってください。もしうまくいかないときは、{{support}}に連絡してください。"
+      password_not_updated: "新しいパスワードが無効です。再度実行してください。"
+      password_updated: "パスワードが更新されました。ログインしてください。"
+    sent:
+      title: パスワードリセット
+      login_link_sent: "あなたがパスワードを取得できるように、eメールを{{email}}に送りました。"
+      follow_the_link: "eメールに記載されたリンクをたどることで、Teamboxにログインできます。eメールが見つからない場合は、迷惑メールフォルダを探してみてください。"
+      not_found: "このeメールアドレス<b>{{email}}</b>はどのTeamboxユーザーのものでもありません。スペルを確認してみてください。"
+      change_password_now: "ログインしました。忘れないように、<b>新しいパスワードを今決めて</b>ください。"
+  cards:
+    card:
+      phone_numbers: 電話番号
+      email_addresses: eメールアドレス
+      websites: ウェブサイト
+      addresses: 住所
+      ims: インスタントメッセンジャー
+      social_networks: ソーシャルネットワーク
+      vcard: vCardのダウンロード
+    field:
+      add_phone_numbers: 電話番号の追加
+      add_email_addresses: eメールの追加
+      add_websites: ウェブサイトの追加
+      add_addresses: 住所の追加
+      add_ims: インスタントメッセージの追加
+      add_social_networks: ソーシャルネットワークの追加
+  users:
+    fields:
+      login: ユーザ名
+      first_name: 名
+      last_name: 姓
+      biography: 自己紹介
+      time_zone: タイムゾーン
+      language: 言語
+      email: eメール
+      password: パスワード
+      password_confirmation: パスワード確認
+      sunday: 日曜
+      monday: 月曜
+      first_day_of_week: 週のはじめ
+      change_password: パスワード変更
+      confirm_password: パスワード確認
+      use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
+      notify_mentions: "自分に言及されたら通知する。 例. やぁ @{{login}}! これでメールが届くよ"
+      notify_conversations: チャットに参加しているときに通知する
+      notify_task_lists: タスクリストをウォッチしている時に通知する
+      notify_tasks: タスクをウォッチしている時に通知する
+      wants_task_reminder: "毎日自分のタスクをeメールで送信する"
+      invalid_login: "アルファベット、数字、またはアンダースコアのみが使えます"
+      avatar:
+        field: あなたのアバター
+        presence: "空ファイルはアップロードできません"
+        max_size: "ファイルサイズは{{mb}}におさめる必要があります"
+        we_have_this_avatar: "現在のあなたのアバターです:"
+        upload_here_or_at_gravatar: "ここでアバターをアップロードするか、<a href='http://gravatar.com'>Gravatar</a>にアップロードして、Teamboxだけではなく他の多くのウェブサイトで利用できるようにもできます。"
+      tooltips:
+        login: "ログインにはユーザー名が必要です。他の人々はユーザー名であなたを見つけます。ユーザー名は小文字のみで、空白は含めることができません。アンダースコアは利用できます。"
+        first_name: 20文字まで
+        last_name: 20文字まで
+        email: チームメイトが連絡を取れるように、eメールアドレスを記載してください
+        password: "大文字と小文字、数字などを混在させるのは良い考えです。"
+    new:
+      title: アカウントの作成
+      submit: アカウントの作成
+      ####
+      no_public_signup: "Public signups are not allowed in this system."
+      you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
+      existing_user: "If you already have an account, <a href='{{login_url}}'>log in</a> or <a href='{{forgot_url}}'>retrieve your password</a>."
+      you_already_have_an_account: "You already have a Teambox account for the address {{email}}. <a href='{{login_link}}'>Log in with this email</a> or <a href='{{reset_password_link}}'>reset your password</a> if you forgot it."
+    create:
+      thanks: Thanks for signing up!
+      error: "We couldn't set up that account, sorry. Please try again, or contact an admin (link is above)."
+    edit:
+      title_settings: アカウント設定
+      title_profile: プロフィール設定
+      title_picture: プロフィール画像設定
+      title_notifications: 通知設定
+      title_deletion: プロジェクト アーカイブ/削除
+      submit: アカウントの更新
+    update:
+      updated: プロフィールを更新しました
+      error: "Couldn't save the updated profile. Please correct the mistakes and retry."
+    activation:
+      resent: "We've re-sent the activation email. Take a look at your inbox!"
+      already_done: "You had already confirmed your email! You can now use Teambox."
+      activated: "Your account has been activated! Welcome to Teambox :)"
+      invalid: "<p>Invalid or expired access link. ログイン with your email and password.</p><p>If you don't remember your login data, follow the Forgot your パスワード link.</p>"
+      invalid_user: 無効なユーザー
+    show:
+      profile: プロフィール 
+      projects: プロジェクト
+      recent_activity_for: "{{user_name}}の最近の活動"
+      pending_invite: "{{name}} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
+    user:
+      formatted_address: "{{street}}, {{city}} ({{country}})"
+      remove_from_project: Remove from プロジェクト
+    welcome:
+      get_started: Teamboxを始めよう!
+      intro1: "ようこそ新メンバー! <br/>Teamboxを一日の出発点にするためにはどうすればいいか、すぐにわかります。"
+      intro2: "まずは、<b>共同作業</b>のためにプロジェクトを作成しましょう。" # or an agenda to <b>keep track of contacts</b>:"
+      projects:
+        title: プロジェクト
+        share_and_collaborate: "チームの共同作業や、ファイルを共有しましょう。<br/>プロジェクトには、壁紙の更新や、チャット、タスク、ページとファイルなどがあります。"
+        create_your_first_project: "イベントや、デザインや、製品開発など... さぁ、今すぐ<a href='{{link}}'>最初のプロジェクトを作成</a>しましょう!"
+      spread:
+        title: 私達のことも好きになっていただけますか?
+        reasons: "私達はTeamboxがあなたの役に立つことを願って、長年Teamboxに取り組んでいます。<br/>私達はあなたと同じく、使命と意欲を持った開発者です。"
+        help: <b>私達に協力してください。</b> Teamboxをどのように使っているかを
+        twitter: 'Twitterや'
+        facebook: Facebook
+        in_your_site: あなたのサイトで友達に伝えてください!
+        tell_us: "Teamboxを楽しんでいただけたなら、ぜひ私達に<a href='mailto:{{address}}'>メールで</a>お知らせください。"
+      stop_welcome: 「ようこそ」タブを表示しないようにする
+    unconfirmed_email:
+      title: メールを確認
+      invitation_sent_to: "An email invitation was sent to <i>{{email}}</i>, in order to verify your email address."
+      follow_the_link: Please <b>open this email and follow the link inside it</b> to activate your account.
+      problems_title: Problems?
+      resend: "Can't find the email? Press <a href='{{link}}'>here</a> to re-send the activation email."
+      spam: "Make sure the email wasn't classified as spam by your email client."
+      wrong_address: "Wrong address? If you mistyped your email address, <a href='{{link}}'>cancel the signup process</a> and re-create your account with a valid address."
+      problems: "If you're still having problems, please contact us at {{support}}"
+    profile_completeness:
+      title: Profile Completion
+      complete_your_profile: Complete your profile so your team can keep in touch with your contact information!
+      completeness: "{{percentage}}% 完了"
+      to_get_to: to get to
+    daily_task_reminder_email:
+      daily_task_reminder: "今日のタスクのリマインド"
+      daily_task_reminder_from_teambox: "これはTeamboxの今日のタスクのリマインドメールです。"
+      late_tasks: "遅れているタスク"
+      tasks_for_today: "今日のタスク"
+      tasks_for_tomorrow: "明日のタスク"
+      tasks_for_next_two_weeks: "今後二週間のタスク"
+      tasks_without_a_due_date: "期限のないタスク"
+      you_receive_this_message: "このメッセージはあなたが送信設定をしたので送られています。この機能は{{link}}"
+      settings_page: "設定ページで無効にできます"
+  groups:
+    index:
+      title: グループ 
+      groups_in: "参加しているグループ"
+      your_group: "あなたのグループ"
+      no_groups: "まだグループに参加していません"
+      description: "グループを使うと、他の人と共有したり、いくつかのグループをまとめることができます。"
+      submit_project: 追加
+      remove_project: 削除
+    primer:
+      no_group_create: "グループを所有していません。{{link}}"
+      create_group: "グループを作成する"
+    header:
+      leave: Leave
+      remove: 削除
+    logo_fields:
+      current: 現在のロゴ
+      delete: 削除
+      description: このロゴはこのグループに属する全てのプロジェクトで表示されます
+      upload: アップロード
+    search:
+      username_or_email: ユーザー名またはeメールアドレス
+      invite: 招待する
+      invite_people: グループに招待する
+    fields:
+      name: 名前
+      description: 説明
+      permalink: Permalink
+      permalink_description: グループにアクセスするドメイン
+    new:
+      submit: 作成
+      explain: グループは一つだけ作成できます
+      title: グループの作成
+      created: グループが作成されました
+      invalid_group: グループが作成できませんでした
+    edit:
+      submit: 更新
+    show:
+      edit: 編集
+      add_project: プロジェクトを追加する
+    errors:
+      already_own: "既にグループのオーナーです!"
+      not_enabled: "このシステムではグループが有効になっていません"
+      not_admin: "このグループを管理できません"
+      no_edit: "このグループを編集できません"
+  projects:
+    index:
+      title: 全てのプロジェクトのニュースフィード
+      projects: 私のプロジェクト
+      subscribe: ニュースフィードを購読する
+      calendars: 全てのプロジェクトのカレンダー
+      new_project: 新規プロジェクト
+      refreshes: 一分毎に更新
+      rss:
+        title: プロジェクト概観
+        description: 全プロジェクトの概観
+      archived: "{{count}}個のアーカイブされたプロジェクト"
+    primer:
+      empty: まだプロジェクトのオーナーでもメンバーでもありません。
+      create_first: 最初のプロジェクトを作成しよう!
+      define1: "プロジェクトを使って、人々と<b>共同作業</b>をしましょう: ウェブサイトやパーティの計画、仕事など..."
+      define2: "あなたは、オンラインの様々な人々と共有するために、<b>好きなだけ多くのプロジェクト</b> を作成することができます。"
+      item1: "<b>プロジェクトを作成し</b>、名前をつけて <b>友達を招待して</b> ください。"
+      item2: "<b>コメント</b> プロジェクト全体の時系列の中で、あなたが何をしているかについてコメントしましょう。"
+      item3: "<b>議論</b> 「チャット」で重要な決定について議論しましょう。"
+      item4: "<b>計画</b> 「タスク」で何が必要かを計画し、最新情報を投稿しましょう。"
+      item5: "<b>情報共有</b> それぞれのプロジェクトにある、簡単に編集できる「ページ」で情報共有しましょう。"
+      footer: "プロジェクトは共同作業を集約します。もうチームメンバーにeメールを送る必要はありません。"
+    show:
+      update_your_status: "あなたの状況を更新..."
+      text_styling: テキスト装飾
+      invite_people: '招待...'
+      new_task_list_link: 新規タスクリスト
+      people_in_project: プロジェクトのメンバー
+      subscribe: ニュースフィードを購読する
+      tip: 誰かを@usernameの形で言及すると、その人は投稿したメッセージをeメールで受け取れます
+      calendar: このプロジェクトのタスクカレンダー
+      rss:
+        title: "{{name}}"
+        description: "{{name}}プロジェクトの最近の活動"
+    fields:
+      tracks_time: "Enable time tracking" #####
+      archiving: "このプロジェクトをアーカイブする"
+      forever: "このプロジェクトを永久に削除する"
+      owner: "オーナー"
+      owner_description: "オーナーはプロジェクトの責任者です。オーナーは、別のユーザーにその所有権を譲らない限り、プロジェクトから外すことはできません。"
+      name: プロジェクト名
+      name_description: "簡潔でわかりやすいプロジェクト名を選んでください。例: Taggart Transcontinental"
+      permalink: URL
+      permalink_description: "あなたのプロジェクトのアドレスです。なるべく短くしましょう。空白を入れることはできません。"
+      archived: このプロジェクトをアーカイブする
+      confirm_delete: "このプロジェクトを永久に削除してもよろしいですか? 削除すると、元に戻すことはできません。もし保存したいのであれば、プロジェクトをアーカイブしてください。"
+    new_primer:
+      define1: プロジェクトはチームメイトと共有するグループです。
+      define2: "プロジェクト中では、チームメイトは以下のことができます:"
+      feature1: 状況を更新する
+      feature2: チャットを始めたり、返信したりする
+      feature3: ファイルを添付する
+      feature4: タスクをアサインしたり、確認したりする
+      feature5: タスクにコメントする
+      feature6: それぞれの実行時間を記録する
+      feature7: "ページを作成、編集、閲覧する"
+      footer: このプロジェクトはあなたが所有していますが、いつでも他のユーザーに譲ることができます。
+      limited: "無料アカウントでは、ファイルは 50 Mbまでアップロード可能です。"
+      upgrade: アカウントをアップグレードしてください!
+    new:
+      title: プロジェクトの作成
+      submit: プロジェクトを作成して招待を開始する
+      new_project: 新規プロジェクト...
+      created: プロジェクトが作成されました!
+      invalid_project: "無効なプロジェクトです。エラーを修正して再度実行してください。"
+      create_an_example_project: "Teamboxは初めてですか? <a href='{{link}}'>サンプルプロジェクトを作成して</a>、いろいろ試して学びましょう"
+      not_allowed: "このアカウントではプロジェクトの作成はできません。"
+    edit:
+      title_settings: 一般設定
+      title_picture: プロジェクトロゴ
+      title_deletion: プロジェクトのアーカイブ/削除
+      title_ownership: オーナー設定
+      submit: 変更を保存
+      change_owner: オーナーを変更
+      transferred: "プロジェクト ownership has been transferred."
+      invalid_transferred: "プロジェクト ownership could not be transferred, correct errors and try again."
+  invitations:
+    fields:
+      user_or_email: "チームメイトのユーザー名、もしくはeメールを入力:"
+    invitation:
+      invited_user: "{{inviter}}は<b>{{invitee}}</b>をこのプロジェクトに招待しました。"
+      invited_email: "{{inviter}}は<b>{{email}}</b>をこのプロジェクトに招待しました。"
+      time_ago: "({{time_ago_in_words}} 前)"
+      resend: 招待メールを再送する
+      pending: "このユーザーに招待メールを送信しましたが、まだ確認されていません"
+      discard: 招待を取り消す
+    group_invitation:
+      invited_user: "{{inviter}}は<b>{{invitee}}</b>をこのグループに招待しました。"
+      invited_email: "{{inviter}}は<b>{{email}}</b>をこのグループに招待しました。"
+    sent:
+      email_sent: "<b>このユーザーにプロジェクトへの招待を受け入れるリンクを含んだeメールを送信しました。もしeメールが見つからないようであれば、迷惑メールに分類されていないか確認するか、異なるeメールアドレスを試して見てください。もし問題が解決しないようでしたら、我々のスタッフに連絡してください。"
+    pending:
+      to_access_or: to access the project or ####
+      to_access_or_group: to access the group or ####
+      invited_to_join: "{{by}}があなたを{{project}}プロジェクトに招待しました。"
+      invited_to_join_group: "{{by}}があなたを{{group}}グループに招待しました。"
+    resend:
+      resent: "招待を{{recipient}}に再度送信しました。もしeメールが届いていないようでしたら、迷惑メールフォルダを確認してください。"
+      return: 戻る
+    index_user:
+      title: 保留している招待
+      no_invitations: "保留している招待はありません。"
+    search:
+      username_or_email: "チームメートのユーザ名、もしくはeメールを入力してください。"
+      invite_people: このプロジェクトに招待する
+      invite: 招待
+      role: "役割を選択"
+      submit: 送信
+      invite_from_project: "プロジェクトに招待する"
+    recent:
+      invite: "{{username}}を招待する"
+    errors:
+      invalid: "無効な招待"
+      invalid_code: "無効な招待コード"
+  conversations:
+    actions:
+      confirm_delete: このチャットを削除してもいいですか?
+    link:
+      edit: 編集
+    fields:
+      name: タイトル
+      body: 最初のコメント
+      tooltips:
+        name: "できるだけ短くしましょう。この部分は通知eメールのサブジェクトになります。"
+        body: "質問をしたり、何をしているかをチームに伝えたり、議論を始めたりしましょう。"
+    new:
+      title: 新規チャット
+      submit: 作成
+    watcher_fields:
+      add_suscribers: 誰がこのチャットの更新を受け取りますか?
+      subscribe_note: これらの人々には、このメッセージと今後のコメントがメールで通知されます。<br/>いつでも通知を解除することができます。
+      invite_users: あなたはこのプロジェクトの唯一のメンバーです!
+      no_users_yet: "チャットは共有するともっと便利になります。いますぐこのプロジェクトに<a href='{{invite_link}}'>他のユーザーを招待</a>して、このチャットにアクセス出来るようにして、コメントを投稿したり、更新を受け取れるようにしましょう。"
+      people_all: "プロジェクト中の全ての人々"
+    edit:
+      submit: 'チャットの更新'
+    index:
+      rss:
+        title: "チャット"
+        description: "{{name}}プロジェクトのチャット"
+    primer:
+      empty: このプロジェクトにはまだチャットがありません。
+      create_first: プロジェクトの最初のチャットを始めましょう!
+      define: "チャットを使って<b>意思決定のための議論</b>や、<b>チームへの情報更新</b>を集中させることができます。<br/>チャットはスレッドになったコメントで、乱雑なeメールによるやりとりに代わるものです。"
+      item1: "<b>ファイル共有</b> それぞれのコメントにはファイルを添付できます。"
+      item2: "<b>チャットに参加</b> チャットに参加するとそれ以降のリプライをメールやRSSで受け取ることができます。"
+      item3: "<b>印象付け</b> 全てのコメントはテキスト装飾を使って整形できます。"
+      item4: "<b>受信箱からでも</b> eメールを使ってチャットにリプライすることもできます。"
+      footer1: "チャットは<b>設計を共有</b>したり、ミーティングの<b>日程を決め</b>たり、ニュースを<b>知らせ</b>たりするのにとても便利です。"
+      footer2: "スレッドになっているので、過去どんなファイルが送られたか、チームメイトが何を言ったかをさっと振り返ることができます。Teamboxでは、<b>共同作業がそのまま報告</b>なのです。"
+    column:
+      new_conversation: 新しいチャット
+      cant_create: "You don't have permission to create conversations in this project" #####
+      subscribe: ニュースフィードを受け取る
+    conversation_with_extract:
+      posted_by: 投稿 by
+    show:
+      started_by: 開始 by
+      edit: タイトルの編集
+      message: メッセージ
+      messages: メッセージ 
+    short_conversation:
+      comment: コメント
+      comments: コメント 
+  #####
+  hours:
+    comments: Time Entries
+    filter_by: Filter by
+    report: Report
+    week_num: Week {{num}}
+    entry_hours: hrs
+    entry_total: Total
+    week_total: Total
+    all_tasks: All tasks
+    all_users: All users
+    reports:
+      user: Users
+      project: Projects
+      task: Tasks
+
+  tasks:
+    errors:
+      name:
+        cant_be_blank: '空ではいけません'
+        too_long: '255文字までです'
+    fields:
+      name: タスク
+      due_on: 期限日<i>(任意)</i>
+    assigned:
+      assigned_to: "{{user}}にアサイン"
+    due_on:
+      due_on: 締切 
+      today: 今日
+      tomorrow: 明日
+    create: タスクを追加
+    edit:
+      submit: タスクを更新
+    new:
+      title: 新規タスク
+      submit: タスクを追加
+    show:
+      title: "タスク: {{name}}"
+    link:
+      new: + タスクを追加
+      edit: 編集
+      show_archived_tasks:
+        one: "アーカイブされたタスクを表示"
+        other: "{{count}}個のアーカイブされたタスクを表示"
+      hide_archived_tasks:
+        one: "アーカイブされたタスクを隠す"
+        other: "{{count}}個のアーカイブされたタスクを隠す"
+    destroy_message:
+      deleted: "タスク <b>{{name}}</b> は削除されました。"
+    archive_message:
+      archived: "タスク <b>{{name}}</b> はアーカイブされました。"
+    archive_box:
+      you_are_done: このタスクは終了しています。
+      archive: タスクをアーカイブする
+      reopen: タスクをりオープンする
+    unarchive_box:
+      task_is_closed: このタスクはクローズされアーカイブされています。
+      unarchive: アーカイブを復元する
+      reopen: タスクをリオープンする
+    overdue: "{{days}}日遅延"
+    status:
+      new: 新規
+      open: オープン
+      hold: 保留
+      resolved: 解決
+      rejected: 取下げ
+    my_tasks:
+      my_tasks: 私のタスク
+  notes:
+    actions:
+      delete_confirm: このノートを削除してもよろしいですか?
+    new:
+      submit: ノートを追加
+    edit:
+      submit: ノートを更新
+    fields:
+      title: タイトル
+      body: 本文
+      text_styling: テキスト整形
+  dividers:
+    actions:
+      delete_confirm: この区切りを削除してもよろしいですか?
+    new:
+      submit: 追加
+    edit:
+      submit: 更新
+  pages:
+    index:
+      pages_in_this_project: ページ in this project
+      rss:
+        title: ページ
+        description: "ページ in project {{name}}"
+    primer:
+      empty: このプロジェクトにはまだページがありません。
+      create_first: プロジェクトの最初のページを作成しましょう!
+      define1: "ここで、あなたのチーム向けに<b>役立つ情報の共有</b>ができます。: ロードマップや、役立つリンク、説明、eメールのテンプレートなどなど・・・"
+      define2: "ページの編集は簡単で楽しい作業です。ドラッグ&ドロップで、見た通りに編集することができます。"
+      item1: "<b>共有</b> 全てのチームメイトはプロジェクト中のページを見たり、編集したりできます。"
+      item2: "<b>公開</b> 共有ページを簡単に公開できます。世界に向け公開しましょう。"
+      item3: "<b>印刷</b> ページは印刷しやすいようにできています。印刷、またはPDF出力を試してみてください。"
+      item4: "<b>Wiki</b> ページはwikiのように、プロジェクトの情報に簡単にアクセスできます。"
+      footer1: "Teamboxを、よく使う情報を書く<b>共有のホワイトボード</b>のように使ってください。"
+      footer2: "また、それぞれのページにあるノートには、ファイルを添付することができます。Enjoy!"
+    buttons:
+      new_note: ノート追加
+      new_divider: 区切り
+      new_upload: アップロード
+      new_task_list: タスクリスト
+    new:
+      title: 新しいページ
+      define1: "ここで、あなたのチーム向けに<b>役立つ情報の共有</b>ができます。: ロードマップや、役立つリンク、説明、eメールのテンプレートなどなど・・・"
+      define2: "ページの編集は簡単で楽しい作業です。ドラッグ&ドロップで、見た通りに編集することができます。"
+      feature1: "<b>共有</b> 全てのチームメイトはプロジェクト中のページを見たり、編集したりできます。"
+      feature2: "<b>公開</b> 共有ページを簡単に公開できます。世界に向け公開しましょう。"
+      feature3: "<b>印刷</b> ページは印刷しやすいようにできています。印刷、またはPDF出力を試してみてください。"
+      feature4: "<b>Wiki</b> ページはwikiのように、プロジェクトの情報に簡単にアクセスできます。"
+      footer1: "Teamboxを、よく使う情報を書く<b>共有のホワイトボード</b>のように使ってください。"
+      footer2: "また、それぞれのページにあるノートには、ファイルを添付することができます。Enjoy!"
+      submit: 作成
+    edit:
+      title: ページの編集
+      submit: 更新
+    fields:
+      name: 名前
+      name_description: 短くて分かりやすい名前をつけてください
+      description: 説明
+      description_description: "任意です。このページを読んだり編集したりする人が知っておくべきことを書いてください。"
+    slots:
+      insert_here: ここに挿入
+    column:
+      new_page: 新しいページ
+      cant_create: "You don't have permission to create pages in this project" #####
+  task_lists:
+    errors:
+      name:
+        cant_be_blank: 名前は空ではいけません
+        too_long: '名前は255文字までにしなければなりません'
+    archived:
+      title: 全てのアーカイブされたタスク
+      description: You're currently looking at archived tasks. These are tasks that have been closed.
+    fields:
+      task_list: タスクリストはあなたのプロジェクトのマイルストーンになります。タスクリストの中にタスクを作成して、人々にアサインできます。
+      name: タスクリスト名
+      start_on: 開始日 <i>(任意)</i>
+      finish_on: 終了日 <i>(任意)</i>
+    link:
+      new: 新規タスクリスト
+      edit: 編集
+      reorder: Reorder
+    index:
+      add_link: 新規タスクリスト
+      empty: No tasks in this category!
+      tasks_for_all_projects: 全てのプロジェクトのタスク
+    primer:
+      empty: このプロジェクトにはまだタスクリストがありません。
+      create_first: 最初のタスクリストを作成しましょう!
+      define: "タスクを使って<b>先の計画を立てたり</b>、<b>進捗を把握したり</b>、<b>作業のレビュー</b>をしたりします。<br/><i>何を? 誰が? いつやるの?</i> タスクには状態とアサイン、そして期限を持つことができます。"
+      item1: "<b>計画</b> タスクリスト中にタスクを作成してチームメイトにアサインしましょう。"
+      item2: "<b>報告</b> それぞれのタスクにコメントしましたり、ファイルを添付したり、フィードバックを求めたりしましょう。"
+      item3: "<b>フォロー</b> 自分に関係するタスクの更新通知を受け取れます。"
+      item4: "<b>レビュー</b> 完了したタスクも削除されないので、後からメッセージやファイルを確認できます。"
+      footer1: "タスクは<b>物事を済ます</b>ための簡単でアジャイルな方法です。他の人にも勧めましょう。"
+      footer2: "Excelの計画シートや複雑なガントチャートは忘れてしまいましょう!"
+    new:
+      title: 新規タスクリスト
+      submit: タスクリストを追加
+    edit:
+      submit: タスクリストの更新
+    column:
+      new_task_list: 新規タスクリスト
+      cant_create: You don't have permission to create tasks in this project
+      subscribe: ニュースフィードを購読する
+    show:
+      title: "タスクリスト: {{name}}"
+    destroy_message:
+      deleted: "タスクリスト <b>{{name}}</b> は削除されました"
+  people:
+    link:
+      edit: 編集
+    edit:
+      submit: ユーザー更新
+    fields:
+      role: 役割
+      observer: オブザーバー
+      commenter: コメンター
+      participant: 参加者
+      admin: 管理者
+    header:
+      owner: プロジェクトオーナー
+      observer: オブザーバー
+      commenter: コメンター
+      participant: 参加者
+      admin: 管理者
+      remove: 削除
+      transfer: 所有権の譲渡
+      leave_project: プロジェクトを離れる
+      confirm_delete: このユーザーをプロジェクトから削除してもいいですか?
+    errors:
+      user_or_email: "ユーザーが見つかりません。ユーザー名、またはeメールアドレスを入力してください。"
+    column:
+      inviting: "Inviting other users"
+      only_admins_can_invite: "Only admins can invite people to this project."
+      contact_admins: "In this project, only {{admins}} can invite new members."
+      leaving: "Leaving the project"
+      you_can_leave: "You can leave this project at any moment. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
+      leave_project: "Leave this project"
+      confirm_delete: Are you sure you want to leave this project?
+  comments:
+    comment:
+      commented_on: "-"
+      commented_on_a_task_list: "-"
+      confirm_delete: このコメントを削除してもよろしですか?
+      hours_hrs: "{{hours}}H" #####
+    new:
+      assigned_to_nobody: '未担当'
+      assigned_to: "Assigned to:"
+      submit: Comment
+      project: "今何をしていますか? アイディアや、リンクや、状況などを共有しましょう。"
+      conversation: "グループにメッセージを送る"
+      task_list: "このタスクリストへのアイディアを共有しましょう。タスクの作成とアサインには、サイドバーを使ってください。"
+      task: "何をする必要があるかを書いてください。誰かにアサインして、更新を投稿し、結果を添付してください。"
+    edit:
+      submit: 保存
+    errors:
+      cannot_update: このコメントを更新する権限がありません。
+    actions:
+      confirm_delete: このコメントを削除してもよろしいですか?
+  example_projects:
+    new:
+      learn: サンプルで学習しましょう!
+      line1: "Teamboxを使うのが今回初めてなら、中身のあるサンプルプロジェクトを作成することができます。"
+      line2: "ページを読み進むことで、Teamboxのそれぞれの機能の使い方を知ることができるでしょう。"
+      line3: "必ず<b>説明を読み</b>、要素の作成、編集、削除を<b>試して</b>ください。"
+      create: サンプルプロジェクトを作成する
+      line4: "このプロジェクトでは他のユーザーを招待することはできませんが、それ以外は全部できます。"
+      error: "サンプルプロジェクトを作成できません。"
+      error_list: "サンプルプロジェクトを作成できません。以下のプロジェクトは無効です。: {{list}}"
+  uploads:
+    comment_upload_link: 添付
+    new:
+      select_a_file: ファイルを選択
+    index:
+      new_file: ファイルをアップロード
+      cant_create: "You don't have permission to upload files to this project" #####
+      max_upload_size: "アップロードサイズの最大は {{mb}} Mb"
+    form:
+      presence: "空ファイルはアップロードできません。"
+      max_size: "ファイルサイズは {{mb}} Mbを超えることはできません。"
+      select_file: ファイルを選択
+      description: タイトル <i>(任意)</i>
+      upload: ファイルをアップロード
+    primer:
+      empty: このプロジェクトにはファイルがアップロードされていません。
+      create_first: プロジェクトの最初のファイルをアップロードしましょう!
+      define1: "チーム内でのファイル共有に問題があったことはありませんか?Teamboxはファイル共有を簡単にします。"
+      define2: "ここにファイルをアップロードしたり、チャットに添付したり、タスクやページに添付することもできます。"
+      item1: "<b>大きなファイル</b> どんなサイズのファイルもアップロードできます。eメールのように制限はありません。"
+      item2: "<b>履歴管理</b> 新しいバージョンのファイルをアップロードすると、変更が管理されます。"
+      item3: "<b>いつでも利用可能</b> ファイルは将来も参照しやすいように、プロジェクト中に保管されます。"
+    upload:
+      uploaded_the_file: "ファイルがアップロードされました"
+      download: ダウンロード
+      uploaded_by: アップロードしたユーザー
+      remove: 削除
+      on_: "on" ####
+  sessions:
+    fields:
+      username_or_email: eメールアドレスまたはユーザー名
+      password: パスワード
+      forgot: パスワードを忘れましたか?
+      signup: アカウントを作成する
+    new:
+      title: ログイン
+      video: What's Teambox about?
+      submit: ログイン
+      activation: "アカウントのアクティベートが必要です"
+      login_failed: "{{login}}としてログインできませんでした"
+
+  email:
+    user:
+      welcome: Teamboxへようこそ!
+
+  shared:
+    strip:
+      archived: "このプロジェクトはアーカイブされています。このプロジェクトを編集したり、コメントしたりするには<a href='{{link}}'>プロジェクト 設定</a>でアーカイブを復元してください。" 
+    gantt_banner_primer:
+      title: ガントチャートに載せる期限をもったタスクリストはありません。
+    upcoming_events_primer:
+      title: カレンダーに載せる期限をもったタスクはありません。
+    projects:
+      projects: プロジェクト
+    archived_projects:
+      archived_projects: アーカイブされたプロジェクト
+    navigation:
+      welcome: ようこそ
+      all_projects: '全てのプロジェクト'
+      new_project: +
+    project_settings_navigation:
+      general: 一般設定
+      picture: プロジェクト Picture
+      deletion: プロジェクトのアーカイブ/削除
+      ownership: オーナー設定
+    project_navigation:
+      overview: 概観
+      all_conversations: 全てのチャット
+      conversations: チャット
+      task_lists: タスクリスト
+      all_task_lists: 全てのタスク
+      project_settings: プロジェクト設定
+      all_pages: 全てのページ
+      people: 人々
+      pages: ページ
+      time_tracking: Time Tracking
+      login: ログイン
+      signup: サインアップ
+      files: ファイル
+      invitations: 招待
+      groups: プロジェクトグループ
+    global_navigation:
+      project_invitations: プロジェクトへの招待
+      home: ホーム
+      logout: ログアウト
+      login: ログイン
+      project_invitations: "招待 ({{count}})"
+      settings: 設定
+    public_navigation:
+      home: Teambox
+      tour: 紹介
+      users: 顧客
+      services: サービス
+      community: コミュニティ
+      help: ヘルプとサポート
+      privacy: プライバシー
+      terms: 使用条件
+    user_navigation:
+      account_settings: アカウント設定
+      profile_information: プロフィール
+      profile_picture: プロフィール画像
+      notifications: 通知設定
+    task_navigation:
+      all_tasks: "全てのタスク"
+      unarchived_tasks: "解凍されたタスク"
+      my_tasks:
+        one: "私のタスク"
+        other: "私の{{count}}個のタスク"
+      everybodys_tasks: "全員のタスク"
+      show_archived_tasks:
+        one: "アーカイブされたタスクを見る"
+        other: "{{count}}個のアーカイブされたタスクを見る"
+      hide_archived_tasks: "アーカイブされたタスクを隠す"
+    footer:
+      support: フィードバックとバグ報告
+      mobile: モバイル版
+      help: ヘルプ
+    watchers:
+      unwatch: 通知を解除
+      watch: 更新を通知
+      people_watching: "通知中の人々: "
+      nobody_watching: "誰にも通知していません"
+      started_watching: "更新がeメールで通知されるようになりました"
+      stopped_watching: "このチャットについての通知を解除しました。"
+    upgrade_browser:
+      upgrade: 古いInternet Explorerを使っています。Teamboxはこのバージョンでは正しく動作しません。
+      ie: IEをアップデートする
+      or_install: もしくは、次のブラウザをインストールして下さい。
+      chrome: "Chrome,"
+      firefox: "Firefox"
+      safari: "Safari"
+
+  emailer:
+    common:
+      do_not_answer: "このメールに返信しないでください。"
+      answer_above_this_line: "回答を投稿するには、このラインより上を返信してください。"
+    invitation:
+      collaborate_with: "{{name}}はTeambox上で、あなたと共同作業をしたいと思っています:"
+      you_have_been_invited_to: "あなたはプロジェクト<b>{{project}}</b>に招待されました。"
+      accept_the_invitation: 共同作業を開始するために、招待を承諾してください。
+      current_users: "このプロジェクトの現在のユーザー:"
+      plaintext_link: "上のリンクが正常に動作しないときは、以下のコードをブラウザのアドレスバーにコピー&ペーストしてください: "
+      teambox_is_a_pm_platform: "Teamboxは現実世界の共同作業のために作られた、プロジェクト管理プラットフォームです。"
+      plan_share_and_collaborate: "計画、共有、作業の終了の確認など。可能な限りシンプルになっています。"
+      report_abuse: "このメールは、あなたのお知り合いからの要求に基づいて送付されています。もし悪用されているようでしたら、お知らせください。"
+    invitation_group:
+      you_have_been_invited_to: "あなたは<b>{{group}}</b>グループに招待されました。"
+    confirm:
+      hey: "こんにちは、 {{user_name}}!"
+      follow_the_link: "Teamboxの<b>サインアップを完了するため</b>、以下をクリックしてログインしてください:"
+      log_in: "Teamboxにログインしてください!"
+      plaintext_link: "リンクが正常に動作しないときは、以下のリンクをブラウザのアドレスバーにコピー&ペーストしてください。:"
+      report_abuse: "このメールは、あなたが{{email}}でTeamboxにサインアップしたために送付されています。"
+      problems: "もし問題がありましたら、{{support}}に連絡してください。"
+    reset_password:
+      hey: "こんにちは、{{user_name}}!"
+      follow_the_link: "Teamboxの<b>新しいパスワードを設定する</b>ために、以下のリンクを使ってログインしてください:"
+      log_in: "Teamboxにログインしてください!"
+      plaintext_link: "これが正常に動作しないときは、以下のリンクをブラウザのアドレスバーにコピー&ペーストしてください。:"
+      report_abuse: "このメールは、あなたが{{email}}でTeamboxにサインアップしたために送付されています。"
+      problems: "もし問題がありましたら、{{support}}に連絡してください。"
+    notify:
+      project: "Teambox プロジェクト:"
+      view_online: "<a href='{{link}}'>このチャットをオンラインで見て</a>、回答や添付ファイルを確認できます。"
+      reply: "このeメールに返信することで、チャットにリプライすることもできます。"
+      are_watching: " はチャットに参加していて、以後の回答が通知されます。"
+      stop_watching: "このスレッドの<a href='{{stop_watching_url}}'>ウォッチをやめる</a>と、eメールでの通知をやめることができます。"
+      notification_settings: "以後のeメール通知について、<a href='{{url}}'>通知設定</a>を変更できます。"
+      comment: "プロジェクトの壁紙についてのコメント: "
+      conversation: "チャット:"
+      task: "タスク:"
+      task_list: "タスクリスト:"
+      recent_conversations: "{{project}}の最近のチャット"
+      comments: "{{number}}個のコメント"
+      assigned_to: "<b>{{user}}</b>にアサインされている"
+      due_on: "{{date}}まで"
+      status: "状態: {{status}}"
+      my_tasks: "{{project}}で、あなたにアサインされているタスク"
+    upload:
+      file: "ファイル:"
+      uploaded_by: アップロード by
+
+  weakling:
+    default: 最低5文字必要です
+    error: 短すぎます
+    weak: 弱い
+    average: 平均
+    strong: 強い
+
+  completeness_scoring:
+    models:
+      user:
+        biography_presence:
+          title: 'プロフィールを書く'
+        biography_length_short:
+          title: 'Expand your profile to 10 words'
+        biography_length_average:
+          title: 'Expand your profile to 20 words'
+        biography_length_long:
+          title: 'Expand your profile to 30 words'
+  form:
+    cancel: キャンセル
+
+  page_title:
+    show_projects: 概観
+    index_task_lists: 全てのタスクリスト
+    index_conversations: 全てのチャット
+    index_pages: 全てのページ
+    index_uploads: 全てのファイル
+    create_uploads: ファイルのアップロード
+    index_projects: 全てのプロジェクト
+    edit_projects: プロジェクトの編集
+    index_people: 人々
+    new_users: サインアップ
+    new_pages: 新規ページ
+    create_users: サインアップ
+    edit_users: 編集
+    welcome_users: ようこそ!
+    new_projects: 新規プロジェクト
+    archived_task_lists: アーカイブされたタスク
+    new_example_projects: サンプルプロジェクトを作成
+    new_conversations: 新規のチャット
+
+  number:
+    # Used in number_with_delimiter()
+    # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
+    format:
+      # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
+      separator: "."
+      # Delimets thousands (e.g. 1,000,000 is a million) (always in groups of three)
+      delimiter: ","
+      # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
+      precision: 3
+
+    # Used in number_to_currency()
+    currency:
+      format:
+        # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
+        format: "%n%u"
+        unit: "Yen"
+        # These three are to override number.format and are optional
+        separator: "."
+        delimiter: ","
+        precision: 0
+
+    # Used in number_to_percentage()
+    percentage:
+      format:
+        # These three are to override number.format and are optional
+        # separator:
+        delimiter: ""
+        # precision:
+
+    # Used in number_to_precision()
+    precision:
+      format:
+        # These three are to override number.format and are optional
+        # separator:
+        delimiter: ""
+        # precision:
+
+    # Used in number_to_human_size()
+    human:
+      format:
+        # These three are to override number.format and are optional
+        # separator:
+        delimiter: ""
+        precision: 1
+      storage_units:
+        # Storage units output formatting.
+        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%n %u"
+        units:
+          byte:
+            one: "byte"
+            other: "bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+
+  # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
+  datetime:
+    time_ago: "{{time_ago_in_words}}前"
+    distance_in_words:
+      half_a_minute: "30秒"
+      less_than_x_seconds:
+        one:   "1秒未満"
+        other: "{{count}}秒未満"
+      x_seconds:
+        one:   "1秒"
+        other: "{{count}}秒"
+      less_than_x_minutes:
+        one:   "１分未満"
+        other: "{{count}}分未満"
+      x_minutes:
+        one:   "1分"
+        other: "{{count}}分"
+      about_x_hours:
+        one:   "1時間程度"
+        other: "{{count}}時間程度"
+      x_days:
+        one:   "1日"
+        other: "{{count}}日"
+      about_x_months:
+        one:   "1か月程度"
+        other: "{{count}}か月程度"
+      x_months:
+        one:   "1月"
+        other: "{{count}}月"
+      about_x_years:
+        one:   "1年程度"
+        other: "{{count}}年程度"
+      over_x_years:
+        one:   "1年以上"
+        other: "{{count}}年以上"
+    prompts:
+      year:   "年"
+      month:  "月"
+      day:    "日"
+      hour:   "時"
+      minute: "分"
+      second: "秒"
+
+  activerecord:
+    models:
+      card: Card
+      address: Address
+      email_address: Email
+      phone_number: Phone
+      website: Web
+      im: IM
+      social_network: Social network
+      project: プロジェクト
+      task_list: タスクリスト
+      task: タスク
+      comment: コメント
+      conversation: チャット
+      page: ページ
+      divider: Divider
+      note: Text
+      invitation: Invitation
+      upload: Upload
+    attributes:
+      card:
+        street: Street
+        city: City
+        state: State
+        zip: ZIP
+        country: Country
+      email_address:
+        name: Address
+        account_type: Type
+      phone_number:
+        name: Phone
+        account_type: Type
+      website:
+        name: Site
+      im:
+        name: Address
+        account_im_type: Service
+        account_type: Type
+      social_network:
+        name: Address
+        account_network_type: Network
+        account_type: Type
+      user:
+        login: Username
+        first_name: First name
+        last_name: Last name
+        biography: Biography
+        email: Email
+        time_zone: Time zone
+        language: Language
+        first_day_of_week: First day of week
+      project:
+        name: Name
+        permalink: Permalink
+      task_list:
+        name: Name
+        start_on: Start date
+        finish_on: Finish date
+      task:
+        name: Name
+        status: Status
+        due_on: Due date
+      comment:
+        body: Body
+        hours: Hours
+        status: Status
+      conversation:
+        name: Name
+      pages:
+        name: ページ
+        description: Description
+      divider:
+        name: Name
+      note:
+        name: Name
+        body: Body
+      invitation:
+        email: Email
+      upload:
+        description: Description
+    errors:
+      messages:
+        inclusion: "はこのリストには含まれていません"
+        exclusion: "は予約済みです"
+        invalid: "は無効です"
+        confirmation: "確認と一致しません"
+        accepted: "は承認されなければなりません。"
+        empty: "空ではいけません"
+        blank: "空ではいけません"
+        too_long: "は長過ぎます (最大で{{count}}文字までです)"
+        too_short: "は短すぎます (最小は{{count}}文字です)"
+        wrong_length: "は長さが異なります ({{count}}文字にする必要があります)"
+        taken: "既に取得されています。"
+        not_a_number: "は数字ではありません"
+        greater_than: "{{count}}より大きい必要があります。"
+        greater_than_or_equal_to: "{{count}}以上である必要があります。"
+        equal_to: "{{count}}である必要があります。"
+        less_than: "{{count}}より小さい必要があります。"
+        less_than_or_equal_to: "{{count}}以下である必要があります。"
+        odd: "偶数でなければいけません。"
+        even: "奇数でなければいけません。"
+        record_invalid: "確認に失敗しました: {{errors}}"
+      ####
+      models:
+        comment:
+          attributes:
+            body:
+              no_body_generic: "何をしたかを上のテキストボックスに記載してください。"
+              no_body_task: "このタスクで何をしたかを上のテキストボックスに記載してください。"
+        conversation:
+          attributes:
+            body:
+              no_body_generic: "チャットを始めるにはコメントを書いて下さい。"
+            name:
+              no_title: "チャットにタイトルを書いてください。"
+
+  date:
+    yesterday: 昨日
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+    order: [ :day, :month, :year ]
+
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    order: [ :year, :month, :day ]
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      short: "%I:%M %p"
+      long: "%B %d, %Y %H:%M"
+    am: "am"
+    pm: "pm"
+
+  support:
+    select:
+      prompt: "Please select"
+    array:
+      words_connector: ", "
+      two_words_connector: " and "
+      last_word_connector: ", and "

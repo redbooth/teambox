@@ -29,7 +29,8 @@ class User < ActiveRecord::Base
                ['Català',   'ca'],
                ['Italiano', 'it'],
                ['Русский',  'ru'],
-               ['Chinese', 'zh'],
+               ['Chinese',  'zh'],
+               ['Japanese', 'ja'],
                ]
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
