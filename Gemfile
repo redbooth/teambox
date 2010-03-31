@@ -10,6 +10,7 @@ gem 'RedCloth', '~> 4.2.3'
 gem 'haml', '~> 2.2.21'
 gem 'mysql', '~> 2.8.1'
 gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
+gem 'hpricot', '~> 0.8.2'
 
 group :plugins do
   gem 'sprockets-rails', '~> 0.0.1'
