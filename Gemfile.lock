@@ -1,101 +1,101 @@
 --- 
 dependencies: 
-- name: rails
-  group: 
-  - :default
-  version: ~> 2.3.5
-  require: []
+  rails: 
+    group: 
+    - :default
+    version: ~> 2.3.5
+    require: []
 
-- name: SystemTimer
-  group: 
-  - :default
-  version: ~> 1.2.0
-  require: 
-  - system_timer
-- name: whenever
-  group: 
-  - :default
-  version: ~> 0.4.1
-  require: []
+  libxml-ruby: 
+    group: 
+    - :default
+    version: ~> 1.1.3
+    require: 
+    - libxml
+  completeness-fu: 
+    group: 
+    - :plugins
+    version: ~> 0.5.2
+  sprockets-rails: 
+    group: 
+    - :plugins
+    version: ~> 0.0.1
+  mysql: 
+    group: 
+    - :default
+    version: ~> 2.8.1
+  SystemTimer: 
+    group: 
+    - :default
+    version: ~> 1.2.0
+    require: 
+    - system_timer
+  haml: 
+    group: 
+    - :default
+    version: ~> 2.2.21
+  calendar_date_select: 
+    group: 
+    - :plugins
+    version: ~> 1.15
+  acts-as-list: 
+    group: 
+    - :plugins
+    version: ~> 0.1.2
+    require: 
+    - acts_as_list
+  whenever: 
+    group: 
+    - :default
+    version: ~> 0.4.1
+    require: []
 
-- name: icalendar
-  group: 
-  - :default
-  version: ~> 1.1.3
-- name: libxml-ruby
-  group: 
-  - :default
-  version: ~> 1.1.3
-  require: 
-  - libxml
-- name: RedCloth
-  group: 
-  - :default
-  version: ~> 4.2.3
-- name: haml
-  group: 
-  - :default
-  version: ~> 2.2.21
-- name: mysql
-  group: 
-  - :default
-  version: ~> 2.8.1
-- name: aws-s3
-  group: 
-  - :default
-  version: ~> 0.6.2
-  require: 
-  - aws/s3
-- name: sprockets-rails
-  group: 
-  - :plugins
-  version: ~> 0.0.1
-- name: completeness-fu
-  group: 
-  - :plugins
-  version: ~> 0.5.2
-- name: acts-as-list
-  group: 
-  - :plugins
-  version: ~> 0.1.2
-  require: 
-  - acts_as_list
-- name: calendar_date_select
-  group: 
-  - :plugins
-  version: ~> 1.15
-- name: paperclip
-  group: 
-  - :plugins
-  version: ~> 2.3.1.1
-- name: database_cleaner
-  group: 
-  - :testing
-  version: ~> 0.5.0
-- name: rspec-rails
-  group: 
-  - :testing
-  version: ~> 1.3.2
-  require: 
-  - spec/rails
-- name: factory_girl
-  group: 
-  - :testing
-  version: ~> 1.2.3
-- name: pickle
-  group: 
-  - :testing
-  version: ~> 0.2.1
-- name: cucumber-rails
-  group: 
-  - :testing
-  version: ~> 0.3.0
-  require: []
+  rspec-rails: 
+    group: 
+    - :testing
+    version: ~> 1.3.2
+    require: 
+    - spec/rails
+  database_cleaner: 
+    group: 
+    - :testing
+    version: ~> 0.5.0
+  paperclip: 
+    group: 
+    - :plugins
+    version: ~> 2.3.1.1
+  factory_girl: 
+    group: 
+    - :testing
+    version: ~> 1.2.3
+  cucumber-rails: 
+    group: 
+    - :testing
+    version: ~> 0.3.0
+    require: []
 
-- name: capybara
-  group: 
-  - :testing
-  version: ~> 0.3.5
+  icalendar: 
+    group: 
+    - :default
+    version: ~> 1.1.3
+  pickle: 
+    group: 
+    - :testing
+    version: ~> 0.2.1
+  RedCloth: 
+    group: 
+    - :default
+    version: ~> 4.2.3
+  aws-s3: 
+    group: 
+    - :default
+    version: ~> 0.6.2
+    require: 
+    - aws/s3
+  capybara: 
+    group: 
+    - :testing
+    version: ~> 0.3.5
 specs: 
 - rake: 
     version: 0.8.7
