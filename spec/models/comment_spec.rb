@@ -159,18 +159,42 @@ describe Comment do
       comment.mentioned.should_not include(@user)
     end
 
-    it "should add the mentioned @user to watchers of a Conversation, Task List or Task" do
-      @project.add_user(@user)
+    describe "mentioning @user" do
+      before do
+        @project.add_user(@user)
+      end
 
-      %w(conversation task_list task).each do |model|
-        element = Factory(model, :project => @project, :user => @project.user)
-        element.watchers.should_not include(@user)
+      it "should add him to conversation" do
+        @conversation = Factory(:conversation, :project => @project, :user => @project.user)
+        @conversation.watchers.should_not include(@user)
 
-        body = "I would like to add @existing to this thread, but not @unexisting."
-        comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => element)
+        body = "I would like to add @existing to this, but not @unexisting."
+        comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @conversation)
+        
         comment.mentioned.should == [@user]
+        @conversation.reload.watchers.should include(@user)
+      end
 
-        element.reload.watchers.collect(&:id).should == [@project.user, @user].collect(&:id)
+      it "should add him to task" do
+        @task = Factory(:task, :project => @project, :user => @project.user)
+        @task.watchers.should_not include(@user)
+
+        body = "I would like to add @existing to this, but not @unexisting."
+        comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @task)
+        
+        comment.mentioned.should == [@user]
+        @task.reload.watchers.should include(@user)
+      end
+
+      it "should add him to task list" do
+        @task_list = Factory(:task_list, :project => @project, :user => @project.user)
+        @task_list.watchers.should_not include(@user)
+
+        body = "I would like to add @existing to this, but not @unexisting."
+        comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @task_list)
+        
+        comment.mentioned.should == [@user]
+        @task_list.reload.watchers.should include(@user)
       end
     end
 
