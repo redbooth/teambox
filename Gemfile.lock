@@ -1,55 +1,59 @@
 --- 
 dependencies: 
-  libxml-ruby: 
+  completeness-fu: 
     group: 
-    - :default
-    version: ~> 1.1.3
-    require: 
-    - libxml
+    - :plugins
+    version: ~> 0.5.2
   rails: 
     group: 
     - :default
     version: ~> 2.3.5
     require: []
 
-  completeness-fu: 
-    group: 
-    - :plugins
-    version: ~> 0.5.2
-  sprockets-rails: 
-    group: 
-    - :plugins
-    version: ~> 0.0.1
-  haml: 
+  libxml-ruby: 
     group: 
     - :default
-    version: ~> 2.2.21
+    version: ~> 1.1.3
+    require: 
+    - libxml
+  sqlite3-ruby: 
+    group: 
+    - :development
+    version: ">= 0"
+  mysql: 
+    group: 
+    - :default
+    version: ~> 2.8.1
   SystemTimer: 
     group: 
     - :default
     version: ~> 1.2.0
     require: 
     - system_timer
-  mysql: 
+  haml: 
     group: 
     - :default
-    version: ~> 2.8.1
+    version: ~> 2.2.21
+  sprockets-rails: 
+    group: 
+    - :plugins
+    version: ~> 0.0.1
   calendar_date_select: 
     group: 
     - :plugins
     version: ~> 1.15
-  acts-as-list: 
-    group: 
-    - :plugins
-    version: ~> 0.1.2
-    require: 
-    - acts_as_list
   whenever: 
     group: 
     - :default
     version: ~> 0.4.1
     require: []
 
+  acts-as-list: 
+    group: 
+    - :plugins
+    version: ~> 0.1.2
+    require: 
+    - acts_as_list
   rspec-rails: 
     group: 
     - :testing
@@ -82,20 +86,20 @@ dependencies:
     group: 
     - :testing
     version: ~> 0.2.1
+  hpricot: 
+    group: 
+    - :default
+    version: ~> 0.8.2
+  RedCloth: 
+    group: 
+    - :default
+    version: ~> 4.2.3
   aws-s3: 
     group: 
     - :default
     version: ~> 0.6.2
     require: 
     - aws/s3
-  RedCloth: 
-    group: 
-    - :default
-    version: ~> 4.2.3
-  hpricot: 
-    group: 
-    - :default
-    version: ~> 0.8.2
   capybara: 
     group: 
     - :testing
@@ -193,9 +197,11 @@ specs:
     version: 1.0.2
 - sprockets-rails: 
     version: 0.0.1
+- sqlite3-ruby: 
+    version: 1.2.5
 - whenever: 
     version: 0.4.1
-hash: 63b645280db451c225bfcf3b593fe7599d7b0560
+hash: 7ccf3537ab7a8428b83d97a926b140b8ca48c66b
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
