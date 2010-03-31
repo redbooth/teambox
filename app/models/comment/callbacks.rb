@@ -9,7 +9,7 @@ class Comment
   def after_create
     self.target.reload
     
-    @activity = project.log_activity(self,'create')
+    @activity = project && project.log_activity(self, 'create')
 
     target.after_comment(self)      if target.respond_to?(:after_comment)
     target.add_watchers(@mentioned) if target.respond_to?(:add_watchers)

@@ -50,11 +50,6 @@ class Task < RoleRecord
     key
   end
 
-  def update_counter_cache
-    self.task_list.archived_tasks_count = Task.count(:conditions => { :archived => true, :task_list_id => self.task_list.id })
-    self.task_list.save
-  end
-
   def assigned?
     !assigned.nil?
   end

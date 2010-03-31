@@ -14,13 +14,8 @@ class Task
     end
   end
 
-  def after_save
-    self.update_counter_cache
-  end
-
   def after_destroy
     Activity.destroy_all  :target_id => self.id, :target_type => self.class.to_s
     Comment.destroy_all   :target_id => self.id, :target_type => self.class.to_s
-    self.update_counter_cache
   end
 end  

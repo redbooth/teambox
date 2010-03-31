@@ -71,7 +71,19 @@ describe Comment do
 
   #describe "posting to a conversation"
   #describe "posting to a task list"
-  #describe "posting to a task"
+  
+  describe "posting to a task" do
+    before do
+      @task = Factory(:task)
+    end
+    
+    it "should update counter cache" do
+      lambda {
+        @task.comments.create(:project => @task.project)
+        @task.reload
+      }.should change(@task, :comments_count).by(1)
+    end
+  end
 
   #describe "marking as read"
 
