@@ -1,3 +1,49 @@
+=rounded-top(!n)
+  :border-radius = !n !n 0 0
+  :-moz-border-radius-topleft = !n
+  :-moz-border-radius-topright = !n
+  :-webkit-border-top-left-radius = !n
+  :-webkit-border-top-right-radius = !n
+=rounded-right(!n)
+  :border-radius = 0 !n !n 0
+  :-moz-border-radius-topright = !n
+  :-moz-border-radius-bottomright = !n
+  :-webkit-border-top-right-radius = !n
+  :-webkit-border-bottom-right-radius = !n
+=rounded-bottom(!n)
+  :-moz-border-radius-bottomleft = !n
+  :-moz-border-radius-bottomright = !n
+  :-webkit-border-bottom-left-radius = !n
+  :-webkit-border-bottom-right-radius = !n
+=rounded-left(!n)
+  :border-radius = !n 0 0 !n
+  :-moz-border-radius-topleft = !n
+  :-moz-border-radius-bottomleft = !n
+  :-webkit-border-top-left-radius = !n
+  :-webkit-border-bottom-left-radius = !n
+=rounded(!n)
+  :border-radius = !n
+  :-moz-border-radius = !n
+  :-webkit-border-radius = !n
+
+=box-shadow(!params)
+  :box-shadow = !params
+  :-webkit-box-shadow = !params
+  :-moz-box-shadow = !params
+
+=gradient(!from, !to)
+  :background-image = "-webkit-gradient(linear, left top, left bottom, from(#{!from}), to(#{!to}))"
+  :background-image = "-moz-linear-gradient(#{!from}, #{!to})"
+=gradient-top(!color, !alpha = 1)
+  +gradient(rgba(!color,!alpha), rgba(!color,0))
+=gradient-bottom(!color, !alpha = 1)
+  +gradient(rgba(!color,0), rgba(!color,!alpha))
+  
+=transform(!params)
+  :-webkit-transform = !params
+  :-moz-transform = !params
+  :transform = !params
+
 @media screen
   html
     :overflow-y scroll
