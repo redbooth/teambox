@@ -24,18 +24,39 @@
       :background url(../images/loading_button_wrap_bg.jpg) no-repeat right
       
   a.add_button, a.new_task_list_link, a.reorder_task_list_link
-    :display block
-    :background url(../images/add_button_bg.jpg) no-repeat left
+    :display inline-block
+    :padding .4em .7em
     :font-size 12px
-    :padding 5px
-      :left 20px
-    :margin-bottom 15px      
+    :margin 0 .5em 1em 0
+    :color rgb(40,40,40)
+    :background #eee
+    +rounded(4px)
+    +gradient-bottom(silver)
+    :text-shadow white 1px 1px 1px
+    &:hover
+      :text-decoration none
+      +gradient-bottom(#aaa)
+    &:before
+      :content "✚ "
+      :color #555
+      :margin-right .3em
     span
-      :color rgb(40,40,40)
-      :padding 5px
-        :right 10px
       :font-weight bold
-      :background url(../images/button_wrap_bg.jpg) no-repeat right
+      :text-transform uppercase
+      :font-family Arial, sans-serif
+      :font-size 11px
+    .cssgradients &
+      :border 1px solid silver
+    .no-cssgradients &
+      //:display block
+      :background url(../images/add_button_bg.jpg) no-repeat left
+      :padding 5px
+        :left 20px
+      span
+        :padding 5px
+          :right 10px
+        :font-weight bold
+        :background url(../images/button_wrap_bg.jpg) no-repeat right
 
   a.button
     :background url(../images/button_bg.jpg) no-repeat left
