@@ -40,6 +40,7 @@ if @comment.errors.empty?
       page.update_watching(@current_project,current_user,@target)
     end
     
+    page << "Comment.watch_edit();"
     page.reload_javascript_events
 
   end
