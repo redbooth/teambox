@@ -13,6 +13,7 @@
     - javascript_tag do
       = yield :js_templates
   %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
+    = javascript_include_tag 'modernizr'
     = strip(@current_project)
     .container
       = header
