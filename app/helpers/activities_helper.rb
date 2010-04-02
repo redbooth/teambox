@@ -91,5 +91,19 @@ module ActivitiesHelper
       render :partial => 'activities/show_more'
     end
   end
-
+  
+  def fluid_badge(count)
+    badge = "if (typeof(badge_count) != 'undefined') 
+                { badge_count += #{count}; }
+            else  badge_count = #{count};"
+    badge << "window.fluid.dockBadge = badge_count+'';"
+    badge << "ClearBadge = window.onfocus=function(){window.fluid.dockBadge = ''; badge_count = 0};"
+  end
+  
+  def fluid_growl(project, user, body)
+    "window.fluid.showGrowlNotification({
+        title: '#{project}', 
+        description: '#{user}: #{body}'
+    });"
+  end
 end
