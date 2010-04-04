@@ -15,7 +15,7 @@ render_tabnav :user do
     add_tab do |t|
       t.named t('.profile_picture')
       t.links_to account_picture_path
-      t.highlights_on :controller => 'avatars', :action => 'show'
+      t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'picture'
     end
     
     add_tab do |t|
