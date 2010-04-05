@@ -269,7 +269,6 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.text     "watchers_ids"
     t.integer  "assigned_id"
     t.integer  "status",          :default => 0
-    t.boolean  "archived",        :default => false
     t.date     "due_on"
     t.datetime "completed_at"
     t.datetime "deleted_at"

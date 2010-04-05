@@ -4,7 +4,6 @@ loading_id = task_list_id(:edit_loading,@current_project,@task_list)
 submit_id = task_list_id(:edit_submit,@current_project,@task_list)
 
 if @task_list.errors.empty?
-  page.replace_task_list(@current_project,@task_list)
   page.replace_task_list_header(@current_project,@task_list)
   page[header_id].show
   page[form_id].hide 

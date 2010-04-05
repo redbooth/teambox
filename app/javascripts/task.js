@@ -155,57 +155,7 @@ Event.addBehavior({
     var form = e.findElement("form");
     form.up().down(".task_header").show();
     form.hide();
-  },
-  ".show_archived_tasks_link:click": function(e) {
-    var show = $(this).readAttribute("show");
-    e.findElement(".tasks").select(".archived_task").each(function(task){
-      'all' == show ? task.show() : task.hide();
-    })
-    $(this).toggleShowAttribute(new Array('all', 'unarchived'));
-    var textClass = $(this).readAttribute('texts_class');
-    var linkTexts = $(this).up().down("." + textClass).innerHTML.split("##");
-    $(this).update($(this).nextText(linkTexts));
-    e.stop();
-  },
-  "#global_show_all_tasks_link:click": function(e) {
-    var show = $(this).readAttribute("show");
-    $$(".archived_task").each(function(task){
-      'all' == show ? task.show() : task.hide();
-    })
-    $(this).toggleShowAttribute(new Array('all', 'unarchived'));
-    var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
-    $(this).update($(this).nextText(linkTexts));
-    e.stop();
-  },
-  "#global_show_my_tasks_link:click": function(e) {
-    var show = $(this).readAttribute("show");
-    $$(".task").each(function(task){
-      // archived tasks should not be shown, mine or someone else's
-      if ('all' == show && !task.hasClassName("archived_task")) {
-        task.show();
-      }
-      if ('mine' == show && !task.hasClassName("assigned_to_" + User.current_user_login())) {
-        task.hide();
-      }
-    })
-    $(this).toggleShowAttribute(new Array('mine', 'all'));
-    var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
-    $(this).update($(this).nextText(linkTexts));
-    e.stop();
-  },
-  "#global_show_archived_tasks_link:click": function(e) {
-    var show = $(this).readAttribute("show");
-    $$(".task").each(function(task){
-      if ('archived' == show) task.hasClassName("archived_task") ? task.show() : task.hide();
-      if ('unarchived' == show) task.hasClassName("archived_task") ? task.hide() : task.show();
-    })
-    $(this).toggleShowAttribute(new Array('archived', 'unarchived'));
-    var linkTexts = $($(this).identify() + "_texts").innerHTML.split("##");
-    $(this).update($(this).nextText(linkTexts));
-    e.stop();
-  },
-
-
+  }
 });
 
 Event.addBehavior.reassignAfterAjax = true;

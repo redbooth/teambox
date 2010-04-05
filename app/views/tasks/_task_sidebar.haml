@@ -1,0 +1,4 @@
+.task{ :class => task.overdue? ? 'overdue' : '' }
+  = task_status(task,:content)
+  = render_due_on(task,current_user)
+  = link_to task.name, project_task_list_task_path(task.project,task.task_list,task), :class => "name"

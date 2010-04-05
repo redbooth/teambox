@@ -1,3 +1,6 @@
+- if @current_project.editable?(current_user)
+  = task_list_form(@current_project,TaskList.new)
+
 #show_task
   = task_header(project,task_list,task)
   = task_form(project,task_list,task) unless task.closed?

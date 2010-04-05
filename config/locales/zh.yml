@@ -37,6 +37,8 @@ zh:
   deleted:
     conversation: "已删除<b>{{name}}</b>话题"
     task: "已删除<b>{{name}}</b>任务"
+    #####
+    task_list: "Deleted <b>{{name}}</b> task list"
     page: "已删除<b>{{name}}</b>页面"
     upload: "已删除<b>{{name}}</b>文件"
     person: "{{name}}不再属于此项目"

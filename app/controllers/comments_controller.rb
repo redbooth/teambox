@@ -45,15 +45,7 @@ class CommentsController < ApplicationController
     respond_to do |f|
       f.html { redirect_to redirect_path }
       f.m    { redirect_to redirect_path }
-      f.js {
-        # Fetch new comments
-        if params[:last_comment_id]
-          @last_id = params[:last_comment_id].to_i
-          new_id = @comment.new_record? ? 0 : @comment.id
-          @new_comments = @target.comments.find(:all, :conditions => ['comments.id != ? AND comments.id > ?', new_id, @last_id])
-          @last_id = @new_comments[0].id unless @new_comments.empty?
-        end
-      }
+      f.js   { fetch_new_comments }
     end
   end
 
@@ -146,9 +138,6 @@ class CommentsController < ApplicationController
         if params[:comment][:target_attributes]
           t.assigned_id = params[:comment][:target_attributes][:assigned_id]
         end
-        #if t.archived? && [Task::STATUSES[:new],Task::STATUSES[:open],Task::STATUSES[:hold]].include?(t.status)
-        #  t.archived = false
-        # end
         t
       elsif params.has_key?(:task_list_id)
         @current_project.task_lists.find(params[:task_list_id])
@@ -156,6 +145,16 @@ class CommentsController < ApplicationController
         @current_project.conversations.find(params[:conversation_id])
       else
         @current_project
+      end
+    end
+    
+    def fetch_new_comments
+      # Fetch new comments
+      if params[:last_comment_id]
+        @last_id = params[:last_comment_id].to_i
+        new_id = @comment.new_record? ? 0 : @comment.id
+        @new_comments = @target.comments.find(:all, :conditions => ['comments.id != ? AND comments.id > ?', new_id, @last_id])
+        @last_id = @new_comments[0].id unless @new_comments.empty?
       end
     end
 end

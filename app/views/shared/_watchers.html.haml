@@ -7,7 +7,7 @@
     = target.watchers.to_sentence
   - case state
     - when :started_watching
-      %span.state.started= t('.started_watching')
+      %span.state.started#updated_watch_state= t('.started_watching')
     - when :stopped_watching
-      %span.state.stopped= t('.stopped_watching')
+      %span.state.stopped#updated_watch_state= t('.stopped_watching')
       

@@ -16,7 +16,7 @@ module UploadsHelper
   end
   
   def the_comment_upload_link(comment)
-    link_to_function image_tag('attach_button.jpg'), show_upload_form(comment), :id => 'comment_upload_link'
+    link_to_function content_tag(:span,"Files"), show_upload_form(comment), :class => 'add_button', :id => 'comment_upload_link'
   end
 
   def upload_iframe_form(comment)

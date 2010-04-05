@@ -1,7 +1,3 @@
 .task_header{ :id => "#{task_id(:edit_header,project,task_list,task)}" }
   = task_action_links(project,task_list,task) unless task.closed?
-  %h2
-    = task_status(task,:header)
-    = task.name
-  = render_due_on(task,current_user)
-  = render_assignment(task,current_user)
+  %h2= task.name

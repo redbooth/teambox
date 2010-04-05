@@ -49,7 +49,8 @@ class TaskListsController < ApplicationController
       @sub_action = 'all'
     end
     respond_to do |f|
-      f.m   { redirect_to project_task_lists_path(@current_project) }
+      f.html { redirect_to [@current_project,@task_list] }
+      f.m    { redirect_to project_task_lists_path(@current_project) }
       f.js
     end
   end
@@ -80,7 +81,6 @@ class TaskListsController < ApplicationController
           flash[:success] = t('deleted.task_list', :name => @task_list.to_s)
           redirect_to project_task_lists_path(@current_project)
         end
-        f.js
       end
     else
       respond_to do |f|

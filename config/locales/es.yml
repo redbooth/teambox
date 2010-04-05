@@ -37,6 +37,7 @@ es:
   deleted:
     conversation: "Se ha borrado la conversación <b>{{name}}</b>"
     task: "Se ha borrado la tarea <b>{{name}}</b>"
+    task_list: "Se ha borrado la lista de tareas <b>{{name}}</b>"
     page: "Se ha borrado la página <b>{{name}}</b>"
     upload: "Se ha borrado el archivo <b>{{name}}</b>"
     person: "{{name}} ya no pertenece al proyecto"

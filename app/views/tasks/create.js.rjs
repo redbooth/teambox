@@ -2,37 +2,24 @@ link_id = task_id(:new_link,@current_project,@task_list)
 form_id = task_id(:new_form,@current_project,@task_list)
 loading_id = task_id(:new_loading,@current_project,@task_list)
 submit_id = task_id(:new_submit,@current_project,@task_list)
+task_id = task_id(:task,@current_project,@task)
+archive_link_id = task_list_id(:archive_link,@current_project,@task_list)
 
 if @task.errors.empty?
   page.insert_task(@current_project,@task_list,@task)
+
+  page[task_id].visual_effect :highlight, :duration => 3
+
+  page.ef(archive_link_id)
+    page[archive_link_id].remove
+  page.en
+
   page[link_id].show
   page[form_id].hide
   page << "Form.reset('#{form_id}')"
-  #page.task_list_sortable(@task_list,order_project_task_list_path(@current_project,@task_list))
-
-  ## AB
-  ## This was in a helper but it would cause everything to hang
-  ## I have no idea why, but it works here
-  the_tasks_id = task_list_id(:the_tasks,@current_project,@task_list)
-  page.sortable the_tasks_id ,{
-    :tag => 'div',
-    :url => project_reorder_tasks_path(@current_project,@task_list),
-    :only => 'task',
-    :format => page.literal('/task_(\d+)/'),
-    :handle => 'img.drag',
-    :constraint => 'vertical' }
-
-  #FIXME: This gives a css class to the newly created task
-  # so that it stands out but it throws an RJS error
-  # debugger
-  page.update_active_task(@current_project,@task_list,@task,@comment)
-  page.reload_javascript_events
 else
   page[form_id].addClassName('form_error')
   page.show_form_errors(@task,form_id)
 end
 page[loading_id].hide
 page[submit_id].show
-
-
-

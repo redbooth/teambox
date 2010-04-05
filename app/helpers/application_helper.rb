@@ -45,11 +45,6 @@ module ApplicationHelper
     render :partial => 'shared/header'
   end
 
-  def task_navigation(project)
-    render :partial => 'shared/task_navigation',
-      :locals => { :project => project }
-  end
-
   def project_navigation(project)
     render :partial => 'shared/project_navigation',
       :locals => { :project => project }
@@ -180,7 +175,7 @@ module ApplicationHelper
   end
 
   def drag_image
-    image_tag('drag.png', :class => 'drag', :style => 'display: none')
+    image_tag('drag.png', :class => 'drag')
   end
 
   def remove_image
@@ -266,6 +261,10 @@ module ApplicationHelper
 
   def update_watching(project,user,target,state = :normal)
     page.replace 'watching', people_watching(project,user,target,state)
+    page.delay(2) do
+      page['updated_watch_state'].visual_effect :fade, :duration => 2
+    end
+    
   end
 
   def upgrade_browser

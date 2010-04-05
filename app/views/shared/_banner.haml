@@ -1,8 +1,7 @@
-- content_for :banner do
-  = upcoming_events(events)
-  = gantt_chart(chart)
-  .banner_navigation
-    %ul
-      %li.calendar= calendar_banner_link
-      %li.gantt_chart= gantt_banner_link
-  .clear
+.calendar_gantt{ :style => 'padding: 0; margin-top: 20px; border-bottom: 1px solid #c8c8c8' }
+  .tabs{ :style => 'border-bottom: 1px solid #c8c8c8' }
+    = calendar_banner_link
+    = gantt_banner_link
+  .body{ :style => 'border-left: 1px solid #c8c8c8; border-right: 1px solid #c8c8c8' }
+    = upcoming_events(events)
+    = gantt_chart(chart)

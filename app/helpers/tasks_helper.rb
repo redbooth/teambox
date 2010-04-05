@@ -5,6 +5,19 @@ module TasksHelper
     js_id(element,project,task_list,task)
   end
 
+  def task_classes(task)
+    classes = []
+    classes << 'due_today' if task.due_today?
+    classes << 'due_tomorrow' if task.due_tomorrow?
+    classes << 'overdue' if task.overdue?
+    classes << 'unassigned_date' if task.due_on.nil?
+    classes << (task.assigned.nil? ? 'unassigned' : "user_#{task.assigned.user_id}")
+    if task.open?
+      classes << 'mine' if task.assigned_to?(current_user)
+    end
+    classes.join(' ')
+  end
+
   def task_link(project,task_list,task=nil)
     task ||= project.tasks.build
     app_link(project,task_list,task)
@@ -71,27 +84,12 @@ module TasksHelper
 
   def task_archive_box(project,task_list,task)
     return unless task.editable?(current_user)
-    if task.archived
+    if task.archived?
       render :partial => 'tasks/unarchive_box', :locals => {
         :project => project,
         :task_list => task_list,
         :task => task }
-    elsif task.closed?
-      render :partial => 'tasks/archive_box', :locals => {
-        :project => project,
-        :task_list => task_list,
-        :task => task }
     end
-  end
-
-  def archive_task_button(project,task_list,task)
-    link_to_remote content_tag(:span, t('.archive')),
-      :url => archive_project_task_list_task_path(project,task_list,task),
-      :method => :put,
-      :loading => loading_archive_task,
-      :html => {
-        :class => 'button',
-        :id => 'archive_button' }
   end
 
   def loading_archive_task
@@ -107,9 +105,11 @@ module TasksHelper
     end
   end
 
-  def show_archive_task_message(task)
-    page.replace 'show_task', :partial => 'tasks/archive_message', :locals => {
-      :task => task }
+  def sidebar_tasks(tasks)
+    render :partial => 'tasks/task_sidebar',
+      :as => :task,
+      :collection => tasks#.sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
+    # Because of the way this sort is implemented, it might be redundant
   end
 
   def show_destroy_task_message(task)
@@ -201,9 +201,8 @@ module TasksHelper
     id = check_status_type(task,status_type)
     out = "<span id='#{id}' class='task_status task_status_#{task.status_name}'>"
     out << case status_type
-    when :column  then task.comments_count.to_s
+    when :column  then localized_status_name(task)
     when :content then task.comments_count.to_s
-    when :header  then "#{localized_status_name(task)} &mdash; #{task.comments_count}"
     end
     out << "</span>"
     out
@@ -243,31 +242,17 @@ module TasksHelper
     drag_image if task.editable?(current_user)
   end
 
-  def list_tabular_tasks(project,task_list,tasks,sub_action)
-    render :partial => 'tasks/td_task',
-      :collection => tasks,
-      :as => :task,
-      :locals => {
-        :project => project,
-        :task_list => task_list,
-        :sub_action => sub_action }
-  end
-
   def due_on(task)
-    if task.overdue?
-      t('tasks.overdue', :days => task.overdue) + " (#{I18n.l(task.due_on, :format => '%b %d')})"
+    if task.overdue? && task.overdue <= 5
+      t('tasks.overdue', :days => task.overdue)
     else
       I18n.l(task.due_on, :format => '%b %d')
     end
   end
 
-  def list_tasks(project,task_list,tasks,current_target=nil)
+  def list_tasks(tasks)
     render :partial => 'tasks/task',
-      :collection => tasks,
-      :locals => {
-        :project => project,
-        :task_list => task_list,
-        :current_target => current_target }
+      :collection => tasks
   end
 
   def task_fields(f,project,task_list,task)
@@ -309,7 +294,7 @@ module TasksHelper
   end
 
   def insert_task(project,task_list,task)
-    page.insert_html :bottom, task_list_id(:the_tasks,project,task_list),
+    page.insert_html :bottom, task_list_id(:with_main_tasks,project,task_list),
       :partial => 'tasks/task',
       :locals => {
         :task => task,
@@ -360,6 +345,10 @@ module TasksHelper
         :handle => 'img.drag',
         :constraint => 'vertical' })
     end
+  end
+
+  def task_overview_box(task)
+    render :partial => 'tasks/overview_box', :locals => { :task => task }
   end
 
   def date_picker(f, field)

@@ -1,11 +1,20 @@
-- active = (current_target == task) ? "active_#{task.status_name}" : nil
-- archived = task.archived? ? "archived_task" : nil
-- mine = task.assigned_to?(current_user) ? "mine" : nil
-- assigned_to = task.assigned? ? "assigned_to_#{task.assigned.user.login}" : "unassigned"
-- late = task.overdue? ? "late" : nil
-.task{ :id => task_id(:item,project,task_list,task), :class => "#{assigned_to} #{active} task_item task_item_#{task.status_name} #{archived}", :show_in_main_content_url => show_in_main_content_project_task_list_task_path(project, task_list, task), :style => ("display:none" if task.archived?) }
-  = task_status(task,:column)
-  = task_drag_link(task)
-  - mine = (task.assigned.try(:user_id) == current_user.id) ? 'mine' : ''
-  = link_to task.name, project_task_list_task_path(project,task_list,task), :class => "name #{mine} #{late}"
-.clear
+- task_list = task.task_list
+- project = task.task_list.project
+%tr.task{ :id => task_id(:task,project,task), :class => task_classes(task)}
+  %td.status
+    = task_status(task,:content)
+  %td.name{ :class => "task_item_#{task.status_name}"}
+    %span.status
+      = localized_status_name(task)
+    %span.project
+      = link_to task.project, project_path(task.project)
+      &rarr;
+    %span.task_list
+      = link_to task.task_list, project_task_list_path(task.project, task.task_list)
+      &rarr;
+    = link_to task.name, project_task_list_task_path(project,task_list,task), :class => 'name'
+    - unless (task.due_on.nil? && task.unassigned?) || task.closed?
+      %span.assigned
+        = due_on(task) if task.due_on
+        = "-" unless task.assigned.nil? || task.due_on.nil?
+        = link_to task.assigned.short_name, user_path(task.assigned.user) if task.assigned

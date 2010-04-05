@@ -1,8 +1,7 @@
 Banner = {
   deactivate_links: function() {
-    $$(".banner_navigation a").each(function(link){
-      link.removeClassName("active");
-    })
+    $('show_calendar_link').removeClassName("active");
+    $('show_gantt_chart_link').removeClassName("active");
   },
   activate_link: function(link_id) {
     $(link_id).addClassName("active");
@@ -13,22 +12,19 @@ Banner = {
   show_banner: function(banner_id) {
     $(banner_id).show();
   }
-
 }
 
 Event.addBehavior({
-  ".banner_navigation li.calendar:click": function(e){
-    // $$(".banner_navigation a").invoke("removeClassName", "active");
+  "#show_calendar_link:click": function(e){
     Banner.deactivate_links();
     Banner.hide_banner_items();
     Banner.show_banner("upcoming_events_banner");
-    Banner.activate_link("calendar_banner_link")
+    Banner.activate_link("show_calendar_link");
   },
-  ".banner_navigation li.gantt_chart:click": function(e){
-    // $$(".banner_navigation a").invoke("removeClassName", "active");
+  "#show_gantt_chart_link:click": function(e){
     Banner.deactivate_links();
     Banner.hide_banner_items();
     Banner.show_banner("gantt_banner");
-    Banner.activate_link("gantt_banner_link")
+    Banner.activate_link("show_gantt_chart_link")
   }
 });

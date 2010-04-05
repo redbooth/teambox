@@ -1,6 +1,7 @@
 %table.task_list
   %tbody
-    - for task in tasks
+    = list_tasks(tasks)
+    - if false #for task in tasks
       %tr{ :class => "#{'overdue' if task.overdue? } #{ 'mine' if task.open? && task.assigned_to?(current_user)}"}
         %td.status
           = task_status(task,:content)

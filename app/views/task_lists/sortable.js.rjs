@@ -1,8 +1,0 @@
-page['reorder_link'].className = 'reorder_task_list_link'
-page.replace_html 'reorder_link', '<span>Done reorder</span>'
-page.replace 'task_lists', 
-  :partial => 'task_lists/sortable_task_lists', 
-  :locals => {
-    :project => @current_project,
-    :task_lists => @task_lists }
-page.select('.drag').each{|e|e.show}

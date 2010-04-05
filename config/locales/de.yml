@@ -37,6 +37,9 @@ de:
   deleted:
     conversation: "Konversation <b>{{name}}</b> gelöscht"
     task: "Aufgabe <b>{{name}}</b> gelöscht"
+    #####
+    task_list: "Deleted <b>{{name}}</b> task list"
+    task: "Aufgabe <b>{{name}}</b> gelöscht"
     page: "Seite <b>{{name}}</b> gelöscht"
     upload: "Datei <b>{{name}}</b> gelöscht"
     person: "{{name}} ist nicht mehr Teilnehmer in diesem Projekt"

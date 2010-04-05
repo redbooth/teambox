@@ -1,9 +1,21 @@
 - if @current_project
-  = banner(@events,@chart)
 
-  - if @task_lists.any?
-    = tabular_task_lists(@current_project,@task_lists,@sub_action)
-  - else
+  .task_header
+    - if @current_project.editable?(current_user)
+      %p.text_actions
+        %span
+          = link_to "Reorder task lists", "#", :id => :reorder_task_lists_link
+          = link_to "Done reordering", "#", :id => :done_reordering_task_lists_link, :style => 'display:none'
+
+    %h2= "Task lists for this project"
+
+  - if @current_project.editable?(current_user)
+    = task_list_form(@current_project,TaskList.new)
+
+  #task_lists
+    = render_task_lists(@current_project,@task_lists,@sub_action)
+
+  - if @task_lists.empty?
     = task_list_primer(@current_project)
   
   - content_for :column do
@@ -11,11 +23,15 @@
 
 - else
   %h2= t('.tasks_for_all_projects')
+  
+  #tasks_for_all_projects
+    = tasks_for_all_projects(@tasks)
 
-  = tasks_for_all_projects(@tasks)
-
-  %div{ :style => 'padding-left: 20px; padding-bottom: 10px' }
+  - content_for :column do
+    = filter_task_lists
+  
+    = my_tasks(current_user.assigned_tasks(:all))
+  
+    %h2 Other views
     = subscribe_to_calendars_link
-
-  %div{ :style => 'padding-left: 20px; padding-bottom: 40px' }
-    = content_tag(:div, link_to(t('common.print'), task_lists_path(:format => :print)), :class => :print)
+    = print_task_lists_link

@@ -1,4 +1,4 @@
-# Add new comments
+# Fetch new comments after post and render them
 if @new_comments
   page.insert_html :top, :comments, :text => list_comments(@new_comments, @comment.target)
   page << "$('last_comment_id').writeAttribute('value', #{@last_id})"
@@ -12,15 +12,15 @@ if @comment.errors.empty?
       page.insert_html :top, :activities, show_activity(@comment.activity)
     page.en
     
-    no_watchers = (@target.class == Project)
+    display_watchers = !@target.is_a?(Project)
     
-    if @task == @target
+    if @target == @task
       if @task.closed?
-        page.insert_archive_box(@current_project,@task)
-        page['new_comment'].remove
-        page['watching'].hide
-        no_watchers = true
-        page[task_id(:edit_form,@current_project,@task_list,@task)].remove
+      #   page.insert_archive_box(@current_project,@task)
+      #   page['new_comment'].remove
+      #   page['watching'].hide
+      #   display_watchers = false
+      #   page[task_id(:edit_form,@current_project,@task_list,@task)].remove
       else
         page.replace 'new_comment', new_comment_form(@current_project,@new_comment,:target => @task)
         if @comment.previously_closed?
@@ -28,21 +28,20 @@ if @comment.errors.empty?
           page.insert_task_form(@current_project,@task_list,@task)
         end
       end
-      page.update_task(@task)
-      page.replace_task_header(@current_project,@task_list,@task)
+      # page.update_task(@task)
+      # page.replace_task_header(@current_project,@task_list,@task)
     else
       page << "Form.reset('new_comment')"
       page.replace 'upload_area', upload_area(@comment)
       page['comment_upload_link'].show
     end
     
-    unless @target.nil? or no_watchers
+    if display_watchers
       page.update_watching(@current_project,current_user,@target)
     end
     
     page << "Comment.watch_edit();"
     page.reload_javascript_events
-
   end
   
   page.remove_form_errors(@comment,'new_comment')
@@ -52,7 +51,7 @@ else
 end
 
 page.ef(js_id(:new_submit,Comment.new))
-  page[js_id(:new_submit,Comment.new)].show      
+  page[js_id(:new_submit,Comment.new)].show
 page.en
 page.ef(js_id(:new_loading,Comment.new))
   page[js_id(:new_loading,Comment.new)].hide

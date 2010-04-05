@@ -36,6 +36,8 @@ fr:
     task: "La tâche {{id}} n'a pas été trouvée dans ce projet."
   deleted:
     conversation: "La conversation <b>{{name}}</b> a été effacée"
+    #####
+    task_list: "Deleted <b>{{name}}</b> task list"
     task: "La tâche <b>{{name}}</b> a été effacée"
     page: "La page <b>{{name}}</b> a été effacée"
     upload: "Le fichier <b>{{name}}</b> a été effacé"

@@ -63,13 +63,13 @@ module GanttChart
         @rows.inject('') do |html,row|
           row_width = (final - start) * day_width
           html << "<div class='row' style='width: #{row_width}px; z-index:50'>"
-          html << list_task_lists(row,start,day_width)
+          html << list_periods(row,start,day_width)
           html << "</div>"
           html
         end
       end
 
-      def list_task_lists(row,start,day_width)
+      def list_periods(row,start,day_width)
         row.inject('') do |html, task_list|
           task_list_width = task_list.length * day_width
           task_list_offset = (task_list.start - start) * day_width + @offset

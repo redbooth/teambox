@@ -39,6 +39,8 @@ it:
   deleted:
     conversation: "La conversazione <b>{{name}}</b> è stata cancellata"
     task: "Il compito <b>{{name}}</b> è stato cancellato"
+    #####
+    task_list: "Deleted <b>{{name}}</b> task list"
     page: "La pagina <b>{{name}}</b> è stata cancellata"
     upload: "Il file <b>{{name}}</b> è stato cancellato"
     person: "{{name}} non fa più parte del progetto"

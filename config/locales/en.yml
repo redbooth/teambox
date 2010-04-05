@@ -37,6 +37,7 @@ en:
   deleted:
     conversation: "Deleted <b>{{name}}</b> conversation"
     task: "Deleted <b>{{name}}</b> task"
+    task_list: "Deleted <b>{{name}}</b> task list"
     page: "Deleted <b>{{name}}</b> page"
     upload: "Deleted <b>{{name}}</b> file"
     person: "{{name}} is no longer in the project"
@@ -437,8 +438,12 @@ en:
         cant_be_blank: 'must not be blank'
         too_long: 'must be shorter than 255 characters'
     fields:
-      name: What needs to be done?
-      due_on: Needs to be done before... <i>(optional)</i>
+      title: New Task
+      task: "Choose an actionable task. The more specific, the better."
+      name: Enter a Task title <i>eg. Upload Logo Proposal</i>
+      optional: You can provide better instructions for this Task below.
+      body: What needs to be done? <i>optional</i>
+      due_on: Needs to be done before... <i>optional</i>
     assigned:
       assigned_to: "Assigned to {{user}}"
     due_on:
@@ -482,7 +487,7 @@ en:
       resolved: resolved
       rejected: rejected
     my_tasks:
-      my_tasks: My tasks
+      my_tasks: My tasks for all projects
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?
@@ -556,8 +561,10 @@ en:
       title: All Archived Tasks
       description: You're currently looking at archived tasks. These are tasks that have been closed.
     fields:
+      title: New Task List
       task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
-      name: Task List name
+      name: "Choose a name for this Task List <i>eg. Prepare a Prototype</i>"
+      optional: "If you starting and ending dates, this task will be displayed in the GANTT chart"
       start_on: Starts on... <i>optional</i>
       finish_on: End on... <i>optional</i>
     link:
@@ -628,6 +635,9 @@ en:
       commented_on_a_task_list: "-"
       confirm_delete: Are you sure you want to delete this comment?
       hours_hrs: "{{hours}}H"
+    hours:
+      add_hours: Hours
+      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: 'Unassigned'
       assigned_to: "Assigned to:"
@@ -701,9 +711,9 @@ en:
     strip:
       archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>" ####
     gantt_banner_primer:
-      title: There are no task lists due to show on the gantt chart
+      title: There are no task lists due to show
     upcoming_events_primer:
-      title: There are no tasks due to show on the calendar
+      title: There are no tasks due to show
     projects:
       projects: Projects
     archived_projects:

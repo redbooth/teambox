@@ -39,6 +39,7 @@ ca:
   deleted:
     conversation: "S'ha esborrat la conversa <b>{{name}}</b>"
     task: "S'ha esborrat la tasca <b>{{name}}</b>"
+    task_list: "S'ha esborrat la llista de tasques <b>{{name}}</b>"
     page: "S'ha esborrat la pàgina <b>{{name}}</b>"
     upload: "S'ha esborrat l'arxiu <b>{{name}}</b>"
     person: "{{name}} ja no pertany al projecte"

@@ -37,6 +37,8 @@ ru:
   deleted:
     conversation: "Обсуждение <b>{{name}}</b> удалено"
     task: "Задача <b>{{name}}</b> удалена"
+    #####
+    task_list: "Deleted <b>{{name}}</b> task list"
     page: "Страница <b>{{name}}</b> удалена"
     upload: "Файл <b>{{name}}</b> удалён"
     person: "{{name}} больше не участвует в этом проекте"

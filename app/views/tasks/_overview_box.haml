@@ -1,0 +1,10 @@
+#task_overview_box
+  %h2= "This task"
+  %p
+    %strong= "Status:"
+    = task_status(@task,:column)
+  - if @task.due_on
+    %p
+      %strong= "Due on:"
+      = render_due_on(@task,current_user)
+  %p= render_assignment(@task,current_user)

@@ -9,7 +9,7 @@ module Watchable
     self.watchers_ids << user.id
     self.watchers_ids.uniq!
     touch_watchers
-    self.save(false)
+    self.save(false) unless new_record?
   end
   
   def add_watchers(users)

@@ -1,20 +1,12 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:update,:reorder,:archive,:unarchive,:reopen, :show_in_main_content]
-  before_filter :find_task, :only => [:show,:destroy,:update,:archive,:unarchive,:watch,:unwatch,:reopen,:show_in_main_content]
+  before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:update,:reorder, :show_in_main_content]
+  before_filter :find_task, :only => [:show,:destroy,:update,:watch,:unwatch,:show_in_main_content]
+  before_filter :load_banner, :only => [:show]
   before_filter :set_page_title
 
   cache_sweeper :task_list_panel_sweeper, :only => [:create, :update, :reorder]
 
   def show
-    if @task.archived?
-      @sub_action = 'archived'
-      @task_lists = @current_project.task_lists.with_archived_tasks
-    else
-      @task_lists = @current_project.task_lists
-      @sub_action = 'all'
-    end
-    @task = @current_project.tasks.find(params[:id])
-
     @comments = @task.comments
     @comment = @current_project.new_task_comment(@task)
 
@@ -44,19 +36,9 @@ class TasksController < ApplicationController
       @comment = @current_project.new_task_comment(@task)
     end
     respond_to do |format|
-      format.m { redirect_to project_task_lists_path(@current_project) }
-      format.js do
-        if @task.valid?
-          render :partial => 'tasks/task',
-          :locals => {
-            :task => @task,
-            :project => @current_project,
-            :task_list => @task_list,
-            :current_target => nil }
-        else
-          render :text => @task.errors.full_messages.join(" "), :status => 403
-        end
-      end
+      format.html { redirect_to [@current_project,@task_list,@task] }
+      format.m    { redirect_to project_task_lists_path(@current_project) }
+      format.js
     end
   end
 
@@ -86,28 +68,6 @@ class TasksController < ApplicationController
         f.html { redirect_to project_task_lists_path(@current_project) }
       end
     end
-  end
-
-  def archive
-    @task.update_attribute(:archived,true)
-    respond_to {|f|f.js}
-  end
-
-  def reopen
-    @task.reopen
-    @task.assigned = @current_project.people.find_by_user_id(current_user.id)
-    @task.save
-    @comment = @current_project.new_task_comment(@task)
-    respond_to {|f|f.js}
-  end
-
-  def unarchive
-    if @task.update_attribute(:archived,false)
-      @task_lists = @current_project.task_lists
-      @sub_action = 'all'
-      @comment = @current_project.new_task_comment(@task)
-    end
-    respond_to {|f|f.js}
   end
 
   def reorder

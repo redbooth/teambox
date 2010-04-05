@@ -1,3 +1,13 @@
--content_for :column do
+- if @current_project.editable?(current_user)
+  = task_list_form(@current_project,TaskList.new)
+
+#show_task_list
+  = task_list_header(@current_project,@task_list)
+  = task_list_form(@current_project,@task_list)
+  = render_task_list(@current_project,@task_list,'all')
+  = #people_watching(@current_project,current_user,@task_list)
+  = #new_comment_form(@current_project,@current_project.comments.new, :target => @task_list)
+  = list_comments(@task_list.comments,@task_list)
+
+- content_for :column do
   = task_list_column(@current_project,@task_lists,@sub_action,@task_list)
-= render_task_list_with_tasks(@current_project,@task_list)

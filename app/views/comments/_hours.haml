@@ -1,4 +1,4 @@
-= link_to_function '<span>Hours</span>', "this.hide();this.next('.hours').show();", :style => (f.object.hours.nil? ? '' : 'display: none;'), :class => 'add_button', :id => 'comment_hours_link'
+= link_to_function content_tag(:span,t('.add_hours')), "this.hide();this.next('.hours').show();", :style => (f.object.hours.nil? ? '' : 'display: none;'), :class => 'add_button', :id => 'comment_hours_link'
 .hours.text_field{:style => (f.object.hours.nil? ? 'display: none;' : '')}
-  = f.label :hours
+  = f.label :hours, t('.hours')
   = f.text_field :hours

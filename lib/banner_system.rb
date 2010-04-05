@@ -20,7 +20,7 @@ module BannerSystem
     def load_banner
       if @current_project
         @chart_task_lists = []
-        @task_lists.each do |task_list|
+        (@task_lists || @current_project.task_lists).each do |task_list|
           @chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name) unless task_list.start_on == task_list.finish_on
         end
         @chart = GanttChart::Base.new(@chart_task_lists)

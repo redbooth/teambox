@@ -14,14 +14,20 @@ class Task < RoleRecord
                   :previous_status,
                   :previous_assigned_id,
                   :status,
-                  :due_on
+                  :due_on,
+                  :body
 
-  attr_accessor :previous_status, :previous_assigned_id
+  attr_accessor :previous_status, :previous_assigned_id, :body
 
+  # IDs equal or bigger than :resolved will be considered as archived tasks
   STATUSES = {:new => 0, :open => 1, :hold => 2, :resolved => 3, :rejected => 4}
 
   ACTIVE_STATUS_NAMES = [ :new, :open ]
   ACTIVE_STATUS_CODES = ACTIVE_STATUS_NAMES.map { |status_name| STATUSES[status_name] }
+
+  def archived?
+    [STATUSES[:rejected],STATUSES[:resolved]].include?(status)
+  end
 
   def status_new?
     STATUSES[:new] == status
@@ -37,11 +43,6 @@ class Task < RoleRecord
 
   def closed?
     [STATUSES[:rejected],STATUSES[:resolved]].include?(status)
-  end
-
-  def reopen
-    self.status = Task::STATUSES[:open]
-    self.archived = false
   end
 
   def status_name
@@ -68,7 +69,7 @@ class Task < RoleRecord
   end
 
   def overdue?
-    due_on ? Time.now.to_date > due_on : false
+    !archived? && due_on && (Time.now.to_date > due_on)
   end
 
   def due_today?
@@ -123,7 +124,6 @@ class Task < RoleRecord
       xml.tag! 'comments-count',  comments_count
       xml.tag! 'assigned-id',     assigned_id
       xml.tag! 'status',          status
-      xml.tag! 'archived',        archived
       xml.tag! 'due-on',          due_on.to_s(:db) if due_on
       xml.tag! 'created-at',      created_at.to_s(:db)
       xml.tag! 'updated-at',      updated_at.to_s(:db)
