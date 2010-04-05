@@ -123,7 +123,7 @@ describe Comment do
   describe "mentioning @user" do
     before do
       @project = Factory(:project)
-      @user = Factory(:user, :login => 'existing')
+      @user = Factory(:confirmed_user, :login => 'existing')
     end
 
     it "should link to users page when mentioning @existing if they are in the project" do
@@ -135,8 +135,8 @@ describe Comment do
     end
 
     it "should link to all the mentioned users if they are in the project" do
-      pablo = Factory(:user, :login => "pablo")
-      james = Factory(:user, :login => "james")
+      pablo = Factory(:confirmed_user, :login => "pablo")
+      james = Factory(:confirmed_user, :login => "james")
       @project.add_user(pablo)
       @project.add_user(james)
       body = "@pablo @james Check this out!"
@@ -144,6 +144,19 @@ describe Comment do
       comment.body_html.should == "<p>@<a href=\"/users/pablo\">pablo</a> @<a href=\"/users/james\">james</a> Check this out!</p>"
       comment.mentioned.should include(pablo)
       comment.mentioned.should include(james)
+    end
+
+    it "should add everyone to watchers if @all is mentioned" do
+      pablo = Factory(:confirmed_user, :login => "pablo")
+      james = Factory(:confirmed_user, :login => "james")
+      @project.add_user(pablo)
+      @project.add_user(james)
+      body = "@all hands on deck this Friday"
+      comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
+      comment.body_html.should == "<p>@all hands on deck this Friday</p>"
+      comment.mentioned.should include(pablo)
+      comment.mentioned.should include(james)
+      comment.mentioned.should_not include(@user)
     end
 
     it "should add the mentioned @user to watchers of a Conversation, Task List or Task" do
