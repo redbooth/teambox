@@ -36,10 +36,6 @@
     &:hover
       :text-decoration none
       +gradient-bottom(#aaa)
-    &:before
-      :content "✚ "
-      :color #555
-      :margin-right .3em
     span
       :font-weight bold
       :text-transform uppercase
@@ -47,6 +43,10 @@
       :font-size 11px
     .cssgradients &
       :border 1px solid silver
+      &:before
+        :content "✚ "
+        :color #555
+        :margin-right .3em
     .no-cssgradients &
       //:display block
       :background url(../images/add_button_bg.jpg) no-repeat left
