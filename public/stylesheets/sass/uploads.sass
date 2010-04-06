@@ -97,7 +97,8 @@
   .upload_thumbnail
     :padding 3px 0px
     :font-size 12px
-    %span
+    :display inline-block
+    span
       :vertical-align top
 .upload_list
   :margin 5px
@@ -172,3 +173,7 @@ body.iframe
 .link_to_upload
   :display inline-block
   :border 1px solid rgb(230,230,230)
+  :padding 1px
+  &:hover
+    :border 1px solid rgb(160,160,160)
+  
