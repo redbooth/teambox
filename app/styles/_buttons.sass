@@ -1,0 +1,65 @@
+a.loading_button
+  background: url(../images/loading_button_bg.gif) no-repeat left
+  font-size: 12px
+  padding: 5px
+    left: 20px
+  span
+    color: rgb(0, 0, 40)
+    padding: 5px
+      right: 10px
+    font-weight: bold
+    background: url(../images/loading_button_wrap_bg.jpg) no-repeat right
+a.add_button, a.new_task_list_link, a.reorder_task_list_link
+  display: inline-block
+  padding: 0.4em 0.7em
+  font-size: 12px
+  margin: 0 0.5em 1em 0
+  color: rgb(40, 40, 40)
+  background: #eeeeee
+  +rounded(4px)
+  +gradient-bottom(silver)
+  text-shadow: white 1px 1px 1px
+  &:hover
+    text-decoration: none
+    +gradient-bottom(#aaaaaa)
+  span
+    font-weight: bold
+    text-transform: uppercase
+    font-family: Arial, sans-serif
+    font-size: 11px
+  .cssgradients &
+    border: 1px solid silver
+    &:before
+      content: "✚ "
+      color: #555555
+      margin-right: 0.3em
+  .no-cssgradients &
+    background: url(../images/add_button_bg.jpg) no-repeat left
+    padding: 5px
+      left: 20px
+    span
+      padding: 5px
+        right: 10px
+      font-weight: bold
+      background: url(../images/button_wrap_bg.jpg) no-repeat right
+a.button
+  background: url(../images/button_bg.jpg) no-repeat left
+  font-size: 12px
+  padding: 5px
+  span
+    color: rgb(40, 40, 40)
+    padding: 5px
+      right: 10px
+    font-weight: bold
+    background: url(../images/button_wrap_bg.jpg) no-repeat right
+a.attach_button
+  background: url(../images/attach_button_bg.jpg) no-repeat left
+  font-size: 12px
+  padding: 5px
+    left: 20px
+  span
+    color: rgb(40, 40, 40)
+    padding: 5px
+      right: 10px
+    font-weight: bold
+    background: url(../images/button_wrap_bg.jpg) no-repeat right

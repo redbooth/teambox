@@ -1,0 +1,57 @@
+@import typography
+@import buttons
+
+img
+  border: none
+
+table
+  border-collapse: collapse
+  clear: both
+  font-size: 0.8em
+  th
+    text-align: left
+    font-weight: normal
+  td
+    vertical-align: top
+
+a
+  color: #259bad
+  text-decoration: none
+
+a:hover
+  color: #df5249
+  text-decoration: underline
+
+div.fieldWithErrors
+  display: inline
+
+.index_task_lists, .show_projects
+  .banner
+    background: rgb(250, 250, 250)
+    border-bottom: solid 1px rgb(200, 200, 200)
+
+span.unread_comment_count
+  font-weight: bold
+  font-size: 10px
+
+div.destroy_message, div.archive_message
+  background: rgb(231, 244, 153)
+  padding: 10px
+  border: 1px rgb(209, 234, 61) solid
+  +rounded(8px)
+  font-size: 13px
+
+.strip_wrap
+  background: rgb(213, 213, 213)
+  .strip
+    font-size: 15px
+    width: 960px
+    padding: 16px 0px
+    margin: 0px auto
+    text-align: center
+    span
+      vertical-align: middle
+    img
+      vertical-align: middle
+      display: inline
+      margin-right: 10px

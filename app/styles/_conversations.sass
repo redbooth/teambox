@@ -1,0 +1,113 @@
+#column
+  .conversations
+    clear: both
+    margin-top: 20px
+    .conversation
+      padding-top: 2px
+      font-size: 12px
+      a
+        padding: 3px 0
+      span.comment_count
+        color: rgb(150, 150, 150)
+
+.index_conversations
+  h2
+    margin-top: 0px
+  #conversations
+    .conversation
+      color: rgb(30, 30, 30)
+      margin-bottom: 10px
+      h2
+        font-family: "Lucida Grande", "Helvetica Neue", Verdana, Arial, Helvetica, sans-serif
+        margin: 0px
+        padding: 0px
+        font-size: 16px
+        a
+          color: rgb(0, 0, 140)
+      .comment
+        -moz-border-radius: 6px
+        -webkit-border-radius: 6px
+        padding: 5px 8px
+        margin: 0px
+          top: 2px
+        .info
+          width: 54px
+        .info .info
+          display: none
+
+.new_conversations, .create_conversations
+  .content
+    form
+      padding-left: 10px
+      label
+        padding: 0px
+      .name
+        input
+          width: 610px
+          font-size: 24px
+    textarea#conversation_body
+      width: 610px
+      height: 240px
+      font-size: 12px
+    .watchers
+      background: rgb(255, 255, 200)
+      border: 1px rgb(220, 220, 150) solid
+      -moz-border-radius: 5px
+      -webkit-border-radius: 5px
+      margin: 10px
+        left: 0px
+      padding: 10px
+        top: 0px
+      font-size: 12px
+      h3
+        font-size: 14px
+        margin:
+          top: 7px
+          bottom: 10px
+      .user
+        float: left
+        width: 170px
+      p
+        margin-top: 10px
+  .column
+    font-size: 12px
+    ul
+      padding-left: 15px
+    p, ul
+      margin-bottom: 10px
+
+.show_conversations
+  h2
+    border: none
+  #comments
+    font-size: 12px
+  form#new_comment
+    margin-top: 10px
+    margin-bottom: 30px
+
+.conversation_form
+  .text_field
+    label
+      display: none
+    padding-right: 10px
+    input
+      width: 100%
+      border:
+        top: solid 1px rgb(90, 90, 90)
+        left: solid 1px rgb(150, 150, 150)
+        bottom: solid 1px rgb(150, 150, 150)
+        right: solid 1px rgb(90, 90, 90)
+  .submit
+    width: 100%
+    text-align: right
+    input
+      float: none
+
+.conversation_header
+  display: block
+  .text_actions
+    float: right
+    font-size: 12px
+    color: rgb(200, 200, 200)
+    a
+      text-decoration: underline

@@ -1,0 +1,258 @@
+body
+  margin: 0
+  font-family: Helvetica
+  overflow-x: hidden
+  color: #333333
+  -webkit-user-select: none
+  -webkit-text-size-adjust: none
+  background-color: #edeff4
+
+label, input
+  margin: 2px 0
+  display: block
+
+.clear
+  clear: both
+
+input
+  margin-bottom: 10px
+
+form
+  margin: 10px 0
+  padding-left: 5px
+  .text_field, .text_area
+    margin-bottom: 10px
+    input
+      font-size: 16px
+      padding: 5px
+      font-family: "Lucida Grande", "Helvetica Neue", Verdana, Arial, Helvetica, sans-serif
+    input, textarea
+      width: 95%
+      border:
+        top: solid 1px rgb(196, 196, 196)
+        left: solid 1px rgb(233, 233, 233)
+        bottom: solid 1px rgb(233, 233, 233)
+        right: solid 1px rgb(196, 196, 196)
+    .label
+      display: block
+      margin:
+        top: 10px
+        bottom: 5px
+      label
+        display: inline
+        font-weight: bold
+
+h2
+  padding-left: 10px
+
+#header
+  h1
+    font-size: 16px
+    margin: 0
+      top: 2px
+      left: 5px
+    a
+      text-decoration: none
+      color: #444444
+  small
+    font-size: 10px
+    color: #999999
+  #menubar
+    -webkit-box-sizing: border-box
+    background-color: #edeff4
+    border-bottom: 1px solid #d8dfea
+    height: 34px
+    position: relative
+    a
+      -webkit-box-sizing: border-box
+      background-color: #b0e1ed
+      border: 1px solid #b0e1ed
+      color: #0083a2
+      display: block
+      float: left
+      font-size: 14px
+      font-weight: bold
+      height: 28px
+      line-height: 28px
+      margin-left: 2%
+      margin-top: 6px
+      text-align: center
+      text-decoration: none
+      overflow: hidden
+      width: 31%
+    a.selected
+      background-color: white
+      border-bottom: 1px solid white
+
+#content
+  background-color: white
+  padding:
+    top: 10px
+    bottom: 20px
+  #page_menu
+    -webkit-box-sizing: border-box
+    height: 30px
+    position: relative
+    a
+      -webkit-box-sizing: border-box
+      background-color: #d8dfea
+      border: 1px solid #d8dfea
+      color: #3b5998
+      display: block
+      float: left
+      font:
+        size: 12px
+        weight: bold
+      height: 22px
+      line-height: 20px
+      width: 18%
+      margin:
+        left: 2%
+        top: 2px
+        bottom: 6px
+      text:
+        align: center
+        decoration: none
+    a.selected
+      background-color: white
+  #page
+    font-size: 14px
+    #activities
+      a
+        text-decoration: none
+        color: black
+      .activity
+        display: block
+        padding: 10px
+        border-bottom: 1px solid #dddddd
+        min-height: 50px
+        .thumb_avatar
+          float: left
+          width: 48px
+          height: 48px
+          margin-right: 10px
+        .container
+          padding-left: 60px
+          word-wrap: break-word
+          span.user
+            font-weight: bold
+        .date
+          float: right
+          font-size: 10px
+          color: #999999
+    #projects, #conversations, #task_lists, #people
+      .project, .conversation, .task_list, .person
+        font-size: 16px
+        display: block
+        border-bottom: 1px solid #dddddd
+        a
+          color: #3b5998
+          text-decoration: none
+          display: block
+          padding: 10px
+        a.new
+          color: #555555
+    #task_lists
+      .task_list
+        .tasks a, div.new a
+          font-size: 12px
+          padding: 0 0 0 10px
+          margin: 7px 0
+    #people
+      #pending
+        margin-top: 15px
+        font-size: xx-small
+        float: right
+    #card
+      .person, .phone, .email_address, .website, .address
+        font-size: 16px
+        display: block
+        border-bottom: 1px solid #dddddd
+        a
+          color: #3b5998
+          text-decoration: none
+          padding: 10px
+        a.new
+          color: #555555
+      .type
+        margin-top: 15px
+        font-size: x-small
+        padding: 5px
+
+.show_projects
+  .comment, .activity
+    .project, .project_arr
+      display: none
+
+.new_sessions
+  padding-left: 10px
+  background-color: white
+  a, a:hover
+    color: rgb(150, 150, 150)
+    text-decoration: none
+
+.new_conversations, .create_conversations
+  .watchers
+    .user
+      float: left
+      width: 100%
+      input, label
+        display: inline
+
+.show_tasks
+  .project, .project_arr, .target, .target_arr
+    display: none
+
+.show_task_lists
+  a
+    text-decoration: none
+    color: #3b5998
+  .project, .project_arr
+    display: none
+
+.statuses
+  .status
+    input
+      display: inline
+
+.watching
+  padding-left: 10px
+  font-size: 12px
+  a
+    color: #999999
+
+span.task_status, span.current_task_status
+  padding: 0 3px
+  text-transform: uppercase
+  color: rgb(255, 255, 255)
+  font-size: 11px
+  -moz-border-radius: 4px
+  -webkit-border-radius: 4px
+  display: inline-block
+
+.task_status_new
+  background: #9da3a7
+
+.task_status_open
+  background: #ffc947
+
+.task_status_hold
+  background: #be3cff
+
+.task_status_resolved
+  background: #afd142
+
+.task_status_rejected
+  background: #e97063
+
+#footer
+  border-top: 1px solid #bdbfc4
+  a
+    -webkit-box-sizing: border-box
+    font-size: 12px
+    color: #555555
+    display: block
+    float: left
+    text-align: center
+    width: 48%
+    padding: 15px 0

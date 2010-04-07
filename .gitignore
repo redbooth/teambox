@@ -3,13 +3,14 @@
 .idea
 .bundle
 *.esproj
+.sass-cache
 assets
 coverage
 db/*.sqlite3
 db/sphinx
+config/*.sphinx.conf
 log/*.log
 tmp
-config/*.sphinx.conf
 public/avatars
 public/stylesheets/*.css
 public/stylesheets/**/*.css

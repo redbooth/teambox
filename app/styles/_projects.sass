@@ -1,0 +1,244 @@
+@media screen
+  .people_list
+    .person, .invite_people
+      font-size: 12px
+      margin-left: 10px
+      height: 30px
+    .invite_people
+      margin-top: 10px
+    .person
+      .status
+        display: inline
+      .last_login
+        display: none
+    a
+      color: rgb(80, 80, 80)
+      text-decoration: none
+    a:hover
+      text-decoration: underline
+    .status, .last_login
+      float: right
+      color: #777777
+  .project_list, .archived_project_list
+    margin-top: 15px
+    font-size: 12px
+    .project_link
+      margin: 1px 0 2px 0
+      .unread_comment_count
+        float: right
+        font-weight: normal
+    .new_project_link
+      a
+        color: rgb(150, 150, 150)
+  #project_archived_link
+    color: #999999
+    font-size: 12px
+    margin: 15px 0
+    display: block
+  .subscribe
+    margin-top: 15px
+    a
+      font-size: 12px
+      padding-left: 25px
+      background: url(/images/feed.png) no-repeat left
+  .calendars
+    margin-top: 5px
+    a
+      font-size: 12px
+      padding-left: 25px
+      background: url(/images/calendar_date_select/calendar.gif) no-repeat left
+  .print
+    margin-top: 5px
+    a
+      font-size: 12px
+      padding-left: 25px
+      background: url(/images/print.gif) no-repeat left
+
+
+@media print
+  .index_projects
+    .column
+      display: none
+    .info
+      display: none
+    h2
+      font-size: 20px
+      border-bottom: solid 3px rgb(0, 0, 0)
+      padding-bottom: 3px
+      span
+        display: none
+    .comment
+      clear: both
+      .block
+        float: none
+        width: 100%
+        .date
+          color: rgb(0, 0, 0)
+        .name
+          border-bottom: solid 1px rgb(0, 0, 0)
+          span
+            color: rgb(0, 0, 0)
+          a
+            color: rgb(0, 0, 0)
+            text-decoration: none
+          span.task_status
+            background: rgb(0, 0, 0)
+            color: rgb(255, 255, 255)
+            border: none
+            -moz-border-radius: 0px
+            -webkit-border-radius: 0px
+    .activity
+      display: block
+      width: 100%
+      clear: both
+      color: rgb(0, 0, 0)
+      .activity_icon
+        display: none
+      span
+        color: rgb(0, 0, 0)
+      .clear
+        border-bottom: solid 1px rgb(0, 0, 0)
+        margin: 0px
+      a
+        color: rgb(0, 0, 0)
+        text-decoration: none
+      .date
+        color: rgb(0, 0, 0)
+    .upload
+      .info
+        display: none
+      .thumbnail
+        display: none
+
+
+.edit_projects, .update_projects
+  .content_wrap
+    float: right
+    padding: 10px
+      left: 0px
+  .column_wrap
+    float: left
+    .submit
+      text-align: right
+  .column
+    -moz-border-radius:
+      topleft: 5px
+    -webkit-border-top-left-radius: 5px
+  .owner
+    margin-bottom: 20px
+    .description
+      margin: 20px 0
+
+form#new_project, form.edit_project
+  padding:
+    left: 10px
+  #project_name
+    width: 272px
+  #project_permalink
+    width: 140px
+  .permalink
+    margin-bottom: 0px
+  #preview
+    font-size: 12px
+    padding: 10px 0px
+    span
+      font-weight: bold
+  .good
+    color: rgb(0, 140, 0)
+  .bad
+    color: rgb(200, 0, 0)
+  .archived
+    margin-bottom: 10px
+    label
+      float: none
+      font-size: 12px
+  .description
+    font-size: 12px
+    color: rgb(150, 150, 150)
+
+.new_projects,.create_projects
+  .content
+    p.new_example_project
+      font-size: 12px
+      margin: 10px
+        top: 20px
+        bottom: 20px
+  .preview
+    margin: 10px 0px
+      top: 15px
+    font-size: 12px
+  .column
+    -moz-border-radius:
+      topright: 5px
+    -webkit-border-top-right-radius: 5px
+    font-size: 12px
+    p
+      margin: 0 0 5px 0
+    ul
+      padding-left: 20px
+      margin-top: 5px
+      li
+        margin-bottom: 3px
+
+.show_projects
+  h2
+    border: none
+    margin: 0
+      bottom: 5px
+
+.show_projects, .index_task_lists
+  .project_name
+    font-weight: bold
+    font-variant: small-caps
+    font-size: 14px
+    margin-bottom: 15px
+  h2
+    .help
+      float: right
+      font-size: 12px
+      font-weight: normal
+      padding-top: 3px
+      a
+        color: rgb(150, 150, 150)
+  .tip
+    margin: 10px 10px
+    font-size: 12px
+    color: rgb(150, 150, 150)
+  #activities
+    .comment, .activity, .upload
+      .author
+
+      .project, .project_arr
+        display: none
+      .target, .target_arr
+
+.index_conversations, .show_conversations, .show_tasks
+  .comment
+    .name
+      .author
+
+      .project, .project_arr
+        display: none
+      .target, .target_arr
+        display: none
+
+.new_example_projects
+  .content
+    h2
+      font-size: 22px
+      margin: 10px
+        right: 0px
+      padding:
+        bottom: 5px
+      border-bottom: solid 2px rgb(240, 240, 240)
+    .section
+      padding:
+        left: 25px
+        bottom: 10px
+      p
+        font-size: 14px
+        margin:
+          top: 15px
+          bottom: 25px
+        &.center
+          padding-left: 200px

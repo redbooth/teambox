@@ -39,7 +39,7 @@ dependencies:
   haml: 
     group: 
     - :default
-    version: ~> 2.2.21
+    version: ~> 3.0.0.beta1
   memcache-client: 
     group: 
     - :rails
@@ -212,7 +212,7 @@ specs:
 - factory_girl: 
     version: 1.2.4
 - haml: 
-    version: 2.2.22
+    version: 3.0.0.beta.2
 - hpricot: 
     version: 0.8.2
 - i18n: 
@@ -230,7 +230,7 @@ specs:
 - paperclip: 
     version: 2.3.1.1
 - pickle: 
-    version: 0.2.5
+    version: 0.2.8
 - rails: 
     version: 2.3.5
 - rspec: 
@@ -254,10 +254,10 @@ specs:
 - tmail: 
     version: 1.2.7.1
 - tzinfo: 
-    version: 0.3.18
+    version: 0.3.19
 - whenever: 
     version: 0.4.1
-hash: 3b2c4e8a34c487c85c7ccf721253db68d3563e7d
+hash: 1cac5a0f3b8f346231c99cec174e053e5fde1073
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org

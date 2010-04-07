@@ -1,0 +1,70 @@
+html, body
+  margin: 0px
+  padding: 0px
+body
+  background: white
+
+div.wrapper
+  clear: both
+  background: white
+  +rounded(5px)
+
+div.content_wrap
+  float: left
+  width: 640px
+  padding: 10px
+    right: 0px
+div.column_wrap
+  float: right
+  width: 300px
+  div.column
+    background: rgb(255, 255, 255)
+    padding: 10px
+    div.active
+      +rounded(5px)
+      background: #259bad
+      color: white
+      padding: 3px
+      span
+        background: #259bad
+        padding-right: 0px
+      a
+        color: rgb(255, 255, 255)
+      .task_status
+        background: rgb(150, 150, 250)
+        color: rgb(50, 50, 250)
+        font-weight: bold
+
+div.container
+  width: 960px
+  margin: 0px auto
+
+// TODO: remove extra element and use +clearing
+div.clear
+  clear: both
+
+@import header
+@import navigation
+
+div.footer
+  clear: both
+  padding:
+    top: 5px
+    bottom: 30px
+  color: #8c8c8c
+  font-size: 10px
+  margin-top: 20px
+  text-transform: uppercase
+  border-top: 1px solid #eeeeee
+  p
+    margin: 0px
+  a
+    color: rgb(140, 140, 140)
+    font-size: 10px
+    padding-left: 20px
+  img
+    vertical-align: bottom
+  span
+    vertical-align: bottom
+  .right
+    float: right

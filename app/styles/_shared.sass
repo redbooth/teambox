@@ -1,0 +1,65 @@
+=rounded($n)
+  border-radius: $n
+  -moz-border-radius: $n
+  -webkit-border-radius: $n
+=rounded-top($n)
+  border-radius: $n $n 0 0
+  -moz-border-radius-topleft: $n
+  -moz-border-radius-topright: $n
+  -webkit-border-top-left-radius: $n
+  -webkit-border-top-right-radius: $n
+=box-shadow($params)
+  box-shadow: $params
+  -webkit-box-shadow: $params
+  -moz-box-shadow: $params
+=transform($params)
+  -webkit-transform: $params
+  -moz-transform: $params
+  transform: $params
+=gradient($from, $to)
+  background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to))
+  background-image: -moz-linear-gradient($from, $to)
+=gradient-top($color)
+  +gradient($color, fade_out($color, 1))
+=gradient-bottom($color)
+  +gradient(fade_out($color, 1), $color)
+
+=clearing
+  &:after
+    content: " "
+    visibility: hidden
+    height: 0
+    font-size: 0
+    display: block
+    clear: both
+  * html &
+    height: 1px
+  *:first-child + html
+    overflow: hidden
+    
+=small_caps
+  font-variant: small-caps
+  text-transform: capitalize
+
+.fyi
+  position: absolute
+  background: rgb(255, 255, 255)
+  border: solid 4px rgb(220, 220, 220)
+  font-size: 12px
+  padding: 5px
+  +rounded(4px)
+  width: 300px
+
+.weakling
+  font-size: 11px
+  font-weight: bold
+  .default
+    color: rgb(160, 160, 160)
+  .error
+    color: rgb(200, 0, 0)
+  .weak
+    color: rgb(100, 100, 0)
+  .average
+    color: rgb(200, 0, 200)
+  .strong
+    color: rgb(0, 200, 0)

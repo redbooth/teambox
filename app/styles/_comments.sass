@@ -1,0 +1,233 @@
+span.comments_count
+  padding: 1px 5px
+  text-transform: uppercase
+  font-size: 11px
+  -moz-border-radius: 4px
+  -webkit-border-radius: 4px
+  color: rgb(255, 255, 255)
+  background: rgb(170, 170, 170)
+
+#column
+  span.comments_count
+    padding: 0
+    display: inline-block
+    width: 20px
+    text-align: center
+
+form#new_comment
+  padding-bottom: 3px
+  margin-bottom: 30px
+  .body
+    margin-bottom: 5px
+    textarea
+      width: 626px
+      margin-bottom: 0px
+    .previewBox
+      margin: 4px
+      padding: 4px
+      border: solid 2px rgb(235, 235, 235)
+  .comment_body
+    height: 4em
+    color: rgb(0, 0, 0)
+  a#comment_upload_link
+    float: left
+  a#comment_hours_link
+    float: left
+    margin-left: 3px
+  .hours
+    padding-left: 1px
+    padding-right: 10px
+    clear: both
+    font-size: 11px
+    img
+      vertical-align: middle
+    span
+      vertical-align: middle
+  .statuses
+    position: relative
+    label
+      display: none
+    float: left
+    margin-top: 2px
+    margin-left: 4px
+    .status
+      cursor: pointer
+      float: left
+      -moz-border-radius: 4px
+      -webkit-border-radius: 4px
+      border: solid 1px rgb(200, 200, 200)
+      background: rgb(240, 240, 240)
+      color: rgb(80, 80, 80)
+      font-size: 11px
+      text-align: center
+      text-transform: uppercase
+      padding: 4px 5px
+      margin-left: 5px
+      input
+        display: none
+    .status:hover
+      color: rgb(255, 255, 255)
+    .active
+      background: rgb(140, 140, 140)
+      border: solid 1px rgb(0, 0, 0)
+      color: rgb(255, 255, 255)
+    .open
+      padding: 2px
+        left: 5px
+      select
+        margin: 0px
+        padding: 0px
+    .new:hover
+      background: #9da3a7
+      border: solid 1px #7d8387
+    .open:hover
+      background: #ffc947
+      border: solid 1px #dfa927
+    .hold:hover
+      background: #be3cff
+      border: solid 1px #9e1cdf
+    .resolved:hover
+      background: #afd142
+      border: solid 1px #8fb122
+    .rejected:hover
+      background: #e97063
+      border: solid 1px #c95043
+  .submit
+    padding:
+      top: 3px
+    text-align: right
+    float: right
+    width: 150px
+  .loading
+    float: right
+  p.error
+    color: red
+    font-weight: bold
+
+form.edit_comment
+  padding-bottom: 3px
+  .body
+    margin-bottom: 5px
+    textarea
+      width: 626px
+      margin-bottom: 0px
+    .previewBox
+      margin: 4px
+      padding: 4px
+      border: solid 2px rgb(235, 235, 235)
+  .comment_body
+    height: 4em
+    color: rgb(0, 0, 0)
+  .submit
+    padding:
+      top: 3px
+    text-align: right
+    float: right
+    width: 200px
+  .loading
+    float: right
+  p.error
+    color: red
+    font-weight: bold
+
+form.reopen
+  background: rgb(255, 255, 200)
+  border: 1px rgb(220, 220, 150) solid
+  -moz-border-radius: 5px
+  -webkit-border-radius: 5px
+  padding: 10px
+    top: 5px
+  h2
+    margin: 0px
+      bottom: 5px
+    font-size: 13px
+    color: rgb(33, 33, 27)
+    border: none
+  .reopen_body
+    margin-bottom: 5px
+    textarea
+      width: 606px
+      margin-bottom: 0px
+
+.comment
+  padding: 15px 0
+  border:
+    top: 1px solid white
+    bottom: 1px solid white
+  &:hover
+    border:
+      top: 1px solid #dfe0e2
+      bottom: 1px solid #dfe0e2
+    background-color: #f6f6f6
+    p.actions
+      visibility: visible
+    .block
+      .date
+        color: rgb(0, 0, 0)
+  p.actions
+    visibility: hidden
+    position: relative
+    margin: 0px
+    float: right
+    span
+      margin-left: -44px
+      overflow: auto
+      position: absolute
+      width: 38px
+      height: 40px
+      text-align: right
+  .info
+    width: 70px
+    padding-right: 10px
+    float: left
+    .thumb_avatar
+      float: right
+    p.activity_icon
+      position: relative
+      img
+        overflow: auto
+        position: absolute
+        display: block
+    .unread
+      float: left
+      position: relative
+      margin-top: 20px
+      width: 16px
+  span.hours
+    font-size: 11px
+    font-weight: bold
+    color: white
+    text-align: center
+    background-color: #668cd9
+    -webkit-border-radius: 3px
+    -moz-border-radius: 3px
+    img
+      margin-top: 6px
+  span.author, span.project
+    color: rgb(120, 120, 120)
+    a
+      color: #5f7c94
+      font-weight: normal
+  span.arr
+    color: rgb(140, 140, 140)
+  .block
+    width: 560px
+    float: right
+    .name
+      font-size: 12px
+      a
+        font-size: 12px
+        font-weight: bold
+      span.arr
+        color: rgb(160, 160, 160)
+        padding: 0px 4px
+    .date
+      float: right
+      font-size: 10px
+      color: #9da3a7
+    .body
+      margin-top: 5px
+
+.mention_all
+  text-decoration: none
+  color: #259bad
