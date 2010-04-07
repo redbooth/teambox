@@ -22,10 +22,10 @@ module HtmlFormatting
   def format_usernames(body)
     body.gsub(/@(\w+)/) do |text|
       name = $1.downcase
-      
+
       if 'all' == name
         @mentioned = project.users.confirmed
-        text
+        content_tag(:span, '@all', :class => "mention_all")
       elsif user = project.users.confirmed.find_by_login(name)
         if Comment === self
           @mentioned ||= []
