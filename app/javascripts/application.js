@@ -1,4 +1,4 @@
-  //= require <prototype>
+//= require <prototype>
 //= require <builder>
 //= require <effects>
 //= require <controls>
