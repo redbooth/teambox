@@ -6,9 +6,13 @@ if @activities.any?
   page << autorefresh(@activities)
   page << "Comment.watch_edit();"
   
-  if request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/(Fluid)/]
+  if request.user_agent.to_s =~ /\bFluid\b/
     page << fluid_badge(@activities.length)
-    @activities.each { |activity| page << fluid_growl(activity.project.name, activity.user.name, escape_javascript(truncate(activity.target.body, :length => 200))) }
+    for activity in @activities
+      next unless activity.target.respond_to? :body
+      body = truncate(activity.target.body, :length => 200)
+      page << fluid_growl(activity.project.name, activity.user.name, escape_javascript(body))
+    end
   end
 
   unless @activities.all? { |a| a.user_id == current_user.id }
