@@ -10,7 +10,7 @@ class Divider < RoleRecord
   attr_accessible :body, :deleted, :name
   
   def clear_slot
-    page_slot.update_attributes(:page_id => nil)
+    page_slot.destroy
   end
 
   def slot_view

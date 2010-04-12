@@ -42,7 +42,7 @@ class Upload < RoleRecord
   end
 
   def clear_slot
-    page_slot.update_attributes(:page_id => nil) if page and page_slot
+    page_slot.destroy if page_slot
   end
   
   def slot_view
