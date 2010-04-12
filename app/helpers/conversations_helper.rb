@@ -70,12 +70,15 @@ module ConversationsHelper
   end
 
   def conversation_comment(conversation)
-    if current_user.conversations_first_comment
-      render :partial => 'comments/comment', :locals => { :comment => conversation.comments.first }
+    comment = if current_user.conversations_first_comment
+      conversation.comments.first
     else
-      render :partial => 'comments/comment', :locals => { :comment => conversation.comments.last }
-    end  
+      conversation.comments.last
+    end
     
+    if comment
+      render :partial => 'comments/comment', :object => comment
+    end
   end
   
   def list_short_conversations(conversations)
