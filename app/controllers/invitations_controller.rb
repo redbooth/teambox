@@ -70,8 +70,10 @@ class InvitationsController < ApplicationController
         flash[:error] = @invitation.errors.full_messages.first
         f.html { redirect_to target_people_path }
         f.m    { redirect_to target_people_path }
-        name = @user ? @user.name : 'user' # This line is doing something?
-        f.js { render :text => "alert('Error inviting #{user}. Maybe you are trying to invite an existing user.');" }
+        f.js {
+          name = @user ? @user.name : 'user'
+          render :text => "alert('Error inviting #{name}. Maybe you are trying to invite an existing user.');"
+        }
       end
     end
   end
