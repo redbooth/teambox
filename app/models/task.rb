@@ -128,7 +128,7 @@ class Task < RoleRecord
       xml.tag! 'created-at',      created_at.to_s(:db)
       xml.tag! 'updated-at',      updated_at.to_s(:db)
       xml.tag! 'completed-at',    completed_at.to_s(:db) if completed_at
-      xml.tag! 'watchers',        watchers_ids.join(',')
+      xml.tag! 'watchers',        Array.wrap(watchers_ids).join(',')
       unless Array(options[:include]).include? :tasks
         task_list.to_xml(options.merge({ :skip_instruct => true }))
       end
