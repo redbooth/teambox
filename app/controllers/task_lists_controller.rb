@@ -13,9 +13,9 @@ class TaskListsController < ApplicationController
       f.m
       f.rss   { render :layout => false }
       f.print { render :layout => 'print' }
-      f.xml   { render :xml     => @task_lists.to_xml(:include => :tasks) }
-      f.json  { render :as_json => @task_lists.to_xml(:include => :tasks) }
-      f.yaml  { render :as_yaml => @task_lists.to_xml(:include => :tasks) }
+      f.xml   { render :xml     => @task_lists.to_xml(:include => :tasks, :root => 'task-lists') }
+      f.json  { render :as_json => @task_lists.to_xml(:include => :tasks, :root => 'task-lists') }
+      f.yaml  { render :as_yaml => @task_lists.to_xml(:include => :tasks, :root => 'task-lists') }
     end
   end
 
@@ -119,6 +119,7 @@ class TaskListsController < ApplicationController
           @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user]).
                     select { |task| task.active? }.
                     sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
+          @task_lists = []
         end
       end
     end
