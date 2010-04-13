@@ -35,6 +35,7 @@ Rails::Initializer.run do |config|
     require 'sass'
     require 'sass/plugin'
     require 'sprockets_controller'
+    SprocketsController.caches_page(:index)
     SprocketsApplication.use_page_caching = true
     ActiveSupport::XmlMini.backend = 'LibXML'
   end
