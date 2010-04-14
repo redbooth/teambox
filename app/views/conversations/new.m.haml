@@ -9,7 +9,6 @@
   .text_area.body
     = f.label :body, t('conversations.fields.body')
     = f.text_area :body, :id => :conversation_body
-    = autoresize :conversation_body
 
   .watchers
     - if @current_project.users.size > 1

@@ -2,7 +2,6 @@
   = hidden_field_tag :original_controller, controller_name
   .body.text_area
     = comment_text_area(f, target)
-    = autoresize :comment_body
     #comment_body_list.autocomplete{:style => 'display:none'}
     .previewBox.textilized{:style => 'display:none'}
   .extra
