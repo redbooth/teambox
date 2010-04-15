@@ -5,7 +5,6 @@
     %link{ :rel => "shortcut icon", :href => "/images/favicon.ico" }
     %title
       Teambox
-    = stylesheet_link_tag 'http://teambox.com/css/basic.css', :media => :all
     = stylesheet_link_tag 'sessions'
     = sprockets_include_tag
 
@@ -26,7 +25,7 @@
           = yield
         .column
           #sidebar
-            %img{ :src => "http://s3.amazonaws.com/site_production/assets/4/logo_original.gif"}
+            = image_tag 'teambox-logo.gif', :alt => 'Teambox logo'
             = yield :column
       .footer
         %p.copyright Copyright &copy; 2010 Teambox. All rights reserved
