@@ -1,5 +1,6 @@
 class ResetPasswordsController < ApplicationController
-  skip_before_filter :login_required
+  no_login_required
+  
   before_filter :set_page_title
   layout "sessions"
   
