@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   helper_method :current_user
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  rescue_from ActiveRecord::RecordNotFound, :with => :show_errors
   
   include AuthenticatedSystem
   include BannerSystem
@@ -27,10 +26,6 @@ class ApplicationController < ActionController::Base
       unless @current_project.editable?(current_user)
         render :text => "You don't have permission to edit/update/delete within \"#{@current_project.name}\" project", :status => :forbidden
       end
-    end
-    
-    def show_errors
-      render :partial => 'shared/record_not_found', :layout => 'application'
     end
     
     def confirmed_user?
