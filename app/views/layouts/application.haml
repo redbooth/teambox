@@ -20,7 +20,7 @@
     .container
       = header
       = global_navigation
-      = hot_flashes(flash)
+      - show_flash
       = navigation(@current_project,current_user.projects,current_user.recent_projects)
       .wrapper
         - unless location_name?(['welcome_users','new_projects','show_users','edit_users','new_avatars','index_invitations'])

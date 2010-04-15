@@ -22,7 +22,7 @@
             %li= link_to_public_page 'help'
       .wrapper
         .content
-          = hot_flashes(flash)
+          - show_flash
           = yield
         .column
           #sidebar

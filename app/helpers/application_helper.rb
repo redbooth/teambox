@@ -32,21 +32,13 @@ module ApplicationHelper
       :loading_id => loading_id }
   end
 
-  def hot_flashes(flash)
-    show_flash_bar = true
-    if flash[:success]
-      class_name = 'success'
-      text = flash[:success]
-    elsif flash[:error]
-      class_name = 'error'
-      text = flash[:error]
-    elsif flash[:notice]
-      class_name = 'notice'
-      text = flash[:notice]
-    else
-      show_flash_bar = false
+  # types: success, error, notice
+  def show_flash
+    flash.each do |type, message|
+      haml_tag :div, :class => "flash-#{type}" do
+        haml_tag :div, message
+      end unless message.blank?
     end
-    "<div class='flash_box flash_#{class_name}'><div>#{text}</div></div>" if show_flash_bar
   end
 
   def header
