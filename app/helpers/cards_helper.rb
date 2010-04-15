@@ -11,7 +11,7 @@ module CardsHelper
   def remove_link_unless_new_record(fields)
     out = ''
     out << fields.hidden_field(:_delete)  unless fields.object.new_record?
-    out << link_to(trash_image, "##{fields.object.class.name.underscore}", :class => 'remove_nested_item on_hover_inline')
+    out << link_to(trash_image, "##{fields.object.class.name.underscore}", :class => 'remove_nested_item')
     out
   end
 

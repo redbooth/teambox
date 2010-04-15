@@ -1,4 +1,4 @@
-.text_field.website.hoverable
+.text_field.website
   = f.text_field :name
   = f.select :account_type, options_for_card_type(Website::TYPES)
   =remove_link_unless_new_record(f)
