@@ -25,10 +25,11 @@ class TasksController < ApplicationController
       f.json { render :as_json => @task.to_xml }
       f.yaml { render :as_yaml => @task.to_xml }
     end
-
+ 
     #   Use this snippet to test the notification emails that we send:
-    #@project = @current_project
-    #render :file => 'emailer/notify_task', :layout => false
+    # @project = @current_project
+    # @recipient = current_user
+    # render :file => 'emailer/notify_task', :layout => false
   end
 
   def new

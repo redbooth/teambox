@@ -58,6 +58,7 @@ class Emailer < ActionMailer::Base
 
   def notify_comment(user, project, comment)
     defaults
+    @recipient = user
     recipients    user.email
     from          comment.user.email
     if APP_CONFIG['allow_incoming_email']
@@ -69,6 +70,7 @@ class Emailer < ActionMailer::Base
 
   def notify_conversation(user, project, conversation)
     defaults
+    @recipient = user
     recipients    user.email
     from          conversation.comments.first.user.email
     if APP_CONFIG['allow_incoming_email']
@@ -80,6 +82,7 @@ class Emailer < ActionMailer::Base
 
   def notify_task(user, project, task)
     defaults
+    @recipient = user
     recipients    user.email
     from          task.comments.first.user.email
     if APP_CONFIG['allow_incoming_email']
@@ -91,6 +94,7 @@ class Emailer < ActionMailer::Base
 
   def notify_task_list(user, project, task_list)
     defaults
+    @recipient = user
     recipients    user.email
     from          task_list.comments.first.user.email
     if APP_CONFIG['allow_incoming_email']
