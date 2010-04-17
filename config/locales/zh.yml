@@ -196,11 +196,6 @@ zh:
       spam: "请确保在您的邮件客户端程序中，此邮件没有被标识为垃圾邮件。"
       wrong_address: "不正确的邮件地址？如果您的邮件地址拼写错误，<a href='{{link}}'>取消注册过程</a>并使用一个有效的邮件地址重新创建您的帐号。"
       problems: "如果还有其它问题，请通过{{support}}联系我们"
-    profile_completeness:
-      title: 完整的个人信息
-      complete_your_profile: 填写完整您的个人信息，有助于您的团队可以通过您的信息与您保持联系！
-      completeness: "完整程序：{{percentage}}%"
-      to_get_to: 以得到
     daily_task_reminder_email:
       daily_task_reminder: "每日任务提醒"
       daily_task_reminder_from_teambox: "这是来自Teambox的每日任务提醒邮件。"
@@ -849,17 +844,6 @@ zh:
     average: 一般
     strong: 强
 
-  completeness_scoring:
-    models:
-      user:
-        biography_presence:
-          title: '写下您的个人信息'
-        biography_length_short:
-          title: '10个字以内的个人简介'
-        biography_length_average:
-          title: '扩展到20个字的个人简介'
-        biography_length_long:
-          title: '扩展到30个字的个人简介'
   form:
     cancel: 取消
 

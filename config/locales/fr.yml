@@ -195,11 +195,6 @@ fr:
       spam: "Assurez-vous que ce mail n'ait pas été classé avec le courrier indésirable."
       wrong_address: "Une erreur dans l'adresse mail? Dans ce cas, <a href='{{link}}'>annulez</a> et recommencez la création du compte avec un email valide."
       problems: "Si le problème persistent, n'hésitez pas à nous contacter! {{support}}"
-    profile_completeness:
-      title: Complétez votre profil
-      complete_your_profile: Ainsi vos collègues pourront-ils être à jour .
-      completeness: "Effectué à {{percentage}}%"
-      to_get_to: pour
     daily_task_reminder_email:
       daily_task_reminder: "Rappel quotidien de vos tâches"
       daily_task_reminder_from_teambox: "Ceci est un mail de rappel pour vos tâches sur Teambox"
@@ -852,17 +847,6 @@ fr:
     average: normal
     strong: fort
 
-  completeness_scoring:
-    models:
-      user:
-        biography_presence:
-          title: 'Complétez votre profil'
-        biography_length_short:
-          title: "Jusqu'à 10 mots"
-        biography_length_average:
-          title: "Jusqu'à 20 mots"
-        biography_length_long:
-          title: "Jusqu'à 30 mots"
   form:
     cancel: Annuler
 

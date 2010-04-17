@@ -311,9 +311,6 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.string   "language",                                   :default => "en"
     t.string   "first_day_of_week",                          :default => "sunday"
     t.integer  "invitations_count",                          :default => 0,   :null => false
-    t.float    "profile_score",                              :default => 0.0
-    t.float    "profile_percent",                            :default => 0.0
-    t.string   "profile_grade"
     t.string   "login_token",                 :limit => 40
     t.datetime "login_token_expires_at"
     t.boolean  "welcome",                                    :default => false

@@ -196,11 +196,6 @@ ja:
       spam: "Make sure the email wasn't classified as spam by your email client."
       wrong_address: "Wrong address? If you mistyped your email address, <a href='{{link}}'>cancel the signup process</a> and re-create your account with a valid address."
       problems: "If you're still having problems, please contact us at {{support}}"
-    profile_completeness:
-      title: Profile Completion
-      complete_your_profile: Complete your profile so your team can keep in touch with your contact information!
-      completeness: "{{percentage}}% 完了"
-      to_get_to: to get to
     daily_task_reminder_email:
       daily_task_reminder: "今日のタスクのリマインド"
       daily_task_reminder_from_teambox: "これはTeamboxの今日のタスクのリマインドメールです。"
@@ -847,17 +842,6 @@ ja:
     average: 平均
     strong: 強い
 
-  completeness_scoring:
-    models:
-      user:
-        biography_presence:
-          title: 'プロフィールを書く'
-        biography_length_short:
-          title: 'Expand your profile to 10 words'
-        biography_length_average:
-          title: 'Expand your profile to 20 words'
-        biography_length_long:
-          title: 'Expand your profile to 30 words'
   form:
     cancel: キャンセル
 

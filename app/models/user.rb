@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
   concerned_with  :activation,
                   :avatar,
                   :authentication,
-                  :completeness,
                   :example_project,
                   :recent_projects,
                   :roles,
@@ -69,7 +68,6 @@ class User < ActiveRecord::Base
   attr_accessor   :activate
 
   def before_save
-    #self.update_profile_score
     self.recent_projects_ids ||= []
     self.rss_token ||= generate_rss_token
   end

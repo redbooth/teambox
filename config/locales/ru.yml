@@ -195,11 +195,6 @@ ru:
       spam: "Убедитесь, что письмо не было помечено, как спам."
       wrong_address: "Неверный адрес? Если вы опечатались в адресе, <a href='{{link}}'>отмените регистрацию</a> и зарегистрируйтесь заново с правильным адресом."
       problems: "Если у вас всё равно проблемы, свяжитесь с нами по адресу {{support}}"
-    profile_completeness:
-      title: Полнота профиля
-      complete_your_profile: Завершите описание профиля, чтобы ваша команда всегда могла с вами связаться!
-      completeness: "Полнота: {{percentage}}%"
-      to_get_to: из
     daily_task_reminder_email:
       daily_task_reminder: "Ежедневное напоминание"
       daily_task_reminder_from_teambox: "Это ежедневное напоминание о задачах"
@@ -846,17 +841,6 @@ ru:
     average: средний
     strong: сильный
 
-  completeness_scoring:
-    models:
-      user:
-        biography_presence:
-          title: 'Заполните ваш профиль'
-        biography_length_short:
-          title: 'Увеличьте профиль до 10 слов'
-        biography_length_average:
-          title: 'Увеличьте профиль до 20 слов'
-        biography_length_long:
-          title: 'Увеличьте профиль до 30 слов'
   form:
     cancel: Cancel
 

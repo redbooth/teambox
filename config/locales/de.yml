@@ -199,11 +199,6 @@ de:
       spam: "Prüfen Sie, dass die Email nicht durch Ihr Mail-Programm als Spam eingestuft wurde."
       wrong_address: "Falsche Adresse? Wenn Sie sich bei ihrer Email Adresse vertippt haben, <a href='{{link}}'>brechen Sie die Anmeldung ab</a> und erstellen Sie ein neues Benutzerkonto mit einer gültigen Email Adresse."
       problems: "Wenn immer noch Probleme auftreten, kontaktieren Sie uns über {{support}}"
-    profile_completeness:
-      title: "Profil Vervollständigung"
-      complete_your_profile: "Vervollständigen Sie Ihr Profil, damit Ihr Team Sie über Ihre Kontaktdaten auf dem Laufenden halten kann!"
-      completeness: "{{percentage}}% vollständig"
-      to_get_to: zu erhalten
     daily_task_reminder_email:
       daily_task_reminder: "Daily task reminder"
       daily_task_reminder_from_teambox: "This is the daily task reminder email from Teambox"
@@ -877,17 +872,6 @@ de:
     average: mittel
     strong: stark
 
-  completeness_scoring:
-    models:
-      user:
-        biography_presence:
-          title: 'Geben Sie Ihr Profil ein'
-        biography_length_short:
-          title: 'Erweitern Sie Ihr Profil auf 10 Worte'
-        biography_length_average:
-          title: 'Erweitern Sie Ihr Profil auf 20 Worte'
-        biography_length_long:
-          title: 'Erweitern Sie Ihr Profil auf 30 Worte'
   form:
     cancel: Abbrechen
 

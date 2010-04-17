@@ -199,11 +199,6 @@ it:
       spam: "Assicurati che la mail non si trovi nella cartella della posta indesiderata o nella spam."
       wrong_address: "Indirizzo sbagliato? Se hai scritto male il tuo indirizzo email, <a href='{{link}}'>annulla il processo</a> e ricrea il tuo account con un indirizzo email valido."
       problems: "Se hai ancora dei problemi, scrivici! {{support}}"
-    profile_completeness:
-      title: Completa il tuo profilo!
-      complete_your_profile: Così i tuoi colleghi avranno i tuoi dati di contatto aggiornati.
-      completeness: "Completo al {{percentage}}%"
-      to_get_to: per
     daily_task_reminder_email:
       daily_task_reminder: "Promoria giornaliero dei compiti"
       late_tasks: "Compiti passati"
@@ -872,17 +867,6 @@ it:
     average: normale
     strong: forte
 
-  completeness_scoring:
-    models:
-      user:
-        biography_presence:
-          title: 'Compila il tuo profilo'
-        biography_length_short:
-          title: 'Completa il tuo profilo con 10 parole'
-        biography_length_average:
-          title: 'Completa il tuo profilo con 20 parole'
-        biography_length_long:
-          title: 'Completa il tuo profilo con 30 parole'
   form:
     cancel: Annulla
 
