@@ -57,7 +57,6 @@ class User < ActiveRecord::Base
                   :password_confirmation,
                   :time_zone,
                   :language,
-                  :conversations_first_comment,
                   :first_day_of_week,
                   :card_attributes,
                   :avatar,

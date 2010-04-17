@@ -309,7 +309,6 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.datetime "remember_token_expires_at"
     t.string   "time_zone",                                  :default => "Eastern Time (US & Canada)"
     t.string   "language",                                   :default => "en"
-    t.boolean  "conversations_first_comment",                :default => true
     t.string   "first_day_of_week",                          :default => "sunday"
     t.integer  "invitations_count",                          :default => 0,   :null => false
     t.float    "profile_score",                              :default => 0.0

@@ -70,11 +70,7 @@ module ConversationsHelper
   end
 
   def conversation_comment(conversation)
-    comment = if current_user.conversations_first_comment
-      conversation.comments.first
-    else
-      conversation.comments.last
-    end
+    comment = conversation.comments.first
     
     if comment
       render :partial => 'comments/comment', :object => comment
