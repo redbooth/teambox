@@ -65,6 +65,30 @@ class Page < RoleRecord
      end      
   end
   
+  def divided_slots
+    groups = []
+    divider = nil
+    items = []
+    slots.each do |slot|
+      if slot.rel_object_type == 'Divider'
+        if divider or items.length > 0
+          groups << [divider, items]
+          items = []
+        end
+        divider = slot
+      else
+        items << slot
+      end
+    end
+    
+    # Final group
+    if divider or items.length > 0
+      groups << [divider, items]
+    end
+    
+    groups
+  end
+  
   def after_create
     project.log_activity(self,'create')
   end
