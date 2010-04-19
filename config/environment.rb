@@ -34,7 +34,7 @@ Rails::Initializer.run do |config|
     require 'haml/template'
     require 'sass'
     require 'sass/plugin'
-    Sass::Plugin.options[:template_location] = "#{Rails.root}/app/styles"
+    Sass::Plugin.options[:template_location] = { 'app/styles' => 'public/stylesheets' }
     require 'sprockets_controller'
     SprocketsController.caches_page(:index)
     SprocketsApplication.use_page_caching = true
