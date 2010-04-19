@@ -18,8 +18,6 @@ class User
   validates_uniqueness_of   :email,       :case_sensitive => false
   validates_email_format_of :email,       :message => Authentication.bad_email_message
 
-  validates_associated      :projects,    :unless => :performing_reset    # Ensure associated projects exist
-
   def before_validate
     [self.email, self.login, self.first_name, self.last_name].strip!
   end
