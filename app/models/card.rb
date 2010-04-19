@@ -10,11 +10,14 @@ class Card < ActiveRecord::Base
 
   with_options :allow_destroy => true, :reject_if => proc { |a| a['name'].blank? } do |card|
     card.accepts_nested_attributes_for :phone_numbers
-    card.accepts_nested_attributes_for :addresses
     card.accepts_nested_attributes_for :email_addresses
     card.accepts_nested_attributes_for :websites
     card.accepts_nested_attributes_for :ims
     card.accepts_nested_attributes_for :social_networks
-  end  
+  end
   
-end  
+  accepts_nested_attributes_for :addresses, :allow_destroy => true, :reject_if => proc { |address|
+    address['street'].blank? and address['city'].blank?
+  }
+  
+end
