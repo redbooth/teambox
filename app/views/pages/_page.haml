@@ -8,4 +8,5 @@
         %h4= h(group[0].rel_object.name)
       %ul
         - group[1].each do |item|
-          %li= h(item.rel_object.name)
+          - if item.rel_object.class == Note
+            %li= h(item.rel_object.name)
