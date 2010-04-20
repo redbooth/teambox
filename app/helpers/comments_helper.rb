@@ -4,7 +4,6 @@ module CommentsHelper
     remote_form_for form_url, 
       :loading => loading_new_comment_form,
       :id => 'new_comment_form',
-      :html => {:preview => preview_project_comments_path(@current_project)},
       &proc
   end
 
@@ -12,7 +11,6 @@ module CommentsHelper
     form_for form_url, 
       :loading => loading_new_comment_form,
       :id => 'new_comment_form',
-      :html => {:preview => preview_project_comments_path(@current_project)},
       &proc
   end
 

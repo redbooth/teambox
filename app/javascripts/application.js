@@ -10,10 +10,20 @@
 //= require <fyi>
 //= require <calendar_date_select>
 //= require <facebox>
+//= require <showdown>
 
 replace_ids = function(s){
   var new_id = new Date().getTime();
   return s.replace(/NEW_RECORD/g, new_id);
+}
+
+Function.prototype.throttle = function(t) {
+  var timeout, fn = this
+  return function() {
+    timeout && clearTimeout(timeout)
+    timeout = null
+    timeout = setTimeout(fn.curry.apply(fn, arguments), t)
+  }
 }
 
 Event.addBehavior({
@@ -77,70 +87,52 @@ Element.addMethods({
     return element;
   },
   showPreview: function(element) {
-    var form = $(element);
-    var block = form.down('.showPreview');
-    if (block.readAttribute('showing') == '1')
-      return false;
+    var form = $(element),
+        block = form.down('.showPreview'),
+        textarea = form.down('textarea'),
+        previewBox = form.down('.previewBox')
+        button = block.down('button'),
+        cancel = block.down('a');
 
-    var button = block.down('button');
-    var cancel = block.down('a');
-
-    // Set showing, cancel any removals
-    block.writeAttribute('showing', '1');
     button.disabled = true;
     button.down('.default').hide();
     button.down('.showing').show();
-    if (block.readAttribute('removing') == '1') {
-      block.writeAttribute('removing', '0');
-      return element;
+    
+    var formatter = new Showdown.converter;
+    formatter.makeHtml = formatter.makeHtml.wrap(function(make) {
+      previewBox.update(make(textarea.getValue()))
+    })
+    
+    var timeout = null, fn = 
+    
+    textarea.updatePreview = textarea.on('keyup', formatter.makeHtml.bind(formatter).throttle(300))
+    
+    formatter.makeHtml()
+    
+    if (!previewBox.visible()) {
+      previewBox.blindDown({duration: 0.3});
+      button.hide();
+      cancel.show();
     }
-
-    // New updater needed!
-    var previewBox = form.down('.previewBox');
-    var updater = null;
-    var updaterCallback = function(transport) {
-      if (block.readAttribute('removing') == '1') {
-        block.writeAttribute('removing', '0');
-        updater.stop();
-      } else {
-        previewBox.innerHTML = transport.responseText;
-        if (!previewBox.visible()) {
-          previewBox.blindDown({duration: 0.3});
-          button.hide();
-          cancel.show();
-        }
-      }
-    }
-
-    updater = new Ajax.PeriodicalFormUpdater(previewBox, form, form.readAttribute('preview'), {
-      method: 'post',
-      frequency: 2,
-      decay: 2,
-      onSuccess: updaterCallback,
-      onFailure: updaterCallback
-    });
 
     return element;
   },
   closePreview: function(element) {
-    var form = $(element);
-    var block = form.down('.showPreview');
-    if (block.readAttribute('showing') == '0')
-      return element;
+    var form = $(element),
+        block = form.down('.showPreview'),
+        textarea = form.down('textarea'),
+        button = block.down('button'),
+        cancel = block.down('a'),
+        previewBox = block.up('form').down('.previewBox');
 
-    var button = block.down('button');
-    var cancel = block.down('a');
-    var previewBox = block.up('form').down('.previewBox');
-
+    textarea.updatePreview.stop()
+    
     cancel.hide();
     button.down('.default').show();
     button.down('.showing').hide();
     button.show().disabled = false;
 
-    block.writeAttribute('showing', '0');
-    block.writeAttribute('removing', '1');
-    if (previewBox.visible())
-      previewBox.blindUp({duration: 0.15});
+    if (previewBox.visible()) previewBox.blindUp({duration: 0.15});
     return element;
   },
   nextText: function(element, texts) {
@@ -148,18 +140,6 @@ Element.addMethods({
     var currentText = element.innerHTML;
     var nextIndex = (texts.indexOf(currentText) + 1) % texts.length;
     return texts[nextIndex];
-  }
-});
-
-Ajax.PeriodicalFormUpdater = Class.create(Ajax.PeriodicalUpdater, {
-  initialize: function($super, container, form, url, options) {
-    this.form = form;
-    $super(container, url, options);
-  },
-
-  onTimerEvent: function() {
-    this.options.parameters = Form.serialize(this.form);
-    this.updater = new Ajax.Updater(this.container, this.url, this.options);
   }
 });
 

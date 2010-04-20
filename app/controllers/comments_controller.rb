@@ -85,17 +85,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  def preview
-    if params.has_key?(:project_id)
-      @comment  = @current_project.new_comment(current_user,@target,params[:comment])
-    else
-      @comment = current_user.new_comment(current_user,@target,params[:comment])
-    end
-
-    @comment.send(:format_attributes)
-    render :text => @comment.body_html
-  end
-
   private
 
     def load_orginal_controller
