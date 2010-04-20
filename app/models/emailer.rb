@@ -58,50 +58,46 @@ class Emailer < ActionMailer::Base
 
   def notify_comment(user, project, comment)
     defaults
-    @recipient = user
     recipients    user.email
     from          comment.user.email
     if APP_CONFIG['allow_incoming_email']
       reply_to      from_address("#{project.permalink}")
     end
     subject       "[#{project.permalink}] #{truncate(comment.body, :length => 20)}"
-    body          :project => project, :comment => comment
+    body          :project => project, :comment => comment, :recipient => user
   end
 
   def notify_conversation(user, project, conversation)
     defaults
-    @recipient = user
     recipients    user.email
     from          conversation.comments.first.user.email
     if APP_CONFIG['allow_incoming_email']
       reply_to      from_address("#{project.permalink}+conversation+#{conversation.id}")
     end
     subject       "[#{project.permalink}] #{conversation.name}"
-    body          :project => project, :conversation => conversation
+    body          :project => project, :conversation => conversation, :recipient => user
   end
 
   def notify_task(user, project, task)
     defaults
-    @recipient = user
     recipients    user.email
     from          task.comments.first.user.email
     if APP_CONFIG['allow_incoming_email']
       reply_to      from_address("#{project.permalink}+task+#{task.id}")
     end
     subject       "[#{project.permalink}] #{task.name}"
-    body          :project => project, :task => task, :task_list => task.task_list
+    body          :project => project, :task => task, :task_list => task.task_list, :recipient => user
   end
 
   def notify_task_list(user, project, task_list)
     defaults
-    @recipient = user
     recipients    user.email
     from          task_list.comments.first.user.email
     if APP_CONFIG['allow_incoming_email']
       reply_to      from_address("#{project.permalink}+task_list+#{task_list.id}")
     end
     subject       "[#{project.permalink}] #{task_list.name}"
-    body          :project => project, :task_list => task_list
+    body          :project => project, :task_list => task_list, :recipient => user
   end
 
   def daily_task_reminder(user, tasks)

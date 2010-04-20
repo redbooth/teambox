@@ -46,7 +46,7 @@ module Watchable
     
     if reloaded or @cached_watchers.nil?
       # Find all users with a join on People to the objects project
-      fields = 'users.id AS id, email, first_name, last_name, language, notify_conversations, notify_task_lists, notify_tasks'
+      fields = 'users.id AS id, email, first_name, last_name, language, notify_conversations, notify_task_lists, notify_tasks, time_zone'
       @cached_watchers = User.find(:all,
                                    :conditions => {
                                      :id => self.watchers_ids, 
