@@ -191,7 +191,7 @@ Group = {
   }
 }
 
-document.on('dom:loaded', function() {
+if (false) document.on('dom:loaded', function() {
   new Cropper.ImgWithPreview('avatar_crop', {
     minWidth: 55,
     minHeight: 55,
