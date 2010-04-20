@@ -12,7 +12,7 @@
 # Invalid or malformed emails will be ignored
 #
 # TODO: Enhance mime and plain messages treatment
-#       Parse html to textile
+#       Parse HTML to Markdown
 #       Strip the quoted text from email replies
 
 class Emailer

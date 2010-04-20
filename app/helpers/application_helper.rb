@@ -290,8 +290,8 @@ module ApplicationHelper
     end
   end
 
-  def textile_documentation_link
-    link_to t('.text_styling'), 'http://help.teambox.com/faqs/advanced-features/textile', :target => '_blank'
+  def formatting_documentation_link
+    link_to t('.text_styling'), 'http://daringfireball.net/projects/markdown/', :target => '_blank'
   end
 
   def host_with_protocol

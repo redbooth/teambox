@@ -94,39 +94,39 @@ describe Comment do
     end
 
     it "should format text" do
-      body = "She *used* to _mean_ so much to ME!"
+      body = "She **used** to _mean_ so much to ME!"
       comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>She <strong>used</strong> to <em>mean</em> so much to ME!</p>"
+      comment.body_html.should == "<p>She <strong>used</strong> to <em>mean</em> so much to ME!</p>\n"
     end
 
     it "should format lists" do
-      body = "She used to mean:\n* So\n* much\n* to\n * me!"
+      body = "She used to mean:\n\n* So\n* much\n* to\n * me!"
       comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>She used to mean:</p>\n<ul>\n\t<li>So</li>\n\t<li>much</li>\n\t<li>to</li>\n\t<li>me!</li>\n</ul>"
+      comment.body_html.should == "<p>She used to mean:</p>\n\n<ul>\n<li>So</li>\n<li>much</li>\n<li>to</li>\n<li>me!</li>\n</ul>\n\n"
     end
 
     it "should format emails and links" do
       body = 'she@couchsurfing.org used to mean so much to www.teambox.com'
       comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p><a href=\"mailto:she@couchsurfing.org\">she@couchsurfing.org</a> used to mean so much to <a href=\"http://www.teambox.com\">www.teambox.com</a></p>"
+      comment.body_html.should == "<p><a href=\"mailto:she@couchsurfing.org\">she@couchsurfing.org</a> used to mean so much to <a href=\"http://www.teambox.com\">www.teambox.com</a></p>\n"
     end
 
-    it "should turn to links textile links" do
-      body = 'I loved that quote: "I like the Divers, but they want me want to go to a war":http://www.shmoop.com/tender-is-the-night/tommy-barban.html. Great page, too.'
+    it "should convert markdown links" do
+      body = 'I loved that quote: ["I like the Divers, but they want me want to go to a war."](http://www.shmoop.com/tender-is-the-night/tommy-barban.html) Great page, too.'
       comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>I loved that quote: <a href=\"http://www.shmoop.com/tender-is-the-night/tommy-barban.html\">I like the Divers, but they want me want to go to a war</a>. Great page, too.</p>"
+      comment.body_html.should == %Q{<p>I loved that quote: <a href="http://www.shmoop.com/tender-is-the-night/tommy-barban.html">"I like the Divers, but they want me want to go to a war."</a> Great page, too.</p>\n}
     end
 
     it "should add http:// in front of links to www.site.com" do
-      body = "I'd link my competitors' \"mistakes\":www.failblog.org, but that'd give them free traffic. So instead I link www.google.com."
+      body = "I'd link my competitors' mistakes (www.failblog.org) but that'd give them free traffic. So instead I link www.google.com."
       comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>I&#8217;d link my competitors&#8217; <a href=\"http://www.failblog.org\">mistakes</a>, but that&#8217;d give them free traffic. So instead I link <a href=\"http://www.google.com\">www.google.com</a>.</p>"
+      comment.body_html.should == %Q{<p>I'd link my competitors' mistakes (<a href="http://www.failblog.org">www.failblog.org</a>) but that'd give them free traffic. So instead I link <a href="http://www.google.com">www.google.com</a>.</p>\n}
     end
 
     it "should preserve html links and images" do
       body = 'Did you know the logo from Teambox has <a href="http://en.wikipedia.org/wiki/Color_theory">carefully selected colors</a>? <img src="http://app.teambox.com/images/header_logo_large.jpg"/>'
       comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>Did you know the logo from Teambox has <a href=\"http://en.wikipedia.org/wiki/Color_theory\">carefully selected colors</a>? <img src=\"http://app.teambox.com/images/header_logo_large.jpg\" /></p>"
+      comment.body_html.should == %Q{<p>Did you know the logo from Teambox has <a href="http://en.wikipedia.org/wiki/Color_theory">carefully selected colors</a>? <img src="http://app.teambox.com/images/header_logo_large.jpg" /></p>\n}
     end
 
     it "should preserve blocks of code and pre"
@@ -142,7 +142,7 @@ describe Comment do
       @project.add_user(@user)
       body = "@existing, hey, @existing"
       comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
-      comment.body_html.should == "<p>@<a href=\"/users/existing\">existing</a>, hey, @<a href=\"/users/existing\">existing</a></p>"
+      comment.body_html.should == %Q{<p>@<a href="/users/existing">existing</a>, hey, @<a href="/users/existing">existing</a></p>\n}
       comment.mentioned.should == [@user]
     end
 
@@ -153,7 +153,7 @@ describe Comment do
       @project.add_user(james)
       body = "@pablo @james Check this out!"
       comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
-      comment.body_html.should == "<p>@<a href=\"/users/pablo\">pablo</a> @<a href=\"/users/james\">james</a> Check this out!</p>"
+      comment.body_html.should == %Q{<p>@<a href="/users/pablo">pablo</a> @<a href="/users/james">james</a> Check this out!</p>\n}
       comment.mentioned.should include(pablo)
       comment.mentioned.should include(james)
     end
@@ -165,7 +165,7 @@ describe Comment do
       @project.add_user(james)
       body = "@all hands on deck this Friday"
       comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
-      comment.body_html.should == '<p><span class="mention_all">@all</span> hands on deck this Friday</p>'
+      comment.body_html.should == %Q{<p><span class="mention_all">@all</span> hands on deck this Friday</p>\n}
       comment.mentioned.should include(pablo)
       comment.mentioned.should include(james)
       comment.mentioned.should_not include(@user)
@@ -213,14 +213,14 @@ describe Comment do
     it "should not link to users page when mentioning @existing if they are not in the project" do
       body = "@existing is a cool guy, but he is not in this project"
       comment = Factory.create(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
-      comment.body_html.should == "<p>@existing is a cool guy, but he is not in this project</p>"
+      comment.body_html.should == "<p>@existing is a cool guy, but he is not in this project</p>\n"
       comment.mentioned.should == nil
     end
 
     it "should not link to users page when typing @unexisting" do
       body = "Hey, @unexisting, take a look at this!"
       comment = Factory.create(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
-      comment.body_html.should == "<p>Hey, @unexisting, take a look at this!</p>"
+      comment.body_html.should == "<p>Hey, @unexisting, take a look at this!</p>\n"
       comment.mentioned.should == nil
     end
   end

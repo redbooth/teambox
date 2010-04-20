@@ -10,7 +10,7 @@ module HtmlFormatting
       self["#{attr}_html"] = if text.blank?
         nil
       else
-        text = format_textile(text)
+        text = format_text(text)
         text = format_usernames(text)
         text = format_links(text)
         white_list_sanitizer.sanitize(text)
@@ -38,15 +38,13 @@ module HtmlFormatting
     end
   end
 
-  def format_textile(text)
-    textilized = RedCloth.new(text, [:hard_breaks, :no_span_caps])
-    textilized.hard_breaks = true if textilized.respond_to?("hard_breaks=")
+  def format_text(text)
+    textilized = RDiscount.new(text)
     textilized.to_html
   end
 
   def format_links(text)
     linked = auto_link(text) { |text| truncate(text, :length => 40) }
-    linked.gsub(/href=\"www/i) { |s| "href=\"http://www" }
   end
 
 end
