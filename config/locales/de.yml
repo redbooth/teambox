@@ -597,10 +597,10 @@ de:
       submit: Person aktualisieren
     fields:
       role: Rolle
-      observer: ""Beobachter. Nur Lesezugriff auf das Projekt."
+      observer: "Beobachter. Nur Lesezugriff auf das Projekt."
       commenter: "Kommentator. Kann Kommentare schreiben, jedoch keine neuen Elemente erstellen."
       participant: "Teilnehmer. Hat alle Berechtigungen, ausser weitere Teilnehmer einladen."
-      admin: "Administrator. Kann Teilnehmer zu dem Projekt einladen.
+      admin: "Administrator. Kann Teilnehmer zu dem Projekt einladen."
     header:
       owner: Projekt Besitzer
       observer: Beobachter
