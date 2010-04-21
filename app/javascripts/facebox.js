@@ -1,11 +1,11 @@
 ;(function(){
-  var element
+  var element, imageMaxWidth = 700, imageMaxHeight = 300
   
   var Facebox = {
     open: function(html, classname, extra) {
       classname || (classname = 'html')
       // element.down('.facebox-wrapper').setStyle({ 'margin-top': window.scrollY + 100 + 'px' })
-      element.down('.facebox-wrapper').className = 'facebox-wrapper ' + classname
+      element.down('.facebox-wrapper').setStyle({ width: '' }).className = 'facebox-wrapper ' + classname
       var content = element.down('.facebox-content').update(html)
       element.down('.facebox-extra .description').update(extra)
       element.setStyle({ display: 'block' })
@@ -17,8 +17,11 @@
       var image = new Image()
       image.onload = function() {
         this.open('<img src="' + src + '">', 'image', alt)
-        //console.log({ width:image.width, height:image.height })
-        element.down('.facebox-wrapper').setStyle({ width:image.width+'px' })
+        var img = element.down('.facebox-content img'),
+            screenWidth = Math.min(image.width, imageMaxWidth)
+        
+        img.setStyle({ maxWidth:imageMaxWidth+'px', maxHeight:imageMaxHeight+'px' })
+        element.down('.facebox-wrapper').setStyle({ width: img.getWidth()+'px' })
       }.bind(this)
       image.src = src
     },
@@ -64,8 +67,8 @@
       document.on('keyup', function(e) {
         if (e.keyCode == Event.KEY_ESC) close()
       })
-      document.on('click', '*[rel=facebox]', function(e) {
-        var el = e.element(),
+      document.on('click', 'a[href][rel=facebox]', function(e) {
+        var el = e.findElement('a'),
             href = el.readAttribute('href'),
             extra = el.readAttribute('title')
         
