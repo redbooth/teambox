@@ -21,15 +21,16 @@ class User < ActiveRecord::Base
                   :validation
 
   # After adding a new locale, run "rake import:country_select 'de'" where de is your locale.
-  LANGUAGES = [['English',  'en'],
-               ['Español',  'es'],
-               ['Français', 'fr'],
-               ['Deutsche', 'de'],
-               ['Català',   'ca'],
-               ['Italiano', 'it'],
-               ['Русский',  'ru'],
-               ['Chinese',  'zh'],
-               ['Japanese', 'ja'],
+  LANGUAGES = [['English',   'en'],
+               ['Español',   'es'],
+               ['Français',  'fr'],
+               ['Deutsche',  'de'],
+               ['Català',    'ca'],
+               ['Italiano',  'it'],
+               ['Русский',   'ru'],
+               ['Chinese',   'zh'],
+               ['Japanese',  'ja'],
+               ['Nederlands','nl']
                ]
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
