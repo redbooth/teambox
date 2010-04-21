@@ -81,28 +81,4 @@ describe Task do
     end
   end
 
-  describe "when archived" do
-    before do
-      @task = Factory(:archived_task)
-    end
-    describe "and reopened" do
-      before do
-        @task.reopen
-      end
-      it "should be unarchived" do
-        @task.should_not be_archived
-      end
-    end
-  end
-
-  describe "when reopened" do
-    before do
-      @task = Factory(:task)
-      @task.reopen
-    end
-    it "should be open" do
-      @task.should be_open
-    end
-  end
-
 end
