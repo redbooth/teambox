@@ -144,7 +144,7 @@ de:
       no_public_signup: "Public signup wird vom System leider nicht unterstützt."
       you_are_logged_in: "Sie haben bereits ein Benutzerkonto. Melden Sie sich ab, um sich als anderer Benutzer anzumelden."
       existing_user: "Wenn Sie bereits ein Benutzerkonto haben, <a href='{{login_url}}'> melden Sie sich an</a> oder <a href='{{forgot_url}}'>lassen Sie sich Ihr Passwort zusenden</a>."
-      you_already_have_an_account: "Sie sind mit der Email Adresse {{email}} bereits bei Teambox registriert. Bitte <a href='{{login_link}}'>loggen Sie sich ein</a> oder <a href='{{reset_password_link}}'>klicken Sie hier</a>, wenn Sie ihr Passwort vergessen haben."
+      you_already_have_an_account: "Sie haben bereits ein Konto für die Email-Adresse {{email}}. Melden Sie sich mit dieser Email-Adresse an oder setzen Sie Ihr Passwort zurück, falls Sie es vergessen haben."
     create:
       thanks: "Danke für die Anmeldung!"
       error: "Entschuldigung, wir konnten Ihr Benutzerkonto nicht einrichten. Versuchen Sie es bitte noch einmal oder nehmen Sie Kontakt mit einem Administrator auf (Link siehe oben)."
@@ -439,7 +439,7 @@ de:
         too_long: 'muss kürzer als 255 Zeichen sein'
     fields:
       name: "Was muss erledigt werden?"
-      due_on: "Muss vor... <i>(optional)</i> erledigt werden"
+      due_on: "Muss erledigt werden vor… (optional)"
     assigned:
       assigned_to: "Zugeordnet zu {{user}}"
     due_on:
@@ -566,10 +566,10 @@ de:
       rename: "Rename task list"
       set_dates: "Set the start & end date"
     fields:
-      task_list: "Eine Aufgabenliste definiert Meilensteine Ihres Projektes. In ihr können Aufgaben erstellt und an Teilnehmer vergeben werden."
+      task_list: "Eine Aufgabenliste definiert einen Meilenstein für Ihr Projekt. In einer Aufgabenliste können Sie Aufgaben erstellen und diese bestimmten Personen zuordnen."
       name: "Name der Aufgabenliste"
-      start_on: Startet am... <i>optional</i>
-      finish_on: Ended am... <i>optional</i>
+      start_on: Beginnt am... <i>optional</i>
+      finish_on: Endet am... <i>optional</i>
     ####
     filter:
       due_date: "Display tasks with due date..."
@@ -584,7 +584,7 @@ de:
     index:
       add_link: Neue Aufgabenliste
       empty: Keine Aufgaben in dieser Kategorie!
-      tasks_for_all_projects: "Projektübergreifende Aufgaben"
+      tasks_for_all_projects: Projektübergreifende Aufgaben
       #####
       tasks_for_project: Task lists for this project
     primer:
