@@ -17,7 +17,7 @@
       var image = new Image()
       image.onload = function() {
         this.open('<img src="' + src + '">', 'image', alt)
-        console.log({ width:image.width, height:image.height })
+        //console.log({ width:image.width, height:image.height })
         element.down('.facebox-wrapper').setStyle({ width:image.width+'px' })
       }.bind(this)
       image.src = src
