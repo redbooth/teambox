@@ -104,8 +104,13 @@ div.column
     cursor: move
     display: inline-block
     margin-right: 20px
-  div.tasks, .new_task
+  div.tasks, .new_task, &.archived
     display: none
+  .task_list  
+    .head
+      border: none
+    div.extra, img.triangle
+      display: none
 
 .task_list, .task_list_closed
   width: 100%
