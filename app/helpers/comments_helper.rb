@@ -28,8 +28,7 @@ module CommentsHelper
   end
 
   def non_js_comment_form_for(form_url,&proc)
-    form_for form_url, 
-      :loading => loading_new_comment_form,
+    form_for form_url,
       :id => 'new_comment_form',
       &proc
   end

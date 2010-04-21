@@ -21,6 +21,7 @@ class ConversationsController < ApplicationController
       
       respond_to do |f|
         f.html { redirect_to project_conversation_path(@current_project,@conversation) }
+        f.m    { redirect_to project_conversation_path(@current_project,@conversation) }
         f.xml  { redirect_to project_conversation_path(@current_project,@conversation) }
         f.json { redirect_to project_conversation_path(@current_project,@conversation) }
         f.yaml { redirect_to project_conversation_path(@current_project,@conversation) }
@@ -28,6 +29,7 @@ class ConversationsController < ApplicationController
     else
       respond_to do |f|
         f.html  { render :action => :new }
+        f.m     { render :action => :new }
         f.xml   { render :xml => @conversation.errors.to_xml }
         f.json  { render :as_json => @conversation.errors.to_xml }
         f.yaml  { render :as_yaml => @conversation.errors.to_xml }
