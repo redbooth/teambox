@@ -1,8 +1,8 @@
 #task_list_overview_box
-  %h2= "This task list"
+  %h2= t('.this_list')
   %p
-    %strong= "Starts on:"
-    = @task_list.start_on || "<i>Undefined</i>"
+    %strong= t('.starts_on')
+    = @task_list.start_on || "<i>#{t('.undefined')}</i>"
   %p
-    %strong= "Ends on:"
-    = @task_list.finish_on || "<i>Undefined</i>"
+    %strong= t('.ends_on')
+    = @task_list.finish_on || "<i>#{t('.undefined')}</i>"

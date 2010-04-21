@@ -556,19 +556,36 @@ fr:
     archived:
       title: Toutes les tâches archivées
       description: "Ce sont les tâches archivées, qui ont été soit achevées soit annulées."
+    ####
+    archive_box:
+      unarchive_list: This task list is archived.
+    actions:
+      resolve_and_archive: "Resolve all tasks and archive"
+      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
+      archive: "archive this task list"
+      rename: "Rename task list"
+      set_dates: "Set the start & end date"
     fields:
       task_list: "Une liste de tâches définit une étape importante pour votre projet. L'intérieur d'une liste de tâches, vous pouvez créer des tâches et les assigner à des personnes."
       name: Nom de la Liste de Taches
       start_on: Débute le... <i>facultatif</i>
       finish_on: Fini le... <i>facultatif</i>
+    ####
+    filter:
+      due_date: "Display tasks with due date..."
+      assigned_to: "Display tasks assigned to..."
     link:
       new: Nouvelle liste de tâches
       edit: Editer
       reorder: Réordonner
+      ####
+      reorder_done: Done reorder
+      unarchive: Unarchive
     index:
       add_link: Nouvelle liste de tâches
       empty: Aucune tâche dans cette catégorie!
       tasks_for_all_projects: Tâches pour tous vos projets
+      tasks_for_project: Task lists for this project
     primer:
       empty: Ce projet ne contient pour l'instant aucune conversation.
       create_first: Créez la première liste de tâches!
@@ -579,6 +596,12 @@ fr:
       item4: "<b>Revoyez</b>. Une tâche terminée ne s'efface pas, de façon à ce que vous puissiez ensuite revoir ce qui a été fait."
       footer1: "C'est une façon simple et habile de <b>faire les choses</b> et de le faire savoir."
       footer2: "Il est maintenant temps d'oublier les plannings sur Excel et les diagrammes de GANTT trop complexes!"
+    ####
+    overview_box:
+      this_list: "This task list"
+      starts_on: "Starts on:"
+      ends_on: "Ends on:"
+      undefined: "Undefined"
     new:
       title: Nouvelle liste de tâches
       submit: Ajouter
@@ -635,6 +658,10 @@ fr:
       commented_on_a_task_list: "-"
       confirm_delete: Etes-vous sûr de vouloir effacer ce commentaire?
       hours_hrs: "{{hours}}H"
+    ####
+    hours:
+      add_hours: Hours
+      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: 'Assignée à personne'
       assigned_to: "Assigné à:"

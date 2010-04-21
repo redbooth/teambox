@@ -1,8 +1,8 @@
-- if project.editable?(current_user)
-  = task_list_link(project)
-
-- else
-  %p= t('.cant_create')
+- if @task_list.nil?
+  - if project.editable?(current_user)
+    = task_list_link(project)
+  - else
+    %p= t('.cant_create')
 
 - case location_name
   - when 'show_tasks'

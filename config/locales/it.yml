@@ -573,21 +573,38 @@ it:
     archived:
       title: Tutti i compiti archiviati
       description: "Questi sono i compiti archiviati, dopo essere stati completati o rifiutati."
+    ####
+    archive_box:
+      unarchive_list: This task list is archived.
+    actions:
+      resolve_and_archive: "Resolve all tasks and archive"
+      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
+      archive: "archive this task list"
+      rename: "Rename task list"
+      set_dates: "Set the start & end date"
     fields:
       #####
       task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
       name: Task List name
       start_on: Starts on... <i>optional</i>
       finish_on: End on... <i>optional</i>
+    ####
+    filter:
+      due_date: "Display tasks with due date..."
+      assigned_to: "Display tasks assigned to..."
     link:
       new: Nuova lista di compiti
       edit: Edita
       reorder: Riordina
+      ####
+      reorder_done: Done reorder
+      unarchive: Unarchive
     index:
       add_link: Nuova lista di compiti
       empty: Non ci sono compiti in questa categoria
       #####
       tasks_for_all_projects: Tasks across all projects
+      tasks_for_project: Task lists for this project
     primer:
       empty: Non c'è ancora alcuna conversazione in questo progetto.
       create_first: Crea la prima lista di compiti!
@@ -598,6 +615,12 @@ it:
       item4: "<b>Revisiona</b>. Un compito completato non si cancella, di modo che puoi vedere sempre cosa è stato fatto."
       footer1: "E' una forma semplice e agile per <b>riuscire a fare quello che ti proponi</b> e farlo sapere."
       footer2: "E' ora che dimentichi i plannings in Excel e i complessi diagrammi GANTT!"
+    ####
+    overview_box:
+      this_list: "This task list"
+      starts_on: "Starts on:"
+      ends_on: "Ends on:"
+      undefined: "Undefined"
     new:
       title: Nuova lista di compiti
       submit: Aggiungi
@@ -654,6 +677,10 @@ it:
       commented_on_a_task_list: "-"
       confirm_delete: Sicuro di voler rimuovere questo commento?
       hours_hrs: "{{hours}}H"
+    ####
+    hours:
+      add_hours: Hours
+      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: Senza assegnazione
       assigned_to: "Assegnato a:"

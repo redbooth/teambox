@@ -573,20 +573,37 @@ ca:
     archived:
       title: Totes les tasques arxivades
       description: "Aquestes són les tasques arxivades, han estat completades o rebutjades"
+    ####
+    archive_box:
+      unarchive_list: This task list is archived.
+    actions:
+      resolve_and_archive: "Resolve all tasks and archive"
+      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
+      archive: "archive this task list"
+      rename: "Rename task list"
+      set_dates: "Set the start & end date"
     fields:
       #####
       task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
       name: Task List name
       start_on: Starts on... <i>optional</i>
       finish_on: End on... <i>optional</i>
+    ####
+    filter:
+      due_date: "Display tasks with due date..."
+      assigned_to: "Display tasks assigned to..."
     link:
       new: Nova llista de tasques
       edit: Editar
       reorder: Reordenar
+      ####
+      reorder_done: Done reorder
+      unarchive: Unarchive
     index:
       add_link: Nova llista de tasques
       empty: No hi ha tasques en aquesta categoria
       tasks_for_all_projects: Tasques per a tots els projectes
+      tasks_for_project: Task lists for this project
     primer:
       empty: Encara no hi ha cap conversa en aquest projecte.
       create_first: Crea la primera llista de tasques!
@@ -597,6 +614,12 @@ ca:
       item4: "<b>Revisa</b>. Una tasca completada no s'esborra, de manera que després pots veure que es va fer."
       footer1: "Es una manera sencilla i àgil de <b>conseguir fer el que et proposes</b> i fer-ho saber."
       footer2: "¡Ja és hora d'oblidar els plannings en Excel i els complexos diagrames GANTT!"
+    ####
+    overview_box:
+      this_list: "This task list"
+      starts_on: "Starts on:"
+      ends_on: "Ends on:"
+      undefined: "Undefined"
     new:
       title: Nova llista de tasques
       submit: Afegir
@@ -653,6 +676,10 @@ ca:
       commented_on_a_task_list: "-"
       confirm_delete: Segur que vols esborrar aquest comentari?
       hours_hrs: "{{hours}}H"
+    ####
+    hours:
+      add_hours: Hours
+      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: Sense assignar
       assigned_to: "Assignat a:"

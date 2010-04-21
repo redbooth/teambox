@@ -4,7 +4,7 @@ loading_id = task_id(:edit_loading,@current_project,@task_list,@task)
 submit_id = task_id(:edit_submit,@current_project,@task_list,@task)
 
 if @task.errors.empty?
-  page.replace_task(@current_project,@task_list,@task)
+  #page.replace_task(@current_project,@task_list,@task)
   page.replace_task_header(@current_project,@task_list,@task)
   page[header_id].highlight
   page.reload_javascript_events

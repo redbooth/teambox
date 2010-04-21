@@ -1,0 +1,44 @@
+.actions_menu
+  position: relative
+  float: right
+  padding: 0
+    top: 4px
+  font-size: 11px
+  color: rgb(150,150,150)
+    text-transform: none
+  img
+    opacity: 0.4
+  &:hover
+    color: #000
+    img
+      opacity: 1
+    .extra
+      display: block
+  .extra
+    display: none
+    position: absolute
+    z-index: 1000
+    top: 17px
+    right: 0
+    margin: 0
+    padding: 3px 0
+    white-space: nowrap
+    background: white
+    border: 1px solid #ccc
+    +box-shadow(#EEE 3px 3px 3px)
+    a
+      display: block
+      padding: 3px 5px
+      font-weight: normal
+      &:hover
+        background: #78ACD7
+        text-decoration: none
+        cursor: pointer
+
+.actions_menu.loading
+  &:hover
+    color: #000
+    img
+      opacity: 1
+    .extra
+      display: none

@@ -1,0 +1,5 @@
+if !@on_index
+  page.redirect_to project_task_lists_path(@current_project)
+else
+  page.remove_task_list task_list_id(nil,@current_project,@task_list)
+end

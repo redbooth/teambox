@@ -556,19 +556,37 @@ ja:
     archived:
       title: 全てのアーカイブされたタスク
       description: You're currently looking at archived tasks. These are tasks that have been closed.
+    ####
+    archive_box:
+      unarchive_list: This task list is archived.
+    actions:
+      resolve_and_archive: "Resolve all tasks and archive"
+      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
+      archive: "archive this task list"
+      rename: "Rename task list"
+      set_dates: "Set the start & end date"
     fields:
       task_list: タスクリストはあなたのプロジェクトのマイルストーンになります。タスクリストの中にタスクを作成して、人々にアサインできます。
       name: タスクリスト名
       start_on: 開始日 <i>(任意)</i>
       finish_on: 終了日 <i>(任意)</i>
+    ####
+    filter:
+      due_date: "Display tasks with due date..."
+      assigned_to: "Display tasks assigned to..."
     link:
       new: 新規タスクリスト
       edit: 編集
       reorder: Reorder
+      ####
+      reorder_done: Done reorder
+      unarchive: Unarchive
     index:
       add_link: 新規タスクリスト
       empty: No tasks in this category!
       tasks_for_all_projects: 全てのプロジェクトのタスク
+      ####
+      tasks_for_project: Task lists for this project
     primer:
       empty: このプロジェクトにはまだタスクリストがありません。
       create_first: 最初のタスクリストを作成しましょう!
@@ -579,6 +597,12 @@ ja:
       item4: "<b>レビュー</b> 完了したタスクも削除されないので、後からメッセージやファイルを確認できます。"
       footer1: "タスクは<b>物事を済ます</b>ための簡単でアジャイルな方法です。他の人にも勧めましょう。"
       footer2: "Excelの計画シートや複雑なガントチャートは忘れてしまいましょう!"
+    ####
+    overview_box:
+      this_list: "This task list"
+      starts_on: "Starts on:"
+      ends_on: "Ends on:"
+      undefined: "Undefined"
     new:
       title: 新規タスクリスト
       submit: タスクリストを追加
@@ -629,6 +653,10 @@ ja:
       commented_on_a_task_list: "-"
       confirm_delete: このコメントを削除してもよろしですか?
       hours_hrs: "{{hours}}H" #####
+    ####
+    hours:
+      add_hours: Hours
+      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: '未担当'
       assigned_to: "Assigned to:"

@@ -1,0 +1,4 @@
+case @show_part
+when 'column'
+  page.replace_html 'column', task_list_column(@current_project,@task_lists,@sub_action,@task_list)
+end

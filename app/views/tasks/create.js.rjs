@@ -6,14 +6,12 @@ task_id = task_id(:task,@current_project,@task)
 archive_link_id = task_list_id(:archive_link,@current_project,@task_list)
 
 if @task.errors.empty?
-  page.insert_task(@current_project,@task_list,@task)
-
-  page[task_id].visual_effect :highlight, :duration => 3
-
-  page.ef(archive_link_id)
-    page[archive_link_id].remove
-  page.en
-
+  page.call "Task.insertTask",
+            task_list_id(nil,@current_project,@task_list),
+            @task.archived?,
+            task_id,
+            render(insert_task_options(@current_project,@task_list,@task))
+  
   page[link_id].show
   page[form_id].hide
   page << "Form.reset('#{form_id}')"

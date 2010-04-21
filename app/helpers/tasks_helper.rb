@@ -20,7 +20,7 @@ module TasksHelper
 
   def task_link(project,task_list,task=nil)
     task ||= project.tasks.build
-    app_link(project,task_list,task)
+    unobtrusive_app_link(project,task_list,task)
   end
 
   def task_form_for(project,task_list,task,&proc)
@@ -31,17 +31,17 @@ module TasksHelper
     unobtrusive_app_submit(project,task_list,task)
   end
 
-  def task_form_loading(action,project,task_list,task)
-    app_form_loading(action,project,task_list,task)
-  end
-
+  # Jenny helpers
+  
   def show_task(project,task_list,task)
-    app_toggle(project,task_list,task)
+    unobtrusive_app_toggle(project,task_list,task)
   end
 
   def hide_task(project,task_list,task)
-    app_toggle(project,task_list,task)
+    unobtrusive_app_toggle(project,task_list,task)
   end
+  
+  #
 
   def replace_task_column(project,task_lists,sub_action,task)
     page.replace_html 'column', task_list_column(project,task_lists,sub_action,task)
@@ -147,17 +147,7 @@ module TasksHelper
       :task => task,
       :user => user }
   end
-
-
-  def update_task(task)
-    page.replace task_id(:item,task.project,task.task_list,task),
-      :partial => 'tasks/task',
-      :locals => {
-        :project => task.project,
-        :task_list => task.task_list,
-        :current_target => task }
-  end
-
+  
   def update_task_assignment(task,user)
     page.replace 'assigned', render_assignment(task,user)
   end
@@ -208,12 +198,17 @@ module TasksHelper
     out
   end
 
-  def delete_task_link(project,task_list,task)
-    link_to_remote t('common.delete'),
-      :url => project_task_list_task_path(project,task_list,task),
-      :loading => delete_task_loading(project,task_list,task),
-      :confirm => t('confirm.delete_task'),
-      :method => :delete
+  def delete_task_link(project,task_list,task,on_task=false)
+    #link_to_remote t('common.delete'),
+    #  :url => project_task_list_task_path(project,task_list,task),
+    #  :loading => delete_task_loading(project,task_list,task),
+    #  :confirm => t('confirm.delete_task'),
+    #  :method => :delete
+      
+    link_to t('common.delete'), '#',
+      :class => 'taskDelete',
+      :aconfirm => t('confirm.delete_task'),
+      :action_url => project_task_list_task_path(project,task_list,task, :on_task => (on_task ? 1 : 0)) 
   end
 
   def delete_task_loading(project,task_list,task)
@@ -239,7 +234,13 @@ module TasksHelper
 
 
   def task_drag_link(task)
-    drag_image if task.editable?(current_user)
+    return if !task.editable?(current_user)
+    
+    if task.class == Task
+      image_tag('drag.png', :class => 'task_drag')
+    else
+      image_tag('drag.png', :class => 'drag')
+    end
   end
 
   def due_on(task)
@@ -250,9 +251,10 @@ module TasksHelper
     end
   end
 
-  def list_tasks(tasks)
+  def list_tasks(tasks,editable=true)
     render :partial => 'tasks/task',
-      :collection => tasks
+      :collection => tasks,
+      :locals => {:editable => editable}
   end
 
   def task_fields(f,project,task_list,task)
@@ -294,23 +296,18 @@ module TasksHelper
   end
 
   def insert_task(project,task_list,task)
-    page.insert_html :bottom, task_list_id(:with_main_tasks,project,task_list),
-      :partial => 'tasks/task',
-      :locals => {
-        :task => task,
-        :project => project,
-        :task_list => task_list,
-        :current_target => nil }
+    page.insert_html :bottom, task_list_id(:the_main_tasks,project,task_list),
+      insert_task_options(project,task_list,task)
   end
-
-  def replace_task(project,task_list,task)
-    page.replace task_id(:item,project,task_list,task),
-      :partial => 'tasks/task',
-      :locals => {
-        :project => project,
-        :task_list => task_list,
-        :task => task,
-        :current_target => task }
+  
+  def insert_task_options(project,task_list,task,editable=true)
+    {:partial => 'tasks/task',
+    :locals => {
+      :task => task,
+      :project => project,
+      :task_list => task_list,
+      :current_target => nil,
+      :editable => editable}}
   end
 
   def replace_task_header(project,task_list,task)
@@ -355,6 +352,17 @@ module TasksHelper
     content_tag(:div,
       f.calendar_date_select(field, {
         :popup => :force,
+        :footer => false,
+        :year_range => 2.years.ago..10.years.from_now,
+        :time => false,
+        :buttons => false }),
+      :class => 'date_picker')
+  end
+  
+  def embedded_date_picker(f, field)
+    content_tag(:div,
+      f.calendar_date_select(field, {
+        :embedded => true,
         :footer => false,
         :year_range => 2.years.ago..10.years.from_now,
         :time => false,

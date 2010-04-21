@@ -1,4 +1,5 @@
-%table.task_list{ :id => task_list_id(:with_main_tasks,project,task_list) }
+- is_archived = task_list.archived
+%table.task_list{ :id => task_list_id(:with_main_tasks,project,task_list), :class => (is_archived ? 'archived' : nil) }
   - if location_name?('index_task_lists')
     %thead
       %tr
@@ -7,4 +8,4 @@
           = the_task_list_link(task_list)
                         
   %tbody{ :id => task_list_id(:the_main_tasks,project,task_list) }
-    = list_tasks(tasks)
+    = list_tasks(task_list.tasks.unarchived,task_list_editable?(task_list,current_user))

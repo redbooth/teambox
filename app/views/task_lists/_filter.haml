@@ -1,6 +1,6 @@
 .filter_box
-  %p= "Display tasks assigned to..."
+  %p= t('task_lists.filter.assigned_to')
   = filter_assigned_dropdown(project)
 
-  %p= "Display tasks with due date..."
+  %p= t('task_lists.filter.due_date')
   = filter_due_date_dropdown(project)

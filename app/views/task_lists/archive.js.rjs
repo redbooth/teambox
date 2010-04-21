@@ -1,0 +1,7 @@
+list_id = task_list_id(nil,@current_project,@task_list)
+if @on_index
+  page.remove_task_list list_id
+  page.insert_task_list(@current_project,@task_list,@sub_action)
+else
+  page.replace list_id, render_task_list(@current_project,@task_list,@sub_action)
+end

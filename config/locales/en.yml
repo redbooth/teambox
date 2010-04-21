@@ -560,6 +560,14 @@ en:
     archived:
       title: All Archived Tasks
       description: You're currently looking at archived tasks. These are tasks that have been closed.
+    archive_box:
+      unarchive_list: This task list is archived.
+    actions:
+      resolve_and_archive: "Resolve all tasks and archive"
+      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
+      archive: "archive this task list"
+      rename: "Rename task list"
+      set_dates: "Set the start & end date"
     fields:
       title: New Task List
       task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
@@ -567,14 +575,20 @@ en:
       optional: "If you starting and ending dates, this task will be displayed in the GANTT chart"
       start_on: Starts on... <i>optional</i>
       finish_on: End on... <i>optional</i>
+    filter:
+      due_date: "Display tasks with due date..."
+      assigned_to: "Display tasks assigned to..."
     link:
       new: New Task List
       edit: Edit
-      reorder: Reorder
+      reorder: Reorder Task Lists
+      reorder_done: Done reorder
+      unarchive: Unarchive
     index:
       add_link: New Task List
       empty: No tasks in this category!
       tasks_for_all_projects: Tasks across all projects
+      tasks_for_project: Task lists for this project
     primer:
       empty: This project doesn't have any conversations yet.
       create_first: Create the first task list in this project!
@@ -585,6 +599,11 @@ en:
       item4: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
       footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others now."
       footer2: "It's time to forget about excel planning sheets and complex GANTT charts!"
+    overview_box:
+      this_list: "This task list"
+      starts_on: "Starts on:"
+      ends_on: "Ends on:"
+      undefined: "Undefined"
     new:
       title: New Task List
       submit: Add Task List

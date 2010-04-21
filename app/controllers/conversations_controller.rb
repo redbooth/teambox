@@ -91,6 +91,7 @@ class ConversationsController < ApplicationController
         flash[:error] = t('common.not_allowed')
         f.html { redirect_to project_conversation_path(@current_project, @conversation) }
         f.m    { redirect_to project_conversation_path(@current_project, @conversation) }
+        f.js   { render :text => 'alert("Not allowed!");'; }
       end
     end
   end

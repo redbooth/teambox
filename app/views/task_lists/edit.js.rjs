@@ -1,0 +1,15 @@
+page.safe_remove_element task_list_id(:edit_form,@current_project,@task_list)
+
+if @edit_part == 'title'
+  title_id = task_list_id(:title,@current_project,@task_list)
+  page[title_id].hide
+  page.insert_html :after, title_id, task_list_title_edit(@current_project,@task_list)
+  page.visual_effect(:blind_down,task_list_id(:edit_form,@current_project,@task_list),:duration => 0.3)
+elsif @edit_part == 'date'
+  title_id = task_list_id(:title,@current_project,@task_list)
+  page[title_id].show
+  page.insert_html :after, title_id, task_list_date_edit(@current_project,@task_list)
+  page.visual_effect(:blind_down,task_list_id(:edit_form,@current_project,@task_list),:duration => 0.3)
+else
+  page.replace_html task_list_id(:header_index,@current_project,@task_list), task_list_index_header(project,task_list)
+end

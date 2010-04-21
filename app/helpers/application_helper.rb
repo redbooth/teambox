@@ -306,6 +306,20 @@ module ApplicationHelper
     end
   end
   
+  def set_reload_url(path)
+    @reload_url = path
+  end
+  
+  def reload_url
+    (@reload_url || url_for(request.path_parameters))
+  end
+  
+  def safe_remove_element(*ids)
+    Array(ids).each do |id|
+      page << "if ($('#{id}')) $('#{id}').remove();"
+    end
+  end
+  
   def groups_enabled?
     APP_CONFIG['allow_groups'] || false
   end

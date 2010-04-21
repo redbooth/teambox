@@ -50,9 +50,4 @@ else
   page.show_form_errors(@comment,'new_comment')
 end
 
-page.ef(js_id(:new_submit,Comment.new))
-  page[js_id(:new_submit,Comment.new)].show
-page.en
-page.ef(js_id(:new_loading,Comment.new))
-  page[js_id(:new_loading,Comment.new)].hide
-page.en
+page.call 'Comment.setLoading', 'comment_new', false

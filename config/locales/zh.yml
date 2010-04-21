@@ -558,19 +558,37 @@ zh:
     archived:
       title: 所有已存档的任务
       description: 您正在查看已存档的任务，这些任务已经被关闭。
+    ####
+    archive_box:
+      unarchive_list: This task list is archived.
+    actions:
+      resolve_and_archive: "Resolve all tasks and archive"
+      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
+      archive: "archive this task list"
+      rename: "Rename task list"
+      set_dates: "Set the start & end date"
     fields:
       task_list: 任务列表为您的项目定义一个里程碑。在任务列表中，您可以创建任务并分配任务给项目成员。
       name: 任务列表名称
       start_on: 开始于... <i>可选</i>
       finish_on: 结束于... <i>可选</i>
+    ####
+    filter:
+      due_date: "Display tasks with due date..."
+      assigned_to: "Display tasks assigned to..."
     link:
       new: 创建任务列表
       edit: 编辑
       reorder: 重新排序
+      ####
+      reorder_done: Done reorder
+      unarchive: Unarchive
     index:
       add_link: 创建任务列表
       empty: 此目录中没有任务！
       tasks_for_all_projects: 所有项目的任务
+      ####
+      tasks_for_project: Task lists for this project
     primer:
       empty: 这个项目还没有任何话题。
       create_first: 在这个项目中创建第一个任务列表！
@@ -581,6 +599,12 @@ zh:
       item4: "<b>预览</b>. 已经完成的任务不会被删除，您可以在将来继续读取到这些消息和文件。"
       footer1: "任务是一个简单而敏捷的方式去<b>完成事情</b>，所以，马上使用它吧。"
       footer2: "是时候忘记Excel计划表和复杂的甘特图了！"
+    ####
+    overview_box:
+      this_list: "This task list"
+      starts_on: "Starts on:"
+      ends_on: "Ends on:"
+      undefined: "Undefined"
     new:
       title: 创建任务列表
       submit: 创建任务列表
@@ -632,6 +656,10 @@ zh:
       commented_on_a_task_list: "-"
       confirm_delete: 您确信要删除这条评论？
       hours_hrs: "{{hours}}H"
+    ####
+    hours:
+      add_hours: Hours
+      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: '未分配'
       assigned_to: "分配给:"

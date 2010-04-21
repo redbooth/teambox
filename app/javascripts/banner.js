@@ -14,17 +14,19 @@ Banner = {
   }
 }
 
-Event.addBehavior({
-  "#show_calendar_link:click": function(e){
+document.on('click', '#show_calendar_link', function(e,el){
+    e.stop();
     Banner.deactivate_links();
     Banner.hide_banner_items();
     Banner.show_banner("upcoming_events_banner");
     Banner.activate_link("show_calendar_link");
-  },
-  "#show_gantt_chart_link:click": function(e){
+});
+
+document.on('click', '#show_gantt_chart_link', function(e,el){
+    e.stop();
     Banner.deactivate_links();
     Banner.hide_banner_items();
     Banner.show_banner("gantt_banner");
-    Banner.activate_link("show_gantt_chart_link")
-  }
+    Banner.activate_link("show_gantt_chart_link");
 });
+

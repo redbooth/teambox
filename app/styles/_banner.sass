@@ -1,14 +1,30 @@
 .banner_item
   .primer
-    font-size: 16px
+    font-size: 12px
     text-align: center
     padding: 10px 0px
       top: 15px
-    color: rgb(160, 160, 160)
+    color: rgb(160,160,160)
 
 =round_corners
   -moz-border-radius: 5px
   -webkit-border-radius: 5px
+
+.calendar_gantt
+  margin: 10px 0
+  a
+    color: #555
+  a:hover
+    text-decoration: none
+
+#show_calendar_link, #show_gantt_chart_link
+  border: 1px solid #C8C8C8
+  text-transform: none
+  padding: 2px 5px 0 5px
+  +rounded-top(5px)
+
+#show_calendar_link.active, #show_gantt_chart_link.active
+  border-bottom: 1px solid white
 
 div.upcoming_events_banner
   padding: 10px
@@ -45,48 +61,36 @@ div.upcoming_events_banner
     padding-bottom: 0px
 
 div.banner_navigation
+  margin-top: 20px
   ul
     margin: 0px
+      bottom: 4px
     padding: 0px
     list-style-type: none
     margin-left: 15px
+    color: rgb(60,60,60)
   li
-    float: left
-    display: block
-    margin-right: 2px
-    a
-      float: left
-      display: block
-      color: rgb(48, 48, 48)
-      text-decoration: none
-      padding: 3px 6px
-      margin-right: 1px
-      font-size: 12px
-      +round_corners
-      background: rgb(235, 235, 235)
-      margin:
-        left: 5px
-        bottom: 2px
+    display: inline
+    a  
     a:hover, a.active
-      background: rgb(210, 210, 210)
+      color: rgb(60,60,60)
 
-.gantt
+.gantt 
   padding-bottom: 10px
   .ruler
     position: relative
     display: block
     height: 26px
-    background: #78acd7
-    border-bottom: solid 1px #386c97
-    color: rgb(80, 80, 80)
+    border-bottom: solid 1px rgb(80,80,80)
+    color: rgb(80,80,80)
     .mark
       position: absolute
       font-size: 10px
       top: 18px
       height: 10px
       width: 5px
-      text-indent: 0.3em
-      background: url(../images/mark.jpg) no-repeat left
+      text-indent: .3em
+      background:  url(../images/mark.jpg) no-repeat left
     .date
       position: absolute
       font-family: Courier, monospace
@@ -109,12 +113,12 @@ div.banner_navigation
     height: 13px
     font-size: 11px
     position: absolute
-    background: rgb(240, 240, 240)
-    border: solid 1px rgb(200, 200, 200)
+    background: rgb(240,240,240)
+    border: solid 1px rgb(200,200,200)
     white-space: nowrap
     overflow: hidden
     padding: 3px 0px
-    text-indent: 0.4em
+    text-indent: .4em
     -moz-border-radius: 4px
     -webkit-border-radius: 4px
   .task:hover

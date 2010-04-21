@@ -1,20 +1,4 @@
-%table.task_list
-  %tbody
-    = list_tasks(tasks)
-    - if false #for task in tasks
-      %tr{ :class => "#{'overdue' if task.overdue? } #{ 'mine' if task.open? && task.assigned_to?(current_user)}"}
-        %td.status
-          = task_status(task,:content)
-        %td.name{ :class => "task_item_#{task.status_name}"}
-          %span.status
-            = localized_status_name(task)
-          = link_to task.project, project_path(task.project)
-          &rarr;
-          = link_to task.task_list, project_task_list_path(task.project, task.task_list)
-          &rarr;
-          = link_to task.name, project_task_list_task_path(task.project, task.task_list, task), :class => 'name'
-          - unless (task.due_on.nil? && task.unassigned?) || task.closed?
-            %span.assigned
-              = due_on(task) if task.due_on
-              = "-" unless task.assigned.nil? || task.due_on.nil?
-              = link_to task.assigned.short_name, user_path(task.assigned.user) if task.assigned
+.task_list_container{ :id => js_id(:all_tasks, current_user) }
+  .task_list{ :id => js_id(:with_main_tasks, current_user) }
+    %div{ :id => js_id(:the_main_tasks,current_user), :class => 'tasks open' }
+      = list_tasks(tasks,false)

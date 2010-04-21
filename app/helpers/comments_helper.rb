@@ -1,9 +1,20 @@
 module CommentsHelper
 
   def comment_form_for(form_url,&proc)
-    remote_form_for form_url, 
-      :loading => loading_new_comment_form,
+    form_for form_url,
       :id => 'new_comment_form',
+      :html => {:update_id => js_id(nil,Comment.new)},
+      &proc
+  end
+  
+  def edit_comment_form_for(comment,&proc)
+    form_for [comment.project,comment],
+      :id => "comment_#{comment.id}_form",
+      :method => :put,
+      :html => {
+        :class => 'edit_comment', 
+        :update_id => js_id(nil,comment),
+        :action_cancel => project_comment_path(comment.project,comment)},
       &proc
   end
 
@@ -12,14 +23,6 @@ module CommentsHelper
       :loading => loading_new_comment_form,
       :id => 'new_comment_form',
       &proc
-  end
-
-  def loading_new_comment_form
-    update_page do |page|
-      page[js_id(:new_submit,Comment.new)].hide
-      page[js_id(:new_loading,Comment.new)].show
-      page['new_comment'].closePreview
-    end  
   end
 
   def options_for_people(people, include_nobody = true)
@@ -74,15 +77,6 @@ module CommentsHelper
     "<span class='arr target_arr'>#{connector}</span> <span class='target'>#{link}</span>" if link
   end
 
-  def comment_actions_link(comment)
-    render :partial => 'comments/actions', :locals => {
-      :comment => comment }
-  end
-  
-  def comments_settings
-    render :partial => 'comments/settings'
-  end
-
   def new_hour_comment_form(project,comment)
     render :partial => 'comments/new', 
       :locals => { :target => nil, 
@@ -134,28 +128,35 @@ module CommentsHelper
   end
   
   def cancel_edit_comment_link(comment)
-    link_to_remote t('common.cancel'),
-      :url => project_comment_path(comment.project, comment),
-      :method => :get,
-      :loading => show_loading_comment_form(comment.id)
+    link_to t('common.cancel'),
+      project_comment_path(comment.project, comment),
+      :class => 'edit_comment_cancel'
+  end
+  
+  def convert_comment_link(comment)
+    link_to "Convert to task",
+      project_comment_path(comment.project, comment),
+      :id => "convert_comment_#{comment.id}_link", 
+      :class => 'commentConvert',
+      :action_url => project_comment_path(comment.project, comment)
   end
 
   def edit_comment_link(comment)
     return unless comment.user_id == current_user.id
-    link_to_remote pencil_image,
-      :url => edit_project_comment_path(comment.project, comment),
-      :loading => edit_comment_loading_action(comment),
-      :method => :get,
-      :html => {:id => "edit_comment_#{comment.id}_link"}
+    link_to "Edit comment",
+      edit_project_comment_path(comment.project, comment),
+      :id => "edit_comment_#{comment.id}_link", 
+      :class => 'commentEdit taction',
+      :action_url => edit_project_comment_path(comment.project, comment)
   end
     
   def delete_comment_link(comment)
-    link_to_remote trash_image,
-      :url => project_comment_path(comment.project, comment),
-      :loading => delete_comment_loading_action(comment),
-      :method => :delete,
-      :confirm => t('.confirm_delete'),
-      :html => {:id => "delete_comment_#{comment.id}_link"}
+    link_to "Delete comment",
+      project_comment_path(comment.project, comment),
+      :id => "delete_comment_#{comment.id}_link", 
+      :class => 'commentDelete taction',
+      :aconfirm => t('.confirm_delete'),
+      :action_url => project_comment_path(comment.project, comment)
   end
   
   def show_loading_comment_form(id)
@@ -178,13 +179,6 @@ module CommentsHelper
       page["note_form_loading#{"_#{id}" if id}"].hide
       page["note_submit#{"_#{id}" if id}"].show
     end
-  end
-  
-  def edit_comment_loading_action(comment)
-    update_page do |page|
-      page.insert_html :after, "edit_comment_#{comment.id}_link", loading_action_image("edit_comment_#{comment.id}")
-      page["edit_comment_#{comment.id}_link"].hide
-    end  
   end
   
   def delete_comment_loading_action(comment)

@@ -1,35 +1,22 @@
-.task_list_container
-  %table.task_list{ :id => task_list_id(:with_main_tasks,project,task_list) }
-    %thead
-      %tr
-        %th{:colspan => 4}
-          = drag_image
-          = the_task_list_link(task_list)
-          .actions_menu
-            = date_range_for_task_list(task_list)
-            - if task_list_editable?(task_list,current_user)
-              = image_tag('triangle.png', :class => 'triangle')
-              .extra
-                - # TODO: This isn't implemented
-                = link_to_function "Rename task list", "prompt('Rename this task list', '#{task_list.name}')"
-                - # TODO: This isn't implemented
-                = link_to "Set the starting date"
-                - # TODO: This isn't implemented
-                = link_to "Set the ending date"
-                - # TODO: This isn't implemented
-                = link_to "Resolve all tasks and archive"
-                - # TODO: Make this unobtrusive
-                = delete_task_list_link(project,task_list)
-    %tbody{ :id => task_list_id(:the_main_tasks,project,task_list) }
-      = list_tasks(task_list.tasks.unarchived)
+- show_archive_link = (task_list.tasks.unarchived.empty? && task_list.tasks.archived.size > 0)
+- header_on_index = @on_index || (action_name == 'index')
+.task_list_container{ :id => task_list_id(nil,project,task_list), :class => (task_list.archived ? 'archived' : nil) }
+  .task_list{ :id => task_list_id(:with_main_tasks,project,task_list) }
+    .head{:id => task_list_id(:header_index,project,task_list) }
+      = task_list_index_header(project,task_list)
+    - if !header_on_index
+      = task_list_archive_box(project,task_list)
+    %div{ :id => task_list_id(:the_main_tasks,project,task_list), :class => 'tasks open', :reorder_url => project_reorder_tasks_path(project,task_list) }
+      - if !task_list.archived
+        = list_tasks(task_list.tasks.unarchived,task_list_editable?(task_list,current_user))
   - if task_list_editable?(task_list,current_user)
     .new_task
       = task_link(project,task_list)
       = task_form(project,task_list,task_list.new_task(current_user))
-      - if task_list.tasks.unarchived.empty? && task_list.tasks.archived.size > 0
-        %span{ :id => task_list_id(:archive_link,project,task_list) }
-          = "or"
-          = link_to "archive this task list", ""
-  %table.task_list_closed
-    %tbody{ :id => task_list_id(:the_main_tasks,project,task_list) }
-      = list_tasks(task_list.tasks.archived)      
+      %span{ :id => task_list_id(:archive_link,project,task_list), :style => (show_archive_link ? nil : 'display:none') }
+        = t('common.or')
+        = archive_task_list_link(project,task_list, header_on_index)
+  .task_list_closed{ :id => task_list_id(:with_closed_tasks,project,task_list) }
+    %div{ :id => task_list_id(:the_closed_tasks,project,task_list), :class => 'tasks closed' }
+      - if !header_on_index
+        = list_tasks(task_list.tasks.archived,task_list_editable?(task_list,current_user))

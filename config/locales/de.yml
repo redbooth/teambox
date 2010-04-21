@@ -556,19 +556,37 @@ de:
     archived:
       title: Alle archivierten Aufgaben
       description: "Sie sehen momentan alle archivierten Aufgaben. Diese sind geschlossen worden."
+    ####
+    archive_box:
+      unarchive_list: This task list is archived.
+    actions:
+      resolve_and_archive: "Resolve all tasks and archive"
+      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
+      archive: "archive this task list"
+      rename: "Rename task list"
+      set_dates: "Set the start & end date"
     fields:
       task_list: "Eine Aufgabenliste definiert Meilensteine Ihres Projektes. In ihr können Aufgaben erstellt und an Teilnehmer vergeben werden."
       name: "Name der Aufgabenliste"
       start_on: Startet am... <i>optional</i>
       finish_on: Ended am... <i>optional</i>
+    ####
+    filter:
+      due_date: "Display tasks with due date..."
+      assigned_to: "Display tasks assigned to..."
     link:
       new: Neue Aufgabenliste
       edit: Bearbeiten
       reorder: Neu anordnen
+      ####
+      reorder_done: Done reorder
+      unarchive: Unarchive
     index:
       add_link: Neue Aufgabenliste
       empty: Keine Aufgaben in dieser Kategorie!
       tasks_for_all_projects: "Projektübergreifende Aufgaben"
+      #####
+      tasks_for_project: Task lists for this project
     primer:
       empty: Dieses Projekt hat bisher keine Aufgabenlisten.
       create_first: Erstellen Sie die erste Aufgabenliste in diesem Projekt!
@@ -579,6 +597,12 @@ de:
       item4: "<b>Nachvollziehen</b>. Eine beendete Aufgabe wird nicht gelöscht, damit Sie auch später noch auf die Nachrichten und Dateien zugreifen können."
       footer1: "Aufgaben sind ein einfacher und agiler Weg, um <b>Sachen zu erledigen</b> und das anderen mitzuteilen."
       footer2: "Es ist an der Zeit, die Excel Planungstabellen und komplexen GANTT-Charts abzulösen!"
+    ####
+    overview_box:
+      this_list: "This task list"
+      starts_on: "Starts on:"
+      ends_on: "Ends on:"
+      undefined: "Undefined"
     new:
       title: Neue Aufgabenliste
       submit: "Aufgabenliste hinzufügen"
@@ -632,6 +656,10 @@ de:
       commented_on_a_task_list: "-"
       confirm_delete: "Sind Sie sicher, dass Sie diesen Kommentar löschen wollen?"
       hours_hrs: "{{hours}} Std."
+    ####
+    hours:
+      add_hours: Hours
+      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: 'Nicht zugeordnet'
       assigned_to: "Zugeordnet zu:"

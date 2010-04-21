@@ -1,3 +1,4 @@
+
 document.on('keyup', 'textarea[name*="[body]"]', function(e) {
   var area = e.element()
   if (area.scrollHeight > area.clientHeight) {
@@ -7,4 +8,4 @@ document.on('keyup', 'textarea[name*="[body]"]', function(e) {
         
     area.setStyle({ height: possible + 'px' })
   }
-})
+});

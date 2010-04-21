@@ -14,7 +14,7 @@
     = yield :js_includes
     - javascript_tag do
       = yield :js_templates
-  %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
+  %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}", :reload_url => reload_url}
     = javascript_include_tag 'modernizr'
     = strip(@current_project)
     .container

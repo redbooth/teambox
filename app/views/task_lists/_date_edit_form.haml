@@ -1,0 +1,10 @@
+- task_list_form_for(project,task_list) do |f|
+  = hidden_field_tag("on_index", "1") if @on_index
+  .date_fields
+    .pick_date
+      = f.label :start_on, t('task_lists.fields.start_on')
+      = embedded_date_picker(f, :start_on)
+    .pick_date
+      = f.label :finish_on, t('task_lists.fields.finish_on')
+      = embedded_date_picker(f, :finish_on)
+  = task_list_submit(project,task_list)

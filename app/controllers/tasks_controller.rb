@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:update,:reorder, :show_in_main_content]
-  before_filter :find_task, :only => [:show,:destroy,:update,:watch,:unwatch,:show_in_main_content]
+  before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:update,:reorder]
+  before_filter :find_task, :only => [:show,:destroy,:update,:watch,:unwatch]
   before_filter :load_banner, :only => [:show]
   before_filter :set_page_title
 
@@ -13,6 +13,7 @@ class TasksController < ApplicationController
     respond_to do |f|
       f.html
       f.m
+      f.js   { @show_part = params[:part]; render :template => 'tasks/reload' }
       f.xml  { render :xml     => @task.to_xml }
       f.json { render :as_json => @task.to_xml }
       f.yaml { render :as_yaml => @task.to_xml }
@@ -52,6 +53,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    @on_task = ((params[:on_task] || 0).to_i == 1)
     if @task.editable?(current_user)
       @task.try(:destroy)
 
@@ -71,7 +73,7 @@ class TasksController < ApplicationController
   end
 
   def reorder
-    @task_list_id = "project_#{@current_project.id}_task_list_#{@task_list.id}_the_tasks"
+    @task_list_id = "project_#{@current_project.id}_task_list_#{@task_list.id}_the_main_tasks"
     new_task_ids_for_task_list = params[@task_list_id].reject { |task_id| task_id.blank? }.map(&:to_i)
     moved_task_ids = new_task_ids_for_task_list.to_set - @task_list.task_ids.to_set
     moved_task_ids.each do |moved_task_id|
@@ -81,16 +83,6 @@ class TasksController < ApplicationController
       task = @task_list.tasks.find(task_id)
       task.update_attribute(:position,idx.to_i)
     end
-  end
-
-  def show_in_main_content
-    @comment = @current_project.new_task_comment(@task)
-    render :partial => 'tasks/show',
-      :locals => {
-        :project => @current_project,
-        :task_list => @task_list,
-        :task => @task,
-        :comment => @comment }
   end
 
   def watch

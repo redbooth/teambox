@@ -4,19 +4,18 @@
     - if @current_project.editable?(current_user)
       %p.text_actions
         %span
-          = link_to "Reorder task lists", "#", :id => :reorder_task_lists_link
-          = link_to "Done reordering", "#", :id => :done_reordering_task_lists_link, :style => 'display:none'
+          = link_to t('task_lists.link.reorder'), "#", :id => :reorder_task_lists_link
+          = link_to t('task_lists.link.reorder_done'), "#", :id => :done_reordering_task_lists_link, :style => 'display:none'
 
-    %h2= "Task lists for this project"
+    %h2= t('.tasks_for_project')
 
   - if @current_project.editable?(current_user)
     = task_list_form(@current_project,TaskList.new)
 
-  #task_lists
+  #task_lists{:reorder_url => project_reorder_task_lists_path(@current_project)}
     = render_task_lists(@current_project,@task_lists,@sub_action)
 
-  - if @task_lists.empty?
-    = task_list_primer(@current_project)
+  = task_list_primer(@current_project, !@task_lists.empty?)
   
   - content_for :column do
     = task_list_column(@current_project,@task_lists,@sub_action,@task_list)
@@ -24,7 +23,7 @@
 - else
   %h2= t('.tasks_for_all_projects')
   
-  #tasks_for_all_projects
+  #tasks_for_all_projects{}
     = tasks_for_all_projects(@tasks)
 
   - content_for :column do

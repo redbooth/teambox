@@ -7,14 +7,8 @@ task_list_id = task_list_id(:with_main_tasks,@current_project,@task_list)
 if @task_list.errors.empty?
   page.insert_task_list(@current_project,@task_list,@sub_action)
   
-  page[task_list_id].visual_effect :highlight, :duration => 3
-  
   page[link_id].show
   page[form_id].hide
-
-  page.ef('primer')
-    page[:primer].remove
-  page.en
 
   page << "Form.reset('#{form_id}')"
 else

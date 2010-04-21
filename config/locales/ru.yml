@@ -555,19 +555,37 @@ ru:
     archived:
       title: Все архивные задачи
       description: Вы просматриваете архивные задачи.
+    ####
+    archive_box:
+      unarchive_list: This task list is archived.
+    actions:
+      resolve_and_archive: "Resolve all tasks and archive"
+      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
+      archive: "archive this task list"
+      rename: "Rename task list"
+      set_dates: "Set the start & end date"
     fields:
       task_list: Списки задач определяют этапы проекта. Внутри списка задач вы можете создавать задачи и распределять их между участниками.
       name: Название списка задач
       start_on: Начало... <i>не обяз.</i>
       finish_on: Конец... <i>не обяз.</i>
+    ####
+    filter:
+      due_date: "Display tasks with due date..."
+      assigned_to: "Display tasks assigned to..."
     link:
       new: Новый список задач
       edit: Редактировать
       reorder: Сортировать
+      ####
+      reorder_done: Done reorder
+      unarchive: Unarchive
     index:
       add_link: Новый список задач
       empty: Нет задач в этой категории!
       tasks_for_all_projects: Задачи во всех проектах
+      ####
+      tasks_for_project: Task lists for this project
     primer:
       empty: В этом проекте пока нет списков задач.
       create_first: Создайте первый список задач в этом проекте!
@@ -578,6 +596,12 @@ ru:
       item4: "<b>Проверяйте</b>. Законченная задача не удаляется, вы можете просматривать сообщения и файлы задачи позднее."
       footer1: "Задачи — простой и гибкий способ <b>заставить вещи работать</b> и рассказать об этом другим."
       footer2: "Пора забыть экселевские таблички с планированием и сложные графики Гантта!"
+    ####
+    overview_box:
+      this_list: "This task list"
+      starts_on: "Starts on:"
+      ends_on: "Ends on:"
+      undefined: "Undefined"
     new:
       title: Новый список задач
       submit: Добавить список задач
@@ -630,6 +654,10 @@ ru:
       commented_on_a_task_list: "-"
       hours_hrs: "{{hours}}H"
       confirm_delete: Вы действительно хотите удалить этот комментарий?
+    ####
+    hours:
+      add_hours: Hours
+      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: 'Не назначен'
       assigned_to: "Назначен:"

@@ -1,0 +1,12 @@
+form_id = task_list_id(:edit_form,@current_project,@task_list)
+
+if @task_list.errors.empty?
+  header_id = task_list_id(:header_index,@current_project,@task_list)
+  page.replace_html header_id, task_list_index_header(@current_project,@task_list)
+  page[header_id].highlight
+  page.call "TaskList.setArchived", task_list_id(nil,@current_project,@task_list), @task_list.archived
+  page.reload_javascript_events
+else
+  page[form_id].addClassName('form_error')
+  page.show_form_errors(@task_list,form_id)
+end
