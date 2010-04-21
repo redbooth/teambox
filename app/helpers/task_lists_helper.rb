@@ -254,5 +254,9 @@ module TaskListsHelper
       :id => js_id("unarchive_link",project,task_list),
       :action_url => unarchive_project_task_list_path(project,task_list)}
   end
+  
+  def options_for_task_lists(lists)
+    lists.map {|list| [ list.name, list.id ]}
+  end
 
 end

@@ -2,8 +2,17 @@ module CommentsHelper
 
   def comment_form_for(form_url,&proc)
     form_for form_url,
-      :id => 'new_comment_form',
       :html => {:update_id => js_id(nil,Comment.new)},
+      &proc
+  end
+  
+  def convert_comment_form_for(comment,&proc)
+    form_for [comment.project,comment],
+      :url => convert_project_comment_path(comment.project,comment),
+      :html => {
+        :id => js_id(:convert,comment.project,comment),
+        :class => 'convert_comment'
+      },
       &proc
   end
   
@@ -133,17 +142,23 @@ module CommentsHelper
       :class => 'edit_comment_cancel'
   end
   
+  def cancel_convert_comment_link(comment)
+    link_to t('common.cancel'),
+      project_path(comment.project),
+      :class => 'convert_comment_cancel'
+  end
+  
   def convert_comment_link(comment)
-    link_to "Convert to task",
+    link_to t('comments.actions.convert_task'),
       project_comment_path(comment.project, comment),
       :id => "convert_comment_#{comment.id}_link", 
       :class => 'commentConvert',
-      :action_url => project_comment_path(comment.project, comment)
+      :action_url => edit_project_comment_path(comment.project, comment, :part => 'task')
   end
 
   def edit_comment_link(comment)
     return unless comment.user_id == current_user.id
-    link_to "Edit comment",
+    link_to t('comments.actions.edit'),
       edit_project_comment_path(comment.project, comment),
       :id => "edit_comment_#{comment.id}_link", 
       :class => 'commentEdit taction',
@@ -151,41 +166,12 @@ module CommentsHelper
   end
     
   def delete_comment_link(comment)
-    link_to "Delete comment",
+    link_to t('common.delete'),
       project_comment_path(comment.project, comment),
       :id => "delete_comment_#{comment.id}_link", 
       :class => 'commentDelete taction',
       :aconfirm => t('.confirm_delete'),
       :action_url => project_comment_path(comment.project, comment)
-  end
-  
-  def show_loading_comment_form(id)
-    update_page do |page|
-      page["comment_form_loading_#{id}"].show
-      page["comment_submit_#{id}"].hide
-    end
-  end
-  
-  def hide_loading_comment_form(id)
-    page.remove "comment_form_loading_#{id}"
-    page["comment_submit_#{id}"].show
-  end
-  
-  def loading_comment_form(toggle,id)
-    if toggle
-      page["note_form_loading#{"_#{id}" if id}"].show
-      page["note_submit#{"_#{id}" if id}"].hide
-    else
-      page["note_form_loading#{"_#{id}" if id}"].hide
-      page["note_submit#{"_#{id}" if id}"].show
-    end
-  end
-  
-  def delete_comment_loading_action(comment)
-    update_page do |page|
-      page.insert_html :after, "delete_comment_#{comment.id}_link", loading_action_image("delete_comment_#{comment.id}")
-      page["delete_comment_#{comment.id}_link"].hide
-    end  
   end
   
   def last_comment_input

@@ -671,6 +671,9 @@ ja:
       cannot_update: このコメントを更新する権限がありません。
     actions:
       confirm_delete: このコメントを削除してもよろしいですか?
+      ####
+      convert_task: Convert to task
+      edit: Edit comment
   example_projects:
     new:
       learn: サンプルで学習しましょう!

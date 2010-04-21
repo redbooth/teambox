@@ -674,6 +674,9 @@ de:
       cannot_update: "Sie haben keine Berechtigung, diesen Kommentare zu beabeiten"
     actions:
       confirm_delete: "Möchten Sie diesen Kommentar wirklich löschen?"
+      ####
+      convert_task: Convert to task
+      edit: Edit comment
   example_projects:
     new:
       learn: Lernen Sie an einem Beispiel!

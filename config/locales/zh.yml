@@ -674,6 +674,9 @@ zh:
       cannot_update: 您没有权限更新此评论
     actions:
       confirm_delete: 您确认要删除此评论？
+      ####
+      convert_task: Convert to task
+      edit: Edit comment
   example_projects:
     new:
       learn: 通过例子学习！

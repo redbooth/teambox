@@ -1,0 +1,11 @@
+- convert_comment_form_for(comment) do |f|
+  .text_field
+    = label_tag :task_list, "Select the destination task list"
+    = select_tag 'task_list_id', options_for_select(options_for_task_lists(@current_project.task_lists.unarchived))
+  .submit{:id => "comment_#{comment.id}_submit"}
+    = f.submit "Convert"
+    = t 'common.or'
+    = cancel_convert_comment_link(comment)
+  .clear
+  = loading_image(js_id(:loading,comment))
+  = #loading('comment_form', comment.id)

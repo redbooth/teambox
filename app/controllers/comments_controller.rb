@@ -1,8 +1,8 @@
 class CommentsController < ApplicationController
-  before_filter :load_comment, :only => [:edit, :update, :show, :destroy]
-  before_filter :load_target, :only => [:create]
+  before_filter :load_comment, :only => [:edit, :update, :convert, :show, :destroy]
+  before_filter :load_target, :only => [:create, :convert]
   before_filter :load_orginal_controller, :only => [:create]
-  before_filter :check_permissions, :only => [:create, :edit, :update]
+  before_filter :check_permissions, :only => [:create, :edit, :update, :convert]
   before_filter :set_page_title
 
   cache_sweeper :task_list_panel_sweeper, :only => [:create]
@@ -54,18 +54,43 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    @edit_part = params[:part]
     respond_to{|f|f.js}
   end
 
   def update
     if @has_permission
       @comment.save_uploads(params) if @comment.update_attributes(params[:comment])
+      
+      # Expire cache
+      expire_fragment("#{current_user.language}_#{current_user.time_zone.gsub(/\W/,'')}_comment_#{@comment.id}")
     end
-  
-    # Expire cache
-    expire_fragment("#{current_user.language}_#{current_user.time_zone.gsub(/\W/,'')}_comment_#{@comment.id}")
     
     respond_to{|f|f.js}
+  end
+  
+  def convert
+    if request.method == :put and @has_permission and @comment.target.class == Project and @target.class == TaskList and !@target.archived
+      # Make a new task in the target...
+      params = {
+        'name' => @comment.body
+      }
+      @task = @current_project.create_task(current_user,@target,params)
+      
+      if @task.errors.empty?
+        @comment.target = @task
+        @comment.save
+      end
+      
+      # Expire cache
+      expire_fragment("#{current_user.language}_#{current_user.time_zone.gsub(/\W/,'')}_comment_#{@comment.id}")
+    end
+    
+    respond_to do |f|
+      f.js {
+        render :template => 'comments/update'
+      }
+    end
   end
 
   def destroy

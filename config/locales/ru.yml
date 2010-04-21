@@ -672,6 +672,9 @@ ru:
       cannot_update: У вас нет прав обновлять этот комментарий
     actions:
       confirm_delete: Вы действительно хотите удалить этот комментарий?
+      ####
+      convert_task: Convert to task
+      edit: Edit comment
   example_projects:
     new:
       learn: Учитесь на примере!

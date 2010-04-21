@@ -49,6 +49,27 @@ Comment = {
     });
   },
 
+  submitConvert: function(form) {
+    var update_id = form.readAttribute('update_id');
+    new Ajax.Request(form.readAttribute('action'), {
+      method: 'put',
+      asynchronous: true,
+      evalScripts: true,
+      parameters: form.serialize(),
+      onLoading: function() {
+        Comment.setLoading(update_id, false);
+      },
+      onSuccess: function(response){
+        Comment.setLoading(update_id, false);
+        if ($(document.body).hasClassName('show_tasks'))
+          TaskList.updatePage('column', TaskList.restoreColumn);
+      },
+      onFailure: function(response){
+        Comment.setLoading(update_id, false);
+      }
+    });
+  },
+
   submitEdit: function(form) {
     var update_id = form.readAttribute('update_id');
     new Ajax.Request(form.readAttribute('action'), {
@@ -223,12 +244,29 @@ document.on('submit', 'form.edit_comment', function(e, el) {
   Comment.submitEdit(el);
 });
 
+document.on('submit', 'form.convert_comment', function(e, el) {
+  e.stop();
+  Comment.submitConvert(el);
+});
+
 document.on('click', 'a.edit_comment_cancel', function(e, el) {
   e.stop();
   Comment.cancelEdit(el.up('form'));
 });
 
+document.on('click', 'a.convert_comment_cancel', function(e, el) {
+  e.stop();
+  // This one is easy!
+  Actions.setActions(el, true);
+  el.up('.comment').down('form.convert_comment').remove();
+});
+
 document.on('click', 'a.commentEdit', function(e, el) {
+  e.stop();
+  Comment.edit(el, el.readAttribute('action_url'));
+});
+
+document.on('click', 'a.commentConvert', function(e, el) {
   e.stop();
   Comment.edit(el, el.readAttribute('action_url'));
 });

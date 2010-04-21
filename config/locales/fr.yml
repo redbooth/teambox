@@ -676,6 +676,9 @@ fr:
       cannot_update: Vous n'avez pas la permission de modifier ce commentaire
     actions:
       confirm_delete: Êtes vous sûr de vouloir effacer ce commentaire?
+      ####
+      convert_task: Convert to task
+      edit: Edit comment
   example_projects:
     new:
       learn: Apprenez par l'exemple

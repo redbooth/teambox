@@ -671,6 +671,9 @@ es:
       cannot_update: No tienes permiso para editar este comentario.
     actions:
       confirm_delete: Seguro que quieres borrar este comentario?
+      ####
+      convert_task: Convert to task
+      edit: Edit comment
   example_projects:
     new:
       learn: Proyecto Tutorial

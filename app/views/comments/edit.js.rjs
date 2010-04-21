@@ -1,5 +1,12 @@
 if @has_permission
-  page.replace_html "comment_#{@comment.id}", :partial => 'comments/edit', :locals => { :comment => @comment }
+  if @edit_part == 'task'
+    convert_id = js_id(:convert,@comment.project,@comment)
+    page.insert_html :top, "comment_#{@comment.id}", :partial => 'comments/convert_form', :locals => { :comment => @comment }
+    page.hide convert_id
+    page.visual_effect :blind_down, convert_id, :duration => 0.3
+  else
+    page.replace_html "comment_#{@comment.id}", :partial => 'comments/edit', :locals => { :comment => @comment }
+  end
 else
   # Alert!!
   error_msg = t('comments.errors.cannot_update')
