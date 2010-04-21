@@ -16,15 +16,21 @@ Comment = {
   },
 
   setLoading: function(id, value) {
+    var submit_el = $(id + '_submit');
+    var loading_el = $(id + '_loading');
     if (value)
     {
-      $(id + '_submit').hide();
-      $(id + '_loading').show();
+      if (submit_el)
+        submit_el.hide();
+      if (loading_el)
+        loading_el.show();
     }
     else
     {
-      $(id + '_submit').show();
-      $(id + '_loading').hide();
+      if (submit_el)
+        submit_el.show();
+      if (loading_el)
+        loading_el.hide();
     }
   },
   create: function(form) {

@@ -16,11 +16,11 @@ if @comment.errors.empty?
     
     if @target == @task
       if @task.closed?
-      #   page.insert_archive_box(@current_project,@task)
-      #   page['new_comment'].remove
-      #   page['watching'].hide
-      #   display_watchers = false
-      #   page[task_id(:edit_form,@current_project,@task_list,@task)].remove
+         page.insert_unarchive_box(@current_project,@task)
+         page['new_comment'].remove
+         page['watching'].hide
+         display_watchers = false
+         #page[task_id(:edit_form,@current_project,@task_list,@task)].remove
       else
         page.replace 'new_comment', new_comment_form(@current_project,@new_comment,:target => @task)
         if @comment.previously_closed?

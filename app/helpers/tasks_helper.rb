@@ -47,9 +47,9 @@ module TasksHelper
     page.replace_html 'column', task_list_column(project,task_lists,sub_action,task)
   end
 
-  def insert_archive_box(project,task)
+  def insert_unarchive_box(project,task)
     page.insert_html :after, 'new_comment',
-      :partial => 'tasks/archive_box', :locals => {
+      :partial => 'tasks/unarchive_box', :locals => {
       :project => project,
       :task_list => task.task_list,
       :task => task }
@@ -70,16 +70,6 @@ module TasksHelper
       page['reopen_task_button'].className = 'loading_button'
       page['reopen_task_button'].writeAttribute('onclick','')
     end
-  end
-
-  def unarchive_task_button(project,task_list,task)
-    link_to_remote content_tag(:span,t('.unarchive')),
-      :url => unarchive_project_task_list_task_path(project,task_list,task),
-      :method => :put,
-      :loading => loading_archive_task,
-      :html => {
-        :class => 'button',
-        :id => 'archive_button' }
   end
 
   def task_archive_box(project,task_list,task)

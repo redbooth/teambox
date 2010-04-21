@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:update,:reorder]
-  before_filter :find_task, :only => [:show,:destroy,:update,:watch,:unwatch]
+  before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:update,:reopen,:reorder]
+  before_filter :find_task, :only => [:show,:destroy,:update,:reopen,:watch,:unwatch]
   before_filter :load_banner, :only => [:show]
   before_filter :set_page_title
 
@@ -83,6 +83,13 @@ class TasksController < ApplicationController
       task = @task_list.tasks.find(task_id)
       task.update_attribute(:position,idx.to_i)
     end
+  end
+  
+  def reopen
+    @task.status = 1
+    @task.assigned = @current_project.people.find_by_user_id(current_user.id)
+    @comment = @current_project.new_task_comment(@task)
+    respond_to {|f|f.js}
   end
 
   def watch
