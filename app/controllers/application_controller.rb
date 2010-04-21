@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
         if @current_group
           # ...
         else
-          flash[:error] = t('not_found.group', :id => h(group_id))
+          flash[:error] = t('not_found.group', :id => group_id)
           redirect_to groups_path, :status => 301
         end
       end
@@ -80,8 +80,8 @@ class ApplicationController < ActionController::Base
           if current_user && !@current_project.archived?
             current_user.add_recent_project(@current_project)
           end
-        else        
-          flash[:error] = t('not_found.project', :id => h(project_id))
+        else
+          flash[:error] = t('not_found.project', :id => project_id)
           redirect_to projects_path, :status => 301
         end
       end

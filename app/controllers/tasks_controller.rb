@@ -101,7 +101,7 @@ class TasksController < ApplicationController
       begin
         @task_list = @current_project.task_lists.find(params[:task_list_id])
       rescue
-        flash[:error] = t('not_found.task_list', :id => h(params[:task_list_id]))
+        flash[:error] = t('not_found.task_list', :id => params[:task_list_id])
         redirect_to project_task_lists_path(@current_project)
       end
     end
@@ -110,7 +110,7 @@ class TasksController < ApplicationController
       begin
         @task = @current_project.tasks.find(params[:id])
       rescue
-        flash[:error] = t('not_found.task', :id => h(params[:id]))
+        flash[:error] = t('not_found.task', :id => params[:id])
         redirect_to project_task_lists_path(@current_project)
       end
     end

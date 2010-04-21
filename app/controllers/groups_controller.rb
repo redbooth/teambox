@@ -161,7 +161,7 @@ private
     
     @group = current_user.groups.find_by_permalink(params[:id])
     unless @group
-      flash[:error] = t('not_found.group', :id => h(params[:id]))
+      flash[:error] = t('not_found.group', :id => params[:id])
       redirect_to groups_path
       return false
     end

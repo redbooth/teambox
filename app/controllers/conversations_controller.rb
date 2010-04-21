@@ -119,7 +119,7 @@ class ConversationsController < ApplicationController
       begin
         @conversation = @current_project.conversations.find(params[:id])
       rescue
-        flash[:error] = t('not_found.conversation', :id => h(params[:id]))
+        flash[:error] = t('not_found.conversation', :id => params[:id])
       end
       
       redirect_to project_path(@current_project) unless @conversation

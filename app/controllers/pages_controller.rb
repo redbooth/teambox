@@ -97,7 +97,7 @@ class PagesController < ApplicationController
       begin
         @page = @current_project.pages.find(params[:id])
       rescue
-        flash[:error] = t('not_found.page', :id => h(params[:id]))
+        flash[:error] = t('not_found.page', :id => params[:id])
       end
       
       unless @page
