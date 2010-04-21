@@ -604,6 +604,7 @@ ca:
       empty: No hi ha tasques en aquesta categoria
       tasks_for_all_projects: Tasques per a tots els projectes
       tasks_for_project: Task lists for this project
+      other_views: Other views
     primer:
       empty: Encara no hi ha cap conversa en aquest projecte.
       create_first: Crea la primera llista de tasques!
@@ -631,6 +632,7 @@ ca:
       #####
       cant_create: You don't have permission to create tasks in this project
       subscribe: Subscriu-te a les tasques
+      other_views: Other views
     show:
       title: "Llista de tasques: {{name}}"
     destroy_message:

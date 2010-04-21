@@ -586,6 +586,7 @@ ru:
       tasks_for_all_projects: Задачи во всех проектах
       ####
       tasks_for_project: Task lists for this project
+      other_views: Other views
     primer:
       empty: В этом проекте пока нет списков задач.
       create_first: Создайте первый список задач в этом проекте!
@@ -611,6 +612,7 @@ ru:
       new_task_list: Новый список задач
       cant_create: Вы не можете создавать списки задач в этом проекте
       subscribe: Подписаться на новости
+      other_views: Other views
     show:
       title: "Список задач: {{name}}"
     destroy_message:

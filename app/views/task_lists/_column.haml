@@ -20,10 +20,8 @@
   - when 'index_task_lists'
     = filter_task_lists(project)
 
-    = my_tasks(current_user.assigned_tasks(:all))
-
 = banner(@events,@chart)
 
-%h2 Other views
+%h2= t('.other_views')
 = subscribe_to_calendar_link(project)
 = print_task_lists_link(project)

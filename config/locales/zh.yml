@@ -589,6 +589,7 @@ zh:
       tasks_for_all_projects: 所有项目的任务
       ####
       tasks_for_project: Task lists for this project
+      other_views: Other views
     primer:
       empty: 这个项目还没有任何话题。
       create_first: 在这个项目中创建第一个任务列表！
@@ -615,6 +616,7 @@ zh:
       #####
       cant_create: You don't have permission to create tasks in this project
       subscribe: 订阅动态反馈
+      other_views: Other views
     show:
       title: "任务列表: {{name}}"
     destroy_message:

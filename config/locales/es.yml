@@ -584,6 +584,7 @@ es:
       empty: No hay tareas en esta categoría
       tasks_for_all_projects: Tareas para todos los proyectos
       tasks_for_project: Task lists for this project
+      other_views: Otras vistas
     primer:
       empty: Aún no hay ninguna conversación en este proyecto.
       create_first: Crea la primera lista de tareas!
@@ -610,6 +611,7 @@ es:
       new_task_list: Nueva lista de tareas
       cant_create: No tienes permiso para crear tareas en este proyecto.
       subscribe: Suscríbete a las tareas
+      other_views: Otras vistas
     show:
       title: "Lista de tareas: {{name}}"
     destroy_message:

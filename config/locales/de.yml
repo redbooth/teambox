@@ -587,6 +587,7 @@ de:
       tasks_for_all_projects: Projektübergreifende Aufgaben
       #####
       tasks_for_project: Task lists for this project
+      other_views: Other views
     primer:
       empty: Dieses Projekt hat bisher keine Aufgabenlisten.
       create_first: Erstellen Sie die erste Aufgabenliste in diesem Projekt!
@@ -613,6 +614,7 @@ de:
       new_task_list: "Neue Aufgabenliste"
       cant_create: "Sie haben nicht die Berechtigung, Aufgaben in diesem Projekt zu erzäugen."
       subscribe: Abonnieren Sie den Nachrichten Feed
+      other_views: Other views
     show:
       title: "Aufgabenliste: {{name}}"
     destroy_message:

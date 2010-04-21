@@ -22,15 +22,13 @@
 
 - else
   %h2= t('.tasks_for_all_projects')
-  
+
   #tasks_for_all_projects{}
     = tasks_for_all_projects(@tasks)
 
   - content_for :column do
     = filter_task_lists
-  
-    = my_tasks(current_user.assigned_tasks(:all))
-  
-    %h2 Other views
+
+    %h2= t('.other_views')
     = subscribe_to_calendars_link
     = print_task_lists_link

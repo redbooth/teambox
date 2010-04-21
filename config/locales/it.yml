@@ -605,6 +605,7 @@ it:
       #####
       tasks_for_all_projects: Tasks across all projects
       tasks_for_project: Task lists for this project
+      other_views: Other views
     primer:
       empty: Non c'è ancora alcuna conversazione in questo progetto.
       create_first: Crea la prima lista di compiti!
@@ -632,6 +633,7 @@ it:
       #####
       cant_create: You don't have permission to create tasks in this project
       subscribe: Iscriviti ai compiti
+      other_views: Other views
     show:
       title: "Lista di compiti: {{name}}"
     destroy_message:

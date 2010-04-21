@@ -586,6 +586,7 @@ fr:
       empty: Aucune tâche dans cette catégorie!
       tasks_for_all_projects: Tâches pour tous vos projets
       tasks_for_project: Task lists for this project
+      other_views: Other views
     primer:
       empty: Ce projet ne contient pour l'instant aucune conversation.
       create_first: Créez la première liste de tâches!
@@ -613,6 +614,7 @@ fr:
       #####
       cant_create: You don't have permission to create tasks in this project
       subscribe: Souscrivez à ces tâches
+      other_views: Other views
     show:
       title: "Liste de tâches: {{name}}"
     destroy_message:

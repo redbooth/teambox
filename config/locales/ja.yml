@@ -587,6 +587,7 @@ ja:
       tasks_for_all_projects: 全てのプロジェクトのタスク
       ####
       tasks_for_project: Task lists for this project
+      other_views: Other views
     primer:
       empty: このプロジェクトにはまだタスクリストがありません。
       create_first: 最初のタスクリストを作成しましょう!
@@ -612,6 +613,7 @@ ja:
       new_task_list: 新規タスクリスト
       cant_create: You don't have permission to create tasks in this project
       subscribe: ニュースフィードを購読する
+      other_views: Other views
     show:
       title: "タスクリスト: {{name}}"
     destroy_message:
