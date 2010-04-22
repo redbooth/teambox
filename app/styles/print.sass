@@ -30,6 +30,15 @@ div.content
 .comments_count
   display: none
 
+img.drag
+  display: none
+
+.actions_menu
+  .triangle
+    display: none
+  .extra
+    display: none
+
 .task_list
   margin: 30px 0
   .head
@@ -54,6 +63,12 @@ div.content
       &.task_item_resolved, &.task_item_rejected
         a.name
           text-decoration: line-through
+  .new_task
+    display: none
   .task.overdue
     a
       color: red
+
+.task_header
+  .text_actions
+    display: none
