@@ -22,9 +22,7 @@ class Comment < ActiveRecord::Base
   
   def check_body
     if body and body.strip.empty?
-      if target.is_a? Task
-        @errors.add :body, :no_body_task
-      else
+      if !target.is_a? Task
         @errors.add :body, :no_body_generic
       end
     end
