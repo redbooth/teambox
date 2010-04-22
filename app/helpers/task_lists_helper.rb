@@ -217,7 +217,6 @@ module TaskListsHelper
   end
   
   def archive_task_list_link(project,task_list, on_index=false)
-    return if task_list.archived
     link_to t('task_lists.actions.archive'),
             '#', :class => 'taskListResolve',
             :aconfirm => t('task_lists.actions.confirm_resolve_and_archive'),

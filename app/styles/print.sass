@@ -32,12 +32,14 @@ div.content
 
 .task_list
   margin: 30px 0
-  th
+  .head
     text-align: left
-  tr
-    td.status
+    span.actiondate
+      color: #afafaf
+  .task
+    .taskStatus
       display: none
-    td.name
+    .taskName
       span.status
         font-weight: bold
         color: #999999
@@ -52,6 +54,6 @@ div.content
       &.task_item_resolved, &.task_item_rejected
         a.name
           text-decoration: line-through
-  tr.overdue
+  .task.overdue
     a
       color: red
