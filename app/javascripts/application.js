@@ -4,7 +4,31 @@
 //= require <controls>
 //= require <dragdrop>
 //= require <sound>
-//= require <lowpro>
+
+Function.prototype.throttle = function(t) {
+  var timeout, fn = this
+  return function() {
+    timeout && clearTimeout(timeout)
+    timeout = null
+    timeout = setTimeout(fn.curry.apply(fn, arguments), t)
+  }
+}
+
+Event.onReady = function(fn) {
+  if (document.body) fn()
+  else document.on('dom:loaded', fn)
+}
+
+Event.addBehavior = function(hash) {
+  var behaviors = $H(hash)
+  // console.log(behaviors.keys())
+  behaviors.each(function(pair) {
+    var selector = pair.key.split(':')
+    document.on(selector[1], selector[0], pair.value)
+  })
+}
+Event.addBehavior.reload = Prototype.emptyFunction
+
 //= require <cropper>
 //= require <weakling>
 //= require <fyi>
@@ -15,15 +39,6 @@
 replace_ids = function(s){
   var new_id = new Date().getTime();
   return s.replace(/NEW_RECORD/g, new_id);
-}
-
-Function.prototype.throttle = function(t) {
-  var timeout, fn = this
-  return function() {
-    timeout && clearTimeout(timeout)
-    timeout = null
-    timeout = setTimeout(fn.curry.apply(fn, arguments), t)
-  }
 }
 
 Event.addBehavior({
