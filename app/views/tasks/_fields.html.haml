@@ -8,6 +8,9 @@
   .body.text_field
     = f.label :body, t('.body')
     = f.text_field :body
+  .assigned_to.text_field
+    = f.label :assigned_id, t('.assigned_to')
+    = f.select :assigned_id, options_for_people(project.people)
 .pick_date
   = f.label :due_on, t('.due_on')
   = date_picker(f, :due_on)

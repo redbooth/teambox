@@ -438,6 +438,9 @@ es:
     fields:
       name: ¿Qué debe hacerse?
       due_on: Debe estar listo antes de... <i>(opcional)</i>
+      ####
+      assigned_to: Who is responsible?
+      assigned_to_nobody: Nobody
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:

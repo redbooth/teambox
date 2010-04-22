@@ -440,6 +440,9 @@ ja:
     fields:
       name: タスク
       due_on: 期限日<i>(任意)</i>
+      ####
+      assigned_to: Who is responsible?
+      assigned_to_nobody: Nobody
     assigned:
       assigned_to: "{{user}}にアサイン"
     due_on:

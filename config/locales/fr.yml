@@ -439,6 +439,9 @@ fr:
     fields:
       name: "Qu'est-ce qui a besoin d'être fait?"
       due_on: "Doit être fait avant... <i>(facultatif)</i>"
+      ####
+      assigned_to: Who is responsible?
+      assigned_to_nobody: Nobody
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:

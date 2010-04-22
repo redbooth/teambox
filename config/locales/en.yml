@@ -444,6 +444,8 @@ en:
       optional: You can provide better instructions for this Task below.
       body: What needs to be done? <i>optional</i>
       due_on: Needs to be done before... <i>optional</i>
+      assigned_to: Who is responsible?
+      assigned_to_nobody: Nobody
     assigned:
       assigned_to: "Assigned to {{user}}"
     due_on:

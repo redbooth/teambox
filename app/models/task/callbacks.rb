@@ -26,8 +26,10 @@ class Task
       if @body && !@body.empty?
         comment = comments.new
         comment.user = user
+        comment.assigned = self.assigned
         comment.body = @body
         comment.project = project
+        comment.status = self.status
         comment.save!
       end
     end

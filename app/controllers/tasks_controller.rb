@@ -33,7 +33,11 @@ class TasksController < ApplicationController
   end
 
   def create
-    if @task = @current_project.create_task(current_user,@task_list,params[:task])
+    task_params = params[:task]
+    assigned_id = task_params ? (task_params[:assigned_id] || '0').to_i : 0
+    task_params.merge!({:status => 1}) if assigned_id > 0
+    
+    if @task = @current_project.create_task(current_user,@task_list,task_params)
       @comment = @current_project.new_task_comment(@task)
     end
     respond_to do |format|

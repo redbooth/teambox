@@ -440,6 +440,9 @@ de:
     fields:
       name: "Was muss erledigt werden?"
       due_on: "Muss erledigt werden vor… (optional)"
+      ####
+      assigned_to: Who is responsible?
+      assigned_to_nobody: Nobody
     assigned:
       assigned_to: "Zugeordnet zu {{user}}"
     due_on:
