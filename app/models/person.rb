@@ -56,6 +56,11 @@ class Person < ActiveRecord::Base
     user.remove_recent_project(project)
   end
   
+  def self.users_from_projects(projects)
+    user_ids = Person.find(:all, :conditions => {:project_id => projects.map(&:id)}).map(&:user_id).uniq
+    User.find(:all, :conditions => {:id => user_ids}, :select => 'id, login, first_name, last_name').sort_by(&:name)
+  end
+  
   def user
     User.find_with_deleted(user_id)
   end

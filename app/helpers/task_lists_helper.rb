@@ -8,9 +8,10 @@ module TaskListsHelper
     options = ['Anybody',     'all'],
               ['My tasks',    'mine'],
               ['Unassigned',  'unassigned']
-    if !project.nil?
+    user_list = project ? project.users.sort_by(&:name) : Person.users_from_projects(current_user.projects)
+    if !user_list.nil?
       options += [['--------', 'divider']]
-      options += project.users.
+      options += user_list.
                   reject { |u| u == current_user }.
                   collect { |u| [u.name, "user_#{u.id}"] }
     end
