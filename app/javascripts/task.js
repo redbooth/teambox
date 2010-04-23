@@ -93,7 +93,7 @@ Element.addMethods({
   },
   toggleShowAttribute: function(element, values) {
     element.toggleAttribute("show", values);
-  },
+  }
 })
 
 document.on('mouseover', '.task_list .task', function(e, element) {
