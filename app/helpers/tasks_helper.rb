@@ -183,6 +183,7 @@ module TasksHelper
     out << case status_type
     when :column  then localized_status_name(task)
     when :content then task.comments_count.to_s
+    when :header then localized_status_name(task)
     end
     out << "</span>"
     out
