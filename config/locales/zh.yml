@@ -570,6 +570,7 @@ zh:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
+      show_archived: "View {{count}} archived tasks"
     fields:
       task_list: 任务列表为您的项目定义一个里程碑。在任务列表中，您可以创建任务并分配任务给项目成员。
       name: 任务列表名称

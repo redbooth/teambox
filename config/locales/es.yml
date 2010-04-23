@@ -566,6 +566,7 @@ es:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
+      show_archived: "View {{count}} archived tasks"
     fields:
       task_list: Una lista de tareas define un hito en el proyecto. Dentro puedes crear Tareas y asignarlas a otras personas.
       name: Lista de Tareas

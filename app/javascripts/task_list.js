@@ -33,6 +33,15 @@ var TaskList = {
     new Effect.Highlight(id, {duration:3});
   },
 
+  // Replaces new list (or inserts if applicable)
+  replaceList: function(id, content, archived) {
+    var existing = $(id);
+    if (!id)
+      TaskList.insertList(id,content,archived);
+    else
+      existing.replace(content);
+  },
+
   // Removes an existing list
   removeList: function(id) {
     var el = $(id);
@@ -176,6 +185,25 @@ var TaskList = {
       evalScripts: true,
       method: 'get',
       onComplete: callback
+    });
+  },
+
+  reloadList: function(el, part, callback) {
+    var url = el.readAttribute('action_url');
+    var on_index = el.hasClassName('index_task_lists');
+    if (!url)
+      return;
+    url = url.indexOf('?') >= 0 ? (url + '&part=' + part) : (url + '?part=' + part);
+    if (on_index)
+      url = url + '&on_index=1';
+    new Ajax.Request(url, {
+      asynchronous: true,
+      evalScripts: true,
+      method: 'get',
+      onComplete: function(request) {
+        callback(request);
+        Task.make_all_sortable();
+      }
     });
   },
 

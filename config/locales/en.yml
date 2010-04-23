@@ -570,6 +570,7 @@ en:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
+      show_archived: "View {{count}} archived tasks"
     fields:
       title: New Task List
       task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.

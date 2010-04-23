@@ -567,6 +567,7 @@ ru:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
+      show_archived: "View {{count}} archived tasks"
     fields:
       task_list: Списки задач определяют этапы проекта. Внутри списка задач вы можете создавать задачи и распределять их между участниками.
       name: Название списка задач

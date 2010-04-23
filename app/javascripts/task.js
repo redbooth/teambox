@@ -60,6 +60,12 @@ Task = {
     TaskList.updateList(task_list_id);
   },
 
+  replaceTasks: function(task_list_id, archived, html) {
+    var container = archived ? $(task_list_id + '_the_closed_tasks') : $(task_list_id + '_the_main_tasks');
+    container.innerHTML = html;
+    TaskList.updateList(task_list_id);
+  },
+
   destroy: function(element, url) {
     new Ajax.Request(url, {
       method: 'delete',
@@ -117,6 +123,18 @@ document.on('click', 'a.new_task_link', function(e, el) {
 document.on('click', 'a.edit_task_link', function(e, el) {
   e.stop();
   Jenny.toggleElement(el);
+});
+
+document.on('click', 'a.show_archived_tasks_link', function(e, el) {
+  e.stop();
+  var task_container_id = el.up('.task_list').id;
+  var task_list_id = $(task_container_id).up().id;
+  el.hide();
+  el.up().down('.loading').show();
+  TaskList.reloadList($(task_container_id), 'tasks', function(req){
+    el.up().remove();
+    new Effect.BlindDown(task_list_id + '_the_closed_tasks', {duration:0.3});
+  });
 });
 
 document.observe('jenny:loaded:new_task', function(evt) {

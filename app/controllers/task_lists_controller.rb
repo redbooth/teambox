@@ -29,7 +29,7 @@ class TaskListsController < ApplicationController
     respond_to do |f|
       f.html
       f.m
-      f.js    { @show_part = params[:part]; render :template => 'task_lists/reload' }
+      f.js    { calc_onindex; @show_part = params[:part]; render :template => 'task_lists/reload' }
       f.xml   { render :xml     => @task_list.to_xml(:include => [:tasks, :comments]) }
       f.json  { render :as_json => @task_list.to_xml(:include => [:tasks, :comments]) }
       f.yaml  { render :as_yaml => @task_list.to_xml(:include => [:tasks, :comments]) }

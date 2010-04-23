@@ -568,6 +568,7 @@ fr:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
+      show_archived: "View {{count}} archived tasks"
     fields:
       task_list: "Une liste de tâches définit une étape importante pour votre projet. L'intérieur d'une liste de tâches, vous pouvez créer des tâches et les assigner à des personnes."
       name: Nom de la Liste de Taches

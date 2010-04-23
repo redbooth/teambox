@@ -108,15 +108,24 @@ module TaskListsHelper
       :task_list => task_list }
   end
 
-  def insert_task_list(project,task_list,sub_action)
-    content = render(:partial => 'task_lists/task_list',
+  def options_for_render_task_list(project,task_list,sub_action)
+    {:partial => 'task_lists/task_list',
       :locals => {
         :project => project,
         :task_list => task_list,
-        :sub_action => sub_action })
-    
+        :sub_action => sub_action }}
+  end
+  
+  def insert_task_list(project,task_list,sub_action)
+    content = render(options_for_render_task_list(project,task_list,sub_action))
     list_id = task_list_id(nil,project,task_list)
     page.call "TaskList.insertList", list_id, content, (task_list.archived || false)
+  end
+  
+  def replace_task_list(project,task_list,sub_action)
+    content = render(options_for_render_task_list(project,task_list,sub_action))
+    list_id = task_list_id(nil,project,task_list)
+    page.call "TaskList.replaceList", list_id, content, task_list.archived
   end
   
   def remove_task_list(list_id)
@@ -222,6 +231,13 @@ module TaskListsHelper
             '#', :class => 'taskListResolve',
             :aconfirm => t('task_lists.actions.confirm_resolve_and_archive'),
             :action_url => archive_project_task_list_path(project, task_list, :on_index => (on_index ? 1 : 0))
+  end
+  
+  def show_archived_tasks_link(project,task_list)
+    archived_tasks = task_list.tasks.archived.length
+    link_to t('task_lists.actions.show_archived', :count => archived_tasks),
+            project_task_lists_path(project, task_list),
+            :class => 'show_archived_tasks_link'
   end
 
   def print_task_lists_link(project = nil)
