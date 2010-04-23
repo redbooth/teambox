@@ -6,11 +6,23 @@
 //= require <sound>
 
 Function.prototype.throttle = function(t) {
+  var timeout, scope, args, fn = this, tick = function() {
+    fn.apply(scope, args)
+    timeout = null
+  }
+  return function() {
+    scope = this
+    args = arguments
+    if (!timeout) timeout = setTimeout(tick, t)
+  }
+}
+
+Function.prototype.debounce = function(t) {
   var timeout, fn = this
   return function() {
+    var scope = this, args = arguments
     timeout && clearTimeout(timeout)
-    timeout = null
-    timeout = setTimeout(fn.curry.apply(fn, arguments), t)
+    timeout = setTimeout(function() { fn.apply(scope, args) }, t)
   }
 }
 
@@ -117,8 +129,6 @@ Element.addMethods({
     formatter.makeHtml = formatter.makeHtml.wrap(function(make) {
       previewBox.update(make(textarea.getValue()))
     })
-    
-    var timeout = null, fn = 
     
     textarea.updatePreview = textarea.on('keyup', formatter.makeHtml.bind(formatter).throttle(300))
     
