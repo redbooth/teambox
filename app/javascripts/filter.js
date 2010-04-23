@@ -1,4 +1,20 @@
 Filter = {
+  count_assigned: null,
+  count_due_date: null,
+  
+  init: function() {
+    Filter.count_assigned = Filter.mapOptions($("filter_assigned").options);
+    Filter.count_due_date = Filter.mapOptions($("filter_due_date").options);
+  },
+
+  mapOptions: function(options) {
+    var out = [];
+    var len = options.length;
+    for (var i=0; i<len; i++)
+      out.push(options[i].text);
+    return out;
+  },
+  
   showAllTaskLists: function() {
     $$(".task_list_container").each(function(e){ e.show() })
   },
@@ -17,6 +33,14 @@ Filter = {
       else
         e.hide();
     });
+  },
+  countTasks: function(by, filter) {
+    var count = 0;
+    $$(".tasks.open div." + by).each(function(e){
+      if (filter == null || e.hasClassName(filter))
+        count += 1;
+    });
+    return count;
   },
   hideTasks: function(by, filter) {
     $$("table.task_list div.task" + by).each(function(e){
@@ -57,13 +81,52 @@ Filter = {
     Filter.showAllTaskLists();
     Filter.hideAllTasks();
 
-    if (assigned == 'task' && filter == null) {
+    if (assigned == 'task' && filter == null) 
+    {
       Filter.showAllTasks();
     }
     else
     {
       Filter.showTasks(assigned, filter);
       Filter.foldEmptyTaskLists();
+    }
+
+    Filter.updateCounts(true);
+  },
+
+  updateCounts: function(due_only) {
+    if (Filter.count_assigned == null)
+      Filter.init();
+
+    var el = $("filter_assigned");
+    var el_filter = $("filter_due_date");
+    
+    var assigned = el.value == 'all' ? 'task' : el.value;
+    var count_assigned = Filter.count_assigned;
+    var count_due_date = Filter.count_due_date;
+
+    var len;
+    if (!due_only) 
+    {
+      len = el.options.length;
+      for (var i=0; i<len; i++)
+      {
+        var option = el.options[i];
+        if (option.disabled)
+          continue;
+        var filter = option.value == 'all' ? 'task' : option.value;
+        option.text = count_assigned[i] + ' (' + Filter.countTasks(filter, null) + ')';
+      }
+    }
+
+    len = el_filter.options.length;
+    for (var i=0; i<len; i++)
+    {
+      var option = el_filter.options[i];
+      if (option.disabled)
+        continue;
+      var filter = option.value == 'all' ? null : option.value;
+      option.text = count_due_date[i] + ' (' + Filter.countTasks(assigned, filter) + ')';
     }
   }
 };
@@ -74,4 +137,8 @@ document.on("change", "#filter_assigned", function(evt, el){
 
 document.on("change", "#filter_due_date", function(evt, el){
   Filter.updateFilters();
+});
+
+document.on('dom:loaded', function() {
+  Filter.updateCounts(false);
 });
