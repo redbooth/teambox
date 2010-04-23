@@ -557,32 +557,30 @@ es:
     archived:
       title: Todas las tareas archivadas
       description: "Estas son las tareas archivadas, al haber sido completadas o rechazadas."
-    ####
     archive_box:
-      unarchive_list: This task list is archived.
+      unarchive_list: Esta tarea está archivada
     actions:
-      resolve_and_archive: "Resolve all tasks and archive"
-      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
-      archive: "archive this task list"
-      rename: "Rename task list"
-      set_dates: "Set the start & end date"
-      show_archived: "View {{count}} archived tasks"
+      resolve_and_archive: Completar todas las tareas y archivar
+      confirm_resolve_and_archive: Estás seguro de que quieres resolver y archivar esta lista de tareas?
+      archive: "archivar esta lista de tareas"
+      rename: "Renombrar lista de tareas"
+      set_dates: "Fijar fechas de inicio y fin"
+      show_archived: "Ver {{count}} tareas archivadas"
     fields:
+      title: Nueva Lista de Tareas
       task_list: Una lista de tareas define un hito en el proyecto. Dentro puedes crear Tareas y asignarlas a otras personas.
       name: Lista de Tareas
       start_on: Empieza el... <i>opcional</i>
       finish_on: Termina el... <i>opcional</i>
-    ####
     filter:
-      due_date: "Display tasks with due date..."
-      assigned_to: "Display tasks assigned to..."
+      due_date: "Mostrar tareas que terminen..."
+      assigned_to: "Mostrar tareas asignadas a..."
     link:
       new: Nueva lista de tareas
       edit: Editar
       reorder: Reordenar
-      ####
-      reorder_done: Done reorder
-      unarchive: Unarchive
+      reorder_done: Hecho
+      unarchive: Desarchivar
     index:
       add_link: Nueva lista de tareas
       empty: No hay tareas en esta categoría
@@ -599,12 +597,11 @@ es:
       item4: "<b>Revisa</b>. Una tarea completada no se borra, de forma que después puedes ver qué se hizo."
       footer1: "Es una forma sencilla y ágil de <b>conseguir hacer lo que te propones</b> y hacerlo saber."
       footer2: "¡Ya es hora de olvidar los plannings en Excel y los complejos diagramas GANTT!"
-    ####
     overview_box:
-      this_list: "This task list"
-      starts_on: "Starts on:"
-      ends_on: "Ends on:"
-      undefined: "Undefined"
+      this_list: "Esta lista de tareas"
+      starts_on: "Empieza el:"
+      ends_on: "Termina el:"
+      undefined: "Indefinido"
     new:
       title: Nueva lista de tareas
       submit: Añadir
@@ -659,11 +656,10 @@ es:
       commented_on_a_task_list: "-"
       confirm_delete: Seguro que quieres borrar este comentario?
       hours_hrs: "{{hours}}H"
-      cannot_edit: "Comment cannot be edited after 15 minutes"
-    ####
+      cannot_edit: "El comentario no se puede editar 15 minutos después de publicarse"
     hours:
-      add_hours: Hours
-      hours: How many hours did you put into this task?
+      add_hours: Horas
+      hours: Cuántas horas has trabajado en esta tarea?
     new:
       assigned_to_nobody: Sin asignar
       assigned_to: "Asignado a:"
@@ -678,9 +674,8 @@ es:
       cannot_update: No tienes permiso para editar este comentario.
     actions:
       confirm_delete: Seguro que quieres borrar este comentario?
-      ####
-      convert_task: Convert to task
-      edit: Edit comment
+      convert_task: Convertir en una tarea
+      edit: Editar comentario
   example_projects:
     new:
       learn: Proyecto Tutorial

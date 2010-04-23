@@ -570,6 +570,8 @@ de:
       set_dates: "Set the start & end date"
       show_archived: "View {{count}} archived tasks"
     fields:
+      ####
+      title: New Task List
       task_list: "Eine Aufgabenliste definiert einen Meilenstein für Ihr Projekt. In einer Aufgabenliste können Sie Aufgaben erstellen und diese bestimmten Personen zuordnen."
       name: "Name der Aufgabenliste"
       start_on: Beginnt am... <i>optional</i>
