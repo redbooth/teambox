@@ -38,7 +38,10 @@ class TasksController < ApplicationController
     task_params.merge!({:status => 1}) if assigned_id > 0
     
     if @task = @current_project.create_task(current_user,@task_list,task_params)
-      @comment = @current_project.new_task_comment(@task)
+      unless @task.new_record?
+        @comment = @current_project.new_task_comment(@task)
+        @task.reload
+      end
     end
     respond_to do |format|
       format.html { redirect_to [@current_project,@task_list,@task] }
