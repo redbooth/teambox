@@ -7,7 +7,7 @@
   %p.optional= t('.optional')
   .body.text_field
     = f.label :body, t('.body')
-    = f.text_field :body
+    = f.text_area :body, :rows => 3
   .assigned_to.text_field
     = f.label :assigned_id, t('.assigned_to')
     = f.select :assigned_id, options_for_people(project.people)
