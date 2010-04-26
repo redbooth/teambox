@@ -73,6 +73,7 @@ class TaskListsController < ApplicationController
     calc_onindex
     @task_list.update_attributes(params[:task_list])
     respond_to do |f|
+      f.html { non_js_list_redirect }
       f.js {}
     end
   end
@@ -120,10 +121,12 @@ class TaskListsController < ApplicationController
       @task_list.save!
       
       respond_to do |f|
+        f.html { non_js_list_redirect }
         f.js{}
       end
     else
       respond_to do |f|
+        f.html { flash[:error] = "Not allowed!"; non_js_list_redirect }
         f.js { render :text => 'alert("Not allowed!");'; }
       end
     end
@@ -143,7 +146,7 @@ class TaskListsController < ApplicationController
     end
     
     respond_to do |f|
-      f.js{ render :template => 'task_lists/update' }
+      f.js { render :template => 'task_lists/update' }
     end
   end
 
@@ -209,6 +212,14 @@ class TaskListsController < ApplicationController
         @task_lists_archived = @task_lists.reject {|t| !t.archived?}
         @task_lists_active = @task_lists.reject {|t| t.archived?}
         @task_lists = @task_lists_active + @task_lists_archived
+      end
+    end
+    
+    def non_js_list_redirect
+      if @on_index
+        redirect_to project_task_lists_path(@current_project)
+      else
+        redirect_to project_task_list_path(@current_project,@task_list)
       end
     end
 
