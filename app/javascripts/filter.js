@@ -3,8 +3,12 @@ Filter = {
   count_due_date: null,
   
   init: function() {
-    Filter.count_assigned = Filter.mapOptions($("filter_assigned").options);
-    Filter.count_due_date = Filter.mapOptions($("filter_due_date").options);
+    var filter_assigned = $("filter_assigned");
+    var filter_due_date = $("filter_due_date");
+    if (filter_assigned)
+      Filter.count_assigned = Filter.mapOptions(filter_assigned.options);
+    if (filter_due_date)
+      Filter.count_due_date = Filter.mapOptions(filter_due_date.options);
   },
 
   mapOptions: function(options) {
@@ -72,6 +76,8 @@ Filter = {
   updateFilters: function() {
     var el = $("filter_assigned");
     var el_filter = $("filter_due_date");
+    if (el == null)
+      return;
 
     var assigned = el.value == 'all' ? 'task' : el.value;
     var filter = el_filter.value == 'all' ? null : el_filter.value;
@@ -100,6 +106,8 @@ Filter = {
 
     var el = $("filter_assigned");
     var el_filter = $("filter_due_date");
+    if (el == null)
+      return;
     
     var assigned = el.value == 'all' ? 'task' : el.value;
     var count_assigned = Filter.count_assigned;
