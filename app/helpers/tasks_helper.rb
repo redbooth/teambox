@@ -346,7 +346,7 @@ module TasksHelper
         :footer => false,
         :year_range => 2.years.ago..10.years.from_now,
         :time => false,
-        :buttons => false }),
+        :buttons => true }),
       :class => 'date_picker')
   end
   
