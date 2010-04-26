@@ -11,7 +11,7 @@ class TasksController < ApplicationController
     @comment = @current_project.new_task_comment(@task)
 
     respond_to do |f|
-      f.html
+      f.html { redirect_to project_task_list_task_path(@current_project, @task_list, @task) if @wrong_task_list }
       f.m
       f.js   { @show_part = params[:part]; render :template => 'tasks/reload' }
       f.xml  { render :xml     => @task.to_xml }
@@ -123,6 +123,11 @@ class TasksController < ApplicationController
     def find_task
       begin
         @task = @current_project.tasks.find(params[:id])
+        # Make sure we have the right task list
+        if @task_list.id != @task.task_list_id
+          @task_list = @task.task_list
+          @wrong_task_list = true
+        end
       rescue
         flash[:error] = t('not_found.task', :id => params[:id])
         redirect_to project_task_lists_path(@current_project)
