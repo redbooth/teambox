@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_filter :load_comment, :only => [:edit, :update, :convert, :show, :destroy]
   before_filter :load_target, :only => [:create, :convert]
   before_filter :load_orginal_controller, :only => [:create]
+  before_filter :check_timeless, :only => [:edit, :convert]
   before_filter :check_permissions, :only => [:create, :edit, :update, :convert]
   before_filter :set_page_title
 
@@ -120,6 +121,12 @@ class CommentsController < ApplicationController
       end
     end
     
+    def check_timeless
+      if (action_name == 'edit' && params[:part] == 'task') || action_name == 'convert'
+        @checks_time = false
+      end
+    end
+    
     def check_permissions
       # Can they even create comments?
       if @comment.nil?
@@ -134,11 +141,12 @@ class CommentsController < ApplicationController
       
       if @comment
         @has_permission = true
+        @checks_time = true if @checks_time.nil?
         
         if action_name == 'destroy'
-          return if @comment.can_destroy?(current_user)
+          return if @comment.can_destroy?(current_user, @checks_time)
         else
-          return if @comment.can_edit?(current_user)
+          return if @comment.can_edit?(current_user, @checks_time)
         end
         
         # Error update handled in rjs handlers

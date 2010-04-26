@@ -205,7 +205,10 @@ Comment = {
       if (now > c.date) {
         var el = $(c.id);
         if (el)
+        {
           el.select('a.taction').each(function(e){ e.hide(); });
+          el.select('.tactione').each(function(e){ e.show(); });
+        }
         return true;
       }
       return false;
@@ -230,9 +233,11 @@ Comment = {
     }).reject(function(c){
         if (date >= c.date) {
           $$('#' + c.id + ' a.taction').each(function(e){ e.hide(); });
+          $$('#' + c.id + ' .tactione').each(function(e){ e.show(); });
           return true;
         } else {
           $$('#' + c.id + ' a.taction').each(function(e){ e.show(); });
+          $$('#' + c.id + ' .tactione').each(function(e){ e.hide(); });
         }
         return false;
     });

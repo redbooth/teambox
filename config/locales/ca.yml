@@ -681,6 +681,7 @@ ca:
       commented_on_a_task_list: "-"
       confirm_delete: Segur que vols esborrar aquest comentari?
       hours_hrs: "{{hours}}H"
+      cannot_edit: "Comment cannot be edited after 15 minutes"
     ####
     hours:
       add_hours: Hours

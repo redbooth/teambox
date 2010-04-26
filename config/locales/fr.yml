@@ -664,6 +664,7 @@ fr:
       commented_on_a_task_list: "-"
       confirm_delete: Etes-vous sûr de vouloir effacer ce commentaire?
       hours_hrs: "{{hours}}H"
+      cannot_edit: "Comment cannot be edited after 15 minutes"
     ####
     hours:
       add_hours: Hours
