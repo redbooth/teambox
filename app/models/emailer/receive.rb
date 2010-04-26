@@ -113,6 +113,10 @@ class Emailer
   def post_to(target)
     comment = @project.new_comment(@user, target, :name => @subject)
     comment.body = @body
+    if target.class == Task
+      comment.status = target.status
+      comment.assigned = target.assigned
+    end
     comment.save!
   end
   
