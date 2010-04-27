@@ -205,7 +205,11 @@ class TaskListsController < ApplicationController
           @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user]).
                     select { |task| task.active? }.
                     sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
-          @task_lists = []
+          if [:xml, :json, :as_yaml].include? request.format.to_sym
+            @task_lists = TaskList.find(:all, :conditions => {:project_id => current_user.project_ids})
+          else
+            @task_lists = []
+          end
         end
         
         # Resort @task_lists and put archived at the bottom
