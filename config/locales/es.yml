@@ -458,9 +458,6 @@ es:
     link:
       new: + Nueva tarea
       edit: Editar
-      show_archived_tasks:
-        one: "Mostrar 1 tarea archivada"
-        other: "Mostrar {{count}} tareas archivadas"
       hide_archived_tasks:
         one: "Ocultar 1 tarea archivada"
         other: "Ocultar {{count}} tareas archivadas"
@@ -565,7 +562,9 @@ es:
       archive: "archivar esta lista de tareas"
       rename: "Renombrar lista de tareas"
       set_dates: "Fijar fechas de inicio y fin"
-      show_archived: "Ver {{count}} tareas archivadas"
+      show_archived:
+        one: "Mostrar 1 tarea archivada"
+        other: "Mostrar {{count}} tareas archivadas"
     fields:
       title: Nueva Lista de Tareas
       task_list: Una lista de tareas define un hito en el proyecto. Dentro puedes crear Tareas y asignarlas a otras personas.
@@ -795,9 +794,6 @@ es:
         one: "Mía"
         other: "Mías ({{count}})"
       everybodys_tasks: "Todas las tareas"
-      show_archived_tasks:
-        one: "Mostrar 1 tarea archivada"
-        other: "Mostrar {{count}} tareas archivadas"
       hide_archived_tasks: "Ocultar tareas archivadas"
     footer:
       support: ¿Problemas? ¡Envía feedback!

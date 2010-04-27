@@ -460,9 +460,6 @@ ja:
     link:
       new: + タスクを追加
       edit: 編集
-      show_archived_tasks:
-        one: "アーカイブされたタスクを表示"
-        other: "{{count}}個のアーカイブされたタスクを表示"
       hide_archived_tasks:
         one: "アーカイブされたタスクを隠す"
         other: "{{count}}個のアーカイブされたタスクを隠す"
@@ -568,7 +565,9 @@ ja:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
-      show_archived: "View {{count}} archived tasks"
+      show_archived:
+        one: "アーカイブされたタスクを表示"
+        other: "{{count}}個のアーカイブされたタスクを表示"
     fields:
       task_list: タスクリストはあなたのプロジェクトのマイルストーンになります。タスクリストの中にタスクを作成して、人々にアサインできます。
       name: タスクリスト名
@@ -800,9 +799,6 @@ ja:
         one: "私のタスク"
         other: "私の{{count}}個のタスク"
       everybodys_tasks: "全員のタスク"
-      show_archived_tasks:
-        one: "アーカイブされたタスクを見る"
-        other: "{{count}}個のアーカイブされたタスクを見る"
       hide_archived_tasks: "アーカイブされたタスクを隠す"
     footer:
       support: フィードバックとバグ報告

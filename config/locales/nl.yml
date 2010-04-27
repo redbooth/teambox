@@ -375,9 +375,6 @@ nl:
     link:
       new: + Voeg Taak Toe
       edit: Wijzig
-      show_archived_tasks:
-        one: "Laat 1 gearchiveerde taak zien"
-        other: "Laat {{count}} gearchiveerde taken zien"
       hide_archived_tasks:
         one: "Verberg 1 gearchiveerde taak"
         other: "Verberg {{count}} gearchiveerde taken"
@@ -473,6 +470,17 @@ nl:
     archived:
       title: Alle Gearchiveerde Taken
       description: U bent momenteel gearchiveerde taken aan het bekijken. Dit zijn taken die gesloten zijn.
+    archive_box:
+      unarchive_list: This task list is archived.
+    action:
+      resolve_and_archive: "Resolve all tasks and archive"
+      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
+      archive: "archive this task list"
+      rename: "Rename task list"
+      set_dates: "Set the start & end date"
+      show_archived:
+        one: "Laat 1 gearchiveerde taak zien"
+        other: "Laat {{count}} gearchiveerde taken zien"
     fields:
       task_list: Een takenlijst defineerd een milestone voor uw project. In een takenlijst kunt u taken aanmaken en ze toewijzen aan mensen.
       name: Takenlijst naam
@@ -660,9 +668,6 @@ nl:
         one: "Mijn 1 Taak"
         other: "Mijn {{count}} Taken"
       everybodys_tasks: "Iedereen zijn taken"
-      show_archived_tasks:
-        one: "Laat 1 Gearchiveerde Taak Zien"
-        other: "Laat {{count}} Gearchiveerde Taken Zien"
       hide_archived_tasks: "Verstop Gearchiveerde Taken"
     footer:
       support: Feedback en bugs

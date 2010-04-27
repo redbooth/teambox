@@ -463,9 +463,6 @@ en:
     link:
       new: + Add Task
       edit: Edit
-      show_archived_tasks:
-        one: "Show 1 archived task"
-        other: "Show {{count}} archived tasks"
       hide_archived_tasks:
         one: "Hide 1 archived task"
         other: "Hide {{count}} archived tasks"
@@ -570,7 +567,9 @@ en:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
-      show_archived: "View {{count}} archived tasks"
+      show_archived:
+        one: "Show 1 archived task"
+        other: "Show {{count}} archived tasks"
     fields:
       title: New Task List
       task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
@@ -798,9 +797,6 @@ en:
         one: "My 1 Task"
         other: "My {{count}} Tasks"
       everybodys_tasks: "Everybody's Tasks"
-      show_archived_tasks:
-        one: "Show 1 Archived Task"
-        other: "Show {{count}} Archived Tasks"
       hide_archived_tasks: "Hide Archived Tasks"
     footer:
       support: Feedback and bugs

@@ -460,9 +460,6 @@ de:
     link:
       new: + Aufgabe hinzufügen
       edit: Bearbeiten
-      show_archived_tasks:
-        one: "Zeige archivierte Aufgabe"
-        other: "Zeige {{count}} archivierte Aufgaben"
       hide_archived_tasks:
         one: "Blende archivierte Aufgabe aus"
         other: "Blende {{count}} archivierte Aufgaben aus"
@@ -568,7 +565,9 @@ de:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
-      show_archived: "View {{count}} archived tasks"
+      show_archived:
+        one: "Zeige archivierte Aufgabe"
+        other: "Zeige {{count}} archivierte Aufgaben"
     fields:
       ####
       title: New Task List
@@ -803,10 +802,7 @@ de:
       my_tasks:
         one: "Meine Aufgabe"
         other: "Meine {{count}} Aufgaben"
-      everybodys_tasks: "Aufgaben für alle" 
-      show_archived_tasks:
-        one: "1 archivierte Aufgabe anzeigen"
-        other: "{{count}} archivierte Aufgaben anzeigen"
+      everybodys_tasks: "Aufgaben für alle"
       hide_archived_tasks: "Archivierte Aufgaben ausblenden"
     footer:
       support: Feedback und Fehler

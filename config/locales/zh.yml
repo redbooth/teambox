@@ -461,9 +461,6 @@ zh:
     link:
       new: + 添加任务
       edit: 编辑
-      show_archived_tasks:
-        one: "显示一条已存档的任务"
-        other: "显示{{count}}条已存档的任务"
       hide_archived_tasks:
         one: "隐藏一条已存档的任务"
         other: "隐藏{{count}}条已存档的任务"
@@ -570,7 +567,9 @@ zh:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
-      show_archived: "View {{count}} archived tasks"
+      show_archived:
+        one: "显示一条已存档的任务"
+        other: "显示{{count}}条已存档的任务"
     fields:
       task_list: 任务列表为您的项目定义一个里程碑。在任务列表中，您可以创建任务并分配任务给项目成员。
       name: 任务列表名称
@@ -805,9 +804,6 @@ zh:
         one: "我的1个任务"
         other: "我的{{count}}个任务"
       everybodys_tasks: "所有人的任务"
-      show_archived_tasks:
-        one: "显示一条已归档的任务"
-        other: "显示{{count}}条已归档的任务"
       hide_archived_tasks: "隐藏归档任务"
     footer:
       support: 反馈和缺陷
