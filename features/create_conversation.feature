@@ -23,7 +23,7 @@ Feature Creating a conversation
       And I should see "Unwatch"
 
     When I fill in "comment_body" with "Rockets!"
-      And I press "Comment"
+      And I press "Save"
     # Using format.html which redirects, not .js
     Then I should see "Im having some ideas for an upcoming project: Getting Laid, the book."
      And I should see "Rockets!"

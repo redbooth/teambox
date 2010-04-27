@@ -56,7 +56,7 @@ Feature Creating a task
       | Invite Yehuda | Awesome Ruby Yahh | Ruby Rockstars |
    When I go to the page of the "Invite Yehuda" task
     And I click the element "status_resolved"
-    And I press "Comment"
+    And I press "Save"
     And I follow "Archive this task"
    When I follow "+ Add Task"
     And I fill in "task_name" with "Invite DHH" in the new task form of the "Awesome Ruby Yahh" task list

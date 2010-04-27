@@ -74,14 +74,6 @@ Given /^the task called "([^\"]*)" is (new|hold|open|resolved|rejected)$/ do |na
   Task.find_by_name(name).update_attribute(:status, Task::STATUSES[status.to_sym])
 end
 
-Given /^the task called "([^\"]*)" is not archived$/ do |name|
-  Task.find_by_name(name).update_attribute(:archived, false)
-end
-
-Given /^the task called "([^\"]*)" is archived$/ do |name|
-  Task.find_by_name(name).update_attribute(:archived, true)
-end
-
 Then /^I should see the task called "([^\"]*)" in the "([^\"]*)" task list panel$/ do |task_name, task_list_name|
   task = Task.find_by_name(task_name)
   task_list = TaskList.find_by_name(task_list_name)

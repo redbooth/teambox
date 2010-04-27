@@ -20,7 +20,7 @@ Feature: See tasks in different, common groupings
 
   Scenario: See all the tasks
     Given the task called "Tell my friends" is resolved
-    And the task called "Tell my friends" is archived
+    And the task called "Tell my friends" is resolved
     And the task called "Tell the tech bloggers" is open
     And the task called "Post on Digg and Hacker News" is hold
     And the task called "Beg Apple to approve of the iPhone app" is rejected
@@ -31,7 +31,7 @@ Feature: See tasks in different, common groupings
       | This week        | Tell the tech bloggers                 |
       | This week        | Post on Digg and Hacker News           |
       | Later            | Beg Apple to approve of the iPhone app |
-    But I should not see the task called "Tell my friends" in the "This week" task list panel
+    But I should not see the task called "Tell my friends" in the "This week" task list
     When I follow "All Tasks"
     Then I should see the following tasks:
       | task_list_name   | task_name                              |
@@ -49,7 +49,7 @@ Feature: See tasks in different, common groupings
   Scenario: See only my tasks
     Given I am logged in as "balint"
     And the task called "Tell my friends" is assigned to me
-    And the task called "Tell my friends" is archived
+    And the task called "Tell my friends" is resolved
     And the task called "Post on Digg and Hacker News" is assigned to me
     When I go to the list of tasks page of the project called "Market Teambox"
     And I follow "My 1 Task"
@@ -70,8 +70,8 @@ Feature: See tasks in different, common groupings
 
   Scenario: See archived tasks
     Given I am logged in as "balint"
-    And the task called "Tell my friends" is archived
-    And the task called "Post on Digg and Hacker News" is archived
+    And the task called "Tell my friends" is resolved
+    And the task called "Post on Digg and Hacker News" is resolved
     When I go to the list of tasks page of the project called "Market Teambox"
     And I follow "Show 2 Archived Tasks"
     Then I should see the following tasks:
@@ -94,12 +94,12 @@ Feature: See tasks in different, common groupings
 
   Scenario: See reopened task
     Given I am logged in as "balint"
-    And the task called "Tell my friends" is archived
+    And the task called "Tell my friends" is resolved
     When I go to the list of tasks page of the project called "Market Teambox"
     And I follow "All Tasks"
     And I follow "Tell my friends"
     And I follow "Reopen this task"
     And I fill in "comment_body" with "Got some new friends"
-    And I press "Comment"
+    And I press "Save"
     And I go to the list of tasks page of the project called "Market Teambox"
-    Then I should see the task called "Tell my friends" in the "This week" task list panel
+    Then I should see the task called "Tell my friends" in the "This week" task list
