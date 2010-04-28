@@ -1,4 +1,5 @@
 //= require <prototype>
+//= require <html5>
 //= require <builder>
 //= require <effects>
 //= require <controls>

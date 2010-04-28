@@ -2,7 +2,7 @@
 %p= t('.task')
 .name.text_field
   = f.label :name, t('.name')
-  = f.text_field :name, :class => 'focus', :autofocus => 'true'
+  = f.text_field :name, :autofocus => true
 - if task.new_record?
   %p.optional= t('.optional')
   .body.text_field

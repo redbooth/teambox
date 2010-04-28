@@ -1,5 +1,5 @@
 = label_tag :login, t('.username_or_email')
-= text_field_tag 'login', @login, :class => 'focus', :tabindex => 200
+= text_field_tag 'login', @login, :autofocus => true
 
 = label_tag :password, t('.password')
-= password_field_tag 'password', nil, :tabindex => 201
+= password_field_tag 'password', nil

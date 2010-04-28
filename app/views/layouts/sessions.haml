@@ -9,6 +9,7 @@
     = sprockets_include_tag
 
   %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
+    = javascript_include_tag 'modernizr'
     .container
       .navigation_wrap
         .navigation
