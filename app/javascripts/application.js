@@ -1,5 +1,6 @@
 //= require <prototype>
 //= require <html5>
+//= require <champagne>
 //= require <builder>
 //= require <effects>
 //= require <controls>
