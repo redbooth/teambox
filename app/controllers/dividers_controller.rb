@@ -10,6 +10,15 @@ class DividersController < ApplicationController
     respond_to{|f|f.js}
   end
   
+  def show
+    @divider = @page.dividers.find(params[:id])
+    respond_to do |f|
+      f.xml { render :xml => @divider.to_xml }
+      f.json{ render :as_json => @divider.to_xml }
+      f.yaml{ render :as_yaml => @divider.to_xml }
+    end
+  end
+  
   def edit
     @divider = @page.dividers.find(params[:id])
     respond_to{|f|f.js}

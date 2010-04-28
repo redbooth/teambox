@@ -72,6 +72,7 @@ class Upload < RoleRecord
     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
     xml.instruct! unless options[:skip_instruct]
     xml.file :id => id do
+      xml.tag! 'page-id', page_id
       xml.tag! 'filename', asset_file_name
       xml.tag! 'description', description
       xml.tag! 'mime-type', asset_content_type

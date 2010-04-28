@@ -9,6 +9,15 @@ class NotesController < ApplicationController
     respond_to{|f|f.js}
   end
   
+  def show
+    @note = @page.notes.find(params[:id])
+    respond_to do |f|
+      f.xml { render :xml => @note.to_xml }
+      f.json{ render :as_json => @note.to_xml }
+      f.yaml{ render :as_yaml => @note.to_xml }
+    end
+  end
+  
   def edit
     @note = @page.notes.find(params[:id])
     respond_to{|f|f.js}

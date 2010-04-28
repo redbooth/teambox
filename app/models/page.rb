@@ -1,7 +1,7 @@
 class Page < RoleRecord
-  has_many :notes, :order => 'position'
-  has_many :dividers, :order => 'position'
-  has_many :uploads, :order => 'position'
+  has_many :notes
+  has_many :dividers
+  has_many :uploads
   
   has_many :slots, :class_name => 'PageSlot', :order => 'position ASC'
   
@@ -99,5 +99,28 @@ class Page < RoleRecord
   
   def user
     User.find_with_deleted(user_id)
+  end
+  
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+    xml.page :id => id do
+      xml.tag! 'project-id',      project_id
+      xml.tag! 'user-id',         user_id
+      xml.tag! 'name',            name
+      xml.tag! 'description',     description
+      xml.tag! 'created-at',      created_at.to_s(:db)
+      xml.tag! 'updated-at',      updated_at.to_s(:db)
+      xml.tag! 'watchers',        Array(watchers_ids).join(',')
+      if Array(options[:include]).include? :slots
+        slots.to_xml(options.merge({ :skip_instruct => true, :root => 'slots' }))
+      end
+      if Array(options[:include]).include? :objects
+        notes.to_xml(options.merge({ :skip_instruct => true, :root => 'notes' }))
+        dividers.to_xml(options.merge({ :skip_instruct => true, :root => 'dividers' }))
+        uploads.to_xml(options.merge({ :skip_instruct => true, :root => 'uploads' }))
+      end
+    end
   end
 end

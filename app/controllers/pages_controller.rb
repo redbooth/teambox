@@ -12,6 +12,9 @@ class PagesController < ApplicationController
     
     respond_to do |f|
       f.html
+      f.xml { render :xml    => @pages.to_xml(:include => :slots, :root => 'pages') }
+      f.json{ render :as_json => @pages.to_xml(:include => :slots, :root => 'pages') }
+      f.yaml{ render :as_yaml => @pages.to_xml(:include => :slots, :root => 'pages') }
       f.rss { render :layout => false }
     end
   end
@@ -32,7 +35,14 @@ class PagesController < ApplicationController
   end
     
   def show
-    @pages = @current_project.pages    
+    @pages = @current_project.pages
+    
+    respond_to do |f|
+      f.html
+      f.xml { render :xml    => @page.to_xml(:include => [:slots, :objects]) }
+      f.json{ render :as_json => @page.to_xml(:include => [:slots, :objects]) }
+      f.yaml{ render :as_yaml => @page.to_xml(:include => [:slots, :objects]) }
+    end
   end
   
   def edit
