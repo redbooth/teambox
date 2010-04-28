@@ -11,7 +11,7 @@ end
 Given /^I have a task on open$/ do
   When  "I fill in \"comment_body\" with \"I fused the dino eggs to the engine\""
   And  "I select \"Mislav Marohnić\" from \"comment_target_attributes_assigned_id\""
-  And  "I press \"Comment\""
+  And  "I press \"Save\""
   Then "I should see \"new\" within \".task_status_new\""
   And  "I should see \"→\" within \".comment .status_arr\""
   And  "I should see \"M. Marohnić\" within \".task_status_open\""
@@ -24,7 +24,7 @@ end
 Given /^I have a task on hold$/ do
   When "I fill in \"comment_body\" with \"I need to wait till the engine cools down\""
    And "I click the element \"status_hold\""
-   And "I press \"Comment\""
+   And "I press \"Save\""
   Then "I should see \"new\" within \".task_status_new\""
    And "I should see \"→\" within \".comment .status_arr\""
    And "I should see \"hold\" within \".task_status_hold\""
@@ -37,7 +37,7 @@ end
 Given /^I have a task on resolved$/ do
   When "I fill in \"comment_body\" with \"I need to wait till the engine cools down\""
    And "I click the element \"status_resolved\""
-   And "I press \"Comment\""
+   And "I press \"Save\""
   Then "I should see \"new\" within \".task_status_new\""
    And "I should see \"→\" within \".comment .status_arr\""
    And "I should see \"resolved\" within \".task_status_resolved\""
@@ -49,7 +49,7 @@ end
 Given /^I have a task on rejected$/ do
   When "I fill in \"comment_body\" with \"I need to wait till the engine cools down\""
    And "I click the element \"status_rejected\""
-   And "I press \"Comment\""
+   And "I press \"Save\""
   Then "I should see \"new\" within \".task_status_new\""
    And "I should see \"→\" within \".comment .status_arr\""
    And "I should see \"rejected\" within \".task_status_rejected\""

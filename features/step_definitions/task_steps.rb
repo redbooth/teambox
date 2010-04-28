@@ -74,7 +74,7 @@ Given /^the task called "([^\"]*)" is (new|hold|open|resolved|rejected)$/ do |na
   Task.find_by_name(name).update_attribute(:status, Task::STATUSES[status.to_sym])
 end
 
-Then /^I should see the task called "([^\"]*)" in the "([^\"]*)" task list panel$/ do |task_name, task_list_name|
+Then /^I should see the task called "([^\"]*)" in the "([^\"]*)" task list$/ do |task_name, task_list_name|
   task = Task.find_by_name(task_name)
   task_list = TaskList.find_by_name(task_list_name)
   project = task_list.project
@@ -100,7 +100,7 @@ end
 
 Then /^I should see the following tasks:$/ do |table|
   table.hashes.each do |hash|
-    Then %(I should see the task called "#{hash['task_name']}" in the "#{hash['task_list_name']}" task list panel)
+    Then %(I should see the task called "#{hash['task_name']}" in the "#{hash['task_list_name']}" task list)
   end
 end
 

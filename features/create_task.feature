@@ -57,7 +57,7 @@ Feature Creating a task
    When I go to the page of the "Invite Yehuda" task
     And I click the element "status_resolved"
     And I press "Save"
-    And I follow "Archive this task"
+   Then I should see "Metaprogramming" within ".task_header h2"
    When I follow "+ Add Task"
     And I fill in "task_name" with "Invite DHH" in the new task form of the "Awesome Ruby Yahh" task list
     And I press "Add Task" within ".task_form"

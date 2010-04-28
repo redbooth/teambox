@@ -96,7 +96,7 @@ Feature: See tasks in different, common groupings
     Given I am logged in as "balint"
     And the task called "Tell my friends" is resolved
     When I go to the list of tasks page of the project called "Market Teambox"
-    And I follow "All Tasks"
+    And I follow "This week"
     And I follow "Tell my friends"
     And I follow "Reopen this task"
     And I fill in "comment_body" with "Got some new friends"
