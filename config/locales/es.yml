@@ -724,7 +724,6 @@ es:
       title: Entrar
       video: Breve introducción a Teambox
       submit: Entrar
-      activation: "Debes activar tu cuenta primero"
       login_failed: "Los datos de acceso para {{login}} no son correctos"
 
   email:

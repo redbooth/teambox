@@ -756,7 +756,6 @@ it:
       video: Breve introduzione a Teambox
       submit: Entra
       ####
-      activation: "You need to activate your account first"
       login_failed: "Couldn't log you in as {{login}}"
 
   email:

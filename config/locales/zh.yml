@@ -734,7 +734,6 @@ zh:
       title: 登录
       video: 什么是Teambox?
       submit: 登录
-      activation: "您需要首先激活您的帐号"
       login_failed: "不能作为{{login}}登录"
 
   email:

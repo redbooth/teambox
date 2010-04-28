@@ -29,7 +29,6 @@ class ApplicationController < ActionController::Base
     
     def confirmed_user?
       if current_user and not current_user.is_active?
-        flash[:error] = t('sessions.new.activation')
         redirect_to unconfirmed_email_user_path(current_user)
       end
     end

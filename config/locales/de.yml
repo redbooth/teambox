@@ -735,7 +735,6 @@ de:
       title: Anmelden
       video: "Um was geht es in Teambox?"
       submit: Anmelden
-      activation: "Sie müssen Ihren Zugang erst aktivieren"
       login_failed: "Fehler beim Anmelden als {{login}}"
   email:
     user:

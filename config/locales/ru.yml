@@ -731,7 +731,6 @@ ru:
       title: Вход
       video: Что такое Teambox?
       submit: Вход
-      activation: "Вы должны сначала активировать свой аккаунт"
       login_failed: "Не получается войти как {{login}}"
 
   email:

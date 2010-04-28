@@ -729,7 +729,6 @@ ja:
       title: ログイン
       video: What's Teambox about?
       submit: ログイン
-      activation: "アカウントのアクティベートが必要です"
       login_failed: "{{login}}としてログインできませんでした"
 
   email:

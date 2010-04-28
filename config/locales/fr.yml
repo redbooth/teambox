@@ -735,7 +735,6 @@ fr:
       title: Entrer
       video: Teambox
       submit: Entrer
-      activation: "Vous devez d'abord activer votre compte"
       login_failed: "Impossible de vous connecter en tant que {{login}}"
 
   email:

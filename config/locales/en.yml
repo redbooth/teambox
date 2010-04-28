@@ -727,7 +727,6 @@ en:
       title: Login
       video: What's Teambox about?
       submit: Login
-      activation: "You need to activate your account first"
       login_failed: "Couldn't log you in as {{login}}"
 
   email:
