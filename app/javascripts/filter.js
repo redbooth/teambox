@@ -5,27 +5,10 @@ Filter = {
   init: function() {
     var filter_assigned = $("filter_assigned");
     var filter_due_date = $("filter_due_date");
-    if (filter_assigned) {
+    if (filter_assigned)
       Filter.count_assigned = Filter.mapOptions(filter_assigned.options);
-    }
-    if (filter_due_date) {
+    if (filter_due_date)
       Filter.count_due_date = Filter.mapOptions(filter_due_date.options);
-    }
-    Filter.rebind();
-  },
-
-  rebind: function() {return;
-    // Note: these elements are reloaded, so being extra careful here!
-    var filter_assigned = $("filter_assigned");
-    var filter_due_date = $("filter_due_date");
-    if (filter_assigned) {
-      filter_assigned.stopObserving("change", Filter.updateFilters);
-      filter_assigned.on("change", Filter.updateFilters);
-    }
-    if (filter_due_date) {
-      filter_due_date.stopObserving("change", Filter.updateFilters);
-      filter_due_date.on("change", Filter.updateFilters);
-    }
   },
 
   mapOptions: function(options) {
@@ -155,6 +138,14 @@ Filter = {
     }
   }
 };
+
+document.on("change", "#filter_assigned", function(evt, el){
+  Filter.updateFilters();
+});
+
+document.on("change", "#filter_due_date", function(evt, el){
+  Filter.updateFilters();
+});
 
 document.on('dom:loaded', function() {
   Filter.updateCounts(false);

@@ -172,7 +172,6 @@ var TaskList = {
         $('filter_due_date').selectedIndex = saved.filter_due_date;
       }
     }
-    Filter.rebind();
     Filter.updateCounts();
   },
 
