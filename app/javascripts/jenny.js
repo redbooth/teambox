@@ -61,10 +61,8 @@ var Jenny = {
 
 		$$('# ' + form_id + ' .error').each(function(e){e.remove();});
 
-		if (form.getStyle('display') == 'block' && form.down('.focus'))
-		{
-			form.auto_focus();
-		}
+		if (form.getStyle('display') == 'block')
+			form.focusFirstElement();
 		
 		var formClass = "";
 		document.fire("jenny:toggle:" + formClass, {form:form});

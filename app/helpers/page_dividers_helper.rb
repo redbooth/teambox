@@ -25,7 +25,7 @@ module PageDividersHelper
       #page << "new Effect.Highlight('new_divider_form',{ startcolor: '#F0F0F0', endcolor: '#F5F5F5', restorecolor: '#FFFFFF'})"
       page << "Form.reset('new_divider_form');"
       page.hide_loading_divider_form
-      page << "$('new_divider_form').auto_focus()"
+      page << "$('new_divider_form').focusFirstElement()"
     end  
   end
 

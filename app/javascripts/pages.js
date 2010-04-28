@@ -180,7 +180,6 @@ var InsertionBar = {
     }
 
     this.hide();
-    el.auto_focus();
     return el;
   },
 

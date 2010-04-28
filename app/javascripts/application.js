@@ -101,18 +101,6 @@ Event.addBehavior({
 });
 
 Element.addMethods({
-  auto_focus: function(element){
-    element = $(element);
-    var field;
-    if (field = element.down(".focus")) { (function() { try { field.focus() } catch (e) { } }).defer(); }
-    return element;
-  },
-  auto_select: function(element){
-    element = $(element);
-    var field;
-    if (field = element.down(".focus")) { (function() { try { field.select() } catch (e) { } }).defer(); }
-    return element;
-  },
   showPreview: function(element) {
     var form = $(element),
         block = form.down('.showPreview'),
