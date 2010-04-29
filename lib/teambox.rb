@@ -48,10 +48,24 @@ module Teambox
         @teambox[key] = value
       end
 
+      if ENV['URL'] and @teambox.app_domain == 'app.teambox.com'
+        @teambox.app_domain = ENV['URL']
+      end
+
       self.time_zone = @teambox.time_zone
       self.i18n.default_locale = @teambox.default_locale
 
       self.action_mailer.default_url_options = { :host => @teambox.app_domain }
+
+      if ENV['SENDGRID_PASSWORD'] and
+          @teambox.smtp_settings[:address] == 'smtp.sendgrid.net' and
+          @teambox.smtp_settings[:password] == 'PASSWORD'
+        @teambox.smtp_settings.update(
+          :user_name  => ENV['SENDGRID_USERNAME'],
+          :password   => ENV['SENDGRID_PASSWORD'],
+          :domain     => ENV['SENDGRID_DOMAIN']
+        )
+      end
 
       if @teambox.allow_outgoing_email
         self.action_mailer.delivery_method = :smtp
