@@ -77,6 +77,8 @@ module Teambox
           :password   => ENV['SENDGRID_PASSWORD'],
           :domain     => ENV['SENDGRID_DOMAIN']
         )
+
+        @teambox.allow_outgoing_email = true
       end
 
       if @teambox.allow_outgoing_email
