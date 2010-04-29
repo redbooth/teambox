@@ -15,6 +15,7 @@ module Teambox
 
       unless $gems_rake_task
         initialize_tender_multipass
+        setup_amazon_s3
       end
     end
 
@@ -30,6 +31,15 @@ module Teambox
       if configuration.tender.site_key
         require 'multipass'
         Teambox.tender_multipass = MultiPass.new(configuration.tender.site_key, configuration.tender.api_key)
+      end
+    end
+    
+    def setup_amazon_s3
+      if Teambox.config.amazon_s3
+        Paperclip::Attachment.default_options.update(
+          :storage => :s3,
+          :s3_credentials => configuration.amazon_s3_config_file
+        )
       end
     end
   end
@@ -51,6 +61,8 @@ module Teambox
       if ENV['URL'] and @teambox.app_domain == 'app.teambox.com'
         @teambox.app_domain = ENV['URL']
       end
+
+      @teambox.amazon_s3 = true if heroku?
 
       self.time_zone = @teambox.time_zone
       self.i18n.default_locale = @teambox.default_locale
@@ -75,6 +87,10 @@ module Teambox
 
     def heroku?
       @heroku
+    end
+    
+    def amazon_s3_config_file
+      "#{Rails.root}/config/amazon_s3.yml"
     end
   end
 

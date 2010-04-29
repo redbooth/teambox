@@ -14,7 +14,8 @@ defaults: &defaults
   daily_task_reminder_email_time: "06:00"
 
   # Set to true to use S3 storage instead of local filesystem storage.
-  # Configure your access keys in amazon_s3.yml
+  # Automatically true on Heroku.
+  # See "config/amazon_s3.yml" for info about credentials.
   amazon_s3: false
 
   asset_max_file_size: 50 # in megabytes
@@ -102,6 +103,7 @@ test: &test
   app_domain: 127.0.0.1
   allow_outgoing_email: false
   asset_max_file_size: 1
+  amazon_s3: false
 
 cucumber:
   <<: *test

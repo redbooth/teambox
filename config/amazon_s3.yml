@@ -1,6 +1,10 @@
 defaults: &defaults
-  access_key_id: ACCESS_KEY
-  secret_access_key: SECRET_KEY
+  # On Heroku, add your Amazon credentials to config vars:
+  #   $ heroku config:add S3_KEY=123 S3_SECRET=xyz
+  #
+  # Otherwise replace these expressions with your credentials.
+  access_key_id: <%= ENV['S3_KEY'] %>
+  secret_access_key: <%= ENV['S3_SECRET'] %>
 
   # http://docs.amazonwebservices.com/AmazonS3/latest/dev/index.html?RESTAccessPolicy.html#RESTCannedAccessPolicies
   s3_permissions: :public_read
@@ -9,12 +13,8 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  bucket: teambox_dev_assets
-
-test:
-  <<: *defaults
-  bucket: teambox_test_assets
+  bucket: teambox-dev
 
 production:
   <<: *defaults
-  bucket: teambox_assets
+  bucket: teambox
