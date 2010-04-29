@@ -5,6 +5,11 @@ defaults: &defaults
   # Otherwise replace these expressions with your credentials.
   access_key_id: <%= ENV['S3_KEY'] %>
   secret_access_key: <%= ENV['S3_SECRET'] %>
+  
+  # Remember that bucket names must be unique across all of Amazon S3.
+  # Check name availability online: http://bucket.heroku.com/
+  # If needed, configure per-environment bucket names in the bottom.
+  bucket: <%= ENV['S3_BUCKET'] %>
 
   # http://docs.amazonwebservices.com/AmazonS3/latest/dev/index.html?RESTAccessPolicy.html#RESTCannedAccessPolicies
   s3_permissions: :public_read
@@ -13,8 +18,8 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  bucket: teambox-dev
+  # bucket: teambox-dev
 
 production:
   <<: *defaults
-  bucket: teambox
+  # bucket: teambox
