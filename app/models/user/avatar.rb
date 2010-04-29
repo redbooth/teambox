@@ -28,11 +28,9 @@ class User
 
   def avatar_or_gravatar_url(size)
     if avatar_file_name
-      if APP_CONFIG['amazon_s3']['enabled']
-        avatar.url(size)
-      else
-        "http://#{APP_CONFIG['app_domain']}#{avatar.url(size)}"
-      end
+      url = avatar.url(size)
+      url = "http://#{Teambox.config.app_domain}" + url unless url.begins_with? 'http'
+      url
     else
       gravatar(size)
     end
