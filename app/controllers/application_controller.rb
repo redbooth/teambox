@@ -150,7 +150,7 @@ class ApplicationController < ActionController::Base
     def set_client
       mobile =   request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][MobileClients]
       mobile ||= request.env["HTTP_PROFILE"] || request.env["HTTP_X_WAP_PROFILE"]
-      if mobile
+      if mobile and request.format == :html
         request.format = :m
       end
     end
