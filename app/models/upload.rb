@@ -12,12 +12,10 @@ class Upload < RoleRecord
   default_scope :order => 'created_at DESC'
 
   has_attached_file :asset,
-    :storage => (APP_CONFIG['amazon_s3']['enabled'] ? :s3 : :filesystem),
-    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-    :bucket => APP_CONFIG['amazon_s3']["bucket_#{RAILS_ENV}"],
     :styles => { :thumb => "64x48>" },
     :url  => "/assets/:id/:style/:basename.:extension",
     :path => (APP_CONFIG['amazon_s3']['enabled'] ? "assets/:id/:style/:filename" : ":rails_root/assets/:id/:style/:filename")
+
   before_post_process :image?
   
   validates_attachment_size :asset, :less_than => APP_CONFIG['asset_max_file_size'].to_i.megabytes

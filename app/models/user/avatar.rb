@@ -6,9 +6,6 @@ class User
     :profile => [278,500] }
 
   has_attached_file :avatar, 
-    :storage => (APP_CONFIG['amazon_s3']['enabled'] ? :s3 : :filesystem),
-    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-    :bucket => APP_CONFIG['amazon_s3']["bucket_#{RAILS_ENV}"],
     :url  => "/avatars/:id/:style.png",
     :path => (APP_CONFIG['amazon_s3']['enabled'] ? "avatars/:id/:style.png" : ":rails_root/public/avatars/:id/:style.png"),
     :styles => { 

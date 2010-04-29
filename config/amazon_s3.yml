@@ -1,12 +1,20 @@
-login: &login
-  access_key_id: 
-  secret_access_key: 
+defaults: &defaults
+  access_key_id: ACCESS_KEY
+  secret_access_key: SECRET_KEY
+
+  # http://docs.amazonwebservices.com/AmazonS3/latest/dev/index.html?RESTAccessPolicy.html#RESTCannedAccessPolicies
+  s3_permissions: :public_read
+  # set to HTTPS when read permissions are more restrictive
+  s3_protocol: http
 
 development:
-  <<: *login
+  <<: *defaults
+  bucket: teambox_dev_assets
 
 test:
-  <<: *login
+  <<: *defaults
+  bucket: teambox_test_assets
 
 production:
-  <<: *login
+  <<: *defaults
+  bucket: teambox_assets
