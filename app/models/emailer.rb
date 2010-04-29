@@ -118,10 +118,13 @@ class Emailer < ActionMailer::Base
   private
 
     def from_address(recipient = "no-reply", name = "Teambox")
-      if APP_CONFIG['outgoing']['safe_from']
-        "#{recipient}@#{APP_CONFIG['outgoing']['from']}"
+      domain = Teambox.config.smtp_settings[:domain]
+      address = "#{recipient}@#{domain}"
+      
+      if Teambox.config.smtp_settings[:safe_from]
+        address
       else
-        "#{name} <#{recipient}@#{APP_CONFIG['outgoing']['from']}>"
+        "#{name} <#{address}>"
       end
     end
 
