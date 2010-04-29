@@ -17,6 +17,7 @@ gem 'libxml-ruby', '~> 1.1.3', :require => 'libxml'
 gem 'rdiscount', '~> 1.6.3'
 gem 'haml', '~> 3.0.0.beta1'
 gem 'mysql', '~> 2.8.1'
+gem 'pg', '~> 0.9.0'
 gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
 gem 'hpricot', '~> 0.8.2'
 
