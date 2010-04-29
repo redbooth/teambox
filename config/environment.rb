@@ -12,9 +12,7 @@ Teambox::Initializer.run do |config|
   config.action_view.sanitized_allowed_tags = 'table', 'th', 'tr', 'td'
 
   config.after_initialize do
-    require 'sprockets_controller'
-    SprocketsController.caches_page(:index)
-    SprocketsApplication.use_page_caching = true
+    SprocketsApplication.use_page_caching = !config.heroku?
     ActiveSupport::XmlMini.backend = 'LibXML'
   end
 end
