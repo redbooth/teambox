@@ -27,14 +27,8 @@ Rails::Initializer.run do |config|
   end
 
   config.active_record.observers = :task_list_panel_sweeper
-  
+
   config.after_initialize do
-    require 'haml/helpers/action_view_mods'
-    require 'haml/helpers/action_view_extensions'
-    require 'haml/template'
-    require 'sass'
-    require 'sass/plugin'
-    Sass::Plugin.options[:template_location] = { 'app/styles' => 'public/stylesheets' }
     require 'sprockets_controller'
     SprocketsController.caches_page(:index)
     SprocketsApplication.use_page_caching = true
