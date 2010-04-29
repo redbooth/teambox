@@ -1,17 +1,16 @@
 class User
 
   AvatarSizes = {
-    :micro => [24,24],
-    :thumb => [48,48],
-    :profile => [278,500] }
+    :micro    => [24, 24],
+    :thumb    => [48, 48],
+    :profile  => [278, 500]
+  }
 
   has_attached_file :avatar, 
     :url  => "/avatars/:id/:style.png",
-    :path => (APP_CONFIG['amazon_s3']['enabled'] ? "avatars/:id/:style.png" : ":rails_root/public/avatars/:id/:style.png"),
-    :styles => { 
-      :micro => ["#{AvatarSizes[:micro][0]}x#{AvatarSizes[:micro][1]}#", :png], 
-      :thumb => ["#{AvatarSizes[:thumb][0]}x#{AvatarSizes[:thumb][1]}#", :png], 
-      :profile => ["#{AvatarSizes[:profile][0]}x#{AvatarSizes[:profile][1]}>", :png]
+    :path => (Teambox.config.amazon_s3 ? "avatars/:id/:style.png" : ":rails_root/public/avatars/:id/:style.png"),
+    :styles => AvatarSizes.each_with_object({}) { |(name, size), all|
+        all[name] = ["%dx%d%s" % [size[0], size[1], size[0] < size[1] ? '>' : '#'], :png]
       }
 
   #validates_attachment_presence :avatar, :unless => Proc.new { |user| user.new_record? }

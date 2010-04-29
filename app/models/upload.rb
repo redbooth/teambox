@@ -14,7 +14,9 @@ class Upload < RoleRecord
   has_attached_file :asset,
     :styles => { :thumb => "64x48>" },
     :url  => "/assets/:id/:style/:basename.:extension",
-    :path => (APP_CONFIG['amazon_s3']['enabled'] ? "assets/:id/:style/:filename" : ":rails_root/assets/:id/:style/:filename")
+    :path => Teambox.config.amazon_s3 ?
+      "assets/:id/:style/:filename" :
+      ":rails_root/assets/:id/:style/:filename"
 
   before_post_process :image?
   
