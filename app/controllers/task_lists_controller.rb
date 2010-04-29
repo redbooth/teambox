@@ -44,6 +44,7 @@ class TaskListsController < ApplicationController
     @task_list = @current_project.task_lists.new
     respond_to do |f|
       f.html
+      f.m
       f.js
     end
   end
