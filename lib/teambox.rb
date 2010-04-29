@@ -101,4 +101,14 @@ module Teambox
   def self.tender_multipass=(multipass)
     @tender_multipass = multipass
   end
+  
+  def self.fetch_incoming_email
+    if config.allow_incoming_email
+      settings = config.incoming_email_settings
+      Emailer::Incoming.fetch(settings)
+    else
+      abort "This application instance isn't set to process incoming email.\n" + 
+        "Check the 'allow_incoming_email' configuration option"
+    end
+  end
 end

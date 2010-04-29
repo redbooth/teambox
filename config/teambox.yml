@@ -68,11 +68,11 @@ defaults: &defaults
 
   # You will need to:
   # * Setup catch-all address for email received for any username of the incoming mail server.
-  # * Run './script/inbox' periodically from cron to process incoming emails.
+  # * Run `rake mail:inbox` periodically from cron to process incoming emails.
   incoming_email_settings:
-    :type:      pop
-    :server:    EXAMPLE.COM
-    :username:  USER
+    :type:      POP
+    :address:   mail.example.com
+    :user_name: USER
     :password:  PASSWORD
 
   # Destination where your users could write to ask for help. Accepts an email or website.

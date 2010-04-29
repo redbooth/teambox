@@ -195,7 +195,7 @@ class User < ActiveRecord::Base
   end
 
   def self.time_zones_to_send_daily_task_reminders_to
-    sending_hour = Time.parse(APP_CONFIG["daily_task_reminder_email_time"]).hour
+    sending_hour = Time.parse(Teambox.config.daily_task_reminder_email_time).hour
     time_zones_with_time(sending_hour)
   end
 

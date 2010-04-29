@@ -1,3 +1,5 @@
+require 'net/pop'
+
 # Receives an email and performs the adequate action
 #
 # Emails can be sent to project@app.server.com or project+model+id@app.server.com
@@ -14,13 +16,33 @@
 # TODO: Enhance mime and plain messages treatment
 #       Parse HTML to Markdown
 #       Strip the quoted text from email replies
+#
+module Emailer::Incoming
 
-class Emailer
+  def self.fetch(settings)
+    type = settings[:type].to_s.downcase
+    send("fetch_#{type}", settings)
+  end
+
+  def self.fetch_pop(settings)
+    Net::POP3.start(settings[:address], nil, settings[:user_name], settings[:password]) do |pop|
+      pop.mails.each do |email|
+        begin
+          Emailer.receive(email.pop)
+        rescue Exception
+          warn "Error receiving email at #{Time.now}: #{$!}"
+        end
+        email.delete
+      end
+    end
+  rescue SocketError
+    settings_out = settings.merge(:password => '*' * settings[:password].to_s.length)
+    $stderr.puts "Error connecting to mail server with settings:\n  #{settings_out.inspect}"
+    raise
+  end
 
   REPLY_REGEX = /(Re:|RE:|Fwd:|FWD:)/
 
-  # for attachment in email.attachments
-  
   def receive(email)
     process email
     get_target
@@ -60,7 +82,7 @@ class Emailer
 
     @to       = email.to.first.split('@').first.downcase
     @body     = (email.multipart? ? email.parts.first.body : email.body)
-    @body     = @body.split(ANSWER_LINE).first.split("<div class='email'").first.strip
+    @body     = @body.split(Emailer::ANSWER_LINE).first.split("<div class='email'").first.strip
     @user     = User.find_by_email email.from.first
     @subject  = email.subject.gsub(REPLY_REGEX, "")
     @project  = Project.find_by_permalink @to.split('+').first
