@@ -140,8 +140,8 @@ h2
           float: right
           font-size: 10px
           color: #999999
-    #projects, #conversations, #task_lists, #people
-      .project, .conversation, .task_list, .person
+    #projects, #conversations, #people
+      div.project, div.conversation, div.person
         font-size: 16px
         display: block
         border-bottom: 1px solid #dddddd
@@ -152,12 +152,6 @@ h2
           padding: 10px
         a.new
           color: #555555
-    #task_lists
-      .task_list
-        .tasks a, div.new a
-          font-size: 12px
-          padding: 0 0 0 10px
-          margin: 7px 0
     #people
       #pending
         margin-top: 15px
@@ -178,6 +172,113 @@ h2
         margin-top: 15px
         font-size: x-small
         padding: 5px
+
+div.task_list, div.task_list_closed
+  width: 100%	
+  font-size: 16px	
+  display: block
+  a	
+    color: #3b5998
+    text-decoration: none
+    padding: 10px
+  .head
+    font-size: 14px
+    border-bottom: solid 1px rgb(240,240,240)
+    padding: 5px
+    color: rgb(100,100,100)
+    .dates
+      float: right
+      padding: 0
+        top: 6px
+        right: 20px
+      font-size: 10px
+      color: rgb(150,150,150)
+    a
+      font-weight: bold
+  .archive
+    display: none
+  .task
+    .inner
+      :padding	
+        top: 4px
+        bottom: 4px
+    .taskStatus
+      text-align: right
+      float: left
+      width: 30px
+      :padding
+        left: 20px
+      span
+        display: block
+        width: 23px
+        padding: 0
+        text-align: center
+    .taskName
+      font-size: 12px
+      padding-left: 4px
+      span.assigned
+        color: rgb(100,100,100)
+        padding: 1px 5px
+        margin-right: 5px
+        font-size: 11px
+        -moz-border-radius: 4px
+        -webkit-border-radius: 4px
+        background: rgb(245,245,245)
+        border: solid 1px rgb(225,225,225)
+        text-transform: uppercase
+        display: inline-block
+        a
+          color: rgb(100,100,100)
+        a:hover
+          text-decoration: none
+          color: rgb(0,0,0)
+      span.status, span.project, span.task_list
+        display: none
+  .task.overdue
+    background: rgb(255,240,240)
+    .taskName
+      a
+        color: rgb(200,0,0)
+        font-weight: bold
+      span
+        background: rgb(255,255,255)
+        border: solid 1px rgb(240,200,200)
+        color: rgb(200,0,0)
+        font-weight: bold
+        a
+          color: rgb(200,0,0)
+          font-weight: normal
+  .task.mine
+    background: rgb(255,255,210)
+    .taskName
+      a
+        font-weight: bold
+      span
+        background: rgb(255,255,255)
+        border: solid 1px rgb(200,200,240)
+        font-weight: bold
+        a
+          color: #555
+          font-weight: normal
+  .task.overdue.mine
+    .taskName
+      span
+        color: rgb(200,0,0)
+
+.task_list_container
+  .new_task
+    padding: 5px 0px
+  border-bottom: 1px solid #dddddd
+
+.task_list_container.archived
+  .new_task
+    display: none
+  .archive
+    display: block
+  .head
+    :border-bottom 0px
+    a
+      color: #ccc
 
 .show_projects
   .comment, .activity
@@ -221,6 +322,54 @@ h2
   a
     color: #999999
 
+.actions_menu
+  position: relative
+  float: right
+  padding: 0
+    top: 4px
+  font-size: 12px
+  color: rgb(150,150,150)
+    text-transform: none
+  img
+    opacity: 0.4
+  &:hover
+    color: #000
+    img
+      opacity: 1
+    .extra
+      display: block
+  .extra
+    display: none
+    position: absolute
+    z-index: 1000
+    top: 17px
+    right: 0
+    margin: 0
+    padding: 3px 0
+    white-space: nowrap
+    background: white
+    border: 1px solid #ccc
+    a
+      display: block
+      padding: 3px 5px
+      font-weight: normal
+      &:hover
+        background: #78ACD7
+        text-decoration: none
+        cursor: pointer
+    .tactione
+      color: #ccc
+      padding: 3px 5px
+
+.actions_menu.loading
+  &:hover
+    color: #000
+    img
+      opacity: 1
+    .extra
+      display: none
+
+
 span.task_status, span.current_task_status
   padding: 0 3px
   text-transform: uppercase
@@ -244,6 +393,9 @@ span.task_status, span.current_task_status
 
 .task_status_rejected
   background: #e97063
+
+img.drag
+  display: none
 
 #footer
   border-top: 1px solid #bdbfc4

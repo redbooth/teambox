@@ -43,7 +43,7 @@ class TaskListsController < ApplicationController
     @on_index = true
     @task_list = @current_project.task_lists.new
     respond_to do |f|
-      f.m
+      f.html
       f.js
     end
   end
@@ -65,6 +65,8 @@ class TaskListsController < ApplicationController
     calc_onindex
     
     respond_to do |f|
+      f.html
+      f.m
       f.js
     end
   end
@@ -74,6 +76,7 @@ class TaskListsController < ApplicationController
     @task_list.update_attributes(params[:task_list])
     respond_to do |f|
       f.html { non_js_list_redirect }
+      f.m    { non_js_list_redirect }
       f.js {}
     end
   end

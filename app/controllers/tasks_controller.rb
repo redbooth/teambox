@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:update,:reopen,:reorder]
-  before_filter :find_task, :only => [:show,:destroy,:update,:reopen,:watch,:unwatch]
+  before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:edit,:update,:reopen,:reorder]
+  before_filter :find_task, :only => [:show,:destroy,:edit,:update,:reopen,:watch,:unwatch]
   before_filter :load_banner, :only => [:show]
   before_filter :set_page_title
 
@@ -28,6 +28,7 @@ class TasksController < ApplicationController
   def new
     @task = @task_list.tasks.new
     respond_to do |f|
+      f.html
       f.m
     end
   end
@@ -51,12 +52,20 @@ class TasksController < ApplicationController
   end
 
   def edit
-    respond_to{|f|f.js}
+    respond_to do |f|
+      f.html
+      f.m
+      f.js
+    end
   end
 
   def update
     @task.update_attributes(params[:task])
-    respond_to {|f|f.js}
+    respond_to do |f|
+      f.html { redirect_to [@current_project,@task_list,@task] }
+      f.m    { redirect_to [@current_project,@task_list,@task] }
+      f.js
+    end
   end
 
   def destroy

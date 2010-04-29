@@ -53,6 +53,14 @@ module TaskListsHelper
   
   # Jenny helpers
   
+  def new_task_list_url(project,task_list)
+    new_project_task_list_path(project)
+  end
+  
+  def edit_task_list_url(project,task_list)
+    edit_project_task_list_path(project, task_list)
+  end
+  
   def hide_task_list(project,task_list)
     unobtrusive_app_toggle(project,task_list)
   end
@@ -70,6 +78,20 @@ module TaskListsHelper
 
   def task_list_fields(f,project,task_list)
     render :partial => 'task_lists/fields', :locals => {
+      :f => f,
+      :project => project,
+      :task_list => task_list }
+  end
+  
+  def task_list_title_fields(f,project,task_list)
+    render :partial => 'task_lists/title_fields', :locals => {
+      :f => f,
+      :project => project,
+      :task_list => task_list }
+  end
+  
+  def task_list_date_fields(f,project,task_list)
+    render :partial => 'task_lists/date_fields', :locals => {
       :f => f,
       :project => project,
       :task_list => task_list }
@@ -190,16 +212,15 @@ module TaskListsHelper
   
   def rename_task_list_link(project,task_list, on_index=false)
     link_to t('task_lists.actions.rename'), 
-            '#', :class => 'taskListUpdate', 
-            :action_url => edit_project_task_list_path(project, task_list, :part => 'title', :on_index => (on_index ? 1 : 0))
+            edit_project_task_list_path(project, task_list, :part => 'title', :on_index => (on_index ? 1 : 0)),
+            :class => 'taskListUpdate'
   end
   
   def set_date_task_list_link(project,task_list, on_index=false)
     return if task_list.archived
     link_to t('task_lists.actions.set_dates'),
-            '#',
-            :class => 'taskListUpdate',
-            :action_url => edit_project_task_list_path(project, task_list, :part => 'date', :on_index => (on_index ? 1 : 0))
+            edit_project_task_list_path(project, task_list, :part => 'date', :on_index => (on_index ? 1 : 0)),
+            :class => 'taskListUpdate'
   end
   
   def task_list_date_edit(project,task_list)

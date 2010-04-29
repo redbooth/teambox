@@ -302,7 +302,7 @@ document.observe('jenny:cancel:edit_task_list', function(evt) {
 // update action
 document.on('click', 'a.taskListUpdate', function(e, el) {
   e.stop();
-  TaskList.updateForm(el, el.readAttribute('action_url'));
+  TaskList.updateForm(el, el.readAttribute('href'));
 });
 
 // delete action

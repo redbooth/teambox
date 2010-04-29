@@ -33,6 +33,14 @@ module TasksHelper
 
   # Jenny helpers
   
+  def new_task_url(project,task_list,task)
+    new_project_task_list_task_path(project, task_list)
+  end
+  
+  def edit_task_url(project,task_list,task)
+    edit_project_task_list_task_path(project, task_list, task)
+  end
+  
   def show_task(project,task_list,task)
     unobtrusive_app_toggle(project,task_list,task)
   end
