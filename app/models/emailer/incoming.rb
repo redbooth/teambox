@@ -1,4 +1,6 @@
 require 'net/pop'
+require 'net/imap'
+require 'net/http'
 
 # Receives an email and performs the adequate action
 #
@@ -22,23 +24,46 @@ module Emailer::Incoming
   def self.fetch(settings)
     type = settings[:type].to_s.downcase
     send("fetch_#{type}", settings)
-  end
-
-  def self.fetch_pop(settings)
-    Net::POP3.start(settings[:address], nil, settings[:user_name], settings[:password]) do |pop|
-      pop.mails.each do |email|
-        begin
-          Emailer.receive(email.pop)
-        rescue Exception
-          warn "Error receiving email at #{Time.now}: #{$!}"
-        end
-        email.delete
-      end
-    end
   rescue SocketError
     settings_out = settings.merge(:password => '*' * settings[:password].to_s.length)
     $stderr.puts "Error connecting to mail server with settings:\n  #{settings_out.inspect}"
     raise
+  end
+
+  def self.fetch_pop(settings)
+    Net::POP3.start(settings[:address], settings[:port], settings[:user_name], settings[:password]) do |pop|
+      pop.mails.each do |email|
+        begin
+          Emailer.receive(email.pop)
+        rescue Exception
+          $stderr.puts "Error receiving email at #{Time.now}: #{$!}"
+        end
+        email.delete
+      end
+    end
+  end
+  
+  def self.fetch_imap(settings)
+    imap = Net::IMAP.new(settings[:address], settings[:port], true)
+    imap.login(settings[:user_name], settings[:password])
+    imap.select('Inbox')
+
+    imap.uid_search(["NOT", "DELETED"]).each do |uid|
+      source = imap.uid_fetch(uid, ['RFC822']).first.attr['RFC822']
+
+      begin
+        Emailer.receive(source)
+      rescue Exception
+        $stderr.puts "Error receiving email at #{Time.now}: #{$!}"
+      end
+
+      imap.uid_copy(uid, "[Gmail]/All Mail")
+      imap.uid_store(uid, "+FLAGS", [:Deleted])
+    end
+
+    imap.expunge
+    imap.logout
+    imap.disconnect
   end
 
   REPLY_REGEX = /(Re:|RE:|Fwd:|FWD:)/
