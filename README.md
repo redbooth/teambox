@@ -19,6 +19,7 @@ Project info
 - Code repository: <http://github.com/micho/teambox>
 - Community mailing list: <http://groups.google.com/group/teambox>
 - Open-source contributors: <http://github.com/micho/teambox/contributors>
+- License: [GNU Affero GPL 3][license]
 
 
 Installation
@@ -31,3 +32,4 @@ installing Teambox.
 [teambox]: http://www.teambox.com
 [app]: http://app.teambox.com
 [preview]: http://teambox.com/images/screenshots/overview.png
+[license]: http://www.gnu.org/licenses/agpl-3.0.html
