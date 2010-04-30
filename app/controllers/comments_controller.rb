@@ -62,9 +62,6 @@ class CommentsController < ApplicationController
   def update
     if @has_permission
       @comment.save_uploads(params) if @comment.update_attributes(params[:comment])
-      
-      # Expire cache
-      expire_fragment("#{current_user.language}_#{current_user.time_zone.gsub(/\W/,'')}_comment_#{@comment.id}")
     end
     
     respond_to{|f|f.js}
@@ -82,9 +79,6 @@ class CommentsController < ApplicationController
         @comment.target = @task
         @comment.save
       end
-      
-      # Expire cache
-      expire_fragment("#{current_user.language}_#{current_user.time_zone.gsub(/\W/,'')}_comment_#{@comment.id}")
     end
     
     respond_to do |f|

@@ -92,6 +92,15 @@ class ApplicationController < ActionController::Base
       I18n.locale = logged_in? ? current_user.language : get_browser_locale
     end
     
+    def fragment_cache_key(key)
+      super(key).tap { |str|
+        str << "_#{I18n.locale}"
+        if logged_in? and current_user.time_zone?
+          str << "-#{current_user.time_zone.gsub(/\W/,'')}"
+        end
+      }
+    end
+    
     def get_browser_locale
       preferred_locale = nil
 

@@ -1,4 +1,4 @@
-- cache "#{@current_user.language}_#{@current_user.time_zone.gsub(/\W/,'')}_comment_#{comment.id}" do
+- cache comment do
   .comment{:id => "comment_#{comment.id}", :immutable_at => datetime_ms(comment.created_at + 15.minutes) }
     .info
       = thumb_avatar(comment.user)
