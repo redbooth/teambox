@@ -29,7 +29,7 @@ class User
   def avatar_or_gravatar_url(size)
     if avatar_file_name
       url = avatar.url(size)
-      url = "http://#{Teambox.config.app_domain}" + url unless url.begins_with? 'http'
+      url = "http://#{Teambox.config.app_domain}" + url unless url.starts_with? 'http'
       url
     else
       gravatar(size)
