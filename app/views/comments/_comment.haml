@@ -1,4 +1,4 @@
-- cache comment do
+- cache_editable_comment comment do
   .comment{:id => "comment_#{comment.id}", :immutable_at => datetime_ms(comment.created_at + 15.minutes) }
     .info
       = thumb_avatar(comment.user)
