@@ -19,9 +19,9 @@
         this.open('<img src="' + src + '">', 'image', alt)
         var img = element.down('.facebox-content img'),
             screenWidth = Math.min(image.width, imageMaxWidth)
-        
+
         img.setStyle({ maxWidth:imageMaxWidth+'px', maxHeight:imageMaxHeight+'px' })
-        element.down('.facebox-wrapper').setStyle({ width: img.getWidth()+'px' })
+        element.down('.facebox-wrapper').setStyle({ width: screenWidth+'px' })
       }.bind(this)
       image.src = src
     },
