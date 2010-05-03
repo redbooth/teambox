@@ -22,17 +22,13 @@ class ConversationsController < ApplicationController
       respond_to do |f|
         f.html { redirect_to project_conversation_path(@current_project,@conversation) }
         f.m    { redirect_to project_conversation_path(@current_project,@conversation) }
-        f.xml  { redirect_to project_conversation_path(@current_project,@conversation) }
-        f.json { redirect_to project_conversation_path(@current_project,@conversation) }
-        f.yaml { redirect_to project_conversation_path(@current_project,@conversation) }
+        handle_api_success(f, @conversation, true)
       end
     else
       respond_to do |f|
         f.html  { render :action => :new }
         f.m     { render :action => :new }
-        f.xml   { render :xml => @conversation.errors.to_xml }
-        f.json  { render :as_json => @conversation.errors.to_xml }
-        f.yaml  { render :as_yaml => @conversation.errors.to_xml }
+        handle_api_error(f, @conversation)
       end
     end
   end
@@ -68,11 +64,21 @@ class ConversationsController < ApplicationController
   end
 
   def update
-    @conversation.update_attributes(params[:conversation])
-    respond_to do |f|
-      f.js
-      f.m    { redirect_to project_conversation_path(@current_project, @conversation) }
-      f.html { redirect_to project_conversation_path(@current_project, @conversation) }
+    @saved = @conversation.update_attributes(params[:conversation])
+    if @saved
+      respond_to do |f|
+        f.js
+        f.m    { redirect_to project_conversation_path(@current_project, @conversation) }
+        f.html { redirect_to project_conversation_path(@current_project, @conversation) }
+        handle_api_success(f, @conversation)
+      end
+    else
+      respond_to do |f|
+        f.js
+        f.m    { redirect_to project_conversation_path(@current_project, @conversation) }
+        f.html { redirect_to project_conversation_path(@current_project, @conversation) }
+        handle_api_error(f, @conversation)
+      end
     end
   end
 
@@ -87,6 +93,7 @@ class ConversationsController < ApplicationController
         end
         f.m { redirect_to project_conversations_path(@current_project) }
         f.js
+        handle_api_success(f, @conversation)
       end
     else
       respond_to do |f|
@@ -94,6 +101,7 @@ class ConversationsController < ApplicationController
         f.html { redirect_to project_conversation_path(@current_project, @conversation) }
         f.m    { redirect_to project_conversation_path(@current_project, @conversation) }
         f.js   { render :text => 'alert("Not allowed!");'; }
+        handle_api_error(f, @conversation)
       end
     end
   end
@@ -126,7 +134,7 @@ class ConversationsController < ApplicationController
       
       redirect_to project_path(@current_project) unless @conversation
     end
-
+    
     def add_watchers(hash)
       (hash || []).each do |user_id, should_notify|
         if should_notify == "1" and Person.exists? :project_id => @conversation.project_id, :user_id => user_id

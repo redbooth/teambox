@@ -44,10 +44,21 @@ class TasksController < ApplicationController
         @task.reload
       end
     end
-    respond_to do |format|
-      format.html { redirect_to [@current_project,@task_list,@task] }
-      format.m    { redirect_to project_task_lists_path(@current_project) }
-      format.js
+    
+    if !@task.new_record?
+      respond_to do |f|
+        f.html { redirect_to [@current_project,@task_list,@task] }
+        f.m    { redirect_to project_task_lists_path(@current_project) }
+        f.js
+        handle_api_success(f, @task, true)
+      end
+    else
+      respond_to do |f|
+        f.html { render :new }
+        f.m    { render :new }
+        f.js
+        handle_api_error(f, @task)
+      end
     end
   end
 
@@ -60,11 +71,21 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task.update_attributes(params[:task])
-    respond_to do |f|
-      f.html { redirect_to [@current_project,@task_list,@task] }
-      f.m    { redirect_to [@current_project,@task_list,@task] }
-      f.js
+    @saved = @task.update_attributes(params[:task])
+    if @saved
+      respond_to do |f|
+        f.html { redirect_to [@current_project,@task_list,@task] }
+        f.m    { redirect_to [@current_project,@task_list,@task] }
+        f.js
+        handle_api_success(f, @task)
+      end
+    else
+      respond_to do |f|
+        f.html { render :edit }
+        f.m    { render :edit }
+        f.js
+        handle_api_error(f, @task)
+      end
     end
   end
 
@@ -79,11 +100,13 @@ class TasksController < ApplicationController
           redirect_to project_task_lists_path(@current_project)
         end
         f.js
+        handle_api_success(f, @task)
       end
     else
       respond_to do |f|
         flash[:error] = t('common.not_allowed')
         f.html { redirect_to project_task_lists_path(@current_project) }
+        handle_api_error(f, @task)
       end
     end
   end

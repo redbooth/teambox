@@ -28,8 +28,10 @@ class PagesController < ApplicationController
     respond_to do |f|
       if @page.save
         f.html { redirect_to project_page_path(@current_project,@page) }
+        handle_api_success(f, @page, true)
       else
         f.html { render :new }
+        handle_api_error(f, @page)
       end
     end
   end
@@ -52,8 +54,10 @@ class PagesController < ApplicationController
     respond_to do |f|
       if @page.update_attributes(params[:page])
         f.html { redirect_to project_page_path(@current_project,@page)}
+        handle_api_success(f, @page)
       else
         f.html { render :edit }
+        handle_api_error(f, @page)
       end
     end
   end
@@ -83,6 +87,7 @@ class PagesController < ApplicationController
     
     respond_to do |f|
       f.js
+      handle_api_success(f, @page)
     end
   end
 
@@ -93,11 +98,13 @@ class PagesController < ApplicationController
       respond_to do |f|
         flash[:success] = t('deleted.page', :name => @page.to_s)
         f.html { redirect_to project_pages_path(@current_project) }
+        handle_api_success(f, @page)
       end
     else
       respond_to do |f|
         flash[:error] = t('common.not_allowed')
         f.html { redirect_to project_page_path(@current_project,@page) }
+        handle_api_error(f, @page)
       end
     end
   end

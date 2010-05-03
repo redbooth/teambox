@@ -44,9 +44,19 @@ class CommentsController < ApplicationController
     end
 
     respond_to do |f|
-      f.html { redirect_to redirect_path }
-      f.m    { redirect_to redirect_path }
-      f.js   { fetch_new_comments }
+      if !@comment.new_record?
+        # success!
+        f.html { redirect_to redirect_path }
+        f.m    { redirect_to redirect_path }
+        f.js   { fetch_new_comments }
+        handle_api_success(f, @comment, true)
+      else
+        # error
+        f.html { redirect_to redirect_path }
+        f.m    { redirect_to redirect_path }
+        f.js   { fetch_new_comments }
+        handle_api_error(f, @comment)
+      end
     end
   end
 
@@ -61,10 +71,21 @@ class CommentsController < ApplicationController
 
   def update
     if @has_permission
-      @comment.save_uploads(params) if @comment.update_attributes(params[:comment])
+      @saved = @comment.update_attributes(params[:comment])
+      @comment.save_uploads(params) if @saved
     end
     
-    respond_to{|f|f.js}
+    if @saved
+      respond_to do |f|
+        f.js
+        handle_api_success(f, @comment)
+      end
+    else
+      respond_to do |f|
+        f.js
+        handle_api_error(f, @comment)
+      end
+    end
   end
   
   def convert
@@ -81,10 +102,16 @@ class CommentsController < ApplicationController
       end
     end
     
-    respond_to do |f|
-      f.js {
-        render :template => 'comments/update'
-      }
+    if !@task.new_record?
+      respond_to do |f|
+        f.js { render :template => 'comments/update' }
+        handle_api_success(f, @task, true)
+      end
+    else
+      respond_to do |f|
+        f.js { render :template => 'comments/update' }
+        handle_api_error(f, @task)
+      end
     end
   end
 
@@ -94,6 +121,18 @@ class CommentsController < ApplicationController
       @has_permission = true
     else  
       @has_permission = false
+    end
+    
+    if @has_permission
+      respond_to do |f|
+        f.js
+        handle_api_success(f, @comment)
+      end
+    else
+      respond_to do |f|
+        f.js
+        handle_api_error(f, @comment)
+      end
     end
   end
 

@@ -207,6 +207,24 @@ class ApplicationController < ActionController::Base
       end
     end
     
+    def handle_api_error(f,object)
+      f.xml  { render :xml => object.errors.to_xml,     :status => :unprocessable_entity }
+      f.json { render :as_json => object.errors.to_xml, :status => :unprocessable_entity }
+      f.yaml { render :as_yaml => object.errors.to_xml, :status => :unprocessable_entity }
+    end
+    
+    def handle_api_success(f,object,is_new=false)
+      if is_new
+        f.xml  { render :xml => object.to_xml, :status => :created }
+        f.json { render :as_json => object.to_xml, :status => :created }
+        f.yaml { render :as_yaml => object.to_xml, :status => :created }
+      else
+        f.xml  { head :ok }
+        f.json { head :ok }
+        f.yaml { head :ok }
+      end
+    end
+    
     def set_user
       @current_user = current_user || nil
     end

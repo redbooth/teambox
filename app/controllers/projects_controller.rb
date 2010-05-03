@@ -64,10 +64,12 @@ class ProjectsController < ApplicationController
         flash[:notice] = I18n.t('projects.new.created')
         f.html { redirect_to project_path(@project) }
         f.m    { redirect_to project_path(@project) }
+        handle_api_success(f, @project, true)
       else
         flash.now[:error] = I18n.t('projects.new.invalid_project')
         f.html { render :new }
         f.m    { render :new }
+        handle_api_error(f, @project)
       end
     end
   end
@@ -80,11 +82,13 @@ class ProjectsController < ApplicationController
     respond_to do |f|
       if @current_project.update_attributes(params[:project])
         f.html { redirect_to project_path(@current_project) }
+        handle_api_success(f, @current_project)
       else
         f.html {
           @sub_action = params.has_key?(:sub_action) ? params[:sub_action] : 'settings'
           render :edit
         }
+        handle_api_error(f, @current_project)
       end
     end
   end
@@ -114,11 +118,13 @@ class ProjectsController < ApplicationController
       respond_to do |f|
         flash[:notice] = I18n.t('projects.edit.transferred')
         f.html { redirect_to project_path(@current_project) }
+        handle_api_success(f, @current_project)
       end
     else
       respond_to do |f|
         flash[:error] = I18n.t('projects.edit.invalid_transferred')
         f.html { redirect_to project_path(@current_project) }
+        handle_api_error(f, @current_project)
       end
     end
   end
@@ -141,6 +147,7 @@ class ProjectsController < ApplicationController
           respond_to do |f|
             flash[:error] = t('common.not_allowed')
             f.html { redirect_to projects_path }
+            handle_api_error(f, @current_project)
           end
         return false
       end
