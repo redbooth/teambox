@@ -438,6 +438,11 @@ de:
         cant_be_blank: 'darf nicht leer sein'
         too_long: 'muss kürzer als 255 Zeichen sein'
     fields:
+      ####
+      title: New Task
+      task: "Choose an actionable task. The more specific, the better."
+      optional: You can provide better instructions for this Task below.
+      body: What needs to be done? <i>optional</i>
       name: "Was muss erledigt werden?"
       due_on: "Muss erledigt werden vor… (optional)"
       ####
@@ -573,6 +578,8 @@ de:
       title: New Task List
       task_list: "Eine Aufgabenliste definiert einen Meilenstein für Ihr Projekt. In einer Aufgabenliste können Sie Aufgaben erstellen und diese bestimmten Personen zuordnen."
       name: "Name der Aufgabenliste"
+      ####
+      optional: "If you starting and ending dates, this task will be displayed in the GANTT chart"
       start_on: Beginnt am... <i>optional</i>
       finish_on: Endet am... <i>optional</i>
     ####
@@ -611,7 +618,6 @@ de:
       undefined: "Undefined"
     new:
       title: Neue Aufgabenliste
-      submit: "Aufgabenliste hinzufügen"
       submit: "Aufgabenliste hinzufügen"
     edit:
       submit: Aufgabenliste aktualisieren

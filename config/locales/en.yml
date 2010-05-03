@@ -593,7 +593,7 @@ en:
       tasks_for_project: Task lists for this project
       other_views: Other views
     primer:
-      empty: This project doesn't have any conversations yet.
+      empty: This project doesn't have any task lists yet.
       create_first: Create the first task list in this project!
       define: "Use tasks to <b>plan ahead</b>, <b>keep track of progress</b> and <b>review what's been done</b>.<br/><i>What? Who? When?</i> Tasks can have a status, an assigned person and due dates."
       item1: "<b>Plan</b>. Create tasks inside each list and assign them to your teammates."
