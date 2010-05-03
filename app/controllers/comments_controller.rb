@@ -14,9 +14,7 @@ class CommentsController < ApplicationController
       @comment = current_user.new_comment(current_user,@target,params[:comment])
     end
 
-    if @comment.save
-      @comment.save_uploads(params)
-    end
+    @comment.save!
 
     @target = @comment.target
 
@@ -73,10 +71,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    if @has_permission
-      @saved = @comment.update_attributes(params[:comment])
-      @comment.save_uploads(params) if @saved
-    end
+    @has_permission and @comment.update_attributes(params[:comment])
     
     if @saved
       respond_to do |f|

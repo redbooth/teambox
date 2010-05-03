@@ -73,7 +73,7 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :invitations, :member => [:accept,:decline,:resend]
 
     project.resources :comments, :member => {:convert => :put} do |comment|
-      comment.resources :uploads, :member => { :iframe => :get }
+      comment.resources :uploads
     end
 
     project.activities 'activities.:format',               :controller => 'activities', :action => 'show',      :method => :get

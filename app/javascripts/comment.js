@@ -150,23 +150,6 @@ Comment = {
     });
   },
 
-  watch_status: function(){
-    $$('.statuses .status').each(function(e){ 
-      if(e.hasClassName('open'))
-        e.down('select').observe('change', Comment.change_assigned)
-      else
-        e.observe('click', Comment.change_status)
-    });
-  },
-  change_assigned: function(e){
-    Comment.unselect_all_statuses()
-    Comment.mark_status_for_assigned(e.element())
-  },
-  change_status: function(e){
-    Comment.unselect_all_statuses()
-    Comment.assign_to_nobody()
-    Comment.mark_status(e.element())
-  },
   unselect_all_statuses: function(){
     $$('.statuses .active').each(function(ee){ ee.removeClassName('active') })
     $$('.statuses input').each(function(ee){ ee.checked = false })    
@@ -245,9 +228,11 @@ Comment = {
   }
 };
 
-document.on('submit', 'form.new_comment', function(e, el) {
-  e.stop();
-  Comment.create(el);
+document.on('submit', 'form.new_comment', function(e) {
+  if (!this.select('input[type=file]').any(function(i){ return i.getValue() })) {
+    e.stop();
+    Comment.create(this);
+  }
 });
 
 document.on('submit', 'form.edit_comment', function(e, el) {
@@ -307,3 +292,29 @@ document.on('click', 'form .showPreview a', function(e,el) {
 document.on('mouseover', '.textilized a', function(e,el) {
   this.writeAttribute("target", "_blank");
 });
+
+document.on('change', '.statuses .status.open select', function(e) {
+  Comment.unselect_all_statuses()
+  Comment.mark_status_for_assigned(this)
+})
+document.on('click', '.statuses .status:not(.open)', function(e) {
+  Comment.unselect_all_statuses()
+  Comment.assign_to_nobody()
+  Comment.mark_status(this)
+})
+
+document.on('dom:loaded', function() {
+  $$('.statuses input[type=checkbox]').each(function(el) {
+    if (el.checked) {
+      el.up('.status').addClassName('active')
+    }
+  })
+})
+
+document.on('click', 'form.new_comment #comment_upload_link', function(e) {
+  if (!e.isMiddleClick()) {
+    e.preventDefault()
+    this.next('.upload_area').show()
+    this.hide()
+  }
+})

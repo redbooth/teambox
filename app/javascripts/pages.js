@@ -37,10 +37,9 @@ var Page = {
   SLOT_GAP: 36,
   READONLY: false,
 
-  init: function(readonly, url, auth) {
+  init: function(readonly, url) {
     this.READONLY = readonly;
     this.url = url;
-    this.auth = auth;
     document.currentPage = this;
     if (!readonly) {
       InsertionMarker.init();
@@ -57,12 +56,18 @@ var Page = {
 
     Sortable.create('slots', {handle: 'slot_handle', tag: 'div', only: 'page_slot',
       onUpdate: function() {
-        new Ajax.Request(Page.url + '/reorder',
-        {
-          asynchronous:true, evalScripts:true,
-          onComplete:function(request) {},
-          parameters:Sortable.serialize('slots', {name: 'slots'}) + '&authenticity_token=' + Page.auth
-        });
+        var csrf_param = $$('meta[name=csrf-param]').first(),
+            csrf_token = $$('meta[name=csrf-token]').first(),
+            serialized = Sortable.serialize('slots', {name: 'slots'});
+        
+        if (csrf_param) {
+          var param = csrf_param.readAttribute('content'),
+              token = csrf_token.readAttribute('content')
+          
+          serialized += '&' + param + '=' + token
+        }
+
+        new Ajax.Request(Page.url + '/reorder', { parameters: serialized });
       } 
     });
   },
@@ -89,27 +94,6 @@ var Page = {
 
   refreshEvents: function() {
     Event.addBehavior.reload();
-  },
-
-  removeIFrameForm: function(frameDoc) {
-  $$('iframe').each(function(element) {
-    if (Page.uploaderDocument(element) == frameDoc) {
-      $(element).up('.pageForm').remove();
-      throw $break;
-    }
-  });
-  },
-
-  uploaderDocument: function(iframe) {
-    var doc = iframe.contentDocument;
-    if (!doc) {
-      var wnd = iframe.contentWindow;
-      doc = wnd ? wnd.document : null;
-    }
-    if (!doc) {
-      return iframe.document;
-    }
-    return doc;
   }
 }
 
@@ -148,16 +132,15 @@ var InsertionBar = {
     
   // Widget form
   setWidgetForm: function(form) {
-    if (this.current_form)
-      this.clearWidgetForm();
-      form = $(form);
+    this.clearWidgetForm();
+    form = $(form);
 
-      // Set insertion position
-      form.down('input[name="position[before]"]').setValue(Page.insert_before ? '1' : '0')
-      form.down('input[name="position[slot]"]').setValue(Page.insert_element ? Page.insert_element.getSlotId() : '-1')
-      // Form should go in the insertion bar, so we can change the insertion location and maintain state
-      this.current_form = form;
-      this.revealForm();
+    // Set insertion position
+    form.down('input[name="position[before]"]').setValue(Page.insert_before ? '1' : '0')
+    form.down('input[name="position[slot]"]').setValue(Page.insert_element ? Page.insert_element.getSlotId() : '-1')
+    // Form should go in the insertion bar, so we can change the insertion location and maintain state
+    this.current_form = form;
+    this.revealForm();
   },
 
   setWidgetFormLoading: function(id, active) {
@@ -165,16 +148,12 @@ var InsertionBar = {
     var submit = form ? form.down('.submit') : null;
     var loading = form ? form.down('.loading') : null;
 
-    if (!(submit && loading))
-      return;
+    if (!(submit && loading)) return;
 
-    if (active)
-    {
+    if (active) {
       submit.hide();
       loading.show();
-    }
-    else
-    {
+    } else {
       submit.show();
       loading.hide();
     }
@@ -199,8 +178,7 @@ var InsertionBar = {
   },
 
   clearWidgetForm: function() {
-    if (!this.current_form)
-      return;
+    if (!this.current_form) return;
 
     this.current_form.reset();
     this.current_form.hide();
@@ -326,6 +304,13 @@ var InsertionMarkerFunc = function(evt){
   }
 }
 
+document.on('dom:loaded', function() {
+  if ($$('body.show_pages').first()) {
+    Page.init(false, window.location.pathname);
+    Page.makeSortable();
+  }
+})
+
 // Buttons
 
 document.on('click', 'a.note_button, a.divider_button, a.upload_button', function(e) {
@@ -338,16 +323,10 @@ document.on('click', 'a.note_button, a.divider_button, a.upload_button', functio
   
   var type = this.className.match(/\b(note|divider|upload)_/)[1];
   
-  if (type == 'upload') {
-    InsertionMarker.setEnabled(true);
-    InsertionBar.clearWidgetForm();
-    InsertionBar.insertTempForm(Page.upload_template);
-  } else {
-    var form = $('new_' + type);
-    InsertionBar.setWidgetFormLoading(form, false);
-    InsertionBar.setWidgetForm(form);
-    Form.reset(form).focusFirstElement();
-  }
+  var form = $('new_' + type);
+  InsertionBar.setWidgetFormLoading(form, false);
+  InsertionBar.setWidgetForm(form);
+  Form.reset(form).focusFirstElement();
 });
 
 document.on('click', 'a.cancelPageWidget', function(e) {

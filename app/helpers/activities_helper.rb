@@ -46,9 +46,13 @@ module ActivitiesHelper
     values = mobile ? { :user => (plain ? activity.user.short_name : "<span class='user'>#{activity.user.short_name}</span>") } :
                       { :user => link_to_unless(plain, activity.user.name, activity.user) }
     
-    if Comment === activity
+    case activity
+    when Comment
       object = activity
       type = 'create_comment'
+    when Upload
+      object = activity
+      type = 'create_upload'
     else
       object = activity.target
       type = activity.action_type
@@ -72,7 +76,8 @@ module ActivitiesHelper
     when 'create_task_list'
       { :task_list => link_to_unless(plain, object, [activity.project, object]) }
     when 'create_upload'
-      { :file => link_to_unless(plain, object.description, project_uploads_path(activity.project, :anchor => dom_id(object))) }
+      text = object.description.presence || object.file_name
+      { :file => link_to_unless(plain, text, project_uploads_path(activity.project, :anchor => dom_id(object))) }
     when 'create_comment'
       # one of Project, Task or Conversation
       object = object.target

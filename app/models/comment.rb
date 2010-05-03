@@ -5,16 +5,14 @@ class Comment < ActiveRecord::Base
   concerned_with :associations,
                  :callbacks,
                  :tasks,
-                 :finders,
-                 :uploads
-    
-  attr_accessible :body, :user_id, :target_attributes
+                 :finders
+
+  attr_accessible :body, :user_id, :target_attributes, :status, :previous_status,
+                  :assigned, :previous_assigned, :human_hours
 
   formats_attributes :body
 
   named_scope :with_hours, :conditions => 'hours > 0'
-
-  attr_accessible :status, :previous_status, :assigned, :previous_assigned, :human_hours
 
   validate_on_create :check_duplicates
   validate :check_body

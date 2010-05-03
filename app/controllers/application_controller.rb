@@ -227,27 +227,25 @@ class ApplicationController < ActionController::Base
     end
     
     def calculate_position
-      # Calculate target position
-      if !params[:position].nil?
-          pos = params[:position]
-          @insert_id = pos[:slot].to_i
-          if @insert_id < 0
-            @insert_id = 0
-            @insert_before = false
-            @insert_footer = true
-          else
-            @insert_before = @insert_id == 0 ? true : (pos[:before].to_i == 1)
-            @insert_footer = false
-          end
-      else
-          @insert_id = nil
-          @insert_before = true
+      if pos = params[:position].presence
+        @insert_id = pos[:slot].to_i
+        if @insert_id < 0
+          @insert_id = 0
+          @insert_before = false
+          @insert_footer = true
+        else
+          @insert_before = @insert_id == 0 ? true : (pos[:before].to_i == 1)
           @insert_footer = false
+        end
+      else
+        @insert_id = nil
+        @insert_before = true
+        @insert_footer = false
       end
     end
     
     def save_slot(obj)
-      @slot = @page.new_slot(@insert_id, @insert_before, obj)
+      @slot = obj.page.new_slot(@insert_id, @insert_before, obj)
 
       if @insert_footer
         @insert_element = nil

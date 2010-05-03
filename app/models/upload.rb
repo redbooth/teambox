@@ -6,7 +6,8 @@ class Upload < RoleRecord
   belongs_to :comment, :touch => true
   belongs_to :project
   belongs_to :page
-  has_one    :page_slot, :as => :rel_object
+
+  has_one        :page_slot, :as => :rel_object
   before_destroy :clear_slot
 
   default_scope :order => 'created_at DESC'
@@ -39,6 +40,13 @@ class Upload < RoleRecord
 
   def size
     asset_file_size
+  end
+
+  # TODO: handle truncating of description in views
+  include ActionView::Helpers::TextHelper
+
+  def description
+    self[:description] || (comment ? truncate(comment.body, :length => 80) : nil)
   end
 
   def clear_slot
@@ -88,4 +96,5 @@ class Upload < RoleRecord
       xml.tag! 'comment-id', comment_id
     end
   end
+  
 end

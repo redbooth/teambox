@@ -32,8 +32,6 @@ if @comment.errors.empty?
       # page.replace_task_header(@current_project,@task_list,@task)
     else
       page << "Form.reset('new_comment')"
-      page.replace 'upload_area', upload_area(@comment)
-      page['comment_upload_link'].show
     end
     
     if display_watchers

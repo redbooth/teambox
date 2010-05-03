@@ -4,9 +4,9 @@
 .bundle
 *.esproj
 .sass-cache
-assets
+/assets
 config/database.yml
-coverage
+/coverage
 db/*.sqlite3
 db/sphinx
 config/*.sphinx.conf
@@ -14,7 +14,7 @@ log/*.log
 tmp
 public/avatars
 public/stylesheets
-uploads
+/uploads
 webrat-*
 capybara-*
 rerun.txt

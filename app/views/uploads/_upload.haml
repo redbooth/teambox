@@ -1,22 +1,19 @@
-.upload{ :id => "upload_#{upload.id}" }
+%div[upload]
   .info
     = link_to upload.file_type, upload.url, :class => upload.file_type, :rel => (upload.image? ? 'facebox' : '')
-  .block
-    .filename.show_details
-      .date
-        = posted_date upload.created_at          
-      .body
-        .file
-          = upload_link(project,upload)
-          = "(#{number_to_human_size(upload.size)})"
-        - if upload.description
-          .description
-            = upload.description
-        .reference
-          = t('.uploaded_by')
-          = user_link(upload.user)
-          = activity_comment_target_link(upload.comment, t('.on_')) if upload.comment
-          - if upload.editable?(current_user)
-            = " - "
-            = destroy_upload_link(project,upload)
-  .clear
+  - unless rss?
+    .date= posted_date upload.created_at
+  .file
+    = link_to_upload(upload, upload.file_name)
+    == (#{number_to_human_size(upload.size)})
+
+  - unless upload.description.blank?
+    .description&= upload.description
+    
+  .reference
+    = activity_title upload
+
+    - if not activity and upload.editable?(current_user)
+      &ndash;
+      = link_to t('.remove'), [upload.project, upload], :'data-remote' => true,
+          :'data-method' => 'delete', :'data-confirm' => t('confirm.delete_upload')

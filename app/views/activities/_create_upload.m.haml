@@ -5,6 +5,6 @@
     = activity_title(activity, false, true)
     = activity_project_link(activity.project)
     %p 
-      = upload_link(upload.project,upload)
+      = link_to_upload(upload, upload.file_name)
       = number_to_human_size(upload.size)
   .clear
