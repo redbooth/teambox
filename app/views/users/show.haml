@@ -9,7 +9,7 @@
 - content_for :column do
   = image_tag @user.avatar_or_gravatar_url(:profile), :class => 'avatar'
   - if current_user.observable?(@user)
-    - unless @user.biography.empty?
+    - unless @user.biography.blank?
       %p.biography= @user.biography
     = render_card(@card)
     =# list_projects(@user.projects)
