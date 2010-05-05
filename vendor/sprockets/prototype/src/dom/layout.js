@@ -25,7 +25,7 @@
     // Non-IE browsers will always return pixels if possible.
     // (We use parseFloat instead of parseInt because Firefox can return
     // non-integer pixel values.)
-    if ((/^\d+(\.\d+)?(px)?$/i).test(value)) {
+    if ((/^(?:-)?\d+(\.\d+)?(px)?$/i).test(value)) {
       return window.parseFloat(value);
     }
     
@@ -94,8 +94,8 @@
   // Converts the layout hash property names back to the CSS equivalents.
   // For now, only the border properties differ.
   function cssNameFor(key) {
-    if (key.includes('border')) return key + '-width';
-    return key;
+    if (key.include('border')) key = key + '-width';
+    return key.camelize();
   }
   
   /**
@@ -339,6 +339,45 @@
     },
     
     /**
+     *  Element.Layout#toObject([keys...]) -> Object
+     *  - keys (String): A space-separated list of keys to include.
+     *  
+     *  Converts the layout hash to a plain object of key/value pairs,
+     *  optionally including only the given keys.
+     * 
+     *  Keys can be passed into this method as individual arguments _or_
+     *  separated by spaces within a string.
+    **/
+    toObject: function() {
+      var args = $A(arguments);
+      var keys = (args.length === 0) ? Element.Layout.PROPERTIES :
+       args.join(' ').split(' ');
+      var obj = {};
+      keys.each( function(key) {
+        // Key needs to be a valid Element.Layout property.
+        if (!Element.Layout.PROPERTIES.include(key)) return;
+        var value = this.get(key);
+        if (value != null) obj[key] = value;
+      }, this);
+      return obj;
+    },
+    
+    /**
+     *  Element.Layout#toHash([keys...]) -> Hash
+     *  - keys (String): A space-separated list of keys to include.
+     *  
+     *  Converts the layout hash to an ordinary hash of key/value pairs,
+     *  optionally including only the given keys.
+     * 
+     *  Keys can be passed into this method as individual arguments _or_
+     *  separated by spaces within a string.
+    **/
+    toHash: function() {
+      var obj = this.toObject.apply(this, arguments);
+      return new Hash(obj);
+    },
+    
+    /**
      *  Element.Layout#toCSS([keys...]) -> Object
      *  - keys (String): A space-separated list of keys to include.
      *
@@ -359,6 +398,7 @@
       var keys = (args.length === 0) ? Element.Layout.PROPERTIES :
        args.join(' ').split(' ');
       var css = {};
+
       keys.each( function(key) {
         // Key needs to be a valid Element.Layout property...
         if (!Element.Layout.PROPERTIES.include(key)) return;        
@@ -368,8 +408,8 @@
         var value = this.get(key);
         // Unless the value is null, add 'px' to the end and add it to the
         // returned object.
-        if (value) css[cssNameFor(key)] = value + 'px';
-      });
+        if (value != null) css[cssNameFor(key)] = value + 'px';
+      }, this);
       return css;
     },
     
@@ -404,12 +444,12 @@
         
         var bTop = this.get('border-top'),
          bBottom = this.get('border-bottom');
-         
+
         var pTop = this.get('padding-top'),
          pBottom = this.get('padding-bottom');
-         
+
         if (!this._preComputing) this._end();
-        
+
         return bHeight - bTop - bBottom - pTop - pBottom;
       },
       
@@ -846,11 +886,11 @@
     }
     
     var offsetParent = getOffsetParent(element);    
-    var eOffset = element.viewportOffset(), pOffset = 
-     offsetParent.viewportOffset();
+    var eOffset = element.viewportOffset(),
+     pOffset = offsetParent.viewportOffset();
      
-    var offset = eOffset.relativeTo(pOffset);    
-    var layout = element.get('layout');    
+    var offset = eOffset.relativeTo(pOffset);
+    var layout = element.getLayout();    
     
     element.store('prototype_absolutize_original_styles', {
       left:   element.getStyle('left'),
@@ -936,7 +976,7 @@
         element = $(element);
         if (isDetached(element)) return new Element.Offset(0, 0);
 
-        var docOffset = $(document.documentElement).viewportOffset(),
+        var docOffset = $(document.body).viewportOffset(),
           elementOffset = element.viewportOffset();
         return elementOffset.relativeTo(docOffset);
       },
