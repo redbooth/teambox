@@ -57,6 +57,8 @@ en:
       create_task: created the task
     create_page:
       create_page: created the page
+    edit_page:
+      edit_page: edited the page
     create_person:
       create_person: was invited to the project
       by: by

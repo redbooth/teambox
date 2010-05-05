@@ -99,6 +99,10 @@ class Page < RoleRecord
     project.log_activity(self,'create')
   end
   
+  def after_update
+    project.log_activity(self, 'edit')
+  end
+  
   def to_s
     name
   end

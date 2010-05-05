@@ -17,7 +17,7 @@ module ActivitiesHelper
                       create_conversation
                       create_task_list
                       create_task
-                      create_page
+                      create_page edit_page
                       create_upload
                       create_person delete_person)
 
