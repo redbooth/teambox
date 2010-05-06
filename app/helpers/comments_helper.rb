@@ -175,7 +175,7 @@ module CommentsHelper
     link_to t('common.delete'),
       project_comment_path(comment.project, comment),
       :id => "delete_comment_#{comment.id}_link", 
-      :class => 'commentDelete taction',
+      :class => 'commentDelete action',
       :aconfirm => t('.confirm_delete'),
       :action_url => project_comment_path(comment.project, comment)
   end
