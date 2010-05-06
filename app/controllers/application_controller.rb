@@ -208,9 +208,10 @@ class ApplicationController < ActionController::Base
     end
     
     def handle_api_error(f,object)
-      f.xml  { render :xml => object.errors.to_xml,     :status => :unprocessable_entity }
-      f.json { render :as_json => object.errors.to_xml, :status => :unprocessable_entity }
-      f.yaml { render :as_yaml => object.errors.to_xml, :status => :unprocessable_entity }
+      error_list = object.nil? ? [] : object.errors
+      f.xml  { render :xml => error_list.to_xml,     :status => :unprocessable_entity }
+      f.json { render :as_json => error_list.to_xml, :status => :unprocessable_entity }
+      f.yaml { render :as_yaml => error_list.to_xml, :status => :unprocessable_entity }
     end
     
     def handle_api_success(f,object,is_new=false)

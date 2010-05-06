@@ -61,7 +61,12 @@ class CommentsController < ApplicationController
   end
 
   def show
-    respond_to{|f|f.js}
+    respond_to do |f|
+      f.js
+      f.xml { render :xml => @comment.to_xml }
+      f.json{ render :as_json => @comment.to_xml }
+      f.yaml{ render :as_yaml => @comment.to_xml }
+    end
   end
 
   def edit
@@ -102,7 +107,7 @@ class CommentsController < ApplicationController
       end
     end
     
-    if !@task.new_record?
+    if @task and !@task.new_record?
       respond_to do |f|
         f.js { render :template => 'comments/update' }
         handle_api_success(f, @task, true)
