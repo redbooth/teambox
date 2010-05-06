@@ -1,17 +1,21 @@
+widget_id = "divider_#{@divider.id}"
+
 if @insert_element.nil?
-  page.insert_html(:bottom, 'slots', 
+  page.insert_widget(widget_id,
+                   :bottom, 
+                   'slots',
                    :partial => 'pages/slot', 
                    :object => @divider.page_slot, 
                    :locals => {:page => @page, :project => @current_project})
 else
-  page.insert_html((@insert_before ? :before : :after), 
-                   @insert_element, 
+  page.insert_widget(widget_id,
+                  (@insert_before ? :before : :after), 
+                   @insert_element,
                    :partial => 'pages/slot', 
                    :object => @divider.page_slot, 
                    :locals => {:page => @page, :project => @current_project})
 end
+
 page.hide_divider_form
-page["divider_#{@divider.id}"].highlight
-#page.dividers_sortable(project_page_path(@divider.page.project,@divider.page))
 page.reload_javascript_events
 page.reload_page_sort

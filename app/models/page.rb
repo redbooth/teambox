@@ -37,10 +37,16 @@ class Page < RoleRecord
   def new_slot(insert_id, insert_before, widget)
      PageSlot.transaction do
        # Calculate correct position
+       insert_pos = nil
+       
+       # Assuming we have an insert_id...
        if !insert_id.nil? and insert_id != 0
-         old_slot = PageSlot.find(insert_id)
-         insert_pos = insert_before ? old_slot.position : old_slot.position+1
-       else
+         old_slot = PageSlot.find(insert_id) rescue nil
+         insert_pos = (insert_before ? old_slot.position : old_slot.position+1) unless old_slot.nil?
+       end
+       
+       # Fallback
+       if insert_pos.nil?
          if self.slots.empty?
            insert_pos = 0
          else

@@ -1,6 +1,10 @@
-page["note_#{@note.id}"].hide
-page.insert_html :after, "note_#{@note.id}", :partial => 'notes/edit', :locals => { :note => @note }
-page << "$('edit_note_#{@note.id}').focusFirstElement()"
-page.reload_javascript_events
-page["loading_action_note_#{@note.id}"].remove
-page["edit_note_#{@note.id}_link"].show
+if @note
+  page["note_#{@note.id}"].hide
+  page.insert_html :after, "note_#{@note.id}", :partial => 'notes/edit', :locals => { :note => @note }
+  page << "$('edit_note_#{@note.id}').focusFirstElement()"
+  page.reload_javascript_events
+  page["loading_action_note_#{@note.id}"].remove
+  page["edit_note_#{@note.id}_link"].show
+else
+  page.alert t('common.not_allowed')
+end
