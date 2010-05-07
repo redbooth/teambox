@@ -69,8 +69,10 @@ class Person < ActiveRecord::Base
     options[:indent] ||= 2
     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
     xml.instruct! unless options[:skip_instruct]
-    xml.person :id => user.id do
+    xml.person :id => id do
+      xml.tag! 'user-id', user.id
       xml.tag! 'username', user.login
+      xml.tag! 'role', role
     end
   end
 end

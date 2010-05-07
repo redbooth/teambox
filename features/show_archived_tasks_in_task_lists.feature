@@ -13,14 +13,14 @@ Feature: Show archived tasks in task lists
       | name                                   | task_list | project        |
       | Tell my friends                        | This week | Market Teambox |
       | Tell the tech bloggers                 | This week | Market Teambox |
-    And the task called "Tell my friends" is archived
+    And the task called "Tell my friends" is resolved
     And I am logged in as "balint"
 
   Scenario: See archived tasks
     When I go to the list of tasks page of the project called "Market Teambox"
-    Then I should see the task called "Tell the tech bloggers" in the "This week" task list panel
-    But I should not see the task called "Tell my friends" in the "This week" task list panel
-    When I follow "Show 1 archived task" in the "This week" task list panel
+    Then I should see the task called "Tell the tech bloggers" in the "This week" task list
+    But I should not see the task called "Tell my friends" in the "This week" task list
+    When I follow "Show 1 archived task" in the "This week" task list
     Then I should see the following tasks:
       | task_list_name   | task_name                              |
       | This week        | Tell my friends                        |
@@ -33,7 +33,7 @@ Feature: Show archived tasks in task lists
       | name                         | task_list  | project        |
       | Post on Digg and Hacker News | Next month | Market Teambox |
     When I go to the list of tasks page of the project called "Market Teambox"
-    Then I should not see a "Show 0 archived tasks" link in the "Next month" task list panel
+    Then I should not see a "Show 0 archived tasks" link in the "Next month" task list
 
 
   Scenario: Task panel's "See archived tasks" clicked after global "All tasks"
@@ -44,7 +44,7 @@ Feature: Show archived tasks in task lists
       | task_list_name   | task_name                              |
       | This week        | Tell my friends                        |
       | This week        | Tell the tech bloggers                 |
-    When I follow "Hide 1 archived task" in the "This week" task list panel
+    When I follow "Hide 1 archived task" in the "This week" task list
     Then I should see the following tasks:
       | task_list_name   | task_name                              |
       | This week        | Tell the tech bloggers                 |

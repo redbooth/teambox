@@ -20,6 +20,14 @@ module ConversationsHelper
   
   # Jenny helpers
   
+  def new_conversation_url(project,conversation)
+    new_project_task_list_path(project)
+  end
+  
+  def edit_conversation_url(project,conversation)
+    edit_project_conversation_path(project, conversation)
+  end
+  
   def show_conversation(project,conversation)
     unobtrusive_app_toggle(project,conversation)
   end  

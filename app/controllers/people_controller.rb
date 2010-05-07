@@ -6,6 +6,14 @@ class PeopleController < ApplicationController
     @people = @current_project.people.sort { |a,b| b.user.updated_at <=> a.user.updated_at }
     @invitations = @current_project.invitations
     @admins = @current_project.people.admins
+    
+    respond_to do |f|
+      f.html
+      f.m
+      f.xml   { render :xml     => @people.to_xml(:root => 'people') }
+      f.json  { render :as_json => @people.to_xml(:root => 'people') }
+      f.yaml  { render :as_yaml => @people.to_xml(:root => 'people') }
+    end
   end
   
   def create

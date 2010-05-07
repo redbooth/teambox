@@ -224,4 +224,50 @@ describe Comment do
       comment.mentioned.should == nil
     end
   end
+  
+  describe "permissions" do
+    before do
+      @project = Factory(:project)
+      @user = Factory(:confirmed_user, :login => 'existing')
+      @other_user = Factory(:confirmed_user, :login => 'existing2')
+      @another_user = Factory(:confirmed_user, :login => 'existing3')
+      @comment = Factory(:comment, :body => "Random comment.", :project => @project, :user => @other_user, :target => @project)
+      @project.add_user(@user)
+      @project.add_user(@other_user)
+      @project.add_user(@another_user)
+      @project.people.find_by_user_id(@user.id).update_attribute(:role, 3) # -> admin
+    end
+    
+    it "should be editable and deletable by the creator for only 15 minutes" do
+      @comment.can_edit?(@comment.user).should == true
+      @comment.can_destroy?(@comment.user).should == true
+      
+      # backdate to simulate elapsed time
+      @comment.created_at -= 16.minutes
+      @comment.save!
+      
+      @comment.can_edit?(@comment.user).should == false
+      @comment.can_destroy?(@comment.user).should == false
+    end
+    
+    it "should not be editable by an admin" do
+      @comment.can_edit?(@comment.user).should == true
+      @comment.can_edit?(@user).should == false
+    end
+    
+    it "should be deletable by an admin forever" do
+      @comment.can_destroy?(@user).should == true
+      
+      # backdate to simulate elapsed time
+      @comment.created_at -= 16.minutes
+      @comment.save!
+      
+      @comment.can_destroy?(@user).should == true
+    end
+    
+    it "should not be editable or deletable by another non-admin" do
+      @comment.can_edit?(@another_user).should == false
+      @comment.can_destroy?(@another_user).should == false
+    end
+  end
 end

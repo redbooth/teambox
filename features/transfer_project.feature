@@ -17,7 +17,7 @@ Feature Transfer Project
          And I should see "Ownership" within "h2"
         When I select "Balint Erdi" from "Owner"
          And I press "Change owner"
-        Then I should see "Project ownership has been transferred." within ".flash_box div"
+        Then I should see "Project ownership has been transferred."
        Given I go to project settings path
         Then I should not see "Ownership"
        Then the user called "balint" should administrate the project called "Ruby Rockstars"

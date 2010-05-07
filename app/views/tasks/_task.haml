@@ -3,7 +3,7 @@
 .task{ :id => task_id(:task,project,task), :class => task_classes(task)}
   .inner
     .taskStatus	
-      - if editable
+      - if editable and !task.archived?
         %div{:style => 'height:0px;'}
           = task_drag_link(task)
       = task_status(task,:content)

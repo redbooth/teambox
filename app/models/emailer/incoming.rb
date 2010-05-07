@@ -1,3 +1,7 @@
+require 'net/pop'
+require 'net/imap'
+require 'net/http'
+
 # Receives an email and performs the adequate action
 #
 # Emails can be sent to project@app.server.com or project+model+id@app.server.com
@@ -14,13 +18,56 @@
 # TODO: Enhance mime and plain messages treatment
 #       Parse HTML to Markdown
 #       Strip the quoted text from email replies
+#
+module Emailer::Incoming
 
-class Emailer
+  def self.fetch(settings)
+    type = settings[:type].to_s.downcase
+    send("fetch_#{type}", settings)
+  rescue SocketError
+    settings_out = settings.merge(:password => '*' * settings[:password].to_s.length)
+    $stderr.puts "Error connecting to mail server with settings:\n  #{settings_out.inspect}"
+    raise
+  end
+
+  def self.fetch_pop(settings)
+    Net::POP3.start(settings[:address], settings[:port], settings[:user_name], settings[:password]) do |pop|
+      pop.mails.each do |email|
+        begin
+          Emailer.receive(email.pop)
+        rescue Exception
+          $stderr.puts "Error receiving email at #{Time.now}: #{$!}"
+        end
+        email.delete
+      end
+    end
+  end
+  
+  def self.fetch_imap(settings)
+    imap = Net::IMAP.new(settings[:address], settings[:port], true)
+    imap.login(settings[:user_name], settings[:password])
+    imap.select('Inbox')
+
+    imap.uid_search(["NOT", "DELETED"]).each do |uid|
+      source = imap.uid_fetch(uid, ['RFC822']).first.attr['RFC822']
+
+      begin
+        Emailer.receive(source)
+      rescue Exception
+        $stderr.puts "Error receiving email at #{Time.now}: #{$!}"
+      end
+
+      imap.uid_copy(uid, "[Gmail]/All Mail")
+      imap.uid_store(uid, "+FLAGS", [:Deleted])
+    end
+
+    imap.expunge
+    imap.logout
+    imap.disconnect
+  end
 
   REPLY_REGEX = /(Re:|RE:|Fwd:|FWD:)/
 
-  # for attachment in email.attachments
-  
   def receive(email)
     process email
     get_target
@@ -60,7 +107,7 @@ class Emailer
 
     @to       = email.to.first.split('@').first.downcase
     @body     = (email.multipart? ? email.parts.first.body : email.body)
-    @body     = @body.split(ANSWER_LINE).first.split("<div class='email'").first.strip
+    @body     = @body.split(Emailer::ANSWER_LINE).first.split("<div class='email'").first.strip
     @user     = User.find_by_email email.from.first
     @subject  = email.subject.gsub(REPLY_REGEX, "")
     @project  = Project.find_by_permalink @to.split('+').first

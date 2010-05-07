@@ -25,7 +25,7 @@ module PageNotesHelper
       page << "new Effect.Highlight('new_note_form',{ startcolor: '#F0F0F0', endcolor: '#F5F5F5', restorecolor: '#F5F5F5'})"
       page << "Form.reset('new_note_form');"
       page.hide_loading_note_form
-      page << "$('new_note_form').auto_focus()"
+      page << "$('new_note_form').focusFirstElement()"
     end  
   end
 

@@ -1,10 +1,10 @@
 .login.text_field
   = label_tag :login, t('.username_or_email')
   - if @signups_enabled
-    %p.right_link= link_to t('.signup'), signup_path, :tabindex => 202
-  = text_field_tag 'login', @login, :class => 'focus', :tabindex => 200
+    %p.right_link= link_to t('.signup'), signup_path
+  = text_field_tag 'login', @login, :autofocus => true, :tabindex => 1
 
 .password.text_field
   = label_tag :password, t('.password')
-  %p.right_link= link_to t('.forgot'), forgot_password_path, :tabindex => 203
-  = password_field_tag 'password', nil, :tabindex => 201
+  %p.right_link= link_to t('.forgot'), forgot_password_path
+  = password_field_tag 'password', nil, :tabindex => 2

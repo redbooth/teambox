@@ -1,5 +1,9 @@
-page["edit_note_#{@note.id}"].remove
-page.replace "note_#{@note.id}", :partial => 'notes/note', :locals => { :note => @note }
-page["note_#{@note.id}"].show
-page.reload_javascript_events
-page.reload_page_sort
+if @note
+  page["edit_note_#{@note.id}"].remove
+  page.replace "note_#{@note.id}", :partial => 'notes/note', :locals => { :note => @note }
+  page["note_#{@note.id}"].show
+  page.reload_javascript_events
+  page.reload_page_sort
+else
+  page.alert t('common.not_allowed')
+end

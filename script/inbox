@@ -1,29 +1,6 @@
 #!/usr/bin/env ruby
+warn "script/inbox script is deprecated. please run `rake mail:inbox` instead"
 
-require 'net/pop'
 require File.dirname(__FILE__) + '/../config/environment'
 
-logger = RAILS_DEFAULT_LOGGER
-
-puts 'Running Mail Importer...'
-
-@config = APP_CONFIG['incoming']
-Rails.logger.info "POP3 server: #{@config['server']} User: #{@config['username']} Pwd: #{@config['password']}}"
-
-Net::POP3.start(@config['server'], nil, @config['username'], @config['password']) do |pop|
-  if pop.mails.empty?
-    puts 'No mail.'
-  else
-    pop.mails.each do |email|
-      begin
-        puts 'Receiving mail...'
-        Emailer.receive(email.pop)
-      rescue Exception => e
-        puts 'Error receiving email at ' + Time.current.to_s + '::: ' + e.message
-      end
-      email.delete
-    end
-  end
-end
-puts 'Finished Mail Importer.'
-
+Teambox.fetch_incoming_email

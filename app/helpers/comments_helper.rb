@@ -1,5 +1,12 @@
 module CommentsHelper
 
+  def cache_editable_comment(comment, &block)
+    cache(comment.cache_key.tap { |key|
+      key << '-editable' if comment.can_edit?(current_user)
+      key << '-destructable' if comment.can_destroy?(current_user)
+    }, &block)
+  end
+
   def comment_form_for(form_url,&proc)
     form_for form_url,
       :html => {:update_id => js_id(nil,Comment.new)},
@@ -168,7 +175,7 @@ module CommentsHelper
     link_to t('common.delete'),
       project_comment_path(comment.project, comment),
       :id => "delete_comment_#{comment.id}_link", 
-      :class => 'commentDelete taction',
+      :class => 'commentDelete action',
       :aconfirm => t('.confirm_delete'),
       :action_url => project_comment_path(comment.project, comment)
   end

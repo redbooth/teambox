@@ -438,6 +438,11 @@ de:
         cant_be_blank: 'darf nicht leer sein'
         too_long: 'muss kürzer als 255 Zeichen sein'
     fields:
+      ####
+      title: New Task
+      task: "Choose an actionable task. The more specific, the better."
+      optional: You can provide better instructions for this Task below.
+      body: What needs to be done? <i>optional</i>
       name: "Was muss erledigt werden?"
       due_on: "Muss erledigt werden vor… (optional)"
       ####
@@ -460,9 +465,6 @@ de:
     link:
       new: + Aufgabe hinzufügen
       edit: Bearbeiten
-      show_archived_tasks:
-        one: "Zeige archivierte Aufgabe"
-        other: "Zeige {{count}} archivierte Aufgaben"
       hide_archived_tasks:
         one: "Blende archivierte Aufgabe aus"
         other: "Blende {{count}} archivierte Aufgaben aus"
@@ -568,12 +570,16 @@ de:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
-      show_archived: "View {{count}} archived tasks"
+      show_archived:
+        one: "Zeige archivierte Aufgabe"
+        other: "Zeige {{count}} archivierte Aufgaben"
     fields:
       ####
       title: New Task List
       task_list: "Eine Aufgabenliste definiert einen Meilenstein für Ihr Projekt. In einer Aufgabenliste können Sie Aufgaben erstellen und diese bestimmten Personen zuordnen."
       name: "Name der Aufgabenliste"
+      ####
+      optional: "If you starting and ending dates, this task will be displayed in the GANTT chart"
       start_on: Beginnt am... <i>optional</i>
       finish_on: Endet am... <i>optional</i>
     ####
@@ -612,7 +618,6 @@ de:
       undefined: "Undefined"
     new:
       title: Neue Aufgabenliste
-      submit: "Aufgabenliste hinzufügen"
       submit: "Aufgabenliste hinzufügen"
     edit:
       submit: Aufgabenliste aktualisieren
@@ -802,10 +807,7 @@ de:
       my_tasks:
         one: "Meine Aufgabe"
         other: "Meine {{count}} Aufgaben"
-      everybodys_tasks: "Aufgaben für alle" 
-      show_archived_tasks:
-        one: "1 archivierte Aufgabe anzeigen"
-        other: "{{count}} archivierte Aufgaben anzeigen"
+      everybodys_tasks: "Aufgaben für alle"
       hide_archived_tasks: "Archivierte Aufgaben ausblenden"
     footer:
       support: Feedback und Fehler

@@ -459,9 +459,6 @@ ru:
     link:
       new: + Добавить задачу
       edit: Редактировать
-      show_archived_tasks:
-        one: "Показать 1 архивную задачу"
-        other: "Показать {{count}} архивных задач"
       hide_archived_tasks:
         one: "Скрыть 1 архивную задачу"
         other: "Показать {{count}} архивных задач"
@@ -567,7 +564,9 @@ ru:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
-      show_archived: "View {{count}} archived tasks"
+      show_archived:
+        one: "Показать 1 архивную задачу"
+        other: "Показать {{count}} архивных задач"
     fields:
       task_list: Списки задач определяют этапы проекта. Внутри списка задач вы можете создавать задачи и распределять их между участниками.
       name: Название списка задач
@@ -801,9 +800,6 @@ ru:
         one: "Моя задача"
         other: "{{count}} моих задач"
       everybodys_tasks: "Общие задачи"
-      show_archived_tasks:
-        one: "Показать архивную задачу"
-        other: "Показать {{count}} архивных задач"
       hide_archived_tasks: "Скрыть архивные задачи"
     footer:
       support: Обратная связь

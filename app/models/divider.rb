@@ -16,4 +16,17 @@ class Divider < RoleRecord
   def slot_view
     'dividers/divider'
   end
+
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+    xml.divider :id => id do
+      xml.tag! 'page-id',      page_id
+      xml.tag! 'project-id',   project_id
+      xml.tag! 'name',         name
+      xml.tag! 'created-at',   created_at.to_s(:db)
+      xml.tag! 'updated-at',   updated_at.to_s(:db)
+    end
+  end
 end

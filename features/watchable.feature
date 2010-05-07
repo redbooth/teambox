@@ -28,7 +28,7 @@ Feature Watchable Objects
     Then "pablo" should be watching the conversation "Talk!"
     Then "james" should be watching the conversation "Talk!"
     When I fill in "comment_body" with "Rockets!"
-      And I press "Comment"
+      And I press "Save"
     Then "balint.erdi@gmail.com" should receive an email
     Then "pablo@teambox.com" should receive an email
     Then "james.urquhart@gmail.com" should receive an email
@@ -39,9 +39,9 @@ Feature Watchable Objects
     When I go to the conversations page
       And I follow "Politics"
     When I fill in "comment_body" with "Senators!"
-      And I press "Comment"
+      And I press "Save"
     When I fill in "comment_body" with "Rockets!"
-      And I press "Comment"
+      And I press "Save"
     Then "balint.erdi@gmail.com" should receive no emails
     Then "pablo@teambox.com" should receive an email
     Then "james.urquhart@gmail.com" should receive an email
@@ -52,9 +52,9 @@ Feature Watchable Objects
     When I go to the conversations page
       And I follow "Politics"
     When I fill in "comment_body" with "Celebrities!"
-      And I press "Comment"
+      And I press "Save"
     When I fill in "comment_body" with "Controversy!"
-      And I press "Comment"
+      And I press "Save"
     Then "balint.erdi@gmail.com" should receive an email
     Then "pablo@teambox.com" should receive no emails
     Then "james.urquhart@gmail.com" should receive an email

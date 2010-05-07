@@ -1,4 +1,8 @@
-page["divider_#{@divider.id}"].dropOut
-page.delay(3) do
-  page["page_slot_#{@divider.page_slot.id}"].remove
+if @divider
+  page["divider_#{@divider.id}"].dropOut
+  page.delay(3) do
+    page["page_slot_#{@divider.page_slot.id}"].remove
+  end
+else
+  page.alert t('common.not_allowed')
 end

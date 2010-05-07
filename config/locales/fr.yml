@@ -459,9 +459,6 @@ fr:
     link:
       new: + Nouvelle tâche
       edit: Editer
-      show_archived_tasks:
-        one: "Montrer 1 tâche archivée"
-        other: "Montrer {{count}} tâches archivées"
       hide_archived_tasks:
         one: "Cacher 1 tâche archivée"
         other: "Cacher {{count}} tâches archivées"
@@ -568,7 +565,9 @@ fr:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
-      show_archived: "View {{count}} archived tasks"
+      show_archived:
+        one: "Montrer 1 tâche archivée"
+        other: "Montrer {{count}} tâches archivées"
     fields:
       task_list: "Une liste de tâches définit une étape importante pour votre projet. L'intérieur d'une liste de tâches, vous pouvez créer des tâches et les assigner à des personnes."
       name: Nom de la Liste de Taches
@@ -805,9 +804,6 @@ fr:
         one: "Ma tâche"
         other: "Mes tâches ({{count}})"
       everybodys_tasks: "Tâches de tout le monde"
-      show_archived_tasks:
-        one: "Montrer une tâche archivée"
-        other: "Montrer {{count}} tâches archivées"
       hide_archived_tasks: "Ne plus montrer archivées"
     footer:
       support: Un problème? Envoyez-nous un feedback!

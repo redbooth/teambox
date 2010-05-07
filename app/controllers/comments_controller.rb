@@ -44,14 +44,29 @@ class CommentsController < ApplicationController
     end
 
     respond_to do |f|
-      f.html { redirect_to redirect_path }
-      f.m    { redirect_to redirect_path }
-      f.js   { fetch_new_comments }
+      if !@comment.new_record?
+        # success!
+        f.html { redirect_to redirect_path }
+        f.m    { redirect_to redirect_path }
+        f.js   { fetch_new_comments }
+        handle_api_success(f, @comment, true)
+      else
+        # error
+        f.html { redirect_to redirect_path }
+        f.m    { redirect_to redirect_path }
+        f.js   { fetch_new_comments }
+        handle_api_error(f, @comment)
+      end
     end
   end
 
   def show
-    respond_to{|f|f.js}
+    respond_to do |f|
+      f.js
+      f.xml { render :xml => @comment.to_xml }
+      f.json{ render :as_json => @comment.to_xml }
+      f.yaml{ render :as_yaml => @comment.to_xml }
+    end
   end
 
   def edit
@@ -61,13 +76,21 @@ class CommentsController < ApplicationController
 
   def update
     if @has_permission
-      @comment.save_uploads(params) if @comment.update_attributes(params[:comment])
-      
-      # Expire cache
-      expire_fragment("#{current_user.language}_#{current_user.time_zone.gsub(/\W/,'')}_comment_#{@comment.id}")
+      @saved = @comment.update_attributes(params[:comment])
+      @comment.save_uploads(params) if @saved
     end
     
-    respond_to{|f|f.js}
+    if @saved
+      respond_to do |f|
+        f.js
+        handle_api_success(f, @comment)
+      end
+    else
+      respond_to do |f|
+        f.js
+        handle_api_error(f, @comment)
+      end
+    end
   end
   
   def convert
@@ -82,15 +105,18 @@ class CommentsController < ApplicationController
         @comment.target = @task
         @comment.save
       end
-      
-      # Expire cache
-      expire_fragment("#{current_user.language}_#{current_user.time_zone.gsub(/\W/,'')}_comment_#{@comment.id}")
     end
     
-    respond_to do |f|
-      f.js {
-        render :template => 'comments/update'
-      }
+    if @task and !@task.new_record?
+      respond_to do |f|
+        f.js { render :template => 'comments/update' }
+        handle_api_success(f, @task, true)
+      end
+    else
+      respond_to do |f|
+        f.js { render :template => 'comments/update' }
+        handle_api_error(f, @task)
+      end
     end
   end
 
@@ -100,6 +126,18 @@ class CommentsController < ApplicationController
       @has_permission = true
     else  
       @has_permission = false
+    end
+    
+    if @has_permission
+      respond_to do |f|
+        f.js
+        handle_api_success(f, @comment)
+      end
+    else
+      respond_to do |f|
+        f.js
+        handle_api_error(f, @comment)
+      end
     end
   end
 

@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:update,:reopen,:reorder]
-  before_filter :find_task, :only => [:show,:destroy,:update,:reopen,:watch,:unwatch]
+  before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:edit,:update,:reopen,:reorder]
+  before_filter :find_task, :only => [:show,:destroy,:edit,:update,:reopen,:watch,:unwatch]
   before_filter :load_banner, :only => [:show]
   before_filter :set_page_title
 
@@ -28,6 +28,7 @@ class TasksController < ApplicationController
   def new
     @task = @task_list.tasks.new
     respond_to do |f|
+      f.html
       f.m
     end
   end
@@ -43,20 +44,49 @@ class TasksController < ApplicationController
         @task.reload
       end
     end
-    respond_to do |format|
-      format.html { redirect_to [@current_project,@task_list,@task] }
-      format.m    { redirect_to project_task_lists_path(@current_project) }
-      format.js
+    
+    if !@task.new_record?
+      respond_to do |f|
+        f.html { redirect_to [@current_project,@task_list,@task] }
+        f.m    { redirect_to project_task_lists_path(@current_project) }
+        f.js
+        handle_api_success(f, @task, true)
+      end
+    else
+      respond_to do |f|
+        f.html { render :new }
+        f.m    { render :new }
+        f.js
+        handle_api_error(f, @task)
+      end
     end
   end
 
   def edit
-    respond_to{|f|f.js}
+    respond_to do |f|
+      f.html
+      f.m
+      f.js
+    end
   end
 
   def update
-    @task.update_attributes(params[:task])
-    respond_to {|f|f.js}
+    @saved = @task.update_attributes(params[:task])
+    if @saved
+      respond_to do |f|
+        f.html { redirect_to [@current_project,@task_list,@task] }
+        f.m    { redirect_to [@current_project,@task_list,@task] }
+        f.js
+        handle_api_success(f, @task)
+      end
+    else
+      respond_to do |f|
+        f.html { render :edit }
+        f.m    { render :edit }
+        f.js
+        handle_api_error(f, @task)
+      end
+    end
   end
 
   def destroy
@@ -70,11 +100,13 @@ class TasksController < ApplicationController
           redirect_to project_task_lists_path(@current_project)
         end
         f.js
+        handle_api_success(f, @task)
       end
     else
       respond_to do |f|
         flash[:error] = t('common.not_allowed')
         f.html { redirect_to project_task_lists_path(@current_project) }
+        handle_api_error(f, @task)
       end
     end
   end

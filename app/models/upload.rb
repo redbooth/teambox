@@ -3,7 +3,7 @@ class Upload < RoleRecord
   ICONS = %w(aac ai aiff avi bmp c cpp css dat dmg doc dotx dwg dxf eps exe flv gif h hpp html ics iso java jpg key mid mp3 mp4 mpg odf ods odt otp ots ott pdf php png ppt psd py qt rar rb rtf sql tga tgz tiff txt wav xls xlsx xml yml zip)
     
   belongs_to :user
-  belongs_to :comment
+  belongs_to :comment, :touch => true
   belongs_to :project
   belongs_to :page
   has_one    :page_slot, :as => :rel_object
@@ -12,12 +12,12 @@ class Upload < RoleRecord
   default_scope :order => 'created_at DESC'
 
   has_attached_file :asset,
-    :storage => (APP_CONFIG['amazon_s3']['enabled'] ? :s3 : :filesystem),
-    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-    :bucket => APP_CONFIG['amazon_s3']["bucket_#{RAILS_ENV}"],
     :styles => { :thumb => "64x48>" },
     :url  => "/assets/:id/:style/:basename.:extension",
-    :path => (APP_CONFIG['amazon_s3']['enabled'] ? "assets/:id/:style/:filename" : ":rails_root/assets/:id/:style/:filename")
+    :path => Teambox.config.amazon_s3 ?
+      "assets/:id/:style/:filename" :
+      ":rails_root/assets/:id/:style/:filename"
+
   before_post_process :image?
   
   validates_attachment_size :asset, :less_than => APP_CONFIG['asset_max_file_size'].to_i.megabytes
@@ -72,6 +72,7 @@ class Upload < RoleRecord
     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
     xml.instruct! unless options[:skip_instruct]
     xml.file :id => id do
+      xml.tag! 'page-id', page_id
       xml.tag! 'filename', asset_file_name
       xml.tag! 'description', description
       xml.tag! 'mime-type', asset_content_type

@@ -1,0 +1,23 @@
+- content_for :banner do
+  = user_page_name(@user)
+
+- if @shares_invited_projects
+  #primer
+    .box
+      %p= t('.pending_invite', :name => @user.name)
+
+#page
+  #people
+    .person
+      = thumb_avatar(@user)
+      .person_header
+        .name
+          %h2
+            = user_link(@user)
+            = "@#{@user.login}"
+      .clear
+      %p.biography= @user.biography
+      = render_card(@card)
+  %h2= t('.recent_activity_for', :user_name => @user.name)
+  #activities
+    = list_activities(@activities)

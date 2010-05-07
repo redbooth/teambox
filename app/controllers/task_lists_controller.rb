@@ -43,6 +43,7 @@ class TaskListsController < ApplicationController
     @on_index = true
     @task_list = @current_project.task_lists.new
     respond_to do |f|
+      f.html
       f.m
       f.js
     end
@@ -53,10 +54,21 @@ class TaskListsController < ApplicationController
     if @task_list = @current_project.create_task_list(current_user,params[:task_list])
       @sub_action = 'all'
     end
-    respond_to do |f|
-      f.html { redirect_to [@current_project,@task_list] }
-      f.m    { redirect_to project_task_lists_path(@current_project) }
-      f.js
+    
+    if !@task_list.new_record?
+      respond_to do |f|
+        f.html { redirect_to [@current_project,@task_list] }
+        f.m    { redirect_to project_task_lists_path(@current_project) }
+        f.js
+        handle_api_success(f, @task_list, true)
+      end
+    else
+      respond_to do |f|
+        f.html { render :new }
+        f.m    { render :new }
+        f.js
+        handle_api_error(f, @task_list)
+      end
     end
   end
   
@@ -65,16 +77,30 @@ class TaskListsController < ApplicationController
     calc_onindex
     
     respond_to do |f|
+      f.html
+      f.m
       f.js
     end
   end
 
   def update
     calc_onindex
-    @task_list.update_attributes(params[:task_list])
-    respond_to do |f|
-      f.html { non_js_list_redirect }
-      f.js {}
+    @saved = @task_list.update_attributes(params[:task_list])
+    
+    if @saved
+      respond_to do |f|
+        f.html { non_js_list_redirect }
+        f.m    { non_js_list_redirect }
+        f.js {}
+        handle_api_success(f, @task_list)
+      end
+    else
+      respond_to do |f|
+        f.html { render :edit }
+        f.m    { render :edit }
+        f.js {}
+        handle_api_error(f, @task_list)
+      end
     end
   end
 
@@ -91,6 +117,7 @@ class TaskListsController < ApplicationController
     
     respond_to do |f|
       f.js{}
+      handle_api_success(f, @task_list)
     end
   end
   
@@ -123,11 +150,13 @@ class TaskListsController < ApplicationController
       respond_to do |f|
         f.html { non_js_list_redirect }
         f.js{}
+        handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
         f.html { flash[:error] = "Not allowed!"; non_js_list_redirect }
         f.js { render :text => 'alert("Not allowed!");'; }
+        handle_api_error(f, @task_list)
       end
     end
     
@@ -142,11 +171,19 @@ class TaskListsController < ApplicationController
     
     if request.method == :put and @task_list.editable?(current_user) and @task_list.archived
       @task_list.archived = false
-      @task_list.save
+      @saved = @task_list.save
     end
     
-    respond_to do |f|
-      f.js { render :template => 'task_lists/update' }
+    if @saved
+      respond_to do |f|
+        f.js { render :template => 'task_lists/update' }
+        handle_api_success(f, @task_list)
+      end
+    else
+      respond_to do |f|
+        f.js { render :template => 'task_lists/update' }
+        handle_api_error(f, @task_list)
+      end
     end
   end
 
@@ -161,12 +198,14 @@ class TaskListsController < ApplicationController
           redirect_to project_task_lists_path(@current_project)
         end
         f.js {}
+        handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
         flash[:error] = t('common.not_allowed')
         f.html { redirect_to project_task_lists_path(@current_project) }
         f.js { render :text => 'alert("Not allowed!");'; }
+        handle_api_error(f, @task_list)
       end
     end
   end
@@ -205,7 +244,11 @@ class TaskListsController < ApplicationController
           @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user]).
                     select { |task| task.active? }.
                     sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
-          @task_lists = []
+          if [:xml, :json, :as_yaml].include? request.format.to_sym
+            @task_lists = TaskList.find(:all, :conditions => {:project_id => current_user.project_ids})
+          else
+            @task_lists = []
+          end
         end
         
         # Resort @task_lists and put archived at the bottom

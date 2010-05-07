@@ -37,7 +37,8 @@ module JennyHelper
     plural_name = target.class.to_s.tableize
 
     # TODO: check what uses show_*. Should be {action}_*
-    link_to content_tag(:span,t("#{plural_name}.link.#{action}")), '#',
+    link_to content_tag(:span,t("#{plural_name}.link.#{action}")), 
+      send("#{action}_#{singular_name}_url".to_sym, *args),
       {:class => "jennyaction #{action}_#{singular_name}_link",
       :id => js_id("#{action}_link",*args)}.merge(send("show_#{singular_name}".to_sym,*args))
   end

@@ -1,29 +1,14 @@
-require "net/pop"
- 
 namespace :mail do
-  desc "Download inbox"
+  desc "Fetch incoming email"
   task :inbox => :environment do
- 
-    Rails.logger.info 'Running Mail Importer...'
- 
-    config = APP_CONFIG['incoming']
- 
-    Net::POP3.start(config['server'], nil, config['username'], config['password']) do |pop|
-      if pop.mails.empty?
-        Rails.logger.info 'No mail.'
-      else
-        pop.mails.each do |email|
-          begin
-            Rails.logger.info 'Receiving mail...'
-            Emailer.receive(email.pop)
-          rescue Exception => e
-            Rails.logger.info 'Error receiving email at ' + Time.current.to_s + '::: ' + e.message
-          end
-          email.delete
-        end
-      end
-    end
-    Rails.logger.info 'Finished Mail Importer.'
- 
+    Teambox.fetch_incoming_email
+  end
+  
+  desc "Send daily task reminders"
+  task :reminders => :environment do
+    User.send_daily_task_reminders
   end
 end
+
+# for Heroku cron add-on
+task :cron => ["mail:inbox", "mail:reminders"]

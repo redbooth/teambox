@@ -7,6 +7,17 @@ class UsersController < ApplicationController
   skip_before_filter :load_project
   before_filter :set_page_title
 
+  def index
+    # show current user
+    respond_to do |f|
+      f.html { redirect_to '/' }
+      f.m { redirect_to '/' }
+      f.xml   { render :xml     => [@current_user].to_xml(:root => 'users') }
+      f.json  { render :as_json => [@current_user].to_xml(:root => 'users') }
+      f.yaml  { render :as_yaml => [@current_user].to_xml(:root => 'users')}
+    end
+  end
+  
   def new
     if logged_in?
       flash[:success] = t('users.new.you_are_logged_in')

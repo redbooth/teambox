@@ -475,9 +475,6 @@ it:
     link:
       new: + Nuovo compito
       edit: Modifica
-      show_archived_tasks:
-        one: "Mostra 1 compito archiviato"
-        other: "Mostra {{count}} compiti archiviati"
       hide_archived_tasks:
         one: "Nascondi 1 compito archiviato"
         other: "Nascondi {{count}} compiti archiviati"
@@ -584,7 +581,9 @@ it:
       archive: "archive this task list"
       rename: "Rename task list"
       set_dates: "Set the start & end date"
-      show_archived: "View {{count}} archived tasks"
+      show_archived:
+        one: "Mostra 1 compito archiviato"
+        other: "Mostra {{count}} compiti archiviati"
     fields:
       #####
       task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
@@ -825,8 +824,6 @@ it:
       unarchived_tasks: "Compiti non archiviati"
       my_tasks: "I miei compiti ({{count}})"
       everybodys_tasks: "Compiti di tutti"
-      show_archived_tasks: "Mostra {{count}} compiti archiviati"
-      hide_archived_tasks: "Nascondi i compiti archiviati"
     footer:
       support: Problemi? Invia feedback!
       mobile: Versione mobile

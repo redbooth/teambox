@@ -32,6 +32,10 @@ class Comment < ActiveRecord::Base
     User.find_with_deleted(user_id)
   end
   
+  def can_modify?(current_user, limit=true)
+    can_edit?(current_user, limit) or can_destroy?(current_user, limit)
+  end
+  
   def can_edit?(current_user, limit=true)
     # Only the owner can edit their comment
     if self.user_id != current_user.id
@@ -49,9 +53,10 @@ class Comment < ActiveRecord::Base
   end
   
   def can_destroy?(current_user, limit=true)
-    if self.user_id != current_user.id
-      return false unless self.project.admin?(current_user)
-    end
+    # admins can remove at any time, users
+    # need to own the comment
+    return true if self.project.admin?(current_user)
+    return false if self.user_id != current_user.id
     
     return true unless limit
     

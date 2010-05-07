@@ -10,44 +10,48 @@ dependencies:
     group: 
     - :rails
     version: ~> 0.3.12
-  rails: 
+  pg: 
     group: 
-    - :rails
-    version: ~> 2.3.5
-    require: []
-
-  text-format: 
-    group: 
-    - :rails
-    version: ">= 0.6.3"
-    require: 
-    - text/format
+    - :default
+    version: ~> 0.9.0
   libxml-ruby: 
     group: 
     - :default
     version: ~> 1.1.3
     require: 
     - libxml
-  mysql: 
-    group: 
-    - :default
-    version: ~> 2.8.1
-  SystemTimer: 
-    group: 
-    - :default
-    version: ~> 1.2.0
-    require: 
-    - system_timer
-  memcache-client: 
+  text-format: 
     group: 
     - :rails
-    version: ">= 1.7.4"
+    version: ">= 0.6.3"
+    require: 
+    - text/format
+  rails: 
+    group: 
+    - :rails
+    version: ~> 2.3.5
     require: []
 
   haml: 
     group: 
     - :default
     version: ~> 3.0.0.beta1
+  memcache-client: 
+    group: 
+    - :rails
+    version: ">= 1.7.4"
+    require: []
+
+  SystemTimer: 
+    group: 
+    - :default
+    version: ~> 1.2.0
+    require: 
+    - system_timer
+  mysql: 
+    group: 
+    - :default
+    version: ~> 2.8.1
   sprockets-rails: 
     group: 
     - :plugins
@@ -68,16 +72,16 @@ dependencies:
     version: ~> 0.1.2
     require: 
     - acts_as_list
-  tmail: 
-    group: 
-    - :rails
-    version: ~> 1.2.3
   whenever: 
     group: 
     - :default
     version: ~> 0.4.1
     require: []
 
+  tmail: 
+    group: 
+    - :rails
+    version: ~> 1.2.3
   rspec-rails: 
     group: 
     - :testing
@@ -110,14 +114,14 @@ dependencies:
     group: 
     - :testing
     version: ~> 0.2.1
-  rdiscount: 
-    group: 
-    - :default
-    version: ~> 1.6.3
   i18n: 
     group: 
     - :rails
     version: ">= 0.1.3"
+  rdiscount: 
+    group: 
+    - :default
+    version: ~> 1.6.3
   hpricot: 
     group: 
     - :default
@@ -166,7 +170,7 @@ specs:
 - calendar_date_select: 
     version: 1.16.1
 - culerity: 
-    version: 0.2.9
+    version: 0.2.10
 - nokogiri: 
     version: 1.4.1
 - rack-test: 
@@ -174,9 +178,9 @@ specs:
 - ffi: 
     version: 0.6.3
 - json_pure: 
-    version: 1.2.4
+    version: 1.4.2
 - selenium-webdriver: 
-    version: 0.0.17
+    version: 0.0.18
 - capybara: 
     version: 0.3.7
 - rubyforge: 
@@ -204,29 +208,31 @@ specs:
 - factory_girl: 
     version: 1.2.4
 - haml: 
-    version: 3.0.0.beta.3
+    version: 3.0.0.rc.1
 - hpricot: 
     version: 0.8.2
 - i18n: 
-    version: 0.3.6
+    version: 0.3.7
 - icalendar: 
-    version: 1.1.3
+    version: 1.1.4
 - libxml-ruby: 
     version: 1.1.3
 - linecache: 
     version: "0.43"
 - memcache-client: 
-    version: 1.8.2
+    version: 1.8.3
 - mysql: 
     version: 2.8.1
 - paperclip: 
     version: 2.3.1.1
+- pg: 
+    version: 0.9.0
 - pickle: 
-    version: 0.2.8
+    version: 0.2.10
 - rails: 
     version: 2.3.5
 - rdiscount: 
-    version: 1.6.3
+    version: 1.6.3.1
 - rspec: 
     version: 1.3.0
 - rspec-rails: 
@@ -248,10 +254,10 @@ specs:
 - tmail: 
     version: 1.2.7.1
 - tzinfo: 
-    version: 0.3.19
+    version: 0.3.20
 - whenever: 
-    version: 0.4.1
-hash: 38bc99b5d418e31bbd105cc90ebf012674c413eb
+    version: 0.4.2
+hash: 22752c905aaf90ddb1820fca16e70676051d7933
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org

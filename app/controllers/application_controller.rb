@@ -91,6 +91,15 @@ class ApplicationController < ActionController::Base
       I18n.locale = logged_in? ? current_user.language : get_browser_locale
     end
     
+    def fragment_cache_key(key)
+      super(key).tap { |str|
+        str << "_#{I18n.locale}"
+        if logged_in? and current_user.time_zone?
+          str << "-#{current_user.time_zone.gsub(/\W/,'')}"
+        end
+      }
+    end
+    
     def get_browser_locale
       preferred_locale = nil
 
@@ -149,7 +158,7 @@ class ApplicationController < ActionController::Base
     def set_client
       mobile =   request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][MobileClients]
       mobile ||= request.env["HTTP_PROFILE"] || request.env["HTTP_X_WAP_PROFILE"]
-      if mobile
+      if mobile and request.format == :html
         request.format = :m
       end
     end
@@ -194,6 +203,25 @@ class ApplicationController < ActionController::Base
         end
       else
         super(opts, extra_options, &block)
+      end
+    end
+    
+    def handle_api_error(f,object)
+      error_list = object.nil? ? [] : object.errors
+      f.xml  { render :xml => error_list.to_xml,     :status => :unprocessable_entity }
+      f.json { render :as_json => error_list.to_xml, :status => :unprocessable_entity }
+      f.yaml { render :as_yaml => error_list.to_xml, :status => :unprocessable_entity }
+    end
+    
+    def handle_api_success(f,object,is_new=false)
+      if is_new
+        f.xml  { render :xml => object.to_xml, :status => :created }
+        f.json { render :as_json => object.to_xml, :status => :created }
+        f.yaml { render :as_yaml => object.to_xml, :status => :created }
+      else
+        f.xml  { head :ok }
+        f.json { head :ok }
+        f.yaml { head :ok }
       end
     end
     

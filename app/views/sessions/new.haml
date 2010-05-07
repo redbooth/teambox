@@ -5,10 +5,5 @@
   = session_fields
   = submit_tag t('.submit')
 
-%h3= t('.video')
-= '<object width="480" height="295"><param name="movie" value="http://www.youtube.com/v/59PBVuLX4wo&hl=es_ES&fs=1&rel=0&hd=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/59PBVuLX4wo&hl=es_ES&fs=1&rel=0&hd=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed></object>'
-
-= javascript_tag("$('new_session').auto_focus();")
-
 - content_for :column do
   = latest_announcement

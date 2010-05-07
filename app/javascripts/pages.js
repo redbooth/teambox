@@ -89,6 +89,26 @@ var Page = {
 	});		
   },
 
+  insertWidget: function(widget_id, pos, element_id, content) {
+    var el = $(element_id);
+    var opts = {};
+    if (!el) {
+      // fallback: before/after == top/bottom
+      el = $('slots');
+      if (pos == 'before')
+        opts['top'] = content;
+      else if (pos == 'after')
+        opts['bottom'] = content;
+      else
+        opts[pos] = content; // 0_0;
+    } else {
+      opts[pos] = content;
+    }
+
+    el.insert(opts);
+    new Effect.Highlight(widget_id, {duration:3});
+  },
+
   refreshEvents: function() {
     Event.addBehavior.reload();
   },
@@ -180,7 +200,6 @@ var InsertionBar = {
     }
 
     this.hide();
-    el.auto_focus();
     return el;
   },
 
