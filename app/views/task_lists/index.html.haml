@@ -15,7 +15,7 @@
   #task_lists{:reorder_url => project_reorder_task_lists_path(@current_project)}
     = render_task_lists(@current_project,@task_lists,@sub_action)
 
-  = task_list_primer(@current_project, !@task_lists.empty?)
+  = task_list_primer(@current_project, @task_lists.any?)
   
   - content_for :column do
     = task_list_column(@current_project,@task_lists,@sub_action,@task_list)
@@ -32,3 +32,5 @@
     %h2= t('.other_views')
     = subscribe_to_calendars_link
     = print_task_lists_link
+
+    = javascript_tag "$('filter_assigned')[1].selected = 'selected'; Filter.updateFilters()"

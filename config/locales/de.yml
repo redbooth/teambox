@@ -17,6 +17,9 @@ de:
     print: Seite drucken
     prev: Previous
     next: Next
+    tasks:
+      one: 1 Aufgabe
+      other: "{{count}} Aufgaben"
     comment:
       one: "{{count}} Kommentar"
       other: "{{count}} Kommentare"

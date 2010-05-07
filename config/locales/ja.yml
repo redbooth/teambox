@@ -17,6 +17,9 @@ ja:
     print: このページを印刷する
     prev: Previous
     next: Next
+    tasks:
+      one: 1 task
+      other: "{{count}} tasks"
     comment:
       one: "{{count}} 個のコメント"
       other: "{{count}} 個のコメント"

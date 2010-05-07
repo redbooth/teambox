@@ -17,6 +17,9 @@ it:
     print: Stampa la pagina
     prev: Previous
     next: Next
+    tasks:
+      one: 1 compito
+      other: "{{count}} compiti"
     comment:
       one: "{{count}} commento"
       other: "{{count}} commenti"

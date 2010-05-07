@@ -17,6 +17,9 @@ es:
     print: Imprimir esta página
     prev: Anterior
     next: Siguiente
+    tasks:
+      one: 1 tarea
+      other: "{{count}} tareas"
     comment:
       one: "{{count}} comentario"
       other: "{{count}} comentarios"

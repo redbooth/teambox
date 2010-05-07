@@ -1,25 +1,26 @@
+- if @sub_action == 'archived'
+  = list_archived_projects(@archived_projects)
+- else
+  - if @pending_projects.any?
+    .invitations
+      = list_pending_invites(@pending_projects)
+
+  - if @activities.any? or @projects.any?
+    %h2
+      = t('.title')
+      %span= t('.refreshes')
+    #activities
+      = list_activities(@activities)
+      = show_more_button(@activities)
+    = javascript_tag autorefresh(@activities)
+
 - content_for :column do
   = new_project_link
-  = my_tasks(current_user.assigned_tasks(:all))
-  = list_projects(@projects)
+  = #my_tasks(current_user.assigned_tasks(:all))
   - unless @sub_action == 'archived'
-    = list_archived_projects(@archived_projects)
-
-  = subscribe_to_projects_link
-  = subscribe_to_calendars_link
-  = #print_projects_link
-
-- if @pending_projects.any?
-  .invitations
-    = list_pending_invites(@pending_projects)
-
-- unless @activities.empty? and @projects.empty?
-  %h2
-    = t('.title')
-    %span= t('.refreshes')
-  #activities
-    = list_activities(@activities)
-    = show_more_button(@activities)
-  = javascript_tag autorefresh(@activities)
-- else
-  = project_primer unless @sub_action == 'archived'
+    = list_projects(@projects)
+    - if @archived_projects.any?
+      = link_to t('.archived', :count => @archived_projects.size), project_archived_path, :id => 'project_archived_link'
+    = subscribe_to_projects_link
+    = subscribe_to_calendars_link
+    = #print_projects_link

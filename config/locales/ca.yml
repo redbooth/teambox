@@ -17,6 +17,9 @@ ca:
     print: Imprimir aquesta pàgina
     prev: Previous
     next: Next
+    tasks:
+      one: 1 tasca
+      other: "{{count}} tasques"
     comment:
       one: "{{count}} comentari"
       other: "{{count}} comentaris"

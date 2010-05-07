@@ -17,6 +17,9 @@ fr:
     print: Imprimer cette page
     prev: Précédent
     next: Suivant
+    tasks:
+      one: 1 tâche
+      other: "{{count}} tâches"
     comment:
       one: "{{count}} commentaire"
       other: "{{count}} commentaires"

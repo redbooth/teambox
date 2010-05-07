@@ -1,9 +1,11 @@
 <div class="global_navigation"><%  
-render_tabnav :global do 
+render_tabnav :global do
   add_tab do |t|
-    t.named "#{current_user.login}"
-    t.links_to user_path(:id => current_user.id)
-    t.highlights_on :controller => :users, :action => :show
+    my_task_count = current_user.assigned_tasks_count
+    display = current_user.login
+    display << " (#{t('common.tasks', :count => my_task_count)})" if my_task_count > 0
+    t.named display
+    t.links_to task_lists_path(:assigned_to => :mine)
     t.tab_index = '50'
   end
   

@@ -17,6 +17,9 @@ ru:
     print: Распечатать страницу
     prev: Previous
     next: Next
+    tasks:
+      one: 1 task
+      other: "{{count}} tasks"
     comment:
       one: "{{count}} комментарий"
       other: "{{count}} комментариев"

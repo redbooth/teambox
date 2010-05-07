@@ -206,6 +206,13 @@ class User < ActiveRecord::Base
       sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
   end
 
+  def assigned_tasks_count
+    people.map { |person| person.project.tasks }.flatten.
+      select { |task| task.active? }.
+      select { |task| task.assigned_to?(self) }.
+      count
+  end
+
   def tasks_for_daily_reminder_email
     return {} if [0, 6].include?(Date.today.wday)
     assigned_tasks = assigned_tasks(:all)
