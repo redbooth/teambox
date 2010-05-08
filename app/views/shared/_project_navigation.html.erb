@@ -65,8 +65,12 @@ render_tabnav :project do
         t.tab_index = 152
       end
 
-      add_tab do |t|
-        t.named t('.pages')
+      add_tab(:html => {:id => 'pages_tab',
+                        :class => 'nav_tab',
+                        :li_class => 'nav_tab_container',
+                        :li_end => pages_tab_list(project, project.pages)
+      }) do |t|
+        t.named "#{t('.pages')} #{image_tag('triangle.png', :class => 'triangle')}"
         t.links_to  project_pages_path(project)
         t.highlights_on :controller => :pages
         t.tab_index = 153

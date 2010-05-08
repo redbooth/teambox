@@ -161,11 +161,7 @@ div.project_settings_navigation
     a
       border: dashed 1px rgb(230, 230, 230)
 
-#projects_tab
-  display: block
-  float: none
-
-#projects_tab_list
+ul.nav_tab_list
   z-index: 250
   li
     float: none
@@ -175,7 +171,7 @@ div.project_settings_navigation
     font-size: 12px
     a
       padding: 0px
-    a.proj
+    a.tab_item
       padding: 5px 5px
       width: 220px
     .quicklinks
@@ -188,7 +184,11 @@ div.project_settings_navigation
     .quicklinks
       display: block
 
-#projects_tab_container
+li.nav_tab_container
+  a.nav_tab
+    display: block
+    float: none
+    +rounded-bottom(0)
   ul
     float: left
     position: absolute
@@ -197,7 +197,11 @@ div.project_settings_navigation
     border: 2px solid #cccccc
     display: none
   &:hover
-    #projects_tab
+    #projects_tab,#pages_tab
       background-color: #cccccc
     ul
       display: block
+
+#pages_tab_container
+  ul
+

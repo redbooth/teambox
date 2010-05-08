@@ -17,6 +17,9 @@ ca:
     print: Imprimir aquesta pàgina
     prev: Previous
     next: Next
+    tasks:
+      one: 1 tasca
+      other: "{{count}} tasques"
     comment:
       one: "{{count}} comentari"
       other: "{{count}} comentaris"
@@ -756,7 +759,6 @@ ca:
       video: Breu introducció a Teambox
       submit: Entrar
       ####
-      activation: "You need to activate your account first"
       login_failed: "Couldn't log you in as {{login}}"
 
   email:

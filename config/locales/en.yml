@@ -17,6 +17,9 @@ en:
     print: Print this page
     prev: Previous
     next: Next
+    tasks:
+      one: 1 task
+      other: "{{count}} tasks"
     comment:
       one: "{{count}} comment"
       other: "{{count}} comments"
@@ -633,7 +636,7 @@ en:
       observer: Observer. Read-only access to the project.
       commenter: "Commenter. Can comment, but not create new elements."
       participant: "Participant. Can do everything, but not invite users."
-      admin: Admin. Can invite users to the project.
+      admin: "Admin. Can invite users to the project, and delete comments."
     header:
       owner: Project Owner
       observer: Observer
@@ -728,7 +731,6 @@ en:
       title: Login
       video: What's Teambox about?
       submit: Login
-      activation: "You need to activate your account first"
       login_failed: "Couldn't log you in as {{login}}"
 
   email:

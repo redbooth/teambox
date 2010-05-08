@@ -64,6 +64,7 @@ module TabnavHelper
       if tab.html[:li_class]      
         li_options[:class] = tab.html[:li_class] 
       end
+      tab.html.delete(:li_class)
         
       if tab.html[:li_end]
         tag_end = tab.html[:li_end]

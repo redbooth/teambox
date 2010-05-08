@@ -17,6 +17,9 @@ ja:
     print: このページを印刷する
     prev: Previous
     next: Next
+    tasks:
+      one: 1 task
+      other: "{{count}} tasks"
     comment:
       one: "{{count}} 個のコメント"
       other: "{{count}} 個のコメント"
@@ -731,7 +734,6 @@ ja:
       title: ログイン
       video: What's Teambox about?
       submit: ログイン
-      activation: "アカウントのアクティベートが必要です"
       login_failed: "{{login}}としてログインできませんでした"
 
   email:

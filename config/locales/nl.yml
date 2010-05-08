@@ -15,6 +15,9 @@ nl:
     save: Bewaren
     show_more: Toon {{number}} meer
     print: Print deze pagina
+    tasks:
+      one: 1 task
+      other: "{{count}} tasks"
     comment:
       one: "{{count}} reactie"
       other: "{{count}} reacties"

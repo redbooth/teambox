@@ -109,6 +109,12 @@ Factory.define :comment do |comment|
   comment.body 'Just finished posting this comment'
 end
 
+Factory.define :upload do |upload|
+  upload.asset_file_name 'pic.png'
+  upload.asset_file_size 42
+  upload.asset_content_type 'image/png'
+end
+
 Factory.define :page do |page|
   page.association(:user)
   page.association(:project)

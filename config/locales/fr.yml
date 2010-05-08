@@ -17,6 +17,9 @@ fr:
     print: Imprimer cette page
     prev: Précédent
     next: Suivant
+    tasks:
+      one: 1 tâche
+      other: "{{count}} tâches"
     comment:
       one: "{{count}} commentaire"
       other: "{{count}} commentaires"
@@ -737,7 +740,6 @@ fr:
       title: Entrer
       video: Teambox
       submit: Entrer
-      activation: "Vous devez d'abord activer votre compte"
       login_failed: "Impossible de vous connecter en tant que {{login}}"
 
   email:

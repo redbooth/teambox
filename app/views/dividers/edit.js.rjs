@@ -1,6 +1,10 @@
-page["divider_#{@divider.id}"].hide
-page.insert_html :after, "divider_#{@divider.id}", :partial => 'dividers/edit', :locals => { :divider => @divider }
-page << "$('edit_divider_#{@divider.id}').focusFirstElement()"
-page.reload_javascript_events
-page["loading_action_divider_#{@divider.id}"].remove
-page["edit_divider_#{@divider.id}_link"].show
+if @divider
+  page["divider_#{@divider.id}"].hide
+  page.insert_html :after, "divider_#{@divider.id}", :partial => 'dividers/edit', :locals => { :divider => @divider }
+  page << "$('edit_divider_#{@divider.id}').focusFirstElement()"
+  page.reload_javascript_events
+  page["loading_action_divider_#{@divider.id}"].remove
+  page["edit_divider_#{@divider.id}_link"].show
+else
+  page.alert t('common.not_allowed')
+end

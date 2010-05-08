@@ -17,6 +17,9 @@ it:
     print: Stampa la pagina
     prev: Previous
     next: Next
+    tasks:
+      one: 1 compito
+      other: "{{count}} compiti"
     comment:
       one: "{{count}} commento"
       other: "{{count}} commenti"
@@ -758,7 +761,6 @@ it:
       video: Breve introduzione a Teambox
       submit: Entra
       ####
-      activation: "You need to activate your account first"
       login_failed: "Couldn't log you in as {{login}}"
 
   email:

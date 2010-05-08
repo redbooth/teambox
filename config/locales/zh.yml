@@ -17,6 +17,9 @@ zh:
     print: 打印此页
     prev: 上一个
     next: 下一个
+    tasks:
+      one: 1 task
+      other: "{{count}} tasks"
     comment:
       one: "{{count}}条评论"
       other: "{{count}}条评价"
@@ -736,7 +739,6 @@ zh:
       title: 登录
       video: 什么是Teambox?
       submit: 登录
-      activation: "您需要首先激活您的帐号"
       login_failed: "不能作为{{login}}登录"
 
   email:
