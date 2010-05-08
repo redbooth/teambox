@@ -72,6 +72,10 @@ module PagesHelper
       :page => page }
   end
   
+  def pages_tab_list(project,pages)
+    render :partial => "shared/pages_dropdown", :locals => {:project => project, :pages => pages}
+  end
+  
   def page_slot_fields(formName=nil, slot=0, before=0)
     render :partial => 'pages/slot_fields', :locals => {:formName => formName, :pos_slot => slot, :pos_before => before}
   end

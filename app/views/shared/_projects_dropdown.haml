@@ -1,7 +1,7 @@
-%ul#projects_tab_list
+%ul#projects_tab_list.nav_tab_list
   - projects.each do |project|
     %li
-      = link_to(truncate(project.name, :length => 30), project_url(project), :class => 'proj')
+      = link_to(truncate(project.name, :length => 30), project_url(project), :class => 'tab_item')
       .quicklinks
         = quicklink_conversations(project)
         = quicklink_tasks(project)

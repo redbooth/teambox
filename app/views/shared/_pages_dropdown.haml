@@ -1,0 +1,4 @@
+%ul#pages_tab_list.nav_tab_list
+  - pages.each do |page|
+    %li
+      = link_to(truncate(page.name, :length => 30), project_page_url(project,page), :class => 'tab_item')
