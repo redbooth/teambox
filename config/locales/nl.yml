@@ -34,6 +34,9 @@ nl:
     create_upload: Het bestand is geupload
     create_conversation:
       create_conversation: Conversie is gestart
+    create_comment:
+      #####
+      create_comment: created the comment
     create_task_list:
       create_task_list: De takenlijst is aangemaakt
     create_task:

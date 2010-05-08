@@ -48,6 +48,9 @@ ca:
     create_upload: has pujat un arxiu
     create_conversation:
       create_conversation: has començat la conversa
+    create_comment:
+      #####
+      create_comment: created the comment
     create_task_list:
       create_task_list: has creat la llista de tasques
     create_task:

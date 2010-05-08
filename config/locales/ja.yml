@@ -45,6 +45,9 @@ ja:
     create_upload: ファイルをアップロードしました。
     create_conversation:
       create_conversation: チャットを開始しました。
+    create_comment:
+      #####
+      create_comment: created the comment
     create_task_list:
       create_task_list: タスクリストを作成しました。
     create_task:

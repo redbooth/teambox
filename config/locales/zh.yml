@@ -47,6 +47,9 @@ zh:
     create_upload: 上传新文件
     create_conversation:
       create_conversation: 开始新的话题
+    create_comment:
+      #####
+      create_comment: created the comment
     create_task_list:
       create_task_list: 创建新的任务列表
     create_task:

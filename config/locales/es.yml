@@ -46,6 +46,8 @@ es:
     create_upload: ha subido un archivo
     create_conversation:
       create_conversation: ha empezado la conversación
+    create_comment:
+      create_comment: ha creado el comentario
     create_task_list:
       create_task_list: ha creado la lista de tareas
     create_task:

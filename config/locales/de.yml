@@ -48,6 +48,9 @@ de:
     create_upload: Datei hochgeladen
     create_conversation:
       create_conversation: erstellte die Konversation
+    create_comment:
+      #####
+      create_comment: created the comment
     create_task_list:
       create_task_list: erstellte die Aufgabenliste
     create_task:

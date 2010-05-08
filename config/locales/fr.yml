@@ -47,6 +47,9 @@ fr:
     create_upload: a ajouté un fichier
     create_conversation:
       create_conversation: a créé la conversation
+    create_comment:
+      #####
+      create_comment: created the comment
     create_task_list:
       create_task_list: a créé la liste de tâches
     create_task:

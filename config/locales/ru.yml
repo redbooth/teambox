@@ -47,6 +47,9 @@ ru:
     create_upload: файл загружен
     create_conversation:
       create_conversation: "начинает обсуждение"
+    create_comment:
+      #####
+      create_comment: created the comment
     create_task_list:
       create_task_list: "создаёт список задач"
     create_task:

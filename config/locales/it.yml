@@ -49,6 +49,9 @@ it:
     create_upload: ha caricato un file
     create_conversation:
       create_conversation: ha iniziato la conversazione
+    create_comment:
+      #####
+      create_comment: created the comment
     create_task_list:
       create_task_list: ha creato la lista di compiti
     create_task:
