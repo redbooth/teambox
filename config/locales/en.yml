@@ -46,6 +46,8 @@ en:
     create_upload: uploaded a file
     create_conversation:
       create_conversation: started the conversation
+    create_comment:
+      create_comment: created the comment
     create_task_list:
       create_task_list: created the task list
     create_task:
