@@ -34,17 +34,6 @@ module UsersHelper
     end
   end
   
-  def clear_password_if_not_updated
-    update_page_tag do |page|
-      page['edit_user'].observe('submit') do |page|
-        page << "if ($('change_password_link').visible()) {"
-          page['user_password'].setValue('')
-          page['user_password_confirmation'].setValue('')
-        page << "}"
-      end
-    end
-  end
-  
   def user_rss_token(url)
     url + "?rss_token=#{current_user.rss_token}#{current_user.id}"
   end

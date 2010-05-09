@@ -8,10 +8,7 @@
   = render form
   .submit= submit_tag t('.submit')
 
-- case @sub_action
-- when 'settings'
-  = clear_password_if_not_updated
-- when 'profile'
+- if 'profile' == @sub_action
   - form_for current_user do |form|
     - form.fields_for :card do |card_form|
       - content_for :js_templates do
