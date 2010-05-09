@@ -92,17 +92,21 @@ class UsersController < ApplicationController
 
   def update
     @sub_action = params[:sub_action]
-    respond_to do |f|
-      if @current_user.update_attributes(params[:user])
-        I18n.locale = @current_user.language
-        flash[:success] = t('users.update.updated')
-        f.html { redirect_to account_settings_path }
-      else
-        flash[:error] = t('users.update.error')
-        f.html { render 'edit' }
-      end
+    success = current_user.update_attributes(params[:user])
+    
+    respond_to do |wants|
+      wants.html {
+        I18n.locale = current_user.language
+        
+        if success
+          back = polymorphic_url [:account, @sub_action]
+          redirect_to back, :success => t('users.update.updated')
+        else
+          flash.now[:error] = t('users.update.error')
+          render 'edit'
+        end
+      }
     end
-
   end
 
   def unconfirmed_email
