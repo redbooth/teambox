@@ -6,6 +6,7 @@ class NotesController < ApplicationController
     calculate_position
     
     @note = @page.build_note(params[:note])
+    @note.updated_by = current_user
     save_slot(@note) if @page.editable?(current_user) && @note.save
     
     respond_to do |f|
@@ -32,6 +33,8 @@ class NotesController < ApplicationController
   end
   
   def update
+    @note.updated_by = current_user
+    
     if @note.editable?(current_user) and @note.update_attributes(params[:note])
       respond_to do |f|
         f.js

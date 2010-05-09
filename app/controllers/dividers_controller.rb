@@ -6,6 +6,7 @@ class DividersController < ApplicationController
     calculate_position
     
     @divider = @page.build_divider(params[:divider])
+    @divider.updated_by = current_user
     save_slot(@divider) if @page.editable?(current_user) && @divider.save
     
     respond_to do |f|
@@ -32,7 +33,7 @@ class DividersController < ApplicationController
   end
   
   def update
-    if @divider.editable?(current_user) and @divider.update_attributes(params[:divider])
+    if @divider.editable?(current_user) and @divider.update_attributes(params[:divider].merge({:updated_by => current_user}))
       respond_to do |f|
         f.js
         handle_api_success(f, @divider)

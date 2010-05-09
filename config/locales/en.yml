@@ -59,6 +59,10 @@ en:
       create_page: created the page
     edit_page:
       edit_page: edited the page
+    create_note:
+      create_note: added note
+    edit_note:
+      edit_note: edited note
     create_person:
       create_person: was invited to the project
       by: by

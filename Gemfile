@@ -16,10 +16,13 @@ gem 'icalendar', '~> 1.1.3'
 gem 'libxml-ruby', '~> 1.1.3', :require => 'libxml'
 gem 'rdiscount', '~> 1.6.3'
 gem 'haml', '~> 3.0.0.beta1'
-gem 'mysql', '~> 2.8.1'
-gem 'pg', '~> 0.9.0'
 gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
 gem 'hpricot', '~> 0.8.2'
+
+group :database do
+  gem 'mysql', '~> 2.8.1'
+  gem 'pg', '~> 0.9.0'
+end
 
 group :plugins do
   gem 'sprockets-rails', '~> 0.0.1'
@@ -27,6 +30,7 @@ group :plugins do
   # gem 'acts_as_paranoid', '~> 0.3.1' # => too old!
   gem 'calendar_date_select', '~> 1.15'
   gem 'paperclip', '~> 2.3.1.1'
+  gem 'vestal_versions', '~> 1.0.2'
 end
 
 group :development do

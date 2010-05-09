@@ -3,6 +3,7 @@ class Divider < RoleRecord
   belongs_to :project
   has_one :page_slot, :as => :rel_object
   acts_as_paranoid
+  versioned
   
   before_destroy :clear_slot
 

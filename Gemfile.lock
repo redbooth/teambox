@@ -6,56 +6,60 @@ dependencies:
     version: ~> 0.10.3
     require: []
 
+  vestal_versions: 
+    group: 
+    - :plugins
+    version: ~> 1.0.2
   tzinfo: 
     group: 
     - :rails
     version: ~> 0.3.12
-  pg: 
-    group: 
-    - :default
-    version: ~> 0.9.0
-  libxml-ruby: 
-    group: 
-    - :default
-    version: ~> 1.1.3
-    require: 
-    - libxml
-  text-format: 
-    group: 
-    - :rails
-    version: ">= 0.6.3"
-    require: 
-    - text/format
   rails: 
     group: 
     - :rails
     version: ~> 2.3.5
     require: []
 
-  haml: 
-    group: 
-    - :default
-    version: ~> 3.0.0.beta1
-  memcache-client: 
+  text-format: 
     group: 
     - :rails
-    version: ">= 1.7.4"
-    require: []
-
+    version: ">= 0.6.3"
+    require: 
+    - text/format
+  libxml-ruby: 
+    group: 
+    - :default
+    version: ~> 1.1.3
+    require: 
+    - libxml
+  pg: 
+    group: 
+    - :database
+    version: ~> 0.9.0
+  sprockets-rails: 
+    group: 
+    - :plugins
+    version: ~> 0.0.1
+  mysql: 
+    group: 
+    - :database
+    version: ~> 2.8.1
   SystemTimer: 
     group: 
     - :default
     version: ~> 1.2.0
     require: 
     - system_timer
-  mysql: 
+  memcache-client: 
+    group: 
+    - :rails
+    version: ">= 1.7.4"
+    require: []
+
+  haml: 
     group: 
     - :default
-    version: ~> 2.8.1
-  sprockets-rails: 
-    group: 
-    - :plugins
-    version: ~> 0.0.1
+    version: ~> 3.0.0.beta1
   sqlite3-ruby: 
     group: 
     - :development
@@ -66,22 +70,22 @@ dependencies:
     group: 
     - :plugins
     version: ~> 1.15
-  acts-as-list: 
+  tmail: 
     group: 
-    - :plugins
-    version: ~> 0.1.2
-    require: 
-    - acts_as_list
+    - :rails
+    version: ~> 1.2.3
   whenever: 
     group: 
     - :default
     version: ~> 0.4.1
     require: []
 
-  tmail: 
+  acts-as-list: 
     group: 
-    - :rails
-    version: ~> 1.2.3
+    - :plugins
+    version: ~> 0.1.2
+    require: 
+    - acts_as_list
   rspec-rails: 
     group: 
     - :testing
@@ -114,28 +118,28 @@ dependencies:
     group: 
     - :testing
     version: ~> 0.2.1
-  i18n: 
-    group: 
-    - :rails
-    version: ">= 0.1.3"
   rdiscount: 
     group: 
     - :default
     version: ~> 1.6.3
-  hpricot: 
-    group: 
-    - :default
-    version: ~> 0.8.2
-  builder: 
+  i18n: 
     group: 
     - :rails
-    version: ~> 2.1.2
+    version: ">= 0.1.3"
   aws-s3: 
     group: 
     - :default
     version: ~> 0.6.2
     require: 
     - aws/s3
+  builder: 
+    group: 
+    - :rails
+    version: ~> 2.1.2
+  hpricot: 
+    group: 
+    - :default
+    version: ~> 0.8.2
   capybara: 
     group: 
     - :testing
@@ -178,7 +182,7 @@ specs:
 - ffi: 
     version: 0.6.3
 - json_pure: 
-    version: 1.4.2
+    version: 1.4.3
 - selenium-webdriver: 
     version: 0.0.18
 - capybara: 
@@ -193,22 +197,22 @@ specs:
     version: 0.3.1
 - diff-lcs: 
     version: 1.1.2
-- polyglot: 
-    version: 0.3.1
+- trollop: 
+    version: 1.16.2
+- gherkin: 
+    version: 1.0.25
 - term-ansicolor: 
     version: 1.0.5
-- treetop: 
-    version: 1.4.5
 - cucumber: 
-    version: 0.6.4
+    version: 0.7.2
 - cucumber-rails: 
-    version: 0.3.0
+    version: 0.3.1
 - database_cleaner: 
     version: 0.5.2
 - factory_girl: 
     version: 1.2.4
 - haml: 
-    version: 3.0.0.rc.1
+    version: 3.0.0.rc.5
 - hpricot: 
     version: 0.8.2
 - i18n: 
@@ -216,7 +220,7 @@ specs:
 - icalendar: 
     version: 1.1.4
 - libxml-ruby: 
-    version: 1.1.3
+    version: 1.1.4
 - linecache: 
     version: "0.43"
 - memcache-client: 
@@ -255,9 +259,11 @@ specs:
     version: 1.2.7.1
 - tzinfo: 
     version: 0.3.20
+- vestal_versions: 
+    version: 1.0.2
 - whenever: 
     version: 0.4.2
-hash: 22752c905aaf90ddb1820fca16e70676051d7933
+hash: 0f1d30c0569d4df919bebd90e6a2e2303c5040a0
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org

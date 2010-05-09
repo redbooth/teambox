@@ -3,6 +3,7 @@ class Note < RoleRecord
   belongs_to :project
   has_one :page_slot, :as => :rel_object
   acts_as_paranoid
+  versioned
   
   before_destroy :clear_slot
     
@@ -10,6 +11,14 @@ class Note < RoleRecord
     
   attr_accessor :deleted
   attr_accessible :body, :deleted, :name
+  
+  def before_create
+    project.log_activity(self, 'create', updated_by.id)
+  end
+  
+  def before_update
+    project.log_activity(self, 'edit', updated_by.id)
+  end
   
   def clear_slot
     page_slot.destroy
@@ -21,10 +30,6 @@ class Note < RoleRecord
   
   def to_s
     name
-  end
-  
-  def user
-    User.find_with_deleted(user_id)
   end
   
   def to_xml(options = {})
