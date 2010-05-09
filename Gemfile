@@ -31,6 +31,7 @@ group :plugins do
   gem 'calendar_date_select', '~> 1.15'
   gem 'paperclip', '~> 2.3.1.1'
   gem 'vestal_versions', '~> 1.0.2'
+  gem 'tolk', :git => 'git://github.com/mislav/tolk.git'
 end
 
 group :development do
