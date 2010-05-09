@@ -1,49 +1,63 @@
 --- 
 dependencies: 
+  vestal_versions: 
+    group: 
+    - :plugins
+    version: ~> 1.0.2
+  tzinfo: 
+    group: 
+    - :rails
+    version: ~> 0.3.12
   ruby-debug: 
     group: 
     - :development
     version: ~> 0.10.3
     require: []
 
-  tzinfo: 
+  mongrel: 
     group: 
-    - :rails
-    version: ~> 0.3.12
-  vestal_versions: 
-    group: 
-    - :plugins
-    version: ~> 1.0.2
-  pg: 
-    group: 
-    - :database
-    version: ~> 0.9.0
-  libxml-ruby: 
-    group: 
-    - :default
-    version: ~> 1.1.3
-    require: 
-    - libxml
-  text-format: 
-    group: 
-    - :rails
-    version: ">= 0.6.3"
-    require: 
-    - text/format
+    - :development
+    version: ~> 1.1.5
+    require: []
+
   rails: 
     group: 
     - :rails
     version: ~> 2.3.5
     require: []
 
-  haml: 
-    group: 
-    - :default
-    version: ~> 3.0.0.beta1
-  memcache-client: 
+  text-format: 
     group: 
     - :rails
-    version: ">= 1.7.4"
+    version: ">= 0.6.3"
+    require: 
+    - text/format
+  libxml-ruby: 
+    group: 
+    - :default
+    version: ~> 1.1.3
+    require: 
+    - libxml
+  pg: 
+    group: 
+    - :pg
+    version: ~> 0.9.0
+    require: []
+
+  sqlite3-ruby: 
+    group: 
+    - :development
+    version: ~> 1.2.5
+    require: []
+
+  sprockets-rails: 
+    group: 
+    - :plugins
+    version: ~> 0.0.1
+  mysql: 
+    group: 
+    - :mysql
+    version: ~> 2.8.1
     require: []
 
   SystemTimer: 
@@ -52,40 +66,36 @@ dependencies:
     version: ~> 1.2.0
     require: 
     - system_timer
-  mysql: 
+  memcache-client: 
     group: 
-    - :database
-    version: ~> 2.8.1
-  sprockets-rails: 
-    group: 
-    - :plugins
-    version: ~> 0.0.1
-  sqlite3-ruby: 
-    group: 
-    - :development
-    version: ~> 1.2.5
+    - :rails
+    version: ">= 1.7.4"
     require: []
 
+  haml: 
+    group: 
+    - :default
+    version: ~> 3.0.0.beta1
   calendar_date_select: 
     group: 
     - :plugins
     version: ~> 1.15
-  acts-as-list: 
+  tmail: 
     group: 
-    - :plugins
-    version: ~> 0.1.2
-    require: 
-    - acts_as_list
+    - :rails
+    version: ~> 1.2.3
   whenever: 
     group: 
     - :default
     version: ~> 0.4.1
     require: []
 
-  tmail: 
+  acts-as-list: 
     group: 
-    - :rails
-    version: ~> 1.2.3
+    - :plugins
+    version: ~> 0.1.2
+    require: 
+    - acts_as_list
   rspec-rails: 
     group: 
     - :testing
@@ -96,14 +106,14 @@ dependencies:
     group: 
     - :testing
     version: ~> 0.5.0
-  tolk: 
-    group: 
-    - :plugins
-    version: ">= 0"
   paperclip: 
     group: 
     - :plugins
     version: ~> 2.3.1.1
+  tolk: 
+    group: 
+    - :plugins
+    version: ">= 0"
   factory_girl: 
     group: 
     - :testing
@@ -122,28 +132,28 @@ dependencies:
     group: 
     - :testing
     version: ~> 0.2.1
-  i18n: 
-    group: 
-    - :rails
-    version: ">= 0.1.3"
   rdiscount: 
     group: 
     - :default
     version: ~> 1.6.3
-  hpricot: 
-    group: 
-    - :default
-    version: ~> 0.8.2
-  builder: 
+  i18n: 
     group: 
     - :rails
-    version: ~> 2.1.2
+    version: ">= 0.1.3"
   aws-s3: 
     group: 
     - :default
     version: ~> 0.6.2
     require: 
     - aws/s3
+  builder: 
+    group: 
+    - :rails
+    version: ~> 2.1.2
+  hpricot: 
+    group: 
+    - :default
+    version: ~> 0.8.2
   capybara: 
     group: 
     - :testing
@@ -191,6 +201,8 @@ specs:
     version: 0.0.18
 - capybara: 
     version: 0.3.7
+- cgi_multipart_eof_fix: 
+    version: 2.5.0
 - rubyforge: 
     version: 2.0.4
 - hoe: 
@@ -211,10 +223,16 @@ specs:
     version: 0.7.2
 - cucumber-rails: 
     version: 0.3.1
+- daemons: 
+    version: 1.0.10
 - database_cleaner: 
     version: 0.5.2
 - factory_girl: 
     version: 1.2.4
+- fastthread: 
+    version: 1.0.7
+- gem_plugin: 
+    version: 0.2.3
 - haml: 
     version: 3.0.0
 - hpricot: 
@@ -229,6 +247,8 @@ specs:
     version: "0.43"
 - memcache-client: 
     version: 1.8.3
+- mongrel: 
+    version: 1.1.5
 - mysql: 
     version: 2.8.1
 - paperclip: 
@@ -274,7 +294,7 @@ specs:
     version: 1.0.2
 - whenever: 
     version: 0.4.2
-hash: 76b7207f9959d7602585e5cd3ded7db5bec340a3
+hash: ee77615f059abff8b100e06108469a205f459a20
 sources: 
 - Git: 
     uri: git://github.com/mislav/tolk.git
