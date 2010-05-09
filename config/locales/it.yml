@@ -111,7 +111,7 @@ it:
       add_ims: Aggiungi una chat
       add_social_networks: Aggiungi un profilo
   users:
-    fields:
+    form:
       login: Nome utente
       first_name: Nome
       last_name: Cognome

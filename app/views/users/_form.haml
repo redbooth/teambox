@@ -1,3 +1,7 @@
+- f = form
+- user = form.object
+- sub_action = @sub_action
+
 - if user.new_record? or sub_action != nil
   - if user.new_record? or sub_action == 'settings'
     .login.text_field

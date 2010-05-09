@@ -110,7 +110,7 @@ ca:
       add_ims: Afegir Xat
       add_social_networks: Afegir Perfil
   users:
-    fields:
+    form:
       login: Nom d'usuari
       first_name: Nom
       last_name: Cognoms

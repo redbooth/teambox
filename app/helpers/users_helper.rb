@@ -5,28 +5,6 @@ module UsersHelper
       [user.name,
       content_tag(:span,"@#{user.login}", :class => 'login')].join('')
   end
-    
-  def user_navigation
-    render :partial => 'shared/user_navigation'
-  end
-
-  def user_fields(f,user,options={})
-    sub_action ||= options[:sub_action]
-    invite ||= options[:invite]
-    render :partial => 'users/fields', 
-      :locals => { 
-        :f => f,
-        :user => user,
-        :invite => invite,
-        :sub_action => sub_action }
-  end
-
-  def edit_avatar(f,user)
-    render :partial => 'edit_avatar',
-      :locals => { 
-        :f => f,
-        :user => user }
-  end
 
   def user_link(user)
     if user.name.blank?

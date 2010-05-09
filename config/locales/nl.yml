@@ -96,7 +96,7 @@ nl:
       add_ims: IM toevoegen
       add_social_networks: Sociale Netwer toevoegen
   users:
-    fields:
+    form:
       login: Gebruikersnaam
       first_name: Voornaam
       last_name: Achternaam

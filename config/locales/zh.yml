@@ -109,7 +109,7 @@ zh:
       add_ims: 添加即时通讯
       add_social_networks: 添加社会网络
   users:
-    fields:
+    form:
       login: 用户名
       first_name: 姓
       last_name: 名

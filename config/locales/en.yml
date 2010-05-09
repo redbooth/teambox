@@ -117,7 +117,7 @@ en:
       add_ims: Add IM
       add_social_networks: Add Social Network
   users:
-    fields:
+    form:
       login: Username
       first_name: First name
       last_name: Last name

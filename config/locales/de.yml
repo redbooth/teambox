@@ -110,7 +110,7 @@ de:
       add_ims: "IM hinzufügen"
       add_social_networks: "Soziale Netwerke hinzufügen"
   users:
-    fields:
+    form:
       login: Benutzername
       first_name: Vorname
       last_name: Nachname

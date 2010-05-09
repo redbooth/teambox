@@ -107,7 +107,7 @@ es:
       add_ims: Añadir Chat
       add_social_networks: Añadir perfil
   users:
-    fields:
+    form:
       login: Nombre de usuario
       first_name: Nombre
       last_name: Apellidos

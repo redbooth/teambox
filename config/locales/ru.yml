@@ -109,7 +109,7 @@ ru:
       add_ims: Добавить адрес мгновенных сообщений
       add_social_networks: Добавить социальную сеть
   users:
-    fields:
+    form:
       login: Логин
       first_name: Имя
       last_name: Фамилия

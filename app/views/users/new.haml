@@ -9,8 +9,8 @@
 - else
   %p= t('.existing_user', :login_url => login_path, :forgot_url => forgot_password_path)
 
-  - form_for @user do |f|
-    = user_fields(f, @user, :invite => @invite)
+  - form_for @user do |form|
+    = render form
     %br
     .submit
       = submit_tag t('.submit'), :tabindex => 300

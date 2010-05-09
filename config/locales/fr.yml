@@ -109,7 +109,7 @@ fr:
       add_ims: Ajouter Chat
       add_social_networks: Ajouter un profil
   users:
-    fields:
+    form:
       login: Nom d'utilisateur
       first_name: Prénom
       last_name: Nom
