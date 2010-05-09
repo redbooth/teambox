@@ -59,7 +59,6 @@ class User < ActiveRecord::Base
                   :language,
                   :first_day_of_week,
                   :card_attributes,
-                  :avatar,
                   :notify_mentions,
                   :notify_conversations,
                   :notify_task_lists,

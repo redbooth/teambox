@@ -48,4 +48,16 @@ module UsersHelper
   def user_rss_token(url)
     url + "?rss_token=#{current_user.rss_token}#{current_user.id}"
   end
+  
+  def avatar_or_gravatar(user, size)
+    user.avatar_or_gravatar_path(size, request.ssl?).tap do |url|
+      unless url.starts_with? 'http'
+        url.replace(root_url.chomp('/') + url)
+      end
+    end
+  end
+  
+  def gravatar_url
+    "<a href='http://gravatar.com'>Gravatar</a>"
+  end
 end
