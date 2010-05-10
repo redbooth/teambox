@@ -8,24 +8,24 @@
       = f.label :login, t('.login')
       = errors_for user, :login
       = f.text_field :login
-      = tooltip 'user_login', t('.tooltips.login')
+      - tooltip t('.tooltips.login')
   - if user.new_record? or sub_action == 'profile'
     .first_name.text_field
       = f.label :first_name, t('.first_name')
       = errors_for user, :first_name
       = f.text_field :first_name
-      = tooltip 'user_first_name', t('.tooltips.first_name')
+      - tooltip t('.tooltips.first_name')
     .last_name.text_field
       = f.label :last_name, t('.last_name')
       = errors_for user, :last_name
       = f.text_field :last_name
-    = tooltip 'user_last_name', t('.tooltips.last_name')
+    - tooltip t('.tooltips.last_name')
   - if user.new_record? or sub_action == 'settings'
     .email.text_field
       = f.label :email, t('.email')
       = errors_for user, :email
       = f.text_field :email
-      = tooltip 'user_email', t('.tooltips.email')
+      - tooltip t('.tooltips.email')
 
     - if @invitation
       .use_this_email{ :style => 'margin: 10px; padding: 10px; border: 1px rgb(220,220,150) solid; background-color: rgb(255,255,200)' }
@@ -42,7 +42,7 @@
       = f.password_field :password
       - unless sub_action == 'settings'
         = password_strength :password_strength, 'user_password'
-        = tooltip 'user_password', t('.tooltips.password')
+        - tooltip t('.tooltips.password')
     .password.text_field
       = f.label :password_confirmation, t('.confirm_password')
       = errors_for user, :password_confirmation
@@ -55,7 +55,7 @@
       .phone_number.text_field
         = phone.label :name, t('cards.field.add_phone_numbers')
         = phone.text_field :name
-        = tooltip 'user_card_attributes_phone_numbers_attributes_0_name', t('.tooltips.phone')
+        - tooltip t('.tooltips.phone')
 - else
   - if sub_action == 'settings'
     #change_password_link

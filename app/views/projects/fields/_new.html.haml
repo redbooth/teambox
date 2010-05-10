@@ -2,12 +2,12 @@
   = f.label :name, t('projects.fields.name')
   = errors_for project, :name
   = f.text_field :name
-  = tooltip 'project_name', t('projects.fields.name_description')
+  - tooltip t('projects.fields.name_description')
 .permalink.text_field
   = f.label :permalink, t('projects.fields.permalink')
   = errors_for project, :permalink
   = f.text_field :permalink
-  = tooltip 'project_permalink', t('projects.fields.permalink_description')
+  - tooltip t('projects.fields.permalink_description')
   .preview
     = host_with_protocol + projects_path + "/<span id='handle'></span>" 
 = watch_permalink_example

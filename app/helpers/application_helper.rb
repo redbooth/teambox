@@ -331,4 +331,9 @@ module ApplicationHelper
   def time_tracking_enabled?
     APP_CONFIG['allow_time_tracking'] || false
   end
+  
+  def tooltip(text)
+    haml_tag :p, h(text), :class => 'fyi'
+  end
+  
 end
