@@ -49,8 +49,8 @@ class Upload < RoleRecord
     'uploads/upload_slot'
   end
 
-  def before_create
-    project.log_activity(self, 'create', updated_by.id)
+  def after_create
+    project.log_activity(self, 'create', user.id)
   end
   
   def to_s
