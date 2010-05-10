@@ -1,5 +1,3 @@
-# Original translation
-# Mark missing translations by adding ##### at the end of the line
 zh:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "现在访问<a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile站点，法文和德文本地包及API</a>!"
@@ -17,9 +15,6 @@ zh:
     print: 打印此页
     prev: 上一个
     next: 下一个
-    tasks:
-      one: 1 task
-      other: "{{count}} tasks"
     comment:
       one: "{{count}}条评论"
       other: "{{count}}条评价"
@@ -40,8 +35,6 @@ zh:
   deleted:
     conversation: "已删除<b>{{name}}</b>话题"
     task: "已删除<b>{{name}}</b>任务"
-    #####
-    task_list: "Deleted <b>{{name}}</b> task list"
     page: "已删除<b>{{name}}</b>页面"
     upload: "已删除<b>{{name}}</b>文件"
     person: "{{name}}不再属于此项目"
@@ -50,9 +43,6 @@ zh:
     create_upload: 上传新文件
     create_conversation:
       create_conversation: 开始新的话题
-    create_comment:
-      #####
-      create_comment: created the comment
     create_task_list:
       create_task_list: 创建新的任务列表
     create_task:
@@ -136,7 +126,7 @@ zh:
         presence: "您不能上传空文件"
         max_size: "文件大小不能超过{{mb}}"
         we_have_this_avatar: "当前您的头像："
-        upload_here_or_at_gravatar: "您可以在这里上传新的头像，或上传到<a href='http://gravatar.com'>Gravatar</a>作为一个通用的头像，用于Teambox或其它网站。"
+        upload_here_or_at_gravatar: "您可以在这里上传新的头像，或上传到{{gravatar}}作为一个通用的头像，用于Teambox或其它网站。"
       tooltips:
         login: "您需要用户名才能登录。其他人通过用户名可以找到你。必须全为小写字母，不能有空格，可以使用下划线。"
         first_name: 最多20个字符.
@@ -146,7 +136,6 @@ zh:
     new:
       title: 创建新帐号
       submit: 创建帐号
-      ####
       no_public_signup: "此系统不允许公共注册。"
       you_are_logged_in: "您已经有一个帐号。请先注销，并使用另一个帐号登录。"
       existing_user: "如果您已经有一个帐号，请<a href='{{login_url}}'>登录</a>或者<a href='{{forgot_url}}'>找回密码</a>。"
@@ -411,8 +400,6 @@ zh:
       footer2: "因为话题是线程式的，它很容易回溯了解到某个文件已经发布，每个成员说过的内容。在Teambox中，<b>协作也是汇报的过程</b>."
     column:
       new_conversation: 新的话题
-      #####
-      cant_create: You don't have permission to create conversations in this project
       subscribe: 订阅动态反馈
     conversation_with_extract:
       posted_by: 发表者：
@@ -447,9 +434,6 @@ zh:
     fields:
       name: 有哪些任务需要完成？
       due_on: 需要在...之前完成 <i>(可选)</i>
-      ####
-      assigned_to: Who is responsible?
-      assigned_to_nobody: Nobody
     assigned:
       assigned_to: "分配给{{user}}"
     due_on:
@@ -554,8 +538,6 @@ zh:
       insert_here: 插入在这里
     column:
       new_page: 新增页面
-      #####
-      cant_create: You don't have permission to create pages in this project
   task_lists:
     errors:
       name:
@@ -564,15 +546,7 @@ zh:
     archived:
       title: 所有已存档的任务
       description: 您正在查看已存档的任务，这些任务已经被关闭。
-    ####
-    archive_box:
-      unarchive_list: This task list is archived.
     actions:
-      resolve_and_archive: "Resolve all tasks and archive"
-      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
-      archive: "archive this task list"
-      rename: "Rename task list"
-      set_dates: "Set the start & end date"
       show_archived:
         one: "显示一条已存档的任务"
         other: "显示{{count}}条已存档的任务"
@@ -581,24 +555,14 @@ zh:
       name: 任务列表名称
       start_on: 开始于... <i>可选</i>
       finish_on: 结束于... <i>可选</i>
-    ####
-    filter:
-      due_date: "Display tasks with due date..."
-      assigned_to: "Display tasks assigned to..."
     link:
       new: 创建任务列表
       edit: 编辑
       reorder: 重新排序
-      ####
-      reorder_done: Done reorder
-      unarchive: Unarchive
     index:
       add_link: 创建任务列表
       empty: 此目录中没有任务！
       tasks_for_all_projects: 所有项目的任务
-      ####
-      tasks_for_project: Task lists for this project
-      other_views: Other views
     primer:
       empty: 这个项目还没有任何话题。
       create_first: 在这个项目中创建第一个任务列表！
@@ -609,12 +573,6 @@ zh:
       item4: "<b>预览</b>. 已经完成的任务不会被删除，您可以在将来继续读取到这些消息和文件。"
       footer1: "任务是一个简单而敏捷的方式去<b>完成事情</b>，所以，马上使用它吧。"
       footer2: "是时候忘记Excel计划表和复杂的甘特图了！"
-    ####
-    overview_box:
-      this_list: "This task list"
-      starts_on: "Starts on:"
-      ends_on: "Ends on:"
-      undefined: "Undefined"
     new:
       title: 创建任务列表
       submit: 创建任务列表
@@ -622,10 +580,7 @@ zh:
       submit: 更新任务列表
     column:
       new_task_list: 创建任务列表
-      #####
-      cant_create: You don't have permission to create tasks in this project
       subscribe: 订阅动态反馈
-      other_views: Other views
     show:
       title: "任务列表: {{name}}"
     destroy_message:
@@ -666,13 +621,6 @@ zh:
       commented_on: "-"
       commented_on_a_task_list: "-"
       confirm_delete: 您确信要删除这条评论？
-      hours_hrs: "{{hours}}H"
-      ####
-      cannot_edit: "Comment cannot be edited after 15 minutes"
-    ####
-    hours:
-      add_hours: Hours
-      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: '未分配'
       assigned_to: "分配给:"
@@ -687,9 +635,6 @@ zh:
       cannot_update: 您没有权限更新此评论
     actions:
       confirm_delete: 您确认要删除此评论？
-      ####
-      convert_task: Convert to task
-      edit: Edit comment
   example_projects:
     new:
       learn: 通过例子学习！
@@ -706,8 +651,6 @@ zh:
       select_a_file: 选择文件
     index:
       new_file: 上传文件
-      #####
-      cant_create: You don't have permission to upload files to this project
       max_upload_size: "最大上传文件大小是{{mb}}Mb"
     form:
       presence: "您不能上传空文件"
@@ -747,7 +690,7 @@ zh:
 
   shared:
     strip:
-      archived: "此项目已经存档。要修改或评论此项目，你必须首先通过<a href='{{link}}'>项目设置页面</a>取消归档这个项目" ####
+      archived: "此项目已经存档。要修改或评论此项目，你必须首先通过<a href='{{link}}'>项目设置页面</a>取消归档这个项目"
     gantt_banner_primer:
       title: 在甘特图中没有需要显示的任务列表
     upcoming_events_primer:
@@ -1112,7 +1055,6 @@ zh:
         odd: "必须为单数"
         even: "必须为双数"
         record_invalid: "校验失败: {{errors}}"
-      ####
       models:
         comment:
           attributes:

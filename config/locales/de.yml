@@ -1,5 +1,4 @@
 # übersetzt von Armin Ziesmann
-# Mark missing translations by adding ##### at the end of the line
 de:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Now with <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile Site, French and German locales and API</a>!"
@@ -40,8 +39,6 @@ de:
   deleted:
     conversation: "Konversation <b>{{name}}</b> gelöscht"
     task: "Aufgabe <b>{{name}}</b> gelöscht"
-    #####
-    task_list: "Deleted <b>{{name}}</b> task list"
     task: "Aufgabe <b>{{name}}</b> gelöscht"
     page: "Seite <b>{{name}}</b> gelöscht"
     upload: "Datei <b>{{name}}</b> gelöscht"
@@ -52,8 +49,6 @@ de:
     create_conversation:
       create_conversation: erstellte die Konversation
     create_comment:
-      #####
-      create_comment: created the comment
     create_task_list:
       create_task_list: erstellte die Aufgabenliste
     create_task:
@@ -137,7 +132,7 @@ de:
         presence: "Sie können keine leere Datei hochladen"
         max_size: "Die Datei ist größer als {{mb}}"
         we_have_this_avatar: "Dies ist ihr momentaner Avatar: "
-        upload_here_or_at_gravatar: "Sie können hier einen neuen Avator hochladen, oder laden Sie ihren globalen Avatar zu der Adresse <a href='http://gravatar.com'>Gravatar</a>, um ihn für Teambox und für viele andere Webseiten zu benutzen."
+        upload_here_or_at_gravatar: "Sie können hier einen neuen Avator hochladen, oder laden Sie ihren globalen Avatar zu der Adresse {{gravatar}}, um ihn für Teambox und für viele andere Webseiten zu benutzen."
       tooltips:
         login: "Für die Anmeldung brauchen Sie einen Benutzernamen. Mitglieder können Sie über den Benutzernamen suchen. Der Benutzername darf nur aus Kleinbuchstaben bestehen. Leerzeichen sind nicht erlaubt. Sie können Unterstriche benutzen."
         first_name: Maximal 20 Zeichen.
@@ -214,7 +209,6 @@ de:
       tasks_without_a_due_date: "Aufgaben ohne Enddatum"
       you_receive_this_message: "Sie sind für den Email Dienst von Teambox angemeldet. Konfigurieren Sie Email Benachrichtigungen über Ihre {{link}}"
       settings_page: "Einstellungen"
-  ####
   groups:
     index:
       title: Gruppen
@@ -444,16 +438,8 @@ de:
         cant_be_blank: 'darf nicht leer sein'
         too_long: 'muss kürzer als 255 Zeichen sein'
     fields:
-      ####
-      title: New Task
-      task: "Choose an actionable task. The more specific, the better."
-      optional: You can provide better instructions for this Task below.
-      body: What needs to be done? <i>optional</i>
       name: "Was muss erledigt werden?"
       due_on: "Muss erledigt werden vor… (optional)"
-      ####
-      assigned_to: Who is responsible?
-      assigned_to_nobody: Nobody
     assigned:
       assigned_to: "Zugeordnet zu {{user}}"
     due_on:
@@ -567,9 +553,6 @@ de:
     archived:
       title: Alle archivierten Aufgaben
       description: "Sie sehen momentan alle archivierten Aufgaben. Diese sind geschlossen worden."
-    ####
-    archive_box:
-      unarchive_list: This task list is archived.
     actions:
       resolve_and_archive: "Resolve all tasks and archive"
       confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
@@ -580,32 +563,18 @@ de:
         one: "Zeige archivierte Aufgabe"
         other: "Zeige {{count}} archivierte Aufgaben"
     fields:
-      ####
-      title: New Task List
       task_list: "Eine Aufgabenliste definiert einen Meilenstein für Ihr Projekt. In einer Aufgabenliste können Sie Aufgaben erstellen und diese bestimmten Personen zuordnen."
       name: "Name der Aufgabenliste"
-      ####
-      optional: "If you starting and ending dates, this task will be displayed in the GANTT chart"
       start_on: Beginnt am... <i>optional</i>
       finish_on: Endet am... <i>optional</i>
-    ####
-    filter:
-      due_date: "Display tasks with due date..."
-      assigned_to: "Display tasks assigned to..."
     link:
       new: Neue Aufgabenliste
       edit: Bearbeiten
       reorder: Neu anordnen
-      ####
-      reorder_done: Done reorder
-      unarchive: Unarchive
     index:
       add_link: Neue Aufgabenliste
       empty: Keine Aufgaben in dieser Kategorie!
       tasks_for_all_projects: Projektübergreifende Aufgaben
-      #####
-      tasks_for_project: Task lists for this project
-      other_views: Other views
     primer:
       empty: Dieses Projekt hat bisher keine Aufgabenlisten.
       create_first: Erstellen Sie die erste Aufgabenliste in diesem Projekt!
@@ -616,12 +585,6 @@ de:
       item4: "<b>Nachvollziehen</b>. Eine beendete Aufgabe wird nicht gelöscht, damit Sie auch später noch auf die Nachrichten und Dateien zugreifen können."
       footer1: "Aufgaben sind ein einfacher und agiler Weg, um <b>Sachen zu erledigen</b> und das anderen mitzuteilen."
       footer2: "Es ist an der Zeit, die Excel Planungstabellen und komplexen GANTT-Charts abzulösen!"
-    ####
-    overview_box:
-      this_list: "This task list"
-      starts_on: "Starts on:"
-      ends_on: "Ends on:"
-      undefined: "Undefined"
     new:
       title: Neue Aufgabenliste
       submit: "Aufgabenliste hinzufügen"
@@ -676,10 +639,6 @@ de:
       confirm_delete: "Sind Sie sicher, dass Sie diesen Kommentar löschen wollen?"
       hours_hrs: "{{hours}} Std."
       cannot_edit: "Comment cannot be edited after 15 minutes"
-    ####
-    hours:
-      add_hours: Hours
-      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: 'Nicht zugeordnet'
       assigned_to: "Zugeordnet zu:"
@@ -694,9 +653,6 @@ de:
       cannot_update: "Sie haben keine Berechtigung, diesen Kommentare zu beabeiten"
     actions:
       confirm_delete: "Möchten Sie diesen Kommentar wirklich löschen?"
-      ####
-      convert_task: Convert to task
-      edit: Edit comment
   example_projects:
     new:
       learn: Lernen Sie an einem Beispiel!
@@ -713,7 +669,6 @@ de:
       select_a_file: "Wählen Sie eine Datei"
     index:
       new_file: Eine Datei hochladen
-      #####
       cant_create: "Sie haben keine Berechtigung, Dateien zu diesem Projekt zu laden."
       max_upload_size: "Maximale Anhang-Größe ist {{mb}} Mb"
     form:

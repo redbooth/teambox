@@ -1,5 +1,4 @@
 # Translated by ujifgc@gmail.com
-# Mark missing translations by adding ##### at the end of the line
 ru:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Теперь с <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Мобильным сайтом, французским и немецким интерфейсами и API</a>!"
@@ -15,11 +14,6 @@ ru:
     save: Сохранить
     show_more: Показать ещё {{number}}
     print: Распечатать страницу
-    prev: Previous
-    next: Next
-    tasks:
-      one: 1 task
-      other: "{{count}} tasks"
     comment:
       one: "{{count}} комментарий"
       other: "{{count}} комментариев"
@@ -40,8 +34,6 @@ ru:
   deleted:
     conversation: "Обсуждение <b>{{name}}</b> удалено"
     task: "Задача <b>{{name}}</b> удалена"
-    #####
-    task_list: "Deleted <b>{{name}}</b> task list"
     page: "Страница <b>{{name}}</b> удалена"
     upload: "Файл <b>{{name}}</b> удалён"
     person: "{{name}} больше не участвует в этом проекте"
@@ -50,9 +42,6 @@ ru:
     create_upload: файл загружен
     create_conversation:
       create_conversation: "начинает обсуждение"
-    create_comment:
-      #####
-      create_comment: created the comment
     create_task_list:
       create_task_list: "создаёт список задач"
     create_task:
@@ -124,7 +113,6 @@ ru:
       first_day_of_week: Начало недели
       change_password: Сменить пароль
       confirm_password: Подтвердить пароль
-      use_this_email: "У вас есть приглашения для участия в проектах на эту электронную почту. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
       notify_mentions: "Сообщать мне, если меня упоминают, например, Как дела @{{login}}! Вы получите сообщение!"
       notify_conversations: Уведомлять меня о сообщениях в отслеживаемом обсуждении
       notify_task_lists: Уведомлять меня об отслеживаемом списке задач
@@ -136,7 +124,7 @@ ru:
         presence: "Нельзя загружать пустой файл"
         max_size: "Нельзя загружать файл больше {{mb}}"
         we_have_this_avatar: "Аватар уже загружен:"
-        upload_here_or_at_gravatar: "Вы можете загрузить аватар здесь или на <a href='http://gravatar.com'>Gravatar</a>."
+        upload_here_or_at_gravatar: "Вы можете загрузить аватар здесь или на {{gravatar}}."
       tooltips:
         login: "Вам нужен логин, чтобы войти. Люди смогут найти вас по логину. Должен быть только маленькими латинскими буквами, без пробелов."
         first_name: До 20 символов.
@@ -445,9 +433,6 @@ ru:
     fields:
       name: Что нужно сделать?
       due_on: Нужно сделать перед... <i>(не обяз.)</i>
-      ####
-      assigned_to: Who is responsible?
-      assigned_to_nobody: Nobody
     assigned:
       assigned_to: "Назначена {{user}}"
     due_on:
@@ -561,15 +546,7 @@ ru:
     archived:
       title: Все архивные задачи
       description: Вы просматриваете архивные задачи.
-    ####
-    archive_box:
-      unarchive_list: This task list is archived.
     actions:
-      resolve_and_archive: "Resolve all tasks and archive"
-      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
-      archive: "archive this task list"
-      rename: "Rename task list"
-      set_dates: "Set the start & end date"
       show_archived:
         one: "Показать 1 архивную задачу"
         other: "Показать {{count}} архивных задач"
@@ -578,24 +555,14 @@ ru:
       name: Название списка задач
       start_on: Начало... <i>не обяз.</i>
       finish_on: Конец... <i>не обяз.</i>
-    ####
-    filter:
-      due_date: "Display tasks with due date..."
-      assigned_to: "Display tasks assigned to..."
     link:
       new: Новый список задач
       edit: Редактировать
       reorder: Сортировать
-      ####
-      reorder_done: Done reorder
-      unarchive: Unarchive
     index:
       add_link: Новый список задач
       empty: Нет задач в этой категории!
       tasks_for_all_projects: Задачи во всех проектах
-      ####
-      tasks_for_project: Task lists for this project
-      other_views: Other views
     primer:
       empty: В этом проекте пока нет списков задач.
       create_first: Создайте первый список задач в этом проекте!
@@ -606,12 +573,6 @@ ru:
       item4: "<b>Проверяйте</b>. Законченная задача не удаляется, вы можете просматривать сообщения и файлы задачи позднее."
       footer1: "Задачи — простой и гибкий способ <b>заставить вещи работать</b> и рассказать об этом другим."
       footer2: "Пора забыть экселевские таблички с планированием и сложные графики Гантта!"
-    ####
-    overview_box:
-      this_list: "This task list"
-      starts_on: "Starts on:"
-      ends_on: "Ends on:"
-      undefined: "Undefined"
     new:
       title: Новый список задач
       submit: Добавить список задач
@@ -665,12 +626,6 @@ ru:
       commented_on_a_task_list: "-"
       hours_hrs: "{{hours}}H"
       confirm_delete: Вы действительно хотите удалить этот комментарий?
-      ####
-      cannot_edit: "Comment cannot be edited after 15 minutes"
-    ####
-    hours:
-      add_hours: Hours
-      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: 'Не назначен'
       assigned_to: "Назначен:"
@@ -685,9 +640,6 @@ ru:
       cannot_update: У вас нет прав обновлять этот комментарий
     actions:
       confirm_delete: Вы действительно хотите удалить этот комментарий?
-      ####
-      convert_task: Convert to task
-      edit: Edit comment
   example_projects:
     new:
       learn: Учитесь на примере!

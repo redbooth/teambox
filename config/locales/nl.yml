@@ -1,5 +1,4 @@
 # Translated by Michael Koper
-# Mark missing translations by adding ##### at the end of the line
 nl:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Nu met <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobiele Site, Franse en Duitse locales en API</a>!" #TODO locales
@@ -37,9 +36,6 @@ nl:
     create_upload: Het bestand is geupload
     create_conversation:
       create_conversation: Conversie is gestart
-    create_comment:
-      #####
-      create_comment: created the comment
     create_task_list:
       create_task_list: De takenlijst is aangemaakt
     create_task:
@@ -123,7 +119,7 @@ nl:
         presence: "U kunt geen leeg bestand uploaden"
         max_size: "Bestandsgrootte mag niet meer zijn dan {{mb}}"
         we_have_this_avatar: "Dit is uw tijdelijke avatar:"
-        upload_here_or_at_gravatar: "U kunt hier een nieuwe avatar uploaden, of upload het naar<a href='http://gravatar.com'>Gravatar</a> voor een globale avatar die u kunt gebruiken bij Teambox en vele andere websites."
+        upload_here_or_at_gravatar: "U kunt hier een nieuwe avatar uploaden, of upload het naar {{gravatar}} voor een globale avatar die u kunt gebruiken bij Teambox en vele andere websites."
       tooltips:
         login: "U heeft een gebruikersnaam nodig om in te loggen. Leden kunnen u op uw gebruikersnaam vinden. De gebruikersnaam kan alleen bestaan uit kleine letters. Spaties zijn niet toegestaan. U kunt ook de underscore gebruiken."
         first_name: Maximaal 20 tekens.
@@ -341,7 +337,6 @@ nl:
       item3: "<b>Impress</b>. Elke reactie kan worden geformatteerd met tekststijlen."
       item4: "<b>Inbox-driven?</b> U kunt door middel van uw e-mail reacties plaatsen op conversaties."
       footer1: "Conversaties zijn goed voor <b>een ontwerp te delen</b>, <b>een datum te beslissen</b> voor bijeenkomsten of nieuws te <b>raporteren</b>."
-      footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>." #TODO
     column:
       new_conversation: Nieuwe Conversatie
       subscribe: Inschrijven voor de nieuwsfeed
@@ -476,14 +471,7 @@ nl:
     archived:
       title: Alle Gearchiveerde Taken
       description: U bent momenteel gearchiveerde taken aan het bekijken. Dit zijn taken die gesloten zijn.
-    archive_box:
-      unarchive_list: This task list is archived.
     action:
-      resolve_and_archive: "Resolve all tasks and archive"
-      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
-      archive: "archive this task list"
-      rename: "Rename task list"
-      set_dates: "Set the start & end date"
       show_archived:
         one: "Laat 1 gearchiveerde taak zien"
         other: "Laat {{count}} gearchiveerde taken zien"
@@ -548,9 +536,6 @@ nl:
       commented_on: "-"
       commented_on_a_task_list: "-"
       confirm_delete: Weet u zeker dat u deze reactie wilt verwijderen?
-      ####
-      hours_hrs: "{{hours}}H"
-      cannot_edit: "Comment cannot be edited after 15 minutes"
     new:
       assigned_to_nobody: 'Niet-toegewezen'
       assigned_to: "Toegewezen aan:" 
@@ -613,7 +598,7 @@ nl:
 
   shared:
     strip:
-      archived: "Dit project is gearchiveerd. Om dit project te wijzigen of reacties eraan te geven, moet u het eerst uit het archief halen in de <a href='{{link}}'>Project Instellingen pagina</a>" ####
+      archived: "Dit project is gearchiveerd. Om dit project te wijzigen of reacties eraan te geven, moet u het eerst uit het archief halen in de <a href='{{link}}'>Project Instellingen pagina</a>"
     gantt_banner_primer:
       title: Er zijn geen takenlijsten aan te tonen op de Gantt-Grafiek
     upcoming_events_primer:
@@ -641,7 +626,6 @@ nl:
       all_pages: Alle Paginas
       people: Personen
       pages: Paginas
-      time_tracking: Time Tracking
       login: Inloggen
       signup: Inschrijven
       files: Bestanden

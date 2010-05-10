@@ -1,5 +1,4 @@
 # Translated by David Niubò
-# Mark missing translations by adding ##### at the end of the line
 ca:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Novetats: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versió Mòbil, traducció al català i API</a>"
@@ -15,30 +14,17 @@ ca:
     save: Guardar
     show_more: "Veure {{number}} més"
     print: Imprimir aquesta pàgina
-    prev: Previous
-    next: Next
     tasks:
       one: 1 tasca
       other: "{{count}} tasques"
     comment:
       one: "{{count}} comentari"
       other: "{{count}} comentaris"
-    ####
-    not_allowed: You are not allowed to do that!
   confirm:
     delete_task_list: Segur que vols esborrar aquesta llista de tasques?
     delete_task: Segur que vols esborrar aquesta tasca?
     delete_page: Segur que vols esborrar aquesta pàgina?
     delete_upload: Segur que vols esborrar aquest arxiu?
-  ####
-  not_found:
-    user: "User does not exist."
-    conversation: "Conversation {{id}} not found in this project."
-    project: "The project {{id}} doesn't exist."
-    group: "The group {{id}} doesn't exist."
-    page: "Page {{id}} not found in this project."
-    task_list: "Task list {{id}} not found in this project."
-    task: "Task {{id}} not found in this project."
   deleted:
     conversation: "S'ha esborrat la conversa <b>{{name}}</b>"
     task: "S'ha esborrat la tasca <b>{{name}}</b>"
@@ -51,9 +37,6 @@ ca:
     create_upload: has pujat un arxiu
     create_conversation:
       create_conversation: has començat la conversa
-    create_comment:
-      #####
-      create_comment: created the comment
     create_task_list:
       create_task_list: has creat la llista de tasques
     create_task:
@@ -137,7 +120,7 @@ ca:
         presence: No pots pujar un fitxer buit
         max_size: "L'arxiu no pot ser més gran de {{mb}}"
         we_have_this_avatar: "Aquesta es la imatge que tenim de tu:"
-        upload_here_or_at_gravatar: "Pots pujar un nou avatar a Teambox, o crear un <a href='http://gravatar.com'>Gravatar</a> que pots utilitzar a Teambox i d'altres webs."
+        upload_here_or_at_gravatar: "Pots pujar un nou avatar a Teambox, o crear un {{gravatar}} que pots utilitzar a Teambox i d'altres webs."
       tooltips:
         login: "Pots utilitzar un nom d'usuari curt per entrar. Ha de ser en minuscules i sense espais. Pots utilitzar _."
         first_name: Fins a 20 caràcters.
@@ -147,12 +130,8 @@ ca:
     new:
       title: Crear un compte
       submit: Crear un compte
-      ####
-      no_public_signup: "Public signups are not allowed in this system."
       you_are_logged_in: "Ja tens un compte de Teambox. Si vols entrar com un altre usuari, tanca la sessió i intenta-ho de nou."
       existing_user: "Si ja tens un compte, <a href='{{login_url}}'>identifíca't</a> o <a href='{{forgot_url}}'>restableix la teva contrasenya</a>."
-      #####
-      you_already_have_an_account: "You already have a Teambox account for the address {{email}}. <a href='{{login_link}}'>Log in with this email</a> or <a href='{{reset_password_link}}'>reset your password</a> if you forgot it."
     create:
       thanks: ¡Gràcies per registrarte!
       error: "No hem pogur registrar aquest compte ¡ens sap greu! intenta-ho de nou."
@@ -216,59 +195,11 @@ ca:
       tasks_without_a_due_date: "Sense data"
       you_receive_this_message: "Pots deshabilitar aquest recordatori a la teva {{link}}"
       settings_page: "pàgina d'usuari"
-  ####
-  groups:
-    index:
-      title: Groups
-      groups_in: "Groups you are in"
-      your_group: "Your group"
-      no_groups: "You do not belong to any groups."
-      description: "Use groups to share resources with others, and to band together projects under a single name!"
-      submit_project: Add
-      remove_project: Remove
-    primer:
-      no_group_create: "You do not own a group. {{link}}."
-      create_group: "Create a group"
-    header:
-      leave: Leave
-      remove: Remove
-    logo_fields:
-      current: Current logo
-      delete: Remove
-      description: This logo will appear on all projects belonging to this group
-      upload: Upload
-    search:
-      username_or_email: Username or email
-      invite: Invite
-      invite_people: Invite people to the group
-    fields:
-      name: Name
-      description: Description
-      permalink: Permalink
-      permalink_description: Domain your group can be accessed from
-    new:
-      submit: Create
-      explain: You can only have one group.
-      title: Create group
-      created: Your group has been created
-    edit:
-      submit: Update
-    show:
-      edit: Edit
-      add_project: Add a project
-    ####
-    errors:
-      already_own: "You already own a group!"
-      not_enabled: "Groups are not enabled on this system"
-      not_admin: "You cannot admin this group"
-      no_edit: "You cannot edit this group"
   projects:
     index:
       title: Activitat en tots els teus projectes
       projects: Els meus projectes
       subscribe: Subscriu-te al feed d'activitats
-      #####
-      calendars: Calendar for all projects
       new_project: Cap Projecte
       refreshes: Actualiza't cada minut
       rss:
@@ -294,14 +225,10 @@ ca:
       people_in_project: Persones en aquest projecte
       subscribe: Subscriu-te en aquest projecte
       tip: "Si esmentes l'@usuari d'algú, rebran un email amb el teu missatge"
-      #####
-      calendar: Calendar for this project's tasks
       rss:
         title: "{{name}}"
         description: "Activitat recent per a {{name}}"
     fields:
-      ####
-      tracks_time: "Enable time tracking"
       archiving: Arxivar aquest projecte
       forever: Borrar permanentment aquest projecte
       owner: Propietari
@@ -332,8 +259,6 @@ ca:
       created: S´ha creat el projecte!
       invalid_project: "Projecte no vàlid, corregeix els errors i intenta-ho de nou."
       create_an_example_project: "És la teva primera vegada a Teambox? <a href='{{link}}'>Crea un projecte d'exemple</a> per experimentar i aprendre."
-      ####
-      not_allowed: "You can't create any projects with your current account."
     edit:
       title_settings: Preferències Generals
       title_picture: Logotip del Projecte
@@ -353,19 +278,11 @@ ca:
       resend: Reenviar l'email d'invitació
       pending: "S'ha enviat un email en aquest usuari, pero encara no ho ha confirmat"
       discard: Descartar invitació
-    ####
-    group_invitation:
-      invited_user: "{{inviter}} invited <b>{{invitee}}</b> to join the group."
-      invited_email: "{{inviter}} invited <b>{{email}}</b> to join the group."
     sent:
       email_sent: "<b>Hem enviat un email avisant l'usuari que accepti la teva invitació</b>. Si no poden trobar l'email, assegurat que no s´ha classificat com a spam. Si el problema persisteix, ens escrius un email."
     pending:
       to_access_or: per accedir al projecte o
-      ####
-      to_access_or_group: to access the group or
       invited_to_join: "{{by}} t´ha convidat a unir-te al projecte {{project}}."
-      ####
-      invited_to_join_group: "{{by}} has invited you to join the group {{group}}."
     resend:
       resent: "Hem reenviat la invitació a {{recipient}}. Si no poden trobar l'email, assegurat de que no s´ha classificat com a spam."
       return: Tornar enrere
@@ -377,16 +294,8 @@ ca:
       invite_people: Convidar usuaris al projecte
       invite: Buscar i convidar
       submit: Enviar
-      ####
-      role: "Select a role"
-      ####
-      invite_from_project: "Invite from Project"
     recent:
       invite: Convidar a {{username}}
-    ####
-    errors:
-      invalid: "Invalid invitation"
-      invalid_code: "Invalid invitation code"
   conversations:
     actions:
       confirm_delete: Estàs segur de voler esborrar aquesta conversa?
@@ -425,8 +334,6 @@ ca:
       footer2: "S'ordenen per fils, es fàcil tornar enrere en el temps i veure quins arxius es van enviar i què van dir els membres de l'equip. A Teambox, <b>col.laborar</b> genera una <b>traçabilitat</b> del que s'ha fet."
     column:
       new_conversation: Nova conversa
-      #####
-      cant_create: You don't have permission to create conversations in this project
       subscribe: Subscriu-te al feed
     conversation_with_extract:
       posted_by: Publicat per
@@ -438,30 +345,12 @@ ca:
     short_conversation:
       comment: resposta
       comments: respostes
-  ####
-  hours:
-    comments: Time Entries
-    filter_by: Filter by
-    report: Report
-    week_num: Week {{num}}
-    entry_hours: hrs
-    entry_total: Total
-    week_total: Total
-    all_tasks: All tasks
-    all_users: All users
-    reports:
-      user: Users
-      project: Projects
-      task: Tasks
-
   tasks:
     errors:
       name:
         cant_be_blank: El nom no pot estar buit
         too_long: El nom no pot superar els 255 caràcters
     fields:
-      name: "What needs to be done?" ######
-      due_on: Needs to be done before... <i>(optional)</i> #####
       assigned_to: Who is responsible?
       assigned_to_nobody: Nobody
     assigned:
@@ -568,8 +457,6 @@ ca:
       insert_here: Insertar Aquí
     column:
       new_page: Nova pàgina
-      #####
-      cant_create: You don't have permission to create pages in this project
   task_lists:
     errors:
       name:
@@ -578,9 +465,6 @@ ca:
     archived:
       title: Totes les tasques arxivades
       description: "Aquestes són les tasques arxivades, han estat completades o rebutjades"
-    ####
-    archive_box:
-      unarchive_list: This task list is archived.
     actions:
       resolve_and_archive: "Resolve all tasks and archive"
       confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
@@ -592,22 +476,10 @@ ca:
         other: "Hi ha {{count}} tasques arxivades"
     fields:
       title: New Task List
-      #####
-      task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
-      name: Task List name
-      start_on: Starts on... <i>optional</i>
-      finish_on: End on... <i>optional</i>
-    ####
-    filter:
-      due_date: "Display tasks with due date..."
-      assigned_to: "Display tasks assigned to..."
     link:
       new: Nova llista de tasques
       edit: Editar
       reorder: Reordenar
-      ####
-      reorder_done: Done reorder
-      unarchive: Unarchive
     index:
       add_link: Nova llista de tasques
       empty: No hi ha tasques en aquesta categoria
@@ -624,12 +496,6 @@ ca:
       item4: "<b>Revisa</b>. Una tasca completada no s'esborra, de manera que després pots veure que es va fer."
       footer1: "Es una manera sencilla i àgil de <b>conseguir fer el que et proposes</b> i fer-ho saber."
       footer2: "¡Ja és hora d'oblidar els plannings en Excel i els complexos diagrames GANTT!"
-    ####
-    overview_box:
-      this_list: "This task list"
-      starts_on: "Starts on:"
-      ends_on: "Ends on:"
-      undefined: "Undefined"
     new:
       title: Nova llista de tasques
       submit: Afegir
@@ -638,10 +504,7 @@ ca:
       submit: Actualitzar
     column:
       new_task_list: Nova llista de tasques
-      #####
-      cant_create: You don't have permission to create tasks in this project
       subscribe: Subscriu-te a les tasques
-      other_views: Other views
     show:
       title: "Llista de tasques: {{name}}"
     destroy_message:
@@ -653,11 +516,6 @@ ca:
       submit: Modificar
     fields:
       role: Rol
-      #####
-      observer: Observer. Read-only access to the project.
-      commenter: "Commenter. Can comment, but not create new elements."
-      participant: "Participant. Can do everything, but not invite users."
-      admin: Administrador. Can invite users to the project.
     header:
       owner: Propietari del projecte
       observer: Observador
@@ -668,19 +526,6 @@ ca:
       transfer: Transferir el projecte
       leave_project: Deixar el Projecte
       confirm_delete: Segur que vols esborrar a aquesta persona del projecte?
-    ####
-    errors:
-      user_or_email: "User not found. Enter his username or email."
-    column:
-      inviting: "Inviting other users"
-      only_admins_can_invite: "Only admins can invite people to this project."
-      contact_admins:
-        one: "In this project, only {{admins}} can invite new members."
-        other: "In this project, only {{admins}} can invite new members."
-      leaving: "Leaving the project"
-      you_can_leave: "You can leave this project at any moment. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
-      leave_project: "Leave this project"
-      confirm_delete: Are you sure you want to leave this project?
   comments:
     comment:
       commented_on: "-"
@@ -688,27 +533,12 @@ ca:
       confirm_delete: Segur que vols esborrar aquest comentari?
       hours_hrs: "{{hours}}H"
       cannot_edit: "Comment cannot be edited after 15 minutes"
-    ####
-    hours:
-      add_hours: Hours
-      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: Sense assignar
       assigned_to: "Assignat a:"
       submit: Publicar
-      project: "What are you doing? Share ideas, links, updates." #####
-      conversation: "Send a message to the rest of the group." #####
-      task_list: "Share ideas for this task list. To create and assign tasks, use the sidebar." #####
-      task: "Define what needs to be done by commenting. Assign this task to somebody. Post updates. Attach results." #####
     edit:
       submit: Guardar
-    ####
-    errors:
-      cannot_update: You do not have permission to update this comment
-    actions:
-      confirm_delete: Are you sure you want to delete this comment?
-      convert_task: Convert to task
-      edit: Edit comment
   example_projects:
     new:
       learn: Projecte Tutorial
@@ -717,9 +547,6 @@ ca:
       line3: "No oblidis <b>llegir les instruccions</b> i <b>experimentar</b> creant, editant i esborrant elements!"
       create: Crear el projecte tutorial
       line4: "En aquest projecte no podràs convidar a d'altres usuaris, però si pots fer tota la resta."
-      ####
-      error: "Could not create example project."
-      error_list: "Could not create example project. The following projects are invalid: {{list}}."
   uploads:
     comment_upload_link: Adjunto
     new:
@@ -758,8 +585,6 @@ ca:
       title: Entrar
       video: Breu introducció a Teambox
       submit: Entrar
-      ####
-      login_failed: "Couldn't log you in as {{login}}"
 
   email:
     user:
@@ -800,8 +625,6 @@ ca:
       signup: Crear compte
       files: Arxius
       invitations: Invitacions
-      ####
-      groups: Project Groups
     global_navigation:
       project_invitations: Invitacions
       home: Home
@@ -860,9 +683,6 @@ ca:
       teambox_is_a_pm_platform: "Teambox és una plataforma de gestió de projectes pensada per al món real."
       plan_share_and_collaborate: "Planifica, comparteix i estigues al dia del que s'ha fet. Tan fàcil com hauria de ser."
       report_abuse: "Aquest email t'ha arribat per petició del teu amic. Si hi hagut un intent d'abús, contacta'ns."
-    ####
-    invitation_group:
-      you_have_been_invited_to: "You have been invited to the group <b>{{group}}</b>"
     confirm:
       hey: "Hola, {{user_name}}!"
       follow_the_link: "Per a <b>completar el teu registre</b> a Teambox només has de seguir aquest enllaç:"
@@ -1130,19 +950,6 @@ ca:
         odd: "ha de ser senar"
         even: "ha de ser parell"
         record_invalid: "La validació ha fallat: {{errors}}"
-      ####
-      models:
-        comment:
-          attributes:
-            body:
-              no_body_generic: "Please write about what you have done in the box above."
-              no_body_task: "Please write about what you have done for this task in the box above."
-        conversation:
-          attributes:
-            body:
-              no_body_generic: "Please write a comment to start the conversation."
-            name:
-              no_title: "Please give this conversation a title"
 
   date:
     yesterday: Ahir

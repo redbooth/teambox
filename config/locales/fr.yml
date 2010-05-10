@@ -1,5 +1,4 @@
 # Translated by Diane Kurtsoglou
-# Mark missing translations by adding ##### at the end of the line
 fr:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Teambox est désormais disponible en français!"
@@ -39,8 +38,6 @@ fr:
     task: "La tâche {{id}} n'a pas été trouvée dans ce projet."
   deleted:
     conversation: "La conversation <b>{{name}}</b> a été effacée"
-    #####
-    task_list: "Deleted <b>{{name}}</b> task list"
     task: "La tâche <b>{{name}}</b> a été effacée"
     page: "La page <b>{{name}}</b> a été effacée"
     upload: "Le fichier <b>{{name}}</b> a été effacé"
@@ -50,9 +47,6 @@ fr:
     create_upload: a ajouté un fichier
     create_conversation:
       create_conversation: a créé la conversation
-    create_comment:
-      #####
-      create_comment: created the comment
     create_task_list:
       create_task_list: a créé la liste de tâches
     create_task:
@@ -136,7 +130,7 @@ fr:
         presence: "Il n'est pas possible de télécharger un fichier vide"
         max_size: "La taille du fichier ne peut pas excéder {{mb}} Mb"
         we_have_this_avatar: "Voici votre image d'utilisateur:"
-        upload_here_or_at_gravatar: "Ajoutez une nouvelle image ici ou créez un <a href='http://gravatar.com'>Gravatar</a> qui deviendra votre image de profil sur teambox."
+        upload_here_or_at_gravatar: "Ajoutez une nouvelle image ici ou créez un {{gravatar}} qui deviendra votre image de profil sur teambox."
       tooltips:
         login: "Vous pouvez utiliser un nom d'utilisateur court pour vous connecter. Il doit être en minuscules et sans espace. Vous pouvez utiliser _."
         first_name: Jusqu'à 20 caractères.
@@ -410,8 +404,6 @@ fr:
       footer2: "Etant ordonnées par fils, il est facile de retourner en arrière dans le temps pour voir quels fichiers ont été envoyés et ce qui a été dit par chaque membre de l'équipe. Dans Teambox, <b>collaborer</b> génère une <b>traçabilité</b> de ce qui a été fait."
     column:
       new_conversation: Nouvelle conversation
-      #####
-      cant_create: You don't have permission to create conversations in this project
       subscribe: Souscrivez au fil d'actualités
     conversation_with_extract:
       posted_by: Publié par
@@ -445,9 +437,6 @@ fr:
     fields:
       name: "Qu'est-ce qui a besoin d'être fait?"
       due_on: "Doit être fait avant... <i>(facultatif)</i>"
-      ####
-      assigned_to: Who is responsible?
-      assigned_to_nobody: Nobody
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:
@@ -552,8 +541,6 @@ fr:
       insert_here: Insérez Ici
     column:
       new_page: Nouvelle page
-      #####
-      cant_create: You don't have permission to create pages in this project
   task_lists:
     errors:
       name:
@@ -562,9 +549,6 @@ fr:
     archived:
       title: Toutes les tâches archivées
       description: "Ce sont les tâches archivées, qui ont été soit achevées soit annulées."
-    ####
-    archive_box:
-      unarchive_list: This task list is archived.
     actions:
       resolve_and_archive: "Resolve all tasks and archive"
       confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
@@ -579,17 +563,10 @@ fr:
       name: Nom de la Liste de Taches
       start_on: Débute le... <i>facultatif</i>
       finish_on: Fini le... <i>facultatif</i>
-    ####
-    filter:
-      due_date: "Display tasks with due date..."
-      assigned_to: "Display tasks assigned to..."
     link:
       new: Nouvelle liste de tâches
       edit: Editer
       reorder: Réordonner
-      ####
-      reorder_done: Done reorder
-      unarchive: Unarchive
     index:
       add_link: Nouvelle liste de tâches
       empty: Aucune tâche dans cette catégorie!
@@ -606,12 +583,6 @@ fr:
       item4: "<b>Revoyez</b>. Une tâche terminée ne s'efface pas, de façon à ce que vous puissiez ensuite revoir ce qui a été fait."
       footer1: "C'est une façon simple et habile de <b>faire les choses</b> et de le faire savoir."
       footer2: "Il est maintenant temps d'oublier les plannings sur Excel et les diagrammes de GANTT trop complexes!"
-    ####
-    overview_box:
-      this_list: "This task list"
-      starts_on: "Starts on:"
-      ends_on: "Ends on:"
-      undefined: "Undefined"
     new:
       title: Nouvelle liste de tâches
       submit: Ajouter
@@ -620,10 +591,7 @@ fr:
       submit: Actualiser
     column:
       new_task_list: Nouvelle liste de tâches
-      #####
-      cant_create: You don't have permission to create tasks in this project
       subscribe: Souscrivez à ces tâches
-      other_views: Other views
     show:
       title: "Liste de tâches: {{name}}"
     destroy_message:
@@ -635,11 +603,6 @@ fr:
       submit: Modifier
     fields:
       role: Rôle
-      #####
-      observer: Observer. Read-only access to the project.
-      commenter: "Commenter. Can comment, but not create new elements."
-      participant: "Participant. Can do everything, but not invite users."
-      admin: Administrador. Can invite users to the project.
     header:
       owner: Propiétaire du projet
       observer: Observateur
@@ -652,17 +615,6 @@ fr:
       confirm_delete: Êtes-vous sûr de vouloir éliminer cette personne du projet?
     errors:
       user_or_email: "Utilisateur introuvable. Entrez son nom d'utilisateur ou email."
-      #####
-    column:
-      inviting: "Inviting other users"
-      only_admins_can_invite: "Only admins can invite people to this project."
-      contact_admins:
-        one: "In this project, only {{admins}} can invite new members."
-        other: "In this project, only {{admins}} can invite new members."
-      leaving: "Leaving the project"
-      you_can_leave: "You can leave this project at any moment. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
-      leave_project: "Leave this project"
-      confirm_delete: Are you sure you want to leave this project?
   comments:
     comment:
       commented_on: "-"
@@ -670,10 +622,6 @@ fr:
       confirm_delete: Etes-vous sûr de vouloir effacer ce commentaire?
       hours_hrs: "{{hours}}H"
       cannot_edit: "Comment cannot be edited after 15 minutes"
-    ####
-    hours:
-      add_hours: Hours
-      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: 'Assignée à personne'
       assigned_to: "Assigné à:"
@@ -688,9 +636,6 @@ fr:
       cannot_update: Vous n'avez pas la permission de modifier ce commentaire
     actions:
       confirm_delete: Êtes vous sûr de vouloir effacer ce commentaire?
-      ####
-      convert_task: Convert to task
-      edit: Edit comment
   example_projects:
     new:
       learn: Apprenez par l'exemple
@@ -707,8 +652,6 @@ fr:
       select_a_file: Sélectionnez un fichier
     index:
       new_file: Télécharger un fichier
-      #####
-      cant_create: You don't have permission to upload files to this project
       max_upload_size: "La taille maximale est de {{mb}} Mb"
     form:
       presence: "Vous ne pouvez pas joindre un fichier vide"

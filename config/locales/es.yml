@@ -1,5 +1,4 @@
 # Translated by Pablo Villalba
-# Mark missing translations by adding ##### at the end of the line
 es:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Novedades: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versión Móvil, traducción al francés y alemán y API</a>"
@@ -134,7 +133,7 @@ es:
         presence: No puedes subir un fichero vacío
         max_size: "El archivo no puede ser mayor de {{mb}}"
         we_have_this_avatar: "Esta es la imagen que tenemos de ti:"
-        upload_here_or_at_gravatar: "Puedes subir un nuevo avatar en Teambox, o crear un <a href='http://gravatar.com'>Gravatar</a> que puedes usar en Teambox y otra webs."
+        upload_here_or_at_gravatar: "Puedes subir un nuevo avatar en Teambox, o crear un {{gravatar}} que puedes usar en Teambox y otra webs."
       tooltips:
         login: "Puedes usar un nombre de usuario corto para entrar. Debe ser en minúsculas y sin espacios. Puedes usar _."
         first_name: Hasta 20 caracteres.
@@ -443,9 +442,6 @@ es:
     fields:
       name: ¿Qué debe hacerse?
       due_on: Debe estar listo antes de... <i>(opcional)</i>
-      ####
-      assigned_to: Who is responsible?
-      assigned_to_nobody: Nobody
     assigned:
       assigned_to: "Responsable: {{user}}"
     due_on:

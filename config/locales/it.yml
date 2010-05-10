@@ -1,5 +1,4 @@
 # Translated by Valeria Franchi (Eosteam)
-# Mark missing translations by adding ##### at the end of the line
 it:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement: "Novità: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versione Mobile, traduzione in francese e tedesco API</a>"
@@ -23,27 +22,14 @@ it:
     comment:
       one: "{{count}} commento"
       other: "{{count}} commenti"
-    ####
-    not_allowed: You are not allowed to do that!
   confirm:
     delete_task_list: Sicuro di voler cancellare questa lista di compiti?
     delete_task: Sicuro di voler cancellare questo compito?
     delete_page: Sicuro di voler cancellare questa pagina?
     delete_upload: Sicuro di voler cancellare questo file?
-  ####
-  not_found:
-    user: "User does not exist."
-    conversation: "Conversation {{id}} not found in this project."
-    project: "The project {{id}} doesn't exist."
-    group: "The group {{id}} doesn't exist."
-    page: "Page {{id}} not found in this project."
-    task_list: "Task list {{id}} not found in this project."
-    task: "Task {{id}} not found in this project."
   deleted:
     conversation: "La conversazione <b>{{name}}</b> è stata cancellata"
     task: "Il compito <b>{{name}}</b> è stato cancellato"
-    #####
-    task_list: "Deleted <b>{{name}}</b> task list"
     page: "La pagina <b>{{name}}</b> è stata cancellata"
     upload: "Il file <b>{{name}}</b> è stato cancellato"
     person: "{{name}} non fa più parte del progetto"
@@ -52,9 +38,6 @@ it:
     create_upload: ha caricato un file
     create_conversation:
       create_conversation: ha iniziato la conversazione
-    create_comment:
-      #####
-      create_comment: created the comment
     create_task_list:
       create_task_list: ha creato la lista di compiti
     create_task:
@@ -138,7 +121,7 @@ it:
         presence: Non puoi caricare un file vuoto
         max_size: "Il file non può essere superiore di {{mb}}"
         we_have_this_avatar: "Questa è la tua immagine:"
-        upload_here_or_at_gravatar: "Puoi caricare un nuovo avatar in Teambox, o creare un <a href='http://gravatar.com'>Gravatar</a> che puoi usare in Teambox o in altri siti web."
+        upload_here_or_at_gravatar: "Puoi caricare un nuovo avatar in Teambox, o creare un {{gravatar}} che puoi usare in Teambox o in altri siti web."
       tooltips:
         login: "Puoi utilizzare un nome utente breve per loggarti. Deve essere in lettere minuscole e senza spazi. Puoi utilizzare _."
         first_name: Fino a 20 caratteri.
@@ -148,12 +131,8 @@ it:
     new:
       title: Crea un account
       submit: Crea account
-      ####
-      no_public_signup: "Public signups are not allowed in this system."
       you_are_logged_in: "Hai già un account di Teambox. Se voi entrare con un'altro utente, esci e riprova l'accesso."
       existing_user: "Se hai già un account, <a href='{{login_url}}'>entra</a> o <a href='{{forgot_url}}'>reimposta la tua password</a>."
-      #####
-      you_already_have_an_account: "You already have a Teambox account for the address {{email}}. <a href='{{login_link}}'>Log in with this email</a> or <a href='{{reset_password_link}}'>reset your password</a> if you forgot it."
     create:
       thanks: Grazie per esserti registrato!
       error: "Non è stato possible registrare l'account, siamo spiacenti! Ritenta."
@@ -215,60 +194,11 @@ it:
       tasks_for_next_two_weeks: "Compiti per le prossime due settimane"
       tasks_without_a_due_date: "Compiti senza scadenza"
       you_receive_this_message: "You receive this message because you signed up for it. You can disable it on your {{link}}"
-      settings_page: "settings page"
-  ####
-  groups:
-    index:
-      title: Groups
-      groups_in: "Groups you are in"
-      your_group: "Your group"
-      no_groups: "You do not belong to any groups."
-      description: "Use groups to share resources with others, and to band together projects under a single name!"
-      submit_project: Add
-      remove_project: Remove
-    primer:
-      no_group_create: "You do not own a group. {{link}}."
-      create_group: "Create a group"
-    header:
-      leave: Leave
-      remove: Remove
-    logo_fields:
-      current: Current logo
-      delete: Remove
-      description: This logo will appear on all projects belonging to this group
-      upload: Upload
-    search:
-      username_or_email: Username or email
-      invite: Invite
-      invite_people: Invite people to the group
-    fields:
-      name: Name
-      description: Description
-      permalink: Permalink
-      permalink_description: Domain your group can be accessed from
-    new:
-      submit: Create
-      explain: You can only have one group.
-      title: Create group
-      created: Your group has been created
-    edit:
-      submit: Update
-    show:
-      edit: Edit
-      add_project: Add a project
-    ####
-    errors:
-      already_own: "You already own a group!"
-      not_enabled: "Groups are not enabled on this system"
-      not_admin: "You cannot admin this group"
-      no_edit: "You cannot edit this group"
   projects:
     index:
       title: Attività in tutti i tuoi progetti
       projects: I miei progetti
       subscribe: Iscriviti al feed di attività
-      #####
-      calendars: Calendar for all projects
       new_project: Nuovo progetto
       refreshes: Aggiorna ogni minuto
       rss:
@@ -294,14 +224,10 @@ it:
       people_in_project: Persone in questo progetto
       subscribe: Iscriviti a questo progetto
       tip: "Se nomini l'@account di qualcuno, riceverà una mail con il tuo messaggio"
-      #####
-      calendar: Calendar for this project's tasks
       rss:
         title: "{{name}}"
         description: "Attività recenti per {{name}}"
     fields:
-      ####
-      tracks_time: "Enable time tracking"
       archiving: Archivia questo progetto
       forever: Elimina definitivamente questo progetto
       owner: "Proprietario"
@@ -332,8 +258,6 @@ it:
       created: Il progetto è stato creato!
       invalid_project: "Progetto non valido, correggi gli errori e riprova."
       create_an_example_project: "Questa è la tua prima volta in Teambox? <a href='{{link}}'>Crea un progetto di esempio</a> per sperimentare e imparare."
-      ####
-      not_allowed: "You can't create any projects with your current account."
     edit:
       title_settings: Preferenze Generali
       title_picture: Logo del Progetto
@@ -353,19 +277,11 @@ it:
       resend: Reinvia la mail d'invito
       pending: "E' stata inviata una mail a questo utente, però non ha ancora confermato"
       discard: Rifiuta l'invito
-    ####
-    group_invitation:
-      invited_user: "{{inviter}} invited <b>{{invitee}}</b> to join the group."
-      invited_email: "{{inviter}} invited <b>{{email}}</b> to join the group."
     sent:
       email_sent: "<b>Abbiamo inviato una mail avvisando l'utente di accettare il tuo invito</b>. Se non riesce a trovare la mail, assicurati che non sia stata classificata come spam. Se il problema persiste, scrivici una mail."
     pending:
       to_access_or: per accedere al progetto o
-      ####
-      to_access_or_group: to access the group or
       invited_to_join: "{{by}} ti ha invitato a unirti al progetto {{project}}."
-      ####
-      invited_to_join_group: "{{by}} has invited you to join the group {{group}}."
     resend:
       resent: "Abbiamo rimandato l'invito a {{recipient}}. Se non riesce a trovare la mail, assicurati che non sia stata classificata come spam."
       return: Indietro
@@ -377,16 +293,8 @@ it:
       invite_people: Invita utenti al progetto
       invite: Cerca e invita
       submit: Invia
-      ####
-      role: "Select a role"
-      ####
-      invite_from_project: "Invite from Project"
     recent:
       invite: Invita {{username}}
-    ####
-    errors:
-      invalid: "Invalid invitation"
-      invalid_code: "Invalid invitation code"
   conversations:
     actions:
       confirm_delete: Sei sicuro di voler cancellare questa conversazione?
@@ -406,7 +314,6 @@ it:
       subscribe_note: Queste persone verranno notificate via mail di questo messaggio e di tutti i commenti seguenti.<br/>Possono scegliere di smettere di seguire la conversazione in qualunque momento.
       invite_users: Sei l'unico utente in questo progetto!
       no_users_yet: "Conversare è più utile quando non lo fai da solo. <a href='{{invite_link}}'>Invita alcuni utenti</a> a questo progetto perchè possano leggere, commentare e ricevere aggiornamenti su questa conversazione."
-      people_all: "All people in project"
     edit:
       submit: Modifica la conversazione
     index:
@@ -425,8 +332,6 @@ it:
       footer2: "Essendo tutto collegato, è facile tornare indietro nel temppo e vedere quali file sono stati inviati e cosa ha detto ciascun membro del team. In Teambox, <b>collaborare</b> genera una <b>tracciabilità</b> di quel che si è fatto."
     column:
       new_conversation: Nuova conversazione
-      #####
-      cant_create: You don't have permission to create conversations in this project
       subscribe: Iscriviti al feed
     conversation_with_extract:
       posted_by: Pubblicato da
@@ -438,21 +343,6 @@ it:
     short_conversation:
       comment: risposta
       comments: risposte
-  ####
-  hours:
-    comments: Time Entries
-    filter_by: Filter by
-    report: Report
-    week_num: Week {{num}}
-    entry_hours: hrs
-    entry_total: Total
-    week_total: Total
-    all_tasks: All tasks
-    all_users: All users
-    reports:
-      user: Users
-      project: Projects
-      task: Tasks
 
   tasks:
     errors:
@@ -460,8 +350,6 @@ it:
         cant_be_blank: Il nome non può essere lasciato in bianco
         too_long: Il nome non può superare i 255 caratteri
     fields:
-      name: "What needs to be done?" ######
-      due_on: "Needs to be done before... <i>(optional)</i>" #####
       assigned_to: Who is responsible?
       assigned_to_nobody: Nobody
     assigned:
@@ -568,8 +456,6 @@ it:
       insert_here: Inserisci qui
     column:
       new_page: Nuova pagina
-      #####
-      cant_create: You don't have permission to create pages in this project
   task_lists:
     errors:
       name:
@@ -578,42 +464,17 @@ it:
     archived:
       title: Tutti i compiti archiviati
       description: "Questi sono i compiti archiviati, dopo essere stati completati o rifiutati."
-    ####
-    archive_box:
-      unarchive_list: This task list is archived.
     actions:
-      resolve_and_archive: "Resolve all tasks and archive"
-      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
-      archive: "archive this task list"
-      rename: "Rename task list"
-      set_dates: "Set the start & end date"
       show_archived:
         one: "Mostra 1 compito archiviato"
         other: "Mostra {{count}} compiti archiviati"
-    fields:
-      #####
-      task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
-      name: Task List name
-      start_on: Starts on... <i>optional</i>
-      finish_on: End on... <i>optional</i>
-    ####
-    filter:
-      due_date: "Display tasks with due date..."
-      assigned_to: "Display tasks assigned to..."
     link:
       new: Nuova lista di compiti
       edit: Edita
       reorder: Riordina
-      ####
-      reorder_done: Done reorder
-      unarchive: Unarchive
     index:
       add_link: Nuova lista di compiti
       empty: Non ci sono compiti in questa categoria
-      #####
-      tasks_for_all_projects: Tasks across all projects
-      tasks_for_project: Task lists for this project
-      other_views: Other views
     primer:
       empty: Non c'è ancora alcuna conversazione in questo progetto.
       create_first: Crea la prima lista di compiti!
@@ -624,12 +485,6 @@ it:
       item4: "<b>Revisiona</b>. Un compito completato non si cancella, di modo che puoi vedere sempre cosa è stato fatto."
       footer1: "E' una forma semplice e agile per <b>riuscire a fare quello che ti proponi</b> e farlo sapere."
       footer2: "E' ora che dimentichi i plannings in Excel e i complessi diagrammi GANTT!"
-    ####
-    overview_box:
-      this_list: "This task list"
-      starts_on: "Starts on:"
-      ends_on: "Ends on:"
-      undefined: "Undefined"
     new:
       title: Nuova lista di compiti
       submit: Aggiungi
@@ -638,10 +493,7 @@ it:
       submit: Aggiorna
     column:
       new_task_list: Nuova lista di compiti
-      #####
-      cant_create: You don't have permission to create tasks in this project
       subscribe: Iscriviti ai compiti
-      other_views: Other views
     show:
       title: "Lista di compiti: {{name}}"
     destroy_message:
@@ -653,11 +505,6 @@ it:
       submit: Modifica
     fields:
       role: Ruolo
-      #####
-      observer: Observer. Read-only access to the project.
-      commenter: "Commenter. Can comment, but not create new elements."
-      participant: "Participant. Can do everything, but not invite users."
-      admin: Administrador. Can invite users to the project.
     header:
       owner: Proprietario del progetto
       observer: Osservatore
@@ -668,48 +515,18 @@ it:
       transfer: Trasferisci il progetto
       leave_project: Lascia il Progetto
       confirm_delete: Sicuro di voler rimuovere questa persona dal pogetto?
-    ####
-    errors:
-      user_or_email: "User not found. Enter his username or email."
-    column:
-      inviting: "Inviting other users"
-      only_admins_can_invite: "Only admins can invite people to this project."
-      contact_admins:
-        one: "In this project, only {{admins}} can invite new members."
-        other: "In this project, only {{admins}} can invite new members."
-      leaving: "Leaving the project"
-      you_can_leave: "You can leave this project at any moment. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
-      leave_project: "Leave this project"
-      confirm_delete: Are you sure you want to leave this project?
   comments:
     comment:
       commented_on: "-"
       commented_on_a_task_list: "-"
       confirm_delete: Sicuro di voler rimuovere questo commento?
       hours_hrs: "{{hours}}H"
-      cannot_edit: "Comment cannot be edited after 15 minutes"
-    ####
-    hours:
-      add_hours: Hours
-      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: Senza assegnazione
       assigned_to: "Assegnato a:"
       submit: Pubblica
-      project: "What are you doing? Share ideas, links, updates." #####
-      conversation: "Send a message to the rest of the group." #####
-      task_list: "Share ideas for this task list. To create and assign tasks, use the sidebar." #####
-      task: "Define what needs to be done by commenting. Assign this task to somebody. Post updates. Attach results." #####
     edit:
       submit: Salva
-    ####
-    errors:
-      cannot_update: You do not have permission to update this comment
-    actions:
-      confirm_delete: Are you sure you want to delete this comment?
-      ####
-      convert_task: Convert to task
-      edit: Edit comment
   example_projects:
     new:
       learn: Progetto Tutorial
@@ -718,17 +535,12 @@ it:
       line3: "Non dimenticare di <b>leggere le istruzioni</b> e <b>sperimentare</b> creando, modificando e cancellando elementi!"
       create: Crea il progetto tutorial
       line4: "In questo progetto non potrai invitare altre persone, però puoi fare tutto il resto."
-      ####
-      error: "Could not create example project."
-      error_list: "Could not create example project. The following projects are invalid: {{list}}."
   uploads:
     comment_upload_link: Allegato
     new:
       select_a_file: Scegli un file
     index:
       new_file: Carica un file
-      #####
-      cant_create: You don't have permission to upload files to this project
       max_upload_size: "La dimensione massima di un file è di {{mb}} Mb"
     form:
       presence: Non puoi caricare un file vuoto
@@ -760,8 +572,6 @@ it:
       title: Entra
       video: Breve introduzione a Teambox
       submit: Entra
-      ####
-      login_failed: "Couldn't log you in as {{login}}"
 
   email:
     user:
@@ -802,8 +612,6 @@ it:
       signup: Creare un account
       files: Files
       invitations: Inviti
-      ####
-      groups: Project Groups
     global_navigation:
       project_invitations: Inviti
       home: Home
@@ -862,9 +670,6 @@ it:
       teambox_is_a_pm_platform: "Teambox è una piattaforma di gestione dei progetti pensata per il mondo reale."
       plan_share_and_collaborate: "Pianifica, condividi e tieniti aggiornato su quel che è stato fatto. Facile come dovrebbe essere."
       report_abuse: "Questa email ti è stata inviata su richiesta di un tuo contatto. Se c'è stato un intento di abuso, contattaci."
-    ####
-    invitation_group:
-      you_have_been_invited_to: "You have been invited to the group <b>{{group}}</b>"
     confirm:
       hey: "Ciao, {{user_name}}!"
       follow_the_link: "Per <b>completare la tua registrazione</b> in Teambox segui questo link:"
@@ -1132,19 +937,6 @@ it:
         odd: "deve essere dispari"
         even: "deve essere pari"
         record_invalid: "Validazione non valida: {{errors}}"
-      ####
-      models:
-        comment:
-          attributes:
-            body:
-              no_body_generic: "Please write about what you have done in the box above."
-              no_body_task: "Please write about what you have done for this task in the box above."
-        conversation:
-          attributes:
-            body:
-              no_body_generic: "Please write a comment to start the conversation."
-            name:
-              no_title: "Please give this conversation a title"
 
   date:
     yesterday: Ieri

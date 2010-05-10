@@ -1,25 +1,16 @@
 # Original translation
-# Mark missing translations by adding ##### at the end of the line
 ja:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "Now with <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile Site, French and German locales and API</a>!"
   common:
     and: と
     or: または 
     delete: 削除
     edit: 編集
-    accept: Accept
-    decline: Decline
     cancel: キャンセル
     close: 閉じる
     save: 保存
     show_more: 次の{{number}}を見る
     print: このページを印刷する
-    prev: Previous
-    next: Next
-    tasks:
-      one: 1 task
-      other: "{{count}} tasks"
     comment:
       one: "{{count}} 個のコメント"
       other: "{{count}} 個のコメント"
@@ -48,9 +39,6 @@ ja:
     create_upload: ファイルをアップロードしました。
     create_conversation:
       create_conversation: チャットを開始しました。
-    create_comment:
-      #####
-      create_comment: created the comment
     create_task_list:
       create_task_list: タスクリストを作成しました。
     create_task:
@@ -122,7 +110,6 @@ ja:
       first_day_of_week: 週のはじめ
       change_password: パスワード変更
       confirm_password: パスワード確認
-      use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
       notify_mentions: "自分に言及されたら通知する。 例. やぁ @{{login}}! これでメールが届くよ"
       notify_conversations: チャットに参加しているときに通知する
       notify_task_lists: タスクリストをウォッチしている時に通知する
@@ -134,7 +121,7 @@ ja:
         presence: "空ファイルはアップロードできません"
         max_size: "ファイルサイズは{{mb}}におさめる必要があります"
         we_have_this_avatar: "現在のあなたのアバターです:"
-        upload_here_or_at_gravatar: "ここでアバターをアップロードするか、<a href='http://gravatar.com'>Gravatar</a>にアップロードして、Teamboxだけではなく他の多くのウェブサイトで利用できるようにもできます。"
+        upload_here_or_at_gravatar: "ここでアバターをアップロードするか、{{gravatar}}にアップロードして、Teamboxだけではなく他の多くのウェブサイトで利用できるようにもできます。"
       tooltips:
         login: "ログインにはユーザー名が必要です。他の人々はユーザー名であなたを見つけます。ユーザー名は小文字のみで、空白は含めることができません。アンダースコアは利用できます。"
         first_name: 20文字まで
@@ -144,14 +131,6 @@ ja:
     new:
       title: アカウントの作成
       submit: アカウントの作成
-      ####
-      no_public_signup: "Public signups are not allowed in this system."
-      you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
-      existing_user: "If you already have an account, <a href='{{login_url}}'>log in</a> or <a href='{{forgot_url}}'>retrieve your password</a>."
-      you_already_have_an_account: "You already have a Teambox account for the address {{email}}. <a href='{{login_link}}'>Log in with this email</a> or <a href='{{reset_password_link}}'>reset your password</a> if you forgot it."
-    create:
-      thanks: Thanks for signing up!
-      error: "We couldn't set up that account, sorry. Please try again, or contact an admin (link is above)."
     edit:
       title_settings: アカウント設定
       title_profile: プロフィール設定
@@ -161,21 +140,14 @@ ja:
       submit: アカウントの更新
     update:
       updated: プロフィールを更新しました
-      error: "Couldn't save the updated profile. Please correct the mistakes and retry."
     activation:
-      resent: "We've re-sent the activation email. Take a look at your inbox!"
-      already_done: "You had already confirmed your email! You can now use Teambox."
-      activated: "Your account has been activated! Welcome to Teambox :)"
-      invalid: "<p>Invalid or expired access link. ログイン with your email and password.</p><p>If you don't remember your login data, follow the Forgot your パスワード link.</p>"
       invalid_user: 無効なユーザー
     show:
       profile: プロフィール 
       projects: プロジェクト
       recent_activity_for: "{{user_name}}の最近の活動"
-      pending_invite: "{{name}} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
     user:
       formatted_address: "{{street}}, {{city}} ({{country}})"
-      remove_from_project: Remove from プロジェクト
     welcome:
       get_started: Teamboxを始めよう!
       intro1: "ようこそ新メンバー! <br/>Teamboxを一日の出発点にするためにはどうすればいいか、すぐにわかります。"
@@ -195,13 +167,6 @@ ja:
       stop_welcome: 「ようこそ」タブを表示しないようにする
     unconfirmed_email:
       title: メールを確認
-      invitation_sent_to: "An email invitation was sent to <i>{{email}}</i>, in order to verify your email address."
-      follow_the_link: Please <b>open this email and follow the link inside it</b> to activate your account.
-      problems_title: Problems?
-      resend: "Can't find the email? Press <a href='{{link}}'>here</a> to re-send the activation email."
-      spam: "Make sure the email wasn't classified as spam by your email client."
-      wrong_address: "Wrong address? If you mistyped your email address, <a href='{{link}}'>cancel the signup process</a> and re-create your account with a valid address."
-      problems: "If you're still having problems, please contact us at {{support}}"
     daily_task_reminder_email:
       daily_task_reminder: "今日のタスクのリマインド"
       daily_task_reminder_from_teambox: "これはTeamboxの今日のタスクのリマインドメールです。"
@@ -293,7 +258,6 @@ ja:
         title: "{{name}}"
         description: "{{name}}プロジェクトの最近の活動"
     fields:
-      tracks_time: "Enable time tracking" #####
       archiving: "このプロジェクトをアーカイブする"
       forever: "このプロジェクトを永久に削除する"
       owner: "オーナー"
@@ -332,8 +296,6 @@ ja:
       title_ownership: オーナー設定
       submit: 変更を保存
       change_owner: オーナーを変更
-      transferred: "プロジェクト ownership has been transferred."
-      invalid_transferred: "プロジェクト ownership could not be transferred, correct errors and try again."
   invitations:
     fields:
       user_or_email: "チームメイトのユーザー名、もしくはeメールを入力:"
@@ -350,8 +312,6 @@ ja:
     sent:
       email_sent: "<b>このユーザーにプロジェクトへの招待を受け入れるリンクを含んだeメールを送信しました。もしeメールが見つからないようであれば、迷惑メールに分類されていないか確認するか、異なるeメールアドレスを試して見てください。もし問題が解決しないようでしたら、我々のスタッフに連絡してください。"
     pending:
-      to_access_or: to access the project or ####
-      to_access_or_group: to access the group or ####
       invited_to_join: "{{by}}があなたを{{project}}プロジェクトに招待しました。"
       invited_to_join_group: "{{by}}があなたを{{group}}グループに招待しました。"
     resend:
@@ -410,7 +370,6 @@ ja:
       footer2: "スレッドになっているので、過去どんなファイルが送られたか、チームメイトが何を言ったかをさっと振り返ることができます。Teamboxでは、<b>共同作業がそのまま報告</b>なのです。"
     column:
       new_conversation: 新しいチャット
-      cant_create: "You don't have permission to create conversations in this project" #####
       subscribe: ニュースフィードを受け取る
     conversation_with_extract:
       posted_by: 投稿 by
@@ -422,22 +381,6 @@ ja:
     short_conversation:
       comment: コメント
       comments: コメント 
-  #####
-  hours:
-    comments: Time Entries
-    filter_by: Filter by
-    report: Report
-    week_num: Week {{num}}
-    entry_hours: hrs
-    entry_total: Total
-    week_total: Total
-    all_tasks: All tasks
-    all_users: All users
-    reports:
-      user: Users
-      project: Projects
-      task: Tasks
-
   tasks:
     errors:
       name:
@@ -446,9 +389,6 @@ ja:
     fields:
       name: タスク
       due_on: 期限日<i>(任意)</i>
-      ####
-      assigned_to: Who is responsible?
-      assigned_to_nobody: Nobody
     assigned:
       assigned_to: "{{user}}にアサイン"
     due_on:
@@ -510,9 +450,8 @@ ja:
       submit: 更新
   pages:
     index:
-      pages_in_this_project: ページ in this project
       rss:
-        title: ページ
+        title: "{{name}}"
         description: "ページ in project {{name}}"
     primer:
       empty: このプロジェクトにはまだページがありません。
@@ -553,7 +492,6 @@ ja:
       insert_here: ここに挿入
     column:
       new_page: 新しいページ
-      cant_create: "You don't have permission to create pages in this project" #####
   task_lists:
     errors:
       name:
@@ -561,16 +499,7 @@ ja:
         too_long: '名前は255文字までにしなければなりません'
     archived:
       title: 全てのアーカイブされたタスク
-      description: You're currently looking at archived tasks. These are tasks that have been closed.
-    ####
-    archive_box:
-      unarchive_list: This task list is archived.
     actions:
-      resolve_and_archive: "Resolve all tasks and archive"
-      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
-      archive: "archive this task list"
-      rename: "Rename task list"
-      set_dates: "Set the start & end date"
       show_archived:
         one: "アーカイブされたタスクを表示"
         other: "{{count}}個のアーカイブされたタスクを表示"
@@ -579,24 +508,12 @@ ja:
       name: タスクリスト名
       start_on: 開始日 <i>(任意)</i>
       finish_on: 終了日 <i>(任意)</i>
-    ####
-    filter:
-      due_date: "Display tasks with due date..."
-      assigned_to: "Display tasks assigned to..."
     link:
       new: 新規タスクリスト
       edit: 編集
-      reorder: Reorder
-      ####
-      reorder_done: Done reorder
-      unarchive: Unarchive
     index:
       add_link: 新規タスクリスト
-      empty: No tasks in this category!
       tasks_for_all_projects: 全てのプロジェクトのタスク
-      ####
-      tasks_for_project: Task lists for this project
-      other_views: Other views
     primer:
       empty: このプロジェクトにはまだタスクリストがありません。
       create_first: 最初のタスクリストを作成しましょう!
@@ -607,12 +524,6 @@ ja:
       item4: "<b>レビュー</b> 完了したタスクも削除されないので、後からメッセージやファイルを確認できます。"
       footer1: "タスクは<b>物事を済ます</b>ための簡単でアジャイルな方法です。他の人にも勧めましょう。"
       footer2: "Excelの計画シートや複雑なガントチャートは忘れてしまいましょう!"
-    ####
-    overview_box:
-      this_list: "This task list"
-      starts_on: "Starts on:"
-      ends_on: "Ends on:"
-      undefined: "Undefined"
     new:
       title: 新規タスクリスト
       submit: タスクリストを追加
@@ -620,9 +531,7 @@ ja:
       submit: タスクリストの更新
     column:
       new_task_list: 新規タスクリスト
-      cant_create: You don't have permission to create tasks in this project
       subscribe: ニュースフィードを購読する
-      other_views: Other views
     show:
       title: "タスクリスト: {{name}}"
     destroy_message:
@@ -650,29 +559,13 @@ ja:
       confirm_delete: このユーザーをプロジェクトから削除してもいいですか?
     errors:
       user_or_email: "ユーザーが見つかりません。ユーザー名、またはeメールアドレスを入力してください。"
-    column:
-      inviting: "Inviting other users"
-      only_admins_can_invite: "Only admins can invite people to this project."
-      contact_admins: "In this project, only {{admins}} can invite new members."
-      leaving: "Leaving the project"
-      you_can_leave: "You can leave this project at any moment. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
-      leave_project: "Leave this project"
-      confirm_delete: Are you sure you want to leave this project?
   comments:
     comment:
       commented_on: "-"
       commented_on_a_task_list: "-"
       confirm_delete: このコメントを削除してもよろしですか?
-      hours_hrs: "{{hours}}H" #####
-      cannot_edit: "Comment cannot be edited after 15 minutes"
-    ####
-    hours:
-      add_hours: Hours
-      hours: How many hours did you put into this task?
     new:
       assigned_to_nobody: '未担当'
-      assigned_to: "Assigned to:"
-      submit: Comment
       project: "今何をしていますか? アイディアや、リンクや、状況などを共有しましょう。"
       conversation: "グループにメッセージを送る"
       task_list: "このタスクリストへのアイディアを共有しましょう。タスクの作成とアサインには、サイドバーを使ってください。"
@@ -683,9 +576,6 @@ ja:
       cannot_update: このコメントを更新する権限がありません。
     actions:
       confirm_delete: このコメントを削除してもよろしいですか?
-      ####
-      convert_task: Convert to task
-      edit: Edit comment
   example_projects:
     new:
       learn: サンプルで学習しましょう!
@@ -702,7 +592,6 @@ ja:
       select_a_file: ファイルを選択
     index:
       new_file: ファイルをアップロード
-      cant_create: "You don't have permission to upload files to this project" #####
       max_upload_size: "アップロードサイズの最大は {{mb}} Mb"
     form:
       presence: "空ファイルはアップロードできません。"
@@ -723,7 +612,6 @@ ja:
       download: ダウンロード
       uploaded_by: アップロードしたユーザー
       remove: 削除
-      on_: "on" ####
   sessions:
     fields:
       username_or_email: eメールアドレスまたはユーザー名
@@ -732,7 +620,6 @@ ja:
       signup: アカウントを作成する
     new:
       title: ログイン
-      video: What's Teambox about?
       submit: ログイン
       login_failed: "{{login}}としてログインできませんでした"
 
@@ -770,7 +657,6 @@ ja:
       all_pages: 全てのページ
       people: 人々
       pages: ページ
-      time_tracking: Time Tracking
       login: ログイン
       signup: サインアップ
       files: ファイル
@@ -1107,7 +993,6 @@ ja:
         odd: "偶数でなければいけません。"
         even: "奇数でなければいけません。"
         record_invalid: "確認に失敗しました: {{errors}}"
-      ####
       models:
         comment:
           attributes:
