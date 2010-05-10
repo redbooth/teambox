@@ -48,7 +48,15 @@
       = errors_for user, :password_confirmation
       = f.password_field :password_confirmation
 
-- unless user.new_record?
+- if user.new_record?
+  - build_user_phone_number(user)
+  - f.fields_for :card do |card|
+    - card.fields_for :phone_numbers do |phone|
+      .phone_number.text_field
+        = phone.label :name, t('cards.field.add_phone_numbers')
+        = phone.text_field :name
+        = tooltip 'user_card_attributes_phone_numbers_attributes_0_name', t('.tooltips.phone')
+- else
   - if sub_action == 'settings'
     #change_password_link
       = link_to_function t('.change_password'), show_user_password_fields

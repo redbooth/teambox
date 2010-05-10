@@ -151,8 +151,9 @@ en:
         login: "You need a username to login. People will be able to find you by username. Must be all lowercase, no spaces. You can use undescores."
         first_name: Up to 20 characters.
         last_name: Up to 20 characters.
-        email: Enter your real email so your team-mates can contact you.
+        email: Enter your real email so your teammates can contact you.
         password: "Combining letters, numbers, uppercase and lowercase is a good idea."
+        phone: "Work phone number will be visible to teammates. Enter it in full, e.g. +12345678"
     new:
       title: Create an Account
       submit: Create account

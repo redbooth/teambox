@@ -49,4 +49,9 @@ module UsersHelper
   def gravatar_url
     "<a href='http://gravatar.com'>Gravatar</a>"
   end
+  
+  def build_user_phone_number(user)
+    card = user.card || user.build_card
+    card.phone_numbers.build unless card.phone_numbers.any?
+  end
 end

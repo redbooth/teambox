@@ -382,5 +382,19 @@ describe User do
 
     end
   end
+  
+  context 'attributes' do
+    subject {
+      Factory(:user, :card_attributes => { :phone_numbers_attributes => [{:name => '+123456789'}] })
+    }
+    
+    it { should_not be_new_record }
+    
+    it "should allow setting of work phone number" do
+      phone = subject.card.phone_numbers.first
+      phone.name == '+123456789'
+      phone.get_type.should == 'Work'
+    end
+  end
 
 end
