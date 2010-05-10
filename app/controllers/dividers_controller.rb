@@ -33,7 +33,9 @@ class DividersController < ApplicationController
   end
   
   def update
-    if @divider.editable?(current_user) and @divider.update_attributes(params[:divider].merge({:updated_by => current_user}))
+    @divider.updated_by = current_user
+    
+    if @divider.editable?(current_user) and @divider.update_attributes(params[:divider])
       respond_to do |f|
         f.js
         handle_api_success(f, @divider)

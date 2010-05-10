@@ -70,6 +70,7 @@ class Activity < ActiveRecord::Base
     when 'Task'         then begin; Task.find_with_deleted(target_id); rescue; nil; end
     when 'Page'         then begin; Page.find_with_deleted(target_id); rescue; nil; end
     when 'Note'         then begin; Note.find_with_deleted(target_id); rescue; nil; end
+    when 'Divider'      then begin; Divider.find_with_deleted(target_id); rescue; nil; end
     when 'Upload'       then begin; Upload.find_with_deleted(target_id); rescue; nil; end
     end
   end

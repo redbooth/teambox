@@ -19,6 +19,7 @@ module ActivitiesHelper
                       create_task
                       create_page edit_page
                       create_note edit_note
+                      create_divider edit_divider
                       create_upload
                       create_person delete_person)
 

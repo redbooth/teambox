@@ -12,11 +12,11 @@ class Note < RoleRecord
   attr_accessor :deleted
   attr_accessible :body, :deleted, :name
   
-  def before_create
+  def after_create
     project.log_activity(self, 'create', updated_by.id)
   end
   
-  def before_update
+  def after_update
     project.log_activity(self, 'edit', updated_by.id)
   end
   

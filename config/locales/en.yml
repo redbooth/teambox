@@ -63,6 +63,10 @@ en:
       create_note: added note
     edit_note:
       edit_note: edited note
+    create_divider:
+      create_divider: added page divider 
+    edit_divider:
+      edit_divider: edited page divider
     create_person:
       create_person: was invited to the project
       by: by
