@@ -1,9 +1,10 @@
 module CommentsHelper
 
-  def cache_editable_comment(comment, &block)
+  def cache_editable_comment(comment, location=nil, &block)
     cache(comment.cache_key.tap { |key|
       key << '-editable' if comment.can_edit?(current_user)
       key << '-destructable' if comment.can_destroy?(current_user)
+      key << location unless location.nil?
     }, &block)
   end
 
