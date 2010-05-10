@@ -50,7 +50,7 @@ class Upload < RoleRecord
   end
 
   def after_create
-    project.log_activity(self, 'create', user.id)
+    project.log_activity(self, 'create', user_id) if page_id
   end
   
   def to_s
