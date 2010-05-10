@@ -7,6 +7,7 @@
   = link_to note.page, project_page_path(note.page.project, note.page)
   &rarr;
   = note
-  .date
-    = posted_date activity.posted_date
+  - unless rendering_rss?
+    .date
+      = posted_date activity.posted_date
   .clear

@@ -7,6 +7,7 @@
   = link_to divider.page, project_page_path(divider.page.project, divider.page)
   &rarr;
   = divider
-  .date
-    = posted_date activity.posted_date
+  - unless rendering_rss?
+    .date
+      = posted_date activity.posted_date
   .clear

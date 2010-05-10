@@ -3,8 +3,9 @@
     = link_to upload.file_type, upload.url, :class => upload.file_type
   .block
     .filename.show_details
-      .date
-        = posted_date upload.created_at
+      - unless rendering_rss?
+        .date
+          = posted_date upload.created_at
       .name
         = link_to upload.user.name, user_path(upload.user)
         = t('uploads.upload.uploaded_the_file')

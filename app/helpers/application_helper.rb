@@ -320,6 +320,10 @@ module ApplicationHelper
     end
   end
   
+  def rendering_rss?
+    @rendering_rss ||= request.format == :rss
+  end
+  
   def groups_enabled?
     APP_CONFIG['allow_groups'] || false
   end

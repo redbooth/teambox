@@ -10,6 +10,7 @@
       = activity_project_link(activity.project,:none)
       = t(".by")
       = link_to activity.user, user_path(activity.user)
-  .date
-    = posted_date activity.deleted_date
+  - unless rendering_rss?
+    .date
+      = posted_date activity.posted_date
   .clear
