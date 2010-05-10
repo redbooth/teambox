@@ -203,8 +203,8 @@ module ApplicationHelper
   end
 
   def support_link
-    if APP_CONFIG.has_key? 'support_url'
-      link_to t('.support'), APP_CONFIG['support_url']
+    if url = Teambox.config.support_url
+      link_to t('.support'), url
     end
   end
 
@@ -213,8 +213,8 @@ module ApplicationHelper
   end
 
   def help_link
-    if APP_CONFIG.has_key? 'help_url'
-      link_to t('.help'), "#{APP_CONFIG['help_url']}/#{controller.controller_name}"
+    if url = Teambox.config.help_url
+      link_to t('.help'), "#{url}/#{controller.controller_name}"
     end
   end
 
@@ -284,8 +284,8 @@ module ApplicationHelper
   end
 
   def link_to_public_page(name)
-    if APP_CONFIG.has_key?("#{name}_url")
-      link_to t("shared.public_navigation.#{name}"), APP_CONFIG["#{name}_url"]
+    if url = Teambox.config["#{name}_url"]
+      link_to t("shared.public_navigation.#{name}"), url
     end
   end
 
