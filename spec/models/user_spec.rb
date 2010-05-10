@@ -193,12 +193,12 @@ describe User do
 
   describe "validation" do
     before do
-      @user = Factory.create(:user, :first_name => " holden ", :last_name => "  m. caulfield   ",
+      @user = Factory.create(:user, :first_name => " holden ", :last_name => "  m.  caulfield   ",
                                     :login => "Holden", :email => "HoldeN.Caulfield@pencey.edu")
     end
 
-    it "should capitalize first and last name on create" do
-      @user.name.should == "Holden M. Caulfield"
+    it "should strip excess whitespace in first and last names" do
+      @user.name.should == "holden m. caulfield"
     end
 
     it "should convert email to downcase and strip spaces" do

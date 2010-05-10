@@ -67,16 +67,14 @@ class User < ActiveRecord::Base
 
   attr_accessor   :activate
 
+  before_validation :sanitize_name
+
   def before_save
     self.recent_projects_ids ||= []
     self.rss_token ||= generate_rss_token
   end
 
   def before_create
-    self.build_card
-    self.first_name = self.first_name.split(" ").collect(&:capitalize).join(" ")
-    self.last_name  = self.last_name.split(" ").collect(&:capitalize).join(" ")
-
     if invitation = Invitation.find_by_email(email)
       self.invited_by = invitation.user
       invitation.user.update_attribute :invited_count, (invitation.user.invited_count + 1)
@@ -254,6 +252,13 @@ class User < ActiveRecord::Base
     self.notify_mentions &&
       comment.user != self &&
       !!( comment.body =~ /@all/i || comment.body =~ /@#{self.login}[^a-z0-9_]/i )
+  end
+  
+  protected
+  
+  def sanitize_name
+    self.first_name = first_name.blank?? nil : first_name.squish
+    self.last_name = last_name.blank?? nil : last_name.squish
   end
 
 end
