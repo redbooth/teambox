@@ -6,7 +6,6 @@
 .sass-cache
 assets
 config/database.yml
-config/teambox.yml
 coverage
 db/*.sqlite3
 db/sphinx
