@@ -205,9 +205,7 @@ class User < ActiveRecord::Base
 
   def assigned_tasks_count
     people.map { |person| person.project.tasks }.flatten.
-      select { |task| task.active? }.
-      select { |task| task.assigned_to?(self) }.
-      count
+      select { |task| task.active? && task.assigned_to?(self) }.size
   end
 
   def tasks_for_daily_reminder_email
