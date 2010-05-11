@@ -274,7 +274,7 @@ module CalendarsHelper
          :project_id => comment.project_id,
          :user_id => comment.user_id,
          :task_id => task ? task.id : 0,
-         :hours => friendly_hours_value(comment.hours)
+         :hours => comment.hours.to_f
        }.to_json
      end
      
