@@ -300,7 +300,7 @@ module ApplicationHelper
   def friendly_hours_value(hours)
     hours_i = hours.to_i
     if hours - hours_i > 0
-      hours
+      "%.2f" % hours
     else
       hours_i
     end
