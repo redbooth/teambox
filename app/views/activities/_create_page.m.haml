@@ -5,5 +5,5 @@
     %span.user= activity.user.short_name
     = t(".#{activity.action_type}")
     = activity_project_link(activity.project,:after)
-    = link_to page, project_page_path(page.project, page)
+    = link_to page, (page.deleted? ? '#' : project_page_path(page.project, page))
   .clear

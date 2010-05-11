@@ -4,7 +4,8 @@
     = activity.user.name
   = t(".#{activity.action_type}")
   = activity_project_link(activity.project,:after) unless location_name?('show_projects')
-  = link_to note.page, project_page_path(note.page.project, note.page)
+  - target_page = Page.find_with_deleted(note.page_id)
+  = link_to target_page, (target_page.deleted? ? '#' : project_page_path(activity.project, target_page))
   &rarr;
   = note
   - unless rendering_rss?

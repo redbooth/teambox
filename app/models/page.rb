@@ -4,6 +4,7 @@ class Page < RoleRecord
   has_many :uploads
   
   has_many :slots, :class_name => 'PageSlot', :order => 'position ASC'
+  acts_as_paranoid
   
   attr_accessible :name, :description, :note_attributes
 
