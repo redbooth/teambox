@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100509005112) do
+ActiveRecord::Schema.define(:version => 20100511133109) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -381,6 +381,7 @@ ActiveRecord::Schema.define(:version => 20100509005112) do
     t.text     "recent_projects_ids"
     t.string   "feature_level",                            :default => ""
     t.string   "spreedly_token",                           :default => ""
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"
