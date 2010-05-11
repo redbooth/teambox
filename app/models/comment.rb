@@ -20,6 +20,10 @@ class Comment < ActiveRecord::Base
   attr_accessor :mentioned # used by format_usernames to set who's being mentioned
   attr_accessor :activity
 
+  def hours?
+    hours and hours > 0
+  end
+
   def human_hours
     self.hours
   end

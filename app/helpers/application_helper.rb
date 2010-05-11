@@ -298,11 +298,14 @@ module ApplicationHelper
   end
   
   def friendly_hours_value(hours)
-    hours_i = hours.to_i
-    if hours - hours_i > 0
-      "%.2f" % hours
-    else
-      hours_i
+    hours = hours.to_f
+    if hours > 0
+      minutes = (hours % 1) * 60
+      if minutes.zero?
+        t('comments.comment.hours', :hours => hours.to_i)
+      else
+        t('comments.comment.hours_with_minutes', :hours => hours.to_i, :minutes => minutes.to_i)
+      end
     end
   end
   
