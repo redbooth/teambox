@@ -7,7 +7,7 @@
       %p= t('.pending_invite', :name => @user.name)
 
 - content_for :column do
-  = image_tag @user.avatar_or_gravatar_url(:profile), :class => 'avatar'
+  = image_tag avatar_or_gravatar(@user, :profile), :class => 'avatar'
   - if current_user.observable?(@user)
     - unless @user.biography.blank?
       %p.biography= @user.biography
