@@ -113,7 +113,7 @@ class TasksController < ApplicationController
 
   def reorder
     @task_list_id = "project_#{@current_project.id}_task_list_#{@task_list.id}_the_main_tasks"
-    new_task_ids_for_task_list = params[@task_list_id].reject { |task_id| task_id.blank? }.map(&:to_i)
+    new_task_ids_for_task_list = (params[@task_list_id] || []).reject { |task_id| task_id.blank? }.map(&:to_i)
     moved_task_ids = new_task_ids_for_task_list.to_set - @task_list.task_ids.to_set
     moved_task_ids.each do |moved_task_id|
       Task.find(moved_task_id).update_attribute(:task_list, @task_list)
