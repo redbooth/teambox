@@ -234,7 +234,7 @@ specs:
 - gem_plugin: 
     version: 0.2.3
 - haml: 
-    version: 3.0.0
+    version: 3.0.1
 - hpricot: 
     version: 0.8.2
 - i18n: 
@@ -299,6 +299,6 @@ sources:
 - Git: 
     uri: git://github.com/mislav/tolk.git
     git: git://github.com/mislav/tolk.git
-    ref: 468abca87a6b03eaaf3e4bc782b5963aae137a60
+    ref: a468b381fdf83d612598937316db0befb203bb59
 - Rubygems: 
     uri: http://gemcutter.org
