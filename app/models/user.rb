@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   LANGUAGES = [['English',   'en'],
                ['Español',   'es'],
                ['Français',  'fr'],
-               ['Deutsche',  'de'],
+               ['Deutsch',  'de'],
                ['Català',    'ca'],
                ['Italiano',  'it'],
                ['Русский',   'ru'],
