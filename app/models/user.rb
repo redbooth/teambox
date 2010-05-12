@@ -197,7 +197,7 @@ class User < ActiveRecord::Base
   end
 
   def assigned_tasks(project_filter)
-    people.map { |person| person.project.tasks }.flatten.
+    people.reject{ |r| r.project.archived? }.map { |person| person.project.tasks }.flatten.
       select { |task| task.active? }.
       select { |task| task.assigned_to?(self) }.
       sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
