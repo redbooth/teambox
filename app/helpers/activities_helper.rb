@@ -82,6 +82,7 @@ module ActivitiesHelper
       block ||= Proc.new do |item|
         item.title @view.t("activities.#{activity.action_type}.#{activity.action_type}")
         item.description @view.show_activity(activity)
+        item.author activity.user.name
       end
       super(activity, options, &block)
     end

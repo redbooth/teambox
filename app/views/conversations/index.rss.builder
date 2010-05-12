@@ -6,6 +6,7 @@ rss_feed :root_url => project_conversations_url(@current_project) do |feed|
     feed.entry conversation, :url => polymorphic_url([@current_project, conversation]) do |item|
       item.title conversation.name
       item.description conversation_comment(conversation)
+      item.author conversation.user.name
     end
   end
 end

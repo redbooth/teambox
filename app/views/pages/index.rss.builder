@@ -6,6 +6,7 @@ rss_feed :root_url => project_pages_url(@current_project) do |feed|
     feed.entry page, :url => polymorphic_url([@current_project, page]) do |item|
       item.title page.name
       item.description page.description
+      item.author page.user.name
     end
   end
 end
