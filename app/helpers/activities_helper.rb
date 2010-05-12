@@ -45,10 +45,16 @@ module ActivitiesHelper
   
   def activity_title(activity, plain = false)
     values = { :user => link_to_unless(plain, activity.user.name, activity.user) }
-    object = activity.target
-    type = activity.action_type
     
-    values.update case activity.action_type
+    if Comment === activity
+      object = activity
+      type = 'create_comment'
+    else
+      object = activity.target
+      type = activity.action_type
+    end
+    
+    values.update case type
     when 'create_note', 'edit_note'
       page = Page.find_with_deleted(object.page_id)
       { :note => object,
@@ -73,13 +79,13 @@ module ActivitiesHelper
       type << "_#{object.class.name.underscore}"
       
       target = case object
-      when Task then link_to_unless(plain, object.name, [activity.project, object.task_list, object])
+      when Task then link_to_unless(plain, object.name, [object.project, object.task_list, object])
       when Project then link_to_unless(plain, object.name, object)
-      when Conversation then link_to_unless(plain, object.name, [activity.project, object])
+      when Conversation then link_to_unless(plain, object.name, [object.project, object])
       end
       { :target => target }
     else
-      raise ArgumentError, "unknown activity type #{activity.action_type}"
+      raise ArgumentError, "unknown activity type #{type}"
     end
     t("activities.#{type}.title", values)
   end

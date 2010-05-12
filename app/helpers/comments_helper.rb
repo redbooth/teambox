@@ -52,12 +52,6 @@ module CommentsHelper
     Task::STATUSES.to_enum(:each_with_index).each { |e,i| t << [e,i] unless i == 0 }
     t
   end
-
-  def conversation_last_comment_text(comment)
-    if is_controller? :conversations, :index
-      "Last Comment by"
-    end  
-  end
   
   def add_hours_link(f)
     render :partial => 'comments/hours', :locals => { :f => f }
