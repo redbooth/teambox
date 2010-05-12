@@ -129,7 +129,9 @@ module ActivitiesHelper
       
       block ||= Proc.new do |item|
         item.title @view.activity_title(activity, true)
-        item.description @view.show_activity(activity)
+        body = @view.show_activity(activity)
+        item.description body
+        item.tag! 'content:encoded', body
         item.author activity.user.name
       end
       super(activity, options, &block)

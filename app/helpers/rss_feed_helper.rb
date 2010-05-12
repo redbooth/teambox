@@ -6,7 +6,7 @@ module RssFeedHelper
     
     options[:schema_date] ||= "2005"
     
-    xml.rss :version => "2.0" do
+    xml.rss :version => "2.0", :'xmlns:content' => "http://purl.org/rss/1.0/modules/content/" do
       xml.channel do
         xml.link options[:root_url] if options[:root_url]
         yield builder_klass.new(xml, self, options)
