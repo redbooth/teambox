@@ -279,8 +279,8 @@ en:
       new_project: New Project
       refreshes: Refreshes every minute
       rss:
-        title: Projects Overview
-        description: Overview of all your projects
+        title: Teambox projects overview
+        description: Overview of all projects in Teambox
       archived: "Show {{count}} Archived Projects..."
     primer:
       empty: You don't own or belong to any projects yet.
@@ -303,7 +303,7 @@ en:
       tip: Mentioning somebody's @username they will receive an email with your message
       calendar: Calendar for this project's tasks
       rss:
-        title: "{{name}}"
+        title: "{{name}} activity feed"
         description: "Recent activities for the project {{name}}"
     fields:
       tracks_time: "Enable time tracking"
@@ -409,7 +409,7 @@ en:
       submit: 'Update Conversation'
     index:
       rss:
-        title: "Conversations"
+        title: "{{name}} conversations"
         description: "Conversations for project {{name}}"
     primer:
       empty: This project doesn't have any conversations yet.
@@ -527,7 +527,7 @@ en:
     index:
       pages_in_this_project: Pages in this project
       rss:
-        title: Pages
+        title: "{{name}} pages"
         description: "Pages in project {{name}}"
     primer:
       empty: This project doesn't have any pages yet.
@@ -611,6 +611,9 @@ en:
       tasks_for_all_projects: Tasks across all projects
       tasks_for_project: Task lists for this project
       other_views: Other views
+      rss:
+        title: "{{name}} task updates"
+        description: "Tasks activity for project {{name}}"
     primer:
       empty: This project doesn't have any task lists yet.
       create_first: Create the first task list in this project!

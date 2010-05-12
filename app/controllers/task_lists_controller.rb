@@ -12,8 +12,14 @@ class TaskListsController < ApplicationController
     respond_to do |f|
       f.html
       f.m
-      f.js    { @show_part = params[:part]; render :template => 'task_lists/reload' }
-      f.rss   { render :layout => false }
+      f.rss {
+        @activities = @current_project.activities.for_task_lists.latest
+        render :layout => false
+      }
+      f.js {
+        @show_part = params[:part]
+        render :template => 'task_lists/reload'
+      }
       f.print { render :layout => 'print' }
       f.xml   { render :xml     => @task_lists.to_xml(:include => :tasks, :root => 'task-lists') }
       f.json  { render :as_json => @task_lists.to_xml(:include => :tasks, :root => 'task-lists') }

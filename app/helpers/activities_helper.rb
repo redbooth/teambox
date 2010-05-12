@@ -1,3 +1,5 @@
+require 'rss_feed_helper'
+
 module ActivitiesHelper
 
   def activity_project_link(project, arrow_pos = :before)
@@ -28,17 +30,61 @@ module ActivitiesHelper
   end
 
   def show_activity(activity)
-    # Activity#target is redefined so it finds deleted elements too
     if activity.target && ActivityTypes.include?(activity.action_type)
-      render_activity_partial(activity,activity.target)
+      render "activities/#{activity.action_type}", :activity => activity,
+        activity.target_type.underscore.to_sym => activity.target
     end
   end
   
-  def render_activity_partial(activity,target)
-    render :partial => "activities/#{activity.action_type}",
-      :locals => {
-        :activity => activity,
-        activity.target_type.underscore.to_sym => target }
+  def activity_target_url(activity)
+    if activity.target_type == 'Task'
+      task = activity.target
+      project_task_list_task_url(activity.project, task.task_list_id, task)
+    elsif activity.comment_type == 'Task'
+      task = activity.target.target
+      project_task_list_task_url(activity.project, task.task_list_id, task)
+    elsif activity.target_type == 'TaskList'
+      project_task_list_url(activity.project, activity.target)
+    elsif activity.target_type == 'Page'
+      project_page_url(activity.project, activity.target)
+    elsif activity.target_type == 'Upload'
+      project_uploads_url(activity.project)
+    elsif activity.target_type == 'Conversation'
+      project_conversation_url(activity.project, activity.target)
+    elsif activity.comment_type == 'Conversation'
+      project_conversation_url(activity.project, activity.target.target)
+    else
+      project_url(activity.project, :anchor => "activity_#{activity.id}")
+    end
+  end
+  
+  def rss_activity_feed(options, &block)
+    i18n_values = {}
+    project = options.delete(:project)
+    i18n_values[:name] = project.name if project
+    
+    options[:xml] ||= eval("xml", block.binding)
+    options[:builder] = ActivityFeedBuilder
+    
+    rss_feed(options) do |feed|
+      feed.title t('.rss.title', i18n_values)
+      feed.description t('.rss.description', i18n_values)
+      
+      yield feed
+    end
+  end
+  
+  class ActivityFeedBuilder < RssFeedHelper::RssFeedBuilder
+    def entry(activity, options = {}, &block)
+      options[:published] ||= activity.posted_date
+      options[:url] ||= @view.activity_target_url(activity)
+      
+      block ||= Proc.new do |item|
+        item.title @view.t("activities.#{activity.action_type}.#{activity.action_type}")
+        item.description @view.show_activity(activity)
+      end
+      super(activity, options, &block)
+    end
   end
   
   def link_to_conversation(conversation)
