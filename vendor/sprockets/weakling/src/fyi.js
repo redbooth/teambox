@@ -3,7 +3,14 @@
       head = document.getElementsByTagName('head')[0],
       style = document.createElement('style')
 
-  style.appendChild(document.createTextNode(selector + ' { display:none }'))
+  var cssStr = selector + ' { display:none }'
+  style.setAttribute("type", "text/css")
+  if (style.styleSheet){// IE
+    style.styleSheet.cssText = cssStr;
+  } else {// w3c
+    var cssText = document.createTextNode(cssStr);
+    style.appendChild(cssText);
+  }
   head.appendChild(style)
 
   Event.addBehavior({
