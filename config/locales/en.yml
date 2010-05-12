@@ -569,6 +569,7 @@ en:
     column:
       new_page: New Page
       cant_create: You don't have permission to create pages in this project
+      all_pages: All Pages
   task_lists:
     errors:
       name:
