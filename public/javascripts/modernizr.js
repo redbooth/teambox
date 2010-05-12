@@ -8,7 +8,6 @@
  *
  * Featuring major contributions by
  * Paul Irish  - http://paulirish.com
- * Ben Alman   - http://benalman.com
  */
 /*
  * Modernizr is a script that will detect native CSS3 and HTML5 features
@@ -104,8 +103,10 @@ window.Modernizr = (function(window,doc,undefined){
     // inputtypes is an object of its own containing individual tests for
     // various new input types, such as search, range, datetime, etc.
     
-    // SVG checking is not added just yet
-    // svg = 'svg',
+    svg = 'svg',
+    smil = 'smil',
+    svgclippaths = svg+'clippaths',
+    
     background = 'background',
     backgroundColor = background + 'Color',
     canPlayType = 'canPlayType',
@@ -116,31 +117,27 @@ window.Modernizr = (function(window,doc,undefined){
     applicationcache = 'applicationCache',
     
     webWorkers = 'webworkers',
-    smil = 'smil',
     hashchange = 'hashchange',
     crosswindowmessaging = 'crosswindowmessaging',
     historymanagement = 'historymanagement',
     draganddrop = 'draganddrop',
     websqldatabase = 'websqldatabase',
     websocket = 'websocket',
-    flash = 'flash';
-    var 
+    flash = 'flash',
+    smile = ':)',
+    touch = 'touch',
     
     toString = Object.prototype.toString,
     
     // list of property values to set for css tests. see ticket #21
-    setProperties = ' -o- -moz- -ms- -webkit- '.split(' '),
+    setProperties = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
 
     tests = {},
     inputs = {},
     attrs = {},
     
-    elems,
-    elem,
-    i,
-    feature,
     classes = [],
-  
+    
     /**
       * isEventSupported determines if a given element supports the given event
       * function from http://yura.thinkweb2.com/isEventSupported/
@@ -229,7 +226,8 @@ window.Modernizr = (function(window,doc,undefined){
             'Webkit' + uc_prop,
             'Moz' + uc_prop,
             'O' + uc_prop,
-            'ms' + uc_prop
+            'ms' + uc_prop,
+            'Khtml' + uc_prop
         ];
 
         return !!test_props( props, callback );
@@ -262,6 +260,16 @@ window.Modernizr = (function(window,doc,undefined){
             } catch(e){	}
         }
         return false;
+    };
+    
+    /**
+     * The Modernizr.touch test only indicates if the browser supports
+     *    touch events, which does not necessarily reflect a touchscreen
+     *    device, as evidenced by tablets running Windows 7 or, alas,
+     *    the Palm Pre / WebOS (touch) phones.
+     */
+    tests[touch] = function() {
+       return !!('ontouchstart' in window);
     };
 
 
@@ -302,10 +310,7 @@ window.Modernizr = (function(window,doc,undefined){
             && isEventSupported('dragend')
             && isEventSupported('drop');
     };
-    
-    // tests[svg] = function(){
-    //     return !!(window.SVGAngle || doc.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1"));
-    // };
+
     
     tests[websocket] = function(){
         return ('WebSocket' in window);
@@ -334,7 +339,7 @@ window.Modernizr = (function(window,doc,undefined){
         //  and then querying the style.background property value for the number of
         //  occurrences of "url(" is a reliable method for detecting ACTUAL support for this!
         
-        set_css( background + ':url(m.png),url(a.png),#f99 url(m.png)' );
+        set_css( background + ':url(//:),url(//:),red url(//:)' );
         
         // If the UA supports multiple backgrounds, there should be three occurrences
         //  of the string "url(" in the return value for elem_style.background
@@ -382,7 +387,7 @@ window.Modernizr = (function(window,doc,undefined){
         //  according to spec, which means their return values are within the
         //  range of [0.0,1.0] - including the leading zero.
         
-        set_css( 'opacity:.5' );
+        set_css_all( 'opacity:.5' );
         
         return contains( m_style[opacity], '0.5' );
     };
@@ -567,13 +572,13 @@ window.Modernizr = (function(window,doc,undefined){
         if (bool){  
             bool      = new Boolean(bool);  
             bool.ogg  = elem[canPlayType]('audio/ogg; codecs="vorbis"');
-            bool.mp3  = elem[canPlayType]('audio/mpeg3;');
+            bool.mp3  = elem[canPlayType]('audio/mpeg;');
             
             // mimetypes accepted: 
             //   https://developer.mozilla.org/En/Media_formats_supported_by_the_audio_and_video_elements
             //   http://developer.apple.com/safari/library/documentation/appleapplications/reference/SafariWebContent/CreatingContentforSafarioniPhone/CreatingContentforSafarioniPhone.html#//apple_ref/doc/uid/TP40006482-SW7
             bool.wav  = elem[canPlayType]('audio/wav; codecs="1"');
-            bool.m4a  = elem[canPlayType]('audio/x-m4a;');
+            bool.m4a  = elem[canPlayType]('audio/x-m4a;') || elem[canPlayType]('audio/aac;');
         }
         return bool;
     };
@@ -627,25 +632,29 @@ window.Modernizr = (function(window,doc,undefined){
         catch(e) {
             bool = false;
         }
-        // test for flashblock
-        /*  -moz-binding to flashblock is asynchronous. >:(
-            // another technique here: http://jeremiahgrossman.blogspot.com/2006/08/i-know-what-youve-got-firefox.html
-        if (bool){
-            var x = doc.createElement('embed');
-            x.src = flash+'.swf';
-            docElement.appendChild(x);
-            bool = !/chrome/.test(getComputedStyle(x,null).getPropertyValue('-moz-binding'))
-            docElement.removeChild(x);
-        } */
+        // mark pilgrims excellent test for flashblockers is asynchronous and rather large.
+        // it's not included now but we hope to add it later, somehow.
+        // http://code.google.com/p/flashblockdetector/
+        
         return bool;
     };
  
+    // thanks to Erik Dahlstrom
+    tests[svg] = function(){
+        return doc.createElementNS && doc.createElementNS( "http://www.w3.org/2000/svg", "svg").createSVGRect;
+        //return (window.SVGAngle || doc.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1"));
+    };
+    
     // thanks to F1lt3r and lucideer
     // http://github.com/Modernizr/Modernizr/issues#issue/35
     tests[smil] = function(){
-        return document.createElementNS && /SVG/.test(toString.call(document.createElementNS('http://www.w3.org/2000/svg','animate')));
+        return doc.createElementNS && /SVG/.test(toString.call(doc.createElementNS('http://www.w3.org/2000/svg','animate')));
     };
 
+    tests[svgclippaths] = function(){
+        // returns a false positive in saf 3.2?
+        return doc.createElementNS && /SVG/.test(toString.call(doc.createElementNS('http://www.w3.org/2000/svg','clipPath')));
+    };
 
 
     // input features and input types go directly onto the ret object, bypassing the tests loop.
@@ -670,9 +679,19 @@ window.Modernizr = (function(window,doc,undefined){
         //   true/false like all the other tests; instead, it returns an object
         //   containing each input type with its corresponding true/false value 
         ret[inputtypes] = (function(props) {
-            for (var i = 0,len=props.length;i<len;i++) {
+            for (var i = 0,bool,len=props.length;i<len;i++) {
                 f.setAttribute('type', props[i]);
-                inputs[ props[i] ] = f.type !== 'text';
+                bool = f.type !== 'text';
+                
+                // chrome likes to claim support here so we feed it a textual value
+                // if that doesnt succeed then we know there's a custom UI
+                // TODO: not sure how we deal with search, tel, url here..
+                if (bool){  
+                    f.value = smile;
+                    bool = f.value != smile;
+                }
+                
+                inputs[ props[i] ] = bool;
             }
             return inputs;
         })('search tel url email datetime date month week time datetime-local number range color'.split(' '));
@@ -687,7 +706,7 @@ window.Modernizr = (function(window,doc,undefined){
 
     // Run through all tests and detect their support in the current UA.
     // todo: hypothetically we could be doing an array of tests and use a basic loop here.
-    for ( feature in tests ) {
+    for ( var feature in tests ) {
         if ( tests.hasOwnProperty( feature ) ) {
             // run the test, then based on the boolean, define an appropriate className
             classes.push( ( !( ret[ feature ] = tests[ feature ]() ) ? 'no-' : '' ) + feature );
@@ -711,13 +730,14 @@ window.Modernizr = (function(window,doc,undefined){
      * @param test - Function returning true if feature is supported, false if not
      */
     ret.addTest = function (feature, test) {
-      if (this.hasOwnProperty( feature )) {
-        // warn that feature test is already present
+      if (ret[ feature ]) {
+        return; // quit if you're trying to overwrite an existing test
       } 
       feature = feature.toLowerCase();
       test = !!(test());
       docElement.className += ' ' + (!test ? 'no-' : '') + feature; 
       ret[ feature ] = test;
+      return ret; // allow chaining.
     };
 
     /**
@@ -726,9 +746,10 @@ window.Modernizr = (function(window,doc,undefined){
     set_css( '' );
     m = f = null;
 
-    // Enable HTML 5 elements for styling in IE. thx remy, jdalton, kangax, and porneL
-    if ( enableHTML5 && !(!/*@cc_on!@*/0) ) {
-        'abbr article aside audio canvas command datalist details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){doc.createElement(n)});
+    // Enable HTML 5 elements for styling in IE. 
+    if ( enableHTML5 && !(!/*@cc_on@if(@_jscript_version<9)!@end@*/0) ) {
+        // iepp v1.5.1 MIT @jon_neal  http://code.google.com/p/ie-print-protector/
+        (function(p,e){function q(a,b){if(g[a])g[a].styleSheet.cssText+=b;else{var c=r[l],d=e[j]("style");d.media=a;c.insertBefore(d,c[l]);g[a]=d;q(a,b)}}function s(a,b){for(var c=new RegExp("\\b("+m+")\\b(?!.*[;}])","gi"),d=function(k){return".iepp_"+k},h=-1;++h<a.length;){b=a[h].media||b;s(a[h].imports,b);q(b,a[h].cssText.replace(c,d))}}function t(){for(var a,b=e.getElementsByTagName("*"),c,d,h=new RegExp("^"+m+"$","i"),k=-1;++k<b.length;)if((a=b[k])&&(d=a.nodeName.match(h))){c=new RegExp("^\\s*<"+d+"(.*)\\/"+d+">\\s*$","i");i.innerHTML=a.outerHTML.replace(/\r|\n/g," ").replace(c,a.currentStyle.display=="block"?"<div$1/div>":"<span$1/span>");c=i.childNodes[0];c.className+=" iepp_"+d;c=f[f.length]=[a,c];a.parentNode.replaceChild(c[1],c[0])}s(e.styleSheets,"all")}function u(){for(var a=-1,b;++a<f.length;)f[a][1].parentNode.replaceChild(f[a][0],f[a][1]);for(b in g)r[l].removeChild(g[b]);g={};f=[]}for(var r=e.documentElement,i=e.createDocumentFragment(),g={},m="abbr|article|aside|audio|canvas|command|datalist|details|figure|figcaption|footer|header|hgroup|keygen|mark|meter|nav|output|progress|section|source|summary|time|video",n=m.split("|"),f=[],o=-1,l="firstChild",j="createElement";++o<n.length;){e[j](n[o]);i[j](n[o])}i=i.appendChild(e[j]("div"));p.attachEvent("onbeforeprint",t);p.attachEvent("onafterprint",u)})(this,doc);
     }
 
     // Assign private properties to the return object with prefix
@@ -736,7 +757,7 @@ window.Modernizr = (function(window,doc,undefined){
     ret._version         = version;
 
     // Remove "no-js" class from <html> element, if it exists:
-    (function(H,C){H[C]=H[C].replace(/\bno-js\b/,'js')})(docElement,'className');
+    docElement.className=docElement.className.replace(/\bno-js\b/,'js');
 
     // Add the new classes to the <html> element.
     docElement.className += ' ' + classes.join( ' ' );
