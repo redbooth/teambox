@@ -56,7 +56,7 @@ class User
       Digest::MD5.hexdigest email.downcase
     end
 
-    def gravatar(size, secure = false, default = 'identicon')
+    def gravatar(size, secure = false, default = Teambox.config.gravatar_default)
       (secure ? 'https://secure.' : 'http://www.').tap do |url|
         url << "gravatar.com/avatar/#{gravatar_id}?size=#{AvatarSizes[size][0]}"
         url << "&default=#{default}" if default

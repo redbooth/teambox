@@ -12,6 +12,10 @@ defaults: &defaults
   autorefresh_interval: 60 # in seconds
 
   daily_task_reminder_email_time: "06:00"
+  
+  # Gravatar fallback type in case a user doesn't have an avatar
+  # One of: wavatar, monsterid, identicon
+  gravatar_default: identicon
 
   # Set to true to use S3 storage instead of local filesystem storage.
   # Automatically true on Heroku.
