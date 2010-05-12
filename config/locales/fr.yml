@@ -785,7 +785,7 @@ fr:
       plan_share_and_collaborate: "Planifiez, partagez y tenez-vous à jour de ce qui a été fait. Aussi facile que cela devrait l'être."
       report_abuse: "Ce mail vous a été envoyé suite à une demande de votre contact. Contactez-nous en cas d'abus."
     invitation_group:
-      you_have_been_invited_to: "Vous avez été invité à rejoindre le projet <b>{{project}}</b>"
+      you_have_been_invited_to: "Vous avez été invité à rejoindre le projet <b>{{group}}</b>"
     confirm:
       hey: "Bonjour {{user_name}}!"
       follow_the_link: "Pour <b>terminer de vous enregistrer</b> dans Teambox il vous suffit de suivre ce lien:"
