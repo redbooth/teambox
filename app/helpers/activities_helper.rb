@@ -13,6 +13,13 @@ module ActivitiesHelper
       out
     end  
   end
+  
+  def activity_section(activity)
+    haml_tag 'div', :class => "activity #{activity.action_type}" do
+      yield activity_title(activity)
+      haml_tag 'div', posted_date(activity.posted_date), :class => 'date' unless rss?
+    end
+  end
 
   # TODO for activities create_note, create_divider, edit and delete
   ActivityTypes = %w( create_comment 
@@ -21,12 +28,12 @@ module ActivitiesHelper
                       create_task
                       create_page edit_page
                       create_note edit_note
-                      create_divider edit_divider
                       create_upload
-                      create_person delete_person)
+                      create_person delete_person
+                      )
 
   def list_activities(activities)
-    render :partial => "activities/activity", :collection => activities
+    activities.map { |activity| show_activity(activity) }.join('')
   end
 
   def show_activity(activity)
@@ -34,6 +41,47 @@ module ActivitiesHelper
       render "activities/#{activity.action_type}", :activity => activity,
         activity.target_type.underscore.to_sym => activity.target
     end
+  end
+  
+  def activity_title(activity, plain = false)
+    values = { :user => link_to_unless(plain, activity.user.name, activity.user) }
+    object = activity.target
+    type = activity.action_type
+    
+    values.update case activity.action_type
+    when 'create_note', 'edit_note'
+      page = Page.find_with_deleted(object.page_id)
+      { :note => object,
+        :page => link_to_unless(plain || page.deleted?, page, [activity.project, page]) }
+    when 'create_conversation'
+      { :conversation => link_to_unless(plain, object, [activity.project, object]) }
+    when 'create_page', 'edit_page'
+      { :page => link_to_unless(plain || object.deleted?, object, [activity.project, object]) }
+    when 'create_person', 'delete_person'
+      { :person => link_to_unless(plain, object.user.name, object.user),
+        :project => link_to_unless(plain, activity.project, activity.project) }
+    when 'create_task'
+      { :task => link_to_unless(plain, object, [activity.project, object.task_list, object]),
+        :task_list => link_to_unless(plain, object.task_list, [activity.project, object.task_list]) }
+    when 'create_task_list'
+      { :task_list => link_to_unless(plain, object, [activity.project, object]) }
+    when 'create_upload'
+      { :file => link_to_unless(plain, object.description, project_uploads_path(activity.project, :anchor => dom_id(object))) }
+    when 'create_comment'
+      # one of Project, Task or Conversation
+      object = object.target
+      type << "_#{object.class.name.underscore}"
+      
+      target = case object
+      when Task then link_to_unless(plain, object.name, [activity.project, object.task_list, object])
+      when Project then link_to_unless(plain, object.name, object)
+      when Conversation then link_to_unless(plain, object.name, [activity.project, object])
+      end
+      { :target => target }
+    else
+      raise ArgumentError, "unknown activity type #{activity.action_type}"
+    end
+    t("activities.#{type}.title", values)
   end
   
   def activity_target_url(activity)
@@ -80,7 +128,7 @@ module ActivitiesHelper
       options[:url] ||= @view.activity_target_url(activity)
       
       block ||= Proc.new do |item|
-        item.title @view.t("activities.#{activity.action_type}.#{activity.action_type}")
+        item.title @view.activity_title(activity, true)
         item.description @view.show_activity(activity)
         item.author activity.user.name
       end

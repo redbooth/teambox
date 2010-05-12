@@ -323,8 +323,8 @@ module ApplicationHelper
     end
   end
   
-  def rendering_rss?
-    @rendering_rss ||= request.format == :rss
+  def rss?
+    request.format == :rss
   end
   
   def groups_enabled?

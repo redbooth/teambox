@@ -46,34 +46,47 @@ en:
     person: "{{name}} is no longer in the project"
     left_project: "You are no longer in this project"
   activities:
-    create_upload: uploaded a file
+    create_upload:
+      title: "{{user}} uploaded file {{file}}"
     create_conversation:
       create_conversation: started the conversation
+      title: "{{user}} started a conversation: {{conversation}}"
     create_comment:
       create_comment: created the comment
+      title: "{{user}} commented on {{target}}"
+    create_comment_task:
+      title: "{{user}} updated task {{target}}"
+    create_comment_project:
+      title: "{{user}} updated status on {{target}}"
+    create_comment_conversation:
+      title: "{{user}} followed up on conversation {{target}}"
     create_task_list:
       create_task_list: created the task list
+      title: "{{user}} created task list {{task_list}}"
     create_task:
       create_task: created the task
+      title: "{{user}} created task {{task}} in {{task_list}}"
     create_page:
       create_page: created the page
+      title: "{{user}} created page {{page}}"
     edit_page:
       edit_page: edited the page
+      title: "{{user}} edited the page {{page}}"
     create_note:
       create_note: added note
+      title: '{{user}} created note "{{note}}" in {{page}}'
     edit_note:
       edit_note: edited note
-    create_divider:
-      create_divider: added page divider 
-    edit_divider:
-      edit_divider: edited page divider
+      title: '{{user}} edited the note "{{note}}" in {{page}}'
     create_person:
       create_person: was invited to the project
       by: by
+      title: "{{person}} got invited to the project {{project}}"
     delete_person:
       delete_person: was removed to the project
       by: by
       left: left the project
+      title: "{{person}} left the project {{project}}"
   avatars:
     new:
       title: Upload an avatar
@@ -734,7 +747,6 @@ en:
       item2: "<b>Versioning</b>. Upload new versions of a file and keep track of changes."
       item3: "<b>Always available</b>. Files stay in context in the project for future reference."
     upload:
-      uploaded_the_file: "uploaded the file"
       download: Download
       uploaded_by: Uploaded by
       remove: Delete

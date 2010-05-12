@@ -1,16 +1,2 @@
-.activity{ :class => "#{activity.action_type}" }
-  .activity_icon{ :class => "activity_#{activity.target_type.to_s.underscore}" }
-  %span
-    = link_to person.user.name, user_path(person.user)
-    - if person.user == activity.user
-      = t(".left") # left the project
-      = activity_project_link(activity.project,:none)      
-    - else 
-      = t(".#{activity.action_type}") # was removed to the project
-      = activity_project_link(activity.project,:none)
-      = t(".by")
-      = link_to activity.user, user_path(activity.user)
-  - unless rendering_rss?
-    .date
-      = posted_date activity.posted_date
-  .clear
+- activity_section(activity) do |title|
+  %p= title

@@ -10,14 +10,6 @@ class Divider < RoleRecord
   attr_accessor :deleted
   attr_accessible :body, :deleted, :name
   
-  def after_create
-    project.log_activity(self, 'create', updated_by.id)
-  end
-  
-  def after_update
-    project.log_activity(self, 'edit', updated_by.id)
-  end
-  
   def clear_slot
     page_slot.destroy
   end

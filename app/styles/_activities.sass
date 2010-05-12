@@ -1,17 +1,18 @@
 .activity
-  padding: 0px
-    top: 2px
+  padding: 2px
   margin: 15px 0px
   font-size: 12px
   background-color: #fff9da
   border: solid 1px #fff3b9
+  +clearing
+  p
+    margin: 0
+    float: left
   .date
     float: right
+    margin-top: 2px
     font-size: 10px
     color: #c7b89f
-    padding:
-      top: 3px
-      right: 5px
   a
     font-weight: bold
   img
@@ -24,9 +25,3 @@
   &:hover
     .date
       color: rgb(0, 0, 0)
-
-.activity_icon
-  float: left
-  width: 16px
-  height: 16px
-  margin-right: 5px
