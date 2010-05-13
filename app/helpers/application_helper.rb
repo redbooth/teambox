@@ -69,10 +69,6 @@ module ApplicationHelper
         :recent_projects => recent_projects }
   end
 
-  def global_navigation
-    render :partial => 'shared/global_navigation'
-  end
-
   def footer
     render :partial => 'shared/footer'
   end
