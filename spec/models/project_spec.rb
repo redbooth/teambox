@@ -134,7 +134,7 @@ describe Project do
       %w(comment conversation task_list page).each do |model|
         Factory(model, :project => @project, :user => @project.user)
       end
-      
+
       # crazy, I know!
       lambda {
         lambda {
@@ -156,7 +156,7 @@ describe Project do
       task = Factory(:task, :project => @project, :task_list => task_list)
       comment = Factory(:comment, :project => @project, :target => task, :body => '')
       upload = Factory(:upload, :comment => comment, :project => @project)
-      
+
       lambda {
         lambda {
           @project.destroy
@@ -164,6 +164,17 @@ describe Project do
       }.should change(Comment, :count).by(-1)
     end
 
+
+  end
+  describe "calendar output" do
+    it "should produce valid format" do
+      project = Factory(:project)
+      task_list = Factory(:task_list, :project => project)
+      task = Factory(:task, :project => project, :task_list => task_list, :due_on => Time.parse("2010/01/01"))
+      calendar = project.to_ical
+      calendar.should =~ /DTSTART;VALUE=DATE:20100101/m
+      calendar.should =~ /DTEND;VALUE=DATE:20100102/m
+    end
   end
 
   describe "factories" do

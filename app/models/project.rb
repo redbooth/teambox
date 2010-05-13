@@ -31,7 +31,7 @@ class Project < ActiveRecord::Base
       person.destroy
     end
   end
-  
+
   def has_member?(user)
     Person.exists?(:project_id => self.id, :user_id => user.id)
   end
@@ -111,7 +111,7 @@ class Project < ActiveRecord::Base
     tasks = projects.collect{ |p| p.tasks }.flatten
     self.calendar_for_tasks(tasks)
   end
-  
+
   protected
 
     def self.calendar_for_tasks(tasks)
@@ -121,15 +121,18 @@ class Project < ActiveRecord::Base
       ical.custom_property("METHOD","PUBLISH")
       tasks.each do |task|
         next unless task.due_on
-        date = task.due_on.to_date
+        date = task.due_on
+        created_date = task.created_at.to_time.to_datetime
         ical.event do
-          dtstart       Date.new(date.year, date.month, date.day)
-          dtend         Date.new(date.year, date.month, date.day) + 1.day
+          dtstart       Date.new(date.year,date.month,date.day)
+          dtstart.ical_params  = {"VALUE" => "DATE"}
+          dtend       Date.new(date.year,date.month,date.day) + 1.day
+          dtend.ical_params  = {"VALUE" => "DATE"}
           summary       task.name
           klass         task.project.name
-          dtstamp       task.created_at
+          dtstamp       DateTime.civil(created_date.year,created_date.month,created_date.day,created_date.hour,created_date.min,created_date.sec,created_date.offset)
           #url           project_task_list_task_url(task.project, task.task_list, task)
-          uid           "task-#{id}"
+          uid           "task-#{task.object_id}"
         end
       end
       ical.to_ical
