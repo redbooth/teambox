@@ -28,7 +28,10 @@ class Comment
       self.previous_assigned_id = target.previous_assigned_id
       if status == Task::STATUSES[:open] && !assigned
         self.assigned = Person.find(:first, :conditions => { :user_id => user.id, :project_id => project.id })
+      elsif status != Task::STATUSES[:open]
+        self.assigned = nil
       end
+      
     end
     
 end
