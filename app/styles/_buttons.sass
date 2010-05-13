@@ -1,5 +1,5 @@
 a.loading_button
-  background: url(../images/loading_button_bg.gif) no-repeat left
+  background: url(/images/loading_button_bg.gif) no-repeat left
   font-size: 12px
   padding: 5px
     left: 20px
@@ -8,8 +8,9 @@ a.loading_button
     padding: 5px
       right: 10px
     font-weight: bold
-    background: url(../images/loading_button_wrap_bg.jpg) no-repeat right
-a.add_button, a.new_task_list_link, a.reorder_task_list_link
+    background: url(/images/loading_button_wrap_bg.jpg) no-repeat right
+
+a.button, a.unarchive_task_list_link, a.reorder_task_list_link, a.add_button, a.new_task_list_link
   display: inline-block
   padding: 0.4em 0.7em
   font-size: 12px
@@ -32,37 +33,22 @@ a.add_button, a.new_task_list_link, a.reorder_task_list_link
     font-size: 11px
   .cssgradients &
     border: 1px solid silver
+  .no-cssgradients &
+    background: url(/images/button_bg.jpg) no-repeat left
+    padding: 5px
+    span
+      padding: 5px 10px 5px 5px
+      font-weight: bold
+      background: url(/images/button_wrap_bg.jpg) no-repeat right
+
+a.add_button, a.new_task_list_link
+  .cssgradients &
     &:before
       content: "✚ "
       color: #555555
       margin-right: 0.3em
   .no-cssgradients &
-    background: url(../images/add_button_bg.jpg) no-repeat left
-    padding: 5px
-      left: 20px
+    background-image: url(/images/add_button_bg.jpg)
+    padding-left: 20px
     span
-      padding: 5px
-        right: 10px
-      font-weight: bold
-      background: url(../images/button_wrap_bg.jpg) no-repeat right
-a.button, a.unarchive_task_list_link
-  background: url(../images/button_bg.jpg) no-repeat left
-  font-size: 12px
-  padding: 5px
-  span
-    color: rgb(40, 40, 40)
-    padding: 5px
-      right: 10px
-    font-weight: bold
-    background: url(../images/button_wrap_bg.jpg) no-repeat right
-a.attach_button
-  background: url(../images/attach_button_bg.jpg) no-repeat left
-  font-size: 12px
-  padding: 5px
-    left: 20px
-  span
-    color: rgb(40, 40, 40)
-    padding: 5px
-      right: 10px
-    font-weight: bold
-    background: url(../images/button_wrap_bg.jpg) no-repeat right
+      background: url(/images/button_wrap_bg.jpg) no-repeat right

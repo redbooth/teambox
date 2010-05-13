@@ -1,5 +1,9 @@
+$text = #333
+$typeface = "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif
+
 body
-  font-family: "Lucida Grande", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif
+  color: $text
+  font-family: $typeface
 
 p
   margin: 0px
@@ -25,9 +29,11 @@ h2
   span
     font-weight: normal
     font-size: 12px
-    color: rgb(180, 180, 180)
+    color: gray
     float: right
     padding-top: 9px
+    *:first-child + html &
+      margin-top: -1.5em
   div.column_wrap &
     font-size: 12px
     text-transform: uppercase
@@ -49,7 +55,6 @@ h2
     li
       font-size: 12px
   p
-    font-family: "Lucida Grande", Verdana, Arial, Helvetica, sans-serif
     line-height: 18px
     margin: 2px 0 10px
   a

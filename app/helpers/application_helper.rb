@@ -11,6 +11,15 @@ module ApplicationHelper
     content_tag('span', keys.join(', '), :class => 'translation_missing')
   end
   alias t translate
+  
+  def logo_image
+    header_group = @current_project.try(:group) || @group
+    if header_group and header_group.logo?
+      header_group.logo.url(:top)
+    else
+      'header_logo_black.png'
+    end
+  end
 
   def strip(project)
     if project && project.archived
@@ -46,19 +55,10 @@ module ApplicationHelper
   # types: success, error, notice
   def show_flash
     flash.each do |type, message|
-      haml_tag :div, :class => "flash-#{type}" do
-        haml_tag :div, message
-      end unless message.blank?
+      unless message.blank?
+        haml_tag :p, message, :class => "flash flash-#{type}"
+      end
     end
-  end
-
-  def header
-    render :partial => 'shared/header'
-  end
-
-  def project_navigation(project)
-    render :partial => 'shared/project_navigation',
-      :locals => { :project => project }
   end
 
   def navigation(project,projects,recent_projects)

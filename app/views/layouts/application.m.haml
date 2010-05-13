@@ -7,10 +7,11 @@
 
 %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
   #header
-    = header
+    = render 'shared/header'
     = navigation(@current_project,current_user.projects,current_user.recent_projects)
   #content
-    = project_navigation(@current_project) if @current_project
+    - if @current_project
+      = render 'shared/project_navigation', :project => @current_project
     = yield
   #footer
     =# link_to "Use full Teambox", root_path
