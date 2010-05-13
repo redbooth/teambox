@@ -184,7 +184,7 @@
       img
         cursor: move
 
-.new_divider, .edit_divider
+form.new_divider, form.edit_divider
   margin-top: 5px
   padding: 10px
     right: 0px
@@ -207,6 +207,25 @@
     font-size: 12px
     padding-top: 5px
     width: 130px
+
+form.new_note, form.edit_note
+  margin-top: 5px
+  border: solid 1px rgb(230, 230, 230)
+  background: rgb(245, 245, 245)
+  padding: 10px
+  -moz-border-radius: 8px
+  -webkit-border-radius: 8px
+  .documentation
+    font-size: 12px
+    float: right
+  .text_area
+    padding-right: 10px
+    textarea
+      height: 5em
+      width: 100%
+  .submit
+    font-size: 12px
+    padding-top: 10px
 
 .note
   p.actions
