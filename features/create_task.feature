@@ -12,19 +12,18 @@ Feature Creating a task
        And I press "Add Task" within ".task_form"
        And I wait for 1 second
       Then I should see "mislav"
-       And I should see "Ohhh ya" within ".task_header h2"
+       And I should see "Ohhh ya" within ".taskName .name"
 
-   Scenario Outline: Fails to create a valid test
+   Scenario Outline: Fails to create a valid task
       When I go to the "Awesome Ruby Yahh" task list page of the "Ruby Rockstars" project
        And I follow "+ Add Task"
        And I fill in "task_name" with "<name>"
        And I press "Add Task" within ".task_form"
-      Then I should see "mislav"
-      Then I should see an error message: "<error_message>"
+      Then I should see "<error_message>" within ".task_form"
    Examples:
      | name | error_message |
-     | | Name must not be blank  |
-     | a123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790 | Name must be shorter than 255 characters |
+     | | must not be blank  |
+     | a123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790123456790 | must be shorter than 255 characters |
 
    Scenario: Mislav edits a task name
      Given a task exists with name: "Ohhh ya"
@@ -43,23 +42,19 @@ Feature Creating a task
      And I fill in "task_name" with "Metaprogramming" in the new task form of the "Awesome Ruby Yahh" task list
      And I press "Add Task" within ".task_form"
      And I wait for 2 seconds
-    Then I should see "Metaprogramming" within ".task_header h2"
+    Then I should see "Metaprogramming" within ".taskName .name"
     When I follow "+ Add Task"
      And I fill in "task_name" with "Leaking block closures" in the new task form of the "Awesome Ruby Yahh" task list
      And I press "Add Task" within ".task_form"
      And I wait for 2 seconds
-    Then I should see "Leaking block closures" within ".task_header h2"
+    Then I should see "Leaking block closures" within ".taskName .name"
 
-  Scenario: User archives a task and then creates one
+  Scenario: User archives a task
     Given the following task with associations exist:
       | name          | task_list         | project        |
       | Invite Yehuda | Awesome Ruby Yahh | Ruby Rockstars |
    When I go to the page of the "Invite Yehuda" task
     And I click the element "status_resolved"
     And I press "Save"
-   Then I should see "Metaprogramming" within ".task_header h2"
-   When I follow "+ Add Task"
-    And I fill in "task_name" with "Invite DHH" in the new task form of the "Awesome Ruby Yahh" task list
-    And I press "Add Task" within ".task_form"
     And I wait for 2 seconds
-   Then I should see "Invite DHH" within ".task_header h2"
+   Then I should see "This task is closed and archived"
