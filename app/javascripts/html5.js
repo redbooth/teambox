@@ -1,4 +1,6 @@
 document.on('dom:loaded', function() {
+  if (!window.Modernizr) return
+  
   if (!Modernizr.input.placeholder) {
     $$('input[placeholder]').each(function(field) {
       field.addClassName('placeholder')
