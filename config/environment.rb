@@ -16,3 +16,12 @@ Teambox::Initializer.run do |config|
     ActiveSupport::XmlMini.backend = 'LibXML'
   end
 end
+
+# set default locale (Eglish) to be a fallback for missing translations
+I18n.exception_handler = lambda do |e, locale, key, options|
+  if I18n::MissingTranslationData === e and locale != I18n.default_locale
+    I18n.translate(key, options.update(:locale => I18n.default_locale, :raise => true))
+  else
+    raise e
+  end
+end
