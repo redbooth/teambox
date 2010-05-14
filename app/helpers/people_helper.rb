@@ -1,11 +1,12 @@
 module PeopleHelper
   
-  def people_role_options
-    Person::ROLES.map {|k,v| [ t("people.fields.#{k}"), v ] }.sort{|a,b| a[1] <=> b[1]}
+  def options_from_person_roles
+    Person::ROLES.map { |role, value| [t("people.fields.#{role}"), value] }.sort_by(&:last)
   end
   
-  def person_project_select_options(project)
-    {:id => 'people_project_select', :people_url => project_contacts_path(project)}
+  def options_from_other_projects(projects)
+    "<option value=''>#{t('people.column.select_project')}</option>" +
+      options_from_collection_for_select(projects, :id, :name)
   end
 
 end

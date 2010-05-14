@@ -12,6 +12,12 @@ module ApplicationHelper
   end
   alias t translate
   
+  def csrf_meta_tag
+    if protect_against_forgery?
+      %(<meta name="csrf-param" content="#{Rack::Utils.escape_html(request_forgery_protection_token)}"/>\n<meta name="csrf-token" content="#{Rack::Utils.escape_html(form_authenticity_token)}"/>)
+    end
+  end
+  
   def logo_image
     header_group = @current_project.try(:group) || @group
     if header_group and header_group.logo?

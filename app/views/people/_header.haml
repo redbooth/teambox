@@ -11,4 +11,4 @@
       = link_to t('people.link.edit'), '#edit'
       - unless project.owner?(person.user)
         = link_to t('people.header.remove'), project_person_path(project, person, :anchor => 'destroy'),
-          'data-confirm' => t('people.header.confirm_delete')
+          'data-confirm' => t('people.header.confirm_delete'), 'data-method' => 'delete', 'data-remote' => true

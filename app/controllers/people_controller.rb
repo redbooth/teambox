@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_filter :load_person, :only => [:update,:destroy]
+  before_filter :load_person, :only => [:update, :destroy]
   before_filter :set_page_title
   
   def index
@@ -54,31 +54,27 @@ class PeopleController < ApplicationController
   end
   
   def contacts
-    begin
-      @other_project = Project.find_by_id(params[:pid])
-    rescue
-      @other_project = nil
+    @project = Project.find params[:id]
+    
+    if current_user.in_project(@project)
+      users = @project.users
+      
+      invited_ids = @current_project.invitations.find(:all, :select => 'invited_user_id').map(&:invited_user_id).compact
+      users = users.scoped(:conditions => ['users.id NOT IN (?)', invited_ids]) if invited_ids.any?
+      
+      @contacts = users.all
+      @contacts -= @current_project.users
     end
     
-    if current_user.in_project(@other_project)
-      # Strip invited people
-      if @other_project
-        invited_ids = @current_project.invitations.find(:all, :select => 'invited_user_id').map(&:invited_user_id).compact
-        conds = invited_ids.empty? ? [] : ['users.id NOT IN (?)', invited_ids]
-        @contacts = @other_project.users.find(:all, :conditions => conds) - @current_project.users
-      end
-    end
-    
-    @contacts ||= []
-    
-    respond_to do |f|
-      f.js {}
+    respond_to do |wants|
+      wants.html { render :layout => false if request.xhr? }
     end
   end
   
   protected
-    def load_person
-      @person = @current_project.people.find(params[:id])
-      @user = @person.user
-    end
+
+  def load_person
+    @person = @current_project.people.find params[:id]
+    @user = @person.user
+  end
 end

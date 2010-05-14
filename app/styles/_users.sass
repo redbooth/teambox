@@ -1,3 +1,6 @@
+$thumb_size: 48px
+$micro_size: 24px
+
 .new_user
   padding: 10px
 
@@ -104,13 +107,13 @@
 div.upload_avatar
   .avatar
     float: left
-    width: 48px
-    height: 48px
+    width: $thumb_size
+    height: $thumb_size
     margin-right: 5px
     a
       display: block
-      width: 48px
-      height: 48px
+      width: $thumb_size
+      height: $thumb_size
       margin-right: 5px
       background: url(/images/avatar_thumb_corners.png)
     a:hover
@@ -129,8 +132,8 @@ div.upload_avatar
 
 .new_user_avatar
   float: left
-  width: 48px
-  height: 48px
+  width: $thumb_size
+  height: $thumb_size
   margin-right: 10px
   background: rgb(200, 240, 200)
   -moz-border-radius: 8px
@@ -199,27 +202,20 @@ div.upload_avatar
     h2
       border: none
     padding: 5px
-    .invite_box
+    form.new_invitation
       font-size: 12px
       border: 1px rgb(220, 220, 220) solid
       background-color: rgb(240, 240, 240)
       padding: 10px
       margin-bottom: 10px
       +rounded(5px)
-      .invite_by_search
-        float: left
-        h2
-          font-size: 16px
-          margin: 0 0 10px 0
-          padding: 0px
-        .text_field
-          label
-            width: 600px
-  .invite_recent
-    .invite_user_link
-      height: 28px
-    .micro_avatar
-      padding-top: 4px
+      h2
+        font-size: 16px
+        margin: 0 0 10px 0
+        padding: 0px
+      .text_field
+        label
+          width: 600px
   .people
     .person
       +clearing
@@ -285,7 +281,18 @@ div.upload_avatar
         span.discard
           a
             color: rgb(120, 0, 0)
-
+  #sidebar_people
+    margin-top: 1em
+    ol
+      list-style: none
+      margin: 0
+      padding: 0
+      li
+        clear: left
+        margin-top: .4em
+        min-height: $micro_size
+        line-height: $micro_size
+        
 .column
   h2
     margin-top: 20px
@@ -311,13 +318,13 @@ div.upload_avatar
 
 .thumb_avatar
   float: left
-  width: 48px
-  height: 48px
+  width: $thumb_size
+  height: $thumb_size
   margin-right: 10px
   a
     display: block
-    width: 48px
-    height: 48px
+    width: $thumb_size
+    height: $thumb_size
     margin-right: 5px
     &.round_corners
       background: url(/images/avatar_thumb_corners.png)
@@ -326,13 +333,13 @@ div.upload_avatar
 
 .micro_avatar
   float: left
-  width: 24px
-  height: 24px
+  width: $micro_size
+  height: $micro_size
   margin-right: 10px
   a
     display: block
-    width: 24px
-    height: 24px
+    width: $micro_size
+    height: $micro_size
     margin-right: 5px
     &.round_corners
       background: url(/images/avatar_thumb_corners.png)

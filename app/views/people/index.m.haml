@@ -1,6 +1,0 @@
-
-#page
-  = invite_form(@current_project,Invitation.new)
-  #people
-    = list_invitations_for_project(@current_project,@invitations)
-    = render @people, :project => @current_project

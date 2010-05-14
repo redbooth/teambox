@@ -4,11 +4,6 @@ module InvitationsHelper
     render :partial => 'invitations/fields', :locals => { :f => f }
   end
   
-  def list_invitations_for_project(project,invitations)
-    render :partial => 'invitations/invitation', :collection => invitations,
-    :locals => { :group => nil, :project => project, :target => project }
-  end
-  
   def list_invitations_for_group(group,invitations)
     render :partial => 'invitations/group_invitation', :collection => invitations,
     :locals => { :group => group, :project => nil, :target => group }
@@ -32,42 +27,14 @@ module InvitationsHelper
     link_to 'Invite someone', new_project_invitation_path(project)
   end
   
-  def resend_invitation_link(target,invitation)
-    if invitation.editable?(current_user)
-      link = target.class == Project ? resend_project_invitation_path(target,invitation) : resend_group_invitation_path(target,invitation)
-      link_to_remote t('invitations.invitation.resend'),
-        :url => link,
-        :loading => show_loading('resend_invitation',invitation.id),
-        :html => { :id => "resend_invitation_#{invitation.id}_link" }
-    end
+  def resend_invitation_link(target, invitation)
+    link_to t('invitations.invitation.resend'),
+      polymorphic_path([:resend, target, invitation], target, invitation)
   end
   
   def invitation_sent(invitation)
     page.replace "resend_invitation_loading_#{invitation.id}",
       :partial => 'invitations/sent'
-  end
-
-  def invite_form(project,invitation)
-    if project.admin?(current_user)
-      render :partial => 'invitations/new',
-        :locals => {
-          :project => project,
-          :invitation => invitation }
-    end
-  end
-
-  def invite_by_search(target,invitation)
-    render :partial => 'invitations/search',
-      :locals => {
-        :target => target,
-        :invitation => invitation }
-  end
-
-  def invite_recent(project,recent_users)
-    render :partial => 'invitations/recent',
-      :locals => {
-        :project => project,
-        :recent_users => recent_users }
   end
   
   def invite_user(project,user)

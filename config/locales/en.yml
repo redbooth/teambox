@@ -374,14 +374,14 @@ en:
       invited_user: "{{inviter}} invited <b>{{invitee}}</b> to join the group."
       invited_email: "{{inviter}} invited <b>{{email}}</b> to join the group."
     sent:
-      email_sent: "<b>We just sent a notification email to this user with a link to accept your project invitation</b>. If they can't find the email, make sure it was not classified as spam or try a different email address. If problems persist, please contact our staff."
+      email_sent: "Email invitation has been sent"
     pending:
       to_access_or: to access the project or
       to_access_or_group: to access the group or
       invited_to_join: "{{by}} has invited you to join the project {{project}}."
       invited_to_join_group: "{{by}} has invited you to join the group {{group}}."
     resend:
-      resent: "The invitation has been resent to {{recipient}}. If the email is not received make sure to check the spam folder."
+      resent: "The invitation has been resent to {{recipient}}"
       return: Go back
     index_user:
       title: Pending invitations
@@ -394,10 +394,12 @@ en:
       submit: Send
       invite_from_project: "Invite from Project"
     recent:
-      invite: Invite {{username}}
+      invite: "Invite {{username}}"
     errors:
       invalid: "Invalid invitation"
       invalid_code: "Invalid invitation code"
+    destroy:
+      discarded: "The invitation to {{user}} has been discarded"
   conversations:
     actions:
       confirm_delete: Are you sure you to delete this conversation?
@@ -682,6 +684,8 @@ en:
     errors:
       user_or_email: "User not found. Enter his username or email."
     column:
+      select_project: Select a project
+      no_contacts: There are no people available to invite.
       inviting: "Inviting other users"
       only_admins_can_invite: "Only admins can invite people to this project."
       contact_admins: "In this project, only {{admins}} can invite new members."

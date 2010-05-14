@@ -79,17 +79,29 @@ class InvitationsController < ApplicationController
   end
   
   def resend
-    @invitation = Invitation.find(params[:id])
+    @invitation = Invitation.find params[:id]
     @invitation.send_email if @invitation
-    respond_to{|f|f.js}
+    
+    respond_to do |wants|
+      wants.html {
+        flash[:notice] = t('invitations.resend.resent', :recipient => @invitation.email)
+        redirect_to :back
+      }
+      wants.js
+    end
   end
   
   def destroy
-    @invitation = Invitation.find(params[:id])
-    if @invitation
-      @invitation.destroy
+    @invitation = Invitation.find params[:id]
+    @invitation.destroy
+    
+    respond_to do |wants|
+      wants.html {
+        flash[:notice] = t('invitations.destroy.discarded', :user => @invitation.email)
+        redirect_to :back
+      }
+      wants.js
     end
-    respond_to{|f|f.js}
   end
   
   before_filter :load_user_invitation, :only => [ :accept, :decline ]

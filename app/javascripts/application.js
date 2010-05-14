@@ -43,17 +43,6 @@ Event.addBehavior = function(hash) {
 }
 Event.addBehavior.reload = Prototype.emptyFunction
 
-// use Prototype to submit Ajax forms
-document.on('submit', 'form[data-remote="true"]', function(e) {
-  e.preventDefault()
-  var form = this
-  
-  form.request({
-    onSuccess: function(response) { form.fire('submit:success', response) },
-    onFailure: function() { alert(r.responseText) }
-  })
-})
-
 function hideBySelector(selector) {
   insertCss(selector + ' {display:none}')
 }

@@ -1,15 +1,7 @@
 hideBySelector('#people .edit_person')
 
-document.on('click', '#people a[href$="#destroy"]', function(e, link) {
-  e.preventDefault()
-  if (confirm(link.readAttribute('data-confirm'))) {
-    new Ajax.Request(link.readAttribute('href'), {
-      method: 'delete',
-      onSuccess: function() {
-        link.up('.person').remove()
-      }
-    })
-  }
+document.on('ajax:success', '#people a[data-method=delete]', function(e, link) {
+  link.up('.person').remove()
 })
 
 document.on('click', '#people a[href="#edit"]', function(e) {
@@ -26,6 +18,28 @@ document.on('click', '#people form a[href="#cancel"]', function(e) {
   parent.down('.person_header').show()
 })
 
-document.on('submit:success', '#people form', function(e) {
+document.on('ajax:success', '#people form', function(e) {
   this.up('.person').replace(e.memo.responseText)
+})
+
+document.on('change', '#other_projects select', function(e) {
+  var value = this.getValue(), loading = $('people_project_load')
+  if (value) {
+    this.up('form').request({
+      onComplete: function(e) {
+        loading.hide()
+        $('sidebar_people').update(e.responseText)
+      }
+    })
+    loading.show()
+  } else {
+    $('sidebar_people').update('')
+    loading.hide()
+  }
+})
+
+document.on('click', '#sidebar_people a[href]', function(e) {
+  e.preventDefault()
+  var login = this.readAttribute('href').split('/').last()
+  $('invitation_user_or_email').setValue(login).focus()
 })

@@ -1,3 +1,10 @@
-.invite_box
-  = invite_by_search(project, invitation)
-  .clear
+- form_for [project, invitation], :person do |f|
+  %h2= t('invitations.search.invite_people')
+  .text_field
+    = f.label :user_or_email, t('invitations.search.username_or_email')
+    = f.text_field :user_or_email
+  .text_field
+    = f.label :role, t('invitations.search.role')
+    = f.select :role, options_from_person_roles
+  .submit
+    = f.submit t('invitations.search.invite')
