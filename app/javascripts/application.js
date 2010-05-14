@@ -43,6 +43,36 @@ Event.addBehavior = function(hash) {
 }
 Event.addBehavior.reload = Prototype.emptyFunction
 
+// use Prototype to submit Ajax forms
+document.on('submit', 'form[data-remote="true"]', function(e) {
+  e.preventDefault()
+  var form = this
+  
+  form.request({
+    onSuccess: function(response) { form.fire('submit:success', response) },
+    onFailure: function() { alert(r.responseText) }
+  })
+})
+
+function hideBySelector(selector) {
+  insertCss(selector + ' {display:none}')
+}
+
+function insertCss(css) {
+  var head = document.getElementsByTagName('head')[0],
+      style = document.createElement('style')
+  
+  style.setAttribute("type", "text/css")
+  
+  if (style.styleSheet) { // IE
+    style.styleSheet.cssText = css;
+  } else { // w3c
+    var cssText = document.createTextNode(css);
+    style.appendChild(cssText);
+  }
+  head.appendChild(style)
+}
+
 //= require <weakling>
 //= require <fyi>
 //= require <calendar_date_select>

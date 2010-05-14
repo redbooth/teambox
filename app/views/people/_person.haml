@@ -1,5 +1,28 @@
-.person{ :id => person_id(:item,project,person) }
+%div[person]
   = thumb_avatar(person.user)
-  = person_header(project,person)
-  = person_form(project,person)
-  .clear  
+  = render 'header', :person => person, :project => project
+  
+  - unless person.user == current_user
+    - form_for person, :url => [project, person], :html => { 'data-remote' => true } do |f|
+      %h2= person.user.name
+      %ol.roles
+        %li
+          %label
+            = f.radio_button :role, Person::ROLES[:observer]
+            = t('people.fields.observer')
+        %li
+          %label
+            = f.radio_button :role, Person::ROLES[:commenter]
+            = t('people.fields.commenter')
+        %li
+          %label
+            = f.radio_button :role, Person::ROLES[:participant]
+            = t('people.fields.participant')
+        %li
+          %label
+            = f.radio_button :role, Person::ROLES[:admin]
+            = t('people.fields.admin')
+      .actions
+        = submit_tag t('people.edit.submit')
+        = t('common.or')
+        = link_to t('common.cancel'), '#cancel'

@@ -1,8 +1,28 @@
-= invite_form(@current_project,Invitation.new)
+= invite_form @current_project, Invitation.new
 
 #people.people
-  = list_invitations_for_project(@current_project,@invitations)
-  = list_people(@current_project,@people)
+  = list_invitations_for_project @current_project, @invitations
+  = render @people, :project => @current_project
 
 - content_for :column do
-  = render :partial => 'column'
+  - if @current_project.admin?(current_user)
+    %h2= t('invitations.search.invite_from_project')
+    .text_field
+      = select_tag "pid", options_for_select([['---', 0]] + options_for_projects(current_user.projects)), person_project_select_options(@current_project)
+      = loading_image("people_project_load")
+    #sidebar_people
+
+  - else
+    - @admins = @people.map(&:user).select { |user| @current_project.admin?(user) }
+    - current_person = @people.find { |p| p.user == current_user }
+    %h2= t('people.column.inviting')
+    %p= t('people.column.only_admins_can_invite') 
+    %p= t('people.column.contact_admins',
+          :admins => @admins.collect { |user| link_to(user, user) }.to_sentence,
+          :count => @admins.size)
+
+    %h2= t('people.column.leaving')
+    %p= t('people.column.you_can_leave')
+    %p= link_to t('people.column.leave_project'),
+          project_person_path(@current_project, current_person), 
+          :method => :delete, :confirm => t('people.column.confirm_delete')

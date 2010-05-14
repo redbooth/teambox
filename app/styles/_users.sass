@@ -205,9 +205,7 @@ div.upload_avatar
       background-color: rgb(240, 240, 240)
       padding: 10px
       margin-bottom: 10px
-      -moz-border-radius: 5px
-      -webkit-border-radius: 5px
-      -webkit-border-radius: 5px
+      +rounded(5px)
       .invite_by_search
         float: left
         h2
@@ -224,28 +222,10 @@ div.upload_avatar
       padding-top: 4px
   .people
     .person
-      clear: both
-      display: block
+      +clearing
       font-size: 12px
       padding: 5px
       margin-bottom: 5px
-      color: rgb(80, 80, 80)
-      form.person_form
-        padding: 10px
-        background: #ffff99
-        width: 530px
-        float: left
-        h2
-          color: rgb(80, 80, 80)
-          margin: 0px
-            bottom: 10px
-          padding-left: 5px
-        .submit
-          width: 100%
-          clear: both
-          padding-top: 8px
-            right: 5px
-          text-align: right
       .name
         float: left
         width: 350px
@@ -258,8 +238,6 @@ div.upload_avatar
           right: 10px
           bottom: 5px
         float: left
-      .actions
-        float: right
       .text
         margin-left: 68px
         .name
@@ -268,6 +246,31 @@ div.upload_avatar
           font:
             weight: bold
             size: 12px
+      .person_header .actions
+        float: right
+        text-align: right
+        width: 5.5em
+        padding-top: 5px
+        a
+          +button
+          display: block
+          margin-bottom: 5px
+      .edit_person
+        padding: 10px
+        background: $highlight
+        width: 530px
+        float: left
+        h2
+          color: rgb(80, 80, 80)
+          margin: 0px
+            bottom: 10px
+          padding-left: 5px
+        .roles
+          list-style: none
+          margin: 0
+          padding: 0
+        .actions
+          margin-top: .5em
     .invitation
       border: 1px solid rgb(195, 205, 210)
       background: rgb(235, 245, 250)

@@ -3,9 +3,8 @@ class PeopleController < ApplicationController
   before_filter :set_page_title
   
   def index
-    @people = @current_project.people.sort { |a,b| b.user.updated_at <=> a.user.updated_at }
+    @people = @current_project.people.all(:include => :user).sort_by { |p| p.user.updated_at }.reverse
     @invitations = @current_project.invitations
-    @admins = @current_project.people.admins
     
     respond_to do |f|
       f.html
@@ -15,41 +14,38 @@ class PeopleController < ApplicationController
       f.yaml  { render :as_yaml => @people.to_xml(:root => 'people') }
     end
   end
-  
-  def create
-    user = User.find_by_email(params[:search]) || User.find_by_login(params[:search])
 
-    if user
-      @current_project.add_user(user,current_user)
-      flash[:success] = "#{user.name} has been invited to this project!"
-
-      redirect_to project_people_path
-    else
-      flash[:error] = t('people.errors.user_or_email')
-      redirect_to project_people_path
+  def update
+    @person.update_attributes params[:person]
+    
+    respond_to do |wants|
+      wants.html {
+        if request.xhr?
+          render :partial => 'people/person', :locals => {:project => @current_project, :person => @person}
+        else
+          flash[:success] = t('people.update.success', :name => @person.user.name)
+          redirect_to project_people_url(@current_project)
+        end
+      }
     end
   end
 
-  def update
-    @person.update_attributes(params[:person])
-    respond_to {|f|f.js}
-  end
-
   def destroy
-    if @user == current_user
-      @person.try(:destroy)
-
-      flash[:success] = t('deleted.left_project', :name => @user.name)
-      redirect_to root_path
-    elsif @current_project.admin?(current_user)
-      @person.try(:destroy)
-
-      respond_to do |f|
-        f.html do
-          flash[:success] = t('deleted.person', :name => @user.name)
-          redirect_to project_people_path(@current_project)
-        end
-        f.js
+    if @user == current_user or @current_project.admin?(current_user)
+      @person.destroy
+      
+      respond_to do |wants|
+        wants.html {
+          if request.xhr?
+            head :ok
+          elsif @user == current_user
+            flash[:success] = t('deleted.left_project', :name => @user.name)
+            redirect_to root_path
+          else
+            flash[:success] = t('deleted.person', :name => @user.name)
+            redirect_to project_people_path(@current_project)
+          end
+        }
       end
     else
       flash[:error] = t('common.not_allowed')

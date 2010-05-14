@@ -659,8 +659,10 @@ en:
   people:
     link:
       edit: Edit
+    update:
+      success: "You have updated {{name}}'s role"
     edit:
-      submit: Update Person
+      submit: Update person
     fields:
       role: Role
       observer: Observer. Read-only access to the project.

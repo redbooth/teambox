@@ -1,17 +1,6 @@
 ;(function() {
-  var selector = '.fyi',
-      head = document.getElementsByTagName('head')[0],
-      style = document.createElement('style')
-
-  var cssStr = selector + ' { display:none }'
-  style.setAttribute("type", "text/css")
-  if (style.styleSheet){// IE
-    style.styleSheet.cssText = cssStr;
-  } else {// w3c
-    var cssText = document.createTextNode(cssStr);
-    style.appendChild(cssText);
-  }
-  head.appendChild(style)
+  var selector = '.fyi'
+  hideBySelector(selector)
 
   Event.addBehavior({
     'input:focusin': function(e) {
