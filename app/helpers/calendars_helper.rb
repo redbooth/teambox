@@ -265,7 +265,7 @@ module CalendarsHelper
      projectmap = {}
      
      args = @comments.map do |comment|
-       date = comment.created_at
+       date = comment.created_at.in_time_zone(current_user.time_zone)
        task = (comment.target && comment.target.class == Task) ? comment.target : nil
        projectmap[comment.project_id] ||= comment.project.name
        taskmap[task.id] ||= task.name unless task.nil?
