@@ -116,6 +116,13 @@ class User < ActiveRecord::Base
   def shares_invited_projects_with?(user)
     Invitation.count(:conditions => {:project_id => user.project_ids, :invited_user_id => self.id}) > 0
   end
+  
+  def users_with_shared_projects
+    ids = self.projects.map(&:user_ids).flatten
+    ids += Invitation.find(:all, :conditions => {:project_id => self.project_ids}, :select => 'user_id').map(&:user_id)
+    
+    User.find(:all, :conditions => {:id => ids.uniq})
+  end
 
   def activities_visible_to_user(user)
     ids = projects_shared_with(user).collect { |project| project.id }

@@ -12,9 +12,9 @@ class UsersController < ApplicationController
     respond_to do |f|
       f.html { redirect_to '/' }
       f.m { redirect_to '/' }
-      f.xml   { render :xml     => [@current_user].to_xml(:root => 'users') }
-      f.json  { render :as_json => [@current_user].to_xml(:root => 'users') }
-      f.yaml  { render :as_yaml => [@current_user].to_xml(:root => 'users')}
+      f.xml   { render :xml     => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
+      f.json  { render :as_json => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
+      f.yaml  { render :as_yaml => @current_user.users_with_shared_projects.to_xml(:root => 'users')}
     end
   end
   
