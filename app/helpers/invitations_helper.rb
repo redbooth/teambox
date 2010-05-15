@@ -27,9 +27,14 @@ module InvitationsHelper
     link_to 'Invite someone', new_project_invitation_path(project)
   end
   
-  def resend_invitation_link(target, invitation)
-    link_to t('invitations.invitation.resend'),
-      polymorphic_path([:resend, target, invitation], target, invitation)
+  def resend_invitation_link(target,invitation)
+    if invitation.editable?(current_user)
+      link = target.class == Project ? resend_project_invitation_path(target,invitation) : resend_group_invitation_path(target,invitation)
+      link_to_remote t('invitations.invitation.resend'),
+        :url => link,
+        :loading => show_loading('resend_invitation',invitation.id),
+        :html => { :id => "resend_invitation_#{invitation.id}_link" }
+    end
   end
   
   def invitation_sent(invitation)
