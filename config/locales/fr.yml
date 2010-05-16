@@ -133,7 +133,7 @@ fr:
         upload_here_or_at_gravatar: "Ajoutez une nouvelle image ici ou créez un {{gravatar}} qui deviendra votre image de profil sur teambox."
       tooltips:
         login: "Vous pouvez utiliser un nom d’utilisateur court pour vous connecter. Il doit être en minuscules et sans espace. Vous pouvez utiliser _."
-        first_name: "Jusqu’à 20 caractères.
+        first_name: "Jusqu’à 20 caractères."
         last_name: "Jusqu’à 20 caractères."
         email: "Utilisez une adresse mail fonctionnelle. Sinon, vos collègues ne pourront pas vous contacter."
         password: "Combiner des lettres, des chiffres, des majuscules et des minuscules est une bonne idée."
