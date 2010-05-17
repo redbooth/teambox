@@ -3,7 +3,7 @@
  * http://modernizr.com/
  *
  * Copyright (c) 2009-2010 Faruk Ates - http://farukat.es/
- * Licensed under the MIT license.
+ * Dual-licensed under the BSD and MIT licenses.
  * http://modernizr.com/license/
  *
  * Featuring major contributions by
@@ -22,8 +22,8 @@
  * if-conditionals in CSS styling, making it easily to have fine
  * control over the look and feel of your website.
  * 
- * @author    Faruk Ates
- * @copyright   (2009-2010) Faruk Ates.
+ * @author        Faruk Ates
+ * @copyright     (c) 2009-2010 Faruk Ates.
  *
  * @contributor   Paul Irish
  * @contributor   Ben Alman
@@ -66,7 +66,7 @@ window.Modernizr = (function(window,doc,undefined){
     /**
      * Create our "modernizr" element that we do most feature tests on.
      */
-    mod = 'modernizr'
+    mod = 'modernizr',
     m = doc.createElement( mod ),
     m_style = m.style,
 
@@ -79,7 +79,6 @@ window.Modernizr = (function(window,doc,undefined){
     
     canvas = 'canvas',
     canvastext = 'canvastext',
-    webgl = 'webgl',
     rgba = 'rgba',
     hsla = 'hsla',
     multiplebgs = 'multiplebgs',
@@ -123,7 +122,6 @@ window.Modernizr = (function(window,doc,undefined){
     draganddrop = 'draganddrop',
     websqldatabase = 'websqldatabase',
     websocket = 'websocket',
-    flash = 'flash',
     smile = ':)',
     touch = 'touch',
     
@@ -222,6 +220,15 @@ window.Modernizr = (function(window,doc,undefined){
      */
     function test_props_all( prop, callback ) {
         var uc_prop = prop.charAt(0).toUpperCase() + prop.substr(1),
+        
+        // following spec is to expose vendor-specific style properties as:
+        //   elem.style.WebkitBorderRadius
+        // and the following would be incorrect:
+        //   elem.style.webkitBorderRadius
+        // Webkit and Mozilla are nice enough to ghost their properties in the lowercase
+        //   version but Opera does not.
+        
+        // see more here: http://github.com/Modernizr/Modernizr/issues/issue/21
         props = [
             prop,
             'Webkit' + uc_prop,
@@ -234,13 +241,11 @@ window.Modernizr = (function(window,doc,undefined){
         return !!test_props( props, callback );
     }
     
-    // Tests
 
     /**
-     * Canvas tests in Modernizr 1.x are still somewhat rudimentary. However,
-     *   the added "canvastext" test allows for a slightly more reliable and
-     *   usable setup.
+     * Tests
      */
+     
     tests[canvas] = function() {
         return !!doc.createElement( canvas ).getContext;
     };
@@ -249,25 +254,13 @@ window.Modernizr = (function(window,doc,undefined){
         return !!(tests[canvas]() && typeof doc.createElement( canvas ).getContext('2d').fillText == 'function');
     };
     
-    
-    tests[webgl] = function(){
-
-        var elem 	 = doc.createElement( canvas ),
-            contexts = [webgl, "ms-"+webgl, "experimental-"+webgl, "moz-"+webgl, "opera-3d", "webkit-3d", "ms-3d", "3d"]; 
-            
-        for (var b = -1, len = contexts.length; ++b < len; ) {
-            try {
-                if (elem.getContext(contexts[b])) return true;	
-            } catch(e){	}
-        }
-        return false;
-    };
-    
     /**
      * The Modernizr.touch test only indicates if the browser supports
      *    touch events, which does not necessarily reflect a touchscreen
      *    device, as evidenced by tablets running Windows 7 or, alas,
      *    the Palm Pre / WebOS (touch) phones.
+     * Additionally, chrome used to lie about its support on this, but that 
+     *    has since been recitifed: http://crbug.com/36415
      */
     tests[touch] = function() {
        return !!('ontouchstart' in window);
@@ -279,6 +272,8 @@ window.Modernizr = (function(window,doc,undefined){
      *   This test is a standards compliant-only test; for more complete
      *   testing, including a Google Gears fallback, please see:
      *   http://code.google.com/p/geo-location-javascript/
+     * or view a fallback solution using google's geo API:
+     *   http://gist.github.com/366184
      */
     tests[geolocation] = function() {
         return !!navigator.geolocation;
@@ -344,8 +339,8 @@ window.Modernizr = (function(window,doc,undefined){
         
         // If the UA supports multiple backgrounds, there should be three occurrences
         //  of the string "url(" in the return value for elem_style.background
-        
-        return /(url\s*\(.*?){3}/.test(m_style[background]);
+
+        return new RegExp("(url\\s*\\(.*?){3}").test(m_style[background]);
     };
     
     
@@ -518,7 +513,7 @@ window.Modernizr = (function(window,doc,undefined){
           function delayedCheck(){
             if (!body.parentNode) return;
             fontret = ret[fontface] = size !== spn.offsetWidth*spn.offsetHeight;
-            docElement.className = docElement.className.replace(/(no-)?font.*?\b/,'') + (fontret ? ' ' : ' no-') + fontface;
+            docElement.className = docElement.className.replace(/(no-)?fontface\b/,'') + (fontret ? ' ' : ' no-') + fontface;
           }
 
           setTimeout(delayedCheck,fontfaceCheckDelay);
@@ -551,8 +546,8 @@ window.Modernizr = (function(window,doc,undefined){
     // e.g.  Modernizr.video     // true
     //       Modernizr.video.ogg // 'probably'
     //
-    // codec values from : http://www.w3.org/TR/html5/video.html#the-source-element
-    //                     http://www.ietf.org/rfc/rfc4281.txt
+    // codec values from : http://github.com/NielsLeenheer/html5test/blob/9106a8/index.html#L845
+    //                     thx to NielsLeenheer and zcorpan
     
     tests[video] = function() {
         var elem = doc.createElement(video),
@@ -560,8 +555,8 @@ window.Modernizr = (function(window,doc,undefined){
         
         if (bool){  
             bool      = new Boolean(bool);  
-            bool.ogg  = elem[canPlayType]('video/ogg; codecs="theora, vorbis"');
-            bool.h264 = elem[canPlayType]('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+            bool.ogg  = elem[canPlayType]('video/ogg; codecs="theora"');
+            bool.h264 = elem[canPlayType]('video/mp4; codecs="avc1.42E01E"');
         }
         return bool;
     };
@@ -577,7 +572,7 @@ window.Modernizr = (function(window,doc,undefined){
             
             // mimetypes accepted: 
             //   https://developer.mozilla.org/En/Media_formats_supported_by_the_audio_and_video_elements
-            //   http://developer.apple.com/safari/library/documentation/appleapplications/reference/SafariWebContent/CreatingContentforSafarioniPhone/CreatingContentforSafarioniPhone.html#//apple_ref/doc/uid/TP40006482-SW7
+            //   http://bit.ly/iphoneoscodecs
             bool.wav  = elem[canPlayType]('audio/wav; codecs="1"');
             bool.m4a  = elem[canPlayType]('audio/x-m4a;') || elem[canPlayType]('audio/aac;');
         }
@@ -619,31 +614,11 @@ window.Modernizr = (function(window,doc,undefined){
         var cache = window[applicationcache];
         return !!(cache && (typeof cache.status != 'undefined') && (typeof cache.update == 'function') && (typeof cache.swapCache == 'function'));
     };
-    
-    
-    // technique courtesy of Jonathan Neal
-    
-    // in my testing if plugins are disabled this plugins entry isn't availble, so no need to check
-    //   navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin
-    tests[flash] = function(){
-        var bool;
-        try {
-            bool = !!navigator.plugins['Shockwave Flash'] || !!(new ActiveXObject('ShockwaveFlash.ShockwaveFlash'));
-        }
-        catch(e) {
-            bool = false;
-        }
-        // mark pilgrims excellent test for flashblockers is asynchronous and rather large.
-        // it's not included now but we hope to add it later, somehow.
-        // http://code.google.com/p/flashblockdetector/
-        
-        return bool;
-    };
+
  
     // thanks to Erik Dahlstrom
     tests[svg] = function(){
-        return doc.createElementNS && doc.createElementNS( "http://www.w3.org/2000/svg", "svg").createSVGRect;
-        //return (window.SVGAngle || doc.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1"));
+        return doc.createElementNS && !!doc.createElementNS( "http://www.w3.org/2000/svg", "svg").createSVGRect;
     };
     
     // thanks to F1lt3r and lucideer
@@ -679,17 +654,30 @@ window.Modernizr = (function(window,doc,undefined){
         //   This is put behind the tests runloop because it doesn't return a
         //   true/false like all the other tests; instead, it returns an object
         //   containing each input type with its corresponding true/false value 
+        
+        // Big thx to @miketaylr for the html5 forms expertise. http://miketaylr.com/
         ret[inputtypes] = (function(props) {
             for (var i = 0,bool,len=props.length;i<len;i++) {
                 f.setAttribute('type', props[i]);
                 bool = f.type !== 'text';
                 
-                // chrome likes to claim support here so we feed it a textual value
+                // chrome likes to falsely purport support, so we feed it a textual value
                 // if that doesnt succeed then we know there's a custom UI
-                // TODO: not sure how we deal with search, tel, url here..
                 if (bool){  
+                  
                     f.value = smile;
-                    bool = f.value != smile;
+                    
+                    if (/tel|search/.test(f.type)){
+                      // spec doesnt define any special parsing or detectable UI 
+                      //   behaviors so we pass these through as true
+                      
+                    } else if (/url|email/.test(f.type)) {
+                      // real url and email support comes with prebaked validation.
+                      bool = f.checkValidity && f.checkValidity() === false;
+                      
+                    } else {
+                      bool = f.value != smile;
+                    }
                 }
                 
                 inputs[ props[i] ] = bool;
@@ -701,7 +689,7 @@ window.Modernizr = (function(window,doc,undefined){
 
 
 
-    // end of tests.
+    // end of test definitions
 
 
 
@@ -709,8 +697,10 @@ window.Modernizr = (function(window,doc,undefined){
     // todo: hypothetically we could be doing an array of tests and use a basic loop here.
     for ( var feature in tests ) {
         if ( tests.hasOwnProperty( feature ) ) {
-            // run the test, then based on the boolean, define an appropriate className
-            classes.push( ( !( ret[ feature ] = tests[ feature ]() ) ? 'no-' : '' ) + feature );
+            // run the test, throw the return value into the Modernizr,
+            //   then based on that boolean, define an appropriate className
+            //   and push it into an array of classes we'll join later.
+            classes.push( ( ( ret[ feature.toLowerCase() ] = tests[ feature ]() ) ?  '' : 'no-' ) + feature.toLowerCase() );
         }
     }
     
@@ -731,12 +721,13 @@ window.Modernizr = (function(window,doc,undefined){
      * @param test - Function returning true if feature is supported, false if not
      */
     ret.addTest = function (feature, test) {
+      feature = feature.toLowerCase();
+      
       if (ret[ feature ]) {
         return; // quit if you're trying to overwrite an existing test
       } 
-      feature = feature.toLowerCase();
       test = !!(test());
-      docElement.className += ' ' + (!test ? 'no-' : '') + feature; 
+      docElement.className += ' ' + (test ? '' : 'no-') + feature; 
       ret[ feature ] = test;
       return ret; // allow chaining.
     };
@@ -758,7 +749,7 @@ window.Modernizr = (function(window,doc,undefined){
     ret._version         = version;
 
     // Remove "no-js" class from <html> element, if it exists:
-    docElement.className=docElement.className.replace(/\bno-js\b/,'js');
+    docElement.className=docElement.className.replace(/\bno-js\b/,'') + ' js';
 
     // Add the new classes to the <html> element.
     docElement.className += ' ' + classes.join( ' ' );
