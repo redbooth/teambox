@@ -187,7 +187,7 @@ module CalendarsHelper
        cal << " weekendDay" if weekend?(d)
        cal << %("><div class=\"cd\">#{d.day}</div></td>)
      end unless first.wday == first_weekday   
-     return cal 
+     return cal
    end
   
    def print_next_month_days(first_weekday,last_weekday,week_tally,week_count,last,total_tally,total_sum)
@@ -279,8 +279,14 @@ module CalendarsHelper
      end
      
      usermap = {}
-     @current_project.users.each {|u| usermap[u.id] = u.login}
-   
+     usernamemap = {}
+     
+     if @current_project
+       @current_project.users.each {|u| usermap[u.id] = u.login; usernamemap[u.id] = u.name}
+     else
+       @current_user.users_with_shared_projects.each {|u| usermap[u.id] = u.login; usernamemap[u.id] = u.name}
+     end
+     
      start_date = start_of_calendar(year, month)
      start = "new Date(#{start_date.year}, #{start_date.month-1}, #{start_date.day})"
      javascript_tag <<-EOS
@@ -289,12 +295,42 @@ module CalendarsHelper
       Hours.l_hours = '#{t('hours.entry_hours')}';
       Hours.addHours([#{args.join(',')}]);
       Hours.userMap = #{usermap.to_json};
+      Hours.userNameMap = #{usernamemap.to_json};
       Hours.taskMap = #{taskmap.to_json};
       Hours.projectMap = #{projectmap.to_json};
       Hours.update();
      });
      EOS
    end
+   
+   def filter_hours_assigned_dropdown(target_id, project=nil)
+     options = [['Anybody',     0],
+               ['My tasks',    current_user.id]]
+     user_list = project ? project.users.sort_by(&:name) : Person.users_from_projects(current_user.projects)
+     if !user_list.nil?
+       options += [['--------', 'divider']]
+       options += user_list.
+                   reject { |u| u == current_user }.
+                   collect { |u| [u.name, u.id] }
+     end
+     select(:hours_user_filter, :assigned, options, :disabled => 'divider', :id => target_id)
+   end
+   
+   def filter_people_assigned_dropdown(target_id, project=nil)
+      options = [['All tasks',     0]]
+      task_list = project ? project.tasks.unarchived :
+                            Task.find(:all, :conditions => ['project_id IN (?) AND status < ?', current_user.project_ids, 3])
+      options += [['--------', 'divider']]
+      options += task_list.sort_by(&:name).collect { |t| [t.name, t.id] }
+      select(:hours_task_filter, :assigned, options, :disabled => 'divider', :id => target_id)
+    end
+    
+    def filter_project_dropdown(target_id)
+        options = [['All projects',     0]]
+        options += [['--------', 'divider']]
+        options += current_user.projects.sort_by(&:name).collect { |p| [p.name, p.id] }
+        select(:hours_project_filter, :assigned, options, :disabled => 'divider', :id => target_id)
+    end
   
    def calendar_nav(project,year,month)
      render :partial => 'hours/calendar_navigation',

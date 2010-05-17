@@ -90,6 +90,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :task_lists, :only => [ :index ]
   # map.resources :conversations, :only => [ :index ]
   # map.resources :pages, :only => [ :index ]
+  
+  map.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
+  map.time 'time', :controller => 'hours', :action => 'index'
 
   map.root :controller => 'projects', :action => 'index'
   map.connect 'assets/:id/:style/:filename', :controller => 'uploads', :action => 'download', :conditions => { :method => :get }, :requirements => { :filename => /.*/ }

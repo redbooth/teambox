@@ -464,6 +464,10 @@ en:
       user: Users
       project: Projects
       task: Tasks
+    filters:
+      assigned_to: People
+      tasks: Tasks
+      projects: Projects
 
   tasks:
     errors:

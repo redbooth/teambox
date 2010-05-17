@@ -192,7 +192,9 @@ module CommentsHelper
   end
   
   def comments_script(target)
-    if target.is_a? Project
+    if target.nil?
+      return
+    elsif target.is_a? Project
       project = target
     else
       project = target.project

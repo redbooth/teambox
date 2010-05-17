@@ -1,15 +1,14 @@
 #filter_list
   #user_filters
-    = check_box_tag "filter_allusers", 0, true
-    = label_tag "filter_allusers", t('hours.all_users')
-    - @current_project.users.each do |user|
-      .filter
-        = check_box_tag "ufilter_#{user.id}", user.id, false
-        = label_tag "ufilter_#{user.id}", "#{h(user.name)} (#{user.login})"
+    %p= t('hours.filters.assigned_to')
+    .filter
+      = filter_hours_assigned_dropdown('hours_main_user_filter', @current_project)
   #task_filters
-    = check_box_tag "filter_alltasks", 0, true
-    = label_tag "filter_alltasks", t('hours.all_tasks')
-    - @current_project.tasks.each do |task|
+    %p= t('hours.filters.tasks')
+    .filter
+      = filter_people_assigned_dropdown('hours_main_task_filter', @current_project)
+  - unless @current_project
+    #project_filters
+      %p= t('hours.filters.project')
       .filter
-        = check_box_tag "tfilter_#{task.id}", task.id, false
-        = label_tag "tfilter_#{task.id}", "#{h(task.name)}"
+        = filter_project_dropdown('hours_main_project_filter')
