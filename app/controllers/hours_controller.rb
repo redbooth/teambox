@@ -13,7 +13,13 @@ class HoursController < ApplicationController
     end
         
     respond_to do |format|
-      format.html { redirect_to(project_hours_by_month_url(@current_project,@year,@month)) if go_to_default_path}
+      format.html { 
+        if go_to_default_path and @current_project
+          redirect_to project_hours_by_month_url(@current_project,@year,@month)
+        elsif go_to_default_path and @current_project.nil?
+          redirect_to hours_by_month_url(@year,@month)
+        end
+      }
     end
   end
   
