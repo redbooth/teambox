@@ -5,9 +5,9 @@ module TaskListsHelper
   end
   
   def filter_assigned_dropdown(project=nil)
-    options = ['Anybody',     'all'],
-              ['My tasks',    'mine'],
-              ['Unassigned',  'unassigned']
+    options = [t('task_lists.filter.anybody'),     'all'],
+              [t('task_lists.filter.my_tasks'),    'mine'],
+              [t('task_lists.filter.unassigned'),  'unassigned']
     user_list = project ? project.users.sort_by(&:name) : Person.users_from_projects(current_user.projects)
     if !user_list.nil?
       options += [['--------', 'divider']]
@@ -19,12 +19,12 @@ module TaskListsHelper
   end
   
   def filter_due_date_dropdown(project=nil)
-    options = ['Anytime',           'all'],
-              ['Late tasks',        'overdue'],
-              ['No date assigned',  'unassigned_date'],
+    options = [t('task_lists.filter.anytime'),           'all'],
+              [t('task_lists.filter.late_tasks'),        'overdue'],
+              [t('task_lists.filter.no_date_assigned'),  'unassigned_date'],
               ['--------',          'divider'],
-              ['Today',             'due_today'],
-              ['Tomorrow',          'due_tomorrow']
+              [t('task_lists.filter.today'),             'due_today'],
+              [t('task_lists.filter.tomorrow'),          'due_tomorrow']
     
     select(:filter, :due_date, options, :disabled => 'divider')
   end
@@ -104,11 +104,11 @@ module TaskListsHelper
   def date_range_for_task_list(task_list)
     dates = [task_list.start_on, task_list.finish_on]
     if dates[0].nil? && dates[1].nil?
-      "No dates assigned"
+      t('task_lists.index.no_dates_assigned')
     elsif dates[0] && dates[1].nil?
-      "Starts on #{date_for_task_list(dates[0])}"
+      t('task_lists.index.starts_on', :date => date_for_task_list(dates[0])) 
     elsif dates[0].nil? && dates[1]
-      "Ends on #{date_for_task_list(dates[1])}"
+      t('task_lists.index.ends_on', :date => date_for_task_list(dates[1])) 
     else
       "#{date_for_task_list(dates[0])} - #{date_for_task_list(dates[1])}"
     end

@@ -8,21 +8,21 @@ class Emailer < ActionMailer::Base
   def confirm_email(user)
     defaults
     recipients    user.email
-    subject       'Get started with Teambox!'
+    subject       I18n.t("email.subjects.get_started_with_teambox")
     body          :user => user, :login_link => confirm_email_user_url(user, :token => user.login_token)
   end
 
   def reset_password(user)
     defaults
     recipients    user.email
-    subject       'Your password has successfully been reset!'
+    subject       I18n.t("email.subjects.your_password_has_successfully_been_reset")
     body          :user => user
   end
 
   def forgot_password(reset_password)
     defaults
     recipients    reset_password.email
-    subject       'Password retrieval for Teambox'
+    subject       I18n.t("email.subjects.password_retrieval_for_teambox")
     body          :user => reset_password.user, :url => reset_password_url(reset_password.reset_code)
   end
 
@@ -30,7 +30,7 @@ class Emailer < ActionMailer::Base
     defaults
     recipients    invitation.email
     from          invitation.user.email
-    subject       "#{invitation.user.name} shared [#{invitation.project.name}] with you"
+    subject       I18n.t("email.subjects.project_invitation", :username => invitation.user.name, :project_name=>invitation.project.name)
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
   
@@ -38,21 +38,21 @@ class Emailer < ActionMailer::Base
     defaults
     recipients    invitation.email
     from          invitation.user.email
-    subject       "#{invitation.user.name} shared [#{invitation.group.name}] with you"
+    subject       I18n.t("email.subjects.group_invitation", :username => invitation.user.name, :group_name=>invitation.group.name)
     body          :referral => invitation.user, :group => invitation.group, :invitation => invitation
   end
 
   def signup_invitation(invitation)
     defaults
     recipients    invitation.email
-    subject       "#{invitation.user.name} shared [#{invitation.project.name}] with you"
+    subject       I18n.t("email.subjects.project_invitation", :username => invitation.user.name, :project_name=>invitation.project.name)
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
 
   def signup_group_invitation(invitation)
     defaults
     recipients    invitation.email
-    subject       "#{invitation.user.name} shared [#{invitation.group.name}] with you"
+    subject       I18n.t("email.subjects.group_invitation", :username => invitation.user.name, :group_name=>invitation.group.name)
     body          :referral => invitation.user, :group => invitation.group, :invitation => invitation
   end
 
