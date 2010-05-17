@@ -9,6 +9,6 @@
       = filter_people_assigned_dropdown('hours_main_task_filter', @current_project)
   - unless @current_project
     #project_filters
-      %p= t('hours.filters.project')
+      %p= t('hours.filters.projects')
       .filter
         = filter_project_dropdown('hours_main_project_filter')

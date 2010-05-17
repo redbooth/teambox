@@ -245,9 +245,9 @@ module CalendarsHelper
        year -= 1
      else
        month -= 1
-     end  
-  
-     link_to "&larr; #{I18n.t('common.prev')}", project_hours_by_month_url(project,year,month)
+     end
+     url = project ? project_hours_by_month_url(project,year,month) : hours_by_month_url(year,month)
+     link_to "&larr; #{I18n.t('common.prev')}", url
    end
   
    def link_to_next_month(project,year,month)
@@ -256,8 +256,9 @@ module CalendarsHelper
        year += 1
      else
        month += 1
-     end    
-     link_to "#{I18n.t('common.next')} &rarr;", project_hours_by_month_url(project,year,month)
+     end
+     url = project ? project_hours_by_month_url(project,year,month) : hours_by_month_url(year,month)
+     link_to "#{I18n.t('common.next')} &rarr;", url
    end
 
    def hours_js(year, month, comments)
