@@ -2,15 +2,15 @@ document.on('dom:loaded', function() {
   if (!window.Modernizr) return
   
   if (!Modernizr.input.placeholder) {
-    $$('input[placeholder]').each(function(field) {
+    $$('input[placeholder], textarea[placeholder]').each(function(field) {
       field.addClassName('placeholder')
       var title = field.readAttribute('placeholder')
       if (field.getValue().empty()) field.setValue(title)
 
       field.observe('blur', function() {
-        if (this.getValue().empty()) field.setValue(title).removeClassName('focused')
+        if (this.getValue().empty()) field.setValue(title).addClassName('placeholder')
       }).observe('focus', function() {
-        if (this.getValue() === title) field.setValue('').addClassName('focused')
+        if (this.getValue() === title) field.setValue('').removeClassName('placeholder')
       })
     })
   }
