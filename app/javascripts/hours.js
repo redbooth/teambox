@@ -9,8 +9,6 @@ var Hours = {
 		this.projectMap = {};
 		this.showWeekends = false;
 		
-		this.l_hours = 'hrs';
-		
 		this.filters = {
 			'user': null,
 			'task': null,
@@ -255,21 +253,21 @@ var Hours = {
 		for (var i=0; i<5; i++) {
 			var values = weekSum[i];
 			for (var key in values) {
-				var code = "<p class=\"hours\">" + map[key] + '<br/>' + values[key].toFixed(2) + ' ' + this.l_hours + "</p>";
+				var code = "<p class=\"hours\">" + map[key] + '<br/>' + values[key].friendlyHours(2) + "</p>";
 				$('week_' + i).insert({top:code});
 			}
 		}
 		
 		for (var key in totalSum) {
-			var code = "<p class=\"hours\">" + map[key] + '<br/>' + totalSum[key].toFixed(2) + ' ' + this.l_hours + "</p>";
+			var code = "<p class=\"hours\">" + map[key] + '<br/>' + totalSum[key].friendlyHours(2) + "</p>";
 			$('hour_total').insert({top:code});
 		}
-		$('total_sum').innerHTML = weekTotal.toFixed(2) + ' ' + this.l_hours;
+		$('total_sum').innerHTML = weekTotal.friendlyHours();
 		
 		// Insert comments into the calendar
 		this.insertCommentBlocks(comments, function(v, list, block){
 			list.keys().each(function(key){
-				var code = "<p class=\"hours\">" +  map[key] + "<br/>" + list.get(key).toFixed(2) + ' ' + Hours.l_hours + " </p>";
+				var code = "<p class=\"hours\">" +  map[key] + "<br/>" + list.get(key).friendlyHours(2) + " </p>";
 				block.insert({bottom:code});
 			});
 		});
@@ -364,4 +362,12 @@ var Hours = {
 		
 		return true;
 	}
+};
+
+Number.prototype.friendlyHours = function() {
+	if (this <= 0)
+		return;
+	var out = this.floor() + 'h', minutes = ((this % 1) * 60).round()
+	if (minutes) out += ' ' + minutes + 'm'
+	return out
 };

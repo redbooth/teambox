@@ -293,7 +293,6 @@ module CalendarsHelper
      javascript_tag <<-EOS
      document.observe('dom:loaded', function(e){
       Hours.init(#{start});
-      Hours.l_hours = '#{t('hours.entry_hours')}';
       Hours.addHours([#{args.join(',')}]);
       Hours.userMap = #{usermap.to_json};
       Hours.userNameMap = #{usernamemap.to_json};
