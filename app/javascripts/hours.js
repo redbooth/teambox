@@ -20,15 +20,9 @@ var Hours = {
 		this.currentReport = 'user';
 		
 		// Link in filter checkboxes
-		$$('#user_filters input').each(function(e){
-			e.observe('click', Hours.userFilterHandler);
-		});
-		$$('#task_filters input').each(function(e){
-			e.observe('click', Hours.taskFilterHandler);
-		});
-		$$('#project_filters input').each(function(e){
-			e.observe('click', Hours.projectFilterHandler);
-		});
+		document.on('change', '#user_filters select', Hours.userFilterHandler);
+		document.on('change', '#task_filters select', Hours.taskFilterHandler);
+		document.on('change', '#project_filters select', Hours.projectFilterHandler);
 		
 		this.setProjectFilter(0, true);
 		this.setUserFilter(0, true);
@@ -48,12 +42,10 @@ var Hours = {
 			// All projects
 			if (enabled)
 			{
-				this.clearAll('#project_filters .filter input', false);
 				this.filters.project = null;
 			}
 			else
 			{
-				this.clearAll('#project_filters .filter input', true);
 				this.filters.project = [];
 			}
 		}
@@ -72,12 +64,10 @@ var Hours = {
 			// All projects
 			if (enabled)
 			{
-				Hours.clearAll('#user_filters .filter input', false);
 				Hours.filters.user = null;
 			}
 			else
 			{
-				Hours.clearAll('#user_filters .filter input', true);
 				Hours.filters.user = [];
 			}
 		}
@@ -96,12 +86,10 @@ var Hours = {
 			// All projects
 			if (enabled)
 			{
-				Hours.clearAll('#task_filters .filter input', false);
 				Hours.filters.task = null;
 			}
 			else
 			{
-				Hours.clearAll('#task_filters .filter input', true);
 				Hours.filters.task = [];
 			}
 		}
@@ -114,29 +102,32 @@ var Hours = {
 		}
 	},
 	
-	projectFilterHandler: function(evt) {
-		var el = $(this);
-		var id = parseInt(el.readAttribute('value'));
+	projectFilterHandler: function(evt, el) {
+		var value = el.getValue();
 		
-		Hours.setProjectFilter(id, el.checked);
+		Hours.setProjectFilter(0, false);
+		Hours.setProjectFilter(parseInt(value), true);
+		
 		Hours.update();
 		return true;
 	},
 	
-	userFilterHandler: function(evt) {
-		var el = $(this);
-		var id = parseInt(el.readAttribute('value'));
+	userFilterHandler: function(evt, el) {
+		var value = el.getValue();
 		
-		Hours.setUserFilter(id, el.checked);
+		Hours.setUserFilter(0, false);
+		Hours.setUserFilter(parseInt(value), true);
+		
 		Hours.update();
 		return true;
 	},
 	
-	taskFilterHandler: function(evt) {
-		var el = $(this);
-		var id = parseInt(el.readAttribute('value'));
+	taskFilterHandler: function(evt, el) {
+		var value = el.getValue();
 		
-		Hours.setTaskFilter(id, el.checked);
+		Hours.setTaskFilter(0, false);
+		Hours.setTaskFilter(parseInt(value), true);
+		
 		Hours.update();
 		return true;
 	},
