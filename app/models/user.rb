@@ -23,8 +23,9 @@ class User < ActiveRecord::Base
   # After adding a new locale, run "rake import:country_select 'de'" where de is your locale.
   LANGUAGES = [['English',   'en'],
                ['Español',   'es'],
+               ['Português', 'pt'],
                ['Français',  'fr'],
-               ['Deutsch',  'de'],
+               ['Deutsch',   'de'],
                ['Català',    'ca'],
                ['Italiano',  'it'],
                ['Русский',   'ru'],
