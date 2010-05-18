@@ -24,6 +24,8 @@ en:
       one: "{{count}} comment"
       other: "{{count}} comments"
     not_allowed: You are not allowed to do that!
+    calendar: Calendar
+    gantt_chart: Gantt Chart
   confirm:
     delete_task_list: Are you sure you want to delete this task list?
     delete_task: Are you sure you want to delete this task?
@@ -241,12 +243,16 @@ en:
   groups:
     index:
       title: Groups
+      whats_this: "What is this?"
       groups_in: "Groups you are in"
       your_group: "Your group"
       no_groups: "You do not belong to any groups."
       description: "Use groups to share resources with others, and to band together projects under a single name!"
       submit_project: Add
       remove_project: Remove
+    column_group:
+      your_groups: Your groups
+      projects: Projects
     primer:
       no_group_create: "You do not own a group. {{link}}."
       create_group: "Create a group"
@@ -616,6 +622,14 @@ en:
       start_on: Starts on... <i>optional</i>
       finish_on: End on... <i>optional</i>
     filter:
+      anybody: Anybody
+      my_tasks: My tasks
+      unassigned: Unassigned
+      anytime: Anybody
+      late_tasks: Late tasks
+      no_date_assigned: No date assigned
+      today: Today
+      tomorrow: Tomorrow
       due_date: "Display tasks with due date..."
       assigned_to: "Display tasks assigned to..."
     link:
@@ -625,6 +639,9 @@ en:
       reorder_done: Done reorder
       unarchive: Unarchive
     index:
+      no_dates_assigned: No dates assigned
+      starts_on: "Starts on {{date}}"
+      ends_on: "Ends on {{date}}"
       add_link: New Task List
       empty: No tasks in this category!
       tasks_for_all_projects: Tasks across all projects
@@ -773,10 +790,6 @@ en:
       submit: Login
       login_failed: "Couldn't log you in as {{login}}"
 
-  email:
-    user:
-      welcome: Welcome to Teambox!
-
   shared:
     strip:
       archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>" ####
@@ -866,6 +879,7 @@ en:
       do_not_answer: "Do not answer to this email."
       answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
     invitation:
+      subject: "{{user}} shared [{{project}}] with you"
       collaborate_with: "{{name}} wants to collaborate with you on Teambox:"
       you_have_been_invited_to: "You have been invited to the project <b>{{project}}</b>"
       accept_the_invitation: Accept the invitation to start collaborating
@@ -875,8 +889,10 @@ en:
       plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
       report_abuse: "This email was sent to you by your contact's request. Please report any abuse."
     invitation_group:
+      subject: "{{user}} shared [{{group}}] with you"
       you_have_been_invited_to: "You have been invited to the group <b>{{group}}</b>"
     confirm:
+      subject: "Get started with Teambox"
       hey: "Hey, {{user_name}}!"
       follow_the_link: "In order to <b>complete your signup</b> for Teambox, we need you to log in by clicking here:"
       log_in: "Log into Teambox now!"
@@ -884,12 +900,15 @@ en:
       report_abuse: "You receive this message because you signed up for a Teambox account with {{email}}"
       problems: "If you have any problems, please contact us at {{support}}"
     reset_password:
+      subject: "Your password has successfully been reset"
       hey: "Hey, {{user_name}}!"
       follow_the_link: "In order to <b>set a new password</b> for Teambox, we need you to log in with the following link:"
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You receive this message because you signed up for a Teambox account with {{email}}"
       problems: "If you have any problems, please contact us at {{support}}"
+    forgot_password:
+      subject: "Password retrieval for Teambox"
     notify:
       project: "Teambox Project:"
       view_online: "You can <a href='{{link}}'>view this conversation online</a> to answer and attach files."

@@ -781,16 +781,6 @@ pt:
       submit: Entrar
       login_failed: "Os dados de acesso para {{login}} não são corretos"
 
-  email:
-    user:
-      welcome: "Bem-vindo ao Teambox!"
-    subjects:
-      get_started_with_teambox: "Inicie no mundo do Teambox!"
-      your_password_has_successfully_been_reset: "Sua senha foi corretamente alterada"
-      password_retrieval_for_teambox: "Recuperação de senha para Teambox"
-      project_invitation: "{{username}} compartilho com você o projeto {{project_name}}"
-      group_invitation: "{{username}} compartilho com você o grupo {{group_name}}"
-      
   shared:
     strip:
       archived: "Este projeto está arquivado. Para editar ou comentar precisa desarquivá-lo nas <a href='{{link}}'>preferências do projeto</a>"
@@ -880,6 +870,7 @@ pt:
       do_not_answer: "Não responda este email."
       answer_above_this_line: "SELECIONE EM CIMA DESTA LINHA PARA RESPONDERNDER"
     invitation:
+      subject: "{{user}} compartilho com você o projeto {{project}}"
       collaborate_with: "{{name}} quer colaborar com você no Teambox:"
       you_have_been_invited_to: "Você foi convidado para o projeto <b>{{project}}</b>"
       accept_the_invitation: Aceite este convite para participar e colaborar
@@ -889,8 +880,10 @@ pt:
       plan_share_and_collaborate: "Planifica, compartilha e mantem atualizado o que esta sendo feito. Tão fácil como tem que ser."
       report_abuse: "Este email foi enviado por solicitação deste usuário. Se isso é incorreto favor entre em contato."
     invitation_group:
+      subject: "{{user}} compartilho com você o grupo {{group}}"
       you_have_been_invited_to: "Você foi convidado ao grupo <b>{{group}}</b>"
     confirm:
+      subject: "Inicie no mundo do Teambox!"
       hey: "Olá, {{user_name}}!"
       follow_the_link: "Para <b>completar seu registro</b> no Teambox tem que seguir o seguinte link:"
       log_in: "Entrar no Teambox agora!"
@@ -898,12 +891,15 @@ pt:
       report_abuse: "Você está recebendo esta mensagem porque esta registrado no Teambox com o seguinte endereço: {{email}}"
       problems: "Se tiver problemas, entre em contato conosco: {{support}}"
     reset_password:
+      subject: "Sua senha foi corretamente alterada"
       hey: "Olá, {{user_name}}!"
       follow_the_link: "Para <b>recuperar sua senha</b> no Teambox apenas clique no link:"
       log_in: "Entrar no Teambox agora!"
       plaintext_link: "Se o link acima não funcionar, copie-o e cole na barra de endereços no seu navegador:"
       report_abuse: "Você está recebendo esta mensagem porque esta registrado no Teambox com o seguinte endereço: {{email}}"
       problems: "Se tiver problemas, entre em contato conosco: {{support}}"
+    forgot_password:
+      subject: "Recuperação de senha para Teambox"
     notify:
       project: "Projeto:"
       view_online: "Você pode <a href='{{link}}'>entrar no Teambox</a> para responder e anexar arquivos."
