@@ -20,9 +20,15 @@ var Hours = {
 		this.currentReport = 'user';
 		
 		// Link in filter checkboxes
-		document.on('change', '#user_filters select', Hours.userFilterHandler);
-		document.on('change', '#task_filters select', Hours.taskFilterHandler);
-		document.on('change', '#project_filters select', Hours.projectFilterHandler);
+		$$('#user_filters input').each(function(e){
+			e.observe('click', Hours.userFilterHandler);
+		});
+		$$('#task_filters input').each(function(e){
+			e.observe('click', Hours.taskFilterHandler);
+		});
+		$$('#project_filters input').each(function(e){
+			e.observe('click', Hours.projectFilterHandler);
+		});
 		
 		this.setProjectFilter(0, true);
 		this.setUserFilter(0, true);
@@ -42,10 +48,12 @@ var Hours = {
 			// All projects
 			if (enabled)
 			{
+				this.clearAll('#project_filters .filter input', false);
 				this.filters.project = null;
 			}
 			else
 			{
+				this.clearAll('#project_filters .filter input', true);
 				this.filters.project = [];
 			}
 		}
@@ -64,10 +72,12 @@ var Hours = {
 			// All projects
 			if (enabled)
 			{
+				Hours.clearAll('#user_filters .filter input', false);
 				Hours.filters.user = null;
 			}
 			else
 			{
+				Hours.clearAll('#user_filters .filter input', true);
 				Hours.filters.user = [];
 			}
 		}
@@ -86,10 +96,12 @@ var Hours = {
 			// All projects
 			if (enabled)
 			{
+				Hours.clearAll('#task_filters .filter input', false);
 				Hours.filters.task = null;
 			}
 			else
 			{
+				Hours.clearAll('#task_filters .filter input', true);
 				Hours.filters.task = [];
 			}
 		}
@@ -102,32 +114,29 @@ var Hours = {
 		}
 	},
 	
-	projectFilterHandler: function(evt, el) {
-		var value = el.getValue();
+	projectFilterHandler: function(evt) {
+		var el = $(this);
+		var id = parseInt(el.readAttribute('value'));
 		
-		Hours.setProjectFilter(0, false);
-		Hours.setProjectFilter(parseInt(value), true);
-		
+		Hours.setProjectFilter(id, el.checked);
 		Hours.update();
 		return true;
 	},
 	
-	userFilterHandler: function(evt, el) {
-		var value = el.getValue();
+	userFilterHandler: function(evt) {
+		var el = $(this);
+		var id = parseInt(el.readAttribute('value'));
 		
-		Hours.setUserFilter(0, false);
-		Hours.setUserFilter(parseInt(value), true);
-		
+		Hours.setUserFilter(id, el.checked);
 		Hours.update();
 		return true;
 	},
 	
-	taskFilterHandler: function(evt, el) {
-		var value = el.getValue();
+	taskFilterHandler: function(evt) {
+		var el = $(this);
+		var id = parseInt(el.readAttribute('value'));
 		
-		Hours.setTaskFilter(0, false);
-		Hours.setTaskFilter(parseInt(value), true);
-		
+		Hours.setTaskFilter(id, el.checked);
 		Hours.update();
 		return true;
 	},
@@ -255,21 +264,21 @@ var Hours = {
 		for (var i=0; i<5; i++) {
 			var values = weekSum[i];
 			for (var key in values) {
-				var code = "<p class=\"hours\">" + map[key] + '<br/>' + values[key] + ' ' + this.l_hours + "</p>";
+				var code = "<p class=\"hours\">" + map[key] + '<br/>' + values[key].toFixed(2) + ' ' + this.l_hours + "</p>";
 				$('week_' + i).insert({top:code});
 			}
 		}
 		
 		for (var key in totalSum) {
-			var code = "<p class=\"hours\">" + map[key] + '<br/>' + totalSum[key] + ' ' + this.l_hours + "</p>";
+			var code = "<p class=\"hours\">" + map[key] + '<br/>' + totalSum[key].toFixed(2) + ' ' + this.l_hours + "</p>";
 			$('hour_total').insert({top:code});
 		}
-		$('total_sum').innerHTML = weekTotal + ' ' + this.l_hours;
+		$('total_sum').innerHTML = weekTotal.toFixed(2) + ' ' + this.l_hours;
 		
 		// Insert comments into the calendar
 		this.insertCommentBlocks(comments, function(v, list, block){
 			list.keys().each(function(key){
-				var code = "<p class=\"hours\">" +  map[key] + "<br/>" + list.get(key) + ' ' + Hours.l_hours + " </p>";
+				var code = "<p class=\"hours\">" +  map[key] + "<br/>" + list.get(key).toFixed(2) + ' ' + Hours.l_hours + " </p>";
 				block.insert({bottom:code});
 			});
 		});
