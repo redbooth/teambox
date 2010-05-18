@@ -200,7 +200,7 @@ specs:
 - selenium-webdriver: 
     version: 0.0.18
 - capybara: 
-    version: 0.3.7
+    version: 0.3.8
 - cgi_multipart_eof_fix: 
     version: 2.5.0
 - rubyforge: 
@@ -216,11 +216,11 @@ specs:
 - trollop: 
     version: 1.16.2
 - gherkin: 
-    version: 1.0.26
+    version: 1.0.27
 - term-ansicolor: 
     version: 1.0.5
 - cucumber: 
-    version: 0.7.2
+    version: 0.7.3
 - cucumber-rails: 
     version: 0.3.1
 - daemons: 
@@ -234,7 +234,7 @@ specs:
 - gem_plugin: 
     version: 0.2.3
 - haml: 
-    version: 3.0.1
+    version: 3.0.4
 - hpricot: 
     version: 0.8.2
 - i18n: 
@@ -256,11 +256,11 @@ specs:
 - pg: 
     version: 0.9.0
 - pickle: 
-    version: 0.2.10
+    version: 0.2.11
 - rails: 
     version: 2.3.5
 - rdiscount: 
-    version: 1.6.3.1
+    version: 1.6.3.2
 - rspec: 
     version: 1.3.0
 - rspec-rails: 
