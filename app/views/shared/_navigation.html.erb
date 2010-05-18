@@ -16,8 +16,8 @@ if logged_in?
     add_tab({:html => {:id => 'projects_tab',
                        :class => 'nav_tab',
                        :li_class => 'nav_tab_container',
-	                   :li_end => projects_tab_list(current_user.projects.unarchived)}
-	}) do |t|
+	                     :li_end => projects_tab_list(current_user.projects.unarchived)}
+	          }) do |t|
       t.named "#{t('.all_projects')} #{image_tag('triangle.png', :class => 'triangle')}"
       t.links_to projects_path
       t.highlights_on :controller => :projects, :action => :index
