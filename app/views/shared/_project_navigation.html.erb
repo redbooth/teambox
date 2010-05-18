@@ -11,12 +11,6 @@ unless location_name? %w(welcome_users new_projects show_users edit_users new_av
           t.tab_index = 150
         end
       
-        #add_tab do |t|
-        #  t.named t('.all_conversations')
-        #  t.links_to conversations_path
-        #  t.highlights_on :controller => :conversations, :action => :index
-        #end
-      
         add_tab do |t|
          t.named t('.all_task_lists')
          t.links_to task_lists_path
