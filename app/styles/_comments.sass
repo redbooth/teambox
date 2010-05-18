@@ -18,7 +18,7 @@ form#new_comment
   padding-bottom: 3px
   margin-bottom: 30px
   .body
-    margin-bottom: 5px
+    margin: 5px 0
     textarea
       width: 626px
       margin-bottom: 0px
@@ -29,11 +29,9 @@ form#new_comment
   .comment_body
     height: 4em
     color: rgb(0, 0, 0)
-  a#comment_upload_link
+  .add_button
     float: left
-  a#comment_hours_link
-    float: left
-    margin-left: 3px
+    margin-bottom: 0
   .hours
     padding-left: 1px
     padding-right: 10px
@@ -48,21 +46,21 @@ form#new_comment
     label
       display: none
     float: left
-    margin-top: 2px
-    margin-left: 4px
     .status
       cursor: pointer
       float: left
-      -moz-border-radius: 4px
-      -webkit-border-radius: 4px
+      +rounded(4px)
       border: solid 1px rgb(200, 200, 200)
       background: rgb(240, 240, 240)
       color: rgb(80, 80, 80)
       font-size: 11px
+      line-height: 2.3
       text-align: center
       text-transform: uppercase
-      padding: 4px 5px
+      padding: 0 5px
       margin-left: 5px
+      select
+        text-transform: none
       input
         display: none
     .status:hover
@@ -72,11 +70,9 @@ form#new_comment
       border: solid 1px rgb(0, 0, 0)
       color: rgb(255, 255, 255)
     .open
-      padding: 2px
-        left: 5px
       select
-        margin: 0px
-        padding: 0px
+        max-width: 9em
+        font-size: 1em
     .new:hover
       background: #9da3a7
       border: solid 1px #7d8387
@@ -93,8 +89,7 @@ form#new_comment
       background: #e97063
       border: solid 1px #c95043
   .submit
-    padding:
-      top: 3px
+    padding-top: 5px
     text-align: right
     float: right
     width: 150px

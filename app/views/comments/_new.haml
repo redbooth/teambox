@@ -1,5 +1,4 @@
 - comment_form_for(form_url) do |f|
-  = hidden_field_tag :original_controller, controller_name
   .body.text_area
     = comment_text_area(f, target)
     #comment_body_list.autocomplete{:style => 'display:none'}
@@ -36,6 +35,7 @@
           = javascript_tag "$$('.statuses input').each(function(e){ if (e.checked) { e.up('.status').addClassName('active') }; })"
           = javascript_tag "Comment.watch_status();"
     .submit{ :id => js_id(:new_submit,Comment.new) }
+      = hidden_field_tag :original_controller, controller_name
       %span.showPreview
         %button{}
           %span.default= "Preview"

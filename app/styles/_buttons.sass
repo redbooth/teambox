@@ -35,7 +35,7 @@ a.button, a.unarchive_task_list_link, a.reorder_task_list_link, a.add_button, a.
     border: 1px solid silver
   .no-cssgradients &
     background: url(/images/button_bg.jpg) no-repeat left
-    padding: 5px
+    padding: 5px 0 5px 5px
     span
       padding: 5px 10px 5px 5px
       font-weight: bold
@@ -44,7 +44,8 @@ a.button, a.unarchive_task_list_link, a.reorder_task_list_link, a.add_button, a.
 a.add_button, a.new_task_list_link
   .cssgradients &
     &:before
-      content: "✚ "
+      content: "+ "
+      font: 900 1.2em Helvetica, Arial, sans-serif
       color: #555555
       margin-right: 0.3em
   .no-cssgradients &
