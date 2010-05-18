@@ -110,6 +110,8 @@ class UsersController < ApplicationController
   end
 
   def unconfirmed_email
+    redirect_to root_path and return if current_user.is_active?
+
     if params[:resend]
       current_user.send_activation_email
       flash[:success] = t('users.activation.resent')
