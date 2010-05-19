@@ -69,6 +69,8 @@ ActionController::Routing::Routes.draw do |map|
 
     project.resources :uploads
 
+    project.hooks      'hooks/:hook_name',                 :controller => 'hooks',      :action => 'create',    :method => :post
+
     project.reorder_task_lists 'reorder_task_lists', :controller => 'task_lists', :action => 'reorder', :method => :post
     project.reorder_tasks 'task_lists/:task_list_id/reorder_task_list', :controller => 'tasks', :action => 'reorder', :method => :post
 
