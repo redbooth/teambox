@@ -13,6 +13,8 @@
       = list_activities(@activities)
       = show_more_button(@activities)
     = javascript_tag autorefresh(@activities)
+  - else
+    = project_primer
 
 - content_for :column do
   = new_project_link
