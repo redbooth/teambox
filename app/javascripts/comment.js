@@ -302,3 +302,8 @@ document.on('click', 'form .showPreview a', function(e,el) {
   e.stop();
   $(this).up('form').closePreview();
 });
+
+// Open links inside Comments and Notes textilized areas in new windows
+document.on('mouseover', '.textilized a', function(e,el) {
+  this.writeAttribute("target", "_blank");
+});
