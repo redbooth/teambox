@@ -91,6 +91,16 @@ class ApplicationController < ActionController::Base
       I18n.locale = logged_in? ? current_user.language : get_browser_locale
     end
     
+    LOCALES_REGEX = /\b(#{ I18n.available_locales.map(&:to_s).join('|') })\b/
+    
+    def get_browser_locale
+      if request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX
+        $&
+      else
+        I18n.default_locale
+      end
+    end
+    
     def fragment_cache_key(key)
       super(key).tap { |str|
         str << "_#{I18n.locale}"
@@ -99,21 +109,6 @@ class ApplicationController < ActionController::Base
         end
       }
     end
-    
-    def get_browser_locale
-      preferred_locale = nil
-
-      if browser_locale = request.headers['HTTP_ACCEPT_LANGUAGE']
-        preferred_locale = %w(en es fr de).
-                            select { |i| browser_locale.include?(i) }.
-                            collect { |i| [i, browser_locale.index(i)] }.
-                            sort { |a,b| a[1] <=> b[1] }.
-                            first
-      end
-      
-      preferred_locale.try(:first) || 'en'
-    end
-    
     
     def touch_user
       current_user.touch if logged_in?
