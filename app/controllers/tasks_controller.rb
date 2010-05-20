@@ -144,19 +144,14 @@ class TasksController < ApplicationController
   private
 
     def find_task_list
-      begin
-        @task_list = @current_project.task_lists.find(params[:task_list_id])
-      rescue
-        flash[:error] = t('not_found.task_list', :id => params[:task_list_id])
-        redirect_to project_task_lists_path(@current_project)
-      end
+      @task_list = @current_project.task_lists.find(params[:task_list_id]) rescue nil
     end
 
     def find_task
       begin
         @task = @current_project.tasks.find(params[:id])
         # Make sure we have the right task list
-        if @task_list.id != @task.task_list_id
+        if @task_list.try(:id) != @task.task_list_id
           @task_list = @task.task_list
           @wrong_task_list = true
         end
