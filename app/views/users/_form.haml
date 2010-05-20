@@ -39,14 +39,14 @@
     .password.text_field
       = f.label :password, t('.password')
       = errors_for user, :password
-      = f.password_field :password
+      = f.password_field :password, :autocomplete => 'off'
       - unless sub_action == 'settings'
         = password_strength :password_strength, 'user_password'
         - tooltip t('.tooltips.password')
     .password.text_field
       = f.label :password_confirmation, t('.confirm_password')
       = errors_for user, :password_confirmation
-      = f.password_field :password_confirmation
+      = f.password_field :password_confirmation, :autocomplete => 'off'
 
 - if user.new_record?
   - build_user_phone_number(user)
