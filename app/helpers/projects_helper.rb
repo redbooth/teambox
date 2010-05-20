@@ -139,8 +139,14 @@ module ProjectsHelper
     "clearInterval(autorefresh)"
   end
 
-  def autorefresh(activities)
-    ajax_request = remote_function(:url => show_new_path(@activities.first.id))
+  def autorefresh(activities, project = nil)
+    first_id = Array(activities).first.id
+    
+    ajax_request = if project
+      remote_function(:url => project_show_new_path(project, first_id))
+    else
+      remote_function(:url => show_new_path(first_id))
+    end
 
     interval = APP_CONFIG['autorefresh_interval']*1000
 

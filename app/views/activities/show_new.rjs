@@ -19,3 +19,10 @@ if @activities.any?
     page << "Sound.play('/sounds/laser.wav')"
   end
 end
+
+# This code has a problem: If you post a comment in Project#show, there's a chance
+# that the autorefresh comments will be requested first, then the comment will post
+# and the user will see the comment twice in the timeline.
+
+# Luckily this happens only if they are both quasi-simultaneous.
+# This code must be replaced be an HTTP Push solution that avoids duplicates
