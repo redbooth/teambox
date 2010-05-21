@@ -6,7 +6,8 @@
 - form_for current_user, :html => { :multipart => true } do |form|
   = form.error_messages
   = render form
-  .submit= submit_tag t('.submit')
+  - unless @sub_action == 'delete'
+    .submit= submit_tag t('.submit')
 
 - if 'profile' == @sub_action
   - form_for current_user do |form|

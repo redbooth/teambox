@@ -113,6 +113,14 @@
     .check_box.notify
       = f.check_box :wants_task_reminder
       = f.label :wants_task_reminder, t('.wants_task_reminder')
-    
+
+- if @sub_action == 'delete'
+  - if false#current_user.projects.count > 0
+    %p= t('.account_deletion.steps_before_1')
+    %p= t('.account_deletion.steps_before_2')
+    %p= t('.account_deletion.steps_before_3')
+  - else
+    %p= t('.account_deletion.what_will_happen')
+    %p= link_to t('.account_deletion.delete_my_account'), destroy_user_path
 
 = hidden_field_tag 'sub_action', sub_action

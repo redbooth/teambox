@@ -21,10 +21,15 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reset_passwords
   map.resource :session
 
-  map.account_settings '/account/settings', :controller => 'users', :action => 'edit', :sub_action => 'settings'
-  map.account_picture '/account/picture',   :controller => 'users', :action => 'edit', :sub_action => 'picture'
-  map.account_profile '/account/profile',   :controller => 'users', :action => 'edit', :sub_action => 'profile'
-  map.account_notifications '/account/notifications', :controller => 'users', :action => 'edit', :sub_action => 'notifications'
+  map.with_options :controller => 'users', :action => 'edit' do |account|
+    account.account_settings      '/account/settings',      :sub_action => 'settings'
+    account.account_picture       '/account/picture',       :sub_action => 'picture'
+    account.account_profile       '/account/profile',       :sub_action => 'profile'
+    account.account_notifications '/account/notifications', :sub_action => 'notifications'
+    account.account_delete        '/account/delete',        :sub_action => 'delete'
+  end
+
+  map.destroy_user '/account/destroy', :controller => 'users', :action => 'destroy'
 
   map.resources :users, :has_many => [:invitations,:comments], :member => {
                           :unconfirmed_email => :get,

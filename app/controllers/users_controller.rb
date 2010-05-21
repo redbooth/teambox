@@ -158,6 +158,19 @@ class UsersController < ApplicationController
       format.html { redirect_to projects_path }
     end
   end
+  
+  def destroy
+    if current_user.projects.count == 0 && current_user.projects.archived.count == 0
+      user = current_user
+      logout_killing_session!
+      flash[:success] = t('users.form.account_deletion.account_deleted')
+      user.destroy
+      redirect_to login_path
+    else
+      flash[:error] = t('users.form.account_deletion.couldnt_delete_account')
+      redirect_to account_delete_path
+    end
+  end
 
   private
     def find_user

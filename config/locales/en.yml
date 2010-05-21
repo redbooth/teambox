@@ -154,6 +154,14 @@ en:
       notify_tasks: Notify me when I'm watching a task
       wants_task_reminder: "Send me a daily email of my tasks"
       invalid_login: "use only letters, numbers and _"
+      account_deletion:
+        steps_before_1: "To delete your Teambox account, first you need to leave or delete all your current projects."
+        steps_before_2: "This will ensure that no other users will lose data on their projects when you delete your account."
+        steps_before_3: "Leave or delete your current projects and then come back to this page to delete your account."
+        what_will_happen: "After deleting your account, your Teambox profile will not be accessible anymore."
+        delete_my_account: "Delete my account now"
+        account_deleted: "Your account has been deleted. We will miss you!"
+        couldnt_delete_account: "We can't delete your account because you still have active or archived projects."
       avatar:
         field: New avatar
         presence: "You can't upload a blank file"
@@ -172,7 +180,6 @@ en:
     new:
       title: Create an Account
       submit: Create account
-      ####
       no_public_signup: "Public signups are not allowed in this system."
       you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
       existing_user: "If you already have an account, <a href='{{login_url}}'>log in</a> or <a href='{{forgot_url}}'>retrieve your password</a>."
@@ -186,6 +193,7 @@ en:
       title_picture: Your Profile Picture
       title_notifications: Your Notifications
       title_deletion: Project Archiving/Deletion
+      title_delete: Delete Account
       submit: Update account
     update:
       updated: User profile updated!
@@ -792,7 +800,7 @@ en:
 
   shared:
     strip:
-      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>" ####
+      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>"
     gantt_banner_primer:
       title: There are no task lists due to show
     upcoming_events_primer:
@@ -847,6 +855,7 @@ en:
       profile_information: Profile Information
       profile_picture: Profile Picture
       notifications: Notifications
+      delete_account: Delete Account...
     task_navigation:
       all_tasks: "All Tasks"
       unarchived_tasks: "Unarchived Tasks"
@@ -1163,7 +1172,6 @@ en:
         odd: "must be odd"
         even: "must be even"
         record_invalid: "Validation failed: {{errors}}"
-      ####
       models:
         comment:
           attributes:
