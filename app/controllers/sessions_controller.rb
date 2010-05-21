@@ -1,6 +1,7 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
 
+  force_ssl :only => :new
   no_login_required :except => :destroy
   
   skip_before_filter :confirmed_user?

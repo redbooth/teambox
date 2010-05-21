@@ -29,6 +29,10 @@ defaults: &defaults
   # create the first one.
   allow_signups: true
 
+  # Enable secure signup and logins over HTTPS.
+  # Make sure your domain has a valid SSL certificate
+  secure_logins: false
+
   # Enable user groups
   allow_groups: true
 

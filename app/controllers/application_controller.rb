@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   
   include AuthenticatedSystem
   include BannerSystem
+  include SslHelper
+
   filter_parameter_logging :password
 
   before_filter :rss_token, 
