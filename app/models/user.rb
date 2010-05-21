@@ -69,6 +69,7 @@ class User < ActiveRecord::Base
   attr_accessor   :activate
 
   before_validation :sanitize_name
+  before_destroy :rename_as_deleted
 
   def before_save
     self.recent_projects_ids ||= []
@@ -259,12 +260,38 @@ class User < ActiveRecord::Base
       comment.user != self &&
       !!( comment.body =~ /@all/i || comment.body =~ /@#{self.login}[^a-z0-9_]/i )
   end
-  
-  protected
-  
-  def sanitize_name
-    self.first_name = first_name.blank?? nil : first_name.squish
-    self.last_name = last_name.blank?? nil : last_name.squish
+
+  DELETED_TAG = "deleted"
+  DELETED_REGEX = /#{DELETED_TAG}\d+__(.*)/i
+
+  def rename_as_deleted
+    tag = find_available_deleted_tag
+    update_attribute :login, "#{tag}#{login}" unless login =~ DELETED_REGEX
+    update_attribute :email, "#{tag}#{email}" unless email =~ DELETED_REGEX
   end
+
+  def rename_as_active
+    login =~ DELETED_REGEX
+    update_attribute :login, Regexp.last_match(1).to_s if login =~ DELETED_REGEX
+    update_attribute :email, Regexp.last_match(1).to_s if email =~ DELETED_REGEX
+  end
+
+  protected
+
+    def find_available_deleted_tag
+      counter = 0
+      begin
+        counter += 1
+        tag = "#{DELETED_TAG}#{counter}__"
+        user = User.find_with_deleted(:first,
+                :conditions => "login LIKE '#{tag}#{login}' OR email LIKE '#{tag}#{email}'")
+      end while user
+      tag
+    end
+
+    def sanitize_name
+      self.first_name = first_name.blank?? nil : first_name.squish
+      self.last_name = last_name.blank?? nil : last_name.squish
+    end
 
 end

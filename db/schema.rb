@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100511133109) do
+ActiveRecord::Schema.define(:version => 20100521093855) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -128,6 +128,8 @@ ActiveRecord::Schema.define(:version => 20100511133109) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
   end
+
+  add_index "groups", ["permalink"], :name => "index_groups_on_permalink"
 
   create_table "groups_users", :id => false, :force => true do |t|
     t.integer "group_id"
@@ -381,6 +383,7 @@ ActiveRecord::Schema.define(:version => 20100511133109) do
     t.text     "recent_projects_ids"
     t.string   "feature_level",                            :default => ""
     t.string   "spreedly_token",                           :default => ""
+    t.string   "source",                                   :default => "web"
     t.datetime "avatar_updated_at"
   end
 

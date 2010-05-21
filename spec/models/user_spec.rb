@@ -345,6 +345,32 @@ describe User do
     end
   end
 
+  describe "deletion" do
+    before do
+      @user = Factory(:confirmed_user, :login => "simon", :email => "simon@sorcerer.net")
+      @user.destroy
+    end
+    it "renames the login so it can be reused by new signups" do
+      @user.login.should == "deleted1__simon"
+      @user.email.should == "deleted1__simon@sorcerer.net"
+    end
+    it "renames the login so it can be reused by new signups" do
+      @user2 = Factory(:confirmed_user, :login => "simon", :email => "simon@sorcerer.net")
+      @user2.login.should == "simon"
+      @user2.email.should == "simon@sorcerer.net"
+      @user2.destroy
+      @user2.login.should == "deleted2__simon"
+      @user2.email.should == "deleted2__simon@sorcerer.net"
+    end
+    it "has a method to rename the user as the original name" do
+      @user = User.find_only_deleted(:first)
+      @user.recover!
+      @user.rename_as_active
+      @user.login.should == "simon"
+      @user.email.should == "simon@sorcerer.net"
+    end
+  end
+
   describe "when in a project" do
     before do
       @user = Factory(:confirmed_user, :login => "balint")
