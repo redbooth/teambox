@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
       f.xml   { render :xml     => @projects.to_xml }
       f.json  { render :as_json => @projects.to_xml }
       f.yaml  { render :as_yaml => @projects.to_xml }
-      f.ics   { render :text    => Project.to_ical(@projects) }
+      f.ics   { render :text    => Project.to_ical(@projects, params[:filter] == 'mine' ? current_user : nil) }
       f.print { render :layout  => 'print' }
     end
   end
@@ -41,7 +41,7 @@ class ProjectsController < ApplicationController
       f.xml   { render :xml     => @current_project.to_xml }
       f.json  { render :as_json => @current_project.to_xml }
       f.yaml  { render :as_yaml => @current_project.to_xml }
-      f.ics   { render :text    => @current_project.to_ical }
+      f.ics   { render :text    => @current_project.to_ical(params[:filter] == 'mine' ? current_user : nil) }
       f.print { render :layout  => 'print' }
     end
   end

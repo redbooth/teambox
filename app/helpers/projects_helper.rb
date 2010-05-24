@@ -102,14 +102,20 @@ module ProjectsHelper
 
   def subscribe_to_all_calendars_link
     content_tag(:div,
-      link_to(t('.subscribe_to_all'), user_rss_token(projects_path(:format => :ics))),
-      :class => :calendars)
+      t('.subscribe_to_all') +
+      link_to("All tasks", user_rss_token(projects_path(:format => :ics))) +
+      ' ' + t('common.or') + ' ' +
+      link_to("only tasks assigned to me", user_rss_token(projects_path(:format => :ics), 'mine')),
+      :class => :calendar_links)
   end
 
   def subscribe_to_calendar_link(project)
     content_tag(:div,
-      link_to(t('.subscribe_to_project', :project => project), user_rss_token(project_path(project, :format => :ics))),
-      :class => :calendars)
+      t('.subscribe_to_project', :project => project) +
+      link_to("All tasks", user_rss_token(project_path(project, :format => :ics))) +
+      ' ' + t('common.or') + ' ' +
+      link_to("only tasks assigned to me", user_rss_token(project_path(project, :format => :ics), 'mine')),
+      :class => :calendar_links)
   end
   
   def print_projects_link

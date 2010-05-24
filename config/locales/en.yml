@@ -251,8 +251,8 @@ en:
       tasks_can_be_synced: "Teambox tasks can be synced with your usual Calendars so you don't forget what's coming up."
       possible_clients: "You can sync your Google Calendar, your Apple's iCal, Outlook, Blackberry and others."
       your_calendars: Your Calendars
-      subscribe_to_all: "Tasks for All Projects"
-      subscribe_to_project: "Tasks for {{project}}"
+      subscribe_to_all: "All Projects: "
+      subscribe_to_project: "Project {{project}}: "
       how_to:
         title: "How to sync your calendars"
         body: "Basically, you should import the links below into your calendar client. Visit our <a href='{{link}}'>knowledge base</a> to learn how to use them with your calendar app."

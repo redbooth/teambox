@@ -103,21 +103,30 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def to_ical
-    Project.calendar_for_tasks(tasks)
+  def to_ical(filter_user = nil)
+    Project.calendar_for_tasks(tasks, self, filter_user)
   end
 
-  def self.to_ical(projects)
+  def self.to_ical(projects, filter_user = nil)
     tasks = projects.collect{ |p| p.tasks }.flatten
-    self.calendar_for_tasks(tasks)
+    self.calendar_for_tasks(tasks, projects, filter_user)
   end
 
   protected
 
-    def self.calendar_for_tasks(tasks)
+    def self.calendar_for_tasks(tasks, projects, filter_user)
+      calendar_name = case projects
+      when Project then projects.name
+      else "Teambox - All Projects"
+      end
+
+      if filter_user
+        tasks = tasks.select { |task| task.assigned.try(:user_id) == filter_user.id }
+      end
+
       ical = Icalendar::Calendar.new
       ical.product_id = "-//Teambox//iCal 2.0//EN"
-      ical.custom_property("X-WR-CALNAME;VALUE=TEXT", "Teambox - All Projects")
+      ical.custom_property("X-WR-CALNAME;VALUE=TEXT", calendar_name)
       ical.custom_property("METHOD","PUBLISH")
       tasks.each do |task|
         next unless task.due_on
@@ -125,9 +134,9 @@ class Project < ActiveRecord::Base
         created_date = task.created_at.to_time.to_datetime
         ical.event do
           dtstart       Date.new(date.year,date.month,date.day)
+          dtend         Date.new(date.year,date.month,date.day) + 1.day
           dtstart.ical_params  = {"VALUE" => "DATE"}
-          dtend       Date.new(date.year,date.month,date.day) + 1.day
-          dtend.ical_params  = {"VALUE" => "DATE"}
+          dtend.ical_params    = {"VALUE" => "DATE"}
           summary       task.name
           klass         task.project.name
           dtstamp       DateTime.civil(created_date.year,created_date.month,created_date.day,created_date.hour,created_date.min,created_date.sec,created_date.offset)

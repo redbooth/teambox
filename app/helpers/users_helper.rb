@@ -34,8 +34,9 @@ module UsersHelper
     end
   end
   
-  def user_rss_token(url)
-    url + "?rss_token=#{current_user.rss_token}#{current_user.id}"
+  def user_rss_token(url, filter = nil)
+    filter_param = filter.present? ? "&filter=#{filter}" : ""
+    url + "?rss_token=#{current_user.rss_token}#{current_user.id}#{filter_param}"
   end
   
   def avatar_or_gravatar(user, size)
