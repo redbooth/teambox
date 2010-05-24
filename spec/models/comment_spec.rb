@@ -171,6 +171,28 @@ describe Comment do
       comment.mentioned.should_not include(@user)
     end
 
+    describe "commenting" do
+      before do
+        @project = Factory(:project)
+        @pablo = Factory(:confirmed_user)
+        @project.add_user(@pablo)
+      end
+
+      it "on a conversation should add you as a watcher" do
+        @conversation = Factory(:conversation, :project => @project, :user => @project.user)
+        @conversation.watchers_ids.should_not include(@pablo.id)
+        comment = Factory(:comment, :project => @project, :user => @pablo, :target => @conversation)
+        @conversation.reload.watchers_ids.should include(@pablo.id)
+      end
+
+      it "on a task should add you as a watcher" do
+        @task = Factory(:task, :project => @project, :user => @project.user)
+        @task.watchers_ids.should_not include(@pablo.id)
+        comment = Factory(:comment, :project => @project, :user => @pablo, :target => @task)
+        @task.reload.watchers_ids.should include(@pablo.id)
+      end
+    end
+
     describe "mentioning @user" do
       before do
         @project.add_user(@user)
