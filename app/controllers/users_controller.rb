@@ -152,6 +152,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def calendars
+  end
+
   def feeds
   end
 

@@ -94,15 +94,21 @@ module ProjectsHelper
       :class => :subscribe)
   end
 
-  def subscribe_to_calendars_link
+  def instructions_for_calendars
     content_tag(:div,
-      link_to(t('projects.index.calendars'), user_rss_token(projects_path(:format => :ics))),
+      link_to(t('shared.instructions.subscribe_to_calendars'), calendars_path),
+      :class => :calendars)
+  end
+
+  def subscribe_to_all_calendars_link
+    content_tag(:div,
+      link_to(t('.subscribe_to_all'), user_rss_token(projects_path(:format => :ics))),
       :class => :calendars)
   end
 
   def subscribe_to_calendar_link(project)
     content_tag(:div,
-      link_to(t('projects.show.calendar'), user_rss_token(project_path(project, :format => :ics))),
+      link_to(t('.subscribe_to_project', :project => project), user_rss_token(project_path(project, :format => :ics))),
       :class => :calendars)
   end
   

@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.welcome           '/welcome',             :controller => 'users',       :action => 'welcome'
   map.feeds             '/feeds',               :controller => 'users',       :action => 'feeds'
+  map.calendars         '/calendars',           :controller => 'users',       :action => 'calendars'
   map.close_wecome_tab  '/close_welcome_tab',   :controller => 'users',       :action => 'close_welcome'
   map.forgot_password   '/forgot',              :controller => 'reset_passwords',   :action => 'new'
   map.reset_password    '/reset/:reset_code',   :controller => 'reset_passwords',   :action => 'reset'

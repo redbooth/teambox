@@ -246,6 +246,19 @@ en:
       more_tips:
         title: More tips
         body: "Learn <a href='{{link}}'>more ways to access Teambox</a>."
+    calendars:
+      title: Sync your calendars
+      tasks_can_be_synced: "Teambox tasks can be synced with your usual Calendars so you don't forget what's coming up."
+      possible_clients: "You can sync your Google Calendar, your Apple's iCal, Outlook, Blackberry and others."
+      your_calendars: Your Calendars
+      subscribe_to_all: "Tasks for All Projects"
+      subscribe_to_project: "Tasks for {{project}}"
+      how_to:
+        title: "How to sync your calendars"
+        body: "Basically, you should import the links below into your calendar client. Visit our <a href='{{link}}'>knowledge base</a> to learn how to use them with your calendar app."
+      clients:
+        title: Specific instructions
+        body: "Refer to the <a href='{{link}}'>knowledge base</a> for instructions on how to configure Google Calendar, Apple's iCal, Outlook, Blackberry and others."
     unconfirmed_email:
       title: Confirm your email
       invitation_sent_to: "An email invitation was sent to <i>{{email}}</i>, in order to verify your email address."
@@ -319,7 +332,6 @@ en:
       title: News feed for all your projects
       projects: My Projects
       subscribe: Subscribe to the news feed
-      calendars: Calendar for all projects
       new_project: New Project
       refreshes: Refreshes every minute
       rss:
@@ -345,7 +357,6 @@ en:
       people_in_project: People in this project
       subscribe: Subscribe to the news feed
       tip: Mentioning somebody's @username they will receive an email with your message
-      calendar: Calendar for this project's tasks
       rss:
         title: "{{name}} activity feed"
         description: "Recent activities for the project {{name}}"
@@ -901,7 +912,7 @@ en:
       safari: "Safari"
     instructions:
       subscribe_to_feeds: Subscribe to feeds...
-
+      subscribe_to_calendars: Subscribe to calendars...
   emailer:
     common:
       do_not_answer: "Do not answer to this email."
