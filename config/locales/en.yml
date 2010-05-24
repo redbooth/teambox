@@ -229,6 +229,23 @@ en:
         in_your_site: in your site!
         tell_us: "If you enjoy using Teambox, also consider <a href='mailto:{{address}}'>telling us about it</a> in an email!"
       stop_welcome: Stop showing this Welcome tab
+    feeds:
+      title: Sync your activity feeds
+      follow_activities: "You can follow Teambox activities from News Readers (Desktop or Mobile)."
+      receive_notifications: "By using a Feed Reader on your computer or mobile device, you will receive notifications from activities in your projects."
+      configure: "You can configure your feed reader to alert you every time something new happens in Teambox, even if you don't have it open in a window."
+      import:
+        title: How to import a news feed
+        body: "Beneath you have a list of feeds you can follow. To import them into your feed reader you need to <strong>right-click the link</strong> and select <strong>copy link address</strong>. Next, go to your feed reader, add a new Feed and paste the address of that feed."
+      your_feeds: Your news feeds
+      subscribe_to_all: Activity for All Projects
+      subscribe_to_project: Activity for {{project}}
+      feed_reader:
+        title: Which news reader should I use?
+        body: "Refer to the <a href='{{link}}'>knowledge base</a> for this."
+      more_tips:
+        title: More tips
+        body: "Learn <a href='{{link}}'>more ways to access Teambox</a>."
     unconfirmed_email:
       title: Confirm your email
       invitation_sent_to: "An email invitation was sent to <i>{{email}}</i>, in order to verify your email address."
@@ -882,6 +899,8 @@ en:
       chrome: "Chrome,"
       firefox: "Firefox"
       safari: "Safari"
+    instructions:
+      subscribe_to_feeds: Subscribe to feeds...
 
   emailer:
     common:

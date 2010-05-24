@@ -23,6 +23,6 @@
     = list_projects(@projects)
     - if @archived_projects.any?
       = link_to t('.archived', :count => @archived_projects.size), project_archived_path, :id => 'project_archived_link'
-    = subscribe_to_projects_link
+    = instructions_for_feeds
     = subscribe_to_calendars_link
     = #print_projects_link

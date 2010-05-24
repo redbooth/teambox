@@ -1,0 +1,22 @@
+%h2= t('.title')
+
+%p= t('.follow_activities')
+%p= t('.receive_notifications')
+%p= t('.configure')
+
+%h3= t('.import.title')
+%p= t('.import.body')
+
+%h3= t('.your_feeds')
+
+= subscribe_to_all_projects_link
+
+- for project in current_user.projects
+  = subscribe_to_project_link(project)
+
+- content_for :column do
+  %h2= t('.feed_reader.title')
+  %p= t('.feed_reader.body', :link => "http://help.teambox.com/faqs/more-ways-to-access-teambox/sync-tools")
+  
+  %h2= t('.more_tips.title')
+  %p= t('.more_tips.body', :link => "http://help.teambox.com/faqs/more-ways-to-access-teambox/sync-tools")

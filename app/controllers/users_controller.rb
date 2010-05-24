@@ -152,6 +152,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def feeds
+  end
+
   def close_welcome
     @current_user.update_attribute(:welcome,true)
     respond_to do |format|

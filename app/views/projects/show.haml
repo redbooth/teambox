@@ -25,6 +25,6 @@
   - if @current_project.users.size > 1
     .tip
       = t('.tip')
-  = subscribe_to_project_link(@current_project)
+  = instructions_for_feeds
   = subscribe_to_calendar_link(@current_project)
   = #print_project_link(@current_project)
