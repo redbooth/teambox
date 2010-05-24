@@ -164,17 +164,17 @@ specs:
 - SystemTimer: 
     version: "1.2"
 - activesupport: 
-    version: 2.3.5
+    version: 2.3.7
 - rack: 
-    version: 1.0.1
+    version: 1.1.0
 - actionpack: 
-    version: 2.3.5
+    version: 2.3.7
 - actionmailer: 
-    version: 2.3.5
+    version: 2.3.7
 - activerecord: 
-    version: 2.3.5
+    version: 2.3.7
 - activeresource: 
-    version: 2.3.5
+    version: 2.3.7
 - acts-as-list: 
     version: 0.1.2
 - builder: 
@@ -190,7 +190,7 @@ specs:
 - culerity: 
     version: 0.2.10
 - nokogiri: 
-    version: 1.4.1
+    version: 1.4.2
 - rack-test: 
     version: 0.5.3
 - ffi: 
@@ -216,7 +216,7 @@ specs:
 - trollop: 
     version: 1.16.2
 - gherkin: 
-    version: 1.0.27
+    version: 1.0.30
 - term-ansicolor: 
     version: 1.0.5
 - cucumber: 
@@ -234,7 +234,7 @@ specs:
 - gem_plugin: 
     version: 0.2.3
 - haml: 
-    version: 3.0.4
+    version: 3.0.6
 - hpricot: 
     version: 0.8.2
 - i18n: 
@@ -258,7 +258,7 @@ specs:
 - pickle: 
     version: 0.2.11
 - rails: 
-    version: 2.3.5
+    version: 2.3.7
 - rdiscount: 
     version: 1.6.3.2
 - rspec: 
