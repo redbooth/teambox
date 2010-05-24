@@ -1,3 +1,4 @@
+@signup
 Feature: Logging In
   Background:
     Given I am currently "mislav"

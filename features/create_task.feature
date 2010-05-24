@@ -1,4 +1,4 @@
-Feature Creating a task
+Feature: Creating a task
   Background:
     Given a project exists with name: "Ruby Rockstars"
     And I am logged in as "mislav"

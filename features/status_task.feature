@@ -1,4 +1,4 @@
-Feature Changing Task Status from New
+Feature: Changing Task Status from New
   Background:
     Given I am logged in as mislav
       And I am currently in the project ruby_rockstars

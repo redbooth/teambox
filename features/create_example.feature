@@ -1,4 +1,4 @@
-Feature Creating an example project
+Feature: Creating an example project
   In order to learn how to use Teambox
   As a logged in user
   I will create an example project

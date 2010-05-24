@@ -13,8 +13,8 @@ config/*.sphinx.conf
 log/*.log
 tmp
 public/avatars
-public/stylesheets/*.css
-public/stylesheets/**/*.css
+public/stylesheets
 uploads
 webrat-*
 capybara-*
+rerun.txt

@@ -32,9 +32,7 @@ end
 
 When /^I fill in "([^\"]*)" with "([^\"]*)" in the new task form of the "([^\"]*)" task list$/ do |field, value, task_list_name|
   task_list = TaskList.find_by_name(task_list_name)
-  project = task_list.project
-  task_form_id = "project_#{project.id}_task_list_#{task_list.id}_task_new_form"
-  within(:css, "##{task_form_id}") do
+  within(:css, "#project_#{task_list.project.id}_task_list_#{task_list.id} form") do
     fill_in(field, :with => value)
   end
 end

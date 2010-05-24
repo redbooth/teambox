@@ -1,4 +1,4 @@
-Feature Watchable Objects
+Feature: Watchable Objects
   Background:
     Given the following confirmed users exist
       | login  | email                     | first_name | last_name |

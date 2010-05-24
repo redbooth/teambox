@@ -1,4 +1,4 @@
-Feature Update a profile
+Feature: Update a profile
   Background:
     Given a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić"
       And I am logged in as "mislav"

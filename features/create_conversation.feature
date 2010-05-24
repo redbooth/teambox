@@ -1,4 +1,4 @@
-Feature Creating a conversation
+Feature: Creating a conversation
   Background:
     Given I am logged in as mislav
       And I am currently in the project ruby_rockstars

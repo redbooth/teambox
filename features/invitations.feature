@@ -1,4 +1,5 @@
-Feature Invite a user to a project
+@signup
+Feature: Invite a user to a project
   Background:
     Given a project exists with name: "Ruby Rockstars"
     And a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić"

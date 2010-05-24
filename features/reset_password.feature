@@ -1,3 +1,4 @@
+@signup
 Feature: Resetting passwords
   In order to reset their passwords
   Users should be able to
