@@ -355,5 +355,14 @@ module ApplicationHelper
   def tooltip(text)
     haml_tag :p, h(text), :class => 'fyi'
   end
-  
+
+  def auto_discovery_link_by_context(user, project)
+    if user
+      if project
+        auto_discovery_link_tag(:rss, user_rss_token(project_path(project, :format => :rss)))
+      else
+        auto_discovery_link_tag(:rss, user_rss_token(projects_path(:format => :rss)))
+      end
+    end
+  end
 end
