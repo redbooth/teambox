@@ -1,6 +1,6 @@
 zh:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "现在访问<a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile站点，法文和德文本地包及API</a>!"
+  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   common:
     and: 和
     or: 或者

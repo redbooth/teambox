@@ -1,7 +1,7 @@
 # Translated by Valeria Franchi (Eosteam)
 it:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "Novità: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versione Mobile, traduzione in francese e tedesco API</a>"
+  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   common:
     and: e
     or: o

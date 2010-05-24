@@ -2,7 +2,7 @@
 # Mark missing translations by adding ##### at the end of the line
 en:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "Now with <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Mobile Site, French and German locales and API</a>!"
+  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   common:
     and: and
     or: or

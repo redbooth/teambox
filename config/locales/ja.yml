@@ -1,6 +1,7 @@
 # Original translation
 ja:
   # if latest_announcement is less than 5 characters, it will not be displayed
+  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   common:
     and: と
     or: または 

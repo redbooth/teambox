@@ -1,7 +1,7 @@
 # Translated by David Niubò
 ca:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "Novetats: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versió Mòbil, traducció al català i API</a>"
+  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   common:
     and: i
     or: o

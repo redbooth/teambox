@@ -1,7 +1,7 @@
 # Translated by Gustavo Azambuja - http://kuboit.com
 pt:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "Novidades: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versão para celular, tradução em francês e alemão e API</a>"
+  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   common:
     and: e
     or: ou
