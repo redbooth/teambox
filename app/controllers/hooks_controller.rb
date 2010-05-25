@@ -1,6 +1,7 @@
 class HooksController < ApplicationController
 
   no_login_required
+  skip_before_filter :verify_authenticity_token
 
   def initialize
     @example_github_payload = <<-EOS
