@@ -891,6 +891,7 @@ en:
       my_tasks:
         one: "My 1 Task"
         other: "My {{count}} Tasks"
+      my_assigned_tasks: "only tasks assigned to me"
       everybodys_tasks: "Everybody's Tasks"
       hide_archived_tasks: "Hide Archived Tasks"
     footer:
