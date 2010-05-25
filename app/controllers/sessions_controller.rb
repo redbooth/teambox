@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
       self.current_user = user
       handle_remember_cookie! true
       flash[:error] = nil
-      redirect_back_or_default root_path
+      redirect_back_or_default root_url
     else
       note_failed_signin
       @login       = params[:login]

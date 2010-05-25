@@ -33,7 +33,9 @@ module SslHelper
       { :controller => 'sessions', :action => 'show' },
       { :controller => 'users', :action => 'new' },
       { :controller => 'users', :action => 'create' },
-      { :controller => 'users', :action => 'edit', :sub_action => 'settings' }
+      { :controller => 'users', :action => 'edit', :sub_action => 'settings' },
+      { :controller => 'reset_passwords', :action => 'reset' },
+      { :controller => 'reset_passwords', :action => 'update_after_forgetting' }
     ]
     
     def rewrite(options = {})
@@ -54,6 +56,22 @@ module SslHelper
       options = @request.symbolized_path_parameters.merge options.symbolize_keys
       options.update options[:params].symbolize_keys if options[:params]
       self.class.requires_ssl?(options) ? 'https' : 'http'
+    end
+  end
+  
+  module Routes
+    def requires_ssl?
+      UrlRewriter.requires_ssl?(requirements.merge(conditions))
+    end
+  end
+  
+  class Optimiser < ActionController::Routing::Optimisation::PositionalArguments
+    def guard_conditions
+      super.tap do |cond|
+        if Teambox.config.secure_logins
+          cond << "#{route.requires_ssl?? '' : '!'}request.ssl?"
+        end
+      end
     end
   end
 end
