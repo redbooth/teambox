@@ -164,17 +164,17 @@ specs:
 - SystemTimer: 
     version: "1.2"
 - activesupport: 
-    version: 2.3.7
+    version: 2.3.8
 - rack: 
     version: 1.1.0
 - actionpack: 
-    version: 2.3.7
+    version: 2.3.8
 - actionmailer: 
-    version: 2.3.7
+    version: 2.3.8
 - activerecord: 
-    version: 2.3.7
+    version: 2.3.8
 - activeresource: 
-    version: 2.3.7
+    version: 2.3.8
 - acts-as-list: 
     version: 0.1.2
 - builder: 
@@ -258,7 +258,7 @@ specs:
 - pickle: 
     version: 0.2.11
 - rails: 
-    version: 2.3.7
+    version: 2.3.8
 - rdiscount: 
     version: 1.6.3.2
 - rspec: 

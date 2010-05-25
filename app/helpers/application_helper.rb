@@ -4,7 +4,7 @@ module ApplicationHelper
   # overwrite framework helper because it forces ":raise => true", meaning
   # missing translations wouldn't have a chance to hit the exception_handler
   def translate(key, options = {})
-    translation = I18n.translate(scope_key_by_partial(key), options)
+    translation = I18n.translate(scope_keys_by_partial(key), options)
     translation.respond_to?(:join) ? translation.join : translation
   rescue I18n::MissingTranslationData => e
     keys = I18n.send(:normalize_translation_keys, e.locale, e.key, e.options[:scope])
