@@ -11,7 +11,6 @@ var Hours = {
 		
 		this.filters = {
 			'user': null,
-			'task': null,
 			'project': null
 		};
 		
@@ -19,12 +18,10 @@ var Hours = {
 		
 		// Link in filter checkboxes
 		document.on('change', '#user_filters select', Hours.userFilterHandler);
-		document.on('change', '#task_filters select', Hours.taskFilterHandler);
 		document.on('change', '#project_filters select', Hours.projectFilterHandler);
 		
 		this.setProjectFilter(0, true);
 		this.setUserFilter(0, true);
-		this.setTaskFilter(0, true);
 	},
 	
 	clearAll: function(selector, enabled) {
@@ -78,28 +75,6 @@ var Hours = {
 		}
 	},
 	
-	setTaskFilter: function(id, enabled) {
-		if (id == 0)
-		{
-			// All projects
-			if (enabled)
-			{
-				Hours.filters.task = null;
-			}
-			else
-			{
-				Hours.filters.task = [];
-			}
-		}
-		else
-		{
-			if (enabled)
-				Hours.filters.task.push(id);
-			else
-				Hours.filters.task = Hours.filters.task.without(id);
-		}
-	},
-	
 	projectFilterHandler: function(evt, el) {
 		var value = el.getValue();
 		
@@ -118,32 +93,6 @@ var Hours = {
 		
 		Hours.update();
 		return true;
-	},
-	
-	taskFilterHandler: function(evt, el) {
-		var value = el.getValue();
-		
-		Hours.setTaskFilter(0, false);
-		Hours.setTaskFilter(parseInt(value), true);
-		
-		Hours.update();
-		return true;
-	},
-	
-	addHour: function(comment) {
-		var record = {
-			id: comment.id,
-			date: new Date(comment.date[0], comment.date[1], comment.date[2],0,0,0,0),
-			week: comment.week,
-			project_id: comment.project_id,
-			user_id: comment.user_id,
-			task_id: comment.task_id,
-			hours: comment.hours
-		};
-		
-		var d = record.date;
-		record.key = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
-		this.hours.push(record);
 	},
 	
 	addHours: function(comments) {
@@ -299,13 +248,11 @@ var Hours = {
 	getFilteredComments: function(){
 		var projectFilters = this.filters.project;
 		var userFilters = this.filters.user;
-		var taskFilters = this.filters.task;
 		
 		return this.mapComments(this.hours, function(c) {
 			if (!Hours.applyFilter(c,
 				                  projectFilters,
-				                  userFilters,
-				                  taskFilters))
+				                  userFilters))
 				return null;
 			
 			return {key:c.key, value:c};
@@ -341,7 +288,7 @@ var Hours = {
 		return res;
 	},
 	
-	applyFilter: function(hour, projectFilters, userFilters, taskFilters){
+	applyFilter: function(hour, projectFilters, userFilters){
 		if (projectFilters != null) {
 			// Project?
 			if (projectFilters.indexOf(hour.project_id) == -1)
@@ -351,12 +298,6 @@ var Hours = {
 		if (userFilters != null) {
 			// User?
 			if (userFilters.indexOf(hour.user_id) == -1)
-				return false;
-		}
-		
-		if (taskFilters != null) {
-			// Task?
-			if (taskFilters.indexOf(hour.task_id) == -1)
 				return false;
 		}
 		

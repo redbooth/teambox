@@ -315,15 +315,6 @@ module CalendarsHelper
      end
      select(:hours_user_filter, :assigned, options, :disabled => 'divider', :id => target_id)
    end
-   
-   def filter_people_assigned_dropdown(target_id, project=nil)
-      options = [['All tasks',     0]]
-      task_list = project ? project.tasks.unarchived :
-                            Task.find(:all, :conditions => ['project_id IN (?) AND status < ?', current_user.project_ids, 3])
-      options += [['--------', 'divider']]
-      options += task_list.sort_by(&:name).collect { |t| [t.name, t.id] }
-      select(:hours_task_filter, :assigned, options, :disabled => 'divider', :id => target_id)
-    end
     
     def filter_project_dropdown(target_id)
         options = [['All projects',     0]]
