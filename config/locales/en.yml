@@ -361,14 +361,14 @@ en:
         title: "{{name}} activity feed"
         description: "Recent activities for the project {{name}}"
     fields:
-      tracks_time: "Enable time tracking"
+      tracks_time: "Enable time tracking. <em>Will allow users to log time for each task they work on.</em>"
       archiving: "Archive this project"
       forever: "Delete this project forever"
       owner: "Owner"
       owner_description: "The owner is the main responsible for a project. He cannot be removed from the project unless ownership is transferred to another user."
-      name: Name
+      name: "Name <em>Keep it short and descriptive</em>"
       name_description: "Choose a brief and descriptive title. For example: Taggart Transcontinental"
-      permalink: URL
+      permalink: "Permalink: <em>Short identifier for the project</em>"
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
       archived: Archive this Project
       confirm_delete: "Are you sure you'd want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you want to keep it, use Archive Project instead."
