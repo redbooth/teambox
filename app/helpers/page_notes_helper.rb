@@ -20,34 +20,18 @@ module PageNotesHelper
   end
   
   def edit_note_link(note)
-    link_to_remote pencil_image,
-      :url => edit_project_page_note_path(note.project,note.page,note),
-      :loading => edit_note_loading_action(note),
-      :method => :get, 
-      :html => { :id => "edit_note_#{note.id}_link"}
+    link_to pencil_image,
+      edit_project_page_note_path(note.project,note.page,note),
+      :id => "edit_note_#{note.id}_link",
+      :class => :edit_note
   end
-  
-  def edit_note_loading_action(note)
-    update_page do |page|
-      page.insert_html :after, "edit_note_#{note.id}_link", loading_action_image("note_#{note.id}")
-      page["edit_note_#{note.id}_link"].hide
-    end  
-  end
-  
-  def delete_note_loading_action(note)
-    update_page do |page|
-      page.insert_html :after, "delete_note_#{note.id}_link", loading_action_image("note_#{note.id}")
-      page["delete_note_#{note.id}_link"].hide
-    end  
-  end  
   
   def delete_note_link(note)
-    link_to_remote trash_image,
-      :url => project_page_note_path(note.project,note.page,note),
-      :loading => delete_note_loading_action(note),
-      :method => :delete,
-      :confirm => t('.delete_confirm'),
-      :html => { :id => "delete_note_#{note.id}_link" }
+    link_to trash_image,
+      project_page_note_path(note.project,note.page,note),
+      :aconfirm => t('.delete_confirm'),
+      :id => "delete_note_#{note.id}_link",
+      :class => 'delete_note'
   end
   
   def remove_form(show_element=nil)

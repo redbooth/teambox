@@ -1,7 +1,9 @@
 %p.actions{ :style => "display: none" }
   %span
     = edit_divider_link(divider)
+    = loading_action_image("delete_divider_#{divider.id}", true)
     = delete_divider_link(divider)
+    = loading_action_image("delete_divider_#{divider.id}", true)
     =# drag_image
 %p.actions.handle{ :style => "display: none" }
   %span
