@@ -4,9 +4,9 @@ module ActivitiesHelper
 
   def activity_project_link(project)
     if project
-      out = ""
-      out << " <span class='arr project_arr'>#{t('common.in_project')}</span> "
+      out = " "
       out << "<span class='project'>"
+      out << "#{t('common.in_project')} "
       out <<   link_to(project, project_path(project))
       out << "</span>"
       out
