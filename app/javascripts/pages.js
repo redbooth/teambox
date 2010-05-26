@@ -253,6 +253,23 @@ var InsertionBar = {
     InsertionBar.setWidgetForm(form_name);
     Form.reset(form_name);
     $(form_name).focusFirstElement();
+  },
+
+  widgetFormHandler: function(form) {
+    new Ajax.Request(form.readAttribute('action'), {
+      asynchronous: true,
+      evalScripts: true,
+      method: form.readAttribute('method'),
+      parameters: form.serialize(),
+      onLoading: function() {
+        form.down('.submit').hide();
+        form.down('img.loading').show();
+      },
+      onFailure: function(response) {
+        form.down('.submit').show();
+        form.down('img.loading').hide();
+      }
+    });
   }
 };
 
@@ -455,3 +472,26 @@ document.on('click', 'a.delete_page_upload', function(evt, el) {
   
   Page.widgetActionHandler(el, 'delete', el.readAttribute('href'));
 });
+
+// Actual widget forms
+
+document.on('submit', 'form.edit_divider', function(evt, form) {
+  evt.stop();
+  InsertionBar.widgetFormHandler(form);
+});
+
+document.on('submit', 'form.edit_note', function(evt, form) {
+  evt.stop();
+  InsertionBar.widgetFormHandler(form);
+});
+
+document.on('submit', 'form.new_note', function(evt, form) {
+  evt.stop();
+  InsertionBar.widgetFormHandler(form);
+});
+
+document.on('submit', 'form.new_divider', function(evt, form) {
+  evt.stop();
+  InsertionBar.widgetFormHandler(form);
+});
+
