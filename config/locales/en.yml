@@ -248,7 +248,7 @@ en:
         body: "Learn <a href='{{link}}'>more ways to access Teambox</a>."
     calendars:
       title: Sync your calendars
-      tasks_can_be_synced: "Teambox tasks can be synced with your usual Calendars so you don't forget what's coming up."
+      tasks_can_be_synced: "Teambox tasks can be synched with your usual Calendars so you don't forget what's coming up."
       possible_clients: "You can sync your Google Calendar, your Apple's iCal, Outlook, Blackberry and others."
       your_calendars: Your Calendars
       subscribe_to_all: "All Projects: "
