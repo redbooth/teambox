@@ -4,5 +4,5 @@
   .submit{ :id => "note_submit" }
     = f.submit t('.submit')
     or
-    = link_to_function 'Cancel', inline_hide_note_form
+    = link_to t('common.cancel'), '#', :class => 'cancelPageWidget'
   =loading('note_form')

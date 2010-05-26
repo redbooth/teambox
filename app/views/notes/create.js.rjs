@@ -16,6 +16,6 @@ else
                     :locals => {:page => @page, :project => @current_project})
 end
 
-page.hide_note_form
+page.call "InsertionBar.clearWidgetForm"
 page.reload_javascript_events
 page.reload_page_sort

@@ -5,7 +5,7 @@
     .submit{ :id => "divider_submit" }
       = f.submit t('.submit')
       = t('common.or')
-      = link_to_function t('common.cancel'), inline_hide_divider_form
+      = link_to t('common.cancel'), '#', :class => 'cancelPageWidget'
     =loading('divider_form')
     .clear  
   .clear  

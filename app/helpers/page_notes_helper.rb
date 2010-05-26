@@ -5,46 +5,12 @@ module PageNotesHelper
       :project => project, :page => page, :note => Note.new } 
   end
 
-  def inline_hide_note_form
-    update_page do |page|
-      page.hide_note_form
-    end  
-  end  
-
-  def hide_note_form
-    page.call "InsertionBar.clearWidgetForm"
-  end
-
-  def show_note_form(in_bar)
-    update_page do |page|
-      unless in_bar
-        page.call "InsertionMarker.set", nil, true
-        page.call "InsertionBar.place"
-      end
-      page.call "InsertionBar.setWidgetForm", "new_note_form"
-      page << "new Effect.Highlight('new_note_form',{ startcolor: '#F0F0F0', endcolor: '#F5F5F5', restorecolor: '#F5F5F5'})"
-      page << "Form.reset('new_note_form');"
-      page.hide_loading_note_form
-      page << "$('new_note_form').focusFirstElement()"
-    end  
-  end
-
   def note_fields(f)
     render :partial => 'notes/fields', :locals => { :f => f }
   end
-
-  def list_page_notes(notes)
-    render :partial => 'notes/note', :collection => notes
-  end
   
-  def new_page_note_link(project,page,in_bar)
-    link_to_function "<span>#{t('.new_note')}</span>", show_note_form(in_bar), :class => 'add_button', :id => 'note_button'
-  end
-  
-  def new_loading_form
-    update_page do |page|
-      page['note_button'].className = 'loading_button'
-    end  
+  def new_page_note_link(project,page)
+    link_to "<span>#{t('.new_note')}</span>", new_project_page_note_path(project, page), :class => 'add_button note_button'
   end
   
   def note_actions_link(note)
@@ -97,10 +63,6 @@ module PageNotesHelper
     update_page do |page|
       page.loading_note_form(true,id)
     end  
-  end  
-    
-  def hide_loading_note_form(id=nil)
-    page.loading_note_form(false,id)
   end
       
   def loading_note_form(toggle,id=nil)

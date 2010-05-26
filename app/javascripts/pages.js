@@ -185,6 +185,26 @@ var InsertionBar = {
       this.revealForm();
   },
 
+  setWidgetFormLoading: function(id, active) {
+    var form = $(id);
+    var submit = form ? form.down('.submit') : null;
+    var loading = form ? form.down('.loading') : null;
+
+    if (!(submit && loading))
+      return;
+
+    if (active)
+    {
+      submit.hide();
+      loading.show();
+    }
+    else
+    {
+      submit.show();
+      loading.hide();
+    }
+  },
+
   insertTempForm: function(template) {
     var el = null;
     var before = Page.insert_before ? '1' : '0';
@@ -210,6 +230,13 @@ var InsertionBar = {
     this.current_form.reset();
     this.current_form.hide();
     this.current_form = null;
+  },
+
+  widgetButtonFormHandler: function(form_name) {
+	InsertionBar.setWidgetFormLoading(form_name, false);
+	InsertionBar.setWidgetForm(form_name);
+	Form.reset(form_name);
+	$(form_name).focusFirstElement();
   }
 };
 
@@ -330,3 +357,42 @@ var InsertionMarkerFunc = function(evt){
     InsertionMarker.hide(); // *poof*
   }
 }
+
+document.on('click', 'a.note_button', function(evt, el) {
+	evt.stop();
+	var in_bar = this.up('.pageSlots') != null;
+	if (!in_bar) {
+		InsertionMarker.set(null, true);
+		InsertionBar.place();
+	}
+	
+	InsertionBar.widgetButtonFormHandler('new_note_form');
+});
+
+document.on('click', 'a.divider_button', function(evt, el) {
+	evt.stop();
+	var in_bar = this.up('.pageSlots') != null;
+	if (!in_bar) {
+		InsertionMarker.set(null, true);
+		InsertionBar.place();
+	}
+	
+	InsertionBar.widgetButtonFormHandler('new_divider_form');
+});
+
+document.on('click', 'a.upload_button', function(evt, el) {
+	evt.stop();
+	var in_bar = this.up('.pageSlots') != null;
+	if (!in_bar) {
+		InsertionMarker.set(null, true);
+		InsertionBar.place();
+	}
+	
+	InsertionMarker.setEnabled(true);
+	InsertionBar.clearWidgetForm();
+	InsertionBar.insertTempForm(Page.upload_template);
+});
+
+document.on('click', 'a.cancelPageWidget', function(evt, el) {
+	InsertionBar.clearWidgetForm();
+});
