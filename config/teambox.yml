@@ -33,9 +33,6 @@ defaults: &defaults
   # Make sure your domain has a valid SSL certificate
   secure_logins: false
 
-  # Enable user groups
-  allow_groups: true
-
   # Enable time tracking
   allow_time_tracking: true
 
