@@ -2,14 +2,13 @@ require 'rss_feed_helper'
 
 module ActivitiesHelper
 
-  def activity_project_link(project, arrow_pos = :before)
+  def activity_project_link(project)
     if project
       out = ""
-      out << " <span class='arr project_arr'>&rarr;</span> " if arrow_pos == :before
+      out << " <span class='arr project_arr'>#{t('common.in_project')}</span> "
       out << "<span class='project'>"
       out <<   link_to(project, project_path(project))
       out << "</span>"
-      out << " <span class='arr project_arr'>&rarr;</span> " if arrow_pos == :after
       out
     end  
   end
@@ -43,8 +42,9 @@ module ActivitiesHelper
     end
   end
   
-  def activity_title(activity, plain = false)
-    values = { :user => link_to_unless(plain, activity.user.name, activity.user) }
+  def activity_title(activity, plain = false, mobile = false)
+    values = mobile ? { :user => (plain ? activity.user.short_name : "<span class='user'>#{activity.user.short_name}</span>") } :
+                      { :user => link_to_unless(plain, activity.user.name, activity.user) }
     
     if Comment === activity
       object = activity

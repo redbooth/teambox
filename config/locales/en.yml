@@ -6,6 +6,7 @@ en:
   common:
     and: and
     or: or
+    in_project: in
     delete: Delete
     edit: Edit
     accept: Accept

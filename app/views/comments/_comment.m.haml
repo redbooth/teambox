@@ -2,10 +2,9 @@
   = thumb_avatar(comment.user, false)
   .container
     .date= posted_date comment.created_at
-    %span.user= comment.user.short_name
-    = activity_project_link(comment.project)
-    = activity_comment_target_link(comment)
+    = activity_title(comment, true, true)
     = comment_task_status(comment) if comment.target_type == 'Task'
+    = activity_project_link(comment.project) unless comment.target.class == Project
     ~ comment.body_html
 
     - if comment.uploads.any?
