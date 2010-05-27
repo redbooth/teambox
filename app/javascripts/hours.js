@@ -307,7 +307,7 @@ var Hours = {
 
 Number.prototype.friendlyHours = function() {
   if (this <= 0)
-    return;
+    return 0;
   var out = this.floor() + 'h', minutes = ((this % 1) * 60).round()
   if (minutes) out += ' ' + minutes + 'm'
   return out
