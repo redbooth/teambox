@@ -6,6 +6,7 @@ en:
   common:
     and: and
     or: or
+    in_project: in
     delete: Delete
     edit: Edit
     accept: Accept
@@ -248,7 +249,7 @@ en:
         body: "Learn <a href='{{link}}'>more ways to access Teambox</a>."
     calendars:
       title: Sync your calendars
-      tasks_can_be_synced: "Teambox tasks can be synced with your usual Calendars so you don't forget what's coming up."
+      tasks_can_be_synced: "Teambox tasks can be synched with your usual Calendars so you don't forget what's coming up."
       possible_clients: "You can sync your Google Calendar, your Apple's iCal, Outlook, Blackberry and others."
       your_calendars: Your Calendars
       subscribe_to_all: "All Projects: "
@@ -890,6 +891,7 @@ en:
       my_tasks:
         one: "My 1 Task"
         other: "My {{count}} Tasks"
+      my_assigned_tasks: "only tasks assigned to me"
       everybodys_tasks: "Everybody's Tasks"
       hide_archived_tasks: "Hide Archived Tasks"
     footer:

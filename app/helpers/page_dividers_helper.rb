@@ -5,46 +5,12 @@ module PageDividersHelper
       :project => project, :page => page, :divider => Divider.new } 
   end
 
-  def inline_hide_divider_form
-    update_page do |page|
-      page.hide_divider_form
-    end  
-  end  
-
-  def hide_divider_form
-    page.call "InsertionBar.clearWidgetForm"
-  end
-
-  def show_divider_form(in_bar)
-    update_page do |page|
-      unless in_bar
-        page.call "InsertionMarker.set", nil, true
-        page.call "InsertionBar.place"
-      end
-      page.call "InsertionBar.setWidgetForm", "new_divider_form"
-      #page << "new Effect.Highlight('new_divider_form',{ startcolor: '#F0F0F0', endcolor: '#F5F5F5', restorecolor: '#FFFFFF'})"
-      page << "Form.reset('new_divider_form');"
-      page.hide_loading_divider_form
-      page << "$('new_divider_form').focusFirstElement()"
-    end  
-  end
-
   def divider_fields(f)
     render :partial => 'dividers/fields', :locals => { :f => f }
   end
-
-  def list_page_dividers(dividers)
-    render :partial => 'dividers/divider', :collection => dividers
-  end
   
-  def new_page_divider_link(project,page,in_bar)
-    link_to_function content_tag(:span,t('.new_divider')), show_divider_form(in_bar), :class => 'add_button', :id => 'divider_button'
-  end
-  
-  def new_loading_form
-    update_page do |page|
-      page['divider_button'].className = 'loading_button'
-    end  
+  def new_page_divider_link(project,page)
+    link_to content_tag(:span,t('.new_divider')), new_project_page_divider_path(project, page), :class => 'add_button divider_button'
   end
   
   def divider_actions_link(divider)
@@ -54,35 +20,18 @@ module PageDividersHelper
   end
   
   def edit_divider_link(divider)
-    link_to_remote pencil_image,
-      :url => edit_project_page_divider_path(divider.project,divider.page,divider),
-      :loading => edit_divider_loading_action(divider),
-      :method => :get, 
-      :html => { :id => "edit_divider_#{divider.id}_link"}
+    link_to pencil_image,
+      edit_project_page_divider_path(divider.project,divider.page,divider),
+      :id => "edit_divider_#{divider.id}_link",
+      :class => 'edit_divider'
   end
-
-  
-  def edit_divider_loading_action(divider)
-    update_page do |page|
-      page.insert_html :after, "edit_divider_#{divider.id}_link", loading_action_image("divider_#{divider.id}")
-      page["edit_divider_#{divider.id}_link"].hide
-    end  
-  end
-  
-  def delete_divider_loading_action(divider)
-    update_page do |page|
-      page.insert_html :after, "delete_divider_#{divider.id}_link", loading_action_image("divider_#{divider.id}")
-      page["delete_divider_#{divider.id}_link"].hide
-    end  
-  end  
   
   def delete_divider_link(divider)
-    link_to_remote trash_image,
-      :url => project_page_divider_path(divider.project,divider.page,divider),
-      :loading => delete_divider_loading_action(divider),
-      :method => :delete,
-      :confirm => t('.delete_confirm'),
-      :html => { :id => "delete_divider_#{divider.id}_link" }
+    link_to trash_image,
+      project_page_divider_path(divider.project,divider.page,divider),
+      :aconfirm => t('.delete_confirm'),
+      :id => "delete_divider_#{divider.id}_link",
+      :class => 'delete_divider'
   end
   
   def remove_form(show_element=nil)
@@ -98,10 +47,6 @@ module PageDividersHelper
     update_page do |page|
       page.loading_divider_form(true,id)
     end  
-  end  
-    
-  def hide_loading_divider_form(id=nil)
-    page.loading_divider_form(false,id)
   end
       
   def loading_divider_form(toggle,id=nil)

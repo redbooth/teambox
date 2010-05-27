@@ -86,12 +86,7 @@ module PagesHelper
   
   def page_buttons(project,page)
     return unless project.editable?(current_user)
-    render :partial => 'pages/buttons', :locals => { :project => project, :page => page, :in_bar => false }
-  end
-  
-  def page_bar_buttons(project,page)
-    return unless project.editable?(current_user)
-    render :partial => 'pages/buttons', :locals => { :project => project, :page => page, :in_bar => true }
+    render :partial => 'pages/buttons', :locals => { :project => project, :page => page }
   end
   
   def insert_widget(widget_id, position, location, view_options={})

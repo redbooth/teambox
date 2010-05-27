@@ -2,10 +2,8 @@
   = thumb_avatar(activity.user, false)
   .container
     .date= posted_date upload.created_at
-    %span.user= upload.user.short_name
-    = t('uploads.upload.uploaded_the_file')
-    = activity_project_link(upload.project,:after)
-    = link_to upload.description, upload.url if upload.description
+    = activity_title(activity, false, true)
+    = activity_project_link(activity.project)
     %p 
       = upload_link(upload.project,upload)
       = number_to_human_size(upload.size)

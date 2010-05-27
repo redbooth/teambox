@@ -117,13 +117,6 @@ module UploadsHelper
       :locals => { :upload => upload, :page => page }
   end
   
-  def delete_page_upload_loading_action(upload)
-    update_page do |page|
-      page.insert_html :after, "delete_upload_#{upload.id}_link", loading_action_image("upload_#{upload.id}")
-      page["delete_upload_#{upload.id}_link"].hide
-    end  
-  end
-  
   def list_uploads_edit(uploads,target)
     render :partial => 'uploads/upload_edit', :collection => uploads, :as => :upload, :locals => { :target => target }
   end
@@ -172,12 +165,11 @@ module UploadsHelper
   end
   
   def destroy_page_upload_link(page, upload)
-    link_to_remote trash_image,
-      :url => project_page_upload_url(page.project,page,upload),
-      :loading => delete_page_upload_loading_action(upload),
-      :method => :delete,
-      :confirm => t('confirm.delete_upload'),
-      :html => { :id => "delete_upload_#{upload.id}_link" }
+    link_to trash_image,
+      project_page_upload_url(page.project,page,upload),
+      :aconfirm => t('confirm.delete_upload'),
+      :id => "delete_upload_#{upload.id}_link",
+      :class => 'delete_page_upload'
   end
 
   def upload_form_params(comment)

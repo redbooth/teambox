@@ -1,4 +1,4 @@
-- remote_form_for [divider.project,divider.page,divider], :loading => show_loading_divider_form(divider.id) do |f|
+- form_for [divider.project,divider.page,divider] do |f|
   .area
     = divider_fields(f)
     .submit{ :id => "divider_submit_#{divider.id}" }
