@@ -1,48 +1,89 @@
 #
-# This file takes care of some key strings for the interface and app.
-# You will also need to edit environment.rb with your own email settings.
-# 
+# Main configuration file for functionality of a Teambox app instance.
+#
 
-# This block defines defaults, shared for all environments.
-# You can override them individually under development, test or production.
-defaults: &DEFAULTS
-  # The domain from where your app is served.
+# Configuration shared between all environments:
+defaults: &defaults
+  # The domain from where your app is served
   app_domain: app.teambox.com
 
   # How many activities should activity feeds display?
   activities_per_page: 25
-  autorefresh_interval: 60 # seconds
+  autorefresh_interval: 60 # in seconds
+
+  daily_task_reminder_email_time: "06:00"
   
-  # Configuration for outgoing mail
-  # By default, will send emails in production mode but not in development.
+  # Gravatar fallback type in case a user doesn't have an avatar
+  # One of: wavatar, monsterid, identicon
+  gravatar_default: identicon
+
+  # Set to true to use S3 storage instead of local filesystem storage.
+  # Automatically true on Heroku.
+  # See "config/amazon_s3.yml" for info about credentials.
+  amazon_s3: false
+
+  asset_max_file_size: 50 # in megabytes
+
+  # If signups are disabled, the only way to create an account will be being invited
+  # by another user. If there are no users in the system, you will be asked to
+  # create the first one.
+  allow_signups: true
+
+  # Enable secure signup and logins over HTTPS.
+  # Make sure your domain has a valid SSL certificate
+  secure_logins: false
+
+  # Enable time tracking
+  allow_time_tracking: true
+
+  # Default timezone
+  time_zone: UTC
+
+  # Default language in which the app is displayed.
+  # See translations in "config/locales/"
+  default_locale: :en
+
+  # By default, emails are sent in production but not in development
   allow_outgoing_email: true
-  outgoing:
-    from: yourapp.com           # the domain your emails will come from, as in no_reply@app.teambox.com
-    host: localhost             # the actual SMTP server used to deliver emails. can be a local or remote server
-    user: username
-    pass: password
-    auth: plain                 # choose: plain, login, cram_md5    
-    port: 25
-    enable_starttls_auto: false # Set to true for gmail smtp server
+
+  # Configuration for outgoing mail
+  # With Heroku and the Sendgrid add-on, no configuration is needed here.
+  #   $ heroku addons:add sendgrid:free
+  smtp_settings:
+    :domain:         teambox.com        # the domain your emails will come from
+    :address:        smtp.sendgrid.net  # SMTP server used to send emails
+    :port:           25
+    :authentication: :plain
+    :user_name:      USER
+    :password:       PASSWORD
+
+    # Set to true when using Gmail
+    :enable_starttls_auto: false
+
+    # Set to true if you have Net::SMTPSyntaxError errors when sending email.
     # Rails has sometimes a problem when sending email from "Name <address@host.com>".
     # If you are having problems sending email and your host is correctly configured,
     # try setting safe_from to true. You may need to create a user account for no-reply@yourapp.com
-    safe_from: false            # Set to true if you have Net::SMTPSyntaxError errors when sending email
+    :safe_from: false
 
   # Set allow to true to allow the "reply to" feature for notifications.
   # This will allow users to post answers and comments by email.
   # When set to true, "reply above this line" notice will be displayed where relevant and accept emails.
+  allow_incoming_email: false
+
   # You will need to:
   # * Setup catch-all address for email received for any username of the incoming mail server.
-  # * Run './script/inbox' periodically from cron to process incoming emails.
-  allow_incoming_email: false
-  incoming:
-    type: pop
-    server: 
-    username: 
-    password: 
+  # * Run `rake mail:inbox` periodically from cron to process incoming emails.
+  incoming_email_settings:
+    :type:      POP
+    :address:   mail.example.com
+    :user_name: USER
+    :password:  PASSWORD
 
-  # This links are used for the login page. Delete the line to remove it from the interface.
+  # Destination where your users could write to ask for help. Accepts an email or website.
+  support: http://help.teambox.com
+
+  # These links are used for the login page. Delete a line to remove the link from the interface.
   home_url: http://www.teambox.com
   tour_url: http://www.teambox.com/tour
   users_url: http://www.teambox.com/testimonials
@@ -54,45 +95,20 @@ defaults: &DEFAULTS
   privacy_url: http://www.teambox.com/privacy
   terms_url: http://www.teambox.com/terms
 
-  # To disable signups, set allow_signups: false.
-  #   If signups are disabled, the only way to create an account will be being invited
-  #   by another user. If there are no users in the system, you will be asked to
-  #   create the first one.
-  allow_signups: true
-  
-  # Enable user groups
-  allow_groups: true
-  
-  # Address where your users should write to ask for help. Accepts an email or website.
-  support: http://help.teambox.com
-  
-  # Server's timezone
-  time_zone: UTC
-
-  asset_max_file_size: 50 # Mb
-  
-  # Set enabled: true to use S3 storage instead of local filesystem storage.
-  # If enabled, configure your access keys in amazon_s3.yml
-  amazon_s3:
-    enabled: false
-    bucket_development: teambox_dev_assets
-    bucket_test: teambox_test_assets
-    bucket_production: teambox_assets
-
-  daily_task_reminder_email_time: "06:00"
 development:
-  <<: *DEFAULTS
+  <<: *defaults
   app_domain: localhost:3000
   allow_outgoing_email: false
 
 production:
-  <<: *DEFAULTS
-  app_domain: app.teambox.com
+  <<: *defaults
 
-test: &TEST
-  <<: *DEFAULTS
+test: &test
+  <<: *defaults
   app_domain: 127.0.0.1
   allow_outgoing_email: false
   asset_max_file_size: 1
+  amazon_s3: false
+
 cucumber:
-  <<: *TEST  
+  <<: *test

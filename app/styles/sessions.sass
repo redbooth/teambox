@@ -1,0 +1,159 @@
+@import shared
+@import forms
+@import header
+
+html
+  margin: 0px
+  padding: 0px
+
+body
+  margin: 0px
+  padding: 0px
+  font: normal 14px "Lucida Grande", Arial, Helvetica, sans-serif
+
+h1, h2, h3, h4
+  font-family: Helvetica, Arial
+  font-size: 15px
+  margin: 0px
+
+p
+  margin: 10px 0px
+  line-height: 1.7em
+
+a
+  color: rgb(0, 0, 255)
+  text-decoration: none
+  &:hover
+    text-decoration: underline
+
+img
+  display: block
+  border: 0px
+
+br
+  clear: both
+
+div
+  &.clear
+    clear: both
+  &.header
+    display: none
+  &.navigation_wrap
+    background: url(/images/nav_bg.gif) repeat-x top
+    height: 38px
+  &.navigation
+    width: 900px
+    margin: 0px auto
+    ul
+      display: block
+      margin: 0
+      padding: 0
+      list-style-type: none
+      width: auto
+    li
+      display: block
+      float: left
+      margin: 0
+      padding: 0
+      a
+        font-family: "Lucida Sans", "Lucida Grande", Helvetica, Arial, sans-serif
+        font-size: 15px
+        display: block
+        float: left
+        color: #3d3d3d
+        text-decoration: none
+        padding: 8px 16px 7px
+        border-bottom: none
+        background: transparent url(/images/nav_divider.gif) no-repeat top right
+        &:hover
+          color: white
+          background: rgb(65, 181, 193)
+          border-bottom: 1px solid rgb(65, 181, 193)
+      &.selected a
+        color: white
+        background: #0b0b0a
+        border-bottom: 1px solid #0b0b0a
+      &.right_side
+        float: right
+        a
+          padding-left: 50px
+          padding-right: 50px
+
+h1
+  color: #111111
+  font-family: Georgia, sans-serif
+  font-size: 270%
+  font-weight: normal
+  margin: 0 0 15px 0
+
+h2
+  font-family: Helvetica, Arial, Verdana, sans-serif
+  font-size: 195%
+  margin: 0 0 15px 0
+  font-weight: bold
+
+h3
+  margin-top: 10px
+  margin: 30px 0 15px 0
+
+.new_session, .create_session
+  p.right_link
+    float: right
+    padding:
+      right: 100px
+
+.flash_box
+  display: block
+  margin: 15px 0
+  float: none
+
+form
+  margin: 20px 0
+
+.time_zone
+  margin-top: 10px
+
+div
+  &.wrapper
+    width: 900px
+    margin: 0px auto
+    padding-top: 30px
+  &.content
+    float: left
+    width: 570px
+    padding-bottom: 25px
+  &.sidebar, &.content_single
+    padding-bottom: 25px
+  &.wrapper a
+    text-decoration: none
+    border-bottom: 1px dotted #ddddff
+    color: rgb(0, 0, 200)
+  &.column
+    float: right
+    width: 320px
+  &.box
+    padding: 10px
+    font-size: 12px
+    margin: 20px 0
+    border: 1px solid #dbd6d1
+    background-color: #efedeb
+    p
+      margin: 5px 0
+    h2
+      font-size: 18px
+      margin-bottom: 2px
+  &.footer
+    border-top: solid 1px rgb(220, 220, 220)
+    clear: both
+    color: #777777
+    width: 900px
+    margin: 0px auto
+    padding: 3px 0px 15px 0px
+    p
+      font-size: 12px
+      margin: 0px
+      text-align: right
+      &.copyright
+        float: left
+    a
+      color: #777777

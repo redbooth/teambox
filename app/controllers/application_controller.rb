@@ -3,12 +3,12 @@
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  helper_method :current_user
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  rescue_from ActiveRecord::RecordNotFound, :with => :show_errors
   
   include AuthenticatedSystem
   include BannerSystem
+  include SslHelper
+
   filter_parameter_logging :password
 
   before_filter :rss_token, 
@@ -29,13 +29,8 @@ class ApplicationController < ActionController::Base
       end
     end
     
-    def show_errors
-      render :partial => 'shared/record_not_found', :layout => 'application'
-    end
-    
     def confirmed_user?
       if current_user and not current_user.is_active?
-        flash[:error] = t('sessions.new.activation')
         redirect_to unconfirmed_email_user_path(current_user)
       end
     end
@@ -69,7 +64,7 @@ class ApplicationController < ActionController::Base
         if @current_group
           # ...
         else
-          flash[:error] = t('not_found.group', :id => h(group_id))
+          flash[:error] = t('not_found.group', :id => group_id)
           redirect_to groups_path, :status => 301
         end
       end
@@ -86,8 +81,8 @@ class ApplicationController < ActionController::Base
           if current_user && !@current_project.archived?
             current_user.add_recent_project(@current_project)
           end
-        else        
-          flash[:error] = t('not_found.project', :id => h(project_id))
+        else
+          flash[:error] = t('not_found.project', :id => project_id)
           redirect_to projects_path, :status => 301
         end
       end
@@ -98,20 +93,24 @@ class ApplicationController < ActionController::Base
       I18n.locale = logged_in? ? current_user.language : get_browser_locale
     end
     
+    LOCALES_REGEX = /\b(#{ I18n.available_locales.map(&:to_s).join('|') })\b/
+    
     def get_browser_locale
-      preferred_locale = nil
-
-      if browser_locale = request.headers['HTTP_ACCEPT_LANGUAGE']
-        preferred_locale = %w(en es fr de).
-                            select { |i| browser_locale.include?(i) }.
-                            collect { |i| [i, browser_locale.index(i)] }.
-                            sort { |a,b| a[1] <=> b[1] }.
-                            first
+      if request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX
+        $&
+      else
+        I18n.default_locale
       end
-      
-      preferred_locale.try(:first) || 'en'
     end
     
+    def fragment_cache_key(key)
+      super(key).tap { |str|
+        str << "_#{I18n.locale}"
+        if logged_in? and current_user.time_zone?
+          str << "-#{current_user.time_zone.gsub(/\W/,'')}"
+        end
+      }
+    end
     
     def touch_user
       current_user.touch if logged_in?
@@ -123,7 +122,7 @@ class ApplicationController < ActionController::Base
 
       if params.has_key?(:id) && ['show_projects','edit_projects'].include?(location_name)
         project_name = @current_project.name
-        @page_title = "#{html_escape(project_name)} &rarr; #{translate_location_name}"
+        @page_title = "#{project_name} — #{translate_location_name}"
       elsif params.has_key?(:project_id)
         project_name = @current_project.name
         name = nil
@@ -134,8 +133,10 @@ class ApplicationController < ActionController::Base
             name = @task_list ? @task_list.name : nil
           when 'show_conversations'
             name = @conversation ? @conversation.name : nil
+          when 'show_pages'
+            name = @page ? @page.name : nil
         end
-        @page_title = "#{html_escape(project_name)} &rarr; #{ name ? html_escape(name) : translate_location_name }"
+        @page_title = "#{project_name} — #{name || translate_location_name}"
       else
         name = nil
         user_name = nil
@@ -145,16 +146,16 @@ class ApplicationController < ActionController::Base
           when 'show_users'
             user_name = current_user.name            
         end    
-        @page_title = "#{ "#{html_escape user_name} &rarr;" if user_name } #{translate_location_name}"
+        @page_title = "#{user_name ? user_name + ' — ' : ''}#{translate_location_name}"
       end    
     end
 
-    MobileClients = /(iPhone|iPod|Android|Opera mini|Blackberry|Palm|Windows CE|Opera mobi|iemobile)/i
+    MobileClients = /(iPhone|iPod|Android|Opera mini|Blackberry|Palm|Windows CE|Opera mobi|iemobile|webOS)/i
 
     def set_client
       mobile =   request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][MobileClients]
       mobile ||= request.env["HTTP_PROFILE"] || request.env["HTTP_X_WAP_PROFILE"]
-      if mobile
+      if mobile and request.format == :html
         request.format = :m
       end
     end
@@ -202,6 +203,25 @@ class ApplicationController < ActionController::Base
       end
     end
     
+    def handle_api_error(f,object)
+      error_list = object.nil? ? [] : object.errors
+      f.xml  { render :xml => error_list.to_xml,     :status => :unprocessable_entity }
+      f.json { render :as_json => error_list.to_xml, :status => :unprocessable_entity }
+      f.yaml { render :as_yaml => error_list.to_xml, :status => :unprocessable_entity }
+    end
+    
+    def handle_api_success(f,object,is_new=false)
+      if is_new
+        f.xml  { render :xml => object.to_xml, :status => :created }
+        f.json { render :as_json => object.to_xml, :status => :created }
+        f.yaml { render :as_yaml => object.to_xml, :status => :created }
+      else
+        f.xml  { head :ok }
+        f.json { head :ok }
+        f.yaml { head :ok }
+      end
+    end
+    
     def set_user
       @current_user = current_user || nil
     end
@@ -243,6 +263,10 @@ class ApplicationController < ActionController::Base
     
     def groups_enabled?
       APP_CONFIG['allow_groups'] || false
+    end
+    
+    def time_tracking_enabled?
+      APP_CONFIG['allow_time_tracking'] || false
     end
 
 end

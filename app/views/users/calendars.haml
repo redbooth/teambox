@@ -1,0 +1,21 @@
+%h2= t('.title')
+
+%p= t('.tasks_can_be_synced')
+%p= t('.possible_clients')
+
+%h3= t('.how_to.title')
+%p= t('.how_to.body', :link => "http://help.teambox.com/faqs/more-ways-to-access-teambox/sync-tools#feeds")
+
+%h3= t('.your_calendars')
+
+= subscribe_to_all_calendars_link
+
+- for project in current_user.projects
+  = subscribe_to_calendar_link(project)
+
+- content_for :column do
+  %h2= t('.clients.title')
+  %p= t('.clients.body', :link => "http://help.teambox.com/faqs/more-ways-to-access-teambox/sync-tools#feeds")
+
+  %h2= t('users.feeds.more_tips.title')
+  %p= t('users.feeds.more_tips.body', :link => "http://help.teambox.com/faqs/more-ways-to-access-teambox/sync-tools#feeds")

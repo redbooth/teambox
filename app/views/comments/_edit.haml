@@ -1,8 +1,9 @@
-- remote_form_for [comment.project, comment], :loading => show_loading_comment_form(comment.id) do |f|
+- edit_comment_form_for(comment) do |f|
   = comment_fields(f,comment,true)
-  .submit{:id => "comment_submit_#{comment.id}"}
+  .submit{:id => "comment_#{comment.id}_submit"}
     = f.submit t('.submit')
     = t 'common.or'
     = cancel_edit_comment_link(comment)
   .clear	
-  = loading('comment_form', comment.id)
+  = loading_image(js_id(:loading,comment))
+  = #loading('comment_form', comment.id)

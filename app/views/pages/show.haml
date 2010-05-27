@@ -6,7 +6,7 @@
   .description= @page.description
 
 - content_for :js_templates do
-  = "document.observe(\"dom:loaded\", function() {Page.init(false, \"#{project_page_path(@current_project,@page)}\", \"#{form_authenticity_token}\"); Page.makeSortable();});"
+  = "document.observe(\"dom:loaded\", function() {Page.init(false, \"#{project_page_path(@current_project,@page)}\", \"#{form_authenticity_token}\"); Page.makeSortable();}); Page.upload_template = \"#{escape_javascript(render :partial => 'uploads/page_upload')}\";"
 
 = page_buttons(@current_project,@page)
 
@@ -20,7 +20,7 @@
       #pageInsertItemCancel
         %a{:href => '#'}= t('common.cancel')
       #pageInsertItemWidgets
-        = page_bar_buttons(@current_project,@page)
+        = page_buttons(@current_project,@page)
       
     #pageForms
       = new_note_form(@current_project,@page)

@@ -15,6 +15,8 @@ class Person < ActiveRecord::Base
 
   ROLES = {:observer => 0, :commenter => 1, :participant => 2, :admin => 3}
   PERMISSIONS = [:view,:edit,:delete,:all]
+  
+  named_scope :admins, :conditions => "role = #{ROLES[:admin]}"
 
   def owner?
     project.owner?(user)
@@ -54,6 +56,11 @@ class Person < ActiveRecord::Base
     user.remove_recent_project(project)
   end
   
+  def self.users_from_projects(projects)
+    user_ids = Person.find(:all, :conditions => {:project_id => projects.map(&:id)}).map(&:user_id).uniq
+    User.find(:all, :conditions => {:id => user_ids}, :select => 'id, login, first_name, last_name').sort_by(&:name)
+  end
+  
   def user
     User.find_with_deleted(user_id)
   end
@@ -62,8 +69,10 @@ class Person < ActiveRecord::Base
     options[:indent] ||= 2
     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
     xml.instruct! unless options[:skip_instruct]
-    xml.person :id => user.id do
+    xml.person :id => id do
+      xml.tag! 'user-id', user.id
       xml.tag! 'username', user.login
+      xml.tag! 'role', role
     end
   end
 end

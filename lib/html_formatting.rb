@@ -5,48 +5,46 @@ module HtmlFormatting
 
   def format_attributes
     self.class.formatted_attributes.each do |attr|
-      raw = read_attribute attr
+      text = self[attr]
 
-      text = format_textile(raw || '')
-      text = format_usernames(text)
-      text = format_links(text)
-
-      write_attribute "#{attr}_html", white_list_sanitizer.sanitize(text)
-    end
-  end
-
-  # Get @username, like in Twitter, and link it to user path
-  def format_usernames(text)
-    text.gsub(/@([a-z0-9_]+)/i) do |match|
-      user = User.find_by_login(match[1..-1])
-      if user && is_in_project?(user)
-        if is_a? Comment
-          @mentioned ||= []
-          @mentioned |= [user]
-        end
-        match[0,1] + link_to(user.login, "/users/#{user.login}")
+      self["#{attr}_html"] = if text.blank?
+        nil
       else
-        if "all" == match[1..-1].downcase
-          @mentioned = User.confirmed
-        end
-        match
+        text = format_text(text)
+        text = format_usernames(text)
+        text = format_links(text)
+        white_list_sanitizer.sanitize(text)
       end
     end
   end
 
-  def is_in_project?(user)
-     Person.exists?(:user_id => user.id, :project_id => project.id)
+  # Get @username, like in Twitter, and link it to user path
+  def format_usernames(body)
+    body.gsub(/@(\w+)/) do |text|
+      name = $1.downcase
+
+      if 'all' == name
+        @mentioned = project.users.confirmed
+        content_tag(:span, '@all', :class => "mention_all")
+      elsif user = project.users.confirmed.find_by_login(name)
+        if Comment === self
+          @mentioned ||= []
+          @mentioned |= [user]
+        end
+        '@' + link_to(user.login, "/users/#{user.login}")
+      else
+        text
+      end
+    end
   end
 
-  def format_textile(text)
-    textilized = RedCloth.new(text, [:hard_breaks, :no_span_caps])
-    textilized.hard_breaks = true if textilized.respond_to?("hard_breaks=")
+  def format_text(text)
+    textilized = RDiscount.new(text)
     textilized.to_html
   end
 
   def format_links(text)
     linked = auto_link(text) { |text| truncate(text, :length => 40) }
-    linked.gsub(/href=\"www/i) { |s| "href=\"http://www" }
   end
 
 end

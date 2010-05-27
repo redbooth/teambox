@@ -1,10 +1,21 @@
 - if @current_project
-  = banner(@events,@chart)
 
-  - if @task_lists.any?
-    = tabular_task_lists(@current_project,@task_lists,@sub_action)
-  - else
-    = task_list_primer(@current_project)
+  .task_header
+    - if @current_project.editable?(current_user)
+      %p.text_actions
+        %span
+          = link_to t('task_lists.link.reorder'), "#", :id => :reorder_task_lists_link
+          = link_to t('task_lists.link.reorder_done'), "#", :id => :done_reordering_task_lists_link, :style => 'display:none'
+
+    %h2= t('.tasks_for_project')
+
+  - if @current_project.editable?(current_user)
+    = task_list_form(@current_project,TaskList.new)
+
+  #task_lists{:reorder_url => project_reorder_task_lists_path(@current_project)}
+    = render_task_lists(@current_project,@task_lists,@sub_action)
+
+  = task_list_primer(@current_project, @task_lists.any?)
   
   - content_for :column do
     = task_list_column(@current_project,@task_lists,@sub_action,@task_list)
@@ -12,10 +23,14 @@
 - else
   %h2= t('.tasks_for_all_projects')
 
-  = tasks_for_all_projects(@tasks)
+  #tasks_for_all_projects{}
+    = tasks_for_all_projects(@tasks)
 
-  %div{ :style => 'padding-left: 20px; padding-bottom: 10px' }
-    = subscribe_to_calendars_link
+  - content_for :column do
+    = filter_task_lists
 
-  %div{ :style => 'padding-left: 20px; padding-bottom: 40px' }
-    = content_tag(:div, link_to(t('common.print'), task_lists_path(:format => :print)), :class => :print)
+    %h2= t('.other_views')
+    = instructions_for_calendars
+    = print_task_lists_link
+
+    = javascript_tag "$('filter_assigned')[1].selected = 'selected'; Filter.updateFilters()"

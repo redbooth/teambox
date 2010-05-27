@@ -1,7 +1,7 @@
 class Comment
   
   def save_uploads(params)      
-    params[:uploads].if_defined.each do |upload_id|
+    (params[:uploads] || []).each do |upload_id|
       if upload = Upload.find(upload_id)
         upload.comment_id = self.id
         upload.description = truncate(h(upload.comment.body), :length => 80)
@@ -15,7 +15,7 @@ class Comment
   protected
   
     def clean_deleted_uploads(params)
-      params[:uploads_deleted].if_defined.each do |upload_id|
+      (params[:uploads_deleted] || []).each do |upload_id|
         upload = Upload.find(upload_id)
         upload.destroy if upload
       end

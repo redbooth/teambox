@@ -1,4 +1,4 @@
-Feature Creating a project
+Feature: Creating a project
   Background:
     Given I am logged in as mislav
       And I go to the new project page

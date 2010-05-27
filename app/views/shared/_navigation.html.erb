@@ -1,7 +1,6 @@
 <div class="navigation">
 
-<%  
-
+<%
 if logged_in?
   render_tabnav :main do 
     unless current_user.welcome
@@ -14,12 +13,15 @@ if logged_in?
       end
     end
     
-    add_tab({:html => {:id => 'projects_tab', 
-	                   :li_end => projects_tab_list(current_user.projects.unarchived)}
-	}) do |t|
+    add_tab({:html => {:id => 'projects_tab',
+                       :class => 'nav_tab',
+                       :li_class => 'nav_tab_container',
+	                     :li_end => projects_tab_list(current_user.projects.unarchived)}
+	          }) do |t|
       t.named "#{t('.all_projects')} #{image_tag('triangle.png', :class => 'triangle')}"
       t.links_to projects_path
       t.highlights_on :controller => :projects, :action => :index
+      t.highlights_on :controller => :task_lists, :action => :index, :project_id => nil
       t.tab_index = 101
     end
 

@@ -5,6 +5,9 @@ class Activity < ActiveRecord::Base
   acts_as_paranoid
 
   named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_type = 'TaskList' || comment_type = 'Task'"
+  named_scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_type = 'Conversation'"
+  
+  named_scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
       
   def self.log(project,target,action,creator_id)
     project_id = project.try(:id)
@@ -70,6 +73,7 @@ class Activity < ActiveRecord::Base
     when 'Task'         then begin; Task.find_with_deleted(target_id); rescue; nil; end
     when 'Page'         then begin; Page.find_with_deleted(target_id); rescue; nil; end
     when 'Note'         then begin; Note.find_with_deleted(target_id); rescue; nil; end
+    when 'Divider'      then begin; Divider.find_with_deleted(target_id); rescue; nil; end
     when 'Upload'       then begin; Upload.find_with_deleted(target_id); rescue; nil; end
     end
   end

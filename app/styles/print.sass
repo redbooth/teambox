@@ -1,0 +1,74 @@
+body
+  background: rgb(255, 255, 255)
+  font-family: "Lucida Grande", "Helvetica Neue", Verdana, Arial, Helvetica, sans-serif
+  font-size: 12px
+
+h1
+  font-size: 1.3em
+  img
+    vertical-align: middle
+
+h1,h2,h3,h4,h5,h6,p,textarea
+  font-family: "Lucida Grande", "Helvetica Neue", Verdana, Arial, Helvetica, sans-serif
+
+a
+  text-decoration: none
+  color: black
+  &:hover
+    text-decoration: none
+
+div.wrapper
+  background: rgb(255, 255, 255)
+  border: none
+
+div.content
+  width: 100%
+
+.header, .global_navigation, .navigation, .project_navigation, .banner, .column, .footer
+  display: none
+
+.comments_count
+  display: none
+
+img.drag
+  display: none
+
+.actions_menu
+  .triangle
+    display: none
+  .extra
+    display: none
+
+.task_list
+  margin: 30px 0
+  .head
+    text-align: left
+    span.actiondate
+      color: #afafaf
+  .task
+    .taskStatus
+      display: none
+    .taskName
+      span.status
+        font-weight: bold
+        color: #999999
+      span.assigned
+        font-style: italic
+        color: #999999
+        a
+          color: #999999
+      &.task_item_open
+        a.name
+          background: rgb(255, 255, 210)
+      &.task_item_resolved, &.task_item_rejected
+        a.name
+          text-decoration: line-through
+  .new_task
+    display: none
+  .task.overdue
+    a
+      color: red
+
+.task_header
+  .text_actions
+    display: none

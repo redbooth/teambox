@@ -22,9 +22,9 @@ Weakling = {
       score += 1;
     if (password.length == 0)
       score = 0;
-    else if (password.length <= 4)
+    else if (password.length <= 5)
       score = -1;
-    else if (password.length > 4 && password.length < 8)
+    else if (password.length > 5 && password.length < 8)
       score += 1;
     else if (password.length >= 8)
       score += 2;

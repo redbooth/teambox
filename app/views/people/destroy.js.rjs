@@ -1,5 +1,0 @@
-page[person_id(:item,@current_project,@person)].dropOut
-
-page.delay(3) do
-  page[person_id(:item,@current_project,@person)].remove
-end

@@ -2,6 +2,7 @@
   %p.slotActions{ :style => "display: none" }
     %span
       = destroy_page_upload_link(page, upload)
+      = loading_action_image("delete_upload_#{upload.id}", true)
   %p.slotActions.handle{ :style => "display: none;" }
     %span
       = drag_widget_handle(upload)

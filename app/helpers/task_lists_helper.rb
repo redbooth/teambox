@@ -1,12 +1,32 @@
 module TaskListsHelper
 
-  def task_list_range(task_list)
-    start_on  = task_list.start_on.nil? ? task_list.start_on : nil
-    finish_on = task_list.finish_on.nil? ? task_list.finish_on : nil
-
-    return unless (start_on.nil? && finish_on.nil?) || (start_on == finish_on)
-    out = [I18n.l(start_on, :format => '%b %d'),I18n.l(finish_on, :format => '%b %d')].join(" - ")
-    content_tag(:span,out,:class => 'range')
+  def filter_task_lists(project=nil)
+    render :partial => 'task_lists/filter', :locals => { :project => project }
+  end
+  
+  def filter_assigned_dropdown(project=nil)
+    options = [t('task_lists.filter.anybody'),     'all'],
+              [t('task_lists.filter.my_tasks'),    'mine'],
+              [t('task_lists.filter.unassigned'),  'unassigned']
+    user_list = project ? project.users.sort_by(&:name) : Person.users_from_projects(current_user.projects)
+    if !user_list.nil?
+      options += [['--------', 'divider']]
+      options += user_list.
+                  reject { |u| u == current_user }.
+                  collect { |u| [u.name, "user_#{u.id}"] }
+    end
+    select(:filter, :assigned, options, :disabled => 'divider')
+  end
+  
+  def filter_due_date_dropdown(project=nil)
+    options = [t('task_lists.filter.anytime'),           'all'],
+              [t('task_lists.filter.late_tasks'),        'overdue'],
+              [t('task_lists.filter.no_date_assigned'),  'unassigned_date'],
+              ['--------',          'divider'],
+              [t('task_lists.filter.today'),             'due_today'],
+              [t('task_lists.filter.tomorrow'),          'due_tomorrow']
+    
+    select(:filter, :due_date, options, :disabled => 'divider')
   end
 
   def task_list_id(element,project,task_list=nil)
@@ -16,28 +36,45 @@ module TaskListsHelper
 
   def task_list_link(project,task_list=nil)
     task_list ||= project.task_lists.new
-    app_link(project,task_list)
+    unobtrusive_app_link(project,task_list)
+  end
+  
+  def task_list_index_header(project,task_list)
+    render :partial => 'task_lists/header_index', :locals => {:project => project, :task_list => task_list}
   end
 
   def task_list_form_for(project,task_list,&proc)
-    app_form_for(project,task_list,&proc)
+    unobtrusive_app_form_for(project,task_list,&proc)
   end
 
   def task_list_submit(project,task_list)
-    app_submit(project,task_list)
+    unobtrusive_app_submit(project,task_list)
   end
-
-  def task_list_form_loading(action,project,task_list)
-    app_form_loading(action,project,task_list)
+  
+  # Jenny helpers
+  
+  def new_task_list_url(project,task_list)
+    new_project_task_list_path(project)
   end
-
+  
+  def edit_task_list_url(project,task_list)
+    edit_project_task_list_path(project, task_list)
+  end
+  
   def hide_task_list(project,task_list)
-    app_toggle(project,task_list)
+    unobtrusive_app_toggle(project,task_list)
   end
 
   def show_task_list(project,task_list)
-    app_toggle(project,task_list)
+    unobtrusive_app_toggle(project,task_list)
   end
+  
+  def show_new_task_list(project,task_list=nil)
+    task_list ||= project.task_lists.new
+    unobtrusive_app_toggle(project,task_list)
+  end
+  
+  #
 
   def task_list_fields(f,project,task_list)
     render :partial => 'task_lists/fields', :locals => {
@@ -45,35 +82,46 @@ module TaskListsHelper
       :project => project,
       :task_list => task_list }
   end
-
-  def task_list_editable?(task_list,user,sub_action)
-    sub_action != 'archived' && task_list.editable?(user)
+  
+  def task_list_title_fields(f,project,task_list)
+    render :partial => 'task_lists/title_fields', :locals => {
+      :f => f,
+      :project => project,
+      :task_list => task_list }
+  end
+  
+  def task_list_date_fields(f,project,task_list)
+    render :partial => 'task_lists/date_fields', :locals => {
+      :f => f,
+      :project => project,
+      :task_list => task_list }
   end
 
-  def assign_tasks(project,task_list,sub_action)
-    if sub_action == 'mine'
-      person = project.people.find_by_user_id(current_user.id)
-      task_list.tasks.unarchived.find(:all, :conditions => { :assigned_id => person.id} )
-    elsif sub_action == 'archived'
-      task_list.tasks.archived
-    elsif sub_action == 'all'
-      task_list.tasks.unarchived
-    elsif sub_action == 'all_with_archived'
-      task_list.tasks
+  def task_list_editable?(task_list,user)
+    task_list.editable?(user)
+  end
+
+  def date_range_for_task_list(task_list)
+    dates = [task_list.start_on, task_list.finish_on]
+    if dates[0].nil? && dates[1].nil?
+      t('task_lists.index.no_dates_assigned')
+    elsif dates[0] && dates[1].nil?
+      t('task_lists.index.starts_on', :date => date_for_task_list(dates[0])) 
+    elsif dates[0].nil? && dates[1]
+      t('task_lists.index.ends_on', :date => date_for_task_list(dates[1])) 
+    else
+      "#{date_for_task_list(dates[0])} - #{date_for_task_list(dates[1])}"
     end
   end
 
-  def archived_task_lists(project,task_lists)
-    render :partial => 'task_lists/archived_task_list_with_tasks',
-      :as => :task_list,
-      :collection => task_lists, :locals => { :project => project }
+  def date_for_task_list(date)
+    I18n.l(date, :format => '%b %d')
   end
 
-  def render_task_list(project,task_list,current_target)
+  def render_task_list(project,task_list)
     render :partial => 'task_lists/task_list', :locals => {
       :project => project,
-      :task_list => task_list,
-      :current_target => current_target }
+      :task_list => task_list }
   end
 
   def task_list_form(project,task_list)
@@ -82,49 +130,41 @@ module TaskListsHelper
       :task_list => task_list }
   end
 
-  def insert_task_list(project,task_list,sub_action)
-    page.insert_html :top, "task_lists",
-      :partial => 'task_lists/task_list_with_tasks',
+  def options_for_render_task_list(project,task_list,sub_action)
+    {:partial => 'task_lists/task_list',
       :locals => {
         :project => project,
         :task_list => task_list,
-        :sub_action => sub_action,
-        :current_target => nil }
+        :sub_action => sub_action }}
+  end
+  
+  def insert_task_list(project,task_list,sub_action)
+    content = render(options_for_render_task_list(project,task_list,sub_action))
+    list_id = task_list_id(nil,project,task_list)
+    page.call "TaskList.insertList", list_id, content, (task_list.archived || false)
+  end
+  
+  def replace_task_list(project,task_list,sub_action)
+    content = render(options_for_render_task_list(project,task_list,sub_action))
+    list_id = task_list_id(nil,project,task_list)
+    page.call "TaskList.replaceList", list_id, content, task_list.archived
+  end
+  
+  def remove_task_list(list_id)
+    page.call "TaskList.removeList", list_id
   end
 
-  def render_task_list_with_tasks(project,task_list)
-    render :partial => 'task_lists/show', :locals => { :project => project, :task_list => task_list }
+  def render_task_lists(project,task_lists,sub_action)
+    render :partial => 'task_lists/task_list',
+      :collection => task_lists,
+      :as => :task_list,
+      :locals => {
+        :project => project,
+        :sub_action => sub_action }
   end
 
-  def reorder_task_list_link(project,task_lists)
-    link_to_remote content_tag(:span,t("task_lists.link.reorder")),
-      :url => sortable_project_task_lists_path(project),
-      :loading => reorder_button_loading,
-      :method => :get,
-      :html => {
-        :class => "reorder_task_list_link",
-        :id => 'reorder_link' }
-  end
-
-  def reorder_task_lists(project,task_lists)
-    update_page do |page|
-      page << "$$('.tasks').each(function(task){ task.hide(); })"
-      page << "$$('.new_task_link').each(function(task){ task.hide(); })"
-      page << "$$('.task_list_wrap').each(function(task_list){ task_list.addClassName('task_list_wrap_reorder');})"
-    end
-  end
-
-  def tabular_task_lists(project,task_lists,sub_action)
-    render :partial => 'task_lists/tabular_task_list',
-    :collection => task_lists,
-    :as => :task_list,
-    :locals => {
-      :project => project,
-      :sub_action => sub_action }
-  end
-
-  def tabular_task_list(project,task_list,sub_action)
-    render :partial => 'task_lists/tabular_task_list',
+  def render_task_list(project,task_list,sub_action)
+    render :partial => 'task_lists/task_list',
     :locals => {
       :project => project,
       :task_list => task_list,
@@ -140,17 +180,8 @@ module TaskListsHelper
         :current_target => current_target }
   end
 
-  def list_task_lists(project,task_lists,sub_action,current_target=nil)
-    render :partial => 'task_lists/task_list_with_tasks',
-      :collection => task_lists, :as => :task_list,
-      :locals => {
-        :project => project,
-        :sub_action => sub_action,
-        :current_target => current_target }
-  end
-
   def the_task_list_link(task_list)
-    link_to h(task_list.name), project_task_list_path(task_list.project,task_list)
+    link_to h(task_list.name), project_task_list_path(task_list.project,task_list), :id => task_list_id(:title, task_list.project, task_list)
   end
 
   def task_list_action_links(project,task_list)
@@ -160,48 +191,15 @@ module TaskListsHelper
       :task_list => task_list }
   end
 
-  def task_list_partial_action_links(project, task_list)
-    if logged_in?
-      if task_list.owner?(current_user)
-        render :partial => 'task_lists/partial_actions',
-        :locals => {
-          :project => project,
-          :task_list => task_list }
-      end
-    end
-  end
-
-  def task_lists_sortable(project)
-    update_page_tag do |page|
-      page.sortable("sortable_task_lists",{
-        :tag => 'div',
-        :url => reorder_task_lists_path(project),
-        :only => 'task_list',
-        :format => page.literal('/task_list_(\d+)/'),
-        :handle => 'img.drag',
-        :constraint => 'vertical'
-      })
-    end
-  end
-
-  def task_list_primer(project)
+  def task_list_primer(project,hidden=false)
     return unless project.editable?(current_user)
-    render :partial => 'task_lists/primer', :locals => { :project => project }
+    render :partial => 'task_lists/primer', :locals => { :project => project, :primer_hidden => hidden }
   end
 
   def task_list_header(project,task_list)
     render :partial => 'task_lists/header', :locals => {
       :project => project,
       :task_list => task_list }
-  end
-
-  def replace_task_list(project,task_list)
-    page.replace task_list_id(:item,project,task_list),
-      :partial => 'task_lists/task_list',
-      :locals => {
-        :project => project,
-        :task_list => task_list,
-        :current_target => task_list }
   end
 
   def replace_task_list_header(project,task_list)
@@ -211,77 +209,91 @@ module TaskListsHelper
         :project => project,
         :task_list => task_list}
   end
-
-  def delete_task_list_link(project,task_list)
-    link_to_remote t('common.delete'),
-      :url => project_task_list_path(project,task_list),
-      :loading => delete_task_list_loading(project,task_list),
-      :confirm => t('confirm.delete_task_list'),
-      :method => :delete
+  
+  def rename_task_list_link(project,task_list, on_index=false)
+    link_to t('task_lists.actions.rename'), 
+            edit_project_task_list_path(project, task_list, :part => 'title', :on_index => (on_index ? 1 : 0)),
+            :class => 'taskListUpdate'
+  end
+  
+  def set_date_task_list_link(project,task_list, on_index=false)
+    return if task_list.archived
+    link_to t('task_lists.actions.set_dates'),
+            edit_project_task_list_path(project, task_list, :part => 'date', :on_index => (on_index ? 1 : 0)),
+            :class => 'taskListUpdate'
+  end
+  
+  def task_list_date_edit(project,task_list)
+    render :partial => 'task_lists/date_edit_form', :locals => {:project => project, :task_list => task_list}
+  end
+  
+  def task_list_title_edit(project,task_list)
+    render :partial => 'task_lists/title_edit_form', :locals => {:project => project, :task_list => task_list}
   end
 
-  def delete_task_list_loading(project,task_list)
-    edit_actions_id = task_list_id('edit_actions',project,task_list)
-    delete_loading_id = task_list_id('delete_loading',project,task_list)
-    update_page do |page|
-      page[edit_actions_id].hide
-      page[delete_loading_id].show
+  def delete_task_list_link(project,task_list, on_index=false)
+    link_to t('common.delete'),
+      '#',
+      :action_url => project_task_list_path(project,task_list, :on_index => (on_index ? 1 : 0)),
+      :aconfirm => t('confirm.delete_task_list'),
+      :class => 'taskListDelete'
+  end
+  
+  def resolve_archive_task_list_link(project,task_list, on_index=false)
+    return if task_list.archived
+    link_to t('task_lists.actions.resolve_and_archive'),
+            '#', :class => 'taskListResolve',
+            :aconfirm => t('task_lists.actions.confirm_resolve_and_archive'),
+            :action_url => archive_project_task_list_path(project, task_list, :on_index => (on_index ? 1 : 0))
+  end
+  
+  def archive_task_list_link(project,task_list, on_index=false)
+    link_to t('task_lists.actions.archive'),
+            '#', :class => 'taskListResolve',
+            :aconfirm => t('task_lists.actions.confirm_resolve_and_archive'),
+            :action_url => archive_project_task_list_path(project, task_list, :on_index => (on_index ? 1 : 0))
+  end
+  
+  def show_archived_tasks_link(project,task_list)
+    archived_tasks = task_list.tasks.archived.length
+    link_to t('task_lists.actions.show_archived', :count => archived_tasks),
+            project_task_lists_path(project, task_list),
+            :class => 'show_archived_tasks_link'
+  end
+
+  def print_task_lists_link(project = nil)
+    if project
+      content_tag(:div,
+        link_to(t('common.print'), project_task_lists_path(project, :format => :print)),
+        :class => :print)
+    else
+      content_tag(:div,
+        link_to(t('common.print'), task_lists_path(:format => :print)),
+        :class => :print)
     end
-  end
-
-  def show_destroy_task_list_message(task_list)
-    page.replace 'show_task_list', :partial => 'task_lists/destroy_message', :locals => {
-      :task_list => task_list }
-  end
-
-  def update_active_task_list(project,task_list)
-    page.replace_html 'content', :partial => 'task_lists/show',
-      :locals => {
-        :project => project,
-        :task_list => task_list }
-
-    item_list_id = task_list_id(:item,project,task_list)
-    page.select('.task').each do |e|
-      e.removeClassName('active_new')
-      e.removeClassName('active_open')
-      e.removeClassName('active_hold')
-      e.removeClassName('active_resolved')
-      e.removeClassName('active_rejected')
-    end
-    page.select('.task_list').invoke('removeClassName','active_list')
-    page[item_list_id].addClassName('active_list')
-  end
-
-  def list_sortable_task_lists(project,task_lists)
-    render :partial => 'task_lists/sortable_task_list',
-      :collection => task_lists,
-      :as => :task_list,
-      :locals => {
-        :project => project }
-  end
-
-  def reorder_button_loading
-    update_page do |page|
-      page['reorder_link'].className = 'loading_button'
-    end
-  end
-
-  def print_task_lists_link(project)
-    content_tag(:div,
-      link_to(t('common.print'), project_task_lists_path(project, :format => :print)),
-      :class => :print)
   end
 
   def tasks_for_all_projects(tasks)
     render :partial => 'task_lists/tasks_for_all_projects', :locals => { :tasks => tasks }
   end
 
-  def maybe_cache_task_list_panel(task_list, current_target, &block)
-    if current_target.nil? or (current_target.respond_to?(:task_list) and current_target.task_list != task_list)
-      cache(task_list.cache_key_for_sidebar_panel, &block)
-    else
-      block.call
-    end
+  def task_list_overview_box(task_list)
+    render :partial => 'task_lists/overview_box', :locals => { :task_list => task_list }
+  end
+  
+  def task_list_archive_box(project,task_list)
+    render :partial => 'task_lists/archive_box', :locals => { :project => project, :task_list => task_list }
+  end
+  
+  def reopen_task_list_button(project,task_list)
+    link_to content_tag(:span,t("task_lists.link.unarchive")), '#',
+      {:class => "unarchive_task_list_link",
+      :id => js_id("unarchive_link",project,task_list),
+      :action_url => unarchive_project_task_list_path(project,task_list)}
+  end
+  
+  def options_for_task_lists(lists)
+    lists.map {|list| [ list.name, list.id ]}
   end
 
 end

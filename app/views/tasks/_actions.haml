@@ -3,4 +3,4 @@
   .text_actions{ :id => task_id('edit_actions',project,task_list,task) }
     = task_link(project,task_list,task)
     = t('common.or')
-    = delete_task_link(project,task_list,task)
+    = delete_task_link(project,task_list,task, (action_name == 'show'))

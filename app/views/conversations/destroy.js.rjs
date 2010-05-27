@@ -1,0 +1,1 @@
+page.redirect_to project_conversations_path(@current_project)

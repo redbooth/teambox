@@ -3,6 +3,7 @@ class Note < RoleRecord
   belongs_to :project
   has_one :page_slot, :as => :rel_object
   acts_as_paranoid
+  versioned
   
   before_destroy :clear_slot
     
@@ -11,8 +12,16 @@ class Note < RoleRecord
   attr_accessor :deleted
   attr_accessible :body, :deleted, :name
   
+  def after_create
+    project.log_activity(self, 'create', updated_by.id)
+  end
+  
+  def after_update
+    project.log_activity(self, 'edit', updated_by.id)
+  end
+  
   def clear_slot
-    page_slot.update_attributes(:page_id => nil)
+    page_slot.destroy
   end
   
   def slot_view
@@ -23,8 +32,17 @@ class Note < RoleRecord
     name
   end
   
-  def user
-    User.find_with_deleted(user_id)
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+    xml.note :id => id do
+      xml.tag! 'page-id',      page_id
+      xml.tag! 'project-id',   project_id
+      xml.tag! 'name',         name
+      xml.tag! 'body',         body
+      xml.tag! 'created-at',   created_at.to_s(:db)
+      xml.tag! 'updated-at',   updated_at.to_s(:db)
+    end
   end
-  
 end

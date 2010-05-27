@@ -1,7 +1,12 @@
 .page
   %h3= page_link(page)
   %p= page.description
-  - if page.notes.any?
-    %ul
-      - for note in page.notes
-        %li= note  
+  - if page.slots.any?
+    - groups = page.divided_slots
+    - groups.each do |group|
+      - if group[0]
+        %h4= h(group[0].rel_object.name)
+      %ul
+        - group[1].each do |item|
+          - if item.rel_object.class == Note
+            %li= h(item.rel_object.name)

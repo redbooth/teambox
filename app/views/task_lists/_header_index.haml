@@ -1,0 +1,13 @@
+= drag_image
+- header_on_index = @on_index || (action_name == 'index')
+.actions_menu
+  %span.actiondate= date_range_for_task_list(task_list)
+  %span.loading{:style => 'display:none'}= "Loading..."
+  - if task_list_editable?(task_list,current_user)
+    = image_tag('triangle.png', :class => 'triangle')
+    .extra
+      = rename_task_list_link(project,task_list, header_on_index)
+      = set_date_task_list_link(project,task_list, header_on_index)
+      = resolve_archive_task_list_link(project,task_list, header_on_index)
+      = delete_task_list_link(project,task_list, header_on_index)
+= the_task_list_link(task_list)

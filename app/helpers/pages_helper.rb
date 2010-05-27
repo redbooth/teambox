@@ -72,6 +72,10 @@ module PagesHelper
       :page => page }
   end
   
+  def pages_tab_list(project,pages)
+    render :partial => "shared/pages_dropdown", :locals => {:project => project, :pages => pages}
+  end
+  
   def page_slot_fields(formName=nil, slot=0, before=0)
     render :partial => 'pages/slot_fields', :locals => {:formName => formName, :pos_slot => slot, :pos_before => before}
   end
@@ -82,12 +86,10 @@ module PagesHelper
   
   def page_buttons(project,page)
     return unless project.editable?(current_user)
-    render :partial => 'pages/buttons', :locals => { :project => project, :page => page, :in_bar => false }
-  end
-
-  def page_bar_buttons(project,page)
-    return unless project.editable?(current_user)
-    render :partial => 'pages/buttons', :locals => { :project => project, :page => page, :in_bar => true }
+    render :partial => 'pages/buttons', :locals => { :project => project, :page => page }
   end
   
+  def insert_widget(widget_id, position, location, view_options={})
+    page.call "Page.insertWidget", widget_id, position, location, render(view_options)
+  end
 end

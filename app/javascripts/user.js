@@ -1,5 +1,6 @@
 User = {
   current_user_login: function() {
-    return $('current_user_login').readAttribute("value");
+    var meta = $$('meta[name="current-username"]').first()
+    return meta ? meta.readAttribute('content') : null
   }
 }

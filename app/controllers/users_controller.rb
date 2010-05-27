@@ -1,12 +1,23 @@
 class UsersController < ApplicationController
-  # Be sure to include AuthenticationSystem in Application Controller instead
+  no_login_required :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password ]
+  
   before_filter :find_user, :only => [ :show, :confirm_email, :login_from_reset_password ]
   before_filter :load_invitation, :only => [ :new, :create ]
-  skip_before_filter :login_required,  :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password ]
   skip_before_filter :confirmed_user?, :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password, :unconfirmed_email ]
   skip_before_filter :load_project
   before_filter :set_page_title
 
+  def index
+    # show current user
+    respond_to do |f|
+      f.html { redirect_to '/' }
+      f.m { redirect_to '/' }
+      f.xml   { render :xml     => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
+      f.json  { render :as_json => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
+      f.yaml  { render :as_yaml => @current_user.users_with_shared_projects.to_xml(:root => 'users')}
+    end
+  end
+  
   def new
     if logged_in?
       flash[:success] = t('users.new.you_are_logged_in')
@@ -33,6 +44,7 @@ class UsersController < ApplicationController
         }
       else
         format.html
+        format.m
         format.xml  { render :xml => @user.to_xml }
         format.json { render :as_json => @user.to_xml }
         format.yaml { render :as_yaml => @user.to_xml }
@@ -80,20 +92,26 @@ class UsersController < ApplicationController
 
   def update
     @sub_action = params[:sub_action]
-    respond_to do |f|
-      if @current_user.update_attributes(params[:user])
-        I18n.locale = @current_user.language
-        flash[:success] = t('users.update.updated')
-        f.html { redirect_to account_settings_path }
-      else
-        flash[:error] = t('users.update.error')
-        f.html { render 'edit' }
-      end
+    success = current_user.update_attributes(params[:user])
+    
+    respond_to do |wants|
+      wants.html {
+        I18n.locale = current_user.language
+        
+        if success
+          back = polymorphic_url [:account, @sub_action]
+          redirect_to back, :success => t('users.update.updated')
+        else
+          flash.now[:error] = t('users.update.error')
+          render 'edit'
+        end
+      }
     end
-
   end
 
   def unconfirmed_email
+    redirect_to root_path and return if current_user.is_active?
+
     if params[:resend]
       current_user.send_activation_email
       flash[:success] = t('users.activation.resent')
@@ -134,10 +152,29 @@ class UsersController < ApplicationController
     end
   end
 
+  def calendars
+  end
+
+  def feeds
+  end
+
   def close_welcome
     @current_user.update_attribute(:welcome,true)
     respond_to do |format|
       format.html { redirect_to projects_path }
+    end
+  end
+  
+  def destroy
+    if current_user.projects.count == 0 && current_user.projects.archived.count == 0
+      user = current_user
+      logout_killing_session!
+      flash[:success] = t('users.form.account_deletion.account_deleted')
+      user.destroy
+      redirect_to login_path
+    else
+      flash[:error] = t('users.form.account_deletion.couldnt_delete_account')
+      redirect_to account_delete_path
     end
   end
 

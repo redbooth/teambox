@@ -1,4 +1,4 @@
-Feature Changing Task Status from New
+Feature: Changing Task Status from New
   Background:
     Given I am logged in as mislav
       And I am currently in the project ruby_rockstars
@@ -9,7 +9,7 @@ Feature Changing Task Status from New
    Scenario: Mislav doesn't change task (new -> new)
        When I fill in "comment_body" with "I need to wait till the engine cools down"
         And I click the element "status_new"
-        And I press "Comment"
+        And I press "Save"
         And I wait for 0.1 second
        Then I should see "new" within ".task_status_new"
         And I should see "I need to wait till the engine cools down" within ".body"
@@ -19,7 +19,7 @@ Feature Changing Task Status from New
    Scenario: Mislav changes task (new -> open:Mislav)
        When I fill in "comment_body" with "I fused the dino eggs to the engine"
         And I select "Mislav Marohnić" from "comment_target_attributes_assigned_id"
-        And I press "Comment"
+        And I press "Save"
        Then I should see "new" within ".task_status_new"
         And I should see "→" within ".comment .status_arr"
         And I should see "M. Marohnić" within ".task_status_open"
@@ -32,7 +32,7 @@ Feature Changing Task Status from New
       When I fill in "comment_body" with "I need to wait till the engine cools down"
         And I click the element "status_hold"
        # And I choose "comment_status_2"
-       And I press "Comment"
+       And I press "Save"
       Then I should see "new" within ".task_status_new"
        And I should see "→" within ".comment .status_arr"
        And I should see "hold" within ".task_status_hold"
@@ -43,7 +43,7 @@ Feature Changing Task Status from New
    Scenario: Mislav changes task (new -> resolved)
        When I fill in "comment_body" with "I need to wait till the engine cools down"
         And I click the element "status_resolved"
-        And I press "Comment"
+        And I press "Save"
        Then I should see "new" within ".task_status_new"
         And I should see "→" within ".comment .status_arr"
         And I should see "resolved" within ".task_status_resolved"
@@ -54,7 +54,7 @@ Feature Changing Task Status from New
    Scenario: Mislav changes task (new -> rejected)
        When I fill in "comment_body" with "I need to wait till the engine cools down"
         And I click the element "status_rejected"
-        And I press "Comment"
+        And I press "Save"
        Then I should see "new" within ".task_status_new"
         And I should see "→" within ".comment .status_arr"
         And I should see "rejected" within ".task_status_rejected"
@@ -68,7 +68,7 @@ Feature Changing Task Status from New
      Given I have a task on hold
       When I fill in "comment_body" with "done!"
        And I click the element "status_resolved"
-       And I press "Comment"
+       And I press "Save"
        And I should see "hold" within ".task_status_hold"
        And I should see "→" within ".comment .status_arr"
        And I should see "resolved" within ".task_status_resolved"
@@ -80,7 +80,7 @@ Feature Changing Task Status from New
      Given I have a task on hold
       When I fill in "comment_body" with "done!"
        And I click the element "status_rejected"
-       And I press "Comment"
+       And I press "Save"
        And I should see "hold" within ".task_status_hold"
        And I should see "→" within ".comment .status_arr"
        And I should see "rejected" within ".task_status_rejected"

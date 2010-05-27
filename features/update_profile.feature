@@ -1,4 +1,4 @@
-Feature Update a profile
+Feature: Update a profile
   Background:
     Given a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić"
       And I am logged in as "mislav"
@@ -12,7 +12,7 @@ Feature Update a profile
          | Last name         | Mar                      |
          | Biography         | Ruby Rockstar Programmer |
       And I press "Update account"
-     Then I should see "User profile updated!" within ".flash_success div"
+     Then I should see "User profile updated!" within ".flash-success div"
      When I follow "mislav"
      Then I should see "Mis Mar" within ".banner h2"
       And I should see "Ruby Rockstar Programmer" within ".biography"
@@ -36,7 +36,7 @@ Feature Update a profile
       And I check "Notify me when I'm watching a task"
       And I check "Send me a daily email of my tasks"
       And I press "Update account"
-     Then I should see "User profile updated!" within ".flash_success"
+     Then I should see "User profile updated!" within ".flash-success"
      When I follow "Notifications"
      Then I should see "Your Notifications"
       And the "Notify me when I'm mentioned e.g. Howdy @mislav! You'll receive an email!" checkbox should be checked
@@ -50,7 +50,7 @@ Feature Update a profile
       Then I should see "Your Account Settings"
       When I fill in "Username" with "mislavrocks"
        And I press "Update account"
-      Then I should see "User profile updated!" within ".flash_success"
+      Then I should see "User profile updated!" within ".flash-success"
        And I should see "mislavrocks"
 
   Scenario: Mislav fails to update his username because its already in use

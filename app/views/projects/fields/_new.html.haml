@@ -1,0 +1,17 @@
+.name.text_field
+  = f.label :name, t('projects.fields.name')
+  = errors_for project, :name
+  = f.text_field :name
+  - tooltip t('projects.fields.name_description')
+.permalink.text_field
+  = f.label :permalink, t('projects.fields.permalink')
+  = errors_for project, :permalink
+  = f.text_field :permalink
+  - tooltip t('projects.fields.permalink_description')
+  .preview
+    = host_with_protocol + projects_path + "/<span id='handle'></span>" 
+= watch_permalink_example
+- if time_tracking_enabled?
+  .check_box.archived
+    = f.check_box :tracks_time
+    = f.label :tracks_time, t('projects.fields.tracks_time')

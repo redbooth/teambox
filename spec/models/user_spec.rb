@@ -193,12 +193,12 @@ describe User do
 
   describe "validation" do
     before do
-      @user = Factory.create(:user, :first_name => " holden ", :last_name => "  m. caulfield   ",
+      @user = Factory.create(:user, :first_name => " holden ", :last_name => "  m.  caulfield   ",
                                     :login => "Holden", :email => "HoldeN.Caulfield@pencey.edu")
     end
 
-    it "should capitalize first and last name on create" do
-      @user.name.should == "Holden M. Caulfield"
+    it "should strip excess whitespace in first and last names" do
+      @user.name.should == "holden m. caulfield"
     end
 
     it "should convert email to downcase and strip spaces" do
@@ -345,6 +345,32 @@ describe User do
     end
   end
 
+  describe "deletion" do
+    before do
+      @user = Factory(:confirmed_user, :login => "simon", :email => "simon@sorcerer.net")
+      @user.destroy
+    end
+    it "renames the login so it can be reused by new signups" do
+      @user.login.should == "deleted1__simon"
+      @user.email.should == "deleted1__simon@sorcerer.net"
+    end
+    it "renames the login so it can be reused by new signups" do
+      @user2 = Factory(:confirmed_user, :login => "simon", :email => "simon@sorcerer.net")
+      @user2.login.should == "simon"
+      @user2.email.should == "simon@sorcerer.net"
+      @user2.destroy
+      @user2.login.should == "deleted2__simon"
+      @user2.email.should == "deleted2__simon@sorcerer.net"
+    end
+    it "has a method to rename the user as the original name" do
+      @user = User.find_only_deleted(:first)
+      @user.recover!
+      @user.rename_as_active
+      @user.login.should == "simon"
+      @user.email.should == "simon@sorcerer.net"
+    end
+  end
+
   describe "when in a project" do
     before do
       @user = Factory(:confirmed_user, :login => "balint")
@@ -380,6 +406,20 @@ describe User do
         @user.notify_of_project_comment?(comment).should == false
       end
 
+    end
+  end
+  
+  context 'attributes' do
+    subject {
+      Factory(:user, :card_attributes => { :phone_numbers_attributes => [{:name => '+123456789'}] })
+    }
+    
+    it { should_not be_new_record }
+    
+    it "should allow setting of work phone number" do
+      phone = subject.card.phone_numbers.first
+      phone.name == '+123456789'
+      phone.get_type.should == 'Work'
     end
   end
 

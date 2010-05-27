@@ -1,10 +1,14 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :sprockets, :only => [:index, :show]
+  
   map.logout            '/logout',              :controller => 'sessions',    :action => 'destroy'
   map.login             '/login',               :controller => 'sessions',    :action => 'new'
   map.register          '/register',            :controller => 'users',       :action => 'create'
   map.signup            '/signup',              :controller => 'users',       :action => 'new'
 
   map.welcome           '/welcome',             :controller => 'users',       :action => 'welcome'
+  map.feeds             '/feeds',               :controller => 'users',       :action => 'feeds'
+  map.calendars         '/calendars',           :controller => 'users',       :action => 'calendars'
   map.close_wecome_tab  '/close_welcome_tab',   :controller => 'users',       :action => 'close_welcome'
   map.forgot_password   '/forgot',              :controller => 'reset_passwords',   :action => 'new'
   map.reset_password    '/reset/:reset_code',   :controller => 'reset_passwords',   :action => 'reset'
@@ -19,10 +23,15 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reset_passwords
   map.resource :session
 
-  map.account_settings '/account/settings', :controller => 'users', :action => 'edit', :sub_action => 'settings'
-  map.account_picture '/account/picture',   :controller => 'users', :action => 'edit', :sub_action => 'picture'
-  map.account_profile '/account/profile',   :controller => 'users', :action => 'edit', :sub_action => 'profile'
-  map.account_notifications '/account/notifications', :controller => 'users', :action => 'edit', :sub_action => 'notifications'
+  map.with_options :controller => 'users', :action => 'edit' do |account|
+    account.account_settings      '/account/settings',      :sub_action => 'settings'
+    account.account_picture       '/account/picture',       :sub_action => 'picture'
+    account.account_profile       '/account/profile',       :sub_action => 'profile'
+    account.account_notifications '/account/notifications', :sub_action => 'notifications'
+    account.account_delete        '/account/delete',        :sub_action => 'delete'
+  end
+
+  map.destroy_user '/account/destroy', :controller => 'users', :action => 'destroy'
 
   map.resources :users, :has_many => [:invitations,:comments], :member => {
                           :unconfirmed_email => :get,
@@ -44,8 +53,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :projects,
       :has_many => [:pages, :people],
       :member => {:get_comments => :get, :accept => :post, :decline => :post, :transfer => :put} do |project|
-    #project.hours_by_month 'time_tracking/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
-    #project.time_tracking 'time_tracking', :controller => 'hours', :action => 'index'
+    project.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
+    project.time 'time', :controller => 'hours', :action => 'index'
 
     project.settings 'settings',  :controller => 'projects', :action => 'edit', :sub_action => 'settings'
     project.picture  'picture',   :controller => 'projects', :action => 'edit', :sub_action => 'picture'
@@ -57,7 +66,7 @@ ActionController::Routing::Routes.draw do |map|
 
     project.resources :invitations, :member => [:accept,:decline,:resend]
 
-    project.resources :comments, :collection => { :preview => :post } do |comment|
+    project.resources :comments, :member => {:convert => :put} do |comment|
       comment.resources :uploads, :member => { :iframe => :get }
     end
 
@@ -67,10 +76,12 @@ ActionController::Routing::Routes.draw do |map|
 
     project.resources :uploads
 
+    project.hooks      'hooks/:hook_name',                 :controller => 'hooks',      :action => 'create',    :method => :post
+
     project.reorder_task_lists 'reorder_task_lists', :controller => 'task_lists', :action => 'reorder', :method => :post
     project.reorder_tasks 'task_lists/:task_list_id/reorder_task_list', :controller => 'tasks', :action => 'reorder', :method => :post
 
-    project.resources :task_lists, :has_many => [:comments], :collection => { :sortable => :get, :archived => :get  }, :member => [:watch,:unwatch] do |task_lists|
+    project.resources :task_lists, :has_many => [:comments], :collection => { :sortable => :get, :archived => :get  }, :member => [:archive,:unarchive,:watch,:unwatch] do |task_lists|
         task_lists.resources :tasks, :has_many => [:comments], :member => { :watch => :post, :unwatch => :post, :archive => :put, :unarchive => :put, :reopen => :get, :show_in_main_content => :get }
     end
     
@@ -88,8 +99,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :task_lists, :only => [ :index ]
   # map.resources :conversations, :only => [ :index ]
   # map.resources :pages, :only => [ :index ]
+  
+  map.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
+  map.time 'time', :controller => 'hours', :action => 'index'
 
   map.root :controller => 'projects', :action => 'index'
   map.connect 'assets/:id/:style/:filename', :controller => 'uploads', :action => 'download', :conditions => { :method => :get }, :requirements => { :filename => /.*/ }
-  SprocketsApplication.routes(map)
 end

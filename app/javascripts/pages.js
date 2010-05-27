@@ -34,12 +34,12 @@ Event.addBehavior({
     return false;
   },
   "#pageInsert:click": function(e) {
-	if (InsertionBar.current_form) {
-	  InsertionBar.place();
-	} else {
+    if (InsertionBar.current_form) {
+      InsertionBar.place();
+    } else {
       InsertionBar.show();
-	  InsertionMarker.setEnabled(false);
-	  InsertionMarker.hide();
+      InsertionMarker.setEnabled(false);
+      InsertionMarker.hide();
     }
 
     return false;
@@ -61,9 +61,9 @@ var Page = {
 
   init: function(readonly, url, auth) {
     this.READONLY = readonly;
-	this.url = url;
-	this.auth = auth;
-	document.currentPage = this;
+    this.url = url;
+    this.auth = auth;
+    document.currentPage = this;
     if (!readonly) {
       InsertionMarker.init();
       InsertionBar.init();
@@ -86,7 +86,27 @@ var Page = {
           parameters:Sortable.serialize('slots', {name: 'slots'}) + '&authenticity_token=' + Page.auth
         });
       } 
-	});		
+    });
+  },
+
+  insertWidget: function(widget_id, pos, element_id, content) {
+    var el = $(element_id);
+    var opts = {};
+    if (!el) {
+      // fallback: before/after == top/bottom
+      el = $('slots');
+      if (pos == 'before')
+        opts['top'] = content;
+      else if (pos == 'after')
+        opts['bottom'] = content;
+      else
+        opts[pos] = content; // 0_0;
+    } else {
+      opts[pos] = content;
+    }
+
+    el.insert(opts);
+    new Effect.Highlight(widget_id, {duration:3});
   },
 
   refreshEvents: function() {
@@ -94,24 +114,40 @@ var Page = {
   },
 
   removeIFrameForm: function(frameDoc) {
-	$$('iframe').each(function(element) {
-		if (Page.uploaderDocument(element) == frameDoc) {
-			$(element).up('.pageForm').remove();
-			throw $break;
-		}
-	});
+  $$('iframe').each(function(element) {
+    if (Page.uploaderDocument(element) == frameDoc) {
+      $(element).up('.pageForm').remove();
+      throw $break;
+    }
+  });
   },
 
   uploaderDocument: function(iframe) {
     var doc = iframe.contentDocument;
-    if (!doc) { 
-	  var wnd = iframe.contentWindow; 
-	  doc = wnd ? wnd.document : null;  
-	}
-	if (!doc) {
-		return iframe.document
-	}
-	return doc;
+    if (!doc) {
+      var wnd = iframe.contentWindow;
+      doc = wnd ? wnd.document : null;
+    }
+    if (!doc) {
+      return iframe.document;
+    }
+    return doc;
+  },
+
+  widgetActionHandler: function(el, method, href) {
+    new Ajax.Request(href, {
+      asynchronous: true,
+      evalScripts: true,
+      method: method,
+      onLoading: function() {
+        el.hide();
+        el.next('.loading_action').show();
+      },
+      onComplete: function(response) {
+        el.show();
+        el.next('.loading_action').hide();
+      }
+    });
   }
 }
 
@@ -165,6 +201,26 @@ var InsertionBar = {
       this.revealForm();
   },
 
+  setWidgetFormLoading: function(id, active) {
+    var form = $(id);
+    var submit = form ? form.down('.submit') : null;
+    var loading = form ? form.down('.loading') : null;
+
+    if (!(submit && loading))
+      return;
+
+    if (active)
+    {
+      submit.hide();
+      loading.show();
+    }
+    else
+    {
+      submit.show();
+      loading.hide();
+    }
+  },
+
   insertTempForm: function(template) {
     var el = null;
     var before = Page.insert_before ? '1' : '0';
@@ -180,7 +236,6 @@ var InsertionBar = {
     }
 
     this.hide();
-    el.auto_focus();
     return el;
   },
 
@@ -191,6 +246,30 @@ var InsertionBar = {
     this.current_form.reset();
     this.current_form.hide();
     this.current_form = null;
+  },
+
+  widgetButtonFormHandler: function(form_name) {
+    InsertionBar.setWidgetFormLoading(form_name, false);
+    InsertionBar.setWidgetForm(form_name);
+    Form.reset(form_name);
+    $(form_name).focusFirstElement();
+  },
+
+  widgetFormHandler: function(form) {
+    new Ajax.Request(form.readAttribute('action'), {
+      asynchronous: true,
+      evalScripts: true,
+      method: form.readAttribute('method'),
+      parameters: form.serialize(),
+      onLoading: function() {
+        form.down('.submit').hide();
+        form.down('img.loading').show();
+      },
+      onFailure: function(response) {
+        form.down('.submit').show();
+        form.down('img.loading').hide();
+      }
+    });
   }
 };
 
@@ -242,8 +321,8 @@ var InsertionMarker = {
   },
 
   nextSlot: function() {
-	if (Page.insert_element == null)
-		return;
+    if (Page.insert_element == null)
+      return;
     var next = Page.insert_element.next();
     while (next != null && next.readAttribute('slot') == null) {
       next = next.next();
@@ -311,3 +390,108 @@ var InsertionMarkerFunc = function(evt){
     InsertionMarker.hide(); // *poof*
   }
 }
+
+// Buttons
+
+document.on('click', 'a.note_button', function(evt, el) {
+  evt.stop();
+  var in_bar = this.up('.pageSlots') != null;
+  if (!in_bar) {
+    InsertionMarker.set(null, true);
+    InsertionBar.place();
+  }
+  
+  InsertionBar.widgetButtonFormHandler('new_note_form');
+});
+
+document.on('click', 'a.divider_button', function(evt, el) {
+  evt.stop();
+  var in_bar = this.up('.pageSlots') != null;
+  if (!in_bar) {
+    InsertionMarker.set(null, true);
+    InsertionBar.place();
+  }
+  
+  InsertionBar.widgetButtonFormHandler('new_divider_form');
+});
+
+document.on('click', 'a.upload_button', function(evt, el) {
+  evt.stop();
+  var in_bar = this.up('.pageSlots') != null;
+  if (!in_bar) {
+    InsertionMarker.set(null, true);
+    InsertionBar.place();
+  }
+  
+  InsertionMarker.setEnabled(true);
+  InsertionBar.clearWidgetForm();
+  InsertionBar.insertTempForm(Page.upload_template);
+});
+
+document.on('click', 'a.cancelPageWidget', function(evt, el) {
+  InsertionBar.clearWidgetForm();
+});
+
+// Widget Actions
+
+document.on('click', 'a.edit_divider', function(evt, el) {
+  evt.stop();
+
+  Page.widgetActionHandler(el, 'get', el.readAttribute('href'));;
+});
+
+document.on('click', 'a.delete_divider', function(evt, el) {
+  evt.stop();
+  
+  if (!confirm(el.readAttribute('aconfirm')))
+    return;
+  
+  Page.widgetActionHandler(el, 'delete', el.readAttribute('href'));
+});
+
+document.on('click', 'a.edit_note', function(evt, el) {
+  evt.stop();
+  
+  Page.widgetActionHandler(el, 'get', el.readAttribute('href'));
+});
+
+document.on('click', 'a.delete_note', function(evt, el) {
+  evt.stop();
+  
+  if (!confirm(el.readAttribute('aconfirm')))
+    return;
+  
+  Page.widgetActionHandler(el, 'delete', el.readAttribute('href'));
+});
+
+document.on('click', 'a.delete_page_upload', function(evt, el) {
+  evt.stop();
+  
+  if (!confirm(el.readAttribute('aconfirm')))
+    return;
+  
+  Page.widgetActionHandler(el, 'delete', el.readAttribute('href'));
+});
+
+// Actual widget forms
+
+document.on('submit', 'form.edit_divider', function(evt, form) {
+  evt.stop();
+  InsertionBar.widgetFormHandler(form);
+});
+
+document.on('submit', 'form.edit_note', function(evt, form) {
+  evt.stop();
+  InsertionBar.widgetFormHandler(form);
+});
+
+document.on('submit', 'form.new_note', function(evt, form) {
+  evt.stop();
+  InsertionBar.widgetFormHandler(form);
+});
+
+document.on('submit', 'form.new_divider', function(evt, form) {
+  evt.stop();
+  InsertionBar.widgetFormHandler(form);
+});
+

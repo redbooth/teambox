@@ -11,3 +11,7 @@
 .check_box.archived
   = f.check_box :archived
   = f.label :archived, t('projects.fields.archived')
+- if time_tracking_enabled?
+  .check_box.archived
+    = f.check_box :tracks_time
+    = f.label :tracks_time, t('projects.fields.tracks_time')

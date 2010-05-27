@@ -1,4 +1,4 @@
-.text_field.email_address.hoverable
+.text_field.email_address
   = f.text_field :name
   = f.select :account_type, options_for_card_type(EmailAddress::TYPES)
   =remove_link_unless_new_record(f)

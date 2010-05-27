@@ -1,0 +1,125 @@
+.banner_item
+  .primer
+    font-size: 12px
+    text-align: center
+    padding: 10px 0px
+      top: 15px
+    color: rgb(160,160,160)
+
+=round_corners
+  -moz-border-radius: 5px
+  -webkit-border-radius: 5px
+
+.calendar_gantt
+  margin: 10px 0
+  a
+    color: #555
+  a:hover
+    text-decoration: none
+
+#show_calendar_link, #show_gantt_chart_link
+  border: 1px solid #C8C8C8
+  text-transform: none
+  padding: 2px 5px 0 5px
+  +rounded-top(5px)
+
+#show_calendar_link.active, #show_gantt_chart_link.active
+  border-bottom: 1px solid white
+
+div.upcoming_events_banner
+  padding: 10px
+  table
+    width: 100%
+  th
+    font-size: 11px
+    padding: 4px
+      top: 10px
+    border-bottom: 1px solid rgb(140, 140, 140)
+  th.today
+    font-weight: bold
+    -moz-border-radius:
+      topleft: 5px
+      topright: 5px
+    -webkit-border-top-left-radius: 5px
+    -webkit-border-top-right-radius: 5px
+    border-bottom: dashed 1px rgb(0, 0, 0)
+  td.today
+    border: dashed 1px rgb(0, 0, 0)
+  td
+    font-size: 11px
+    padding: 0px
+    ul
+      margin: 0px
+      padding: 0px
+      list-style-type: none
+      a
+        display: block
+        padding: 3px 4px
+        border-bottom: solid 1px rgb(255, 255, 255)
+  p.nada
+    font-size: 12px
+    padding-bottom: 0px
+
+div.banner_navigation
+  margin-top: 20px
+  ul
+    margin: 0px
+      bottom: 4px
+    padding: 0px
+    list-style-type: none
+    margin-left: 15px
+    color: rgb(60,60,60)
+  li
+    display: inline
+    a  
+    a:hover, a.active
+      color: rgb(60,60,60)
+
+.gantt 
+  padding-bottom: 10px
+  .ruler
+    position: relative
+    display: block
+    height: 26px
+    border-bottom: solid 1px rgb(80,80,80)
+    color: rgb(80,80,80)
+    .mark
+      position: absolute
+      font-size: 10px
+      top: 18px
+      height: 10px
+      width: 5px
+      text-indent: .3em
+      background:  url(../images/mark.jpg) no-repeat left
+    .date
+      position: absolute
+      font-family: Courier, monospace
+      text-transform: uppercase
+      font-size: 12px
+      top: 0px
+      padding-top: 4px
+      width: 1px
+      display: block
+      &.major
+        font-weight: bold
+        color: #386c97
+  .row
+    position: relative
+    display: block
+    margin: 1px 0
+    font-size: 12px
+    height: 19px
+  .task_list
+    height: 13px
+    font-size: 11px
+    position: absolute
+    background: rgb(240,240,240)
+    border: solid 1px rgb(200,200,200)
+    white-space: nowrap
+    overflow: hidden
+    padding: 3px 0px
+    text-indent: .4em
+    -moz-border-radius: 4px
+    -webkit-border-radius: 4px
+  .task:hover
+    overflow: visible

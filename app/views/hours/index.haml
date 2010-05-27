@@ -1,12 +1,20 @@
--content_for :banner do
-  =calendar_nav(@current_project,@year,@month)
+%div
+  = calendar_nav(@current_project,@year,@month)
   .calendar#calendar
-    = build_calendar(@comments,@year,@month)
+    = build_calendar(@year,@month)
+  .weektable
+    = build_weektable(@year, @month)
+  = hours_js(@year,@month,@comments)
 
--content_for :column do
-  %select#user_filter
-    =list_hour_users(@users_displayed)
-  =observe_user_filter
- 
-= new_hour_comment_form(@current_project)
-= list_comments(@comments,@current_project)
+- content_for :column do
+  %h2= t('hours.report')
+  %select#report_list
+    = list_hour_reports
+  = observe_hour_reports
+  %h2= t('hours.filter_by')
+  #user_filter
+    = list_hour_filters(@current_project)
+  = observe_hour_filter
+
+%h2= t('hours.comments')
+= list_comments(@comments,nil)

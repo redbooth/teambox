@@ -20,14 +20,14 @@ Feature: Edit user settings
     When I go to my settings page
     And I fill in "Username" with "balint.erdi"
     And I press "Update account"
-    Then I should see an error message: "Couldn't save the updated profile."
+    Then I should see an error message: "Couldn't save the updated profile. Please correct the mistakes and retry."
 
   Scenario Outline: User tries to update his login to a reserved one
     Given I am logged in as "balint"
     When I go to my settings page
     And I fill in "Username" with "<username>"
     And I press "Update account"
-    Then I should see an error message: "Couldn't save the updated profile."
+    Then I should see an error message: "Couldn't save the updated profile. Please correct the mistakes and retry."
     Examples:
     | username |
     | all      |

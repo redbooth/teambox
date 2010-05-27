@@ -1,0 +1,1078 @@
+--- 
+zh: 
+  activerecord: 
+    attributes: 
+      card: 
+        city: 城市
+        country: 国家
+        state: 省/州
+        street: 街道
+        zip: 邮编
+      comment: 
+        body: 内容
+        hours: 小时
+        status: 状态
+      conversation: 
+        name: 标题
+      divider: 
+        name: 名称
+      email_address: 
+        account_type: 类型
+        name: 地址
+      im: 
+        account_im_type: 服务
+        account_type: 类型
+        name: Address
+      invitation: 
+        email: 电子邮件
+      note: 
+        body: 内容
+        name: 标题
+      pages: 
+        description: 说明
+        name: 标题
+      phone_number: 
+        account_type: 类型
+        name: 电话
+      project: 
+        name: 名称
+        permalink: 链接
+      social_network: 
+        account_network_type: 网络
+        account_type: 类型
+        name: Address
+      task: 
+        due_on: 截止日期
+        name: 名称
+        status: 状态
+      task_list: 
+        finish_on: 截止日期
+        name: 名称
+        start_on: 开始日期
+      upload: 
+        description: 说明
+      user: 
+        biography: 自传
+        email: 电子邮箱
+        first_day_of_week: 星期开始于
+        first_name: 姓
+        language: 语言
+        last_name: 名
+        login: 用户名
+        time_zone: 时区
+      website: 
+        name: Site
+    errors: 
+      messages: 
+        accepted: 必须是可被接受的
+        blank: 不能为空字符
+        confirmation: 与确认值不匹配
+        empty: 不能留空
+        equal_to: "必须等于 {{count}}"
+        even: 必须为双数
+        exclusion: 是保留关键字
+        greater_than: "必须大于 {{count}}"
+        greater_than_or_equal_to: "必须大于或等于 {{count}}"
+        inclusion: 不包含于列表中
+        invalid: 是无效的
+        less_than: "必须小于 {{count}}"
+        less_than_or_equal_to: "必须小于或等于 {{count}}"
+        not_a_number: 不是数字
+        odd: 必须为单数
+        record_invalid: "校验失败: {{errors}}"
+        taken: 已经被使用
+        too_long: "过长（最长为 {{count}} 个字符）"
+        too_short: "过短（最短为 {{count}} 个字符）"
+        wrong_length: "长度非法（必须为 {{count}} 个字符）"
+      models: 
+        comment: 
+          attributes: 
+            body: 
+              no_body_generic: 请在下面的输入框写下您完成的工作。
+              no_body_task: 请在下面的输入框写下这个任务中您完成的工作。
+        conversation: 
+          attributes: 
+            body: 
+              no_body_generic: 请写一个评论以开始这个话题。
+            name: 
+              no_title: 请为这个话题指定一个标题。
+    models: 
+      address: 地址
+      card: Card
+      comment: 评论
+      conversation: 话题
+      divider: Divider
+      email_address: 电子邮件
+      im: 即时通信
+      invitation: 邀请
+      note: 备注
+      page: 页面
+      phone_number: 电话
+      project: 项目
+      social_network: 社会网络
+      task: 任务
+      task_list: 任务列表
+      upload: 上传
+      website: 网址
+  activities: 
+    create_conversation: 
+      create_conversation: 开始新的话题
+    create_page: 
+      create_page: 创建新页面
+    create_person: 
+      by: 由
+      create_person: 已经被邀请加入此项目
+    create_task: 
+      create_task: 创建新任务
+    create_task_list: 
+      create_task_list: 创建新的任务列表
+    delete_person: 
+      by: 由
+      delete_person: 已经被从此项目移除
+      left: 离开此项目
+  avatars: 
+    edit: 
+      upload: 上传头像
+      upload_new_image: 上传一个新的图片作为头像
+    new: 
+      title: 上传头像
+      upload: 上传
+    show: 
+      save: 保存变更
+  cards: 
+    card: 
+      addresses: 地址
+      email_addresses: 电子邮件地址
+      ims: 即时通讯
+      phone_numbers: 电话号码
+      social_networks: 社会网络
+      vcard: 下载vCard
+      websites: 网址
+    field: 
+      add_addresses: 添加地址
+      add_email_addresses: 添加Email
+      add_ims: 添加即时通讯
+      add_phone_numbers: 添加电话号码
+      add_social_networks: 添加社会网络
+      add_websites: 添加网址
+  comments: 
+    actions: 
+      confirm_delete: 您确认要删除此评论？
+    comment: 
+      commented_on: "-"
+      commented_on_a_task_list: "-"
+      confirm_delete: 您确信要删除这条评论？
+    edit: 
+      submit: 保存
+    errors: 
+      cannot_update: 您没有权限更新此评论
+    new: 
+      assigned_to: "分配给:"
+      assigned_to_nobody: 未分配
+      conversation: 发送消息给群里其他成员。
+      project: 您在做什么？分享想法，链接，更新。
+      submit: 保存
+      task: 通过注释定义需要做什么，分配此任务给某人，发布更新，附加结果。
+      task_list: 分享这个任务列表的想法。需要创建和分配任务，请使用侧务条。
+  common: 
+    accept: 接受
+    and: 和
+    cancel: 取消
+    close: 关闭
+    comment: 
+      one: "{{count}}条评论"
+      other: "{{count}}条评价"
+    decline: 拒绝
+    delete: 删除
+    edit: 编辑
+    next: 下一个
+    not_allowed: 您不允许操作此操作！
+    or: 或者
+    prev: 上一个
+    print: 打印此页
+    save: 保存
+    show_more: "显示{{number}}的更多信息"
+  confirm: 
+    delete_page: 您确信要删除此页面？
+    delete_task: 您确信要删除此任务？
+    delete_task_list: 您确信要删除这个任务列表？
+    delete_upload: 您确信要删除此文件？
+  conversations: 
+    actions: 
+      confirm_delete: 您确信要删除此评论？
+    column: 
+      new_conversation: 新的话题
+      subscribe: 订阅动态反馈
+    conversation_with_extract: 
+      posted_by: 发表者：
+    edit: 
+      submit: 更新话题
+    fields: 
+      body: 第一条评论
+      name: 标题
+      tooltips: 
+        body: 提出问题，告诉您的团队成员最新动态，开始一个讨论
+        name: 尽量简短，这些内容将作为提醒邮件的标题
+    index: 
+      rss: 
+        description: "{{name}}项目的话题"
+        title: 话题
+    link: 
+      edit: 编辑
+    new: 
+      submit: 创建
+      title: 新的话题
+    primer: 
+      create_first: 在这个项目中创建第一个话题！
+      define: 使用话题作为一个集中的方式<b>讨论决定</b>和<b>同步您的团队</b>。<br/>每个话题是一系列的评论，用于代替成堆的邮件。
+      empty: 当前项目还没有任何话题。
+      footer1: "话题是一个很好的方式，用于<b>分享设计</b>, <b>决定会议日期</b>或者<b>报告新闻动态</b>。"
+      footer2: 因为话题是线程式的，它很容易回溯了解到某个文件已经发布，每个成员说过的内容。在Teambox中，<b>协作也是汇报的过程</b>.
+      item1: "<b>分享文件</b>. 评论也可以包含附件。"
+      item2: <b>订阅</b>一个话题可以通过Email或RSS得到将来回复的通知。
+      item3: "<b>加深印象</b>. 任何评论都可以使用文本样式进行格式化。"
+      item4: "<b>收件箱驱动?</b> 您可以通过回复您的邮件的方式，向一个话题发表回复。"
+    short_conversation: 
+      comment: 评论
+      comments: 评论
+    show: 
+      edit: 修改标题
+      message: 消息
+      messages: 消息
+      started_by: 开始于
+    watcher_fields: 
+      add_suscribers: 哪些人将关注这个话题？
+      invite_users: 您是这个项目的唯一成员！
+      no_users_yet: "话题因分享而更有用。现在就<a href='{{invite_link}}'>邀请某人</a>加入此项目，以便他们可以读取这个话题，解答问题或收到更新提示。"
+      people_all: 所有项目成员
+      subscribe_note: 这些人将通过email得到这个消息及相关评论的提醒。<br/>他们可以随时取消订阅。
+  date: 
+    abbr_day_names: 
+      - 日
+      - 一
+      - 二
+      - 三
+      - 四
+      - 五
+      - 六
+    abbr_month_names: 
+      - ~
+      - 一
+      - 二
+      - 三
+      - 四
+      - 五
+      - 六
+      - 七
+      - 八
+      - 九
+      - 十
+      - 十一
+      - 十二
+    day_names: 
+      - 周日
+      - 周一
+      - 周二
+      - 周三
+      - 周四
+      - 周五
+      - 周六
+    formats: 
+      default: "%Y-%m-%d"
+      long: "%Y-%m-%d"
+      short: "%m-%d"
+    month_names: 
+      - ~
+      - 一月
+      - 二月
+      - 三月
+      - 四月
+      - 五月
+      - 六月
+      - 七月
+      - 八月
+      - 九月
+      - 十月
+      - 十一月
+      - 十二月
+    order: 
+      - !ruby/symbol year
+      - !ruby/symbol month
+      - !ruby/symbol day
+    yesterday: 昨天
+  datetime: 
+    distance_in_words: 
+      about_x_hours: 
+        one: 大约1小时
+        other: "大约{{count}}小时"
+      about_x_months: 
+        one: 大约1个月
+        other: "大约{{count}}个月"
+      about_x_years: 
+        one: 大约1年
+        other: "大约{{count}}年"
+      half_a_minute: 半分钟
+      less_than_x_minutes: 
+        one: 少于1分钟
+        other: "少于{{count}}分钟"
+      less_than_x_seconds: 
+        one: 少于1秒
+        other: "少于{{count}}秒"
+      over_x_years: 
+        one: 超过1年
+        other: "超过{{count}}年"
+      x_days: 
+        one: 1天
+        other: "{{count}}天"
+      x_minutes: 
+        one: 1分钟
+        other: "{{count}}分钟"
+      x_months: 
+        one: 1个月
+        other: "{{count}}个月"
+      x_seconds: 
+        one: 1秒
+        other: "{{count}}秒"
+    prompts: 
+      day: 日
+      hour: 时
+      minute: 分
+      month: 月
+      second: 秒
+      year: 年
+    time_ago: "{{time_ago_in_words}}以前"
+  deleted: 
+    conversation: "已删除<b>{{name}}</b>话题"
+    left_project: 您不再属于此项目
+    page: "已删除<b>{{name}}</b>页面"
+    person: "{{name}}不再属于此项目"
+    task: "已删除<b>{{name}}</b>任务"
+    upload: "已删除<b>{{name}}</b>文件"
+  dividers: 
+    actions: 
+      delete_confirm: 您确认要删除此Divider?
+    edit: 
+      submit: 更新
+    new: 
+      submit: 新增
+  emailer: 
+    common: 
+      answer_above_this_line: 回复此行以发表回复
+      do_not_answer: 请不要回复此邮件。
+    confirm: 
+      follow_the_link: 为了<b>完成您的Teambox注册</b>，我们需要您通过点击这里登录：
+      hey: "您好, {{user_name}}!"
+      log_in: 现在就登录Teambox！
+      plaintext_link: 如果出现问题，复制并粘贴以下链接到您的浏览器地址栏：
+      problems: "如果您有任何问题，请通过{{support}}联系我们"
+      report_abuse: "您收到此邮件是因为您使用了{{email}}注册了一个Teambox帐号"
+    invitation: 
+      accept_the_invitation: 接受邀请开始协作
+      collaborate_with: "{{name}}希望通过Teambox与您协作："
+      current_users: 此项目中的当前用户列表：
+      plaintext_link: 如果以上链接不能工作，复制并粘贴以下代码到您的浏览器地址栏：
+      plan_share_and_collaborate: 计划，分享和跟踪需要做的工作。足够简单。
+      report_abuse: 此邮件应您的朋友要求而发送给您。如有滥用请及时报告。
+      teambox_is_a_pm_platform: Teambox是一个用于真实世界协作的项目管理平台。
+      you_have_been_invited_to: "您已经被邀请加入项目<b>{{project}}</b>"
+    invitation_group: 
+      you_have_been_invited_to: "您已被邀请加入小组<b>{{group}}</b>"
+    notify: 
+      are_watching: 已经订阅了此话题，将能够收到回复的提醒。
+      assigned_to: "分配给<b>{{user}}</b>"
+      comment: 在项目公告板上评论：
+      comments: "{{number}}评论"
+      conversation: "话题:"
+      due_on: "截止日期：{{date}}"
+      my_tasks: "分配给您的更多{{project}}中的任务"
+      notification_settings: "您可以通过<a href='{{url}}'>提醒设置</a>修改更多邮件相关设置。"
+      project: "Teambox项目:"
+      recent_conversations: "{{project}}的近期话题"
+      reply: 您也可以通过回复此邮件来发表您对这个话题的答复。
+      status: "状态: {{status}}"
+      stop_watching: "<a href='{{stop_watching_url}}'>停止订阅</a>这一话题将中止收到邮件提醒。"
+      task: "任务:"
+      task_list: "任务列表:"
+      view_online: "您可以<a href='{{link}}'>在线查看这个话题</a>，进行答复，也可以附加文件。"
+    reset_password: 
+      follow_the_link: 为了<b>设置新的Teambox密码</b>，我们需要您通过以下链接进行登录：
+      hey: "您好, {{user_name}}!"
+      log_in: 现在就登录Teambox！
+      plaintext_link: 如果出现问题，复制并粘贴以下链接到您的浏览器地址栏：
+      problems: "如果您有任何问题，请通过{{support}}联系我们"
+      report_abuse: "您收到此邮件是因为您使用了{{email}}注册了一个Teambox帐号"
+    upload: 
+      file: "文件:"
+      uploaded_by: 上传者：
+  example_projects: 
+    new: 
+      create: 创建一个样例项目
+      error: 不能创建样例项目。
+      error_list: "不能创建样例项目。以下项目是无效的：{{list}}。"
+      learn: 通过例子学习！
+      line1: 如果您是第一次使用Teambox，您可以创建一个包含一些内容的样例项目。
+      line2: 浏览这些页面将引导您使用Teambox的各个部分。
+      line3: 确保您<b>阅读介绍</b>和<b>试验</b>如何创建、修改和删除元素！
+      line4: 在这个项目您不能邀请其它用户，但您可以做其它任何事。
+  form: 
+    cancel: 取消
+  groups: 
+    edit: 
+      submit: 更新
+    errors: 
+      already_own: 您已经拥有一个小组！
+      no_edit: 您不能编辑这个小组
+      not_admin: 您不能管理这个小组
+      not_enabled: 这个系统不支持小组功能
+    fields: 
+      description: 说明
+      name: 名称
+      permalink: Permalink
+      permalink_description: 您的小组被访问的来源域名
+    header: 
+      leave: 离开
+      remove: 删除
+    index: 
+      description: 用户小组用于分享资源，并且可以通过一个小组名字快捷的绑定到项目！
+      groups_in: 您所在的小组
+      no_groups: 您不属于任何小组。
+      remove_project: 移除
+      submit_project: 添加
+      title: 小组
+      your_group: 您的小组
+    logo_fields: 
+      current: 当前Logo
+      delete: 删除
+      description: 这个Logo将出现在所有属于此小组的项目上
+      upload: 上传
+    new: 
+      created: 您的小组已经被创建
+      explain: 您只能拥有一个小组。
+      submit: 创建
+      title: 创建小组
+    primer: 
+      create_group: 创建小组
+      no_group_create: "您没有拥有任何小组。{{link}}."
+    search: 
+      invite: 邀请
+      invite_people: 邀请其他人加入此小组
+      username_or_email: 用户名或Email
+    show: 
+      add_project: 添加一个项目
+      edit: 修改
+  hours: 
+    all_tasks: 全部任务
+    all_users: 所有用户
+    comments: 时间输入
+    entry_hours: 小时
+    entry_total: 合计
+    filter_by: 过滤于
+    report: 报告
+    reports: 
+      project: 项目
+      task: 任务
+      user: 用户
+    week_num: "第{{num}}周"
+    week_total: 周合计
+  invitations: 
+    errors: 
+      invalid: 无效的邀请
+      invalid_code: 无效的邀请码
+    fields: 
+      user_or_email: 请输入你队友的用户名或email：
+    group_invitation: 
+      invited_email: "{{inviter}}邀请<b>{{email}}</b>加入这个小组。"
+      invited_user: "{{inviter}}邀请<b>{{invitee}}</b>加入这个小组。"
+    index_user: 
+      no_invitations: 您没有未处理的项目邀请。
+      title: 待确认的邀请
+    invitation: 
+      discard: 放弃邀请
+      invited_email: "{{inviter}}邀请<b>{{email}}</b>加入这个项目。"
+      invited_user: "{{inviter}}邀请<b>{{invitee}}</b>加入这个项目。"
+      pending: 已经向此用户发送邀请邮件，但对方还没有确认邀请。
+      resend: 重新发送邀请邮件
+      time_ago: "({{time_ago_in_words}}以前)"
+    pending: 
+      invited_to_join: "{{by}}已邀请您加入项目{{project}}."
+      invited_to_join_group: "{{by}}已邀请您加入小组{{group}}."
+      to_access_or: 访问项目或者
+      to_access_or_group: 访问小组或者
+    recent: 
+      invite: "邀请 {{username}}"
+    resend: 
+      resent: "邀请已经重新发送给{{recipient}}。如果没有收到邮件，请先查看一下垃圾邮件目录。"
+      return: 返回
+    search: 
+      invite: 邀请
+      invite_from_project: 邀请来自项目
+      invite_people: 邀请其他人加入此项目
+      role: 选择一个角色
+      submit: 发布
+      username_or_email: 请输入您的团队成员的用户名或email
+    sent: 
+      email_sent: "<b>我们刚刚发布了一个提醒邮件给此用户，邮件中包含了一个接受您项目邀请的链接。</b>. 如果他们不能收到此邮件，请确保此邮件不会作为垃圾邮件处理，或者尝试换一个邮件地址。如果还有问题，请联系我们。"
+  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  not_found: 
+    conversation: "在这个项目中找不到话题{{id}}。"
+    group: "小组{{id}}不存在。"
+    page: "在这个项目中找不到页面{{id}}。"
+    project: "项目{{id}}不存在。"
+    task: "在这个项目中找不到任务{{id}}。"
+    task_list: "在这个项目中找不到任务列表{{id}}。"
+    user: 用户不存在。
+  notes: 
+    actions: 
+      delete_confirm: 您确信要删除这条备注？
+    edit: 
+      submit: 修改备注
+    fields: 
+      body: 内容
+      text_styling: 文本样式
+      title: 标题
+    new: 
+      submit: 添加备注
+  number: 
+    currency: 
+      format: 
+        delimiter: ","
+        format: "%u%n"
+        separator: "."
+        unit: $
+    format: 
+      delimiter: ","
+      separator: "."
+    human: 
+      storage_units: 
+        format: "%n %u"
+        units: 
+          byte: 
+            one: 字节
+            other: 字节
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+  page_title: 
+    archived_task_lists: 存档任务
+    create_uploads: 文件上传
+    create_users: 注册
+    edit_projects: 修改项目
+    edit_users: 编辑
+    index_conversations: 所有话题
+    index_pages: 所有页面
+    index_people: 人员
+    index_projects: 所有项目
+    index_task_lists: 所有任务列表
+    index_uploads: 所有文件
+    new_conversations: 新增话题
+    new_example_projects: 创建样例项目
+    new_pages: 新页面
+    new_projects: 新增项目
+    new_users: 注册
+    show_projects: 概述
+    welcome_users: 欢迎！
+  pages: 
+    buttons: 
+      new_divider: Divider
+      new_note: 备注
+      new_task_list: 任务列表
+      new_upload: 上传
+    column: 
+      new_page: 新增页面
+    edit: 
+      submit: 更新
+      title: 修改页面
+    fields: 
+      description: 说明
+      description_description: 可选。可以输入任何其他人在阅读或修改此页面时需要了解的信息。
+      name: 标题
+      name_description: 请使用简短清晰的标题
+    index: 
+      pages_in_this_project: 当前项目的页面
+      rss: 
+        description: "{{name}}项目的页面"
+        title: 页面
+    new: 
+      define1: 这里您可以和您的团队<b>分享有用的信息</b>：路线图，有意思的链接，规定，邮件模板等等...
+      define2: 修改一个项目是相当容易和有趣的事，通过拖曳元素您可以即时修改页面。
+      footer1: 使用Teambox作为您的频繁使用的<b>共享白板</b>。
+      footer2: 您也可以添加附件到任何页面。使用愉快！
+      submit: 创建
+      title: 新增页面
+    primer: 
+      create_first: 在这个项目中创建第一个页面！
+      define1: 这里您可以和您的团队<b>分享有用的信息</b>：路线图，有意思的链接，规定，邮件模板等等...
+      define2: 修改一个项目是相当容易和有趣的事，通过拖曳元素您可以即时修改页面。
+      empty: 这个项目还没有任何页面。
+      footer1: 使用Teambox作为您的频繁使用的<b>共享白板</b>。
+      footer2: 您也可以添加附件到任何页面。使用愉快！
+      item1: "<b>分享</b>. 所有您的团队成员都可以查看和修改项目的页面。"
+      item2: "<b>发布</b>. 通过共享页面进行即时网络发布，全世界都可以看到。"
+      item3: "<b>打印</b>. 页面是打印友好的，请尝试一下打印或导出为PDF！"
+      item4: "<b>Wiki</b>. 页面就象是wiki，提供了一种快速访问项目信息的方式。"
+    slots: 
+      insert_here: 插入在这里
+  people: 
+    column: 
+      confirm_delete: 您确信要把此人从项目中移除？
+      contact_admins: "在这个项目中，只有{{admins}}可以邀请新成员加入。"
+      inviting: 邀请其它用户
+      leave_project: 离开项目
+      leaving: 离开项目
+      only_admins_can_invite: 只有管理员才可以邀请其他人加入此项目。
+      you_can_leave: 您可以在任何时候离开这个项目。如果这样做，你将不能访问任何数据，不能收到任何提醒邮件。其他人仍然可以使用此项目，不会丢失任何数据。
+    edit: 
+      submit: 更新人员
+    errors: 
+      user_or_email: 用户没有找到。请输入他的用户名或Email。
+    fields: 
+      admin: 管理员。可以邀请新用户加入此项目。
+      commenter: 评论者。可以评论，但不能创建新的元素。
+      observer: 观察者。对项目只有只读权限。
+      participant: 参与者。可以做任何事，但不能邀请用户。
+      role: 角色
+    header: 
+      admin: 管理员
+      commenter: 评论者
+      confirm_delete: 您确信要把此人从项目中移除？
+      leave_project: 离开项目
+      observer: 观察者
+      owner: 项目所有者
+      participant: 参与者
+      remove: 移除
+      transfer: 改变所有者
+    link: 
+      edit: 编辑
+  projects: 
+    edit: 
+      change_owner: 修改所有者
+      invalid_transferred: 项目所有者不能移交，请修正错误并重试。
+      submit: 保存修改
+      title_deletion: 存档/删除项目
+      title_ownership: 所有者
+      title_picture: 项目Logo
+      title_settings: 一般设置
+      transferred: 项目所有者已经被移交。
+    fields: 
+      archived: 存档此项目
+      archiving: 存档此项目
+      confirm_delete: 您确信要永久删除此项目？此操作不可恢复。如果您还想保留它，请使用存档项目操作。
+      forever: 永久删除此项目
+      name: 名称
+      name_description: "请选择一个简短明确的标题。如：Taggart Transcontinental"
+      owner: 所有者
+      owner_description: 所有者是一个项目的主要负责人，他不能被从此项目中移除，除非先行指定另一个所有者。
+      permalink: URL
+      permalink_description: 这是您项目的网址。请尽量简短，不允许有空格。
+      tracks_time: 启用时间跟踪
+    index: 
+      archived: "显示{{count}}个已存档项目..."
+      new_project: 新增项目
+      projects: 我的项目
+      refreshes: 每分钟自动刷新
+      rss: 
+        description: 概览所有您的项目
+        title: 项目摘要
+      subscribe: 订阅动态反馈
+      title: 我的所有项目动态
+    new: 
+      create_an_example_project: "第一次使用Teambox？可以先<a href='{{link}}'>创建一个样例项目</a>以尝试并熟悉Teambox。"
+      created: 您的项目已经创建成功！
+      invalid_project: 无效的项目，请修正错误并重试
+      new_project: 新项目...
+      not_allowed: 您的当前帐号不能创建任何项目。
+      submit: 创建项目并开始邀请其他人
+      title: 创建项目
+    new_primer: 
+      define1: 项目是一个与您的团队成员共享的群。
+      define2: 在项目中，每个项目成员可以：
+      feature1: 发表状态更新
+      feature2: 开始话题或回复话题
+      feature3: 发送附件
+      feature4: 分配并解决任务
+      feature5: 评论任务
+      feature6: 跟踪花费在每件事上的时间
+      feature7: 创建，修改和查看页面
+      footer: 此项目归你所有。你可以随时发送这个项目给其他人。
+      limited: 作为免费帐户，你最多只能上传50M的附件到这个项目。
+      upgrade: 现在就升级您的帐号！
+    primer: 
+      create_first: 创建您第一个项目!
+      define1: 项目用户与一组人进行<b>协作</b>：建立网站，组织一次聚会，客户工作...
+      define2: 您可以创建<b>您需要多少就多少个项目</b>，以便和不同的在线用户分享。
+      empty: 您还不能拥有或属于任何项目。
+      footer: 项目是一个集中化协作的通用方式，所以您不再需要发送电子邮件给您的团队。
+      item1: <b>创建一个项目</b>，命名它，然后<b>邀请一些相关人士</b>使用它。
+      item2: <b>评论</b>您所做的每一件事，在任何时候都可以。
+      item3: <b>讨论</b>关于任何重要的决定（话题）
+      item4: <b>计划</b>需要完成的任何及发布对任务的更新。
+      item5: <b>分享信息</b>于多个项目，通过易于修改的页面。
+    show: 
+      invite_people: 邀请好友...
+      new_task_list_link: 新建任务列表
+      people_in_project: 项目成员
+      rss: 
+        description: "项目{{name}}的近期活动"
+        title: "{{name}}"
+      subscribe: 订阅动态反馈
+      text_styling: 文本样式
+      tip: "引用某人的 @username，某人将会收到一个包含您消息内容的email"
+      update_your_status: 更新您的状态...
+  reset_passwords: 
+    create: 
+      invalid: "您输入的修改密码地址无效或已经过期。请尝试再次使用主页上的找回密码功能。<br/>请检查电子邮箱地址并重新尝试。如果不能成功，请联系我们{{support}}"
+      not_found: "我们不能找到任何使用此电子邮箱的用户： {{email}}<br/>请检查电子邮箱地址并重新尝试。如果不能成功，请联系我们{{support}}"
+      password_not_updated: 新密码无效，请重试。
+      password_updated: 密码修改成功，请重新登录
+    new: 
+      back: 返回登录页
+      email: 您注册时使用的邮箱是？
+      submit: 发给我一个重置密码的链接
+      title: 忘记密码？
+    sent: 
+      change_password_now: 您现在已经登录。<b>现在就重新设置密码</b>，这样您就不会再忘记密码！
+      follow_the_link: 点击此邮件中的链接以登录Teambox！如果您找不到邮件，请尝试看一下垃圾邮件夹。
+      login_link_sent: "我们将发送邮件到{{email}}给您以重置您的密码。"
+      not_found: "此邮件地址<b>{{email}}</b>不属于任何Teambox用户，可能您的拼写有误？"
+      title: 重置密码
+  sessions: 
+    fields: 
+      forgot: 忘记密码？
+      password: 密码
+      signup: 注册新帐号
+      username_or_email: Email或用户名
+    new: 
+      login_failed: "不能作为{{login}}登录"
+      submit: 登录
+      title: 登录
+      video: 什么是Teambox?
+  shared: 
+    archived_projects: 
+      archived_projects: 已存档的项目
+    footer: 
+      help: 帮助
+      mobile: 移动版
+      support: 反馈和缺陷
+    gantt_banner_primer: 
+      title: 在甘特图中没有需要显示的任务列表
+    global_navigation: 
+      home: 主页
+      login: 登录
+      logout: 注销
+      project_invitations: "邀请数 ({{count}})"
+      settings: 设置
+    navigation: 
+      all_projects: 全部项目
+      new_project: +
+      welcome: 欢迎
+    project_navigation: 
+      all_conversations: 所有话题
+      all_pages: 所有页面
+      all_task_lists: 所有任务
+      conversations: 话题
+      files: 文件
+      groups: 项目小组
+      invitations: 邀请
+      login: 登录
+      overview: 概述
+      pages: 页面
+      people: 成员
+      project_settings: 项目设置
+      signup: 注册
+      task_lists: 任务列表
+      time_tracking: 时间跟踪
+    project_settings_navigation: 
+      deletion: 项目存档/回收站
+      general: 一般设置
+      ownership: 所有者
+      picture: 项目图版
+    projects: 
+      projects: 项目
+    public_navigation: 
+      community: 社区
+      help: 帮助和支持
+      home: Teambox
+      privacy: 隐私
+      services: 服务
+      terms: 使用条款
+      tour: 教程
+      users: 我们的用户
+    strip: 
+      archived: "此项目已经存档。要修改或评论此项目，你必须首先通过<a href='{{link}}'>项目设置页面</a>取消归档这个项目"
+    task_navigation: 
+      all_tasks: 全部任务
+      everybodys_tasks: 所有人的任务
+      hide_archived_tasks: 隐藏归档任务
+      my_tasks: 
+        one: 我的1个任务
+        other: "我的{{count}}个任务"
+      unarchived_tasks: 未存档的任务
+    upcoming_events_primer: 
+      title: 在日历中没有需要显示的任务
+    upgrade_browser: 
+      chrome: "Chrome,"
+      firefox: Firefox
+      ie: "升级Internet Explorer"
+      or_install: 或者安装
+      safari: Safari
+      upgrade: "您正在使用一个过于陈旧版本的Internet Explorer，Teambox可能不能正常工作。"
+    user_navigation: 
+      account_settings: 帐号设置
+      notifications: 提醒
+      profile_information: 个人信息
+      profile_picture: 个性图片
+    watchers: 
+      nobody_watching: 没有人在关注
+      people_watching: "关注中的人: "
+      started_watching: 在发生变更时您将收到email提醒。
+      stopped_watching: 您将不再收到此记录的提醒。
+      unwatch: 取消关注
+      watch: 关注
+  support: 
+    array: 
+      last_word_connector: ", 和 "
+      two_words_connector: " 和 "
+      words_connector: ", "
+    select: 
+      prompt: 请选择
+  task_lists: 
+    actions: 
+      show_archived: 
+        one: 显示一条已存档的任务
+        other: "显示{{count}}条已存档的任务"
+    archived: 
+      description: 您正在查看已存档的任务，这些任务已经被关闭。
+      title: 所有已存档的任务
+    column: 
+      new_task_list: 创建任务列表
+      subscribe: 订阅动态反馈
+    destroy_message: 
+      deleted: "任务列表<b>{{name}}</b>已经被成功删除！"
+    edit: 
+      submit: 更新任务列表
+    errors: 
+      name: 
+        cant_be_blank: 名称不能为空
+        too_long: 名称不能超过255个字符
+    fields: 
+      finish_on: "结束于... <i>可选</i>"
+      name: 任务列表名称
+      start_on: "开始于... <i>可选</i>"
+      task_list: 任务列表为您的项目定义一个里程碑。在任务列表中，您可以创建任务并分配任务给项目成员。
+    index: 
+      add_link: 创建任务列表
+      empty: 此目录中没有任务！
+      tasks_for_all_projects: 所有项目的任务
+    link: 
+      edit: 编辑
+      new: 创建任务列表
+      reorder: 重新排序
+    new: 
+      submit: 创建任务列表
+      title: 创建任务列表
+    primer: 
+      create_first: 在这个项目中创建第一个任务列表！
+      define: "使用任务进行<b>事前计划</b>, <b>跟踪进程</b>和<b>了解已经完成的工作</b>。<br/><i>何事？何人？何时？</i> 任务可以有状态，执行者和截止日期。"
+      empty: 这个项目还没有任何话题。
+      footer1: 任务是一个简单而敏捷的方式去<b>完成事情</b>，所以，马上使用它吧。
+      footer2: 是时候忘记Excel计划表和复杂的甘特图了！
+      item1: "<b>计划</b>. 在列表中创建任务并分配给您的团队成员。"
+      item2: "<b>报告</b>. 发表评论到每个任务，添加附件，回复反馈信息。"
+      item3: "<b>跟进</b>. 得到与您相关任务的提醒。"
+      item4: "<b>预览</b>. 已经完成的任务不会被删除，您可以在将来继续读取到这些消息和文件。"
+    show: 
+      title: "任务列表: {{name}}"
+  tasks: 
+    archive_box: 
+      archive: 存档此任务
+      reopen: 重新打开任务
+      you_are_done: 看上去您已经完成了这个任务！
+    archive_message: 
+      archived: "任务 <b>{{name}}</b>已经成功存档！"
+    assigned: 
+      assigned_to: "分配给{{user}}"
+    create: 添加任务
+    destroy_message: 
+      deleted: "任务 <b>{{name}}</b>已经成功删除！"
+    due_on: 
+      due_on: 截止于
+      today: 今天
+      tomorrow: 明天
+    edit: 
+      submit: 修改任务
+    errors: 
+      name: 
+        cant_be_blank: 必须不为空
+        too_long: 必须少于255字符
+    fields: 
+      due_on: "需要在...之前完成 <i>(可选)</i>"
+      name: 有哪些任务需要完成？
+    link: 
+      edit: 编辑
+      hide_archived_tasks: 
+        one: 隐藏一条已存档的任务
+        other: "隐藏{{count}}条已存档的任务"
+      new: "+ 添加任务"
+    my_tasks: 
+      my_tasks: 我的任务
+    new: 
+      submit: 添加任务
+      title: 新任务
+    overdue: "{{days}}天以后"
+    show: 
+      title: "任务: {{name}}"
+    status: 
+      hold: 已分配
+      new: 新建
+      open: 未分配
+      rejected: 已拒绝
+      resolved: 已解决
+    unarchive_box: 
+      reopen: 重新打开任务
+      task_is_closed: 此任务已经关闭并存档
+      unarchive: 取消存档
+  time: 
+    am: 上午
+    formats: 
+      default: "%A, %Y-%m-%d %H:%M:%S %z"
+      long: "%Y-%m-%d %H:%M"
+      short: "%m-%d %H:%M"
+    pm: 下午
+  uploads: 
+    comment_upload_link: 附件
+    form: 
+      description: "标题 <i>(可选)</i>"
+      max_size: "文件大小不能超过{{mb}}"
+      presence: 您不能上传空文件
+      select_file: 选择文件
+      upload: 上传文件
+    index: 
+      max_upload_size: "最大上传文件大小是{{mb}}Mb"
+      new_file: 上传文件
+    new: 
+      select_a_file: 选择文件
+    primer: 
+      create_first: 在这个项目中上传第一个文件！
+      define1: 还有与您的团队分享文件的问题？Teambox再次让分享更容易。
+      define2: 您可以在这里上传文件，或者附加文件到话题，任务或页面。
+      empty: 这个项目还没有任何文件。
+      item1: "<b>更大的文件</b>. 上传任意大小的文件，忘记电子邮件附件大小的限制吧。"
+      item2: "<b>版本</b>. 上传新版本的文件，同时保留旧版本的变更记录。"
+      item3: "<b>永远可用</b>. 文件保存在项目上下文相关的地方，将来查找引用更方便。"
+    upload: 
+      download: 下载
+      on_: 打开
+      remove: 删除
+      uploaded_by: "上传者:"
+  users: 
+    activation: 
+      activated: "您的帐号已经激活！欢迎使用Teambox :)"
+      already_done: 您已经确认了您的email地址！现在您可以使用Teambox了。
+      invalid: <p>无效或已经过期的链接。请使用您的email和密码登录。</p><p>如果您忘记了您的登录密码，请点击下面的“忘记密码”链接。</p>
+      invalid_user: 无效用户
+      resent: 我们已经重新发送了激活邮件。请检查您的收件箱！
+    create: 
+      error: 对不起，我们不能创建此帐号。请重新尝试，或者联系管理员（链接如下）。
+      thanks: 谢谢注册！
+    daily_task_reminder_email: 
+      daily_task_reminder: 每日任务提醒
+      daily_task_reminder_from_teambox: 这是来自Teambox的每日任务提醒邮件。
+      late_tasks: 延迟任务
+      settings_page: 设置页
+      tasks_for_next_two_weeks: 下两周任务
+      tasks_for_today: 今日任务
+      tasks_for_tomorrow: 明日任务
+      tasks_without_a_due_date: 无截止日期任务
+      you_receive_this_message: "您收到此邮件是因为您设置了提醒选项。您可以通过{{link}}不再收到这些邮件"
+    edit: 
+      submit: 更新帐号
+      title_deletion: 项目存档/回收站
+      title_notifications: 您的提醒
+      title_picture: 您的个性图片
+      title_profile: 您的个性设置
+      title_settings: 您的帐号设置
+    form: 
+      avatar: 
+        field: 您的头像
+        max_size: "文件大小不能超过{{mb}}"
+        presence: 您不能上传空文件
+        upload_here_or_at_gravatar: "您可以在这里上传新的头像，或上传到{{gravatar}}作为一个通用的头像，用于Teambox或其它网站。"
+        we_have_this_avatar: 当前您的头像：
+      biography: 自我介绍
+      change_password: 修改密码
+      confirm_password: 确认密码
+      email: 电子邮件
+      first_day_of_week: 一周开始于
+      first_name: 姓
+      invalid_login: 只能使用字母，数字和下划线_
+      language: 语言
+      last_name: 名
+      login: 用户名
+      monday: 周一
+      notify_conversations: 在我关注的话题变化时通知我
+      notify_mentions: "在消息中提及我时通知我。例如：“你好，@{{login}}!”您将收到一封提醒的电子邮件"
+      notify_task_lists: 在我关注的任务列表变化时通知我
+      notify_tasks: 在我关注的任务变化时通知我
+      password: 密码
+      password_confirmation: 确认密码
+      sunday: 周日
+      time_zone: 时区
+      tooltips: 
+        email: 请输入真实的Email地址，你的队友可以通过邮件联系您。
+        first_name: 最多20个字符.
+        last_name: 最多20个字符.
+        login: 您需要用户名才能登录。其他人通过用户名可以找到你。必须全为小写字母，不能有空格，可以使用下划线。
+        password: 组合字母，数字，大小写混合是个好注意。
+      use_this_email: 您已经被邀请使用此电子邮件地址共享使用项目。如果您希望使用这些项目，请不要修改此邮件地址。在您完成注册过程后，您可以修改您的邮件地址。
+      wants_task_reminder: 发送我的任务每日情况报告
+    new: 
+      existing_user: "如果您已经有一个帐号，请<a href='{{login_url}}'>登录</a>或者<a href='{{forgot_url}}'>找回密码</a>。"
+      no_public_signup: 此系统不允许公共注册。
+      submit: 创建帐号
+      title: 创建新帐号
+      you_already_have_an_account: "您已经有一个使用了地址{{email}}的Teambox帐号。<a href='{{login_link}}'>使用此邮箱登录</a>或<a href='{{reset_password_link}}'>重置密码</a>，如果您已经忘记密码。"
+      you_are_logged_in: 您已经有一个帐号。请先注销，并使用另一个帐号登录。
+    show: 
+      pending_invite: "{{name}}当前已经有一个您的项目的未受理邀请。在此邀请被接受前，您不允许操作任何信息。"
+      profile: 个性设置
+      projects: 项目
+      recent_activity_for: "{{user_name}}的近期活动"
+    unconfirmed_email: 
+      follow_the_link: 请<b>打开此邮件并点击邮件中的链接</b>，以激活您的帐号。
+      invitation_sent_to: "已经向<i>{{email}}</i>发出一封邮件邀请，以确认您的邮件地址。"
+      problems: "如果还有其它问题，请通过{{support}}联系我们"
+      problems_title: 问题？
+      resend: "没有收到邮件？请点击<a href='{{link}}'>这里</a>重新发布激活邮件。"
+      spam: 请确保在您的邮件客户端程序中，此邮件没有被标识为垃圾邮件。
+      title: 确认您的邮件
+      wrong_address: "不正确的邮件地址？如果您的邮件地址拼写错误，<a href='{{link}}'>取消注册过程</a>并使用一个有效的邮件地址重新创建您的帐号。"
+    update: 
+      error: 不能保存修改的个性设置，请修正错误并重试。
+      updated: 用户个性设置已更新！
+    user: 
+      formatted_address: "{{city}} {{street}}({{country}})"
+      remove_from_project: 从项目中移除
+    welcome: 
+      get_started: 开始使用Teambox!
+      intro1: 欢迎您成为我们的新成员！您将了解到Teambox如何成为您每日工作的起点。
+      intro2: 接下来怎么做？创建一个项目进行<b>协作</b>：
+      projects: 
+        create_your_first_project: "事件，设计，产品... 现在开始<a href='{{link}}'>创建您的第一个项目</a>！"
+        share_and_collaborate: 与您的团队进行分享和协作！项目的日常更新，话题，任务，页面和文件。
+        title: 项目
+      spread: 
+        facebook: Facebook
+        help: 您可以<b>帮肋我们</b>，通过告诉您的朋友您对Teambox的喜爱
+        in_your_site: 在您的网站！
+        reasons: 我们已经在Teambox工作多年时间，希望它可以对您有所帮助。<br/>我们和您一样，是真实的人，为目标为激情工作的开发者！
+        tell_us: "如果您喜欢使用Teambox，也请考虑<a href='mailto:{{address}}'>通过Email告诉我们</a>！"
+        title: 您也喜欢我们的产品吗？
+        twitter: "Twitter,"
+      stop_welcome: 不再显示此欢迎页签
+  weakling: 
+    average: 一般
+    default: 必须至少5个字符
+    error: 太短
+    strong: 强
+    weak: 弱

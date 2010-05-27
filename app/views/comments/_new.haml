@@ -1,8 +1,6 @@
 - comment_form_for(form_url) do |f|
-  = hidden_field_tag :original_controller, controller_name
   .body.text_area
     = comment_text_area(f, target)
-    = autoresize :comment_body
     #comment_body_list.autocomplete{:style => 'display:none'}
     .previewBox.textilized{:style => 'display:none'}
   .extra
@@ -12,6 +10,7 @@
     - if target
       = last_comment_input
       - if target.is_a?(Task)
+        = add_hours_link(f)
         .statuses
           = f.label :status
           - if target.status_new?
@@ -36,6 +35,7 @@
           = javascript_tag "$$('.statuses input').each(function(e){ if (e.checked) { e.up('.status').addClassName('active') }; })"
           = javascript_tag "Comment.watch_status();"
     .submit{ :id => js_id(:new_submit,Comment.new) }
+      = hidden_field_tag :original_controller, controller_name
       %span.showPreview
         %button{}
           %span.default= "Preview"
@@ -45,5 +45,4 @@
     = loading_image(js_id(:new_loading,Comment.new))
     .clear
 
-= javascript_tag "$('new_comment').auto_focus()"
 = make_autocompletable('comment_body')

@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
   concerned_with  :activation,
                   :avatar,
                   :authentication,
-                  :completeness,
                   :example_project,
                   :recent_projects,
                   :roles,
@@ -22,13 +21,18 @@ class User < ActiveRecord::Base
                   :validation
 
   # After adding a new locale, run "rake import:country_select 'de'" where de is your locale.
-  LANGUAGES = [['English',  'en'],
-               ['Español',  'es'],
-               ['Français', 'fr'],
-               ['Deutsche', 'de'],
-               ['Català',   'ca'],
-               ['Italiano', 'it'],
-               ['Русский',  'ru']]
+  LANGUAGES = [['English',   'en'],
+               ['Español',   'es'],
+               ['Português', 'pt'],
+               ['Français',  'fr'],
+               ['Deutsch',   'de'],
+               ['Català',    'ca'],
+               ['Italiano',  'it'],
+               ['Русский',   'ru'],
+               ['Chinese',   'zh'],
+               ['Japanese',  'ja'],
+               ['Nederlands','nl']
+               ]
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
@@ -54,10 +58,8 @@ class User < ActiveRecord::Base
                   :password_confirmation,
                   :time_zone,
                   :language,
-                  :conversations_first_comment,
                   :first_day_of_week,
                   :card_attributes,
-                  :avatar,
                   :notify_mentions,
                   :notify_conversations,
                   :notify_task_lists,
@@ -66,17 +68,15 @@ class User < ActiveRecord::Base
 
   attr_accessor   :activate
 
+  before_validation :sanitize_name
+  before_destroy :rename_as_deleted
+
   def before_save
-    #self.update_profile_score
     self.recent_projects_ids ||= []
     self.rss_token ||= generate_rss_token
   end
 
   def before_create
-    self.build_card
-    self.first_name = self.first_name.split(" ").collect(&:capitalize).join(" ")
-    self.last_name  = self.last_name.split(" ").collect(&:capitalize).join(" ")
-
     if invitation = Invitation.find_by_email(email)
       self.invited_by = invitation.user
       invitation.user.update_attribute :invited_count, (invitation.user.invited_count + 1)
@@ -117,6 +117,13 @@ class User < ActiveRecord::Base
 
   def shares_invited_projects_with?(user)
     Invitation.count(:conditions => {:project_id => user.project_ids, :invited_user_id => self.id}) > 0
+  end
+  
+  def users_with_shared_projects
+    ids = self.projects.map(&:user_ids).flatten
+    ids += Invitation.find(:all, :conditions => {:project_id => self.project_ids}, :select => 'user_id').map(&:user_id)
+    
+    User.find(:all, :conditions => {:id => ids.uniq})
   end
 
   def activities_visible_to_user(user)
@@ -194,12 +201,12 @@ class User < ActiveRecord::Base
   end
 
   def self.time_zones_to_send_daily_task_reminders_to
-    sending_hour = Time.parse(APP_CONFIG["daily_task_reminder_email_time"]).hour
+    sending_hour = Time.parse(Teambox.config.daily_task_reminder_email_time).hour
     time_zones_with_time(sending_hour)
   end
 
   def assigned_tasks(project_filter)
-    people.map { |person| person.project.tasks }.flatten.
+    people.reject{ |r| r.project.archived? }.map { |person| person.project.tasks }.flatten.
       select { |task| task.active? }.
       select { |task| task.assigned_to?(self) }.
       sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
@@ -207,6 +214,11 @@ class User < ActiveRecord::Base
 
   def tasks(from_date = Time.now.midnight, to_date = Time.now)
     Task.all(:joins => 'JOIN comments ON comments.target_id = tasks.id JOIN activities ON activities.target_id = comments.id', :conditions => ['activities.user_id = ? AND activities.created_at >= ? AND activities.created_at <= ? AND comment_type = ?', self.id, from_date, to_date, 'Task'], :select => "DISTINCT(name)", :order => "activities.created_at DESC")
+  end
+
+  def assigned_tasks_count
+    people.map { |person| person.project.tasks }.flatten.
+      select { |task| task.active? && task.assigned_to?(self) }.size
   end
 
   def tasks_for_daily_reminder_email
@@ -255,5 +267,38 @@ class User < ActiveRecord::Base
       comment.user != self &&
       !!( comment.body =~ /@all/i || comment.body =~ /@#{self.login}[^a-z0-9_]/i )
   end
+
+  DELETED_TAG = "deleted"
+  DELETED_REGEX = /#{DELETED_TAG}\d+__(.*)/i
+
+  def rename_as_deleted
+    tag = find_available_deleted_tag
+    update_attribute :login, "#{tag}#{login}" unless login =~ DELETED_REGEX
+    update_attribute :email, "#{tag}#{email}" unless email =~ DELETED_REGEX
+  end
+
+  def rename_as_active
+    login =~ DELETED_REGEX
+    update_attribute :login, Regexp.last_match(1).to_s if login =~ DELETED_REGEX
+    update_attribute :email, Regexp.last_match(1).to_s if email =~ DELETED_REGEX
+  end
+
+  protected
+
+    def find_available_deleted_tag
+      counter = 0
+      begin
+        counter += 1
+        tag = "#{DELETED_TAG}#{counter}__"
+        user = User.find_with_deleted(:first,
+                :conditions => "login LIKE '#{tag}#{login}' OR email LIKE '#{tag}#{email}'")
+      end while user
+      tag
+    end
+
+    def sanitize_name
+      self.first_name = first_name.blank?? nil : first_name.squish
+      self.last_name = last_name.blank?? nil : last_name.squish
+    end
 
 end

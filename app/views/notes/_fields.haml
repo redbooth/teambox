@@ -1,9 +1,8 @@
 .documentation
-  = textile_documentation_link
+  = formatting_documentation_link
 .name.text_field
   = f.label :name, t('.title'), :size => 74
-  = f.text_field :name, :class => 'focus'
+  = f.text_field :name
 .body.text_area
   = f.label :body, t('.body')
   = f.text_area :body, :id => :note_body
-  = autoresize :note_body

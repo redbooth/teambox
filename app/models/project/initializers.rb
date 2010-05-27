@@ -41,12 +41,12 @@ class Project
   end
 
 
-  def new_comment(user,target,comment)
-    self.comments.new(comment) do |comment|
-      comment.project_id = self.id
-      comment.user_id = user.id
+  def new_comment(user, target, attributes)
+    self.comments.new.tap { |comment|
+      comment.user = user
       comment.target = target
-    end
+      comment.attributes = attributes
+    }
   end
   
   def new_page(user,page)

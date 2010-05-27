@@ -15,7 +15,7 @@ class ExampleProjectsController < ApplicationController
       @project = current_user.find_or_create_example_project
     rescue Exception => e
       # Shouldn't happen. Most likely a problem with the projects, so check!
-      projects_invalid = current_user.projects.reject{|p|p.valid?}.map{|p| "\"#{h(p.name)}\""}
+      projects_invalid = current_user.projects.reject{|p|p.valid?}.map{|p| %("#{p.name}") }
       
       if projects_invalid.empty?
         flash[:error] = t('example_projects.new.error')

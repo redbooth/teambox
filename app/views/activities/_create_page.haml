@@ -1,10 +1,2 @@
-.activity{ :class => "#{activity.action_type}" }
-  .activity_icon{ :class => "activity_#{activity.target_type.to_s.underscore}" }
-  %span.name
-    = activity.user.name
-  = t(".#{activity.action_type}")
-  = activity_project_link(activity.project,:after) unless location_name?('show_projects')
-  = link_to page, project_page_path(page.project, page)
-  .date
-    = posted_date activity.posted_date
-  .clear
+- activity_section(activity) do |title|
+  %p= title

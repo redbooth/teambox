@@ -1,6 +1,6 @@
 .upload_area#upload_area{:style => 'display: none;'}
   %h3#upload_header
-    Upload
+    =t('uploads.new.select_a_file')
   =upload_iframe_form(comment)
   .uploads_save{ :style => 'display: block;', :id => 'uploads_save' }
   .uploads_current{ :style => (comment.uploads.count > 0 ? '' : 'display: block;'), :id => 'uploads_current' }

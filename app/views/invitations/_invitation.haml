@@ -1,4 +1,4 @@
-.person.invitation{:id => "invitation_#{invitation.id}"}
+.person[invitation]
   - if invitation.invited_user
     = thumb_avatar(invitation.invited_user)
     = t('.invited_user', :invitee => invitation.invited_user.login, :inviter => invitation.user.login)
@@ -9,10 +9,10 @@
   .status
     = t('.pending')
     = t('.time_ago', :time_ago_in_words => time_ago_in_words(invitation.updated_at))
-  .links
-    - if invitation.editable?(current_user)
-      = resend_invitation_link(target,invitation)
-      = loading('resend_invitation',invitation.id)
+  - if invitation.editable?(current_user)
+    .links
+      = link_to t('invitations.invitation.resend'), polymorphic_path([:resend, target, invitation])
+      = loading('resend_invitation', invitation.id)
       = t('common.or')
-      %span.discard= delete_invitation_link(invitation)
-  .clear
+      %span.discard= link_to t('invitations.invitation.discard'),
+        polymorphic_path([target, invitation]), 'data-method' => 'delete'

@@ -64,30 +64,44 @@ class InvitationsController < ApplicationController
       if @invitation.save
         @user = @invitation.invited_user
         f.html { redirect_to target_people_path }
+        f.m    { redirect_to target_people_path }
         f.js
       else
-        f.html do
-          flash[:error] = @invitation.errors.full_messages.first
-          redirect_to target_people_path
-        end
-        name = @user ? @user.name : 'user'
-        f.js { render :text => "alert('Error inviting #{user}. Maybe you are trying to invite an existing user.');" }
+        flash[:error] = @invitation.errors.full_messages.first
+        f.html { redirect_to target_people_path }
+        f.m    { redirect_to target_people_path }
+        f.js {
+          name = @user ? @user.name : 'user'
+          render :text => "alert('Error inviting #{name}. Maybe you are trying to invite an existing user.');"
+        }
       end
     end
   end
   
   def resend
-    @invitation = Invitation.find(params[:id])
+    @invitation = Invitation.find params[:id]
     @invitation.send_email if @invitation
-    respond_to{|f|f.js}
+    
+    respond_to do |wants|
+      wants.html {
+        flash[:notice] = t('invitations.resend.resent', :recipient => @invitation.email)
+        redirect_to :back
+      }
+      wants.js
+    end
   end
   
   def destroy
-    @invitation = Invitation.find(params[:id])
-    if @invitation
-      @invitation.destroy
+    @invitation = Invitation.find params[:id]
+    @invitation.destroy
+    
+    respond_to do |wants|
+      wants.html {
+        flash[:notice] = t('invitations.destroy.discarded', :user => @invitation.email)
+        redirect_to :back
+      }
+      wants.js
     end
-    respond_to{|f|f.js}
   end
   
   before_filter :load_user_invitation, :only => [ :accept, :decline ]
@@ -120,7 +134,6 @@ class InvitationsController < ApplicationController
       end
       
       @invite_target = @current_group || @current_project
-      return !@invite_target.nil?
     end
     
     def load_user_invitation

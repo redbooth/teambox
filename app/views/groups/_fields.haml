@@ -7,7 +7,7 @@
 .permalink.text_field
   = f.label :permalink, t('groups.fields.permalink')
   = f.text_field :permalink
-  = tooltip 'group_permalink', t('groups.fields.permalink_description')
+  - tooltip t('groups.fields.permalink_description')
   .preview
     = request.protocol + "<span id='handle'></span>." + request.host
   = watch_permalink_group

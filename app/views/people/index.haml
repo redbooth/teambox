@@ -1,8 +1,34 @@
-= invite_form(@current_project,Invitation.new)
+- if @current_project.admin?(current_user)
+  = render 'invitations/new', :project => @current_project, :invitation => Invitation.new
 
 #people.people
-  = list_invitations_for_project(@current_project,@invitations)
-  = list_people(@current_project,@people)
+  = render :partial => 'invitations/invitation', :collection => @invitations,
+      :locals => { :group => nil, :project => @current_project, :target => @current_project }
+  = render @people, :project => @current_project
 
 - content_for :column do
-  = render :partial => 'column'
+  - if @current_project.admin?(current_user)
+    - other_projects = current_user.projects - [@current_project]
+    - if other_projects.any?
+      - form_tag project_contacts_path(@current_project), :method => 'get', :id => 'other_projects' do
+        %h2= t('invitations.search.invite_from_project')
+        .field
+          = select_tag :id, options_from_other_projects(other_projects)
+          = loading_image "people_project_load"
+      #sidebar_people
+
+  - else
+    - @admins = @people.map(&:user).select { |user| @current_project.admin?(user) }
+    %h2= t('people.column.inviting')
+    %p= t('people.column.only_admins_can_invite') 
+    %p= t('people.column.contact_admins',
+          :admins => @admins.collect { |user| link_to(user, user) }.to_sentence,
+          :count => @admins.size)
+
+  - unless @current_project.owner?(current_user)
+    - current_person = @people.find { |p| p.user == current_user }
+    %h2= t('people.column.leaving')
+    %p= t('people.column.you_can_leave')
+    %p= link_to t('people.column.leave_project'),
+          project_person_path(@current_project, current_person), 
+          :method => :delete, :confirm => t('people.column.confirm_delete')

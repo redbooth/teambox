@@ -1,20 +1,20 @@
 - content_for :column do
-  = user_navigation
+  = render 'shared/user_navigation'
 
 %h2= t(".title_#{@sub_action}")
 
-- form_for :user, @current_user, :url => user_path(:id => @current_user.id), :html => { :multipart => true, :method => :put, :id => 'edit_user', :class => "#{'form_error' unless @current_user.errors.empty?}" } do |f|
-  = f.error_messages
-  = user_fields(f,current_user,:sub_action => @sub_action)
-  .submit
-    = submit_tag t('.submit')
+- secure_post = @sub_action == 'settings' && Teambox.config.secure_logins
+- secure_url = secure_post ? polymorphic_url(current_user, :protocol => 'https') : nil
 
-- if @sub_action == 'settings'
-  = clear_password_if_not_updated
+- form_for current_user, :url => secure_url, :html => { :multipart => true } do |form|
+  = form.error_messages
+  = render form
+  - unless @sub_action == 'delete'
+    .submit= submit_tag t('.submit')
 
-- if @sub_action == 'profile'
-  - form_for @current_user do |f|
-    - f.fields_for :card, @current_user.card do |card_form|
+- if 'profile' == @sub_action
+  - form_for current_user do |form|
+    - form.fields_for :card do |card_form|
       - content_for :js_templates do
         - %w(phone_numbers email_addresses websites addresses ims social_networks).each do |field|
           = "var #{field}='#{generate_template(card_form, field.to_sym)}'"

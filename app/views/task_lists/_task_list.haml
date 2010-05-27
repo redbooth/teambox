@@ -1,4 +1,0 @@
-.task_list{ :id => task_list_id(:item,project,task_list), :class => "task_list_#{task_list.id} #{ 'active_list' if current_target == task_list }" }
-  = task_list_drag_link(task_list)
-  = comments_count(task_list,:column)
-  = the_task_list_link(task_list)

@@ -1,8 +1,9 @@
 class CommentsController < ApplicationController
-  before_filter :load_comment, :only => [:edit, :update, :show, :destroy]
-  before_filter :load_target, :only => [:create]
+  before_filter :load_comment, :only => [:edit, :update, :convert, :show, :destroy]
+  before_filter :load_target, :only => [:create, :convert]
   before_filter :load_orginal_controller, :only => [:create]
-  before_filter :check_permissions, :only => [:create, :edit, :update]
+  before_filter :check_timeless, :only => [:edit, :convert]
+  before_filter :check_permissions, :only => [:create, :edit, :update, :convert]
   before_filter :set_page_title
 
   cache_sweeper :task_list_panel_sweeper, :only => [:create]
@@ -43,37 +44,80 @@ class CommentsController < ApplicationController
     end
 
     respond_to do |f|
-      f.html { redirect_to redirect_path }
-      f.m    { redirect_to redirect_path }
-      f.js {
-        # Fetch new comments
-        if params[:last_comment_id]
-          @last_id = params[:last_comment_id].to_i
-          new_id = @comment.new_record? ? 0 : @comment.id
-          @new_comments = @target.comments.find(:all, :conditions => ['comments.id != ? AND comments.id > ?', new_id, @last_id])
-          @last_id = @new_comments[0].id unless @new_comments.empty?
-        end
-      }
+      if !@comment.new_record?
+        # success!
+        f.html { redirect_to redirect_path }
+        f.m    { redirect_to redirect_path }
+        f.js   { fetch_new_comments }
+        handle_api_success(f, @comment, true)
+      else
+        # error
+        f.html { redirect_to redirect_path }
+        f.m    { redirect_to redirect_path }
+        f.js   { fetch_new_comments }
+        handle_api_error(f, @comment)
+      end
     end
   end
 
   def show
-    respond_to{|f|f.js}
+    respond_to do |f|
+      f.js
+      f.xml { render :xml => @comment.to_xml }
+      f.json{ render :as_json => @comment.to_xml }
+      f.yaml{ render :as_yaml => @comment.to_xml }
+    end
   end
 
   def edit
+    @edit_part = params[:part]
     respond_to{|f|f.js}
   end
 
   def update
     if @has_permission
-      @comment.save_uploads(params) if @comment.update_attributes(params[:comment])
+      @saved = @comment.update_attributes(params[:comment])
+      @comment.save_uploads(params) if @saved
     end
-  
-    # Expire cache
-    expire_fragment("#{current_user.language}_#{current_user.time_zone.gsub(/\W/,'')}_comment_#{@comment.id}")
     
-    respond_to{|f|f.js}
+    if @saved
+      respond_to do |f|
+        f.js
+        handle_api_success(f, @comment)
+      end
+    else
+      respond_to do |f|
+        f.js
+        handle_api_error(f, @comment)
+      end
+    end
+  end
+  
+  def convert
+    if request.method == :put and @has_permission and @comment.target.class == Project and @target.class == TaskList and !@target.archived
+      # Make a new task in the target...
+      params = {
+        'name' => @comment.body
+      }
+      @task = @current_project.create_task(current_user,@target,params)
+      
+      if @task.errors.empty?
+        @comment.target = @task
+        @comment.save
+      end
+    end
+    
+    if @task and !@task.new_record?
+      respond_to do |f|
+        f.js { render :template => 'comments/update' }
+        handle_api_success(f, @task, true)
+      end
+    else
+      respond_to do |f|
+        f.js { render :template => 'comments/update' }
+        handle_api_error(f, @task)
+      end
+    end
   end
 
   def destroy
@@ -83,17 +127,18 @@ class CommentsController < ApplicationController
     else  
       @has_permission = false
     end
-  end
-
-  def preview
-    if params.has_key?(:project_id)
-      @comment  = @current_project.new_comment(current_user,@target,params[:comment])
+    
+    if @has_permission
+      respond_to do |f|
+        f.js
+        handle_api_success(f, @comment)
+      end
     else
-      @comment = current_user.new_comment(current_user,@target,params[:comment])
+      respond_to do |f|
+        f.js
+        handle_api_error(f, @comment)
+      end
     end
-
-    @comment.send(:format_attributes)
-    render :text => @comment.body_html
   end
 
   private
@@ -114,6 +159,12 @@ class CommentsController < ApplicationController
       end
     end
     
+    def check_timeless
+      if (action_name == 'edit' && params[:part] == 'task') || action_name == 'convert'
+        @checks_time = false
+      end
+    end
+    
     def check_permissions
       # Can they even create comments?
       if @comment.nil?
@@ -128,11 +179,12 @@ class CommentsController < ApplicationController
       
       if @comment
         @has_permission = true
+        @checks_time = true if @checks_time.nil?
         
         if action_name == 'destroy'
-          return if @comment.can_destroy?(current_user)
+          return if @comment.can_destroy?(current_user, @checks_time)
         else
-          return if @comment.can_edit?(current_user)
+          return if @comment.can_edit?(current_user, @checks_time)
         end
         
         # Error update handled in rjs handlers
@@ -157,9 +209,6 @@ class CommentsController < ApplicationController
         if params[:comment][:target_attributes]
           t.assigned_id = params[:comment][:target_attributes][:assigned_id]
         end
-        #if t.archived? && [Task::STATUSES[:new],Task::STATUSES[:open],Task::STATUSES[:hold]].include?(t.status)
-        #  t.archived = false
-        # end
         t
       elsif params.has_key?(:task_list_id)
         @current_project.task_lists.find(params[:task_list_id])
@@ -167,6 +216,16 @@ class CommentsController < ApplicationController
         @current_project.conversations.find(params[:conversation_id])
       else
         @current_project
+      end
+    end
+    
+    def fetch_new_comments
+      # Fetch new comments
+      if params[:last_comment_id]
+        @last_id = params[:last_comment_id].to_i
+        new_id = @comment.new_record? ? 0 : @comment.id
+        @new_comments = @target.comments.find(:all, :conditions => ['comments.id != ? AND comments.id > ?', new_id, @last_id])
+        @last_id = @new_comments[0].id unless @new_comments.empty?
       end
     end
 end

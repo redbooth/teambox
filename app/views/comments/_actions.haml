@@ -1,6 +1,0 @@
-%p.actions
-  %span
-    - if true#comment.can_edit?(current_user)
-      = edit_comment_link(comment)
-    - if comment.can_destroy?(current_user)
-      = delete_comment_link(comment)

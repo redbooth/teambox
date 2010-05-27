@@ -1,0 +1,17 @@
+- show_archive_link = (task_list.tasks.unarchived.empty? && task_list.tasks.archived.size > 0)
+- header_on_index = @on_index || (action_name == 'index')
+- show_the_lists = !(header_on_index and task_list.archived)
+.task_list_container{ :id => task_list_id(nil,project,task_list), :class => (task_list.archived ? 'archived' : nil) }
+  .task_list{ :id => task_list_id(:with_main_tasks,project,task_list) }
+    - if location_name?('index_task_lists')
+      .head{:id => task_list_id(:header_index,project,task_list) }
+        = the_task_list_link(task_list)
+        %span.actiondate= date_range_for_task_list(task_list)
+    - if show_the_lists
+      %div{ :id => task_list_id(:the_main_tasks,project,task_list), :class => 'tasks open' }
+        - if !task_list.archived
+          = list_tasks(task_list.tasks.unarchived,false)
+      .task_list_closed{ :id => task_list_id(:with_closed_tasks,project,task_list) }
+        %div{ :id => task_list_id(:the_closed_tasks,project,task_list), :class => 'tasks closed' }
+          - if !header_on_index
+            = list_tasks(task_list.tasks.archived,false)

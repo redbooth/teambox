@@ -14,17 +14,50 @@ class Comment < ActiveRecord::Base
 
   named_scope :with_hours, :conditions => 'hours > 0'
 
-  attr_accessible :status, :previous_status, :assigned, :previous_assigned
+  attr_accessible :status, :previous_status, :assigned, :previous_assigned, :human_hours
   validate :check_body
 
   attr_accessor :mentioned # used by format_usernames to set who's being mentioned
   attr_accessor :activity
-  
+
+  def hours?
+    hours and hours > 0
+  end
+
+  def human_hours
+    self.hours
+  end
+
+  # Instead of using the float 'hours' field in a form, we use 'human_hours'
+  # and we can take:
+  # 7 (hours)
+  # 7.5 (hours with decimals)
+  # 7h (hours)
+  # 30m (minutes => fractions of hours)
+  # 2h 30m (hours and minutes => hours with decimals)
+  # 2:30 (hours and minutes => hours with decimals)
+  def human_hours=(duration)
+    self.hours = if duration =~ /(\d+)h[ ]*(\d+)m/i
+      # 2h 15m
+      $1.to_f + $2.to_f / 60
+    elsif duration =~ /(\d+):(\d+)/
+      # 2:15
+      $1.to_f + $2.to_f / 60.0
+    elsif duration =~ /(\d+)m/i
+      # 20m
+      $1.to_f / 60.0
+    elsif duration =~ /(\d+)h/i
+      # 3h
+      $1.to_f
+    else
+      # old-style numeric format
+      duration.to_f
+    end
+  end
+
   def check_body
     if body and body.strip.empty?
-      if target.is_a? Task
-        @errors.add :body, :no_body_task
-      else
+      if !target.is_a? Task
         @errors.add :body, :no_body_generic
       end
     end
@@ -34,11 +67,17 @@ class Comment < ActiveRecord::Base
     User.find_with_deleted(user_id)
   end
   
-  def can_edit?(current_user)
+  def can_modify?(current_user, limit=true)
+    can_edit?(current_user, limit) or can_destroy?(current_user, limit)
+  end
+  
+  def can_edit?(current_user, limit=true)
     # Only the owner can edit their comment
     if self.user_id != current_user.id
       return false
     end
+    
+    return true unless limit
     
     # We can only edit / delete up to 15 minutes after creation
     if Time.now < (self.created_at + 15.minutes)
@@ -48,16 +87,27 @@ class Comment < ActiveRecord::Base
     end
   end
   
-  def can_destroy?(current_user)
-    if self.user_id != current_user.id
-      return false unless self.project.admin?(current_user)
-    end
+  def can_destroy?(current_user, limit=true)
+    # admins can remove at any time, users
+    # need to own the comment
+    return true if self.project.admin?(current_user)
+    return false if self.user_id != current_user.id
+    
+    return true unless limit
     
     # 15 minutes restriction
     if Time.now < (self.created_at + 15.minutes)
       true
     else
       false
+    end
+  end
+  
+  def day
+    if self.created_at.mday.to_s.length == 1
+      current_day = "0#{self.created_at.mday.to_s}"
+    else
+      current_day =  self.created_at.mday.to_s
     end
   end
   

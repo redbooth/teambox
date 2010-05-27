@@ -1,3 +1,4 @@
+@signup
 Feature: Signing up
   Scenario: Mislav successfully signs up and confirms his email
     When I go to the signup page

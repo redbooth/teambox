@@ -9,7 +9,7 @@
       %strong{ :style => 'color: rgb(50,50,50);' }
         = comment.user.name + ', '
       %span{ :style => 'color: rgb(150,150,150);' }
-        = I18n.l(comment.created_at, :format => "%b %d &mdash; %I:%M %p")
+        = I18n.l(comment.created_at.in_time_zone(@recipient.time_zone), :format => "%b %d &mdash; %I:%M %p")
       ~ comment.body_html
 
     - if comment.uploads.any?

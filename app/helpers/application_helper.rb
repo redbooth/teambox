@@ -1,6 +1,32 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  # overwrite framework helper because it forces ":raise => true", meaning
+  # missing translations wouldn't have a chance to hit the exception_handler
+  def translate(key, options = {})
+    translation = I18n.translate(scope_keys_by_partial(key), options)
+    translation.respond_to?(:join) ? translation.join : translation
+  rescue I18n::MissingTranslationData => e
+    keys = I18n.send(:normalize_translation_keys, e.locale, e.key, e.options[:scope])
+    content_tag('span', keys.join(', '), :class => 'translation_missing')
+  end
+  alias t translate
+  
+  def csrf_meta_tag
+    if protect_against_forgery?
+      %(<meta name="csrf-param" content="#{Rack::Utils.escape_html(request_forgery_protection_token)}"/>\n<meta name="csrf-token" content="#{Rack::Utils.escape_html(form_authenticity_token)}"/>)
+    end
+  end
+  
+  def logo_image
+    header_group = @current_project.try(:group) || @group
+    if header_group and header_group.logo?
+      header_group.logo.url(:top)
+    else
+      'header_logo_black.png'
+    end
+  end
+
   def strip(project)
     if project && project.archived
       render :partial => 'shared/strip', :locals => { :project => project }
@@ -32,35 +58,13 @@ module ApplicationHelper
       :loading_id => loading_id }
   end
 
-  def hot_flashes(flash)
-    show_flash_bar = true
-    if flash[:success]
-      class_name = 'success'
-      text = flash[:success]
-    elsif flash[:error]
-      class_name = 'error'
-      text = flash[:error]
-    elsif flash[:notice]
-      class_name = 'notice'
-      text = flash[:notice]
-    else
-      show_flash_bar = false
+  # types: success, error, notice
+  def show_flash
+    flash.each do |type, message|
+      unless message.blank?
+        haml_tag :p, message, :class => "flash flash-#{type}"
+      end
     end
-    "<div class='flash_box flash_#{class_name}'><div>#{text}</div></div>" if show_flash_bar
-  end
-
-  def header
-    render :partial => 'shared/header'
-  end
-
-  def task_navigation(project)
-    render :partial => 'shared/task_navigation',
-      :locals => { :project => project }
-  end
-
-  def project_navigation(project)
-    render :partial => 'shared/project_navigation',
-      :locals => { :project => project }
   end
 
   def navigation(project,projects,recent_projects)
@@ -70,9 +74,9 @@ module ApplicationHelper
         :projects => projects,
         :recent_projects => recent_projects }
   end
-
-  def global_navigation
-    render :partial => 'shared/global_navigation'
+  
+  def project_navigation(project)
+    render 'shared/project_navigation', :project => project
   end
 
   def footer
@@ -154,8 +158,13 @@ module ApplicationHelper
   def posted_date(datetime)
     datetime = datetime.in_time_zone(current_user.time_zone)
 
-    content_tag(:span, l(datetime, :format => 'short'), :id => "date_#{datetime.to_i}",
+    content_tag(:span, l(datetime, :format => :long), :id => "date_#{datetime.to_i}",
       :class => 'timeago', :alt => (datetime.to_i * 1000)) << javascript_tag("format_posted_date_#{I18n.locale}()")
+  end
+  
+  def datetime_ms(datetime)
+    datetime = datetime.in_time_zone(current_user.time_zone)
+    (datetime.to_i * 1000)
   end
 
   def large_trash_image
@@ -183,7 +192,7 @@ module ApplicationHelper
   end
 
   def drag_image
-    image_tag('drag.png', :class => 'drag', :style => 'display: none')
+    image_tag('drag.png', :class => 'drag')
   end
 
   def remove_image
@@ -194,8 +203,11 @@ module ApplicationHelper
     image_tag('add_button.jpg', :class => 'add')
   end
 
-  def loading_action_image(e=nil)
-    image_tag('loading_action.gif', :id => "loading_action#{ "_#{e}" if e}")
+  def loading_action_image(e=nil, hidden=false)
+    image_tag('loading_action.gif',
+              :id => "loading_action#{ "_#{e}" if e}",
+              :class => 'loading_action',
+              :style => (hidden ? 'display:none' : nil))
   end
 
   def reload_javascript_events
@@ -211,8 +223,8 @@ module ApplicationHelper
   end
 
   def support_link
-    if APP_CONFIG.has_key? 'support_url'
-      link_to t('.support'), APP_CONFIG['support_url']
+    if url = Teambox.config.support_url
+      link_to t('.support'), url
     end
   end
 
@@ -221,8 +233,8 @@ module ApplicationHelper
   end
 
   def help_link
-    if APP_CONFIG.has_key? 'help_url'
-      link_to t('.help'), "#{APP_CONFIG['help_url']}/#{controller.controller_name}"
+    if url = Teambox.config.help_url
+      link_to t('.help'), "#{url}/#{controller.controller_name}"
     end
   end
 
@@ -269,6 +281,10 @@ module ApplicationHelper
 
   def update_watching(project,user,target,state = :normal)
     page.replace 'watching', people_watching(project,user,target,state)
+    page.delay(2) do
+      page['updated_watch_state'].visual_effect :fade, :duration => 2
+    end
+    
   end
 
   def upgrade_browser
@@ -277,10 +293,6 @@ module ApplicationHelper
 
   def latest_announcement
     render :partial => 'shared/latest_announcement'
-  end
-  
-  def face_box
-    render :partial => 'shared/facebox'
   end
 
   def errors_for(model, field)
@@ -292,24 +304,68 @@ module ApplicationHelper
   end
 
   def link_to_public_page(name)
-    if APP_CONFIG.has_key?("#{name}_url")
-      link_to t("shared.public_navigation.#{name}"), APP_CONFIG["#{name}_url"]
+    if url = Teambox.config["#{name}_url"]
+      link_to t("shared.public_navigation.#{name}"), url
     end
   end
 
-  def textile_documentation_link
-    link_to t('.text_styling'), 'http://help.teambox.com/faqs/advanced-features/textile', :target => '_blank'
+  def formatting_documentation_link
+    link_to t('.text_styling'), 'http://daringfireball.net/projects/markdown/', :target => '_blank'
   end
 
-  def autoresize(id)
-    javascript_tag "activateResize('#{id.to_s}')"
-  end
-  
   def host_with_protocol
     request.protocol + request.host + request.port_string
   end
   
+  def friendly_hours_value(hours)
+    hours = hours.to_f
+    if hours > 0
+      minutes = (hours % 1) * 60
+      if minutes.zero?
+        t('comments.comment.hours', :hours => hours.to_i)
+      else
+        t('comments.comment.hours_with_minutes', :hours => hours.to_i, :minutes => minutes.to_i)
+      end
+    end
+  end
+  
+  def set_reload_url(path)
+    @reload_url = path
+  end
+  
+  def reload_url
+    (@reload_url || url_for(request.path_parameters))
+  end
+  
+  def safe_remove_element(*ids)
+    Array(ids).each do |id|
+      page << "if ($('#{id}')) $('#{id}').remove();"
+    end
+  end
+  
+  def rss?
+    request.format == :rss
+  end
+  
   def groups_enabled?
     APP_CONFIG['allow_groups'] || false
+  end
+  
+  def time_tracking_enabled?
+    APP_CONFIG['allow_time_tracking'] || false
+  end
+  
+  def tooltip(text)
+    haml_tag :p, h(text), :class => 'fyi'
+  end
+
+  def auto_discovery_link_by_context(user, project)
+    if user
+      if project
+        auto_discovery_link_tag(:rss, user_rss_token(project_path(project, :format => :rss)))
+      else
+        auto_discovery_link_tag(:rss, user_rss_token(projects_path(:format => :rss)))
+      end
+    end
   end
 end

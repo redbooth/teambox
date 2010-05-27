@@ -1,4 +1,4 @@
-.text_field.phone_number.hoverable
+.text_field.phone_number
   = f.text_field :name
   = f.select :account_type, options_for_card_type(PhoneNumber::TYPES)
   = remove_link_unless_new_record(f)

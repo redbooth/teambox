@@ -1,11 +1,8 @@
-# This file is copied to ~/spec when you run 'ruby script/generate rspec'
-# from the project root directory.
-ENV["RAILS_ENV"] ||= 'test'
-require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_ROOT)
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../config/environment', __FILE__) unless defined?(RAILS_ROOT)
 require 'spec/autorun'
 require 'spec/rails'
-require 'factory_girl'
-require File.dirname(__FILE__) + '/factories.rb'
+require File.expand_path('../factories', __FILE__)
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

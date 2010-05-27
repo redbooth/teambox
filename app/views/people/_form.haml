@@ -1,7 +1,0 @@
--people_form_for(project,person) do |f|
-  %h2= person.user.name
-  = person_fields(f,project,person)
-  = person_submit(project,person)
-  = javascript_tag "$$('.roles input').each(function(e){ if (e.checked) { e.up('.role').addClassName('active') }; })"
-  = javascript_tag "Person.watch_role();"
-   

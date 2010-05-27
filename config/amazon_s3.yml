@@ -1,12 +1,25 @@
-login: &login
-  access_key_id: 
-  secret_access_key: 
+defaults: &defaults
+  # On Heroku, add your Amazon credentials to config vars:
+  #   $ heroku config:add S3_KEY=123 S3_SECRET=xyz
+  #
+  # Otherwise replace these expressions with your credentials.
+  access_key_id: <%= ENV['S3_KEY'] %>
+  secret_access_key: <%= ENV['S3_SECRET'] %>
+  
+  # Remember that bucket names must be unique across all of Amazon S3.
+  # Check name availability online: http://bucket.heroku.com/
+  # If needed, configure per-environment bucket names in the bottom.
+  bucket: <%= ENV['S3_BUCKET'] %>
+
+  # http://docs.amazonwebservices.com/AmazonS3/latest/dev/index.html?RESTAccessPolicy.html#RESTCannedAccessPolicies
+  s3_permissions: :public_read
+  # set to HTTPS when read permissions are more restrictive
+  s3_protocol: http
 
 development:
-  <<: *login
-
-test:
-  <<: *login
+  <<: *defaults
+  # bucket: teambox-dev
 
 production:
-  <<: *login
+  <<: *defaults
+  # bucket: teambox

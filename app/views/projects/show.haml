@@ -1,19 +1,19 @@
-= banner(@events,@chart)
-
 - if @pending_projects.any?
   .invitations
     = list_pending_invites(@pending_projects)
 
-%h2
-  = t('.update_your_status')
-  %span.help
-    = textile_documentation_link
+- if @current_project.commentable?(current_user) && @current_project.archived == false
+  %h2
+    = t('.update_your_status')
+    %span.help
+      = formatting_documentation_link
 
-= new_comment_form(@current_project,@current_project.comments.new)
+  = new_comment_form(@current_project,@current_project.comments.new)
 
 #activities
   = list_activities(@activities)
   = show_more_button(@activities)
+= javascript_tag autorefresh(@activities, @current_project)
   
 - content_for :column do
   .project_name= @current_project.name
@@ -25,6 +25,6 @@
   - if @current_project.users.size > 1
     .tip
       = t('.tip')
-  = subscribe_to_project_link(@current_project)
-  = subscribe_to_calendar_link(@current_project)
+  = instructions_for_feeds
+  = instructions_for_calendars
   = #print_project_link(@current_project)

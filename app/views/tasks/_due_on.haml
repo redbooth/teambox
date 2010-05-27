@@ -1,7 +1,10 @@
-%span.due_on#due_on{ :class => "#{'overdue' if task.open? && task.overdue? } #{'today' if task.open? && task.due_today? }"}
+%span.due_on#due_on{ :class => "#{'overdue' if task.overdue? } #{'today' if task.open? && task.due_today? }"}
   - if task.due_on
     - if task.overdue?
-      = I18n.l(task.due_on, :format => '%b %d') + ' - ' + t('tasks.overdue', :days => task.overdue)
+      - if task.overdue > 5
+        = I18n.l(task.due_on, :format => '%b %d')
+      - else
+        = t('tasks.overdue', :days => task.overdue)
     - elsif task.due_today?
       = t('.today')
     - elsif task.due_tomorrow?

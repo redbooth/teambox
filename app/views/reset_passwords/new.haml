@@ -4,7 +4,7 @@
   .email.text_field
     = f.label :email
     = errors_for @reset_password, :email
-    = f.text_field :email, :class => 'focus'
+    = f.text_field :email, :autofocus => true
   .submit
     = submit_tag t('.submit')
 

@@ -1,0 +1,8 @@
+- if @contacts.any?
+  %ol
+    = list_of @contacts do |user|
+      = micro_avatar user
+      = link_to user.name, user
+
+- else
+  %p= t('people.column.no_contacts')

@@ -1,17 +1,30 @@
-- cache "#{@current_user.language}_#{@current_user.time_zone.gsub(/\W/,'')}_comment_#{comment.id}" do
-  .comment{:id => "comment_#{comment.id}" }
+- cache_editable_comment comment do
+  .comment{:id => "comment_#{comment.id}", :immutable_at => datetime_ms(comment.created_at + 15.minutes) }
     .info
       = thumb_avatar(comment.user)
     .block
-      .date
-        = posted_date comment.created_at
-      = comment_actions_link(comment)
+      - unless rss?
+        .actions_menu
+          %span.actiondate= posted_date comment.created_at
+          %span.loading{:style => 'display:none'}= "Loading..."
+          - if comment.can_modify?(current_user, false)
+            = image_tag('triangle.png', :class => 'triangle')
+            .extra
+              - if comment.target.class == Project
+                = convert_comment_link(comment)
+              - if comment.can_edit?(current_user)
+                = edit_comment_link(comment)
+              .tactione{:style => (comment.can_edit?(current_user) ? 'display:none' : nil)}
+                = t('.cannot_edit')
+              - if comment.can_destroy?(current_user)
+                = delete_comment_link(comment)
       .name
-        = conversation_last_comment_text(comment)
-        = activity_comment_user_link(comment)
-        = activity_project_link(comment.project)
-        = activity_comment_target_link(comment)
-        = comment_task_status(comment) if comment.target_type == 'Task'
+        = activity_title(comment)
+        - if comment.target_type == 'Task'
+          = comment_task_status(comment)
+        - if comment.hours?
+          %span.hours= friendly_hours_value(comment.hours)
+        = activity_project_link(comment.project) unless comment.target.is_a? Project
       .body.textilized
         ~ comment.body_html
       - if comment.uploads.any?

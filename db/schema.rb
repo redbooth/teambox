@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100125103357) do
+ActiveRecord::Schema.define(:version => 20100511133109) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "last_comment_id"
-    t.integer  "comments_count", :default => 0, :null => false
+    t.integer  "comments_count",  :default => 0, :null => false
     t.text     "watchers_ids"
     t.datetime "deleted_at"
     t.datetime "created_at"
@@ -116,6 +116,24 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.datetime "created_on"
   end
 
+  create_table "groups", :force => true do |t|
+    t.string   "name",              :limit => 40
+    t.text     "description"
+    t.string   "permalink",         :limit => 40
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "deleted_at"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+  end
+
+  create_table "groups_users", :id => false, :force => true do |t|
+    t.integer "group_id"
+    t.integer "user_id"
+  end
+
   create_table "ims", :force => true do |t|
     t.integer "card_id"
     t.string  "name"
@@ -126,7 +144,7 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
   create_table "invitations", :force => true do |t|
     t.integer  "user_id"
     t.integer  "project_id"
-    t.integer  "role",           :default => 2
+    t.integer  "role",            :default => 2
     t.integer  "group_id"
     t.string   "email"
     t.integer  "invited_user_id"
@@ -193,16 +211,17 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
   end
 
   create_table "projects", :force => true do |t|
-    t.integer  "group_id", :default => nil
+    t.integer  "group_id"
     t.integer  "user_id"
     t.string   "name"
     t.string   "permalink"
     t.integer  "last_comment_id"
-    t.integer  "comments_count",  :default => 0, :null => false
+    t.integer  "comments_count",  :default => 0,     :null => false
     t.boolean  "archived",        :default => false
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "tracks_time",     :default => false
   end
 
   add_index "projects", ["deleted_at"], :name => "index_projects_on_deleted_at"
@@ -240,12 +259,12 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.string   "name"
     t.integer  "position"
     t.integer  "last_comment_id"
-    t.integer  "comments_count",       :default => 0, :null => false
+    t.integer  "comments_count",       :default => 0,     :null => false
     t.text     "watchers_ids"
     t.boolean  "archived",             :default => false
     t.datetime "deleted_at"
-    t.integer  "archived_tasks_count", :default => 0, :null => false
-    t.integer  "tasks_count",          :default => 0, :null => false
+    t.integer  "archived_tasks_count", :default => 0,     :null => false
+    t.integer  "tasks_count",          :default => 0,     :null => false
     t.datetime "completed_at"
     t.date     "start_on"
     t.date     "finish_on"
@@ -263,7 +282,7 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "position"
-    t.integer  "comments_count",  :default => 0, :null => false
+    t.integer  "comments_count",  :default => 0,     :null => false
     t.integer  "last_comment_id"
     t.text     "watchers_ids"
     t.integer  "assigned_id"
@@ -279,6 +298,34 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
   add_index "tasks", ["deleted_at"], :name => "index_tasks_on_deleted_at"
   add_index "tasks", ["project_id"], :name => "index_tasks_on_project_id"
   add_index "tasks", ["task_list_id"], :name => "index_tasks_on_task_list_id"
+
+  create_table "tolk_locales", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tolk_locales", ["name"], :name => "index_tolk_locales_on_name", :unique => true
+
+  create_table "tolk_phrases", :force => true do |t|
+    t.string   "key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tolk_phrases", ["key"], :name => "index_tolk_phrases_on_key", :unique => true
+
+  create_table "tolk_translations", :force => true do |t|
+    t.integer  "phrase_id"
+    t.integer  "locale_id"
+    t.text     "text"
+    t.text     "previous_text"
+    t.boolean  "primary_updated", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tolk_translations", ["phrase_id", "locale_id"], :name => "index_tolk_translations_on_phrase_id_and_locale_id", :unique => true
 
   create_table "uploads", :force => true do |t|
     t.integer  "user_id"
@@ -297,78 +344,73 @@ ActiveRecord::Schema.define(:version => 20100125103357) do
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
 
   create_table "users", :force => true do |t|
-    t.string   "login",                       :limit => 40
-    t.string   "first_name",                  :limit => 20,  :default => ""
-    t.string   "last_name",                   :limit => 20,  :default => ""
-    t.text     "biography",                                  :default => "", :null => false
-    t.string   "email",                       :limit => 100
-    t.string   "crypted_password",            :limit => 40
-    t.string   "salt",                        :limit => 40
-    t.string   "remember_token",              :limit => 40
+    t.string   "login",                     :limit => 40
+    t.string   "first_name",                :limit => 20,  :default => ""
+    t.string   "last_name",                 :limit => 20,  :default => ""
+    t.text     "biography"
+    t.string   "email",                     :limit => 100
+    t.string   "crypted_password",          :limit => 40
+    t.string   "salt",                      :limit => 40
+    t.string   "remember_token",            :limit => 40
     t.datetime "remember_token_expires_at"
-    t.string   "time_zone",                                  :default => "Eastern Time (US & Canada)"
-    t.string   "language",                                   :default => "en"
-    t.boolean  "conversations_first_comment",                :default => true
-    t.string   "first_day_of_week",                          :default => "sunday"
-    t.integer  "invitations_count",                          :default => 0,   :null => false
-    t.float    "profile_score",                              :default => 0.0
-    t.float    "profile_percent",                            :default => 0.0
-    t.string   "profile_grade"
-    t.string   "login_token",                 :limit => 40
+    t.string   "time_zone",                                :default => "Eastern Time (US & Canada)"
+    t.string   "language",                                 :default => "en"
+    t.string   "first_day_of_week",                        :default => "sunday"
+    t.integer  "invitations_count",                        :default => 0,                            :null => false
+    t.string   "login_token",               :limit => 40
     t.datetime "login_token_expires_at"
-    t.boolean  "welcome",                                    :default => false
-    t.boolean  "confirmed_user",                             :default => false
+    t.boolean  "welcome",                                  :default => false
+    t.boolean  "confirmed_user",                           :default => false
     t.integer  "last_read_announcement"
     t.datetime "deleted_at"
-    t.string   "rss_token",                   :limit => 40
-    t.boolean  "admin",                                      :default => false
-    t.integer  "comments_count",                             :default => 0,     :null => false
-    t.boolean  "notify_mentions",                            :default => true
-    t.boolean  "notify_conversations",                       :default => true
-    t.boolean  "notify_task_lists",                          :default => true
-    t.boolean  "notify_tasks",                               :default => true
+    t.string   "rss_token",                 :limit => 40
+    t.boolean  "admin",                                    :default => false
+    t.integer  "comments_count",                           :default => 0,                            :null => false
+    t.boolean  "notify_mentions",                          :default => true
+    t.boolean  "notify_conversations",                     :default => true
+    t.boolean  "notify_task_lists",                        :default => true
+    t.boolean  "notify_tasks",                             :default => true
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.integer  "invited_by_id"
-    t.integer  "invited_count",                              :default => 0,     :null => false
+    t.integer  "invited_count",                            :default => 0,                            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "wants_task_reminder",                        :default => true
+    t.boolean  "wants_task_reminder",                      :default => true
     t.text     "recent_projects_ids"
-    t.string   "feature_level",                              :default => ""
-    t.string   "spreedly_token",                             :default => ""
+    t.string   "feature_level",                            :default => ""
+    t.string   "spreedly_token",                           :default => ""
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 
+  create_table "versions", :force => true do |t|
+    t.integer  "versioned_id"
+    t.string   "versioned_type"
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.string   "user_name"
+    t.text     "changes"
+    t.integer  "number"
+    t.string   "tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "versions", ["created_at"], :name => "index_versions_on_created_at"
+  add_index "versions", ["number"], :name => "index_versions_on_number"
+  add_index "versions", ["tag"], :name => "index_versions_on_tag"
+  add_index "versions", ["user_id", "user_type"], :name => "index_versions_on_user_id_and_user_type"
+  add_index "versions", ["user_name"], :name => "index_versions_on_user_name"
+  add_index "versions", ["versioned_id", "versioned_type"], :name => "index_versions_on_versioned_id_and_versioned_type"
+
   create_table "websites", :force => true do |t|
     t.integer "card_id"
     t.string  "name"
     t.integer "account_type", :default => 0
-  end
-  
-  create_table "groups", :force => true do |t|
-    t.string   "name",                      :limit => 40
-    t.text     "description"
-    t.string   "permalink",                 :limit => 40
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "deleted_at"
-    t.string   "logo_file_name"
-    t.string   "logo_content_type"
-    t.integer  "logo_file_size"
-  end
-  
-  create_table "groups_users", :id => false, :force => true do |t|
-    t.integer "group_id"
-    t.integer "user_id"
-  end
-  
-  create_table "schema_migrations", :force => true do |t|
-    t.string  "version"
   end
 
 end

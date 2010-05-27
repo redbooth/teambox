@@ -1,0 +1,105 @@
+.calendar_date_select
+  background: white
+  display: block
+  width: 250px
+  th
+    font-size: 11px
+    text-align: center
+    padding-top: 5px
+  .cds_buttons
+    float: left
+    width: 250px
+    text-align: center
+    padding: 2px 0px
+    a
+      color: #000096
+      font-size: 12px
+      padding: 0px 4px
+      text-decoration: underline
+  .cds_footer
+    display: none
+  .greyed
+    background: rgb(200, 200, 200)
+    border:
+      right: solid 1px rgb(140, 140, 140)
+      bottom: solid 1px rgb(140, 140, 140)
+  .cds_header
+    clear: both
+    text-align: center
+    *
+
+    border: 0px
+    background-color: white
+    span
+      font-size: 11px
+      padding: 0px 3px
+    select
+      font-size: 11px
+    a
+      width: 22px
+      height: 20px
+      text-decoration: none
+      font-size: 12px
+      color: black !important
+    a:hover
+      color: white
+    a.prev
+      float: left
+      padding-top: 3px
+    a.next
+      float: right
+      padding-top: 3px
+    a.close
+      float: right
+      display: none
+    select.month
+      width: 70px
+      margin-right: 5px
+    select.year
+      width: 61px
+      margin: 0px 5px
+    span.seperator, select.minute, select.hour
+      display: none
+  td
+    font-size: 11px
+    text-align: center
+    vertical-align: middle
+    padding: 0px
+    width: 8px
+    div
+      border: solid 1px rgb(255, 255, 255)
+      background: rgb(240, 240, 240)
+      padding: 5px
+      color: black
+    div.other
+      background: rgb(255, 255, 255)
+      color: #cccccc
+  td.selected, td.selected:hover
+    div
+      background-color: #000096
+      color: rgb(255, 255, 255)
+  td:hover
+    div
+      background-color: rgb(160, 160, 160)
+      color: rgb(255, 255, 255)
+  td.today
+    border: 1px dashed #000096
+  td.disabled div
+    color: #e6e6e6
+
+.pick_date
+  label
+    display: block
+    font-size: 12px
+    margin: 10px 0 7px 0
+  .date_picker
+    display: block
+    input
+      border: 0
+      background: transparent
+      font-size: 12px
+    img
+      float: left
+
+.fieldWithErrors .calendar_date_select
+  border: 2px solid red

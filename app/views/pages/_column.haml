@@ -1,5 +1,9 @@
 - content_for :column do
   - if project
-    = new_page_link(project)
+    - if project.editable?(current_user)
+      = new_page_link(project)
+    - else
+      %p= t('.cant_create')
   .pages
+    %h2= t('.all_pages')
     = list_pages(pages,current_target)

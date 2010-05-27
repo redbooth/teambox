@@ -7,12 +7,12 @@
   .description
     = @group.description
 
-  %h2= "Projects"
+  %h2= t('.projects')
   #projects
     = list_group_projects(@group)
   - if @group.admin?(current_user)
     = add_group_project_link
     = group_project_form
 
-  %h2= "Your Groups"
+  %h2=  t('.your_groups')
   = render :partial => 'group_column', :collection => current_user.groups

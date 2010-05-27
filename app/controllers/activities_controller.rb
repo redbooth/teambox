@@ -48,10 +48,10 @@ class ActivitiesController < ApplicationController
     # * All projects if it's not defined
     # * The requested project if given
     def get_target
-      if params[:project_id]
-        @target = @current_user.projects.find(params[:project_id]) or not_found
+      @target = if params[:project_id]
+        @current_user.projects.find_by_permalink(params[:project_id]) or not_found
       else
-        @target = @current_user.projects.find :all
+        @current_user.projects.find :all
       end
     end
 end

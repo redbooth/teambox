@@ -1,4 +1,4 @@
-Feature Creating an example project
+Feature: Creating an example project
   In order to learn how to use Teambox
   As a logged in user
   I will create an example project
@@ -31,7 +31,7 @@ Feature Creating an example project
       And I follow "Create an example project"
       And I follow "Create an example project"
       And I fill in "comment_body" with "Posting to the first example project"
-      And I press "Comment"
+      And I press "Save"
     When I go to the new project page
       And I follow "Create an example project"
       And I follow "Create an example project"

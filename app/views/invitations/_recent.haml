@@ -1,6 +1,0 @@
-.invite_recent
-  - for user in recent_users
-    .invite_user_link{:id => invitation_id(:item,project,user)}
-      = micro_avatar(user)
-      = invite_user(project,user)
-    .clear

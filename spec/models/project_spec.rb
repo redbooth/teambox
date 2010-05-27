@@ -125,34 +125,56 @@ describe Project do
     end
   end
 
-  describe "deleting projects" do
+  describe "#destroy" do
     before do
       @project = Factory(:project)
+    end
+
+    it "should delete associated comments, conversations, task lists, pages, uploads and people" do
       %w(comment conversation task_list page).each do |model|
         Factory(model, :project => @project, :user => @project.user)
       end
-      @project.reload.comments.reload
+
+      # crazy, I know!
+      lambda {
+        lambda {
+          lambda {
+            lambda {
+              lambda {
+                lambda {
+                  @project.destroy
+                }.should change(Project, :count).by(-1)
+              }.should change(Comment, :count).by(-2) # Remember: a new conversation makes a comment!
+            }.should change(Conversation, :count).by(-1)
+          }.should change(TaskList, :count).by(-1)
+        }.should change(Page, :count).by(-1)
+      }.should change(Person, :count).by(-1)
     end
 
-    it "should have some elements" do
-      Project.count.should == 1
-      Comment.count.should == 2  # Remember: a new conversation makes a comment!
-      Conversation.count.should == 1
-      TaskList.count.should == 1
-      Page.count.should == 1
-      Person.count.should == 1
+    it "should destroy blank comments with uploads" do
+      task_list = Factory(:task_list, :project => @project)
+      task = Factory(:task, :project => @project, :task_list => task_list)
+      comment = Factory(:comment, :project => @project, :target => task, :body => '')
+      upload = Factory(:upload, :comment => comment, :project => @project)
+
+      lambda {
+        lambda {
+          @project.destroy
+        }.should change(Upload, :count).by(-1)
+      }.should change(Comment, :count).by(-1)
     end
 
-    it "destroy all its comments, conversations, task lists, pages, uploads and people" do
-      @project.destroy
-      Project.count.should == 0
-      Comment.count.should == 0
-      Conversation.count.should == 0
-      TaskList.count.should == 0
-      Page.count.should == 0
-      Person.count.should == 0
-    end
 
+  end
+  describe "calendar output" do
+    it "should produce valid format" do
+      project = Factory(:project)
+      task_list = Factory(:task_list, :project => project)
+      task = Factory(:task, :project => project, :task_list => task_list, :due_on => Time.parse("2010/01/01"))
+      calendar = project.to_ical
+      calendar.should =~ /DTSTART;VALUE=DATE:20100101/m
+      calendar.should =~ /DTEND;VALUE=DATE:20100102/m
+    end
   end
 
   describe "factories" do

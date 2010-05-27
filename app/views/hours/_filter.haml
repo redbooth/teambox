@@ -1,0 +1,10 @@
+#filter_list
+  #user_filters
+    %p= t('hours.filters.assigned_to')
+    .filter
+      = filter_hours_assigned_dropdown('hours_main_user_filter', @current_project)
+  - unless @current_project
+    #project_filters
+      %p= t('hours.filters.projects')
+      .filter
+        = filter_project_dropdown('hours_main_project_filter')

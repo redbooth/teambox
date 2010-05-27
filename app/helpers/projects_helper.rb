@@ -48,8 +48,7 @@ module ProjectsHelper
 
   def list_archived_projects(projects)
     if projects.any?
-      out =  link_to(t('.archived', :count => projects.size), project_archived_path, :id => 'project_archived_link')
-      out << render(:partial => 'shared/archived_projects', :locals => { :projects => projects })
+      render(:partial => 'shared/archived_projects', :locals => { :projects => projects })
     end
   end
   
@@ -75,29 +74,48 @@ module ProjectsHelper
   def project_primer
     render :partial => 'projects/primer'
   end
-  
-  def subscribe_to_projects_link
+
+  def instructions_for_feeds
     content_tag(:div,
-      link_to(t('.subscribe'), user_rss_token(projects_path(:format => :rss))),
+      link_to(t('shared.instructions.subscribe_to_feeds'), feeds_path),
+      :class => :subscribe)
+  end
+
+  def subscribe_to_all_projects_link
+    content_tag(:div,
+      link_to(t('.subscribe_to_all'), user_rss_token(projects_path(:format => :rss))),
       :class => :subscribe)
   end
 
   def subscribe_to_project_link(project)
     content_tag(:div,
-      link_to(t('.subscribe'), user_rss_token(project_path(@current_project, :format => :rss))),
+      link_to(t('.subscribe_to_project', :project => project),
+        user_rss_token(project_path(project, :format => :rss))),
       :class => :subscribe)
   end
 
-  def subscribe_to_calendars_link
+  def instructions_for_calendars
     content_tag(:div,
-      link_to(t('projects.index.calendars'), user_rss_token(projects_path(:format => :ics))),
+      link_to(t('shared.instructions.subscribe_to_calendars'), calendars_path),
       :class => :calendars)
+  end
+
+  def subscribe_to_all_calendars_link
+    content_tag(:div,
+      t('.subscribe_to_all') +
+      link_to(t('shared.task_navigation.all_tasks'), user_rss_token(projects_path(:format => :ics))) +
+      ' ' + t('common.or') + ' ' +
+      link_to(t('shared.task_navigation.my_assigned_tasks'), user_rss_token(projects_path(:format => :ics), 'mine')),
+      :class => :calendar_links)
   end
 
   def subscribe_to_calendar_link(project)
     content_tag(:div,
-      link_to(t('projects.show.calendar'), user_rss_token(project_path(project, :format => :ics))),
-      :class => :calendars)
+      t('.subscribe_to_project', :project => project) +
+      link_to(t('shared.task_navigation.all_tasks'), user_rss_token(project_path(project, :format => :ics))) +
+      ' ' + t('common.or') + ' ' +
+      link_to(t('shared.task_navigation.my_assigned_tasks'), user_rss_token(project_path(project, :format => :ics), 'mine')),
+      :class => :calendar_links)
   end
   
   def print_projects_link
@@ -140,8 +158,14 @@ module ProjectsHelper
     "clearInterval(autorefresh)"
   end
 
-  def autorefresh(activities)
-    ajax_request = remote_function(:url => show_new_path(@activities.first.id))
+  def autorefresh(activities, project = nil)
+    first_id = Array(activities).first.id
+    
+    ajax_request = if project
+      remote_function(:url => project_show_new_path(project, first_id))
+    else
+      remote_function(:url => show_new_path(first_id))
+    end
 
     interval = APP_CONFIG['autorefresh_interval']*1000
 

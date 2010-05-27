@@ -1,4 +1,4 @@
-Feature Uploading a file
+Feature: Uploading a file
   Background:
     Given a project exists with name: "Ruby Rockstars"
       And a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić"

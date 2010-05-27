@@ -3,14 +3,12 @@
     = link_to upload.file_type, upload.url, :class => upload.file_type
   .block
     .filename.show_details
-      .date
-        = posted_date upload.created_at
-      .name
-        = link_to upload.user.name, user_path(upload.user)
-        = t('uploads.upload.uploaded_the_file')
-        = activity_project_link(upload.project,:after)
-        = link_to upload.description, upload.url if upload.description
+      - unless rss?
+        .date= posted_date upload.created_at
+      %p.name
+        = activity_title(activity)
+        = activity_project_link(activity.project)
       .body  
-        = upload_link(upload.project,upload)
+        = upload_link(upload.project, upload)
         = number_to_human_size(upload.size)
   .clear

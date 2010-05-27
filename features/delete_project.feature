@@ -1,4 +1,4 @@
-Feature Delete Project
+Feature: Delete Project
   Background:
        Given I am logged in as mislav
          And I am currently in the project ruby_rockstars

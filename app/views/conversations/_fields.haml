@@ -4,10 +4,8 @@
   = errors_for conversation, :name
 
 - if conversation.new_record?
-  = tooltip 'user_description', t('.name')
   .text_area.body
     = f.label :body, t('.body')
     = f.text_area :body, :id => :conversation_body
     = errors_for conversation, :body
-    = tooltip 'user_body', t('.body')
-    = autoresize :conversation_body
+    - tooltip t('.body')

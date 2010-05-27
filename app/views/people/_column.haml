@@ -1,7 +1,0 @@
-- content_for :column do
-  - if @current_project.admin?(current_user)
-    %h2= t('invitations.search.invite_from_project')
-    .text_field
-      = select_tag "pid", options_for_select([['---', 0]] + options_for_projects(current_user.projects)), person_project_select_options(@current_project)
-      = loading_image("people_project_load")
-    #sidebar_people
