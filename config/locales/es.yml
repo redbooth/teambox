@@ -288,7 +288,6 @@ es:
       add_suscribers: "¿Quién seguirá esta conversación?"
       invite_users: "Eres el único usuario en este proyecto!"
       no_users_yet: "Conversar es más útil cuando no lo haces solo. <a href='{{invite_link}}'>Invita a algunos usuarios</a> a este proyecto para que puedan leer, comentar y recibir actualizaciones de esta conversación."
-      people_all: "All people in project"
       subscribe_note: "Estas personas serán notificadas via email de este mensaje y los comentarios posteriores.<br/>Pueden dejar de seguir la conversación en cualquier momento."
   date: 
     abbr_day_names: 
@@ -576,12 +575,6 @@ es:
       email_sent: "<b>Hemos enviado un email avisando al usuario para que acepte tu invitación</b>. Si no pueden encontrar el email, asegúrate de que no se ha clasificado como spam. Si el problema persiste, escríbenos un email."
   latest_announcement: "Novedades: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versión Móvil, traducción al francés y alemán y API</a>"
   not_found: 
-    conversation: "Conversation {{id}} not found in this project."
-    group: "The group {{id}} doesn't exist."
-    page: "Page {{id}} not found in this project."
-    project: "The project {{id}} doesn't exist."
-    task: "Task {{id}} not found in this project."
-    task_list: "Task list {{id}} not found in this project."
     user: "El usuario no existe"
   notes: 
     actions: 

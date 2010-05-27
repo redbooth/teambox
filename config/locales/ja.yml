@@ -1,67 +1,6 @@
 --- 
 ja: 
-  activerecord: 
-    attributes: 
-      card: 
-        city: City
-        country: Country
-        state: State
-        street: Street
-        zip: ZIP
-      comment: 
-        body: Body
-        hours: Hours
-        status: Status
-      conversation: 
-        name: Name
-      divider: 
-        name: Name
-      email_address: 
-        account_type: Type
-        name: Address
-      im: 
-        account_im_type: Service
-        account_type: Type
-        name: Address
-      invitation: 
-        email: Email
-      note: 
-        body: Body
-        name: Name
-      pages: 
-        description: Description
-        name: ページ
-      phone_number: 
-        account_type: Type
-        name: Phone
-      project: 
-        name: Name
-        permalink: Permalink
-      social_network: 
-        account_network_type: Network
-        account_type: Type
-        name: Address
-      task: 
-        due_on: "Due date"
-        name: Name
-        status: Status
-      task_list: 
-        finish_on: "Finish date"
-        name: Name
-        start_on: "Start date"
-      upload: 
-        description: Description
-      user: 
-        biography: Biography
-        email: Email
-        first_day_of_week: "First day of week"
-        first_name: "First name"
-        language: Language
-        last_name: "Last name"
-        login: Username
-        time_zone: "Time zone"
-      website: 
-        name: Site
+  activerecord:
     errors: 
       messages: 
         accepted: は承認されなければなりません。
@@ -97,23 +36,12 @@ ja:
             name: 
               no_title: チャットにタイトルを書いてください。
     models: 
-      address: Address
-      card: Card
       comment: コメント
       conversation: チャット
-      divider: Divider
-      email_address: Email
-      im: IM
-      invitation: Invitation
-      note: Text
       page: ページ
-      phone_number: Phone
       project: プロジェクト
-      social_network: "Social network"
       task: タスク
       task_list: タスクリスト
-      upload: Upload
-      website: Web
   activities: 
     create_conversation: 
       create_conversation: チャットを開始しました。
@@ -491,7 +419,6 @@ ja:
       username_or_email: チームメートのユーザ名、もしくはeメールを入力してください。
     sent: 
       email_sent: <b>このユーザーにプロジェクトへの招待を受け入れるリンクを含んだeメールを送信しました。もしeメールが見つからないようであれば、迷惑メールに分類されていないか確認するか、異なるeメールアドレスを試して見てください。もし問題が解決しないようでしたら、我々のスタッフに連絡してください。
-  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   not_found: 
     conversation: "チャット {{id}} はこのプロジェクトにはありません"
     group: "グループ {{id}} は存在しません。"
