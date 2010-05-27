@@ -205,6 +205,10 @@ class User < ActiveRecord::Base
       sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
   end
 
+  def tasks(from_date = Time.now.midnight, to_date = Time.now)
+    Task.all(:joins => 'JOIN comments ON comments.target_id = tasks.id JOIN activities ON activities.target_id = comments.id', :conditions => ['activities.user_id = ? AND activities.created_at >= ? AND activities.created_at <= ? AND comment_type = ?', self.id, from_date, to_date, 'Task'], :select => "DISTINCT(name)", :order => "activities.created_at DESC")
+  end
+
   def tasks_for_daily_reminder_email
     return {} if [0, 6].include?(Date.today.wday)
     assigned_tasks = assigned_tasks(:all)
@@ -240,7 +244,10 @@ class User < ActiveRecord::Base
   end
 
   def can_create_project?
-    true
+    if APP_CONFIG["internal_mail_domain"]
+      self.email.include? APP_CONFIG["internal_mail_domain"]
+    else
+      true
   end
 
   def notify_of_project_comment?(comment)
