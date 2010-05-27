@@ -260,6 +260,7 @@ class User < ActiveRecord::Base
       self.email.include? APP_CONFIG["internal_mail_domain"]
     else
       true
+    end
   end
 
   def notify_of_project_comment?(comment)
