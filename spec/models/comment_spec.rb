@@ -70,7 +70,6 @@ describe Comment do
   end
 
   #describe "posting to a conversation"
-  #describe "posting to a task list"
   
   describe "posting to a task" do
     before do
@@ -79,7 +78,7 @@ describe Comment do
     
     it "should update counter cache" do
       lambda {
-        @task.comments.create(:project => @task.project)
+        @task.comments.create(:project => @task.project, :user_id => @task.user.id)
         @task.reload
       }.should change(@task, :comments_count).by(1)
     end
@@ -244,6 +243,26 @@ describe Comment do
       comment = Factory.create(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
       comment.body_html.should == "<p>Hey, @unexisting, take a look at this!</p>\n"
       comment.mentioned.should == nil
+    end
+  end
+  
+  describe "duplicates" do
+    before do
+      @project = Factory(:project)
+      @user = @project.user
+      @comment = Factory(:comment, :project => @project, :user => @user, :target => @project)
+    end
+
+    it "should not allow posting a duplicate comment" do
+      comment = Factory.build(:comment, :project => @project, :user => @user, :target => @project, :body => @comment.body)
+      comment.valid?.should be_false
+    end
+
+    it "should allow posting a comment with the same body to different targets" do
+      @task = Factory(:task)
+      lambda {
+        Factory(:comment, :project => @project, :user => @user, :target => @task, :body => @comment.body)
+      }.should change(Comment, :count).by(1)
     end
   end
   

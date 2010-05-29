@@ -15,6 +15,8 @@ class Comment < ActiveRecord::Base
   named_scope :with_hours, :conditions => 'hours > 0'
 
   attr_accessible :status, :previous_status, :assigned, :previous_assigned, :human_hours
+
+  validate_on_create :check_duplicates
   validate :check_body
 
   attr_accessor :mentioned # used by format_usernames to set who's being mentioned
@@ -60,6 +62,17 @@ class Comment < ActiveRecord::Base
       if !target.is_a? Task
         @errors.add :body, :no_body_generic
       end
+    end
+  end
+  
+  # We will not allow two comments in a row with the body, target and assigned_to
+  def check_duplicates
+    last = Comment.find(:first, :conditions =>
+                    ["user_id = ? AND target_id = ? AND target_type LIKE ?",
+                      user_id, target_id, target_type], :order => "id DESC")
+
+    if last && last.body == body && last.assigned_id == assigned_id
+      @errors.add :body, "Duplicate comment"
     end
   end
   
