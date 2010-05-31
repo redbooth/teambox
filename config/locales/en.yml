@@ -362,7 +362,7 @@ en:
         title: "{{name}} activity feed"
         description: "Recent activities for the project {{name}}"
     fields:
-      tracks_time: "Enable time tracking. <em>Will allow users to log time for each task they work on.</em>"
+      tracks_time: "Enable time tracking. <em>Will allow users to log time for tasks.</em>"
       archiving: "Archive this project"
       forever: "Delete this project forever"
       owner: "Owner"
@@ -373,6 +373,8 @@ en:
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
       archived: Archive this Project
       confirm_delete: "Are you sure you'd want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you want to keep it, use Archive Project instead."
+      new:
+        time_tracking_docs: Learn more.
     new_primer:
       define1: A project is a shared group with your teammates.
       define2: "Inside a project, each team member can:"
@@ -762,6 +764,7 @@ en:
     hours:
       add_hours: Hours
       hours: How many hours did you put into this task?
+      time_tracking_docs: Learn how to use time-tracking
     new:
       assigned_to_nobody: 'Unassigned'
       assigned_to: "Assigned to:"

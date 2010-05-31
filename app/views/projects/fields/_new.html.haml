@@ -10,8 +10,10 @@
   - tooltip t('projects.fields.permalink_description')
   .preview
     = host_with_protocol + projects_path + "/<span id='handle'></span>" 
+
 = watch_permalink_example
+
 - if time_tracking_enabled?
   .check_box.archived
     = f.check_box :tracks_time
-    = f.label :tracks_time, t('projects.fields.tracks_time')
+    = f.label :tracks_time, t('projects.fields.tracks_time') + " " + time_tracking_doc

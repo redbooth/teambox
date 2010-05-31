@@ -347,6 +347,10 @@ module TasksHelper
     render :partial => 'tasks/overview_box', :locals => { :task => task }
   end
 
+  def time_tracking_doc
+    link_to(t('.time_tracking_docs'), "http://help.teambox.com/faqs/advanced-features/time-tracking", :target => '_blank')
+  end
+
   def date_picker(f, field)
     content_tag(:div,
       f.calendar_date_select(field, {
