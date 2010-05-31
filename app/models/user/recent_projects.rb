@@ -16,7 +16,7 @@ class User
   def add_recent_project(project)
     self.recent_projects_ids ||= []
     unless self.recent_projects_ids.include?(project.id)
-      self.recent_projects_ids = self.recent_projects_ids.unshift(project.id).slice(0,5)
+      self.recent_projects_ids = self.recent_projects_ids.unshift(project.id).slice(0,7)
       @recent_projects = nil
       @projects = nil
       self.save(false)

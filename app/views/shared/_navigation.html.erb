@@ -33,18 +33,15 @@ if logged_in?
       t.tab_index = 102
     end
   
-    if current_user.recent_projects.any?
-      tab_index = 103
-      for project in current_user.recent_projects
-        add_tab do |t|
-          t.named truncate(project.name, :length => 20)
-          t.links_to project_path(project)
-          if project == @current_project
-            t.highlights_on :controller => controller_name
-          end
-          t.tab_index = tab_index
-          tab_index.succ
+    tab_index = 103
+    for project in Array(current_user.recent_projects)
+      add_tab do |t|
+        t.named truncate(project.name, :length => 20)
+        t.links_to project_path(project)
+        if project == @current_project
+          t.highlights_on :controller => controller_name
         end
+        t.tab_index = (tab_index += 1)
       end
     end
   end
