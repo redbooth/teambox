@@ -10,7 +10,6 @@ require 'net/http'
 # keiretsu@app.server.com                  Will post a new comment on the project's activity wall
 # keiretsu+conversation@app.server.com     Will create a new conversation with Subject as a title and Body as a comment
 # keiretsu+conversation+5@app.server.com   Will post a new comment in the conversation whose id is 5
-# keiretsu+task_list+8@app.server.com      Will post a new comment in the task list whose id is 8
 # keiretsu+task+12@app.server.com          Will post a new comment in the task whose id is 12
 #
 # Invalid or malformed emails will be ignored
@@ -71,42 +70,25 @@ module Emailer::Incoming
   def receive(email)
     process email
     get_target
-    
-    case @type
-    when :project
-      puts "Posting to project #{@target.id} '#{@subject}'"
-      post_to @target
-    when :conversation
-      if @target
-        puts "Posting to conversation #{@target.id} '#{@subject}'"
-        post_to @target
-      else
-        puts "Creating conversation '#{@subject}'"
-        create_conversation
-      end
-    when :task_list
-      if @target
-        puts "Posting to task list #{@target.id} '#{@subject}'"
-        post_to @target        
-      end
-    when :task
-      if @target
-        puts "Posting to task #{@target.id} '#{@subject}'"
-        post_to @target
-      end
-    else
-      raise "Invalid target type"
-    end    
-  end
-  
-  private
-  
-  def process(email)
-    raise "Invalid To field"   unless email.to   and email.to.first
-    raise "Invalid From field" unless email.from and email.from.first
 
-    @to       = email.to.first.split('@').first.downcase
-    @body     = (email.multipart? ? email.parts.first.body : email.body)
+    case @type
+    when :project then post_to @target
+    when :conversation then @target ? post_to @target : create_conversation
+    when :task then post_to @target if @target
+    else raise "Invalid target type"
+    end
+  end
+
+  private
+
+  def process(email)
+    raise "Invalid To fields"  unless email.destinations and email.destinations.first
+    raise "Invalid From field" unless email.from         and email.from.first
+
+    @to       = email.destinations.
+                  select { |a| a.include? Teambox.config.smtp_settings[:domain] }.
+                  first.split('@').first.downcase
+    @body     = email.multipart? ? email.parts.first.body : email.body
     @body     = @body.split(Emailer::ANSWER_LINE).first.split("<div class='email'").first.strip
     @user     = User.find_by_email email.from.first
     @subject  = email.subject.gsub(REPLY_REGEX, "")
@@ -158,6 +140,8 @@ module Emailer::Incoming
   end
   
   def post_to(target)
+    puts "Posting to #{target.class.to_s} #{target.id} '#{@subject}'"
+
     comment = @project.new_comment(@user, target, :name => @subject)
     comment.body = @body
     if target.class == Task
@@ -168,6 +152,7 @@ module Emailer::Incoming
   end
   
   def create_conversation
+    puts "Creating conversation '#{@subject}'"
     conversation = @project.new_conversation(@user, :name => @subject)
     conversation.body = @body
     conversation.save!
