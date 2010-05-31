@@ -72,9 +72,9 @@ module Emailer::Incoming
     get_target
 
     case @type
-    when :project then post_to @target
-    when :conversation then @target ? post_to @target : create_conversation
-    when :task then post_to @target if @target
+    when :project then post_to(@target)
+    when :conversation then @target ? post_to(@target) : create_conversation
+    when :task then post_to(@target) if @target
     else raise "Invalid target type"
     end
   end
