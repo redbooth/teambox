@@ -6,8 +6,6 @@ class CommentsController < ApplicationController
   before_filter :check_permissions, :only => [:create, :edit, :update, :convert]
   before_filter :set_page_title
 
-  cache_sweeper :task_list_panel_sweeper, :only => [:create]
-
   def create
     if params.has_key?(:project_id)
       @comment  = @current_project.new_comment(current_user,@target,params[:comment])

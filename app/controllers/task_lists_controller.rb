@@ -5,8 +5,6 @@ class TaskListsController < ApplicationController
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy,:archive,:unarchive]
   before_filter :set_page_title
 
-  cache_sweeper :task_list_panel_sweeper, :only => [:update,:archive,:unarchive]
-
   def index
     @on_index = true
     respond_to do |f|

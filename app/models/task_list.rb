@@ -51,8 +51,4 @@ class TaskList < RoleRecord
       end
     end
   end
-
-  def cache_key_for_sidebar_panel(locale=I18n.locale)
-    { :controller => "task_lists", :action => "index", :key => ["TaskListPanel", self.id, locale].join('/') }
-  end
 end

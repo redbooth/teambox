@@ -4,8 +4,6 @@ class TasksController < ApplicationController
   before_filter :load_banner, :only => [:show]
   before_filter :set_page_title
 
-  cache_sweeper :task_list_panel_sweeper, :only => [:create, :update, :reorder]
-
   def show
     @comments = @task.comments
     @comment = @current_project.new_task_comment(@task)
