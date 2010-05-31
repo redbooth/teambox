@@ -164,7 +164,7 @@ module ActivitiesHelper
     elsif location_name == 'show_more_activities' and params[:project_id].nil?
       url = show_more_path(options[:last_activity].id)
     elsif location_name == 'show_projects'
-      url = project_show_more_path(@current_project.id, options[:last_activity].id)
+      url = project_show_more_path(@current_project.permalink, options[:last_activity].id)
     elsif location_name == 'show_more_activities' and params[:project_id]
       url = project_show_more_path(params[:project_id], options[:last_activity].id)
     else
