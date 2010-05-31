@@ -35,7 +35,7 @@
       = hidden_field_tag 'invitation', @invitation_token
       
 - if user.new_record? || sub_action == 'settings'
-  #password_fields{ :style => "#{ 'display: none' unless user.new_record? }"}
+  #password_fields{ :style => user.new_record?? '' : 'display: none' }
     .password.text_field
       = f.label :password, t('.password')
       = errors_for user, :password
@@ -67,11 +67,11 @@
     
 - if user.new_record? || sub_action == 'settings'
   .language.select
-    = f.label :language, t('.language')
+    = f.label :language, t('.language'), :style => 'width: 100px; text-align: right'
     = f.select :language, User::LANGUAGES
     
-  .time_zone.text_field
-    = f.label :time_zone, t('.time_zone')
+  .time_zone.select
+    = f.label :time_zone, t('.time_zone'), :style => 'width: 100px; text-align: right'
     = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"    
 
 - if sub_action == 'profile'
@@ -115,7 +115,7 @@
       = f.label :wants_task_reminder, t('.wants_task_reminder')
 
 - if @sub_action == 'delete'
-  - if false#current_user.projects.count > 0
+  - if current_user.projects.count > 0
     %p= t('.account_deletion.steps_before_1')
     %p= t('.account_deletion.steps_before_2')
     %p= t('.account_deletion.steps_before_3')

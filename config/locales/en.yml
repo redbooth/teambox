@@ -126,7 +126,7 @@ en:
       social_networks: Social Networks
       vcard: Download vCard
     field:
-      add_phone_numbers: Add Phone Number
+      add_phone_numbers: Phone Number <em>for future SMS integration</em>
       add_email_addresses: Add Email
       add_websites: Add Website
       add_addresses: Add Address
@@ -177,7 +177,7 @@ en:
         last_name: Up to 20 characters.
         email: Enter your real email so your teammates can contact you.
         password: "Combining letters, numbers, uppercase and lowercase is a good idea."
-        phone: "Work phone number will be visible to teammates. Enter it in full, e.g. +12345678"
+        phone: "Preferrably cell phone. Enter it including the country code, e.g. +1 (415) 1234-567"
     new:
       title: Create an Account
       submit: Create account
@@ -369,7 +369,7 @@ en:
       owner_description: "The owner is the main responsible for a project. He cannot be removed from the project unless ownership is transferred to another user."
       name: "Name <em>Keep it short and descriptive</em>"
       name_description: "Choose a brief and descriptive title. For example: Taggart Transcontinental"
-      permalink: "Permalink: <em>Short identifier for the project</em>"
+      permalink: "Permalink <em>Short identifier for the project</em>"
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
       archived: Archive this Project
       confirm_delete: "Are you sure you'd want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you want to keep it, use Archive Project instead."
