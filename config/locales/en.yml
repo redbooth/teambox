@@ -126,7 +126,7 @@ en:
       social_networks: Social Networks
       vcard: Download vCard
     field:
-      add_phone_numbers: Phone Number <em>for future SMS integration</em>
+      add_phone_numbers: Phone Number
       add_email_addresses: Add Email
       add_websites: Add Website
       add_addresses: Add Address
@@ -141,6 +141,8 @@ en:
       time_zone: Time Zone
       language: Language
       email: Email
+      phone: Phone Number
+      phone_for_integration: Optional. For future SMS integration
       password: Password
       password_confirmation: Confirm Password
       sunday: Sunday

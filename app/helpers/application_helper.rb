@@ -300,7 +300,7 @@ module ApplicationHelper
     when Array then errors.first
     when String then errors
     end
-    "<div style='color:red;font-weight:bold'>#{error}</div>"
+    "<div class='errors_for'>#{error}</div>"
   end
 
   def link_to_public_page(name)
