@@ -2,6 +2,15 @@ class DividersController < ApplicationController
   before_filter :load_page
   before_filter :load_divider, :only => [:show, :edit, :update, :destroy]
   
+  def new
+    @divider = @page.build_divider(params[:divider])
+    
+    respond_to do |f|
+      f.html { redirect_to project_page_path(@current_project, @page) }
+      f.m 
+    end
+  end
+  
   def create
     calculate_position
     

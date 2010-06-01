@@ -1,0 +1,11 @@
+.page_header
+  %h2= @page
+  .description= @page.description
+
+= #page_buttons(@current_project,@page)
+
+.pageSlots
+  #slots
+    = render :partial => 'slot', :collection => @page.slots, :locals => {:page => @page, :project => @current_project}
+  
+  .pageSlot.pageFooter#page_slot_footer{:slot => -1}

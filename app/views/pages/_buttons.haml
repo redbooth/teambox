@@ -2,5 +2,5 @@
   = new_page_note_link(project,page)
   = new_page_divider_link(project,page)
   = #new_page_task_list_link(project,page)
-  = new_page_upload_link(project,page,false)
+  = new_page_upload_link(project,page,false) unless request.format == :m
   .clear

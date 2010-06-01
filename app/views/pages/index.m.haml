@@ -1,0 +1,5 @@
+#page
+  #pages
+    - for page in @pages
+      .project_page
+        = link_to page, project_page_path(@current_project, page)

@@ -2,6 +2,15 @@ class NotesController < ApplicationController
   before_filter :load_page
   before_filter :load_note, :only => [:show, :edit, :update, :destroy]
   
+  def new
+    @note = @page.build_note(params[:note])
+    
+    respond_to do |f|
+      f.html { redirect_to project_page_path(@current_project, @page) }
+      f.m 
+    end
+  end
+  
   def create
     calculate_position
     
@@ -42,6 +51,7 @@ class NotesController < ApplicationController
       end
     else
       respond_to do |f|
+        f.html { redirect_to project_page_path(@current_project, @note) }
         f.js
         handle_api_error(f, @note)
       end
