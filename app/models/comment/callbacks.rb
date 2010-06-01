@@ -1,6 +1,6 @@
 class Comment
 
-  def before_save
+  def before_create
     self.target ||= project
 
     set_status_and_assigned if self.target.is_a?(Task)
