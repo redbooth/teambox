@@ -55,7 +55,7 @@ class UsersController < ApplicationController
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
-    @user.confirmed_user = true if @invitation && @invitation.email == @user.email
+    @user.confirmed_user = (@invitation && @invitation.email == @user.email) || RAILS_ENV == "development"
     
     unless @invitation || signups_enabled?
       flash[:error] = t('users.new.no_public_signup')

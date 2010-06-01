@@ -11,6 +11,9 @@
 
   - form_for @user do |form|
     = render form
+    - if RAILS_ENV == "development"
+      %p You are running in development mode. No email confirmation will be required.
+      %p When running Teambox in production mode, signup will require an email confirmation.
     %br
     .submit
       = submit_tag t('.submit'), :tabindex => 300
