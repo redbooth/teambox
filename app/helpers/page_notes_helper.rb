@@ -1,10 +1,5 @@
 module PageNotesHelper
 
-  def new_note_form(project,page)
-    render :partial => 'notes/new', :locals => { 
-      :project => project, :page => page, :note => Note.new } 
-  end
-
   def note_fields(f)
     render :partial => 'notes/fields', :locals => { :f => f }
   end
@@ -17,21 +12,6 @@ module PageNotesHelper
     return unless note.editable?(current_user)
     render :partial => 'notes/actions',
       :locals => { :note => note }
-  end
-  
-  def edit_note_link(note)
-    link_to pencil_image,
-      edit_project_page_note_path(note.project,note.page,note),
-      :id => "edit_note_#{note.id}_link",
-      :class => :edit_note
-  end
-  
-  def delete_note_link(note)
-    link_to trash_image,
-      project_page_note_path(note.project,note.page,note),
-      :aconfirm => t('.delete_confirm'),
-      :id => "delete_note_#{note.id}_link",
-      :class => 'delete_note'
   end
   
   def remove_form(show_element=nil)

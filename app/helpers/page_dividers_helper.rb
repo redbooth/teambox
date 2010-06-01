@@ -1,10 +1,5 @@
 module PageDividersHelper
 
-  def new_divider_form(project,page)
-    render :partial => 'dividers/new', :locals => { 
-      :project => project, :page => page, :divider => Divider.new } 
-  end
-
   def divider_fields(f)
     render :partial => 'dividers/fields', :locals => { :f => f }
   end
@@ -17,21 +12,6 @@ module PageDividersHelper
     return unless divider.editable?(current_user)
     render :partial => 'dividers/actions',
       :locals => { :divider => divider }
-  end
-  
-  def edit_divider_link(divider)
-    link_to pencil_image,
-      edit_project_page_divider_path(divider.project,divider.page,divider),
-      :id => "edit_divider_#{divider.id}_link",
-      :class => 'edit_divider'
-  end
-  
-  def delete_divider_link(divider)
-    link_to trash_image,
-      project_page_divider_path(divider.project,divider.page,divider),
-      :aconfirm => t('.delete_confirm'),
-      :id => "delete_divider_#{divider.id}_link",
-      :class => 'delete_divider'
   end
   
   def remove_form(show_element=nil)

@@ -1,2 +1,2 @@
-%input{:id => formName.nil? ? nil : "#{formName}Before", :type => 'hidden', :name => "position[before]", :value => pos_before}/
-%input{:id => formName.nil? ? nil : "#{formName}Slot", :type => 'hidden', :name => "position[slot]", :value => pos_slot}/
+= hidden_field_tag 'position[before]', pos_before
+= hidden_field_tag 'position[slot]', pos_slot

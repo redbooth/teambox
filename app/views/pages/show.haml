@@ -23,8 +23,8 @@
         = page_buttons(@current_project,@page)
       
     #pageForms
-      = new_note_form(@current_project,@page)
-      = new_divider_form(@current_project,@page)
+      = render 'notes/new', :project => @current_project, :page => @page, :note => Note.new
+      = render 'dividers/new', :project => @current_project, :page => @page, :divider => Divider.new
   
   #slots
     = render :partial => 'slot', :collection => @page.slots, :locals => {:page => @page, :project => @current_project}

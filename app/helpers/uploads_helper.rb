@@ -163,14 +163,6 @@ module UploadsHelper
       :confirm => t('confirm.delete_upload'),
       :html => { :class => 'remove' }
   end
-  
-  def destroy_page_upload_link(page, upload)
-    link_to trash_image,
-      project_page_upload_url(page.project,page,upload),
-      :aconfirm => t('confirm.delete_upload'),
-      :id => "delete_upload_#{upload.id}_link",
-      :class => 'delete_page_upload'
-  end
 
   def upload_form_params(comment)
     render :partial => 'uploads/iframe_upload', :locals => { :comment => comment, :upload => Upload.new }

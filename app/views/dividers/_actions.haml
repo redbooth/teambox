@@ -1,8 +1,11 @@
 %p.actions{ :style => "display: none" }
   %span
-    = edit_divider_link(divider)
+    = link_to pencil_image, edit_project_page_divider_path(divider.project, divider.page, divider),
+        :'data-remote' => 'get'
     = loading_action_image("delete_divider_#{divider.id}", true)
-    = delete_divider_link(divider)
+    
+    = link_to trash_image, project_page_divider_path(divider.project, divider.page, divider),
+        :'data-remote' => 'delete', :'data-confirm' => t('.delete_confirm')
     = loading_action_image("delete_divider_#{divider.id}", true)
     =# drag_image
 %p.actions.handle{ :style => "display: none" }

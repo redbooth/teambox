@@ -1,4 +1,4 @@
-- form_for [note.project,note.page,note] do |f|
+- form_for [note.project,note.page,note], :html => { :'data-remote' => 'true' } do |f|
   = note_fields(f)
   .submit{ :id => "note_submit_#{note.id}" }
     = f.submit t('.submit')
