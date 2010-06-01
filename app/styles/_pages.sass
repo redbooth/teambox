@@ -1,3 +1,23 @@
+=handle
+  position: relative
+  margin: 0px
+  float: none
+  span
+    background: rgb(255, 255, 255)
+    -moz-border-radius: 4px
+    -webkit-border-radius: 4px
+    padding: 3px 0px
+    left: -32px
+    bottom: 0px
+    position: absolute
+    display: block
+    width: 32px
+    height: 18px
+    top: 2px
+    img
+      cursor: move
+
+
 .pages
   clear: both
   margin-top: 10px
@@ -82,8 +102,10 @@
       font-size: 12px
       color: rgb(180, 180, 180)
   h3
-    font-size: 18px
+    font-size: 16px
+    font-weight: normal
     margin: 0px
+      bottom: 5px
   p
     font-size: 12px
     line-height: 1.4em
@@ -152,7 +174,7 @@
   background-repeat: repeat-x
 
 .divider
-  background: url(../images/divider.jpg) repeat-x center
+  background: url(/images/divider.jpg) repeat-x center
   padding-left: 10px
   h3
     padding-top: 3px
@@ -160,29 +182,12 @@
       background: rgb(255, 255, 255)
       padding: 0px 5px
   p.actions
+    background: white
+    padding-left: 10px
     float: right
     margin: 0px
-    a.delete
-      color: red
   p.handle
-    position: relative
-    margin: 0px
-    float: none
-    span
-      background: rgb(255, 255, 255)
-      -moz-border-radius: 4px
-      -webkit-border-radius: 4px
-      padding: 3px 0px
-      left: 2px
-      bottom: 0px
-      position: absolute
-      display: block
-      width: 32px
-      height: 18px
-      left: -32px
-      top: 2px
-      img
-        cursor: move
+    +handle
 
 form.new_divider, form.edit_divider
   margin-top: 5px
@@ -228,30 +233,14 @@ form.new_note, form.edit_note
     padding-top: 10px
 
 .note
+  padding-left: 16px
   p.actions
     float: right
     margin: 0px
     a.delete
       color: red
   p.handle
-    position: relative
-    margin: 0px
-    float: none
-    span
-      background: rgb(255, 255, 255)
-      -moz-border-radius: 4px
-      -webkit-border-radius: 4px
-      padding: 3px 0px
-      left: 2px
-      bottom: 0px
-      position: absolute
-      display: block
-      width: 32px
-      height: 18px
-      left: -32px
-      top: 2px
-      img
-        cursor: move
+    +handle
 
 .pageForm
   a.cancel
@@ -268,23 +257,7 @@ form.new_note, form.edit_note
       a.delete
         color: red
     p.handle
-      position: relative
-      margin: 0px
-      float: none
-      span
-        background: rgb(255, 255, 255)
-        -moz-border-radius: 4px
-        -webkit-border-radius: 4px
-        padding: 3px 0px
-        left: -32px
-        bottom: 0px
-        position: absolute
-        display: block
-        width: 32px
-        height: 18px
-        top: 2px
-        img
-          cursor: move
+      +handle
     .block
       .date
         margin-right: 34px
