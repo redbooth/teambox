@@ -24,7 +24,7 @@
     .email.text_field
       = f.label :email, t('.email')
       - if @invitation
-        = f.text_field :email, :value => 'asdad', :readonly => 'readonly', :style => 'color: #999'
+        = f.text_field :email, :readonly => 'readonly', :style => 'color: #999'
       - else
         = f.text_field :email
         - tooltip t('.tooltips.email')
