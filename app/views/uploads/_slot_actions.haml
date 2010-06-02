@@ -2,7 +2,7 @@
   %p.slotActions{ :style => "display: none" }
     %span
       = link_to trash_image, project_page_upload_url(page.project, page,upload),
-        :'data-remote' => 'delete', :'data-confirm' => t('confirm.delete_upload')
+        :'data-remote' => true, :'data-method' => 'delete', :'data-confirm' => t('confirm.delete_upload')
       = loading_action_image("delete_upload_#{upload.id}", true)
   %p.slotActions.handle{ :style => "display: none;" }
     %span
