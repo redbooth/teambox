@@ -82,10 +82,11 @@ module Emailer::Incoming
   private
 
   def process(email)
-    raise "Invalid To fields"  unless email.destinations and email.destinations.first
-    raise "Invalid From field" unless email.from         and email.from.first
+    destinations = Array(email.to) + Array(email.cc)
+    raise "Invalid To fields"  unless destinations and destinations.first
+    raise "Invalid From field" unless email.from   and email.from.first
 
-    @to       = email.destinations.
+    @to       = destinations.
                   select { |a| a.include? Teambox.config.smtp_settings[:domain] }.
                   first.split('@').first.downcase
     @body     = email.multipart? ? email.parts.first.body : email.body
