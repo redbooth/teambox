@@ -1,3 +1,5 @@
+require_dependency 'role_record'
+
 class Conversation < RoleRecord
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy

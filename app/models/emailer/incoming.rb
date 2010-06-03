@@ -1,6 +1,17 @@
 require 'net/pop'
 require 'net/imap'
 require 'net/http'
+require_dependency 'emailer'
+require_dependency 'user'
+require_dependency 'person'
+require_dependency 'project'
+require_dependency 'conversation'
+require_dependency 'task'
+require_dependency 'task_list'
+require_dependency 'comment'
+require_dependency 'activity'
+require_dependency 'upload'
+require_dependency 'email'
 
 # Receives an email and performs the adequate action
 #
@@ -160,3 +171,5 @@ module Emailer::Incoming
   end
 
 end
+
+Emailer.send(:include, Emailer::Incoming)

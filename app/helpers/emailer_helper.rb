@@ -1,3 +1,6 @@
+require_dependency 'uploads_helper'
+require_dependency 'tasks_helper'
+
 module EmailerHelper
 
   include UploadsHelper

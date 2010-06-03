@@ -1,3 +1,5 @@
+require_dependency 'html_formatting'
+
 class ActiveRecord::Base
   @@white_list_sanitizer = HTML::WhiteListSanitizer.new
   class << self
