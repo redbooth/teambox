@@ -45,10 +45,10 @@ module Emailer::Incoming
       pop.mails.each do |email|
         begin
           Emailer.receive(email.pop)
+          email.delete
         rescue Exception
           $stderr.puts "Error receiving email at #{Time.now}: #{$!}"
         end
-        email.delete
       end
     end
   end
