@@ -81,6 +81,7 @@ module Emailer::Incoming
   def receive(email)
     process email
     get_target
+    get_action unless @target.nil?
 
     case @type
     when :project then post_to(@target)
@@ -151,14 +152,60 @@ module Emailer::Incoming
     end
   end
   
+  # Determines the #action
+  # The commands are #resolve / #resolved, #username, #reject / #rejected and #hold.
+  def get_action
+    first_line = @body.split("\n").first
+    tag = /#([a-zA-Z0-9_]*)/.match(first_line)
+    tag = tag ? tag[1] : nil
+    
+    case tag
+    when 'open', 'reopen'
+      @target_action = :open
+    when 'resolve', 'resolved'
+      @target_action = :resolve
+    when 'reject', 'rejected'
+      @target_action = :reject
+    when 'hold'
+      @target_action = :hold
+    else
+      people = @target.project.people.reject{ |r| r.login != tag }
+      unless people.empty?
+        @target_action = :assign
+        @target_person = people.first
+      end
+    end
+  end
+  
   def post_to(target)
     puts "Posting to #{target.class.to_s} #{target.id} '#{@subject}'"
 
     comment = @project.new_comment(@user, target, :name => @subject)
     comment.body = @body
     if target.class == Task
+      target.previous_status = target.status
+      target.previous_assigned_id = target.assigned_id
       comment.status = target.status
-      comment.assigned = target.assigned
+      
+      case @target_action
+      when :open
+        comment.status = Task::STATUSES[:open]
+        comment.assigned_id = @project.people.find_by_user_id(@user.id)
+      when :resolve
+        comment.status = Task::STATUSES[:resolved]
+      when :reject
+        comment.status = Task::STATUSES[:rejected]
+      when :hold
+        comment.status = Task::STATUSES[:hold]
+      when :assign
+        comment.status = Task::STATUSES[:open]
+        comment.assigned_id = @target_person.id
+      else
+        comment.assigned_id = target.assigned_id
+      end
+      
+      target.status = comment.status
+      target.assigned_id = comment.assigned_id
     end
     comment.save!
   end
