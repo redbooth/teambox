@@ -95,6 +95,33 @@ defaults: &defaults
   privacy_url: http://www.teambox.com/privacy
   terms_url: http://www.teambox.com/terms
 
+  # OAuth single-click login. You can configure Teambox to log in with Github, Facebook and others.
+  #
+  # To enable this, you'll need to create developer accounts for each provider.
+  # We are providing defaults that work for http://localhost:3000, for testing purposes.
+  #
+  # If signups are enabled, this will allow users to create an account at Teambox.
+  # If not, it will still allow them to link their services to existing Teambox accounts.
+  oauth_providers:
+    # This example is configured for http://localhost:3000
+    # Register for your own domain at http://github.com/account/applications
+    github:
+      site: https://github.com
+      client_id: abfe8d0a74b0344b111b
+      secret_key: aad82e098d2015254fc9b34550d6f93c37c17952
+      authorize_path: /login/oauth/authorize
+      access_token_path: /login/oauth/access_token
+      user_path: /api/v2/json/user/show
+    # This example is configured for http://localhost:3000
+    # Register for your own domain at www.facebook.com/developers
+    facebook:
+      site: https://graph.facebook.com
+      client_id: 95fcdf49f46b8c057c66a8890d0b29ac
+      secret_key: f5049b1d9f8da979278ac4394de54a1b
+      authorize_path: /oauth/authorize
+      access_token_path: /oauth/access_token
+      user_path: /me
+
 development:
   <<: *defaults
   app_domain: localhost:3000

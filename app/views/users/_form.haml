@@ -64,7 +64,6 @@
   - if sub_action == 'settings'
     #change_password_link
       = link_to_function t('.change_password'), show_user_password_fields
-      
     .first_day_of_week.select
       = f.label :first_day_of_week, t('.first_day_of_week')
       = f.select :first_day_of_week, [[t('.sunday'), 'sunday'],[t('.monday'), 'monday']]

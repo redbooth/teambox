@@ -106,6 +106,10 @@ dependencies:
     group: 
     - :testing
     version: ~> 0.5.0
+  json: 
+    group: 
+    - :default
+    version: ">= 0"
   paperclip: 
     group: 
     - :plugins
@@ -154,6 +158,10 @@ dependencies:
     group: 
     - :default
     version: ~> 0.8.2
+  oauth2: 
+    group: 
+    - :default
+    version: ">= 0"
   capybara: 
     group: 
     - :testing
@@ -177,6 +185,8 @@ specs:
     version: 2.3.8
 - acts-as-list: 
     version: 0.1.2
+- addressable: 
+    version: 2.1.2
 - builder: 
     version: 2.1.2
 - mime-types: 
@@ -192,13 +202,13 @@ specs:
 - nokogiri: 
     version: 1.4.2
 - rack-test: 
-    version: 0.5.3
+    version: 0.5.4
 - ffi: 
     version: 0.6.3
 - json_pure: 
     version: 1.4.3
 - selenium-webdriver: 
-    version: 0.0.18
+    version: 0.0.20
 - capybara: 
     version: 0.3.8
 - cgi_multipart_eof_fix: 
@@ -206,7 +216,7 @@ specs:
 - rubyforge: 
     version: 2.0.4
 - hoe: 
-    version: 2.6.0
+    version: 2.6.1
 - chronic: 
     version: 0.2.3
 - columnize: 
@@ -229,18 +239,22 @@ specs:
     version: 0.5.2
 - factory_girl: 
     version: 1.2.4
+- faraday: 
+    version: 0.4.6
 - fastthread: 
     version: 1.0.7
 - gem_plugin: 
     version: 0.2.3
 - haml: 
-    version: 3.0.6
+    version: 3.0.9
 - hpricot: 
     version: 0.8.2
 - i18n: 
-    version: 0.3.7
+    version: 0.4.0
 - icalendar: 
     version: 1.1.4
+- json: 
+    version: 1.4.3
 - libxml-ruby: 
     version: 1.1.4
 - linecache: 
@@ -251,6 +265,8 @@ specs:
     version: 1.1.5
 - mysql: 
     version: 2.8.1
+- oauth2: 
+    version: 0.0.8
 - paperclip: 
     version: 2.3.1.1
 - pg: 
@@ -282,23 +298,23 @@ specs:
 - tmail: 
     version: 1.2.7.1
 - will_paginate: 
-    version: 2.3.12
+    version: 2.3.14
 - ya2yaml: 
     version: 0.29.2
 - tolk: 
-    version: 0.0.1
+    version: 0.2.0
     source: 0
 - tzinfo: 
-    version: 0.3.20
+    version: 0.3.22
 - vestal_versions: 
     version: 1.0.2
 - whenever: 
     version: 0.4.2
-hash: ee77615f059abff8b100e06108469a205f459a20
+hash: f568abb83b5ec6a057b0d967a6fb5d8b399f8673
 sources: 
 - Git: 
     uri: git://github.com/mislav/tolk.git
     git: git://github.com/mislav/tolk.git
-    ref: a468b381fdf83d612598937316db0befb203bb59
+    ref: 0d4c9b332cbfefbf89d23f0dc8d92b07f4540260
 - Rubygems: 
     uri: http://gemcutter.org

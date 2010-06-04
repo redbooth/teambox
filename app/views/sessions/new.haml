@@ -5,5 +5,8 @@
   = session_fields
   = submit_tag t('.submit')
 
+%p= link_to t('.login_signup_with_github'), oauth_request_path('github')
+%p= link_to t('.login_signup_with_facebook'), oauth_request_path('facebook')
+
 - content_for :column do
   = latest_announcement

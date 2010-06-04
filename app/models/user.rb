@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
   has_many :invitations, :foreign_key => 'invited_user_id'
   has_many :activities
   has_many :uploads
+  has_many :app_links
   has_one :group
   has_and_belongs_to_many :groups
 
@@ -274,6 +275,15 @@ class User < ActiveRecord::Base
     login =~ DELETED_REGEX
     update_attribute :login, Regexp.last_match(1).to_s if login =~ DELETED_REGEX
     update_attribute :email, Regexp.last_match(1).to_s if email =~ DELETED_REGEX
+  end
+
+  def link_to_app(provider, profile)
+    link = AppLink.new
+    link.user              = self
+    link.provider          = provider
+    link.app_user_id       = profile[:id]
+    link.custom_attributes = profile[:original]
+    link.save!
   end
 
   protected
