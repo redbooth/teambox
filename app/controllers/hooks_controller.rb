@@ -69,8 +69,9 @@ class HooksController < ApplicationController
       commits = push["commits"]
 
       text = "<h3>New code on <a href='#{push['repository']['url']}'>#{push['repository']['name']}</a></h3>\n\n"
-      text << commits.collect do |commit|
-        "#{commit['author']['name']} - <a href='#{commit['url']}'>#{commit['message']}</a>"
+      text << commits[0,10].collect do |commit|
+        message = commit['message'].strip.split("\n").first
+        "#{commit['author']['name']} - <a href='#{commit['url']}'>#{message}</a>"
       end.join("<br/>")
 
       user = @current_project.user
