@@ -49,9 +49,14 @@ class ActivitiesController < ApplicationController
     # * The requested project if given
     def get_target
       @target = if params[:project_id]
-        @current_user.projects.find_by_permalink(params[:project_id]) or not_found
+        @current_user.projects.find_by_permalink(params[:project_id])
       else
         @current_user.projects.find :all
+      end
+      
+      unless @target
+        redirect_to '/'
+        return false
       end
     end
 end
