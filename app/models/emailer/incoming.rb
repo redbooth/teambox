@@ -155,7 +155,7 @@ module Emailer::Incoming
   # Determines the #action
   # The commands are #resolve / #resolved, #username, #reject / #rejected and #hold.
   def get_action
-    tag = /^\s+?#([a-zA-Z0-9_]*)/.match(@body.gsub(/\n/, ' '))
+    tag = /^\s*#([a-zA-Z0-9_]*)/.match(@body.gsub(/\n/, ' '))
     tag = tag ? tag[1] : nil
     
     case tag

@@ -86,5 +86,16 @@ describe Emailer do
       comment.status.should == Task::STATUSES[:rejected]
       comment.previous_status.should == Task::STATUSES[:new]
     end
+
+    it "should still parse with newlines and spaces in front" do
+      @email_template.body = "\n\n  \n\n \n\n#hold\nPeople like newlines too. So lets implement that!"
+      Emailer.receive(@email_template.to_s)
+      
+      @task.reload
+      comment = @task.comments.last
+      @task.status.should == Task::STATUSES[:hold]
+      comment.status.should == Task::STATUSES[:hold]
+      comment.previous_status.should == Task::STATUSES[:new]
+    end
   end
 end
