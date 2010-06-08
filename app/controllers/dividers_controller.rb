@@ -6,7 +6,7 @@ class DividersController < ApplicationController
     @divider = @page.build_divider(params[:divider])
     
     respond_to do |f|
-      f.html { redirect_to project_page_path(@current_project, @page) }
+      f.html { reload_page }
       f.m 
     end
   end
@@ -20,9 +20,11 @@ class DividersController < ApplicationController
     
     respond_to do |f|
       if !@divider.new_record?
+        f.html { reload_page }
         f.js
         handle_api_success(f, @divider, true)
       else
+        f.html { reload_page }
         f.js
         handle_api_error(f, @divider)
       end
@@ -46,11 +48,13 @@ class DividersController < ApplicationController
     
     if @divider.editable?(current_user) and @divider.update_attributes(params[:divider])
       respond_to do |f|
+        f.html { reload_page }
         f.js
         handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
+        f.html { reload_page }
         f.js
         handle_api_error(f, @divider)
       end
@@ -63,11 +67,13 @@ class DividersController < ApplicationController
     if @divider.editable?(current_user)
       @divider.destroy
       respond_to do |f|
+        f.html { reload_page }
         f.js
         handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
+        f.html { reload_page }
         f.js
         handle_api_error(f, @divider)
       end
@@ -77,6 +83,10 @@ class DividersController < ApplicationController
   private
     def load_page
       @page = @current_project.pages.find(params[:page_id])
+    end
+    
+    def reload_page
+      redirect_to project_page_path(@current_project, @page)
     end
     
     def load_divider
