@@ -20,7 +20,7 @@ class Emailer < ActionMailer::Base
 
   def forgot_password(reset_password)
     defaults
-    recipients    reset_password.email
+    recipients    reset_password.user.email
     subject       I18n.t("emailer.forgot_password.subject")
     body          :user => reset_password.user, :url => reset_password_url(reset_password.reset_code)
   end
