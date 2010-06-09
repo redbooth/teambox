@@ -1,7 +1,5 @@
 class ProjectsController < ApplicationController
   before_filter :can_modify?, :only => [:edit, :update, :transfer, :destroy]
-  before_filter :load_task_lists, :only => [:show]
-  before_filter :load_banner, :only => [:show]
   before_filter :load_projects, :only => [:index]
   before_filter :set_page_title
   
