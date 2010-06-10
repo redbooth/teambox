@@ -2,7 +2,7 @@ module CommentsHelper
 
   def cache_editable_comment(comment, &block)
     cache(comment.cache_key.tap { |key|
-      key << "-#{comment.user.avatar_updated_at.to_i}"
+      key << "-#{comment.user.avatar_updated_at.to_i}-#{comment.project.permalink}"
       key << '-editable' if comment.can_edit?(current_user)
       key << '-destructable' if comment.can_destroy?(current_user)
       key << ".#{request.format}"
