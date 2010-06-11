@@ -115,12 +115,9 @@ module ApplicationHelper
     image_tag('loading.gif', :id => id, :class => 'loading', :style => 'display: none')
   end
 
-  def loading(action,id=nil)
-    if id
-      image_tag('loading.gif', :id => "#{action}_loading_#{id}", :class => 'loading', :style => 'display: none')
-    else
-      image_tag('loading.gif', :id => "#{action}_loading", :class => 'loading', :style => 'display: none')
-    end
+  def loading(action, id = nil)
+    img_id = id ? "#{action}_loading_#{id}" : "#{action}_loading"
+    image_tag('loading.gif', :id => img_id, :class => 'loading', :style => 'display: none', :alt => '')
   end
 
   def show_loading(action,id=nil)

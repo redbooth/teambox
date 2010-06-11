@@ -92,9 +92,10 @@
       parameters: params,
       evalScripts: true,
 
-      onComplete: function(request) { element.fire("ajax:complete", request); },
-      onSuccess:  function(request) { element.fire("ajax:success",  request); },
-      onFailure:  function(request) { element.fire("ajax:failure",  request); }
+      onCreate:   function(response) { element.fire("ajax:create",   response); },
+      onComplete: function(response) { element.fire("ajax:complete", response); },
+      onSuccess:  function(response) { element.fire("ajax:success",  response); },
+      onFailure:  function(response) { element.fire("ajax:failure",  response); }
     });
 
     element.fire("ajax:after");

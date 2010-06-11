@@ -378,3 +378,7 @@ document.on('ajax:complete', '.page_slot .note form, .page_slot .divider form', 
   this.down('.submit').show();
   this.down('img.loading').hide();
 });
+
+document.on('ajax:create', 'form.edit_note', function(e, element) {
+  element.down('img.loading').show()
+});
