@@ -28,7 +28,6 @@ Installation
 Hop to [our wiki](http://wiki.github.com/micho/teambox/ "Teambox wiki") to get detailed information on
 installing Teambox.
 
-
 [teambox]: http://www.teambox.com
 [preview]: http://teambox.com/images/screenshots/overview.png
 [license]: http://www.gnu.org/licenses/agpl-3.0.html

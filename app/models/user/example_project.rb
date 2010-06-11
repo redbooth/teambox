@@ -20,7 +20,7 @@ class User
       example_comment(@project, @ellis, "Cool, Dagny. Let's learn how to use this.")
       example_comment(@project, @hank,  "@ellis, you'll get a hold of it in no time. My guys at the coal and steel places use it to work closely in teams.")
       example_comment(@project, @dagny, "The way I use it is creating a **Project** for each event, department or project we have. Then I *invite* all the people concerned with it, so they can post and receive updates.\n\nProjects have:\n\n* Conversations\n* Task lists\n* Pages\n* Files")
-      example_comment(@project, @hank,  "I like to use the project **wall** to leave interesting links that don't require much attention.\n\nEmail might be intrusive, so the wall is the perfect place to leave comments and advice.\n\nhttp://www.teambox.com")
+      example_comment(@project, @hank,  "I like to use the project **wall** to leave interesting links that don't require much attention.\n\nEmail might be intrusive, so the wall is the perfect place to leave comments and advice.\n\nhttp://teambox.com")
       example_comment(@project, @dagny, "You can also _format_ your text using [Markdown](http://daringfireball.net/projects/markdown/).")
       example_comment(@project, @ellis, "Very nice! I also noticed I can post files to a project wall. I can use this to call attention on images or quick ideas.")
       example_comment(@project, @ellis, "I'm going to invite #{name} to the project, too.\n\nHey, @#{login}, read below to learn how Teambox works! Also take a look at [Conversations](#{project_conversations_path(@project)}), [Task lists](#{project_task_lists_path(@project)}), [Pages](#{project_pages_path(@project)}) and [Files](#{project_uploads_path(@project)}) to learn more about how each section works.")
