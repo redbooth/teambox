@@ -1,5 +1,6 @@
-.divider{:id => "divider_#{divider.id}"}
-  = divider_actions_link(divider)
+%div[divider]
+  - if divider.editable?(current_user)
+    = render 'dividers/actions', :divider => divider
   %h3
     %span
       = divider.name

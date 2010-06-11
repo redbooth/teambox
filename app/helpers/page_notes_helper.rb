@@ -8,12 +8,6 @@ module PageNotesHelper
     link_to "<span>#{t('.new_note')}</span>", new_project_page_note_path(project, page), :class => 'add_button note_button'
   end
   
-  def note_actions_link(note)
-    return unless note.editable?(current_user)
-    render :partial => 'notes/actions',
-      :locals => { :note => note }
-  end
-  
   def remove_form(show_element=nil)
     update_page do |page|  
       page << "$(this).up('form').remove();"

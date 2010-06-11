@@ -8,12 +8,6 @@ module PageDividersHelper
     link_to content_tag(:span,t('.new_divider')), new_project_page_divider_path(project, page), :class => 'add_button divider_button'
   end
   
-  def divider_actions_link(divider)
-    return unless divider.editable?(current_user)
-    render :partial => 'dividers/actions',
-      :locals => { :divider => divider }
-  end
-  
   def remove_form(show_element=nil)
     update_page do |page|  
       page << "$(this).up('form').remove();"

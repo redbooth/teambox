@@ -1,34 +1,12 @@
+Element.addMethods({
+  getSlotId: function(element) {
+    element = $(element)
+    return element.readAttribute('slot') ||
+      (element.id && element.id.match(/^page_slot_(\d+)$/) && RegExp.$1)
+  }
+})
+
 Event.addBehavior({
-  ".note:mouseover": function(e){
-    $(this).select('p.actions').each(function(e) {
-      e.show();
-    });
-  },
-  ".note:mouseout": function(e){
-    $$(".note p.actions").each(function(e){ 
-      e.hide();
-    });
-  },
-  ".divider:mouseover": function(e){
-    $(this).select('p.actions').each(function(e) {
-      e.show();
-    });
-  },
-  ".divider:mouseout": function(e){
-    $$(".divider p.actions").each(function(e){ 
-      e.hide();
-    });
-  },
-  ".pageSlot .upload:mouseover": function(e){
-    $(this).select('p.slotActions').each(function(e) {
-      e.show();
-    });
-  },
-  ".pageSlot .upload:mouseout": function(e){
-    $$(".pageSlot .upload p.slotActions").each(function(e){ 
-      e.hide();
-    });
-  },
   ".pageForm a.cancel:click": function(e){
     e.element().up('.pageForm').remove();
     return false;
@@ -77,7 +55,7 @@ var Page = {
     if (this.READONLY)
       return;
 
-    Sortable.create('slots', {handle: 'slot_handle', tag: 'div', only: 'pageSlot',
+    Sortable.create('slots', {handle: 'slot_handle', tag: 'div', only: 'page_slot',
       onUpdate: function() {
         new Ajax.Request(Page.url + '/reorder',
         {
@@ -176,7 +154,7 @@ var InsertionBar = {
 
       // Set insertion position
       form.down('input[name="position[before]"]').setValue(Page.insert_before ? '1' : '0')
-      form.down('input[name="position[slot]"]').setValue(Page.insert_element ? Page.insert_element.readAttribute('slot') : '-1')
+      form.down('input[name="position[slot]"]').setValue(Page.insert_element ? Page.insert_element.getSlotId() : '-1')
       // Form should go in the insertion bar, so we can change the insertion location and maintain state
       this.current_form = form;
       this.revealForm();
@@ -205,7 +183,7 @@ var InsertionBar = {
   insertTempForm: function(template) {
     var el = null;
     var before = Page.insert_before ? '1' : '0';
-    var slot = Page.insert_element ? Page.insert_element.readAttribute('slot') : '-1';
+    var slot = Page.insert_element ? Page.insert_element.getSlotId() : '-1';
     var content = template.replace(/\{POS\}/, 'position[slot]=' + slot + '&position[before]=' + before);
 
     if (Page.insert_element == null) {
@@ -281,14 +259,14 @@ var InsertionMarker = {
     if (Page.insert_element == null)
       return;
     var next = Page.insert_element.next();
-    while (next != null && next.readAttribute('slot') == null) {
+    while (next != null && !next.getSlotId()) {
       next = next.next();
     }
     return next;
   },
 
   set: function(element, insert_before) {
-    var el = element == null ? $(Element.getElementsBySelector($('slots'), '.pageSlot')[0]) : element;
+    var el = element == null ? $(Element.getElementsBySelector($('slots'), '.page_slot')[0]) : element;
     
     this.updateSlot(false);
     Page.insert_element = el;
@@ -321,7 +299,7 @@ var InsertionMarkerFunc = function(evt){
   if (!(delta < 0 || delta > Page.MARGIN))
   {
     // Show bar here *if* we are within the slot
-    if (el.hasClassName('pageSlot'))
+    if (el.hasClassName('page_slot'))
     {
       var h = el.getHeight(), thr = Math.min(h / 2, Page.SLOT_VERGE);
       var t = offset.top, b = t + h;
@@ -372,30 +350,31 @@ document.on('click', 'a.note_button, a.divider_button, a.upload_button', functio
   }
 });
 
-document.on('click', 'a.cancelPageWidget', function(evt, el) {
+document.on('click', 'a.cancelPageWidget', function(e) {
+  e.stop()
   InsertionBar.clearWidgetForm();
 });
 
 // Widget actions, forms
 
-document.on('ajax:before', '.pageSlot .actions, .pageSlot .slotActions', function(e) {
+document.on('ajax:before', '.page_slot .actions, .page_slot .slotActions', function(e) {
   var el = e.findElement();
   el.hide();
   el.next('.loading_action').show();
 });
 
-document.on('ajax:complete', '.pageSlot .actions, .pageSlot .slotActions', function(e) {
+document.on('ajax:complete', '.page_slot .actions, .page_slot .slotActions', function(e) {
   var el = e.findElement();
   el.show();
   el.next('.loading_action').hide();
 });
 
-document.on('ajax:before', '.pageSlot .note form, .pageSlot .divider form', function(e) {
+document.on('ajax:before', '.page_slot .note form, .page_slot .divider form', function(e) {
   this.down('.submit').hide();
   this.down('img.loading').show();
 });
 
-document.on('ajax:complete', '.pageSlot .note form, .pageSlot .divider form', function(e) {
+document.on('ajax:complete', '.page_slot .note form, .page_slot .divider form', function(e) {
   this.down('.submit').show();
   this.down('img.loading').hide();
 });

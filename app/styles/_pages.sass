@@ -4,8 +4,7 @@
   float: none
   span
     background: rgb(255, 255, 255)
-    -moz-border-radius: 4px
-    -webkit-border-radius: 4px
+    +rounded(4px)
     padding: 3px 0px
     left: -32px
     bottom: 0px
@@ -16,7 +15,6 @@
     top: 2px
     img
       cursor: move
-
 
 .pages
   clear: both
@@ -159,7 +157,7 @@
 #pageWidgetForms
   display: none
 
-.pageSlot
+.page_slot
   padding: 5px 0px
   padding-left: 46px
   margin-left: -46px
@@ -168,8 +166,16 @@
     height: 0px
     float: left
     width: 100%
+  .actions
+    display: none
+  &:hover .actions
+    display: block
+  .slotActions
+    display: none
+  &:hover .slotActions
+    display: block
 
-.pageSlot.InsertBefore
+.page_slot.InsertBefore
   background-image: url(/images/pins.gif)
   background-repeat: repeat-x
 
@@ -198,8 +204,7 @@ form.new_divider, form.edit_divider
     border: solid 1px rgb(230, 230, 230)
     background: rgb(245, 245, 245)
     width: 340px
-    -moz-border-radius: 8px
-    -webkit-border-radius: 8px
+    +rounded(8px)
     padding: 0px 10px
       top: 5px
   .text_field
@@ -218,8 +223,7 @@ form.new_note, form.edit_note
   border: solid 1px rgb(230, 230, 230)
   background: rgb(245, 245, 245)
   padding: 10px
-  -moz-border-radius: 8px
-  -webkit-border-radius: 8px
+  +rounded(8px)
   .documentation
     font-size: 12px
     float: right

@@ -1,7 +1,6 @@
 //= require <prototype>
 //= require <rails>
 //= require <html5>
-//= require <champagne>
 //= require <builder>
 //= require <effects>
 //= require <controls>
