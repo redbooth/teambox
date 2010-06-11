@@ -61,8 +61,8 @@ class TaskListsController < ApplicationController
     
     if !@task_list.new_record?
       respond_to do |f|
-        f.html { redirect_to [@current_project,@task_list] }
-        f.m    { redirect_to project_task_lists_path(@current_project) }
+        f.html { redirect_to_task_list @task_list }
+        f.m    { redirect_to_task_list }
         f.js
         handle_api_success(f, @task_list, true)
       end
@@ -129,7 +129,7 @@ class TaskListsController < ApplicationController
     calc_onindex
     @sub_action = 'all'
     
-    if request.method == :put and @task_list.editable?(current_user) and !@task_list.archived
+    if request.method == :put and !@task_list.archived
       # Prototype for comment
       comment_attrs = {:comment_body => params[:message]}
       comment_attrs[:body] ||= "Archived task list"
@@ -153,13 +153,15 @@ class TaskListsController < ApplicationController
       
       respond_to do |f|
         f.html { non_js_list_redirect }
-        f.js{}
+        f.m    { non_js_list_redirect }
+        f.js   {}
         handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
         f.html { flash[:error] = "Not allowed!"; non_js_list_redirect }
-        f.js { render :text => 'alert("Not allowed!");'; }
+        f.m    { flash[:error] = "Not allowed!"; non_js_list_redirect }
+        f.js   { render :text => 'alert("Not allowed!");'; }
         handle_api_error(f, @task_list)
       end
     end
@@ -197,18 +199,16 @@ class TaskListsController < ApplicationController
       @task_list.try(:destroy)
 
       respond_to do |f|
-        f.html do
-          flash[:success] = t('deleted.task_list', :name => @task_list.to_s)
-          redirect_to project_task_lists_path(@current_project)
-        end
-        f.js {}
+        f.html { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
+        f.m    { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
+        f.js
         handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
-        flash[:error] = t('common.not_allowed')
-        f.html { redirect_to project_task_lists_path(@current_project) }
-        f.js { render :text => 'alert("Not allowed!");'; }
+        f.html { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+        f.m    { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+        f.js   { render :text => 'alert("Not allowed!");'; }
         handle_api_error(f, @task_list)
       end
     end
@@ -277,5 +277,23 @@ class TaskListsController < ApplicationController
     def calc_onindex
       @on_index = ((params[:on_index] || 0).to_i == 1)
     end
-
+    
+    def redirect_to_task_list(task_list=nil)
+      redirect_to task_list ? project_task_list_path(@current_project, @task_list) :
+                               project_task_lists_path(@current_project)
+    end
+    
+    def check_permissions
+      # Can they even edit the project?
+      unless @current_project.editable?(current_user)
+        respond_to do |f|
+          f.html { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+          f.m    { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+          f.js   {
+            render :text => "alert(\"#{t('common.not_allowed')}\");", :status => :unprocessable_entity
+          }
+        end
+        return false
+      end
+    end
 end

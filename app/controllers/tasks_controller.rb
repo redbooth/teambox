@@ -2,6 +2,7 @@ class TasksController < ApplicationController
   before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:edit,:update,:reopen,:reorder]
   before_filter :find_task, :only => [:show,:destroy,:edit,:update,:reopen,:watch,:unwatch]
   before_filter :load_banner, :only => [:show]
+  before_filter :check_permissions, :except => [:show, :watch, :unwatch]
   before_filter :set_page_title
 
   def show
@@ -9,18 +10,13 @@ class TasksController < ApplicationController
     @comment = @current_project.new_task_comment(@task)
 
     respond_to do |f|
-      f.html { redirect_to project_task_list_task_path(@current_project, @task_list, @task) if @wrong_task_list }
+      f.html { redirect_to_task(@task_list, @task) if @wrong_task_list }
       f.m
       f.js   { @show_part = params[:part]; render :template => 'tasks/reload' }
       f.xml  { render :xml     => @task.to_xml }
       f.json { render :as_json => @task.to_xml }
       f.yaml { render :as_yaml => @task.to_xml }
     end
- 
-    #   Use this snippet to test the notification emails that we send:
-    # @project = @current_project
-    # @recipient = current_user
-    # render :file => 'emailer/notify_task', :layout => false
   end
 
   def new
@@ -45,8 +41,8 @@ class TasksController < ApplicationController
     
     if !@task.new_record?
       respond_to do |f|
-        f.html { redirect_to [@current_project,@task_list,@task] }
-        f.m    { redirect_to project_task_lists_path(@current_project) }
+        f.html { redirect_to_task @task_list, @task }
+        f.m    { redirect_to_task @task_list, @task }
         f.js
         handle_api_success(f, @task, true)
       end
@@ -72,8 +68,8 @@ class TasksController < ApplicationController
     @saved = @task.update_attributes(params[:task])
     if @saved
       respond_to do |f|
-        f.html { redirect_to [@current_project,@task_list,@task] }
-        f.m    { redirect_to [@current_project,@task_list,@task] }
+        f.html { redirect_to_task @task_list, @task }
+        f.m    { redirect_to_task @task_list, @task }
         f.js
         handle_api_success(f, @task)
       end
@@ -89,23 +85,13 @@ class TasksController < ApplicationController
 
   def destroy
     @on_task = ((params[:on_task] || 0).to_i == 1)
-    if @task.editable?(current_user)
-      @task.try(:destroy)
+    @task.try(:destroy)
 
-      respond_to do |f|
-        f.html do
-          flash[:success] = t('deleted.task', :name => @task.to_s)
-          redirect_to project_task_lists_path(@current_project)
-        end
-        f.js
-        handle_api_success(f, @task)
-      end
-    else
-      respond_to do |f|
-        flash[:error] = t('common.not_allowed')
-        f.html { redirect_to project_task_lists_path(@current_project) }
-        handle_api_error(f, @task)
-      end
+    respond_to do |f|
+      f.html { flash[:success] = t('deleted.task', :name => @task.to_s); redirect_to_task @task_list }
+      f.m    { flash[:success] = t('deleted.task', :name => @task.to_s); redirect_to_task @task_list }
+      f.js
+      handle_api_success(f, @task)
     end
   end
 
@@ -155,7 +141,30 @@ class TasksController < ApplicationController
         end
       rescue
         flash[:error] = t('not_found.task', :id => params[:id])
+        redirect_to_task
+      end
+    end
+    
+    def redirect_to_task(task_list=nil, task=nil)
+      if task_list
+        redirect_to task ? project_task_list_task_path(@current_project, task_list, task) :
+                           project_task_list_path(@current_project, task_list)
+      else
         redirect_to project_task_lists_path(@current_project)
+      end
+    end
+
+    def check_permissions
+      # Can they even edit the project?
+      unless @current_project.editable?(current_user)
+        respond_to do |f|
+          f.html { flash[:error] = t('common.not_allowed'); redirect_to_task @task_list, @task }
+          f.m    { flash[:error] = t('common.not_allowed'); redirect_to_task @task_list, @task }
+          f.js   {
+            render :text => "alert(\"#{t('common.not_allowed')}\");", :status => :unprocessable_entity
+          }
+        end
+        return false
       end
     end
 end
