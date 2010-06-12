@@ -14,30 +14,34 @@ dependencies:
     group: 
     - :plugins
     version: ~> 1.0.2
-  pg: 
-    group: 
-    - :pg
-    version: ~> 0.9.0
-    require: []
-
-  libxml-ruby: 
-    group: 
-    - :default
-    version: ~> 1.1.3
-    require: 
-    - libxml
-  text-format: 
-    group: 
-    - :rails
-    version: ">= 0.6.3"
-    require: 
-    - text/format
   rails: 
     group: 
     - :rails
     version: ~> 2.3.5
     require: []
 
+  text-format: 
+    group: 
+    - :rails
+    version: ">= 0.6.3"
+    require: 
+    - text/format
+  libxml-ruby: 
+    group: 
+    - :default
+    version: ~> 1.1.3
+    require: 
+    - libxml
+  pg: 
+    group: 
+    - :pg
+    version: ~> 0.9.0
+    require: []
+
+  mustache: 
+    group: 
+    - :default
+    version: ~> 0.11.0
   mongrel: 
     group: 
     - :development
@@ -48,14 +52,10 @@ dependencies:
     group: 
     - :plugins
     version: ~> 0.0.1
-  haml: 
+  mysql: 
     group: 
-    - :default
-    version: ~> 3.0.0.beta1
-  memcache-client: 
-    group: 
-    - :rails
-    version: ">= 1.7.4"
+    - :mysql
+    version: ~> 2.8.1
     require: []
 
   SystemTimer: 
@@ -64,12 +64,16 @@ dependencies:
     version: ~> 1.2.0
     require: 
     - system_timer
-  mysql: 
+  memcache-client: 
     group: 
-    - :mysql
-    version: ~> 2.8.1
+    - :rails
+    version: ">= 1.7.4"
     require: []
 
+  haml: 
+    group: 
+    - :default
+    version: ~> 3.0.0.beta1
   sqlite3-ruby: 
     group: 
     - :development
@@ -90,16 +94,16 @@ dependencies:
     version: ~> 0.1.2
     require: 
     - acts_as_list
+  tmail: 
+    group: 
+    - :rails
+    version: ~> 1.2.3
   whenever: 
     group: 
     - :default
     version: ~> 0.4.1
     require: []
 
-  tmail: 
-    group: 
-    - :rails
-    version: ~> 1.2.3
   database_cleaner: 
     group: 
     - :testing
@@ -142,36 +146,36 @@ dependencies:
     group: 
     - :default
     version: ~> 1.1.3
-  i18n: 
-    group: 
-    - :rails
-    version: ">= 0.1.3"
   rdiscount: 
     group: 
     - :default
     version: ~> 1.6.3
+  i18n: 
+    group: 
+    - :rails
+    version: ">= 0.1.3"
   pickle: 
     group: 
     - :testing
     version: ~> 0.2.1
-  oauth2: 
-    group: 
-    - :default
-    version: ">= 0"
-  hpricot: 
-    group: 
-    - :default
-    version: ~> 0.8.2
-  builder: 
-    group: 
-    - :rails
-    version: ~> 2.1.2
   aws-s3: 
     group: 
     - :default
     version: ~> 0.6.2
     require: 
     - aws/s3
+  builder: 
+    group: 
+    - :rails
+    version: ~> 2.1.2
+  hpricot: 
+    group: 
+    - :default
+    version: ~> 0.8.2
+  oauth2: 
+    group: 
+    - :default
+    version: ">= 0"
   launchy: 
     group: 
     - :testing
@@ -285,6 +289,8 @@ specs:
     version: 1.1.5
 - multi_json: 
     version: 0.0.4
+- mustache: 
+    version: 0.11.2
 - mysql: 
     version: 2.8.1
 - oauth: 
@@ -338,7 +344,7 @@ specs:
     version: 1.0.2
 - whenever: 
     version: 0.4.2
-hash: 60416abac64f26de1de8a256ab20e8eb560b5bba
+hash: ccf5dd30a5ec59cff1f47c0f6680c42cdecc6137
 sources: 
 - Git: 
     uri: git://github.com/mislav/tolk.git

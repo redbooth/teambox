@@ -32,6 +32,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reset_passwords
   map.resource :session
 
+  map.hooks '/hooks/:key/:format', :controller => 'hooks', :action => 'push', :format => 'post'
+
   map.with_options :controller => 'users', :action => 'edit' do |account|
     account.account_settings        '/account/settings',        :sub_action => 'settings'
     account.account_picture         '/account/picture',         :sub_action => 'picture'
@@ -83,8 +85,6 @@ ActionController::Routing::Routes.draw do |map|
     project.show_more  'activities/:id/show_more.:format', :controller => 'activities', :action => 'show_more', :method => :get
 
     project.resources :uploads
-
-    project.hooks      'hooks/:hook_name',                 :controller => 'hooks',      :action => 'create',    :method => :post
 
     project.reorder_task_lists 'reorder_task_lists', :controller => 'task_lists', :action => 'reorder', :method => :post
     project.reorder_tasks 'task_lists/:task_list_id/reorder_task_list', :controller => 'tasks', :action => 'reorder', :method => :post
