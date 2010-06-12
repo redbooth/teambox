@@ -47,42 +47,70 @@ class HooksController < ApplicationController
       }
     EOS
   end
+  
+  def index
+    
+  end
+  
+  def show
+    
+  end
+  
+  def new
 
+  end
+  
+  def edit
+    
+  end
+  
+  def update
+  
+  end
+  
   def create
-    @source = params[:hook_name]
-    @payload = params[:payload] || @example_github_payload
+    
+  end
+  
+  def push    
+    @hook = Hook.find(:first, :conditions => {:key => params[:key]})
+    params.merge!({:payload => @example_github_payload}) unless params[:payload]
 
-    output = case @source
-              when "github" then post_from_github
-              else 'Invalid hook'
-              end
+    post = parse_data
+    template = params[:template] || @hook.message
 
-    render :text => output
+    create_comment(template, post)
+
+    render :text => "OK"
   end
   
   protected
 
-    def post_from_github
-      return "Invalid project" unless @current_project
-
-      push = JSON.parse(@payload)
-      commits = push["commits"]
-
-      text = "<h3>New code on <a href='#{push['repository']['url']}'>#{push['repository']['name']}</a></h3>\n\n"
-      text << commits[0,10].collect do |commit|
-        message = commit['message'].strip.split("\n").first
-        "#{commit['author']['name']} - <a href='#{commit['url']}'>#{message}</a>"
-      end.join("<br/>")
-
-      user = @current_project.user
-      target = nil
-
-      @current_project.new_comment(user, target, {
-        :body => "<div class='hook_#{@source}'>#{text}</div>",
-        :user => @current_project.user
-      }).save!
-
-      RDiscount.new(text).to_html
+    def parse_data
+      post = {:hook_time => Time.now.to_s}
+      params.each do |k,v|
+        begin
+          case params[:format]
+          when 'xml'  then data = XML.parse(v)
+          when 'json' then data = JSON.parse(v)
+          else data = v
+          end
+          post.merge!({k => data})
+        rescue
+          # we might want to notify @hook.user with an email?
+          # If its not xml/json, just take the raw param
+          post.merge!({k => v})
+        end unless ['controller','key','action','method','format', 'template'].include?(k)
+      end
+      
+      post
     end
-  
+
+    def create_comment(template, post)
+      text = RDiscount.new(Mustache.render(template, post)).to_html
+      
+      @hook.project.new_comment(@hook.user, @hook.project, {
+        :body => "<div class='hook'>#{text}</div>",
+        :user => @hook.user}).save!
+    end
 end
