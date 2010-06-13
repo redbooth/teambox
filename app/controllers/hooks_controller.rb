@@ -1,7 +1,7 @@
 class HooksController < ApplicationController
-
-  no_login_required
-  skip_before_filter :verify_authenticity_token
+  before_filter :find_hook, :only => [:edit, :update, :destroy]
+  no_login_required :only => [:push]
+  skip_before_filter :verify_authenticity_token, :only => [:push]
 
   def initialize
     @example_github_payload = <<-EOS
@@ -49,39 +49,59 @@ class HooksController < ApplicationController
   end
   
   def index
-    
+    @hooks = @current_user.hooks
   end
-  
-  def show
     
-  end
-  
   def new
-
+    @hook = @current_user.hooks.build
   end
   
   def edit
-    
   end
   
   def update
-  
+    respond_to do |f|
+      if @hook.update_attributes(params[:hook])
+        f.html { redirect_to edit_project_hook_path(@current_project, @hook) }
+      else
+        f.html { render :edit }
+      end
+    end
   end
   
   def create
+    @hook = @current_user.hooks.build(params[:hook])
+    @hook.project = @current_project
     
+    respond_to do |f|
+      if @hook.save
+        f.html { redirect_to project_hooks_path(@current_project) }
+      else
+        f.html { render :edit }
+      end
+    end
+  end
+  
+  def destroy
+    respond_to do |f|
+      if @hook.destroy
+        flash[:success] = t('hooks.destroy.success', :hook => @hook.name)
+      end
+      f.html { redirect_to project_hooks_path(@current_project) }
+    end
   end
   
   def push    
-    @hook = Hook.find(:first, :conditions => {:key => params[:key]})
-    params.merge!({:payload => @example_github_payload}) unless params[:payload]
-
-    post = parse_data
-    template = params[:template] || @hook.message
-
-    create_comment(template, post)
-
-    render :text => "OK"
+    if @hook = Hook.find(:first, :conditions => {:key => params[:key]})
+      params.merge!({:payload => @example_github_payload}) unless params[:payload]
+    
+      post = parse_data
+      template = params[:template] || @hook.message
+    
+      if create_comment(template, post)
+        render :text => "OK"
+      end
+    end
   end
   
   protected
@@ -112,5 +132,9 @@ class HooksController < ApplicationController
       @hook.project.new_comment(@hook.user, @hook.project, {
         :body => "<div class='hook'>#{text}</div>",
         :user => @hook.user}).save!
+    end
+    
+    def find_hook
+      @hook = @current_user.hooks.find_by_id(params[:id])
     end
 end

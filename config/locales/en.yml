@@ -33,6 +33,7 @@ en:
     delete_task: Are you sure you want to delete this task?
     delete_page: Are you sure you want to delete this page?
     delete_upload: Are you sure you want to delete this file?
+    delete_hook: Are you sure you want to delete this hook?
   not_found:
     user: "User does not exist."
     conversation: "Conversation %{id} not found in this project."
@@ -912,7 +913,26 @@ en:
       video: What's Teambox about?
       submit: Login
       login_failed: "Couldn't log you in as %{login}"
-
+  hooks:
+    index:
+      title: Integration Hooks
+      your_hook: "Your hooks for the project '{{project}}'"
+      new_hook: "Create a new Hook and a generate a new Key"
+    hook:
+      hook_url: "URL for this hook"
+    fields:
+      name: Name of your hook
+      message: Message template
+      instruction: See the documentation for <a>link</a> for details.
+    new:
+      title: "Create a new hook for project '{{project}}'"
+      submit: Create
+    edit:
+      title: "Edit the hook '{{hook}}'"
+      submit: Save
+    destroy:
+      success: "The hook '{{hook}}' was successfully deleted."
+      
   shared:
     strip:
       archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
@@ -933,6 +953,7 @@ en:
       picture: Project Picture
       deletion: Project Archiving/Deletion
       ownership: Ownership
+      hooks: Notification Hooks
     project_navigation:
       overview: Overview
       all_conversations: All Conversations

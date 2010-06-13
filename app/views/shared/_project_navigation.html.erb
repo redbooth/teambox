@@ -110,6 +110,7 @@ unless location_name? %w(welcome_users new_projects show_users edit_users new_av
             t.named t('.project_settings')
             t.links_to  project_settings_path(project)
             t.highlights_on :controller => :projects, :action => :edit
+            t.highlights_on :controller => :hooks
             t.li_class = 'right_side'
             t.tab_index = 155
           end

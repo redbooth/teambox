@@ -1,0 +1,6 @@
+.hook
+  = link_to hook.name.capitalize, edit_project_hook_path(@current_project,hook)
+  = "#{t('.hook_url')}:"
+  = "http://#{Teambox.config.app_domain}/hooks/#{hook.key}/"
+  = link_to t('common.edit'), edit_project_hook_path(@current_project,hook), :class => 'button'
+  = link_to t('common.delete'), project_hook_path(@current_project,hook), :method => :delete, :class => 'button', :confirm => t('confirm.delete_hook')
