@@ -8,6 +8,7 @@ class Project
     project.has_many :tasks
     project.has_many :uploads
     project.has_many :invitations
+    project.has_many :hooks
   end
   
   with_options :dependent => :destroy, :order => 'id DESC' do |project|

@@ -1,0 +1,8 @@
+.name.text_field
+  = f.label :name, t('hooks.fields.name')
+  = errors_for hook, :name
+  = f.text_field :name
+.message.text_field
+  = f.label :message, t('hooks.fields.message')
+  = errors_for hook, :message
+  = f.text_area :message

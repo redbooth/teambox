@@ -1,0 +1,7 @@
+- content_for :column do
+  = project_settings_navigation
+
+%h2= t(".title", :hook => @hook.name)
+- form_for @hook, :url => project_hook_path(@current_project,@hook) do |f|
+  = render :partial => "form", :locals => {:f => f, :hook => @hook}
+  = f.submit t('.submit'), :class => 'button'
