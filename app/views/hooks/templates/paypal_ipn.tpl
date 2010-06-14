@@ -1,0 +1,1 @@
+SOLD! {{item_name}} for {{mc_gross}} {{mc_currency}}
