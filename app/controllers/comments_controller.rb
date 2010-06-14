@@ -94,8 +94,9 @@ class CommentsController < ApplicationController
   def convert
     if request.method == :put and @has_permission and @comment.target.class == Project and @target.class == TaskList and !@target.archived
       # Make a new task in the target...
+      task_name = params[:task].nil? ? nil : params[:task][:name]
       params = {
-        'name' => @comment.body
+        'name' => task_name || @comment.body.split('\n').first
       }
       @task = @current_project.create_task(current_user,@target,params)
       
@@ -107,12 +108,12 @@ class CommentsController < ApplicationController
     
     if @task and !@task.new_record?
       respond_to do |f|
-        f.js { render :template => 'comments/update' }
+        f.js
         handle_api_success(f, @task, true)
       end
     else
       respond_to do |f|
-        f.js { render :template => 'comments/update' }
+        f.js
         handle_api_error(f, @task)
       end
     end
@@ -181,6 +182,8 @@ class CommentsController < ApplicationController
         
         if action_name == 'destroy'
           return if @comment.can_destroy?(current_user, @checks_time)
+        elsif action_name == 'convert'
+          return if @current_project.editable?(current_user)
         else
           return if @comment.can_edit?(current_user, @checks_time)
         end

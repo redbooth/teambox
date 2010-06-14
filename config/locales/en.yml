@@ -775,6 +775,9 @@ en:
       conversation: "Send a message to the rest of the group."
       task_list: "Share ideas for this task list. To create and assign tasks, use the sidebar."
       task: "Define what needs to be done by commenting. Assign this task to somebody. Post updates. Attach results."
+    convert_form:
+      name: "Enter a name for this task"
+      destination: "Select the destination task list"
     edit:
       submit: Save
     errors:

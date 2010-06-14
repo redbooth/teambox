@@ -1,5 +1,5 @@
-if !@saved
-  page.show_form_errors(@comment,"edit_comment_#{@comment.id}")
+if @task and @task.new_record?
+  page.show_form_errors(@task,js_id('convert', @current_project, @comment))
 else
   page.replace "comment_#{@comment.id}", :partial => 'comments/comment', :locals => { :comment => @comment }
   if !@has_permission
