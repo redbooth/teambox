@@ -6,3 +6,7 @@
   = f.label :message, t('hooks.fields.message')
   = errors_for hook, :message
   = f.text_area :message
+  %p= t("hooks.fields.instruction", :documentation => (link_to t("hooks.fields.documentation"), '#doc'))
+-if @template_readme
+  .readme
+    =@template_readme

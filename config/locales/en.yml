@@ -917,18 +917,21 @@ en:
     index:
       title: Integration Hooks
       your_hook: "Your hooks for the project '{{project}}'"
-      new_hook: "Create a new Hook and a generate a new Key"
-    hook:
-      hook_url: "URL for this hook"
+      new_hook: "Create a new Hook"
+      templates: "Use one of our templates for popular services"
     fields:
       name: Name of your hook
       message: Message template
-      instruction: See the documentation for <a>link</a> for details.
+      instruction: See the {{documentation}} for details.
+      documentation: documentation
+    templates:
+      title: Templates for Integration Hooks
     new:
       title: "Create a new hook for project '{{project}}'"
       submit: Create
     edit:
       title: "Edit the hook '{{hook}}'"
+      url: "URL for '{{hook}}'"
       submit: Save
     destroy:
       success: "The hook '{{hook}}' was successfully deleted."

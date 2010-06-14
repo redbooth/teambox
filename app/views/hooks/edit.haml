@@ -5,3 +5,15 @@
 - form_for @hook, :url => project_hook_path(@current_project,@hook) do |f|
   = render :partial => "form", :locals => {:f => f, :hook => @hook}
   = f.submit t('.submit'), :class => 'button'
+
+%h2= t(".url", :hook => @hook.name)
+%ul
+  %li 
+    Raw post
+    %small= "http://#{Teambox.config.app_domain}/hooks/#{@hook.key}/"
+  %li
+    JSON
+    %small= "http://#{Teambox.config.app_domain}/hooks/#{@hook.key}/json"
+  %li
+    XML
+    %small= "http://#{Teambox.config.app_domain}/hooks/#{@hook.key}/xml"

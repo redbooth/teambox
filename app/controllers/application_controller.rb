@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
                 :set_user
   
   private
-
     def check_permissions
       unless @current_project.editable?(current_user)
         render :text => "You don't have permission to edit/update/delete within \"#{@current_project.name}\" project", :status => :forbidden
