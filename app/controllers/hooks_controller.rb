@@ -1,5 +1,6 @@
 class HooksController < ApplicationController
   before_filter :find_hook, :only => [:edit, :update, :destroy]
+  before_filter :can_modify?, :except => [:push]
   no_login_required :only => [:push]
   skip_before_filter :verify_authenticity_token, :only => [:push]
 
@@ -136,5 +137,18 @@ class HooksController < ApplicationController
     
     def find_hook
       @hook = @current_user.hooks.find_by_id(params[:id])
+    end
+    
+    def can_modify?
+      if !(@current_project.owner?(current_user) or @current_project.admin?(current_user))
+          respond_to do |f|
+            flash[:error] = t('common.not_allowed')
+            f.html { redirect_to projects_path }
+            handle_api_error(f, @current_project)
+          end
+        return false
+      end
+      
+      true
     end
 end
