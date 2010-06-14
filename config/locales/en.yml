@@ -195,6 +195,7 @@ en:
       title_profile: Your Profile Settings
       title_picture: Your Profile Picture
       title_notifications: Your Notifications
+      title_linked_accounts: Linked Application Accounts
       title_deletion: Project Archiving/Deletion
       title_delete: Delete Account
       submit: Update account
@@ -891,6 +892,7 @@ en:
       account_settings: Account Settings
       profile_information: Profile Information
       profile_picture: Profile Picture
+      linked_accounts: Linked Accounts
       notifications: Notifications
       delete_account: Delete Account...
     task_navigation:
@@ -1256,10 +1258,17 @@ en:
       two_words_connector: " and "
       last_word_connector: ", and "
   oauth:
-    account_linked: "Your accounts have been linked."
-    already_linked_to_your_account: "This service is already linked to your account."
-    already_taken_by_other_account: "This service is already linked to another account on the system"
+    this_account_will_be_linked_to: "This account will be linked with {{provider}}"
+    account_linked: "Your account has been linked."
+    app_unlinked: "App unlinked"
+    not_linked: "That service is not linked to your Teambox account."
+    already_linked_to_your_account: "This service is already linked to your account. You can log in with it."
+    already_taken_by_other_account: "This service is already linked to another account on the system. Try logging out and logging in with it. To link it to a different account, you'll need to unlink it from the current one."
     auth_status: OAuth Auth
     auth_status_linked: Linked with the provider
     auth_status_link: Link with your account
     logged_in: Logged in successfully
+    your_account_is_linked: "Your {{provider}} profile is <strong>linked</strong> to Teambox."
+    your_account_is_not_linked: "Your {{provider}} profile is <strong>not linked</strong> to Teambox."
+    link_account: Link account.
+    unlink_account: Unlink account.

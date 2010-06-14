@@ -1,7 +1,7 @@
 %h2= t('.title')
 
 - if @app_link
-  %p= "This account will be linked with #{@app_link.provider}"
+  %p= t(:'oauth.this_account_will_be_linked_to', :provider => @app_link.provider)
 
 - if !@invitation and @user.email and User.find_by_email(@user.email)
   %p{ :style => 'margin: 80px 10px; padding: 10px; border: 1px rgb(220,220,150) solid; background-color: rgb(255,255,200)' }

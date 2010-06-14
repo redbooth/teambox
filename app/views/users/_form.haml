@@ -126,4 +126,7 @@
     %p= t('.account_deletion.what_will_happen')
     %p= link_to t('.account_deletion.delete_my_account'), destroy_user_path
 
+- if @sub_action == 'linked_accounts'
+  = render :partial => 'users/settings/linked_accounts'
+
 = hidden_field_tag 'sub_action', sub_action

@@ -19,6 +19,12 @@ render_tabnav :user do
     end
 
     add_tab do |t|
+      t.named t('.linked_accounts')
+      t.links_to account_linked_accounts_path
+      t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'linked_accounts'
+    end
+
+    add_tab do |t|
       t.named t('.notifications')
       t.links_to account_notifications_path
       t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'notifications'

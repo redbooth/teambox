@@ -191,6 +191,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def unlink_app
+    if app_link = current_user.app_links.find_by_provider(params[:provider])
+      flash[:success] = t(:'oauth.app_unlinked')
+      app_link.destroy
+    else
+      flash[:error] = t(:'oauth.not_linked')
+    end
+
+    redirect_to account_linked_accounts_path
+  end
+
   private
     def find_user
       unless @user = ( User.find_by_login(params[:id]) || User.find_by_id(params[:id]) )

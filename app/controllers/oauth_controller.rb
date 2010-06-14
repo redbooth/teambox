@@ -25,12 +25,13 @@ class OauthController < ApplicationController
       if logged_in?
         if current_user.app_links.find_by_provider(@provider)
           flash[:notice] = t(:'oauth.already_linked_to_your_account')
-        elsif AppLink.find_by_provider_and_app_user_id(@provider, app_links)
+        elsif AppLink.find_by_provider_and_app_user_id(@provider, @profile[:id])
           flash[:error] = t(:'oauth.already_taken_by_other_account')
         else
           current_user.link_to_app(@provider, @profile)
           flash[:success] = t(:'oauth.account_linked')
         end
+        return redirect_to(account_linked_accounts_path)
       else
         if oauth_login
           flash[:success] = t(:'oauth.logged_in')

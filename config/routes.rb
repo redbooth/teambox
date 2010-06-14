@@ -23,16 +23,18 @@ ActionController::Routing::Routes.draw do |map|
   map.oauth_request   '/oauth/:provider',          :controller => 'oauth', :action => 'start' 
   map.oauth_callback  '/oauth/:provider/callback', :controller => 'oauth', :action => 'callback'
   map.complete_signup '/complete_signup',          :controller => 'users', :action => 'complete_signup'
+  map.unlink_app      '/oauth/:provider/unlink',   :controller => 'users', :action => 'unlink_app'
 
   map.resources :reset_passwords
   map.resource :session
 
   map.with_options :controller => 'users', :action => 'edit' do |account|
-    account.account_settings      '/account/settings',      :sub_action => 'settings'
-    account.account_picture       '/account/picture',       :sub_action => 'picture'
-    account.account_profile       '/account/profile',       :sub_action => 'profile'
-    account.account_notifications '/account/notifications', :sub_action => 'notifications'
-    account.account_delete        '/account/delete',        :sub_action => 'delete'
+    account.account_settings        '/account/settings',        :sub_action => 'settings'
+    account.account_picture         '/account/picture',         :sub_action => 'picture'
+    account.account_profile         '/account/profile',         :sub_action => 'profile'
+    account.account_linked_accounts '/account/linked_accounts', :sub_action => 'linked_accounts'
+    account.account_notifications   '/account/notifications',   :sub_action => 'notifications'
+    account.account_delete          '/account/delete',          :sub_action => 'delete'
   end
 
   map.destroy_user '/account/destroy', :controller => 'users', :action => 'destroy'
