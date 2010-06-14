@@ -113,7 +113,7 @@ class ApplicationController < ActionController::Base
     end
     
     def touch_user
-      current_user.touch if logged_in?
+      current_user.update_attribute(:visited_at, Time.now) if logged_in? and (Time.now - current_user.last_active) >= 12.hours
     end
 
     def set_page_title
