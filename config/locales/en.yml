@@ -931,7 +931,7 @@ en:
       submit: Create
     edit:
       title: "Edit the hook '{{hook}}'"
-      url: "URL for '{{hook}}'"
+      url: "URLs for '{{hook}}'"
       submit: Save
     destroy:
       success: "The hook '{{hook}}' was successfully deleted."
