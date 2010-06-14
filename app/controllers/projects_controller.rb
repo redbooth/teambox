@@ -141,7 +141,10 @@ class ProjectsController < ApplicationController
     end
     
     def can_modify?
-      if !(@current_project.owner?(current_user) or @current_project.admin?(current_user))
+      if !( @current_project.owner?(current_user) or 
+            ( @current_project.admin?(current_user) and 
+              !(params[:controller] == 'transfer' or params[:sub_action] == 'ownership')))
+        
           respond_to do |f|
             flash[:error] = t('common.not_allowed')
             f.html { redirect_to projects_path }
