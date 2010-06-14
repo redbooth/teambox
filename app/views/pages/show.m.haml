@@ -1,10 +1,17 @@
 .page_header
+  .text_actions
+    - if @page.editable?(current_user)
+      = rename_page_link(@current_project, @page)
+      = t('common.or')
+      = edit_mobile_page_link(@current_project, @page)
   %h2= @page
   .description= @page.description
+  
 
-= page_buttons(@current_project,@page)
+- unless @edit_part.nil?
+  = page_buttons(@current_project,@page)
 
-.pageSlots
+.pageSlots{:class => (@edit_part == 'page' ? 'edit' : nil)}
   #slots
     = render :partial => 'slot', :collection => @page.slots, :locals => {:page => @page, :project => @current_project}
   

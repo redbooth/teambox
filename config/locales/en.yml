@@ -9,6 +9,7 @@ en:
     in_project: in
     delete: Delete
     edit: Edit
+    rename: Rename
     accept: Accept
     decline: Decline
     cancel: Cancel

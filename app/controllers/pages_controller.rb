@@ -52,6 +52,17 @@ class PagesController < ApplicationController
   end
   
   def edit
+    respond_to do |f|
+      f.html
+      f.m   {
+        @edit_part = params[:edit_part]
+        if @edit_part == 'page'
+          render :show
+        else
+          render :edit
+        end
+      }
+    end
   end
   
   def update

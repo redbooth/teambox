@@ -5,7 +5,7 @@
     = loading_action_image("delete_divider_#{divider.id}", true)
     
     = link_to trash_image, project_page_divider_path(divider.project, divider.page, divider),
-        :'data-remote' => true, :'data-method' => 'delete', :'data-confirm' => t('.delete_confirm')
+        :'data-remote' => true, :'data-method' => 'delete', :'data-confirm' => t('.delete_confirm'), :class => 'widget_delete'
     = loading_action_image("delete_divider_#{divider.id}", true)
 %p.actions.handle
   %span

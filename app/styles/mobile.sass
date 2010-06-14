@@ -581,16 +581,29 @@ div.upload
     .body
       font-size: 12px
 
-body.show_pages
+div.pageSlots
+  p.actions
+    display: none
+    a.widget_delete
+      display: none
+
+div.pageSlots.edit
+  p.actions
+    padding-right: 4px
+    display: block
+    
+body.show_pages,body.edit_pages
   div.page_header
     display: block
     margin-bottom: 10px
     .text_actions
       margin-top: 5px
+      padding-right: 6px
       float: right
       font-size: 12px
       color: rgb(200, 200, 200)
       a
+        color: #555
         text-decoration: underline
     .description
       font-size: 12px
@@ -608,10 +621,17 @@ body.show_pages
   p
     font-size: 12px
     line-height: 1.4em
-  .buttons
+  div.buttons
+    border-top: 1px solid #afafaf
+    border-bottom: 1px solid #afafaf
+    background: #ededed
     padding: 6px 10px
-    -moz-border-radius: 8px
-    -webkit-border-radius: 8px
+    margin: 6px 0px
+    span.add
+      font-weight: bold
+    .add_button
+      color: #555
+      padding: 2px
   div.upload
     .block
       .date
