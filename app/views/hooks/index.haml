@@ -4,4 +4,7 @@
 %h2= t(".title")
 %h3= t(".your_hook", :project => @current_project.name)
 = render :partial => "hook", :collection => @hooks
-= link_to t(".new_hook"), new_project_hook_path(@current_project), :class => 'button'
+%p
+  = link_to t(".new_hook"), new_project_hook_path(@current_project), :class => 'button'
+  or
+  = link_to t(".templates"), templates_project_hook_path(@current_project, 'new'), :calss => 'button'
