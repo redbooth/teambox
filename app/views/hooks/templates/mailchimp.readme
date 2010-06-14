@@ -1,0 +1,9 @@
+### Webhooks need to be configured from your MailChimp account:
+* Log into your MailChimp account
+* Navigating to your Lists
+* Click the View Lists button on the list you want to configure
+* Click the List Tools menu option at the top
+* Click the Webhooks link
+* Insert your Hook URL 
+
+_Hook URL can be found once you save your template. You need to click the Hook name to get the list. For Mailchimp, choose the 'Raw post' URL_
