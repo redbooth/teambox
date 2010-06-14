@@ -834,8 +834,6 @@ en:
       video: What's Teambox about?
       submit: Login
       login_failed: "Couldn't log you in as {{login}}"
-      login_signup_with_github: Log in with Github
-      login_signup_with_facebook: Log in with Facebook
 
   shared:
     strip:
@@ -1258,7 +1256,6 @@ en:
       two_words_connector: " and "
       last_word_connector: ", and "
   oauth:
-    confirm_details: "Please confirm your account details"
     account_linked: "Your accounts have been linked."
     already_linked_to_your_account: "This service is already linked to your account."
     already_taken_by_other_account: "This service is already linked to another account on the system"

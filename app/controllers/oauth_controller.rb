@@ -40,13 +40,12 @@ class OauthController < ApplicationController
           flash[:notice] = "The user #{@profile[:email]} has already a Teambox account.<br/>Log in and link it from your Settings panel."
         else
           if signups_enabled?
-            # TODO: should jump to signup screen, with pre-filled info
-            #
-            # warn this will create a new account.
-            # give instructions on how to link an existing one, instead of creating a new one
-            new_user = oauth_signup
-            flash[:notice] = t(:'oauth.confirm_details')
-            return redirect_to account_settings_path
+            profile_for_session = @profile
+            profile_for_session.delete(:original)
+            session[:profile] = profile_for_session
+            app_link = AppLink.create!(:provider => @provider, :app_user_id => @profile[:id])
+            session[:app_link] = app_link.id
+            return redirect_to signup_path
           else
             flash[:error] = t(:'users.new.no_public_signup')
             return redirect_to login_path

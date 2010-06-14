@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20100613181634) do
     t.datetime "updated_at"
   end
 
-  add_index "app_links", ["user_id"], :name => "index_app_links_on_user_id", :unique => true
+  add_index "app_links", ["user_id"], :name => "index_app_links_on_user_id"
 
   create_table "cards", :force => true do |t|
     t.integer "user_id"

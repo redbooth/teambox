@@ -106,6 +106,7 @@ defaults: &defaults
     # This example is configured for http://localhost:3000
     # Register for your own domain at http://github.com/account/applications
     github:
+      name: Github
       site: https://github.com
       client_id: abfe8d0a74b0344b111b
       secret_key: aad82e098d2015254fc9b34550d6f93c37c17952
@@ -115,6 +116,7 @@ defaults: &defaults
     # This example is configured for http://localhost:3000
     # Register for your own domain at www.facebook.com/developers
     facebook:
+      name: Facebook
       site: https://graph.facebook.com
       client_id: 95fcdf49f46b8c057c66a8890d0b29ac
       secret_key: f5049b1d9f8da979278ac4394de54a1b

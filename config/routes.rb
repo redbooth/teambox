@@ -20,8 +20,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.create_project_invitation '/projects/:project_id/invite/:login', :controller => 'invitations', :action => 'create', :method => :posts
 
-  map.oauth_request  '/oauth/:provider',          :controller => 'oauth', :action => 'start' 
-  map.oauth_callback '/oauth/:provider/callback', :controller => 'oauth', :action => 'callback'
+  map.oauth_request   '/oauth/:provider',          :controller => 'oauth', :action => 'start' 
+  map.oauth_callback  '/oauth/:provider/callback', :controller => 'oauth', :action => 'callback'
+  map.complete_signup '/complete_signup',          :controller => 'users', :action => 'complete_signup'
 
   map.resources :reset_passwords
   map.resource :session

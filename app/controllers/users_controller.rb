@@ -23,7 +23,10 @@ class UsersController < ApplicationController
       flash[:success] = t('users.new.you_are_logged_in')
       redirect_to projects_path
     else
-      @user = User.new
+      load_app_link
+      load_profile
+
+      @user ||= User.new
       @user.email = @invitation.email if @invitation
 
       render :layout => 'sessions'
@@ -55,16 +58,25 @@ class UsersController < ApplicationController
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
-    @user.confirmed_user = (@invitation && @invitation.email == @user.email) || RAILS_ENV == "development"
-    
+
+    load_app_link
+
+    @user.confirmed_user = ((@invitation && @invitation.email == @user.email) or
+                            RAILS_ENV == "development" or
+                            !!@app_link)
+
     unless @invitation || signups_enabled?
       flash[:error] = t('users.new.no_public_signup')
-      redirect_to root_path
-      return
+      return redirect_to root_path
     end
 
     if @user && @user.save && @user.errors.empty?
       self.current_user = @user
+
+      if @app_link
+        @app_link.user = @user
+        @app_link.save!
+      end
 
       if @invitation
         if @invitation.project
@@ -78,6 +90,7 @@ class UsersController < ApplicationController
 
       flash[:success] = t('users.create.thanks')
     else
+      load_profile
       render :action => :new, :layout => 'sessions'
     end
   end
@@ -190,6 +203,23 @@ class UsersController < ApplicationController
       if params[:invitation]
         @invitation = Invitation.find_by_token(params[:invitation])
         @invitation_token = params[:invitation] if @invitation
+      end
+    end
+
+    def load_app_link
+      if session[:app_link]
+        @app_link = AppLink.find(session[:app_link]) || raise("Invalid AppLink")
+        raise("AppLink already in use") if @app_link.user_id
+      end
+    end
+
+    def load_profile
+      @user ||= User.new
+      if @profile = session[:profile]
+        @user.first_name    = @user.first_name.presence || @profile[:first_name]
+        @user.last_name     = @user.last_name.presence  || @profile[:last_name]
+        @user.login       ||= @profile[:login]
+        @user.email       ||= @profile[:email]
       end
     end
 end

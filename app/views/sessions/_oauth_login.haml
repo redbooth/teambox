@@ -1,0 +1,6 @@
+- if APP_CONFIG['oauth_providers']
+  .oauth_logins
+    - if APP_CONFIG['oauth_providers']['github']
+      %p= link_to image_tag("login_with_github.png"), oauth_request_path('github')
+    - if APP_CONFIG['oauth_providers']['facebook']
+      %p= link_to image_tag("login_with_facebook.png"), oauth_request_path('facebook')

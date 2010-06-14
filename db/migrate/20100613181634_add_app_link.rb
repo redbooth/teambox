@@ -8,7 +8,7 @@ class AddAppLink < ActiveRecord::Migration
       t.datetime :created_at
       t.datetime :updated_at
     end
-    add_index :app_links, :user_id, :unique => true
+    add_index :app_links, :user_id
   end
 
   def self.down
