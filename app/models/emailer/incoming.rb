@@ -81,7 +81,7 @@ module Emailer::Incoming
   def receive(email)
     process email
     get_target
-    get_action unless @target.nil?
+    get_action if @target.is_a?(Task)
 
     case @type
     when :project then post_to(@target)
