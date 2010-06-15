@@ -147,18 +147,9 @@ class User < ActiveRecord::Base
     Activity.log(nil, target, action, creator_id)
   end
 
-  # Rewriting ActiveRecord's touch method
-  # The original runs validations and loads associated models, being very inefficient
-  def touch
-    self.update_attribute(:updated_at, Time.now)
-  end
-  
-  def last_active
-    mod_date = self.updated_at || self.created_at
-    if self.visited_at
-      self.visited_at > mod_date ? self.visited_at : mod_date
-    else
-      mod_date
+  def update_visited_at
+    if (Time.now - visited_at) >= 12.hours
+      update_attribute(:visited_at, Time.now)
     end
   end
 

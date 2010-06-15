@@ -4,4 +4,4 @@
   .status
     = "@#{user.login}"
   .last_login
-    = time_ago_in_words(user.last_active)
+    = time_ago_in_words(user.visited_at)
