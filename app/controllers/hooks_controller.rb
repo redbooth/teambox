@@ -104,10 +104,8 @@ class HooksController < ApplicationController
     
       post = parse_data
       template = params[:template] || @hook.message
-    
-      if create_comment(template, post)
-        render :text => "OK"
-      end
+      
+      render :text => "OK", :status => create_comment(template, post)
     end
   end
     
@@ -122,7 +120,7 @@ class HooksController < ApplicationController
       params.each do |k,v|
         begin
           case params[:format]
-          when 'xml'  then data = XML.parse(v)
+          when 'xml'  then data = Crack::XML.parse(v)
           when 'json' then data = JSON.parse(v)
           else data = v
           end
@@ -138,11 +136,15 @@ class HooksController < ApplicationController
     end
 
     def create_comment(template, post)
-      text = RDiscount.new(Mustache.render(template, post)).to_html
-      
-      @hook.project.new_comment(@hook.user, @hook.project, {
-        :body => "<div class='hook'>#{text}</div>",
-        :user => @hook.user}).save!
+      begin
+        text = RDiscount.new(Mustache.render(template, post)).to_html
+        @hook.project.new_comment(@hook.user, @hook.project, {
+                                  :body => "<div class='hook'>#{text}</div>",
+                                  :user => @hook.user}).save!
+        return 200
+      rescue
+        return 406
+      end
     end
     
     def find_hook

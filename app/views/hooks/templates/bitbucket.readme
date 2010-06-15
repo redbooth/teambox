@@ -2,8 +2,8 @@ Step by step:
 
 * Sign in your account
 * Go to administration tab on your repository
-* Select the Hooks tab
-* Enter your hook URL, use the JSON one!
+* Click Services
+* Enter your hook URL, use the Raw Post one!
 * That's it
 
 _Your hook URL will only appear once your saved the template_
