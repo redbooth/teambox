@@ -113,6 +113,10 @@ class User < ActiveRecord::Base
     login
   end
 
+  def visited_at
+    read_attribute(:visited_at) || updated_at
+  end
+
   def projects_shared_with(user)
     self.projects & user.projects
   end
