@@ -121,7 +121,7 @@ class OauthController < ApplicationController
         @profile[:email]      = user['email']
         @profile[:first_name] = user['first_name']
         @profile[:last_name]  = user['last_name']
-        @profile[:location]   = user['location']['name']
+        @profile[:location]   = user['location']['name'] if user['location']
         @profile[:original]   = user
       else
         raise "Unsupported provider: '#{@provider}'"
