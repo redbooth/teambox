@@ -1,0 +1,10 @@
+This is the classic Hello World exemple.
+
+Raw post:
+<pre><code>http://teambox.com/hooks/YOUR_HOOK_KEY/xml?test[hello]=world</code></pre>
+
+For XML:
+<pre><code>http://teambox.com/hooks/YOUR_HOOK_KEY/xml?test=%3Chello%3Eworld%3C/hello%3E</code></pre>
+
+For JSON:
+<pre><code>http://teambox.com/hooks/ca7963b96a3a8ed29eb9/json?test={%22hello%22:%22world%22}</code></pre>

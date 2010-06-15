@@ -1,6 +1,5 @@
-MailChimp event: {{type}}
+MailChimp, new subscriber:
 {{#data}}
-  {{#list_id}}* List id: {{/list_id}}
-  {{#email}}* Email {{email}} {{/email}} 
-  {{#merges}}* Name: {{FNAME}} {{LNAME}} {{#merges}}
+{{#email}} Email {{email}} {{/email}} 
+{{#merges}}- Name: {{FNAME}} {{LNAME}} {{/merges}}
 {{/data}}
