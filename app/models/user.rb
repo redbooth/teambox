@@ -148,7 +148,7 @@ class User < ActiveRecord::Base
   end
 
   def update_visited_at
-    if (Time.now - visited_at) >= 12.hours
+    if visited_at.nil? or (Time.now - visited_at) >= 12.hours
       update_attribute(:visited_at, Time.now)
     end
   end
