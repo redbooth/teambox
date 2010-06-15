@@ -8,7 +8,7 @@
       .body
         .file
           = upload_link(project,upload)
-          = '(' + number_to_human_size(upload.size) + ')'
+          = '(' + number_to_human_size(upload.size).to_s + ')'
         - if upload.description
           .description
             = upload.description
