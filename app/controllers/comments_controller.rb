@@ -14,8 +14,7 @@ class CommentsController < ApplicationController
       @comment = current_user.new_comment(current_user,@target,params[:comment])
     end
 
-    @comment.save!
-
+    @comment.save
     @target = @comment.target
 
     # Evaluate target
