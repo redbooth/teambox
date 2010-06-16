@@ -10,7 +10,7 @@ class Upload < RoleRecord
   has_one        :page_slot, :as => :rel_object
   before_destroy :clear_slot
 
-  before_create :copy_user_id_from_comment
+  before_create :copy_ownership_from_comment
 
   default_scope :order => 'created_at DESC'
 
@@ -101,9 +101,10 @@ class Upload < RoleRecord
   
   protected
   
-  def copy_user_id_from_comment
+  def copy_ownership_from_comment
     if comment_id
       self.user_id = comment.user_id
+      self.project_id = comment.project_id
     end
   end
   

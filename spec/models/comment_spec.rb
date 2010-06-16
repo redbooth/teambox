@@ -334,6 +334,7 @@ describe Comment do
       upload.comment.should == comment
       upload.description.should == 'Here is that dog video I promised'
       upload.user_id.should == comment.user_id
+      upload.project_id.should == comment.project_id
     end
   end
 end
