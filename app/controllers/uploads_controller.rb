@@ -62,7 +62,13 @@ class UploadsController < ApplicationController
           flash[:error] = "There was an error uploading the file"
           redirect_to :back
         elsif @upload.page
-          redirect_to [@current_project, @upload.page]
+          if iframe?
+            template = self.view_paths.find_template(default_template_name(action_name), :js)
+            @code = render_to_string :template => template
+            render :template => 'shared/iframe_rjs', :layout => false
+          else
+            redirect_to [@current_project, @upload.page]
+          end
         else
           redirect_to [@current_project, :uploads]
         end
@@ -107,6 +113,10 @@ class UploadsController < ApplicationController
       else
         @upload = @current_project.uploads.find_by_asset_file_name(params[:id])
       end
+    end
+    
+    def iframe?
+      params[:iframe] == 'true'
     end
 
 end

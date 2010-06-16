@@ -1,0 +1,15 @@
+if @insert_element.nil?
+  position = :bottom
+  location = 'slots'
+else
+  position = @insert_before ? :before : :after
+  location = @insert_element
+end
+
+page.insert_widget dom_id(@upload), position, location,
+                   :partial => 'pages/slot', 
+                   :object => @slot, 
+                   :locals => { :page => @page, :project => @current_project }
+
+page.call "InsertionBar.clearWidgetForm"
+page.reload_page_sort
