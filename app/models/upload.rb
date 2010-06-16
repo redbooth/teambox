@@ -10,6 +10,8 @@ class Upload < RoleRecord
   has_one        :page_slot, :as => :rel_object
   before_destroy :clear_slot
 
+  before_create :copy_user_id_from_comment
+
   default_scope :order => 'created_at DESC'
 
   has_attached_file :asset,
@@ -94,6 +96,14 @@ class Upload < RoleRecord
       xml.tag! 'updated-at', updated_at.to_s(:db)
       xml.tag! 'user-id', user_id
       xml.tag! 'comment-id', comment_id
+    end
+  end
+  
+  protected
+  
+  def copy_user_id_from_comment
+    if comment_id
+      self.user_id = comment.user_id
     end
   end
   

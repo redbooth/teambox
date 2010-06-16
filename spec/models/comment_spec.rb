@@ -323,5 +323,17 @@ describe Comment do
       upload.comment.should == comment
       upload.description.should == 'Here is that cat video I promised'
     end
+
+    it "should create nested upload" do
+      attributes = { :asset => File.open(File.expand_path('../../fixtures/tb-space.jpg', __FILE__)) }
+      comment = Factory.create :comment, :uploads_attributes => [attributes],
+        :body => 'Here is that dog video I promised'
+
+      comment.should have(1).upload
+      upload = comment.uploads.first
+      upload.comment.should == comment
+      upload.description.should == 'Here is that dog video I promised'
+      upload.user_id.should == comment.user_id
+    end
   end
 end
