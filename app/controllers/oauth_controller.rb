@@ -39,6 +39,7 @@ class OauthController < ApplicationController
         elsif User.find_by_email(@profile[:email])
           # TODO: locate existing user by email and ask to log in to link him
           flash[:notice] = "The user #{@profile[:email]} has already a Teambox account.<br/>Log in and link it from your Settings panel."
+          redirect_to login_path
         else
           if signups_enabled?
             profile_for_session = @profile
@@ -53,7 +54,6 @@ class OauthController < ApplicationController
           end
         end
       end
-      redirect_to root_path
     rescue OAuth2::HTTPError
       render :text => %(<p>OAuth Error ?code=#{params[:code]}:</p><p>#{$!}</p><p><a href="/auth/#{@provider}">Retry</a></p>)
     end
