@@ -216,7 +216,7 @@ class CommentsController < ApplicationController
     
     def fetch_new_comments
       # Fetch new comments
-      if params[:last_comment_id]
+      if params[:last_comment_id] and @target
         @last_id = params[:last_comment_id].to_i
         new_id = @comment.new_record? ? 0 : @comment.id
         @new_comments = @target.comments.find(:all, :conditions => ['comments.id != ? AND comments.id > ?', new_id, @last_id])
