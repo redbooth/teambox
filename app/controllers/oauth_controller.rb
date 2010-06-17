@@ -45,7 +45,9 @@ class OauthController < ApplicationController
             profile_for_session = @profile
             profile_for_session.delete(:original)
             session[:profile] = profile_for_session
-            app_link = AppLink.create!(:provider => @provider, :app_user_id => @profile[:id])
+            app_link = AppLink.create!(:provider => @provider, 
+                                       :app_user_id => @profile[:id], 
+                                       :custom_attributes => @profile[:original])
             session[:app_link] = app_link.id
             return redirect_to signup_path
           else
