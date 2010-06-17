@@ -17,6 +17,10 @@ module NavigationHelpers
       login_path
     when /the forgot password page/
       "/forgot"
+    when /the pages of the "([^\"]*)" project/
+      project_pages_path(Project.find_by_name($1))
+    when /the page named "([^\"]*)"/
+        project_page_path(@current_project, Page.find_by_name($1))
     when /the project page/
       project_path(@current_project)
     when /the page of the "([^\"]*)" project/
