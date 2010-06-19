@@ -110,7 +110,7 @@ en:
       not_found: "We can't find a user with that email: {{email}}<br/>Please check the email address and try again. If that doesn't work, contact us at {{support}}"
       invalid: "The change password URL you visited is either invalid or expired. Try using I Forgot my Password again from the home page.<br/>If that doesn't work, contact us at {{support}}"
       password_not_updated: "New password is not valid. Try again."
-      password_updated: "Password was successfully updated. Please log in."
+      password_updated: "Password was successfully updated."
     sent:
       title: Reset Password
       login_link_sent: "We just sent you an email to {{email}} so you can retrieve your password."
