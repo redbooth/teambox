@@ -113,8 +113,8 @@ class OauthController < ApplicationController
         @profile[:id]         = user['id']
         @profile[:email]      = user['email']
         @profile[:login]      = user['login']
-        @profile[:first_name] = user['name'].split.first
-        @profile[:last_name]  = user['name'].split.second
+        @profile[:first_name] = user['name'].try(:split).try(:first)
+        @profile[:last_name]  = user['name'].try(:split).try(:second)
         @profile[:company]    = user['company']
         @profile[:location]   = user['location']
         @profile[:original]   = user
