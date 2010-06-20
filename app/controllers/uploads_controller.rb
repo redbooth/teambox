@@ -59,8 +59,8 @@ class UploadsController < ApplicationController
     respond_to do |wants|
       wants.html {
         if @upload.new_record?
-          flash[:error] = "There was an error uploading the file"
-          redirect_to :back
+          flash.now[:error] = "There was an error uploading the file"
+          render :new
         elsif @upload.page
           if iframe?
             template = self.view_paths.find_template(default_template_name(action_name), :js)

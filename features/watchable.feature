@@ -18,7 +18,6 @@ Feature: Watchable Objects
     Given "james" is watching the conversation "Politics"
 
   Scenario: New conversation watchers
-    Given a clear email queue
     When I go to the new conversation page
       And I fill in the following:
         | conversation_name | Talk!     |
@@ -29,12 +28,11 @@ Feature: Watchable Objects
     Then "james" should be watching the conversation "Talk!"
     When I fill in "comment_body" with "Rockets!"
       And I press "Save"
-    Then "balint.erdi@gmail.com" should receive an email
-    Then "pablo@teambox.com" should receive an email
-    Then "james.urquhart@gmail.com" should receive an email
+    Then "balint.erdi@gmail.com" should receive 2 emails
+    Then "pablo@teambox.com" should receive 2 emails
+    Then "james.urquhart@gmail.com" should receive 2 emails
 
   Scenario: Existing conversation with modified watchers
-    Given a clear email queue	
     Given "balint" stops watching the conversation "Politics"
     When I go to the conversations page
       And I follow "Politics"
@@ -43,11 +41,10 @@ Feature: Watchable Objects
     When I fill in "comment_body" with "Rockets!"
       And I press "Save"
     Then "balint.erdi@gmail.com" should receive no emails
-    Then "pablo@teambox.com" should receive an email
-    Then "james.urquhart@gmail.com" should receive an email
+    Then "pablo@teambox.com" should receive 2 emails
+    Then "james.urquhart@gmail.com" should receive 2 emails
 
   Scenario: User leaves project
-    Given a clear email queue
     Given "pablo" is not in the project called "Ruby Rockstars"
     When I go to the conversations page
       And I follow "Politics"
@@ -55,7 +52,7 @@ Feature: Watchable Objects
       And I press "Save"
     When I fill in "comment_body" with "Controversy!"
       And I press "Save"
-    Then "balint.erdi@gmail.com" should receive an email
+    Then "balint.erdi@gmail.com" should receive 2 emails
     Then "pablo@teambox.com" should receive no emails
-    Then "james.urquhart@gmail.com" should receive an email
+    Then "james.urquhart@gmail.com" should receive 2 emails
     

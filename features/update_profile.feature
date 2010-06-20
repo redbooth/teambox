@@ -12,15 +12,15 @@ Feature: Update a profile
          | Last name         | Mar                      |
          | Biography         | Ruby Rockstar Programmer |
       And I press "Update account"
-     Then I should see "User profile updated!" within ".flash-success div"
+     Then I should see "User profile updated!"
      When I follow "mislav"
-     Then I should see "Mis Mar" within ".banner h2"
-      And I should see "Ruby Rockstar Programmer" within ".biography"
+     Then I should see "Mis Mar"
+      And I should see "Ruby Rockstar Programmer"
 
   Scenario: Mislav updates his profile picture
      When I follow "Profile Picture"
-     Then I should see "Your Profile Picture" within "h2"
-     When I attach the file at "features/support/sample_files/dragon.jpg" to "user_avatar"
+     Then I should see "Your Profile Picture"
+     When I attach the file "features/support/sample_files/dragon.jpg" to "user_avatar"
       And I press "Update account"
      Then I should not see missing avatar image within ".column"
 
@@ -36,7 +36,7 @@ Feature: Update a profile
       And I check "Notify me when I'm watching a task"
       And I check "Send me a daily email of my tasks"
       And I press "Update account"
-     Then I should see "User profile updated!" within ".flash-success"
+     Then I should see "User profile updated!"
      When I follow "Notifications"
      Then I should see "Your Notifications"
       And the "Notify me when I'm mentioned e.g. Howdy @mislav! You'll receive an email!" checkbox should be checked
@@ -50,7 +50,7 @@ Feature: Update a profile
       Then I should see "Your Account Settings"
       When I fill in "Username" with "mislavrocks"
        And I press "Update account"
-      Then I should see "User profile updated!" within ".flash-success"
+      Then I should see "User profile updated!"
        And I should see "mislavrocks"
 
   Scenario: Mislav fails to update his username because its already in use

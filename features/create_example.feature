@@ -19,8 +19,8 @@ Feature: Creating an example project
       And I should see "Dagny Taggart" within ".people_list"
       And I should see "Hank Rearden" within ".people_list"
       And I should see "Ellis Wyatt" within ".people_list"
-      And I should see "Hey guys, I’m setting up a project on Teambox to build the John Galt line. Hope it helps!"
-      And I should see "I’m going to invite Mislav Marohnić to the project, too"
+      And I should see "Hey guys, I'm setting up a project on Teambox to build the John Galt line. Hope it helps!"
+      And I should see "I'm going to invite Mislav Marohnić to the project, too"
       And "dagny@teambox.com" should receive 0 emails
       And "hank@teambox.com" should receive 0 emails
       And "ellis@teambox.com" should receive 0 emails

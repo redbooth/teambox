@@ -260,8 +260,9 @@ class ApplicationController < ActionController::Base
     end
     
     def groups_enabled?
-      APP_CONFIG['allow_groups'] || false
+      !!Teambox.config.allow_groups
     end
+    helper_method :groups_enabled?
     
     def time_tracking_enabled?
       APP_CONFIG['allow_time_tracking'] || false

@@ -5,8 +5,8 @@ Feature: Creating a project
 
   Scenario Outline: Mislav creates two valid projects and fails to create an invalid project
     When I fill in the following:
-      | Name  | <name>  |
-      | URL   | <url>   |
+      | Name      | <name> |
+      | Permalink | <url>  |
       And I press "Create project and start inviting people"
     Then I should see "<response>"
     And I should see "<flash>"
@@ -16,4 +16,3 @@ Feature: Creating a project
       | Title with ()_+&-         |                 | Title with ()_+&- | Your project has been created!  |
       | Ruby Rockstars            | ruby_rockstars  | Ruby Rockstars    | Your project has been created!  |
       | Fucking awesome group     | @XFla$@$*       | Invalid project   | Invalid project                 |
-    

@@ -113,7 +113,8 @@ class UsersController < ApplicationController
         
         if success
           back = polymorphic_url [:account, @sub_action]
-          redirect_to back, :success => t('users.update.updated')
+          flash[:success] = t('users.update.updated')
+          redirect_to back
         else
           flash.now[:error] = t('users.update.error')
           render 'edit'

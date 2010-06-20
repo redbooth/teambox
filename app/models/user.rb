@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
   end
 
   def to_param
-    login
+    login_was # in case it changes but is not yet saved
   end
 
   def visited_at

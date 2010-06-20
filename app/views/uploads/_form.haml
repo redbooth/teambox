@@ -10,9 +10,9 @@
     - unless upload.asset.errors.empty?
       %p
         - if upload.asset.errors.has_key?(:presence)
-          %span=t('.presence')
+          %span= t('.presence')
         - if upload.asset.errors.has_key?(:size)
-          %span=t('.max_size',:mb => upload.asset.errors[:size][:max])
+          %span= t('.max_size', :mb => Teambox.config.asset_max_file_size.to_i)
   .submit
     - if page
       = page_slot_fields

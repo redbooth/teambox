@@ -2,6 +2,7 @@ Feature: Creating a group
   Background:
     Given I am logged in as mislav
       And I am currently in the project ruby_rockstars
+      And groups are enabled
   
   Scenario: Mislav sees there are no groups yet
     When I go to the groups page

@@ -808,7 +808,7 @@ en:
       max_upload_size: "Max upload size is %{mb} Mb"
     form:
       presence: "You can't upload a blank file"
-      max_size: "File size can't exceed %{mb}"
+      max_size: "File size can't exceed %{mb} MB"
       select_file: Select file
       description: Title <i>(optional)</i>
       upload: Upload file
