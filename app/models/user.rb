@@ -291,6 +291,16 @@ class User < ActiveRecord::Base
     link.save!
   end
 
+  def self.find_available_login(proposed_login = nil)
+    proposed_login ||= "user"
+    counter = 0
+    begin
+      counter += 1
+      login = "#{proposed_login}#{counter == 1 ? nil : counter}"
+    end while User.find_with_deleted(:first, :conditions => ["login LIKE ?", login])
+    login
+  end
+
   protected
 
     def find_available_deleted_tag
