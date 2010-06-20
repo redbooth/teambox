@@ -10,7 +10,7 @@ class Invitation < RoleRecord
   attr_accessible :user_or_email, :user, :project, :role, :group
   
   validate :check_invite
-  
+
   def target
     project || group
   end
@@ -83,7 +83,7 @@ class Invitation < RoleRecord
     if target.class == Project
       person = self.project.people.new(
         :user => current_user,
-        :role => self.role || 2,
+        :role => self.role || 3,
         :source_user => self.user)
       person.save
     else
