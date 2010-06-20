@@ -50,7 +50,9 @@ end
 
 page.call 'Comment.setLoading', 'comment_new', false
 
-if @target.is_a? Project
-  page << reset_autorefresh
-  page << autorefresh(@comment.activity, @current_project)
+unless @comment.new_record?
+  if @target.is_a? Project
+    page << reset_autorefresh
+    page << autorefresh(@comment.activity, @current_project)
+  end
 end
