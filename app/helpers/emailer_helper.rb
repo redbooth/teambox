@@ -54,12 +54,21 @@ module EmailerHelper
     render :partial => 'emailer/recent_conversations', :locals => { :project => project }
   end
 
-  def emailer_recent_tasks(project)
-    render :partial => 'emailer/recent_tasks', :locals => { :project => project }
+  def emailer_recent_tasks(project, user)
+    recent_tasks = project.tasks.unarchived.
+                    assigned_to(user).
+                    sort { |a,b| (a.due_on || 1.year.ago) <=> (a.due_on || 1.year.ago)}
+    render :partial => 'emailer/recent_tasks', :locals => { :project => project, :recent_tasks => recent_tasks }
   end
 
   def emailer_answer_to_this_email
     content_tag(:p,I18n.t('emailer.notify.reply')) if APP_CONFIG['allow_incoming_email']
+  end
+
+  def emailer_commands_for_tasks(user)
+    if APP_CONFIG['allow_incoming_email']
+      content_tag(:p,I18n.t('emailer.notify.task_commands', :username => user.login))
+    end
   end
 
   def tasks_for_daily_reminder(tasks, user, header)

@@ -965,6 +965,7 @@ en:
       project: "Teambox Project:"
       view_online: "You can <a href='{{link}}'>view this conversation online</a> to answer and attach files."
       reply: "You can also answer to this email to post a reply in the conversation."
+      task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
       are_watching: " are suscribed to this conversation, and will be notified of future replies."
       stop_watching: "<a href='{{stop_watching_url}}'>Stop watching</a> this thread to stop receiving email notifications."
       notification_settings: "You can change your <a href='{{url}}'>notification settings</a> for further emails."

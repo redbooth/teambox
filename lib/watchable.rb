@@ -52,8 +52,8 @@ module Watchable
                                      :id => self.watchers_ids, 
                                      :people => {:project_id => self.project_id, :deleted_at => nil}
                                    }, 
-                                   :joins => [:people],
-                                   :select => fields)
+                                   :joins => [:people])
+                                   #:select => fields) premature optimization
     end
     
     @cached_watchers
