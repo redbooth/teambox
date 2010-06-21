@@ -47,4 +47,5 @@ group :testing do
   gem 'pickle', '~> 0.2.1'
   gem 'cucumber-rails', '~> 0.3.0', :require => nil
   gem 'capybara', '~> 0.3.5'
+  gem 'launchy', '~> 0.3.5'
 end
