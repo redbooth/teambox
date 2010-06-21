@@ -133,7 +133,7 @@ describe User do
         projects << project
         @user.add_recent_project(project)
       end
-      @user.recent_projects.should == projects
+      @user.recent_projects.should == projects.reverse
       @user.remove_recent_project(projects.second)
       @user.recent_projects.should include(projects.first, projects.third)
       @user.recent_projects.should_not include(projects.second)
@@ -162,7 +162,7 @@ describe User do
 
       it "should return all projects of the user" do
         [@user, @invited].each do |user|
-          user.recent_projects.should == @projects
+          user.recent_projects.should == @projects.reverse
         end
       end
 
