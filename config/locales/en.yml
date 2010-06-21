@@ -15,16 +15,16 @@ en:
     cancel: Cancel
     close: Close
     save: Save
-    show_more: Show {{number}} more
+    show_more: Show %{number} more
     print: Print this page
     prev: Previous
     next: Next
     tasks:
       one: 1 task
-      other: "{{count}} tasks"
+      other: "%{count} tasks"
     comment:
-      one: "{{count}} comment"
-      other: "{{count}} comments"
+      one: "%{count} comment"
+      other: "%{count} comments"
     not_allowed: You are not allowed to do that!
     calendar: Calendar
     gantt_chart: Gantt Chart
@@ -35,62 +35,62 @@ en:
     delete_upload: Are you sure you want to delete this file?
   not_found:
     user: "User does not exist."
-    conversation: "Conversation {{id}} not found in this project."
-    project: "The project {{id}} doesn't exist."
-    group: "The group {{id}} doesn't exist."
-    page: "Page {{id}} not found in this project."
-    task_list: "Task list {{id}} not found in this project."
-    task: "Task {{id}} not found in this project."
+    conversation: "Conversation %{id} not found in this project."
+    project: "The project %{id} doesn't exist."
+    group: "The group %{id} doesn't exist."
+    page: "Page %{id} not found in this project."
+    task_list: "Task list %{id} not found in this project."
+    task: "Task %{id} not found in this project."
   deleted:
-    conversation: "Deleted <b>{{name}}</b> conversation"
-    task: "Deleted <b>{{name}}</b> task"
-    task_list: "Deleted <b>{{name}}</b> task list"
-    page: "Deleted <b>{{name}}</b> page"
-    upload: "Deleted <b>{{name}}</b> file"
-    person: "{{name}} is no longer in the project"
+    conversation: "Deleted <b>%{name}</b> conversation"
+    task: "Deleted <b>%{name}</b> task"
+    task_list: "Deleted <b>%{name}</b> task list"
+    page: "Deleted <b>%{name}</b> page"
+    upload: "Deleted <b>%{name}</b> file"
+    person: "%{name} is no longer in the project"
     left_project: "You are no longer in this project"
   activities:
     create_upload:
-      title: "{{user}} uploaded file {{file}}"
+      title: "%{user} uploaded file %{file}"
     create_conversation:
       create_conversation: started the conversation
-      title: "{{user}} started a conversation: {{conversation}}"
+      title: "%{user} started a conversation: %{conversation}"
     create_comment:
       create_comment: created the comment
-      title: "{{user}} commented on {{target}}"
+      title: "%{user} commented on %{target}"
     create_comment_task:
-      title: "{{user}} updated task {{target}}"
+      title: "%{user} updated task %{target}"
     create_comment_project:
-      title: "{{user}} updated status on {{target}}"
+      title: "%{user} updated status on %{target}"
     create_comment_conversation:
-      title: "{{user}} followed up on conversation {{target}}"
+      title: "%{user} followed up on conversation %{target}"
     create_task_list:
       create_task_list: created the task list
-      title: "{{user}} created task list {{task_list}}"
+      title: "%{user} created task list %{task_list}"
     create_task:
       create_task: created the task
-      title: "{{user}} created task {{task}} in {{task_list}}"
+      title: "%{user} created task %{task} in %{task_list}"
     create_page:
       create_page: created the page
-      title: "{{user}} created page {{page}}"
+      title: "%{user} created page %{page}"
     edit_page:
       edit_page: edited the page
-      title: "{{user}} edited the page {{page}}"
+      title: "%{user} edited the page %{page}"
     create_note:
       create_note: added note
-      title: '{{user}} created note "{{note}}" in {{page}}'
+      title: '%{user} created note "%{note}" in %{page}'
     edit_note:
       edit_note: edited note
-      title: '{{user}} edited the note "{{note}}" in {{page}}'
+      title: '%{user} edited the note "%{note}" in %{page}'
     create_person:
       create_person: was invited to the project
       by: by
-      title: "{{person}} got invited to the project {{project}}"
+      title: "%{person} got invited to the project %{project}"
     delete_person:
       delete_person: was removed to the project
       by: by
       left: left the project
-      title: "{{person}} left the project {{project}}"
+      title: "%{person} left the project %{project}"
   avatars:
     new:
       title: Upload an avatar
@@ -107,15 +107,15 @@ en:
       back: Back to Login screen
       submit: Send me a link to reset my password
     create:
-      not_found: "We can't find a user with that email: {{email}}<br/>Please check the email address and try again. If that doesn't work, contact us at {{support}}"
-      invalid: "The change password URL you visited is either invalid or expired. Try using I Forgot my Password again from the home page.<br/>If that doesn't work, contact us at {{support}}"
+      not_found: "We can't find a user with that email: %{email}<br/>Please check the email address and try again. If that doesn't work, contact us at %{support}"
+      invalid: "The change password URL you visited is either invalid or expired. Try using I Forgot my Password again from the home page.<br/>If that doesn't work, contact us at %{support}"
       password_not_updated: "New password is not valid. Try again."
       password_updated: "Password was successfully updated."
     sent:
       title: Reset Password
-      login_link_sent: "We just sent you an email to {{email}} so you can retrieve your password."
+      login_link_sent: "We just sent you an email to %{email} so you can retrieve your password."
       follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
-      not_found: "The email <b>{{email}}</b> doesn't belong to any Teambox user. Maybe you misspelt it?"
+      not_found: "The email <b>%{email}</b> doesn't belong to any Teambox user. Maybe you misspelt it?"
       change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"
   cards:
     card:
@@ -152,7 +152,7 @@ en:
       change_password: Change password
       confirm_password: Confirm password
       use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
-      notify_mentions: "Notify me when I'm mentioned e.g. Howdy @{{login}}! You'll receive an email!"
+      notify_mentions: "Notify me when I'm mentioned e.g. Howdy @%{login}! You'll receive an email!"
       notify_conversations: Notify me when I'm watching a conversation
       notify_task_lists: Notify me when I'm watching a task list
       notify_tasks: Notify me when I'm watching a task
@@ -169,10 +169,10 @@ en:
       avatar:
         field: New avatar
         presence: "You can't upload a blank file"
-        max_size: "File size can't exceed {{mb}}"
+        max_size: "File size can't exceed %{mb}"
         we_have_this_avatar: "This is the picture we currently have of you:"
-        gravatar_in_use: "We don't have a picture of you, so we're using {{gravatar}}:"
-        upload_here_or_at_gravatar: "You can either upload a picture here or set one on {{gravatar}}."
+        gravatar_in_use: "We don't have a picture of you, so we're using %{gravatar}:"
+        upload_here_or_at_gravatar: "You can either upload a picture here or set one on %{gravatar}."
         destroy: Delete avatar
       tooltips:
         login: "You need a username to login. People will be able to find you by username. Must be all lowercase, no spaces. You can use undescores."
@@ -186,8 +186,8 @@ en:
       submit: Create account
       no_public_signup: "Public signups are not allowed in this system."
       you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
-      existing_user: "If you already have an account, <a href='{{login_url}}'>log in</a> or <a href='{{forgot_url}}'>retrieve your password</a>."
-      you_already_have_an_account: "You already have a Teambox account for the address {{email}}. <a href='{{login_link}}'>Log in with this email</a> or <a href='{{reset_password_link}}'>reset your password</a> if you forgot it."
+      existing_user: "If you already have an account, <a href='%{login_url}'>log in</a> or <a href='%{forgot_url}'>retrieve your password</a>."
+      you_already_have_an_account: "You already have a Teambox account for the address %{email}. <a href='%{login_link}'>Log in with this email</a> or <a href='%{reset_password_link}'>reset your password</a> if you forgot it."
     create:
       thanks: Thanks for signing up!
       error: "We couldn't set up that account, sorry. Please try again, or contact an admin (link is above)."
@@ -212,10 +212,10 @@ en:
     show:
       profile: Profile
       projects: Projects
-      recent_activity_for: "Recent activity for {{user_name}}"
-      pending_invite: "{{name}} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
+      recent_activity_for: "Recent activity for %{user_name}"
+      pending_invite: "%{name} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
     user:
-      formatted_address: "{{street}}, {{city}} ({{country}})"
+      formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: Remove from Project
     welcome:
       get_started: Get started with Teambox!
@@ -224,7 +224,7 @@ en:
       projects:
         title: Projects
         share_and_collaborate: "Share and collaborate with your team! Project's wall updates, conversations, tasks, pages and files."
-        create_your_first_project: "An event, a design, a product... Go ahead and <a href='{{link}}'>create your first project</a> now!"
+        create_your_first_project: "An event, a design, a product... Go ahead and <a href='%{link}'>create your first project</a> now!"
       spread:
         title: Do you love us too?
         reasons: "We've been working on Teambox for years, hoping it can be useful for you.<br/>We're real people, motivated developers with a mission, just like you!"
@@ -232,7 +232,7 @@ en:
         twitter: 'Twitter,'
         facebook: Facebook
         in_your_site: in your site!
-        tell_us: "If you enjoy using Teambox, also consider <a href='mailto:{{address}}'>telling us about it</a> in an email!"
+        tell_us: "If you enjoy using Teambox, also consider <a href='mailto:%{address}'>telling us about it</a> in an email!"
       stop_welcome: Stop showing this Welcome tab
     feeds:
       title: Sync your activity feeds
@@ -244,35 +244,35 @@ en:
         body: "Beneath you have a list of feeds you can follow. To import them into your feed reader you need to <strong>right-click the link</strong> and select <strong>copy link address</strong>. Next, go to your feed reader, add a new Feed and paste the address of that feed."
       your_feeds: Your news feeds
       subscribe_to_all: Activity for All Projects
-      subscribe_to_project: Activity for {{project}}
+      subscribe_to_project: Activity for %{project}
       feed_reader:
         title: Which news reader should I use?
-        body: "Refer to the <a href='{{link}}'>knowledge base</a> for this."
+        body: "Refer to the <a href='%{link}'>knowledge base</a> for this."
       more_tips:
         title: More tips
-        body: "Learn <a href='{{link}}'>more ways to access Teambox</a>."
+        body: "Learn <a href='%{link}'>more ways to access Teambox</a>."
     calendars:
       title: Sync your calendars
       tasks_can_be_synced: "Teambox tasks can be synched with your usual Calendars so you don't forget what's coming up."
       possible_clients: "You can sync your Google Calendar, your Apple's iCal, Outlook, Blackberry and others."
       your_calendars: Your Calendars
       subscribe_to_all: "All Projects: "
-      subscribe_to_project: "Project {{project}}: "
+      subscribe_to_project: "Project %{project}: "
       how_to:
         title: "How to sync your calendars"
-        body: "Basically, you should import the links below into your calendar client. Visit our <a href='{{link}}'>knowledge base</a> to learn how to use them with your calendar app."
+        body: "Basically, you should import the links below into your calendar client. Visit our <a href='%{link}'>knowledge base</a> to learn how to use them with your calendar app."
       clients:
         title: Specific instructions
-        body: "Refer to the <a href='{{link}}'>knowledge base</a> for instructions on how to configure Google Calendar, Apple's iCal, Outlook, Blackberry and others."
+        body: "Refer to the <a href='%{link}'>knowledge base</a> for instructions on how to configure Google Calendar, Apple's iCal, Outlook, Blackberry and others."
     unconfirmed_email:
       title: Confirm your email
-      invitation_sent_to: "An email invitation was sent to <i>{{email}}</i>, in order to verify your email address."
+      invitation_sent_to: "An email invitation was sent to <i>%{email}</i>, in order to verify your email address."
       follow_the_link: Please <b>open this email and follow the link inside it</b> to activate your account.
       problems_title: Problems?
-      resend: "Can't find the email? Press <a href='{{link}}'>here</a> to re-send the activation email."
+      resend: "Can't find the email? Press <a href='%{link}'>here</a> to re-send the activation email."
       spam: "Make sure the email wasn't classified as spam by your email client."
-      wrong_address: "Wrong address? If you mistyped your email address, <a href='{{link}}'>cancel the signup process</a> and re-create your account with a valid address."
-      problems: "If you're still having problems, please contact us at {{support}}"
+      wrong_address: "Wrong address? If you mistyped your email address, <a href='%{link}'>cancel the signup process</a> and re-create your account with a valid address."
+      problems: "If you're still having problems, please contact us at %{support}"
     daily_task_reminder_email:
       daily_task_reminder: "Daily task reminder"
       daily_task_reminder_from_teambox: "This is the daily task reminder email from Teambox"
@@ -281,7 +281,7 @@ en:
       tasks_for_tomorrow: "Tasks for tomorrow"
       tasks_for_next_two_weeks: "Tasks for next two weeks"
       tasks_without_a_due_date: "Tasks without a due date"
-      you_receive_this_message: "You receive this message because you signed up for it. You can disable it on your {{link}}"
+      you_receive_this_message: "You receive this message because you signed up for it. You can disable it on your %{link}"
       settings_page: "settings page"
   groups:
     index:
@@ -297,7 +297,7 @@ en:
       your_groups: Your groups
       projects: Projects
     primer:
-      no_group_create: "You do not own a group. {{link}}."
+      no_group_create: "You do not own a group. %{link}."
       create_group: "Create a group"
     header:
       leave: Leave
@@ -342,7 +342,7 @@ en:
       rss:
         title: Teambox projects overview
         description: Overview of all projects in Teambox
-      archived: "Show {{count}} Archived Projects..."
+      archived: "Show %{count} Archived Projects..."
     primer:
       empty: You don't own or belong to any projects yet.
       create_first: Create your first project!
@@ -363,8 +363,8 @@ en:
       subscribe: Subscribe to the news feed
       tip: Mentioning somebody's @username they will receive an email with your message
       rss:
-        title: "{{name}} activity feed"
-        description: "Recent activities for the project {{name}}"
+        title: "%{name} activity feed"
+        description: "Recent activities for the project %{name}"
     fields:
       tracks_time: "Enable time tracking. <em>Will allow users to log time for tasks.</em>"
       archiving: "Archive this project"
@@ -398,7 +398,7 @@ en:
       new_project: New Project...
       created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
-      create_an_example_project: "First time in Teambox? <a href='{{link}}'>Create an example project</a> to play around and learn."
+      create_an_example_project: "First time in Teambox? <a href='%{link}'>Create an example project</a> to play around and learn."
       not_allowed: "You can't create any projects with your current account."
     edit:
       title_settings: General Settings
@@ -413,24 +413,24 @@ en:
     fields:
       user_or_email: "Enter your teammate's username or email:"
     invitation:
-      invited_user: "{{inviter}} invited <b>{{invitee}}</b> to join the project."
-      invited_email: "{{inviter}} invited <b>{{email}}</b> to join the project."
-      time_ago: "({{time_ago_in_words}} ago)"
+      invited_user: "%{inviter} invited <b>%{invitee}</b> to join the project."
+      invited_email: "%{inviter} invited <b>%{email}</b> to join the project."
+      time_ago: "(%{time_ago_in_words} ago)"
       resend: Re-send invitation email
       pending: "An email was sent to this user, but they still haven't confirmed."
       discard: Discard invitation
     group_invitation:
-      invited_user: "{{inviter}} invited <b>{{invitee}}</b> to join the group."
-      invited_email: "{{inviter}} invited <b>{{email}}</b> to join the group."
+      invited_user: "%{inviter} invited <b>%{invitee}</b> to join the group."
+      invited_email: "%{inviter} invited <b>%{email}</b> to join the group."
     sent:
       email_sent: "Email invitation has been sent"
     pending:
       to_access_or: to access the project or
       to_access_or_group: to access the group or
-      invited_to_join: "{{by}} has invited you to join the project {{project}}."
-      invited_to_join_group: "{{by}} has invited you to join the group {{group}}."
+      invited_to_join: "%{by} has invited you to join the project %{project}."
+      invited_to_join_group: "%{by} has invited you to join the group %{group}."
     resend:
-      resent: "The invitation has been resent to {{recipient}}"
+      resent: "The invitation has been resent to %{recipient}"
       return: Go back
     index_user:
       title: Pending invitations
@@ -443,12 +443,12 @@ en:
       submit: Send
       invite_from_project: "Invite from Project"
     recent:
-      invite: "Invite {{username}}"
+      invite: "Invite %{username}"
     errors:
       invalid: "Invalid invitation"
       invalid_code: "Invalid invitation code"
     destroy:
-      discarded: "The invitation to {{user}} has been discarded"
+      discarded: "The invitation to %{user} has been discarded"
   conversations:
     actions:
       confirm_delete: Are you sure you to delete this conversation?
@@ -467,14 +467,14 @@ en:
       add_suscribers: Which people will be watching this conversation?
       subscribe_note: These people will be notified via email of this message and any following comments.<br/>They can unsubscribe at any moment.
       invite_users: You are the only user in this project!
-      no_users_yet: "Conversations are more useful when shared. <a href='{{invite_link}}'>Invite some users</a> to this project now so they can access this conversation, answer and receive updates."
+      no_users_yet: "Conversations are more useful when shared. <a href='%{invite_link}'>Invite some users</a> to this project now so they can access this conversation, answer and receive updates."
       people_all: "All people in project"
     edit:
       submit: 'Update Conversation'
     index:
       rss:
-        title: "{{name}} conversations"
-        description: "Conversations for project {{name}}"
+        title: "%{name} conversations"
+        description: "Conversations for project %{name}"
     primer:
       empty: This project doesn't have any conversations yet.
       create_first: Create the first conversation in this project!
@@ -503,7 +503,7 @@ en:
     comments: Time Entries
     filter_by: Filter by
     report: Report
-    week_num: Week {{num}}
+    week_num: Week %{num}
     entry_hours: hrs
     entry_total: Total
     week_total: Total
@@ -533,7 +533,7 @@ en:
       assigned_to: Who is responsible?
       assigned_to_nobody: Nobody
     assigned:
-      assigned_to: "Assigned to {{user}}"
+      assigned_to: "Assigned to %{user}"
     due_on:
       due_on: Due on
       today: Today
@@ -545,17 +545,17 @@ en:
       title: New Task
       submit: Add Task
     show:
-      title: "Task: {{name}}"
+      title: "Task: %{name}"
     link:
       new: + Add Task
       edit: Edit
       hide_archived_tasks:
         one: "Hide 1 archived task"
-        other: "Hide {{count}} archived tasks"
+        other: "Hide %{count} archived tasks"
     destroy_message:
-      deleted: "The Task <b>{{name}}</b> was successfully deleted!"
+      deleted: "The Task <b>%{name}</b> was successfully deleted!"
     archive_message:
-      archived: "The Task <b>{{name}}</b> was successfully archived!"
+      archived: "The Task <b>%{name}</b> was successfully archived!"
     archive_box:
       you_are_done: It looks like you're done with this task!
       archive: Archive this task
@@ -564,7 +564,7 @@ en:
       task_is_closed: This task is closed and archived
       unarchive: Unarchive
       reopen: Reopen this task
-    overdue: "{{days}} days late"
+    overdue: "%{days} days late"
     status:
       new: new
       open: open
@@ -595,8 +595,8 @@ en:
     index:
       pages_in_this_project: Pages in this project
       rss:
-        title: "{{name}} pages"
-        description: "Pages in project {{name}}"
+        title: "%{name} pages"
+        description: "Pages in project %{name}"
     primer:
       empty: This project doesn't have any pages yet.
       create_first: Create the first page in this project!
@@ -656,7 +656,7 @@ en:
       set_dates: "Set the start & end date"
       show_archived:
         one: "Show 1 archived task"
-        other: "Show {{count}} archived tasks"
+        other: "Show %{count} archived tasks"
     fields:
       title: New Task List
       task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
@@ -683,16 +683,16 @@ en:
       unarchive: Unarchive
     index:
       no_dates_assigned: No dates assigned
-      starts_on: "Starts on {{date}}"
-      ends_on: "Ends on {{date}}"
+      starts_on: "Starts on %{date}"
+      ends_on: "Ends on %{date}"
       add_link: New Task List
       empty: No tasks in this category!
       tasks_for_all_projects: Tasks across all projects
       tasks_for_project: Task lists for this project
       other_views: Other views
       rss:
-        title: "{{name}} task updates"
-        description: "Tasks activity for project {{name}}"
+        title: "%{name} task updates"
+        description: "Tasks activity for project %{name}"
     primer:
       empty: This project doesn't have any task lists yet.
       create_first: Create the first task list in this project!
@@ -719,14 +719,14 @@ en:
       subscribe: Subscribe to the news feed
       other_views: Other views
     show:
-      title: "Task List: {{name}}"
+      title: "Task List: %{name}"
     destroy_message:
-      deleted: "The Task List <b>{{name}}</b> was successfully deleted!"
+      deleted: "The Task List <b>%{name}</b> was successfully deleted!"
   people:
     link:
       edit: Edit
     update:
-      success: "You have updated {{name}}'s role"
+      success: "You have updated %{name}'s role"
     edit:
       submit: Update person
     fields:
@@ -752,7 +752,7 @@ en:
       no_contacts: There are no people available to invite.
       inviting: "Inviting other users"
       only_admins_can_invite: "Only admins can invite people to this project."
-      contact_admins: "In this project, only {{admins}} can invite new members."
+      contact_admins: "In this project, only %{admins} can invite new members."
       leaving: "Leaving the project"
       you_can_leave: "You can leave this project at any moment. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
       leave_project: "Leave this project"
@@ -762,8 +762,8 @@ en:
       commented_on: "-"
       commented_on_a_task_list: "-"
       confirm_delete: Are you sure you want to delete this comment?
-      hours: "{{hours}}h"
-      hours_with_minutes: "{{hours}}h {{minutes}}m"
+      hours: "%{hours}h"
+      hours_with_minutes: "%{hours}h %{minutes}m"
       cannot_edit: "Comment cannot be edited after 15 minutes"
     hours:
       add_hours: Hours
@@ -797,7 +797,7 @@ en:
       create: Create an example project
       line4: "In this project you won't be able to invite other users, but you can do all the rest."
       error: "Could not create example project."
-      error_list: "Could not create example project. The following projects are invalid: {{list}}."
+      error_list: "Could not create example project. The following projects are invalid: %{list}."
   uploads:
     comment_upload_link: Attachment
     new:
@@ -805,10 +805,10 @@ en:
     index:
       new_file: Upload a File
       cant_create: You don't have permission to upload files to this project
-      max_upload_size: "Max upload size is {{mb}} Mb"
+      max_upload_size: "Max upload size is %{mb} Mb"
     form:
       presence: "You can't upload a blank file"
-      max_size: "File size can't exceed {{mb}}"
+      max_size: "File size can't exceed %{mb}"
       select_file: Select file
       description: Title <i>(optional)</i>
       upload: Upload file
@@ -835,11 +835,11 @@ en:
       title: Login
       video: What's Teambox about?
       submit: Login
-      login_failed: "Couldn't log you in as {{login}}"
+      login_failed: "Couldn't log you in as %{login}"
 
   shared:
     strip:
-      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='{{link}}'>Project Settings page</a>"
+      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
     gantt_banner_primer:
       title: There are no task lists due to show
     upcoming_events_primer:
@@ -878,7 +878,7 @@ en:
       home: Home
       logout: Logout
       login: Login
-      project_invitations: "Invitations ({{count}})"
+      project_invitations: "Invitations (%{count})"
       settings: Settings
     public_navigation:
       home: Teambox
@@ -901,7 +901,7 @@ en:
       unarchived_tasks: "Unarchived Tasks"
       my_tasks:
         one: "My 1 Task"
-        other: "My {{count}} Tasks"
+        other: "My %{count} Tasks"
       my_assigned_tasks: "only tasks assigned to me"
       everybodys_tasks: "Everybody's Tasks"
       hide_archived_tasks: "Hide Archived Tasks"
@@ -931,9 +931,9 @@ en:
       do_not_answer: "Do not answer to this email."
       answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
     invitation:
-      subject: "{{user}} shared [{{project}}] with you"
-      collaborate_with: "{{name}} wants to collaborate with you on Teambox:"
-      you_have_been_invited_to: "You have been invited to the project <b>{{project}}</b>"
+      subject: "%{user} shared [%{project}] with you"
+      collaborate_with: "%{name} wants to collaborate with you on Teambox:"
+      you_have_been_invited_to: "You have been invited to the project <b>%{project}</b>"
       accept_the_invitation: Accept the invitation to start collaborating
       current_users: "Current users in this project:"
       plaintext_link: "If the above link doesn't work, copy and paste the following code into your browser bar: "
@@ -941,44 +941,44 @@ en:
       plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
       report_abuse: "This email was sent to you by your contact's request. Please report any abuse."
     invitation_group:
-      subject: "{{user}} shared [{{group}}] with you"
-      you_have_been_invited_to: "You have been invited to the group <b>{{group}}</b>"
+      subject: "%{user} shared [%{group}] with you"
+      you_have_been_invited_to: "You have been invited to the group <b>%{group}</b>"
     confirm:
       subject: "Get started with Teambox"
-      hey: "Hey, {{user_name}}!"
+      hey: "Hey, %{user_name}!"
       follow_the_link: "In order to <b>complete your signup</b> for Teambox, we need you to log in by clicking here:"
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
-      report_abuse: "You receive this message because you signed up for a Teambox account with {{email}}"
-      problems: "If you have any problems, please contact us at {{support}}"
+      report_abuse: "You receive this message because you signed up for a Teambox account with %{email}"
+      problems: "If you have any problems, please contact us at %{support}"
     reset_password:
       subject: "Your password has successfully been reset"
-      hey: "Hey, {{user_name}}!"
+      hey: "Hey, %{user_name}!"
       follow_the_link: "In order to <b>set a new password</b> for Teambox, we need you to log in with the following link:"
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
-      report_abuse: "You receive this message because you signed up for a Teambox account with {{email}}"
-      problems: "If you have any problems, please contact us at {{support}}"
+      report_abuse: "You receive this message because you signed up for a Teambox account with %{email}"
+      problems: "If you have any problems, please contact us at %{support}"
     forgot_password:
       subject: "Password retrieval for Teambox"
     notify:
       project: "Teambox Project:"
-      view_online: "You can <a href='{{link}}'>view this conversation online</a> to answer and attach files."
+      view_online: "You can <a href='%{link}'>view this conversation online</a> to answer and attach files."
       reply: "You can also answer to this email to post a reply in the conversation."
       task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
       are_watching: " are suscribed to this conversation, and will be notified of future replies."
-      stop_watching: "<a href='{{stop_watching_url}}'>Stop watching</a> this thread to stop receiving email notifications."
-      notification_settings: "You can change your <a href='{{url}}'>notification settings</a> for further emails."
+      stop_watching: "<a href='%{stop_watching_url}'>Stop watching</a> this thread to stop receiving email notifications."
+      notification_settings: "You can change your <a href='%{url}'>notification settings</a> for further emails."
       comment: "Comment on project's wall: "
       conversation: "Conversation:"
       task: "Task:"
       task_list: "Task List:"
-      recent_conversations: "Recent conversations for {{project}}"
-      comments: "{{number}} comments"
-      assigned_to: "Assigned to <b>{{user}}</b>"
-      due_on: "Due on {{date}}"
-      status: "Status: {{status}}"
-      my_tasks: "More tasks assigned to you in {{project}}"
+      recent_conversations: "Recent conversations for %{project}"
+      comments: "%{number} comments"
+      assigned_to: "Assigned to <b>%{user}</b>"
+      due_on: "Due on %{date}"
+      status: "Status: %{status}"
+      my_tasks: "More tasks assigned to you in %{project}"
     upload:
       file: "File:"
       uploaded_by: uploaded by
@@ -1073,39 +1073,39 @@ en:
 
   # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
   datetime:
-    time_ago: "{{time_ago_in_words}} ago"
+    time_ago: "%{time_ago_in_words} ago"
     distance_in_words:
       half_a_minute: "half a minute"
       less_than_x_seconds:
         one:   "less than 1 second"
-        other: "less than {{count}} seconds"
+        other: "less than %{count} seconds"
       x_seconds:
         one:   "1 second"
-        other: "{{count}} seconds"
+        other: "%{count} seconds"
       less_than_x_minutes:
         one:   "less than a minute"
-        other: "less than {{count}} minutes"
+        other: "less than %{count} minutes"
       x_minutes:
         one:   "1 minute"
-        other: "{{count}} minutes"
+        other: "%{count} minutes"
       about_x_hours:
         one:   "about 1 hour"
-        other: "about {{count}} hours"
+        other: "about %{count} hours"
       x_days:
         one:   "1 day"
-        other: "{{count}} days"
+        other: "%{count} days"
       about_x_months:
         one:   "about 1 month"
-        other: "about {{count}} months"
+        other: "about %{count} months"
       x_months:
         one:   "1 month"
-        other: "{{count}} months"
+        other: "%{count} months"
       about_x_years:
         one:   "about 1 year"
-        other: "about {{count}} years"
+        other: "about %{count} years"
       over_x_years:
         one:   "over 1 year"
-        other: "over {{count}} years"
+        other: "over %{count} years"
     prompts:
       year:   "Year"
       month:  "Month"
@@ -1203,19 +1203,19 @@ en:
         accepted: "must be accepted"
         empty: "can't be empty"
         blank: "can't be blank"
-        too_long: "is too long (maximum is {{count}} characters)"
-        too_short: "is too short (minimum is {{count}} characters)"
-        wrong_length: "is the wrong length (should be {{count}} characters)"
+        too_long: "is too long (maximum is %{count} characters)"
+        too_short: "is too short (minimum is %{count} characters)"
+        wrong_length: "is the wrong length (should be %{count} characters)"
         taken: "has already been taken"
         not_a_number: "is not a number"
-        greater_than: "must be greater than {{count}}"
-        greater_than_or_equal_to: "must be greater than or equal to {{count}}"
-        equal_to: "must be equal to {{count}}"
-        less_than: "must be less than {{count}}"
-        less_than_or_equal_to: "must be less than or equal to {{count}}"
+        greater_than: "must be greater than %{count}"
+        greater_than_or_equal_to: "must be greater than or equal to %{count}"
+        equal_to: "must be equal to %{count}"
+        less_than: "must be less than %{count}"
+        less_than_or_equal_to: "must be less than or equal to %{count}"
         odd: "must be odd"
         even: "must be even"
-        record_invalid: "Validation failed: {{errors}}"
+        record_invalid: "Validation failed: %{errors}"
       models:
         comment:
           attributes:
@@ -1260,7 +1260,7 @@ en:
       two_words_connector: " and "
       last_word_connector: ", and "
   oauth:
-    this_account_will_be_linked_to: "This account will be linked with {{provider}}"
+    this_account_will_be_linked_to: "This account will be linked with %{provider}"
     account_linked: "Your account has been linked."
     app_unlinked: "App unlinked"
     not_linked: "That service is not linked to your Teambox account."
@@ -1270,7 +1270,7 @@ en:
     auth_status_linked: Linked with the provider
     auth_status_link: Link with your account
     logged_in: Logged in successfully
-    your_account_is_linked: "Your {{provider}} profile is <strong>linked</strong> to Teambox."
-    your_account_is_not_linked: "Your {{provider}} profile is <strong>not linked</strong> to Teambox."
+    your_account_is_linked: "Your %{provider} profile is <strong>linked</strong> to Teambox."
+    your_account_is_not_linked: "Your %{provider} profile is <strong>not linked</strong> to Teambox."
     link_account: Link account.
     unlink_account: Unlink account.
