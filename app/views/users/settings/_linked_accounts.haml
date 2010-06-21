@@ -1,4 +1,4 @@
-- AppLink.providers.each do |provider|
+- AppLink.providers.wrap.each do |provider|
   %p
     - if current_user.app_links.find_by_provider(provider)
       = t(:'oauth.your_account_is_linked', :provider => provider)
