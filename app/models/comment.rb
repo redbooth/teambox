@@ -69,7 +69,7 @@ class Comment < ActiveRecord::Base
                     ["user_id = ? AND target_id = ? AND target_type LIKE ?",
                       user_id, target_id, target_type], :order => "id DESC")
 
-    if last && last.body == body && last.assigned_id == assigned_id
+    if last && last.body == body && last.assigned_id == assigned_id && last.status == status
       @errors.add :body, "Duplicate comment"
     end
   end
