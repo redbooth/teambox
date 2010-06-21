@@ -75,12 +75,14 @@ class NotesController < ApplicationController
       @note.destroy
       respond_to do |f|
         f.html { reload_page }
+        f.m    { reload_page }
         f.js
         handle_api_success(f, @note)
       end
     else
       respond_to do |f|
         f.html { reload_page }
+        f.m    { reload_page }
         f.js
         handle_api_error(f, @note)
       end
