@@ -7,6 +7,7 @@ class User
       proj_ids = self.recent_projects_ids
       @recent_projects = @projects.nil? ? Project.find(:all, :conditions => ["id IN (?)", proj_ids]) : 
                                           @projects.select { |p| proj_ids.include? p.id }
+      @recent_projects.sort! { |a,b| proj_ids.index(a.id) <=> proj_ids.index(b.id)}
     else
       @recent_projects
     end
