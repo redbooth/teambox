@@ -70,7 +70,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @has_permission and @comment.update_attributes(params[:comment])
+    @has_permission and @saved = @comment.update_attributes(params[:comment])
     
     if @saved
       respond_to do |f|
