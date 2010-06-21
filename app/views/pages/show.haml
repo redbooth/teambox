@@ -25,6 +25,6 @@
       = render 'uploads/form', :project => @current_project, :page => @page, :upload => Upload.new(:page => @page)
   
   #slots
-    = render :partial => 'slot', :collection => @page.slots, :locals => {:page => @page, :project => @current_project}
+    = render :partial => 'slot', :collection => @page.slots.with_widgets, :locals => {:page => @page, :project => @current_project}
   
   .page_slot.pageFooter#page_slot_footer{:slot => -1}
