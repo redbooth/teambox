@@ -1,3 +1,4 @@
+@javascript @tasks
 Feature: Show archived tasks in task lists
   In order to cut down on page load time
   As a Teambox developer
@@ -17,10 +18,11 @@ Feature: Show archived tasks in task lists
     And I am logged in as "balint"
 
   Scenario: See archived tasks
-    When I go to the list of tasks page of the project called "Market Teambox"
+    When I go to the "Market Teambox" tasks page
     Then I should see the task called "Tell the tech bloggers" in the "This week" task list
-    But I should not see the task called "Tell my friends" in the "This week" task list
+     But I should not see the task called "Tell my friends" in the "This week" task list
     When I follow "Show 1 archived task" in the "This week" task list
+     And I wait for .2 seconds
     Then I should see the following tasks:
       | task_list_name   | task_name                              |
       | This week        | Tell my friends                        |
@@ -32,38 +34,5 @@ Feature: Show archived tasks in task lists
     And the following tasks with associations exists:
       | name                         | task_list  | project        |
       | Post on Digg and Hacker News | Next month | Market Teambox |
-    When I go to the list of tasks page of the project called "Market Teambox"
+    When I go to the "Market Teambox" tasks page
     Then I should not see a "Show 0 archived tasks" link in the "Next month" task list
-
-
-  Scenario: Task panel's "See archived tasks" clicked after global "All tasks"
-    When I go to the list of tasks page of the project called "Market Teambox"
-    And I follow "All Tasks"
-    And I follow "Show 1 archived task"
-    Then I should see the following tasks:
-      | task_list_name   | task_name                              |
-      | This week        | Tell my friends                        |
-      | This week        | Tell the tech bloggers                 |
-    When I follow "Hide 1 archived task" in the "This week" task list
-    Then I should see the following tasks:
-      | task_list_name   | task_name                              |
-      | This week        | Tell the tech bloggers                 |
-    But I should not see the following tasks:
-      | task_list_name   | task_name                              |
-      | This week        | Tell my friends                        |
-
-  Scenario: "All tasks" clicked after task panel's "See archived tasks"
-    When I go to the list of tasks page of the project called "Market Teambox"
-    And I follow "Show 1 archived task"
-    And I follow "All Tasks"
-    Then I should see the following tasks:
-      | task_list_name   | task_name                              |
-      | This week        | Tell my friends                        |
-      | This week        | Tell the tech bloggers                 |
-    When I follow "Hide 1 archived task"
-    Then I should see the following tasks:
-      | task_list_name   | task_name                              |
-      | This week        | Tell the tech bloggers                 |
-    But I should not see the following tasks:
-      | task_list_name   | task_name                              |
-      | This week        | Tell my friends                        |

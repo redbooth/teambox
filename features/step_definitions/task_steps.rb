@@ -2,6 +2,38 @@ Given /^there is a task called "([^\"]*)"$/ do |name|
   Task.find_by_name(name) || Factory(:task, :name => name)
 end
 
+Given /^I have a task called "([^\"]*)"$/ do |name|
+  task_list = @task_list || Factory(:task_list)
+  project = @current_project || Factory(:project)
+  @task = project.create_task(@current_user, task_list, {:name => name})
+end
+
+## FIXME: it's better for 'givens' to set tasks up directly in the db:
+
+Given /^I have a task on open$/ do
+  And 'I select "Mislav Marohnić" from "comment_target_attributes_assigned_id"'
+  And 'I press "Save"'
+  And 'I wait for 0.3 seconds'
+end
+
+Given /^I have a task on hold$/ do
+  And 'I click the element "status_hold"'
+  And 'I press "Save"'
+  And 'I wait for 0.3 seconds'
+end
+
+Given /^I have a task on resolved$/ do
+  And 'I click the element "status_resolved"'
+  And 'I press "Save"'
+  And 'I wait for 0.3 seconds'
+end
+
+Given /^I have a task on rejected$/ do
+  And 'I click the element "status_rejected"'
+  And 'I press "Save"'
+  And 'I wait for 0.3 seconds'
+end
+
 Given /^the following tasks? with associations exists?:?$/ do |table|
   table.hashes.each do |hash|
     Factory(:task,
@@ -55,7 +87,7 @@ Given /^the task called "([^\"]*)" is assigned to me$/ do |name|
   Given %(there is a task called "#{name}")
   task = Task.find_by_name(name)
   task.project.add_user(@current_user)
-  task.assign_to(@user)
+  task.assign_to(@current_user)
 end
 
 Given /^the task called "([^\"]*)" is assigned to "([^\"]*)"$/ do |task_name, login|
@@ -74,20 +106,10 @@ Given /^the task called "([^\"]*)" is (new|hold|open|resolved|rejected)$/ do |na
   Task.find_by_name(name).update_attribute(:status, Task::STATUSES[status.to_sym])
 end
 
-Then /^I should see the task called "([^\"]*)" in the "([^\"]*)" task list$/ do |task_name, task_list_name|
-  task = Task.find_by_name(task_name)
-  task_list = TaskList.find_by_name(task_list_name)
+Then /^I should( not)? see the task called "([^\"]*)" in the "([^\"]*)" task list$/ do |negative, task_name, task_list_name|
+  task_list = TaskList.find_by_name!(task_list_name)
   project = task_list.project
-  sleep(1)
-  page.should have_xpath(%(//*[@id = "project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}_item"][not(contains(@style,'display: none'))]))
-end
-
-Then /^I should not see the task called "([^\"]*)" in the "([^\"]*)" task list panel$/ do |task_name, task_list_name|
-  task = Task.find_by_name(task_name)
-  task_list = TaskList.find_by_name(task_list_name)
-  project = task_list.project
-  sleep(1)
-  page.should have_xpath(%(//*[@id = "project_#{project.id}_task_list_#{task_list.id}_task_#{task.id}_item"][contains(@style,'display: none')]))
+  Then %(I should#{negative} see "#{task_name}" within "#project_#{project.id}_task_list_#{task_list.id}")
 end
 
 Then /^I should see the following tasks:$/ do |table|
@@ -98,8 +120,11 @@ end
 
 Then /^I should not see the following tasks:$/ do |table|
   table.hashes.each do |hash|
-    Then %(I should not see the task called "#{hash['task_name']}" in the "#{hash['task_list_name']}" task list panel)
+    Then %(I should not see the task called "#{hash['task_name']}" in the "#{hash['task_list_name']}" task list)
   end
 end
 
-## daily task reminder email steps
+# needed to change the task's status
+When /^I click the element "([^\"]*)"$/ do |id|
+  find(%(##{id})).click
+end

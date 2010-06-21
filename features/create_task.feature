@@ -1,3 +1,4 @@
+@javascript @tasks
 Feature: Creating a task
   Background:
     Given a project exists with name: "Ruby Rockstars"

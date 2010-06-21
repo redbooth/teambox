@@ -1,3 +1,4 @@
+@javascript
 Feature: Posting a comment on a project wall
   Background:
     Given a project exists with name: "Ruby Rockstars"

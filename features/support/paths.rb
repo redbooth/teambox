@@ -47,7 +47,7 @@ module NavigationHelpers
       project_task_list_task_path(@current_project,@task_list,@task)
     when /project settings path/
       project_settings_path(@current_project)
-    when /the list of tasks page of the project called "(.+)"/
+    when /the "(.+)" tasks page/
       project = Project.find_by_name($1)
       project_task_lists_path(project)
     when /the "([^\"]*)" task list page of the "([^\"]*)" project/
