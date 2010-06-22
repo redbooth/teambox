@@ -225,7 +225,13 @@ form.convert_comment
       color: #9da3a7
     .body
       margin-top: 5px
-
-.mention_all
-  text-decoration: none
-  color: #259bad
+  .mention
+    padding: 0 3px
+    background-color: #eee
+    border: 1px solid #ccc
+    +rounded(3px 3px)
+    text-decoration: none
+    color: #000
+  a.mention
+    &:hover
+      color: #259BAD

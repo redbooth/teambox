@@ -25,13 +25,13 @@ module HtmlFormatting
 
       if 'all' == name
         @mentioned = project.users.confirmed
-        content_tag(:span, '@all', :class => "mention_all")
+        content_tag(:span, '@all', :class => "mention")
       elsif user = project.users.confirmed.find_by_login(name)
         if Comment === self
           @mentioned ||= []
           @mentioned |= [user]
         end
-        '@' + link_to(user.login, "/users/#{user.login}")
+        link_to("@#{user.login}", "/users/#{user.login}", :class => 'mention')
       else
         text
       end

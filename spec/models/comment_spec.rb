@@ -164,7 +164,7 @@ describe Comment do
       @project.add_user(james)
       body = "@all hands on deck this Friday"
       comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
-      comment.body_html.should == %Q{<p><span class="mention_all">@all</span> hands on deck this Friday</p>\n}
+      comment.body_html.should == %Q{<p><span class="mention">@all</span> hands on deck this Friday</p>\n}
       comment.mentioned.should include(pablo)
       comment.mentioned.should include(james)
       comment.mentioned.should_not include(@user)
