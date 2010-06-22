@@ -4,7 +4,7 @@ Feature: See tasks in different, common groupings
   As a Teambox developer
   I want to give options to see tasks in different groupings
 
-  Background:
+  Background: 
     Given a project exists with name: "Market Teambox"
     And a confirmed user exists with login: "balint"
     And "balint" is in the project called "Market Teambox"
@@ -28,9 +28,9 @@ Feature: See tasks in different, common groupings
     And I am logged in as "balint"
     When I go to the "Market Teambox" tasks page
     Then I should see the following tasks:
-      | task_list_name   | task_name                              |
-      | This week        | Tell the tech bloggers                 |
-      | This week        | Post on Digg and Hacker News           |
+      | task_list_name | task_name                    |
+      | This week      | Tell the tech bloggers       |
+      | This week      | Post on Digg and Hacker News |
     But I should not see the task called "Tell my friends" in the "This week" task list
     And I should not see the task called "Beg Apple to approve of the iPhone app" in the "Later" task list
 
@@ -41,23 +41,23 @@ Feature: See tasks in different, common groupings
     And the task called "Post on Digg and Hacker News" is assigned to me
     And the task called "Post on Digg and Hacker News" is open
     When I go to the "Market Teambox" tasks page
-     And I select "My tasks (1)" from "filter_assigned"
-     And I wait for .2 seconds
+    And I select "My tasks (1)" from "filter_assigned"
+    And I wait for .2 seconds
     Then I should see the following tasks:
-      | task_list_name   | task_name                              |
-      | This week        | Post on Digg and Hacker News           |
+      | task_list_name | task_name                    |
+      | This week      | Post on Digg and Hacker News |
     But I should not see the following tasks:
-      | task_list_name   | task_name                              |
-      | This week        | Tell the tech bloggers                 |
-      | Later            | Beg Apple to approve of the iPhone app |
-      | This week        | Tell my friends                        |
+      | task_list_name | task_name                              |
+      | This week      | Tell the tech bloggers                 |
+      | Later          | Beg Apple to approve of the iPhone app |
+      | This week      | Tell my friends                        |
     When I select "Anybody (3)" from "filter_assigned"
-     And I wait for .2 seconds
+    And I wait for .2 seconds
     Then I should see the following tasks:
-      | task_list_name   | task_name                              |
-      | This week        | Post on Digg and Hacker News           |
-      | This week        | Tell the tech bloggers                 |
-      | Later            | Beg Apple to approve of the iPhone app |
+      | task_list_name | task_name                              |
+      | This week      | Post on Digg and Hacker News           |
+      | This week      | Tell the tech bloggers                 |
+      | Later          | Beg Apple to approve of the iPhone app |
 
   Scenario: See archived tasks
     Given I am logged in as "balint"
@@ -67,9 +67,9 @@ Feature: See tasks in different, common groupings
     And I follow "Show 2 archived tasks"
     And I wait for .3 seconds
     Then I should see the following tasks:
-      | task_list_name   | task_name                              |
-      | This week        | Tell my friends                        |
-      | This week        | Post on Digg and Hacker News           |
+      | task_list_name | task_name                    |
+      | This week      | Tell my friends              |
+      | This week      | Post on Digg and Hacker News |
 
   Scenario: See reopened task
     Given I am logged in as "balint"
@@ -83,3 +83,4 @@ Feature: See tasks in different, common groupings
     And I press "Save"
     And I go to the "Market Teambox" tasks page
     Then I should see the task called "Tell my friends" in the "This week" task list
+
