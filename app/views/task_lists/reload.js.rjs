@@ -1,6 +1,6 @@
 case @show_part
 when 'column'
-  page.replace_html 'column', task_list_column(@current_project,@task_lists,@sub_action,@task_list)
+  page.replace_html 'column', task_list_column(@current_project,@task_lists,@task_list)
 when 'tasks'
   @on_index = false
   list_id = task_list_id(nil, @current_project, @task_list)
@@ -11,5 +11,5 @@ when 'tasks'
   page.call "Task.replaceTasks", list_id, true, list_tasks(@task_list.tasks.archived,task_list_editable?(@task_list,current_user))
 when 'list'
   # replace all
-  page.replace_task_list(@current_project,@task_list,@sub_action)
+  page.replace_task_list(@current_project,@task_list)
 end

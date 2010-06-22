@@ -130,22 +130,21 @@ module TaskListsHelper
       :task_list => task_list }
   end
 
-  def options_for_render_task_list(project,task_list,sub_action)
+  def options_for_render_task_list(project,task_list)
     {:partial => 'task_lists/task_list',
       :locals => {
         :project => project,
-        :task_list => task_list,
-        :sub_action => sub_action }}
+        :task_list => task_list}}
   end
   
-  def insert_task_list(project,task_list,sub_action)
-    content = render(options_for_render_task_list(project,task_list,sub_action))
+  def insert_task_list(project,task_list)
+    content = render(options_for_render_task_list(project,task_list))
     list_id = task_list_id(nil,project,task_list)
     page.call "TaskList.insertList", list_id, content, (task_list.archived || false)
   end
   
-  def replace_task_list(project,task_list,sub_action)
-    content = render(options_for_render_task_list(project,task_list,sub_action))
+  def replace_task_list(project,task_list)
+    content = render(options_for_render_task_list(project,task_list))
     list_id = task_list_id(nil,project,task_list)
     page.call "TaskList.replaceList", list_id, content, task_list.archived
   end
@@ -154,29 +153,26 @@ module TaskListsHelper
     page.call "TaskList.removeList", list_id
   end
 
-  def render_task_lists(project,task_lists,sub_action)
+  def render_task_lists(project,task_lists)
     render :partial => 'task_lists/task_list',
       :collection => task_lists,
       :as => :task_list,
       :locals => {
-        :project => project,
-        :sub_action => sub_action }
+        :project => project}
   end
 
-  def render_task_list(project,task_list,sub_action)
+  def render_task_list(project,task_list)
     render :partial => 'task_lists/task_list',
     :locals => {
       :project => project,
-      :task_list => task_list,
-      :sub_action =>  sub_action }
+      :task_list => task_list}
   end
 
 
-  def task_list_column(project,task_lists,sub_action,current_target = nil)
+  def task_list_column(project,task_lists,current_target = nil)
     render :partial => 'task_lists/column', :locals => {
         :project => project,
         :task_lists => task_lists,
-        :sub_action => sub_action,
         :current_target => current_target }
   end
 

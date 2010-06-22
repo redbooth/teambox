@@ -5,7 +5,7 @@ submit_id = task_list_id(:new_submit,@current_project)
 task_list_id = task_list_id(:with_main_tasks,@current_project,@task_list)
 
 if @task_list.errors.empty?
-  page.insert_task_list(@current_project,@task_list,@sub_action)
+  page.insert_task_list(@current_project,@task_list)
   
   page[link_id].show
   page[form_id].hide

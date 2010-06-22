@@ -67,9 +67,6 @@ ActionController::Routing::Routes.draw do |map|
     project.deletion 'deletion',  :controller => 'projects', :action => 'edit', :sub_action => 'deletion'
     project.ownership 'ownership', :controller => 'projects', :action => 'edit', :sub_action => 'ownership'
 
-    project.my_task_lists 'my_task_lists',             :controller => 'task_lists', :action => 'index', :sub_action => 'mine'
-    project.archived_task_lists 'task_lists/archived', :controller => 'task_lists', :action => 'index', :sub_action => 'archived'
-
     project.resources :invitations, :member => [:accept,:decline,:resend]
 
     project.resources :comments, :member => {:convert => :put} do |comment|

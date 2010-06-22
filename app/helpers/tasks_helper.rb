@@ -51,8 +51,8 @@ module TasksHelper
   
   #
 
-  def replace_task_column(project,task_lists,sub_action,task)
-    page.replace_html 'column', task_list_column(project,task_lists,sub_action,task)
+  def replace_task_column(project,task_lists,task)
+    page.replace_html 'column', task_list_column(project,task_lists,task)
   end
 
   def insert_unarchive_box(project,task)

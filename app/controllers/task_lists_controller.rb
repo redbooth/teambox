@@ -1,6 +1,6 @@
 class TaskListsController < ApplicationController
   before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive]
-  before_filter :load_task_lists, :only => [:index, :show]
+  before_filter :load_task_lists, :only => [:index]
   before_filter :load_banner, :only => [:index, :show]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy,:archive,:unarchive]
   before_filter :set_page_title
@@ -26,7 +26,6 @@ class TaskListsController < ApplicationController
   end
 
   def show
-    @sub_action = 'all'
     @task_lists = @current_project.task_lists.unarchived
     @comments = @task_list.comments
 
@@ -55,9 +54,7 @@ class TaskListsController < ApplicationController
 
   def create
     @on_index = true
-    if @task_list = @current_project.create_task_list(current_user,params[:task_list])
-      @sub_action = 'all'
-    end
+    @task_list = @current_project.create_task_list(current_user,params[:task_list])
     
     if !@task_list.new_record?
       respond_to do |f|
@@ -127,7 +124,6 @@ class TaskListsController < ApplicationController
   
   def archive
     calc_onindex
-    @sub_action = 'all'
     
     if request.method == :put and !@task_list.archived
       # Prototype for comment
@@ -173,7 +169,6 @@ class TaskListsController < ApplicationController
   
   def unarchive
     calc_onindex
-    @sub_action = 'all'
     
     if request.method == :put and @task_list.editable?(current_user) and @task_list.archived
       @task_list.archived = false
@@ -226,40 +221,26 @@ class TaskListsController < ApplicationController
 
   private
     def load_task_lists
-      if params.has_key?(:sub_action)
-        @sub_action = params[:sub_action]
-        if params[:sub_action] == 'mine'
-          @task_lists = @current_project.task_lists_assigned_to(current_user)
-        elsif params[:sub_action] == 'archived'
-          @task_lists = @current_project.task_lists.with_archived_tasks
-        end
-        
-        # Resort @task_lists and put archived at the bottom
-        @task_lists_archived = @task_lists.reject {|t| !t.archived?}
-        @task_lists_active = @task_lists.reject {|t| t.archived?}
-        @task_lists = @task_lists_active + @task_lists_archived
+      if @current_project
+        @task_lists = @current_project.task_lists
       else
-        @sub_action = 'all'
-        if @current_project
-          @task_lists = @current_project.task_lists
+        @projects = current_user.projects.unarchived
+        conditions = ["project_id IN (?)", Array(@projects).collect{ |p| p.id } ]
+        if [:xml, :json, :as_yaml].include? request.format.to_sym
+          @task_lists = TaskList.find(:all, :conditions => {:project_id => current_user.project_ids})
+          @tasks = []
         else
-          @projects = current_user.projects.unarchived
-          conditions = ["project_id IN (?)", Array(@projects).collect{ |p| p.id } ]
+          @task_lists = []
           @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user]).
                     select { |task| task.active? }.
                     sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
-          if [:xml, :json, :as_yaml].include? request.format.to_sym
-            @task_lists = TaskList.find(:all, :conditions => {:project_id => current_user.project_ids})
-          else
-            @task_lists = []
-          end
         end
-        
-        # Resort @task_lists and put archived at the bottom
-        @task_lists_archived = @task_lists.reject {|t| !t.archived?}
-        @task_lists_active = @task_lists.reject {|t| t.archived?}
-        @task_lists = @task_lists_active + @task_lists_archived
       end
+      
+      # Resort @task_lists and put archived at the bottom
+      @task_lists_archived = @task_lists.reject {|t| !t.archived?}
+      @task_lists_active = @task_lists.reject {|t| t.archived?}
+      @task_lists = @task_lists_active + @task_lists_archived
     end
     
     def non_js_list_redirect
