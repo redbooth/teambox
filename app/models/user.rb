@@ -219,7 +219,7 @@ class User < ActiveRecord::Base
   end
 
   def assigned_tasks_count
-    people.map { |person| person.project.tasks }.flatten.
+    people.reject{ |r| r.project.archived? }.map { |person| person.project.tasks }.flatten.
       select { |task| task.active? && task.assigned_to?(self) }.size
   end
 
