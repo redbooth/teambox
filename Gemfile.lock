@@ -240,7 +240,7 @@ specs:
 - cucumber-rails: 
     version: 0.3.2
 - daemons: 
-    version: 1.0.10
+    version: 1.1.0
 - database_cleaner: 
     version: 0.5.2
 - factory_girl: 
@@ -258,7 +258,7 @@ specs:
 - i18n: 
     version: 0.4.1
 - icalendar: 
-    version: 1.1.4
+    version: 1.1.5
 - json: 
     version: 1.4.3
 - launchy: 
@@ -312,7 +312,7 @@ specs:
 - ya2yaml: 
     version: 0.29.2
 - tolk: 
-    version: 0.2.0
+    version: 0.2.1
     source: 0
 - tzinfo: 
     version: 0.3.22
@@ -325,6 +325,6 @@ sources:
 - Git: 
     uri: git://github.com/mislav/tolk.git
     git: git://github.com/mislav/tolk.git
-    ref: 0d4c9b332cbfefbf89d23f0dc8d92b07f4540260
+    ref: a15640b196bb011dedf4cc3392b9288d97e4cad4
 - Rubygems: 
     uri: http://gemcutter.org

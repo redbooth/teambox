@@ -63,6 +63,8 @@ ru:
       website: 
         name: Веб-сайт
     errors: 
+      full_messages: 
+        format: "%{attribute} %{message}"
       messages: 
         accepted: "должен быть принят"
         blank: "не может быть пустым"
@@ -96,6 +98,13 @@ ru:
               no_body_generic: "Чтобы начать обсуждение, напишите, пожалуйста, комментарий."
             name: 
               no_title: "Пожалуйста, дайте название этому обсуждению."
+      template: 
+        body: "Проблемы возникли со следующими полями:"
+        header: 
+          few: "%{model}: сохранение не удалось из-за %{count} ошибок"
+          many: "%{model}: сохранение не удалось из-за %{count} ошибок"
+          one: "%{model}: сохранение не удалось из-за %{count} ошибки"
+          other: "%{model}: сохранение не удалось из-за %{count} ошибки"
     models: 
       address: Адрес
       card: Карточка
@@ -221,7 +230,6 @@ ru:
     index: 
       rss: 
         description: "Обсуждения проекта %{name}"
-        title: Обсуждения
     link: 
       edit: Редактировать
     new: 
@@ -251,6 +259,265 @@ ru:
       no_users_yet: "Обсуждения более полезны, если ими делиться. <a href='%{invite_link}'>Пригласите участников</a> в этот проект, чтобы они могли участвовать в обсуждении и следить за обновлениями."
       people_all: "Все участники проекта"
       subscribe_note: "Эти люди будут уведомлены по электронной почте о комментариях.<br/>Они могут отменить подписку в любой момент."
+  countries: 
+    AC: "Остров Вознесения"
+    AD: Андорра
+    AE: "Объединенные Арабские Эмираты"
+    AF: Афганистан
+    AG: "Антигуа и Барбуда"
+    AI: Ангилья
+    AL: Албания
+    AM: Армения
+    AN: "Нидерландские Антильские о-ва"
+    AO: Ангола
+    AQ: Антарктида
+    AR: Аргентина
+    AS: "Американское Самоа"
+    AT: Австрия
+    AU: Австралия
+    AW: Аруба
+    AX: "Аландские о-ва"
+    AZ: Азербайджан
+    BA: "Босния и Герцеговина"
+    BB: Барбадос
+    BD: Бангладеш
+    BE: Бельгия
+    BF: "Буркина Фасо"
+    BG: Болгария
+    BH: Бахрейн
+    BI: Бурунди
+    BJ: Бенин
+    BL: "Остров Святого Бартоломея"
+    BM: "Бермудские о-ва"
+    BN: "Бруней Даруссалам"
+    BO: Боливия
+    BR: Бразилия
+    BS: "Багамские о-ва"
+    BT: Бутан
+    BV: "Остров Буве"
+    BW: Ботсвана
+    BY: Беларусь
+    BZ: Белиз
+    CA: Канада
+    CC: "Кокосовые о-ва"
+    CD: Конгоd
+    CF: "Центральноафриканская Республика"
+    CG: Конго
+    CH: Швейцария
+    CI: Кот-д’Ивуарd
+    CK: "Острова Кука"
+    CL: Чили
+    CM: Камерун
+    CN: Китай
+    CO: Колумбия
+    CP: "Остров Клиппертон"
+    CR: Коста-Рика
+    CS: "Сербия и Черногория"
+    CU: Куба
+    CV: "Острова Зеленого Мыса"
+    CX: "Остров Рождества"
+    CY: Кипр
+    CZ: Чехия
+    DE: Германия
+    DG: Диего-Гарсия
+    DJ: Джибути
+    DK: Дания
+    DM: Доминика
+    DO: "Доминиканская Республика"
+    DZ: Алжир
+    EA: "Сеута и Мелилья"
+    EC: Эквадор
+    EE: Эстония
+    EG: Египет
+    EH: "Западная Сахара"
+    ER: Эритрея
+    ES: Испания
+    ET: Эфиопия
+    EU: "Европейский союз"
+    FI: Финляндия
+    FJ: Фиджи
+    FK: "Фолклендские (Мальвинские) о-ва"
+    FM: "Федеративные Штаты Микронезии"
+    FO: "Фарерские о-ва"
+    FR: Франция
+    FX: "Франция (метрополия)"
+    GA: Габон
+    GB: Великобритания
+    GD: Гренада
+    GE: Грузия
+    GF: "Французская Гвиана"
+    GG: Гернси
+    GH: Гана
+    GI: Гибралтар
+    GL: Гренландия
+    GM: Гамбия
+    GN: Гвинея
+    GP: Гваделупа
+    GQ: "Экваториальная Гвинея"
+    GR: Греция
+    GS: "Южная Джорджия и Южные Сандвичевы Острова"
+    GT: Гватемала
+    GU: Гуам
+    GW: Гвинея-Бисау
+    GY: Гайана
+    HK: Гонконг
+    HM: "Острова Херд и Макдональд"
+    HN: Гондурас
+    HR: Хорватия
+    HT: Гаити
+    HU: Венгрия
+    IC: "Канарские о-ва"
+    ID: Индонезия
+    IE: Ирландия
+    IL: Израиль
+    IM: "Остров Мэн"
+    IN: Индия
+    IO: "Британская территория в Индийском океане"
+    IQ: Ирак
+    IR: Иран
+    IS: Исландия
+    IT: Италия
+    JE: Джерси
+    JM: Ямайка
+    JO: Иордания
+    JP: Япония
+    KE: Кения
+    KG: Киргизия
+    KH: Камбоджа
+    KI: Кирибати
+    KM: "Коморские о-ва"
+    KN: "Сент-Киттс и Невис"
+    KP: "Северная Корея"
+    KR: "Республика Корея"
+    KW: Кувейт
+    KY: "Каймановы острова"
+    KZ: Казахстан
+    LA: Лаос
+    LB: Ливан
+    LC: Сент-Люсия
+    LI: Лихтенштейн
+    LK: Шри-Ланка
+    LR: Либерия
+    LS: Лесото
+    LT: Литва
+    LU: Люксембург
+    LV: Латвия
+    LY: Ливия
+    MA: Марокко
+    MC: Монако
+    MD: Молдова
+    ME: Черногория
+    MF: "Остров Святого Мартина"
+    MG: Мадагаскар
+    MH: "Маршалловы о-ва"
+    MK: Македония
+    ML: Мали
+    MM: Мьянма
+    MN: Монголия
+    MO: Макао
+    MP: "Северные Марианские о-ва"
+    MQ: Мартиника
+    MR: Мавритания
+    MS: Монтсеррат
+    MT: Мальта
+    MU: Маврикий
+    MV: "Мальдивские о-ва"
+    MW: Малави
+    MX: Мексика
+    MY: Малайзия
+    MZ: Мозамбик
+    NA: Намибия
+    NC: "Новая Каледония"
+    NE: Нигер
+    NF: "Остров Норфолк"
+    NG: Нигерия
+    NI: Никарагуа
+    NL: Нидерланды
+    ? "NO"
+    : Норвегия
+    NP: Непал
+    NR: Науру
+    NU: Ниуе
+    NZ: "Новая Зеландия"
+    OM: Оман
+    PA: Панама
+    PE: Перу
+    PF: "Французская Полинезия"
+    PG: "Папуа – Новая Гвинея"
+    PH: Филиппины
+    PK: Пакистан
+    PL: Польша
+    PM: "Сен-Пьер и Микелон"
+    PN: Питкэрн
+    PR: Пуэрто-Рико
+    PS: "Палестинские территории"
+    PT: Португалия
+    PW: Палау
+    PY: Парагвай
+    QA: Катар
+    QO: "Внешняя Океания"
+    RE: Реюньон
+    RO: Румыния
+    RS: Сербия
+    RU: Россия
+    RW: Руанда
+    SA: "Саудовская Аравия"
+    SB: "Соломоновы о-ва"
+    SC: "Сейшельские о-ва"
+    SD: Судан
+    SE: Швеция
+    SG: Сингапур
+    SH: "Остров Святой Елены"
+    SI: Словения
+    SJ: "Свальбард и Ян-Майен"
+    SK: Словакия
+    SL: Сьерра-Леоне
+    SM: Сан-Марино
+    SN: Сенегал
+    SO: Сомали
+    SR: Суринам
+    ST: "Сан-Томе и Принсипи"
+    SV: Сальвадор
+    SY: Сирия
+    SZ: Свазиленд
+    TA: Тристан-да-Кунья
+    TC: "Острова Тёркс и Кайкос"
+    TD: Чад
+    TF: "Французские Южные Территории"
+    TG: Того
+    TH: Таиланд
+    TJ: Таджикистан
+    TK: Токелау
+    TL: "Восточный Тимор"
+    TM: Туркменистан
+    TN: Тунис
+    TO: Тонга
+    TR: Турция
+    TT: "Тринидад и Тобаго"
+    TV: Тувалу
+    TW: Тайвань
+    TZ: Танзания
+    UA: Украина
+    UG: Уганда
+    UM: "Внешние малые острова (США)"
+    US: США
+    UY: Уругвай
+    UZ: Узбекистан
+    VA: Ватикан
+    VC: "Сент-Винсент и Гренадины"
+    VE: Венесуэла
+    VG: "Британские Виргинские о-ва"
+    VI: "Виргинские о-ва (США)"
+    VN: Вьетнам
+    VU: Вануату
+    WF: "Уоллис и Футуна"
+    WS: Самоа
+    YE: Йемен
+    YT: Майотта
+    ZA: ЮАР
+    ZM: Замбия
+    ZW: Зимбабве
+    ZZ: "Неизвестный или недействительный регион"
   date: 
     abbr_day_names: 
       - Вс
@@ -308,34 +575,54 @@ ru:
   datetime: 
     distance_in_words: 
       about_x_hours: 
+        few: "около %{count} часов"
+        many: "около %{count} часов"
         one: "около часа"
         other: "около %{count} часов"
       about_x_months: 
+        few: "около %{count} месяцев"
+        many: "около %{count} месяцев"
         one: "около месяца"
         other: "около %{count} месяцев"
       about_x_years: 
+        few: "около %{count} лет"
+        many: "около %{count} лет"
         one: "около года"
         other: "около %{count} лет"
       half_a_minute: полминуты
       less_than_x_minutes: 
+        few: "меньше %{count} минут"
+        many: "меньше %{count} минут"
         one: "меньше минуты"
         other: "меньше %{count} минут"
       less_than_x_seconds: 
+        few: "меньше %{count} секунд"
+        many: "меньше %{count} секунд"
         one: "меньше секунды"
         other: "меньше %{count} секунд"
       over_x_years: 
+        few: "больше %{count} лет"
+        many: "больше %{count} лет"
         one: "больше года"
         other: "больше %{count} лет"
       x_days: 
+        few: "%{count} дня"
+        many: "%{count} дней"
         one: день
         other: "%{count} дней"
       x_minutes: 
+        few: "%{count} минуты"
+        many: "%{count} минут"
         one: минуту
         other: "%{count} минут"
       x_months: 
+        few: "%{count} месяца"
+        many: "%{count} месяцев"
         one: месяц
         other: "%{count} месяцев"
       x_seconds: 
+        few: "%{count} секунды"
+        many: "%{count} секунд"
         one: секунду
         other: "%{count} секунд"
     prompts: 
@@ -537,65 +824,29 @@ ru:
       title: Заголовок
     new: 
       submit: "Добавить текст"
-
-  number:
-    # Used in number_with_delimiter()
-    # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
-    format:
-      # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
-      separator: "."
-      # Delimets thousands (e.g. 1,000,000 is a million) (always in groups of three)
-      delimiter: ","
-      # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
-      precision: 3
-
-    # Used in number_to_currency()
-    currency:
-      format:
-        # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
-        format: "%u%n"
-        unit: "р"
-        # These three are to override number.format and are optional
-        separator: "."
+  number: 
+    currency: 
+      format: 
         delimiter: ","
-        precision: 2
-
-    # Used in number_to_percentage()
-    percentage:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        # precision:
-
-    # Used in number_to_precision()
-    precision:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        # precision:
-
-    # Used in number_to_human_size()
-    human:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        precision: 1
-      storage_units:
-        # Storage units output formatting.
-        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%u%n"
+        separator: "."
+        unit: р
+    format: 
+      delimiter: ","
+      separator: "."
+    human: 
+      storage_units: 
         format: "%n %u"
-        units:
-          byte:
+        units: 
+          byte: 
+            few: байта
+            many: байт
             one: байт
             other: байт
-          kb: "КБ"
-          mb: "МБ"
-          gb: "ГБ"
-          tb: "ТБ"
-
+          gb: ГБ
+          kb: КБ
+          mb: МБ
+          tb: ТБ
   page_title: 
     archived_task_lists: "Заархивированные списки задач"
     create_uploads: "Загрузить файл"
@@ -636,7 +887,6 @@ ru:
       pages_in_this_project: "Страницы этого проекта"
       rss: 
         description: "Страницы проекта %{name}"
-        title: Страницы
     new: 
       define1: "Здесь вы можете <b>делиться с командой полезной информацией</b>: план, интересные ссылки, инструкции, шаблоны электронных писем..."
       define2: "Заполнение страницы — это легко и весело, вы можете перетаскивать элементы страницы и редактировать их."

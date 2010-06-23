@@ -143,7 +143,6 @@ fr:
     create_person: 
       by: par
       create_person: "a rejoint projet"
-      title: essai
     create_task: 
       create_task: "a créé la tâche"
       title: "%{user} a créé la tâche %{task} dans %{task_list}"
@@ -265,7 +264,6 @@ fr:
     index: 
       rss: 
         description: "Conversations du projet %{name}"
-        title: Conversations
     link: 
       edit: Éditer
     new: 
@@ -296,6 +294,7 @@ fr:
       people_all: "Toutes les personnes dans le projet"
       subscribe_note: "Ces personnes recevront une notification par mail de ce message et des commentaires ultérieurs.<br/>Vous pouvez arrêter de suivre cette conversation à tout moment."
   countries: 
+    AC: AC
     AD: Andorre
     AE: "Émirats arabes unis"
     AF: Afghanistan
@@ -346,6 +345,7 @@ fr:
     CM: Cameroun
     CN: Chine
     CO: Colombie
+    CP: CP
     CR: "Costa Rica"
     CS: Serbie-et-Monténégro
     CT: "Iles Canton et Enderbury"
@@ -356,11 +356,13 @@ fr:
     CZ: "République tchèque"
     DD: "Allemagne de l'Est"
     DE: Allemagne
+    DG: DG
     DJ: Djibouti
     DK: Danemark
     DM: Dominique
     DO: "République dominicaine"
     DZ: Algérie
+    EA: EA
     EC: Équateur
     EE: Estonie
     EG: Égypte
@@ -368,6 +370,7 @@ fr:
     ER: Érythrée
     ES: Espagne
     ET: Éthiopie
+    EU: EU
     FI: Finlande
     FJ: Fidji
     FK: FK
@@ -401,6 +404,7 @@ fr:
     HR: Croatie
     HT: Haïti
     HU: Hongrie
+    IC: IC
     ID: Indonésie
     IE: Irlande
     IL: Israël
@@ -469,6 +473,8 @@ fr:
     NG: Nigéria
     NI: Nicaragua
     NL: Pays-Bas
+    ? "NO"
+    : Norvège
     NP: Népal
     NQ: "Terre de la Reine-Maud"
     NR: Nauru
@@ -495,7 +501,6 @@ fr:
     PZ: "Zone du Canal de Panama"
     QA: Qatar
     QO: "régions éloignées de l’Océanie"
-    QU: "Union européenne"
     RE: Réunion
     RO: Roumanie
     RS: Serbie
@@ -521,6 +526,7 @@ fr:
     SV: "El Salvador"
     SY: Syrie
     SZ: Swaziland
+    TA: TA
     TC: "Îles Turks et Caïques"
     TD: Tchad
     TF: "Terres australes françaises"
@@ -633,9 +639,11 @@ fr:
       less_than_x_minutes: 
         one: "moins d’une minute"
         other: "moins de %{count} minutes"
+        zero: "moins d'une minute"
       less_than_x_seconds: 
         one: "moins d’une seconde"
         other: "moins de %{count} secondes"
+        zero: "moins d'une seconde"
       over_x_years: 
         one: "plus d’un an"
         other: "plus de %{count} ans"
@@ -873,17 +881,12 @@ fr:
       format: 
         delimiter: ","
         format: "%u%n"
-        precision: 2
         separator: "."
         unit: $
     format: 
       delimiter: ","
-      precision: 3
       separator: "."
     human: 
-      format: 
-        delimiter: ""
-        precision: 1
       storage_units: 
         format: "%n %u"
         units: 
@@ -894,12 +897,6 @@ fr:
           kb: ko
           mb: Mo
           tb: To
-    percentage: 
-      format: 
-        delimiter: ""
-    precision: 
-      format: 
-        delimiter: ""
   page_title: 
     archived_task_lists: "Tâches archivées"
     create_uploads: "Ajouter un fichier"
@@ -941,7 +938,6 @@ fr:
       pages_in_this_project: "Pages dans ce projet"
       rss: 
         description: "Pages du projet %{name}"
-        title: Pages
     new: 
       define1: "Vous pouvez ici <b>partager des infomations utiles</b> avec votre équipe: « plan, liens intéressants, instructions, modèles de mails… »"
       define2: "Éditer une page est simple et amusant, avec des éléments que vous pouvez éditer sur le site par glisser‑déposer."

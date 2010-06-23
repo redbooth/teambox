@@ -84,6 +84,11 @@ ca:
         too_long: "es massa llarg (%{count} caràcters màxim)"
         too_short: "es massa curt (%{count} caràcters mínim)"
         wrong_length: "no té la longitud correcta (%{count} caràcters exactes)"
+      template: 
+        body: "Hi ha hagut problemes amb els següents camps:"
+        header: 
+          one: "No s'ha pogut desar aquest/a %{model} perquè hi ha 1 error"
+          other: "No s'ha pogut desar aquest/a %{model} perquè hi ha hagut %{count} errors"
     models: 
       address: Adreça
       card: Targeta
@@ -196,7 +201,6 @@ ca:
     index: 
       rss: 
         description: "Converses en el projecte %{name}"
-        title: Converses
     link: 
       edit: Editar
     new: 
@@ -226,6 +230,265 @@ ca:
       no_users_yet: "Conversar es més útil quan no ho fas sol. <a href='%{invite_link}'>Convida a alguns usuaris</a> en aquest projecte per que puguin llegir, comentar i rebre actualitzacions d'aquesta conversa."
       people_all: "All people in project"
       subscribe_note: "Aquestes persones rebran una notificació via email d´aquest missatge i els comentaris posteriors.<br/>Poden deixar de seguir la conversa en qualsevol moment."
+  countries: 
+    AC: "Illa de l'Ascensió"
+    AD: Andorra
+    AE: "Unió dels Emirats Àrabs"
+    AF: Afganistan
+    AG: "Antigua i Barbuda"
+    AI: Anguilla
+    AL: Albània
+    AM: Armènia
+    AN: "Antilles Neerlandeses"
+    AO: Angola
+    AQ: Antàrtida
+    AR: Argentina
+    AS: "Samoa Americana"
+    AT: Àustria
+    AU: Austràlia
+    AW: Aruba
+    AX: "Illes Åland"
+    AZ: Azerbaidjan
+    BA: "Bòsnia i Hercegovina"
+    BB: Barbados
+    BD: "Bangla Desh"
+    BE: Bèlgica
+    BF: "Burkina Faso"
+    BG: Bulgària
+    BH: Bahrain
+    BI: Burundi
+    BJ: Benín
+    BL: "Saint Barthélemy"
+    BM: Bermudes
+    BN: Brunei
+    BO: Bolívia
+    BR: Brasil
+    BS: Bahames
+    BT: Bhutan
+    BV: "Illa Bouvet"
+    BW: Botswana
+    BY: Bielorússia
+    BZ: Belize
+    CA: Canadà
+    CC: "Illes Cocos"
+    CD: "Congo [República Democràtica del Congo]"
+    CF: "República Centreafricana"
+    CG: "Congo [República del Congo]"
+    CH: Suïssa
+    CI: "Costa d’Ivori"
+    CK: "Illes Cook"
+    CL: Xile
+    CM: Camerun
+    CN: Xina
+    CO: Colòmbia
+    CP: "Illa Clipperton"
+    CR: "Costa Rica"
+    CS: "Sèrbia i Montenegro"
+    CU: Cuba
+    CV: "Cap Verd"
+    CX: "Illa Christmas"
+    CY: Xipre
+    CZ: "República Txeca"
+    DE: Alemanya
+    DG: "Diego Garcia"
+    DJ: Djibouti
+    DK: Dinamarca
+    DM: Dominica
+    DO: "República Dominicana"
+    DZ: Algèria
+    EA: "Ceuta i Melilla"
+    EC: Equador
+    EE: Estònia
+    EG: Egipte
+    EH: "Sàhara Occidental"
+    ER: Eritrea
+    ES: Espanya
+    ET: Etiòpia
+    EU: UEd
+    FI: Finlàndia
+    FJ: Fiji
+    FK: "Illes Malvines [Illes Falkland]"
+    FM: Micronèsia
+    FO: "Illes Fèroe"
+    FR: França
+    FX: "França metropolitanad"
+    GA: Gabon
+    GB: "Regne Unit"
+    GD: Grenada
+    GE: Geòrgia
+    GF: "Guaiana Francesa"
+    GG: Guernsey
+    GH: Ghana
+    GI: Gibraltar
+    GL: Grenlàndia
+    GM: Gàmbia
+    GN: Guinea
+    GP: Guadeloupe
+    GQ: "Guinea Equatorial"
+    GR: Grècia
+    GS: "Illes Geòrgia del Sud i Sandwich del Sud"
+    GT: Guatemala
+    GU: Guam
+    GW: "Guinea Bissau"
+    GY: Guyana
+    HK: "Hong Kong"
+    HM: "Illa Heard i Illes McDonald"
+    HN: Hondures
+    HR: Croàcia
+    HT: Haití
+    HU: Hongria
+    IC: "Illes Canàries"
+    ID: Indonèsia
+    IE: Irlanda
+    IL: Israel
+    IM: "Illa de Man"
+    IN: Índia
+    IO: "Territori Britànic de l'Oceà Índic"
+    IQ: Iraq
+    IR: Iran
+    IS: Islàndia
+    IT: Itàlia
+    JE: Jersey
+    JM: Jamaica
+    JO: Jordània
+    JP: Japó
+    KE: Kenya
+    KG: Kirguizistan
+    KH: Cambodja
+    KI: Kiribati
+    KM: Comores
+    KN: "Saint Christopher i Nevis"
+    KP: "Corea del Nord"
+    KR: "Corea del Sud"
+    KW: Kuwait
+    KY: "Illes Caiman"
+    KZ: Kazakhstan
+    LA: Laos
+    LB: Líban
+    LC: "Saint Lucia"
+    LI: Liechtenstein
+    LK: "Sri Lanka"
+    LR: Libèria
+    LS: Lesotho
+    LT: Lituània
+    LU: Luxemburg
+    LV: Letònia
+    LY: Líbia
+    MA: Marroc
+    MC: Mònaco
+    MD: Moldàvia
+    ME: Montenegro
+    MF: "Saint MartinRP3"
+    MG: Madagascar
+    MH: "Illes Marshall"
+    MK: "Macedònia [Exrepública Iugoslava de Macedònia]"
+    ML: Mali
+    MM: "Myanmar [Birmània]"
+    MN: Mongòlia
+    MO: Macau
+    MP: "Illes Mariannes del NordRP3"
+    MQ: Martinica
+    MR: Mauritània
+    MS: Montserrat
+    MT: Malta
+    MU: Maurici
+    MV: Maldives
+    MW: Malawi
+    MX: Mèxic
+    MY: Malàisia
+    MZ: Moçambic
+    NA: Namíbia
+    NC: "Nova Caledònia"
+    NE: Níger
+    NF: "Illa Norfolk"
+    NG: Nigèria
+    NI: Nicaragua
+    NL: "Països Baixos"
+    ? "NO"
+    : Noruega
+    NP: Nepal
+    NR: Nauru
+    NU: Niue
+    NZ: "Nova Zelanda"
+    OM: Oman
+    PA: Panamà
+    PE: Perú
+    PF: "Polinèsia Francesa"
+    PG: "Papua Nova Guinea"
+    PH: Filipines
+    PK: Pakistan
+    PL: Polònia
+    PM: "Saint Pierre i Miquelon"
+    PN: "Illes Pitcairn"
+    PR: "Puerto Rico"
+    PS: Palestina
+    PT: Portugal
+    PW: Palau
+    PY: Paraguai
+    QA: Qatar
+    QO: "Territoris allunyats d'Oceania"
+    RE: "Illa de la Reunió"
+    RO: Romania
+    RS: Sèrbia
+    RU: Rússia
+    RW: Rwanda
+    SA: "Aràbia Saudita"
+    SB: "Illes Salomó"
+    SC: Seychelles
+    SD: Sudan
+    SE: Suècia
+    SG: Singapur
+    SH: "Saint Helena"
+    SI: Eslovènia
+    SJ: "Svalbard i Jan Mayen"
+    SK: Eslovàquia
+    SL: "Sierra Leone"
+    SM: "San Marino"
+    SN: Senegal
+    SO: Somàlia
+    SR: Surinam
+    ST: "São Tomé i Príncipe"
+    SV: "El Salvador"
+    SY: Síria
+    SZ: Swazilàndia
+    TA: "Tristão da Cunha"
+    TC: "Illes Turks i Caicos"
+    TD: Txad
+    TF: "Territoris Francesos del Sud"
+    TG: Togo
+    TH: Tailàndia
+    TJ: Tadjikistan
+    TK: Tokelau
+    TL: "Timor Oriental"
+    TM: Turkmenistan
+    TN: Tunísia
+    TO: Tonga
+    TR: Turquia
+    TT: "Trinitat i Tobago"
+    TV: Tuvalu
+    TW: Taiwan
+    TZ: Tanzània
+    UA: Ucraïna
+    UG: Uganda
+    UM: "Illes Perifèriques Menors dels EUA"
+    US: "Estats Units"
+    UY: Uruguai
+    UZ: Uzbekistan
+    VA: Vaticà
+    VC: "Saint Vincent i les Grenadines"
+    VE: Veneçuela
+    VG: "Illes Verges Britàniques"
+    VI: "Illes Verges Nord-americanes"
+    VN: Vietnam
+    VU: Vanuatu
+    WF: "Wallis i Futuna"
+    WS: Samoa
+    YE: Iemen
+    YT: Mayotte
+    ZA: "República de Sud-àfrica"
+    ZM: Zàmbia
+    ZW: Zimbabwe
+    ZZ: "Regió desconeguda o no vàlida"
   date: 
     abbr_day_names: 
       - Dg
@@ -433,65 +696,27 @@ ca:
       title: Títol
     new: 
       submit: "Nova nota"
-
-  number:
-    # Used in number_with_delimiter()
-    # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
-    format:
-      # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
-      separator: "."
-      # Delimets thousands (e.g. 1,000,000 is a million) (always in groups of three)
-      delimiter: ","
-      # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
-      precision: 3
-
-    # Used in number_to_currency()
-    currency:
-      format:
-        # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
-        format: "%u%n"
-        unit: "$"
-        # These three are to override number.format and are optional
-        separator: "."
+  number: 
+    currency: 
+      format: 
         delimiter: ","
-        precision: 2
-
-    # Used in number_to_percentage()
-    percentage:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        # precision:
-
-    # Used in number_to_precision()
-    precision:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        # precision:
-
-    # Used in number_to_human_size()
-    human:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        precision: 1
-      storage_units:
-        # Storage units output formatting.
-        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%u%n"
+        separator: "."
+        unit: $
+    format: 
+      delimiter: ","
+      separator: "."
+    human: 
+      storage_units: 
         format: "%n %u"
-        units:
-          byte:
-            one: "byte"
-            other: "bytes"
-          kb: "KB"
-          mb: "MB"
-          gb: "GB"
-          tb: "TB"
-
+        units: 
+          byte: 
+            one: byte
+            other: bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
   page_title: 
     archived_task_lists: "Tasques arxivades"
     create_uploads: "Pujar arxiu"
@@ -530,7 +755,6 @@ ca:
       pages_in_this_project: "Pàgines en aquest projecte"
       rss: 
         description: "Pàgines del projecte %{name}"
-        title: Pàgines
     new: 
       define1: "Aquí pots <b>compartir informació d'us freqüent</b> amb el teu equip: Un roadmap, links útils, instruccions, plantilles d'emails..."
       define2: "Editar una pàgina es senzill i divertit, amb elements arrossegables que pots editar en el lloc."

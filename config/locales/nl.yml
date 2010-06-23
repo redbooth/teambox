@@ -84,6 +84,11 @@ nl:
         too_long: "is te lang (maximum is %{count} tekens)"
         too_short: "is te kort (minimum is %{count} tekens)"
         wrong_length: "is de verkeerde lengte (moet %{count} tekens zijn)"
+      template: 
+        body: "Controleer alstublieft de volgende velden:"
+        header: 
+          one: "Kon dit %{model} object niet opslaan: 1 fout."
+          other: "Kon dit %{model} niet opslaan: %{count} fouten."
     models: 
       address: Adres
       card: Kaart
@@ -200,7 +205,6 @@ nl:
     index: 
       rss: 
         description: "Conversaties voor het project %{name}"
-        title: Conversaties
     link: 
       edit: Wijzigen
     new: 
@@ -229,6 +233,265 @@ nl:
       no_users_yet: "Conversaties zijn meer zinvol wanneer ze gedeeld zijn. <a href='%{invite_link}'>Nodig wat gebruikers uit</a> bij dit project zodat ze deze conversatie kunnen inzien, beantwoorden en updates kunnen ontvangen."
       people_all: "Alle mensen in dit project"
       subscribe_note: "Deze mensen zullen op de hoogte gesteld worden via een e-mail van dit bericht en elk volgende reacties.<br/>Ze kunnen op elk moment zichzelf uitschrijven."
+  countries: 
+    AC: "Ascension; [draft=contributed]"
+    AD: Andorra
+    AE: "Verenigde Arabische Emiraten"
+    AF: Afghanistan
+    AG: "Antigua en Barbuda"
+    AI: Anguilla
+    AL: Albanië
+    AM: Armenië
+    AN: "Nederlandse Antillen"
+    AO: Angola
+    AQ: Antarctica
+    AR: Argentinië
+    AS: "Amerikaans Samoa"
+    AT: Oostenrijk
+    AU: Australië
+    AW: Aruba
+    AX: Alandeilanden
+    AZ: Azerbeidzjan
+    BA: "Bosnië en Herzegovina"
+    BB: Barbados
+    BD: Bangladesh
+    BE: België
+    BF: "Burkina Faso"
+    BG: Bulgarije
+    BH: Bahrein
+    BI: Burundi
+    BJ: Benin
+    BL: "Saint Barthélemy"
+    BM: Bermuda
+    BN: Brunei
+    BO: Bolivia
+    BR: Brazilië
+    BS: Bahama’s
+    BT: Bhutan
+    BV: Bouveteiland
+    BW: Botswana
+    BY: Wit-Rusland
+    BZ: Belize
+    CA: Canada
+    CC: Cocoseilanden
+    CD: Congo-Kinshasad
+    CF: "Centraal-Afrikaanse Republiek"
+    CG: Congo-Brazzavilled
+    CH: Zwitserland
+    CI: "Ivoorkust; [draft=contributed]"
+    CK: Cookeilanden
+    CL: Chili
+    CM: Kameroen
+    CN: China
+    CO: Colombia
+    CP: "Clipperton; [draft=contributed]"
+    CR: "Costa Rica"
+    CS: "Servië en Montenegro"
+    CU: Cuba
+    CV: Kaapverdië
+    CX: Christmaseiland
+    CY: Cyprus
+    CZ: Tsjechië
+    DE: Duitsland
+    DG: "Diego Garcia; [draft=contributed]"
+    DJ: Djibouti
+    DK: Denemarken
+    DM: Dominica
+    DO: "Dominicaanse Republiek"
+    DZ: Algerije
+    EA: "Ceuta en Melilla; [draft=contributed]"
+    EC: Ecuador
+    EE: Estland
+    EG: Egypte
+    EH: "Westelijke Sahara"
+    ER: Eritrea
+    ES: Spanje
+    ET: Ethiopië
+    EU: "Europese Unie"
+    FI: Finland
+    FJ: Fiji
+    FK: Falklandeilandend
+    FM: Micronesië
+    FO: Faeröer
+    FR: Frankrijk
+    FX: "Europese Frankrijk"
+    GA: Gabon
+    GB: "Verenigd Koninkrijk"
+    GD: Grenada
+    GE: Georgië
+    GF: Frans-Guyana
+    GG: Guernsey
+    GH: Ghana
+    GI: Gibraltar
+    GL: Groenland
+    GM: Gambia
+    GN: Guinee
+    GP: Guadeloupe
+    GQ: Equatoriaal-Guinea
+    GR: Griekenland
+    GS: "Zuid-Georgië en Zuidelijke Sandwicheilanden"
+    GT: Guatemala
+    GU: Guam
+    GW: Guinee-Bissau
+    GY: Guyana
+    HK: Hongkong
+    HM: "Heard- en McDonaldeilanden"
+    HN: Honduras
+    HR: Kroatië
+    HT: Haïti
+    HU: Hongarije
+    IC: "Canarische Eilanden; [draft=contributed]"
+    ID: Indonesië
+    IE: Ierland
+    IL: Israël
+    IM: "Isle of Man"
+    IN: India
+    IO: "Britse Gebieden in de Indische Oceaan"
+    IQ: Irak
+    IR: Iran
+    IS: IJsland
+    IT: Italië
+    JE: Jersey
+    JM: Jamaica
+    JO: Jordanië
+    JP: Japan
+    KE: Kenia
+    KG: Kirgizië
+    KH: Cambodja
+    KI: Kiribati
+    KM: Comoren
+    KN: "Saint Kitts en Nevis"
+    KP: Noord-Korea
+    KR: Zuid-Korea
+    KW: Koeweit
+    KY: Caymaneilanden
+    KZ: Kazachstan
+    LA: Laos
+    LB: Libanon
+    LC: "Saint Lucia"
+    LI: Liechtenstein
+    LK: "Sri Lanka"
+    LR: Liberia
+    LS: Lesotho
+    LT: Litouwen
+    LU: Luxemburg
+    LV: Letland
+    LY: Libië
+    MA: Marokko
+    MC: Monaco
+    MD: Moldavië
+    ME: Montenegro
+    MF: Sint-Maarten
+    MG: Madagaskar
+    MH: Marshalleilanden
+    MK: Macedoniëd
+    ML: Mali
+    MM: Myanmar
+    MN: Mongolië
+    MO: Macao
+    MP: "Noordelijke Marianeneilanden"
+    MQ: Martinique
+    MR: Mauritanië
+    MS: Montserrat
+    MT: Malta
+    MU: Mauritius
+    MV: Maldiven
+    MW: Malawi
+    MX: Mexico
+    MY: Maleisië
+    MZ: Mozambique
+    NA: Namibië
+    NC: Nieuw-Caledonië
+    NE: Niger
+    NF: Norfolkeiland
+    NG: Nigeria
+    NI: Nicaragua
+    NL: Nederland
+    ? "NO"
+    : Noorwegen
+    NP: Nepal
+    NR: Nauru
+    NU: Niue
+    NZ: Nieuw-Zeeland
+    OM: Oman
+    PA: Panama
+    PE: Peru
+    PF: Frans-Polynesië
+    PG: Papoea-Nieuw-Guinea
+    PH: Filipijnen
+    PK: Pakistan
+    PL: Polen
+    PM: "Saint Pierre en Miquelon"
+    PN: Pitcairn
+    PR: "Puerto Rico"
+    PS: "Palestijns Gebied"
+    PT: Portugal
+    PW: Palau
+    PY: Paraguay
+    QA: Qatar
+    QO: "Oceanië (overige)"
+    RE: Réunion
+    RO: Roemenië
+    RS: Servië
+    RU: Rusland
+    RW: Rwanda
+    SA: Saoedi-Arabië
+    SB: Salomonseilanden
+    SC: Seychellen
+    SD: Soedan
+    SE: Zweden
+    SG: Singapore
+    SH: Sint-Helena
+    SI: Slovenië
+    SJ: "Svalbard en Jan Mayen"
+    SK: Slowakije
+    SL: "Sierra Leone"
+    SM: "San Marino"
+    SN: Senegal
+    SO: Somalië
+    SR: Suriname
+    ST: "Sao Tomé en Principe"
+    SV: "El Salvador"
+    SY: Syrië
+    SZ: Swaziland
+    TA: "Tristan da Cunha; [draft=contributed]"
+    TC: "Turks- en Caicoseilanden"
+    TD: Tsjaad
+    TF: "Franse Gebieden in de zuidelijke Indische Oceaan"
+    TG: Togo
+    TH: Thailand
+    TJ: Tadzjikistan
+    TK: Tokelau
+    TL: "Oost-Timor; [draft=contributed]"
+    TM: Turkmenistan
+    TN: Tunesië
+    TO: Tonga
+    TR: Turkije
+    TT: "Trinidad en Tobago"
+    TV: Tuvalu
+    TW: Taiwan
+    TZ: Tanzania
+    UA: Oekraïne
+    UG: Oeganda
+    UM: "Amerikaanse kleinere afgelegen eilanden"
+    US: "Verenigde Staten"
+    UY: Uruguay
+    UZ: Oezbekistan
+    VA: Vaticaanstad
+    VC: "Saint Vincent en de Grenadines"
+    VE: Venezuela
+    VG: "Britse Maagdeneilanden"
+    VI: "Amerikaanse Maagdeneilanden"
+    VN: Vietnam
+    VU: Vanuatu
+    WF: "Wallis en Futuna"
+    WS: Samoa
+    YE: Jemen
+    YT: Mayotte
+    ZA: Zuid-Afrika
+    ZM: Zambia
+    ZW: Zimbabwe
+    ZZ: "Onbekend of onjuist gebied"
   date: 
     abbr_day_names: 
       - Zon
@@ -435,65 +698,27 @@ nl:
       title: Titel
     new: 
       submit: "Notitie toevoegen"
-
-  number:
-    # Used in number_with_delimiter()
-    # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
-    format:
-      # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
-      separator: "."
-      # Delimets thousands (e.g. 1,000,000 is a million) (always in groups of three)
-      delimiter: ","
-      # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
-      precision: 3
-
-    # Used in number_to_currency()
-    currency:
-      format:
-        # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
-        format: "%u%n"
-        unit: "$"
-        # These three are to override number.format and are optional
-        separator: "."
+  number: 
+    currency: 
+      format: 
         delimiter: ","
-        precision: 2
-
-    # Used in number_to_percentage()
-    percentage:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        # precision:
-
-    # Used in number_to_precision()
-    precision:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        # precision:
-
-    # Used in number_to_human_size()
-    human:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        precision: 1
-      storage_units:
-        # Storage units output formatting.
-        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%u%n"
+        separator: "."
+        unit: $
+    format: 
+      delimiter: ","
+      separator: "."
+    human: 
+      storage_units: 
         format: "%n %u"
-        units:
-          byte:
-            one: "byte"
-            other: "bytes"
-          kb: "KB"
-          mb: "MB"
-          gb: "GB"
-          tb: "TB"
-
+        units: 
+          byte: 
+            one: byte
+            other: bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
   page_title: 
     archived_task_lists: "Gearchiveerde taken"
     create_uploads: "Bestand Upload"
@@ -533,7 +758,6 @@ nl:
       pages_in_this_project: "Paginas in dit project"
       rss: 
         description: "Paginas in project %{name}"
-        title: Paginas
     new: 
       define1: "Hier kan u <b>nuttige informatie delen</b> voor uw team: Een roadmap, interessante links, instructies, e-mail templates..."
       define2: "Een pagina wijzigen is makkelijk en leuk, met drag-and-drop elementen kunt u ter plaatse wijzigen."

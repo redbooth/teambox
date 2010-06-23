@@ -1,7 +1,9 @@
 --- 
 ja: 
-  activerecord:
+  activerecord: 
     errors: 
+      full_messages: 
+        format: "%{attribute}%{message}"
       messages: 
         accepted: は承認されなければなりません。
         blank: 空ではいけません
@@ -35,6 +37,11 @@ ja:
               no_body_generic: チャットを始めるにはコメントを書いて下さい。
             name: 
               no_title: チャットにタイトルを書いてください。
+      template: 
+        body: 次の項目を確認してください。
+        header: 
+          one: "%{model}にエラーが発生しました。"
+          other: "%{model}に%{count}つのエラーが発生しました。"
     models: 
       comment: コメント
       conversation: チャット
@@ -138,7 +145,6 @@ ja:
     index: 
       rss: 
         description: "%{name}プロジェクトのチャット"
-        title: チャット
     link: 
       edit: 編集
     new: 
@@ -168,6 +174,264 @@ ja:
       no_users_yet: "チャットは共有するともっと便利になります。いますぐこのプロジェクトに<a href='%{invite_link}'>他のユーザーを招待</a>して、このチャットにアクセス出来るようにして、コメントを投稿したり、更新を受け取れるようにしましょう。"
       people_all: プロジェクト中の全ての人々
       subscribe_note: これらの人々には、このメッセージと今後のコメントがメールで通知されます。<br/>いつでも通知を解除することができます。
+  countries: 
+    AC: アセンション島
+    AD: アンドラ
+    AE: アラブ首長国連邦
+    AF: アフガニスタン
+    AG: アンティグア・バーブーダ
+    AI: アンギラ
+    AL: アルバニア
+    AM: アルメニア
+    AN: オランダ領アンティル諸島
+    AO: アンゴラ
+    AQ: 南極大陸
+    AR: アルゼンチン
+    AS: 米領サモア
+    AT: オーストリア
+    AU: オーストラリア
+    AW: アルバ島
+    AX: オーランド諸島
+    AZ: アゼルバイジャン
+    BA: ボスニア・ヘルツェゴビナ
+    BB: バルバドス
+    BD: バングラデシュ
+    BE: ベルギー
+    BF: ブルキナファソ
+    BG: ブルガリア
+    BH: バーレーン
+    BI: ブルンジ
+    BJ: ベナン
+    BL: サン・バルテルミー
+    BM: バミューダ
+    BN: ブルネイ
+    BO: ボリビア
+    BR: ブラジル
+    BS: バハマ
+    BT: ブータン
+    BV: ブーベ島
+    BW: ボツワナ
+    BY: ベラルーシ
+    BZ: ベリーズ
+    CA: カナダ
+    CC: "ココス (キーリング) 諸島"
+    CD: コンゴ民主共和国
+    CF: 中央アフリカ共和国
+    CG: コンゴ共和国
+    CH: スイス
+    CI: 象牙海岸
+    CK: クック諸島
+    CL: チリ
+    CM: カメルーン
+    CN: 中国
+    CO: コロンビア
+    CP: クリッパートン島
+    CR: コスタリカ
+    CS: セルビア・モンテネグロ
+    CU: キューバ
+    CV: カーボベルデ
+    CX: クリスマス島
+    CY: キプロス
+    CZ: チェコ共和国
+    DE: ドイツ
+    DG: ディエゴガルシア島
+    DJ: ジブチ
+    DK: デンマーク
+    DM: ドミニカ国
+    DO: ドミニカ共和国
+    DZ: アルジェリア
+    EA: セウタ・メリリャ
+    EC: エクアドル
+    EE: エストニア
+    EG: エジプト
+    EH: 西サハラ
+    ER: エリトリア
+    ES: スペイン
+    ET: エチオピア
+    EU: 欧州連合
+    FI: フィンランド
+    FJ: フィジー
+    FK: フォークランド諸島（マルビナス諸島）d
+    FM: ミクロネシア
+    FO: フェロー諸島
+    FR: フランス
+    GA: ガボン
+    GB: イギリス
+    GD: グレナダ
+    GE: グルジア
+    GF: 仏領ギアナ
+    GG: ガーンジー
+    GH: ガーナ
+    GI: ジブラルタル
+    GL: グリーンランド
+    GM: ガンビア
+    GN: ギニア
+    GP: グアドループ
+    GQ: 赤道ギニア
+    GR: ギリシャ
+    GS: 南ジョージア島・南サンドイッチ諸島
+    GT: グアテマラ
+    GU: グアム
+    GW: ギニアビサウ
+    GY: ガイアナ
+    HK: "香港; [draft=contributed]"
+    HM: ハード島・マクドナルド諸島
+    HN: ホンジュラス
+    HR: クロアチア
+    HT: ハイチ
+    HU: ハンガリー
+    IC: カナリア諸島
+    ID: インドネシア
+    IE: アイルランド
+    IL: イスラエル
+    IM: マン島
+    IN: インド
+    IO: 英領インド洋地域
+    IQ: イラク
+    IR: イラン
+    IS: アイスランド
+    IT: イタリア
+    JE: ジャージー
+    JM: ジャマイカ
+    JO: ヨルダン
+    JP: 日本
+    KE: ケニア
+    KG: キルギスタン
+    KH: カンボジア
+    KI: キリバス
+    KM: コモロ
+    KN: セントクリストファー・ネイビス
+    KP: 朝鮮民主主義人民共和国
+    KR: 大韓民国
+    KW: クウェート
+    KY: ケイマン諸島
+    KZ: カザフスタン
+    LA: ラオス
+    LB: レバノン
+    LC: セントルシア
+    LI: リヒテンシュタイン
+    LK: スリランカ
+    LR: リベリア
+    LS: レソト
+    LT: リトアニア
+    LU: ルクセンブルグ
+    LV: ラトビア
+    LY: リビア
+    MA: モロッコ
+    MC: モナコ
+    MD: モルドバ
+    ME: モンテネグロ
+    MF: セント・マーチン
+    MG: マダガスカル
+    MH: マーシャル諸島共和国
+    MK: マケドニア旧ユーゴスラヴィア共和国d
+    ML: マリ
+    MM: ミャンマー
+    MN: モンゴル
+    MO: "マカオ; [draft=contributed]"
+    MP: 北マリアナ諸島
+    MQ: マルティニーク島
+    MR: モーリタニア
+    MS: モントセラト島
+    MT: マルタ
+    MU: モーリシャス
+    MV: モルジブ
+    MW: マラウィ
+    MX: メキシコ
+    MY: マレーシア
+    MZ: モザンビーク
+    NA: ナミビア
+    NC: ニューカレドニア
+    NE: ニジェール
+    NF: ノーフォーク島
+    NG: ナイジェリア
+    NI: ニカラグア
+    NL: オランダ
+    ? "NO"
+    : ノルウェー
+    NP: ネパール
+    NR: ナウル
+    NU: ニウエ島
+    NZ: ニュージーランド
+    OM: オマーン
+    PA: パナマ
+    PE: ペルー
+    PF: 仏領ポリネシア
+    PG: パプアニューギニア
+    PH: フィリピン
+    PK: パキスタン
+    PL: ポーランド
+    PM: サンピエール島・ミクロン島
+    PN: ピトケアン島
+    PR: プエルトリコ
+    PS: パレスチナ
+    PT: ポルトガル
+    PW: パラオ
+    PY: パラグアイ
+    QA: カタール
+    QO: その他のオセアニア
+    RE: レユニオン島
+    RO: ルーマニア
+    RS: セルビア
+    RU: ロシア
+    RW: ルワンダ
+    SA: サウジアラビア
+    SB: ソロモン諸島
+    SC: セーシェル
+    SD: スーダン
+    SE: スウェーデン
+    SG: シンガポール
+    SH: セントヘレナ
+    SI: スロベニア
+    SJ: スバールバル諸島・ヤンマイエン島
+    SK: スロバキア
+    SL: シエラレオネ
+    SM: サンマリノ
+    SN: セネガル
+    SO: ソマリア
+    SR: スリナム
+    ST: サントメ・プリンシペ
+    SV: エルサルバドル
+    SY: シリア
+    SZ: スワジランド
+    TA: トリスタン・ダ・クーニャ
+    TC: タークス諸島・カイコス諸島
+    TD: チャド
+    TF: フランス領極南諸島
+    TG: トーゴ
+    TH: タイ
+    TJ: タジキスタン
+    TK: トケラウ諸島
+    TL: 東ティモールd
+    TM: トルクメニスタン
+    TN: チュニジア
+    TO: トンガ
+    TR: トルコ
+    TT: トリニダード・トバゴ
+    TV: ツバル
+    TW: 台湾
+    TZ: タンザニア
+    UA: ウクライナ
+    UG: ウガンダ
+    UM: 米領太平洋諸島
+    US: アメリカ合衆国
+    UY: ウルグアイ
+    UZ: ウズベキスタン
+    VA: バチカン市国
+    VC: セントビンセント・グレナディーン諸島
+    VE: ベネズエラ
+    VG: 英領ヴァージン諸島
+    VI: アメリカ領ヴァージン諸島
+    VN: ベトナム
+    VU: バヌアツ
+    WF: ウォリス・フツナ
+    WS: サモア
+    YE: イエメン
+    YT: マヨット島
+    ZA: 南アフリカ
+    ZM: ザンビア
+    ZW: ジンバブエ
+    ZZ: 不明な地域
   date: 
     abbr_day_names: 
       - Sun
@@ -438,65 +702,27 @@ ja:
       title: タイトル
     new: 
       submit: ノートを追加
-
-  number:
-    # Used in number_with_delimiter()
-    # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
-    format:
-      # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
-      separator: "."
-      # Delimets thousands (e.g. 1,000,000 is a million) (always in groups of three)
-      delimiter: ","
-      # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
-      precision: 3
-
-    # Used in number_to_currency()
-    currency:
-      format:
-        # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
-        format: "%u%n"
-        unit: "Yen"
-        # These three are to override number.format and are optional
-        separator: "."
+  number: 
+    currency: 
+      format: 
         delimiter: ","
-        precision: 2
-
-    # Used in number_to_percentage()
-    percentage:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        # precision:
-
-    # Used in number_to_precision()
-    precision:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        # precision:
-
-    # Used in number_to_human_size()
-    human:
-      format:
-        # These three are to override number.format and are optional
-        # separator:
-        delimiter: ""
-        precision: 1
-      storage_units:
-        # Storage units output formatting.
-        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%u%n"
+        separator: "."
+        unit: Yen
+    format: 
+      delimiter: ","
+      separator: "."
+    human: 
+      storage_units: 
         format: "%n %u"
-        units:
-          byte:
-            one: "byte"
-            other: "bytes"
-          kb: "KB"
-          mb: "MB"
-          gb: "GB"
-          tb: "TB"
-
+        units: 
+          byte: 
+            one: byte
+            other: bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
   page_title: 
     archived_task_lists: アーカイブされたタスク
     create_uploads: ファイルのアップロード
