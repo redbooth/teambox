@@ -567,7 +567,7 @@ en:
     overdue: "%{days} days late"
     status:
       new: new
-      open: open
+      open: assigned
       hold: hold
       resolved: resolved
       rejected: rejected
