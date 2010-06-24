@@ -51,10 +51,6 @@ module TasksHelper
   
   #
 
-  def replace_task_column(project,task_lists,task)
-    page.replace_html 'column', task_list_column(project,task_lists,task)
-  end
-
   def insert_unarchive_box(project,task)
     page.insert_html :after, 'new_comment',
       :partial => 'tasks/unarchive_box', :locals => {
@@ -250,10 +246,13 @@ module TasksHelper
     end
   end
 
-  def list_tasks(tasks,editable=true)
+  def list_tasks(task_list, tasks,editable=true)
     render :partial => 'tasks/task',
       :collection => tasks,
-      :locals => {:editable => editable}
+      :locals => {
+        :project => task_list.try(:project),
+        :task_list => task_list,
+        :editable => editable}
   end
 
   def task_fields(f,project,task_list,task)
