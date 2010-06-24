@@ -1,5 +1,5 @@
-- task_list = task.task_list
-- project = task.task_list.project
+- task_list ||= task.task_list
+- project ||= task.task_list.project
 .task{ :id => task_id(:task,project,task), :class => task_classes(task)}
   .inner
     .taskStatus	

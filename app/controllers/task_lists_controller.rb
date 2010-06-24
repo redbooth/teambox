@@ -26,7 +26,6 @@ class TaskListsController < ApplicationController
   end
 
   def show
-    @task_lists = @current_project.task_lists.unarchived
     @comments = @task_list.comments
 
     respond_to do |f|
@@ -222,22 +221,24 @@ class TaskListsController < ApplicationController
   private
     def load_task_lists
       if @current_project
-        @task_lists = @current_project.task_lists
+        @task_lists = @current_project.task_lists(:include => [:project])
       else
         @projects = current_user.projects.unarchived
-        conditions = ["project_id IN (?)", Array(@projects).collect{ |p| p.id } ]
+        
         if [:xml, :json, :as_yaml].include? request.format.to_sym
-          @task_lists = TaskList.find(:all, :conditions => {:project_id => current_user.project_ids})
+          @task_lists = TaskList.find(:all,
+                                      :include => [:project],
+                                      :conditions => {:project_id => @projects.map(&:id)})
           @tasks = []
         else
           @task_lists = []
-          @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user]).
-                    select { |task| task.active? }.
+          conditions = { :project_id => Array(@projects).map(&:id),
+                         :status => Task::ACTIVE_STATUS_CODES }
+          @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user, :project]).
                     sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
         end
       end
       
-      # Resort @task_lists and put archived at the bottom
       @task_lists_archived = @task_lists.reject {|t| !t.archived?}
       @task_lists_active = @task_lists.reject {|t| t.archived?}
       @task_lists = @task_lists_active + @task_lists_archived
