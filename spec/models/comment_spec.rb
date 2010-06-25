@@ -141,7 +141,7 @@ describe Comment do
       @project.add_user(@user)
       body = "@existing, hey, @existing"
       comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
-      comment.body_html.should == %Q{<p>@<a href="/users/existing">existing</a>, hey, @<a href="/users/existing">existing</a></p>\n}
+      comment.body_html.should == %Q{<p><a href="/users/existing" class="mention">@existing</a>, hey, <a href="/users/existing" class="mention">@existing</a></p>\n}
       comment.mentioned.should == [@user]
     end
 
@@ -152,7 +152,7 @@ describe Comment do
       @project.add_user(james)
       body = "@pablo @james Check this out!"
       comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
-      comment.body_html.should == %Q{<p>@<a href="/users/pablo">pablo</a> @<a href="/users/james">james</a> Check this out!</p>\n}
+      comment.body_html.should == %Q{<p><a href="/users/pablo" class="mention">@pablo</a> <a href="/users/james" class="mention">@james</a> Check this out!</p>\n}
       comment.mentioned.should include(pablo)
       comment.mentioned.should include(james)
     end
