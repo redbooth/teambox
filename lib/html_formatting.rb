@@ -44,7 +44,7 @@ module HtmlFormatting
   end
 
   def format_links(text)
-    linked = auto_link(text) { |text| truncate(text, :length => 40) }
+    linked = auto_link(text) { |text| truncate(text, :length => 80) }
   end
 
 end
