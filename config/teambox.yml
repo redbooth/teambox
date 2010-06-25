@@ -93,7 +93,7 @@ defaults: &defaults
   community_url: http://www.teambox.com/community
   blog_url: http://blog.teambox.com
   help_url: http://help.teambox.com/faqs/using-teambox
-  support_url: http://help.teambox.com
+  support_url: http://teambox.com/group
   privacy_url: http://www.teambox.com/privacy
   terms_url: http://www.teambox.com/terms
 
