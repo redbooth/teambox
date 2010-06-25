@@ -24,6 +24,8 @@ defaults: &defaults
 
   asset_max_file_size: 50 # in megabytes
 
+  project_permalink_min_length: 5
+
   # If signups are disabled, the only way to create an account will be being invited
   # by another user. If there are no users in the system, you will be asked to
   # create the first one.

@@ -180,7 +180,8 @@ Project = {
   valid_url: function(){
     var title = $F('project_permalink');
     var class_name = '';
-    if(title.match(/^[a-z0-9_\-\.]{5,}$/))
+    var _regex = new RegExp("^[a-z0-9_\\\-\\\.]{" + AppConfig.project_permalink_min_length + ",}$");
+    if(title.match(_regex))
       class_name = 'good'
     else
       class_name = 'bad'
