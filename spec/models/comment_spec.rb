@@ -128,7 +128,21 @@ describe Comment do
       comment.body_html.should == %Q{<p>Did you know the logo from Teambox has <a href="http://en.wikipedia.org/wiki/Color_theory">carefully selected colors</a>? <img src="http://app.teambox.com/images/header_logo_large.jpg" /></p>\n}
     end
 
+    it "should truncate links longer than 80 chars" do
+      body = 'This commit needs a spec: http://github.com/micho/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/lib/html_formatting.rb'
+      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+      comment.body_html.should == "<p>This commit needs a spec: <a href=\"http://github.com/micho/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/lib/html_formatting.rb\">http://github.com/micho/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80...</a></p>\n"
+    end
+
+    it "should not truncate links shorter or equal than 80 chars" do
+      body = 'This commit needs a spec: http://github.com/micho/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/'
+      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+      comment.body_html.should == "<p>This commit needs a spec: <a href=\"http://github.com/micho/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/\">http://github.com/micho/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/</a></p>\n"
+    end
+
     it "should preserve blocks of code and pre"
+
+    it "should allow youtube videos"
   end
 
   describe "mentioning @user" do
