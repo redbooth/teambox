@@ -252,7 +252,7 @@ specs:
 - gem_plugin: 
     version: 0.2.3
 - haml: 
-    version: 3.0.12
+    version: 3.0.13
 - hpricot: 
     version: 0.8.2
 - i18n: 
@@ -282,7 +282,7 @@ specs:
 - pg: 
     version: 0.9.0
 - pickle: 
-    version: 0.2.11
+    version: 0.2.12
 - rails: 
     version: 2.3.8
 - rdiscount: 
@@ -312,7 +312,7 @@ specs:
 - ya2yaml: 
     version: 0.29.2
 - tolk: 
-    version: 0.2.1
+    version: 0.2.2
     source: 0
 - tzinfo: 
     version: 0.3.22
@@ -325,6 +325,6 @@ sources:
 - Git: 
     uri: git://github.com/mislav/tolk.git
     git: git://github.com/mislav/tolk.git
-    ref: a15640b196bb011dedf4cc3392b9288d97e4cad4
+    ref: 1b0a16d1dcd1eb34564009d06f08e57d9e114967
 - Rubygems: 
     uri: http://gemcutter.org
