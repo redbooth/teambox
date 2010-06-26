@@ -31,7 +31,8 @@ class User < ActiveRecord::Base
                ['Русский',   'ru'],
                ['Chinese',   'zh'],
                ['Japanese',  'ja'],
-               ['Nederlands','nl']
+               ['Nederlands','nl'],
+               ['Slovenian','sl']
                ]
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
