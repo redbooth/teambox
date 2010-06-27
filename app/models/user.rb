@@ -176,7 +176,7 @@ class User < ActiveRecord::Base
 
     User.find(:all,
       :conditions => conditions,
-      :order => 'updated_at ASC',
+      :order => 'updated_at DESC',
       :limit => 10)
   end
 
@@ -254,7 +254,16 @@ class User < ActiveRecord::Base
   end
 
   def contacts
-    projects.collect { |p| p.users }.flatten.uniq.reject { |u| u == self }
+    conditions = ["project_id IN (?)", Array(self.projects).collect{ |p| p.id } ]
+    user_ids = Person.find(:all,
+      :select => 'user_id',
+      :conditions => conditions,
+      :limit => 300).collect { |p| p.user_id }.uniq
+    conditions = ["id IN (?) AND deleted_at IS NULL AND id != (?)", user_ids, self.id]
+    User.find(:all,
+      :conditions => conditions,
+      :order => 'updated_at DESC',
+      :limit => 60)
   end
 
   def active_projects_count
