@@ -358,6 +358,9 @@ en:
       update_your_status: "Update your status..."
       text_styling: Text Styling
       invite_people: 'Invite people...'
+      pending_invitations:
+        one: One invitation pending
+        other: "%{count} invitations pending"
       new_task_list_link: New Task List
       people_in_project: People in this project
       subscribe: Subscribe to the news feed
@@ -393,11 +396,13 @@ en:
       upgrade: Upgrade your account now!
     new:
       title: Create a Project
-      submit: Create project and start inviting people
+      submit: Create project and start collaborating
       new_project: New Project...
       created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
       create_an_example_project: "First time in Teambox? <a href='%{link}'>Create an example project</a> to play around and learn."
+      invite_people: Invite people to the project
+      invite_by_email: Invite users by entering their email addresses
       not_allowed: "You can't create any projects with your current account."
     edit:
       title_settings: General Settings
