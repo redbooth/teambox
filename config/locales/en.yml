@@ -777,7 +777,7 @@ en:
       assigned_to_nobody: 'Unassigned'
       assigned_to: "Assigned to:"
       submit: Save
-      project: "What are you doing? Share ideas, links, updates."
+      project: "What are you working on? Share ideas, links, updates."
       conversation: "Send a message to the rest of the group."
       task_list: "Share ideas for this task list. To create and assign tasks, use the sidebar."
       task: "Define what needs to be done by commenting. Assign this task to somebody. Post updates. Attach results."
