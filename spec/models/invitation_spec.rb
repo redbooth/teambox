@@ -1,6 +1,113 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Invitation do
+  describe "preinviting users on project creation" do
+    before do
+      @project = Factory(:project)
+    end
+
+    describe "preloading invitations" do
+      it "should not invite anybody by default" do
+        @project.invited_users.should == nil
+        @project.invited_emails.should == nil
+      end
+
+      it "should invite a new user from 'invite_emails' field" do
+        @project.preinvite_emails("hey@man.com")
+        @project.invited_emails.should == ["hey@man.com"]
+      end
+
+      it "should invite two new users from 'invite_emails' field" do
+        @project.preinvite_emails("- gitar@come.to\n 'my@buduar.com' a@s")
+        @project.invited_emails.should == %w(gitar@come.to my@buduar.com)
+      end
+
+      it "should not invite duplicate emails" do
+        @project.preinvite_emails("a@b.com b@c.es")
+        @project.preinvite_emails("b@c.es j@k.co.uk")
+        @project.invited_emails.should == %w(a@b.com b@c.es j@k.co.uk)
+      end
+
+      it "should invite users passing the user model" do
+        user1 = Factory(:user)
+        user2 = Factory(:user)
+        @project.preinvite_users([user1, user2])
+        @project.invited_emails.should == nil
+        @project.invited_users.should == [user1,user2]
+      end
+
+      it "should invite users with their email" do
+        user1 = Factory(:user)
+        user2 = Factory(:user)
+        @project.preinvite_emails %Q(#{user1.email} #{user2.email})
+        @project.invited_emails.should == []
+        @project.invited_users.should == [user1,user2]
+      end
+
+      it "should invite users with their email" do
+        user1 = Factory(:user)
+        user2 = Factory(:user)
+        @project.preinvite_emails user1.email
+        @project.preinvite_users user2
+        @project.invited_emails.should == []
+        @project.invited_users.should == [user1,user2]
+      end
+
+      it "should invite existing users and new ones" do
+        user1 = Factory(:user)
+        user2 = Factory(:user)
+        @project.preinvite_emails %Q(#{user1.email} invalid new@user.dk)
+        @project.preinvite_users user2
+        @project.invited_emails.should == %w(new@user.dk)
+        @project.invited_users.should == [user1,user2]
+      end
+
+      it "should not duplicate users when inviting by email and user" do
+        user1 = Factory(:user)
+        @project.preinvite_emails user1.email
+        @project.preinvite_users user1
+        @project.invited_emails.should == []
+        @project.invited_users.should == [user1]
+      end
+    end
+    
+    describe "sending preloaded invitations" do
+      it "should not send invitations for an unsaved project" do
+        project = Factory.build(:project)
+        begin
+          project.send_invitations
+          raise "Send invitations didn't fail"
+        rescue
+          $!.to_s.should == "Project must be saved before sending the invites"
+        end
+      end
+
+      it "should invite new users by email" do
+        @project.preinvite_emails "new@user.br"
+        @project.send_invitations
+        @project.invitations.first.user.should == @project.user
+        @project.invitations.first.invited_user.should == nil
+        @project.invitations.first.email.should == "new@user.br"
+      end
+
+      it "should invite existing users" do
+        user = Factory(:user)
+        @project.preinvite_users user
+        @project.send_invitations
+        @project.invitations.first.user.should == @project.user
+        @project.invitations.first.invited_user.should == user
+        @project.invitations.first.email.should == user.email
+      end
+
+      it "should not invite users already on the project" do
+        @project.preinvite_emails @project.user.email
+        @project.preinvite_users @project.user
+        @project.send_invitations
+        Invitation.count.should == 0
+      end
+    end
+  end
+
   describe "a new invitation" do
     before do
       @project = Factory.create(:project)

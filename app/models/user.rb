@@ -253,6 +253,10 @@ class User < ActiveRecord::Base
     project.people.select { |person| person.user_id == self.id }.first
   end
 
+  def contacts
+    projects.collect { |p| p.users }.flatten.uniq.reject { |u| u == self }
+  end
+
   def active_projects_count
     projects.unarchived.count
   end

@@ -50,7 +50,12 @@ class ProjectsController < ApplicationController
   
   def create
     @project = current_user.projects.new(params[:project])
-    
+
+    @project.preinvite_emails(params[:invite_emails])
+    @project.preinvite_users((params[:user] || []).
+      collect { |k,v| User.find(k.to_i) if v == '1' }.
+      compact)
+
     unless current_user.can_create_project?
       flash[:error] = t('projects.new.not_allowed')
       redirect_to root_path
@@ -59,6 +64,7 @@ class ProjectsController < ApplicationController
     
     respond_to do |f|
       if @project.save
+        @project.send_invitations
         flash[:notice] = I18n.t('projects.new.created')
         f.html { redirect_to project_path(@project) }
         f.m    { redirect_to project_path(@project) }

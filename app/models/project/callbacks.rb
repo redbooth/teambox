@@ -10,7 +10,7 @@ class Project
   
   def after_create
     add_user(user)
-  end 
+  end
 
   private
 
