@@ -2,8 +2,6 @@
 
 - form_for @project do |f|
   = project_fields(f,@project)
-  .submit
-    = f.submit t('.submit')
 
   - contacts = current_user.contacts
   .invite_contacts
@@ -16,6 +14,9 @@
     .clear
     %p= t('.invite_by_email')
     = text_area_tag :invite_emails, params[:invite_emails], :placeholder => "john@galt.com, francisco@danconia.com"
+  
+  .submit
+    = f.submit t('.submit')
   
 - content_for :column do
   %p.new_example_project= t('.create_an_example_project', :link => new_example_project_path)
