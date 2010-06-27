@@ -1,4 +1,5 @@
 require_dependency 'html_formatting'
+require_dependency 'extract_emails'
 
 ActiveRecord::Base.class_eval do
   @@white_list_sanitizer = HTML::WhiteListSanitizer.new
