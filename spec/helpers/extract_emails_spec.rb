@@ -9,6 +9,7 @@ describe String do
     "inv@lid brr".extract_emails.should == []
     "'Pablo' <pablo2@teambox.com>, 'Juan Jaramillo'".extract_emails.should == %w(pablo2@teambox.com)
     "james@cuppadev.co.uk".extract_emails.should == %w(james@cuppadev.co.uk)
+    "ohyeah+teambox@gmail.com".extract_emails.should == %w(ohyeah+teambox@gmail.com)
   end
   
 end
