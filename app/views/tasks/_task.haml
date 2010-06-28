@@ -1,6 +1,8 @@
 - task_list ||= task.task_list
 - project ||= task.task_list.project
-.task{ :id => task_id(:task,project,task), :class => task_classes(task)}
+.task.has_tooltip{ :id => task_id(:task,project,task), :class => task_classes(task)}
+  .tooltip{ :style => 'right: 10px' }
+    == #{localized_status_name(task)} - #{t('common.comment', :count => task.comments_count)}
   .inner
     .taskStatus	
       - if editable and !task.archived?
