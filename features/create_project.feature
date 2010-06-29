@@ -15,5 +15,5 @@ Feature: Creating a project
       | name                  | response          | flash                          |
       | Title with ()_+&-     | Title with ()_+&- | Your project has been created! |
       | Ruby Rockstars        | Ruby Rockstars    | Your project has been created! |
-      | Fucking awesome group | Invalid project   | Invalid project                |
+      | Mine                  | Invalid project   | Invalid project                |
 
