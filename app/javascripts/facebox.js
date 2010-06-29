@@ -16,7 +16,7 @@
       this.open('Loading image ...', 'loading')
       var image = new Image()
       image.onload = function() {
-        this.open('<a href="' + src + '"><img src="' + src + '"></a>', 'image', alt)
+        this.open('<img src="' + src + '">', 'image', alt)
         var img = element.down('.facebox-content img'),
             screenWidth = Math.min(image.width, imageMaxWidth)
 
