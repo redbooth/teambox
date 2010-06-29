@@ -2,16 +2,34 @@ document.on('dom:loaded', function() {
   if (!window.Modernizr) return
   
   if (!Modernizr.input.placeholder) {
-    $$('input[placeholder], textarea[placeholder]').each(function(field) {
-      field.addClassName('placeholder')
-      var title = field.readAttribute('placeholder')
-      if (field.getValue().empty()) field.setValue(title)
+    var selector = 'input[placeholder], textarea[placeholder]'
+    
+    function emulatePlaceholder(field) {
+      var title = field.readAttribute('placeholder'),
+          init = function() {
+            if (field.getValue().empty()) field.setValue(title).addClassName('placeholder')
+          }
 
-      field.observe('blur', function() {
-        if (this.getValue().empty()) field.setValue(title).addClassName('placeholder')
-      }).observe('focus', function() {
-        if (this.getValue() === title) field.setValue('').removeClassName('placeholder')
+      init()
+
+      field.observe('blur', init).observe('focus', function() {
+        if (this.getValue() === title) this.setValue('').removeClassName('placeholder')
       })
+    }
+    
+    // setup existing fields
+    $$(selector).each(emulatePlaceholder)
+    
+    // observe form submits and clear emulated placeholder values
+    $(document.body).on('submit', 'form:has(' + selector + ')', function(e, form) {
+      form.select(selector).each(function(field) {
+        if (field.getValue() == field.readAttribute('placeholder')) field.setValue('')
+      })
+    })
+    
+    // observe new forms inserted into document and setup fields inside
+    document.on('DOMNodeInserted', 'form', function(e) {
+      if (e.element().match('form')) e.element().select(selector).each(emulatePlaceholder)
     })
   }
 
