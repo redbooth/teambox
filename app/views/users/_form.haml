@@ -76,6 +76,14 @@
   .time_zone.select
     = f.label :time_zone, t('.time_zone')
     = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"    
+    - unless user.time_zone_changed?
+      :javascript
+        var offset = -new Date().getTimezoneOffset() / 60 - 1
+        var local_tz = (offset < 0 ? "-" : "+") + offset.abs().toPaddedString(2)
+        var select = $('user_time_zone')
+        $A(select.options).find(function(option) {
+          return option.text.match(/[+-]\d+/) == local_tz
+        }).selected = true
 
 - if sub_action == 'profile'
   .description.text_area
