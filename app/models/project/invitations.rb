@@ -1,3 +1,5 @@
+require_dependency 'extract_emails'
+
 class Project
 
   attr_reader :invited_users, :invited_emails

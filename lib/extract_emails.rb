@@ -1,8 +1,9 @@
 class String
-  Email_name_regex  = '[\w\.%\-\+]+'.freeze
-  Domain_head_regex = '(?:[A-Z0-9\-]+\.)+'.freeze
-  Domain_tld_regex  = '(?:[A-Z]{2,3}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|jobs|coop|museum)'.freeze
-  Email_regex       = /\A#{Email_name_regex}@#{Domain_head_regex}#{Domain_tld_regex}\z/i
+  # adapted from http://fightingforalostcause.net/misc/2006/compare-email-regex.php
+  EmailLocal  = /[\w!#\$%&'*\/=?^`{|}~+-]+/
+  EmailDomain = /(?:(?:(?:[a-z0-9][a-z0-9-]{0,62}[a-z0-9])|[a-z])\.)+[a-z]{2,6}/i
+  EmailHost   = /(?:\d{1,3}\.){3}\d{1,3}(?:\:\d{1,5})?/
+  EmailRegex  = /(?:#{EmailLocal}\.)*#{EmailLocal}@(?:#{EmailDomain}|#{EmailHost})/
 
   # Returns an Array with all the valid emails found in String
   # Examples:
@@ -10,6 +11,6 @@ class String
   #   "invalid@email"                    #=> []
   #   "  c@c.com word d@d.com\ne@f.com"  #=> ["c@c.com", "d@d.com", "e@f.com"]
   def extract_emails
-    split(/[^\w\.%\-@\+]/).select { |email| email.match Email_regex }
+    scan(EmailRegex)
   end
 end
