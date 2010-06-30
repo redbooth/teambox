@@ -1,9 +1,9 @@
 class String
   # adapted from http://fightingforalostcause.net/misc/2006/compare-email-regex.php
-  EmailLocal  = /[\w!#\$%&'*\/=?^`{|}~+-]+/
+  EmailLocal  = /[\w!#\$%&'*\/=?^`{|}~+-]/
   EmailDomain = /(?:(?:(?:[a-z0-9][a-z0-9-]{0,62}[a-z0-9])|[a-z])\.)+[a-z]{2,6}/i
   EmailHost   = /(?:\d{1,3}\.){3}\d{1,3}(?:\:\d{1,5})?/
-  EmailRegex  = /(?:#{EmailLocal}\.)*#{EmailLocal}@(?:#{EmailDomain}|#{EmailHost})/
+  EmailRegex  = /[a-z0-9~](?:#{EmailLocal}+\.)*#{EmailLocal}*@(?:#{EmailDomain}|#{EmailHost})/i
 
   # Returns an Array with all the valid emails found in String
   # Examples:
