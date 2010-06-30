@@ -35,6 +35,10 @@ describe String, '#extract_emails' do
       should == %w[ hasApostrophe.o'leary@domain.org ]
     end
 
+    it "doesn't extract leading apostrophe from: 'hello@domain.org'" do
+      should == %w[ hello@domain.org ]
+    end
+
     it "extracts the email with a 'travel' TLD from: uncommon@domain.travel" do
       should == %w[ uncommon@domain.travel ]
     end
@@ -55,8 +59,8 @@ describe String, '#extract_emails' do
       should == %w[ subdomain@sub.domain.com ]
     end
 
-    it "doesn't trip on whacky characters from: &*=?^+{}'~@validCharsInLocal.net" do
-      should == %w[ &*=?^+{}'~@validCharsInLocal.net ]
+    it "doesn't trip on whacky characters from: ~&*=?^+{}'@validCharsInLocal.net" do
+      should == %w[ ~&*=?^+{}'@validCharsInLocal.net ]
     end
   end
   
