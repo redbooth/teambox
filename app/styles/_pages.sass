@@ -255,6 +255,7 @@ form.new_note, form.edit_note
 
 .show_pages
   .upload
+    padding-left: 0px
     p.slotActions
       float: right
       margin: 0px
@@ -264,9 +265,14 @@ form.new_note, form.edit_note
         color: red
     p.handle
       +handle
-    .block
+      span
+        left: -18px
+    div.info
+      margin-left: 15px
+      margin-right: 8px
+    div.reference
       .date
-        margin-right: 34px
+        float: none
 
 .index_pages
   h4
