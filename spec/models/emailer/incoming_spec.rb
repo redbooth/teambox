@@ -38,9 +38,9 @@ describe Emailer do
       
       @task.reload
       comment = @task.comments.last
-      @task.assigned_id.should == @fred.id
+      @task.assigned.user.id.should == @fred.id
       @task.status.should == Task::STATUSES[:open]
-      comment.assigned_id.should == @fred.id
+      comment.assigned.user.id.should == @fred.id
       comment.status.should == Task::STATUSES[:open]
       comment.previous_assigned_id.should == nil
       comment.previous_status.should == Task::STATUSES[:new]
