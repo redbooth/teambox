@@ -68,6 +68,8 @@
         if (e.keyCode == Event.KEY_ESC) close()
       })
       document.on('click', 'a[href][rel=facebox]', function(e) {
+        if (e.isMiddleClick()) return
+        
         var el = e.findElement('a'),
             href = el.readAttribute('href'),
             extra = el.readAttribute('title')
