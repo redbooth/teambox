@@ -34,6 +34,34 @@ describe Project do
       @owner.reload
       @owner.projects.should include(@project)
     end
+
+  end
+
+  describe "validating length of name and permalink" do
+    before do
+      @owner = Factory.create(:user)
+    end
+
+    it "should fail on create if the name is shorter than 5 chars" do
+      project = Factory.build(:project, :user => @owner, :name => "abcd")
+      project.should be_invalid
+      project.should have(1).error_on(:name)
+    end
+
+    it "should allow existent projects to have a name between 3 and 5 chars if they don't change it" do
+      project = Factory.build(:project, :user => @owner, :name => "abcd", :permalink => "abcdefg")
+      project.save(false)
+      project.should be_valid
+      project.permalink = "#{project.permalink}2"
+      project.should be_valid
+    end
+
+    it "should fail if the name is updated and shorter than 5 chars" do
+      project = Factory.create(:project, :name => "abcde")
+      project.name = "abc"
+      project.should be_invalid
+    end
+
   end
 
   describe "inviting users" do
