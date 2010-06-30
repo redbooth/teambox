@@ -1,6 +1,10 @@
 %div[upload]
   .info
-    = link_to upload.file_type, upload.url, :class => upload.file_type, :rel => (upload.image? ? 'facebox' : '')
+    - icon_path = "file_icons/48px/#{upload.file_type}.png"
+    - if Rails.root.join("public/images/#{icon_path}").exist?
+      = link_to image_tag(icon_path), upload.url, :class => 'file_icon', :rel => (upload.image? ? 'facebox' : '')
+    - else
+      = link_to upload.file_type, upload.url, :class => upload.file_type, :rel => (upload.image? ? 'facebox' : '')
   - unless rss?
     .date= posted_date upload.created_at
   .file
