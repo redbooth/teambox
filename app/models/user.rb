@@ -35,6 +35,8 @@ class User < ActiveRecord::Base
                ['Slovenščina', 'si']
                ]
 
+  LANGUAGE_CODES = LANGUAGES.map { |lang| lang[1] }
+
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
   has_many :people
@@ -116,6 +118,14 @@ class User < ActiveRecord::Base
 
   def visited_at
     read_attribute(:visited_at) || updated_at
+  end
+  
+  def language
+    if LANGUAGE_CODES.include? self[:language]
+      self[:language]
+    else
+      LANGUAGES.first[1]
+    end
   end
 
   def projects_shared_with(user)
