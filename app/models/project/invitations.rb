@@ -7,6 +7,8 @@ class Project
   # string with email addresses
   attr_accessor :invite_emails
   
+  attr_accessible :invite_users, :invite_emails
+  
   def invite_people?
     invite_users.present? or invite_emails.present?
   end
