@@ -9,11 +9,13 @@
     - if contacts.any?
       .users
         - for user in contacts[0,60]
-          .user
-            = user_checkbox(user, false)
+          %label.user
+            = check_box_tag 'project[invite_users][]', user.id
+            &= user.name
     .clear
-    %p= t('.invite_by_email')
-    = text_area_tag :invite_emails, params[:invite_emails], :placeholder => "john@galt.com, francisco@danconia.com"
+    %p
+      = t('.invite_by_email')
+      = f.text_area :invite_emails, :placeholder => "john@galt.com, francisco@danconia.com"
   
   .submit
     = f.submit t('.submit')

@@ -21,7 +21,7 @@ module UsersHelper
   end
 
   def user_checkbox(user, checked = true)
-    text =  check_box_tag("user_#{user.id}", "1", checked, :name => "user[#{user.id}]")
+    text =  check_box_tag("user_#{user.id}", "1", checked, :name => "user[#{user.id}]") 
     text << ' '
     text << label_tag("user_#{user.id}", user.name)
   end
