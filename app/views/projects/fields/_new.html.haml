@@ -3,8 +3,6 @@
   = f.text_field :name
   = errors_for project, :name
 
-= watch_permalink_example
-
 - if time_tracking_enabled?
   .check_box.archived
     = f.check_box :tracks_time
