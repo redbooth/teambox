@@ -50,6 +50,7 @@ class UploadsController < ApplicationController
     @upload = @current_project.uploads.new params[:upload]
     @upload.user = current_user
     calculate_position if @upload.page
+    @page = @upload.page
 
     if @upload.save
       @current_project.log_activity(@upload, 'create')

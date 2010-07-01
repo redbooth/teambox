@@ -7,7 +7,7 @@
       .body
         .file
           = link_to_upload(upload_slot, upload_slot.file_name)
-          = '(' + number_to_human_size(upload_slot.size) + ')'
+          == (#{number_to_human_size(upload_slot.size)})
         - if upload_slot.description
           .description
             = upload_slot.description
