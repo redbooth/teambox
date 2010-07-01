@@ -6,10 +6,14 @@ else
   location = @insert_element
 end
 
-page.insert_widget dom_id(@upload), position, location,
-                   :partial => 'pages/slot', 
-                   :object => @slot, 
-                   :locals => { :page => @page, :project => @current_project }
+if @upload.new_record?
+  page.alert 'There was an error uploading the file. Please try again.'
+else
+  page.insert_widget dom_id(@upload), position, location,
+                     :partial => 'pages/slot',
+                     :object => @slot,
+                     :locals => { :page => @page, :project => @current_project }
+end
 
 page.call "InsertionBar.clearWidgetForm"
 page.reload_page_sort
