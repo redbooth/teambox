@@ -430,6 +430,18 @@ describe User do
       User.find_available_login(that_girl.login).should == "#{that_girl.login}2"
     end
   end
+  
+  describe "#language" do
+    it "should set a valid language" do
+      user = Factory.create(:user, :language => 'es')
+      user.language.should == 'es'
+    end
+    
+    it "should fall back to default language when setting not in list of available languages" do
+      user = Factory.create(:user, :language => 'xy')
+      user.language.should == 'en'
+    end
+  end
 
   context 'attributes' do
     subject {
