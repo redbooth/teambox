@@ -80,7 +80,7 @@ class InvitationsController < ApplicationController
   
   def resend
     @invitation = Invitation.find params[:id]
-    @invitation.send_email if @invitation
+    @invitation.send(:send_email)
     
     respond_to do |wants|
       wants.html {

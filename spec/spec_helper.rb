@@ -8,8 +8,11 @@ require File.expand_path('../factories', __FILE__)
 # in ./support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
+require 'email_spec/helpers'
+require 'email_spec/matchers'
+
 Spec::Runner.configure do |config|
-  config.include AuthenticatedTestHelper
+  config.include AuthenticatedTestHelper, EmailSpec::Helpers, EmailSpec::Matchers
 
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record
