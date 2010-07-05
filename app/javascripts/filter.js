@@ -1,22 +1,14 @@
 Filter = {
-  count_assigned: null,
+  assigned_options: null,
   count_due_date: null,
   
   init: function() {
     var filter_assigned = $("filter_assigned");
     var filter_due_date = $("filter_due_date");
     if (filter_assigned)
-      Filter.count_assigned = Filter.mapOptions(filter_assigned.options);
+      Filter.assigned_options = Filter.initOptions(filter_assigned.options);
     if (filter_due_date)
       Filter.count_due_date = Filter.mapOptions(filter_due_date.options);
-  },
-
-  mapOptions: function(options) {
-    var out = [];
-    var len = options.length;
-    for (var i=0; i<len; i++)
-      out.push(options[i].text);
-    return out;
   },
   
   showAllTaskLists: function() {
@@ -72,8 +64,29 @@ Filter = {
       }
     })
   },
-
+  
+  initOptions: function(assigned_options) {
+    var out = [];
+    len = assigned_options.length;
+    for (var i=0; i<len; i++) {
+        var option = assigned_options[i];
+        out.push({value:option.value, text:option.text, disabled:option.disabled, count:0});
+    };
+    return out;
+  },
+  
+  mapOptions: function(options) {
+      var out = [];
+      var len = options.length;
+      for (var i=0; i<len; i++)
+        out.push(options[i].text);
+      return out;
+  },
+  
   updateFilters: function() {
+    if (Filter.assigned_options == null && Filter.count_due_date == null)
+      Filter.init();
+    
     var el = $("filter_assigned");
     var el_filter = $("filter_due_date");
     if (el == null)
@@ -101,7 +114,7 @@ Filter = {
   },
 
   updateCounts: function(due_only) {
-    if (Filter.count_assigned == null)
+    if (Filter.assigned_options == null && Filter.count_due_date == null)
       Filter.init();
 
     var el = $("filter_assigned");
@@ -109,22 +122,34 @@ Filter = {
     if (el == null)
       return;
     
+    var current_assigned = el.value;
     var assigned = el.value == 'all' ? 'task' : el.value;
-    var count_assigned = Filter.count_assigned;
     var count_due_date = Filter.count_due_date;
-
+    var assigned_options = Filter.assigned_options;
     var len;
+    
     if (!due_only) 
     {
-      len = el.options.length;
+      el.options.length = 0;
+      len = assigned_options.length;
+      var idx = 0;
       for (var i=0; i<len; i++)
       {
-        var option = el.options[i];
-        if (option.disabled)
-          continue;
-        var filter = option.value == 'all' ? 'task' : option.value;
-        option.text = count_assigned[i] + ' (' + Filter.countTasks(filter, null) + ')';
+        var option = assigned_options[i];
+        if (option.disabled) {
+            el.options[idx] = new Option(option.text, option.value);
+            el.options[idx].disabled = true;
+            idx += 1;
+        } else {
+            var filter = option.value;
+            var count = Filter.countTasks(filter, null);
+            if (i < 3 || count > 0 || filter == current_assigned) {
+                el.options[idx] = (new Option(option.text + ' (' + count + ')', filter));
+                idx += 1;
+            }
+        }
       }
+      el.value = current_assigned;
     }
 
     len = el_filter.options.length;
