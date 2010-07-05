@@ -150,7 +150,7 @@ Factory.define :reset_password do |reset_pw|
 end
 
 Factory.define :invitation do |i|
-  i.association(:user)
   i.association(:project)
+  i.user  { |i| i.project.user }
   i.email { Factory.next(:email) }
 end
