@@ -23,7 +23,7 @@ class ActivitiesController < ApplicationController
     
     respond_to do |format|
       format.html { redirect_to projects_path }
-      format.js
+      format.js { @threads = Activity.get_threads(@activities) }
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }
@@ -36,7 +36,7 @@ class ActivitiesController < ApplicationController
     
     respond_to do |format|
       format.html { redirect_to projects_path }
-      format.js
+      format.js { @threads = Activity.get_threads(@activities) }
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }
@@ -49,7 +49,7 @@ class ActivitiesController < ApplicationController
     # * The requested project if given
     def get_target
       @target = if params[:project_id]
-        @current_user.projects.find_by_permalink(params[:project_id])
+        @current_project = @current_user.projects.find_by_permalink(params[:project_id])
       else
         @current_user.projects.find :all
       end
