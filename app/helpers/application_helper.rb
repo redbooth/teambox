@@ -1,17 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  # overwrite framework helper because it forces ":raise => true", meaning
-  # missing translations wouldn't have a chance to hit the exception_handler
-  def translate(key, options = {})
-    translation = I18n.translate(scope_keys_by_partial(key), options)
-    translation.respond_to?(:join) ? translation.join : translation
-  rescue I18n::MissingTranslationData => e
-    keys = I18n.send(:normalize_translation_keys, e.locale, e.key, e.options[:scope])
-    content_tag('span', keys.join(', '), :class => 'translation_missing')
-  end
-  alias t translate
-  
   def csrf_meta_tag
     if protect_against_forgery?
       %(<meta name="csrf-param" content="#{Rack::Utils.escape_html(request_forgery_protection_token)}"/>\n<meta name="csrf-token" content="#{Rack::Utils.escape_html(form_authenticity_token)}"/>)
