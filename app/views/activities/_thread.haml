@@ -1,0 +1,23 @@
+- thread = activity.thread
+- thread_link = thread.is_a?(Task) ? [thread.task_list.project, thread.task_list, thread] : [thread.project, thread]
+.thread{ :id => "thread_#{thread.class.to_s}_#{thread.id}" }
+  .title
+    .info
+      = thumb_avatar(thread.user)
+    %div.date
+      = posted_date(thread.created_at)
+    %span.starter
+      = link_to(thread.user.name, thread.user)
+      = t("activities.thread.created.#{thread.class.to_s.downcase}")
+    %strong
+      = link_to thread, thread_link
+    - unless @current_project
+      %span.project
+        = t('common.in_project')
+        = link_to thread.project, thread.project
+  .comments
+    - if thread.comments_count > 2
+      %span.more_comments
+        = link_to t('activities.thread.more_comments', :count => thread.comments_count - 2), thread_link
+    - thread.comments.last_two.all.reverse.each do |comment|
+      = render :partial => 'comments/comment', :locals => { :comment => comment, :threaded => true }

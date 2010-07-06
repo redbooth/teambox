@@ -81,6 +81,18 @@ class Activity < ActiveRecord::Base
     User.find_with_deleted(user_id)
   end
 
+  def thread
+    @thread ||= if target.is_a?(Comment) && !target.target.is_a?(Project)
+      target.target
+    else
+      target
+    end
+  end
+
+  def thread_id
+    "#{thread.class}_#{thread.id}"
+  end
+
   def to_xml(options = {})
     options[:indent] ||= 2
     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
@@ -109,4 +121,14 @@ class Activity < ActiveRecord::Base
       end if target
     end
   end
+
+  def self.get_threads(activities)
+    activities.inject([]) do |result, a|
+      unless result.collect(&:thread_id).include?(a.thread_id)
+        result << a
+      end
+      result
+    end
+  end
+
 end

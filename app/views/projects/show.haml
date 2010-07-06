@@ -11,7 +11,7 @@
   = new_comment_form(@current_project,@current_project.comments.new)
 
 #activities
-  = list_activities(@activities)
+  = list_threads(@threads)
   = show_more_button(@activities)
 = javascript_tag autorefresh(@activities, @current_project)
   
