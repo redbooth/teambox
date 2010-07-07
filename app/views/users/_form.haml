@@ -76,7 +76,7 @@
   .time_zone.select
     = f.label :time_zone, t('.time_zone')
     = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"    
-    - unless user.time_zone_changed?
+    - unless !user.new_record? or user.time_zone_changed?
       :javascript
         var offset = -new Date().getTimezoneOffset() / 60 - 1
         var local_tz = (offset < 0 ? "-" : "+") + offset.abs().toPaddedString(2)
