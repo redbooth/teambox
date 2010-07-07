@@ -23,8 +23,7 @@ class Activity < ActiveRecord::Base
       :target => target,
       :action => action,
       :user_id => creator_id,
-      :created_at => target.created_at,
-      :comment_type => comment_type)      
+      :comment_type => comment_type)
     activity.save
     
     activity
