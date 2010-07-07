@@ -10,3 +10,10 @@ require 'rake/rdoctask'
 require 'tasks/rails'
 require 'tolk/tasks'
 require 'thinking_sphinx/tasks'
+
+# FIXME: this sucks
+task "preload_indexed_models" => :environment do
+  require 'comment'
+end
+task "thinking_sphinx:configure" => :preload_indexed_models
+
