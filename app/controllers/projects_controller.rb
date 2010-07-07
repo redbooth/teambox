@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
     @archived_projects = @current_user.projects.archived
 
     respond_to do |f|
-      f.html
+      f.html  { @threads = Activity.get_threads(@activities) }
       f.m
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @projects.to_xml }
@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
     #return
 
     respond_to do |f|
-      f.html
+      f.html  { @threads = Activity.get_threads(@activities) }
       f.m
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @current_project.to_xml }

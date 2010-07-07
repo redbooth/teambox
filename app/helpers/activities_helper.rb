@@ -35,6 +35,18 @@ module ActivitiesHelper
     activities.map { |activity| show_activity(activity) }.join('')
   end
 
+  def list_threads(activities)
+    activities.map { |activity| show_threaded_activity(activity) }.join('')
+  end
+
+  def show_threaded_activity(activity)
+    if activity.thread.is_a?(Task) || activity.thread.is_a?(Conversation)
+      render :partial => 'activities/thread', :locals => { :activity => activity }
+    else
+      show_activity(activity)
+    end
+  end
+
   def show_activity(activity)
     if activity.target && ActivityTypes.include?(activity.action_type)
       render "activities/#{activity.action_type}", :activity => activity,

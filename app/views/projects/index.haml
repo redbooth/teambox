@@ -10,7 +10,7 @@
       = t('.title')
       %span= t('.refreshes')
     #activities
-      = list_activities(@activities)
+      = list_threads(@threads)
       = show_more_button(@activities)
     = javascript_tag autorefresh(@activities)
   - else

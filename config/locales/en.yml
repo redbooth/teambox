@@ -91,6 +91,13 @@ en:
       by: by
       left: left the project
       title: "%{person} left the project %{project}"
+    thread:
+      more_comments:
+        one: "1 previous comment"
+        other: "%{count} previous comments"
+      created:
+        task: "created the task"
+        conversation: "created the conversation"
   avatars:
     new:
       title: Upload an avatar
