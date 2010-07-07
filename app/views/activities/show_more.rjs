@@ -2,7 +2,11 @@ page['activity_paginate_link'].remove
 page['activity_paginate_loading'].remove
 
 if @activities.any?
-  page.insert_html :bottom, :activities, list_activities(@activities)
+  @threads.each do |thread|
+    page << "if ($('thread_#{thread.thread_id}') == nil) {"
+    page.insert_html :bottom, :activities, show_threaded_activity(thread)
+    page << "}"
+  end
   if @activities.size == APP_CONFIG['activities_per_page']
     page.insert_html :after, :activities, show_more_button(@activities)
   end

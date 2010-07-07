@@ -1,4 +1,5 @@
-- cache_editable_comment comment do
+- threaded = defined?(threaded) && threaded
+- cache_editable_comment(comment, threaded) do
   .comment{:id => "comment_#{comment.id}", :immutable_at => datetime_ms(comment.created_at + 15.minutes) }
     .info
       = thumb_avatar(comment.user)
@@ -19,12 +20,15 @@
               - if comment.can_destroy?(current_user)
                 = delete_comment_link(comment)
       .name
-        = activity_title(comment)
+        - if threaded
+          = link_to(comment.user.name, comment.user)
+        -else
+          = activity_title(comment)
         - if comment.target_type == 'Task'
           = comment_task_status(comment)
         - if comment.hours?
           %span.hours= friendly_hours_value(comment.hours)
-        = activity_project_link(comment.project) unless comment.target.is_a? Project
+        = activity_project_link(comment.project) unless threaded || comment.target.is_a?(Project)
       .body.textilized
         ~ comment.body_html
       - if comment.uploads.any?
