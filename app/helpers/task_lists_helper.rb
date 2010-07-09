@@ -295,4 +295,19 @@ module TaskListsHelper
     lists.map {|list| [ list.name, list.id ]}
   end
 
+  GANTT_VIEW_SETTINGS = { :gantt => 0, :calendar => 1 }
+
+  def current_gantt_view?(setting)
+    current_gantt_view == GANTT_VIEW_SETTINGS[setting]
+  end
+      
+  def current_gantt_view
+    @current_gantt_view ||= GANTT_VIEW_SETTINGS[:gantt]
+  end
+  
+  def current_gantt_view=(setting)
+    session[:gantt_view] = GANTT_VIEW_SETTINGS[setting]
+    @current_gantt_view = session[:gantt_view]
+  end
+
 end
