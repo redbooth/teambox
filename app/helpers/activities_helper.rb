@@ -16,7 +16,7 @@ module ActivitiesHelper
   def activity_section(activity)
     haml_tag 'div', :class => "activity #{activity.action_type}" do
       yield activity_title(activity)
-      haml_tag 'div', posted_date(activity.posted_date), :class => 'date' unless rss?
+      haml_tag 'div', posted_date(activity.created_at), :class => 'date' unless rss?
     end
   end
 
