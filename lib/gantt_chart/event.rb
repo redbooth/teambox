@@ -10,9 +10,8 @@ module GanttChart
 
     # Checks if two events overlap in time
     def overlaps?(task_list)
-      return true if task_list.start < self.final && self.final <= task_list.final
-      return true if self.start < task_list.final && task_list.final <= self.final
-      return false
+      ((task_list.start < self.final && self.final <= task_list.final) ||
+        (self.start < task_list.final && task_list.final <= self.final))
     end
 
     def length
