@@ -175,7 +175,7 @@ it:
     prev: Previous
     print: "Stampa la pagina"
     save: Salva
-    show_more: "Mostra %{number} in più"
+    show_more: "Mostra più"
     tasks: 
       one: "1 compito"
       other: "%{count} compiti"

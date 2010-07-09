@@ -177,7 +177,7 @@ nl:
     or: of
     print: "Print deze pagina"
     save: Bewaren
-    show_more: "Toon %{number} meer"
+    show_more: "Toon meer"
     tasks: 
       one: "1 task"
       other: "%{count} tasks"

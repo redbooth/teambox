@@ -234,7 +234,7 @@ es:
     prev: Anterior
     print: "Imprimir esta página"
     save: Guardar
-    show_more: "Ver %{number} más"
+    show_more: "Ver más"
     tasks: 
       one: "1 tarea"
       other: "%{count} tareas"
