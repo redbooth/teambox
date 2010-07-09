@@ -1,8 +1,8 @@
 module BannerHelper
 
-  def gantt_chart(chart)
+  def gantt_chart(chart, days = 14)
 
-    unless chart.process(1,14)
+    unless chart.process(1,days)
       content_tag :div,
         chart.to_html(20,0),
         :class => 'gantt banner_item',

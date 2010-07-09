@@ -17,7 +17,7 @@ module BannerSystem
       @current_banner = session[:banner_setting]
     end
 
-    def load_banner
+    def load_gantt_events
       if @current_project
         @chart_task_lists = []
         (@task_lists || @current_project.task_lists.unarchived).each do |task_list|

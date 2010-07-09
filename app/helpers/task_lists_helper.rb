@@ -168,11 +168,14 @@ module TaskListsHelper
       :task_list => task_list}
   end
 
-
   def task_list_column(project,current_target = nil)
     render :partial => 'task_lists/column', :locals => {
         :project => project,
         :current_target => current_target }
+  end
+
+  def gantt_view_link(project=nil)
+    link_to t('.gantt_view'), gantt_view_project_task_lists_path(project), :class => :gantt_link
   end
 
   def the_task_list_link(task_list)
@@ -187,8 +190,9 @@ module TaskListsHelper
   end
 
   def task_list_primer(project,hidden=false)
-    return unless project.editable?(current_user)
-    render :partial => 'task_lists/primer', :locals => { :project => project, :primer_hidden => hidden }
+    if project.editable?(current_user)
+      render :partial => 'task_lists/primer', :locals => { :project => project, :primer_hidden => hidden }
+    end
   end
 
   def task_list_header(project,task_list)

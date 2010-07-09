@@ -722,6 +722,7 @@ en:
       cant_create: You don't have permission to create tasks in this project
       subscribe: Subscribe to the news feed
       other_views: Other views
+      gantt_view: Project GANTT and calendar
     show:
       title: "Task List: %{name}"
     destroy_message:

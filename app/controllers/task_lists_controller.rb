@@ -1,7 +1,6 @@
 class TaskListsController < ApplicationController
   before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive]
   before_filter :load_task_lists, :only => [:index]
-  before_filter :load_banner, :only => [:index, :show]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy,:archive,:unarchive]
   before_filter :set_page_title
 
@@ -216,6 +215,10 @@ class TaskListsController < ApplicationController
   def unwatch
     @task_list.remove_watcher(current_user)
     respond_to{|f|f.js}
+  end
+
+  def gantt_view
+    load_gantt_events
   end
 
   private
