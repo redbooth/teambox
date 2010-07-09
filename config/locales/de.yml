@@ -196,7 +196,7 @@ de:
     prev: Previous
     print: "Seite drucken"
     save: Speichern
-    show_more: "Zeige %{number} mehr"
+    show_more: "Zeige mehr"
     tasks: 
       one: "1 Aufgabe"
       other: "%{count} Aufgaben"

@@ -202,7 +202,7 @@ si:
     print: Natisni
     rename: Preimenuj
     save: Shrani
-    show_more: "Prikaži še %{number} več"
+    show_more: "Prikaži več"
     tasks: 
       one: "1 opravilo"
       other: "%{count} opravil"

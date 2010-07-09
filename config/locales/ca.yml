@@ -173,7 +173,7 @@ ca:
     or: o
     print: "Imprimir aquesta pàgina"
     save: Guardar
-    show_more: "Veure %{number} més"
+    show_more: "Veure més"
     tasks: 
       one: "1 tasca"
       other: "%{count} tasques"

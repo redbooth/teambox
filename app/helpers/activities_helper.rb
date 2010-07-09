@@ -187,7 +187,7 @@ module ActivitiesHelper
     else
       raise "unexpected location #{location_name}"
     end
-    link_to_remote content_tag(:span, t('common.show_more', :number => APP_CONFIG['activities_per_page'])),
+    link_to_remote content_tag(:span, t('common.show_more')),
       :url => url,
       :loading => activities_paginate_loading,
       :html => {
