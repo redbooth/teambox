@@ -141,7 +141,7 @@ Filter = {
             el.options[idx].disabled = true;
             idx += 1;
         } else {
-            var filter = option.value;
+            var filter = option.value == 'all' ? 'task' : option.value;
             var count = Filter.countTasks(filter, null);
             if (i < 3 || count > 0 || filter == current_assigned) {
                 el.options[idx] = (new Option(option.text + ' (' + count + ')', filter));
