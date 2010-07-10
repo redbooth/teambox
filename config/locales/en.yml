@@ -694,6 +694,7 @@ en:
       tasks_for_all_projects: Tasks across all projects
       tasks_for_project: Task lists for this project
       other_views: Other views
+      gantt_view: Project GANTT and calendar
       rss:
         title: "%{name} task updates"
         description: "Tasks activity for project %{name}"
@@ -867,6 +868,7 @@ en:
       all_conversations: All Conversations
       conversations: Conversations
       task_lists: Task Lists
+      gantt: Calendar and charts
       all_task_lists: All Tasks
       project_settings: Project Settings
       all_pages: All Pages

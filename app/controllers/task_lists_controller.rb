@@ -223,14 +223,21 @@ class TaskListsController < ApplicationController
 
   private
     def load_gantt_events
+      @chart_task_lists = []
       if @current_project
-        @chart_task_lists = []
         (@task_lists || @current_project.task_lists.unarchived).each do |task_list|
           @chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name) unless task_list.start_on == task_list.finish_on
         end
-        @chart = GanttChart::Base.new(@chart_task_lists)
         @events = split_events_by_date(Task.upcoming_for_project(@current_project.id))
+      else
+        current_user.projects.each do |project|
+          (project.task_lists.unarchived).each do |task_list|
+            @chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name) unless task_list.start_on == task_list.finish_on
+          end
+          @events = [] #split_events_by_date(Task.upcoming_for_project(@current_project.id))
+        end
       end
+      @chart = GanttChart::Base.new(@chart_task_lists)
     end
 
     def load_task_lists

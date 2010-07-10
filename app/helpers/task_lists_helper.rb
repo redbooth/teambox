@@ -175,7 +175,11 @@ module TaskListsHelper
   end
 
   def gantt_view_link(project=nil)
-    link_to t('.gantt_view'), gantt_view_project_task_lists_path(project), :class => :gantt_link
+    if project
+      link_to t('.gantt_view'), gantt_view_project_task_lists_path(project), :class => :gantt_link
+    else
+      link_to t('.gantt_view'), gantt_view_task_lists_path, :class => :gantt_link
+    end
   end
 
   def the_task_list_link(task_list)

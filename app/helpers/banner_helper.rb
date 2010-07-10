@@ -13,7 +13,7 @@ module BannerHelper
   end
 
   def upcoming_events(events)
-    unless events.empty?
+    if events.any?
       render :partial => 'shared/upcoming_events',
         :locals => {
           :events => events }
