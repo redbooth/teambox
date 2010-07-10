@@ -371,4 +371,9 @@ module TasksHelper
         :buttons => true }),
       :class => 'date_picker')
   end
+  
+  def value_for_assigned_to_select
+    value = params[:assigned_to] == 'all' ? 'task' : params[:assigned_to]
+    value ||= 'task'
+  end
 end
