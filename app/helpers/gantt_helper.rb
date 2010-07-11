@@ -1,4 +1,52 @@
+# Builds a GANTT Chart from the given array of task_lists
+# It'll need some CSS to display well, for example:
+#
+# .gantt { margin: 20px; }
+#   .row { position: relative; display: block; margin-bottom: 2px; border: 1px solid #aaa; background: #aaa; width: 600px; height: 22px; }
+#   .task_list { position: absolute; border: 1px solid #000; background: #5f5; height: 20px; white-space: nowrap; overflow: hidden; cursor: move; }
+
+module GanttHelper
+end
+
 module GanttChart
+  class Event
+    attr_accessor :start, :final, :description
+
+    def initialize(start, final, description = nil)
+      @start = set_destination(start)
+      @final = set_destination(final)
+      @description = description || [@start,@final].join('-')
+    end
+
+    # Checks if two events overlap in time
+    def overlaps?(task_list)
+      ((task_list.start < self.final && self.final <= task_list.final) ||
+        (self.start < task_list.final && task_list.final <= self.final))
+    end
+
+    def length
+      final - start
+    end
+
+    def to_s
+      @description
+    end
+
+    def set_destination(position)
+      case position
+        when Date
+          (position - Time.current.to_date).to_i + 1
+        when Fixnum
+          position
+        when NilClass
+          nil
+        else
+          raise "Invalid date"
+      end
+    end 
+
+  end
+
   class Base
     attr_accessor :task_lists, :rows
 
