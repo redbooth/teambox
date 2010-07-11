@@ -10,7 +10,7 @@ end
 
 module GanttChart
   class Event
-    attr_accessor :start, :final, :description, :link
+    attr_accessor :start, :final, :description, :link, :classes
 
     def initialize(start, final, description = nil, link = nil)
       @start = set_destination(start)
@@ -95,11 +95,20 @@ module GanttChart
     
       @task_lists.each do |task_list|
         # Clip the task_list to the given time window
-        next if !task_list.start && !task_list.final
-        task_list.start = start if !task_list.start || task_list.start < start
-        task_list.final = final if !task_list.final || task_list.final > final
-        next if task_list.start > final
-        next if task_list.final < start
+        next if !task_list.start && !task_list.final # undefinated start and end
+        task_list.start = start if task_list.start && task_list.start < start # past start date
+        task_list.final = final if task_list.final && task_list.final > final # future final date
+        if !task_list.start # undefined start date
+          task_list.start = start-1
+          task_list.classes = "undefined_start"
+        end
+        if !task_list.final # undefined final date
+          task_list.final = final+1
+          task_list.classes = "undefined_end"
+        end
+        
+        next if task_list.start > final # not visible (future)
+        next if task_list.final < start # not visible (past)
 
         add_to_rows(task_list)
       end
@@ -122,7 +131,7 @@ module GanttChart
         row.inject('') do |html, task_list|
           task_list_width = task_list.length * day_width
           task_list_offset = (task_list.start - start) * day_width + @offset
-          html << %(<div class='task_list' style='width: #{task_list_width}px; left: #{task_list_offset}px'>)
+          html << %(<div class='task_list #{task_list.classes}' style='width: #{task_list_width}px; left: #{task_list_offset}px'>)
           html << %(<a href="#{task_list.link}">#{task_list}</a>)
           html << %(</div>)
           html
