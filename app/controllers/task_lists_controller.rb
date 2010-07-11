@@ -226,15 +226,17 @@ class TaskListsController < ApplicationController
       @chart_task_lists = []
       if @current_project
         @task_lists = (@task_lists || @current_project.task_lists.unarchived)
-        @events = split_events_by_date(Task.upcoming_for_project(@current_project.id))
+        conditions = ["project_id = :project_id AND status IN (:status) AND due_on IS NOT NULL", {
+                       :project_id => @current_project.id,
+                       :status => Task::ACTIVE_STATUS_CODES }]
       else
         @task_lists = current_user.projects.collect { |p| p.task_lists.unarchived }.flatten.compact
         conditions = ["project_id IN (:project_ids) AND status IN (:status) AND due_on IS NOT NULL", {
                        :project_ids => Array(current_user.projects.unarchived).map(&:id),
                        :status => Task::ACTIVE_STATUS_CODES }]
-        @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user, :project])
-        @events = split_events_by_date(@tasks)
       end
+      @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user, :project])
+      @events = split_events_by_date(@tasks)
 
       @task_lists.each do |task_list|
         unless task_list.start_on == task_list.finish_on
