@@ -1,7 +1,6 @@
 class TasksController < ApplicationController
   before_filter :find_task_list, :only => [:new,:show,:destroy,:create,:edit,:update,:reopen,:reorder]
   before_filter :find_task, :only => [:show,:destroy,:edit,:update,:reopen,:watch,:unwatch]
-  before_filter :load_banner, :only => [:show]
   before_filter :check_permissions, :except => [:show, :watch, :unwatch]
   before_filter :set_page_title
 

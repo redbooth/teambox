@@ -168,11 +168,18 @@ module TaskListsHelper
       :task_list => task_list}
   end
 
-
   def task_list_column(project,current_target = nil)
     render :partial => 'task_lists/column', :locals => {
         :project => project,
         :current_target => current_target }
+  end
+
+  def gantt_view_link(project=nil)
+    if project
+      link_to t('.gantt_view'), gantt_view_project_task_lists_path(project), :class => :gantt_link
+    else
+      link_to t('.gantt_view'), gantt_view_task_lists_path, :class => :gantt_link
+    end
   end
 
   def the_task_list_link(task_list)
@@ -187,8 +194,9 @@ module TaskListsHelper
   end
 
   def task_list_primer(project,hidden=false)
-    return unless project.editable?(current_user)
-    render :partial => 'task_lists/primer', :locals => { :project => project, :primer_hidden => hidden }
+    if project.editable?(current_user)
+      render :partial => 'task_lists/primer', :locals => { :project => project, :primer_hidden => hidden }
+    end
   end
 
   def task_list_header(project,task_list)
@@ -289,6 +297,21 @@ module TaskListsHelper
   
   def options_for_task_lists(lists)
     lists.map {|list| [ list.name, list.id ]}
+  end
+
+  GANTT_VIEW_SETTINGS = { :gantt => 0, :calendar => 1 }
+
+  def current_gantt_view?(setting)
+    current_gantt_view == GANTT_VIEW_SETTINGS[setting]
+  end
+      
+  def current_gantt_view
+    @current_gantt_view ||= GANTT_VIEW_SETTINGS[:gantt]
+  end
+  
+  def current_gantt_view=(setting)
+    session[:gantt_view] = GANTT_VIEW_SETTINGS[setting]
+    @current_gantt_view = session[:gantt_view]
   end
 
 end
