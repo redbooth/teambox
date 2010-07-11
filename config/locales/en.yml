@@ -665,7 +665,7 @@ en:
       title: New Task List
       task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
       name: "Choose a name for this Task List <i>eg. Prepare a Prototype</i>"
-      optional: "If you starting and ending dates, this task will be displayed in the GANTT chart"
+      optional: "If you starting and ending dates, this task will be displayed in the Gantt chart"
       start_on: Starts on... <i>optional</i>
       finish_on: End on... <i>optional</i>
     filter:
@@ -694,13 +694,13 @@ en:
       tasks_for_all_projects: Tasks across all projects
       tasks_for_project: Task lists for this project
       other_views: Other views
-      gantt_view: Project GANTT and calendar
+      gantt_view: Project Gantt and calendar
       rss:
         title: "%{name} task updates"
         description: "Tasks activity for project %{name}"
     gantt_view:
       back_to_normal_view: Go back to normal view
-      view_for_all_projects: view Calendar and GANTT charts for all projects
+      view_for_all_projects: view Calendar and Gantt charts for all projects
     primer:
       empty: This project doesn't have any task lists yet.
       create_first: Create the first task list in this project!
@@ -710,7 +710,7 @@ en:
       item3: "<b>Follow</b>. Receive notifications for tasks related to you."
       item4: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
       footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others now."
-      footer2: "It's time to forget about excel planning sheets and complex GANTT charts!"
+      footer2: "It's time to forget about excel planning sheets and complex Gantt charts!"
     overview_box:
       this_list: "This task list"
       starts_on: "Starts on:"
@@ -726,7 +726,7 @@ en:
       cant_create: You don't have permission to create tasks in this project
       subscribe: Subscribe to the news feed
       other_views: Other views
-      gantt_view: Project GANTT and calendar
+      gantt_view: Project Gantt and calendar
     show:
       title: "Task List: %{name}"
     destroy_message:
