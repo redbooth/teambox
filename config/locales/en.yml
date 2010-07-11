@@ -698,6 +698,9 @@ en:
       rss:
         title: "%{name} task updates"
         description: "Tasks activity for project %{name}"
+    gantt_view:
+      back_to_normal_view: Go back to normal view
+      view_for_all_projects: view Calendar and GANTT charts for all projects
     primer:
       empty: This project doesn't have any task lists yet.
       create_first: Create the first task list in this project!
