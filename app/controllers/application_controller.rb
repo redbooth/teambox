@@ -161,7 +161,7 @@ class ApplicationController < ActionController::Base
     
     def split_events_by_date(events, start_date=nil)
       start_date ||= Date.today.monday.to_date
-      split_events = Array.new(14)
+      split_events = Array.new
       Array(events).each do |event|
         if (event.due_on - start_date) >= 0
           split_events[(event.due_on - start_date)] ||= []
