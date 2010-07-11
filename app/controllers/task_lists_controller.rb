@@ -238,7 +238,11 @@ class TaskListsController < ApplicationController
 
       @task_lists.each do |task_list|
         unless task_list.start_on == task_list.finish_on
-          @chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name)
+          @chart_task_lists << GanttChart::Event.new(
+            task_list.start_on,
+            task_list.finish_on,
+            task_list.name,
+            project_task_list_path(task_list.project, task_list))
         end
       end
       @chart = GanttChart::Base.new(@chart_task_lists)
