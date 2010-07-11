@@ -1,0 +1,54 @@
+.gantt
+  padding-bottom: 10px
+  min-height: 300px
+  overflow-x: auto
+  .ruler
+    position: relative
+    display: block
+    height: 26px
+    border-bottom: solid 1px rgb(80,80,80)
+    color: rgb(80,80,80)
+    .mark
+      position: absolute
+      font-size: 10px
+      top: 18px
+      height: 10px
+      width: 5px
+      text-indent: .3em
+      background:  url(../images/mark.jpg) no-repeat left
+    .date
+      position: absolute
+      font-family: Courier, monospace
+      text-transform: uppercase
+      font-size: 12px
+      top: 0px
+      padding-top: 4px
+      width: 1px
+      display: block
+      &.major
+        font-weight: bold
+        color: #386c97
+  .row
+    position: relative
+    display: block
+    margin: 1px 0
+    font-size: 12px
+    height: 19px
+  .task_list
+    height: 13px
+    font-size: 11px
+    position: absolute
+    background: rgb(240,240,240)
+    border: solid 1px rgb(200,200,200)
+    white-space: nowrap
+    overflow: hidden
+    padding: 3px 0px
+    text-indent: .4em
+    -moz-border-radius: 4px
+    -webkit-border-radius: 4px
+    a
+      display: block
+    a:hover
+      text-decoration: underline
+  .task:hover
+    overflow: visible

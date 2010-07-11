@@ -225,16 +225,24 @@ class TaskListsController < ApplicationController
     def load_gantt_events
       @chart_task_lists = []
       if @current_project
-        (@task_lists || @current_project.task_lists.unarchived).each do |task_list|
-          @chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name) unless task_list.start_on == task_list.finish_on
-        end
+        @task_lists = (@task_lists || @current_project.task_lists.unarchived)
         @events = split_events_by_date(Task.upcoming_for_project(@current_project.id))
       else
-        current_user.projects.each do |project|
-          (project.task_lists.unarchived).each do |task_list|
-            @chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name) unless task_list.start_on == task_list.finish_on
-          end
-          @events = [] #split_events_by_date(Task.upcoming_for_project(@current_project.id))
+        @task_lists = current_user.projects.collect { |p| p.task_lists.unarchived }.flatten.compact
+        conditions = ["project_id IN (:project_ids) AND status IN (:status) AND due_on IS NOT NULL", {
+                       :project_ids => Array(current_user.projects.unarchived).map(&:id),
+                       :status => Task::ACTIVE_STATUS_CODES }]
+        @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user, :project])
+        @events = split_events_by_date(@tasks)
+      end
+
+      @task_lists.each do |task_list|
+        unless task_list.start_on == task_list.finish_on
+          @chart_task_lists << GanttChart::Event.new(
+            task_list.start_on,
+            task_list.finish_on,
+            task_list.name,
+            project_task_list_path(task_list.project, task_list))
         end
       end
       @chart = GanttChart::Base.new(@chart_task_lists)

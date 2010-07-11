@@ -10,18 +10,19 @@ end
 
 module GanttChart
   class Event
-    attr_accessor :start, :final, :description
+    attr_accessor :start, :final, :description, :link
 
-    def initialize(start, final, description = nil)
+    def initialize(start, final, description = nil, link = nil)
       @start = set_destination(start)
       @final = set_destination(final)
       @description = description || [@start,@final].join('-')
+      @link = link
     end
 
     # Checks if two events overlap in time
     def overlaps?(task_list)
-      ((task_list.start < self.final && self.final <= task_list.final) ||
-        (self.start < task_list.final && task_list.final <= self.final))
+      ((task_list.start < final && final <= task_list.final) ||
+        (start < task_list.final && task_list.final <= final))
     end
 
     def length
@@ -121,7 +122,9 @@ module GanttChart
         row.inject('') do |html, task_list|
           task_list_width = task_list.length * day_width
           task_list_offset = (task_list.start - start) * day_width + @offset
-          html << "<div class='task_list' style='width: #{task_list_width}px; left: #{task_list_offset}px'>#{task_list}</div>"
+          html << %(<div class='task_list' style='width: #{task_list_width}px; left: #{task_list_offset}px'>)
+          html << %(<a href="#{task_list.link}">#{task_list}</a>)
+          html << %(</div>)
           html
         end
       end

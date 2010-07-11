@@ -14,9 +14,7 @@ module BannerHelper
 
   def upcoming_events(events)
     if events.any?
-      render :partial => 'shared/upcoming_events',
-        :locals => {
-          :events => events }
+      render :partial => 'shared/upcoming_events', :locals => { :events => events }
     else
       render :partial => 'shared/upcoming_events_primer'
     end
@@ -35,11 +33,13 @@ module BannerHelper
   end
 
   def calendar_banner_link
-    link_to t('common.calendar'), "#", :id => 'show_calendar_link', :class => ('active' if current_gantt_view?(:calendar))
+    content_tag(:div, link_to(t('common.calendar'), "#", :id => 'show_calendar_link'),
+      :id => 'tab_calendar', :class => "tab #{'active' if current_gantt_view?(:calendar)}")
   end
 
   def gantt_banner_link
-    link_to t('common.gantt_chart'), "#", :id => 'show_gantt_chart_link', :class => ('active' if current_gantt_view?(:gantt))
+    content_tag(:div, link_to(t('common.gantt_chart'), "#", :id => 'show_gantt_chart_link'),
+      :id => 'tab_gantt', :class => "tab #{'active' if current_gantt_view?(:gantt)}")
   end
 
   def banner(events,chart)

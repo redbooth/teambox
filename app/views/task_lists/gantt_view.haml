@@ -1,3 +1,9 @@
+- if @current_project
+  %p.view_for_all
+    = link_to t('.back_to_normal_view'), project_task_lists_path(@current_project)
+    = t('common.or')
+    = link_to t('.view_for_all_projects'), gantt_view_task_lists_path
+
 .calendar_gantt{ :style => 'padding: 0; margin-top: 20px; border-bottom: 1px solid #c8c8c8' }
   .tabs{ :style => 'border-bottom: 1px solid #c8c8c8' }
     = calendar_banner_link

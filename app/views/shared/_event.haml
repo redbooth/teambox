@@ -1,4 +1,3 @@
-- if events && events.any?
-  %ul
-    - for task in events
-      %li= event_task_link(task)
+%ul
+  - for task in Array(events)
+    %li= event_task_link(task)
