@@ -1,7 +1,6 @@
 class TaskListsController < ApplicationController
   before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive]
   before_filter :load_task_lists, :only => [:index]
-  before_filter :load_banner, :only => [:index, :show]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy,:archive,:unarchive]
   before_filter :set_page_title
 
@@ -218,7 +217,29 @@ class TaskListsController < ApplicationController
     respond_to{|f|f.js}
   end
 
+  def gantt_view
+    load_gantt_events
+  end
+
   private
+    def load_gantt_events
+      @chart_task_lists = []
+      if @current_project
+        (@task_lists || @current_project.task_lists.unarchived).each do |task_list|
+          @chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name) unless task_list.start_on == task_list.finish_on
+        end
+        @events = split_events_by_date(Task.upcoming_for_project(@current_project.id))
+      else
+        current_user.projects.each do |project|
+          (project.task_lists.unarchived).each do |task_list|
+            @chart_task_lists << GanttChart::Event.new(task_list.start_on, task_list.finish_on, task_list.name) unless task_list.start_on == task_list.finish_on
+          end
+          @events = [] #split_events_by_date(Task.upcoming_for_project(@current_project.id))
+        end
+      end
+      @chart = GanttChart::Base.new(@chart_task_lists)
+    end
+
     def load_task_lists
       if @current_project
         @task_lists = @current_project.task_lists(:include => [:project])
