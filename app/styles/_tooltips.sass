@@ -15,3 +15,25 @@
   &:hover
     .tooltip
       display: block
+
+.has_panel
+  display: relative
+  &:hover
+    .panel
+      display: block
+  .panel
+    display: none
+    position: absolute
+    background: white
+    color: black
+    padding: 3px 8px
+    border: 1px solid #999
+    z-index: 10000
+    width: 400px
+    +rounded(5px)
+    +box-shadow(#EEE 3px 3px 3px)
+    font-size: 12px
+    p
+      margin: 10px 0
+    a
+      display: inline

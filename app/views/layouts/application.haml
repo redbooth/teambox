@@ -32,7 +32,6 @@
         - content_for_column = yield :column
         %div{ :class => content_for_column.blank? ? 'content_wrap_single' : 'content_wrap' }
           .content#content= yield
-        
         - unless content_for_column.blank?
           .column_wrap
             .column#column= content_for_column
