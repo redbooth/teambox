@@ -12,19 +12,27 @@
 
 .calendar_gantt
   margin: 10px 0
-  a
-    color: #555
-  a:hover
-    text-decoration: none
-
-#show_calendar_link, #show_gantt_chart_link
-  border: 1px solid #C8C8C8
-  text-transform: none
-  padding: 2px 5px 0 5px
-  +rounded-top(5px)
-
-#show_calendar_link.active, #show_gantt_chart_link.active
-  border-bottom: 1px solid white
+  .tabs
+    .tab
+      +rounded-top(5px)
+      border: 1px solid #C8C8C8
+      display: inline
+      padding: 0 5px
+      &.active
+        border-bottom: 1px solid white
+      a
+        color: #555
+        font-size: 12px
+        text-transform: none
+        padding: 2px 5px 0 25px
+        &.active
+          border-bottom: 1px solid white
+        &#show_calendar_link
+          background: url(/images/calendar_date_select/calendar.gif) no-repeat left
+        &#show_gantt_chart_link
+          background: url(/images/gantt.gif) no-repeat left
+        &:hover
+          text-decoration: none
 
 div.upcoming_events_banner
   padding: 10px
