@@ -161,15 +161,14 @@ class ApplicationController < ActionController::Base
     
     def split_events_by_date(events, start_date=nil)
       start_date ||= Date.today.monday.to_date
-      return [] if events.empty?
       split_events = Array.new(14)
-      events.each do |event|
+      Array(events).each do |event|
         if (event.due_on - start_date) >= 0
           split_events[(event.due_on - start_date)] ||= []
           split_events[(event.due_on - start_date)] << event
         end
       end
-      return split_events
+      split_events
     end
     
     # http://www.coffeepowered.net/2009/02/16/powerful-easy-dry-multi-format-rest-apis-part-2/
