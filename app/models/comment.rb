@@ -66,7 +66,8 @@ class Comment < ActiveRecord::Base
   define_index do
     indexes body, :sortable => true
 #    indexes user(:name)
-#    indexes target(:name)
+    indexes uploads(:asset_file_name), :as => :upload_name
+    indexes target.name, :as => :target
 
     has user_id, project_id, created_at
   end
