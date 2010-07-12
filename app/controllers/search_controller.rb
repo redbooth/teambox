@@ -9,12 +9,15 @@ class SearchController < ApplicationController
 
     @search_page = params[:page]
     @search = params[:search]
-    @comments = Comment.search(
-                  @search,
-                  :retry_stale => true,
-                  :order => 'created_at DESC',
-                  :with => { :project_id => my_project_ids },
-                  :page => @search_page)
+    
+    unless @search.nil? or @search.strip.empty?
+      @comments = Comment.search(
+                    @search,
+                    :retry_stale => true,
+                    :order => 'created_at DESC',
+                    :with => { :project_id => my_project_ids },
+                    :page => @search_page)
+      end
   end
   
   protected

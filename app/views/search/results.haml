@@ -1,10 +1,13 @@
 .results
-  %p= "#{@comments.total_entries} results found for \"#{@search}\""
+  - if @comments
+    %p= "#{@comments.total_entries} results found for \"#{@search}\""
 
   - form_tag search_path do
     = text_field_tag :search, params[:search]
-    = submit_tag "Search again"
+    = submit_tag (@comments ? "Search again" : "Search")
 
-= render :partial => 'comments/comment', :collection => @comments
-
-= will_paginate @comments, :params => {:search => @search}
+- if @comments
+  #results_set
+    = render :partial => 'comments/comment', :collection => @comments
+  = will_paginate @comments, :params => {:search => @search}
+  = javascript_tag("Element.addHighlights($('results_set'), #{@search.split.to_json}, 'highlight')")
