@@ -1029,6 +1029,7 @@ en:
     archived_task_lists: Archived Tasks
     new_example_projects: Create an Example Project
     new_conversations: New Conversation
+    results_search: Search
 
   number:
     # Used in number_with_delimiter()
