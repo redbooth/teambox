@@ -7,11 +7,14 @@ class SearchController < ApplicationController
       return
     end
 
+    @search_page = params[:page]
+    @search = params[:search]
     @comments = Comment.search(
-                  params[:search],
+                  @search,
                   :retry_stale => true,
                   :order => 'created_at DESC',
-                  :with => { :project_id => my_project_ids }).compact
+                  :with => { :project_id => my_project_ids },
+                  :page => @search_page)
   end
   
   protected
