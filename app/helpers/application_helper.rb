@@ -296,7 +296,7 @@ module ApplicationHelper
   end
 
   def formatting_documentation_link
-    link_to t('.text_styling'), 'http://daringfireball.net/projects/markdown/', :target => '_blank'
+    link_to t('.text_styling'), text_styles_path, :rel => :facebox
   end
 
   def host_with_protocol
