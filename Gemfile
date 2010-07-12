@@ -25,6 +25,7 @@ gem 'oauth2'
 
 group :plugins do
   gem 'sprockets-rails', '~> 0.0.1'
+  gem 'thinking-sphinx', '~> 1.3.15', :require => 'thinking_sphinx'
   gem 'acts-as-list', '~> 0.1.2', :require => 'acts_as_list'
   # gem 'acts_as_paranoid', '~> 0.3.1' # => too old!
   gem 'calendar_date_select', '~> 1.15'

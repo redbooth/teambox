@@ -730,6 +730,7 @@ ca:
     index_task_lists: "Les meves tasques"
     index_uploads: "Els meus arxius"
     new_conversations: "Nova Conversa"
+    results_search: Cerca
     new_example_projects: "Crear un projecte d'exemple"
     new_projects: "Nou projecte"
     new_users: "Crear compte"

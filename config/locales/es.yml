@@ -885,6 +885,7 @@ es:
     index_task_lists: "Mis tareas"
     index_uploads: "Mis archivos"
     new_conversations: "Nueva Conversación"
+    results_search: Búsqueda
     new_example_projects: "Crear un proyecto de ejemplo"
     new_pages: "Página nueva"
     new_projects: "Nuevo proyecto"

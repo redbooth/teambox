@@ -3,7 +3,7 @@ div.column
     color: red
 
   span.task_status
-    :margin
+    margin:
       right: 5px
       bottom: 3px
     padding: 2px 5px
@@ -33,7 +33,7 @@ div.column
     padding-right: 10px
     input
       width: 100%
-      :border
+      border:
         top: solid 1px rgb(90,90,90)
         left: solid 1px rgb(150,150,150)
         bottom: solid 1px rgb(150,150,150)
@@ -141,6 +141,7 @@ div.column
       width: 30px
       padding:
         left: 20px
+        top: 2px
       span
         display: block
         width: 23px
@@ -165,22 +166,15 @@ div.column
         a:hover
           text-decoration: none
           color: rgb(0,0,0)
-      span.status, span.project, span.task_list
+      .task_extended, span.status, span.project, span.task_list
         display: none
   .task.overdue
-    background: rgb(255,240,240)
     .taskName
-      a
+      a.name
         color: rgb(200,0,0)
         font-weight: bold
-      span
-        background: rgb(255,255,255)
-        border: solid 1px rgb(240,200,200)
+      span.assigned
         color: rgb(200,0,0)
-        font-weight: bold
-        a
-          color: rgb(200,0,0)
-          font-weight: normal
   .task.mine
     background: rgb(255,255,210)
     .taskName
@@ -220,6 +214,10 @@ div.column
         border: none
         background: none
         display: inline
+      .task_extended
+        display: block
+        padding-left: 46px
+        margin: 3px 0 5px
 
 div.tasks
   padding-bottom: 5px

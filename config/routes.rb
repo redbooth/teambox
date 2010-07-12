@@ -5,8 +5,11 @@ ActionController::Routing::Routes.draw do |map|
   map.login             '/login',               :controller => 'sessions',    :action => 'new'
   map.register          '/register',            :controller => 'users',       :action => 'create'
   map.signup            '/signup',              :controller => 'users',       :action => 'new'
+  
+  map.search            '/search',              :controller => 'search',      :action => 'results'
 
   map.welcome           '/welcome',             :controller => 'users',       :action => 'welcome'
+  map.text_styles       '/text_styles',         :controller => 'users',       :action => 'text_styles'
   map.feeds             '/feeds',               :controller => 'users',       :action => 'feeds'
   map.calendars         '/calendars',           :controller => 'users',       :action => 'calendars'
   map.close_wecome_tab  '/close_welcome_tab',   :controller => 'users',       :action => 'close_welcome'

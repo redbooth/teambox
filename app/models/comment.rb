@@ -62,6 +62,15 @@ class Comment < ActiveRecord::Base
       end
     end
   end
+
+  define_index do
+    indexes body, :sortable => true
+#    indexes user(:name)
+    indexes uploads(:asset_file_name), :as => :upload_name
+    indexes target.name, :as => :target
+
+    has user_id, project_id, created_at
+  end
   
   # We will not allow two comments in a row with the body, target and assigned_to
   def check_duplicates

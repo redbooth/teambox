@@ -68,6 +68,10 @@ module ApplicationHelper
     render 'shared/project_navigation', :project => project
   end
 
+  def search_bar
+    render :partial => 'shared/search_bar'
+  end
+
   def footer
     render :partial => 'shared/footer'
   end
@@ -296,7 +300,7 @@ module ApplicationHelper
   end
 
   def formatting_documentation_link
-    link_to t('.text_styling'), 'http://daringfireball.net/projects/markdown/', :target => '_blank'
+    link_to t('.text_styling'), text_styles_path, :rel => :facebox
   end
 
   def host_with_protocol
