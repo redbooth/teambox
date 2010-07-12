@@ -165,7 +165,7 @@ div.column
         a:hover
           text-decoration: none
           color: rgb(0,0,0)
-      span.status, span.project, span.task_list
+      .task_extended, span.status, span.project, span.task_list
         display: none
   .task.overdue
     background: rgb(255,240,240)
@@ -220,6 +220,10 @@ div.column
         border: none
         background: none
         display: inline
+      .task_extended
+        display: block
+        padding-left: 46px
+        margin: 3px 0 5px
 
 div.tasks
   padding-bottom: 5px
