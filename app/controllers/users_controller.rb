@@ -166,6 +166,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def text_styles
+    render :layout => false
+  end
+
   def calendars
   end
 
