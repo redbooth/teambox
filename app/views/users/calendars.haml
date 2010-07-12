@@ -10,7 +10,7 @@
 
 = subscribe_to_all_calendars_link
 
-- for project in current_user.projects
+- for project in current_user.projects.unarchived
   = subscribe_to_calendar_link(project)
 
 - content_for :column do

@@ -235,7 +235,6 @@ table.task_list_closed
     .taskName
       font-size: 10px
 
-
 .active_new,.active_open,.active_hold,.active_resolved,.active_rejected
   -moz-border-radius: 5px
   -webkit-border-radius: 5px
@@ -279,6 +278,9 @@ table.task_list_closed
   a
     color: #CCC
 
+.closed
+  margin-top: 10px
+
 span.task_status, span.current_task_status
   padding: 0 3px
   text-transform: uppercase
@@ -288,18 +290,23 @@ span.task_status, span.current_task_status
   display: inline-block
 .task_status_new
   background: #9da3a7
+  +gradient(#9da3a7,#9da3a7-#333)
   color: white
 .task_status_open
   background: #ffc947
+  +gradient(#ffc947+#333,#ffc947)
   color: #333
 .task_status_hold
   background: #be3cff
+  +gradient(#be3cff+#333,#be3cff)
   color: white
 .task_status_resolved
   background: #afd142
+  +gradient(#afd142,#afd142-#333)
   color: white
 .task_status_rejected
   background: #e97063
+  +gradient(#e97063+#333,#e97063)
   color: white
 
 p.view_for_all
