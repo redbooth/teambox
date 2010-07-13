@@ -238,4 +238,8 @@ module CommentsHelper
     f.text_area :body, :class => 'comment_body', :id => 'comment_body', :placeholder => placeholder
   end
 
+  def paint_status_boxes
+    javascript_tag "Comment.paint_status_boxes()"
+  end
+
 end

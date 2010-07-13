@@ -168,6 +168,13 @@ Comment = {
       }
     })
   },
+  paint_status_boxes: function(){
+    $$('.statuses input[type=radio]').each(function(el) {
+      if (el.checked) {
+        el.up('.status').addClassName('active')
+      }
+    })
+  },
   assign_to_nobody: function(){
     $$('#new_comment option').each(function(e){ 
       if(e.value == '')
@@ -317,7 +324,7 @@ document.on('dom:loaded', function() {
 document.on('click', 'form.new_comment #comment_upload_link', function(e) {
   if (!e.isMiddleClick()) {
     e.preventDefault()
-    this.next('.upload_area').show()
+    this.up().next('.upload_area').show()
     this.hide()
   }
 })

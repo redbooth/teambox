@@ -22,7 +22,7 @@
           = f.label :status
           - if target.status_new?
             .status.new#status_new
-              = f.radio_button :status, Task::STATUSES[:new]
+              = f.radio_button :status, Task::STATUSES[:new], :checked => (target.status == Task::STATUSES[:new])
               = t('tasks.status.new')
           .status.open#status_open
             = f.radio_button :status, Task::STATUSES[:open]
@@ -31,13 +31,13 @@
               = task_form.label :assigned_id, t('.assigned_to')
               = task_form.select :assigned_id, options_for_people(comment.project.people)
           .status.hold#status_hold
-            = f.radio_button :status, Task::STATUSES[:hold]
+            = f.radio_button :status, Task::STATUSES[:hold], :checked => (target.status == Task::STATUSES[:hold])
             = t('tasks.status.hold')
           .status.resolved#status_resolved
-            = f.radio_button :status, Task::STATUSES[:resolved]
+            = f.radio_button :status, Task::STATUSES[:resolved], :checked => (target.status == Task::STATUSES[:resolved])
             = t('tasks.status.resolved')
           .status.rejected#status_rejected
-            = f.radio_button :status, Task::STATUSES[:rejected]
+            = f.radio_button :status, Task::STATUSES[:rejected], :checked => (target.status == Task::STATUSES[:rejected])
             = t('tasks.status.rejected')
     .submit{ :id => js_id(:new_submit,Comment.new) }
       = hidden_field_tag :original_controller, controller_name
@@ -52,3 +52,4 @@
     .clear
 
 = make_autocompletable('comment_body', comment.project)
+= paint_status_boxes
