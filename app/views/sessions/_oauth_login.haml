@@ -4,3 +4,5 @@
       %p= link_to image_tag("login_with_github.png"), oauth_request_path('github')
     - if APP_CONFIG['oauth_providers']['facebook']
       %p= link_to image_tag("login_with_facebook.png"), oauth_request_path('facebook')
+    - if APP_CONFIG['oauth_providers']['twitter']
+      %p= link_to image_tag("login_with_twitter.png"), oauth_request_path('twitter')

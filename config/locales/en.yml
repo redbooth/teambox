@@ -1298,3 +1298,5 @@ en:
     your_account_is_not_linked: "Your %{provider} profile is <strong>not linked</strong> to Teambox."
     link_account: Link account.
     unlink_account: Unlink account.
+    user_already_exists_by_email: The user %{email} has already a Teambox account.<br/>Log in with that account and link it from your Settings panel.
+    user_already_exists_by_login: The user %{login} has already a Teambox account.<br/>Log in with that account and link it from your Settings panel.

@@ -108,24 +108,41 @@ defaults: &defaults
   oauth_providers:
     # This example is configured for http://localhost:3000. Uncomment it to test it.
     # Register for your own domain at http://github.com/account/applications
-    #github:
-    #  name: Github
-    #  site: https://github.com
-    #  client_id: abfe8d0a74b0344b111b
-    #  secret_key: aad82e098d2015254fc9b34550d6f93c37c17952
-    #  authorize_path: /login/oauth/authorize
-    #  access_token_path: /login/oauth/access_token
-    #  user_path: /api/v2/json/user/show
+    # github:
+    #   version: v2
+    #   name: Github
+    #   site: https://github.com
+    #   client_id: abfe8d0a74b0344b111b
+    #   secret_key: aad82e098d2015254fc9b34550d6f93c37c17952
+    #   authorize_path: /login/oauth/authorize
+    #   access_token_path: /login/oauth/access_token
+    #   user_path: /api/v2/json/user/show
     # This example is configured for http://localhost:3000. Uncomment it to test it.
     # Register for your own domain at www.facebook.com/developers
-    #facebook:
-    #  name: Facebook
-    #  site: https://graph.facebook.com
-    #  client_id: 95fcdf49f46b8c057c66a8890d0b29ac
-    #  secret_key: f5049b1d9f8da979278ac4394de54a1b
-    #  authorize_path: /oauth/authorize
-    #  access_token_path: /oauth/access_token
-    #  user_path: /me
+    # facebook:
+    #   version: v2
+    #   name: Facebook
+    #   site: https://graph.facebook.com
+    #   client_id: 95fcdf49f46b8c057c66a8890d0b29ac
+    #   secret_key: f5049b1d9f8da979278ac4394de54a1b
+    #   authorize_path: /oauth/authorize
+    #   access_token_path: /oauth/access_token
+    #   user_path: /me
+    # This example is configured for http://localhost:3000. Uncomment it to test it.
+    # Register for your own domain at http://dev.twitter.com/apps/new
+    # twitter:
+    #   version: v1
+    #   name: Twitter
+    #   site: https://api.twitter.com
+    #   client_id: mHhqM9ExNkeC1B2SvW5Q
+    #   secret_key: WvfddBQkw6sw2rP8XKIeKnwyfZa0rpdD2t17Nl4h9q8
+    #   # New OAuth v1.0 one-click sig in with Twitter http://apiwiki.twitter.com/Sign-in-with-Twitter
+    #   authorize_path: /oauth/authenticate
+    #   # Old OAuth v1.0 sig in.
+    #   # authorize_path: /oauth/authorize
+    #   access_token_path: /oauth/access_token
+    #   request_token_path: /oauth/request_token
+    #   user_path: /account/verify_credentials.json
 
 development:
   <<: *defaults
@@ -141,6 +158,5 @@ test: &test
   allow_outgoing_email: false
   asset_max_file_size: 1
   amazon_s3: false
-
 cucumber:
   <<: *test

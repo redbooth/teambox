@@ -6,21 +6,27 @@ class OauthController < ApplicationController
   # Starts the redirect authorization for OAuth
   def start
     @provider = params[:provider]
-    url = client.web_server.authorize_url(
-      :redirect_uri => oauth_callback_url,
-      :scope => 'email,offline_access')
 
-    redirect_to url
+    config = APP_CONFIG['oauth_providers'][@provider]
+    raise "Provider #{@provider} is missing. Please add the key and secret to the configuration file." unless config
+
+    oauth = Oauth.new(config)
+    redirect_to oauth.get_authorize_url(session, oauth_callback_url)
+    return
   end
 
-  # Returns the user from the OAuth provider
   def callback
     @provider = params[:provider]
     begin
-      @access_token = client.web_server.get_access_token(
-        params[:code], :redirect_uri => oauth_callback_url)
+      @config = APP_CONFIG['oauth_providers'][@provider]
+      raise "Provider #{@provider} is missing. Please add the key and secret to the configuration file." unless @config
 
-      load_profile
+      oauth = Oauth.new(@config)
+      access_token = oauth.get_access_token(session, params, oauth_callback_url)
+      user = oauth.get_user(access_token)
+
+      load_profile(user)
+
 
       if logged_in?
         if current_user.app_links.find_by_provider(@provider)
@@ -38,7 +44,11 @@ class OauthController < ApplicationController
           return redirect_to projects_path
         elsif User.find_by_email(@profile[:email])
           # TODO: locate existing user by email and ask to log in to link him
-          flash[:notice] = "The user #{@profile[:email]} has already a Teambox account.<br/>Log in and link it from your Settings panel."
+          flash[:notice] = t(:'oauth.user_already_exists_by_email', :email => @profile[:email])
+          return redirect_to login_path
+        elsif User.find_by_login(@profile[:login])
+          flash[:notice] = t(:'oauth.user_already_exists_by_login', :login => @profile[:login])
+          return redirect_to login_path
           redirect_to login_path
         else
           if signups_enabled?
@@ -89,23 +99,9 @@ class OauthController < ApplicationController
       !!self.current_user = user
     end
 
-    # Prepares a OAuth client
-    def client
-      @config = APP_CONFIG['oauth_providers'][@provider]
-      raise "Provider #{@provider} is missing. Please add the key and secret to the configuration file." unless @config
-      @client ||= OAuth2::Client.new(
-        @config['client_id'],
-        @config['secret_key'],
-        :site => @config['site'],
-        :authorize_path => @config['authorize_path'],
-        :access_token_path => @config['access_token_path'])
-    end
-
     # Loads user's OAuth profile in @profile
-    def load_profile
+    def load_profile(user)
       @profile = {}
-
-      user = JSON.parse(@access_token.get(@config['user_path']))
 
       case @provider
       when "github"
@@ -118,6 +114,8 @@ class OauthController < ApplicationController
         @profile[:company]    = user['company']
         @profile[:location]   = user['location']
         @profile[:original]   = user
+        # We search for an available login name
+        @profile[:login] = User.find_available_login(@profile[:login])
       when "facebook"
         @profile[:id]         = user['id']
         @profile[:email]      = user['email']
@@ -130,9 +128,92 @@ class OauthController < ApplicationController
           @profile[:login]    = user['link'].split('/').last
         end
         @profile[:original]   = user
+      when "twitter"
+        @profile[:id]         = user['id']
+        @profile[:login]      = user['screen_name']
+        @profile[:first_name] = user['name'].split.first
+        @profile[:last_name]  = user['name'].split.second
+        @profile[:location]   = user['location']
+        @profile[:biography]  = user['description']
+        @profile[:original]   = user
       else
         raise "Unsupported provider: '#{@provider}'"
       end
-      @profile[:login] = User.find_available_login(@profile[:login])
     end
+end
+
+
+
+class Oauth
+  def self.new(config)
+    @config = config
+    klass = case @config['version']
+      when 'v1'  then Oauthv1
+      when 'v2'  then Oauthv2
+      else raise "Unsupported OAuth version: '#{@config['version']}''"
+    end
+    klass == self ? super() : klass.new(@config)
+    return klass
+  end
+end
+
+class Oauthv1 < Oauth
+  def self.get_authorize_url(session, callback)
+    request_token = client.get_request_token(:oauth_callback => callback)
+    session[:request_token] = request_token.token
+    session[:request_token_secret] = request_token.secret
+    return request_token.authorize_url
+  end
+
+  def self.get_access_token(session, params, callback = nil)
+    @request_token = OAuth::RequestToken.new(client, session[:request_token], session[:request_token_secret])
+    @access_token = @request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
+  end
+
+  def self.get_user(access_token) 
+    @user = JSON.parse(client.request(:get,  @config['user_path'], 
+      access_token, { :scheme => :query_string }).body)
+  end
+
+  private
+    # Prepares an OAuth v1.0 client
+    def self.client
+      @client ||= OAuth::Consumer.new(
+        @config['client_id'],
+        @config['secret_key'],
+        :site => @config['site'],
+        :authorize_path => @config['authorize_path'],
+        :access_token_path => @config['access_token_path'],
+        :request_token_path => @config['request_token_path'])
+    end  
+end
+
+class Oauthv2 < Oauth
+  def self.get_authorize_url(session, callback)
+    url = client.web_server.authorize_url(
+      :redirect_uri => callback,
+      :scope => 'email,offline_access')
+
+    return url
+  end  
+
+  def self.get_access_token(session, params, callback = nil)
+    @access_token = client.web_server.get_access_token(
+      params[:code], :redirect_uri => callback)
+  end
+
+  def self.get_user(access_token)
+    @user = JSON.parse(access_token.get(@config['user_path']))
+  end
+
+  private
+  # Prepares an OAuth v2.0 client
+  def self.client
+      @client ||= OAuth2::Client.new(
+        @config['client_id'],
+        @config['secret_key'],
+        :site => @config['site'],
+        :authorize_path => @config['authorize_path'],
+        :access_token_path => @config['access_token_path'])
+  end
 end
