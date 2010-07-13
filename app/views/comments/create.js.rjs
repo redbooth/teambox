@@ -4,10 +4,14 @@ if @threaded && @activity # The comment was posted from the thread
     # Insert comment
     page.insert_html :bottom, :"thread_#{@activity.thread_id}_comments", :partial => 'comments/comment', :locals => { :comment => @comment, :threaded => true }
     # Reset form
-    if @activity.thread.is_a?(Task) && @activity.thread.closed?
-      page.replace_html :"thread_#{@activity.thread_id}_reply", ""
+    if @activity.thread.is_a?(Task)
+      if @activity.thread.closed?
+        page.replace_html :"thread_#{@activity.thread_id}_reply", ""
+      else
+        page.replace_html :"thread_#{@activity.thread_id}_reply", new_comment_form(@activity.project, @new_comment, :target => @task, :thread => true)
+      end
     else
-      page.replace_html :"thread_#{@activity.thread_id}_reply", new_comment_form(@activity.project, @new_comment, :target => @task, :thread => true)
+      page << "$$('#thread_#{@activity.thread_id}_reply #new_comment').first().reset()"
     end
     # Highlight comment
     page["comment_#{@comment.id}"].visual_effect :highlight, :duration => 2
