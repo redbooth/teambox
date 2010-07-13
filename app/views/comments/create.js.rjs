@@ -1,6 +1,5 @@
-
-if @threaded && @activity # The comment was posted from the thread
-  if @comment.errors.empty?
+if @threaded # The comment was posted from the thread
+  if @comment.errors.empty? && @activity
     # Insert comment
     page.insert_html :bottom, :"thread_#{@activity.thread_id}_comments", :partial => 'comments/comment', :locals => { :comment => @comment, :threaded => true }
     # Reset form
@@ -15,6 +14,8 @@ if @threaded && @activity # The comment was posted from the thread
     end
     # Highlight comment
     page["comment_#{@comment.id}"].visual_effect :highlight, :duration => 2
+  else
+    page.show_form_errors(@comment,'new_comment')
   end
 else
   # Fetch new comments after post and render them
