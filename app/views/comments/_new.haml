@@ -1,4 +1,5 @@
 - thread = defined?(thread) && thread
+- thread_id = target ? "_#{target.class.to_s}_#{target.id}" : ""
 - form_for form_url, :html => {:update_id => js_id(nil,Comment.new), :multipart => true, :method => :post} do |f|
   = micro_avatar(current_user)
   .body.text_area
@@ -39,16 +40,18 @@
           .status.rejected#status_rejected
             = f.radio_button :status, Task::STATUSES[:rejected], :checked => (target.status == Task::STATUSES[:rejected])
             = t('tasks.status.rejected')
-    .submit{ :id => js_id(:new_submit,Comment.new) }
+    .submit{ :id => "comment_new#{thread_id}_submit" }
       = hidden_field_tag :original_controller, controller_name
       = hidden_field_tag :thread, thread
+      - if target
+        = hidden_field_tag :thread_id, "#{target.class.to_s}_#{target.id}"
       %span.showPreview
         %button{}
           %span.default= "Preview"
           %span.showing{:style => "display:none"}= "..."
         %a{:href => '#', :style => 'display:none'}= "Close"
       = f.submit t('.submit')
-    = loading_image(js_id(:new_loading,Comment.new))
+    = loading_image("comment_new#{thread_id}_loading")
     .clear
 
 = make_autocompletable('comment_body', comment.project)

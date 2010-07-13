@@ -35,20 +35,23 @@ Comment = {
   },
   create: function(form) {
     var update_id = form.readAttribute('update_id');
+    var thread_id_ = form.down('#thread_id');
+    thread_id = thread_id_ ? '_' + thread_id_.getValue() : "";
+
     new Ajax.Request(form.readAttribute('action'), {
       asynchronous: true,
       evalScripts: true,
       method: form.readAttribute('method'),
       parameters: form.serialize(),
       onLoading: function() {
-        Comment.setLoading('comment_new', true);
-        $('new_comment').closePreview();
+        Comment.setLoading('comment_new' + thread_id, true);
+        form.closePreview();
       },
       onFailure: function(response) {
-        Comment.setLoading('comment_new', false);
+        Comment.setLoading('comment_new' + thread_id, false);
       },
       onSuccess: function(response){
-        Comment.setLoading('comment_new', false);
+        Comment.setLoading('comment_new' + thread_id, false);
         if ($(document.body).hasClassName('show_tasks'))
           TaskList.updatePage('column', TaskList.restoreColumn);
       }
