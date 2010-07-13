@@ -15,7 +15,7 @@ if @threaded # The comment was posted from the thread
     # Highlight comment
     page["comment_#{@comment.id}"].visual_effect :highlight, :duration => 2
   else
-    page.show_form_errors(@comment,'new_comment')
+    page.show_form_errors(@comment,"thread_#{@comment.target.class.to_s}_#{@comment.target.id}_reply")
   end
 else
   # Fetch new comments after post and render them
