@@ -1,4 +1,5 @@
 - edit_comment_form_for(comment) do |f|
+  = hidden_field_tag 'thread', (@threaded ? 'true' : 'false')
   = comment_fields(f,comment,true)
   .submit{:id => "comment_#{comment.id}_submit"}
     = f.submit t('.submit')

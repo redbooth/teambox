@@ -7,7 +7,6 @@ if @activities.any?
     page.insert_html :top, :activities, show_threaded_activity(thread)
   end
 
-
   page[:activities].visual_effect :highlight, :duration => 3
   
   page << reset_autorefresh

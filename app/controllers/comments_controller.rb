@@ -39,6 +39,11 @@ class CommentsController < ApplicationController
     end
 
     respond_to do |f|
+      if @threaded = params[:thread] == "true" # Comment from Overview
+        @activity = Activity.first(:conditions => {:target_type => "Comment", :target_id => @comment.id})
+        redirect_path = request.referer
+      end
+
       if !@comment.new_record?
         # success!
         f.html { redirect_to redirect_path }
@@ -56,6 +61,7 @@ class CommentsController < ApplicationController
   end
 
   def show
+    @threaded = params[:thread] == "true"
     respond_to do |f|
       f.js
       f.xml { render :xml => @comment.to_xml }
@@ -66,11 +72,13 @@ class CommentsController < ApplicationController
 
   def edit
     @edit_part = params[:part]
+    @threaded = params[:thread] == "true"
     respond_to{|f|f.js}
   end
 
   def update
     @has_permission and @saved = @comment.update_attributes(params[:comment])
+    @threaded = params[:thread] == "true"
     
     if @saved
       respond_to do |f|

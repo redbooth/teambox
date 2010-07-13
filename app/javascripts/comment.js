@@ -35,20 +35,23 @@ Comment = {
   },
   create: function(form) {
     var update_id = form.readAttribute('update_id');
+    var thread_id_ = form.down('#thread_id');
+    thread_id = thread_id_ ? '_' + thread_id_.getValue() : "";
+
     new Ajax.Request(form.readAttribute('action'), {
       asynchronous: true,
       evalScripts: true,
       method: form.readAttribute('method'),
       parameters: form.serialize(),
       onLoading: function() {
-        Comment.setLoading('comment_new', true);
-        $('new_comment').closePreview();
+        Comment.setLoading('comment_new' + thread_id, true);
+        form.closePreview();
       },
       onFailure: function(response) {
-        Comment.setLoading('comment_new', false);
+        Comment.setLoading('comment_new' + thread_id, false);
       },
       onSuccess: function(response){
-        Comment.setLoading('comment_new', false);
+        Comment.setLoading('comment_new' + thread_id, false);
         if ($(document.body).hasClassName('show_tasks'))
           TaskList.updatePage('column', TaskList.restoreColumn);
       }
@@ -99,10 +102,12 @@ Comment = {
 
   cancelEdit: function(form) {
     var update_id = form.readAttribute('update_id');
+    var has_threads = form.up('.thread') ? 'true' : 'false';
     new Ajax.Request(form.readAttribute('action_cancel'), {
       method: 'get',
       asynchronous: true,
       evalScripts: true,
+      parameters: {'thread': has_threads},
       onLoading: function() {
         Comment.setLoading(update_id, true);
       },
@@ -115,10 +120,12 @@ Comment = {
   },
 
   edit: function(element, url) {
+    var has_threads = element.up('.thread') ? 'true' : 'false';
     new Ajax.Request(url, {
       method: 'get',
       asynchronous: true,
       evalScripts: true,
+      parameters: {'thread': has_threads},
       onLoading: function() {
         Actions.setLoading(element, true);
       },
@@ -165,6 +172,13 @@ Comment = {
           Comment.mark_status($('new_comment').down('.hold'))
         else  
           Comment.mark_status(e.up('.status'))
+      }
+    })
+  },
+  paint_status_boxes: function(){
+    $$('.statuses input[type=radio]').each(function(el) {
+      if (el.checked) {
+        el.up('.status').addClassName('active')
       }
     })
   },
@@ -309,12 +323,19 @@ document.on('dom:loaded', function() {
       el.up('.status').addClassName('active')
     }
   })
+  $$('.thread form.new_comment .extra').each(function(el) {
+    el.hide()
+  })
 })
 
 document.on('click', 'form.new_comment #comment_upload_link', function(e) {
   if (!e.isMiddleClick()) {
     e.preventDefault()
-    this.next('.upload_area').show()
+    this.up().next('.upload_area').show()
     this.hide()
   }
+})
+
+document.on('focusin', '.thread form.new_comment #comment_body', function(e) {
+  this.up('form').down('.extra').show()
 })
