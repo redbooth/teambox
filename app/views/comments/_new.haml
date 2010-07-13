@@ -1,11 +1,15 @@
+- thread = defined?(thread) && thread
 - form_for form_url, :html => {:update_id => js_id(nil,Comment.new), :multipart => true, :method => :post} do |f|
+  = micro_avatar(current_user)
   .body.text_area
     = comment_text_area(f, target)
     #comment_body_list.autocomplete{:style => 'display:none'}
     .previewBox.textilized{:style => 'display:none'}
   .extra
     - if comment.project
-      = link_to content_tag(:span, t('uploads.comment_upload_link')), new_project_upload_path(comment.project), :class => 'add_button', :id => 'comment_upload_link'
+      %span.attach_label
+        Attach:
+      = link_to content_tag(:span, t('uploads.comment_upload_link')), new_project_upload_path(comment.project), :class => 'attach_button attach_file', :id => 'comment_upload_link'
       = render 'uploads/upload_area', :comment => comment, :form => f
     - if target
       = last_comment_input
@@ -34,6 +38,7 @@
             = t('tasks.status.rejected')
     .submit{ :id => js_id(:new_submit,Comment.new) }
       = hidden_field_tag :original_controller, controller_name
+      = hidden_field_tag :thread, thread
       %span.showPreview
         %button{}
           %span.default= "Preview"
@@ -43,4 +48,4 @@
     = loading_image(js_id(:new_loading,Comment.new))
     .clear
 
-= make_autocompletable('comment_body')
+= make_autocompletable('comment_body', comment.project)

@@ -11,16 +11,25 @@ span.comments_count
   span.comments_count
     padding: 0
     display: inline-block
-    width: 20px
+    width: 16px
     text-align: center
 
 form#new_comment
   padding-bottom: 3px
   margin-bottom: 30px
+  span.attach_label
+    float: left
+    font-size: 13px
+    line-height: 26px
+    color: rgb(80, 80, 80)
+    margin-right: 10px
+  .micro_avatar
+    +rounded(3px)
+    margin-top: 2px
   .body
-    margin: 5px 0
+    margin: 5px 0 5px 30px
     textarea
-      width: 626px
+      width: 594px
       margin-bottom: 0px
       font-size: 13px
     .previewBox
@@ -28,11 +37,24 @@ form#new_comment
       padding: 4px
       border: solid 2px rgb(235, 235, 235)
   .comment_body
-    height: 4em
+    height: 1.4em
     color: rgb(0, 0, 0)
   .add_button
     float: left
     margin-bottom: 0
+  .attach_button
+    float: left
+    margin-bottom: 0
+    margin-right: 10px
+    display: block
+    width: 16px
+    height: 16px
+    span
+      display: none
+  .attach_file
+    background: url('/images/icons/attach.png') no-repeat right
+  .attach_time
+    background: url('/images/icons/time_add.png') no-repeat right
   .hours
     padding-left: 1px
     padding-right: 10px

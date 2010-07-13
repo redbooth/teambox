@@ -309,6 +309,9 @@ document.on('dom:loaded', function() {
       el.up('.status').addClassName('active')
     }
   })
+  $$('.thread form.new_comment .extra').each(function(el) {
+    el.hide()
+  })
 })
 
 document.on('click', 'form.new_comment #comment_upload_link', function(e) {
@@ -317,4 +320,8 @@ document.on('click', 'form.new_comment #comment_upload_link', function(e) {
     this.next('.upload_area').show()
     this.hide()
   }
+})
+
+document.on('focusin', '.thread form.new_comment #comment_body', function(e) {
+  this.up('form').down('.extra').show()
 })
