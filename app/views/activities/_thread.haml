@@ -19,7 +19,7 @@
     - if thread.comments_count > 2
       %span.more_comments
         = link_to t('activities.thread.more_comments', :count => thread.comments_count - 2), thread_link
-    - thread.comments.all(:order => "id DESC", :limit => 2).reverse.each do |comment|
+    - thread.comments.last_two.all.reverse.each do |comment|
       = render :partial => 'comments/comment', :locals => { :comment => comment, :threaded => true }
   .reply
     = new_comment_form(thread.project, thread.project.comments.new, :target => thread, :thread => true) unless thread.is_a?(Task) && thread.closed?
