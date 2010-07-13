@@ -56,6 +56,7 @@ ActionController::Routing::Routes.draw do |map|
   map.activities 'activities.:format',               :controller => 'activities', :action => 'show',      :method => :get
   map.show_new   'activities/:id/show_new.:format',  :controller => 'activities', :action => 'show_new',  :method => :get
   map.show_more  'activities/:id/show_more.:format', :controller => 'activities', :action => 'show_more', :method => :get
+  map.show_thread  'activities/:id/show_thread.:format', :controller => 'activities', :action => 'show_thread', :method => :get
 
   map.project_archived 'projects/archived.:format',  :controller => 'projects', :action => 'index', :sub_action => 'archived'
 

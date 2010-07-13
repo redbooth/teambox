@@ -43,6 +43,22 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def show_thread
+    if params[:thread_type] == "Task"
+      target = Task.find(params[:id])
+    else
+      target = Conversation.find(params[:id])
+    end
+    @comments = target ? target.comments.all : []
+    respond_to do |format|
+      format.html { redirect_to projects_path }
+      format.js
+      format.xml  { render :xml     => @comments.to_xml }
+      format.json { render :as_json => @comments.to_xml }
+      format.yaml { render :as_yaml => @comments.to_xml }
+    end
+  end
+
   private
     # Assigns @target, depending of the value of :project_id in the URL
     # * All projects if it's not defined
