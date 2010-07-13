@@ -8,8 +8,11 @@
   .extra
     - if comment.project
       %span.attach_label
-        Attach:
-      = link_to content_tag(:span, t('uploads.comment_upload_link')), new_project_upload_path(comment.project), :class => 'attach_button attach_file', :id => 'comment_upload_link'
+        = t('comments.attach.tooltip')
+      .has_tooltip
+        .tooltip.attach
+          = t('uploads.tooltip')
+        = link_to content_tag(:span, t('uploads.comment_upload_link')), new_project_upload_path(comment.project), :class => 'attach_button attach_file', :id => 'comment_upload_link'
       = render 'uploads/upload_area', :comment => comment, :form => f
     - if target
       = last_comment_input
