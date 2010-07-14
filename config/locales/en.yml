@@ -763,6 +763,7 @@ en:
       confirm_delete: Are you sure you want to remove this person from the project?
     errors:
       user_or_email: "User not found. Enter his username or email."
+      users_or_emails: "Invalid usernames or email addresses"
     column:
       select_project: Select a project
       no_contacts: There are no people available to invite.
