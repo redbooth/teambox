@@ -202,8 +202,13 @@ sl:
     print: Natisni
     rename: Preimenuj
     save: Shrani
+<<<<<<< HEAD:config/locales/sl.yml
     show_more: "Prikaži še %{number} več"
     tasks:
+=======
+    show_more: "Prikaži več"
+    tasks: 
+>>>>>>> e788ff30d34ef2b1d811a93c9a689321e01636af:config/locales/si.yml
       one: "1 opravilo"
       other: "%{count} opravil"
   confirm:

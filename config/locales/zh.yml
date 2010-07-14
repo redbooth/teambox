@@ -191,7 +191,7 @@ zh:
     prev: 上一个
     print: 打印此页
     save: 保存
-    show_more: "显示%{number}的更多信息"
+    show_more: "显示更多"
   confirm: 
     delete_page: 您确信要删除此页面？
     delete_task: 您确信要删除此任务？

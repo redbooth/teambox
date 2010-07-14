@@ -240,7 +240,7 @@ ja:
     print: このページを印刷する
     rename: 名前の変更
     save: 保存
-    show_more: "次の%{number}を見る"
+    show_more: "さらに詳しく"
     tasks: 
       one: "1 タスク"
       other: "%{count} タスク"

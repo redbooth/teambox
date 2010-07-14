@@ -235,7 +235,7 @@ fr:
     prev: Précédent
     print: "Imprimer cette page"
     save: Enregistrer
-    show_more: "Afficher les %{number} suivants"
+    show_more: "Voir plus"
     tasks: 
       one: "1 tâche"
       other: "%{count} tâches"

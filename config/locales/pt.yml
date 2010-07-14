@@ -232,7 +232,7 @@ pt:
     prev: Anterior
     print: "Imprimir esta página"
     save: Salvar
-    show_more: "Ver %{number} mais"
+    show_more: "Ver mais"
     tasks: 
       one: "1 tarefa"
       other: "%{count} tarefas"
