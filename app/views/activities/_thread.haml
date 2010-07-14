@@ -1,6 +1,7 @@
 - thread = activity.thread
+- thread_id = "#{thread.class.to_s}_#{thread.id}"
 - thread_link = thread.is_a?(Task) ? [thread.task_list.project, thread.task_list, thread] : [thread.project, thread]
-.thread{ :id => "thread_#{thread.class.to_s}_#{thread.id}" }
+.thread{ :id => "thread_#{thread_id}" }
   .title
     .info
       = thumb_avatar(thread.user)
@@ -15,9 +16,15 @@
       %span.project
         = t('common.in_project')
         = link_to thread.project, thread.project
-  .comments
+  .comments{ :id => "thread_#{thread_id}_comments" }
     - if thread.comments_count > 2
       %span.more_comments
-        = link_to t('activities.thread.more_comments', :count => thread.comments_count - 2), thread_link
-    - thread.comments.all(:order => "id DESC", :limit => 2).reverse.each do |comment|
+        = link_to_remote t('activities.thread.more_comments', :count => thread.comments_count - 2),
+          :url => show_thread_path(thread, :thread_type => thread.class.to_s),
+          :method => :get,
+          :loading => full_thread_loading(thread_id)
+        = loading_image("#{thread_id}_more_comments")
+    - thread.comments.last_two.all.reverse.each do |comment|
       = render :partial => 'comments/comment', :locals => { :comment => comment, :threaded => true }
+  .reply{ :id => "thread_#{thread_id}_reply" }
+    = new_comment_form(thread.project, thread.project.comments.new, :target => thread, :thread => true) unless thread.is_a?(Task) && thread.closed?
