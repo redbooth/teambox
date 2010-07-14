@@ -83,8 +83,11 @@ class InvitationsController < ApplicationController
   end
   
   def destroy
-    @invitation = Invitation.find params[:id]
-    @invitation.destroy
+    begin
+      @invitation = Invitation.find params[:id]
+      @invitation.destroy
+    rescue
+    end
     
     respond_to do |wants|
       wants.html {
@@ -166,14 +169,16 @@ class InvitationsController < ApplicationController
     def admins_target?
       if !(@invite_target.owner?(current_user) or @invite_target.admin?(current_user))
           respond_to do |f|
-            flash[:error] = t('common.not_allowed')
+            message = t('common.not_allowed')
             f.html {
+              flash[:error] = message
               if @current_project
                 redirect_to project_path(@current_project)
               else
                 redirect_to group_path(@current_group)
               end 
             }
+            f.js { render :text => "alert('#{message}')" }
           end
         return false
       end

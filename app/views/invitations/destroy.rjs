@@ -1,4 +1,4 @@
-invitation_id = "invitation_#{@invitation.id}"
+invitation_id = "invitation_#{params[:id]}"
 fade_duration = 0.5
 
 page.visual_effect :fade, invitation_id, :duration => fade_duration
