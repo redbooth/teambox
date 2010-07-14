@@ -43,37 +43,28 @@ class InvitationsController < ApplicationController
   end
   
   def create
-    if params[:login] # using a link to invite directly a user
-      @user = User.find_by_login(params[:login])
-      user_or_email = @user.login
-      role = 2
-    elsif params[:invitation]
+    if params[:invitation]
       user_or_email = params[:invitation][:user_or_email]
       role = params[:invitation][:role] || 2
+      
+      @targets = user_or_email.extract_emails
+      @targets = user_or_email.split if @targets.empty?
+      
+      @invitations = @targets.map { |user_or_email| make_invitation(user_or_email, role) }
     else
       flash[:error] = t('invitations.errors.invalid')
       redirect_to target_people_path
       return
     end
     
-    @invitation = @invite_target.invitations.new(:user_or_email => user_or_email.strip)
-    @invitation.role = role
-    @invitation.user = current_user
-
     respond_to do |f|
-      if @invitation.save
-        @user = @invitation.invited_user
+      if @saved
         f.html { redirect_to target_people_path }
         f.m    { redirect_to target_people_path }
-        f.js
       else
-        flash[:error] = @invitation.errors.full_messages.first
-        f.html { redirect_to target_people_path }
-        f.m    { redirect_to target_people_path }
-        f.js {
-          name = @user ? @user.name : 'user'
-          render :text => "alert('Error inviting #{name}. Maybe you are trying to invite an existing user.');"
-        }
+        message = @invitations.length == 1 ? @invitations.first.errors.full_messages.first : t('people.errors.users_or_emails')
+        f.html { flash[:error] = message; redirect_to target_people_path }
+        f.m    { flash[:error] = message; redirect_to target_people_path }
       end
     end
   end
@@ -162,6 +153,14 @@ class InvitationsController < ApplicationController
       else
         group_path(@current_group)
       end
+    end
+    
+    def make_invitation(user_or_email, role)
+      invitation = @invite_target.invitations.new(:user_or_email => user_or_email.strip)
+      invitation.role = role
+      invitation.user = current_user
+      @saved = invitation.save unless @saved
+      invitation
     end
 
     def admins_target?
