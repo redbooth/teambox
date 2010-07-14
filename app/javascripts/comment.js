@@ -102,10 +102,12 @@ Comment = {
 
   cancelEdit: function(form) {
     var update_id = form.readAttribute('update_id');
+    var has_threads = form.up('.thread') ? 'true' : 'false';
     new Ajax.Request(form.readAttribute('action_cancel'), {
       method: 'get',
       asynchronous: true,
       evalScripts: true,
+      parameters: {'thread': has_threads},
       onLoading: function() {
         Comment.setLoading(update_id, true);
       },
@@ -118,10 +120,12 @@ Comment = {
   },
 
   edit: function(element, url) {
+    var has_threads = element.up('.thread') ? 'true' : 'false';
     new Ajax.Request(url, {
       method: 'get',
       asynchronous: true,
       evalScripts: true,
+      parameters: {'thread': has_threads},
       onLoading: function() {
         Actions.setLoading(element, true);
       },
