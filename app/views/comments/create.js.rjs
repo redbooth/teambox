@@ -1,7 +1,12 @@
 if @new_conversation
-  page.insert_html :top, :activities, show_threaded_activity(@comment.activity)
-  page["thread_#{@comment.activity.thread_id}"].visual_effect :highlight, :duration => 3
-  page << "$('new_comment').reset()"
+  if @comment.errors.empty?
+    page.insert_html :top, :activities, show_threaded_activity(@comment.activity)
+    page["thread_#{@comment.activity.thread_id}"].visual_effect :highlight, :duration => 3
+    page << "$('new_comment').reset()"
+    page.remove_form_errors(@comment, "new_comment")
+  else
+    page.show_form_errors(@comment, "new_comment")
+  end
 elsif @threaded # The comment was posted from the thread
   if @comment.errors.empty? && @comment.activity
     # Insert comment
