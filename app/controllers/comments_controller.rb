@@ -23,8 +23,10 @@ class CommentsController < ApplicationController
         comment.uploads = @comment.uploads
         comment.save
         @comment = comment
-        @new_conversation = true
+      else
+        @comment.errors.add(:body, :no_body_generic)
       end
+      @new_conversation = true
     else
       @comment.save
     end
