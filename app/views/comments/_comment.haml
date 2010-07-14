@@ -1,5 +1,6 @@
 - threaded = defined?(threaded) && threaded
-- cache_editable_comment(comment, threaded) do
+- simpleconv = defined?(simpleconv) && simpleconv
+- cache_editable_comment(comment, threaded, simpleconv) do
   .comment{:id => "comment_#{comment.id}", :immutable_at => datetime_ms(comment.created_at + 15.minutes) }
     .info
       - if threaded
@@ -23,7 +24,7 @@
               - if comment.can_destroy?(current_user)
                 = delete_comment_link(comment)
       .name
-        - if threaded
+        - if threaded || simpleconv
           = link_to(comment.user.name, comment.user)
         -else
           = activity_title(comment)
