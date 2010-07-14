@@ -50,6 +50,7 @@ class ActivitiesController < ApplicationController
       target = Conversation.find(params[:id])
     end
     @comments = target ? target.comments.all : []
+    @comments.pop if target.is_a?(Conversation) and target.simple
     respond_to do |format|
       format.html { redirect_to projects_path }
       format.js
