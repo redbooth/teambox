@@ -45,6 +45,8 @@
       = hidden_field_tag :thread, thread
       - if target
         = hidden_field_tag :thread_id, "#{target.class.to_s}_#{target.id}"
+      %span.help
+        = formatting_documentation_link
       %span.showPreview
         %button{}
           %span.default= "Preview"
