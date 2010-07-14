@@ -14,7 +14,21 @@ class CommentsController < ApplicationController
       @comment = current_user.new_comment(current_user,@target,params[:comment])
     end
 
-    @comment.save
+    # If this is a status update, we'll turn it in a new `simple` Conversation
+    if @comment.target.is_a?(Project)
+      conversation = @current_project.new_conversation(current_user, :simple => true )
+      conversation.body = @comment.body
+      if conversation.save
+        comment = conversation.comments.last
+        comment.uploads = @comment.uploads
+        comment.save
+        @comment = comment
+        @new_conversation = true
+      end
+    else
+      @comment.save
+    end
+
     @target = @comment.target
 
     # Evaluate target
@@ -39,8 +53,8 @@ class CommentsController < ApplicationController
     end
 
     respond_to do |f|
-      if @threaded = params[:thread] == "true" # Comment from Overview
-        @activity = Activity.first(:conditions => {:target_type => "Comment", :target_id => @comment.id})
+      if (@threaded = params[:thread] == "true") || @new_conversation # Comment from Overview
+        @comment.activity = Activity.first(:conditions => {:target_type => "Comment", :target_id => @comment.id})
         redirect_path = request.referer
       end
 

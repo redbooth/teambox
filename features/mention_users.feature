@@ -20,10 +20,10 @@ Feature: Send email to users mentioned in comments
     And I wait for 1 second
     Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"
     When "pablo@teambox.com" opens the email with subject "surpass-basecamp"
-    Then he should see "Comentario en la pared del proyecto" in the email body
+    Then he should see "Conversación" in the email body
     And "james.urquhart@gmail.com" should receive an email with subject "surpass-basecamp"
     When "james.urquhart@gmail.com" opens the email with subject "surpass-basecamp"
-    Then he should see "Comment on project's wall" in the email body
+    Then he should see "Conversation:" in the email body
 
   Scenario: Mention all users by using @all in a project comment
     Given a project exists with name: "Surpass Basecamp"
@@ -35,10 +35,10 @@ Feature: Send email to users mentioned in comments
     And I wait for 1 second
     Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"
     When "pablo@teambox.com" opens the email with subject "surpass-basecamp"
-    Then he should see "Comentario en la pared del proyecto" in the email body
+    Then he should see "Conversación:" in the email body
     And "james.urquhart@gmail.com" should receive an email with subject "surpass-basecamp"
     When "james.urquhart@gmail.com" opens the email with subject "surpass-basecamp"
-    Then he should see "Comment on project's wall" in the email body
+    Then he should see "Conversation" in the email body
 
   Scenario: Mention all users by using @all in a task comment
     Given a project exists with name: "Surpass Basecamp"

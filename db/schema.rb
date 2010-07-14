@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100614131154) do
+ActiveRecord::Schema.define(:version => 20100714113347) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20100614131154) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "simple",          :default => false
   end
 
   add_index "conversations", ["deleted_at"], :name => "index_conversations_on_deleted_at"
