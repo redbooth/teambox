@@ -202,6 +202,12 @@ module ActivitiesHelper
     end
   end
 
+  def full_thread_loading(thread_id)
+    update_page do |page|
+      page["#{thread_id}_more_comments"].show
+    end
+  end
+
   def show_more(after)
     update_page do |page|
       page['activities'].insert list_activities(@activities)

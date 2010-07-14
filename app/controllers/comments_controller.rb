@@ -39,6 +39,11 @@ class CommentsController < ApplicationController
     end
 
     respond_to do |f|
+      if @threaded = params[:thread] == "true" # Comment from Overview
+        @activity = Activity.first(:conditions => {:target_type => "Comment", :target_id => @comment.id})
+        redirect_path = request.referer
+      end
+
       if !@comment.new_record?
         # success!
         f.html { redirect_to redirect_path }

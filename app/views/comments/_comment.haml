@@ -2,7 +2,10 @@
 - cache_editable_comment(comment, threaded) do
   .comment{:id => "comment_#{comment.id}", :immutable_at => datetime_ms(comment.created_at + 15.minutes) }
     .info
-      = micro_avatar(comment.user)
+      - if threaded
+        = micro_avatar(comment.user)
+      - else
+        = thumb_avatar(comment.user)
     .block
       - unless rss?
         .actions_menu
