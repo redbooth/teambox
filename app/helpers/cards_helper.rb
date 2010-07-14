@@ -1,7 +1,9 @@
 module CardsHelper
 
   def options_for_card_type(types)
-    types.to_enum(:each_with_index).collect{|type,i|[type,i]}
+    types.to_enum(:each_with_index).collect do |type,i|
+       [t("cards.card_types.#{type.downcase}", :default => type),i]
+    end
   end
 
   def render_card(card)

@@ -133,6 +133,14 @@ en:
       ims: IM
       social_networks: Social Networks
       vcard: Download vCard
+    card_types:
+      business: Business
+      fax: Fax
+      home: Home
+      mobile: Mobile
+      other: Other
+      personal: Personal
+      work: Work
     field:
       add_phone_numbers: Phone Number
       add_email_addresses: Add Email
@@ -529,6 +537,11 @@ en:
       assigned_to: People
       tasks: Tasks
       projects: Projects
+    filter_assigned:
+      anybody: "Anybody"
+      my_tasks: "My tasks"
+    filter_project:
+      all: "All projects"
 
   tasks:
     errors:
@@ -585,6 +598,9 @@ en:
       rejected: rejected
     my_tasks:
       my_tasks: My tasks for all projects
+    overview_box:
+      title: "This task"
+      status: "Status"
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?
@@ -809,6 +825,10 @@ en:
       confirm_delete: Are you sure you want to delete this comment?
       convert_task: Convert to task
       edit: Edit comment
+    preview:
+      close: Close
+      preview: Preview
+      showing: "..."
   example_projects:
     new:
       learn: Learn by example!
@@ -1164,6 +1184,12 @@ en:
       invitation: Invitation
       upload: Upload
     attributes:
+      address:
+        city: Ciudad
+        country: País
+        state: Provincia
+        street: Calle
+        zip: CP
       card:
         street: Street
         city: City
