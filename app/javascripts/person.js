@@ -1,9 +1,5 @@
 hideBySelector('#people .edit_person')
 
-document.on('ajax:success', '#people a[data-method=delete]', function(e, link) {
-  link.up('.person').remove()
-})
-
 document.on('click', '#people a[href="#edit"]', function(e) {
   e.preventDefault()
   var parent = this.up('.person')

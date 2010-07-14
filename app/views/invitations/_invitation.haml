@@ -15,4 +15,4 @@
       = loading('resend_invitation', invitation.id)
       = t('common.or')
       %span.discard= link_to t('invitations.invitation.discard'),
-        polymorphic_path([target, invitation]), 'data-method' => 'delete'
+        polymorphic_path([target, invitation]), 'data-method' => 'delete', 'data-remote' => true
