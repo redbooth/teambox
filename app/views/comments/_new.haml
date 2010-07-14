@@ -49,9 +49,9 @@
         = formatting_documentation_link
       %span.showPreview
         %button{}
-          %span.default= "Preview"
-          %span.showing{:style => "display:none"}= "..."
-        %a{:href => '#', :style => 'display:none'}= "Close"
+          %span.default= t("comments.preview.preview")
+          %span.showing{:style => "display:none"}= t('comments.preview.showing')
+        %a{:href => '#', :style => 'display:none'}= t("comments.preview.close")
       = f.submit t('.submit')
     = loading_image("comment_new#{thread_id}_loading")
     .clear

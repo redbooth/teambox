@@ -1,7 +1,13 @@
 --- 
 es: 
   activerecord: 
-    attributes: 
+    attributes:
+      address:
+        city: Ciudad
+        country: País
+        state: Provincia
+        street: Calle
+        zip: CP
       card: 
         city: Ciudad
         country: País
@@ -181,6 +187,14 @@ es:
       social_networks: "Redes sociales"
       vcard: "Descargar vCard"
       websites: "Sitios web"
+    card_types:
+      business: Negocios
+      fax: Fax
+      home: Casa
+      mobile: Móvil
+      other: Otro
+      personal: Personal
+      work: Trabajo
     field: 
       add_addresses: "Añadir dirección"
       add_email_addresses: "Añadir email"
@@ -188,7 +202,9 @@ es:
       add_phone_numbers: "Añadir teléfono"
       add_social_networks: "Añadir perfil"
       add_websites: "Añadir web"
-  comments: 
+  comments:
+    attach:
+      tooltip: Adjuntar
     actions: 
       confirm_delete: "Seguro que quieres borrar este comentario?"
       convert_task: "Convertir en una tarea"
@@ -215,6 +231,10 @@ es:
       submit: Publicar
       task: "Define qué debe hacerse en un comentario."
       task_list: "Comparte ideas para esta lista de tareas. Para crear y asignar tareas, usa la barra lateral."
+    preview:
+      close: Cerrar
+      preview: Previsualizar
+      showing: "..."
   common: 
     accept: Aceptar
     and: "y"
@@ -785,7 +805,12 @@ es:
     comments: Entradas
     entry_hours: hrs
     entry_total: Total
+    filter_assigned:
+      anybody: "Cualquiera"
+      my_tasks: "Mis tareas"
     filter_by: "Filtrar por"
+    filter_project:
+      all: "Todos los proyectos"
     filters: 
       assigned_to: Usuarios
       projects: Proyectos
@@ -1296,6 +1321,9 @@ es:
       submit: Crear
       title: "Nueva tarea"
     overdue: "%{days} días tarde"
+    overview_box:
+      title: "Esta Tarea"
+      status: "Estado"
     show: 
       title: "Tarea: %{name}"
     status: 
@@ -1337,6 +1365,7 @@ es:
       item1: "<b>Más capacidad</b>. Sube archivos de cualquier tamaño y olvida las limitaciones del email."
       item2: "<b>Versiones</b>. Sube versiones nuevas de archivos y guarda el histórico."
       item3: "<b>Siempre disponibles</b>. Los archivos permanecen en Teambox para que puedas consultarlos en el futuro."
+    tooltip: Subir fichero
     upload: 
       download: Descargar
       on_: en
