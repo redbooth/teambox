@@ -24,7 +24,7 @@ Project info
 Installation
 ------------
 
-Hop to [our wiki](http://wiki.github.com/micho/teambox/ "Teambox wiki") to get detailed information on
+Hop to [our wiki](http://wiki.github.com/teambox/teambox/ "Teambox wiki") to get detailed information on
 installing Teambox.
 
 [teambox]: http://teambox.com
