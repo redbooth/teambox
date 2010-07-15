@@ -213,7 +213,7 @@ es:
       conversation: "Envía un mensaje al resto del grupo."
       project: "¿Qué estás haciendo? Comparte ideas, enlaces, logros."
       submit: Publicar
-      task: "Define qué debe hacerse en un comentario. Asigna un responsable. Publica actualizaciones. Adjunta resultados."
+      task: "Define qué debe hacerse en un comentario."
       task_list: "Comparte ideas para esta lista de tareas. Para crear y asignar tareas, usa la barra lateral."
   common: 
     accept: Aceptar

@@ -161,7 +161,7 @@ nl:
       conversation: "Zend een bericht naar de rest van de groep."
       project: "Wat bent u aan het doen? Deel ideeën, links, updates."
       submit: Reactie
-      task: "Defineer wat er gedaan moet worden door commentaar te geven. Wijs deze taak toe aan iemand. Plaats updates. Bevestig resultaten."
+      task: "Defineer wat er gedaan moet worden door commentaar te geven."
       task_list: "Deel ideeën voor deze takenlijst. Om taken aan te maken en toe te wijzen, maak gebruik van de sidebar."
   common: 
     accept: Accepteren
