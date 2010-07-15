@@ -16,9 +16,9 @@ Project info
 ------------
 
 - Official website: <http://teambox.com/>
-- Code repository: <http://github.com/micho/teambox>
+- Code repository: <http://github.com/teambox/teambox>
 - Community mailing list: <http://teambox.com/group>
-- Open-source contributors: <http://github.com/micho/teambox/contributors>
+- Open-source contributors: <http://github.com/teambox/teambox/contributors>
 - License: [GNU Affero GPL 3][license]
 
 Installation
