@@ -16,7 +16,7 @@ Feature: Invite a user to a project
     And I should not see "Transfer Ownership"
     When I fill in "invitation_user_or_email" with "invalid user"
     And I press "Invite"
-    Then I should see "User or email is not a valid username or email"
+    Then I should see "Invalid usernames or email addresses"
     When I fill in "invitation_user_or_email" with "ed_bloom@spectre.com"
     And I press "Invite"
     Then I should see "mislav invited ed_bloom@spectre.com to join the project"
