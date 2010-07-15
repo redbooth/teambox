@@ -50,7 +50,7 @@ class InvitationsController < ApplicationController
       @targets = user_or_email.extract_emails
       @targets = user_or_email.split if @targets.empty?
       
-      @invitations = @targets.map { |user_or_email| make_invitation(user_or_email, role) }
+      @invitations = @targets.map { |target| make_invitation(target, role) }
     else
       flash[:error] = t('invitations.errors.invalid')
       redirect_to target_people_path
@@ -58,7 +58,7 @@ class InvitationsController < ApplicationController
     end
     
     respond_to do |f|
-      if @saved
+      if @saved_count > 0
         f.html { redirect_to target_people_path }
         f.m    { redirect_to target_people_path }
       else
@@ -162,7 +162,8 @@ class InvitationsController < ApplicationController
       invitation = @invite_target.invitations.new(:user_or_email => user_or_email.strip)
       invitation.role = role
       invitation.user = current_user
-      @saved = invitation.save unless @saved
+      @saved_count ||= 0
+      @saved_count += 1 if invitation.save
       invitation
     end
 
