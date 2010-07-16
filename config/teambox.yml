@@ -41,7 +41,7 @@ defaults: &defaults
   # Enable search (you must have thinking_sphinx installed and configured)
   # See http://wiki.github.com/teambox/teambox/configuring-search for more 
   # information on configuring search
-  allow_search: true
+  allow_search: false
 
   # Default timezone
   time_zone: UTC
