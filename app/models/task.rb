@@ -108,8 +108,9 @@ class Task < RoleRecord
     name
   end
 
+  # This method now doesn't throw and exception if a task doesn't have a user_id
   def user
-    User.find_with_deleted(user_id)
+    user_id && User.find_with_deleted(user_id)
   end
 
   def to_xml(options = {})
