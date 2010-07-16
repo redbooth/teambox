@@ -20,6 +20,5 @@ task "preload_indexed_models" => :environment do
   require 'comment'
   require 'upload'
 end
-
 task "thinking_sphinx:configure" => :preload_indexed_models
 
