@@ -53,22 +53,21 @@ module CalendarsHelper
    
    def start_of_calendar(year, month)
      first = Date.civil(year,month, 1)
-     last = Date.civil(year,month, -1)
-     weekdays = calendar_weekdays(first, last)
+     weekdays = calendar_weekdays
      first_weekday, last_weekday = weekdays[0], weekdays[1]
      beginning_of_week(first, first_weekday)
    end
    
    def end_of_calendar(year, month)
      dm = month+1 > 12 ? 1 : month+1
-     first = Date.civil(year,dm, 1)
-     last = Date.civil(year,dm, -1)
-     weekdays = calendar_weekdays(first, last)
+     dy = month+1 > 12 ? year+1 : year
+     first = Date.civil(dy,dm, 1)
+     weekdays = calendar_weekdays
      first_weekday, last_weekday = weekdays[0], weekdays[1]
      beginning_of_week(first, first_weekday) + 7
    end
    
-   def calendar_weekdays(first, last)
+   def calendar_weekdays
      if current_user.first_day_of_week == 'monday'
         first_weekday = first_day_of_week(1)
         last_weekday = last_day_of_week(1)
@@ -83,7 +82,7 @@ module CalendarsHelper
    def build_calendar(year,month,small=false)
      first = Date.civil(year,month, 1)
      last = Date.civil(year,month, -1)
-     weekdays = calendar_weekdays(first, last)
+     weekdays = calendar_weekdays
      first_weekday, last_weekday = weekdays[0], weekdays[1]
      
      cal = ''
@@ -120,7 +119,7 @@ module CalendarsHelper
       last = end_of_calendar(year, month)
       weeks = ((last - first) / 7).ceil
       
-      wk = "<table class=\"weektable#{weeks}\"><tr>"
+      wk = "<table class=\"weektable#{weeks} #{first} #{last}\"><tr>"
       
       wk << (0...weeks).map do |week|
         "<th>#{t('hours.week_num', :num => week+1)}</th>"

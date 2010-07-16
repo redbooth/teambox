@@ -158,8 +158,8 @@ var Hours = {
       var list = {};
       values.each(function(c){
         // Total day
-        var value = list[c.user_id];
         var id = c[field];
+        var value = list[id];
         if (value == null || value == undefined)
           list[id] = c.hours;
         else 
