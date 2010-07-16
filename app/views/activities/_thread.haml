@@ -31,4 +31,5 @@
     - comments[0..1].reverse.each do |comment|
       = render :partial => 'comments/comment', :locals => { :comment => comment, :threaded => true }
   .reply{ :id => "thread_#{thread_id}_reply" }
-    = new_comment_form(thread.project, thread.project.comments.new, :target => thread, :thread => true) unless thread.is_a?(Task) && thread.closed?
+    - unless thread.is_a?(Task) && thread.closed?
+      = new_comment_form(thread.project, thread.project.comments.new, :target => thread, :thread => true)
