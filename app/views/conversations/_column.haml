@@ -3,5 +3,6 @@
     = new_conversation_link(project)
   - else
     %p= t('.cant_create')
+  = instructions_for_email(project)
   .conversations
     = list_conversations(project,conversations,conversation)
