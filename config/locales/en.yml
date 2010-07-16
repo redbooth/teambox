@@ -1107,13 +1107,13 @@ en:
     distance_in_words:
       half_a_minute: "half a minute"
       less_than_x_seconds:
-        one:   "less than 1 second"
-        other: "less than %{count} seconds"
+        one:   "now"
+        other: "now"
       x_seconds:
-        one:   "1 second"
-        other: "%{count} seconds"
+        one:   "now"
+        other: "now"
       less_than_x_minutes:
-        one:   "less than a minute"
+        one:   "now"
         other: "less than %{count} minutes"
       x_minutes:
         one:   "1 minute"
