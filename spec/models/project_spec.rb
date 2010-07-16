@@ -34,34 +34,6 @@ describe Project do
       @owner.reload
       @owner.projects.should include(@project)
     end
-
-  end
-
-  describe "validating length of name and permalink" do
-    before do
-      @owner = Factory.create(:user)
-    end
-
-    it "should fail on create if the name is shorter than 5 chars" do
-      project = Factory.build(:project, :user => @owner, :name => "abcd")
-      project.should be_invalid
-      project.should have(1).error_on(:name)
-    end
-
-    it "should allow existent projects to have a name between 3 and 5 chars if they don't change it" do
-      project = Factory.build(:project, :user => @owner, :name => "abcd", :permalink => "abcdefg")
-      project.save(false)
-      project.should be_valid
-      project.permalink = "#{project.permalink}2"
-      project.should be_valid
-    end
-
-    it "should fail if the name is updated and shorter than 5 chars" do
-      project = Factory.create(:project, :name => "abcde")
-      project.name = "abc"
-      project.should be_invalid
-    end
-
   end
 
   describe "validating length of name and permalink" do
@@ -126,28 +98,28 @@ describe Project do
       person.reload.source_user.should == @owner
     end
   end
-  
+
   describe "preinviting users on project creation" do
     before do
       @user1 = Factory.create(:user)
       @user2 = Factory.create(:user)
       @user3 = Factory.create(:user)
-      
+
       @project = Factory.create(:project,
         :invite_users => [@user1.id, @user2.id],
         :invite_emails => "#{@user2.email} #{@user3.email} richard.roe@law.uni"
       )
     end
-    
+
     it "creates 4 invitations" do
       @project.should have(4).invitations
     end
-    
+
     it "doesn't invite same user twice" do
       to_user2 = @project.invitations.select { |i| i.email == @user2.email }
       to_user2.size.should == 1
     end
-    
+
     it "invites non-existing user" do
       to_richard = @project.invitations.find_by_email 'richard.roe@law.uni'
       to_richard.invited_user.should be_nil
@@ -267,4 +239,3 @@ describe Project do
     end
   end
 end
-

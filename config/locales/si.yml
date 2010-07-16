@@ -1,5 +1,5 @@
 ---
-sl:
+si:
   activerecord:
     attributes:
       card:
@@ -203,7 +203,7 @@ sl:
     rename: Preimenuj
     save: Shrani
     show_more: "Prikaži več"
-    tasks: 
+    tasks:
       one: "1 opravilo"
       other: "%{count} opravil"
   confirm:
@@ -245,6 +245,265 @@ sl:
       started_by: Začel
     watcher_fields:
       people_all: "Vsi osebe v projektu"
+  countries:
+    AC: "Otok Ascension"
+    AD: Andora
+    AE: "Združeni arabski emirati"
+    AF: Afganistan
+    AG: "Antigva in Barbuda"
+    AI: Angvila
+    AL: Albanija
+    AM: Armenija
+    AN: "Nizozemski Antili"
+    AO: Angola
+    AQ: Antarktika
+    AR: Argentina
+    AS: "Ameriška Samoa"
+    AT: Avstrija
+    AU: Avstralija
+    AW: Aruba
+    AX: "Alandsko otočje"
+    AZ: Azerbajdžan
+    BA: "Bosna in Hercegovina"
+    BB: Barbados
+    BD: Bangladeš
+    BE: Belgija
+    BF: "Burkina Faso"
+    BG: Bolgarija
+    BH: Bahrajn
+    BI: Burundi
+    BJ: Benin
+    BL: "Saint Barthelemy"
+    BM: Bermudi
+    BN: Brunej
+    BO: Bolivija
+    BR: Brazilija
+    BS: Bahami
+    BT: Butan
+    BV: "Bouvetov otok"
+    BW: Bocvana
+    BY: Belorusija
+    BZ: Belize
+    CA: Kanada
+    CC: "Kokosovi otoki"
+    CD: "Kongo [Demokratična republika Kongo]"
+    CF: "Centralnoafriška republika"
+    CG: "Kongo [Republika]"
+    CH: Švica
+    CI: "Slonokoščena obala"
+    CK: "Cookovo otočje"
+    CL: Čile
+    CM: Kamerun
+    CN: Kitajska
+    CO: Kolumbija
+    CP: "Otok Clipperton"
+    CR: Kostarika
+    CS: "Srbija in Črna gora"
+    CU: Kuba
+    CV: "Zelenortski otoki"
+    CX: "Božični otok"
+    CY: Ciper
+    CZ: Češka
+    DE: Nemčija
+    DG: "Diego Garcia"
+    DJ: Džibuti
+    DK: Danska
+    DM: Dominika
+    DO: "Dominikanska republika"
+    DZ: Alžirija
+    EA: "Ceuta in Melilla"
+    EC: Ekvador
+    EE: Estonija
+    EG: Egipt
+    EH: "Zahodna Sahara"
+    ER: Eritreja
+    ES: Španija
+    ET: Etiopija
+    EU: "Evropska unija"
+    FI: Finska
+    FJ: Fidži
+    FK: "Falklandski otoki [Malvinski otoki]"
+    FM: Mikronezija
+    FO: "Ferski otoki"
+    FR: Francija
+    FX: "Francija (metropolitanska)"
+    GA: Gabon
+    GB: "Velika Britanija"
+    GD: Grenada
+    GE: Gruzija
+    GF: "Francoska Gvajana"
+    GG: Guernsey
+    GH: Gana
+    GI: Gibraltar
+    GL: Grenlandija
+    GM: Gambija
+    GN: Gvineja
+    GP: Gvadalupe
+    GQ: "Ekvatorialna Gvineja"
+    GR: Grčija
+    GS: "Južna Georgia in Južni Sandwichevi otoki"
+    GT: Gvatemala
+    GU: Guam
+    GW: "Gvineja Bissau"
+    GY: Gvajana
+    HK: Hongkong
+    HM: "Otok Heard in otočje McDonald"
+    HN: Honduras
+    HR: Hrvaška
+    HT: Haiti
+    HU: Madžarska
+    IC: "Kanarski otoki"
+    ID: Indonezija
+    IE: Irska
+    IL: Izrael
+    IM: "Otok Man"
+    IN: Indija
+    IO: "Britansko ozemlje v Indijskem oceanu"
+    IQ: Irak
+    IR: Iran
+    IS: Islandija
+    IT: Italija
+    JE: Jersey
+    JM: Jamajka
+    JO: Jordanija
+    JP: Japonska
+    KE: Kenija
+    KG: Kirgizistan
+    KH: Kambodža
+    KI: Kiribati
+    KM: Komori
+    KN: "Saint Kitts in Nevis"
+    KP: "Severna Koreja"
+    KR: "Južna Koreja"
+    KW: Kuvajt
+    KY: "Kajmanski otoki"
+    KZ: Kazahstan
+    LA: Laos
+    LB: Libanon
+    LC: "Saint Lucia"
+    LI: Lihtenštajn
+    LK: Šrilanka
+    LR: Liberija
+    LS: Lesoto
+    LT: Litva
+    LU: Luksemburg
+    LV: Latvija
+    LY: Libija
+    MA: Maroko
+    MC: Monako
+    MD: Moldavija
+    ME: "Črna gora"
+    MF: "Saint Martin"
+    MG: Madagaskar
+    MH: "Marshallovi otoki"
+    MK: "Makedonija [FYROM]"
+    ML: Mali
+    MM: "Mjanmar [Burma]"
+    MN: Mongolija
+    MO: Macao
+    MP: "Severni Marianski otoki"
+    MQ: Martinik
+    MR: Mavretanija
+    MS: Montserrat
+    MT: Malta
+    MU: Mauritius
+    MV: Maldivi
+    MW: Malavi
+    MX: Mehika
+    MY: Malezija
+    MZ: Mozambik
+    NA: Namibija
+    NC: "Nova Kaledonija"
+    NE: Niger
+    NF: "Norfolški otok"
+    NG: Nigerija
+    NI: Nikaragva
+    NL: Nizozemska
+    ? "NO"
+    : Norveška
+    NP: Nepal
+    NR: Nauru
+    NU: Niue
+    NZ: "Nova Zelandija"
+    OM: Oman
+    PA: Panama
+    PE: Peru
+    PF: "Francoska Polinezija"
+    PG: "Papua Nova Gvineja"
+    PH: Filipini
+    PK: Pakistan
+    PL: Poljska
+    PM: "Saint Pierre in Miquelon"
+    PN: Pitcairn
+    PR: Portoriko
+    PS: "Palestinsko ozemlje"
+    PT: Portugalska
+    PW: Palau
+    PY: Paragvaj
+    QA: Katar
+    QO: "Ostala oceanija"
+    RE: Reunion
+    RO: Romunija
+    RS: Srbija
+    RU: Rusija
+    RW: Ruanda
+    SA: "Saudova Arabija"
+    SB: "Salomonovi otoki"
+    SC: Sejšeli
+    SD: Sudan
+    SE: Švedska
+    SG: Singapur
+    SH: "Sveta Helena"
+    SI: Slovenija
+    SJ: "Svalbard in Jan Mayen"
+    SK: Slovaška
+    SL: "Sierra Leone"
+    SM: "San Marino"
+    SN: Senegal
+    SO: Somalija
+    SR: Surinam
+    ST: "Sao Tome in Principe"
+    SV: Salvador
+    SY: Sirija
+    SZ: Svazi
+    TA: "Tristan da Cunha"
+    TC: "Otočji Turks in Caicos"
+    TD: Čad
+    TF: "Francosko južno ozemlje"
+    TG: Togo
+    TH: Tajska
+    TJ: Tadžikistan
+    TK: Tokelau
+    TL: "Vzhodni Timor"
+    TM: Turkmenistan
+    TN: Tunizija
+    TO: Tonga
+    TR: Turčija
+    TT: "Trinidad in Tobago"
+    TV: Tuvalu
+    TW: Tajvan
+    TZ: Tanzanija
+    UA: Ukrajina
+    UG: Uganda
+    UM: "Druga ameriška ozemlja v Tihem oceanu"
+    US: "Združene države Amerike"
+    UY: Urugvaj
+    UZ: Uzbekistan
+    VA: Vatikan
+    VC: "Saint Vincent in Grenadine"
+    VE: Venezuela
+    VG: "Britanski Deviški otoki"
+    VI: "Ameriški Deviški otoki"
+    VN: Vietnam
+    VU: Vanuatu
+    WF: "Wallis in Futuna"
+    WS: Samoa
+    YE: Jemen
+    YT: Mayotte
+    ZA: "Južnoafriška republika"
+    ZM: Zambija
+    ZW: Zimbabve
+    ZZ: "Neznano ali neveljavno območje"
   date:
     abbr_day_names:
       - Ned
@@ -412,14 +671,14 @@ sl:
     search:
       invite: Povabi
       invite_people: "Povabi osebe v skupino"
-      username_or_email: "Uporabniško ime ali Email"
+      username_or_email: "Uporabniško ime ali email"
     show:
       add_project: "Dodaj projekt"
       edit: Uredi
   hours:
     all_tasks: "Vsa opravila"
     all_users: "Vsi uporabniki"
-    comments: "Vnosi"
+    comments: Vnosi
     entry_hours: ur
     entry_total: Skupaj
     filter_by: Filtriraj
@@ -464,16 +723,12 @@ sl:
       format:
         delimiter: ","
         format: "%u%n"
-        precision: 2
         separator: "."
         unit: $
     format:
       delimiter: ","
-      precision: 3
       separator: "."
     human:
-      format:
-        precision: 1
       storage_units:
         format: "%n %u"
         units:
@@ -485,7 +740,7 @@ sl:
           mb: MB
           tb: TB
   page_title:
-    archived_task_lists: "Arhivirana Opravila"
+    archived_task_lists: "Arhivirana opravila"
     create_uploads: "Nalaganje datoteke"
     create_users: Registracija
     edit_projects: "Uredi projekt"
@@ -493,7 +748,7 @@ sl:
     index_conversations: "Vsi pogovori"
     index_pages: "Vse strani"
     index_people: Osebe
-    index_projects: "Vsi Projekti"
+    index_projects: "Vsi projekti"
     index_task_lists: "Vse seznami nalog"
     index_uploads: "Vse datoteke"
     new_conversations: "Nov pogovor"
@@ -606,7 +861,7 @@ sl:
       forgot: "Si pozabil/a geslo?"
       password: Geslo
       signup: "Registriraj se za račun"
-      username_or_email: "Uporabniško ime ali Email"
+      username_or_email: "Uporabniško ime ali email"
     new:
       login_failed: "Ne morem te rijaviti kot %{login}"
       submit: Prijava
@@ -682,8 +937,8 @@ sl:
       nobody_watching: "Nobeden ne spremlja tega"
       people_watching: "Osebeki spremljajo: "
       stopped_watching: "Ne boste več prejemali obvestil za ta predmet."
-      unwatch: "Nehaj Spremljati"
-      watch: "Začni PSremljati"
+      unwatch: "Nehaj spremljati"
+      watch: "Začni spremljati"
   support:
     array:
       last_word_connector: ", in"
@@ -785,9 +1040,9 @@ sl:
     link:
       edit: Uredi
       hide_archived_tasks:
-        one: "Skrij1 arhivirano opravilo"
+        one: "Skrij arhivirano opravilo"
         other: "Skrij %{count} arhivirana opravila"
-      new: "+Dodaj opravilo"
+      new: "Dodaj opravilo"
     my_tasks:
       my_tasks: "Moja oipravila za vse projekte"
     new:
@@ -797,7 +1052,7 @@ sl:
     show:
       title: "Opravilo: %{name}"
     status:
-      hold: zadrži
+      hold: zadržano
       new: novo
       open: dodeljeno
       rejected: zavrnjeno
@@ -816,7 +1071,7 @@ sl:
   uploads:
     comment_upload_link: Priponka
     form:
-      description: NAslov<i>(opcijsko)</i>
+      description: Naslov<i>(opcijsko)</i>
       select_file: "Izberi datoteko"
       upload: "Naloži datoteko"
     index:

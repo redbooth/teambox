@@ -21,18 +21,18 @@ class User < ActiveRecord::Base
                   :validation
 
   # After adding a new locale, run "rake import:country_select 'de'" where de is your locale.
-  LANGUAGES = [['English',   'en'],
-               ['Español',   'es'],
-               ['Português', 'pt'],
-               ['Français',  'fr'],
-               ['Deutsch',   'de'],
-               ['Català',    'ca'],
-               ['Italiano',  'it'],
-               ['Русский',   'ru'],
-               ['Chinese',   'zh'],
-               ['Japanese',  'ja'],
-               ['Nederlands','nl'],
-               ['Slovenian','sl']
+  LANGUAGES = [['English',    'en'],
+               ['Español',    'es'],
+               ['Português',  'pt'],
+               ['Français',   'fr'],
+               ['Deutsch',    'de'],
+               ['Català',     'ca'],
+               ['Italiano',   'it'],
+               ['Русский',    'ru'],
+               ['Chinese',    'zh'],
+               ['Japanese',   'ja'],
+               ['Nederlands', 'nl'],
+               ['Slovenian',  'si']
                ]
 
   LANGUAGE_CODES = LANGUAGES.map { |lang| lang[1] }
