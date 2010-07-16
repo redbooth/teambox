@@ -23,9 +23,6 @@ describe InvitationsController do
       @emails = "foo@localhost.com billg@microsoft.com fred@teambox.com"
       5.times { @users << Factory(:user) }
       @project = Factory.create(:project)
-      
-      puts @emails
-      puts @users.map(&:login).join(' ')
     end
     
     it "accepts email addresses as email addresses" do
