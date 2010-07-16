@@ -453,6 +453,7 @@ en:
       role: "Select a role"
       submit: Send
       invite_from_project: "Invite from Project"
+      help: Help
     recent:
       invite: "Invite %{username}"
     errors:
