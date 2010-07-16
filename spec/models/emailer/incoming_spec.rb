@@ -133,5 +133,19 @@ describe Emailer do
       comment = @conversation.comments(true).last
       comment.body.should == "I am outraged!"
     end
+
+    it "should create a conversation with the subject as title and the body as comment" do
+      @email_template.to = "#{@project.permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}"
+      accepted_prefixes = %w(Re: RE: Fwd: FWD:) << ""
+      accepted_prefixes.each_with_index do |prefix, i|
+        @email_template.subject = "#{prefix} This feature wasn't tested grrrr... #{i}"
+        @email_template.body = "But I'm fixing it right now! And refactoring the Regexp too!\nI'm using #{prefix} on the subject"
+        Emailer.receive(@email_template.to_s)
+        conv = @project.conversations.first
+        conv.name.should == "This feature wasn't tested grrrr... #{i}"
+        conv.comments.first.body.should == "But I'm fixing it right now! And refactoring the Regexp too!\nI'm using #{prefix} on the subject"
+        conv.user.should == @owner
+      end
+    end
   end
 end
