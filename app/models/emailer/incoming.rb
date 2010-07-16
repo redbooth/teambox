@@ -76,7 +76,7 @@ module Emailer::Incoming
     imap.disconnect
   end
 
-  REPLY_REGEX = /(Re:|RE:|Fwd:|FWD:)/
+  REPLY_REGEX = /(re|fwd):/i
 
   def receive(email)
     process email
