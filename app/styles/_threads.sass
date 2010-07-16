@@ -1,11 +1,9 @@
 .thread
   +rounded(3px)
-  border-bottom: 4px solid #f6f6f6
   margin-bottom: 20px
-  padding-bottom: 20px
   .title
     display: block
-    padding: 15px 0
+    padding: 15px 0 5px
     font-size: 0.8em
     border:
       top: 1px solid white
@@ -22,23 +20,21 @@
       float: right
       font-size: 0.8em
       color: #9da3a7
-    &:hover
-      background-color: #f6f6f6
-      border:
-        bottom: 1px solid #dfe0e2
-        top: 1px solid #dfe0e2
   .comments
-    border-left: 4px solid #ccc
+    border-left: 4px solid #eee
     margin: 1px 0 0 70px
-    background-color: #f6f6f6
+    background-color: #fafafa
     .block
       width: 475px
       padding-right: 10px
+      .body
+        margin-top: 0
     .more_comments
-      padding: 10px 10px 10px 10px
+      padding: 10px 10px 10px 45px
       display: block
-      font-size: 0.8em
+      font-size: 12px
     .comment
+      padding: 5px 0
       .info
         width: 24px
         margin-left: 10px
@@ -47,10 +43,10 @@
       .block
         width: 510px
   form#new_comment
-    border-left: 4px solid #ccc
-    background-color: #f6f6f6
+    border-left: 4px solid #eee
+    background-color: #fafafa
     margin: 0 0 0 70px
-    padding: 5px 0 5px 10px
+    padding: 2px 0 5px 10px
     .body
       textarea
         width: 500px
