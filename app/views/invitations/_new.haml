@@ -1,5 +1,8 @@
 - form_for [project, invitation], :person do |f|
-  %h2= t('invitations.search.invite_people')
+  %h2
+    = t('invitations.search.invite_people')
+  .documentation{:style => 'float:right'}
+    = formatting_invitations_link
   .text_field
     = f.label :user_or_email, t('invitations.search.username_or_email')
     = f.text_field :user_or_email

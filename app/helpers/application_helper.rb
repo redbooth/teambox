@@ -302,6 +302,10 @@ module ApplicationHelper
   def formatting_documentation_link
     link_to t('projects.show.text_styling'), text_styles_path, :rel => :facebox
   end
+  
+  def formatting_invitations_link
+    link_to t('invitations.search.help'), invite_format_path, :rel => :facebox
+  end
 
   def host_with_protocol
     request.protocol + request.host + request.port_string

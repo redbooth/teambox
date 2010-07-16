@@ -1,7 +1,7 @@
 class InvitationsController < ApplicationController
   skip_before_filter :load_project
-  before_filter :load_group_or_project
-  before_filter :admins_target?, :except => [:index, :accept, :decline]
+  before_filter :load_group_or_project, :except => [:invite_format]
+  before_filter :admins_target?, :except => [:index, :accept, :decline, :invite_format]
   before_filter :set_page_title
   
   def index
@@ -114,6 +114,10 @@ class InvitationsController < ApplicationController
   def decline
     @invitation.destroy
     redirect_to(user_invitations_path(current_user))
+  end
+  
+  def invite_format
+    render :layout => false
   end
   
   private
