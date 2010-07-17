@@ -1,10 +1,11 @@
 <%= if ( current_user && current_user.first_day_of_week == 'monday' )
-      "Date.weekdays = $w('M T W T F S S'); Date.first_day_of_week = 1;"
+      "Date.weekdays = Date.first_day_of_week = 1;"
     else
-      "Date.weekdays = $w('S M T W T F S'); Date.first_day_of_week = 0;"
+      "Date.weekdays = Date.first_day_of_week = 0;"
     end
 %>
-_translations = {'OK':'OK','Now':'Now','Today':'Today'}; Date.months = $w('January February March April May June July August September October November December');
+
+<%= javascript_calendar_date_translations %>
 
 <% 
   less_than_one = I18n.t('datetime.distance_in_words.less_than_x_minutes.one')

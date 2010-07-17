@@ -251,4 +251,16 @@ module ApplicationHelper
       [t(code, :scope => :locales, :locale => code), code.to_s]
     }.sort_by(&:first)
   end
+
+  def javascript_calendar_date_translations
+    js_locale_path = File.join(Rails.public_path, "javascripts", "calendar_date_select", "locale")
+    I18n.fallbacks[I18n.locale].each do |fallback|
+      if File.exist?(File.join(js_locale_path, "#{fallback}.js"))
+        js_translations = File.read(File.join(js_locale_path, "#{fallback}.js"))
+      end
+      return js_translations unless js_translations.nil?
+    end
+
+    File.read(File.join(js_locale_path, "en.js"))
+  end
 end
