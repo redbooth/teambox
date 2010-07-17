@@ -298,6 +298,40 @@ en:
       tasks_without_a_due_date: "Tasks without a due date"
       you_receive_this_message: "You receive this message because you signed up for it. You can disable it on your %{link}"
       settings_page: "settings page"
+    text_styles:
+      block_of_code: Paste your code indented (4 spaces or tabs) to paste it as a block of code.
+      enter_this:
+        bold_text: "**bold** text"
+        header: |
+          Header
+          ======
+        image: "![alt text](http://w3.org/img.jpg)"
+        italic_text: "*italics* text"
+        link: "[A link](http://teambox.com)"
+        ordered_list: |
+          1. ordered list
+          2. leave empty lines!
+        smaller_header: |
+          Smaller header
+          ---------
+        title: Enter this
+        unordered_list: |
+          * unordered list
+          * leave empty lines around
+      to_see_this:
+        bold_text: "<strong style=\"font-weight: bold\">bold</strong> text"
+        header: "<h3 style=\"font-size:18px\">Header</h3>"
+        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text: "<i>italics</i> text"
+        link: "<a href=\"http://www.teambox.com\">Link something</a>"
+        ordered_list: |
+          <li>ordered list</li>
+          <li>leave empty lines!</li>
+        smaller_header: "<h4 style=\"font-size:14px\">Smaller header</h4>"
+        title: To see this
+        unordered_list: |
+          <li>unordered list</li>
+          <li>leave empty lines around</li>
   groups:
     index:
       title: Groups
