@@ -31,6 +31,14 @@ require_dependency 'email'
 #
 module Emailer::Incoming
 
+  def self.logger
+    RAILS_DEFAULT_LOGGER
+  end
+
+  def logger
+    RAILS_DEFAULT_LOGGER
+  end
+
   def self.fetch(settings)
     type = settings[:type].to_s.downcase
     send("fetch_#{type}", settings)
