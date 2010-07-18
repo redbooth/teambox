@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100511133109) do
+ActiveRecord::Schema.define(:version => 20100521093855) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -221,7 +221,6 @@ ActiveRecord::Schema.define(:version => 20100511133109) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "tracks_time",     :default => false
   end
 
   add_index "projects", ["deleted_at"], :name => "index_projects_on_deleted_at"
@@ -344,43 +343,47 @@ ActiveRecord::Schema.define(:version => 20100511133109) do
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
 
   create_table "users", :force => true do |t|
-    t.string   "login",                     :limit => 40
-    t.string   "first_name",                :limit => 20,  :default => ""
-    t.string   "last_name",                 :limit => 20,  :default => ""
+    t.string   "login",                       :limit => 40
+    t.string   "first_name",                  :limit => 20,  :default => ""
+    t.string   "last_name",                   :limit => 20,  :default => ""
     t.text     "biography"
-    t.string   "email",                     :limit => 100
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
-    t.string   "remember_token",            :limit => 40
+    t.string   "email",                       :limit => 100
+    t.string   "crypted_password",            :limit => 40
+    t.string   "salt",                        :limit => 40
+    t.string   "remember_token",              :limit => 40
     t.datetime "remember_token_expires_at"
-    t.string   "time_zone",                                :default => "Eastern Time (US & Canada)"
-    t.string   "language",                                 :default => "en"
-    t.string   "first_day_of_week",                        :default => "sunday"
-    t.integer  "invitations_count",                        :default => 0,                            :null => false
-    t.string   "login_token",               :limit => 40
+    t.string   "time_zone",                                  :default => "Eastern Time (US & Canada)"
+    t.string   "language",                                   :default => "en"
+    t.boolean  "conversations_first_comment",                :default => true
+    t.string   "first_day_of_week",                          :default => "sunday"
+    t.integer  "invitations_count",                          :default => 0,                            :null => false
+    t.float    "profile_score",                              :default => 0.0
+    t.float    "profile_percent",                            :default => 0.0
+    t.string   "profile_grade"
+    t.string   "login_token",                 :limit => 40
     t.datetime "login_token_expires_at"
-    t.boolean  "welcome",                                  :default => false
-    t.boolean  "confirmed_user",                           :default => false
+    t.boolean  "welcome",                                    :default => false
+    t.boolean  "confirmed_user",                             :default => false
     t.integer  "last_read_announcement"
     t.datetime "deleted_at"
-    t.string   "rss_token",                 :limit => 40
-    t.boolean  "admin",                                    :default => false
-    t.integer  "comments_count",                           :default => 0,                            :null => false
-    t.boolean  "notify_mentions",                          :default => true
-    t.boolean  "notify_conversations",                     :default => true
-    t.boolean  "notify_task_lists",                        :default => true
-    t.boolean  "notify_tasks",                             :default => true
+    t.string   "rss_token",                   :limit => 40
+    t.boolean  "admin",                                      :default => false
+    t.integer  "comments_count",                             :default => 0,                            :null => false
+    t.boolean  "notify_mentions",                            :default => true
+    t.boolean  "notify_conversations",                       :default => true
+    t.boolean  "notify_task_lists",                          :default => true
+    t.boolean  "notify_tasks",                               :default => true
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.integer  "invited_by_id"
-    t.integer  "invited_count",                            :default => 0,                            :null => false
+    t.integer  "invited_count",                              :default => 0,                            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "wants_task_reminder",                      :default => true
+    t.boolean  "wants_task_reminder",                        :default => true
     t.text     "recent_projects_ids"
-    t.string   "feature_level",                            :default => ""
-    t.string   "spreedly_token",                           :default => ""
+    t.string   "feature_level",                              :default => ""
+    t.string   "spreedly_token",                             :default => ""
     t.datetime "avatar_updated_at"
   end
 
