@@ -971,10 +971,10 @@ en:
       subscribe_to_calendars: Subscribe to calendars...
       send_email: Post a new comment by email...
       send_email_conversations: Post a new conversation by email...
-      send_email_help_project: "To post a new comment to this project's activity wall send an email to <a href=\"mailto:%{email}\">%{email}</a> Only members from the project can post to the wall."
-      send_email_help_conversations: "To create a new conversation send an email to <a href=\"mailto:%{email}\">%{email}</a> with Subject for the title and Body for the comment. Only members from the project can create a new conversation"
-      send_email_help_conversation: "To post a new comment to this conversation send an email to <a href=\"mailto:%{email}\">%{email}</a> Only members from the project can post to the conversation."
-      send_email_help_task: "To post a new comment to this task send an email to <a href=\"mailto:%{email}\">%{email}</a> Only members from the project can comment to the task."
+      send_email_help_project: "To post a new comment to this project's activity wall send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the wall."
+      send_email_help_conversations: "To create a new conversation send an email to <a href=\"mailto:%{email}\">%{email}</a> with Subject for the title and Body for the comment. Only members from the project can create a new conversation."
+      send_email_help_conversation: "To post a new comment to this conversation send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the conversation."
+      send_email_help_task: "To post a new comment to this task send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can comment to the task."
   emailer:
     common:
       do_not_answer: "Do not answer to this email."
