@@ -1,6 +1,6 @@
 class HooksController < ApplicationController
   before_filter :find_hook, :only => [:edit, :update, :destroy]
-  before_filter :find_templates, :only => [:templates, :new]
+  before_filter :find_templates, :only => [:index, :new]
   before_filter :can_modify?, :except => [:push]
   no_login_required :only => [:push]
   skip_before_filter :verify_authenticity_token, :only => [:push]
@@ -108,11 +108,7 @@ class HooksController < ApplicationController
       render :text => "OK", :status => create_comment(template, post)
     end
   end
-    
-  def templates
-    
-  end
-  
+
   protected
 
     def parse_data
@@ -129,7 +125,7 @@ class HooksController < ApplicationController
           # we might want to notify @hook.user with an email?
           # If its not xml/json, just take the raw param
           post.merge!({k => v})
-        end unless ['controller','key','action','method','format', 'template'].include?(k)
+        end unless %w(controller key action method format template).include?(k)
       end
       
       post

@@ -915,20 +915,22 @@ en:
       login_failed: "Couldn't log you in as %{login}"
   hooks:
     index:
-      title: Integration Hooks
-      your_hook: "Your hooks for the project '{{project}}'"
-      new_hook: "Create a new Hook"
-      templates: "Use one of our templates for popular services"
+      title: "Your hooks for this project"
+      explain: Hooks allow you to integrate Teambox with other web applications' notifications.
+      explain_more: |
+        You can use our examples or
+        <a target='_blank' href='http://help.teambox.com/faqs/integrations/webhooks'>learn how to integrate
+        your own services</a> with your projects.
+      active_hooks: Active hooks
+      add_hook: Add an integration hook
+      new_hook: "Create your own Hook"
     fields:
       name: Name of your hook
-      message: Message template
-      instruction: See the {{documentation}} for details.
-      documentation: documentation
-    templates:
-      title: Templates for Integration Hooks
+      message: Message template <span>(<a href="http://help.teambox.com/faqs/integrations/webhooks" target="_blank">Instructions on editing templates</a>)</span>
+      instructions: Instructions for this webhook
     new:
-      title: "Create a new hook for project '{{project}}'"
-      submit: Create
+      title: "Create a new hook"
+      submit: Create webhook
     edit:
       title: "Edit the hook '{{hook}}'"
       url: "URLs for '{{hook}}'"
@@ -956,7 +958,7 @@ en:
       picture: Project Picture
       deletion: Project Archiving/Deletion
       ownership: Ownership
-      hooks: Notification Hooks
+      hooks: Integration Hooks
     project_navigation:
       overview: Overview
       all_conversations: All Conversations

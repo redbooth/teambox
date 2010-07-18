@@ -1,4 +1,4 @@
-.hook
+%p.hook
   = link_to hook.name.capitalize, edit_project_hook_path(@current_project,hook)
   %small= "http://#{Teambox.config.app_domain}/hooks/#{hook.key}/"
   = link_to t('common.edit'), edit_project_hook_path(@current_project,hook), :class => 'button'
