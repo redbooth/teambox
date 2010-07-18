@@ -112,6 +112,8 @@ module Emailer::Incoming
     raise "Invalid body" unless @body
     
     raise "User does not belong to project" unless @user.projects.include? @project
+
+    raise "Exclude Auto Responder" unless @project.include? "Auto Response"
     
     logger.info "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
   end
