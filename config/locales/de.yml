@@ -68,22 +68,22 @@ de:
         blank: "darf nicht leer sein"
         confirmation: "entspricht nicht der Bestätigung"
         empty: "darf nicht leer sein"
-        equal_to: "muss gleich groß sein wie {{count}}"
+        equal_to: "muss gleich groß sein wie %{count}"
         even: "muss gerade sein"
         exclusion: "ist reserviert"
-        greater_than: "muss größer sein als {{count}}"
-        greater_than_or_equal_to: "muss größer oder gleich sein wie {{count}}"
+        greater_than: "muss größer sein als %{count}"
+        greater_than_or_equal_to: "muss größer oder gleich sein wie %{count}"
         inclusion: "ist nicht in dieser Liste"
         invalid: "ist ungültig"
-        less_than: "muss kleiner sein als {{count}}"
-        less_than_or_equal_to: "muss kleiner oder gleich sein wie {{count}}"
+        less_than: "muss kleiner sein als %{count}"
+        less_than_or_equal_to: "muss kleiner oder gleich sein wie %{count}"
         not_a_number: "ist keine Nummer"
         odd: "muss ungerade sein"
-        record_invalid: "Überprüfung fehlgeschlagen: {{errors}}"
+        record_invalid: "Überprüfung fehlgeschlagen: %{errors}"
         taken: "ist schon vergeben"
-        too_long: "ist zu lang (Maximum ist {{count}} Zeichen)"
-        too_short: "ist zu kurz (Minimum ist {{count}} Zeichen)"
-        wrong_length: "hat die falsche Länge (sollte {{count}} Zeichen sein)"
+        too_long: "ist zu lang (Maximum ist %{count} Zeichen)"
+        too_short: "ist zu kurz (Minimum ist %{count} Zeichen)"
+        wrong_length: "hat die falsche Länge (sollte %{count} Zeichen sein)"
       models: 
         comment: 
           attributes: 
@@ -96,6 +96,11 @@ de:
               no_body_generic: "Schreiben Sie bitte einen Kommentar, um die Konversation zu beginnen."
             name: 
               no_title: "Bitte vergeben Sie einen Titel für die Konversation"
+      template: 
+        body: "Bitte überprüfen Sie die folgenden Felder:"
+        header: 
+          one: "Konnte %{model} nicht speichern: ein Fehler."
+          other: "Konnte %{model} nicht speichern: %{count} Fehler."
     models: 
       address: Adresse
       card: Karte
@@ -172,7 +177,7 @@ de:
       conversation: "Schicken Sie eine Nachricht an alle Gruppenmitglieder."
       project: "Was machen Sie gerade? Teilen Sie Ideen, Links und Updates."
       submit: Kommentar
-      task: "Definieren Sie Arbeitsbedarfe durch Kommentare. Beauftragen Sie jemanden mit der Aufgabe. Geben Sie Statusupdates und hängen Sie aktuelle Erebnisse an."
+      task: "Definieren Sie Arbeitsbedarfe durch Kommentare."
       task_list: "Teilen Sie Ihre Meinung zu dieser Aufgabenliste. Um Aufgaben zu erstellen und zu verteilen, benutzen Sie das Seitenmenü."
   common: 
     accept: Annehmen
@@ -180,8 +185,8 @@ de:
     cancel: Abbrechen
     close: Schließen
     comment: 
-      one: "{{count}} Kommentar"
-      other: "{{count}} Kommentare"
+      one: "%{count} Kommentar"
+      other: "%{count} Kommentare"
     decline: Ablehnen
     delete: Löschen
     edit: Bearbeiten
@@ -191,10 +196,10 @@ de:
     prev: Previous
     print: "Seite drucken"
     save: Speichern
-    show_more: "Zeige {{number}} mehr"
+    show_more: "Zeige mehr"
     tasks: 
       one: "1 Aufgabe"
-      other: "{{count}} Aufgaben"
+      other: "%{count} Aufgaben"
   confirm: 
     delete_page: "Sind Sie sicher, dass Sie diese Seite löschen wollen?"
     delete_task: "Sind Sie sicher, dass Sie diese Aufgabe löschen wollen?"
@@ -219,8 +224,7 @@ de:
         name: "So kurz wie möglich, dies wird in den Betreff der Bestätigungs Eamil eingefügt"
     index: 
       rss: 
-        description: "Konversationen für Projekt {{name}}"
-        title: Konversationen
+        description: "Konversationen für Projekt %{name}"
     link: 
       edit: Bearbeiten
     new: 
@@ -247,9 +251,267 @@ de:
     watcher_fields: 
       add_suscribers: "Welche Teilnehmer verfolgen diese Konversation?"
       invite_users: "Sie sind der einzige Benutzer in diesem Projekt!"
-      no_users_yet: "Konversationen sind nützlicher wenn sie geteilt werden. <a href='{{invite_link}}'>Laden Sie Benutzer ein</a> zu diesem Projekt, so dass sie diese Konversation lesen können, Antworten senden können und Aktualisierungen erhalten."
-      people_all: "All people in project"
+      no_users_yet: "Konversationen sind nützlicher wenn sie geteilt werden. <a href='%{invite_link}'>Laden Sie Benutzer ein</a> zu diesem Projekt, so dass sie diese Konversation lesen können, Antworten senden können und Aktualisierungen erhalten."
       subscribe_note: "Diese Teilnehmer werden über diese Nachricht und alle folgenden Kommentare per Email informiert.<br/> Sie können die Benachrichtigung jederzeit abbestellen."
+  countries: 
+    AC: Ascension
+    AD: Andorra
+    AE: "Vereinigte Arabische Emirate"
+    AF: Afghanistan
+    AG: "Antigua und Barbuda"
+    AI: Anguilla
+    AL: Albanien
+    AM: Armenien
+    AN: "Niederländische Antillen"
+    AO: Angola
+    AQ: Antarktis
+    AR: Argentinien
+    AS: Amerikanisch-Samoa
+    AT: Österreich
+    AU: Australien
+    AW: Aruba
+    AX: Alandinseln
+    AZ: Aserbaidschan
+    BA: "Bosnien u. Herzegowina"
+    BB: Barbados
+    BD: Bangladesch
+    BE: Belgien
+    BF: "Burkina Faso"
+    BG: Bulgarien
+    BH: Bahrain
+    BI: Burundi
+    BJ: Benin
+    BL: "St. Barthélemy"
+    BM: Bermuda
+    BN: "Brunei Darussalam"
+    BO: Bolivien
+    BR: Brasilien
+    BS: Bahamas
+    BT: Bhutan
+    BV: Bouvetinsel
+    BW: Botsuana
+    BY: Belarus
+    BZ: Belize
+    CA: Kanada
+    CC: Kokosinseln
+    CD: "Demokratische Republik Kongod"
+    CF: "Zentralafrikanische Republik"
+    CG: Kongo-Brazzavilled
+    CH: Schweiz
+    CI: Elfenbeinküste
+    CK: Cookinseln
+    CL: Chile
+    CM: Kamerun
+    CN: China
+    CO: Kolumbien
+    CP: Clipperton
+    CR: "Costa Rica"
+    CS: "Serbien und Montenegro"
+    CU: Kuba
+    CV: "Kap Verde"
+    CX: Weihnachtsinsel
+    CY: Zypern
+    CZ: "Tschechische Republik"
+    DE: Deutschland
+    DG: "Diego Garcia"
+    DJ: Dschibuti
+    DK: Dänemark
+    DM: Dominica
+    DO: "Dominikanische Republik"
+    DZ: Algerien
+    EA: "Ceuta und Melilla"
+    EC: Ecuador
+    EE: Estland
+    EG: Ägypten
+    EH: Westsahara
+    ER: Eritrea
+    ES: Spanien
+    ET: Äthiopien
+    EU: EU
+    FI: Finnland
+    FJ: Fidschi
+    FK: Falklandinseln
+    FM: Mikronesien
+    FO: Färöer
+    FR: Frankreich
+    FX: Metropolitan-Frankreich
+    GA: Gabun
+    GB: "Vereinigtes Königreich"
+    GD: Grenada
+    GE: Georgien
+    GF: Französisch-Guayana
+    GG: Guernsey
+    GH: Ghana
+    GI: Gibraltar
+    GL: Grönland
+    GM: Gambia
+    GN: Guinea
+    GP: Guadeloupe
+    GQ: Äquatorialguinea
+    GR: Griechenland
+    GS: "Südgeorgien und die Südlichen Sandwichinseln"
+    GT: Guatemala
+    GU: Guam
+    GW: Guinea-Bissau
+    GY: Guyana
+    HK: Hongkong
+    HM: "Heard- und McDonald-Inseln"
+    HN: Honduras
+    HR: Kroatien
+    HT: Haiti
+    HU: Ungarn
+    IC: "Kanarische Inseln"
+    ID: Indonesien
+    IE: Irland
+    IL: Israel
+    IM: "Isle of Man"
+    IN: Indien
+    IO: "Britisches Territorium im Indischen Ozean"
+    IQ: Irak
+    IR: Iran
+    IS: Island
+    IT: Italien
+    JE: Jersey
+    JM: Jamaika
+    JO: Jordanien
+    JP: Japan
+    KE: Kenia
+    KG: Kirgisistan
+    KH: Kambodscha
+    KI: Kiribati
+    KM: Komoren
+    KN: "St. Kitts und Nevis"
+    KP: Nordkorea
+    KR: "Republik Korea"
+    KW: Kuwait
+    KY: Kaimaninseln
+    KZ: Kasachstan
+    LA: Laos
+    LB: Libanon
+    LC: "St. Lucia"
+    LI: Liechtenstein
+    LK: "Sri Lanka"
+    LR: Liberia
+    LS: Lesotho
+    LT: Litauen
+    LU: Luxemburg
+    LV: Lettland
+    LY: Libyen
+    MA: Marokko
+    MC: Monaco
+    MD: "Republik Moldau"
+    ME: Montenegro
+    MF: "St. Martin"
+    MG: Madagaskar
+    MH: Marshallinseln
+    MK: "Mazedonien [EJR]d"
+    ML: Mali
+    MM: Myanmar
+    MN: Mongolei
+    MO: Macaud
+    MP: "Nördliche Marianen"
+    MQ: Martinique
+    MR: Mauretanien
+    MS: Montserrat
+    MT: Malta
+    MU: Mauritius
+    MV: Malediven
+    MW: Malawi
+    MX: Mexiko
+    MY: Malaysia
+    MZ: Mosambik
+    NA: Namibia
+    NC: Neukaledonien
+    NE: Niger
+    NF: Norfolkinsel
+    NG: Nigeria
+    NI: Nicaragua
+    NL: Niederlande
+    ? "NO"
+    : Norwegen
+    NP: Nepal
+    NR: Nauru
+    NU: Niue
+    NZ: Neuseeland
+    OM: Oman
+    PA: Panama
+    PE: Peru
+    PF: Französisch-Polynesien
+    PG: Papua-Neuguinea
+    PH: Philippinen
+    PK: Pakistan
+    PL: Polen
+    PM: "St. Pierre und Miquelon"
+    PN: Pitcairn
+    PR: "Puerto Rico"
+    PS: "Palästinensische Autonomiegebiete"
+    PT: Portugal
+    PW: Palau
+    PY: Paraguay
+    QA: Katar
+    QO: "Äußeres Ozeanien"
+    RE: Réunion
+    RO: Rumänien
+    RS: Serbien
+    RU: "Russische Föderation"
+    RW: Ruanda
+    SA: Saudi-Arabien
+    SB: Salomonen
+    SC: Seychellen
+    SD: Sudan
+    SE: Schweden
+    SG: Singapur
+    SH: "St. Helena"
+    SI: Slowenien
+    SJ: "Svalbard und Jan Mayen"
+    SK: Slowakei
+    SL: "Sierra Leone"
+    SM: "San Marino"
+    SN: Senegal
+    SO: Somalia
+    SR: Suriname
+    ST: "São Tomé und Príncipe"
+    SV: "El Salvador"
+    SY: Syrien
+    SZ: Swasiland
+    TA: "Tristan da Cunha"
+    TC: "Turks- und Caicosinseln"
+    TD: Tschad
+    TF: "Französische Süd- und Antarktisgebiete"
+    TG: Togo
+    TH: Thailand
+    TJ: Tadschikistan
+    TK: Tokelau
+    TL: Osttimor
+    TM: Turkmenistan
+    TN: Tunesien
+    TO: Tonga
+    TR: Türkei
+    TT: "Trinidad und Tobago"
+    TV: Tuvalu
+    TW: Taiwan
+    TZ: Tansania
+    UA: Ukraine
+    UG: Uganda
+    UM: "United States Minor Outlying Islands"
+    US: "Vereinigte Staaten"
+    UY: Uruguay
+    UZ: Usbekistan
+    VA: Vatikanstadt
+    VC: "St. Vincent und die Grenadinen"
+    VE: Venezuela
+    VG: "Britische Jungferninseln"
+    VI: "Amerikanische Jungferninseln"
+    VN: Vietnam
+    VU: Vanuatu
+    WF: "Wallis und Futuna"
+    WS: Samoa
+    YE: Jemen
+    YT: Mayotte
+    ZA: Südafrika
+    ZM: Sambia
+    ZW: Simbabwe
+    ZZ: "Unbekannte oder ungültige Region"
   date: 
     abbr_day_names: 
       - Son
@@ -308,35 +570,38 @@ de:
     distance_in_words: 
       about_x_hours: 
         one: "circa 1 Stunde"
-        other: "circa {{count}} Stunden"
+        other: "circa %{count} Stunden"
       about_x_months: 
         one: "circa 1 Monat"
-        other: "circa {{count}} Monate"
+        other: "circa %{count} Monate"
       about_x_years: 
         one: "circa 1 Jahr"
-        other: "circa {{count}} Jahre"
+        other: "circa %{count} Jahre"
+      almost_x_years: 
+        one: "fast ein Jahr"
+        other: "fast %{count} Jahre"
       half_a_minute: "halbe Minute"
       less_than_x_minutes: 
         one: "weniger als 1 Minute"
-        other: "weniger als {{count}} Minuten"
+        other: "weniger als %{count} Minuten"
       less_than_x_seconds: 
         one: "weniger als 1 Sekunde"
-        other: "weniger als {{count}} Sekunden"
+        other: "weniger als %{count} Sekunden"
       over_x_years: 
         one: "über 1 Jahr"
-        other: "über {{count}} Jahre"
+        other: "über %{count} Jahre"
       x_days: 
         one: "1 Tag"
-        other: "{{count}} Tage"
+        other: "%{count} Tage"
       x_minutes: 
         one: "1 Minute"
-        other: "{{count}} Minuten"
+        other: "%{count} Minuten"
       x_months: 
         one: "1 Monat"
-        other: "{{count}} Monate"
+        other: "%{count} Monate"
       x_seconds: 
         one: "1 Sekunde"
-        other: "{{count}} Sekunden"
+        other: "%{count} Sekunden"
     prompts: 
       day: Tag
       hour: Stunde
@@ -344,14 +609,14 @@ de:
       month: Monat
       second: Sekunde
       year: Jahr
-    time_ago: "{{time_ago_in_words}} vorher"
+    time_ago: "%{time_ago_in_words} vorher"
   deleted: 
-    conversation: "Konversation <b>{{name}}</b> gelöscht"
+    conversation: "Konversation <b>%{name}</b> gelöscht"
     left_project: "Sie haben dieses Projekt verlassen"
-    page: "Seite <b>{{name}}</b> gelöscht"
-    person: "{{name}} ist nicht mehr Teilnehmer in diesem Projekt"
-    task: "Aufgabe <b>{{name}}</b> gelöscht"
-    upload: "Datei <b>{{name}}</b> gelöscht"
+    page: "Seite <b>%{name}</b> gelöscht"
+    person: "%{name} ist nicht mehr Teilnehmer in diesem Projekt"
+    task: "Aufgabe <b>%{name}</b> gelöscht"
+    upload: "Datei <b>%{name}</b> gelöscht"
   dividers: 
     actions: 
       delete_confirm: "Sind Sie sicher, dass Sie diesen Trenner löschen wollen?"
@@ -365,46 +630,46 @@ de:
       do_not_answer: "Antworten Sie nicht auf diese Email."
     confirm: 
       follow_the_link: "Um die <b>Anmeldung für Teambox zu vervollständigen</b>, melden Sie sich per Klick hier an: "
-      hey: "Hallo {{user_name}}!"
+      hey: "Hallo %{user_name}!"
       log_in: "Jetzt bei Teambox anmelden!"
       plaintext_link: "Wenn das nicht funktioniert, kopieren Sie den folgenden Link und fügen Sie ihn in die Adresszeile Ihres Browsers ein:"
-      problems: "Wenn Sie irgendwelche Probleme haben, kontaktieren Sie uns unter {{support}}"
-      report_abuse: "Sie erhalten diese Email, weil Sie sich mit der Adresse {{email}} für ein Teambox-Benutzerkonto registriert haben."
+      problems: "Wenn Sie irgendwelche Probleme haben, kontaktieren Sie uns unter %{support}"
+      report_abuse: "Sie erhalten diese Email, weil Sie sich mit der Adresse %{email} für ein Teambox-Benutzerkonto registriert haben."
     invitation: 
       accept_the_invitation: "Nehmen Sie die Einladung an, um mit der Zusammenarbeit zu beginnen."
-      collaborate_with: "{{name}} will mit Ihnen auf Teambox zusammenarbeiten:"
+      collaborate_with: "%{name} will mit Ihnen auf Teambox zusammenarbeiten:"
       current_users: "Benutzer aktuell in diesem Projekt: "
       plaintext_link: "Wenn der obige Link nicht funktioniert, kopieren Sie den folgenden Code und fügen Sie Ihn in die Adresszeile Ihres Browsers ein: "
       plan_share_and_collaborate: "Planen Sie, Geben Sie Aufgaben frei and erfassen Sie, was gemacht werden soll. So einfach, wie es sein soll."
       report_abuse: "Diese Email wurde versendet auf den Wunsch einer Ihrer Kontakte. Teilen Sie uns bitte jeglichen Missbrauch mit."
       teambox_is_a_pm_platform: "Teambox ist eine Projekt Management Plattform, die für die Echtzeit Zusammenarbeit entwickelt wurde."
-      you_have_been_invited_to: "Sie sind zu dem Projekt <b>{{project}}</b> eingeladen worden!"
+      you_have_been_invited_to: "Sie sind zu dem Projekt <b>%{project}</b> eingeladen worden!"
     invitation_group: 
-      you_have_been_invited_to: "Sie wurden zu der Gruppe <b>{{group}}</b> eingeladen"
+      you_have_been_invited_to: "Sie wurden zu der Gruppe <b>%{group}</b> eingeladen"
     notify: 
       are_watching: " haben diese Konversation abonniert und werden über zukünftige Antworten benachrichtigt."
-      assigned_to: "Zugeordnet zu <b>{{user}}</b>"
+      assigned_to: "Zugeordnet zu <b>%{user}</b>"
       comment: "Kommentar auf der Projektseite: "
-      comments: "{{number}} Kommentare"
+      comments: "%{number} Kommentare"
       conversation: "Konversation:"
-      due_on: "Fällig am {{date}}"
-      my_tasks: "Mehr Aufgaben, die Ihnen zugeordnet sind in {{project}}"
-      notification_settings: "Sie können Ihre <a href='{{url}}'>Benachrichtigungseinstellungen hier</a> für weitere Emails ändern."
+      due_on: "Fällig am %{date}"
+      my_tasks: "Mehr Aufgaben, die Ihnen zugeordnet sind in %{project}"
+      notification_settings: "Sie können Ihre <a href='%{url}'>Benachrichtigungseinstellungen hier</a> für weitere Emails ändern."
       project: "Teambox Projekt:"
-      recent_conversations: "Kürzliche Konversationen für {{project}}"
+      recent_conversations: "Kürzliche Konversationen für %{project}"
       reply: "Sie können auch eine Email senden um auf die Konversation zu antworten."
-      status: "Status: {{status}}"
-      stop_watching: "<a href='{{stop_watching_url}}'>Abbestellen</a> der Email Benachrichtigungen für diesen Baum."
+      status: "Status: %{status}"
+      stop_watching: "<a href='%{stop_watching_url}'>Abbestellen</a> der Email Benachrichtigungen für diesen Baum."
       task: "Aufgabe:"
       task_list: "Aufgabenliste:"
-      view_online: "Sie können <a href='{{link}}'>diese Konversation online aufrufen</a>, um zu antworten und Dateien hochzuladen."
+      view_online: "Sie können <a href='%{link}'>diese Konversation online aufrufen</a>, um zu antworten und Dateien hochzuladen."
     reset_password: 
       follow_the_link: "Um ein <b>neues Passwort einzugeben</b> für Teambox, melden Sie sich bitte über den folgenden Link an: "
-      hey: "Hallo {{user_name}}!"
+      hey: "Hallo %{user_name}!"
       log_in: "Melden Sie sich jetzt bei Teambox an!"
       plaintext_link: "Wenn dieses nicht funktioniert, kopieren Sie den folgenden Link und fügen Sie ihn in die Adresszeile Ihres Browsers ein:"
-      problems: "Wenn Sie irgendwelche Probleme haben, kontaktieren Sie uns unter {{support}}"
-      report_abuse: "Sie erhalten dieses Email, weil Sie sichr für ein Teambox-Benutzerkonto registriert haben mit {{email}}"
+      problems: "Wenn Sie irgendwelche Probleme haben, kontaktieren Sie uns unter %{support}"
+      report_abuse: "Sie erhalten dieses Email, weil Sie sichr für ein Teambox-Benutzerkonto registriert haben mit %{email}"
     upload: 
       file: "Datei:"
       uploaded_by: "hochgeladen von"
@@ -412,7 +677,7 @@ de:
     new: 
       create: "Erstellen Sie ein Beispiel-Projekt"
       error: "Beispielprojekt konnte nicht erstellt werden."
-      error_list: "Beispielprojekt konnte nicht erstellt werden. Folgende Projekte sind ungültig: {{list}}."
+      error_list: "Beispielprojekt konnte nicht erstellt werden. Folgende Projekte sind ungültig: %{list}."
       learn: "Lernen Sie an einem Beispiel!"
       line1: "Wenn Sie das erste Mal Teambox nutzen, können Sie ein Beispiel-Projekt mit beliebigen Inhalten erstellen."
       line2: "Das Navigieren durch die Seiten lehrt Sie, wie Sie jeden Bestandteil von Teambox nutzen."
@@ -456,7 +721,7 @@ de:
       title: "Gruppe erstellen"
     primer: 
       create_group: "Gruppe erstellen"
-      no_group_create: "Sie besitzen keine Gruppen. {{link}}."
+      no_group_create: "Sie besitzen keine Gruppen. %{link}."
     search: 
       invite: Einladen
       invite_people: "Teilnehmer zur Gruppe einladen"
@@ -476,7 +741,7 @@ de:
       project: Projekte
       task: Aufgaben
       user: Benutzer
-    week_num: "Woche {{num}}"
+    week_num: "Woche %{num}"
     week_total: Gesamt
   invitations: 
     errors: 
@@ -485,27 +750,27 @@ de:
     fields: 
       user_or_email: "Geben Sie den Benutzernamen oder die Email ein:"
     group_invitation: 
-      invited_email: "{{inviter}} hat <b>{{email}}</b> zu der Gruppe eingeladen."
-      invited_user: "{{inviter}} hat <b>{{invitee}}</b> zu der Gruppe eingeladen."
+      invited_email: "%{inviter} hat <b>%{email}</b> zu der Gruppe eingeladen."
+      invited_user: "%{inviter} hat <b>%{invitee}</b> zu der Gruppe eingeladen."
     index_user: 
       no_invitations: "Sie haben keine offenen Projekt Einladungen."
       title: "Offene Einladungen"
     invitation: 
       discard: "Einladung verwerfen"
-      invited_email: "{{inviter}} hat <b>{{email}}</b> eingeladen am Projekt teilzunehmen."
-      invited_user: "{{inviter}} hat <b>{{invitee}}</b> eingeladen am Projekt teilzunehmen."
+      invited_email: "%{inviter} hat <b>%{email}</b> eingeladen am Projekt teilzunehmen."
+      invited_user: "%{inviter} hat <b>%{invitee}</b> eingeladen am Projekt teilzunehmen."
       pending: "Eine Email wurde an den Benutzer versendet, aber sie wurde noch nicht bestätigt."
       resend: "Einladungs-Email noch einmal versenden"
-      time_ago: "({{time_ago_in_words}} vorher)"
+      time_ago: "(%{time_ago_in_words} vorher)"
     pending: 
-      invited_to_join: "{{by}} hat Sie eingeladen an dem Projekt {{project}} teilzunehmen."
-      invited_to_join_group: "{{by}} hat Sie eingeladen, der Gruppe {{group}} beizutreten."
+      invited_to_join: "%{by} hat Sie eingeladen an dem Projekt %{project} teilzunehmen."
+      invited_to_join_group: "%{by} hat Sie eingeladen, der Gruppe %{group} beizutreten."
       to_access_or: "um das Projekt aufzurufen oder"
       to_access_or_group: "um zur Gruppe zu gelangen"
     recent: 
-      invite: "Einladen von {{username}}"
+      invite: "Einladen von %{username}"
     resend: 
-      resent: "Die Einladung wurde erneut versendet an {{recipient}}. Wenn die Email nicht erhalten wurde, kontrollieren Sie bitte den Spam-Ordner."
+      resent: "Die Einladung wurde erneut versendet an %{recipient}. Wenn die Email nicht erhalten wurde, kontrollieren Sie bitte den Spam-Ordner."
       return: Zurück
     search: 
       invite: Einladen
@@ -518,12 +783,12 @@ de:
       email_sent: "<b>Wir haben diesem Benutzer gerade eine Benachrichtigungs-Email gesendet mit einem Link, um die Einladung anzunehmen</b>. Wenn sie die Email nicht erhalten haben, stellen Sie sicher, dass sie nicht als Spam eingestuft wurde oder wählen Sie eine andere Email Adresse. Wenn weiterhin Probleme bestehen, nehmen Sie bitte Kontakt zu unserem Team auf."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   not_found: 
-    conversation: "Konversation {{id}} wurde nicht im Projekt gefunden."
-    group: "Gruppe {{id}} existiert nicht."
-    page: "Seite {{id}} wurde nicht im Projekt gefunden."
-    project: "Projekt {{id}} existiert nicht."
-    task: "Aufgabe {{id}} wurde nicht im Projekt gefunden."
-    task_list: "Aufgabenliste {{id}} wurde nicht im Projekt gefunden."
+    conversation: "Konversation %{id} wurde nicht im Projekt gefunden."
+    group: "Gruppe %{id} existiert nicht."
+    page: "Seite %{id} wurde nicht im Projekt gefunden."
+    project: "Projekt %{id} existiert nicht."
+    task: "Aufgabe %{id} wurde nicht im Projekt gefunden."
+    task_list: "Aufgabenliste %{id} wurde nicht im Projekt gefunden."
     user: "Benutzer existiert nicht."
   notes: 
     actions: 
@@ -539,13 +804,13 @@ de:
   number: 
     currency: 
       format: 
-        delimiter: "."
+        delimiter: ","
         format: "%u%n"
-        separator: ","
-        unit: €
+        separator: "."
+        unit: $
     format: 
-      delimiter: "."
-      separator: ","
+      delimiter: ","
+      separator: "."
     human: 
       storage_units: 
         format: "%n %u"
@@ -570,6 +835,7 @@ de:
     index_task_lists: "Alle Aufgabenlisten"
     index_uploads: "Alle hochgeladenen Dateien"
     new_conversations: "Neue Konversation"
+    results_search: Suche
     new_example_projects: "Erstellen Sie ein Beispiel-Projekt"
     new_pages: "Neue Seite"
     new_projects: "Neues Projekt"
@@ -596,8 +862,7 @@ de:
     index: 
       pages_in_this_project: "Seiten in diesem Projekt"
       rss: 
-        description: "Seiten im Projekt {{name}}"
-        title: Seiten
+        description: "Seiten im Projekt %{name}"
     new: 
       define1: "Hier können Sie <b>nützliche Informationen mitteilen</b> für Ihr Team: Eine Roadmap, interessante Links, Anleitungen, Email Vorlagen..."
       define2: "Eine Seite zu bearbeiten ist sehr einfach, mit Drag-and-Drop können Sie Elemente genau platzieren."
@@ -675,7 +940,7 @@ de:
       permalink_description: "Dies wird die Web-Adresse Ihres Projektes. Wählen Sie sie so kurz wie möglich und vermeiden Sie Leerzeichen."
       tracks_time: "Zeiterfassung aktivieren"
     index: 
-      archived: "Zeige {{count}} archivierte Projekte..."
+      archived: "Zeige %{count} archivierte Projekte..."
       new_project: "Neues Projekt"
       projects: "Meine Projekte"
       refreshes: "Aktualisiert jede Minute"
@@ -685,7 +950,7 @@ de:
       subscribe: "Nachrichten Feed abonnieren"
       title: "Nachrichten Feeds für alle eigenen Projekte"
     new: 
-      create_an_example_project: "Zum ersten Mal bei Teambox? <a href='{{link}}'>Erstellen Sie ein Beispiel-Projekt</a> zum Ausprobieren und Lernen."
+      create_an_example_project: "Zum ersten Mal bei Teambox? <a href='%{link}'>Erstellen Sie ein Beispiel-Projekt</a> zum Ausprobieren und Lernen."
       created: "Ihr Projekt wurde erstellt!"
       invalid_project: "Ungültiges Projekt, bitte Fehler korrigieren und noch einmal versuchen."
       new_project: "Neues Projekt..."
@@ -721,16 +986,16 @@ de:
       new_task_list_link: "Neue Aufgabenliste"
       people_in_project: "Teilnehmer in diesem Projekt"
       rss: 
-        description: "Kürzliche Aktivitäten im Projekt {{name}}"
-        title: "{{name}}"
+        description: "Kürzliche Aktivitäten im Projekt %{name}"
+        title: "%{name}"
       subscribe: "Abonnieren Sie den Nachrichten Feed"
       text_styling: "Text Formatierung"
       tip: "Erwähnen Sie jemanden über @benutzername in Ihrem Status, erhält der Benutzer eine Email mit Ihrer Nachricht"
       update_your_status: "Aktualisieren Sie Ihren Status..."
   reset_passwords: 
     create: 
-      invalid: "Die URL zur Änderung des Passwortes ist ungültig oder abgelaufen. Bitte versuchen Sie, über den Button 'Ich habe mein Passwort vergessen' einen neuen Link anzufordern. <br/>Wenn das nicht hilft, kontaktieren Sie uns unter {{support}}"
-      not_found: "Wir finden keine Benutzer mit dieser Email Adresse: {{email}}<br/>Bitte prüfen Sie die Email Adresse und versuchen Sie es noch einmal. Wenn das nicht hilft, kontaktieren Sie uns unter {{support}}"
+      invalid: "Die URL zur Änderung des Passwortes ist ungültig oder abgelaufen. Bitte versuchen Sie, über den Button 'Ich habe mein Passwort vergessen' einen neuen Link anzufordern. <br/>Wenn das nicht hilft, kontaktieren Sie uns unter %{support}"
+      not_found: "Wir finden keine Benutzer mit dieser Email Adresse: %{email}<br/>Bitte prüfen Sie die Email Adresse und versuchen Sie es noch einmal. Wenn das nicht hilft, kontaktieren Sie uns unter %{support}"
       password_not_updated: "Das neue Passwort ist ungültig. Bitte melden Sie sich erneut an."
       password_updated: "Das Passwort wurde erfolgreich geändert. Bitte melden Sie sich an."
     new: 
@@ -741,8 +1006,8 @@ de:
     sent: 
       change_password_now: "Sie sind jetzt angemeldet. <b>Geben Sie ein neues Passwort ein</b> und prägen Sie es sich ein!"
       follow_the_link: "Folgen Sie dem Link in der Email, um sich bei Teambox anzumelden. Wenn Sie die Email nicht finden, schauen Sie bitte auch in Ihrem Spam-Ordner nach."
-      login_link_sent: "Wir haben Ihnen eine Email an {{email}} gesendet. Sie erhalten damit Ihr Passwort."
-      not_found: "Die Email <b>{{email}}</b> gehört zu keinem Teambox-Benutzer. Bitte überprüfen Sie Ihre Eingabe!"
+      login_link_sent: "Wir haben Ihnen eine Email an %{email} gesendet. Sie erhalten damit Ihr Passwort."
+      not_found: "Die Email <b>%{email}</b> gehört zu keinem Teambox-Benutzer. Bitte überprüfen Sie Ihre Eingabe!"
       title: "Passwort zurücksetzen"
   sessions: 
     fields: 
@@ -751,7 +1016,7 @@ de:
       signup: "Registrieren Sie sich für ein Benutzerkonto"
       username_or_email: "Email oder Benutzername"
     new: 
-      login_failed: "Fehler beim Anmelden als {{login}}"
+      login_failed: "Fehler beim Anmelden als %{login}"
       submit: Anmelden
       title: Anmelden
       video: "Um was geht es in Teambox?"
@@ -768,7 +1033,7 @@ de:
       home: Teambox
       login: Anmelden
       logout: Abmelden
-      project_invitations: "Einladungen ({{count}})"
+      project_invitations: "Einladungen (%{count})"
       settings: Einstellungen
     navigation: 
       all_projects: "Alle Projekte"
@@ -807,14 +1072,14 @@ de:
       tour: Tour
       users: "Unsere Benutzer"
     strip: 
-      archived: "Dieses Projekt ist archiviert. Um dieses Projekt zu bearbeiten oder zu kommentieren, müssen Sie es aus dem Archiv holen auf der Seite <a href='{{link}}'>Projekt Einstellungen</a>"
+      archived: "Dieses Projekt ist archiviert. Um dieses Projekt zu bearbeiten oder zu kommentieren, müssen Sie es aus dem Archiv holen auf der Seite <a href='%{link}'>Projekt Einstellungen</a>"
     task_navigation: 
       all_tasks: "Alle Aufgaben"
       everybodys_tasks: "Aufgaben für alle"
       hide_archived_tasks: "Archivierte Aufgaben ausblenden"
       my_tasks: 
         one: "Meine Aufgabe"
-        other: "Meine {{count}} Aufgaben"
+        other: "Meine %{count} Aufgaben"
       unarchived_tasks: "Unarchivierte Aufgaben"
     upcoming_events_primer: 
       title: "Es gibt keine fälligen Aufgaben für den Kalender"
@@ -853,7 +1118,7 @@ de:
       set_dates: "Set the start & end date"
       show_archived: 
         one: "Zeige archivierte Aufgabe"
-        other: "Zeige {{count}} archivierte Aufgaben"
+        other: "Zeige %{count} archivierte Aufgaben"
     archived: 
       description: "Sie sehen momentan alle archivierten Aufgaben. Diese sind geschlossen worden."
       title: "Alle archivierten Aufgaben"
@@ -863,7 +1128,7 @@ de:
       other_views: "Other views"
       subscribe: "Abonnieren Sie den Nachrichten Feed"
     destroy_message: 
-      deleted: "Die Aufgabenliste <b>{{name}}</b> wurde erfolgreich gelöscht!"
+      deleted: "Die Aufgabenliste <b>%{name}</b> wurde erfolgreich gelöscht!"
     edit: 
       submit: "Aufgabenliste aktualisieren"
     errors: 
@@ -897,19 +1162,19 @@ de:
       item3: "<b>Verfolgen</b>. Erhalten Sie Benachrichtigungen für Tasks, die Sie betreffen."
       item4: "<b>Nachvollziehen</b>. Eine beendete Aufgabe wird nicht gelöscht, damit Sie auch später noch auf die Nachrichten und Dateien zugreifen können."
     show: 
-      title: "Aufgabenliste: {{name}}"
+      title: "Aufgabenliste: %{name}"
   tasks: 
     archive_box: 
       archive: "Diese Aufgabe archivieren"
       reopen: "Diese Aufgabe wieder öffnen"
       you_are_done: "Die Aufgabe scheint erledigt zu sein!"
     archive_message: 
-      archived: "Die Aufgabe <b>{{name}}</b> wurde erfolgreich archiviert!"
+      archived: "Die Aufgabe <b>%{name}</b> wurde erfolgreich archiviert!"
     assigned: 
-      assigned_to: "Zugeordnet zu {{user}}"
+      assigned_to: "Zugeordnet zu %{user}"
     create: "Aufgabe hinzufügen"
     destroy_message: 
-      deleted: "Die Aufgabe <b>{{name}}</b> wurde erfolgreich gelöscht!"
+      deleted: "Die Aufgabe <b>%{name}</b> wurde erfolgreich gelöscht!"
     due_on: 
       due_on: "Fällig am"
       today: Heute
@@ -927,16 +1192,16 @@ de:
       edit: Bearbeiten
       hide_archived_tasks: 
         one: "Blende archivierte Aufgabe aus"
-        other: "Blende {{count}} archivierte Aufgaben aus"
+        other: "Blende %{count} archivierte Aufgaben aus"
       new: "+ Aufgabe hinzufügen"
     my_tasks: 
       my_tasks: "Meine Aufgaben"
     new: 
       submit: "Aufgabe hinzufügen"
       title: "Neue Aufgabe"
-    overdue: "{{days}} Tage überfällig"
+    overdue: "%{days} Tage überfällig"
     show: 
-      title: "Aufgabe: {{name}}"
+      title: "Aufgabe: %{name}"
     status: 
       hold: halten
       new: neu
@@ -958,13 +1223,13 @@ de:
     comment_upload_link: Anhang
     form: 
       description: "Titel <i>(optional)</i>"
-      max_size: "Dateigröße darf nicht größer sein als {{mb}}"
+      max_size: "Dateigröße darf nicht größer sein als %{mb}"
       presence: "Sie können keine leere Datei hochladen"
       select_file: "Datei auswählen"
       upload: "Datei hochladen"
     index: 
       cant_create: "Sie haben keine Berechtigung, Dateien zu diesem Projekt zu laden."
-      max_upload_size: "Maximale Anhang-Größe ist {{mb}} Mb"
+      max_upload_size: "Maximale Anhang-Größe ist %{mb} Mb"
       new_file: "Eine Datei hochladen"
     new: 
       select_a_file: "Wählen Sie eine Datei"
@@ -1000,7 +1265,7 @@ de:
       tasks_for_today: "Heutige Aufgaben"
       tasks_for_tomorrow: "Aufgaben für Morgen"
       tasks_without_a_due_date: "Aufgaben ohne Enddatum"
-      you_receive_this_message: "Sie sind für den Email Dienst von Teambox angemeldet. Konfigurieren Sie Email Benachrichtigungen über Ihre {{link}}"
+      you_receive_this_message: "Sie sind für den Email Dienst von Teambox angemeldet. Konfigurieren Sie Email Benachrichtigungen über Ihre %{link}"
     edit: 
       submit: "Konto aktualisieren"
       title_deletion: "Projekt Archivieren/Löschen"
@@ -1011,9 +1276,9 @@ de:
     form: 
       avatar: 
         field: "Ihr Avatar"
-        max_size: "Die Datei ist größer als {{mb}}"
+        max_size: "Die Datei ist größer als %{mb}"
         presence: "Sie können keine leere Datei hochladen"
-        upload_here_or_at_gravatar: "Sie können hier einen neuen Avator hochladen, oder laden Sie ihren globalen Avatar zu der Adresse {{gravatar}}, um ihn für Teambox und für viele andere Webseiten zu benutzen."
+        upload_here_or_at_gravatar: "Sie können hier einen neuen Avator hochladen, oder laden Sie ihren globalen Avatar zu der Adresse %{gravatar}, um ihn für Teambox und für viele andere Webseiten zu benutzen."
         we_have_this_avatar: "Dies ist ihr momentaner Avatar: "
       biography: Lebenslauf
       change_password: "Passwort ändern"
@@ -1027,7 +1292,7 @@ de:
       login: Benutzername
       monday: Montag
       notify_conversations: "Benachrichtigen Sie mich, wenn ich eine Konversation verfolge"
-      notify_mentions: "Benachrichtigen Sie mich, wenn ich angesprochen werde z.B. Hallo @{{login}}! Sie haben eine neue Email!"
+      notify_mentions: "Benachrichtigen Sie mich, wenn ich angesprochen werde z.B. Hallo @%{login}! Sie haben eine neue Email!"
       notify_task_lists: "Benachrichtigen Sie mich, wenn ich eine Aufgabenliste verfolge"
       notify_tasks: "Benachrichtigen Sie mich, wenn ich eine Aufgabe verfolge"
       password: Passwort
@@ -1043,38 +1308,37 @@ de:
       use_this_email: "Sie haben für diese Email Einladungen zur Teilnahme an Projekten. Wenn Sie an den Projekten teilnehmen wollen, ändern Sie diese Email Adresse nicht. Sie können sie ändern, nachdem sie die Anmeldung abgeschlossen haben."
       wants_task_reminder: "Senden Sie mir täglich eine Email mit meinen Aufgaben"
     new: 
-      existing_user: "Wenn Sie bereits ein Benutzerkonto haben, <a href='{{login_url}}'> melden Sie sich an</a> oder <a href='{{forgot_url}}'>lassen Sie sich Ihr Passwort zusenden</a>."
+      existing_user: "Wenn Sie bereits ein Benutzerkonto haben, <a href='%{login_url}'> melden Sie sich an</a> oder <a href='%{forgot_url}'>lassen Sie sich Ihr Passwort zusenden</a>."
       no_public_signup: "Public signup wird vom System leider nicht unterstützt."
       submit: "Benutzerkonto erstellen"
       title: "Erstellen eines Benutzerkontos"
-      you_already_have_an_account: "Sie haben bereits ein Konto für die Email-Adresse {{email}}. Melden Sie sich mit dieser Email-Adresse an oder setzen Sie Ihr Passwort zurück, falls Sie es vergessen haben."
       you_are_logged_in: "Sie haben bereits ein Benutzerkonto. Melden Sie sich ab, um sich als anderer Benutzer anzumelden."
     show: 
-      pending_invite: "{{name}} wurde bereits zu einem Ihrer Projekte eingeladen. Sie können nicht auf die Informationen zugreifen, bevor die Einladung akzeptiert wurde."
+      pending_invite: "%{name} wurde bereits zu einem Ihrer Projekte eingeladen. Sie können nicht auf die Informationen zugreifen, bevor die Einladung akzeptiert wurde."
       profile: Profil
       projects: Projekte
-      recent_activity_for: "Kürzliche Aktivitäten für {{user_name}}"
+      recent_activity_for: "Kürzliche Aktivitäten für %{user_name}"
     unconfirmed_email: 
       follow_the_link: "Bitte <b>öffnen Sie diese Email und folgen Sie dem enthaltenen Link</b>, um Ihr Benutzerkonto zu aktvieren."
-      invitation_sent_to: "Eine Email-Einladung wurde an <i>{{email}}</i> gesendet, damit Sie Ihre Email Adresse bestätigen können."
-      problems: "Wenn immer noch Probleme auftreten, kontaktieren Sie uns über {{support}}"
+      invitation_sent_to: "Eine Email-Einladung wurde an <i>%{email}</i> gesendet, damit Sie Ihre Email Adresse bestätigen können."
+      problems: "Wenn immer noch Probleme auftreten, kontaktieren Sie uns über %{support}"
       problems_title: Probleme?
-      resend: "Sie finden die Email nicht? Klicken Sie <a href='{{link}}'>hier</a>, um die Aktivierungs-Email erneut zu versenden."
+      resend: "Sie finden die Email nicht? Klicken Sie <a href='%{link}'>hier</a>, um die Aktivierungs-Email erneut zu versenden."
       spam: "Prüfen Sie, dass die Email nicht durch Ihr Mail-Programm als Spam eingestuft wurde."
       title: "Bestätigen Sie Ihre Email"
-      wrong_address: "Falsche Adresse? Wenn Sie sich bei ihrer Email Adresse vertippt haben, <a href='{{link}}'>brechen Sie die Anmeldung ab</a> und erstellen Sie ein neues Benutzerkonto mit einer gültigen Email Adresse."
+      wrong_address: "Falsche Adresse? Wenn Sie sich bei ihrer Email Adresse vertippt haben, <a href='%{link}'>brechen Sie die Anmeldung ab</a> und erstellen Sie ein neues Benutzerkonto mit einer gültigen Email Adresse."
     update: 
       error: "Das geänderte Profil konnte nicht gespeichert werden. Bitte korrigieren Sie die Fehler und versuchen Sie es noch einmal."
       updated: "Benutzerprofil wurde geändert!"
     user: 
-      formatted_address: "{{street}}, {{city}} ({{country}})"
+      formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: "Aus dem Projekt entfernen"
     welcome: 
       get_started: "Starten Sie mit Teambox!"
       intro1: "Herzlich Willkommen als neueste Mitglied von Teambox! Sie werden bald erleben, wie Sie Teambox zum Ausgangspukt für Ihre täglichen Aufgaben machen können."
       intro2: "Was können Sie jetzt tun? Erstellen Sie ein Projekt zum <b>Zusammenarbeiten</b>:"
       projects: 
-        create_your_first_project: "Eine Veranstaltung, ein Design, ein Produkt... Starten Sie und <a href='{{link}}'>erstellen Sie Ihr erstes Projekt</a> jetzt!"
+        create_your_first_project: "Eine Veranstaltung, ein Design, ein Produkt... Starten Sie und <a href='%{link}'>erstellen Sie Ihr erstes Projekt</a> jetzt!"
         share_and_collaborate: "Erstellen Sie Freigaben und arbeiten Sie mit Ihrem Team zusammen! Geben und erhalten Sie Updates von Projektständen, Konversationen, Aufgaben, Seiten und Dateien."
         title: Projekte
       spread: 
@@ -1082,7 +1346,7 @@ de:
         help: "Sie können <b>uns helfen</b>, indem Sie Ihren Freunden erzählen, wie viel Spaß die Arbeit mit Teambox macht auf"
         in_your_site: "auf Ihrer Webseite!"
         reasons: "Wir haben jahrelang an Teambox gearbeitet in der Hoffnung, dass es für Sie nützlich ist. <br/>Wir sind reale Menschen, motivierte Entwickler mit viel Engagement, genau wie Sie!"
-        tell_us: "Wenn Ihnen Teambox gefällt, <a href='mailto:{{address}}'> erzählen Sie uns davon</a> in einer Email!"
+        tell_us: "Wenn Ihnen Teambox gefällt, <a href='mailto:%{address}'> erzählen Sie uns davon</a> in einer Email!"
         title: "Lieben Sie uns auch?"
         twitter: "Twitter,"
       stop_welcome: "Diesen Willkommensdialog nicht mehr zeigen"

@@ -4,6 +4,9 @@
       font-size: 12px
       margin-left: 10px
       height: 30px
+    .invitations_pending
+      margin: 10px 0 5px 10px
+      font-weight: bold
     .invite_people
       margin-top: 10px
     .person
@@ -44,9 +47,10 @@
       background: url(/images/feed.png) no-repeat left
   .calendars
     margin-top: 5px
+    padding-left: 3px
     a
       font-size: 13px
-      padding-left: 25px
+      padding-left: 22px
       background: url(/images/calendar_date_select/calendar.gif) no-repeat left
   .calendar_links
     font-size: 13px
@@ -59,7 +63,35 @@
       font-size: 13px
       padding-left: 25px
       background: url(/images/print.gif) no-repeat left
-
+  .email
+    margin-top: 5px
+    a
+      font-size: 13px
+      padding-left: 25px
+      background: url(/images/email.gif) no-repeat left
+    span
+      display: none
+      margin: 5px 0 0 25px
+      padding: 10px 25px 10px 10px
+      color: #505050
+      -moz-border-radius: 4px
+      border: 1px solid #C8C8C8
+      background-color: #F0F0F0
+      word-wrap: break-word
+      a
+        background-image: none
+        padding-left: 0
+      .closeThis
+        background: url(/images/close_help.png) no-repeat left
+        text-indent: -9999px
+        width: 15px
+        float: right
+        margin-top: -5px
+        margin-right: -20px
+  a.gantt_link
+    font-size: 13px
+    padding-left: 25px
+    background: url(/images/gantt.gif) no-repeat left
 
 @media print
   .index_projects
@@ -114,7 +146,6 @@
       .thumbnail
         display: none
 
-
 .edit_projects, .update_projects
   .content_wrap
     float: right
@@ -130,6 +161,35 @@
     margin-bottom: 20px
     .description
       margin: 20px 0
+
+form#new_project
+  margin: 30px 0
+  .errors_for
+    font-size: 12px
+  .text_field
+    margin-bottom: 20px
+  .invite_contacts
+    margin-top: 30px
+    font-size: 12px
+    h3
+      font-size: 14px
+      margin:
+        top: 7px
+        bottom: 10px
+    .users
+      margin-left: 10px
+      .user
+        float: left
+        width: 190px
+    p
+      margin: 15px 0 5px
+    textarea
+      width: 550px
+      height: 40px
+      font-size: 12px
+      margin: 0
+  .submit
+    margin-top: 20px
 
 form#new_project, form.edit_project
   padding:

@@ -23,7 +23,7 @@ class ActivitiesController < ApplicationController
     
     respond_to do |format|
       format.html { redirect_to projects_path }
-      format.js
+      format.js { @threads = Activity.get_threads(@activities) }
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }
@@ -36,10 +36,27 @@ class ActivitiesController < ApplicationController
     
     respond_to do |format|
       format.html { redirect_to projects_path }
-      format.js
+      format.js { @threads = Activity.get_threads(@activities) }
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }
+    end
+  end
+
+  def show_thread
+    if params[:thread_type] == "Task"
+      target = Task.find(params[:id])
+    else
+      target = Conversation.find(params[:id])
+    end
+    @comments = target ? target.comments.all : []
+    @comments.pop if target.is_a?(Conversation) and target.simple
+    respond_to do |format|
+      format.html { redirect_to projects_path }
+      format.js
+      format.xml  { render :xml     => @comments.to_xml }
+      format.json { render :as_json => @comments.to_xml }
+      format.yaml { render :as_yaml => @comments.to_xml }
     end
   end
 
@@ -49,9 +66,14 @@ class ActivitiesController < ApplicationController
     # * The requested project if given
     def get_target
       @target = if params[:project_id]
-        @current_user.projects.find_by_permalink(params[:project_id]) or not_found
+        @current_project = @current_user.projects.find_by_permalink(params[:project_id])
       else
         @current_user.projects.find :all
+      end
+      
+      unless @target
+        redirect_to '/'
+        return false
       end
     end
 end

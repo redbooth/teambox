@@ -1,4 +1,9 @@
-- if events && events.any?
-  %ul
-    - for task in events
-      %li= event_task_link(task)
+%ul
+  - for task in Array(events)
+    %li.has_panel
+      = event_task_link(task)
+      .panel
+        %h2= task
+        %h3
+          Project:
+          = link_to task.project, project_path(task.task_list.project)

@@ -3,15 +3,10 @@
     = list_pending_invites(@pending_projects)
 
 - if @current_project.commentable?(current_user) && @current_project.archived == false
-  %h2
-    = t('.update_your_status')
-    %span.help
-      = formatting_documentation_link
-
   = new_comment_form(@current_project,@current_project.comments.new)
 
 #activities
-  = list_activities(@activities)
+  = list_threads(@threads)
   = show_more_button(@activities)
 = javascript_tag autorefresh(@activities, @current_project)
   
@@ -20,6 +15,9 @@
   .people_list
     %h2= t '.people_in_project'
     = list_users_statuses(@current_project.users)
+    - if @current_project.invitations.count > 0
+      .invitations_pending
+        = link_to t('.pending_invitations', :count => @current_project.invitations.count), project_people_path(@current_project)
     .invite_people
       = link_to "+ #{t('.invite_people')}", project_people_path(@current_project)
   - if @current_project.users.size > 1
@@ -28,3 +26,4 @@
   = instructions_for_feeds
   = instructions_for_calendars
   = #print_project_link(@current_project)
+  = instructions_for_email(@current_project)

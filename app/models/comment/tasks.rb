@@ -13,7 +13,7 @@ class Comment
   end
   
   def status_transition?
-    status != previous_status
+    previous_status && status != previous_status
   end
 
   def assigned?

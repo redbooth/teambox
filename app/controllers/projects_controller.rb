@@ -1,7 +1,5 @@
 class ProjectsController < ApplicationController
   before_filter :can_modify?, :only => [:edit, :update, :transfer, :destroy]
-  before_filter :load_task_lists, :only => [:show]
-  before_filter :load_banner, :only => [:show]
   before_filter :load_projects, :only => [:index]
   before_filter :set_page_title
   
@@ -13,7 +11,7 @@ class ProjectsController < ApplicationController
     @archived_projects = @current_user.projects.archived
 
     respond_to do |f|
-      f.html
+      f.html  { @threads = Activity.get_threads(@activities) }
       f.m
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @projects.to_xml }
@@ -35,7 +33,7 @@ class ProjectsController < ApplicationController
     #return
 
     respond_to do |f|
-      f.html
+      f.html  { @threads = Activity.get_threads(@activities) }
       f.m
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @current_project.to_xml }
@@ -143,7 +141,10 @@ class ProjectsController < ApplicationController
     end
     
     def can_modify?
-      if !(@current_project.owner?(current_user) or @current_project.admin?(current_user))
+      if !( @current_project.owner?(current_user) or 
+            ( @current_project.admin?(current_user) and 
+              !(params[:controller] == 'transfer' or params[:sub_action] == 'ownership')))
+        
           respond_to do |f|
             flash[:error] = t('common.not_allowed')
             f.html { redirect_to projects_path }

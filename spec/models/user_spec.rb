@@ -133,7 +133,7 @@ describe User do
         projects << project
         @user.add_recent_project(project)
       end
-      @user.recent_projects.should == projects
+      @user.recent_projects.should == projects.reverse
       @user.remove_recent_project(projects.second)
       @user.recent_projects.should include(projects.first, projects.third)
       @user.recent_projects.should_not include(projects.second)
@@ -162,7 +162,7 @@ describe User do
 
       it "should return all projects of the user" do
         [@user, @invited].each do |user|
-          user.recent_projects.should == @projects
+          user.recent_projects.should == @projects.reverse
         end
       end
 
@@ -405,10 +405,44 @@ describe User do
         comment = Factory(:comment, :project => @project, :body => "@balint This is urgent!")
         @user.notify_of_project_comment?(comment).should == false
       end
+    end
+  end
 
+  describe "finding an available username" do
+    it "should return the proposed one if it's free" do
+      User.find_available_login("donnie").should == "donnie"
+    end
+
+    it "should propose a new one if it's taken" do
+      Factory(:user, :login => "rabbit")
+      User.find_available_login("rabbit").should == "rabbit2"
+    end
+
+    it "should keep looking for a free one until it's possible" do
+      Factory(:user, :login => "timetravel")
+      Factory(:user, :login => "timetravel2")
+      Factory(:user, :login => "timetravel3")
+      User.find_available_login("timetravel").should == "timetravel4"
+    end
+
+    it "should not take a deleted user's login" do
+      that_girl = Factory(:user, :login => "the_girl_who_dies").destroy
+      User.find_available_login(that_girl.login).should == "#{that_girl.login}2"
     end
   end
   
+  describe "#language" do
+    it "should set a valid language" do
+      user = Factory.create(:user, :language => 'es')
+      user.language.should == 'es'
+    end
+    
+    it "should fall back to default language when setting not in list of available languages" do
+      user = Factory.create(:user, :language => 'xy')
+      user.language.should == 'en'
+    end
+  end
+
   context 'attributes' do
     subject {
       Factory(:user, :card_attributes => { :phone_numbers_attributes => [{:name => '+123456789'}] })

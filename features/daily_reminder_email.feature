@@ -3,13 +3,13 @@ Feature: Daily reminder for tasks email
   As a user
   I want to receive a list of my tasks for that day
 
-  Background:
+  Background: 
     Given a confirmed user exists with login: "mislav", time_zone: "Amsterdam"
     And a project exists with name: "Aquaculture"
     And the task list called "ASAP" belongs to the project called "Aquaculture"
     And the following task with associations exist:
-      | name                                   | task_list | project        |
-      | Give water to the flowers              | ASAP      | Aquaculture    |
+      | name                      | task_list | project     |
+      | Give water to the flowers | ASAP      | Aquaculture |
     And I am currently "mislav"
     And I have the daily task reminders turned on
     And we are in the "UTC" time zone
@@ -52,10 +52,10 @@ Feature: Daily reminder for tasks email
     When the daily task reminders go out at "05:00"
     Then I should receive no emails
 
-    Examples:
-      | date        |
-      | 2010/02/13  |
-      | 2010/02/14  |
+    Examples: 
+      | date       |
+      | 2010/02/13 |
+      | 2010/02/14 |
 
   Scenario: User with the task reminders turned off
     Given I have the daily task reminders turned off
@@ -90,10 +90,10 @@ Feature: Daily reminder for tasks email
     Then I should see "Tasks without a due date" in the email body
     And I should see "Give water to the flowers" in the email body
 
-    Examples:
-      | date        |
-      | 2010/02/15  |
-      | 2010/02/18  |
+    Examples: 
+      | date       |
+      | 2010/02/15 |
+      | 2010/02/18 |
 
   Scenario Outline: User assigned a task without a due date - today is NOT Monday or Thursday
     Given the task called "Give water to the flowers" is assigned to me
@@ -102,16 +102,16 @@ Feature: Daily reminder for tasks email
     When the daily task reminders go out at "05:00"
     Then I should receive no emails
 
-    Examples:
-      | date        |
-      | 2010/02/16  |
-      | 2010/02/17  |
-      | 2010/02/20  |
+    Examples: 
+      | date       |
+      | 2010/02/16 |
+      | 2010/02/17 |
+      | 2010/02/20 |
 
   Scenario: User assigned a story due today and another one without a due date - today is NOT Monday or Thursday
     Given the following task with associations exist:
-      | name                                   | task_list | project        |
-      | Flood the trees                        | ASAP      | Aquaculture    |
+      | name            | task_list | project     |
+      | Flood the trees | ASAP      | Aquaculture |
     And today is "2010/02/16"
     And the task called "Give water to the flowers" is assigned to me
     And the task called "Flood the trees" is assigned to me
@@ -136,3 +136,4 @@ Feature: Daily reminder for tasks email
     Given I have no tasks assigned to me
     When the daily task reminders go out at "05:00"
     Then I should receive no emails
+

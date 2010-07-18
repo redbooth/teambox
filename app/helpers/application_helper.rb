@@ -1,17 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  # overwrite framework helper because it forces ":raise => true", meaning
-  # missing translations wouldn't have a chance to hit the exception_handler
-  def translate(key, options = {})
-    translation = I18n.translate(scope_keys_by_partial(key), options)
-    translation.respond_to?(:join) ? translation.join : translation
-  rescue I18n::MissingTranslationData => e
-    keys = I18n.send(:normalize_translation_keys, e.locale, e.key, e.options[:scope])
-    content_tag('span', keys.join(', '), :class => 'translation_missing')
-  end
-  alias t translate
-  
   def csrf_meta_tag
     if protect_against_forgery?
       %(<meta name="csrf-param" content="#{Rack::Utils.escape_html(request_forgery_protection_token)}"/>\n<meta name="csrf-token" content="#{Rack::Utils.escape_html(form_authenticity_token)}"/>)
@@ -79,6 +68,10 @@ module ApplicationHelper
     render 'shared/project_navigation', :project => project
   end
 
+  def search_bar
+    render :partial => 'shared/search_bar'
+  end
+
   def footer
     render :partial => 'shared/footer'
   end
@@ -115,12 +108,9 @@ module ApplicationHelper
     image_tag('loading.gif', :id => id, :class => 'loading', :style => 'display: none')
   end
 
-  def loading(action,id=nil)
-    if id
-      image_tag('loading.gif', :id => "#{action}_loading_#{id}", :class => 'loading', :style => 'display: none')
-    else
-      image_tag('loading.gif', :id => "#{action}_loading", :class => 'loading', :style => 'display: none')
-    end
+  def loading(action, id = nil)
+    img_id = id ? "#{action}_loading_#{id}" : "#{action}_loading"
+    image_tag('loading.gif', :id => img_id, :class => 'loading', :style => 'display: none', :alt => '')
   end
 
   def show_loading(action,id=nil)
@@ -300,7 +290,7 @@ module ApplicationHelper
     when Array then errors.first
     when String then errors
     end
-    "<div style='color:red;font-weight:bold'>#{error}</div>"
+    "<div class='errors_for'>#{error}</div>"
   end
 
   def link_to_public_page(name)
@@ -310,7 +300,11 @@ module ApplicationHelper
   end
 
   def formatting_documentation_link
-    link_to t('.text_styling'), 'http://daringfireball.net/projects/markdown/', :target => '_blank'
+    link_to t('projects.show.text_styling'), text_styles_path, :rel => :facebox
+  end
+  
+  def formatting_invitations_link
+    link_to t('invitations.search.help'), invite_format_path, :rel => :facebox
   end
 
   def host_with_protocol
@@ -345,10 +339,6 @@ module ApplicationHelper
   
   def rss?
     request.format == :rss
-  end
-  
-  def groups_enabled?
-    APP_CONFIG['allow_groups'] || false
   end
   
   def time_tracking_enabled?

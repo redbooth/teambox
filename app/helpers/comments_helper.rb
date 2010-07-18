@@ -1,18 +1,14 @@
 module CommentsHelper
 
-  def cache_editable_comment(comment, &block)
+  def cache_editable_comment(comment, threaded, simpleconv, &block)
     cache(comment.cache_key.tap { |key|
-      key << "-#{comment.user.avatar_updated_at.to_i}"
+      key << "-#{comment.user.avatar_updated_at.to_i}-#{comment.project.permalink}"
       key << '-editable' if comment.can_edit?(current_user)
       key << '-destructable' if comment.can_destroy?(current_user)
+      key << '-threaded' if threaded
+      key << '-simpleconv' if simpleconv
       key << ".#{request.format}"
     }, &block)
-  end
-
-  def comment_form_for(form_url,&proc)
-    form_for form_url,
-      :html => {:update_id => js_id(nil,Comment.new)},
-      &proc
   end
   
   def convert_comment_form_for(comment,&proc)
@@ -108,6 +104,7 @@ module CommentsHelper
   def new_comment_form(project,comment,options={})
     message = options[:message] ||= nil
     target  = options[:target]  ||= nil
+    thread  = options[:thread]  ||= nil
     if target.nil?
       form_url = [project,comment]
     elsif target.is_a?(Task)
@@ -120,7 +117,8 @@ module CommentsHelper
         :locals => { :target => target,
           :message => message,
           :form_url => form_url, 
-          :comment => comment }
+          :comment => comment,
+          :thread => thread }
     end
   end
   
@@ -223,9 +221,10 @@ module CommentsHelper
     id = "#{js_id(target)}_#{status_type}_comments_count"
   end
 
-  def make_autocompletable(element_id)
+  def make_autocompletable(element_id, project = nil)
+    project ||= @current_project
     base_list = ["'@all <span class=\"informal\">#{t('conversations.watcher_fields.people_all')}</span>'"]
-    people_list = (base_list + @current_project.people.map{|m| "'@#{m.login} <span class=\"informal\">#{h(m.name)}</span>'"}).join(',')
+    people_list = (base_list + project.people.map{|m| "'@#{m.login} <span class=\"informal\">#{h(m.name)}</span>'"}).join(',')
     javascript_tag "Comment.make_autocomplete('comment_body', [#{people_list}]);"
   end
 
@@ -237,7 +236,11 @@ module CommentsHelper
     else t('.project')
     end
 
-    f.text_area :body, :class => 'comment_body', :id => 'comment_body', :placeholder => placeholder
+    f.text_area :body, :class => 'comment_body placeholder', :id => 'comment_body', :placeholder => placeholder
+  end
+
+  def paint_status_boxes
+    javascript_tag "Comment.paint_status_boxes()"
   end
 
 end

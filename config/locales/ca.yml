@@ -68,22 +68,27 @@ ca:
         blank: "no pot estar en blanc"
         confirmation: "no coincideix amb la confirmació"
         empty: "no pot estar buit"
-        equal_to: "ha de ser igual a {{count}}"
+        equal_to: "ha de ser igual a %{count}"
         even: "ha de ser parell"
         exclusion: "està reservat"
-        greater_than: "ha de ser més gran que {{count}}"
-        greater_than_or_equal_to: "ha de ser més gran que o igual a {{count}}"
+        greater_than: "ha de ser més gran que %{count}"
+        greater_than_or_equal_to: "ha de ser més gran que o igual a %{count}"
         inclusion: "no està inclós a la llista"
         invalid: "no es vàlid"
-        less_than: "ha de ser menor que {{count}}"
-        less_than_or_equal_to: "ha de ser menor que o igual a {{count}}"
+        less_than: "ha de ser menor que %{count}"
+        less_than_or_equal_to: "ha de ser menor que o igual a %{count}"
         not_a_number: "no és un número"
         odd: "ha de ser senar"
-        record_invalid: "La validació ha fallat: {{errors}}"
+        record_invalid: "La validació ha fallat: %{errors}"
         taken: "ja està en ús"
-        too_long: "es massa llarg ({{count}} caràcters màxim)"
-        too_short: "es massa curt ({{count}} caràcters mínim)"
-        wrong_length: "no té la longitud correcta ({{count}} caràcters exactes)"
+        too_long: "es massa llarg (%{count} caràcters màxim)"
+        too_short: "es massa curt (%{count} caràcters mínim)"
+        wrong_length: "no té la longitud correcta (%{count} caràcters exactes)"
+      template: 
+        body: "Hi ha hagut problemes amb els següents camps:"
+        header: 
+          one: "No s'ha pogut desar aquest/a %{model} perquè hi ha 1 error"
+          other: "No s'ha pogut desar aquest/a %{model} perquè hi ha hagut %{count} errors"
     models: 
       address: Adreça
       card: Targeta
@@ -160,18 +165,18 @@ ca:
     cancel: Cancel.lar
     close: Close
     comment: 
-      one: "{{count}} comentari"
-      other: "{{count}} comentaris"
+      one: "%{count} comentari"
+      other: "%{count} comentaris"
     decline: Rebutjar
     delete: Esborrar
     edit: Editar
     or: o
     print: "Imprimir aquesta pàgina"
     save: Guardar
-    show_more: "Veure {{number}} més"
+    show_more: "Veure més"
     tasks: 
       one: "1 tasca"
-      other: "{{count}} tasques"
+      other: "%{count} tasques"
   confirm: 
     delete_page: "Segur que vols esborrar aquesta pàgina?"
     delete_task: "Segur que vols esborrar aquesta tasca?"
@@ -195,8 +200,7 @@ ca:
         name: "Tan curt com puguis, donat que apareixerà en el tìtol dels emails que s'enviïn."
     index: 
       rss: 
-        description: "Converses en el projecte {{name}}"
-        title: Converses
+        description: "Converses en el projecte %{name}"
     link: 
       edit: Editar
     new: 
@@ -223,9 +227,268 @@ ca:
     watcher_fields: 
       add_suscribers: "Qui seguirà aquesta conversa?"
       invite_users: "Ets l'unic usuari en aquest projecte!"
-      no_users_yet: "Conversar es més útil quan no ho fas sol. <a href='{{invite_link}}'>Convida a alguns usuaris</a> en aquest projecte per que puguin llegir, comentar i rebre actualitzacions d'aquesta conversa."
+      no_users_yet: "Conversar es més útil quan no ho fas sol. <a href='%{invite_link}'>Convida a alguns usuaris</a> en aquest projecte per que puguin llegir, comentar i rebre actualitzacions d'aquesta conversa."
       people_all: "All people in project"
       subscribe_note: "Aquestes persones rebran una notificació via email d´aquest missatge i els comentaris posteriors.<br/>Poden deixar de seguir la conversa en qualsevol moment."
+  countries: 
+    AC: "Illa de l'Ascensió"
+    AD: Andorra
+    AE: "Unió dels Emirats Àrabs"
+    AF: Afganistan
+    AG: "Antigua i Barbuda"
+    AI: Anguilla
+    AL: Albània
+    AM: Armènia
+    AN: "Antilles Neerlandeses"
+    AO: Angola
+    AQ: Antàrtida
+    AR: Argentina
+    AS: "Samoa Americana"
+    AT: Àustria
+    AU: Austràlia
+    AW: Aruba
+    AX: "Illes Åland"
+    AZ: Azerbaidjan
+    BA: "Bòsnia i Hercegovina"
+    BB: Barbados
+    BD: "Bangla Desh"
+    BE: Bèlgica
+    BF: "Burkina Faso"
+    BG: Bulgària
+    BH: Bahrain
+    BI: Burundi
+    BJ: Benín
+    BL: "Saint Barthélemy"
+    BM: Bermudes
+    BN: Brunei
+    BO: Bolívia
+    BR: Brasil
+    BS: Bahames
+    BT: Bhutan
+    BV: "Illa Bouvet"
+    BW: Botswana
+    BY: Bielorússia
+    BZ: Belize
+    CA: Canadà
+    CC: "Illes Cocos"
+    CD: "Congo [República Democràtica del Congo]"
+    CF: "República Centreafricana"
+    CG: "Congo [República del Congo]"
+    CH: Suïssa
+    CI: "Costa d’Ivori"
+    CK: "Illes Cook"
+    CL: Xile
+    CM: Camerun
+    CN: Xina
+    CO: Colòmbia
+    CP: "Illa Clipperton"
+    CR: "Costa Rica"
+    CS: "Sèrbia i Montenegro"
+    CU: Cuba
+    CV: "Cap Verd"
+    CX: "Illa Christmas"
+    CY: Xipre
+    CZ: "República Txeca"
+    DE: Alemanya
+    DG: "Diego Garcia"
+    DJ: Djibouti
+    DK: Dinamarca
+    DM: Dominica
+    DO: "República Dominicana"
+    DZ: Algèria
+    EA: "Ceuta i Melilla"
+    EC: Equador
+    EE: Estònia
+    EG: Egipte
+    EH: "Sàhara Occidental"
+    ER: Eritrea
+    ES: Espanya
+    ET: Etiòpia
+    EU: UEd
+    FI: Finlàndia
+    FJ: Fiji
+    FK: "Illes Malvines [Illes Falkland]"
+    FM: Micronèsia
+    FO: "Illes Fèroe"
+    FR: França
+    FX: "França metropolitanad"
+    GA: Gabon
+    GB: "Regne Unit"
+    GD: Grenada
+    GE: Geòrgia
+    GF: "Guaiana Francesa"
+    GG: Guernsey
+    GH: Ghana
+    GI: Gibraltar
+    GL: Grenlàndia
+    GM: Gàmbia
+    GN: Guinea
+    GP: Guadeloupe
+    GQ: "Guinea Equatorial"
+    GR: Grècia
+    GS: "Illes Geòrgia del Sud i Sandwich del Sud"
+    GT: Guatemala
+    GU: Guam
+    GW: "Guinea Bissau"
+    GY: Guyana
+    HK: "Hong Kong"
+    HM: "Illa Heard i Illes McDonald"
+    HN: Hondures
+    HR: Croàcia
+    HT: Haití
+    HU: Hongria
+    IC: "Illes Canàries"
+    ID: Indonèsia
+    IE: Irlanda
+    IL: Israel
+    IM: "Illa de Man"
+    IN: Índia
+    IO: "Territori Britànic de l'Oceà Índic"
+    IQ: Iraq
+    IR: Iran
+    IS: Islàndia
+    IT: Itàlia
+    JE: Jersey
+    JM: Jamaica
+    JO: Jordània
+    JP: Japó
+    KE: Kenya
+    KG: Kirguizistan
+    KH: Cambodja
+    KI: Kiribati
+    KM: Comores
+    KN: "Saint Christopher i Nevis"
+    KP: "Corea del Nord"
+    KR: "Corea del Sud"
+    KW: Kuwait
+    KY: "Illes Caiman"
+    KZ: Kazakhstan
+    LA: Laos
+    LB: Líban
+    LC: "Saint Lucia"
+    LI: Liechtenstein
+    LK: "Sri Lanka"
+    LR: Libèria
+    LS: Lesotho
+    LT: Lituània
+    LU: Luxemburg
+    LV: Letònia
+    LY: Líbia
+    MA: Marroc
+    MC: Mònaco
+    MD: Moldàvia
+    ME: Montenegro
+    MF: "Saint MartinRP3"
+    MG: Madagascar
+    MH: "Illes Marshall"
+    MK: "Macedònia [Exrepública Iugoslava de Macedònia]"
+    ML: Mali
+    MM: "Myanmar [Birmània]"
+    MN: Mongòlia
+    MO: Macau
+    MP: "Illes Mariannes del NordRP3"
+    MQ: Martinica
+    MR: Mauritània
+    MS: Montserrat
+    MT: Malta
+    MU: Maurici
+    MV: Maldives
+    MW: Malawi
+    MX: Mèxic
+    MY: Malàisia
+    MZ: Moçambic
+    NA: Namíbia
+    NC: "Nova Caledònia"
+    NE: Níger
+    NF: "Illa Norfolk"
+    NG: Nigèria
+    NI: Nicaragua
+    NL: "Països Baixos"
+    ? "NO"
+    : Noruega
+    NP: Nepal
+    NR: Nauru
+    NU: Niue
+    NZ: "Nova Zelanda"
+    OM: Oman
+    PA: Panamà
+    PE: Perú
+    PF: "Polinèsia Francesa"
+    PG: "Papua Nova Guinea"
+    PH: Filipines
+    PK: Pakistan
+    PL: Polònia
+    PM: "Saint Pierre i Miquelon"
+    PN: "Illes Pitcairn"
+    PR: "Puerto Rico"
+    PS: Palestina
+    PT: Portugal
+    PW: Palau
+    PY: Paraguai
+    QA: Qatar
+    QO: "Territoris allunyats d'Oceania"
+    RE: "Illa de la Reunió"
+    RO: Romania
+    RS: Sèrbia
+    RU: Rússia
+    RW: Rwanda
+    SA: "Aràbia Saudita"
+    SB: "Illes Salomó"
+    SC: Seychelles
+    SD: Sudan
+    SE: Suècia
+    SG: Singapur
+    SH: "Saint Helena"
+    SI: Eslovènia
+    SJ: "Svalbard i Jan Mayen"
+    SK: Eslovàquia
+    SL: "Sierra Leone"
+    SM: "San Marino"
+    SN: Senegal
+    SO: Somàlia
+    SR: Surinam
+    ST: "São Tomé i Príncipe"
+    SV: "El Salvador"
+    SY: Síria
+    SZ: Swazilàndia
+    TA: "Tristão da Cunha"
+    TC: "Illes Turks i Caicos"
+    TD: Txad
+    TF: "Territoris Francesos del Sud"
+    TG: Togo
+    TH: Tailàndia
+    TJ: Tadjikistan
+    TK: Tokelau
+    TL: "Timor Oriental"
+    TM: Turkmenistan
+    TN: Tunísia
+    TO: Tonga
+    TR: Turquia
+    TT: "Trinitat i Tobago"
+    TV: Tuvalu
+    TW: Taiwan
+    TZ: Tanzània
+    UA: Ucraïna
+    UG: Uganda
+    UM: "Illes Perifèriques Menors dels EUA"
+    US: "Estats Units"
+    UY: Uruguai
+    UZ: Uzbekistan
+    VA: Vaticà
+    VC: "Saint Vincent i les Grenadines"
+    VE: Veneçuela
+    VG: "Illes Verges Britàniques"
+    VI: "Illes Verges Nord-americanes"
+    VN: Vietnam
+    VU: Vanuatu
+    WF: "Wallis i Futuna"
+    WS: Samoa
+    YE: Iemen
+    YT: Mayotte
+    ZA: "República de Sud-àfrica"
+    ZM: Zàmbia
+    ZW: Zimbabwe
+    ZZ: "Regió desconeguda o no vàlida"
   date: 
     abbr_day_names: 
       - Dg
@@ -284,35 +547,35 @@ ca:
     distance_in_words: 
       about_x_hours: 
         one: "al voltant d'1 hora"
-        other: "al voltant de {{count}} hores"
+        other: "al voltant de %{count} hores"
       about_x_months: 
         one: "al voltant d'1 mes"
-        other: "al voltant de {{count}} mesos"
+        other: "al voltant de %{count} mesos"
       about_x_years: 
         one: "al voltant d'1 any"
-        other: "al voltant de {{count}} anys"
+        other: "al voltant de %{count} anys"
       half_a_minute: "mig minut"
       less_than_x_minutes: 
         one: "menys d'1 minut"
-        other: "menys de {{count}} minuts"
+        other: "menys de %{count} minuts"
       less_than_x_seconds: 
         one: "menys d'1 segon"
-        other: "menys de {{count}} segons"
+        other: "menys de %{count} segons"
       over_x_years: 
         one: "més d'1 any"
-        other: "més de {{count}} anys"
+        other: "més de %{count} anys"
       x_days: 
         one: "1 dia"
-        other: "{{count}} dies"
+        other: "%{count} dies"
       x_minutes: 
         one: "1 minut"
-        other: "{{count}} minuts"
+        other: "%{count} minuts"
       x_months: 
         one: "1 mes"
-        other: "{{count}} mesos"
+        other: "%{count} mesos"
       x_seconds: 
         one: "1 segon"
-        other: "{{count}} segons"
+        other: "%{count} segons"
     prompts: 
       day: Dia
       hour: Hora
@@ -320,15 +583,15 @@ ca:
       month: Mes
       second: Segons
       year: Any
-    time_ago: "Hace {{time_ago_in_words}}"
+    time_ago: "Hace %{time_ago_in_words}"
   deleted: 
-    conversation: "S'ha esborrat la conversa <b>{{name}}</b>"
+    conversation: "S'ha esborrat la conversa <b>%{name}</b>"
     left_project: "Has deixat el projecte"
-    page: "S'ha esborrat la pàgina <b>{{name}}</b>"
-    person: "{{name}} ja no pertany al projecte"
-    task: "S'ha esborrat la tasca <b>{{name}}</b>"
-    task_list: "S'ha esborrat la llista de tasques <b>{{name}}</b>"
-    upload: "S'ha esborrat l'arxiu <b>{{name}}</b>"
+    page: "S'ha esborrat la pàgina <b>%{name}</b>"
+    person: "%{name} ja no pertany al projecte"
+    task: "S'ha esborrat la tasca <b>%{name}</b>"
+    task_list: "S'ha esborrat la llista de tasques <b>%{name}</b>"
+    upload: "S'ha esborrat l'arxiu <b>%{name}</b>"
   dividers: 
     actions: 
       delete_confirm: "Segur que vols esborrar aquest separador?"
@@ -342,44 +605,44 @@ ca:
       do_not_answer: "No responguis a aquest email."
     confirm: 
       follow_the_link: "Per a <b>completar el teu registre</b> a Teambox només has de seguir aquest enllaç:"
-      hey: "Hola, {{user_name}}!"
+      hey: "Hola, %{user_name}!"
       log_in: "Entra a Teambox ara!"
       plaintext_link: "Si l'enllaç de sobre no funciona, copia i enganxa el següent a la barra d'adreces del teu navegador:"
-      problems: "Si tens problemes, posat en contacte amb nosaltres a {{support}}"
-      report_abuse: "Has rebut aquest missatge perquè t'has registrat a Teambox amb l'adreça {{email}}"
+      problems: "Si tens problemes, posat en contacte amb nosaltres a %{support}"
+      report_abuse: "Has rebut aquest missatge perquè t'has registrat a Teambox amb l'adreça %{email}"
     invitation: 
       accept_the_invitation: "Accepta la invitació per començar a col.laborar"
-      collaborate_with: "{{name}} vol col.laborar amb tú a Teambox:"
+      collaborate_with: "%{name} vol col.laborar amb tú a Teambox:"
       current_users: "Usuaris en aquest projecte:"
       plaintext_link: "Si l'enllaç de sobre no funciona, copia i enganxa el següent a la barra d'adreces del teu navegador:"
       plan_share_and_collaborate: "Planifica, comparteix i estigues al dia del que s'ha fet. Tan fàcil com hauria de ser."
       report_abuse: "Aquest email t'ha arribat per petició del teu amic. Si hi hagut un intent d'abús, contacta'ns."
       teambox_is_a_pm_platform: "Teambox és una plataforma de gestió de projectes pensada per al món real."
-      you_have_been_invited_to: "Has estat convidat al projecte <b>{{project}}</b>"
+      you_have_been_invited_to: "Has estat convidat al projecte <b>%{project}</b>"
     notify: 
       are_watching: " estan subscrits a la conversa, i seran notificats de les respostes futures."
-      assigned_to: "Asignada a <b>{{user}}</b>"
+      assigned_to: "Asignada a <b>%{user}</b>"
       comment: "Comentari a la paret del projecte: "
-      comments: "{{number}} comentaris"
+      comments: "%{number} comentaris"
       conversation: "Conversa:"
-      due_on: "Data límit: {{date}}"
-      my_tasks: "Altres tasques teves a {{project}}"
-      notification_settings: "Pots canviar les teves <a href='{{url}}'>preferències de notificació</a> per els següents emails."
+      due_on: "Data límit: %{date}"
+      my_tasks: "Altres tasques teves a %{project}"
+      notification_settings: "Pots canviar les teves <a href='%{url}'>preferències de notificació</a> per els següents emails."
       project: "Projecte de Teambox:"
-      recent_conversations: "Converses recents a {{project}}"
+      recent_conversations: "Converses recents a %{project}"
       reply: "També pots respondre a aquest email per publicar una resposta."
-      status: "Estat: {{status}}"
-      stop_watching: "<a href='{{stop_watching_url}}'>Deixa de seguir</a> aquest element per a no rebre més emails sobre ell."
+      status: "Estat: %{status}"
+      stop_watching: "<a href='%{stop_watching_url}'>Deixa de seguir</a> aquest element per a no rebre més emails sobre ell."
       task: "Tasca:"
       task_list: "Llista de tasques:"
-      view_online: "Pots <a href='{{link}}'>entrar a Teambox</a> per respondre i adjuntar arxius."
+      view_online: "Pots <a href='%{link}'>entrar a Teambox</a> per respondre i adjuntar arxius."
     reset_password: 
       follow_the_link: "Per a <b>restablir la teva contrasenya</b> a Teambox només has de seguir aquest enllaç:"
-      hey: "Hola, {{user_name}}!"
+      hey: "Hola, %{user_name}!"
       log_in: "Entra a Teambox ara!"
       plaintext_link: "Si l'enllaç de sobre no funciona, copia i enganxa el següent a la barra d'adreces del teu navegador:"
-      problems: "Si tens problemes, posat en contacte amb nosaltres a {{support}}"
-      report_abuse: "Has rebut aquest missatge perquè t'has registrat a Teambox amb l'adreça {{email}}"
+      problems: "Si tens problemes, posat en contacte amb nosaltres a %{support}"
+      report_abuse: "Has rebut aquest missatge perquè t'has registrat a Teambox amb l'adreça %{email}"
     upload: 
       file: "Arxiu:"
       uploaded_by: "pujat per"
@@ -401,18 +664,18 @@ ca:
       title: "Invitacions pendents"
     invitation: 
       discard: "Descartar invitació"
-      invited_email: "{{inviter}} ha convidat a <b>{{email}}</b> al projecte."
-      invited_user: "{{inviter}} ha convidat a <b>{{invitee}}</b> al projecte."
+      invited_email: "%{inviter} ha convidat a <b>%{email}</b> al projecte."
+      invited_user: "%{inviter} ha convidat a <b>%{invitee}</b> al projecte."
       pending: "S'ha enviat un email en aquest usuari, pero encara no ho ha confirmat"
       resend: "Reenviar l'email d'invitació"
-      time_ago: "(hace {{time_ago_in_words}})"
+      time_ago: "(hace %{time_ago_in_words})"
     pending: 
-      invited_to_join: "{{by}} t´ha convidat a unir-te al projecte {{project}}."
+      invited_to_join: "%{by} t´ha convidat a unir-te al projecte %{project}."
       to_access_or: "per accedir al projecte o"
     recent: 
-      invite: "Convidar a {{username}}"
+      invite: "Convidar a %{username}"
     resend: 
-      resent: "Hem reenviat la invitació a {{recipient}}. Si no poden trobar l'email, assegurat de que no s´ha classificat com a spam."
+      resent: "Hem reenviat la invitació a %{recipient}. Si no poden trobar l'email, assegurat de que no s´ha classificat com a spam."
       return: "Tornar enrere"
     search: 
       invite: "Buscar i convidar"
@@ -437,7 +700,7 @@ ca:
     currency: 
       format: 
         delimiter: ","
-        format: "%n%u"
+        format: "%u%n"
         separator: "."
         unit: $
     format: 
@@ -467,6 +730,7 @@ ca:
     index_task_lists: "Les meves tasques"
     index_uploads: "Els meus arxius"
     new_conversations: "Nova Conversa"
+    results_search: Cerca
     new_example_projects: "Crear un projecte d'exemple"
     new_projects: "Nou projecte"
     new_users: "Crear compte"
@@ -491,8 +755,7 @@ ca:
     index: 
       pages_in_this_project: "Pàgines en aquest projecte"
       rss: 
-        description: "Pàgines del projecte {{name}}"
-        title: Pàgines
+        description: "Pàgines del projecte %{name}"
     new: 
       define1: "Aquí pots <b>compartir informació d'us freqüent</b> amb el teu equip: Un roadmap, links útils, instruccions, plantilles d'emails..."
       define2: "Editar una pàgina es senzill i divertit, amb elements arrossegables que pots editar en el lloc."
@@ -556,7 +819,7 @@ ca:
       permalink: URL
       permalink_description: "Això formarà l'adreça web del teu projecte. L'has de mantenir breu. No es permeten espais"
     index: 
-      archived: "Veure {{count}} projectes arxivats..."
+      archived: "Veure %{count} projectes arxivats..."
       new_project: "Cap Projecte"
       projects: "Els meus projectes"
       refreshes: "Actualiza't cada minut"
@@ -566,7 +829,7 @@ ca:
       subscribe: "Subscriu-te al feed d'activitats"
       title: "Activitat en tots els teus projectes"
     new: 
-      create_an_example_project: "És la teva primera vegada a Teambox? <a href='{{link}}'>Crea un projecte d'exemple</a> per experimentar i aprendre."
+      create_an_example_project: "És la teva primera vegada a Teambox? <a href='%{link}'>Crea un projecte d'exemple</a> per experimentar i aprendre."
       created: "S´ha creat el projecte!"
       invalid_project: "Projecte no vàlid, corregeix els errors i intenta-ho de nou."
       new_project: "Nou projecte..."
@@ -601,16 +864,16 @@ ca:
       new_task_list_link: "Nova llista de tasques"
       people_in_project: "Persones en aquest projecte"
       rss: 
-        description: "Activitat recent per a {{name}}"
-        title: "{{name}}"
+        description: "Activitat recent per a %{name}"
+        title: "%{name}"
       subscribe: "Subscriu-te en aquest projecte"
       text_styling: "Estils de text"
       tip: "Si esmentes l'@usuari d'algú, rebran un email amb el teu missatge"
       update_your_status: "Qué fas?"
   reset_passwords: 
     create: 
-      invalid: "L'enllaç que has seguit per recuperar la contrasenya no es vàlid o ha expirat. Intenta recordar-te'n de la contrasenya de nou desde la pàgina principal.<br/>Si això no funcionés, escriu-nos: {{support}}"
-      not_found: "No s'ha trobat cap usuari amb l'email: {{email}}<br/>Comprova que ho escrius bé i fes-ho de nou. Si encara no funcionés, ens escrius: {{support}}"
+      invalid: "L'enllaç que has seguit per recuperar la contrasenya no es vàlid o ha expirat. Intenta recordar-te'n de la contrasenya de nou desde la pàgina principal.<br/>Si això no funcionés, escriu-nos: %{support}"
+      not_found: "No s'ha trobat cap usuari amb l'email: %{email}<br/>Comprova que ho escrius bé i fes-ho de nou. Si encara no funcionés, ens escrius: %{support}"
       password_not_updated: "El nou password no es vàlid. Intenta-ho de nou."
       password_updated: "Has canviat la teva contrasenya. Ja pots accedir a Teambox."
     new: 
@@ -621,8 +884,8 @@ ca:
     sent: 
       change_password_now: "Benvingut de nou. Ara és el moment d' b>escollir una nova contrasenya</b> que no oblidaràs"
       follow_the_link: "Segueix l'enllaç del correu electrònic per accedir a Teambox.Si no ho trobes, assegura't de que no hi és a la carpeta de correo no desitjat"
-      login_link_sent: "T'hem enviat un correu electrònic a {{email}} per poder canviar la contrasenya."
-      not_found: "El correu electrònic <b>{{email}}</b> no pertany a cap usuari de Teambox. Potser ho vas escriure malament."
+      login_link_sent: "T'hem enviat un correu electrònic a %{email} per poder canviar la contrasenya."
+      not_found: "El correu electrònic <b>%{email}</b> no pertany a cap usuari de Teambox. Potser ho vas escriure malament."
       title: "Restablir contrasenya"
   sessions: 
     fields: 
@@ -647,7 +910,7 @@ ca:
       home: Home
       login: Login
       logout: Sortir
-      project_invitations: "Invitacions ({{count}})"
+      project_invitations: "Invitacions (%{count})"
       settings: Opcions
     navigation: 
       all_projects: Projectes
@@ -685,7 +948,7 @@ ca:
       tour: Tour
       users: Testimonis
     strip: 
-      archived: "Aquest projecte és arxivat. Per a editar o comentar-ho has de desarxivarlo a les <a href='{{link}}'>preferències del projecte</a>"
+      archived: "Aquest projecte és arxivat. Per a editar o comentar-ho has de desarxivarlo a les <a href='%{link}'>preferències del projecte</a>"
     task_navigation: 
       all_tasks: Totes
       everybodys_tasks: "Everybody's tasks"
@@ -727,7 +990,7 @@ ca:
       set_dates: "Set the start & end date"
       show_archived: 
         one: "Hi ha una tasca arxivada"
-        other: "Hi ha {{count}} tasques arxivades"
+        other: "Hi ha %{count} tasques arxivades"
     archived: 
       description: "Aquestes són les tasques arxivades, han estat completades o rebutjades"
       title: "Totes les tasques arxivades"
@@ -735,7 +998,7 @@ ca:
       new_task_list: "Nova llista de tasques"
       subscribe: "Subscriu-te a les tasques"
     destroy_message: 
-      deleted: "La lllista <b>{{name}}</b> ha estat esborrada!"
+      deleted: "La lllista <b>%{name}</b> ha estat esborrada!"
     edit: 
       submit: Actualitzar
     errors: 
@@ -768,19 +1031,19 @@ ca:
       item3: "<b>Estigues al dia</b>. Rep notificacions per a tasques que et concerneixen."
       item4: "<b>Revisa</b>. Una tasca completada no s'esborra, de manera que després pots veure que es va fer."
     show: 
-      title: "Llista de tasques: {{name}}"
+      title: "Llista de tasques: %{name}"
   tasks: 
     archive_box: 
       archive: "Arxivar tasca"
       reopen: "Reobrir aquesta tasca"
       you_are_done: "Sembla que ja has acabat amb aquesta tasca."
     archive_message: 
-      archived: "La tasca <b>{{name}}</b> ha estat arxivada!"
+      archived: "La tasca <b>%{name}</b> ha estat arxivada!"
     assigned: 
-      assigned_to: "Responsable: {{user}}"
+      assigned_to: "Responsable: %{user}"
     create: "Afegir Tasca"
     destroy_message: 
-      deleted: "La tasca <b>{{name}}</b> s'ha esborrat"
+      deleted: "La tasca <b>%{name}</b> s'ha esborrat"
     due_on: 
       due_on: Data
       today: Avui
@@ -798,16 +1061,16 @@ ca:
       edit: Editar
       hide_archived_tasks: 
         one: "Amagar la tasca arxivada"
-        other: "Amagar les {{count}} tasques arxivades"
+        other: "Amagar les %{count} tasques arxivades"
       new: "+ Nova tasca"
     my_tasks: 
       my_tasks: "Les meves tasques"
     new: 
       submit: Crear
       title: "Nova tasca"
-    overdue: "{{days}} dies tard"
+    overdue: "%{days} dies tard"
     show: 
-      title: "Tasca: {{name}}"
+      title: "Tasca: %{name}"
     status: 
       hold: espera
       new: nova
@@ -829,13 +1092,13 @@ ca:
     comment_upload_link: Adjunto
     form: 
       description: "Descripció <i>(opcional)</i>"
-      max_size: "El tamany màxim d'arxiu són {{mb}}"
+      max_size: "El tamany màxim d'arxiu són %{mb}"
       presence: "No pots pujar un arxiu buit"
       select_file: "Seleccionar arxiu"
       upload: "Pujar arxiu"
     index: 
       cant_create: "You don't have permission to upload files to this project"
-      max_upload_size: "El tamany màxim d'arxiu és de {{mb}} Mb"
+      max_upload_size: "El tamany màxim d'arxiu és de %{mb} Mb"
       new_file: "Pujar un arxiu"
     new: 
       select_a_file: "Selecciona un arxiu"
@@ -871,7 +1134,7 @@ ca:
       tasks_for_today: "Las teves tasques per avui"
       tasks_for_tomorrow: "Tasques per a demà"
       tasks_without_a_due_date: "Sense data"
-      you_receive_this_message: "Pots deshabilitar aquest recordatori a la teva {{link}}"
+      you_receive_this_message: "Pots deshabilitar aquest recordatori a la teva %{link}"
     edit: 
       submit: Actualitzar
       title_deletion: "Esborrar o arxivar projecte"
@@ -882,9 +1145,9 @@ ca:
     form: 
       avatar: 
         field: "La teva icona"
-        max_size: "L'arxiu no pot ser més gran de {{mb}}"
+        max_size: "L'arxiu no pot ser més gran de %{mb}"
         presence: "No pots pujar un fitxer buit"
-        upload_here_or_at_gravatar: "Pots pujar un nou avatar a Teambox, o crear un {{gravatar}} que pots utilitzar a Teambox i d'altres webs."
+        upload_here_or_at_gravatar: "Pots pujar un nou avatar a Teambox, o crear un %{gravatar} que pots utilitzar a Teambox i d'altres webs."
         we_have_this_avatar: "Aquesta es la imatge que tenim de tu:"
       biography: Biografía
       change_password: "Canviar contrasenya"
@@ -898,7 +1161,7 @@ ca:
       login: "Nom d'usuari"
       monday: Dilluns
       notify_conversations: "Notificarme les converses que segueixo"
-      notify_mentions: "Notificarme quan em mencionin en un comentari, per exemple: Hola @{{login}}!"
+      notify_mentions: "Notificarme quan em mencionin en un comentari, per exemple: Hola @%{login}!"
       notify_task_lists: "Notificarme els comentaris a les llistes de tasques que segueixo"
       notify_tasks: "Notificarme els comentaris a tasques que segueixo"
       password: Contrasenya
@@ -914,36 +1177,36 @@ ca:
       use_this_email: "Has estat convidat a Teambox amb aquesta adreça de correu. Si vols accedir als projectes de qui et va convidar, no canviïs l'adreça de correu. Podràs canviar el teu correu una vegada estiguis donat d'alta."
       wants_task_reminder: "Rebre un correu diari amb les meves tasques"
     new: 
-      existing_user: "Si ja tens un compte, <a href='{{login_url}}'>identifíca't</a> o <a href='{{forgot_url}}'>restableix la teva contrasenya</a>."
+      existing_user: "Si ja tens un compte, <a href='%{login_url}'>identifíca't</a> o <a href='%{forgot_url}'>restableix la teva contrasenya</a>."
       submit: "Crear un compte"
       title: "Crear un compte"
       you_are_logged_in: "Ja tens un compte de Teambox. Si vols entrar com un altre usuari, tanca la sessió i intenta-ho de nou."
     show: 
-      pending_invite: "{{name}} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
+      pending_invite: "%{name} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
       profile: Perfil
       projects: Projectes
-      recent_activity_for: "Activitat recent de {{user_name}}"
+      recent_activity_for: "Activitat recent de %{user_name}"
     unconfirmed_email: 
       follow_the_link: "Així que <b>obre aquest correu i segueix l'enllaç que hi ha</b> per activar el teu compte."
-      invitation_sent_to: "Hem enviat una invitació a <i>{{email}}</i>, per verificar la teva adreça de correu."
-      problems: "Si encara tens problemes, escriu-nos! {{support}}"
+      invitation_sent_to: "Hem enviat una invitació a <i>%{email}</i>, per verificar la teva adreça de correu."
+      problems: "Si encara tens problemes, escriu-nos! %{support}"
       problems_title: "Cap problema?"
-      resend: "¿No trobes el correu de confirmació? Pitja <a href='{{link}}'>aquí</a> per reenviar el correu."
+      resend: "¿No trobes el correu de confirmació? Pitja <a href='%{link}'>aquí</a> per reenviar el correu."
       spam: "Assegura't que el teu correu no s'ha classificat com a correu no desitjat."
       title: "Confirma la teva adreça de correu"
-      wrong_address: "Adreça equivocada? Si vas escriure incorrectament la teva adreça de correu, <a href='{{link}}'>cancel.la el procés</a> i torna a crear el teu compte amb un correu vàlid."
+      wrong_address: "Adreça equivocada? Si vas escriure incorrectament la teva adreça de correu, <a href='%{link}'>cancel.la el procés</a> i torna a crear el teu compte amb un correu vàlid."
     update: 
       error: "No s'ha pogut actualitzar el perfil. Corregeix els errors i intenta-ho de nou."
       updated: "Perfil actualitzat"
     user: 
-      formatted_address: "{{street}}, {{city}} ({{country}})"
+      formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: "Esborrar del projecte"
     welcome: 
       get_started: "Ja ets a Teambox!"
       intro1: "Ets el nostre convidat més recent¡ Aprén com Teambox pot ser el punt d'inici del tu día."
       intro2: "I ara què? Crea un projecte per a <b>colaborar</b>."
       projects: 
-        create_your_first_project: "Un esdeveniment, un disseny, un producte..?  <a href='{{link}}'>Crea el teu primer projecte</a> ara!"
+        create_your_first_project: "Un esdeveniment, un disseny, un producte..?  <a href='%{link}'>Crea el teu primer projecte</a> ara!"
         share_and_collaborate: "Comparteix i col.labora amb el teu equip! Notificacions, converses, tasques, pàgines i arxius."
         title: Projectes
       spread: 
@@ -951,7 +1214,7 @@ ca:
         help: "Pots <b>ajudarnos</b> explicant als teus amics com fas servir Teambox a"
         in_your_site: "a la teva web o blog!"
         reasons: "Hem treballat a Teambox durant anys, esperant ajudar amb la teva organització.<br/>Som gent com tú, desenvolupadors motivats amb ganes de fer bé les coses i millor."
-        tell_us: "¿Utilitzes Teambox tots els dies? Explica'ns ho <a href='mailto:{{address}}'>com ho utilitzes</a> en un correu !"
+        tell_us: "¿Utilitzes Teambox tots els dies? Explica'ns ho <a href='mailto:%{address}'>com ho utilitzes</a> en un correu !"
         title: "¡Volem ser útils per tu!"
         twitter: "Twitter,"
       stop_welcome: "Ocultar la pàgina de benvinguda"

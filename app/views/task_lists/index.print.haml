@@ -1,9 +1,7 @@
 - if @current_project
-  = banner(@events,@chart)
-
   - if @task_lists.any?
     #task_lists
-      = render_task_lists(@current_project,@task_lists,@sub_action)
+      = render_task_lists(@current_project,@task_lists)
   
 - else
   %h2= t('.tasks_for_all_projects')

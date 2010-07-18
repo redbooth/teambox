@@ -10,6 +10,8 @@ class TaskList < RoleRecord
                  :associations,
                  :callbacks
 
+  before_save :ensure_date_order
+
   def notify_new_comment(comment)
     self.watchers.each do |user|
       if user != comment.user and user.notify_task_lists
@@ -52,7 +54,11 @@ class TaskList < RoleRecord
     end
   end
 
-  def cache_key_for_sidebar_panel(locale=I18n.locale)
-    { :controller => "task_lists", :action => "index", :key => ["TaskListPanel", self.id, locale].join('/') }
-  end
+  private
+  
+    def ensure_date_order
+      if start_on && finish_on && start_on > finish_on
+        self.start_on, self.finish_on = finish_on, start_on
+      end
+    end
 end

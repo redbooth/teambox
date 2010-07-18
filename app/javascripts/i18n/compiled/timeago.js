@@ -1,4 +1,6 @@
-// render from /Users/charles/Documents/Rails/teambox/app/javascripts/i18n/timeago.erb// it
+// render from /Users/charles/Documents/Rails/teambox/app/javascripts/i18n/timeago.erb
+
+// it
 
 function format_posted_date_it()
 {
@@ -29,7 +31,7 @@ function format_posted_date_it()
     else if(minutes < 60)    { c.update(minutesAgoInWords_it(minutes)); }
     else if(days == 0)  { c.update(posted_date.strftime_it("%I:%M %p")); }
     else if(days == 1)  { c.update('Ieri ' + posted_date.strftime_it("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_it("%A %b %d")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_it("%a %b %d")); }
     else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_it("%b %d")); }
     else c.update(posted_date.strftime_it("%B %d, %Y"));    
   }
@@ -44,7 +46,8 @@ function minutesAgoInWords_it(minutes) {
   return ""+"" + minutes + " minuti fa"+"";
   }
 
-// ru
+
+// ru
 
 function format_posted_date_ru()
 {
@@ -75,7 +78,7 @@ function format_posted_date_ru()
     else if(minutes < 60)    { c.update(minutesAgoInWords_ru(minutes)); }
     else if(days == 0)  { c.update(posted_date.strftime_ru("%H:%M")); }
     else if(days == 1)  { c.update('Вчера ' + posted_date.strftime_ru("%H:%M")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_ru("%A %d %b")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_ru("%a %d %b")); }
     else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_ru("%d %b")); }
     else c.update(posted_date.strftime_ru("%d %b %Y"));    
   }
@@ -90,7 +93,8 @@ function minutesAgoInWords_ru(minutes) {
   return ""+"" + minutes + " минут назад"+"";
   }
 
-// en
+
+// en
 
 function format_posted_date_en()
 {
@@ -121,7 +125,7 @@ function format_posted_date_en()
     else if(minutes < 60)    { c.update(minutesAgoInWords_en(minutes)); }
     else if(days == 0)  { c.update(posted_date.strftime_en("%I:%M %p")); }
     else if(days == 1)  { c.update('Yesterday ' + posted_date.strftime_en("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_en("%A %b %d")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_en("%a %b %d")); }
     else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_en("%b %d")); }
     else c.update(posted_date.strftime_en("%B %d, %Y"));    
   }
@@ -131,12 +135,13 @@ function format_posted_date_en()
 
 
 function minutesAgoInWords_en(minutes) {
-  if(minutes == 0) { return "less than a minute ago"; }
+  if(minutes == 0) { return "now"; }
   if(minutes == 1) { return "1 minute ago"; }
   return ""+"" + minutes + " minutes ago"+"";
   }
 
-// zh
+
+// zh
 
 function format_posted_date_zh()
 {
@@ -167,7 +172,7 @@ function format_posted_date_zh()
     else if(minutes < 60)    { c.update(minutesAgoInWords_zh(minutes)); }
     else if(days == 0)  { c.update(posted_date.strftime_zh("%m-%d %H:%M")); }
     else if(days == 1)  { c.update('昨天 ' + posted_date.strftime_zh("%m-%d %H:%M")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_zh("%A %m-%d")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_zh("%a %m-%d")); }
     else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_zh("%m-%d")); }
     else c.update(posted_date.strftime_zh("%Y-%m-%d"));    
   }
@@ -182,7 +187,8 @@ function minutesAgoInWords_zh(minutes) {
   return ""+"" + minutes + "分钟以前"+"";
   }
 
-// fr
+
+// fr
 
 function format_posted_date_fr()
 {
@@ -213,7 +219,7 @@ function format_posted_date_fr()
     else if(minutes < 60)    { c.update(minutesAgoInWords_fr(minutes)); }
     else if(days == 0)  { c.update(posted_date.strftime_fr("%I:%M %p")); }
     else if(days == 1)  { c.update('Hier ' + posted_date.strftime_fr("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_fr("%A %d %b")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_fr("%a %d %b")); }
     else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_fr("%d %b")); }
     else c.update(posted_date.strftime_fr("%d %B %Y"));    
   }
@@ -228,7 +234,8 @@ function minutesAgoInWords_fr(minutes) {
   return ""+"Il y a " + minutes + " minutes"+"";
   }
 
-// de
+
+// de
 
 function format_posted_date_de()
 {
@@ -259,7 +266,7 @@ function format_posted_date_de()
     else if(minutes < 60)    { c.update(minutesAgoInWords_de(minutes)); }
     else if(days == 0)  { c.update(posted_date.strftime_de("%I:%M %p")); }
     else if(days == 1)  { c.update('Gestern ' + posted_date.strftime_de("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_de("%A %b %d")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_de("%a %b %d")); }
     else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_de("%b %d")); }
     else c.update(posted_date.strftime_de("%B %d, %Y"));    
   }
@@ -274,7 +281,8 @@ function minutesAgoInWords_de(minutes) {
   return ""+"" + minutes + " Minuten vorher"+"";
   }
 
-// ca
+
+// ca
 
 function format_posted_date_ca()
 {
@@ -305,7 +313,7 @@ function format_posted_date_ca()
     else if(minutes < 60)    { c.update(minutesAgoInWords_ca(minutes)); }
     else if(days == 0)  { c.update(posted_date.strftime_ca("%I:%M %p")); }
     else if(days == 1)  { c.update('Ahir ' + posted_date.strftime_ca("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_ca("%A %b %d")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_ca("%a %b %d")); }
     else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_ca("%b %d")); }
     else c.update(posted_date.strftime_ca("%B %d, %Y"));    
   }
@@ -320,7 +328,8 @@ function minutesAgoInWords_ca(minutes) {
   return ""+"Hace " + minutes + " minuts"+"";
   }
 
-// es
+
+// es
 
 function format_posted_date_es()
 {
@@ -351,7 +360,7 @@ function format_posted_date_es()
     else if(minutes < 60)    { c.update(minutesAgoInWords_es(minutes)); }
     else if(days == 0)  { c.update(posted_date.strftime_es("%I:%M %p")); }
     else if(days == 1)  { c.update('Ayer ' + posted_date.strftime_es("%I:%M %p")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_es("%A %b %d")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_es("%a %b %d")); }
     else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_es("%b %d")); }
     else c.update(posted_date.strftime_es("%B %d, %Y"));    
   }

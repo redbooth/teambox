@@ -3,7 +3,7 @@ div.column
     color: red
 
   span.task_status
-    :margin
+    margin:
       right: 5px
       bottom: 3px
     padding: 2px 5px
@@ -33,7 +33,7 @@ div.column
     padding-right: 10px
     input
       width: 100%
-      :border
+      border:
         top: solid 1px rgb(90,90,90)
         left: solid 1px rgb(150,150,150)
         bottom: solid 1px rgb(150,150,150)
@@ -132,15 +132,16 @@ div.column
       margin-left: -18px
       cursor: move
     .inner
-      :padding	
+      padding:	
         top: 4px
         bottom: 4px
     .taskStatus
       text-align: right
       float: left
       width: 30px
-      :padding
+      padding:
         left: 20px
+        top: 2px
       span
         display: block
         width: 23px
@@ -165,22 +166,15 @@ div.column
         a:hover
           text-decoration: none
           color: rgb(0,0,0)
-      span.status, span.project, span.task_list
+      .task_extended, span.status, span.project, span.task_list
         display: none
   .task.overdue
-    background: rgb(255,240,240)
     .taskName
-      a
+      a.name
         color: rgb(200,0,0)
         font-weight: bold
-      span
-        background: rgb(255,255,255)
-        border: solid 1px rgb(240,200,200)
+      span.assigned
         color: rgb(200,0,0)
-        font-weight: bold
-        a
-          color: rgb(200,0,0)
-          font-weight: normal
   .task.mine
     background: rgb(255,255,210)
     .taskName
@@ -220,9 +214,13 @@ div.column
         border: none
         background: none
         display: inline
+      .task_extended
+        display: block
+        padding-left: 46px
+        margin: 3px 0 5px
 
 div.tasks
-  :padding-top 3px
+  padding-bottom: 5px
 
 table.task_list_closed
   margin-top: 10px
@@ -235,7 +233,6 @@ table.task_list_closed
     .taskName
       font-size: 10px
 
-
 .active_new,.active_open,.active_hold,.active_resolved,.active_rejected
   -moz-border-radius: 5px
   -webkit-border-radius: 5px
@@ -243,7 +240,7 @@ table.task_list_closed
   a
     color: rgb(255,255,255)
   span
-    :padding
+    padding:
       left: 2px
       right: 0px
 .active_new
@@ -264,8 +261,8 @@ table.task_list_closed
 
 .new_task
   font-size: 11px
-  :padding
-    top: 10px
+  padding:
+    top: 5px
     left: 50px
   a
     color: rgb(100,100,100)
@@ -273,11 +270,14 @@ table.task_list_closed
 
 .show_archived_tasks
   font-size: 11px
-  :padding
+  padding:
     top: 6px
     left: 50px
   a
     color: #CCC
+
+.closed
+  margin-top: 10px
 
 span.task_status, span.current_task_status
   padding: 0 3px
@@ -288,16 +288,25 @@ span.task_status, span.current_task_status
   display: inline-block
 .task_status_new
   background: #9da3a7
+  +gradient(#9da3a7,#9da3a7-#333)
   color: white
 .task_status_open
   background: #ffc947
+  +gradient(#ffc947+#333,#ffc947)
   color: #333
 .task_status_hold
   background: #be3cff
+  +gradient(#be3cff+#333,#be3cff)
   color: white
 .task_status_resolved
   background: #afd142
+  +gradient(#afd142,#afd142-#333)
   color: white
 .task_status_rejected
   background: #e97063
+  +gradient(#e97063+#333,#e97063)
   color: white
+
+p.view_for_all
+  font-size: 12px
+  margin: 10px 0

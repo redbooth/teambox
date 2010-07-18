@@ -23,10 +23,11 @@ describe Invitation do
     
     it "should initialize properly entering existing users' emails" do
       user = Factory(:user)
-      invitation = @project.invitations.new(:user_or_email => user.email)
-      invitation.valid?.should be_false
+      invitation = @project.invitations.create(:user_or_email => user.email)
+      invitation.should_not be_valid
       invitation.user = @inviter
-      invitation.valid?.should be_true
+      invitation.should be_valid
+      invitation.save!
       invitation.project.should == @project
       invitation.user.should == @inviter
       invitation.email.should == user.email
@@ -34,8 +35,8 @@ describe Invitation do
     
     it "should find a user by her login" do
       user = Factory.create(:user)
-      invitation = @project.invitations.new(:user_or_email => user.login, :user => @inviter)
-      invitation.valid?.should be_true
+      invitation = @project.invitations.create(:user_or_email => user.login, :user => @inviter)
+      invitation.should_not be_new_record
       invitation.user.should == @inviter
       invitation.invited_user.should == user
       invitation.email.should == user.email
@@ -43,8 +44,8 @@ describe Invitation do
 
     it "should find a user by her email" do
       user = Factory.create(:user)
-      invitation = @project.invitations.new(:user_or_email => user.email, :user => @inviter)
-      invitation.valid?.should be_true
+      invitation = @project.invitations.create(:user_or_email => user.email, :user => @inviter)
+      invitation.should_not be_new_record
       invitation.user.should == @inviter
       invitation.invited_user.should == user
       invitation.email.should == user.email
@@ -131,20 +132,19 @@ describe Invitation do
   describe "an existing invitation" do
     before do
       @project = Factory.create(:project)
-      @inviter = Factory.create(:user)
     end
 
     it "can resend an email to an already invited user with an account who hasn't accepted" do
       user = Factory.create(:user)
-      invitation = @project.invitations.create(:user_or_email => user.login, :user => @inviter)
+      invitation = @project.invitations.new(:user_or_email => user.login, :user => @project.user)
       Emailer.should_receive(:deliver_project_invitation).with(invitation).once
-      invitation.send_email
+      invitation.save!
     end
 
     it "can resend an email to an already invited user without an account who hasn't accepted" do
-      invitation = @project.invitations.create(:user_or_email => "carl.jung@hotmail.ch", :user => @inviter)
+      invitation = @project.invitations.new(:user_or_email => "carl.jung@hotmail.ch", :user => @project.user)
       Emailer.should_receive(:deliver_signup_invitation).with(invitation).once
-      invitation.send_email
+      invitation.save!
     end
   end
 end

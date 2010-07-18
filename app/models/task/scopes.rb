@@ -1,6 +1,6 @@
 class Task
-  named_scope :archived,   :conditions => ['status >= ?', 3]
-  named_scope :unarchived, :conditions => ['status <  ?', 3]
+  named_scope :archived,   :conditions => ['status >= ?', 3], :include => [:project, :task_list, :assigned]
+  named_scope :unarchived, :conditions => ['status <  ?', 3], :include => [:project, :task_list, :assigned]
 
   named_scope :assigned_to, lambda { |person_id| { :conditions => ['assigned_id > ?', person_id] } }
 

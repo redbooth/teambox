@@ -70,7 +70,6 @@ describe Comment do
   end
 
   #describe "posting to a conversation"
-  #describe "posting to a task list"
   
   describe "posting to a task" do
     before do
@@ -79,7 +78,7 @@ describe Comment do
     
     it "should update counter cache" do
       lambda {
-        @task.comments.create(:project => @task.project)
+        @task.comments.create(:project => @task.project, :user_id => @task.user.id)
         @task.reload
       }.should change(@task, :comments_count).by(1)
     end
@@ -129,7 +128,21 @@ describe Comment do
       comment.body_html.should == %Q{<p>Did you know the logo from Teambox has <a href="http://en.wikipedia.org/wiki/Color_theory">carefully selected colors</a>? <img src="http://app.teambox.com/images/header_logo_large.jpg" /></p>\n}
     end
 
+    it "should truncate links longer than 80 chars" do
+      body = 'This commit needs a spec: http://github.com/micho/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/lib/html_formatting.rb'
+      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+      comment.body_html.should == "<p>This commit needs a spec: <a href=\"http://github.com/micho/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/lib/html_formatting.rb\">http://github.com/micho/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80...</a></p>\n"
+    end
+
+    it "should not truncate links shorter or equal than 80 chars" do
+      body = 'This commit needs a spec: http://github.com/micho/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/'
+      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+      comment.body_html.should == "<p>This commit needs a spec: <a href=\"http://github.com/micho/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/\">http://github.com/micho/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/</a></p>\n"
+    end
+
     it "should preserve blocks of code and pre"
+
+    it "should allow youtube videos"
   end
 
   describe "mentioning @user" do
@@ -142,7 +155,7 @@ describe Comment do
       @project.add_user(@user)
       body = "@existing, hey, @existing"
       comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
-      comment.body_html.should == %Q{<p>@<a href="/users/existing">existing</a>, hey, @<a href="/users/existing">existing</a></p>\n}
+      comment.body_html.should == %Q{<p><a href="/users/existing" class="mention">@existing</a>, hey, <a href="/users/existing" class="mention">@existing</a></p>\n}
       comment.mentioned.should == [@user]
     end
 
@@ -153,7 +166,7 @@ describe Comment do
       @project.add_user(james)
       body = "@pablo @james Check this out!"
       comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
-      comment.body_html.should == %Q{<p>@<a href="/users/pablo">pablo</a> @<a href="/users/james">james</a> Check this out!</p>\n}
+      comment.body_html.should == %Q{<p><a href="/users/pablo" class="mention">@pablo</a> <a href="/users/james" class="mention">@james</a> Check this out!</p>\n}
       comment.mentioned.should include(pablo)
       comment.mentioned.should include(james)
     end
@@ -165,7 +178,7 @@ describe Comment do
       @project.add_user(james)
       body = "@all hands on deck this Friday"
       comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
-      comment.body_html.should == %Q{<p><span class="mention_all">@all</span> hands on deck this Friday</p>\n}
+      comment.body_html.should == %Q{<p><span class="mention">@all</span> hands on deck this Friday</p>\n}
       comment.mentioned.should include(pablo)
       comment.mentioned.should include(james)
       comment.mentioned.should_not include(@user)
@@ -247,6 +260,26 @@ describe Comment do
     end
   end
   
+  describe "duplicates" do
+    before do
+      @project = Factory(:project)
+      @user = @project.user
+      @comment = Factory(:comment, :project => @project, :user => @user, :target => @project)
+    end
+
+    it "should not allow posting a duplicate comment" do
+      comment = Factory.build(:comment, :project => @project, :user => @user, :target => @project, :body => @comment.body)
+      comment.valid?.should be_false
+    end
+
+    it "should allow posting a comment with the same body to different targets" do
+      @task = Factory(:task)
+      lambda {
+        Factory(:comment, :project => @project, :user => @user, :target => @task, :body => @comment.body)
+      }.should change(Comment, :count).by(1)
+    end
+  end
+  
   describe "permissions" do
     before do
       @project = Factory(:project)
@@ -290,6 +323,32 @@ describe Comment do
     it "should not be editable or deletable by another non-admin" do
       @comment.can_edit?(@another_user).should == false
       @comment.can_destroy?(@another_user).should == false
+    end
+  end
+
+  context "uploads" do
+    it "should link existing upload" do
+      upload = Factory.create :upload
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
+        :body => 'Here is that cat video I promised'
+
+      comment.uploads.should == [upload]
+      upload.reload
+      upload.comment.should == comment
+      upload.description.should == 'Here is that cat video I promised'
+    end
+
+    it "should create nested upload" do
+      attributes = { :asset => File.open(File.expand_path('../../fixtures/tb-space.jpg', __FILE__)) }
+      comment = Factory.create :comment, :uploads_attributes => [attributes],
+        :body => 'Here is that dog video I promised'
+
+      comment.should have(1).upload
+      upload = comment.uploads.first
+      upload.comment.should == comment
+      upload.description.should == 'Here is that dog video I promised'
+      upload.user_id.should == comment.user_id
+      upload.project_id.should == comment.project_id
     end
   end
 end

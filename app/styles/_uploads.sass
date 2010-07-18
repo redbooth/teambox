@@ -1,19 +1,21 @@
+$upload_icon_width: 48px
+
 .upload
-  padding: 15px 0px
-  border:
-    top: 1px solid white
-    bottom: 1px solid white
+  font-size: 12px
+  +clearing
+  padding: 15px 10px 15px $upload_icon_width + 20px
+  border: 1px solid white
+  border-width: 1px 0
   &:hover
-    border:
-      top: 1px solid #dbe1e6
-      bottom: 1px solid #dbe1e6
+    border-color: #dbe1e6
     background-color: #f6f6f6
-  margin: 0px
-    left: 6px
   .info
-    width: 60px
-    padding-right: 10px
+    width: $upload_icon_width
+    margin-left: -$upload_icon_width - 10px
     float: left
+    .file_icon
+      background: #ffffff
+      padding: 0
     a
       display: block
       text-align: center
@@ -21,13 +23,10 @@
       background: rgb(100, 100, 100)
       color: rgb(255, 255, 255)
       font-size: 16px
-      padding: 3px 0px
-        top: 14px
-      width: 48px
+      padding: 14px 0 3px 0
+      width: $upload_icon_width
       height: 28px
-      margin-left: 6px
-      -moz-border-radius: 5px
-      -webkit-border-radius: 5px
+      +rounded(5px)
       letter-spacing: 0.1em
       font-family: Georgia
     a.jpg, a.gif, a.png, a.tga, a.tiff, a.eps, a.bmp
@@ -57,37 +56,17 @@
       background: rgb(105, 161, 53)
     a.dxf, a.dwg
       background: rgb(12, 164, 227)
-  .block
-    width: 560px
+  .date
     float: right
-    .description
-      color: #999999
-      font-style: italic
-    .name
-      font-size: 12px
-      margin-bottom: 5px
-      border-bottom: solid 1px rgb(235, 235, 235)
-      a
-        font-size: 12px
-        font-weight: bold
-    .date
-      float: right
-      font-size: 10px
-      color: rgb(180, 180, 180)
-    .body
-      font-size: 12px
-
-.iframe_container
-  height: 28px
-  background: white
-  font-family: "Lucida Grande", "Helvetica Neue", Verdana, Arial, Helvetica, sans-serif
-  form
-    .file, .description
-      font-size: 12px
-    .description
-      margin-top: 5px
-    .field .upload_description
-      width: 320px
+    font-size: 10px
+    color: rgb(180, 180, 180)
+  .description
+    color: #999
+    font-style: italic
+  .reference
+    margin-top: .3em
+  a[data-method="delete"]
+    color: red
 
 .uploads_current, .upload_images
   margin: 5px
@@ -133,24 +112,9 @@
       bottom: 4px
     border-bottom: solid 1px rgb(210, 210, 210)
 
-iframe.upload_form
-  clear: both
-  width: 100%
-  height: 28px
-  border: none
-  body
-    background: rgb(255, 255, 255)
-
 .index_uploads
   .content
     padding: 0px
-
-a.remove
-  color: rgb(255, 0, 0)
-  font-size: 12px
-
-body.iframe
-  background: rgb(255, 255, 255)
 
 .upload_form
   margin-bottom: 10px

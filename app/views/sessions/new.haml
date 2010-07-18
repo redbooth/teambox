@@ -5,5 +5,7 @@
   = session_fields
   = submit_tag t('.submit')
 
+= render :partial => 'sessions/oauth_login'
+
 - content_for :column do
   = latest_announcement

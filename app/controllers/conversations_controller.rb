@@ -34,7 +34,7 @@ class ConversationsController < ApplicationController
   end
 
   def index
-    @conversations = @current_project.conversations
+    @conversations = @current_project.conversations.not_simple
 
     respond_to do |f|
       f.html
@@ -48,7 +48,7 @@ class ConversationsController < ApplicationController
 
   def show
     @comments = @conversation.comments
-    @conversations = @current_project.conversations
+    @conversations = @current_project.conversations.not_simple
 
     respond_to do |f|
       f.html

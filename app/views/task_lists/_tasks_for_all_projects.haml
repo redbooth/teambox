@@ -1,4 +1,4 @@
 .task_list_container{ :id => js_id(:all_tasks, current_user) }
   .task_list{ :id => js_id(:with_main_tasks, current_user) }
     %div{ :id => js_id(:the_main_tasks,current_user), :class => 'tasks open' }
-      = list_tasks(tasks,false)
+      = list_tasks(nil, tasks,false)

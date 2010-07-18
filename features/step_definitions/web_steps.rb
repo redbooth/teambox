@@ -106,7 +106,9 @@ end
 
 Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   with_scope(selector) do
-    if page.respond_to? :should
+    if Capybara.current_driver == Capybara.javascript_driver
+      page.has_xpath?(Capybara::XPath.content(text), :visible => true)
+    elsif page.respond_to? :should
       page.should have_content(text)
     else
       assert page.has_content?(text)
@@ -115,19 +117,24 @@ Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
 end
 
 Then /^(?:|I )should see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, selector|
-  regexp = Regexp.new(regexp)
   with_scope(selector) do
+    args = ['//*', {
+      :text => Regexp.new(regexp),
+      :visible => Capybara.current_driver == Capybara.javascript_driver
+    }]
     if page.respond_to? :should
-      page.should have_xpath('//*', :text => regexp)
+      page.should have_xpath(*args)
     else
-      assert page.has_xpath?('//*', :text => regexp)
+      assert page.has_xpath?(*args)
     end
   end
 end
 
 Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   with_scope(selector) do
-    if page.respond_to? :should
+    if Capybara.current_driver == Capybara.javascript_driver
+      page.has_no_xpath?(Capybara::XPath.content(text), :visible => true)
+    elsif page.respond_to? :should
       page.should have_no_content(text)
     else
       assert page.has_no_content?(text)
@@ -136,12 +143,15 @@ Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selec
 end
 
 Then /^(?:|I )should not see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, selector|
-  regexp = Regexp.new(regexp)
   with_scope(selector) do
+    args = ['//*', {
+      :text => Regexp.new(regexp),
+      :visible => Capybara.current_driver == Capybara.javascript_driver
+    }]
     if page.respond_to? :should
-      page.should have_no_xpath('//*', :text => regexp)
+      page.should have_no_xpath(*args)
     else
-      assert page.has_no_xpath?('//*', :text => regexp)
+      assert page.has_no_xpath?(*args)
     end
   end
 end
@@ -174,9 +184,9 @@ Then /^the "([^\"]*)" checkbox(?: within "([^\"]*)")? should be checked$/ do |la
   with_scope(selector) do
     field_checked = find_field(label)['checked']
     if field_checked.respond_to? :should
-      field_checked.should == 'checked'
+      field_checked.should be_true
     else
-      assert_equal 'checked', field_checked
+      assert field_checked
     end
   end
 end
@@ -185,9 +195,9 @@ Then /^the "([^\"]*)" checkbox(?: within "([^\"]*)")? should not be checked$/ do
   with_scope(selector) do
     field_checked = find_field(label)['checked']
     if field_checked.respond_to? :should_not
-      field_checked.should_not == 'checked'
+      field_checked.should_not be_true
     else
-      assert_not_equal 'checked', field_checked
+      assert ! field_checked
     end
   end
 end

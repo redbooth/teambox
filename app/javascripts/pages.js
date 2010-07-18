@@ -1,34 +1,12 @@
+Element.addMethods({
+  getSlotId: function(element) {
+    element = $(element)
+    return element.readAttribute('slot') ||
+      (element.id && element.id.match(/^page_slot_(\d+)$/) && RegExp.$1)
+  }
+})
+
 Event.addBehavior({
-  ".note:mouseover": function(e){
-    $(this).select('p.actions').each(function(e) {
-      e.show();
-    });
-  },
-  ".note:mouseout": function(e){
-    $$(".note p.actions").each(function(e){ 
-      e.hide();
-    });
-  },
-  ".divider:mouseover": function(e){
-    $(this).select('p.actions').each(function(e) {
-      e.show();
-    });
-  },
-  ".divider:mouseout": function(e){
-    $$(".divider p.actions").each(function(e){ 
-      e.hide();
-    });
-  },
-  ".pageSlot .upload:mouseover": function(e){
-    $(this).select('p.slotActions').each(function(e) {
-      e.show();
-    });
-  },
-  ".pageSlot .upload:mouseout": function(e){
-    $$(".pageSlot .upload p.slotActions").each(function(e){ 
-      e.hide();
-    });
-  },
   ".pageForm a.cancel:click": function(e){
     e.element().up('.pageForm').remove();
     return false;
@@ -59,10 +37,9 @@ var Page = {
   SLOT_GAP: 36,
   READONLY: false,
 
-  init: function(readonly, url, auth) {
+  init: function(readonly, url) {
     this.READONLY = readonly;
     this.url = url;
-    this.auth = auth;
     document.currentPage = this;
     if (!readonly) {
       InsertionMarker.init();
@@ -77,14 +54,20 @@ var Page = {
     if (this.READONLY)
       return;
 
-    Sortable.create('slots', {handle: 'slot_handle', tag: 'div', only: 'pageSlot',
+    Sortable.create('slots', {handle: 'slot_handle', tag: 'div', only: 'page_slot',
       onUpdate: function() {
-        new Ajax.Request(Page.url + '/reorder',
-        {
-          asynchronous:true, evalScripts:true,
-          onComplete:function(request) {},
-          parameters:Sortable.serialize('slots', {name: 'slots'}) + '&authenticity_token=' + Page.auth
-        });
+        var csrf_param = $$('meta[name=csrf-param]').first(),
+            csrf_token = $$('meta[name=csrf-token]').first(),
+            serialized = Sortable.serialize('slots', {name: 'slots'});
+        
+        if (csrf_param) {
+          var param = csrf_param.readAttribute('content'),
+              token = csrf_token.readAttribute('content')
+          
+          serialized += '&' + param + '=' + token
+        }
+
+        new Ajax.Request(Page.url + '/reorder', { parameters: serialized });
       } 
     });
   },
@@ -111,43 +94,6 @@ var Page = {
 
   refreshEvents: function() {
     Event.addBehavior.reload();
-  },
-
-  removeIFrameForm: function(frameDoc) {
-  $$('iframe').each(function(element) {
-    if (Page.uploaderDocument(element) == frameDoc) {
-      $(element).up('.pageForm').remove();
-      throw $break;
-    }
-  });
-  },
-
-  uploaderDocument: function(iframe) {
-    var doc = iframe.contentDocument;
-    if (!doc) {
-      var wnd = iframe.contentWindow;
-      doc = wnd ? wnd.document : null;
-    }
-    if (!doc) {
-      return iframe.document;
-    }
-    return doc;
-  },
-
-  widgetActionHandler: function(el, method, href) {
-    new Ajax.Request(href, {
-      asynchronous: true,
-      evalScripts: true,
-      method: method,
-      onLoading: function() {
-        el.hide();
-        el.next('.loading_action').show();
-      },
-      onComplete: function(response) {
-        el.show();
-        el.next('.loading_action').hide();
-      }
-    });
   }
 }
 
@@ -185,20 +131,16 @@ var InsertionBar = {
   },
     
   // Widget form
-  setWidgetForm: function(id) {
-    if (this.current_form)
-      this.clearWidgetForm();
+  setWidgetForm: function(form) {
+    this.clearWidgetForm();
+    form = $(form);
 
-      var template = $(id);
-
-      // Set insertion position
-      $(id + 'Before').writeAttribute('value', Page.insert_before ? '1' : '0');
-      $(id + 'Slot').writeAttribute('value', Page.insert_element ? Page.insert_element.readAttribute('slot') : '-1');
-
-      // Form should go in the insertion bar, so we can change the insertion location and maintain
-      // state
-      this.current_form = template;
-      this.revealForm();
+    // Set insertion position
+    form.down('input[name="position[before]"]').setValue(Page.insert_before ? '1' : '0')
+    form.down('input[name="position[slot]"]').setValue(Page.insert_element ? Page.insert_element.getSlotId() : '-1')
+    // Form should go in the insertion bar, so we can change the insertion location and maintain state
+    this.current_form = form;
+    this.revealForm();
   },
 
   setWidgetFormLoading: function(id, active) {
@@ -206,16 +148,12 @@ var InsertionBar = {
     var submit = form ? form.down('.submit') : null;
     var loading = form ? form.down('.loading') : null;
 
-    if (!(submit && loading))
-      return;
+    if (!(submit && loading)) return;
 
-    if (active)
-    {
+    if (active) {
       submit.hide();
       loading.show();
-    }
-    else
-    {
+    } else {
       submit.show();
       loading.hide();
     }
@@ -224,7 +162,7 @@ var InsertionBar = {
   insertTempForm: function(template) {
     var el = null;
     var before = Page.insert_before ? '1' : '0';
-    var slot = Page.insert_element ? Page.insert_element.readAttribute('slot') : '-1';
+    var slot = Page.insert_element ? Page.insert_element.getSlotId() : '-1';
     var content = template.replace(/\{POS\}/, 'position[slot]=' + slot + '&position[before]=' + before);
 
     if (Page.insert_element == null) {
@@ -240,36 +178,11 @@ var InsertionBar = {
   },
 
   clearWidgetForm: function() {
-    if (!this.current_form)
-      return;
+    if (!this.current_form) return;
 
     this.current_form.reset();
     this.current_form.hide();
     this.current_form = null;
-  },
-
-  widgetButtonFormHandler: function(form_name) {
-    InsertionBar.setWidgetFormLoading(form_name, false);
-    InsertionBar.setWidgetForm(form_name);
-    Form.reset(form_name);
-    $(form_name).focusFirstElement();
-  },
-
-  widgetFormHandler: function(form) {
-    new Ajax.Request(form.readAttribute('action'), {
-      asynchronous: true,
-      evalScripts: true,
-      method: form.readAttribute('method'),
-      parameters: form.serialize(),
-      onLoading: function() {
-        form.down('.submit').hide();
-        form.down('img.loading').show();
-      },
-      onFailure: function(response) {
-        form.down('.submit').show();
-        form.down('img.loading').hide();
-      }
-    });
   }
 };
 
@@ -324,14 +237,14 @@ var InsertionMarker = {
     if (Page.insert_element == null)
       return;
     var next = Page.insert_element.next();
-    while (next != null && next.readAttribute('slot') == null) {
+    while (next != null && !next.getSlotId()) {
       next = next.next();
     }
     return next;
   },
 
   set: function(element, insert_before) {
-    var el = element == null ? $(Element.getElementsBySelector($('slots'), '.pageSlot')[0]) : element;
+    var el = element == null ? $(Element.getElementsBySelector($('slots'), '.page_slot')[0]) : element;
     
     this.updateSlot(false);
     Page.insert_element = el;
@@ -364,7 +277,7 @@ var InsertionMarkerFunc = function(evt){
   if (!(delta < 0 || delta > Page.MARGIN))
   {
     // Show bar here *if* we are within the slot
-    if (el.hasClassName('pageSlot'))
+    if (el.hasClassName('page_slot'))
     {
       var h = el.getHeight(), thr = Math.min(h / 2, Page.SLOT_VERGE);
       var t = offset.top, b = t + h;
@@ -391,107 +304,67 @@ var InsertionMarkerFunc = function(evt){
   }
 }
 
+document.on('dom:loaded', function() {
+  if ($$('body.show_pages').first()) {
+    Page.init(false, window.location.pathname);
+    Page.makeSortable();
+  }
+})
+
 // Buttons
 
-document.on('click', 'a.note_button', function(evt, el) {
-  evt.stop();
-  var in_bar = this.up('.pageSlots') != null;
-  if (!in_bar) {
+document.on('click', 'a.note_button, a.divider_button, a.upload_button', function(e) {
+  e.preventDefault();
+  
+  if (!this.up('.pageSlots')) {
     InsertionMarker.set(null, true);
     InsertionBar.place();
   }
   
-  InsertionBar.widgetButtonFormHandler('new_note_form');
-});
-
-document.on('click', 'a.divider_button', function(evt, el) {
-  evt.stop();
-  var in_bar = this.up('.pageSlots') != null;
-  if (!in_bar) {
-    InsertionMarker.set(null, true);
-    InsertionBar.place();
-  }
+  var type = this.className.match(/\b(note|divider|upload)_/)[1];
   
-  InsertionBar.widgetButtonFormHandler('new_divider_form');
+  var form = $('new_' + type);
+  InsertionBar.setWidgetFormLoading(form, false);
+  InsertionBar.setWidgetForm(form);
+  Form.reset(form).focusFirstElement();
 });
 
-document.on('click', 'a.upload_button', function(evt, el) {
-  evt.stop();
-  var in_bar = this.up('.pageSlots') != null;
-  if (!in_bar) {
-    InsertionMarker.set(null, true);
-    InsertionBar.place();
-  }
-  
-  InsertionMarker.setEnabled(true);
-  InsertionBar.clearWidgetForm();
-  InsertionBar.insertTempForm(Page.upload_template);
-});
-
-document.on('click', 'a.cancelPageWidget', function(evt, el) {
+document.on('click', 'a.cancelPageWidget', function(e) {
+  e.stop()
   InsertionBar.clearWidgetForm();
 });
 
-// Widget Actions
+// Widget actions, forms
 
-document.on('click', 'a.edit_divider', function(evt, el) {
-  evt.stop();
-
-  Page.widgetActionHandler(el, 'get', el.readAttribute('href'));;
+document.on('ajax:before', '.page_slot .actions, .page_slot .slotActions', function(e) {
+  var el = e.findElement();
+  el.hide();
+  el.next('.loading_action').show();
 });
 
-document.on('click', 'a.delete_divider', function(evt, el) {
-  evt.stop();
-  
-  if (!confirm(el.readAttribute('aconfirm')))
-    return;
-  
-  Page.widgetActionHandler(el, 'delete', el.readAttribute('href'));
+document.on('ajax:complete', '.page_slot .actions, .page_slot .slotActions', function(e) {
+  var el = e.findElement();
+  el.show();
+  el.next('.loading_action').hide();
 });
 
-document.on('click', 'a.edit_note', function(evt, el) {
-  evt.stop();
-  
-  Page.widgetActionHandler(el, 'get', el.readAttribute('href'));
+document.on('ajax:before', '.page_slot .note form, .page_slot .divider form', function(e) {
+  this.down('.submit').hide();
+  this.down('img.loading').show();
 });
 
-document.on('click', 'a.delete_note', function(evt, el) {
-  evt.stop();
-  
-  if (!confirm(el.readAttribute('aconfirm')))
-    return;
-  
-  Page.widgetActionHandler(el, 'delete', el.readAttribute('href'));
+document.on('ajax:complete', '.page_slot .note form, .page_slot .divider form', function(e) {
+  this.down('.submit').show();
+  this.down('img.loading').hide();
 });
 
-document.on('click', 'a.delete_page_upload', function(evt, el) {
-  evt.stop();
-  
-  if (!confirm(el.readAttribute('aconfirm')))
-    return;
-  
-  Page.widgetActionHandler(el, 'delete', el.readAttribute('href'));
+document.on('ajax:create', 'form.edit_note', function(e, element) {
+  element.down('img.loading').show()
 });
 
-// Actual widget forms
-
-document.on('submit', 'form.edit_divider', function(evt, form) {
-  evt.stop();
-  InsertionBar.widgetFormHandler(form);
-});
-
-document.on('submit', 'form.edit_note', function(evt, form) {
-  evt.stop();
-  InsertionBar.widgetFormHandler(form);
-});
-
-document.on('submit', 'form.new_note', function(evt, form) {
-  evt.stop();
-  InsertionBar.widgetFormHandler(form);
-});
-
-document.on('submit', 'form.new_divider', function(evt, form) {
-  evt.stop();
-  InsertionBar.widgetFormHandler(form);
-});
-
+document.on('submit', 'body.show_pages form#new_upload', function(e, form) {
+  var iframe = new Element('iframe', { id: 'file_upload_iframe' }).hide()
+  $(document.body).insert(iframe)
+  form.target = iframe.id
+  form.insert(new Element('input', { type: 'hidden', name: 'iframe', value: 'true' }))
+})

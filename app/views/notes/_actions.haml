@@ -1,9 +1,12 @@
-%p.actions{ :style => "display: none" }
+%p.actions
   %span
-    = edit_note_link(note)
+    = link_to pencil_image, edit_project_page_note_path(note.project, note.page, note),
+        :'data-remote' => true
     = loading_action_image("note_#{note.id}", true)
-    = delete_note_link(note)
+    
+    = link_to trash_image, project_page_note_path(note.project, note.page, note),
+        :'data-remote' => true, :'data-method' => 'delete', :'data-confirm' => t('.delete_confirm'), :class => 'widget_delete'
     = loading_action_image("delete_note_#{note.id}", true)
-%p.actions.handle{ :style => "display: none;" }
+%p.actions.handle
   %span
     = drag_widget_handle(note)

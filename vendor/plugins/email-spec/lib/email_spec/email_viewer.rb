@@ -17,10 +17,11 @@ module EmailSpec
 
     def self.save_and_open_all_html_emails
       all_emails.each_with_index do |m, index|
-        if m.multipart? && html_part = m.parts.detect{ |p| p.content_type == 'text/html' }
+        parts = m.multipart?? m.parts : Array.wrap(m)
+        if html_part = parts.detect{ |p| p.content_type == 'text/html' }
           filename = tmp_email_filename("-#{index}.html")
           File.open(filename, "w") do |f|
-            f.write m.parts[1].body
+            f.write html_part.body
           end
           open_in_browser(filename)
         end

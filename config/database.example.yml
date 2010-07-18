@@ -1,20 +1,20 @@
 development:
   adapter: mysql
-  server: localhost
+  host: localhost
   username: root 
   password:
   database: teambox2
   
 test: &TEST
   adapter: mysql
-  server: localhost
+  host: localhost
   username: root 
   password:
   database: teambox2_test
 
 production:
   adapter: mysql
-  server: localhost
+  host: localhost
   username: root 
   password:
   database: teambox2_production

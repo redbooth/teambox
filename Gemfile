@@ -20,9 +20,13 @@ gem 'mysql', '~> 2.8.1', :require => nil, :group => 'mysql'
 gem 'pg', '~> 0.9.0', :require => nil, :group => 'pg'
 gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
 gem 'hpricot', '~> 0.8.2'
+gem 'json'
+gem 'oauth2'
+gem 'oauth'
 
 group :plugins do
   gem 'sprockets-rails', '~> 0.0.1'
+  gem 'thinking-sphinx', '~> 1.3.15', :require => 'thinking_sphinx'
   gem 'acts-as-list', '~> 0.1.2', :require => 'acts_as_list'
   # gem 'acts_as_paranoid', '~> 0.3.1' # => too old!
   gem 'calendar_date_select', '~> 1.15'
@@ -45,4 +49,5 @@ group :testing do
   gem 'pickle', '~> 0.2.1'
   gem 'cucumber-rails', '~> 0.3.0', :require => nil
   gem 'capybara', '~> 0.3.5'
+  gem 'launchy', '~> 0.3.5'
 end

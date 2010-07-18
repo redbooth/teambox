@@ -1,1 +1,3 @@
-= render :partial => 'uploads/new', :locals => { :upload => @upload, :comment => @comment, :page => @page }
+%h2= t('uploads.index.new_file')
+
+= render 'uploads/form', :project => @current_project, :upload => @upload, :page => nil

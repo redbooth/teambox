@@ -1,10 +1,7 @@
-Event.addBehavior({
-  ".upload_wrap:mouseover": function(e){
-    $(this).down('p.actions').show();
-  },
-  ".upload_wrap:mouseout": function(e){
-    $$(".upload_wrap p.actions").each(function(e){ 
-      e.hide();
-    });
+document.on('click', '.index_uploads #column .add_button', function(e) {
+  if (!e.isMiddleClick()) {
+    e.preventDefault()
+    this.next('form').show()
+    this.hide()
   }
-});
+})

@@ -68,22 +68,22 @@ zh:
         blank: 不能为空字符
         confirmation: 与确认值不匹配
         empty: 不能留空
-        equal_to: "必须等于 {{count}}"
+        equal_to: "必须等于 %{count}"
         even: 必须为双数
         exclusion: 是保留关键字
-        greater_than: "必须大于 {{count}}"
-        greater_than_or_equal_to: "必须大于或等于 {{count}}"
+        greater_than: "必须大于 %{count}"
+        greater_than_or_equal_to: "必须大于或等于 %{count}"
         inclusion: 不包含于列表中
         invalid: 是无效的
-        less_than: "必须小于 {{count}}"
-        less_than_or_equal_to: "必须小于或等于 {{count}}"
+        less_than: "必须小于 %{count}"
+        less_than_or_equal_to: "必须小于或等于 %{count}"
         not_a_number: 不是数字
         odd: 必须为单数
-        record_invalid: "校验失败: {{errors}}"
+        record_invalid: "校验失败: %{errors}"
         taken: 已经被使用
-        too_long: "过长（最长为 {{count}} 个字符）"
-        too_short: "过短（最短为 {{count}} 个字符）"
-        wrong_length: "长度非法（必须为 {{count}} 个字符）"
+        too_long: "过长（最长为 %{count} 个字符）"
+        too_short: "过短（最短为 %{count} 个字符）"
+        wrong_length: "长度非法（必须为 %{count} 个字符）"
       models: 
         comment: 
           attributes: 
@@ -180,8 +180,8 @@ zh:
     cancel: 取消
     close: 关闭
     comment: 
-      one: "{{count}}条评论"
-      other: "{{count}}条评价"
+      one: "%{count}条评论"
+      other: "%{count}条评价"
     decline: 拒绝
     delete: 删除
     edit: 编辑
@@ -191,7 +191,7 @@ zh:
     prev: 上一个
     print: 打印此页
     save: 保存
-    show_more: "显示{{number}}的更多信息"
+    show_more: "显示更多"
   confirm: 
     delete_page: 您确信要删除此页面？
     delete_task: 您确信要删除此任务？
@@ -215,8 +215,7 @@ zh:
         name: 尽量简短，这些内容将作为提醒邮件的标题
     index: 
       rss: 
-        description: "{{name}}项目的话题"
-        title: 话题
+        description: "%{name}项目的话题"
     link: 
       edit: 编辑
     new: 
@@ -243,9 +242,267 @@ zh:
     watcher_fields: 
       add_suscribers: 哪些人将关注这个话题？
       invite_users: 您是这个项目的唯一成员！
-      no_users_yet: "话题因分享而更有用。现在就<a href='{{invite_link}}'>邀请某人</a>加入此项目，以便他们可以读取这个话题，解答问题或收到更新提示。"
+      no_users_yet: "话题因分享而更有用。现在就<a href='%{invite_link}'>邀请某人</a>加入此项目，以便他们可以读取这个话题，解答问题或收到更新提示。"
       people_all: 所有项目成员
       subscribe_note: 这些人将通过email得到这个消息及相关评论的提醒。<br/>他们可以随时取消订阅。
+  countries: 
+    AC: 阿森松岛
+    AD: 安道尔
+    AE: 阿拉伯联合酋长国
+    AF: 阿富汗
+    AG: 安提瓜和巴布达
+    AI: 安圭拉
+    AL: 阿尔巴尼亚
+    AM: 亚美尼亚
+    AN: 荷属安的列斯群岛
+    AO: 安哥拉
+    AQ: 南极洲
+    AR: 阿根廷
+    AS: 美属萨摩亚
+    AT: 奥地利
+    AU: 澳大利亚
+    AW: 阿鲁巴
+    AX: 奥兰群岛
+    AZ: 阿塞拜疆
+    BA: 波斯尼亚和黑塞哥维那
+    BB: 巴巴多斯
+    BD: 孟加拉国
+    BE: 比利时
+    BF: 布基纳法索
+    BG: 保加利亚
+    BH: 巴林
+    BI: 布隆迪
+    BJ: 贝宁
+    BL: "圣巴泰勒米; [draft=contributed]"
+    BM: 百慕大
+    BN: 文莱
+    BO: 玻利维亚
+    BR: 巴西
+    BS: 巴哈马
+    BT: 不丹
+    BV: 布维特岛
+    BW: 博茨瓦纳
+    BY: 白俄罗斯
+    BZ: 伯利兹
+    CA: 加拿大
+    CC: 科科斯群岛
+    CD: CD
+    CF: 中非共和国
+    CG: 刚果共和国
+    CH: 瑞士
+    CI: 象牙海岸
+    CK: 库克群岛
+    CL: 智利
+    CM: 喀麦隆
+    CN: 中国
+    CO: 哥伦比亚
+    CP: 克利珀顿岛
+    CR: 哥斯达黎加
+    CS: 塞尔维亚和黑山
+    CU: 古巴
+    CV: 佛得角
+    CX: 圣诞岛
+    CY: 塞浦路斯
+    CZ: 捷克共和国
+    DE: 德国
+    DG: 迪戈加西亚岛
+    DJ: 吉布提
+    DK: 丹麦
+    DM: 多米尼加
+    DO: 多米尼加共和国
+    DZ: 阿尔及利亚
+    EA: 休达及梅利利亚
+    EC: 厄瓜多尔
+    EE: 爱沙尼亚
+    EG: 埃及
+    EH: 西撒哈拉
+    ER: 厄立特里亚
+    ES: 西班牙
+    ET: 埃塞俄比亚
+    EU: 欧盟
+    FI: 芬兰
+    FJ: 斐济
+    FK: 福克兰群岛（马尔维纳斯群岛）
+    FM: 密克罗尼西亚联邦
+    FO: 法罗群岛
+    FR: 法国
+    GA: 加蓬
+    GB: 英国
+    GD: 格林纳达
+    GE: 格鲁吉亚
+    GF: 法属圭亚那
+    GG: 格恩西岛
+    GH: 加纳
+    GI: 直布罗陀
+    GL: 格陵兰
+    GM: 冈比亚
+    GN: 几内亚
+    GP: 瓜德罗普岛
+    GQ: 赤道几内亚
+    GR: 希腊
+    GS: 南乔治亚岛和南桑威齐群岛
+    GT: 危地马拉
+    GU: 关岛
+    GW: 几内亚比绍
+    GY: 圭亚那
+    HK: 香港
+    HM: 赫德与麦克唐纳群岛
+    HN: 洪都拉斯
+    HR: 克罗地亚
+    HT: 海地
+    HU: 匈牙利
+    IC: 加纳利群岛
+    ID: 印度尼西亚
+    IE: 爱尔兰
+    IL: 以色列
+    IM: 曼岛
+    IN: 印度
+    IO: 英属印度洋领地
+    IQ: 伊拉克
+    IR: 伊朗
+    IS: 冰岛
+    IT: 意大利
+    JE: 泽西岛
+    JM: 牙买加
+    JO: 约旦
+    JP: 日本
+    KE: 肯尼亚
+    KG: 吉尔吉斯斯坦
+    KH: 柬埔寨
+    KI: 基里巴斯
+    KM: 科摩罗
+    KN: 圣基茨和尼维斯
+    KP: 朝鲜
+    KR: 韩国
+    KW: 科威特
+    KY: 开曼群岛
+    KZ: 哈萨克斯坦
+    LA: 老挝人民民主共和国
+    LB: 黎巴嫩
+    LC: 圣卢西亚
+    LI: 列支敦士登
+    LK: 斯里兰卡
+    LR: 利比里亚
+    LS: 莱索托
+    LT: 立陶宛
+    LU: 卢森堡
+    LV: 拉脱维亚
+    LY: 利比亚
+    MA: 摩洛哥
+    MC: 摩纳哥
+    MD: 摩尔多瓦
+    ME: 黑山共和国
+    MF: "圣马丁; [draft=contributed]"
+    MG: 马达加斯加
+    MH: 马绍尔群岛
+    MK: 马其顿（前南斯拉夫的马其顿共和国）
+    ML: 马里
+    MM: 缅甸
+    MN: 蒙古
+    MO: 澳门
+    MP: 北马里亚纳群岛
+    MQ: 马提尼克群岛
+    MR: 毛里塔尼亚
+    MS: 蒙塞拉特群岛
+    MT: 马耳他
+    MU: 毛里求斯
+    MV: 马尔代夫
+    MW: 马拉维
+    MX: 墨西哥
+    MY: 马来西亚
+    MZ: 莫桑比克
+    NA: 纳米比亚
+    NC: 新喀里多尼亚
+    NE: 尼日尔
+    NF: 诺福克岛
+    NG: 尼日利亚
+    NI: 尼加拉瓜
+    NL: 荷兰
+    ? "NO"
+    : 挪威
+    NP: 尼泊尔
+    NR: 瑙鲁
+    NU: 纽埃
+    NZ: 新西兰
+    OM: 阿曼
+    PA: 巴拿马
+    PE: 秘鲁
+    PF: 法属波利尼西亚
+    PG: 巴布亚新几内亚
+    PH: 菲律宾
+    PK: 巴基斯坦
+    PL: 波兰
+    PM: 圣皮埃尔和密克隆
+    PN: 皮特凯恩
+    PR: 波多黎各
+    PS: 巴勒斯坦领土
+    PT: 葡萄牙
+    PW: 帕劳
+    PY: 巴拉圭
+    QA: 卡塔尔
+    QO: 大洋洲边远群岛
+    RE: 留尼汪
+    RO: 罗马尼亚
+    RS: 塞尔维亚
+    RU: 俄罗斯
+    RW: 卢旺达
+    SA: 沙特阿拉伯
+    SB: 所罗门群岛
+    SC: 塞舌尔群岛
+    SD: 苏丹
+    SE: 瑞典
+    SG: 新加坡
+    SH: 圣赫勒拿
+    SI: 斯洛文尼亚
+    SJ: 斯瓦尔巴特和扬马延
+    SK: 斯洛伐克
+    SL: 塞拉利昂
+    SM: 圣马力诺
+    SN: 塞内加尔
+    SO: 索马里
+    SR: 苏里南
+    ST: 圣多美和普林西比
+    SV: 萨尔瓦多
+    SY: 叙利亚
+    SZ: 斯威士兰
+    TA: 特里斯坦-达库尼亚群岛
+    TC: 特克斯和凯科斯群岛
+    TD: 乍得
+    TF: 法属南部领土
+    TG: 多哥
+    TH: 泰国
+    TJ: 塔吉克斯坦
+    TK: 托克劳
+    TL: 东帝汶
+    TM: 土库曼斯坦
+    TN: 突尼斯
+    TO: 汤加
+    TR: 土耳其
+    TT: 特立尼达和多巴哥
+    TV: 图瓦卢
+    TW: 台湾
+    TZ: 坦桑尼亚
+    UA: 乌克兰
+    UG: 乌干达
+    UM: 美国边远小岛
+    US: 美国
+    UY: 乌拉圭
+    UZ: 乌兹别克斯坦
+    VA: 梵蒂冈
+    VC: 圣文森特和格林纳丁斯
+    VE: 委内瑞拉
+    VG: 英属维京群岛
+    VI: 美属维京群岛
+    VN: 越南
+    VU: 瓦努阿图
+    WF: 瓦利斯和富图纳
+    WS: 萨摩亚
+    YE: 也门
+    YT: 马约特
+    ZA: 南非
+    ZM: 赞比亚
+    ZW: 津巴布韦
+    ZZ: 未知或无效地区
   date: 
     abbr_day_names: 
       - 日
@@ -304,35 +561,35 @@ zh:
     distance_in_words: 
       about_x_hours: 
         one: 大约1小时
-        other: "大约{{count}}小时"
+        other: "大约%{count}小时"
       about_x_months: 
         one: 大约1个月
-        other: "大约{{count}}个月"
+        other: "大约%{count}个月"
       about_x_years: 
         one: 大约1年
-        other: "大约{{count}}年"
+        other: "大约%{count}年"
       half_a_minute: 半分钟
       less_than_x_minutes: 
         one: 少于1分钟
-        other: "少于{{count}}分钟"
+        other: "少于%{count}分钟"
       less_than_x_seconds: 
         one: 少于1秒
-        other: "少于{{count}}秒"
+        other: "少于%{count}秒"
       over_x_years: 
         one: 超过1年
-        other: "超过{{count}}年"
+        other: "超过%{count}年"
       x_days: 
         one: 1天
-        other: "{{count}}天"
+        other: "%{count}天"
       x_minutes: 
         one: 1分钟
-        other: "{{count}}分钟"
+        other: "%{count}分钟"
       x_months: 
         one: 1个月
-        other: "{{count}}个月"
+        other: "%{count}个月"
       x_seconds: 
         one: 1秒
-        other: "{{count}}秒"
+        other: "%{count}秒"
     prompts: 
       day: 日
       hour: 时
@@ -340,14 +597,14 @@ zh:
       month: 月
       second: 秒
       year: 年
-    time_ago: "{{time_ago_in_words}}以前"
+    time_ago: "%{time_ago_in_words}以前"
   deleted: 
-    conversation: "已删除<b>{{name}}</b>话题"
+    conversation: "已删除<b>%{name}</b>话题"
     left_project: 您不再属于此项目
-    page: "已删除<b>{{name}}</b>页面"
-    person: "{{name}}不再属于此项目"
-    task: "已删除<b>{{name}}</b>任务"
-    upload: "已删除<b>{{name}}</b>文件"
+    page: "已删除<b>%{name}</b>页面"
+    person: "%{name}不再属于此项目"
+    task: "已删除<b>%{name}</b>任务"
+    upload: "已删除<b>%{name}</b>文件"
   dividers: 
     actions: 
       delete_confirm: 您确认要删除此Divider?
@@ -361,46 +618,46 @@ zh:
       do_not_answer: 请不要回复此邮件。
     confirm: 
       follow_the_link: 为了<b>完成您的Teambox注册</b>，我们需要您通过点击这里登录：
-      hey: "您好, {{user_name}}!"
+      hey: "您好, %{user_name}!"
       log_in: 现在就登录Teambox！
       plaintext_link: 如果出现问题，复制并粘贴以下链接到您的浏览器地址栏：
-      problems: "如果您有任何问题，请通过{{support}}联系我们"
-      report_abuse: "您收到此邮件是因为您使用了{{email}}注册了一个Teambox帐号"
+      problems: "如果您有任何问题，请通过%{support}联系我们"
+      report_abuse: "您收到此邮件是因为您使用了%{email}注册了一个Teambox帐号"
     invitation: 
       accept_the_invitation: 接受邀请开始协作
-      collaborate_with: "{{name}}希望通过Teambox与您协作："
+      collaborate_with: "%{name}希望通过Teambox与您协作："
       current_users: 此项目中的当前用户列表：
       plaintext_link: 如果以上链接不能工作，复制并粘贴以下代码到您的浏览器地址栏：
       plan_share_and_collaborate: 计划，分享和跟踪需要做的工作。足够简单。
       report_abuse: 此邮件应您的朋友要求而发送给您。如有滥用请及时报告。
       teambox_is_a_pm_platform: Teambox是一个用于真实世界协作的项目管理平台。
-      you_have_been_invited_to: "您已经被邀请加入项目<b>{{project}}</b>"
+      you_have_been_invited_to: "您已经被邀请加入项目<b>%{project}</b>"
     invitation_group: 
-      you_have_been_invited_to: "您已被邀请加入小组<b>{{group}}</b>"
+      you_have_been_invited_to: "您已被邀请加入小组<b>%{group}</b>"
     notify: 
       are_watching: 已经订阅了此话题，将能够收到回复的提醒。
-      assigned_to: "分配给<b>{{user}}</b>"
+      assigned_to: "分配给<b>%{user}</b>"
       comment: 在项目公告板上评论：
-      comments: "{{number}}评论"
+      comments: "%{number}评论"
       conversation: "话题:"
-      due_on: "截止日期：{{date}}"
-      my_tasks: "分配给您的更多{{project}}中的任务"
-      notification_settings: "您可以通过<a href='{{url}}'>提醒设置</a>修改更多邮件相关设置。"
+      due_on: "截止日期：%{date}"
+      my_tasks: "分配给您的更多%{project}中的任务"
+      notification_settings: "您可以通过<a href='%{url}'>提醒设置</a>修改更多邮件相关设置。"
       project: "Teambox项目:"
-      recent_conversations: "{{project}}的近期话题"
+      recent_conversations: "%{project}的近期话题"
       reply: 您也可以通过回复此邮件来发表您对这个话题的答复。
-      status: "状态: {{status}}"
-      stop_watching: "<a href='{{stop_watching_url}}'>停止订阅</a>这一话题将中止收到邮件提醒。"
+      status: "状态: %{status}"
+      stop_watching: "<a href='%{stop_watching_url}'>停止订阅</a>这一话题将中止收到邮件提醒。"
       task: "任务:"
       task_list: "任务列表:"
-      view_online: "您可以<a href='{{link}}'>在线查看这个话题</a>，进行答复，也可以附加文件。"
+      view_online: "您可以<a href='%{link}'>在线查看这个话题</a>，进行答复，也可以附加文件。"
     reset_password: 
       follow_the_link: 为了<b>设置新的Teambox密码</b>，我们需要您通过以下链接进行登录：
-      hey: "您好, {{user_name}}!"
+      hey: "您好, %{user_name}!"
       log_in: 现在就登录Teambox！
       plaintext_link: 如果出现问题，复制并粘贴以下链接到您的浏览器地址栏：
-      problems: "如果您有任何问题，请通过{{support}}联系我们"
-      report_abuse: "您收到此邮件是因为您使用了{{email}}注册了一个Teambox帐号"
+      problems: "如果您有任何问题，请通过%{support}联系我们"
+      report_abuse: "您收到此邮件是因为您使用了%{email}注册了一个Teambox帐号"
     upload: 
       file: "文件:"
       uploaded_by: 上传者：
@@ -408,7 +665,7 @@ zh:
     new: 
       create: 创建一个样例项目
       error: 不能创建样例项目。
-      error_list: "不能创建样例项目。以下项目是无效的：{{list}}。"
+      error_list: "不能创建样例项目。以下项目是无效的：%{list}。"
       learn: 通过例子学习！
       line1: 如果您是第一次使用Teambox，您可以创建一个包含一些内容的样例项目。
       line2: 浏览这些页面将引导您使用Teambox的各个部分。
@@ -452,7 +709,7 @@ zh:
       title: 创建小组
     primer: 
       create_group: 创建小组
-      no_group_create: "您没有拥有任何小组。{{link}}."
+      no_group_create: "您没有拥有任何小组。%{link}."
     search: 
       invite: 邀请
       invite_people: 邀请其他人加入此小组
@@ -472,7 +729,7 @@ zh:
       project: 项目
       task: 任务
       user: 用户
-    week_num: "第{{num}}周"
+    week_num: "第%{num}周"
     week_total: 周合计
   invitations: 
     errors: 
@@ -481,27 +738,27 @@ zh:
     fields: 
       user_or_email: 请输入你队友的用户名或email：
     group_invitation: 
-      invited_email: "{{inviter}}邀请<b>{{email}}</b>加入这个小组。"
-      invited_user: "{{inviter}}邀请<b>{{invitee}}</b>加入这个小组。"
+      invited_email: "%{inviter}邀请<b>%{email}</b>加入这个小组。"
+      invited_user: "%{inviter}邀请<b>%{invitee}</b>加入这个小组。"
     index_user: 
       no_invitations: 您没有未处理的项目邀请。
       title: 待确认的邀请
     invitation: 
       discard: 放弃邀请
-      invited_email: "{{inviter}}邀请<b>{{email}}</b>加入这个项目。"
-      invited_user: "{{inviter}}邀请<b>{{invitee}}</b>加入这个项目。"
+      invited_email: "%{inviter}邀请<b>%{email}</b>加入这个项目。"
+      invited_user: "%{inviter}邀请<b>%{invitee}</b>加入这个项目。"
       pending: 已经向此用户发送邀请邮件，但对方还没有确认邀请。
       resend: 重新发送邀请邮件
-      time_ago: "({{time_ago_in_words}}以前)"
+      time_ago: "(%{time_ago_in_words}以前)"
     pending: 
-      invited_to_join: "{{by}}已邀请您加入项目{{project}}."
-      invited_to_join_group: "{{by}}已邀请您加入小组{{group}}."
+      invited_to_join: "%{by}已邀请您加入项目%{project}."
+      invited_to_join_group: "%{by}已邀请您加入小组%{group}."
       to_access_or: 访问项目或者
       to_access_or_group: 访问小组或者
     recent: 
-      invite: "邀请 {{username}}"
+      invite: "邀请 %{username}"
     resend: 
-      resent: "邀请已经重新发送给{{recipient}}。如果没有收到邮件，请先查看一下垃圾邮件目录。"
+      resent: "邀请已经重新发送给%{recipient}。如果没有收到邮件，请先查看一下垃圾邮件目录。"
       return: 返回
     search: 
       invite: 邀请
@@ -514,12 +771,12 @@ zh:
       email_sent: "<b>我们刚刚发布了一个提醒邮件给此用户，邮件中包含了一个接受您项目邀请的链接。</b>. 如果他们不能收到此邮件，请确保此邮件不会作为垃圾邮件处理，或者尝试换一个邮件地址。如果还有问题，请联系我们。"
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   not_found: 
-    conversation: "在这个项目中找不到话题{{id}}。"
-    group: "小组{{id}}不存在。"
-    page: "在这个项目中找不到页面{{id}}。"
-    project: "项目{{id}}不存在。"
-    task: "在这个项目中找不到任务{{id}}。"
-    task_list: "在这个项目中找不到任务列表{{id}}。"
+    conversation: "在这个项目中找不到话题%{id}。"
+    group: "小组%{id}不存在。"
+    page: "在这个项目中找不到页面%{id}。"
+    project: "项目%{id}不存在。"
+    task: "在这个项目中找不到任务%{id}。"
+    task_list: "在这个项目中找不到任务列表%{id}。"
     user: 用户不存在。
   notes: 
     actions: 
@@ -591,8 +848,7 @@ zh:
     index: 
       pages_in_this_project: 当前项目的页面
       rss: 
-        description: "{{name}}项目的页面"
-        title: 页面
+        description: "%{name}项目的页面"
     new: 
       define1: 这里您可以和您的团队<b>分享有用的信息</b>：路线图，有意思的链接，规定，邮件模板等等...
       define2: 修改一个项目是相当容易和有趣的事，通过拖曳元素您可以即时修改页面。
@@ -616,7 +872,7 @@ zh:
   people: 
     column: 
       confirm_delete: 您确信要把此人从项目中移除？
-      contact_admins: "在这个项目中，只有{{admins}}可以邀请新成员加入。"
+      contact_admins: "在这个项目中，只有%{admins}可以邀请新成员加入。"
       inviting: 邀请其它用户
       leave_project: 离开项目
       leaving: 离开项目
@@ -667,7 +923,7 @@ zh:
       permalink_description: 这是您项目的网址。请尽量简短，不允许有空格。
       tracks_time: 启用时间跟踪
     index: 
-      archived: "显示{{count}}个已存档项目..."
+      archived: "显示%{count}个已存档项目..."
       new_project: 新增项目
       projects: 我的项目
       refreshes: 每分钟自动刷新
@@ -677,7 +933,7 @@ zh:
       subscribe: 订阅动态反馈
       title: 我的所有项目动态
     new: 
-      create_an_example_project: "第一次使用Teambox？可以先<a href='{{link}}'>创建一个样例项目</a>以尝试并熟悉Teambox。"
+      create_an_example_project: "第一次使用Teambox？可以先<a href='%{link}'>创建一个样例项目</a>以尝试并熟悉Teambox。"
       created: 您的项目已经创建成功！
       invalid_project: 无效的项目，请修正错误并重试
       new_project: 新项目...
@@ -713,16 +969,16 @@ zh:
       new_task_list_link: 新建任务列表
       people_in_project: 项目成员
       rss: 
-        description: "项目{{name}}的近期活动"
-        title: "{{name}}"
+        description: "项目%{name}的近期活动"
+        title: "%{name}"
       subscribe: 订阅动态反馈
       text_styling: 文本样式
       tip: "引用某人的 @username，某人将会收到一个包含您消息内容的email"
       update_your_status: 更新您的状态...
   reset_passwords: 
     create: 
-      invalid: "您输入的修改密码地址无效或已经过期。请尝试再次使用主页上的找回密码功能。<br/>请检查电子邮箱地址并重新尝试。如果不能成功，请联系我们{{support}}"
-      not_found: "我们不能找到任何使用此电子邮箱的用户： {{email}}<br/>请检查电子邮箱地址并重新尝试。如果不能成功，请联系我们{{support}}"
+      invalid: "您输入的修改密码地址无效或已经过期。请尝试再次使用主页上的找回密码功能。<br/>请检查电子邮箱地址并重新尝试。如果不能成功，请联系我们%{support}"
+      not_found: "我们不能找到任何使用此电子邮箱的用户： %{email}<br/>请检查电子邮箱地址并重新尝试。如果不能成功，请联系我们%{support}"
       password_not_updated: 新密码无效，请重试。
       password_updated: 密码修改成功，请重新登录
     new: 
@@ -733,8 +989,8 @@ zh:
     sent: 
       change_password_now: 您现在已经登录。<b>现在就重新设置密码</b>，这样您就不会再忘记密码！
       follow_the_link: 点击此邮件中的链接以登录Teambox！如果您找不到邮件，请尝试看一下垃圾邮件夹。
-      login_link_sent: "我们将发送邮件到{{email}}给您以重置您的密码。"
-      not_found: "此邮件地址<b>{{email}}</b>不属于任何Teambox用户，可能您的拼写有误？"
+      login_link_sent: "我们将发送邮件到%{email}给您以重置您的密码。"
+      not_found: "此邮件地址<b>%{email}</b>不属于任何Teambox用户，可能您的拼写有误？"
       title: 重置密码
   sessions: 
     fields: 
@@ -743,7 +999,7 @@ zh:
       signup: 注册新帐号
       username_or_email: Email或用户名
     new: 
-      login_failed: "不能作为{{login}}登录"
+      login_failed: "不能作为%{login}登录"
       submit: 登录
       title: 登录
       video: 什么是Teambox?
@@ -760,7 +1016,7 @@ zh:
       home: 主页
       login: 登录
       logout: 注销
-      project_invitations: "邀请数 ({{count}})"
+      project_invitations: "邀请数 (%{count})"
       settings: 设置
     navigation: 
       all_projects: 全部项目
@@ -799,14 +1055,14 @@ zh:
       tour: 教程
       users: 我们的用户
     strip: 
-      archived: "此项目已经存档。要修改或评论此项目，你必须首先通过<a href='{{link}}'>项目设置页面</a>取消归档这个项目"
+      archived: "此项目已经存档。要修改或评论此项目，你必须首先通过<a href='%{link}'>项目设置页面</a>取消归档这个项目"
     task_navigation: 
       all_tasks: 全部任务
       everybodys_tasks: 所有人的任务
       hide_archived_tasks: 隐藏归档任务
       my_tasks: 
         one: 我的1个任务
-        other: "我的{{count}}个任务"
+        other: "我的%{count}个任务"
       unarchived_tasks: 未存档的任务
     upcoming_events_primer: 
       title: 在日历中没有需要显示的任务
@@ -840,7 +1096,7 @@ zh:
     actions: 
       show_archived: 
         one: 显示一条已存档的任务
-        other: "显示{{count}}条已存档的任务"
+        other: "显示%{count}条已存档的任务"
     archived: 
       description: 您正在查看已存档的任务，这些任务已经被关闭。
       title: 所有已存档的任务
@@ -848,7 +1104,7 @@ zh:
       new_task_list: 创建任务列表
       subscribe: 订阅动态反馈
     destroy_message: 
-      deleted: "任务列表<b>{{name}}</b>已经被成功删除！"
+      deleted: "任务列表<b>%{name}</b>已经被成功删除！"
     edit: 
       submit: 更新任务列表
     errors: 
@@ -882,19 +1138,19 @@ zh:
       item3: "<b>跟进</b>. 得到与您相关任务的提醒。"
       item4: "<b>预览</b>. 已经完成的任务不会被删除，您可以在将来继续读取到这些消息和文件。"
     show: 
-      title: "任务列表: {{name}}"
+      title: "任务列表: %{name}"
   tasks: 
     archive_box: 
       archive: 存档此任务
       reopen: 重新打开任务
       you_are_done: 看上去您已经完成了这个任务！
     archive_message: 
-      archived: "任务 <b>{{name}}</b>已经成功存档！"
+      archived: "任务 <b>%{name}</b>已经成功存档！"
     assigned: 
-      assigned_to: "分配给{{user}}"
+      assigned_to: "分配给%{user}"
     create: 添加任务
     destroy_message: 
-      deleted: "任务 <b>{{name}}</b>已经成功删除！"
+      deleted: "任务 <b>%{name}</b>已经成功删除！"
     due_on: 
       due_on: 截止于
       today: 今天
@@ -912,16 +1168,16 @@ zh:
       edit: 编辑
       hide_archived_tasks: 
         one: 隐藏一条已存档的任务
-        other: "隐藏{{count}}条已存档的任务"
+        other: "隐藏%{count}条已存档的任务"
       new: "+ 添加任务"
     my_tasks: 
       my_tasks: 我的任务
     new: 
       submit: 添加任务
       title: 新任务
-    overdue: "{{days}}天以后"
+    overdue: "%{days}天以后"
     show: 
-      title: "任务: {{name}}"
+      title: "任务: %{name}"
     status: 
       hold: 已分配
       new: 新建
@@ -943,12 +1199,12 @@ zh:
     comment_upload_link: 附件
     form: 
       description: "标题 <i>(可选)</i>"
-      max_size: "文件大小不能超过{{mb}}"
+      max_size: "文件大小不能超过%{mb}"
       presence: 您不能上传空文件
       select_file: 选择文件
       upload: 上传文件
     index: 
-      max_upload_size: "最大上传文件大小是{{mb}}Mb"
+      max_upload_size: "最大上传文件大小是%{mb}Mb"
       new_file: 上传文件
     new: 
       select_a_file: 选择文件
@@ -984,7 +1240,7 @@ zh:
       tasks_for_today: 今日任务
       tasks_for_tomorrow: 明日任务
       tasks_without_a_due_date: 无截止日期任务
-      you_receive_this_message: "您收到此邮件是因为您设置了提醒选项。您可以通过{{link}}不再收到这些邮件"
+      you_receive_this_message: "您收到此邮件是因为您设置了提醒选项。您可以通过%{link}不再收到这些邮件"
     edit: 
       submit: 更新帐号
       title_deletion: 项目存档/回收站
@@ -995,9 +1251,9 @@ zh:
     form: 
       avatar: 
         field: 您的头像
-        max_size: "文件大小不能超过{{mb}}"
+        max_size: "文件大小不能超过%{mb}"
         presence: 您不能上传空文件
-        upload_here_or_at_gravatar: "您可以在这里上传新的头像，或上传到{{gravatar}}作为一个通用的头像，用于Teambox或其它网站。"
+        upload_here_or_at_gravatar: "您可以在这里上传新的头像，或上传到%{gravatar}作为一个通用的头像，用于Teambox或其它网站。"
         we_have_this_avatar: 当前您的头像：
       biography: 自我介绍
       change_password: 修改密码
@@ -1011,7 +1267,7 @@ zh:
       login: 用户名
       monday: 周一
       notify_conversations: 在我关注的话题变化时通知我
-      notify_mentions: "在消息中提及我时通知我。例如：“你好，@{{login}}!”您将收到一封提醒的电子邮件"
+      notify_mentions: "在消息中提及我时通知我。例如：“你好，@%{login}!”您将收到一封提醒的电子邮件"
       notify_task_lists: 在我关注的任务列表变化时通知我
       notify_tasks: 在我关注的任务变化时通知我
       password: 密码
@@ -1027,38 +1283,38 @@ zh:
       use_this_email: 您已经被邀请使用此电子邮件地址共享使用项目。如果您希望使用这些项目，请不要修改此邮件地址。在您完成注册过程后，您可以修改您的邮件地址。
       wants_task_reminder: 发送我的任务每日情况报告
     new: 
-      existing_user: "如果您已经有一个帐号，请<a href='{{login_url}}'>登录</a>或者<a href='{{forgot_url}}'>找回密码</a>。"
+      existing_user: "如果您已经有一个帐号，请<a href='%{login_url}'>登录</a>或者<a href='%{forgot_url}'>找回密码</a>。"
       no_public_signup: 此系统不允许公共注册。
       submit: 创建帐号
       title: 创建新帐号
-      you_already_have_an_account: "您已经有一个使用了地址{{email}}的Teambox帐号。<a href='{{login_link}}'>使用此邮箱登录</a>或<a href='{{reset_password_link}}'>重置密码</a>，如果您已经忘记密码。"
+      you_already_have_an_account: "您已经有一个使用了地址%{email}的Teambox帐号。<a href='%{login_link}'>使用此邮箱登录</a>或<a href='%{reset_password_link}'>重置密码</a>，如果您已经忘记密码。"
       you_are_logged_in: 您已经有一个帐号。请先注销，并使用另一个帐号登录。
     show: 
-      pending_invite: "{{name}}当前已经有一个您的项目的未受理邀请。在此邀请被接受前，您不允许操作任何信息。"
+      pending_invite: "%{name}当前已经有一个您的项目的未受理邀请。在此邀请被接受前，您不允许操作任何信息。"
       profile: 个性设置
       projects: 项目
-      recent_activity_for: "{{user_name}}的近期活动"
+      recent_activity_for: "%{user_name}的近期活动"
     unconfirmed_email: 
       follow_the_link: 请<b>打开此邮件并点击邮件中的链接</b>，以激活您的帐号。
-      invitation_sent_to: "已经向<i>{{email}}</i>发出一封邮件邀请，以确认您的邮件地址。"
-      problems: "如果还有其它问题，请通过{{support}}联系我们"
+      invitation_sent_to: "已经向<i>%{email}</i>发出一封邮件邀请，以确认您的邮件地址。"
+      problems: "如果还有其它问题，请通过%{support}联系我们"
       problems_title: 问题？
-      resend: "没有收到邮件？请点击<a href='{{link}}'>这里</a>重新发布激活邮件。"
+      resend: "没有收到邮件？请点击<a href='%{link}'>这里</a>重新发布激活邮件。"
       spam: 请确保在您的邮件客户端程序中，此邮件没有被标识为垃圾邮件。
       title: 确认您的邮件
-      wrong_address: "不正确的邮件地址？如果您的邮件地址拼写错误，<a href='{{link}}'>取消注册过程</a>并使用一个有效的邮件地址重新创建您的帐号。"
+      wrong_address: "不正确的邮件地址？如果您的邮件地址拼写错误，<a href='%{link}'>取消注册过程</a>并使用一个有效的邮件地址重新创建您的帐号。"
     update: 
       error: 不能保存修改的个性设置，请修正错误并重试。
       updated: 用户个性设置已更新！
     user: 
-      formatted_address: "{{city}} {{street}}({{country}})"
+      formatted_address: "%{city} %{street}(%{country})"
       remove_from_project: 从项目中移除
     welcome: 
       get_started: 开始使用Teambox!
       intro1: 欢迎您成为我们的新成员！您将了解到Teambox如何成为您每日工作的起点。
       intro2: 接下来怎么做？创建一个项目进行<b>协作</b>：
       projects: 
-        create_your_first_project: "事件，设计，产品... 现在开始<a href='{{link}}'>创建您的第一个项目</a>！"
+        create_your_first_project: "事件，设计，产品... 现在开始<a href='%{link}'>创建您的第一个项目</a>！"
         share_and_collaborate: 与您的团队进行分享和协作！项目的日常更新，话题，任务，页面和文件。
         title: 项目
       spread: 
@@ -1066,7 +1322,7 @@ zh:
         help: 您可以<b>帮肋我们</b>，通过告诉您的朋友您对Teambox的喜爱
         in_your_site: 在您的网站！
         reasons: 我们已经在Teambox工作多年时间，希望它可以对您有所帮助。<br/>我们和您一样，是真实的人，为目标为激情工作的开发者！
-        tell_us: "如果您喜欢使用Teambox，也请考虑<a href='mailto:{{address}}'>通过Email告诉我们</a>！"
+        tell_us: "如果您喜欢使用Teambox，也请考虑<a href='mailto:%{address}'>通过Email告诉我们</a>！"
         title: 您也喜欢我们的产品吗？
         twitter: "Twitter,"
       stop_welcome: 不再显示此欢迎页签

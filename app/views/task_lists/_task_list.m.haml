@@ -10,7 +10,7 @@
     - if show_the_lists
       %div{ :id => task_list_id(:the_main_tasks,project,task_list), :class => 'tasks open', :reorder_url => project_reorder_tasks_path(project,task_list) }
         - if !task_list.archived
-          = list_tasks(task_list.tasks.unarchived,false)
+          = list_tasks(task_list,task_list.tasks.unarchived,false)
       - if task_list_editable?(task_list,current_user)
         .new_task
           = task_link(project,task_list)

@@ -16,7 +16,7 @@
       this.open('Loading image ...', 'loading')
       var image = new Image()
       image.onload = function() {
-        this.open('<img src="' + src + '">', 'image', alt)
+        this.open('<a href="' + src + '"><img src="' + src + '"></a>', 'image', alt)
         var img = element.down('.facebox-content img'),
             screenWidth = Math.min(image.width, imageMaxWidth)
 
@@ -68,6 +68,8 @@
         if (e.keyCode == Event.KEY_ESC) close()
       })
       document.on('click', 'a[href][rel=facebox]', function(e) {
+        if (e.isMiddleClick()) return
+        
         var el = e.findElement('a'),
             href = el.readAttribute('href'),
             extra = el.readAttribute('title')

@@ -1,3 +1,6 @@
+require_dependency 'uploads_helper'
+require_dependency 'tasks_helper'
+
 module EmailerHelper
 
   include UploadsHelper
@@ -7,8 +10,24 @@ module EmailerHelper
     'font-size: 14px; color: rgb(50,50,50); font-family: Helvetica, Arial'
   end
 
-  def email_box
-    'background-color: rgb(255,255,200); margin: 10px; padding: 10px; border: 1px rgb(220,220,150) solid'
+  def email_box(target = nil)
+    case target
+    when Task
+      case target.status
+      when 0 # new
+        'background-color: #f5f5f5; border: 1px #cccccc solid;'
+      when 2 # hold
+        'background-color: #ffddff; border: 1px #bb99bb solid;'
+      when 3 # resolved
+        'background-color: #ddffdd; border: 1px #66aa66 solid;'
+      when 4 # rejected
+        'background-color: #ffdddd; border: 1px #aa6666 solid;'
+      else # assigned and default
+        'background-color: rgb(255,255,200); border: 1px rgb(220,220,150) solid;'
+      end
+    else
+      'background-color: rgb(255,255,200); border: 1px rgb(220,220,150) solid;'
+    end + 'margin: 10px; padding: 10px'
   end
 
   def email_text(size)
@@ -35,12 +54,21 @@ module EmailerHelper
     render :partial => 'emailer/recent_conversations', :locals => { :project => project }
   end
 
-  def emailer_recent_tasks(project)
-    render :partial => 'emailer/recent_tasks', :locals => { :project => project }
+  def emailer_recent_tasks(project, user)
+    recent_tasks = project.tasks.unarchived.
+                    assigned_to(user).
+                    sort { |a,b| (a.due_on || 1.year.ago) <=> (a.due_on || 1.year.ago)}
+    render :partial => 'emailer/recent_tasks', :locals => { :project => project, :recent_tasks => recent_tasks }
   end
 
   def emailer_answer_to_this_email
     content_tag(:p,I18n.t('emailer.notify.reply')) if APP_CONFIG['allow_incoming_email']
+  end
+
+  def emailer_commands_for_tasks(user)
+    if APP_CONFIG['allow_incoming_email']
+      content_tag(:p,I18n.t('emailer.notify.task_commands', :username => user.login))
+    end
   end
 
   def tasks_for_daily_reminder(tasks, user, header)

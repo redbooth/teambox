@@ -25,13 +25,7 @@ Factory.define :user do |user|
   user.password_confirmation 'dragons'
 end
 
-Factory.define :confirmed_user, :class => User do |user|
-  user.login { Factory.next(:login) }
-  user.email { Factory.next(:email) }
-  user.first_name 'Andrew'
-  user.last_name 'Wiggin'
-  user.password 'dragons'
-  user.password_confirmation 'dragons'
+Factory.define :confirmed_user, :parent => :user do |user|
   user.confirmed_user true
 end
 
@@ -42,7 +36,7 @@ end
 
 Factory.define :project do |project|
   project.name { Factory.next(:name) }
-  project.association(:user)
+  project.association(:user, :factory => :confirmed_user)
 end
 
 Factory.define :group do |group|
@@ -156,7 +150,7 @@ Factory.define :reset_password do |reset_pw|
 end
 
 Factory.define :invitation do |i|
-  i.association(:user)
   i.association(:project)
+  i.user  { |i| i.project.user }
   i.email { Factory.next(:email) }
 end

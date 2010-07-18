@@ -8,14 +8,19 @@ require File.expand_path('../factories', __FILE__)
 # in ./support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
+require 'email_spec/helpers'
+require 'email_spec/matchers'
+
 Spec::Runner.configure do |config|
+  config.include AuthenticatedTestHelper, EmailSpec::Helpers, EmailSpec::Matchers
+
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record
   # in your config/boot.rb
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
-
+  
   # == Fixtures
   #
   # You can declare fixtures for each example_group like this:

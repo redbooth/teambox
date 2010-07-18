@@ -24,7 +24,7 @@ div.wrapper
 div.content
   width: 100%
 
-.header, .global_navigation, .navigation, .project_navigation, .banner, .column, .footer
+.header, .global_navigation, .navigation, .project_navigation, .banner, .column, #footer
   display: none
 
 .comments_count
@@ -45,6 +45,10 @@ img.drag
     text-align: left
     span.actiondate
       color: #afafaf
+      float: right
+    border-bottom: 1px solid #999
+    margin-bottom: 5px
+    font-weight: bold
   .task
     .taskStatus
       display: none
@@ -72,3 +76,6 @@ img.drag
 .task_header
   .text_actions
     display: none
+
+.task_extended, .tooltip
+  display: none

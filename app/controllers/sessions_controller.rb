@@ -8,7 +8,10 @@ class SessionsController < ApplicationController
   skip_before_filter :load_project
   before_filter :set_page_title
 
-  def new  
+  def new
+    # Cleanup OAuth login parameters if present
+    session.delete :profile
+    session.delete :app_link
     @signups_enabled = signups_enabled?
     respond_to do |format|
       format.html { redirect_to root_path if logged_in? }

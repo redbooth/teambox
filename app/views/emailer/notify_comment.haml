@@ -8,7 +8,7 @@
 
   = emailer_list_comments(@project.get_recent(Comment))
   = emailer_recent_conversations(@project)
-  = emailer_recent_tasks(@project)
+  = emailer_recent_tasks(@project, @recipient)
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
     %p= t('emailer.notify.view_online', :link => project_url(@project))
