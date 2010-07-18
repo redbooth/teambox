@@ -71,7 +71,7 @@ ActionController::Routing::Routes.draw do |map|
 
     project.settings 'settings',  :controller => 'projects', :action => 'edit', :sub_action => 'settings'
     project.picture  'picture',   :controller => 'projects', :action => 'edit', :sub_action => 'picture'
-    project.resources :hooks, :member => {:templates => :get}
+    project.resources :hooks
     project.deletion 'deletion',  :controller => 'projects', :action => 'edit', :sub_action => 'deletion'
     project.ownership 'ownership', :controller => 'projects', :action => 'edit', :sub_action => 'ownership'
 

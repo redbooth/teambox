@@ -6,7 +6,7 @@
   = render :partial => "form", :locals => {:f => f, :hook => @hook}
   = f.submit t('.submit'), :class => 'button'
 
-%h2= t(".url", :hook => @hook.name)
+%h3= t(".url", :hook => @hook.name)
 %ul
   %li 
     Raw post

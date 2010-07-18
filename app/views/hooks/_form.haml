@@ -2,11 +2,11 @@
   = f.label :name, t('hooks.fields.name')
   = errors_for hook, :name
   = f.text_field :name
+- if @template_readme
+  .readme{ :style => 'margin: 30px 0' }
+    %h3= t('hooks.fields.instructions')
+    = @template_readme
 .message.text_field
   = f.label :message, t('hooks.fields.message')
   = errors_for hook, :message
-  = f.text_area :message
-  %p= t("hooks.fields.instruction", :documentation => (link_to t("hooks.fields.documentation"), '#doc'))
--if @template_readme
-  .readme
-    =@template_readme
+  = f.text_area :message, :rows => 10, :style => 'font-size: 12px'

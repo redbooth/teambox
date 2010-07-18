@@ -2,9 +2,14 @@
   = project_settings_navigation
 
 %h2= t(".title")
-%h3= t(".your_hook", :project => @current_project.name)
-= render :partial => "hook", :collection => @hooks
+%p= t('.explain')
+%p= t('.explain_more')
+
+- if @hooks.any?
+  %h3= t('.active_hooks')
+  = render :partial => "hook", :collection => @hooks
+
+%h3= t('.add_hook')
+%ul= render :partial => "template", :collection => @templates
 %p
   = link_to t(".new_hook"), new_project_hook_path(@current_project), :class => 'button'
-  or
-  = link_to t(".templates"), templates_project_hook_path(@current_project, 'new'), :calss => 'button'
