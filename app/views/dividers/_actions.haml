@@ -2,7 +2,7 @@
   %span
     = link_to pencil_image, edit_project_page_divider_path(divider.project, divider.page, divider),
         :'data-remote' => true
-    = loading_action_image("delete_divider_#{divider.id}", true)
+    = loading_action_image("divider_#{divider.id}", true)
     
     = link_to trash_image, project_page_divider_path(divider.project, divider.page, divider),
         :'data-remote' => true, :'data-method' => 'delete', :'data-confirm' => t('.delete_confirm'), :class => 'widget_delete'
