@@ -46,8 +46,11 @@ module Emailer::Incoming
         begin
           Emailer.receive(email.pop)
           email.delete
-        rescue Exception
+        rescue Exception => e
           Rails.logger.error "Error receiving email at #{Time.now}: #{$!}"
+          if e.message == "Exclude Auto Responder"
+            email.delete
+          end
         end
       end
     end
@@ -113,7 +116,7 @@ module Emailer::Incoming
     
     raise "User does not belong to project" unless @user.projects.include? @project
 
-    raise "Exclude Auto Responder" unless @project.include? "Auto Response"
+    raise "Exclude Auto Responder" unless !@subject.downcase.include? "auto response"
     
     Rails.logger.info "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
   end
