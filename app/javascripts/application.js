@@ -37,8 +37,8 @@ Event.addBehavior = function(hash) {
   var behaviors = $H(hash)
   // console.log(behaviors.keys())
   behaviors.each(function(pair) {
-    var selector = pair.key.split(':')
-    document.on(selector[1], selector[0], pair.value)
+    var selector = pair.key.split(':'), fn = pair.value
+    document.on(selector[1], selector[0], function(e, el) { fn.call(el, e) })
   })
 }
 Event.addBehavior.reload = Prototype.emptyFunction
@@ -247,7 +247,7 @@ Group = {
   }
 }
 
-document.on('click', 'a.closeThis', function(e) {
-    e.preventDefault()
-    this.parentNode.setStyle('display: none')
+document.on('click', 'a.closeThis', function(e, link) {
+  e.preventDefault()
+  $(link.parentNode).setStyle('display: none')
 })

@@ -242,10 +242,10 @@ Comment = {
   }
 };
 
-document.on('submit', 'form.new_comment', function(e) {
-  if (!this.select('input[type=file]').any(function(i){ return i.getValue() })) {
+document.on('submit', 'form.new_comment', function(e, form) {
+  if (!form.select('input[type=file]').any(function(i){ return i.getValue() })) {
     e.stop();
-    Comment.create(this);
+    Comment.create(form);
   }
 });
 
@@ -292,29 +292,29 @@ document.on('click', '#sort_uploads, #sort_all, #sort_hours', function(e,el) {
   Comment.update();
 });
 
-document.on('click', 'form .showPreview button', function(e,el) {
+document.on('click', 'form .showPreview button', function(e, link) {
   e.stop();
-  $(this).up('form').showPreview();
+  link.up('form').showPreview();
 });
 
-document.on('click', 'form .showPreview a', function(e,el) {
+document.on('click', 'form .showPreview a', function(e, link) {
   e.stop();
-  $(this).up('form').closePreview();
+  link.up('form').closePreview();
 });
 
 // Open links inside Comments and Notes textilized areas in new windows
-document.on('mouseover', '.textilized a', function(e,el) {
-  this.writeAttribute("target", "_blank");
+document.on('mouseover', '.textilized a', function(e, link) {
+  link.writeAttribute("target", "_blank");
 });
 
-document.on('change', '.statuses .status.open select', function(e) {
+document.on('change', '.statuses .status.open select', function(e, selectbox) {
   Comment.unselect_all_statuses()
-  Comment.mark_status_for_assigned(this)
+  Comment.mark_status_for_assigned(selectbox)
 })
-document.on('click', '.statuses .status:not(.open)', function(e) {
+document.on('click', '.statuses .status:not(.open)', function(e, status) {
   Comment.unselect_all_statuses()
   Comment.assign_to_nobody()
-  Comment.mark_status(this)
+  Comment.mark_status(status)
 })
 
 document.on('dom:loaded', function() {
@@ -323,19 +323,16 @@ document.on('dom:loaded', function() {
       el.up('.status').addClassName('active')
     }
   })
-  // $$('.thread form.new_comment .extra').each(function(el) {
-  //   el.hide()
-  // })
 })
 
-document.on('click', 'form.new_comment #comment_upload_link', function(e) {
+document.on('click', 'form.new_comment #comment_upload_link', function(e, link) {
   if (!e.isMiddleClick()) {
     e.preventDefault()
-    this.up().next('.upload_area').show()
-    this.hide()
+    link.up().next('.upload_area').show()
+    link.hide()
   }
 })
 
-// document.on('focusin', '.thread form.new_comment textarea', function(e) {
-//   this.up('form').down('.extra').show()
-// })
+document.on('focusin', '.thread form.new_comment textarea', function(e, input) {
+  input.up('form').down('.extra').style.display = 'block'
+})
