@@ -1,4 +1,5 @@
 require_dependency 'role_record'
+include ActionView::Helpers::TextHelper
 
 class Conversation < RoleRecord
   has_many :uploads
@@ -29,7 +30,7 @@ class Conversation < RoleRecord
       comment.save!
     end
     if simple
-      update_attribute :name, body.split("\n").first.chomp
+      update_attribute :name, truncate(body.chomp.split("\n").first, :length => 80)
     end
   end
 
