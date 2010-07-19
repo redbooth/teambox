@@ -29,8 +29,9 @@ class User < ActiveRecord::Base
                ['Català',      'ca'],
                ['Italiano',    'it'],
                ['Русский',     'ru'],
-               ['Chinese',     'zh'],
-               ['Japanese',    'ja'],
+               ['中文',          'zh'],
+               ['日本語',         'ja'],
+               ['한국어',         'ko'],
                ['Nederlands',  'nl'],
                ['Slovenščina', 'si']
                ]
