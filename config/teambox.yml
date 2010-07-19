@@ -108,10 +108,13 @@ defaults: &defaults
   # OAuth single-click login. You can configure Teambox to log in with Github, Facebook and others.
   #
   # To enable this, you'll need to create developer accounts for each provider.
+  # The return URL you should use is http://your-domain.com/oauth/:provider/callback
+  #
   # We are providing defaults that work for http://localhost:3000, for testing purposes.
   #
   # If signups are enabled, this will allow users to create an account at Teambox.
   # If not, it will still allow them to link their services to existing Teambox accounts.
+
   oauth_providers:
     # This example is configured for http://localhost:3000. Uncomment it to test it.
     # Register for your own domain at http://github.com/account/applications
