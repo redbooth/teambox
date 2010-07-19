@@ -31,12 +31,8 @@ require_dependency 'email'
 #
 module Emailer::Incoming
 
-  def self.logger
-    RAILS_DEFAULT_LOGGER
-  end
-
   def logger
-    RAILS_DEFAULT_LOGGER
+    Rails.logger
   end
 
   def self.fetch(settings)
