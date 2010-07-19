@@ -236,7 +236,7 @@ module CommentsHelper
     else t('.project')
     end
 
-    f.text_area :body, :class => 'comment_body placeholder', :id => 'comment_body', :placeholder => placeholder
+    f.text_area :body, :class => 'comment_body', :id => 'comment_body', :placeholder => placeholder
   end
 
   def paint_status_boxes
