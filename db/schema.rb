@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100521093855) do
+ActiveRecord::Schema.define(:version => 20100714113347) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -41,6 +41,17 @@ ActiveRecord::Schema.define(:version => 20100521093855) do
     t.integer "user_id"
     t.integer "comment_id"
   end
+
+  create_table "app_links", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "app_user_id"
+    t.text     "custom_attributes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "app_links", ["user_id"], :name => "index_app_links_on_user_id"
 
   create_table "cards", :force => true do |t|
     t.integer "user_id"
@@ -82,11 +93,12 @@ ActiveRecord::Schema.define(:version => 20100521093855) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "last_comment_id"
-    t.integer  "comments_count",  :default => 0, :null => false
+    t.integer  "comments_count",  :default => 0,     :null => false
     t.text     "watchers_ids"
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "simple",          :default => false
   end
 
   add_index "conversations", ["deleted_at"], :name => "index_conversations_on_deleted_at"
@@ -221,6 +233,7 @@ ActiveRecord::Schema.define(:version => 20100521093855) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "tracks_time",     :default => false
   end
 
   add_index "projects", ["deleted_at"], :name => "index_projects_on_deleted_at"
@@ -385,6 +398,7 @@ ActiveRecord::Schema.define(:version => 20100521093855) do
     t.string   "feature_level",                              :default => ""
     t.string   "spreedly_token",                             :default => ""
     t.datetime "avatar_updated_at"
+    t.datetime "visited_at"
   end
 
   add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"

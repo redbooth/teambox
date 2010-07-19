@@ -15,8 +15,9 @@ module ActivitiesHelper
   
   def activity_section(activity)
     haml_tag 'div', :class => "activity #{activity.action_type}" do
+      haml_concat micro_avatar(activity.user)
       yield activity_title(activity)
-      haml_tag 'div', posted_date(activity.posted_date), :class => 'date' unless rss?
+      haml_tag 'div', posted_date(activity.created_at), :class => 'date' unless rss?
     end
   end
 
@@ -35,6 +36,18 @@ module ActivitiesHelper
     activities.map { |activity| show_activity(activity) }.join('')
   end
 
+  def list_threads(activities)
+    activities.map { |activity| show_threaded_activity(activity) }.join('')
+  end
+
+  def show_threaded_activity(activity)
+    if activity.thread.is_a?(Task) || activity.thread.is_a?(Conversation)
+      render :partial => 'activities/thread', :locals => { :activity => activity }
+    else
+      show_activity(activity)
+    end
+  end
+
   def show_activity(activity)
     if activity.target && ActivityTypes.include?(activity.action_type)
       render "activities/#{activity.action_type}", :activity => activity,
@@ -46,9 +59,13 @@ module ActivitiesHelper
     values = mobile ? { :user => (plain ? activity.user.short_name : "<span class='user'>#{activity.user.short_name}</span>") } :
                       { :user => link_to_unless(plain, activity.user.name, activity.user) }
     
-    if Comment === activity
+    case activity
+    when Comment
       object = activity
       type = 'create_comment'
+    when Upload
+      object = activity
+      type = 'create_upload'
     else
       object = activity.target
       type = activity.action_type
@@ -72,7 +89,8 @@ module ActivitiesHelper
     when 'create_task_list'
       { :task_list => link_to_unless(plain, object, [activity.project, object]) }
     when 'create_upload'
-      { :file => link_to_unless(plain, object.description, project_uploads_path(activity.project, :anchor => dom_id(object))) }
+      text = object.description.presence || object.file_name
+      { :file => link_to_unless(plain, text, project_uploads_path(activity.project, :anchor => dom_id(object))) }
     when 'create_comment'
       # one of Project, Task or Conversation
       object = object.target
@@ -164,13 +182,13 @@ module ActivitiesHelper
     elsif location_name == 'show_more_activities' and params[:project_id].nil?
       url = show_more_path(options[:last_activity].id)
     elsif location_name == 'show_projects'
-      url = project_show_more_path(@current_project.id, options[:last_activity].id)
+      url = project_show_more_path(@current_project.permalink, options[:last_activity].id)
     elsif location_name == 'show_more_activities' and params[:project_id]
       url = project_show_more_path(params[:project_id], options[:last_activity].id)
     else
       raise "unexpected location #{location_name}"
     end
-    link_to_remote content_tag(:span, t('common.show_more', :number => APP_CONFIG['activities_per_page'])),
+    link_to_remote content_tag(:span, t('common.show_more')),
       :url => url,
       :loading => activities_paginate_loading,
       :html => {
@@ -182,6 +200,12 @@ module ActivitiesHelper
     update_page do |page|
       page['activity_paginate_link'].hide
       page['activity_paginate_loading'].show
+    end
+  end
+
+  def full_thread_loading(thread_id)
+    update_page do |page|
+      page["#{thread_id}_more_comments"].show
     end
   end
 

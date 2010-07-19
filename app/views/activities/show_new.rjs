@@ -1,5 +1,12 @@
 if @activities.any?
-  page.insert_html :top, :activities, list_activities(@activities)
+
+  @threads.reverse.each do |thread|
+    page << "if ($('thread_#{thread.thread_id}') != nil) {"
+      page["thread_#{thread.thread_id}"].hide
+    page << "}"
+    page.insert_html :top, :activities, show_threaded_activity(thread)
+  end
+
   page[:activities].visual_effect :highlight, :duration => 3
   
   page << reset_autorefresh

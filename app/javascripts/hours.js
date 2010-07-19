@@ -158,8 +158,8 @@ var Hours = {
       var list = {};
       values.each(function(c){
         // Total day
-        var value = list[c.user_id];
         var id = c[field];
+        var value = list[id];
         if (value == null || value == undefined)
           list[id] = c.hours;
         else 
@@ -307,7 +307,7 @@ var Hours = {
 
 Number.prototype.friendlyHours = function() {
   if (this <= 0)
-    return;
+    return 0;
   var out = this.floor() + 'h', minutes = ((this % 1) * 60).round()
   if (minutes) out += ' ' + minutes + 'm'
   return out

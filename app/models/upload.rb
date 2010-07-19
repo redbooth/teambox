@@ -6,8 +6,11 @@ class Upload < RoleRecord
   belongs_to :comment, :touch => true
   belongs_to :project
   belongs_to :page
-  has_one    :page_slot, :as => :rel_object
+
+  has_one        :page_slot, :as => :rel_object
   before_destroy :clear_slot
+
+  before_create :copy_ownership_from_comment
 
   default_scope :order => 'created_at DESC'
 
@@ -20,7 +23,7 @@ class Upload < RoleRecord
 
   before_post_process :image?
   
-  validates_attachment_size :asset, :less_than => APP_CONFIG['asset_max_file_size'].to_i.megabytes
+  validates_attachment_size :asset, :less_than => Teambox.config.asset_max_file_size.to_i.megabytes
   validates_attachment_presence :asset
   
   def image?
@@ -39,6 +42,13 @@ class Upload < RoleRecord
 
   def size
     asset_file_size
+  end
+
+  # TODO: handle truncating of description in views
+  include ActionView::Helpers::TextHelper
+
+  def description
+    self[:description] || (comment ? truncate(comment.body, :length => 80) : nil)
   end
 
   def clear_slot
@@ -88,4 +98,14 @@ class Upload < RoleRecord
       xml.tag! 'comment-id', comment_id
     end
   end
+  
+  protected
+  
+  def copy_ownership_from_comment
+    if comment_id
+      self.user_id = comment.user_id
+      self.project_id = comment.project_id
+    end
+  end
+  
 end

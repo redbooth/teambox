@@ -1,5 +1,5 @@
 - if @current_project.admin?(current_user)
-  = render 'invitations/new', :project => @current_project, :invitation => Invitation.new
+  = render 'invitations/new', :project => @current_project, :invitation => Invitation.new(:role => 3)
 
 #people.people
   = render :partial => 'invitations/invitation', :collection => @invitations,

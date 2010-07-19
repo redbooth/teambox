@@ -1,0 +1,54 @@
+.thread
+  +rounded(3px)
+  margin-bottom: 20px
+  .title
+    display: block
+    padding: 15px 0 5px
+    font-size: 0.8em
+    border:
+      top: 1px solid white
+      bottom: 1px solid white
+    +rounded(3px)
+    +clearing
+    .info
+      .thumb_avatar
+        margin: 0 20px 0 10px
+    .starter
+      display: block
+      height: 25px
+    .date
+      float: right
+      font-size: 0.8em
+      color: #9da3a7
+  .comments
+    border-left: 4px solid #eee
+    margin: 1px 0 0 70px
+    background-color: #fafafa
+    .block
+      width: 475px
+      padding-right: 10px
+      .body
+        margin-top: 0
+    .more_comments
+      padding: 10px 10px 10px 45px
+      display: block
+      font-size: 12px
+    .comment
+      padding: 5px 0
+      .info
+        width: 24px
+        margin-left: 10px
+        .micro_avatar
+          +rounded(3px)
+      .block
+        width: 510px
+  form#new_comment
+    border-left: 4px solid #eee
+    background-color: #fafafa
+    margin: 0 0 0 70px
+    padding: 2px 0 5px 10px
+    .body
+      textarea
+        width: 500px
+    .micro_avatar
+      margin-top: 7px

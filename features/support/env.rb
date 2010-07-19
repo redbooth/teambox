@@ -22,6 +22,34 @@ require 'capybara/session'
 # Lets you click links with onclick javascript handlers without using @culerity or @javascript
 require 'cucumber/rails/capybara_javascript_emulation'
 
+Capybara::Driver::Selenium.class_eval do
+  class << self
+    alias old_driver driver
+    if false
+      # override firefox driver in favor of selenium
+      def driver
+        @driver ||= begin
+          driver = Selenium::WebDriver.for :chrome
+          at_exit { driver.quit }
+          driver
+        end
+      end
+    else
+      # fix running Firefox while offline
+      # http://groups.google.com/group/ruby-capybara/browse_thread/thread/c012c73aa3ee86
+      def driver
+        @driver ||= begin
+          profile = Selenium::WebDriver::Firefox::Profile.new 
+          profile['network.manage-offline-status'] = false
+          driver = Selenium::WebDriver.for :firefox, :profile => profile
+          at_exit { driver.quit }
+          driver
+        end
+      end
+    end
+  end
+end
+
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
 # prefer to use XPath just remove this line and adjust any selectors in your

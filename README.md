@@ -1,36 +1,33 @@
-Teambox Project Managment
-=========================
+# Teambox
+## Collaboration just got better
 
 [Teambox is project management software][teambox] built on Ruby on Rails with a focus on collaboration.
 
 Teambox workflow is project-centered; each project being visible only to people invited to it.
-Projects have a status wall, conversations, tasks, shared pages and file uploads.
+Projects have a status wall, conversations, tasks, shared pages and file uploads. You can even post
+to everywhere just using email.
 
-You can [try Teambox online][app] for free to see how it works. Teambox is open-source software, meaning you
+You can [try Teambox online][teambox] for free to see how it works. Teambox is open-source software, meaning you
 can also download it, change its code and host yourself.
 
-[![Preview of Teambox in action](http://img.skitch.com/20100430-jywt7tfh5kq3une2udnud8ayph.png)][preview]
-
+[![Preview of Teambox][preview]][tour]
 
 Project info
 ------------
 
-- Official website: <http://www.teambox.com/>
-- Code repository: <http://github.com/micho/teambox>
-- Community mailing list: <http://groups.google.com/group/teambox>
-- Open-source contributors: <http://github.com/micho/teambox/contributors>
+- Official website: <http://teambox.com/>
+- Code repository: <http://github.com/teambox/teambox>
+- Community mailing list: <http://teambox.com/group>
+- Open-source contributors: <http://github.com/teambox/teambox/contributors>
 - License: [GNU Affero GPL 3][license]
-
 
 Installation
 ------------
 
-Hop to [our wiki](http://wiki.github.com/micho/teambox/ "Teambox wiki") to get detailed information on
+Hop to [our wiki](http://wiki.github.com/teambox/teambox/ "Teambox wiki") to get detailed information on
 installing Teambox.
 
-
-[teambox]: http://www.teambox.com
-[app]: http://app.teambox.com
-[preview]: http://teambox.com/images/screenshots/overview.png
+[teambox]: http://teambox.com
+[tour]: http://teambox.com/tour
+[preview]: http://img.skitch.com/20100630-8thtcf16qg52w4jjy2my37tpp4.jpg
 [license]: http://www.gnu.org/licenses/agpl-3.0.html
-

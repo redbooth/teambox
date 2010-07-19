@@ -1,6 +1,6 @@
 #page_menu
   = link_to t('shared.project_navigation.conversations'), project_conversations_path(project), :class => controller_selected?('conversations')
   = link_to t('shared.project_navigation.task_lists'), project_task_lists_path(project), :class => controller_selected?(['task_lists', 'tasks'])
-  -# = link_to t('shared.project_navigation.all_pages'), project_pages_path(project), :class => controller_selected?('pages')
+  = link_to t('shared.project_navigation.pages'), project_pages_path(project), :class => controller_selected?('pages')
   -# = link_to t('shared.project_navigation.files'), project_uploads_path(project), :class => controller_selected?('uploads')
   = link_to t('shared.project_navigation.people'), project_people_path(project), :class => controller_selected?('people')

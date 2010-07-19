@@ -54,16 +54,5 @@ class Project
       page.user_id = user.id
     end
   end
-  
-  def new_upload(user,target = nil)
-    if target == nil
-      self.uploads.new(:user_id => user.id)
-    else
-      self.uploads.new do |upload|
-        upload.user_id = user.id
-        upload.target = target
-      end
-    end
-  end
 
 end

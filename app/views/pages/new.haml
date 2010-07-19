@@ -5,6 +5,8 @@
 
   .submit
     = f.submit t('.submit')
+    = t('common.or')
+    = link_to t('common.cancel'), project_pages_path(@current_project)
   
 - content_for :column do
   %p= t '.define1'

@@ -1,16 +1,11 @@
 require 'digest/sha1'
 
 class Invitation < RoleRecord
-  belongs_to :user
-  belongs_to :project
   belongs_to :group
   belongs_to :invited_user, :class_name => 'User'
   
-  attr_reader :user_or_email
-  attr_accessible :user_or_email, :user, :project, :role, :group
-  
   validate :check_invite
-  
+
   def target
     project || group
   end
@@ -50,17 +45,38 @@ class Invitation < RoleRecord
     end
   end
   
+  attr_reader :user_or_email
+  
   def user_or_email=(value)
-    user_to_invite = User.find_by_username_or_email value
-    
-    if user_to_invite
-      self.email = user_to_invite.email
-    else
-      self.email = value
-    end
-    
-    self.invited_user = user_to_invite
+    self.invited_user = User.find_by_username_or_email(value)
+    self.email = value unless self.invited_user
     @user_or_email = value
+  end
+  
+  def accept(current_user)
+    if target.class == Project
+      person = self.project.people.new(
+        :user => current_user,
+        :role => self.role || 3,
+        :source_user => self.user)
+      person.save
+    else
+      target.add_user(current_user)
+    end
+  end
+  
+  def editable?(user)
+    (project || group).admin?(user) or self.user_id == user.id or self.invited_user_id == user.id
+  end
+
+  before_create :generate_token
+  after_create :send_email
+  before_save :copy_user_email, :if => :invited_user
+
+  protected
+
+  def generate_token
+    self.token ||= ActiveSupport::SecureRandom.hex(20)
   end
   
   def send_email
@@ -79,27 +95,11 @@ class Invitation < RoleRecord
     end
   end
   
-  def accept(current_user)
-    if target.class == Project
-      person = self.project.people.new(
-        :user => current_user,
-        :role => self.role || 2,
-        :source_user => self.user)
-      person.save
-    else
-      target.add_user(current_user)
-    end
+  if Rails.env.production? and respond_to? :handle_asynchronously
+    handle_asynchronously :send_email 
   end
   
-  def editable?(user)
-    (project || group).admin?(user) or self.user_id == user.id or self.invited_user_id == user.id
-  end
-
-  def before_save
-    self.token ||= ActiveSupport::SecureRandom.hex(20)
-  end
-  
-  def after_save
-    send_email
+  def copy_user_email
+    self.email ||= invited_user.email
   end
 end

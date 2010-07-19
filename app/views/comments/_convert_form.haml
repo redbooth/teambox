@@ -1,6 +1,9 @@
 - convert_comment_form_for(comment) do |f|
+  .name.text_field
+    = f.label :name, t('.name')
+    = text_field_tag 'task[name]', (@task.nil? ? @comment.body.split('\n').first : @task.name), :autofocus => true
   .text_field
-    = label_tag :task_list, "Select the destination task list"
+    = label_tag :task_list, t('.destination')
     = select_tag 'task_list_id', options_for_select(options_for_task_lists(@current_project.task_lists.unarchived))
   .submit{:id => "comment_#{comment.id}_submit"}
     = f.submit "Convert"

@@ -1,3 +1,7 @@
+Given /^I have a task list called "([^\"]*)"$/ do |name|
+  @task_list = (@current_project || Factory(:project)).create_task_list(@current_user,{:name => name})
+end
+
 Given /^there is a task list called "([^\"]*)"$/ do |name|
   TaskList.find_by_name(name) || Factory(:task_list, :name => name)
 end

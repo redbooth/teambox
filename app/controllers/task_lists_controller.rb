@@ -1,11 +1,8 @@
 class TaskListsController < ApplicationController
   before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive]
-  before_filter :load_task_lists, :only => [:index, :show]
-  before_filter :load_banner, :only => [:index, :show]
+  before_filter :load_task_lists, :only => [:index]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy,:archive,:unarchive]
   before_filter :set_page_title
-
-  cache_sweeper :task_list_panel_sweeper, :only => [:update,:archive,:unarchive]
 
   def index
     @on_index = true
@@ -28,8 +25,6 @@ class TaskListsController < ApplicationController
   end
 
   def show
-    @sub_action = 'all'
-    @task_lists = @current_project.task_lists.unarchived
     @comments = @task_list.comments
 
     respond_to do |f|
@@ -57,14 +52,12 @@ class TaskListsController < ApplicationController
 
   def create
     @on_index = true
-    if @task_list = @current_project.create_task_list(current_user,params[:task_list])
-      @sub_action = 'all'
-    end
+    @task_list = @current_project.create_task_list(current_user,params[:task_list])
     
     if !@task_list.new_record?
       respond_to do |f|
-        f.html { redirect_to [@current_project,@task_list] }
-        f.m    { redirect_to project_task_lists_path(@current_project) }
+        f.html { redirect_to_task_list @task_list }
+        f.m    { redirect_to_task_list }
         f.js
         handle_api_success(f, @task_list, true)
       end
@@ -129,9 +122,8 @@ class TaskListsController < ApplicationController
   
   def archive
     calc_onindex
-    @sub_action = 'all'
     
-    if request.method == :put and @task_list.editable?(current_user) and !@task_list.archived
+    if request.method == :put and !@task_list.archived
       # Prototype for comment
       comment_attrs = {:comment_body => params[:message]}
       comment_attrs[:body] ||= "Archived task list"
@@ -155,13 +147,15 @@ class TaskListsController < ApplicationController
       
       respond_to do |f|
         f.html { non_js_list_redirect }
-        f.js{}
+        f.m    { non_js_list_redirect }
+        f.js   {}
         handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
         f.html { flash[:error] = "Not allowed!"; non_js_list_redirect }
-        f.js { render :text => 'alert("Not allowed!");'; }
+        f.m    { flash[:error] = "Not allowed!"; non_js_list_redirect }
+        f.js   { render :text => 'alert("Not allowed!");'; }
         handle_api_error(f, @task_list)
       end
     end
@@ -173,7 +167,6 @@ class TaskListsController < ApplicationController
   
   def unarchive
     calc_onindex
-    @sub_action = 'all'
     
     if request.method == :put and @task_list.editable?(current_user) and @task_list.archived
       @task_list.archived = false
@@ -199,18 +192,16 @@ class TaskListsController < ApplicationController
       @task_list.try(:destroy)
 
       respond_to do |f|
-        f.html do
-          flash[:success] = t('deleted.task_list', :name => @task_list.to_s)
-          redirect_to project_task_lists_path(@current_project)
-        end
-        f.js {}
+        f.html { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
+        f.m    { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
+        f.js
         handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
-        flash[:error] = t('common.not_allowed')
-        f.html { redirect_to project_task_lists_path(@current_project) }
-        f.js { render :text => 'alert("Not allowed!");'; }
+        f.html { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+        f.m    { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+        f.js   { render :text => 'alert("Not allowed!");'; }
         handle_api_error(f, @task_list)
       end
     end
@@ -226,42 +217,62 @@ class TaskListsController < ApplicationController
     respond_to{|f|f.js}
   end
 
+  def gantt_view
+    load_gantt_events
+  end
+
   private
-    def load_task_lists
-      if params.has_key?(:sub_action)
-        @sub_action = params[:sub_action]
-        if params[:sub_action] == 'mine'
-          @task_lists = @current_project.task_lists_assigned_to(current_user)
-        elsif params[:sub_action] == 'archived'
-          @task_lists = @current_project.task_lists.with_archived_tasks
-        end
-        
-        # Resort @task_lists and put archived at the bottom
-        @task_lists_archived = @task_lists.reject {|t| !t.archived?}
-        @task_lists_active = @task_lists.reject {|t| t.archived?}
-        @task_lists = @task_lists_active + @task_lists_archived
+    def load_gantt_events
+      @chart_task_lists = []
+      if @current_project
+        @task_lists = (@task_lists || @current_project.task_lists.unarchived)
+        conditions = ["project_id = :project_id AND status IN (:status) AND due_on IS NOT NULL", {
+                       :project_id => @current_project.id,
+                       :status => Task::ACTIVE_STATUS_CODES }]
       else
-        @sub_action = 'all'
-        if @current_project
-          @task_lists = @current_project.task_lists
-        else
-          @projects = current_user.projects.unarchived
-          conditions = ["project_id IN (?)", Array(@projects).collect{ |p| p.id } ]
-          @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user]).
-                    select { |task| task.active? }.
-                    sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
-          if [:xml, :json, :as_yaml].include? request.format.to_sym
-            @task_lists = TaskList.find(:all, :conditions => {:project_id => current_user.project_ids})
-          else
-            @task_lists = []
-          end
-        end
-        
-        # Resort @task_lists and put archived at the bottom
-        @task_lists_archived = @task_lists.reject {|t| !t.archived?}
-        @task_lists_active = @task_lists.reject {|t| t.archived?}
-        @task_lists = @task_lists_active + @task_lists_archived
+        @task_lists = current_user.projects.collect { |p| p.task_lists.unarchived }.flatten.compact
+        conditions = ["project_id IN (:project_ids) AND status IN (:status) AND due_on IS NOT NULL", {
+                       :project_ids => Array(current_user.projects.unarchived).map(&:id),
+                       :status => Task::ACTIVE_STATUS_CODES }]
       end
+      @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user, :project])
+      @events = split_events_by_date(@tasks)
+
+      @task_lists.each do |task_list|
+        unless task_list.start_on == task_list.finish_on
+          @chart_task_lists << GanttChart::Event.new(
+            task_list.start_on,
+            task_list.finish_on,
+            task_list.name,
+            project_task_list_path(task_list.project, task_list))
+        end
+      end
+      @chart = GanttChart::Base.new(@chart_task_lists)
+    end
+
+    def load_task_lists
+      if @current_project
+        @task_lists = @current_project.task_lists(:include => [:project])
+      else
+        @projects = current_user.projects.unarchived
+        
+        if [:xml, :json, :as_yaml].include? request.format.to_sym
+          @task_lists = TaskList.find(:all,
+                                      :include => [:project],
+                                      :conditions => {:project_id => @projects.map(&:id)})
+          @tasks = []
+        else
+          @task_lists = []
+          conditions = { :project_id => Array(@projects).map(&:id),
+                         :status => Task::ACTIVE_STATUS_CODES }
+          @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user, :project]).
+                    sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
+        end
+      end
+      
+      @task_lists_archived = @task_lists.reject {|t| !t.archived?}
+      @task_lists_active = @task_lists.reject {|t| t.archived?}
+      @task_lists = @task_lists_active + @task_lists_archived
     end
     
     def non_js_list_redirect
@@ -279,5 +290,23 @@ class TaskListsController < ApplicationController
     def calc_onindex
       @on_index = ((params[:on_index] || 0).to_i == 1)
     end
-
+    
+    def redirect_to_task_list(task_list=nil)
+      redirect_to task_list ? project_task_list_path(@current_project, @task_list) :
+                               project_task_lists_path(@current_project)
+    end
+    
+    def check_permissions
+      # Can they even edit the project?
+      unless @current_project.editable?(current_user)
+        respond_to do |f|
+          f.html { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+          f.m    { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+          f.js   {
+            render :text => "alert(\"#{t('common.not_allowed')}\");", :status => :unprocessable_entity
+          }
+        end
+        return false
+      end
+    end
 end

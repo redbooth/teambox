@@ -11,7 +11,7 @@
   - if current_user.observable?(@user)
     - unless @user.biography.blank?
       %p.biography= @user.biography
-    = render_card(@card)
+    = render_card(@card) if @card
     =# list_projects(@user.projects)
   - if @current_user == @user
     %h3= "Heute bearbeitete Aufgaben"

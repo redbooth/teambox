@@ -7,7 +7,8 @@ class Comment
   end
 
   def after_create
-    self.target.reload
+    return unless self.target
+    target.reload
     
     @activity = project && project.log_activity(self, 'create')
 

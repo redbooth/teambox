@@ -17,7 +17,7 @@ class User
   validates_length_of       :email,       :within => 6..100 #r@a.wk
   validates_uniqueness_of   :email,       :case_sensitive => false
   validates_email_format_of :email,       :message => Authentication.bad_email_message
-
+  
   def before_validate
     [self.email, self.login, self.first_name, self.last_name].strip!
   end

@@ -1,7 +1,6 @@
 class Emailer < ActionMailer::Base
   include ActionController::UrlWriter # Allows us to generate URLs
   include ActionView::Helpers::TextHelper
-  include Emailer::Incoming
 
   ANSWER_LINE = '-----------------------------==-----------------------------'
 
@@ -21,7 +20,7 @@ class Emailer < ActionMailer::Base
 
   def forgot_password(reset_password)
     defaults
-    recipients    reset_password.email
+    recipients    reset_password.user.email
     subject       I18n.t("emailer.forgot_password.subject")
     body          :user => reset_password.user, :url => reset_password_url(reset_password.reset_code)
   end
@@ -29,7 +28,7 @@ class Emailer < ActionMailer::Base
   def project_invitation(invitation)
     defaults
     recipients    invitation.email
-    from          invitation.user.email
+    from          from_user(nil, invitation.user)
     subject       I18n.t("emailer.invitation.subject", :user => invitation.user.name, :project => invitation.project.name)
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
@@ -37,7 +36,7 @@ class Emailer < ActionMailer::Base
   def group_invitation(invitation)
     defaults
     recipients    invitation.email
-    from          invitation.user.email
+    from          from_user(nil, invitation.user)
     subject       I18n.t("emailer.invitation_group.subject", :user => invitation.user.name, :group => invitation.group.name)
     body          :referral => invitation.user, :group => invitation.group, :invitation => invitation
   end
@@ -59,10 +58,7 @@ class Emailer < ActionMailer::Base
   def notify_comment(user, project, comment)
     defaults
     recipients    user.email
-    from          comment.user.email
-    if APP_CONFIG['allow_incoming_email']
-      reply_to      from_address("#{project.permalink}")
-    end
+    from          from_user("#{project.permalink}", comment.user)
     subject       "[#{project.permalink}] #{truncate(comment.body, :length => 20)}"
     body          :project => project, :comment => comment, :recipient => user
   end
@@ -70,10 +66,7 @@ class Emailer < ActionMailer::Base
   def notify_conversation(user, project, conversation)
     defaults
     recipients    user.email
-    from          conversation.comments.first.user.email
-    if APP_CONFIG['allow_incoming_email']
-      reply_to      from_address("#{project.permalink}+conversation+#{conversation.id}")
-    end
+    from          from_user("#{project.permalink}+conversation+#{conversation.id}", conversation.comments.first.user)
     subject       "[#{project.permalink}] #{conversation.name}"
     body          :project => project, :conversation => conversation, :recipient => user
   end
@@ -81,10 +74,7 @@ class Emailer < ActionMailer::Base
   def notify_task(user, project, task)
     defaults
     recipients    user.email
-    from          task.comments.first.user.email
-    if APP_CONFIG['allow_incoming_email']
-      reply_to      from_address("#{project.permalink}+task+#{task.id}")
-    end
+    from          from_user("#{project.permalink}+task+#{task.id}", task.comments.first.user)
     subject       "[#{project.permalink}] #{task.name}"
     body          :project => project, :task => task, :task_list => task.task_list, :recipient => user
   end
@@ -92,10 +82,7 @@ class Emailer < ActionMailer::Base
   def notify_task_list(user, project, task_list)
     defaults
     recipients    user.email
-    from          task_list.comments.first.user.email
-    if APP_CONFIG['allow_incoming_email']
-      reply_to      from_address("#{project.permalink}+task_list+#{task_list.id}")
-    end
+    from          from_user("#{project.permalink}+task_list+#{task_list.id}", task_list.comments.first.user)
     subject       "[#{project.permalink}] #{task_list.name}"
     body          :project => project, :task_list => task_list, :recipient => user
   end
@@ -116,6 +103,14 @@ class Emailer < ActionMailer::Base
   end
 
   private
+
+    def from_user(command, user)
+      if APP_CONFIG['allow_incoming_email'] && command
+        from_address(command, "#{user.first_name} #{user.last_name}")
+      else
+        from_address("no-reply", "#{user.first_name} #{user.last_name}")
+      end
+    end
 
     def from_address(recipient = "no-reply", name = "Teambox")
       domain = Teambox.config.smtp_settings[:domain]

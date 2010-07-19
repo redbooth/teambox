@@ -1,6 +1,6 @@
 - show_archive_link = (task_list.tasks.unarchived.empty? && task_list.tasks.archived.size > 0)
 - header_on_index = @on_index || (action_name == 'index')
-- show_the_lists = !(header_on_index and task_list.archived)
+- show_the_lists = !(header_on_index && task_list.archived)
 .task_list_container{ :id => task_list_id(nil,project,task_list), :class => (task_list.archived ? 'archived' : nil) }
   .task_list{ :id => task_list_id(:with_main_tasks,project,task_list), :action_url => project_task_list_path(project,task_list) }
     .head{:id => task_list_id(:header_index,project,task_list) }
@@ -8,9 +8,9 @@
     - if !header_on_index
       = task_list_archive_box(project,task_list)
     - if show_the_lists
-      %div{ :id => task_list_id(:the_main_tasks,project,task_list), :class => 'tasks open', :reorder_url => project_reorder_tasks_path(project,task_list) }
+      .tasks.open{ :id => task_list_id(:the_main_tasks,project,task_list), :reorder_url => project_reorder_tasks_path(project,task_list) }
         - if !task_list.archived
-          = list_tasks(task_list.tasks.unarchived,task_list_editable?(task_list,current_user))
+          = list_tasks(task_list,task_list.tasks.unarchived,task_list_editable?(task_list,current_user))
       - if task_list_editable?(task_list,current_user)
         .new_task
           = task_link(project,task_list)
@@ -19,9 +19,9 @@
             = t('common.or')
             = archive_task_list_link(project,task_list, header_on_index)
       .task_list_closed{ :id => task_list_id(:with_closed_tasks,project,task_list) }
-        %div{ :id => task_list_id(:the_closed_tasks,project,task_list), :class => 'tasks closed' }
+        .tasks.closed{ :id => task_list_id(:the_closed_tasks,project,task_list) }
           - if !header_on_index
-            = list_tasks(task_list.tasks.archived,task_list_editable?(task_list,current_user))
+            = list_tasks(task_list,task_list.tasks.archived,task_list_editable?(task_list,current_user))
         - if header_on_index and task_list.tasks.archived.size > 0
           .show_archived_tasks
             = loading_image(task_list_id(:archived_tasks_loading,project,task_list))

@@ -51,10 +51,6 @@ module TasksHelper
   
   #
 
-  def replace_task_column(project,task_lists,sub_action,task)
-    page.replace_html 'column', task_list_column(project,task_lists,sub_action,task)
-  end
-
   def insert_unarchive_box(project,task)
     page.insert_html :after, 'new_comment',
       :partial => 'tasks/unarchive_box', :locals => {
@@ -250,10 +246,13 @@ module TasksHelper
     end
   end
 
-  def list_tasks(tasks,editable=true)
+  def list_tasks(task_list, tasks,editable=true)
     render :partial => 'tasks/task',
       :collection => tasks,
-      :locals => {:editable => editable}
+      :locals => {
+        :project => task_list.try(:project),
+        :task_list => task_list,
+        :editable => editable}
   end
 
   def task_fields(f,project,task_list,task)
@@ -347,6 +346,10 @@ module TasksHelper
     render :partial => 'tasks/overview_box', :locals => { :task => task }
   end
 
+  def time_tracking_doc
+    link_to(t('.time_tracking_docs'), "http://help.teambox.com/faqs/advanced-features/time-tracking", :target => '_blank')
+  end
+
   def date_picker(f, field)
     content_tag(:div,
       f.calendar_date_select(field, {
@@ -367,5 +370,10 @@ module TasksHelper
         :time => false,
         :buttons => true }),
       :class => 'date_picker')
+  end
+  
+  def value_for_assigned_to_select
+    value = params[:assigned_to] == 'all' ? 'task' : params[:assigned_to]
+    value ||= 'task'
   end
 end

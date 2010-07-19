@@ -1,6 +1,81 @@
-;(function() {
+(function() {
+  // Technique from Juriy Zaytsev
+  // http://thinkweb2.com/projects/prototype/detecting-event-support-without-browser-sniffing/
+  function isEventSupported(eventName) {
+    var el = document.createElement('div');
+    eventName = 'on' + eventName;
+    var isSupported = (eventName in el);
+    if (!isSupported) {
+      el.setAttribute(eventName, 'return;');
+      isSupported = typeof el[eventName] == 'function';
+    }
+    el = null;
+    return isSupported;
+  }
+
+  function isForm(element) {
+    return Object.isElement(element) && element.nodeName.toUpperCase() == 'FORM';
+  }
+
+  function isInput(element) {
+    if (Object.isElement(element)) {
+      var name = element.nodeName.toUpperCase();
+      return name == 'INPUT' || name == 'SELECT' || name == 'TEXTAREA';
+    }
+    else return false;
+  }
+
+  var submitBubbles = isEventSupported('submit'),
+      changeBubbles = isEventSupported('change');
+
+  if (!submitBubbles || !changeBubbles) {
+    // augment the Event.Handler class to observe custom events when needed
+    Event.Handler.prototype.initialize = Event.Handler.prototype.initialize.wrap(
+      function(init, element, eventName, selector, callback) {
+        init(element, eventName, selector, callback);
+        // is the handler being attached to an element that doesn't support this event?
+        if ( (!submitBubbles && this.eventName == 'submit' && !isForm(this.element)) ||
+             (!changeBubbles && this.eventName == 'change' && !isInput(this.element)) ) {
+          // "submit" => "emulated:submit"
+          this.eventName = 'emulated:' + this.eventName;
+        }
+      }
+    );
+  }
+
+  if (!submitBubbles) {
+    // discover forms on the page by observing focus events which always bubble
+    document.on('focusin', 'form', function(focusEvent, form) {
+      // special handler for the real "submit" event (one-time operation)
+      if (!form.retrieve('emulated:submit')) {
+        form.on('submit', function(submitEvent) {
+          var emulated = form.fire('emulated:submit', submitEvent, true);
+          // if custom event received preventDefault, cancel the real one too
+          if (emulated.returnValue === false) submitEvent.preventDefault();
+        });
+        form.store('emulated:submit', true);
+      }
+    })
+  }
+
+  if (!changeBubbles) {
+    // discover form inputs on the page
+    document.on('focusin', 'input, select, texarea', function(focusEvent, input) {
+      // special handler for real "change" events
+      if (!input.retrieve('emulated:change')) {
+        input.on('change', function(changeEvent) {
+          input.fire('emulated:change', changeEvent, true);
+        });
+        input.store('emulated:change', true);
+      }
+    })
+  }
+
   function handleRemote(element) {
     var method, url, params;
+
+    var event = element.fire("ajax:before");
+    if (event.stopped) return false;
 
     if (element.tagName.toLowerCase() === 'form') {
       method = element.readAttribute('method') || 'post';
@@ -12,20 +87,15 @@
       params = {};
     }
 
-    var event = element.fire("ajax:before");
-    if (event.stopped) return false;
-
     new Ajax.Request(url, {
       method: method,
       parameters: params,
       evalScripts: true,
 
-      onLoading:     function(request) { element.fire("ajax:loading",     request); },
-      onLoaded:      function(request) { element.fire("ajax:loaded",      request); },
-      onInteractive: function(request) { element.fire("ajax:interactive", request); },
-      onComplete:    function(request) { element.fire("ajax:complete",    request); },
-      onSuccess:     function(request) { element.fire("ajax:success",     request); },
-      onFailure:     function(request) { element.fire("ajax:failure",     request); }
+      onCreate:   function(response) { element.fire("ajax:create",   response); },
+      onComplete: function(response) { element.fire("ajax:complete", response); },
+      onSuccess:  function(response) { element.fire("ajax:success",  response); },
+      onFailure:  function(response) { element.fire("ajax:failure",  response); }
     });
 
     element.fire("ajax:after");
@@ -34,8 +104,8 @@
   function handleMethod(element) {
     var method = element.readAttribute('data-method'),
         url = element.readAttribute('href'),
-        csrf_param = $$('meta[name=csrf-param]').first(),
-        csrf_token = $$('meta[name=csrf-token]').first();
+        csrf_param = $$('meta[name=csrf-param]')[0],
+        csrf_token = $$('meta[name=csrf-token]')[0];
 
     var form = new Element('form', { method: "POST", action: url, style: "display: none;" });
     element.parentNode.insert(form);

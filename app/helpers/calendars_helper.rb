@@ -53,22 +53,21 @@ module CalendarsHelper
    
    def start_of_calendar(year, month)
      first = Date.civil(year,month, 1)
-     last = Date.civil(year,month, -1)
-     weekdays = calendar_weekdays(first, last)
+     weekdays = calendar_weekdays
      first_weekday, last_weekday = weekdays[0], weekdays[1]
      beginning_of_week(first, first_weekday)
    end
    
    def end_of_calendar(year, month)
      dm = month+1 > 12 ? 1 : month+1
-     first = Date.civil(year,dm, 1)
-     last = Date.civil(year,dm, -1)
-     weekdays = calendar_weekdays(first, last)
+     dy = month+1 > 12 ? year+1 : year
+     first = Date.civil(dy,dm, 1)
+     weekdays = calendar_weekdays
      first_weekday, last_weekday = weekdays[0], weekdays[1]
      beginning_of_week(first, first_weekday) + 7
    end
    
-   def calendar_weekdays(first, last)
+   def calendar_weekdays
      if current_user.first_day_of_week == 'monday'
         first_weekday = first_day_of_week(1)
         last_weekday = last_day_of_week(1)
@@ -83,7 +82,7 @@ module CalendarsHelper
    def build_calendar(year,month,small=false)
      first = Date.civil(year,month, 1)
      last = Date.civil(year,month, -1)
-     weekdays = calendar_weekdays(first, last)
+     weekdays = calendar_weekdays
      first_weekday, last_weekday = weekdays[0], weekdays[1]
      
      cal = ''
@@ -120,7 +119,7 @@ module CalendarsHelper
       last = end_of_calendar(year, month)
       weeks = ((last - first) / 7).ceil
       
-      wk = "<table class=\"weektable#{weeks}\"><tr>"
+      wk = "<table class=\"weektable#{weeks} #{first} #{last}\"><tr>"
       
       wk << (0...weeks).map do |week|
         "<th>#{t('hours.week_num', :num => week+1)}</th>"
@@ -304,8 +303,8 @@ module CalendarsHelper
    end
    
    def filter_hours_assigned_dropdown(target_id, project=nil)
-     options = [['Anybody',     0],
-               ['My tasks',    current_user.id]]
+     options = [[t('hours.filter_assigned.anybody'),     0],
+               [t('hours.filter_assigned.my_tasks'),    current_user.id]]
      user_list = project ? project.users.sort_by(&:name) : Person.users_from_projects(current_user.projects)
      if !user_list.nil?
        options += [['--------', 'divider']]
@@ -317,7 +316,7 @@ module CalendarsHelper
    end
     
     def filter_project_dropdown(target_id)
-        options = [['All projects',     0]]
+        options = [[t('hours.filter_project.all'),     0]]
         options += [['--------', 'divider']]
         options += current_user.projects.sort_by(&:name).collect { |p| [p.name, p.id] }
         select(:hours_project_filter, :assigned, options, :disabled => 'divider', :id => target_id)

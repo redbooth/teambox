@@ -29,7 +29,7 @@ function format_posted_date_<%= I18n.locale %>()
     else if(minutes < 60)    { c.update(minutesAgoInWords_<%= I18n.locale %>(minutes)); }
     else if(days == 0)  { c.update(posted_date.strftime_<%= I18n.locale %>("<%= I18n.t('time.formats.short') %>")); }
     else if(days == 1)  { c.update('<%= I18n.t 'date.yesterday' %> ' + posted_date.strftime_<%= I18n.locale %>("<%= I18n.t('time.formats.short') %>")); }
-    else if(days <= 7)       { c.update(posted_date.strftime_<%= I18n.locale %>("%A <%= I18n.t('date.formats.short')%>")); }
+    else if(days <= 7)       { c.update(posted_date.strftime_<%= I18n.locale %>("%a <%= I18n.t('date.formats.short')%>")); }
     else if(current_date.getFullYear() == posted_date.getFullYear()) { c.update(posted_date.strftime_<%= I18n.locale %>("<%= I18n.t('date.formats.short')%>")); }
     else c.update(posted_date.strftime_<%= I18n.locale %>("<%= I18n.t('date.formats.long')%>"));    
   }

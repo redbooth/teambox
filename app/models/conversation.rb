@@ -1,14 +1,19 @@
+require_dependency 'role_record'
+
 class Conversation < RoleRecord
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
   serialize :watchers_ids
 
-  attr_accessible :name
+  attr_accessible :name, :simple
   attr_accessor :body
 
-  validates_presence_of :name, :message => :no_title
+  validates_presence_of :name, :message => :no_title, :unless => :simple?
   validates_presence_of :body, :message => :no_body_generic, :on => :create
+
+  named_scope :only_simple, :conditions => { :simple => true }
+  named_scope :not_simple, :conditions => { :simple => false }
 
   def after_create
     project.log_activity(self,'create')
@@ -22,6 +27,9 @@ class Conversation < RoleRecord
       end
 
       comment.save!
+    end
+    if simple
+      update_attribute :name, body.split("\n").first.chomp
     end
   end
 

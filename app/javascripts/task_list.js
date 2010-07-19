@@ -280,6 +280,7 @@ document.observe('jenny:loaded:new_task_list', function(evt) {
     }, 0);
   }
   setTimeout(function(){
+    Task.make_all_sortable();
     TaskList.updatePrimer();
     TaskList.saveColumn();
     TaskList.updatePage('column', TaskList.restoreColumn);

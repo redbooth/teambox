@@ -1,5 +1,5 @@
-- form_for [project,page,divider], :html => { :id => "new_divider_form", :style => 'display: none' } do |f|
-  = page_slot_fields("new_divider_form")
+- form_for [project,page,divider], :html => { :style => 'display: none', :'data-remote' => 'true' } do |f|
+  = page_slot_fields
   .area
     = divider_fields(f)
     .submit{ :id => "divider_submit" }

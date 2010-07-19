@@ -2,6 +2,15 @@ class DividersController < ApplicationController
   before_filter :load_page
   before_filter :load_divider, :only => [:show, :edit, :update, :destroy]
   
+  def new
+    @divider = @page.build_divider(params[:divider])
+    
+    respond_to do |f|
+      f.html { reload_page }
+      f.m 
+    end
+  end
+  
   def create
     calculate_position
     
@@ -11,9 +20,13 @@ class DividersController < ApplicationController
     
     respond_to do |f|
       if !@divider.new_record?
+        f.html { reload_page }
+        f.m    { reload_edit_page(:edit_part => 'page') }
         f.js
         handle_api_success(f, @divider, true)
       else
+        f.html { reload_page }
+        f.m    { reload_edit_page(:edit_part => 'page') }
         f.js
         handle_api_error(f, @divider)
       end
@@ -29,7 +42,10 @@ class DividersController < ApplicationController
   end
   
   def edit
-    respond_to{|f|f.js}
+    respond_to do |f|
+      f.m
+      f.js
+    end
   end
   
   def update
@@ -37,11 +53,15 @@ class DividersController < ApplicationController
     
     if @divider.editable?(current_user) and @divider.update_attributes(params[:divider])
       respond_to do |f|
+        f.html { reload_page }
+        f.m    { reload_edit_page(:edit_part => 'page') }
         f.js
         handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
+        f.html { reload_page }
+        f.m    { reload_edit_page(:edit_part => 'page') }
         f.js
         handle_api_error(f, @divider)
       end
@@ -54,11 +74,15 @@ class DividersController < ApplicationController
     if @divider.editable?(current_user)
       @divider.destroy
       respond_to do |f|
+        f.html { reload_page }
+        f.m    { reload_page }
         f.js
         handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
+        f.html { reload_page }
+        f.m    { reload_page }
         f.js
         handle_api_error(f, @divider)
       end
@@ -68,6 +92,14 @@ class DividersController < ApplicationController
   private
     def load_page
       @page = @current_project.pages.find(params[:page_id])
+    end
+    
+    def reload_page(extras={})
+      redirect_to project_page_path(@current_project, @page, extras)
+    end
+    
+    def reload_edit_page(extras={})
+      redirect_to edit_project_page_path(@current_project, @page, extras)
     end
     
     def load_divider

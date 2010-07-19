@@ -1,0 +1,8 @@
+if @comments.any?
+  page.replace_html :"thread_#{@comments.last.target.class.to_s}_#{@comments.last.target.id}_comments", ""
+  @comments.each do |comment|
+    page.insert_html :top, :"thread_#{comment.target.class.to_s}_#{comment.target.id}_comments", render(:partial => 'comments/comment', :locals => { :comment => comment, :threaded => true })
+  end
+end
+
+page[:"thread_#{@comments.last.target.class.to_s}_#{@comments.last.target.id}_comments"].visual_effect :highlight, :duration => 3

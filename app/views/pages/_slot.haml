@@ -1,2 +1,2 @@
-.pageSlot{:id => "page_slot_#{slot.id}", :slot => slot.id}
-  = render :partial => "#{slot.rel_object.slot_view}", :locals => {:object => slot.rel_object, :page => page, :project => project}
+%div[slot]
+  = render slot.rel_object.slot_view, :object => slot.rel_object, :page => page, :project => project

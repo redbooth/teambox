@@ -21,18 +21,21 @@ class User < ActiveRecord::Base
                   :validation
 
   # After adding a new locale, run "rake import:country_select 'de'" where de is your locale.
-  LANGUAGES = [['English',   'en'],
-               ['Español',   'es'],
-               ['Português', 'pt'],
-               ['Français',  'fr'],
-               ['Deutsch',   'de'],
-               ['Català',    'ca'],
-               ['Italiano',  'it'],
-               ['Русский',   'ru'],
-               ['Chinese',   'zh'],
-               ['Japanese',  'ja'],
-               ['Nederlands','nl']
+  LANGUAGES = [['English',     'en'],
+               ['Español',     'es'],
+               ['Português',   'pt'],
+               ['Français',    'fr'],
+               ['Deutsch',     'de'],
+               ['Català',      'ca'],
+               ['Italiano',    'it'],
+               ['Русский',     'ru'],
+               ['Chinese',     'zh'],
+               ['Japanese',    'ja'],
+               ['Nederlands',  'nl'],
+               ['Slovenščina', 'si']
                ]
+
+  LANGUAGE_CODES = LANGUAGES.map { |lang| lang[1] }
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
@@ -41,6 +44,7 @@ class User < ActiveRecord::Base
   has_many :invitations, :foreign_key => 'invited_user_id'
   has_many :activities
   has_many :uploads
+  has_many :app_links
   has_one :group
   has_and_belongs_to_many :groups
 
@@ -74,6 +78,7 @@ class User < ActiveRecord::Base
   def before_save
     self.recent_projects_ids ||= []
     self.rss_token ||= generate_rss_token
+    self.visited_at = Time.now
   end
 
   def before_create
@@ -108,7 +113,19 @@ class User < ActiveRecord::Base
   end
 
   def to_param
-    login
+    login_was # in case it changes but is not yet saved
+  end
+
+  def visited_at
+    read_attribute(:visited_at) || updated_at
+  end
+  
+  def language
+    if LANGUAGE_CODES.include? self[:language]
+      self[:language]
+    else
+      LANGUAGES.first[1]
+    end
   end
 
   def projects_shared_with(user)
@@ -146,10 +163,10 @@ class User < ActiveRecord::Base
     Activity.log(nil, target, action, creator_id)
   end
 
-  # Rewriting ActiveRecord's touch method
-  # The original runs validations and loads associated models, being very inefficient
-  def touch
-    self.update_attribute(:updated_at, Time.now)
+  def update_visited_at
+    if visited_at.nil? or (Time.now - visited_at) >= 12.hours
+      update_attribute(:visited_at, Time.now)
+    end
   end
 
   def contacts_not_in_project(project)
@@ -170,7 +187,7 @@ class User < ActiveRecord::Base
 
     User.find(:all,
       :conditions => conditions,
-      :order => 'updated_at ASC',
+      :order => 'updated_at DESC',
       :limit => 10)
   end
 
@@ -217,7 +234,7 @@ class User < ActiveRecord::Base
   end
 
   def assigned_tasks_count
-    people.map { |person| person.project.tasks }.flatten.
+    people.reject{ |r| r.project.archived? }.map { |person| person.project.tasks }.flatten.
       select { |task| task.active? && task.assigned_to?(self) }.size
   end
 
@@ -251,6 +268,19 @@ class User < ActiveRecord::Base
     project.people.select { |person| person.user_id == self.id }.first
   end
 
+  def contacts
+    conditions = ["project_id IN (?)", Array(self.projects).collect{ |p| p.id } ]
+    user_ids = Person.find(:all,
+      :select => 'user_id',
+      :conditions => conditions,
+      :limit => 300).collect { |p| p.user_id }.uniq
+    conditions = ["id IN (?) AND deleted_at IS NULL AND id != (?)", user_ids, self.id]
+    User.find(:all,
+      :conditions => conditions,
+      :order => 'updated_at DESC',
+      :limit => 60)
+  end
+
   def active_projects_count
     projects.unarchived.count
   end
@@ -282,6 +312,25 @@ class User < ActiveRecord::Base
     login =~ DELETED_REGEX
     update_attribute :login, Regexp.last_match(1).to_s if login =~ DELETED_REGEX
     update_attribute :email, Regexp.last_match(1).to_s if email =~ DELETED_REGEX
+  end
+
+  def link_to_app(provider, profile)
+    link = AppLink.new
+    link.user              = self
+    link.provider          = provider
+    link.app_user_id       = profile[:id]
+    link.custom_attributes = profile[:original]
+    link.save!
+  end
+
+  def self.find_available_login(proposed_login = nil)
+    proposed_login ||= "user"
+    counter = 0
+    begin
+      counter += 1
+      login = "#{proposed_login}#{counter == 1 ? nil : counter}"
+    end while User.find_with_deleted(:first, :conditions => ["login LIKE ?", login])
+    login
   end
 
   protected

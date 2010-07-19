@@ -1,6 +1,8 @@
 class Comment
   
   has_many :uploads
+  accepts_nested_attributes_for :uploads, :allow_destroy => true, :reject_if => proc { |upload| upload['asset'].blank? }
+  attr_accessible :upload_ids, :uploads_attributes
 
   belongs_to :user
   belongs_to :project

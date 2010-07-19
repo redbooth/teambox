@@ -1,6 +1,7 @@
-- @user.password = @user.password_confirmation = nil
-
 %h2= t('.title')
+
+- if @app_link
+  %p= t(:'oauth.this_account_will_be_linked_to', :provider => @app_link.provider)
 
 - if !@invitation and @user.email and User.find_by_email(@user.email)
   %p{ :style => 'margin: 80px 10px; padding: 10px; border: 1px rgb(220,220,150) solid; background-color: rgb(255,255,200)' }
@@ -9,8 +10,13 @@
 - else
   %p= t('.existing_user', :login_url => login_path, :forgot_url => forgot_password_path)
 
-  - form_for @user do |form|
+  - secure_url = Teambox.config.secure_logins ? users_url(:protocol => 'https') : nil
+
+  - form_for @user, :url => secure_url do |form|
     = render form
+    - if RAILS_ENV == "development"
+      %p You are running in development mode. No email confirmation will be required.
+      %p When running Teambox in production mode, signup will require an email confirmation.
     %br
     .submit
       = submit_tag t('.submit'), :tabindex => 300

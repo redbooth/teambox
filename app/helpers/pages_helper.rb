@@ -40,6 +40,14 @@ module PagesHelper
   def edit_page_link(project,page)
     link_to t('common.edit'), edit_project_page_path(project,page)
   end
+  
+  def rename_page_link(project,page)
+    link_to t('common.rename'), edit_project_page_path(project,page)
+  end
+  
+  def edit_mobile_page_link(project,page)
+    link_to t('common.edit'), edit_project_page_path(project,page, :edit_part => 'page')
+  end
 
   def delete_page_link(project,page)
     link_to t('common.delete'), project_page_path(project,page),
@@ -76,8 +84,8 @@ module PagesHelper
     render :partial => "shared/pages_dropdown", :locals => {:project => project, :pages => pages}
   end
   
-  def page_slot_fields(formName=nil, slot=0, before=0)
-    render :partial => 'pages/slot_fields', :locals => {:formName => formName, :pos_slot => slot, :pos_before => before}
+  def page_slot_fields(slot = 0, before = 0)
+    render 'pages/slot_fields', :pos_slot => slot, :pos_before => before
   end
   
   def drag_widget_handle(widget)

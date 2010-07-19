@@ -1,3 +1,21 @@
+=handle
+  position: relative
+  margin: 0px
+  float: none
+  span
+    background: rgb(255, 255, 255)
+    +rounded(4px)
+    padding: 3px 0px
+    left: -32px
+    bottom: 0px
+    position: absolute
+    display: block
+    width: 32px
+    height: 18px
+    top: 2px
+    img
+      cursor: move
+
 .pages
   clear: both
   margin-top: 10px
@@ -82,8 +100,10 @@
       font-size: 12px
       color: rgb(180, 180, 180)
   h3
-    font-size: 18px
+    font-size: 16px
+    font-weight: normal
     margin: 0px
+      bottom: 5px
   p
     font-size: 12px
     line-height: 1.4em
@@ -137,7 +157,7 @@
 #pageWidgetForms
   display: none
 
-.pageSlot
+.page_slot
   padding: 5px 0px
   padding-left: 46px
   margin-left: -46px
@@ -146,13 +166,21 @@
     height: 0px
     float: left
     width: 100%
+  .actions
+    display: none
+  &:hover .actions
+    display: block
+  .slotActions
+    display: none
+  &:hover .slotActions
+    display: block
 
-.pageSlot.InsertBefore
+.page_slot.InsertBefore
   background-image: url(/images/pins.gif)
   background-repeat: repeat-x
 
 .divider
-  background: url(../images/divider.jpg) repeat-x center
+  background: url(/images/divider.jpg) repeat-x center
   padding-left: 10px
   h3
     padding-top: 3px
@@ -160,29 +188,12 @@
       background: rgb(255, 255, 255)
       padding: 0px 5px
   p.actions
+    background: white
+    padding-left: 10px
     float: right
     margin: 0px
-    a.delete
-      color: red
   p.handle
-    position: relative
-    margin: 0px
-    float: none
-    span
-      background: rgb(255, 255, 255)
-      -moz-border-radius: 4px
-      -webkit-border-radius: 4px
-      padding: 3px 0px
-      left: 2px
-      bottom: 0px
-      position: absolute
-      display: block
-      width: 32px
-      height: 18px
-      left: -32px
-      top: 2px
-      img
-        cursor: move
+    +handle
 
 form.new_divider, form.edit_divider
   margin-top: 5px
@@ -193,8 +204,7 @@ form.new_divider, form.edit_divider
     border: solid 1px rgb(230, 230, 230)
     background: rgb(245, 245, 245)
     width: 340px
-    -moz-border-radius: 8px
-    -webkit-border-radius: 8px
+    +rounded(8px)
     padding: 0px 10px
       top: 5px
   .text_field
@@ -213,8 +223,7 @@ form.new_note, form.edit_note
   border: solid 1px rgb(230, 230, 230)
   background: rgb(245, 245, 245)
   padding: 10px
-  -moz-border-radius: 8px
-  -webkit-border-radius: 8px
+  +rounded(8px)
   .documentation
     font-size: 12px
     float: right
@@ -226,32 +235,18 @@ form.new_note, form.edit_note
   .submit
     font-size: 12px
     padding-top: 10px
+    img.loading
+      vertical-align: middle
 
 .note
+  padding-left: 16px
   p.actions
     float: right
     margin: 0px
     a.delete
       color: red
   p.handle
-    position: relative
-    margin: 0px
-    float: none
-    span
-      background: rgb(255, 255, 255)
-      -moz-border-radius: 4px
-      -webkit-border-radius: 4px
-      padding: 3px 0px
-      left: 2px
-      bottom: 0px
-      position: absolute
-      display: block
-      width: 32px
-      height: 18px
-      left: -32px
-      top: 2px
-      img
-        cursor: move
+    +handle
 
 .pageForm
   a.cancel
@@ -260,6 +255,7 @@ form.new_note, form.edit_note
 
 .show_pages
   .upload
+    padding-left: 0px
     p.slotActions
       float: right
       margin: 0px
@@ -268,26 +264,17 @@ form.new_note, form.edit_note
       a.delete
         color: red
     p.handle
-      position: relative
-      margin: 0px
-      float: none
+      +handle
       span
-        background: rgb(255, 255, 255)
-        -moz-border-radius: 4px
-        -webkit-border-radius: 4px
-        padding: 3px 0px
-        left: -32px
-        bottom: 0px
-        position: absolute
-        display: block
-        width: 32px
-        height: 18px
-        top: 2px
-        img
-          cursor: move
-    .block
+        left: -18px
+    div.info
+      margin-left: 15px
+      margin-right: 8px
+    div.block
+      float: left
+    div.reference
       .date
-        margin-right: 34px
+        float: none
 
 .index_pages
   h4

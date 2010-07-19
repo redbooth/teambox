@@ -20,8 +20,8 @@
   - when 'index_task_lists'
     = filter_task_lists(project)
 
-= banner(@events,@chart)
-
 %h2= t('.other_views')
+= gantt_view_link(@current_project)
 = instructions_for_calendars
 = print_task_lists_link(project)
+= instructions_for_email(project)

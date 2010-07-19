@@ -1,0 +1,10 @@
+- form_for [@current_project,@page,@divider], :html => { :id => "new_divider_form" } do |f|
+  = page_slot_fields
+  .area
+    = divider_fields(f)
+    .submit{ :id => "divider_submit" }
+      = f.submit t('.submit')
+      = t('common.or')
+      = link_to t('common.cancel'), '#', :class => 'cancelPageWidget'
+    .clear  
+  .clear

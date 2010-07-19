@@ -1,9 +1,11 @@
+= render @uploads, :activity => false
+
 - content_for :column do
   - if @current_project.editable?(current_user)
-    = add_upload_link(@current_project) if @upload.errors.empty?
-    = upload_form(@current_project,@upload)
+    - if @upload.errors.empty?
+      = link_to content_tag(:span, t('.new_file')), new_project_upload_path(@current_project), :class => 'add_button'
+    = render 'uploads/form', :project => @current_project, :upload => @upload, :page => nil
+    
     %p= t('.max_upload_size', :mb => APP_CONFIG['asset_max_file_size'])
   - else
     %p= t('.cant_create')
-
-= list_uploads(@current_project,@uploads)

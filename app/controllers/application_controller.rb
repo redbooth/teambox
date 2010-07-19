@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
   include AuthenticatedSystem
-  include BannerSystem
   include SslHelper
 
   filter_parameter_logging :password
@@ -113,7 +112,7 @@ class ApplicationController < ActionController::Base
     end
     
     def touch_user
-      current_user.touch if logged_in?
+      current_user.update_visited_at if logged_in?
     end
 
     def set_page_title
@@ -162,15 +161,14 @@ class ApplicationController < ActionController::Base
     
     def split_events_by_date(events, start_date=nil)
       start_date ||= Date.today.monday.to_date
-      return [] if events.empty?
-      split_events = Array.new(14)
-      events.each do |event|
+      split_events = Array.new
+      Array(events).each do |event|
         if (event.due_on - start_date) >= 0
           split_events[(event.due_on - start_date)] ||= []
           split_events[(event.due_on - start_date)] << event
         end
       end
-      return split_events
+      split_events
     end
     
     # http://www.coffeepowered.net/2009/02/16/powerful-easy-dry-multi-format-rest-apis-part-2/
@@ -227,27 +225,25 @@ class ApplicationController < ActionController::Base
     end
     
     def calculate_position
-      # Calculate target position
-      if !params[:position].nil?
-          pos = params[:position]
-          @insert_id = pos[:slot].to_i
-          if @insert_id < 0
-            @insert_id = 0
-            @insert_before = false
-            @insert_footer = true
-          else
-            @insert_before = @insert_id == 0 ? true : (pos[:before].to_i == 1)
-            @insert_footer = false
-          end
-      else
-          @insert_id = nil
-          @insert_before = true
+      if pos = params[:position].presence
+        @insert_id = pos[:slot].to_i
+        if @insert_id < 0
+          @insert_id = 0
+          @insert_before = false
+          @insert_footer = true
+        else
+          @insert_before = @insert_id == 0 ? true : (pos[:before].to_i == 1)
           @insert_footer = false
+        end
+      else
+        @insert_id = nil
+        @insert_before = true
+        @insert_footer = false
       end
     end
     
     def save_slot(obj)
-      @slot = @page.new_slot(@insert_id, @insert_before, obj)
+      @slot = obj.page.new_slot(@insert_id, @insert_before, obj)
 
       if @insert_footer
         @insert_element = nil
@@ -262,8 +258,9 @@ class ApplicationController < ActionController::Base
     end
     
     def groups_enabled?
-      APP_CONFIG['allow_groups'] || false
+      !!Teambox.config.allow_groups
     end
+    helper_method :groups_enabled?
     
     def time_tracking_enabled?
       APP_CONFIG['allow_time_tracking'] || false

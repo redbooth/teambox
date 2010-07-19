@@ -3,7 +3,7 @@ Feature: Edit user settings
   As a Teambox admin
   I want users to edit their own settings
 
-  Background:
+  Background: 
     Given there is a user called "balint"
     And the user called "balint" is confirmed
 
@@ -28,8 +28,9 @@ Feature: Edit user settings
     And I fill in "Username" with "<username>"
     And I press "Update account"
     Then I should see an error message: "Couldn't save the updated profile. Please correct the mistakes and retry."
-    Examples:
-    | username |
-    | all      |
-    | ALL      |
+
+    Examples: 
+      | username |
+      | all      |
+      | ALL      |
 

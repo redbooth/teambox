@@ -1,0 +1,13 @@
+- if @current_project
+  %p.view_for_all
+    = link_to t('.back_to_normal_view'), project_task_lists_path(@current_project)
+    = t('common.or')
+    = link_to t('.view_for_all_projects'), gantt_view_task_lists_path
+
+.calendar_gantt{ :style => 'padding: 0; margin-top: 20px; border-bottom: 1px solid #c8c8c8' }
+  .tabs{ :style => 'border-bottom: 1px solid #c8c8c8' }
+    = calendar_banner_link
+    = gantt_banner_link
+  .body{ :style => 'border-left: 1px solid #c8c8c8; border-right: 1px solid #c8c8c8' }
+    = upcoming_events(@events)
+    = gantt_chart(@chart, 47)

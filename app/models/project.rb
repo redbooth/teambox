@@ -11,7 +11,8 @@ class Project < ActiveRecord::Base
                  :associations,
                  :callbacks,
                  :archival,
-                 :permalink
+                 :permalink,
+                 :invitations
 
   attr_accessible :name, :permalink, :archived, :group_id, :tracks_time
 

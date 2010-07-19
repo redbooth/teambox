@@ -1,7 +1,7 @@
 class InvitationsController < ApplicationController
   skip_before_filter :load_project
-  before_filter :load_group_or_project
-  before_filter :admins_target?, :except => [:index, :accept, :decline]
+  before_filter :load_group_or_project, :except => [:invite_format]
+  before_filter :admins_target?, :except => [:index, :accept, :decline, :invite_format]
   before_filter :set_page_title
   
   def index
@@ -43,44 +43,35 @@ class InvitationsController < ApplicationController
   end
   
   def create
-    if params[:login] # using a link to invite directly a user
-      @user = User.find_by_login(params[:login])
-      user_or_email = @user.login
-      role = 2
-    elsif params[:invitation]
+    if params[:invitation]
       user_or_email = params[:invitation][:user_or_email]
       role = params[:invitation][:role] || 2
+      
+      @targets = user_or_email.extract_emails
+      @targets = user_or_email.split if @targets.empty?
+      
+      @invitations = @targets.map { |target| make_invitation(target, role) }
     else
       flash[:error] = t('invitations.errors.invalid')
       redirect_to target_people_path
       return
     end
     
-    @invitation = @invite_target.invitations.new(:user_or_email => user_or_email.strip)
-    @invitation.role = role
-    @invitation.user = current_user
-
     respond_to do |f|
-      if @invitation.save
-        @user = @invitation.invited_user
+      if @saved_count > 0
         f.html { redirect_to target_people_path }
         f.m    { redirect_to target_people_path }
-        f.js
       else
-        flash[:error] = @invitation.errors.full_messages.first
-        f.html { redirect_to target_people_path }
-        f.m    { redirect_to target_people_path }
-        f.js {
-          name = @user ? @user.name : 'user'
-          render :text => "alert('Error inviting #{name}. Maybe you are trying to invite an existing user.');"
-        }
+        message = @invitations.length == 1 ? @invitations.first.errors.full_messages.first : t('people.errors.users_or_emails')
+        f.html { flash[:error] = message; redirect_to target_people_path }
+        f.m    { flash[:error] = message; redirect_to target_people_path }
       end
     end
   end
   
   def resend
     @invitation = Invitation.find params[:id]
-    @invitation.send_email if @invitation
+    @invitation.send(:send_email)
     
     respond_to do |wants|
       wants.html {
@@ -92,8 +83,11 @@ class InvitationsController < ApplicationController
   end
   
   def destroy
-    @invitation = Invitation.find params[:id]
-    @invitation.destroy
+    begin
+      @invitation = Invitation.find params[:id]
+      @invitation.destroy
+    rescue
+    end
     
     respond_to do |wants|
       wants.html {
@@ -120,6 +114,10 @@ class InvitationsController < ApplicationController
   def decline
     @invitation.destroy
     redirect_to(user_invitations_path(current_user))
+  end
+  
+  def invite_format
+    render :layout => false
   end
   
   private
@@ -163,18 +161,29 @@ class InvitationsController < ApplicationController
         group_path(@current_group)
       end
     end
+    
+    def make_invitation(user_or_email, role)
+      invitation = @invite_target.invitations.new(:user_or_email => user_or_email.strip)
+      invitation.role = role
+      invitation.user = current_user
+      @saved_count ||= 0
+      @saved_count += 1 if invitation.save
+      invitation
+    end
 
     def admins_target?
       if !(@invite_target.owner?(current_user) or @invite_target.admin?(current_user))
           respond_to do |f|
-            flash[:error] = t('common.not_allowed')
+            message = t('common.not_allowed')
             f.html {
+              flash[:error] = message
               if @current_project
                 redirect_to project_path(@current_project)
               else
                 redirect_to group_path(@current_group)
               end 
             }
+            f.js { render :text => "alert('#{message}')" }
           end
         return false
       end

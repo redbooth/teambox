@@ -5,9 +5,6 @@
   %h2= @page
   .description= @page.description
 
-- content_for :js_templates do
-  = "document.observe(\"dom:loaded\", function() {Page.init(false, \"#{project_page_path(@current_project,@page)}\", \"#{form_authenticity_token}\"); Page.makeSortable();}); Page.upload_template = \"#{escape_javascript(render :partial => 'uploads/page_upload')}\";"
-
 = page_buttons(@current_project,@page)
 
 .pageSlots
@@ -23,10 +20,11 @@
         = page_buttons(@current_project,@page)
       
     #pageForms
-      = new_note_form(@current_project,@page)
-      = new_divider_form(@current_project,@page)
+      = render 'notes/new', :project => @current_project, :page => @page, :note => Note.new
+      = render 'dividers/new', :project => @current_project, :page => @page, :divider => Divider.new
+      = render 'uploads/form', :project => @current_project, :page => @page, :upload => Upload.new(:page => @page)
   
   #slots
-    = render :partial => 'slot', :collection => @page.slots, :locals => {:page => @page, :project => @current_project}
+    = render :partial => 'slot', :collection => @page.slots.with_widgets, :locals => {:page => @page, :project => @current_project}
   
-  .pageSlot.pageFooter#page_slot_footer{:slot => -1}
+  .page_slot.pageFooter#page_slot_footer{:slot => -1}
