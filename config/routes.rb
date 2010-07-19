@@ -106,6 +106,22 @@ ActionController::Routing::Routes.draw do |map|
     group.resources :invitations, :member => [:accept,:decline,:resend]
   end
   
+  map.namespace(:api_v1, :path_prefix => 'api/1') do |api|
+    api.resources :projects do |project|
+      project.resource :people
+      project.resource :comments
+      project.resource :conversations
+      project.resource :task_lists
+      project.resource :tasks
+      project.resource :uploads
+      project.resource :pages
+      project.resource :notes
+      project.resource :dividers
+    end
+    api.resources :activities
+    api.resources :users
+  end
+  
   # map.resources :comments
   map.resources :task_lists, :only => [ :index ], :collection => { :gantt_view => :get }
   # map.resources :conversations, :only => [ :index ]
