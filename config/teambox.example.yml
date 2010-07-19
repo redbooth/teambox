@@ -79,6 +79,7 @@ defaults: &defaults
   # You will need to:
   # * Setup catch-all address for email received for any username of the incoming mail server.
   # * Run `rake mail:inbox` periodically from cron to process incoming emails.
+  # Important: Email should be received in the same domain it's being sent from.
   incoming_email_settings:
     :type:      POP
     :address:   mail.example.com

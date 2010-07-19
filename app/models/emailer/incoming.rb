@@ -36,7 +36,7 @@ module Emailer::Incoming
     send("fetch_#{type}", settings)
   rescue SocketError
     settings_out = settings.merge(:password => '*' * settings[:password].to_s.length)
-    logger.error "Error connecting to mail server with settings:\n  #{settings_out.inspect}"
+    Rails.logger.error "Error connecting to mail server with settings:\n  #{settings_out.inspect}"
     raise
   end
 
@@ -47,7 +47,7 @@ module Emailer::Incoming
           Emailer.receive(email.pop)
           email.delete
         rescue Exception
-          logger.error "Error receiving email at #{Time.now}: #{$!}"
+          Rails.logger.error "Error receiving email at #{Time.now}: #{$!}"
         end
       end
     end
@@ -64,7 +64,7 @@ module Emailer::Incoming
       begin
         Emailer.receive(source)
       rescue Exception
-        logger.error "Error receiving email at #{Time.now}: #{$!}"
+        Rails.logger.error "Error receiving email at #{Time.now}: #{$!}"
       end
 
       imap.uid_copy(uid, "[Gmail]/All Mail")
@@ -115,7 +115,7 @@ module Emailer::Incoming
 
     raise "Exclude Auto Responder" unless @project.include? "Auto Response"
     
-    logger.info "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
+    Rails.logger.info "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
   end
   
   # Decides which kind of object we'll be posting to (Conversation, Task, Task List..)
@@ -179,7 +179,7 @@ module Emailer::Incoming
   end
   
   def post_to(target)
-    logger.info "Posting to #{target.class.to_s} #{target.id} '#{@subject}'"
+    Rails.logger.info "Posting to #{target.class.to_s} #{target.id} '#{@subject}'"
 
     comment = @project.new_comment(@user, target, :name => @subject)
     comment.body = @body
@@ -212,7 +212,7 @@ module Emailer::Incoming
   end
   
   def create_conversation
-    logger.info "Creating conversation '#{@subject}'"
+    Rails.logger.info "Creating conversation '#{@subject}'"
     conversation = @project.new_conversation(@user, :name => @subject)
     conversation.body = @body
     conversation.save!

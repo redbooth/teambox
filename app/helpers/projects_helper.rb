@@ -101,30 +101,28 @@ module ProjectsHelper
   end
 
   def instructions_for_email(project)
-    sufix = ''
+    suffix = ''
     case location_name
       when 'show_projects' #project@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_project', :email => "#{project.permalink}@#{Teambox.config.app_domain}")
+        email_help = t('shared.instructions.send_email_help_project', :email => "#{project.permalink}@#{Teambox.config.smtp_settings[:domain]}")
       when 'show_tasks' #project+task+12@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_task', :email => "#{project.permalink}+task+#{@task.id}@#{Teambox.config.app_domain}")
+        email_help = t('shared.instructions.send_email_help_task', :email => "#{project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}")
       when 'index_conversations' #project+conversation@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_conversations', :email => "#{project.permalink}+conversation@#{Teambox.config.app_domain}")
-        sufix = '_conversations'
+        email_help = t('shared.instructions.send_email_help_conversations', :email => "#{project.permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}")
+        suffix = '_conversations'
       when 'show_conversations' #project+conversation+5@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_conversation', :email => "#{project.permalink}+conversation+#{@conversation.id}@#{Teambox.config.app_domain}")
+        email_help = t('shared.instructions.send_email_help_conversation', :email => "#{project.permalink}+conversation+#{@conversation.id}@#{Teambox.config.smtp_settings[:domain]}")
     end
 
     if email_help
       content_tag(:div,
-        link_to_function(t('shared.instructions.send_email' + sufix), "$('email_help').setStyle({ display: 'block'})") +
+        link_to_function(t('shared.instructions.send_email' + suffix), "$('email_help').setStyle({ display: 'block'})") +
         content_tag(:span, {:id => 'email_help'}) do
           #link_to_function(t('common.close'), "$('email_help').setStyle({ display: 'none'})", :class => "closeThis") +
           '<a href="#" class="closeThis">' + t('common.close') + "</a>" +
           email_help
         end,
         {:class => :email})
-    else
-      content_tag(:div, '****: ' + location_name)
     end
   end
 

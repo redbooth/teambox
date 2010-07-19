@@ -49,7 +49,6 @@ class OauthController < ApplicationController
         elsif User.find_by_login(@profile[:login])
           flash[:notice] = t(:'oauth.user_already_exists_by_login', :login => @profile[:login])
           return redirect_to login_path
-          redirect_to login_path
         else
           if signups_enabled?
             profile_for_session = @profile

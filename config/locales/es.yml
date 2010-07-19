@@ -1486,6 +1486,40 @@ es:
       profile: Perfil
       projects: Proyectos
       recent_activity_for: "Actividad reciente de %{user_name}"
+    text_styles:
+      block_of_code: Paste your code indented (4 spaces or tabs) to paste it as a block of code.
+      enter_this:
+        bold_text: "texto **negrita**"
+        header: |
+          Cabecera
+          ========
+        image: "![alt texto](http://w3.org/img.jpg)"
+        italic_text: "texto *italica*"
+        link: "[Un enlace](http://teambox.com)"
+        ordered_list: |
+          1. lista ordenada
+          2. deja una línea en blanco!
+        smaller_header: |
+          Cabecera pequeña
+          ----------------
+        title: Escribe esto
+        unordered_list: |
+          * lista ordenada
+          * deja una línea antes y después
+      to_see_this:
+        bold_text: "texto <strong style=\"font-weight: bold\">negrita</strong>"
+        header: "<h3 style=\"font-size:18px\">Cabecera</h3>"
+        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text: "texto <i>italica</i>"
+        link: "<a href=\"http://www.teambox.com\">Un enlace</a>"
+        ordered_list: |
+          <li>lista ordenada</li>
+          <li>deja una línea en blanco!</li>
+        smaller_header: "<h4 style=\"font-size:14px\">Cabecera pequeña</h4>"
+        title: Para ver esto
+        unordered_list: |
+          <li>lista ordenada</li>
+          <li>deja una línea antes y después</li>
     unconfirmed_email: 
       follow_the_link: "Así que <b>abre este email y sigue el enlace que hay en él</b> para activar tu cuenta."
       invitation_sent_to: "Hemos enviado una invitación a <i>%{email}</i>, para verificar tu dirección de email."
