@@ -29,6 +29,8 @@ ActionController::Routing::Routes.draw do |map|
   map.complete_signup '/complete_signup',          :controller => 'users', :action => 'complete_signup'
   map.unlink_app      '/oauth/:provider/unlink',   :controller => 'users', :action => 'unlink_app'
 
+  map.javascript_environment '/javascripts/environment.js', :controller => 'javascripts', :action => 'environment'
+
   map.resources :reset_passwords
   map.resource :session
 

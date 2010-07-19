@@ -54,6 +54,9 @@ Comment = {
         Comment.setLoading('comment_new' + thread_id, false);
         if ($(document.body).hasClassName('show_tasks'))
           TaskList.updatePage('column', TaskList.restoreColumn);
+			},
+			onComplete: function(){
+				format_posted_date();
       }
     });
   },

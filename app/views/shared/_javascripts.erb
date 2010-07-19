@@ -1,8 +1,0 @@
-<%= if ( current_user && current_user.first_day_of_week == 'monday' )
-      javascript_tag("Date.weekdays = $w('M T W T F S S'); Date.first_day_of_week = 1;");
-    else
-      javascript_tag("Date.weekdays = $w('S M T W T F S'); Date.first_day_of_week = 0;");
-    end
-%>
-<%= javascript_tag("_translations = {'OK':'OK','Now':'Now','Today':'Today'}; Date.months = $w('January February March April May June July August September October Novemeber'); "); %>
-<%= javascript_tag("new PeriodicalExecuter(format_posted_date_#{I18n.locale}, 30); Comment.watch_edit(); "); %>

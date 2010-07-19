@@ -149,7 +149,7 @@ module ApplicationHelper
     datetime = datetime.in_time_zone(current_user.time_zone)
 
     content_tag(:span, l(datetime, :format => :long), :id => "date_#{datetime.to_i}",
-      :class => 'timeago', :alt => (datetime.to_i * 1000)) << javascript_tag("format_posted_date_#{I18n.locale}()")
+      :class => 'timeago', :alt => (datetime.to_i * 1000))
   end
   
   def datetime_ms(datetime)
