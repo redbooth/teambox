@@ -1219,11 +1219,11 @@ en:
       upload: Upload
     attributes:
       address:
-        city: Ciudad
-        country: País
-        state: Provincia
-        street: Calle
-        zip: CP
+        city: City
+        country: Country
+        state: State
+        street: Street
+        zip: ZIP
       card:
         street: Street
         city: City
