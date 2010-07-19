@@ -313,15 +313,15 @@ document.on('dom:loaded', function() {
 
 // Buttons
 
-document.on('click', 'a.note_button, a.divider_button, a.upload_button', function(e) {
+document.on('click', 'a.note_button, a.divider_button, a.upload_button', function(e, button) {
   e.preventDefault();
   
-  if (!this.up('.pageSlots')) {
+  if (!button.up('.pageSlots')) {
     InsertionMarker.set(null, true);
     InsertionBar.place();
   }
   
-  var type = this.className.match(/\b(note|divider|upload)_/)[1];
+  var type = button.className.match(/\b(note|divider|upload)_/)[1];
   
   var form = $('new_' + type);
   InsertionBar.setWidgetFormLoading(form, false);
@@ -337,25 +337,21 @@ document.on('click', 'a.cancelPageWidget', function(e) {
 // Widget actions, forms
 
 document.on('ajax:before', '.page_slot .actions, .page_slot .slotActions', function(e) {
-  var el = e.findElement();
-  el.hide();
-  el.next('.loading_action').show();
+  e.findElement('a').hide().next('.loading_action').show();
 });
 
 document.on('ajax:complete', '.page_slot .actions, .page_slot .slotActions', function(e) {
-  var el = e.findElement();
-  el.show();
-  el.next('.loading_action').hide();
+  e.findElement('a').show().next('.loading_action').hide();
 });
 
-document.on('ajax:before', '.page_slot .note form, .page_slot .divider form', function(e) {
-  this.down('.submit').hide();
-  this.down('img.loading').show();
+document.on('ajax:before', '.page_slot .note form, .page_slot .divider form', function(e, el) {
+  el.down('.submit').hide();
+  el.down('img.loading').show();
 });
 
-document.on('ajax:complete', '.page_slot .note form, .page_slot .divider form', function(e) {
-  this.down('.submit').show();
-  this.down('img.loading').hide();
+document.on('ajax:complete', '.page_slot .note form, .page_slot .divider form', function(e, el) {
+  el.down('.submit').show();
+  el.down('img.loading').hide();
 });
 
 document.on('ajax:create', 'form.edit_note', function(e, element) {

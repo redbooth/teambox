@@ -1,6 +1,4 @@
-
-document.on('keyup', 'textarea[name*="[body]"]', function(e) {
-  var area = e.element()
+document.on('keyup', 'textarea[name*="[body]"]', function(e, area) {
   if (area.scrollHeight > area.clientHeight) {
     var wanted = area.getHeight() + (area.scrollHeight - area.clientHeight) + 15,
         available = document.viewport.getHeight() - area.viewportOffset().top - 60,
