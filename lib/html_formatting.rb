@@ -10,6 +10,7 @@ module HtmlFormatting
       self["#{attr}_html"] = if text.blank?
         nil
       else
+        text = format_gfm(text)
         text = format_text(text)
         text = format_usernames(text)
         text = format_links(text)
@@ -47,4 +48,31 @@ module HtmlFormatting
     linked = auto_link(text) { |text| truncate(text, :length => 80) }
   end
 
+  # Github Flavoured Markdown, from http://github.github.com/github-flavored-markdown/
+  def format_gfm(text)
+    # Extract pre blocks
+    extractions = {}
+    text.gsub!(%r{<pre>.*?</pre>}m) do |match|
+      md5 = Digest::MD5.hexdigest(match)
+      extractions[md5] = match
+      "{gfm-extraction-#{md5}}"
+    end
+
+    # prevent foo_bar_baz from ending up with an italic word in the middle
+    text.gsub!(/(^(?! {4}|\t)\w+_\w+_\w[\w_]*)/) do |x|
+      x.gsub('_', '\_') if x.split('').sort.to_s[0..1] == '__'
+    end
+
+    # in very clear cases, let newlines become <br /> tags
+    text.gsub!(/^[\w\<][^\n]*\n+/) do |x|
+      x =~ /\n{2}/ ? x : (x.strip!; x << "  \n")
+    end
+
+    # Insert pre block extractions
+    text.gsub!(/\{gfm-extraction-([0-9a-f]{32})\}/) do
+      "\n\n" + extractions[$1]
+    end
+
+    text
+  end
 end
