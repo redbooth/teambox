@@ -104,7 +104,7 @@ class ApiV1::CommentsController < ApiV1::APIController
       # Can they even create comments?
       if @comment.nil?
         unless @current_project.commentable?(current_user)
-          api_error(t('common.not_allowed'), :unprocessable_entity)
+          api_error(t('common.not_allowed'), :unauthorized)
           return false
         end
       end
@@ -126,7 +126,7 @@ class ApiV1::CommentsController < ApiV1::APIController
         return if request.format == :js
         
         # Process of elimination: don't allow this!
-        api_error(t('comments.errors.cannot_update'), :unprocessable_entity)
+        api_error(t('comments.errors.cannot_update'), :unauthorized)
         return false
       end
     end

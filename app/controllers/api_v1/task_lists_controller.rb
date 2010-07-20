@@ -138,7 +138,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
     def check_permissions
       # Can they even edit the project?
       unless @current_project.editable?(current_user)
-        api_error(t('common.not_allowed'), :unprocessable_entity)
+        api_error(t('common.not_allowed'), :unauthorized)
         return false
       end
     end

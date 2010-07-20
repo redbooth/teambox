@@ -19,7 +19,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
     @project = current_user.projects.new(params[:project])
     
     unless current_user.can_create_project?
-      api_error(t('projects.new.not_allowed'), :unprocessable_entity)
+      api_error(t('projects.new.not_allowed'), :unauthorized)
       return
     end
     
@@ -44,7 +44,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
   
   def transfer
     unless @current_project.owner?(current_user)
-      api_error(t('common.not_allowed'), :unprocessable_entity)
+      api_error(t('common.not_allowed'), :unauthorized)
       return
     end
     
@@ -81,7 +81,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
           ( @current_project.admin?(current_user) and 
             params[:controller] != 'transfer'))
       
-      api_error(t('common.not_allowed'), :unprocessable_entity)
+      api_error(t('common.not_allowed'), :unauthorized)
       return false
     end
     
