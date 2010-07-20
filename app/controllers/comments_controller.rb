@@ -62,6 +62,7 @@ class CommentsController < ApplicationController
 
       if !@comment.new_record?
         # success!
+        session[:last_project_commented] = @comment.project.permalink
         f.html { redirect_to redirect_path }
         f.m    { redirect_to redirect_path }
         f.js   { fetch_new_comments }

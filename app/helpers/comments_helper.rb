@@ -105,23 +105,42 @@ module CommentsHelper
     message = options[:message] ||= nil
     target  = options[:target]  ||= nil
     thread  = options[:thread]  ||= nil
-    if target.nil?
-      form_url = [project,comment]
-    elsif target.is_a?(Task)
-      form_url = [project,target.task_list,target,comment]
+    comment ||= Comment.new
+    form_url = if project.nil?
+                  [comment]
+                elsif target.nil?
+                  [project,comment]
+                elsif target.is_a?(Task)
+                  [project,target.task_list,target,comment]
+                else
+                  [project,target,comment]
+                end
+
+    if project && project.commentable?(current_user) && !project.archived
+      can_comment = true
     else
-      form_url = [project,target,comment]
+      commentable_projects = @projects.select { |p| p.commentable?(current_user) && !p.archived }
+      can_comment = commentable_projects.any?
     end
-    if project.commentable?(current_user) && project.archived == false
+
+    if can_comment
       render :partial => 'comments/new',
         :locals => { :target => target,
           :message => message,
           :form_url => form_url, 
           :comment => comment,
-          :thread => thread }
+          :thread => thread,
+          :commentable_projects => commentable_projects }
     end
   end
-  
+
+  def select_project_for_comment(projects)
+    select_tag :project_id, projects.map { |p|
+      selected = "selected='selected'" if session[:last_project_commented] == p.permalink
+      %(<option #{selected} value='#{p.permalink}'>#{p.name}</option>)
+    }.join
+  end
+
   def list_comments(comments,target)
     content_tag :div,
     render(:partial => 'comments/list_comments',

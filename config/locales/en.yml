@@ -384,11 +384,9 @@ en:
       no_edit: "You cannot edit this group"
   projects:
     index:
-      title: News feed for all your projects
       projects: My Projects
       subscribe: Subscribe to the news feed
       new_project: New Project
-      refreshes: Refreshes every minute
       rss:
         title: Teambox projects overview
         description: Overview of all projects in Teambox

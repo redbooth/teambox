@@ -6,9 +6,8 @@
       = list_pending_invites(@pending_projects)
 
   - if @activities.any? or @projects.any?
-    %h2
-      = t('.title')
-      %span= t('.refreshes')
+    = new_comment_form(nil, nil)
+    
     #activities
       = list_threads(@threads)
       = show_more_button(@activities)

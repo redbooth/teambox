@@ -1,60 +1,68 @@
 - thread = defined?(thread) && thread
 - thread_id = target ? "_#{target.class.to_s}_#{target.id}" : ""
 - form_for form_url, :html => {:update_id => js_id(nil,Comment.new), :multipart => true, :method => :post} do |f|
-  = micro_avatar(current_user)
-  .body.text_area
-    = comment_text_area(f, target)
-    #comment_body_list.autocomplete{:style => 'display:none'}
-    .previewBox.textilized{:style => 'display:none'}
-  .extra
-    - if comment.project
+
+  - unless commentable_projects.nil?
+    %div.project{ :style => 'padding-left: 34px; font-size: 12px' }
+      Comment on:
+      = select_project_for_comment(commentable_projects)
+
+  .comment_area
+    = micro_avatar(current_user)
+    .body.text_area
+      = comment_text_area(f, target)
+      #comment_body_list.autocomplete{:style => 'display:none'}
+      .previewBox.textilized{:style => 'display:none'}
+    .extra
       %span.attach_label
         = t('comments.attach.tooltip')
       .has_tooltip
         .tooltip.attach
           = t('uploads.tooltip')
-        = link_to content_tag(:span, t('uploads.comment_upload_link')), new_project_upload_path(comment.project), :class => 'attach_button attach_file', :id => 'comment_upload_link'
+        - fallback_url = comment.project.nil?? '#' : new_project_upload_path(comment.project)
+        = link_to content_tag(:span, t('uploads.comment_upload_link')), fallback_url, :class => 'attach_button attach_file', :id => 'comment_upload_link'
       = render 'uploads/upload_area', :comment => comment, :form => f
-    - if target
-      = last_comment_input
-      - if target.is_a?(Task)
-        = add_hours_link(f)
-        .statuses
-          = f.label :status
-          - if target.status_new?
-            .status.new#status_new
-              = f.radio_button :status, Task::STATUSES[:new], :checked => (target.status == Task::STATUSES[:new])
-              = t('tasks.status.new')
-          .status.open#status_open
-            = f.radio_button :status, Task::STATUSES[:open]
-            = t('tasks.status.open')
-            - f.fields_for :target, target do |task_form|
-              = task_form.label :assigned_id, t('.assigned_to')
-              = task_form.select :assigned_id, options_for_people(comment.project.people)
-          .status.hold#status_hold
-            = f.radio_button :status, Task::STATUSES[:hold], :checked => (target.status == Task::STATUSES[:hold])
-            = t('tasks.status.hold')
-          .status.resolved#status_resolved
-            = f.radio_button :status, Task::STATUSES[:resolved], :checked => (target.status == Task::STATUSES[:resolved])
-            = t('tasks.status.resolved')
-          .status.rejected#status_rejected
-            = f.radio_button :status, Task::STATUSES[:rejected], :checked => (target.status == Task::STATUSES[:rejected])
-            = t('tasks.status.rejected')
-    .submit{ :id => "comment_new#{thread_id}_submit" }
-      = hidden_field_tag :original_controller, controller_name
-      = hidden_field_tag :thread, thread
       - if target
-        = hidden_field_tag :thread_id, "#{target.class.to_s}_#{target.id}"
-      %span.help
-        = formatting_documentation_link
-      %span.showPreview
-        %button{}
-          %span.default= t("comments.preview.preview")
-          %span.showing{:style => "display:none"}= t('comments.preview.showing')
-        %a{:href => '#', :style => 'display:none'}= t("comments.preview.close")
-      = f.submit t('.submit')
-    = loading_image("comment_new#{thread_id}_loading")
-    .clear
+        = last_comment_input
+        - if target.is_a?(Task)
+          = add_hours_link(f)
+          .statuses
+            = f.label :status
+            - if target.status_new?
+              .status.new#status_new
+                = f.radio_button :status, Task::STATUSES[:new], :checked => (target.status == Task::STATUSES[:new])
+                = t('tasks.status.new')
+            .status.open#status_open
+              = f.radio_button :status, Task::STATUSES[:open]
+              = t('tasks.status.open')
+              - f.fields_for :target, target do |task_form|
+                = task_form.label :assigned_id, t('.assigned_to')
+                = task_form.select :assigned_id, options_for_people(comment.project.people)
+            .status.hold#status_hold
+              = f.radio_button :status, Task::STATUSES[:hold], :checked => (target.status == Task::STATUSES[:hold])
+              = t('tasks.status.hold')
+            .status.resolved#status_resolved
+              = f.radio_button :status, Task::STATUSES[:resolved], :checked => (target.status == Task::STATUSES[:resolved])
+              = t('tasks.status.resolved')
+            .status.rejected#status_rejected
+              = f.radio_button :status, Task::STATUSES[:rejected], :checked => (target.status == Task::STATUSES[:rejected])
+              = t('tasks.status.rejected')
+      .submit{ :id => "comment_new#{thread_id}_submit" }
+        = hidden_field_tag :original_controller, controller_name
+        = hidden_field_tag :thread, thread
+        - if target
+          = hidden_field_tag :thread_id, "#{target.class.to_s}_#{target.id}"
+        %span.help
+          = formatting_documentation_link
+        %span.showPreview
+          %button{}
+            %span.default= t("comments.preview.preview")
+            %span.showing{:style => "display:none"}= t('comments.preview.showing')
+          %a{:href => '#', :style => 'display:none'}= t("comments.preview.close")
+        = f.submit t('.submit')
+      = loading_image("comment_new#{thread_id}_loading")
+      .clear
 
-= make_autocompletable('comment_body', comment.project)
+- if comment.project
+  = make_autocompletable('comment_body', comment.project)
 = paint_status_boxes

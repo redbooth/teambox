@@ -32,8 +32,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reset_passwords
   map.resource :session
 
-  map.hook_push '/hooks/:key/:format', :controller => 'hooks', :action => 'push', :format => 'post'
-
   map.with_options :controller => 'users', :action => 'edit' do |account|
     account.account_settings        '/account/settings',        :sub_action => 'settings'
     account.account_picture         '/account/picture',         :sub_action => 'picture'
@@ -71,7 +69,6 @@ ActionController::Routing::Routes.draw do |map|
 
     project.settings 'settings',  :controller => 'projects', :action => 'edit', :sub_action => 'settings'
     project.picture  'picture',   :controller => 'projects', :action => 'edit', :sub_action => 'picture'
-    project.resources :hooks
     project.deletion 'deletion',  :controller => 'projects', :action => 'edit', :sub_action => 'deletion'
     project.ownership 'ownership', :controller => 'projects', :action => 'edit', :sub_action => 'ownership'
 
@@ -86,6 +83,8 @@ ActionController::Routing::Routes.draw do |map|
     project.show_more  'activities/:id/show_more.:format', :controller => 'activities', :action => 'show_more', :method => :get
 
     project.resources :uploads
+
+    project.hooks      'hooks/:hook_name',                 :controller => 'hooks',      :action => 'create',    :method => :post
 
     project.reorder_task_lists 'reorder_task_lists', :controller => 'task_lists', :action => 'reorder', :method => :post
     project.reorder_tasks 'task_lists/:task_list_id/reorder_task_list', :controller => 'tasks', :action => 'reorder', :method => :post
@@ -106,30 +105,11 @@ ActionController::Routing::Routes.draw do |map|
     group.resources :invitations, :member => [:accept,:decline,:resend]
   end
   
-  map.namespace(:api_v1, :path_prefix => 'api/1') do |api|
-    api.resources :projects do |project|
-      project.resources :activities
-      project.resources :people
-      project.resources :comments
-      project.resources :conversations
-      project.resources :invitations
-      project.resources :task_lists
-      project.resources :tasks
-      project.resources :uploads
-      project.resources :pages
-      project.resources :notes
-      project.resources :dividers
-    end
-    api.resources :activities
-    api.resources :invitations
-    api.resources :users
-  end
-  
-  # map.resources :comments
+  map.resources :comments, :only => [ :create ]
   map.resources :task_lists, :only => [ :index ], :collection => { :gantt_view => :get }
   # map.resources :conversations, :only => [ :index ]
   # map.resources :pages, :only => [ :index ]
-  
+
   map.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
   map.time 'time', :controller => 'hours', :action => 'index'
 
