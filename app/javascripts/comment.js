@@ -333,6 +333,14 @@ document.on('click', 'form.new_comment #comment_upload_link', function(e, link) 
   }
 })
 
+hideBySelector('.thread form.new_comment .extra')
+
 document.on('focusin', '.thread form.new_comment textarea', function(e, input) {
-  input.up('form').down('.extra').style.display = 'block'
+  input.up('form').down('.extra').setStyle({display: 'block'})
 })
+
+// document.on('focusout', '.thread form.new_comment textarea', function(e, input) {
+//   if (input.getValue().empty()) {
+//     input.up('form').down('.extra').hide()
+//   }
+// })
