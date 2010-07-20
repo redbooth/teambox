@@ -76,6 +76,18 @@ class ApiV1::ProjectsController < ApiV1::APIController
 
   protected
   
+  def api_load_project
+    project_id ||= params[:id]
+    
+    if project_id
+      @current_project = Project.find_by_permalink(project_id)
+      
+      unless @current_project
+        api_status(:not_found)
+      end
+    end
+  end
+  
   def can_modify?
     if !( @current_project.owner?(current_user) or 
           ( @current_project.admin?(current_user) and 

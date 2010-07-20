@@ -1,5 +1,4 @@
 class ApiV1::InvitationsController < ApiV1::APIController
-  skip_before_filter :load_project
   before_filter :load_target
   before_filter :belongs_to_target?
   before_filter :admins_target?, :except => [:index, :accept, :decline, :invite_format]

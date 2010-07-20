@@ -1,5 +1,5 @@
 class ApiV1::ActivitiesController < ApiV1::APIController
-  skip_before_filter :load_project, :rss_token, :belongs_to_project?, :recent_projects, :touch_user
+  skip_before_filter :api_load_project, :touch_user
   before_filter :get_target
 
   def index

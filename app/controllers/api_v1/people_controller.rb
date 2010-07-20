@@ -33,7 +33,7 @@ class ApiV1::PeopleController < ApiV1::APIController
   end
 
   protected
-
+  
   def load_person
     @person = @current_project.people.find params[:id]
   end
