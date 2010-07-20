@@ -2,15 +2,15 @@ class ApiV1::APIController < ApplicationController
   # Common api helpers
   
   def api_status(status)
-    respond_to do |format|
-      f.json { render :text => '', :status => status }
+    respond_to do |f|
+      f.json { head :status }
     end
   end
   
   def api_error(message, status)
-    error = {'error' => message}
-    respond_to do |format|
-      f.json { render :as_json => error.to_xml, :status => status }
+    error = {'message' => message}
+    respond_to do |f|
+      f.json { render :as_json => error.to_xml(:root => 'error'), :status => status }
     end
   end
   
