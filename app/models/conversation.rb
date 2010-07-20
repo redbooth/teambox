@@ -30,7 +30,7 @@ class Conversation < RoleRecord
       comment.save!
     end
     if simple
-      update_attribute :name, truncate(body.chomp.split("\n").first, :length => 80)
+      update_attribute :name, truncate(body.chomp.split("\n").first.strip, :length => 50)
     end
   end
 
