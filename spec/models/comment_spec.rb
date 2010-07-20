@@ -151,9 +151,26 @@ describe Comment do
       comment.body_html.should == "<p>This commit needs a spec: <a href=\"http://github.com/teambox/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e8\">http://github.com/teambox/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e8</a></p>\n"
     end
 
-    it "should preserve blocks of code and pre"
+    it "should preserve <pre> blocks" do
+      body = "Lorem ipsum dolor sit amet.\n\n<pre>*lorem* _ipsum_ weird_var_name</pre>\n\nExcepteur sint occaecat cupidatat non proident."
+      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+      comment.body_html.should == "<p>Lorem ipsum dolor sit amet.</p>\n\n<pre>*lorem* _ipsum_ weird_var_name</pre>\n\n\n<p>Excepteur sint occaecat cupidatat non proident.</p>\n"
+    end
 
     it "should allow youtube videos"
+
+    it "should use insert <br> between lines" do
+      body = "This is a comment\nwith multiple lines\n\nJordi."
+      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+      comment.body_html.should == "<p>This is a comment<br />\nwith multiple lines</p>\n\n<p>Jordi.</p>\n"
+    end
+
+    it "should not insert <em> in underscored words" do
+      body = "This is a comment with an_underscored_word"
+      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
+      comment.body_html.should == "<p>This is a comment with an_underscored_word</p>\n"
+    end
+
   end
 
   describe "mentioning @user" do
