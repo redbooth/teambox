@@ -32,6 +32,13 @@ class Project < ActiveRecord::Base
       person.destroy
     end
   end
+  
+  def transfer_to(person)
+    self.user = person.user
+    saved = self.save
+    person.update_attribute(:role, Person::ROLES[:admin]) if saved # owners need to be admin!
+    saved
+  end
 
   def has_member?(user)
     Person.exists?(:project_id => self.id, :user_id => user.id)

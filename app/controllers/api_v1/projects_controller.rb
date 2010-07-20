@@ -10,10 +10,9 @@ class ApiV1::ProjectsController < ApiV1::APIController
   end
 
   def show
-  end
-  
-  def new
-    @project = Project.new
+    respond_to do |f|
+      f.json  { render :as_json => @current_project.to_xml }
+    end
   end
   
   def create
@@ -26,14 +25,11 @@ class ApiV1::ProjectsController < ApiV1::APIController
     
     respond_to do |f|
       if @project.save
-        handle_api_success(f, @project, true)
+        handle_api_success(f, @project, :is_new => true)
       else
         handle_api_error(f, @project)
       end
     end
-  end
-  
-  def edit
   end
   
   def update
@@ -59,15 +55,15 @@ class ApiV1::ProjectsController < ApiV1::APIController
     
     # Transfer!
     unless person.nil?
-      @current_project.user = person.user
-      person.update_attribute(:role, Person::ROLES[:admin]) # owners need to be admin!
-      saved = @current_project.save
+      saved = @current_project.transfer_to(person)
     end
     
-    if saved
-      api_updated(@project, :edited)
-    else
-      api_error(@project.errors, :unprocessable_entity)
+    respond_to do |f|
+      if saved
+        handle_api_success(@project)
+      else
+        handle_api_success(@project)
+      end
     end
   end
 
@@ -83,7 +79,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
   def can_modify?
     if !( @current_project.owner?(current_user) or 
           ( @current_project.admin?(current_user) and 
-            !(params[:controller] == 'transfer' or params[:sub_action] == 'ownership')))
+            params[:controller] != 'transfer'))
       
       api_error(t('common.not_allowed'), :unprocessable_entity)
       return false

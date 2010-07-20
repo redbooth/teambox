@@ -1,21 +1,9 @@
 class ApiV1::APIController < ApplicationController
   # Common api helpers
   
-  def api_created(path)
+  def api_status(status)
     respond_to do |format|
-      f.json { redirect_to path }
-    end
-  end
-  
-  def api_updated(object, status)
-    respond_to do |format|
-      f.json { render :as_json => object.to_xml, :status => status }
-    end
-  end
-  
-  def api_deleted
-    respond_to do |format|
-      f.json { render :text => '', :status => :deleted }
+      f.json { render :text => '', :status => status }
     end
   end
   
@@ -26,16 +14,16 @@ class ApiV1::APIController < ApplicationController
     end
   end
   
-  def handle_api_error(f,object)
+  def handle_api_error(f,object,options={})
     error_list = object.nil? ? [] : object.errors
-    f.json { render :as_json => error_list.to_xml, :status => :unprocessable_entity }
+    f.json { render :as_json => error_list.to_xml, :status => options.delete(:status) || :unprocessable_entity }
   end
   
-  def handle_api_success(f,object,is_new=false)
-    if is_new
-      f.json { render :as_json => object.to_xml, :status => :created }
+  def handle_api_success(f,object,options={})
+    if options.delete(:is_new)
+      f.json { render :as_json => object.to_xml, :status => options.delete(:status) || :created }
     else
-      f.json { head :ok }
+      f.json { head(options.delete(:status) || :ok) }
     end
   end
 end

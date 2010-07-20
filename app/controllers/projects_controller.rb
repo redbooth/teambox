@@ -107,9 +107,7 @@ class ProjectsController < ApplicationController
     
     # Transfer!
     unless person.nil?
-      @current_project.user = person.user
-      person.update_attribute(:role, Person::ROLES[:admin]) # owners need to be admin!
-      saved = @current_project.save
+      saved = @current_project.transfer_to(person)
     end
     
     if saved

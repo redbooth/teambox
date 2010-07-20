@@ -108,15 +108,15 @@ ActionController::Routing::Routes.draw do |map|
   
   map.namespace(:api_v1, :path_prefix => 'api/1') do |api|
     api.resources :projects do |project|
-      project.resource :people
-      project.resource :comments
-      project.resource :conversations
-      project.resource :task_lists
-      project.resource :tasks
-      project.resource :uploads
-      project.resource :pages
-      project.resource :notes
-      project.resource :dividers
+      project.resources :people
+      project.resources :comments
+      project.resources :conversations
+      project.resources :task_lists
+      project.resources :tasks
+      project.resources :uploads
+      project.resources :pages
+      project.resources :notes
+      project.resources :dividers
     end
     api.resources :activities
     api.resources :users
