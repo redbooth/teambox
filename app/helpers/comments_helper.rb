@@ -116,11 +116,11 @@ module CommentsHelper
                   [project,target,comment]
                 end
 
-    if project && project.commentable?(current_user) && !project.archived
-      can_comment = true
-    else
+    if project.nil?
       commentable_projects = @projects.select { |p| p.commentable?(current_user) && !p.archived }
       can_comment = commentable_projects.any?
+    else
+      can_comment = project.commentable?(current_user) && !project.archived
     end
 
     if can_comment
