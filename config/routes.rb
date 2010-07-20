@@ -105,11 +105,11 @@ ActionController::Routing::Routes.draw do |map|
     group.resources :invitations, :member => [:accept,:decline,:resend]
   end
   
-  # map.resources :comments
+  map.resources :comments, :only => [ :create ]
   map.resources :task_lists, :only => [ :index ], :collection => { :gantt_view => :get }
   # map.resources :conversations, :only => [ :index ]
   # map.resources :pages, :only => [ :index ]
-  
+
   map.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
   map.time 'time', :controller => 'hours', :action => 'index'
 
