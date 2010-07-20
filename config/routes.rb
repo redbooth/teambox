@@ -108,9 +108,11 @@ ActionController::Routing::Routes.draw do |map|
   
   map.namespace(:api_v1, :path_prefix => 'api/1') do |api|
     api.resources :projects do |project|
+      project.resources :activities
       project.resources :people
       project.resources :comments
       project.resources :conversations
+      project.resources :invitations
       project.resources :task_lists
       project.resources :tasks
       project.resources :uploads
@@ -119,6 +121,7 @@ ActionController::Routing::Routes.draw do |map|
       project.resources :dividers
     end
     api.resources :activities
+    api.resources :invitations
     api.resources :users
   end
   
