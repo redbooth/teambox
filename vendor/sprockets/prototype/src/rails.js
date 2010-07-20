@@ -26,21 +26,31 @@
   }
 
   var submitBubbles = isEventSupported('submit'),
-      changeBubbles = isEventSupported('change');
+      changeBubbles = isEventSupported('change'),
+      emulateFocusin = !Prototype.Browser.WebKit && document.addEventListener;
 
-  if (!submitBubbles || !changeBubbles) {
+  if (!submitBubbles || !changeBubbles || emulateFocusin) {
     // augment the Event.Handler class to observe custom events when needed
     Event.Handler.prototype.initialize = Event.Handler.prototype.initialize.wrap(
       function(init, element, eventName, selector, callback) {
         init(element, eventName, selector, callback);
         // is the handler being attached to an element that doesn't support this event?
         if ( (!submitBubbles && this.eventName == 'submit' && !isForm(this.element)) ||
-             (!changeBubbles && this.eventName == 'change' && !isInput(this.element)) ) {
+             (!changeBubbles && this.eventName == 'change' && !isInput(this.element)) ||
+             (emulateFocusin && (this.eventName == 'focusin' || this.eventName == 'focusout')) ) {
           // "submit" => "emulated:submit"
           this.eventName = 'emulated:' + this.eventName;
         }
       }
     );
+  }
+
+  if (emulateFocusin) {
+    $H({ focus: 'focusin', blur: 'focusout' }).each(function(pair) {
+      document.addEventListener(pair.key, function(e) {
+        e.target.fire('emulated:' + pair.value, e, true);
+      }, true);
+    });
   }
 
   if (!submitBubbles) {
