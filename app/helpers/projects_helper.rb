@@ -209,4 +209,15 @@ module ProjectsHelper
   def options_for_owned_projects(user, projects)
     projects.reject{|p| p.user_id != user.id}.map {|p| [ p.name, p.id ]}
   end
+
+  def javascript_projects_people(projects = [])
+    tag = "var _projects_people = $H();"
+    all = ["'@all <span class=\"informal\">#{t('conversations.watcher_fields.people_all')}</span>'"]
+    projects.each do |project|
+      people_list = (all + project.people.map{|m| "'@#{m.login} <span class=\"informal\">#{h(m.name)}</span>'"}).join(',')
+      tag << "_projects_people.set('#{project.permalink}', [#{people_list}]);"
+    end
+    javascript_tag tag
+  end
+
 end

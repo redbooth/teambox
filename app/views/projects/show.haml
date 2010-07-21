@@ -9,7 +9,8 @@
   = list_threads(@threads)
   = show_more_button(@activities)
 = javascript_tag autorefresh(@activities, @current_project)
-  
+= javascript_projects_people [@current_project]
+
 - content_for :column do
   .project_name= @current_project.name
   .people_list
