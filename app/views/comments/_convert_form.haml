@@ -6,8 +6,8 @@
     = label_tag :task_list, t('.destination')
     = select_tag 'task_list_id', options_for_select(options_for_task_lists(@current_project.task_lists.unarchived))
   .submit{:id => "comment_#{comment.id}_submit"}
-    = f.submit "Convert"
-    = t 'common.or'
+    = f.submit t('.convert')
+    = t('common.or')
     = cancel_convert_comment_link(comment)
   .clear
   = loading_image(js_id(:loading,comment))

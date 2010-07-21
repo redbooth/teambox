@@ -836,6 +836,13 @@ es:
     index_user: 
       no_invitations: "No tienes ninguna invitación pendiente."
       title: "Invitaciones pendientes"
+    invite_format:
+      title: "En la caja de texto, puedes introducir una lista de usuario o de direcciones de correo. ej.:"
+      enter_this:
+        title: Introduce
+      to_invite:
+        title: Invitarás a
+        not_example: '(Ni <span class="mention">@fred</span> ni <span class="mention">@lisa</span>)'     
     invitation: 
       discard: "Descartar invitación"
       invited_email: "%{inviter} ha invitado a <b>%{email}</b> al proyecto."
@@ -853,7 +860,8 @@ es:
     resend: 
       resent: "Hemos reenviado la invitación a %{recipient}. Si no pueden encontrar el email, asegúrate de que no se ha clasificado como spam."
       return: "Volver atrás"
-    search: 
+    search:
+      help: "Ayuda"
       invite: "Buscar e invitar"
       invite_from_project: "Invitar a alguien desde otro proyecto"
       invite_people: "Invitar usuarios al proyecto"

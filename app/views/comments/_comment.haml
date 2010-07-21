@@ -11,7 +11,7 @@
       - unless rss?
         .actions_menu
           %span.actiondate= posted_date comment.created_at
-          %span.loading{:style => 'display:none'}= "Loading..."
+          %span.loading{:style => 'display:none'}= t('.loading')
           - if comment.can_modify?(current_user, false)
             = image_tag('triangle.png', :class => 'triangle')
             .extra
