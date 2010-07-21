@@ -1450,7 +1450,7 @@ es:
       change_password: "Cambiar contraseña"
       confirm_password: "Confirmar contraseña"
       email: Email
-      first_day_of_week: "Semana empieza en"
+      first_day_of_week: "Semana empieza"
       first_name: Nombre
       invalid_login: "usa sólo letras, números y _"
       language: Idioma
