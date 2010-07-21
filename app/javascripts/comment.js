@@ -220,7 +220,7 @@ Comment = {
     Comment.edit_watch_timer = null;
   },
   watch_edit: function(){
-    this.cancel_watch_edit();
+    Comment.cancel_watch_edit();
     var date = new Date();
     
     Comment.edit_watch_list = $$('div.comment').map(function(c){
@@ -352,5 +352,5 @@ document.on('focusin', 'form.new_comment textarea', function(e, input) {
 // })
 
 document.observe("dom:loaded", function() {
-  new PeriodicalExecuter(Comment.watch_edit(), 30);
+  new PeriodicalExecuter(Comment.watch_edit, 30);
 });
