@@ -181,7 +181,7 @@ class ApplicationController < ActionController::Base
           else
             text = Hash.from_xml(render_to_string(:template => opts[:to_yaml], :layout => false)).to_yaml
           end
-          super :text => text, :layout => false
+          super opts.merge(:text => content, :layout => false)
         elsif opts[:to_json] or opts[:as_json] then
           content = nil
           if opts[:to_json] then
@@ -191,7 +191,7 @@ class ApplicationController < ActionController::Base
           end
           cbparam = params[:callback] || params[:jsonp]
           content = "#{cbparam}(#{content})" unless cbparam.blank?
-          super :json => content, :layout => false
+          super opts.merge(:json => content, :layout => false)
         else
           super(opts, extra_options, &block)
         end
