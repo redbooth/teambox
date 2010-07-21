@@ -3,6 +3,7 @@ if @new_conversation
     page.insert_html :top, :activities, show_threaded_activity(@comment.activity)
     page["thread_#{@comment.activity.thread_id}"].visual_effect :highlight, :duration => 3
     page << "$('new_comment').reset()"
+    page << "$$('#new_comment textarea[name*=\"[body]\"]').first().setStyle({ height: '' })"
     page.remove_form_errors(@comment, "new_comment")
   else
     page.show_form_errors(@comment, "new_comment")
@@ -20,6 +21,7 @@ elsif @threaded # The comment was posted from the thread
       end
     else
       page << "$$('#thread_#{@comment.activity.thread_id}_reply .new_comment').first().reset()"
+      page << "$$('#thread_#{@comment.activity.thread_id}_reply textarea[name*=\"[body]\"]').first().setStyle({ height: '' })"
     end
     page.remove_form_errors(@comment, "thread_#{@comment.target.class.to_s}_#{@comment.target.id}_reply")
     # Highlight comment
@@ -52,7 +54,7 @@ else
            display_watchers = false
            #page[task_id(:edit_form,@current_project,@task_list,@task)].remove
         else
-          page.replace 'new_comment', new_comment_form(@current_project,@new_comment,:target => @task)
+          #page.replace 'new_comment', new_comment_form(@current_project,@new_comment,:target => @task)
           if @comment.previously_closed?
             page['watching'].show
             page.insert_task_form(@current_project,@task_list,@task)
