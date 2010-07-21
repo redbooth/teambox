@@ -19,7 +19,7 @@ elsif @threaded # The comment was posted from the thread
         page.replace_html :"thread_#{@comment.activity.thread_id}_reply", new_comment_form(@comment.activity.project, @new_comment, :target => @task, :thread => true)
       end
     else
-      page << "$$('#thread_#{@comment.activity.thread_id}_reply #new_comment').first().reset()"
+      page << "$$('#thread_#{@comment.activity.thread_id}_reply .new_comment').first().reset()"
     end
     page.remove_form_errors(@comment, "thread_#{@comment.target.class.to_s}_#{@comment.target.id}_reply")
     # Highlight comment

@@ -166,10 +166,10 @@ Comment = {
     e.addClassName('active')    
   },
   mark_status_for_assigned: function(e){
-    $$('#new_comment option').each(function(ee){ 
+    $$('.new_comment .statuses option').each(function(ee){
       if(ee.value == ''){
         if(ee.selected == true)
-          Comment.mark_status($('new_comment').down('.hold'))
+          Comment.mark_status(e.up('.statuses').down('.hold'))
         else  
           Comment.mark_status(e.up('.status'))
       }
@@ -183,7 +183,7 @@ Comment = {
     })
   },
   assign_to_nobody: function(){
-    $$('#new_comment option').each(function(e){ 
+    $$('.new_comment .statuses option').each(function(e){
       if(e.value == '')
         e.selected = true
       else
