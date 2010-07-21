@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
   
   skip_before_filter :confirmed_user?
   skip_before_filter :load_project
+  skip_before_filter :verify_authenticity_token, :only => :create
   before_filter :set_page_title
 
   def new
