@@ -92,11 +92,12 @@ en:
       left: left the project
       title: "%{person} left the project %{project}"
     thread:
+      on_task_list: "on"
       more_comments:
         one: "1 previous comment"
         other: "%{count} previous comments"
       created:
-        task: "created the task"
+        task: "created a task"
         conversation: "created the conversation"
   avatars:
     new:

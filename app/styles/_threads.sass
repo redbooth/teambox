@@ -16,10 +16,22 @@
     .starter
       display: block
       height: 25px
+      a
+        font-weight: bold
     .date
       float: right
       font-size: 0.8em
       color: #9da3a7
+    span.thread_title
+      a
+        padding-left: 20px
+        font-weight: bold
+        &.conversation
+          background: url(/images/comment.gif) no-repeat left
+        &.task
+          background: url(/images/task.png) no-repeat left
+        &.task_list
+          background: url(/images/task_list.png) no-repeat left
   .comments
     border-left: 4px solid #eee
     margin: 1px 0 0 70px
@@ -51,4 +63,4 @@
       textarea
         width: 500px
     .micro_avatar
-      margin-top: 7px
+      margin-top: 2px
