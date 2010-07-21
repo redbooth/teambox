@@ -12,7 +12,6 @@ class OauthController < ApplicationController
 
     oauth = Oauth.new(config)
     redirect_to oauth.get_authorize_url(session, oauth_callback_url)
-    return
   end
 
   def callback
@@ -113,8 +112,6 @@ class OauthController < ApplicationController
         @profile[:company]    = user['company']
         @profile[:location]   = user['location']
         @profile[:original]   = user
-        # We search for an available login name
-        @profile[:login] = User.find_available_login(@profile[:login])
       when "facebook"
         @profile[:id]         = user['id']
         @profile[:email]      = user['email']
@@ -137,6 +134,10 @@ class OauthController < ApplicationController
         @profile[:original]   = user
       else
         raise "Unsupported provider: '#{@provider}'"
+      end
+      # We search for an available login name
+      if @profile[:login]
+        @profile[:login] = User.find_available_login(@profile[:login])
       end
     end
 end
