@@ -23,11 +23,11 @@
   text-decoration: none; }
 </style>
 
-<p style="margin-bottom:12px">In the username/email box, use either a list of usernames or email addresses. e.g.:</p>
+<p style="margin-bottom:12px"><%= t('.title') %></p>
 <table class="textile_doc" style="width: 500px"> 
   <tr> 
-    <th>Enter this</th>
-    <th>To invite</th>
+    <th><%= t('.enter_this.title') %></th>
+    <th><%= t('.to_invite.title') %></th>
   </tr> 
   <tr> 
     <td><pre>fred</pre></td> 
@@ -39,7 +39,7 @@
   </tr> 
   <tr> 
     <td><pre>fred george@someaddress.com lisa</pre></td> 
-    <td>george@someaddress.com  (NOT <span class="mention">@fred</span> or <span class="mention">@lisa</span>)</td> 
+    <td>george@someaddress.com  <%= t('.to_invite.not_example') %></td> 
   </tr> 
   <tr> 
     <td><pre>fred lisa</pre></td> 

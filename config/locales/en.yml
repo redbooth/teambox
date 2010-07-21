@@ -507,6 +507,13 @@ en:
       invalid_code: "Invalid invitation code"
     destroy:
       discarded: "The invitation to %{user} has been discarded"
+    invite_format:
+      title: "In the username/email box, use either a list of usernames or email addresses. e.g.:"
+      enter_this:
+        title: Enter this
+      to_invite:
+        title: To invite
+        not_example: '(NOT <span class="mention">@fred</span> or <span class="mention">@lisa</span>)'
   conversations:
     actions:
       confirm_delete: Are you sure you to delete this conversation?
@@ -530,6 +537,7 @@ en:
     edit:
       submit: 'Update Conversation'
     index:
+      new_conversation: "New Conversation"
       rss:
         title: "%{name} conversations"
         description: "Conversations for project %{name}"
@@ -839,6 +847,7 @@ en:
       hours: "%{hours}h"
       hours_with_minutes: "%{hours}h %{minutes}m"
       cannot_edit: "Comment cannot be edited after 15 minutes"
+      loading: "Loading..."
     hours:
       add_hours: Hours
       tooltip: Add hours to this task
@@ -856,6 +865,7 @@ en:
     convert_form:
       name: "Enter a name for this task"
       destination: "Select the destination task list"
+      submit: "Convert"
     edit:
       submit: Save
     errors:
@@ -1047,6 +1057,7 @@ en:
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You receive this message because you signed up for a Teambox account with %{email}"
       problems: "If you have any problems, please contact us at %{support}"
+      successfully_reset: "Your password has been successfully reset." 
     forgot_password:
       subject: "Password retrieval for Teambox"
     notify:
