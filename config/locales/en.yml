@@ -404,17 +404,22 @@ en:
     show:
       update_your_status: "Update your status..."
       text_styling: Text Styling
-      invite_people: 'Invite people...'
-      pending_invitations:
-        one: One invitation pending
-        other: "%{count} invitations pending"
       new_task_list_link: New Task List
-      people_in_project: People in this project
       subscribe: Subscribe to the news feed
       tip: Mentioning somebody's @username they will receive an email with your message
       rss:
         title: "%{name} activity feed"
         description: "Recent activities for the project %{name}"
+    people_list:
+      invite_people: 'Invite people...'
+      people_in_project: People in this project
+      pending_invitations:
+        one: One invitation pending
+        other: "%{count} invitations pending"
+    recent_conversations:
+      title: Recent conversations
+      view_all: View all conversations
+      new: "+ New conversation"
     fields:
       tracks_time: "Enable time tracking. <em>Will allow users to log time for tasks.</em>"
       archiving: "Archive this project"

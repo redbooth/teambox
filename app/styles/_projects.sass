@@ -1,5 +1,7 @@
 @media screen
   .people_list
+    .list
+      display: block
     .person, .invite_people
       font-size: 12px
       margin-left: 10px
@@ -10,18 +12,49 @@
     .invite_people
       margin-top: 10px
     .person
-      .status
+      span
         display: inline
-      .last_login
-        display: none
+      span.login
+        float: right
+        color: #777777
     a
       color: rgb(80, 80, 80)
       text-decoration: none
     a:hover
       text-decoration: underline
-    .status, .last_login
-      float: right
-      color: #777777
+    &.compact
+      .person
+        display: inline
+        position: relative
+        .more, span
+          display: none
+        .micro_avatar
+          display: inline
+          margin: 0 0 7px 10px
+        &:hover
+          .more
+            display: block
+            position: absolute
+            background: rgb(50, 50, 50)
+            background: rgba(0, 0, 0, 0.7)
+            color: #fff
+            padding: 1px 8px 0 8px
+            border-radius: 9px 9px
+            font-size: 12px
+            font-weight: bold
+            text-shadow: black 0px 1px 1px
+            z-index: 10000
+            width: 200px
+            height: auto
+            top: 0
+            left: 0
+          span
+            display: block
+          span, a
+            color: #fff
+          span.login
+            float: none
+      
   .project_list
     margin-top: 15px
     font-size: 12px
@@ -33,7 +66,27 @@
   .archived_project_list
     .project_link
       margin: 10px 5px
-  
+
+  .recent_conversations
+    a.conversation
+      background: url(/images/comment.gif) no-repeat left
+      margin-left: 10px
+      padding-left: 25px
+    a
+      display: block
+      margin-top: 5px
+      color: rgb(80, 80, 80)
+      text-decoration: none
+    a:hover
+      text-decoration: underline
+    a.view_all, a.new
+      margin:
+        top: 10px
+        left: 35px
+      color: rgb(150, 150, 150)
+    a.new
+      margin-top: 5px
+
   #project_archived_link
     color: #999999
     font-size: 12px
@@ -249,11 +302,6 @@ form#new_project, form.edit_project
       bottom: 5px
 
 .show_projects, .index_task_lists
-  .project_name
-    font-weight: bold
-    font-variant: small-caps
-    font-size: 14px
-    margin-bottom: 15px
   h2
     .help
       float: right

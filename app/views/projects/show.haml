@@ -2,7 +2,7 @@
   .invitations
     = list_pending_invites(@pending_projects)
 
-- if @current_project.commentable?(current_user) && @current_project.archived == false
+- if @current_project.commentable?(current_user) && !@current_project.archived
   = new_comment_form(@current_project,@current_project.comments.new)
 
 #activities
@@ -12,18 +12,12 @@
 = javascript_projects_people [@current_project]
 
 - content_for :column do
-  .project_name= @current_project.name
-  .people_list
-    %h2= t '.people_in_project'
-    = list_users_statuses(@current_project.users)
-    - if @current_project.invitations.count > 0
-      .invitations_pending
-        = link_to t('.pending_invitations', :count => @current_project.invitations.count), project_people_path(@current_project)
-    .invite_people
-      = link_to "+ #{t('.invite_people')}", project_people_path(@current_project)
+  = render :partial => 'people_list', :locals => { :project => @current_project, :compact => false }
   - if @current_project.users.size > 1
-    .tip
-      = t('.tip')
+    .tip= t('.tip')
+
+  = render :partial => 'recent_conversations', :locals => { :project => @current_project, :conversations => @recent_conversations}
+    
   = instructions_for_feeds
   = instructions_for_calendars
   = #print_project_link(@current_project)

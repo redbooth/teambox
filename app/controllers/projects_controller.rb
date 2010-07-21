@@ -7,7 +7,6 @@ class ProjectsController < ApplicationController
     @activities = Project.get_activities_for(@projects)
     @last_activity = @activities.last
     @pending_projects = @current_user.invitations.reload # adding reload to avoid a strange bug
-    
     @archived_projects = @current_user.projects.archived
 
     respond_to do |f|
@@ -26,7 +25,8 @@ class ProjectsController < ApplicationController
     @activities = Project.get_activities_for @current_project
     @last_activity = @activities.last
     @pending_projects = @current_user.invitations.reload
-    
+    @recent_conversations = Conversation.find_all_by_project_id_and_simple(@current_project.id, false, :limit => 4)
+
     #   Use this snippet to test the notification emails that we send:
     #@project = @current_project
     #render :file => 'emailer/notify_comment', :layout => false
