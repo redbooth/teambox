@@ -4,7 +4,7 @@
 
   - unless commentable_projects.nil?
     %div.project{ :style => 'padding-left: 34px; font-size: 12px' }
-      Comment on:
+      = t('.comment_on_project')
       = select_project_for_comment(commentable_projects)
 
   .comment_area
