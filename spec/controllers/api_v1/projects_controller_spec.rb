@@ -20,7 +20,7 @@ describe ApiV1::ProjectsController do
 
       lambda {
         post :create, :project => project_attributes
-        response.status.should == 201
+        response.status.should == '201 Created'
       }.should change(Project, :count)
     
       project = Project.last(:order => 'id')
@@ -31,25 +31,33 @@ describe ApiV1::ProjectsController do
   describe "#show" do
     it "shows a project" do
       login_as @user
-    
-      @user2 = Factory.create(:user)
       
       get :show, :id => @project.permalink
       response.should be_success
     end
     
     it "should not show a project the user doesn't belong to" do
-      login_as @user
-    
-      @project2 = Factory.create(:project)
+      @user2 = Factory.create(:confirmed_user)
+      login_as @user2
       
-      get :show, :id => @project2.permalink
-      response.status.should == 401
+      get :show, :id => @project.permalink
+      response.status.should == '401 Unauthorized'
     end
   end
   
   describe "#destroy" do
     it "should destroy a project" do
+      login_as @project.user
+      
+      Project.count.should == 1
+      post :destroy, :id => @project.permalink
+      response.should be_success
+      Project.count.should == 0
+    end
+    
+    it "should only allow the owner or an admin to destroy a project" do
+      login_as @project.user
+      
       Project.count.should == 1
       post :destroy, :id => @project.permalink
       response.should be_success
