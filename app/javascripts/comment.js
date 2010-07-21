@@ -190,9 +190,6 @@ Comment = {
         e.selected = false
     })
   },
-  make_autocomplete: function(element_id, items){
-    new Autocompleter.Local(element_id, element_id + '_list', items, {tokens:[' ']});
-  },
 
   check_edit: function(){
     var list = Comment.edit_watch_list;
@@ -337,6 +334,12 @@ hideBySelector('.thread form.new_comment .extra')
 
 document.on('focusin', '.thread form.new_comment textarea', function(e, input) {
   input.up('form').down('.extra').setStyle({display: 'block'})
+})
+
+document.on('focusin', 'form.new_comment textarea', function(e, input) {
+  project_id = input.up('form').readAttribute('data-project') || input.up('form').down('select[name=project_id]').value
+  people = _projects_people.get(project_id)
+  new Autocompleter.Local(input, input.next('.autocomplete'), people, {tokens:[' ']})
 })
 
 // document.on('focusout', '.thread form.new_comment textarea', function(e, input) {

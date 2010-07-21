@@ -1,6 +1,6 @@
 - thread = defined?(thread) && thread
 - thread_id = target ? "_#{target.class.to_s}_#{target.id}" : ""
-- form_for form_url, :html => {:update_id => js_id(nil,Comment.new), :multipart => true, :method => :post} do |f|
+- form_for form_url, :html => {:update_id => js_id(nil,Comment.new), :multipart => true, :method => :post, :'data-project' => (comment.project ? comment.project.permalink : nil) } do |f|
 
   - unless commentable_projects.nil?
     %div.project{ :style => 'padding-left: 34px; font-size: 12px' }
@@ -11,7 +11,7 @@
     = micro_avatar(current_user)
     .body.text_area
       = comment_text_area(f, target)
-      #comment_body_list.autocomplete{:style => 'display:none'}
+      .autocomplete{ :style => 'display:none' }
       .previewBox.textilized{:style => 'display:none'}
     .extra
       %span.attach_label
@@ -63,6 +63,4 @@
       = loading_image("comment_new#{thread_id}_loading")
       .clear
 
-- if comment.project
-  = make_autocompletable('comment_body', comment.project)
 = paint_status_boxes
