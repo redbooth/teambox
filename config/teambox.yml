@@ -151,6 +151,7 @@ development:
   <<: *defaults
   app_domain: localhost:3000
   allow_outgoing_email: false
+  autorefresh_interval: 20 # in seconds
 
 production:
   <<: *defaults
