@@ -3,12 +3,15 @@
   padding-top: 6px
   margin-right: 1.5em
   form
-    input#search
-      font-size: 14px
-      padding: 2px
-      color: #aaaaaa
-    input[name=commit]
+    input[type=submit]
       display: none
+    .no-inputsearch &
+      input[type=search]
+        border: 1px solid silver
+        padding: 3px 1em 2px 1em
+        +rounded(10px)
+        width: 10em
+        +box-shadow(inset rgba(0,0,0,.2) 0px 1px 2px)
 
 .results_search
   .comment
