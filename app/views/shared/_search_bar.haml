@@ -1,5 +1,5 @@
 - if current_user.can_search? || (@current_project && @current_project.user.can_search?)
   .search_bar
-    - form_tag search_path do
+    - form_tag search_path, :target => '_blank' do
       <input id='search' name='search' onfocus='if (this._cleared) return; this.clear(); this._cleared = true' type='search' value='Search...'>
       = submit_tag
