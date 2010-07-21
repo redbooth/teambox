@@ -26,6 +26,8 @@ class OauthController < ApplicationController
 
       load_profile(user)
 
+      # Cleanup if there's an app link not assigned to a user yet
+      AppLink.find_by_provider_and_app_user_id_and_user_id(@provider, @profile[:id],nil).try(:destroy)
 
       if logged_in?
         if current_user.app_links.find_by_provider(@provider)
@@ -65,7 +67,7 @@ class OauthController < ApplicationController
         end
       end
     rescue OAuth2::HTTPError
-      render :text => %(<p>OAuth Error ?code=#{params[:code]}:</p><p>#{$!}</p><p><a href="/auth/#{@provider}">Retry</a></p>)
+      render :text => %(<p>OAuth Error ?code=#{params[:code]}:</p><p>#{$!}</p><p><a href="/oauth/#{@provider}">Retry</a></p>)
     end
   end
 
@@ -193,8 +195,6 @@ class Oauthv2 < Oauth
     url = client.web_server.authorize_url(
       :redirect_uri => callback,
       :scope => 'email,offline_access')
-
-    return url
   end  
 
   def self.get_access_token(session, params, callback = nil)
@@ -207,13 +207,13 @@ class Oauthv2 < Oauth
   end
 
   private
-  # Prepares an OAuth v2.0 client
-  def self.client
+    # Prepares an OAuth v2.0 client
+    def self.client
       @client ||= OAuth2::Client.new(
         @config['client_id'],
         @config['secret_key'],
         :site => @config['site'],
         :authorize_path => @config['authorize_path'],
         :access_token_path => @config['access_token_path'])
-  end
+    end
 end
