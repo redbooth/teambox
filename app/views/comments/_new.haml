@@ -1,6 +1,6 @@
 - thread = defined?(thread) && thread
 - thread_id = target ? "_#{target.class.to_s}_#{target.id}" : ""
-- form_for form_url, :html => {:id => thread ? "new_comment#{thread_id}" : "new_comment",:update_id => js_id(nil,Comment.new), :multipart => true, :method => :post, :'data-project' => (comment.project ? comment.project.permalink : nil) } do |f|
+- form_for form_url, :html => {:id => "new_comment#{thread_id}",:update_id => js_id(nil,Comment.new), :multipart => true, :method => :post, :'data-project' => (comment.project ? comment.project.permalink : nil) } do |f|
 
   - unless commentable_projects.nil?
     %div.project{ :style => 'padding-left: 34px; font-size: 12px' }
