@@ -350,3 +350,7 @@ document.on('focusin', 'form.new_comment textarea', function(e, input) {
 //     input.up('form').down('.extra').hide()
 //   }
 // })
+
+document.observe("dom:loaded", function() {
+  new PeriodicalExecuter(Comment.watch_edit(), 30);
+});

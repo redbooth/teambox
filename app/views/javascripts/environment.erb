@@ -36,7 +36,6 @@ date_yesterday = '<%= I18n.t 'date.yesterday' %> ';
 
 /* when ready, start excuter */
 document.observe("dom:loaded", function() {
-  Comment.watch_edit();
   format_posted_date();
   new PeriodicalExecuter(format_posted_date, 30);
 });
