@@ -54,6 +54,9 @@ Comment = {
         Comment.setLoading('comment_new' + thread_id, false);
         if ($(document.body).hasClassName('show_tasks'))
           TaskList.updatePage('column', TaskList.restoreColumn);
+			},
+			onComplete: function(){
+				format_posted_date();
       }
     });
   },
@@ -347,3 +350,7 @@ document.on('focusin', 'form.new_comment textarea', function(e, input) {
 //     input.up('form').down('.extra').hide()
 //   }
 // })
+
+document.observe("dom:loaded", function() {
+  new PeriodicalExecuter(Comment.watch_edit(), 30);
+});

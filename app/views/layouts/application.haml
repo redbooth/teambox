@@ -17,7 +17,7 @@
     - javascript_tag do
       = yield :js_templates
   %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}", :reload_url => reload_url}
-    = javascript_include_tag 'modernizr'
+    = javascript_include_tag 'modernizr', 'environment'
     = strip(@current_project)
     .container
       = render 'shared/header'
@@ -37,5 +37,3 @@
             .column#column= content_for_column
 
       = footer
-
-    = javascripts
