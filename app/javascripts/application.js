@@ -251,3 +251,20 @@ document.on('click', 'a.closeThis', function(e, link) {
   e.preventDefault()
   $(link.parentNode).setStyle('display: none')
 })
+
+if (Prototype.Browser.Gecko) {
+  document.on('dom:loaded', function() {
+    var searchForm = $$('.search_bar form:has(input[name=search])').first()
+    if (searchForm) {
+      // search opens in another window/tab when Alt+Return is pressed
+      searchForm.on('keydown', function(e) {
+        if (e.keyCode == Event.KEY_RETURN) {
+          if (e.altKey) this.writeAttribute('target', '_blank')
+          else this.removeAttribute('target')
+        }
+      })
+      searchForm.down('input[name=search]').
+        writeAttribute('title', 'Search with Alt + Enter to open up results in a new window')
+    }
+  })
+}

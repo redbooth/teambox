@@ -39,4 +39,8 @@ document.on('dom:loaded', function() {
     var input = $(document.body).down('input[autofocus]')
     if (input) input.activate()
   }
+  
+  Modernizr.addTest('inputsearch', function() {
+    return Modernizr.inputtypes.search
+  })
 })
