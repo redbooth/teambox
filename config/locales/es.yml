@@ -142,7 +142,7 @@ es:
       title: "%{user} ha comenzado una conversación: %{conversation}"
     create_note: 
       create_note: "ha añadido una nota"
-      title: "%{user} ha creado la nota \"%{note}\" en %{page}"
+      title: "%{user} ha creado la nota <strong>%{note}</strong> en %{page}"
     create_page: 
       create_page: "ha creado la página"
       title: "%{user} ha creado la página %{page}"
