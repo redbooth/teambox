@@ -110,6 +110,9 @@ module ProjectsHelper
       when 'index_conversations' #project+conversation@app.teambox.com
         email_help = t('shared.instructions.send_email_help_conversations', :email => "#{project.permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}")
         suffix = '_conversations'
+      when 'new_conversations' #project+conversation@app.teambox.com
+        email_help = t('shared.instructions.send_email_help_conversations', :email => "#{project.permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}")
+        suffix = '_conversations'
       when 'show_conversations' #project+conversation+5@app.teambox.com
         email_help = t('shared.instructions.send_email_help_conversation', :email => "#{project.permalink}+conversation+#{@conversation.id}@#{Teambox.config.smtp_settings[:domain]}")
     end
