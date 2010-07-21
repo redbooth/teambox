@@ -6,6 +6,7 @@
 //= require <controls>
 //= require <dragdrop>
 //= require <sound>
+//= require <screenflash>
 
 Function.prototype.throttle = function(t) {
   var timeout, scope, args, fn = this, tick = function() {
