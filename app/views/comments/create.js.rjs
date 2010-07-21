@@ -80,8 +80,6 @@ else
 
 end
 
-page.call 'Comment.setLoading', 'comment_new', false
-
 unless @comment.new_record?
   if @target.is_a?(Project) || @threaded || @new_conversation
     page << reset_autorefresh
