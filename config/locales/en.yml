@@ -845,6 +845,7 @@ en:
       hours: How many hours did you put into this task?
       time_tracking_docs: Learn how to use time-tracking
     new:
+      comment_on_project: "Comment on:"
       assigned_to_nobody: 'Unassigned'
       assigned_to: "Assigned to:"
       submit: Save
