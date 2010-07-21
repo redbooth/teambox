@@ -932,7 +932,7 @@ es:
       title: "Editar página"
     fields: 
       description: Descripción
-      description_description: "Opcional. Cualquier información que las personas leyendo o editando esta página deban saber."
+      description_description: "Opcional. No admite estilos de texto."
       name: Nombre
       name_description: "Escoge un título breve y descriptivo"
     index: 

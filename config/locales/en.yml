@@ -697,7 +697,7 @@ en:
       name: Name
       name_description: Choose a short and descriptive title
       description: Description
-      description_description: "Optional. Enter any information that people reading or editing this page should know."
+      description_description: "Optional short notes about it. Doesn't allow text styles."
     slots:
       insert_here: Insert Here
     column:
