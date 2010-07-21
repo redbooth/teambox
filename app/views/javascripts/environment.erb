@@ -4,7 +4,7 @@
       "Date.weekdays = $w('S M T W T F S'); Date.first_day_of_week = 0;"
     end
 %>
-_translations = {'OK':'OK','Now':'Now','Today':'Today'}; Date.months = $w('January February March April May June July August September October Novemeber');
+_translations = {'OK':'OK','Now':'Now','Today':'Today'}; Date.months = $w('January February March April May June July August September October November December');
 
 <% 
   less_than_one = I18n.t('datetime.distance_in_words.less_than_x_minutes.one')
@@ -16,16 +16,15 @@ _translations = {'OK':'OK','Now':'Now','Today':'Today'}; Date.months = $w('Janua
 %>
 
 function minutesAgoInWords(minutes) {
-// I've commented this one, because "now" and "ago" should not be together
- 	if(minutes == 0) { return '<%= less_than_one %>'; }
+  if(minutes == 0) { return '<%= less_than_one %>'; }
   if(minutes == 1) { return '<%= one_minute_ago %>'; }
   return "<%= minutes_ago %>";
-  }
+}
 
 /* strftime strings */
 time_format_short = '<%= I18n.t('time.formats.short') %>';
-time_pm = '<%= I18n.t('time.pm').upcase %>';
-time_am = '<%= I18n.t('time.am').upcase %>';
+time_pm = '<%= I18n.t('time.pm') %>';
+time_am = '<%= I18n.t('time.am') %>';
 
 date_format_short = '<%= I18n.t('date.formats.short')%>';
 date_format_short = '<%= I18n.t('date.formats.long')%>';
@@ -35,10 +34,9 @@ date_abbr_month_names = $w("<%= I18n.t('date.abbr_month_names').join(" ") %>");
 date_month_names = $w("<%= I18n.t('date.month_names').join(" ") %>");
 date_yesterday = '<%= I18n.t 'date.yesterday' %> ';
 
-
 /* when ready, start excuter */
 document.observe("dom:loaded", function() {
-	Comment.watch_edit();
-	format_posted_date();
-	new PeriodicalExecuter(format_posted_date, 30);
+  Comment.watch_edit();
+  format_posted_date();
+  new PeriodicalExecuter(format_posted_date, 30);
 });
