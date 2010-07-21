@@ -948,7 +948,7 @@ es:
       feature4: "<b>Wiki</b>. Actúan como un wiki, dando toda información de tu proyecto."
       footer1: "Usa Teambox como una <b>pizarra compartida</b> para información de uso frecuente."
       footer2: "También puedes adjuntar archivos a cualquier página del proyecto. Disfruta!"
-      submit: Crear
+      submit: Crear página
       title: "Nueva página"
     primer: 
       create_first: "Crea la primera página!"
