@@ -33,7 +33,7 @@
                 = f.radio_button :status, Task::STATUSES[:new], :checked => (target.status == Task::STATUSES[:new])
                 = t('tasks.status.new')
             .status.open#status_open
-              = f.radio_button :status, Task::STATUSES[:open]
+              = f.radio_button :status, Task::STATUSES[:open], :checked => (target.status == Task::STATUSES[:open])
               = t('tasks.status.open')
               - f.fields_for :target, target do |task_form|
                 = task_form.label :assigned_id, t('.assigned_to')
