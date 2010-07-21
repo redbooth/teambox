@@ -21,15 +21,7 @@
           = t('common.in_project')
           = link_to thread.project, thread.project
   .comments{ :id => "thread_#{thread_id}_comments" }
-    - if comments.size > 2
-      %span.more_comments
-        = link_to_remote t('activities.thread.more_comments', :count => comments.size - 2),
-          :url => show_thread_path(thread, :thread_type => thread.class.to_s),
-          :method => :get,
-          :loading => full_thread_loading(thread_id)
-        = loading_image("#{thread_id}_more_comments")
-    - comments[0..1].reverse.each do |comment|
-      = render :partial => 'comments/comment', :locals => { :comment => comment, :threaded => true }
+    = render :partial => 'activities/thread_comments', :locals => { :comments => comments, :thread => thread }
   .reply{ :id => "thread_#{thread_id}_reply" }
     - unless thread.is_a?(Task) && thread.closed?
       = new_comment_form(thread.project, thread.project.comments.new, :target => thread, :thread => true)
