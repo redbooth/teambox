@@ -15,7 +15,7 @@
           - if comment.can_modify?(current_user, false)
             = image_tag('triangle.png', :class => 'triangle')
             .extra
-              - if comment.target.class == Project and comment.project.editable?(current_user)
+              - if comment.target.is_a?(Project) and comment.project.editable?(current_user)
                 = convert_comment_link(comment)
               - if comment.can_edit?(current_user)
                 = edit_comment_link(comment)
@@ -26,7 +26,7 @@
       .name
         - if threaded || simpleconv
           = link_to(comment.user.name, comment.user)
-        -else
+        - else
           = activity_title(comment)
         - if comment.target_type == 'Task'
           = comment_task_status(comment)
