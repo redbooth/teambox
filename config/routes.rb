@@ -101,6 +101,8 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :people, :member => { :destroy => :get }
     project.resources :conversations, :has_many => [:comments,:uploads], :member => [:watch,:unwatch]
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }
+    
+    project.search 'search', :controller => 'search', :action => 'results'
   end
   
   map.resources :groups, :member => { :logo => :any, :projects => :any, :members => :any} do |group|
