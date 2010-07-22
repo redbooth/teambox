@@ -14,7 +14,7 @@
 
   - form_for @user, :url => secure_url do |form|
     = render form
-    - if RAILS_ENV == "development"
+    - if Rails.env.development?
       %p You are running in development mode. No email confirmation will be required.
       %p When running Teambox in production mode, signup will require an email confirmation.
     %br
