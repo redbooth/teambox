@@ -7,6 +7,24 @@ describe ApiV1::ProjectsController do
     @project.add_user(@user)
   end
   
+  describe "#index" do
+    it "shows projects the user belongs to" do
+      login_as @user
+      
+      get :index
+      response.should be_success
+      JSON.parse(response.body)['projects'].length.should == 1
+    end
+    
+    it "does not show projects the user doesn't belong to" do
+      login_as Factory(:confirmed_user)
+      
+      get :index
+      response.should be_success
+      JSON.parse(response.body)['projects'].length.should == 0
+    end
+  end
+  
   describe "#create" do
     it "creates a project with invitations" do
       login_as @user
@@ -28,12 +46,29 @@ describe ApiV1::ProjectsController do
     end
   end
   
+  describe "#update" do
+    it "should allow an admin to update the project" do
+    end
+    
+    it "should not allow a non-admin to update the project" do
+    end
+  end
+  
+  describe "#transfer" do
+    it "should allow the owner to transfer the project" do
+    end
+    
+    it "should not allow non-owners to transfer the project" do
+    end
+  end
+  
   describe "#show" do
     it "shows a project" do
       login_as @user
       
       get :show, :id => @project.permalink
       response.should be_success
+      JSON.parse(response.body).has_key?('project').should == true
     end
     
     it "should not show a project the user doesn't belong to" do
@@ -56,12 +91,12 @@ describe ApiV1::ProjectsController do
     end
     
     it "should only allow the owner or an admin to destroy a project" do
-      login_as @project.user
+      login_as @user
       
       Project.count.should == 1
       post :destroy, :id => @project.permalink
-      response.should be_success
-      Project.count.should == 0
+      response.status.should == '401 Unauthorized'
+      Project.count.should == 1
     end
   end
   
