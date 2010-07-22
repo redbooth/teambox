@@ -172,10 +172,10 @@ en:
       notify_conversations: Notify me when I'm watching a conversation
       notify_task_lists: Notify me when I'm watching a task list
       notify_tasks: Notify me when I'm watching a task
-      wants_task_reminder: "Send me a daily email of my tasks"
-      invalid_login: "use only letters, numbers and _"
+      wants_task_reminder: "Send me a daily email reminder of my tasks"
+      invalid_login: "use only letters, numbers and underscores"
       account_deletion:
-        steps_before_1: "To delete your Teambox account, first you need to leave or delete all your current projects."
+        steps_before_1: "To delete your Teambox account, you first need to leave or delete all your current projects."
         steps_before_2: "This will ensure that no other users will lose data on their projects when you delete your account."
         steps_before_3: "Leave or delete your current projects and then come back to this page to delete your account."
         what_will_happen: "After deleting your account, your Teambox profile will not be accessible anymore."
@@ -195,12 +195,12 @@ en:
         first_name: Up to 20 characters.
         last_name: Up to 20 characters.
         email: Enter your real email so your teammates can contact you.
-        password: "Combining letters, numbers, uppercase and lowercase is a good idea."
+        password: "Combining uppercase and lowercase letters and numbers is a good idea."
         phone: "Preferrably cell phone. Enter it including the country code, e.g. +1 (415) 1234-567"
     new:
       title: Create an Account
       submit: Create account
-      no_public_signup: "Public signups are not allowed in this system."
+      no_public_signup: "Public signups are not allowed on this system."
       you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
       existing_user: "If you already have an account, <a href='%{login_url}'>log in</a> or <a href='%{forgot_url}'>retrieve your password</a>."
       you_already_have_an_account: "You already have a Teambox account for the address %{email}. <a href='%{login_link}'>Log in with this email</a> or <a href='%{reset_password_link}'>reset your password</a> if you forgot it."
@@ -221,7 +221,7 @@ en:
       error: "Couldn't save the updated profile. Please correct the mistakes and retry."
     activation:
       resent: "We've re-sent the activation email. Take a look at your inbox!"
-      already_done: "You had already confirmed your email! You can now use Teambox."
+      already_done: "You have already confirmed your email! You can now use Teambox."
       activated: "Your account has been activated! Welcome to Teambox :)"
       invalid: "<p>Invalid or expired access link. Login with your email and password.</p><p>If you don't remember your login data, follow the Forgot your Password link.</p>"
       invalid_user: Invalid user
@@ -239,16 +239,16 @@ en:
       intro2: "Where can you go now? Create a project to <b>collaborate</b>:" # or an agenda to <b>keep track of contacts</b>:"
       projects:
         title: Projects
-        share_and_collaborate: "Share and collaborate with your team! Project's wall updates, conversations, tasks, pages and files."
+        share_and_collaborate: "Share and collaborate with your team! Project wall updates, conversations, tasks, pages and files."
         create_your_first_project: "An event, a design, a product... Go ahead and <a href='%{link}'>create your first project</a> now!"
       spread:
         title: Do you love us too?
-        reasons: "We've been working on Teambox for years, hoping it can be useful for you.<br/>We're real people, motivated developers with a mission, just like you!"
+        reasons: "We've been working on Teambox for years, hoping it will be useful for you.<br/>We're real people, motivated developers with a mission, just like you!"
         help: You can <b>help us</b> by telling your friends how you enjoy Teambox on
         twitter: 'Twitter,'
         facebook: Facebook
         in_your_site: in your site!
-        tell_us: "If you enjoy using Teambox, also consider <a href='mailto:%{address}'>telling us about it</a> in an email!"
+        tell_us: "If you enjoy using Teambox, consider also <a href='mailto:%{address}'>telling us about it</a> in an email!"
       stop_welcome: Stop showing this Welcome tab
     feeds:
       title: Sync your activity feeds
@@ -297,7 +297,7 @@ en:
       tasks_for_tomorrow: "Tasks for tomorrow"
       tasks_for_next_two_weeks: "Tasks for next two weeks"
       tasks_without_a_due_date: "Tasks without a due date"
-      you_receive_this_message: "You receive this message because you signed up for it. You can disable it on your %{link}"
+      you_receive_this_message: "You received this message because you opted for it. You can disable it on your %{link}"
       settings_page: "settings page"
     text_styles:
       block_of_code: Paste your code indented (4 spaces or tabs) to paste it as a block of code.
@@ -397,17 +397,17 @@ en:
       define1: "Use projects to <b>collaborate</b> with groups of people: A website, organizing a party, client work..."
       define2: "You can create <b>as many projects as you wish</b> to share with different users online."
       item1: "<b>Create a project</b>, name it and <b>invite some contacts</b> to it."
-      item2: "<b>Comment</b> about what you're doing at each moment in the general timeline."
-      item3: "<b>Discuss</b> about important decisions with Conversations."
+      item2: "<b>Comment</b> about what you're doing in the main timeline."
+      item3: "<b>Discuss</b> important decisions with Conversations."
       item4: "<b>Plan</b> what needs to be done and post updates with Tasks."
-      item5: "<b>Share information</b> by easily editable Pages for each project."
+      item5: "<b>Share information</b> with easily editable Pages for each project."
       footer: "Projects are a centralized way of collaborating, so you'll never need to email your team again."
     show:
       update_your_status: "Update your status..."
       text_styling: Text Styling
       new_task_list_link: New Task List
       subscribe: Subscribe to the news feed
-      tip: Mentioning somebody's @username they will receive an email with your message
+      tip: Mentioning somebody's @username will send them an email with your message
       rss:
         title: "%{name} activity feed"
         description: "Recent activities for the project %{name}"
@@ -426,12 +426,12 @@ en:
       archiving: "Archive this project"
       forever: "Delete this project forever"
       owner: "Owner"
-      owner_description: "The owner is the main responsible for a project. He cannot be removed from the project unless ownership is transferred to another user."
+      owner_description: "The owner is the main responsible for a project. He or she cannot be removed from the project before ownership is transferred to another user."
       name: "Name <em>Keep it short and descriptive, for example: Taggart Transcontinental.</em>"
       permalink: "Permalink <em>Short identifier for the project</em>"
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
       archived: Archive this Project
-      confirm_delete: "Are you sure you'd want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you want to keep it, use Archive Project instead."
+      confirm_delete: "Are you sure you want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you'd rather keep it, use Archive Project instead."
       new:
         time_tracking_docs: Learn more.
     new_primer:
@@ -456,7 +456,7 @@ en:
       create_an_example_project: "First time in Teambox? <a href='%{link}'>Create an example project</a> to play around and learn."
       invite_people: Invite people to the project
       invite_by_email: Invite users by entering their email addresses
-      not_allowed: "You can't create any projects with your current account."
+      not_allowed: "You can't create any more projects with your current account."
     edit:
       title_settings: General Settings
       title_picture: Project Logo
@@ -530,7 +530,7 @@ en:
       submit: Create
     watcher_fields:
       add_suscribers: Which people will be watching this conversation?
-      subscribe_note: These people will be notified via email of this message and any following comments.<br/>They can unsubscribe at any moment.
+      subscribe_note: These people will be notified via email of this message and any following comments.<br/>They can unsubscribe at any time.
       invite_users: You are the only user in this project!
       no_users_yet: "Conversations are more useful when shared. <a href='%{invite_link}'>Invite some users</a> to this project now so they can access this conversation, answer and receive updates."
       people_all: "All people in project"
@@ -548,7 +548,7 @@ en:
       item1: "<b>Share files</b>. Comments can have attached files, too."
       item2: "<b>Subscribe</b> to a conversation to be notified about future replies by email or RSS."
       item3: "<b>Impress</b>. Any comment can be formatted with text styles."
-      item4: "<b>Inbox-driven?</b> You can answer to a conversation from your email to post a reply."
+      item4: "<b>Inbox-driven?</b> You can reply to a conversation from your email."
       footer1: "Conversations are great to <b>share a design</b>, <b>decide a date</b> for meeting or <b>report</b> some news."
       footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
     column:
@@ -716,7 +716,7 @@ en:
     errors:
       name:
         cant_be_blank: Name must not be blank
-        too_long: 'Name is must be shorter than 255 characters'
+        too_long: 'Name must be shorter than 255 characters'
     archived:
       title: All Archived Tasks
       description: You're currently looking at archived tasks. These are tasks that have been closed.
@@ -735,7 +735,7 @@ en:
       title: New Task List
       task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
       name: "Choose a name for this Task List <i>eg. Prepare a Prototype</i>"
-      optional: "If you starting and ending dates, this task will be displayed in the Gantt chart"
+      optional: "If you set starting and ending dates, this task will be displayed in the Gantt chart"
       start_on: Starts on... <i>optional</i>
       finish_on: End on... <i>optional</i>
     filter:
@@ -780,7 +780,7 @@ en:
       item3: "<b>Follow</b>. Receive notifications for tasks related to you."
       item4: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
       footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others now."
-      footer2: "It's time to forget about excel planning sheets and complex Gantt charts!"
+      footer2: "It's time to forget about Excel planning sheets and complex Gantt charts!"
     overview_box:
       this_list: "This task list"
       starts_on: "Starts on:"
@@ -825,7 +825,7 @@ en:
       leave_project: Leave Project
       confirm_delete: Are you sure you want to remove this person from the project?
     errors:
-      user_or_email: "User not found. Enter his username or email."
+      user_or_email: "User not found. Enter his or her username or email."
       users_or_emails: "Invalid usernames or email addresses"
     column:
       select_project: Select a project
@@ -834,7 +834,7 @@ en:
       only_admins_can_invite: "Only admins can invite people to this project."
       contact_admins: "In this project, only %{admins} can invite new members."
       leaving: "Leaving the project"
-      you_can_leave: "You can leave this project at any moment. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
+      you_can_leave: "You can leave this project at any time. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
       leave_project: "Leave this project"
       confirm_delete: Are you sure you want to leave this project?
   comments:
@@ -1006,11 +1006,11 @@ en:
       watch: Watch
       people_watching: "People watching: "
       nobody_watching: "Nobody is watching"
-      started_watching: "You will now be notified by email of updates."
+      started_watching: "You will now be notified of updates by email."
       stopped_watching: "You will no longer receive notifications for this item."
     upgrade_browser:
       upgrade: You're using an outdated version of Internet Explorer. Teambox may not work properly under this version.
-      ie: Upgrade to Internet Explorer
+      ie: Upgrade Internet Explorer
       or_install: or install
       chrome: "Chrome,"
       firefox: "Firefox"
@@ -1026,7 +1026,7 @@ en:
       send_email_help_task: "To post a new comment to this task send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can comment to the task."
   emailer:
     common:
-      do_not_answer: "Do not answer to this email."
+      do_not_answer: "Do not reply to this email."
       answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
     invitation:
       subject: "%{user} shared [%{project}] with you"
@@ -1037,7 +1037,7 @@ en:
       plaintext_link: "If the above link doesn't work, copy and paste the following code into your browser bar: "
       teambox_is_a_pm_platform: "Teambox is a project management platform made for real-world collaboration."
       plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
-      report_abuse: "This email was sent to you by your contact's request. Please report any abuse."
+      report_abuse: "This email was sent to you at your contact's request. Please report any abuse."
     invitation_group:
       subject: "%{user} shared [%{group}] with you"
       you_have_been_invited_to: "You have been invited to the group <b>%{group}</b>"
@@ -1047,7 +1047,7 @@ en:
       follow_the_link: "In order to <b>complete your signup</b> for Teambox, we need you to log in by clicking here:"
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
-      report_abuse: "You receive this message because you signed up for a Teambox account with %{email}"
+      report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
       problems: "If you have any problems, please contact us at %{support}"
     reset_password:
       subject: "Your password has successfully been reset"
@@ -1055,7 +1055,7 @@ en:
       follow_the_link: "In order to <b>set a new password</b> for Teambox, we need you to log in with the following link:"
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
-      report_abuse: "You receive this message because you signed up for a Teambox account with %{email}"
+      report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
       problems: "If you have any problems, please contact us at %{support}"
       successfully_reset: "Your password has been successfully reset." 
     forgot_password:
@@ -1063,7 +1063,7 @@ en:
     notify:
       project: "Teambox Project:"
       view_online: "You can <a href='%{link}'>view this conversation online</a> to answer and attach files."
-      reply: "You can also answer to this email to post a reply in the conversation."
+      reply: "You can also reply to this email to post a reply in the conversation."
       task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
       are_watching: " are suscribed to this conversation, and will be notified of future replies."
       stop_watching: "<a href='%{stop_watching_url}'>Stop watching</a> this thread to stop receiving email notifications."
