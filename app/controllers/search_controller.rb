@@ -1,28 +1,41 @@
 class SearchController < ApplicationController
   
+  before_filter :permission_to_search, :only => :results
+  
   def results
-    unless current_user.can_search?
-      flash[:error] = "Search has been disabled"
-      redirect_to root_path
-      return
-    end
-
-    @search_page = params[:page]
     @search = params[:search]
     
-    unless @search.nil? or @search.strip.empty?
-      @comments = Comment.search(
-                    @search,
-                    :retry_stale => true,
-                    :order => 'created_at DESC',
-                    :with => { :project_id => my_project_ids },
-                    :page => @search_page)
-      end
+    unless @search.blank?
+      @comments = Comment.search @search,
+        :retry_stale => true, :order => 'created_at DESC',
+        :with => { :project_id => project_ids },
+        :page => params[:page]
+    end
   end
   
   protected
   
-    def my_project_ids
-      current_user.projects.collect { |p| p.id }
+    def permission_to_search
+      unless user_can_search? or (@current_project and project_owner.can_search?)
+        flash[:notice] = "Search is disabled"
+        redirect_to root_path
+      end
     end
+    
+    def user_can_search?
+      current_user.can_search?
+    end
+    
+    def project_owner
+      @current_project.user
+    end
+  
+    def project_ids
+      if @current_project
+        @current_project.id
+      else
+        current_user.projects.collect { |p| p.id }
+      end
+    end
+
 end
