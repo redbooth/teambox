@@ -9,7 +9,7 @@
     = stylesheet_link_tag 'sessions'
     = sprockets_include_tag
 
-  %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
+  %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
     = javascript_include_tag 'modernizr'
     .container
       .navigation_wrap

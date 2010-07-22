@@ -6,7 +6,7 @@
   = csrf_meta_tag
   = stylesheet_link_tag 'mobile', :media => :all
 
-%body{ :class => "layout_sessions #{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
+%body{ :class => "layout_sessions #{location_name} #{I18n.locale} #{Rails.env}"}
 
   #content
     %h1= image_tag '/images/header_logo_white.png'
