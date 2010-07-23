@@ -145,7 +145,11 @@ class Project < ActiveRecord::Base
           dtend         Date.new(date.year,date.month,date.day) + 1.day
           dtstart.ical_params  = {"VALUE" => "DATE"}
           dtend.ical_params    = {"VALUE" => "DATE"}
-          summary       task.name
+          if projects.is_a?(Array) && projects.size > 1
+            summary "#{task.name} (#{projects.find { |p| p.id == task.project_id }.name})"
+          else
+            summary task.name
+          end
           klass         task.project.name
           dtstamp       DateTime.civil(created_date.year,created_date.month,created_date.day,created_date.hour,created_date.min,created_date.sec,created_date.offset)
           #url           project_task_list_task_url(task.project, task.task_list, task)
