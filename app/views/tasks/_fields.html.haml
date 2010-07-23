@@ -3,6 +3,7 @@
 .name.text_field
   = f.label :name, t('.name')
   = f.text_field :name, :autofocus => true
+  = last_comment_input
 - if task.new_record?
   %p.optional= t('.optional')
   .body.text_field
