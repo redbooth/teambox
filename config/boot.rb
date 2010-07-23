@@ -3,9 +3,11 @@ begin
   require File.expand_path('../../.bundle/environment', __FILE__)
 rescue LoadError
   # Fall back on doing an unlocked resolve at runtime.
-  require 'rubygems'
-  gem 'bundler', '~> 0.9.26'
-  require 'bundler'
+  unless defined? Bundler
+    require 'rubygems'
+    gem 'bundler', '~> 0.9.26'
+    require 'bundler'
+  end
   Bundler.setup
 end
 
