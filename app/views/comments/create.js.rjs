@@ -71,6 +71,9 @@ else
       end
 
       page << "Comment.watch_edit();"
+      page << "$$('.new_comment').first().reset()"
+      page << "$$('textarea[name*=\"[body]\"]').first().setStyle({ height: '' })"
+      
       page.reload_javascript_events
     end
 
