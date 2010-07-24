@@ -107,14 +107,14 @@ class Project < ActiveRecord::Base
     Project.calendar_for_tasks(tasks, self, filter_user)
   end
 
-  def self.to_ical(projects, filter_user = nil)
+  def self.to_ical(projects, filter_user = nil, host = nil, port = 80)
     tasks = projects.collect{ |p| p.tasks }.flatten
-    self.calendar_for_tasks(tasks, projects, filter_user)
+    self.calendar_for_tasks(tasks, projects, filter_user, host, port)
   end
 
   protected
 
-    def self.calendar_for_tasks(tasks, projects, filter_user)
+    def self.calendar_for_tasks(tasks, projects, filter_user, host = nil, port = 80)
       calendar_name = case projects
       when Project then projects.name
       else "Teambox - All Projects"
@@ -142,10 +142,13 @@ class Project < ActiveRecord::Base
           else
             summary task.name
           end
+          if host
+            port_in_url = (port == 80) ? '' : ":#{port}"
+            url         "http://#{host}#{port_in_url}/projects/#{task.project.permalink}/task_lists/#{task.task_list.id}/tasks/#{task.id}"
+          end
           klass         task.project.name
           dtstamp       DateTime.civil(created_date.year,created_date.month,created_date.day,created_date.hour,created_date.min,created_date.sec,created_date.offset)
-          #url           project_task_list_task_url(task.project, task.task_list, task)
-          uid           "task-#{task.object_id}"
+          uid           "tb-#{task.project.id}-#{task.id}"
         end
       end
       ical.to_ical
