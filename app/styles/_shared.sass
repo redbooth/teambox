@@ -52,6 +52,23 @@ $typeface: "Lucida Grande", Helvetica, "Helvetica Neue", Arial, Verdana, sans-se
   font-variant: small-caps
   text-transform: capitalize
 
+// Show the image in *image* at the given *x_pos* and *y_pos*.
+// If the optional *x_size* or *y_size* arguments are passed in, the width and/or height
+// is set to that value.
+// Usage examples: In HAML, just call ".playlists-icon" to render
+// =player_sprite($x_pos, $y_pos, $x_size: 0, $y_size: 0)
+//   +sprite("http://teambox.com/images/header_logo_black.png", $x_pos, $y_pos, $x_size, $y_size)
+// .playlists-icon  
+//   +player_sprite(10px, 10px, 18px, 18px)
+
+=sprite($image, $x_pos, $y_pos, $x_size: 0, $y_size: 0)
+  background-image: url($image)
+  background-position: -$x_pos -$y_pos
+  @if $x_size > 0
+    width: $x_size
+  @if $y_size > 0
+    height: $y_size
+
 .fyi
   position: absolute
   background: white
