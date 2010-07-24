@@ -157,22 +157,6 @@ module ApplicationHelper
     (datetime.to_i * 1000)
   end
 
-  def large_trash_image
-    image_tag('trash_large.png', :class => 'trash_large')
-  end
-
-  def large_pencil_image
-    image_tag('pencil_large.png', :class => 'pencil_large')
-  end
-
-  def trash_image
-    image_tag('trash.jpg', :class => 'trash')
-  end
-
-  def pencil_image
-    image_tag('pencil.jpg', :class => 'pencil')
-  end
-
   def time_image
     image_tag('time.jpg', :class => 'time')
   end

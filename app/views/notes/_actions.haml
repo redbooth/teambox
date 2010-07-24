@@ -1,11 +1,11 @@
 %p.actions
   %span
-    = link_to pencil_image, edit_project_page_note_path(note.project, note.page, note),
-        :'data-remote' => true
+    = link_to '', edit_project_page_note_path(note.project, note.page, note),
+        :'data-remote' => true, :style => :edit_icon
     = loading_action_image("note_#{note.id}", true)
     
-    = link_to trash_image, project_page_note_path(note.project, note.page, note),
-        :'data-remote' => true, :'data-method' => 'delete', :'data-confirm' => t('.delete_confirm'), :class => 'widget_delete'
+    = link_to '', project_page_note_path(note.project, note.page, note),
+        :'data-remote' => true, :'data-method' => 'delete', :'data-confirm' => t('.delete_confirm'), :class => 'widget_delete trash_icon'
     = loading_action_image("delete_note_#{note.id}", true)
 %p.actions.handle
   %span

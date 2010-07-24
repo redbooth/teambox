@@ -11,10 +11,10 @@ module CardsHelper
   end
 
   def remove_link_unless_new_record(fields)
-    out = ''
-    out << fields.hidden_field(:_destroy)  unless fields.object.new_record?
-    out << link_to(trash_image, "##{fields.object.class.name.underscore}", :class => 'remove_nested_item')
-    out
+    ''.tap do |out|
+      out << fields.hidden_field(:_destroy) unless fields.object.new_record?
+      out << link_to("", "##{fields.object.class.name.underscore}", :class => 'remove_nested_item trash_icon')
+    end
   end
 
   def generate_html(form_builder, method, options = {})

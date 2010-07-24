@@ -54,12 +54,6 @@ module CommentsHelper
     render :partial => 'comments/hours', :locals => { :f => f }
   end
 
-  def activity_comment_icon(comment,unread)
-    if is_controller? :projects
-      "<div class='activity_icon activity_#{comment.target_type.to_s.underscore}#{'_unread' if unread}'><!-- --></div>"
-    end        
-  end
-
   def activity_comment_user_link(comment)
     if comment.user.deleted_at
       "<span class='author' style='text-decoration: line-through'>#{comment.user.name}</span>"
