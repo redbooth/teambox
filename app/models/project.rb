@@ -2,7 +2,6 @@
 # A Person model describes the relationship of a User that follows a Project.
 
 class Project < ActiveRecord::Base
-
   acts_as_paranoid
 
   concerned_with :validation,
@@ -146,7 +145,7 @@ class Project < ActiveRecord::Base
           dtstart.ical_params  = {"VALUE" => "DATE"}
           dtend.ical_params    = {"VALUE" => "DATE"}
           if projects.is_a?(Array) && projects.size > 1
-            summary "#{task.name} (#{projects.find { |p| p.id == task.project_id }.name})"
+            summary "#{task} (#{task.project})"
           else
             summary task.name
           end

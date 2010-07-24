@@ -135,7 +135,7 @@ module ProjectsHelper
       link_to(t('shared.task_navigation.all_tasks'), user_rss_token(projects_path(:format => :ics))) +
       ' ' + t('common.or') + ' ' +
       link_to(t('shared.task_navigation.my_assigned_tasks'), user_rss_token(projects_path(:format => :ics), 'mine')),
-      :class => :calendar_links)
+      :class => 'calendar_links_all')
   end
 
   def subscribe_to_calendar_link(project)
