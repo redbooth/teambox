@@ -229,13 +229,7 @@ module TasksHelper
 
 
   def task_drag_link(task)
-    return if !task.editable?(current_user)
-    
-    if task.class == Task
-      image_tag('drag.png', :class => 'task_drag')
-    else
-      image_tag('drag.png', :class => 'drag')
-    end
+    image_tag('drag.png', :class => 'task_drag')
   end
 
   def due_on(task)
