@@ -51,7 +51,7 @@ module CommentsHelper
   end
   
   def add_hours_link(f)
-    render :partial => 'comments/hours', :locals => { :f => f }
+    render 'comments/hours', :f => f
   end
 
   def activity_comment_user_link(comment)
@@ -61,7 +61,6 @@ module CommentsHelper
       content_tag :span,
         link_to(comment.user.name, user_path(comment.user)),
         :class => 'author'
-
     end
   end
   
@@ -74,25 +73,7 @@ module CommentsHelper
       when 'TaskList'
         link_to_task_list(comment.target.target)
     end
-    
     "<span class='arr target_arr'>#{connector}</span> <span class='target'>#{link}</span>" if link
-  end
-
-  def new_hour_comment_form(project,comment)
-    render :partial => 'comments/new', 
-      :locals => { :target => nil, 
-        :form_url => [project,comment], 
-        :comment => comment,
-        :show_hours => true }
-  end
-
-  def new_comment_user_form(user,comment,options={})
-    message = options[:message] ||= nil
-    render :partial => 'comments/new',
-      :locals => { :target => user,
-        :message => message,
-        :form_url => [user,comment], 
-        :comment => comment }
   end
 
   def new_comment_form(project,comment,options={})
@@ -118,13 +99,13 @@ module CommentsHelper
     end
 
     if can_comment
-      render :partial => 'comments/new',
-        :locals => { :target => target,
-          :message => message,
-          :form_url => form_url, 
-          :comment => comment,
-          :thread => thread,
-          :commentable_projects => commentable_projects }
+      render 'comments/new',
+        :target => target,
+        :message => message,
+        :form_url => form_url, 
+        :comment => comment,
+        :thread => thread,
+        :commentable_projects => commentable_projects
     end
   end
 
@@ -146,7 +127,7 @@ module CommentsHelper
   end
   
   def comment_fields(f,comment,show_hours)
-    render :partial => 'comments/fields', :locals => { :f => f, :comment => comment, :show_hours => show_hours }
+    render 'comments/fields', :f => f, :comment => comment, :show_hours => show_hours
   end
   
   def cancel_edit_comment_link(comment)
@@ -170,12 +151,13 @@ module CommentsHelper
   end
 
   def edit_comment_link(comment)
-    return unless comment.user_id == current_user.id
-    link_to t('comments.actions.edit'),
-      edit_project_comment_path(comment.project, comment),
-      :id => "edit_comment_#{comment.id}_link", 
-      :class => 'commentEdit taction',
-      :action_url => edit_project_comment_path(comment.project, comment)
+    if comment.user_id == current_user.id
+      link_to t('comments.actions.edit'),
+        edit_project_comment_path(comment.project, comment),
+        :id => "edit_comment_#{comment.id}_link", 
+        :class => 'commentEdit taction',
+        :action_url => edit_project_comment_path(comment.project, comment)
+    end
   end
     
   def delete_comment_link(comment)
@@ -203,35 +185,14 @@ module CommentsHelper
   end
   
   def comments_script(target)
-    if target.nil?
-      return
-    elsif target.is_a? Project
-      project = target
-    else
-      project = target.project
-    end
+    return unless target
+    
+    project = target.try(:project) || target
       
     update_page_tag do |page|
       page.assign('comments_update_url',get_comments_project_path(project))
       page.assign('comments_parameters', { :target_name => target.class.name, :target_id => target.id })
     end
-  end
-
-  def comments_count(target,status_type)
-    target.comments_count ||= 0
-    id = comment_count_type(target,status_type)
-    render :partial => 'comments/comment_count',
-      :locals => {
-        :id => id,
-        :target => target,
-        :status_type => status_type }
-  end
-
-  def comment_count_type(target,status_type)
-    unless [:column,:content,:header].include?(status_type)
-      raise ArgumentError, "Invalid Comment Count type, was expecting :column, :content or :header but got #{status_type}"
-    end
-    id = "#{js_id(target)}_#{status_type}_comments_count"
   end
 
   def comment_text_area(f, target)

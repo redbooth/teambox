@@ -77,12 +77,11 @@ module TasksHelper
   end
 
   def task_archive_box(project,task_list,task)
-    return unless task.editable?(current_user)
-    if task.archived?
-      render :partial => 'tasks/unarchive_box', :locals => {
+    if task.editable?(current_user) && task.archived?
+      render 'tasks/unarchive_box',
         :project => project,
         :task_list => task_list,
-        :task => task }
+        :task => task
     end
   end
 
@@ -95,7 +94,7 @@ module TasksHelper
 
   def my_tasks(tasks)
     if tasks.any?
-      render :partial => 'tasks/my_tasks', :locals => { :tasks => tasks }
+      render 'tasks/my_tasks', :tasks => tasks
     end
   end
 
@@ -113,33 +112,28 @@ module TasksHelper
 
 
   def task_form(project,task_list,task)
-    return unless task.editable?(current_user)
-    render :partial => 'tasks/form', :locals => {
-      :project => project,
-      :task_list => task_list,
-      :task => task }
+    if task.editable?(current_user)
+      render 'tasks/form',
+        :project => project,
+        :task_list => task_list,
+        :task => task
+    end
   end
 
 
   def task_header(project,task_list,task)
-    render :partial => 'tasks/header', :locals => {
+    render 'tasks/header',
       :project => project,
       :task_list => task_list,
-      :task => task }
+      :task => task
   end
 
   def render_due_on(task,user)
-    render :partial => 'tasks/due_on',
-    :locals => {
-      :task => task,
-      :user => user }
+    render 'tasks/due_on', :task => task, :user => user
   end
 
   def render_assignment(task,user)
-    render :partial => 'tasks/assigned',
-    :locals => {
-      :task => task,
-      :user => user }
+    render 'tasks/assigned', :task => task, :user => user
   end
   
   def update_task_assignment(task,user)
@@ -157,11 +151,11 @@ module TasksHelper
     end
     case status_type
       when :column
-        id = "column_task_status_#{task.id}"
+        "column_task_status_#{task.id}"
       when :content
-        id = "content_task_status_#{task.id}"
+        "content_task_status_#{task.id}"
       when :header
-        id = "header_task_status_#{task.id}"
+        "header_task_status_#{task.id}"
     end
   end
 
@@ -187,19 +181,13 @@ module TasksHelper
     out << case status_type
     when :column  then localized_status_name(task)
     when :content then task.comments_count.to_s
-    when :header then localized_status_name(task)
+    when :header  then localized_status_name(task)
     end
     out << "</span>"
     out
   end
 
   def delete_task_link(project,task_list,task,on_task=false)
-    #link_to_remote t('common.delete'),
-    #  :url => project_task_list_task_path(project,task_list,task),
-    #  :loading => delete_task_loading(project,task_list,task),
-    #  :confirm => t('confirm.delete_task'),
-    #  :method => :delete
-      
     link_to t('common.delete'), '#',
       :class => 'taskDelete',
       :aconfirm => t('confirm.delete_task'),
@@ -216,11 +204,10 @@ module TasksHelper
   end
 
   def task_action_links(project,task_list,task)
-    render :partial => 'tasks/actions',
-    :locals => {
+    render 'tasks/actions',
       :project => project,
       :task_list => task_list,
-      :task => task }
+      :task => task
   end
 
   def task_list_drag_link(task_list)
@@ -241,29 +228,26 @@ module TasksHelper
   end
 
   def list_tasks(task_list, tasks,editable=true)
-    render :partial => 'tasks/task',
-      :collection => tasks,
-      :locals => {
-        :project => task_list.try(:project),
-        :task_list => task_list,
-        :editable => editable}
+    render tasks,
+      :project => task_list.try(:project),
+      :task_list => task_list,
+      :editable => editable
   end
 
   def task_fields(f,project,task_list,task)
-    render :partial => 'tasks/fields', :locals => {
+    render 'tasks/fields',
       :f => f,
       :project => project,
       :task_list => task_list,
-      :task => task }
+      :task => task
   end
 
   def render_task(project,task_list,task,comment)
-    render :partial => 'tasks/show',
-      :locals => {
-        :project => project,
-        :task_list => task_list,
-        :task => task,
-        :comment => comment }
+    render 'tasks/show',
+      :project => project,
+      :task_list => task_list,
+      :task => task,
+      :comment => comment
   end
 
   def update_active_task(project,task_list,task,comment)
@@ -337,7 +321,7 @@ module TasksHelper
   end
 
   def task_overview_box(task)
-    render :partial => 'tasks/overview_box', :locals => { :task => task }
+    render 'tasks/overview_box', :task => task
   end
 
   def time_tracking_doc

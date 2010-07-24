@@ -421,7 +421,7 @@ en:
       title: Recent conversations
       view_all: View all conversations
       new: "+ New conversation"
-      first: "+ Create a first conversation"
+      first: "+ Create the first conversation"
     fields:
       tracks_time: "Enable time tracking. <em>Will allow users to log time for tasks.</em>"
       archiving: "Archive this project"

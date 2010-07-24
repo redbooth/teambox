@@ -1,16 +1,6 @@
 module GroupsHelper
   def groups_column
-    render :partial => 'groups/column', :locals => {
-      :group => @group,
-      :groups => current_user.groups }
-  end
-  
-  def list_groups(groups)
-    render :partial => 'groups/group', :collection => groups
-  end
-  
-  def groups_primer
-    render :partial => 'groups/primer'
+    render 'groups/column', :group => @group, :groups => current_user.groups
   end
   
   def group_icon(group)
@@ -19,14 +9,14 @@ module GroupsHelper
   end
   
   def group_logo_fields(group, f, button=false)
-    render :partial => 'groups/logo_fields', 
-    :locals => {:f => f, :group => group, :include_button => button}
+    render 'groups/logo_fields', 
+      :f => f, :group => group, :include_button => button
   end
   
   def group_project_form()
-    render :partial => 'groups/project_form', :locals => {
+    render 'groups/project_form',
       :group => @group,
-      :projects => @current_user.projects - @group.projects }
+      :projects => @current_user.projects - @group.projects
   end
   
   def add_group_project_link
@@ -34,7 +24,7 @@ module GroupsHelper
   end
   
   def watch_permalink_group
-    javascript_tag "$('group_permalink').observe('keyup', function(e) { Group.valid_url(); })"    
+    javascript_tag "$('group_permalink').observe('keyup', function(e) { Group.valid_url(); })"
   end
   
   def remove_member_link(group,member,user)
@@ -76,10 +66,7 @@ module GroupsHelper
   end
   
   def invite_by_group_search(target,invitation)
-    render :partial => 'groups/search',
-      :locals => {
-        :target => target,
-        :invitation => invitation }
+    render 'groups/search', :target => target, :invitation => invitation
   end
   
   def list_members(group, users)
@@ -89,9 +76,6 @@ module GroupsHelper
   end
   
   def member_header(group, user)
-    render :partial => 'groups/header', 
-      :locals => { 
-        :group => group,
-        :user => user }
+    render 'groups/header', :group => group, :user => user
   end
 end

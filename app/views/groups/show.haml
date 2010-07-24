@@ -1,4 +1,3 @@
-
 %h2
   = h(@group.name)
   - if @group.has_member?(current_user)
@@ -16,4 +15,4 @@
         = list_invitations_for_group(@group,@invitations)
       = list_members(@group,@group.users)
 
-= render :partial => 'column_group'
+= render 'column_group'

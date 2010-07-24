@@ -42,7 +42,7 @@ module ActivitiesHelper
 
   def show_threaded_activity(activity)
     if activity.thread.is_a?(Task) || activity.thread.is_a?(Conversation)
-      render :partial => 'activities/thread', :locals => { :activity => activity }
+      render 'activities/thread', :activity => activity
     else
       show_activity(activity)
     end
@@ -217,7 +217,7 @@ module ActivitiesHelper
   
   def show_more_button(activities)
     if activities.size == APP_CONFIG['activities_per_page']
-      render :partial => 'activities/show_more'
+      render 'activities/show_more'
     end
   end
   

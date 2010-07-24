@@ -10,18 +10,10 @@ module ProjectsHelper
 
   def archive_project_link(project)
     link_to_function content_tag(:span,t('projects.fields.archiving')), 
-    "$('project_archived').value = 1; $('content').down('.edit_project').submit();",
-    :class => 'button'
+      "$('project_archived').value = 1; $('content').down('.edit_project').submit();",
+      :class => 'button'
   end
   
-  def project_column_navigation
-    render :partial => 'shared/project_column_navigation'
-  end
-
-  def project_new_primer
-    render :partial => 'projects/new_primer'    
-  end
-
   def permalink_example(permalink)
     out = host_with_protocol + projects_path + '/'
     out << content_tag(:span, permalink, :id => 'handle', :class => 'good')
@@ -33,7 +25,7 @@ module ProjectsHelper
   end
 
   def project_settings_navigation
-    render :partial => 'shared/project_settings_navigation'
+    render 'shared/project_settings_navigation'
   end
 
   def list_users_statuses(users)
@@ -42,13 +34,13 @@ module ProjectsHelper
   
   def list_projects(projects)
     if projects.any?
-      render :partial => 'shared/projects', :locals => { :projects => projects }
+      render 'shared/projects', :projects => projects
     end
   end
 
   def list_archived_projects(projects)
     if projects.any?
-      render(:partial => 'shared/archived_projects', :locals => { :projects => projects })
+      render 'shared/archived_projects', :projects => projects
     end
   end
   
@@ -57,24 +49,18 @@ module ProjectsHelper
   end
   
   def new_project_link
-    link_to content_tag(:span, t('.new_project')), new_project_path, :class => 'add_button', :id => 'new_project_link'
+    link_to content_tag(:span, t('.new_project')), new_project_path,
+      :class => 'add_button', :id => 'new_project_link'
   end
   
   def projects_tab_list(projects)
-    render :partial => "shared/projects_dropdown", :locals => {:projects => projects}
+    render 'shared/projects_dropdown', :projects => projects
   end
 
   def project_fields(f,project,sub_action='new')
-    render :partial => "projects/fields/#{sub_action}", 
-      :locals => { 
-        :f => f,
-        :project => project }
+    render "projects/fields/#{sub_action}",  :f => f, :project => project
   end
    
-  def project_primer
-    render :partial => 'projects/primer'
-  end
-
   def instructions_for_feeds
     content_tag(:div,
       link_to(t('shared.instructions.subscribe_to_feeds'), feeds_path),

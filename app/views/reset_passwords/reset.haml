@@ -1,5 +1,4 @@
-%h2
-  You can now reset your password!
+%h2 You can now reset your password!
 
 - form_for(:user, :url => update_after_forgetting_path) do |f|
   %p.message
@@ -10,14 +9,14 @@
   .password.text_field
     = f.label :password
     = f.password_field :password
-    - unless @password.nil?
+    - if @password
       - if @password.user.errors.invalid?(:password)
         %p.error
           = @password.user.errors.on(:password)
   .password.text_field
     = f.label :password_confirmation, 'Confirm Password'
     = f.password_field :password_confirmation
-    - unless @password.nil?
+    - if @password
       - if @password.user.errors.invalid?(:password_confirmation)
         %p.error
           = @password.user.errors.on(:password_confirmation)

@@ -13,7 +13,7 @@
       = show_more_button(@activities)
     = javascript_tag autorefresh(@activities)
   - else
-    = project_primer
+    = render 'projects/primer'
 
   = javascript_projects_people @projects
 

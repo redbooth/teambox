@@ -1,7 +1,7 @@
 module TaskListsHelper
 
   def filter_task_lists(project=nil)
-    render :partial => 'task_lists/filter', :locals => { :project => project }
+    render 'task_lists/filter', :project => project
   end
   
   def filter_assigned_dropdown(project=nil)
@@ -40,7 +40,7 @@ module TaskListsHelper
   end
   
   def task_list_index_header(project,task_list)
-    render :partial => 'task_lists/header_index', :locals => {:project => project, :task_list => task_list}
+    render 'task_lists/header_index', :project => project, :task_list => task_list
   end
 
   def task_list_form_for(project,task_list,&proc)
@@ -77,24 +77,24 @@ module TaskListsHelper
   #
 
   def task_list_fields(f,project,task_list)
-    render :partial => 'task_lists/fields', :locals => {
+    render 'task_lists/fields',
       :f => f,
       :project => project,
-      :task_list => task_list }
+      :task_list => task_list
   end
   
   def task_list_title_fields(f,project,task_list)
-    render :partial => 'task_lists/title_fields', :locals => {
+    render 'task_lists/title_fields',
       :f => f,
       :project => project,
-      :task_list => task_list }
+      :task_list => task_list
   end
   
   def task_list_date_fields(f,project,task_list)
-    render :partial => 'task_lists/date_fields', :locals => {
+    render 'task_lists/date_fields',
       :f => f,
       :project => project,
-      :task_list => task_list }
+      :task_list => task_list
   end
 
   def task_list_editable?(task_list,user)
@@ -119,15 +119,15 @@ module TaskListsHelper
   end
 
   def render_task_list(project,task_list)
-    render :partial => 'task_lists/task_list', :locals => {
+    render 'task_lists/task_list',
       :project => project,
-      :task_list => task_list }
+      :task_list => task_list
   end
 
   def task_list_form(project,task_list)
-    render :partial => 'task_lists/form', :locals => {
+    render 'task_lists/form',
       :project => project,
-      :task_list => task_list }
+      :task_list => task_list
   end
 
   def options_for_render_task_list(project,task_list)
@@ -162,10 +162,7 @@ module TaskListsHelper
   end
 
   def render_task_list(project,task_list)
-    render :partial => 'task_lists/task_list',
-    :locals => {
-      :project => project,
-      :task_list => task_list}
+    render 'task_lists/task_list', :project => project, :task_list => task_list
   end
 
   def task_list_column(project,current_target = nil)
@@ -187,22 +184,17 @@ module TaskListsHelper
   end
 
   def task_list_action_links(project,task_list)
-    render :partial => 'task_lists/actions',
-    :locals => {
-      :project => project,
-      :task_list => task_list }
+    render 'task_lists/actions', :project => project, :task_list => task_list
   end
 
   def task_list_primer(project,hidden=false)
     if project.editable?(current_user)
-      render :partial => 'task_lists/primer', :locals => { :project => project, :primer_hidden => hidden }
+      render 'task_lists/primer', :project => project, :primer_hidden => hidden
     end
   end
 
   def task_list_header(project,task_list)
-    render :partial => 'task_lists/header', :locals => {
-      :project => project,
-      :task_list => task_list }
+    render 'task_lists/header', :project => project, :task_list => task_list
   end
 
   def replace_task_list_header(project,task_list)
@@ -227,11 +219,11 @@ module TaskListsHelper
   end
   
   def task_list_date_edit(project,task_list)
-    render :partial => 'task_lists/date_edit_form', :locals => {:project => project, :task_list => task_list}
+    render 'task_lists/date_edit_form', :project => project, :task_list => task_list
   end
   
   def task_list_title_edit(project,task_list)
-    render :partial => 'task_lists/title_edit_form', :locals => {:project => project, :task_list => task_list}
+    render 'task_lists/title_edit_form', :project => project, :task_list => task_list
   end
 
   def delete_task_list_link(project,task_list, on_index=false)
@@ -277,15 +269,15 @@ module TaskListsHelper
   end
 
   def tasks_for_all_projects(tasks)
-    render :partial => 'task_lists/tasks_for_all_projects', :locals => { :tasks => tasks }
+    render 'task_lists/tasks_for_all_projects', :tasks => tasks
   end
 
   def task_list_overview_box(task_list)
-    render :partial => 'task_lists/overview_box', :locals => { :task_list => task_list }
+    render 'task_lists/overview_box', :task_list => task_list
   end
   
   def task_list_archive_box(project,task_list)
-    render :partial => 'task_lists/archive_box', :locals => { :project => project, :task_list => task_list }
+    render 'task_lists/archive_box', :project => project, :task_list => task_list
   end
   
   def reopen_task_list_button(project,task_list)

@@ -1,4 +1,5 @@
-#upcoming_events_banner.upcoming_events_banner.banner_item{:style => "#{ 'display: none' unless current_gantt_view?(:calendar)}"}
+- style = current_gantt_view?(:calendar)? '' : 'display: none'
+#upcoming_events_banner.upcoming_events_banner.banner_item{:style => style}
   %table
     - for table_row in [(0..6),(7..13),(14..20),(21..27)]
       %tr
@@ -8,4 +9,4 @@
       %tr.days_events
         - for i in table_row
           %td{ :class => event_css(i) }
-            = render :partial => 'shared/event', :locals => { :events => events[i] }
+            = render 'shared/event', :events => events[i]

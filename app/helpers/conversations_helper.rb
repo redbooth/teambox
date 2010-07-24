@@ -19,7 +19,7 @@ module ConversationsHelper
   end
   
   # Jenny helpers
-  
+
   def new_conversation_url(project,conversation)
     new_project_task_list_path(project)
   end
@@ -39,14 +39,13 @@ module ConversationsHelper
   #
 
   def conversation_form(project,conversation)
-    render :partial => 'conversations/form', :locals => {
-      :project => project,
-      :conversation => conversation }
+    render 'conversations/form', :project => project, :conversation => conversation
   end
   
   def conversations_primer(project)
-    return unless project.editable?(current_user)
-    render :partial => 'conversations/primer', :locals => { :project => project }
+    if project.editable?(current_user)
+      render 'conversations/primer', :project => project
+    end
   end
   
   def new_conversation_link(project)
@@ -59,67 +58,47 @@ module ConversationsHelper
   end
   
   def delete_conversation_link(project,conversation)
-    link_to t('common.delete'), project_conversation_path(project,conversation), 
-    :aconfirm => t('.confirm_delete'),
-    :class => 'delete_conversation_link',
-    :action_url => project_conversation_path(project,conversation)
+    link_to t('common.delete'), project_conversation_path(project,conversation),
+      :aconfirm => t('.confirm_delete'),
+      :class => 'delete_conversation_link',
+      :action_url => project_conversation_path(project,conversation)
   end
   
   def conversation_header(project,conversation)
-    render :partial => 'conversations/header', :locals => {
-      :project => project,
-      :conversation => conversation }
+    render 'conversations/header', :project => project, :conversation => conversation
   end
 
   def conversation_action_links(project,conversation)
-    render :partial => 'conversations/actions',
-    :locals => { 
-      :project => project,
-      :conversation => conversation }
+    render 'conversations/actions', :project => project, :conversation => conversation
   end
 
   def conversation_comment(conversation)
-    comment = conversation.comments.first
-    
-    if comment
-      render :partial => 'comments/comment', :object => comment
+    if comment = conversation.comments.first
+      render 'comments/comment', :comment => comment
     end
   end
   
   def list_short_conversations(conversations)
-    render :partial => 'conversations/short_conversation', 
+    render :partial => 'conversations/short_conversation',
       :as => :conversation,
       :collection => conversations
   end
   
-  def conversations_settings
-    render :partial => 'conversations/settings'
-  end
-  
-
-
   def conversation_watcher_fields(project,conversation)
-    render :partial => 'conversations/watcher_fields', 
-      :locals => { 
-        :project => project, 
-        :conversation => conversation }
+    render 'conversations/watcher_fields',
+      :project => project, 
+      :conversation => conversation
   end
-
   
   def conversation_fields(f,project,conversation)
-    render :partial => 'conversations/fields', 
-      :locals => { 
-        :f => f, 
-        :project => project, 
-        :conversation => conversation }
+    render 'conversations/fields',
+      :f => f, 
+      :project => project, 
+      :conversation => conversation
   end
   
   def list_conversations(project,conversations,current_target = nil)
-    render :partial => 'conversations/conversation', 
-      :collection => conversations, 
-      :locals => { 
-        :project => project,
-        :current_target => current_target }
+    render conversations, :project => project, :current_target => current_target
   end
   
   def conversation_comments_count(conversation)
@@ -134,11 +113,11 @@ module ConversationsHelper
     options[:conversation] ||= nil
     options[:show_conversation_settings] ||= false
     
-    render :partial => 'conversations/column', :locals => {
-        :project => project,
-        :conversations => conversations,
-        :conversation => options[:conversation],
-        :show_conversation_settings =>  options[:show_conversation_settings] }
+    render 'conversations/column',
+      :project => project,
+      :conversations => conversations,
+      :conversation => options[:conversation],
+      :show_conversation_settings =>  options[:show_conversation_settings]
   end
   
   def replace_conversation(project,conversation)

@@ -1,7 +1,7 @@
 %h2= t('.title')
 
 - form_tag session_path, :class => 'new_session', :id => 'new_session' do
-  = session_fields
+  = render 'sessions/fields'
   = submit_tag t('.submit')
   
   - if @signups_enabled
