@@ -60,9 +60,9 @@ class ApiV1::ProjectsController < ApiV1::APIController
     
     respond_to do |f|
       if saved
-        handle_api_success(@project)
+        handle_api_success(f, @current_project)
       else
-        handle_api_success(@project)
+        handle_api_error(f, @current_project)
       end
     end
   end

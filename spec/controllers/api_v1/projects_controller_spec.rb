@@ -3,8 +3,12 @@ require 'spec_helper'
 describe ApiV1::ProjectsController do
   before do
     @user = Factory.create(:confirmed_user)
+    @admin = Factory.create(:confirmed_user)
     @project = Factory.create(:project)
+    @owner = @project.user
     @project.add_user(@user)
+    @project.add_user(@admin)
+    @project.people.last.update_attribute(:role, Person::ROLES[:admin])
   end
   
   describe "#index" do
@@ -48,17 +52,41 @@ describe ApiV1::ProjectsController do
   
   describe "#update" do
     it "should allow an admin to update the project" do
+      login_as @admin
+      
+      post :update, :id => @project.permalink, :project => {:permalink => 'ffffuuuuuu'}
+      response.should be_success
+      
+      @project.reload.permalink.should == 'ffffuuuuuu'
     end
     
     it "should not allow a non-admin to update the project" do
+      login_as @user
+      
+      post :update, :id => @project.permalink, :project => {:permalink => 'ffffuuuuuu'}
+      response.status.should == '401 Unauthorized'
+      
+      @project.reload.permalink.should_not == 'ffffuuuuuu'
     end
   end
   
   describe "#transfer" do
     it "should allow the owner to transfer the project" do
+      login_as @owner
+      
+      post :transfer, :id => @project.permalink, :project => {:user_id => @user.id}
+      response.should be_success
+      
+      @project.reload.user.should == @user
     end
     
     it "should not allow non-owners to transfer the project" do
+      login_as @user
+      
+      post :transfer, :id => @project.permalink, :project => {:user_id => @user.id}
+      response.status.should == '401 Unauthorized'
+      
+      @project.reload.user.should == @owner
     end
   end
   
@@ -82,7 +110,7 @@ describe ApiV1::ProjectsController do
   
   describe "#destroy" do
     it "should destroy a project" do
-      login_as @project.user
+      login_as @owner
       
       Project.count.should == 1
       post :destroy, :id => @project.permalink
