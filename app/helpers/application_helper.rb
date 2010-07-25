@@ -104,7 +104,7 @@ module ApplicationHelper
   end
 
   def loading_action_image(e=nil, hidden=false)
-    image_tag('loading_action.gif',
+    image_tag('loading.gif',
               :id => "loading_action#{ "_#{e}" if e}",
               :class => 'loading_action',
               :style => (hidden ? 'display:none' : nil))
