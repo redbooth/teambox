@@ -75,14 +75,6 @@ replace_ids = function(s){
 }
 
 Event.addBehavior({
-  ".remove:mouseover": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/remove.*\.png/,'remove_hover.png')
-  },
-  ".remove:mouseout": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/remove.*\.png/,'remove.png')
-  },
   ".drag:mouseover": function(e){
     image_source = $(this).src
     $(this).src = image_source.sub(/drag.*\.png/,'drag_hover.png')

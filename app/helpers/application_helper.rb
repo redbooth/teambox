@@ -103,14 +103,6 @@ module ApplicationHelper
     image_tag('drag.png', :class => 'drag')
   end
 
-  def remove_image
-    image_tag('remove.png', :class => 'remove')
-  end
-
-  def add_image
-    image_tag('add_button.jpg', :class => 'add')
-  end
-
   def loading_action_image(e=nil, hidden=false)
     image_tag('loading_action.gif',
               :id => "loading_action#{ "_#{e}" if e}",
