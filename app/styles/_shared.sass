@@ -64,6 +64,7 @@ $typeface: "Lucida Grande", Helvetica, "Helvetica Neue", Arial, Verdana, sans-se
 =sprite($image, $x_pos, $y_pos, $x_size: 0, $y_size: 0)
   background-image: url($image)
   background-position: 0-$x_pos 0-$y_pos
+  background-repeat: no-repeat
   @if $x_size > 0
     width: $x_size
   @if $y_size > 0

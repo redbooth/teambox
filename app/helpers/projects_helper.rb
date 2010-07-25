@@ -62,28 +62,23 @@ module ProjectsHelper
   end
    
   def instructions_for_feeds
-    content_tag(:div,
-      link_to(t('shared.instructions.subscribe_to_feeds'), feeds_path),
-      :class => :subscribe)
+    link_to t('shared.instructions.subscribe_to_feeds'), feeds_path, :class => :subscribe
   end
 
   def subscribe_to_all_projects_link
-    content_tag(:div,
-      link_to(t('.subscribe_to_all'), user_rss_token(projects_path(:format => :rss))),
-      :class => :subscribe)
+    link_to t('.subscribe_to_all'),
+      user_rss_token(projects_path(:format => :rss)),
+      :class => 'subscribe subscribe_all'
   end
 
   def subscribe_to_project_link(project)
-    content_tag(:div,
-      link_to(t('.subscribe_to_project', :project => project),
-        user_rss_token(project_path(project, :format => :rss))),
-      :class => :subscribe)
+    link_to t('.subscribe_to_project', :project => project),
+      user_rss_token(project_path(project, :format => :rss)),
+      :class => :subscribe
   end
 
   def instructions_for_calendars
-    content_tag(:div,
-      link_to(t('shared.instructions.subscribe_to_calendars'), calendars_path),
-      :class => :calendars)
+    link_to t('shared.instructions.subscribe_to_calendars'), calendars_path, :class => :calendars_link
   end
 
   def instructions_for_email(project)
@@ -104,12 +99,11 @@ module ProjectsHelper
     end
 
     if email_help
-      content_tag(:div,
-        link_to_function(t('shared.instructions.send_email' + suffix), "$('email_help').setStyle({ display: 'block'})") +
-        content_tag(:span, {:id => 'email_help'}) do
-          %(<p>#{email_help}</p><a href='#' class='closeThis'>#{t('common.close')}</a>)
-        end,
-        {:class => :email})
+      span = content_tag(:span, :id => 'email_help', :style => 'display:none') do
+        %(<p>#{email_help}</p><a href='#' class='closeThis'>#{t('common.close')}</a>)
+      end
+      link_to_function(t('shared.instructions.send_email' + suffix),
+        ("$('email_help').toggle()"), :class => :email_link) + span
     end
   end
 
@@ -131,16 +125,8 @@ module ProjectsHelper
       :class => :calendar_links)
   end
   
-  def print_projects_link
-    content_tag(:div,
-      link_to(t('common.print'), projects_path(:format => :print)),
-      :class => :print)
-  end
-
   def print_project_link(project)
-    content_tag(:div,
-      link_to(t('common.print'), project_path(project,:format => :print)),
-      :class => :print)
+    link_to t('common.print'), project_path(project,:format => :print), :class => :print
   end
   
   def quicklink_conversations(project)

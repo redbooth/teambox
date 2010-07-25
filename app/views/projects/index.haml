@@ -19,11 +19,9 @@
 
 - content_for :column do
   = new_project_link
-  = #my_tasks(current_user.assigned_tasks(:all))
   - unless @sub_action == 'archived'
     = list_projects(@projects)
     - if @archived_projects.any?
       = link_to t('.archived', :count => @archived_projects.size), project_archived_path, :id => 'project_archived_link'
     = instructions_for_feeds
     = instructions_for_calendars
-    = #print_projects_link
