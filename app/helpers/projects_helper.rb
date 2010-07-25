@@ -144,27 +144,15 @@ module ProjectsHelper
   end
   
   def quicklink_conversations(project)
-    desc = t('shared.project_navigation.conversations')
-    link_to image_tag('drop_conv.png',
-                      :alt => desc,
-                      :title => desc), 
-                      project_conversations_path(project)
+    link_to '', project_conversations_path(project), :class => :comment_icon
   end
   
   def quicklink_tasks(project)
-    desc = t('shared.project_navigation.task_lists')
-    link_to image_tag('drop_tasklist.png', 
-                      :alt => desc,
-                      :title => desc), 
-                      project_task_lists_path(project)
+    link_to '', project_task_lists_path(project), :class => :task_icon
   end
 
   def quicklink_pages(project)
-    desc = t('shared.project_navigation.pages')
-    link_to image_tag('drop_page.png',
-                      :alt => desc,
-                      :title => desc), 
-                      project_pages_path(project)
+    link_to '', project_pages_path(project), :class => :page_icon
   end
 
   def reset_autorefresh
