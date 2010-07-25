@@ -107,9 +107,7 @@ module ProjectsHelper
       content_tag(:div,
         link_to_function(t('shared.instructions.send_email' + suffix), "$('email_help').setStyle({ display: 'block'})") +
         content_tag(:span, {:id => 'email_help'}) do
-          #link_to_function(t('common.close'), "$('email_help').setStyle({ display: 'none'})", :class => "closeThis") +
-          '<a href="#" class="closeThis">' + t('common.close') + "</a>" +
-          email_help
+          %(<p>#{email_help}</p><a href='#' class='closeThis'>#{t('common.close')}</a>)
         end,
         {:class => :email})
     end
