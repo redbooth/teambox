@@ -19,13 +19,13 @@
       .has_tooltip
         .tooltip.attach
           = t('uploads.tooltip')
-        - fallback_url = comment.project.nil?? '#' : new_project_upload_path(comment.project)
-        = link_to content_tag(:span, t('uploads.comment_upload_link')), fallback_url, :class => 'attach_button attach_file', :id => 'comment_upload_link'
+        - fallback_url = comment.project ? new_project_upload_path(comment.project) : '#'
+        = link_to '', fallback_url, :class => :attach_icon, :id => :comment_upload_link
       = render 'uploads/upload_area', :comment => comment, :form => f
       - if target
         = last_comment_input
         - if target.is_a?(Task)
-          = add_hours_link(f)
+          = render 'comments/hours', :f => f
           .statuses
             = f.label :status
             - if target.status_new?

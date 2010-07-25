@@ -50,10 +50,6 @@ module CommentsHelper
     t
   end
   
-  def add_hours_link(f)
-    render 'comments/hours', :f => f
-  end
-
   def activity_comment_user_link(comment)
     if comment.user.deleted_at
       "<span class='author' style='text-decoration: line-through'>#{comment.user.name}</span>"
