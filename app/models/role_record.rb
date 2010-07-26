@@ -1,6 +1,3 @@
-require_dependency 'grab_name'
-require_dependency 'watchable'
-
 class RoleRecord < ActiveRecord::Base
   self.abstract_class = true
 

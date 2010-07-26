@@ -1,6 +1,7 @@
 class Emailer < ActionMailer::Base
   include ActionController::UrlWriter # Allows us to generate URLs
   include ActionView::Helpers::TextHelper
+  include Emailer::Incoming
 
   ANSWER_LINE = '-----------------------------==-----------------------------'
 
