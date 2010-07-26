@@ -43,7 +43,7 @@ class ResetPasswordsController < ApplicationController
       throw ActiveRecord::RecordInvalid if @user.nil? or @user.deleted?
     rescue
       flash[:error] = I18n.t('reset_passwords.create.invalid', :support => APP_CONFIG['support'])
-      redirect_to root_path
+      redirect_to login_path
     end
   end
 
