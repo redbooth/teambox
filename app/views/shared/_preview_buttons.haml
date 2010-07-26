@@ -1,0 +1,5 @@
+%span.showPreview
+  %button{}
+    %span.default= t("comments.preview.preview")
+    %span.showing{:style => "display:none"}= t('comments.preview.showing')
+  %a{:href => '#', :style => 'display:none'}= t("comments.preview.close")

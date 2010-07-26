@@ -7,5 +7,7 @@
   .text_area.body
     = f.label :body, t('.body')
     = f.text_area :body, :id => :conversation_body
+    .autocomplete{ :style => 'display:none' }
+    .previewBox.textilized{:style => 'display:none'}
     = errors_for conversation, :body
     - tooltip t('.body')
