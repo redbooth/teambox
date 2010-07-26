@@ -1,4 +1,3 @@
-require_dependency 'role_record'
 include ActionView::Helpers::TextHelper
 
 class Conversation < RoleRecord
