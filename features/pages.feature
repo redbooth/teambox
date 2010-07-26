@@ -1,5 +1,4 @@
-@wip
-@selenium
+@javascript
 Feature: Making project pages
   Background:
     Given a project exists with name: "Ruby Rockstars"
