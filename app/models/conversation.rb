@@ -15,6 +15,7 @@ class Conversation < RoleRecord
 
   named_scope :only_simple, :conditions => { :simple => true }
   named_scope :not_simple, :conditions => { :simple => false }
+  named_scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
 
   def after_create
     project.log_activity(self,'create')

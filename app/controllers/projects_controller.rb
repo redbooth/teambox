@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
     @activities = Project.get_activities_for @current_project
     @last_activity = @activities.last
     @pending_projects = @current_user.invitations.reload
-    @recent_conversations = Conversation.find_all_by_project_id_and_simple(@current_project.id, false, :limit => 4)
+    @recent_conversations = Conversation.not_simple.recent(4).find_all_by_project_id(@current_project.id)
 
     #   Use this snippet to test the notification emails that we send:
     #@project = @current_project
