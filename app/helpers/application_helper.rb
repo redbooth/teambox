@@ -161,12 +161,12 @@ module ApplicationHelper
       style_settings = target.closed? ? 'display:none' : ''
     end
 
-    render 'shared/watchers',
+    render :partial => 'shared/watchers', :locals => {
       :project => project,
       :user => user,
       :target => target,
       :state => state,
-      :style_settings => style_settings
+      :style_settings => style_settings }
   end
 
   def upgrade_browser
