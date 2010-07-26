@@ -10,6 +10,7 @@ class Person < ActiveRecord::Base
   
 #  validates_uniqueness_of :user, :scope => :project
   validates_presence_of :user, :project   # Make sure they both exist and are set
+  validates_inclusion_of :role, :in => 0..3
 
   serialize :permissions
 
@@ -26,9 +27,7 @@ class Person < ActiveRecord::Base
   end
 
   def role_name
-    key = nil
-    ROLES.each{|k,v| key = k if role == v } 
-    key
+    ROLES.index(role)
   end
 
   def to_s

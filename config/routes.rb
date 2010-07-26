@@ -33,6 +33,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reset_passwords
   map.resource :session
+  map.resources :organizations, :member => [:projects] do |org|
+    org.resources :memberships, :member => [:change_role, :add, :remove]
+  end
 
   map.with_options :controller => 'users', :action => 'edit' do |account|
     account.account_settings        '/account/settings',        :sub_action => 'settings'

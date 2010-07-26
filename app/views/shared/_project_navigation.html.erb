@@ -42,11 +42,14 @@ unless location_name? %w(welcome_users new_projects show_users edit_users new_av
           end
         end
 
-        #add_tab do |t|
-        #  t.named t('.all_pages')
-        #  t.links_to pages_path
-        #  t.highlights_on :controller => :pages, :action => :index
-        #end
+        add_tab do |t|
+         t.named t('.organizations')
+         t.links_to organizations_path
+         t.highlights_on :controller => :organizations
+         t.li_class = 'organizations'
+         t.li_class = 'right_side'
+         t.tab_index = 102
+        end
 
       else
         add_tab do |t|

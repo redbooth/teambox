@@ -204,6 +204,8 @@
     margin-bottom: 20px
     .description
       margin: 20px 0
+  .text_field
+    margin: 20px 0
 
 form#new_project
   margin: 30px 0
@@ -211,6 +213,8 @@ form#new_project
     font-size: 12px
   .text_field
     margin-bottom: 20px
+  .check_box
+    padding-left: 10px
   .invite_contacts
     margin-top: 30px
     font-size: 12px
@@ -237,8 +241,14 @@ form#new_project
 form#new_project, form.edit_project
   padding:
     left: 10px
-  #project_name
-    width: 272px
+  .text_field label, h3
+    font-size: 14px
+    margin-bottom: 5px
+  .company
+    margin: 20px 0
+  #project_name, #project_organization_name
+    width: 220px
+    font-size: 20px
   #project_permalink
     width: 140px
   .permalink
@@ -260,8 +270,12 @@ form#new_project, form.edit_project
   .description
     font-size: 12px
     color: rgb(150, 150, 150)
+  p.invite_by_email
+    padding-left: 10px
 
 .new_projects,.create_projects
+  #project_organization_id
+    max-width: 200px
   .content
     p.new_example_project
       font-size: 12px

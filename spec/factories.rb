@@ -29,6 +29,11 @@ Factory.define :confirmed_user, :parent => :user do |user|
   user.confirmed_user true
 end
 
+Factory.define :organization do |organization|
+  organization.name { Factory.next(:name) }
+  organization.permalink { Factory.next(:permalink )}
+end
+
 Factory.define :person do |person|
   person.association(:project)
   person.association(:user)
@@ -37,6 +42,16 @@ end
 Factory.define :project do |project|
   project.name { Factory.next(:name) }
   project.association(:user, :factory => :confirmed_user)
+  project.association(:organization, :factory => :organization)
+end
+
+Factory.define :ruby_rockstars, :class => 'Project' do |project|
+  project.name "Ruby Rockstars"
+  project.permalink "ruby_rockstars"
+  project.user_id do
+    (User.find_by_login('mislav') || Factory(:mislav)).id
+  end
+  project.association(:organization, :name => "ACME")
 end
 
 Factory.define :archived_project, :parent => :project do |project|
@@ -137,14 +152,6 @@ Factory.define :geoffrey, :class => 'User' do |user|
   user.password 'smoothlistening'
   user.password_confirmation 'smoothlistening'
   user.confirmed_user true
-end
-
-Factory.define :ruby_rockstars, :class => 'Project' do |project|
-  project.name "Ruby Rockstars"
-  project.permalink "ruby_rockstars"
-  project.user_id do
-    (User.find_by_login('mislav') || Factory(:mislav)).id
-  end
 end
 
 Factory.define :reset_password do |reset_pw|

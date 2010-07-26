@@ -45,6 +45,15 @@
         end
       end
 
+      add_tab do |t|
+       t.named t('shared.project_navigation.organizations')
+       t.links_to organizations_path
+       t.highlights_on :controller => :organizations
+       t.li_class = 'organizations'
+       t.li_class = 'right_side'
+       t.tab_index = 102
+      end
+
     else
       add_tab do |t|
         t.named t('shared.project_navigation.conversations')

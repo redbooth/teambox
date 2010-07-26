@@ -440,13 +440,23 @@ en:
       forever: "Delete this project forever"
       owner: "Owner"
       owner_description: "The owner is the main responsible for a project. He or she cannot be removed from the project before ownership is transferred to another user."
-      name: "Name <em>Keep it short and descriptive, for example: Taggart Transcontinental.</em>"
+      name: "Project Name <em>Keep it short and descriptive, for example: Taggart Transcontinental.</em>"
+      name_example: Project name
       permalink: "Permalink <em>Short identifier for the project</em>"
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
-      archived: Archive this Project
+      archived: "Archive this Project <em>This will keep it accessible for its members, but not writable anymore.</em>"
       confirm_delete: "Are you sure you want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you'd rather keep it, use Archive Project instead."
+      extra_options: "More options"
+      organization: Organization
       new:
         time_tracking_docs: Learn more.
+        choose_organization:
+          new_org_name: "Organization name <em>Optional. Does this project belong to a company?</em>"
+          choose_org: "Organization <em>Which organization does this project belong to?</em>"
+          or_create_a_new_org: "or create a <a href='%{link}'>new organization</a>"
+      settings:
+        you_cant_transfer_this_project: "This project belongs to the <b>%{organization}</b> organization. You don't have the rights to transfer it."
+        manage_organizations: Manage organizations.
     new_primer:
       define1: A project is a shared group with your teammates.
       define2: "Inside a project, each team member can:"
@@ -479,6 +489,70 @@ en:
       change_owner: Change owner
       transferred: "Project ownership has been transferred."
       invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
+      success: Project updated
+      error: Couldn't change project settings
+  organizations:
+    column:
+      general_settings: General settings
+      admin_users: Manage users
+      admin_projects: Manage projects
+      billing: Billing
+    edit:
+      there_are_x_users: "There are %{count} users"
+      admin_users: "(admin users)"
+      number_of_projects: "%{count} projects"
+      submit: Save changes
+    fields:
+      name: "Organization name"
+      name_placeholder: Your organization
+      permalink: URL address <em>Your organization will have its own website</em>
+    index:
+      about:
+        title: About Organizations
+        explain1: An organization allows you to group projects and users under a brand name.
+        explain2: "You can link them to your own domain to customize your Teambox space. Use your own logo and login page, and share it with your clients."
+      new:
+        create: "+ Create a new Organization"
+        explain: "Brand it with your own logo and website, and create projects inside."
+      title: Organizations
+    new:
+      title: New Organization
+      explain: Organize your people and projects inside an organization.
+      submit: Create Organization
+    organization:
+      admin: admin
+      participant: participant
+      external: external worker
+      number_of_projects:
+        one: One project
+        other: %{count} projects
+    projects:
+      title: "'%{name}' organization"
+      new_project: New project
+      active_projects: Active projects
+      archived_projects: Archived projects
+      role: "you're an <strong>%{role}</strong>"
+      last_activity: "last activity at %{date}"
+      instructions: "These are the projects for this organization. If you're an admin, you can transfer a project to <a href='%{organizations_link}'>other organizations</a> by opening the project's settings."
+      settings: settings
+  memberships:
+    index:
+      title: "'%{name}' organization"
+      admins:
+        title: Admins
+        explain: "Can access any project and manage the organization's settings."
+      users:
+        title: Participants
+        explain: "Can create projects inside the organization, but only access the projects they're invited to."
+      in_projects_but_not_in_the_organization:
+        title: External people
+        explain: Can access only the projects they are invited to. Can't create projects inside the organization.
+      no_users: No users here
+      add_to_the_org: Add to the organization as a participant
+      add_as_admin: add as an admin
+      make_admin: Give admin rights
+      remove_admin: Remove admin rights
+      remove: remove from this organization
   invitations:
     fields:
       user_or_email: "Enter your teammate's username or email:"
@@ -981,6 +1055,7 @@ en:
       files: Files
       invitations: Invitations
       groups: Project Groups
+      organizations: Organizations
     projects_dropdown:
       all_projects: Overview for all projects
       new_project: + New project
@@ -1045,6 +1120,11 @@ en:
       send_email_help_conversations: "To create a new conversation send an email to <a href=\"mailto:%{email}\">%{email}</a> with Subject for the title and Body for the comment. Only members from the project can create a new conversation."
       send_email_help_conversation: "To post a new comment to this conversation send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the conversation."
       send_email_help_task: "To post a new comment to this task send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can comment to the task."
+  roles:
+    observer: observer
+    commenter: commenter
+    participant: participant
+    admin: admin
   emailer:
     common:
       do_not_answer: "Do not reply to this email."

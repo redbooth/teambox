@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
   has_many :app_links
   has_one :group
   has_and_belongs_to_many :groups
+  has_many :memberships
+
+  has_many :organizations, :through => :memberships
+  has_many :admin_organizations, :through => :memberships, :source => :organization, :conditions => {'memberships.role' => Membership::ROLES[:admin]}
 
   belongs_to :invited_by, :class_name => 'User'
 

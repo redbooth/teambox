@@ -77,9 +77,6 @@ class ActivitiesController < ApplicationController
         @current_user.projects.find :all
       end
       
-      if @target.nil? or (@user and @target.empty?)
-        redirect_to '/'
-        return false
-      end
+      redirect_to root_path if @target.nil? or (@user and @target.empty?)
     end
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100807200706) do
+ActiveRecord::Schema.define(:version => 20100810105248) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -166,6 +166,14 @@ ActiveRecord::Schema.define(:version => 20100807200706) do
     t.datetime "updated_at"
   end
 
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "role",            :default => 1
+  end
+
   create_table "notes", :force => true do |t|
     t.integer  "page_id"
     t.integer  "project_id"
@@ -180,6 +188,17 @@ ActiveRecord::Schema.define(:version => 20100807200706) do
   end
 
   add_index "notes", ["deleted_at"], :name => "index_notes_on_deleted_at"
+
+  create_table "organizations", :force => true do |t|
+    t.string   "name"
+    t.string   "permalink",                                             :null => false
+    t.string   "language",    :default => "en"
+    t.string   "time_zone",   :default => "Eastern Time (US & Canada)"
+    t.string   "domain"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "page_slots", :force => true do |t|
     t.integer "page_id"
@@ -236,6 +255,7 @@ ActiveRecord::Schema.define(:version => 20100807200706) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organization_id"
     t.boolean  "public"
   end
 

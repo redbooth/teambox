@@ -1,13 +1,25 @@
 .name.text_field
   = f.label :name, t('projects.fields.name')
-  = f.text_field :name
+  = f.text_field :name, :placeholder => t('projects.fields.name_example')
   = errors_for project, :name
 
+.organization.text_field
+  - case current_user.admin_organizations.size
+  - when 0
+    = f.label :organization_id, t('.choose_organization.new_org_name')
+    = f.text_field :organization_name, :placeholder => t('organizations.fields.name_placeholder')
+    = errors_for(@organization, :name) || errors_for(@organization, :permalink)
+  - else
+    = f.label :organization_name, t('.choose_organization.choose_org')
+    = f.select :organization_id, options_for_organizations(current_user.organizations)
+    %p.inline= t('.choose_organization.or_create_a_new_org', :link => new_organization_path)
+    = errors_for project, :organization_id
+
+%h3= t('projects.fields.extra_options')
 - if time_tracking_enabled?
   .check_box.archived
     = f.check_box :tracks_time
     = f.label :tracks_time, t('projects.fields.tracks_time') + " " + time_tracking_doc
-
 .check_box.archived
   = f.check_box :public
   = f.label :public, t('projects.fields.public_project')

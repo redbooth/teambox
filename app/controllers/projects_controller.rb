@@ -46,10 +46,25 @@ class ProjectsController < ApplicationController
   
   def new
     @project = Project.new
+    @organization = Organization.new
   end
   
   def create
     @project = current_user.projects.new(params[:project])
+    @project.organization = current_user.organizations.find_by_id(params[:project][:organization_id])
+
+    unless @project.organization
+      if params[:project][:organization_name]
+        @organization = Organization.new(:name => params[:project][:organization_name])
+        unless @organization.save
+          @project.errors.add :organization_name, ""
+          render :new
+          return
+        end
+        @organization.memberships.create!(:user_id => current_user.id, :role => Membership::ROLES[:admin])
+        @project.organization = @organization
+      end
+    end
     
     unless current_user.can_create_project?
       flash[:error] = t('projects.new.not_allowed')
@@ -62,12 +77,10 @@ class ProjectsController < ApplicationController
         flash[:notice] = I18n.t('projects.new.created')
         f.html { redirect_to project_path(@project) }
         f.m    { redirect_to project_path(@project) }
-        handle_api_success(f, @project, true)
       else
         flash.now[:error] = I18n.t('projects.new.invalid_project')
         f.html { render :new }
         f.m    { render :new }
-        handle_api_error(f, @project)
       end
     end
   end
@@ -77,26 +90,29 @@ class ProjectsController < ApplicationController
   end
   
   def update
-    respond_to do |f|
-      if @current_project.update_attributes(params[:project])
-        f.html { redirect_to project_path(@current_project) }
-        handle_api_success(f, @current_project)
-      else
-        f.html {
-          @sub_action = params.has_key?(:sub_action) ? params[:sub_action] : 'settings'
-          render :edit
-        }
-        handle_api_error(f, @current_project)
+    @sub_action = params[:sub_action] || 'settings'
+
+    if params[:project] && params[:project][:organization_id]
+      unless @current_project.organization.is_admin?(current_user)
+        @current_project.errors.add(:organization_id, "You're not allowed to modify projects in this organization")
+        return render :edit
       end
+      @current_project.organization_id = params[:project][:organization_id]
     end
+
+    if @current_project.update_attributes(params[:project])
+      flash.now[:success] = t('projects.edit.success')
+    else
+      flash.now[:error] = t('projects.edit.error')
+    end
+
+    render :edit
   end
   
   def transfer
     unless @current_project.owner?(current_user)
-        respond_to do |f|
-          flash[:error] = t('common.not_allowed')
-          f.html { redirect_to projects_path }
-        end
+      flash[:error] = t('common.not_allowed')
+      redirect_to projects_path
       return
     end
     
