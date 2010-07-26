@@ -14,7 +14,7 @@ module BannerHelper
 
   def upcoming_events(events)
     if events.any?
-      render 'shared/upcoming_events', :locals => { :events => events }
+      render 'shared/upcoming_events', :events => events
     else
       render 'shared/upcoming_events_primer'
     end
