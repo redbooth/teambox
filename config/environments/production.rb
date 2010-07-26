@@ -36,3 +36,6 @@ config.action_mailer.delivery_method = :smtp
 
 # Enable threaded mode
 config.threadsafe!
+
+# threadsafe settings turns off autoloading; turn it on for rake tasks
+config.dependency_loading = !!$rails_rake_task
