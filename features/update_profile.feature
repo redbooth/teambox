@@ -36,7 +36,7 @@ Feature: Update a profile
     And I uncheck "Notify me when I'm watching a conversation"
     And I check "Notify me when I'm watching a task list"
     And I check "Notify me when I'm watching a task"
-    And I check "Send me a daily email of my tasks"
+    And I check "Send me a daily email reminder of my tasks"
     And I press "Update account"
     Then I should see "User profile updated!"
     When I follow "Notifications"
@@ -45,7 +45,7 @@ Feature: Update a profile
     And the "Notify me when I'm watching a conversation" checkbox should not be checked
     And the "Notify me when I'm watching a task list" checkbox should be checked
     And the "Notify me when I'm watching a task" checkbox should be checked
-    And the "Send me a daily email of my tasks" checkbox should be checked
+    And the "Send me a daily email reminder of my tasks" checkbox should be checked
 
   Scenario: Mislav updates his username
     When I follow "Account Settings"
