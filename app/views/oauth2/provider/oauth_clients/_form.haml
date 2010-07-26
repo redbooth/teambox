@@ -1,0 +1,7 @@
+- form_for(@oauth_client) do |f|
+  = f.error_messages
+  = f.label :name
+  = f.text_field :name
+  = f.label :redirect_uri
+  = f.text_field :redirect_uri
+  = f.submit t('common.save')

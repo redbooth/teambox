@@ -1,0 +1,8 @@
+- form_tag url_for(:action => :authorize) do
+  = t(".authorize",:service_name => '@client.name')
+  = check_box_tag 'authorize', 1
+  = hidden_field_tag 'client_id', params[:client_id]
+  = hidden_field_tag 'redirect_uri', params[:redirect_uri]
+  = hidden_field_tag 'response_type', params[:response_type]
+  = hidden_field_tag 'state', params[:state]  
+  = submit_tag t('.submit')

@@ -29,6 +29,16 @@ ActionController::Routing::Routes.draw do |map|
   map.complete_signup '/complete_signup',          :controller => 'users', :action => 'complete_signup'
   map.unlink_app      '/oauth/:provider/unlink',   :controller => 'users', :action => 'unlink_app'
 
+  # Oauth-server
+  map.resources :oauth_clients, :controller => 'Oauth2::Provider::OauthClients', :as => 'oauth2/clients'
+  
+  map.connect '/oauth2/authorize', :controller => 'Oauth2::Provider::OauthAuthorize', :action => :authorize, :conditions => {:method => :post}
+  map.connect '/oauth2/authorize', :controller => 'Oauth2::Provider::OauthAuthorize', :action => :index, :conditions => {:method => :get}
+  map.connect '/oauth2/token', :controller => 'Oauth2::Provider::OauthToken', :action => :get_token, :conditions => {:method => :post}
+  
+  map.connect '/oauth2/user_tokens/revoke/:token_id', :controller => 'Oauth2::Provider::OauthUserTokens', :action => :revoke, :conditions => {:method => :delete}
+  map.connect '/oauth2/user_tokens', :controller => 'Oauth2::Provider::OauthUserTokens', :action => :index, :conditions => {:method => :get}
+
   map.javascript_environment '/javascripts/environment.js', :controller => 'javascripts', :action => 'environment'
 
   map.resources :reset_passwords

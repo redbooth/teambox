@@ -1,0 +1,10 @@
+%table
+  %tr
+    %th Client
+    %th Token
+    %th 
+  - @tokens.each do |token|
+    %tr
+      %td= token.oauth_client.name
+      %td= token.access_token
+      %td= link_to('Destroy', {:action => :revoke, :token_id => token.id, :controller => 'Oauth2::Provider::OauthUserTokens'}, {:confirm => 'Are you sure?', :method => :delete})

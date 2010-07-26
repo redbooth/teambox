@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
   has_many :activities
   has_many :uploads
   has_many :app_links
+  has_many :oauth_clients, :class_name => "Oauth2::Provider::OauthClient", :dependent => :delete_all
   has_one :group
   has_and_belongs_to_many :groups
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100714113347) do
+ActiveRecord::Schema.define(:version => 201007251840012) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20100714113347) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "last_comment_id"
-    t.integer  "comments_count",  :default => 0, :null => false
+    t.integer  "comments_count",  :default => 0,     :null => false
     t.text     "watchers_ids"
     t.datetime "deleted_at"
     t.datetime "created_at"
@@ -146,6 +146,17 @@ ActiveRecord::Schema.define(:version => 20100714113347) do
     t.integer "user_id"
   end
 
+  create_table "hooks", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.string   "key"
+    t.string   "name"
+    t.string   "title"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "ims", :force => true do |t|
     t.integer "card_id"
     t.string  "name"
@@ -180,6 +191,35 @@ ActiveRecord::Schema.define(:version => 20100714113347) do
   end
 
   add_index "notes", ["deleted_at"], :name => "index_notes_on_deleted_at"
+
+  create_table "oauth_authorizations", :force => true do |t|
+    t.string   "user_id"
+    t.integer  "oauth_client_id"
+    t.string   "code"
+    t.datetime "expires_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "oauth_clients", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.string   "client_id"
+    t.string   "client_secret"
+    t.string   "redirect_uri"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "oauth_tokens", :force => true do |t|
+    t.string   "user_id"
+    t.integer  "oauth_client_id"
+    t.string   "access_token"
+    t.string   "refresh_token"
+    t.datetime "expires_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "page_slots", :force => true do |t|
     t.integer "page_id"

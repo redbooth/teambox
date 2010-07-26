@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
   include AuthenticatedSystem
+  include Oauth2::Provider::ApplicationControllerMethods
   include SslHelper
 
   filter_parameter_logging :password
@@ -223,6 +224,24 @@ class ApplicationController < ActionController::Base
     def set_user
       @current_user = current_user || nil
     end
+    
+    def current_user_id_for_oauth
+      current_user.id.to_s
+    end  
+
+    # required for oauth to actually work, we wrap our non-oauth
+    # authentication filter with an opportunity to first determine
+    # the request's user via an oauth header.
+    def login_required_with_oauth
+      if user_id = self.user_id_for_oauth_access_token
+        session[:user_id] = user_id
+      elsif looks_like_oauth_request?
+        render :text => "Denied!", :status => :unauthorized
+      else
+        login_required_without_oauth
+      end
+    end
+    alias_method_chain :login_required, :oauth
     
     def calculate_position
       if pos = params[:position].presence
