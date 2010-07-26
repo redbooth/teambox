@@ -54,11 +54,7 @@
           = hidden_field_tag :thread_id, "#{target.class.to_s}_#{target.id}"
         %span.help
           = formatting_documentation_link
-        %span.showPreview
-          %button{}
-            %span.default= t("comments.preview.preview")
-            %span.showing{:style => "display:none"}= t('comments.preview.showing')
-          %a{:href => '#', :style => 'display:none'}= t("comments.preview.close")
+        = render 'shared/preview_buttons'
         = f.submit t('.submit')
       = loading_image("comment_new#{thread_id}_loading")
       .clear

@@ -339,7 +339,7 @@ document.on('focusin', '.thread form.new_comment textarea', function(e, input) {
   input.up('form').down('.extra').setStyle({display: 'block'})
 })
 
-document.on('focusin', 'form.new_comment textarea', function(e, input) {
+document.on('focusin', 'form.new_comment textarea, form.new_conversation textarea', function(e, input) {
   project_id = input.up('form').readAttribute('data-project') || input.up('form').down('select[name=project_id]').value
   people = _projects_people.get(project_id)
   new Autocompleter.Local(input, input.next('.autocomplete'), people, {tokens:[' ']})

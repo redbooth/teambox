@@ -4,8 +4,13 @@
 
 %h2= t('.title')
 
-- form_for [@current_project,@conversation] do |f|
+- form_for [@current_project,@conversation], :html => { :'data-project' => @current_project.permalink } do |f|
   = conversation_fields(f,@current_project,@conversation)
   = conversation_watcher_fields(@current_project,@conversation)
   .submit
+    %span.help
+      = formatting_documentation_link
+    = render 'shared/preview_buttons'
     = f.submit t('.submit')
+
+= javascript_projects_people [@current_project]
