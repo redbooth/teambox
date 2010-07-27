@@ -1,7 +1,7 @@
 %p.actions
   %span
     = link_to '', edit_project_page_note_path(note.project, note.page, note),
-        :'data-remote' => true, :style => :edit_icon
+        :'data-remote' => true, :class => :edit_icon
     = loading_action_image("note_#{note.id}", true)
     
     = link_to '', project_page_note_path(note.project, note.page, note),
