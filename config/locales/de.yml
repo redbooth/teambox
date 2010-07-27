@@ -782,6 +782,8 @@ de:
     sent: 
       email_sent: "<b>Wir haben diesem Benutzer gerade eine Benachrichtigungs-Email gesendet mit einem Link, um die Einladung anzunehmen</b>. Wenn sie die Email nicht erhalten haben, stellen Sie sicher, dass sie nicht als Spam eingestuft wurde oder wählen Sie eine andere Email Adresse. Wenn weiterhin Probleme bestehen, nehmen Sie bitte Kontakt zu unserem Team auf."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  locales: 
+    de: Deutsch
   not_found: 
     conversation: "Konversation %{id} wurde nicht im Projekt gefunden."
     group: "Gruppe %{id} existiert nicht."
@@ -835,11 +837,11 @@ de:
     index_task_lists: "Alle Aufgabenlisten"
     index_uploads: "Alle hochgeladenen Dateien"
     new_conversations: "Neue Konversation"
-    results_search: Suche
     new_example_projects: "Erstellen Sie ein Beispiel-Projekt"
     new_pages: "Neue Seite"
     new_projects: "Neues Projekt"
     new_users: Registrieren
+    results_search: Suche
     show_projects: Übersicht
     welcome_users: Willkommen!
   pages: 
@@ -933,7 +935,6 @@ de:
       confirm_delete: "Sind Sie sicher, dass Sie dieses Projekt endgültig löschen wollen? DIES KANN NICHT RÜCKGÄNGIG GEMACHT WERDEN! Wenn Sie das Projekt behalten wollen, nutzen Sie bitte 'Dieses Projekt archivieren'."
       forever: "Dieses Projekt endgültig löschen"
       name: Name
-      name_description: "Wählen Sie einen kurzen und aussagekräfigen Titel. Zum Beispiel: Designentwurf Koslowski"
       owner: Besitzer
       owner_description: "Der Besitzer ist die einzige Person, die die Projekteinstellungen editieren kann. Wenn Sie den Besitzer ändern, können Sie die Projekteinstellungen nicht mehr ändern."
       permalink: URL
@@ -943,12 +944,10 @@ de:
       archived: "Zeige %{count} archivierte Projekte..."
       new_project: "Neues Projekt"
       projects: "Meine Projekte"
-      refreshes: "Aktualisiert jede Minute"
       rss: 
         description: "Übersicht über alle eigenen Projekte"
         title: Projektübersicht
       subscribe: "Nachrichten Feed abonnieren"
-      title: "Nachrichten Feeds für alle eigenen Projekte"
     new: 
       create_an_example_project: "Zum ersten Mal bei Teambox? <a href='%{link}'>Erstellen Sie ein Beispiel-Projekt</a> zum Ausprobieren und Lernen."
       created: "Ihr Projekt wurde erstellt!"
@@ -982,9 +981,7 @@ de:
       item4: "<b>Planen Sie</b> was zu tun ist und erstellen Sie aktuelle Aufgabenpläne."
       item5: "<b>Teilen Sie Informationen</b> mit einfach zu bearbeitenden Seiten für jedes Projekt."
     show: 
-      invite_people: "Teilnehmer einladen..."
       new_task_list_link: "Neue Aufgabenliste"
-      people_in_project: "Teilnehmer in diesem Projekt"
       rss: 
         description: "Kürzliche Aktivitäten im Projekt %{name}"
         title: "%{name}"

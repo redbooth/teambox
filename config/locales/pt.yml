@@ -161,6 +161,14 @@ pt:
     edit_page: 
       edit_page: "página editada"
       title: "%{user} editou a página %{page}"
+    thread: 
+      created: 
+        conversation: "criou a conversa"
+        task: "criou a tarefa"
+      more_comments: 
+        one: "1 comentário anterior"
+        other: "%{count} comentários anteriores"
+      on_task_list: em
   avatars: 
     edit: 
       upload: "Subir a imagem"
@@ -191,6 +199,8 @@ pt:
       confirm_delete: "Tem certeza que deseja eliminar este comentário?"
       convert_task: "Converter a tarefa"
       edit: "Editar comentário"
+    attach: 
+      tooltip: Anexar
     comment: 
       cannot_edit: "O comentário não pode ser editada 15 minutos depóis de ser publicado"
       commented_on: "-"
@@ -208,11 +218,16 @@ pt:
     new: 
       assigned_to: "Atribuído para:"
       assigned_to_nobody: "Sem assinar"
+      comment_on_project: "Novo comentário em: "
       conversation: "Envie um mensagem ao grupo."
       project: "O que está fazendo? Compartilhe idéias, links, mensagens."
       submit: Publicar
-      task: "Defina o que tem que ser feito em um comentário."
+      task: "Defina o que tem que ser feito em um comentário. Defina um responsável. Publique atualizações. Anexa os resultados."
       task_list: "Compartilhe idéias para esta lista de tarefas. Para criar e assinar tarefas utilize a barra lateral."
+    preview: 
+      close: Fechar
+      preview: Pré-Visualização
+      showing: "..."
   common: 
     accept: Aceitar
     and: e
@@ -226,6 +241,7 @@ pt:
     delete: Eliminar
     edit: Editar
     gantt_chart: "Diagrama de Gantt"
+    in_project: "no projeto"
     next: Próximo
     not_allowed: "Você não tem permissão para fazer isto"
     or: ou
@@ -268,14 +284,14 @@ pt:
       title: "Nova conversa"
     primer: 
       create_first: "Cria a primeira conversa para este projeto!"
-      define: "<b>Conversa sobre decisiones</b> y <b>pon a tu equipo al día</b> de una forma centralizada.<br/>Cada conversación es una lista de mensajes, que reemplazan a los confusos mensajes."
+      define: "<b>Conversa sobre decisões</b> e <b>deixa tua equipe sabendo do que está acontecendo</b> de uma forma centralizada.<br/>Cada conversa é uma lista de mensagens, que substituirá as mensagens confusas do e-mail."
       empty: "Ainda não existe nenhuma conversa neste projeto."
-      footer1: "Las conversaciones son perfectas para <b>compartir un diseño</b>, <b>decidir una fecha</b> para reunirse o <b>informar</b> sobre las noticias del proyecto."
-      footer2: "Estando ordenadas por hilos, es fácil volver atrás en el tiempo y ver qué archivos se enviaron y qué dijo cada miembro del equipo. En Teambox, <b>colaborar</b> genera una <b>trazabilidad</b> de qué se hizo."
-      item1: "<b>Comparte archivos</b>. Puedes adjuntar archivos a cada mensaje."
-      item2: "<b>Suscríbete</b> a una conversación para recibir notificaciones de respuestas por email y RSS."
-      item3: "<b>Exprésate</b>. Puedes usar negrita, cursiva y estilos de texto."
-      item4: "<b>Integrado con tu email</b>. Puedes contestar desde tu email para publicar una respuesta."
+      footer1: "As conversas são perfeitas para <b>compartilhar um desenho</b>, <b>decidir uma data</b> para reunir ou <b>relatar</b> sobre as noticias do projeto."
+      footer2: "São ordenadas através de tópicos, é fácil de voltar no tempo e ver quais arquivos foram enviados e que fez cada membro da equipe. No Teambox, <b>colaborar</b> gerar uma <b>rastreabilidade</b> do que foi feito."
+      item1: "<b>Compartilha arquivos</b>. Pode anexar arquivos a cada mensagem."
+      item2: "<b>Subscrever</b> à uma conversa para receber notificações de respostas por email e RSS."
+      item3: "<b>Se expresse</b>. Pode utilizar estilos de texto, como Puedes usar negrito, itálico, etc."
+      item4: "<b>Integrado com teu correio</b>. Pode responder deste teu email para publicar uma resposta."
     short_conversation: 
       comment: resposta
       comments: respostas
@@ -664,7 +680,7 @@ pt:
   emailer: 
     common: 
       answer_above_this_line: "SELECIONE EM CIMA DESTA LINHA PARA RESPONDERNDER"
-      do_not_answer: "Não responda este email."
+      do_not_answer: "Não responda este email. Você tem que acessar no <a href='http://Teambox.kuboit.com'>Teambox</a> para responder e anexar arquivos."
     confirm: 
       follow_the_link: "Para <b>completar seu registro</b> no Teambox tem que seguir o seguinte link:"
       hey: "Olá, %{user_name}!"
@@ -810,6 +826,13 @@ pt:
       pending: "Foi enviado um mail para este usuário, mas ainda não foi confirmado"
       resend: "Reenviar o email de convite"
       time_ago: "(hace %{time_ago_in_words})"
+    invite_format: 
+      enter_this: 
+        title: Inserir...
+      title: "Na caixa de texto. pode inserir uma lista de usuários ou endereços de e-mail. ex.:"
+      to_invite: 
+        not_example: "(Não <span class=\"mention\">@fred</span> ou <span class=\"mention\">@lisa</span>)"
+        title: "Convidar a"
     pending: 
       invited_to_join: "%{by} enviou um convite para te juntar no projeto %{project}."
       invited_to_join_group: "%{by} enviou um convite para te juntar no grupo %{group}."
@@ -829,7 +852,10 @@ pt:
       username_or_email: "Ingressa o email ou nome de usuário do teu parceiro"
     sent: 
       email_sent: "<b>Temos enviado um email avisando o usuário para que aceite o convite</b>. Se não achar o email, verifica que não esteja classificado como SPAM."
-  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  latest_announcement: "Veja nosso <a href='http://kuboit.com/blog'>blog</a> para ficar sabendo das novidades."
+  locales: 
+    pt-BR: "Português do Brasil"
+    pt-PT: Português
   not_found: 
     conversation: "A conversação %{id} não foi encontrada neste projeto."
     group: "O grupo %{id} não existe."
@@ -887,6 +913,7 @@ pt:
     new_pages: "Página nova"
     new_projects: "Novo projetos"
     new_users: "Criar conta"
+    results_search: Procurar
     show_projects: Resumo
     welcome_users: Bem-vindo!
   pages: 
@@ -982,7 +1009,6 @@ pt:
       confirm_delete: "Estas seguro de que quieres borrar este proyecto definitivamente? NO HAY VUELTA ATRAS. Si quieres conservarlo, usa Archivar Proyecto."
       forever: "Eliminar permanentemente este projeto"
       name: Nome
-      name_description: "Escolha um nome corto e descriptivo. Por exemplo: Taggart Transcontinental"
       owner: Dono
       owner_description: "O propietário é o máximo responsável de um projeto. Não pode ser explusado do projeto, a não ser que tenha outro usuário como dono."
       permalink: URL
@@ -992,16 +1018,16 @@ pt:
       archived: "Mostrar %{count} projetos arquivados..."
       new_project: "Novo projeto"
       projects: "Meus projetos"
-      refreshes: "Atualizado cada minuto"
       rss: 
         description: "Atividade em todos teus projetos"
         title: Teambox
       subscribe: "Assine o feed de notícias"
-      title: "Atividade em todos teus projetos"
     new: 
       create_an_example_project: "Esta é tua primeira vez no Teambox? <a href='%{link}'>Crie um projeto de exemplo</a> para testar e aprender."
       created: "Foi criado o projeto!"
       invalid_project: "Proyecto no válido, corrige los errores e inténtalo de nuevo."
+      invite_by_email: "Convidar por e-mail"
+      invite_people: "Convidar usuários ao projeto"
       new_project: "Novo projeto..."
       not_allowed: "Não pode criar projetos com teu tipo de conta."
       submit: "Criar projeto e convidar usuários"
@@ -1019,6 +1045,12 @@ pt:
       footer: "Este proyecto te pertenecerá a ti. Puedes transferirlo a tus contactos en cualquier momento."
       limited: "Em uma conta gratuita, apenas pode subir até 50Mb de arquivos anexos por projeto."
       upgrade: "Consigue una cuenta premium ahora!"
+    people_list: 
+      invite_people: "Convidar pessoas..."
+      pending_invitations: 
+        one: "Um convite pendente"
+        other: "%{count} convites pendentes"
+      people_in_project: "Pessoas no projeto"
     primer: 
       create_first: "Cria teu primer projeto!"
       define1: "<b>Colabora</b> con tu grupo para tus proyectos: un sitio web, organizar una fiesta, trabajos para clientes..."
@@ -1030,10 +1062,13 @@ pt:
       item3: "<b>Conversa</b> sobre decisiones importantes con Conversaciones."
       item4: "<b>Planifica</b>lo que debe hacerse con las Tareas."
       item5: "<b>Comparte información</b> con Páginas dentro de cada proyecto."
+    recent_conversations: 
+      first: "+ Criar a primeira conversa"
+      new: "+ Nova conversa"
+      title: "Conversas recentes"
+      view_all: "Visualizar todas as conversas"
     show: 
-      invite_people: "Convidar alguém..."
       new_task_list_link: "Nova lista de tarefas"
-      people_in_project: "Pessoas envolvidas neste projeto"
       rss: 
         description: "Atividade recente para %{name}"
         title: "%{name}"
@@ -1058,6 +1093,9 @@ pt:
       login_link_sent: "Foi enviado um email para %{email} assim você ira conseguir mudar sua senha."
       not_found: "O email <b>%{email}</b> não pertence a ninguém no Teambox. Pode que você tenha escrito incorretamente."
       title: "Redefinir senha"
+  search: 
+    placeholder: "Procurar no sistema"
+    placeholder_in_project: "Procurar no projeto"
   sessions: 
     fields: 
       forgot: "Não lembra da senha?"
@@ -1084,6 +1122,15 @@ pt:
       logout: Sair
       project_invitations: "Convites (%{count})"
       settings: Opções
+    instructions: 
+      send_email: "Enviar um comentário por email..."
+      send_email_conversations: "Enviar uma conversa por email..."
+      send_email_help_conversation: "To post a new comment to this conversation send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the conversation."
+      send_email_help_conversations: "To create a new conversation send an email to <a href=\"mailto:%{email}\">%{email}</a> with Subject for the title and Body for the comment. Only members from the project can create a new conversation."
+      send_email_help_project: "To post a new comment to this project's activity wall send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the wall."
+      send_email_help_task: "To post a new comment to this task send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can comment to the task."
+      subscribe_to_calendars: "Calendário deste projeto"
+      subscribe_to_feeds: "Assine o feed de notícias"
     navigation: 
       all_projects: Projetos
       new_project: +
@@ -1094,6 +1141,7 @@ pt:
       all_task_lists: "Todas as tarefas"
       conversations: Conversas
       files: Arquivos
+      gantt: "Diagrama de Gantt"
       groups: "Grupos de Projetos"
       invitations: Convites
       login: Login
@@ -1114,12 +1162,12 @@ pt:
     public_navigation: 
       community: Comunidade
       help: Ajuda
-      home: Teambox
+      home: KuboIT
       privacy: Privacidade
       services: Serviços
       terms: "Condições de utilização"
-      tour: Tour
-      users: Testemunhos
+      tour: Blog
+      users: Twitter
     strip: 
       archived: "Este projeto está arquivado. Para editar ou comentar precisa desarquivá-lo nas <a href='%{link}'>preferências do projeto</a>"
     task_navigation: 
@@ -1141,6 +1189,7 @@ pt:
       upgrade: "Estás utilizando uma versão velha do Internet Explorer. Pode ser que o Teambox não funcione corretamente."
     user_navigation: 
       account_settings: "Conta e opções"
+      delete_account: "Eliminar conta"
       notifications: Notificações
       profile_information: "Informação de contato"
       profile_picture: Imagem
@@ -1323,6 +1372,7 @@ pt:
       item1: "<b>Mais capacidade</b>. Pode subir arquivos de qualquer tamanho e esquece das limitações do email."
       item2: "<b>Versões</b>. Sube novas versões de arquivos e salva o histórico."
       item3: "<b>Siempre sempre disponível</b>. Os arquivos permanecem no contexto do projeto para futura referência."
+    tooltip: "Subir um arquivo"
     upload: 
       download: Baixar
       on_: em
@@ -1350,12 +1400,17 @@ pt:
       you_receive_this_message: "Podes desativar estas notificaçẽs desde %{link}"
     edit: 
       submit: Atualizar
+      title_delete: "Eliminar usuário"
       title_deletion: "Eliminar ou arquivar o projeto"
       title_notifications: Notificações
       title_picture: "Imagem do perfil"
       title_profile: "Informação do perfil"
       title_settings: Preferências
     form: 
+      account_deletion: 
+        steps_before_1: "Para eliminar sua conta, primeiro necessita deixar ou eliminar todos os seus projetos."
+        steps_before_2: "This will ensure that no other users will lose data on their projects when you delete your account."
+        steps_before_3: "Leave or delete your current projects and then come back to this page to delete your account."
       avatar: 
         destroy: "Eliminar avatar"
         field: "Novo avatar"
@@ -1404,6 +1459,38 @@ pt:
       profile: Perfil
       projects: Projetos
       recent_activity_for: "Atividade recente de %{user_name}"
+    text_styles: 
+      block_of_code: "Paste your code indented (4 spaces or tabs) to paste it as a block of code."
+      enter_this: 
+        bold_text: "texto em **negrita**"
+        header: |
+            Cabeçalho
+            ======
+        image: "![alt text](http://w3.org/img.jpg)"
+        italic_text: "*italics* text"
+        link: "[Um enlace](http://kuboit.com)"
+        ordered_list: |
+            1. ordered list
+            2. leave empty lines!
+        smaller_header: "Smaller header ---------"
+        title: Inserir
+        unordered_list: |
+            * unordered list
+            * leave empty lines around
+      to_see_this: 
+        bold_text: "<strong style=\"font-weight: bold\">bold</strong> text"
+        header: "<h3 style=\"font-size:18px\">Header</h3>"
+        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text: "<i>italics</i> text"
+        link: "<a href=\"http://www.teambox.com\">Link something</a>"
+        ordered_list: |
+            <li>ordered list</li>
+            <li>leave empty lines!</li>
+        smaller_header: "<h4 style=\"font-size:14px\">Smaller header</h4>"
+        title: "To see this"
+        unordered_list: |
+            <li>unordered list</li>
+            <li>leave empty lines around</li>
     unconfirmed_email: 
       follow_the_link: "<b>Abre este email e segue o link que tem dentro</b> para ativar tua conta."
       invitation_sent_to: "Temos enviado um convite para <i>%{email}</i>, verifica teu endereço de correio."

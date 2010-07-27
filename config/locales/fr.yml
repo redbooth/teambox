@@ -857,6 +857,8 @@ fr:
     sent: 
       email_sent: "<b>Nous avons envoyé un mail à cet utilisateur pour qu’il accepte votre invitation</b>. S’il ne trouve pas ce mail dans sa boîte de réception, il faut s’assurer qu’il n’a pas été classé dans le courrier indésirable. Si le problème persiste, n’hésitez pas à nous envoyer un mail."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  locales: 
+    fr: Français
   not_found: 
     conversation: "La conversation %{id} n’a pas été trouvée dans ce projet."
     group: "Le group %{id} n’existe pas."
@@ -910,11 +912,11 @@ fr:
     index_task_lists: "Mes tâches"
     index_uploads: "Mes fichiers"
     new_conversations: "Nouvelle conversation"
-    results_search: Recherche
     new_example_projects: "Créer un projet‑exemple"
     new_pages: "Nouvelle page"
     new_projects: "Nouveau projet"
     new_users: "Créer un compte"
+    results_search: Recherche
     show_projects: Résumé
     welcome_users: Bienvenue !
   pages: 
@@ -1014,7 +1016,6 @@ fr:
       confirm_delete: "Êtes‑vous certain de vouloir supprimer définitivement ce projet ? IL SERA IMPOSSIBLE D’Y REVENIR. Si vous voulez le conserver, utilisez plutôt Archiver Projet."
       forever: "Supprimer de façon définitive ce projet"
       name: Nom
-      name_description: "Chosissez un titre bref et explicite. Par exemple: Taggart Transcontinental"
       new: 
         time_tracking_docs: "En savoir plus."
       owner: Propriétaire
@@ -1026,12 +1027,10 @@ fr:
       archived: "Montrer %{count} projets archivés…"
       new_project: "Nouveau projet"
       projects: "Mes projets"
-      refreshes: "Mis à jour chaque minute"
       rss: 
         description: "Activité dans tous vos projets"
         title: Teambox
       subscribe: "Souscrivez au fil d’activités"
-      title: "Activité dans tous vos projets"
     new: 
       create_an_example_project: "C’est la première fois que vous utilisez Teambox ? <a href='%{link}'>Créez un projet‑exemple</a> pour expérimenter toutes les possibilités et apprendre à vous servir de Teambox."
       created: "Le projet a été créé !"
@@ -1065,9 +1064,7 @@ fr:
       item4: "<b>Planifiez</b>ce que vous devez faire avec les Tâches."
       item5: "<b>Partagez des informations</b> avec les Pages pour chaque projet."
     show: 
-      invite_people: "Inviter une autre personne…"
       new_task_list_link: "Nouvelle liste de tâches"
-      people_in_project: "Personnes dans ce projet"
       rss: 
         description: "Actualités récentes dans le projet %{name}"
         title: "%{name}"

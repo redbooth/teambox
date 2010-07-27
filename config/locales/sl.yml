@@ -709,6 +709,8 @@ sl:
       role: "Izberi vlogo"
       submit: Pošlji
       username_or_email: "Vnesi sodelavčev email ali uporabniško ime"
+  locales: 
+    sl: Slovenščina
   notes: 
     edit: 
       submit: Posodobizaznamek
@@ -825,11 +827,9 @@ sl:
     index: 
       new_project: "Nov Projekt"
       projects: "Moji Projekti"
-      refreshes: "Stran se osveži vsako minuto"
       rss: 
         description: "Pregled vseh projektov"
         title: "Pregled projektov"
-      title: "Aktivnosti v vseh projektih"
     new: 
       new_project: "Nov Projekt"
       title: "Ustvari projekt"
@@ -843,9 +843,7 @@ sl:
     primer: 
       create_first: "Ustvari svoj prvi projekt"
     show: 
-      invite_people: "Povabi osebe..."
       new_task_list_link: "Nov Seznam Opravil"
-      people_in_project: "Osebe v tem projektu"
       text_styling: "Oblikovanje Besedila"
       tip: "Z uporabo @uporabnik, bo prejel sporočilo, v katerm si ga omenil."
       update_your_status: "Posodobi svoj status"
