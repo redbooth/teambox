@@ -146,17 +146,6 @@ ActiveRecord::Schema.define(:version => 201007251840012) do
     t.integer "user_id"
   end
 
-  create_table "hooks", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "project_id"
-    t.string   "key"
-    t.string   "name"
-    t.string   "title"
-    t.text     "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "ims", :force => true do |t|
     t.integer "card_id"
     t.string  "name"
