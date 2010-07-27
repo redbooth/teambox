@@ -5,7 +5,7 @@ rescue LoadError
   # Fall back on doing an unlocked resolve at runtime.
   unless defined? Bundler
     require 'rubygems'
-    gem 'bundler', '~> 0.9.26'
+    gem 'bundler', '~> 1.0.0.rc'
     require 'bundler'
   end
   Bundler.setup
