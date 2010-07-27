@@ -241,4 +241,10 @@ module ApplicationHelper
       auto_discovery_link_tag(:rss, user_rss_token(path))
     end
   end
+  
+  def locale_select_values
+    I18n.available_locales.map { |code|
+      [t(code, :scope => :locales, :locale => code), code.to_s]
+    }.sort_by(&:first)
+  end
 end

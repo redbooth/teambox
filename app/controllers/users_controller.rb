@@ -109,11 +109,9 @@ class UsersController < ApplicationController
     
     respond_to do |wants|
       wants.html {
-        I18n.locale = current_user.language
-        
         if success
           back = polymorphic_url [:account, @sub_action]
-          flash[:success] = t('users.update.updated')
+          flash[:success] = t('users.update.updated', :locale => current_user.locale)
           redirect_to back
         else
           flash.now[:error] = t('users.update.error')

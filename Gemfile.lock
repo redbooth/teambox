@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/mislav/tolk.git
-  revision: 1b0a16d
+  revision: a7b900f
   specs:
     tolk (0.2.2)
       will_paginate (~> 2.3.13)

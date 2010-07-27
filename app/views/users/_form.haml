@@ -70,8 +70,8 @@
     
 - if user.new_record? || sub_action == 'settings'
   .language.select
-    = f.label :language, t('.language')
-    = f.select :language, User::LANGUAGES
+    = f.label :locale, t('.language')
+    = f.select :locale, locale_select_values
     
   .time_zone.select
     = f.label :time_zone, t('.time_zone')

@@ -20,23 +20,7 @@ class User < ActiveRecord::Base
                   :scopes,
                   :validation
 
-  # After adding a new locale, run "rake import:country_select 'de'" where de is your locale.
-  LANGUAGES = [['English',     'en'],
-               ['Español',     'es'],
-               ['Português',   'pt'],
-               ['Français',    'fr'],
-               ['Deutsch',     'de'],
-               ['Català',      'ca'],
-               ['Italiano',    'it'],
-               ['Русский',     'ru'],
-               ['中文',          'zh'],
-               ['日本語',         'ja'],
-               ['한국어',         'ko'],
-               ['Nederlands',  'nl'],
-               ['Slovenščina', 'si']
-               ]
-
-  LANGUAGE_CODES = LANGUAGES.map { |lang| lang[1] }
+  LOCALE_CODES = I18n.available_locales.map(&:to_s)
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
@@ -62,7 +46,7 @@ class User < ActiveRecord::Base
                   :password,
                   :password_confirmation,
                   :time_zone,
-                  :language,
+                  :locale,
                   :first_day_of_week,
                   :card_attributes,
                   :notify_mentions,
@@ -121,11 +105,11 @@ class User < ActiveRecord::Base
     read_attribute(:visited_at) || updated_at
   end
   
-  def language
-    if LANGUAGE_CODES.include? self[:language]
-      self[:language]
+  def locale
+    if LOCALE_CODES.include? self[:locale]
+      self[:locale]
     else
-      LANGUAGES.first[1]
+      I18n.default_locale.to_s
     end
   end
 
@@ -200,7 +184,7 @@ class User < ActiveRecord::Base
       xml.tag! 'first-name', first_name
       xml.tag! 'last-name', last_name
       # xml.tag! 'email', email
-      xml.tag! 'language', language
+      xml.tag! 'locale', locale
       xml.tag! 'username', login
       xml.tag! 'time_zone', time_zone
       xml.tag! 'biography', biography

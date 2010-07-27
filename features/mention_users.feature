@@ -5,7 +5,7 @@ Feature: Send email to users mentioned in comments
 
   Background: 
     Given the following confirmed users exist
-      | login  | email                    | first_name | last_name | language |
+      | login  | email                    | first_name | last_name | locale   |
       | balint | balint.erdi@gmail.com    | Balint     | Erdi      | it       |
       | pablo  | pablo@teambox.com        | Pablo      | Villalba  | es       |
       | james  | james.urquhart@gmail.com | James      | Urquhart  | en       |

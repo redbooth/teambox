@@ -47,7 +47,7 @@ class Project < ActiveRecord::Base
   def notify_new_comment(comment)
     users.each do |user|
       if user.notify_of_project_comment?(comment)
-        Emailer.send_with_language(:notify_comment, user.language, user, self, comment) # deliver_notify_comment
+        Emailer.send_with_language(:notify_comment, user.locale, user, self, comment) # deliver_notify_comment
       end
     end
   end

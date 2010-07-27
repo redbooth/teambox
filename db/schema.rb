@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100714113347) do
+ActiveRecord::Schema.define(:version => 20100727153714) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -365,7 +365,7 @@ ActiveRecord::Schema.define(:version => 20100714113347) do
     t.string   "remember_token",            :limit => 40
     t.datetime "remember_token_expires_at"
     t.string   "time_zone",                                :default => "Eastern Time (US & Canada)"
-    t.string   "language",                                 :default => "en"
+    t.string   "locale",                                   :default => "en"
     t.string   "first_day_of_week",                        :default => "sunday"
     t.integer  "invitations_count",                        :default => 0,                            :null => false
     t.string   "login_token",               :limit => 40
