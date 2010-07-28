@@ -25,7 +25,8 @@
       - if target
         = last_comment_input
         - if target.is_a?(Task)
-          = render 'comments/hours', :f => f
+          - if time_tracking_enabled? and comment.project.tracks_time
+            = render 'comments/hours', :f => f
           .statuses
             = f.label :status
             - if target.status_new?
