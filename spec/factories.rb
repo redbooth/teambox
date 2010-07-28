@@ -39,6 +39,10 @@ Factory.define :project do |project|
   project.association(:user, :factory => :confirmed_user)
 end
 
+Factory.define :archived_project, :parent => :project do |project|
+  project.archived true
+end
+
 Factory.define :group do |group|
   group.name { Factory.next(:name) }
   group.permalink { Factory.next(:permalink) }

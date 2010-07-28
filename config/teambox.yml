@@ -11,7 +11,8 @@ defaults: &defaults
   activities_per_page: 25
   autorefresh_interval: 60 # in seconds
 
-  daily_task_reminder_email_time: "06:00"
+  # Hour of the day at which daily reminders will be sent
+  daily_task_reminder_email_time: 6
   
   # Gravatar fallback type in case a user doesn't have an avatar
   # One of: wavatar, monsterid, identicon
