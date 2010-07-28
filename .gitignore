@@ -11,6 +11,7 @@ db/*.sqlite3
 db/sphinx
 config/*.sphinx.conf
 log/*.log
+log/*.pid
 tmp
 public/avatars
 public/stylesheets
