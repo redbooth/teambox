@@ -164,10 +164,16 @@
     height: 0px
     float: left
     width: 100%
-  .actions
+  .actions.handle
     display: none
+  .actions
+    a
+      opacity: 0.4
   &:hover .actions
-    display: block
+    a
+      opacity: 1
+    .handle
+      display: block
   .slotActions
     display: none
   &:hover .slotActions
