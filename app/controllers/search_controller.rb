@@ -1,10 +1,12 @@
 class SearchController < ApplicationController
-  
+
   before_filter :permission_to_search, :only => :results
-  
+  skip_before_filter :load_project
+
   def results
     @search = params[:search]
-    
+    @current_project = Project.find_by_permalink(params[:project_id]) if params[:project_id]
+
     unless @search.blank?
       @comments = Comment.search @search,
         :retry_stale => true, :order => 'created_at DESC',
