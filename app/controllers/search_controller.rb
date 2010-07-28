@@ -1,11 +1,11 @@
 class SearchController < ApplicationController
 
-  before_filter :permission_to_search, :only => :results
   skip_before_filter :load_project
+  before_filter :load_project_search, :only => :results
+  before_filter :permission_to_search, :only => :results
 
   def results
     @search = params[:search]
-    @current_project = Project.find_by_permalink(params[:project_id]) if params[:project_id]
 
     unless @search.blank?
       @comments = Comment.search @search,
@@ -16,7 +16,11 @@ class SearchController < ApplicationController
   end
   
   protected
-  
+
+    def load_project_search
+      @current_project = Project.find_by_permalink(params[:project_id]) if params[:project_id]
+    end
+
     def permission_to_search
       unless user_can_search? or (@current_project and project_owner.can_search?)
         flash[:notice] = "Search is disabled"
