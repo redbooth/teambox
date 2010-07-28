@@ -1,5 +1,11 @@
 class Task < RoleRecord
 
+  # IDs equal or bigger than :resolved will be considered as archived tasks
+  STATUSES = {:new => 0, :open => 1, :hold => 2, :resolved => 3, :rejected => 4}
+
+  ACTIVE_STATUS_NAMES = [ :new, :open ]
+  ACTIVE_STATUS_CODES = ACTIVE_STATUS_NAMES.map { |status_name| STATUSES[status_name] }
+
   concerned_with :validation,
                  :scopes,
                  :associations,
@@ -18,12 +24,6 @@ class Task < RoleRecord
                   :body
 
   attr_accessor :previous_status, :previous_assigned_id, :body
-
-  # IDs equal or bigger than :resolved will be considered as archived tasks
-  STATUSES = {:new => 0, :open => 1, :hold => 2, :resolved => 3, :rejected => 4}
-
-  ACTIVE_STATUS_NAMES = [ :new, :open ]
-  ACTIVE_STATUS_CODES = ACTIVE_STATUS_NAMES.map { |status_name| STATUSES[status_name] }
 
   def archived?
     [STATUSES[:rejected],STATUSES[:resolved]].include?(status)

@@ -1,7 +1,7 @@
 %ol.global_navigation
   %li
     = link_to_unless_current current_user.login, current_user
-    - my_task_count = current_user.assigned_tasks_count
+    - my_task_count = current_user.assigned_tasks.count
     - if my_task_count > 0
       == (#{ link_to_unless_current(t('common.tasks', :count => my_task_count), task_lists_path(:assigned_to => :mine)) })
       

@@ -17,6 +17,9 @@ class Person < ActiveRecord::Base
   PERMISSIONS = [:view,:edit,:delete,:all]
   
   named_scope :admins, :conditions => "role = #{ROLES[:admin]}"
+  
+  named_scope :from_unarchived, :joins => :project,
+    :conditions => ['projects.archived = ?', false]
 
   def owner?
     project.owner?(user)

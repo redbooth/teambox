@@ -1,5 +1,4 @@
 require 'digest/sha1'
-require 'time_zone'
 
 # A User model describes an actual user, with his password and personal info.
 # A Person model describes the relationship of a User that follows a Project.
@@ -7,7 +6,6 @@ require 'time_zone'
 class User < ActiveRecord::Base
 
   include ActionController::UrlWriter
-  extend TimeZone
 
   acts_as_paranoid
   concerned_with  :activation,
@@ -18,7 +16,8 @@ class User < ActiveRecord::Base
                   :roles,
                   :rss,
                   :scopes,
-                  :validation
+                  :validation,
+                  :task_reminders
 
   LOCALE_CODES = I18n.available_locales.map(&:to_s)
 
@@ -193,57 +192,6 @@ class User < ActiveRecord::Base
       xml.tag! 'updated-at', updated_at.to_s(:db)
       xml.tag! 'avatar-url', avatar_or_gravatar_url(:thumb)
     end
-  end
-
-  def self.send_daily_task_reminders
-    tzs = time_zones_to_send_daily_task_reminders_to
-    in_time_zone(tzs.map(&:name)).wants_task_reminder_email.each do |user|
-      tasks = user.tasks_for_daily_reminder_email
-      Emailer.deliver_daily_task_reminder(user, tasks) unless tasks.values.flatten.empty?
-    end
-  end
-
-  def self.time_zones_to_send_daily_task_reminders_to
-    sending_hour = Time.parse(Teambox.config.daily_task_reminder_email_time).hour
-    time_zones_with_time(sending_hour)
-  end
-
-  def assigned_tasks(project_filter)
-    people.reject{ |r| r.project.archived? }.map { |person| person.project.tasks }.flatten.
-      select { |task| task.active? }.
-      select { |task| task.assigned_to?(self) }.
-      sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
-  end
-
-  def assigned_tasks_count
-    people.reject{ |r| r.project.archived? }.map { |person| person.project.tasks }.flatten.
-      select { |task| task.active? && task.assigned_to?(self) }.size
-  end
-
-  def tasks_for_daily_reminder_email
-    return {} if [0, 6].include?(Date.today.wday)
-    assigned_tasks = assigned_tasks(:all)
-    tasks_without_due_date, tasks_with_due_date  = assigned_tasks.partition { |task| task.due_on.nil? }
-    tasks_by_dueness = tasks_with_due_date.inject({}) do |tasks, task|
-      if Date.today == task.due_on
-        tasks[:today] ||= []
-        tasks[:today].push(task)
-      elsif Date.today + 1 == task.due_on
-        tasks[:tomorrow] ||= []
-        tasks[:tomorrow].push(task)
-      elsif task.due_on > Date.today and task.due_on < Date.today + 15
-        tasks[:for_next_two_weeks] ||= []
-        tasks[:for_next_two_weeks].push(task)
-      elsif Date.today > task.due_on
-        tasks[:late] ||= []
-        tasks[:late].push(task)
-      end
-      tasks
-    end
-    if !tasks_by_dueness.values.flatten.empty? || [1, 4].include?(Date.today.wday)
-      tasks_by_dueness[:no_due_date] = tasks_without_due_date
-    end
-    tasks_by_dueness
   end
 
   def in_project(project)

@@ -51,6 +51,37 @@ describe Task do
 
     it "should send an email to the responsible"
   end
+  
+  describe "assigned_to filter" do
+    before(:all) do
+      @user = Factory(:user)
+      
+      @projects = [Factory(:project), Factory(:project), Factory(:archived_project)]
+      people = @projects.map do |project|
+        Factory(:person, :user => @user, :project => project)
+      end
+      
+      Factory(:task, :project => @projects[0])
+      Factory(:task, :project => @projects[0], :assigned => people[0], :name => "Feed the cat")
+      Factory(:resolved_task, :project => @projects[0], :assigned => people[0])
+      Factory(:task, :project => @projects[1], :assigned => people[1], :name => "Feed the dog")
+      Factory(:task, :project => @projects[2], :assigned => people[2])
+    end
+    
+    after(:all) do
+      User.delete_all
+      Project.delete_all
+    end
+    
+    it "gets correct count" do
+      Task.active.assigned_to(@user).count.should == 2
+    end
+    
+    it "gets correct tasks" do
+      tasks = Task.active.assigned_to(@user).all(:order => 'tasks.id')
+      tasks.map(&:name).should == ["Feed the cat", "Feed the dog"]
+    end
+  end
 
   describe "when assigning a task to a user" do
     it "the person belonging to the user should be assigned" do

@@ -88,7 +88,9 @@ class Emailer < ActionMailer::Base
     body          :project => project, :task_list => task_list, :recipient => user
   end
 
-  def daily_task_reminder(user, tasks)
+  def daily_task_reminder(user)
+    tasks = user.tasks_for_daily_reminder_email
+    
     defaults
     recipients    user.email
     subject       I18n.t("users.daily_task_reminder_email.daily_task_reminder")
