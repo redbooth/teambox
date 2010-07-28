@@ -99,7 +99,7 @@ Given /^the task called "([^\"]*)" is assigned to "([^\"]*)"$/ do |task_name, lo
 end
 
 Given /^I have no tasks assigned to me$/ do
-  @current_user.assigned_tasks(:all).each { |task| task.destroy }
+  @current_user.assigned_tasks.destroy_all
 end
 
 Given /^the task called "([^\"]*)" is (new|hold|open|resolved|rejected)$/ do |name, status|

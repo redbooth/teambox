@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe User do
   it { should have_many(:projects_owned) }
@@ -20,8 +20,6 @@ describe User do
   it { should validate_presence_of(:email) }
   it { should validate_length_of(:email, :within => 6..100) }
   it { should validate_uniqueness_of(:email) }
-
-# it { should validate_associated :projects }
 
   describe "invited count" do
     before do
@@ -260,26 +258,26 @@ describe User do
       boring_task = Factory(:task, :project => @boring_project)
       interesting_task.assign_to(@user)
       boring_task.assign_to(@user)
-      user_tasks = @user.assigned_tasks(:all)
+      user_tasks = @user.assigned_tasks.all
       user_tasks.should include(interesting_task, boring_task)
     end
 
     it "should not return a held task" do
       held_task = Factory(:held_task, :project => @interesting_project)
       held_task.assign_to(@user)
-      @user.assigned_tasks(:all).should_not include(held_task)
+      @user.assigned_tasks.all.should_not include(held_task)
     end
 
     it "should not return a resolved task" do
       resolved_task = Factory(:resolved_task, :project => @interesting_project)
       resolved_task.assign_to(@user)
-      @user.assigned_tasks(:all).should_not include(resolved_task)
+      @user.assigned_tasks.all.should_not include(resolved_task)
     end
 
     it "should not return a rejected task" do
       rejected_task = Factory(:rejected_task, :project => @interesting_project)
       rejected_task.assign_to(@user)
-      @user.assigned_tasks(:all).should_not include(rejected_task)
+      @user.assigned_tasks.all.should_not include(rejected_task)
     end
   end
 
