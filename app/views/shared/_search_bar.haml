@@ -5,5 +5,8 @@
     - form_tag search_destination do
       %input{ :name => 'search', :type => 'search',
         :placeholder => per_project ? t('search.placeholder_in_project') : t('search.placeholder') }
-      = hidden_field_tag :project_id, @current_project
-      = submit_tag
+        
+      - if per_project
+        = hidden_field_tag :project_id, @current_project
+        
+      = submit_tag "search"
