@@ -1,12 +1,8 @@
 module InvitationsHelper
 
-  def invitation_fields(f)
-    render :partial => 'invitations/fields', :locals => { :f => f }
-  end
-  
   def list_invitations_for_group(group,invitations)
     render :partial => 'invitations/group_invitation', :collection => invitations,
-    :locals => { :group => group, :project => nil, :target => group }
+      :locals => { :group => group, :project => nil, :target => group }
   end
 
   def list_pending_invites(invitations)
@@ -21,10 +17,6 @@ module InvitationsHelper
         :url => link,
         :method => :delete
     end
-  end
-  
-  def new_invitation_link(project)
-    link_to 'Invite someone', new_project_invitation_path(project)
   end
   
   def resend_invitation_link(target,invitation)
@@ -44,11 +36,6 @@ module InvitationsHelper
   
   def invite_user(project,user)
     link_to t('.invite', :username => user.name), '#', :class => 'invite_user', :login => user.login
-  end
-  
-  def invite_user_loading(project,user)
-    update_page do |page|
-    end
   end
   
   def invitation_id(element,project,user)

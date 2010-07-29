@@ -1,21 +1,20 @@
-%h2
-  = t('.title')
+%h2= t('.title')
 
 #groups_owned
   - if @group
     %p= t('.your_group')
     .group.owned
-      = list_groups([@group])
+      = render @group
 
 - if @group.nil?
-  = groups_primer
+  = render 'groups/primer'
 
 #groups
   - if @groups.any?
     %p= t('.groups_in')
-    = list_groups(@groups_member)
+    = render @groups_member
   - else
     .account
       %p= t('.no_groups')
 
-= render :partial => 'column'
+= render 'column'

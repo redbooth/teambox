@@ -333,6 +333,12 @@ document.on('click', 'form.new_comment #comment_upload_link', function(e, link) 
   }
 })
 
+document.on('click', 'form.new_comment #comment_hours_link', function(e, link) {
+  e.preventDefault()
+  link.hide()
+  link.up().next('.hours').show()
+})
+
 hideBySelector('.thread form.new_comment .extra')
 
 document.on('focusin', '.thread form.new_comment textarea', function(e, input) {

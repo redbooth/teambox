@@ -12,10 +12,8 @@
     - unless @user.biography.blank?
       %p.biography= @user.biography
     = render_card(@card) if @card
-    =# list_projects(@user.projects)
 
 - if current_user.observable?(@user)
-  =# new_comment_user_form(current_user)
   %h2= t('.recent_activity_for', :user_name => @user.name)
   #activities
     = list_activities(@activities)

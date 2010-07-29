@@ -191,7 +191,7 @@ zh:
     prev: 上一个
     print: 打印此页
     save: 保存
-    show_more: "显示更多"
+    show_more: 显示更多
   confirm: 
     delete_page: 您确信要删除此页面？
     delete_task: 您确信要删除此任务？
@@ -770,6 +770,8 @@ zh:
     sent: 
       email_sent: "<b>我们刚刚发布了一个提醒邮件给此用户，邮件中包含了一个接受您项目邀请的链接。</b>. 如果他们不能收到此邮件，请确保此邮件不会作为垃圾邮件处理，或者尝试换一个邮件地址。如果还有问题，请联系我们。"
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  locales: 
+    zh: 中文
   not_found: 
     conversation: "在这个项目中找不到话题%{id}。"
     group: "小组%{id}不存在。"
@@ -916,7 +918,6 @@ zh:
       confirm_delete: 您确信要永久删除此项目？此操作不可恢复。如果您还想保留它，请使用存档项目操作。
       forever: 永久删除此项目
       name: 名称
-      name_description: "请选择一个简短明确的标题。如：Taggart Transcontinental"
       owner: 所有者
       owner_description: 所有者是一个项目的主要负责人，他不能被从此项目中移除，除非先行指定另一个所有者。
       permalink: URL
@@ -926,12 +927,10 @@ zh:
       archived: "显示%{count}个已存档项目..."
       new_project: 新增项目
       projects: 我的项目
-      refreshes: 每分钟自动刷新
       rss: 
         description: 概览所有您的项目
         title: 项目摘要
       subscribe: 订阅动态反馈
-      title: 我的所有项目动态
     new: 
       create_an_example_project: "第一次使用Teambox？可以先<a href='%{link}'>创建一个样例项目</a>以尝试并熟悉Teambox。"
       created: 您的项目已经创建成功！
@@ -965,9 +964,7 @@ zh:
       item4: <b>计划</b>需要完成的任何及发布对任务的更新。
       item5: <b>分享信息</b>于多个项目，通过易于修改的页面。
     show: 
-      invite_people: 邀请好友...
       new_task_list_link: 新建任务列表
-      people_in_project: 项目成员
       rss: 
         description: "项目%{name}的近期活动"
         title: "%{name}"

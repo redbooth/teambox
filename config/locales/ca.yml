@@ -685,6 +685,8 @@ ca:
     sent: 
       email_sent: "<b>Hem enviat un email avisant l'usuari que accepti la teva invitació</b>. Si no poden trobar l'email, assegurat que no s´ha classificat com a spam. Si el problema persisteix, ens escrius un email."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  locales: 
+    ca: Català
   notes: 
     actions: 
       delete_confirm: "Segur que vols esborrar aquesta nota?"
@@ -730,10 +732,10 @@ ca:
     index_task_lists: "Les meves tasques"
     index_uploads: "Els meus arxius"
     new_conversations: "Nova Conversa"
-    results_search: Cerca
     new_example_projects: "Crear un projecte d'exemple"
     new_projects: "Nou projecte"
     new_users: "Crear compte"
+    results_search: Cerca
     show_projects: Resum
     welcome_users: ¡Benvingut!
   pages: 
@@ -813,7 +815,6 @@ ca:
       confirm_delete: "Estàs segur de que vols esborrar aquest projecte definitivament? NO HI HA UN PAS ENRERE. Si el vols conservar, utilitza Arxivar Projecte."
       forever: "Borrar permanentment aquest projecte"
       name: Nom
-      name_description: "Escull un nom breu i descriptiu. Per exemple: Taggart Transcontinental"
       owner: Propietari
       owner_description: "El propietari és el màxim responsable d'un projecte. No es pot expulsar del projecte, a menys que un altre usuari sigui anomenat propietari."
       permalink: URL
@@ -822,12 +823,10 @@ ca:
       archived: "Veure %{count} projectes arxivats..."
       new_project: "Cap Projecte"
       projects: "Els meus projectes"
-      refreshes: "Actualiza't cada minut"
       rss: 
         description: "Activitat en tots els teus projectes"
         title: Teambox
       subscribe: "Subscriu-te al feed d'activitats"
-      title: "Activitat en tots els teus projectes"
     new: 
       create_an_example_project: "És la teva primera vegada a Teambox? <a href='%{link}'>Crea un projecte d'exemple</a> per experimentar i aprendre."
       created: "S´ha creat el projecte!"
@@ -860,9 +859,7 @@ ca:
       item4: "<b>Planifica</b>el que has def fer amb les Tasques."
       item5: "<b>Comparteix informació</b> amb les Pàgines dins de cadascun dels projectes."
     show: 
-      invite_people: "Convidar algú més..."
       new_task_list_link: "Nova llista de tasques"
-      people_in_project: "Persones en aquest projecte"
       rss: 
         description: "Activitat recent per a %{name}"
         title: "%{name}"

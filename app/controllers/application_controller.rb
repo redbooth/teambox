@@ -87,18 +87,13 @@ class ApplicationController < ActionController::Base
     end
     
     def set_locale
-      # if this is nil then I18n.default_locale will be used
-      I18n.locale = logged_in? ? current_user.language : get_browser_locale
+      I18n.locale = logged_in? ? current_user.locale : user_agent_locale
     end
     
-    LOCALES_REGEX = /\b(#{ I18n.available_locales.map(&:to_s).join('|') })\b/
+    LOCALES_REGEX = /\b(#{ I18n.available_locales.join('|') })\b/
     
-    def get_browser_locale
-      if request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX
-        $&
-      else
-        I18n.default_locale
-      end
+    def user_agent_locale
+      request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX && $&
     end
     
     def fragment_cache_key(key)

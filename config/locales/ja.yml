@@ -240,12 +240,11 @@ ja:
     print: このページを印刷する
     rename: 名前の変更
     save: 保存
-    show_more: "さらに詳しく"
+    show_more: さらに詳しく
     tasks: 
       one: "1 タスク"
       other: "%{count} タスク"
   confirm: 
-    delete_group: このグループを削除してよいですか？
     delete_page: このページを削除しますか?
     delete_task: このタスクを削除しますか?
     delete_task_list: このタスクリストを削除しますか?
@@ -766,8 +765,6 @@ ja:
       no_edit: このグループを編集できません
       not_admin: このグループを管理できません
       not_enabled: このシステムではグループが有効になっていません
-      upgrade: "<b>独自のドメイン作成</b>には,  {{link}}をしてください。"
-      upgrade_account: アップグレードしましょう
     fields: 
       description: 説明
       name: 名前
@@ -797,7 +794,6 @@ ja:
       submit: 作成
       title: グループの作成
     primer: 
-      configure_domain: "カスタマイズ化されたサブドメイン、例えばをhttp://yourcompany.teambox.comやhttp://yourdomain.comのように所有されている独自のドメイン名を利用可能です。 <a href='{{link}}' target='_blank'>詳しくはこちら</a>. "
       create_group: グループを作成する
       no_group_create: "グループを所有していません。%{link}"
     search: 
@@ -866,6 +862,8 @@ ja:
     sent: 
       email_sent: <b>このユーザーにプロジェクトへの招待を受け入れるリンクを含んだeメールを送信しました。もしeメールが見つからないようであれば、迷惑メールに分類されていないか確認するか、異なるeメールアドレスを試して見てください。もし問題が解決しないようでしたら、我々のスタッフに連絡してください。
   latest_announcement: "Teamboxに関する最新の情報は<a href='http://blog.teambox.com'>ブログ(英語)</a>でお読みになれます。日本語での提供は下半期を2010年秋頃を予定してます。 "
+  locales: 
+    ja: 日本語
   not_found: 
     conversation: "チャット %{id} はこのプロジェクトにはありません"
     group: "グループ %{id} は存在しません。"
@@ -890,16 +888,12 @@ ja:
       format: 
         delimiter: ","
         format: "%u%n"
-        precision: 2
         separator: "."
         unit: Yen
     format: 
       delimiter: ","
-      precision: 3
       separator: "."
     human: 
-      format: 
-        precision: 1
       storage_units: 
         format: "%n %u"
         units: 
@@ -940,7 +934,6 @@ ja:
     new_projects: 新規プロジェクト
     new_users: サインアップ
     results_search: 検索
-    show_plans: 計画
     show_projects: 概観
     welcome_users: ようこそ!
   pages: 
@@ -1025,23 +1018,6 @@ ja:
       edit: 編集
     update: 
       success: "%{name}の役割を更新しました "
-  plans: 
-    copies: 
-      copy1: "如何でしたか？ <a href='{{link}}'>アップグレード</a> によりさらに便利になります。"
-      copy2: "<a href='{{link}}'>アップグレードはこちらから</a>プロジェクト数と容量アップ、さらにプロジェクト間の検索が可能になります。"
-      copy3: "プレミアムアカウントにより<a href='{{link}}'>容量アップ</a>。容量が追加され2000プロジェクまで利用可能です。"
-      copy4: "プレミアム・アカウントにより<a href='{{link}}'>効率アップ</a>: 全てのプロジェクトSearch bar across all projects."
-      copy5: "<a href='{{link}}'>アップ・グレードしましょう</a>そしてより一層のコラボレーションを実現しましょう "
-      copy6: "全てのプロジェクト内を検索できる”検索バー”は業務効率を大幅アップします。 <a href='{{link}}'>アップグレード</a>をお勧めします! "
-      copy7: "あなたのビジネスは私達にとっても重要です。プレミアム・プランで <a href='{{link}}'>より手厚いサポート</a>を提供しています。"
-    show: 
-      branding: 
-        configure: "ご利用中のプランは独自ブランドの利用及びドメイン名の設定可能です。こちらにて<a href='{{link}}'>独自ブランドの設定</a>ができます. "
-        not_available: ご利用中のプランは<strong>独自ブランドの利用</strong>不可です。アップデートをご利用ください。
-      current_plan: "あなたの現在のプランは<strong>{{name}}</strong>です"
-      max_projects: "{{max}}プロジェクトまで作成出来ます"
-      max_storage: "{{max}}まで保存できます"
-      plan: あなたのTeamboxプラン
   projects: 
     edit: 
       change_owner: オーナーを変更
@@ -1058,31 +1034,22 @@ ja:
       confirm_delete: "このプロジェクトを永久に削除してもよろしいですか? 削除すると、元に戻すことはできません。もし保存したいのであれば、プロジェクトをアーカイブしてください。"
       forever: このプロジェクトを永久に削除する
       name: プロジェクト名
-      name_description: "簡潔でわかりやすいプロジェクト名を選んでください。例: Taggart Transcontinental"
       new: 
         time_tracking_docs: もっと学ぶ
       owner: オーナー
       owner_description: オーナーはプロジェクトの責任者です。オーナーは、別のユーザーにその所有権を譲らない限り、プロジェクトから外すことはできません。
       permalink: URL
       permalink_description: あなたのプロジェクトのアドレスです。なるべく短くしましょう。空白を入れることはできません。
-      settings: 
-        you_cant_unarchive: " {{active}}のプロジェクトを利用中です。現在のプランでは {{max}} のプロジェクトまでご利用可能です。"
       tracks_time: "タイム・トラッキング可能です。<em>Will allow users to log time for tasks.</em>"
     index: 
       archived: "%{count}個のアーカイブされたプロジェクト"
       new_project: 新規プロジェクト
       projects: 私のプロジェクト
-      refreshes: 一分毎に更新
       rss: 
         description: 全プロジェクトの概観
         title: プロジェクト概観
       subscribe: ニュースフィードを購読する
-      title: 全てのプロジェクトのニュースフィード
     new: 
-      active_projects: 
-        one: 一つの稼働中のプロジェクトがあります。
-        other: 稼働中のプロジェクトはございません。
-        zero: " {{count}}の稼働中のプロジェクトがございます。"
       create_an_example_project: "Teamboxは初めてですか? <a href='%{link}'>サンプルプロジェクトを作成して</a>、いろいろ試して学んでみましょう。"
       created: プロジェクトが作成されました!
       invalid_project: 無効なプロジェクトです。エラーを修正して再度実行してください。
@@ -1090,12 +1057,6 @@ ja:
       not_allowed: このアカウントではプロジェクトの作成はできません。
       submit: プロジェクトを作成して招待を開始する
       title: プロジェクトの作成
-      upgrade: 
-        to_2: "<a href='{{link}}'>アップグレードはこちらから</a> to create <b>up to {{projects}} projects</b>, store up to <b>{{storage}} Gb</b> of files and use the <b>search bar across all projects</b>. "
-      you_can_create_more: 
-        one: あと一つプロジェクトを現在のプランで追加出来ます。
-        other: "プロジェクトの追加はこれ以上出来ません。<br/>現在ご利用のプランにおける最大プロジェクト数は{{max}}です。"
-        zero: "あと {{count}}のプロジェクトを現在のプランで追加出来ます。"
     new_primer: 
       define1: プロジェクトはチームメイトと共有するグループです。
       define2: "プロジェクト中では、チームメイトは以下のことができます:"
@@ -1121,9 +1082,7 @@ ja:
       item4: "<b>計画</b> 「タスク」で何が必要かを計画し、最新情報を投稿しましょう。"
       item5: "<b>情報共有</b> それぞれのプロジェクトにある、簡単に編集できる「ページ」で情報共有しましょう。"
     show: 
-      invite_people: 招待...
       new_task_list_link: 新規タスクリスト
-      people_in_project: プロジェクトのメンバー
       rss: 
         description: "%{name}プロジェクトの最近の活動"
         title: "%{name}"
@@ -1237,7 +1196,6 @@ ja:
       account_settings: アカウント設定
       delete_account: アカウント削除
       notifications: 通知設定
-      plans_and_billing: 課金プラン
       profile_information: プロフィール
       profile_picture: プロフィール画像
     watchers: 

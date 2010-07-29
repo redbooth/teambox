@@ -116,15 +116,29 @@ describe Emailer do
       comment.previous_status.should == Task::STATUSES[:new]
     end
     
-    it "should post a comment to a project" do
+    it "should post a comment to a project if no subject is given" do
       @email_template.to = "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}"
       @email_template.body = "Yes i agree completely!"
       Emailer.receive(@email_template.to_s)
       
+      @project.conversations(true).first.simple.should == true
       comment = @project.comments(true).first
       comment.body.should == "Yes i agree completely!"
     end
-    
+
+    it "should post a comment to a project if there's a subject" do
+      @email_template.to = "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}"
+      @email_template.subject = "Wat do I do?"
+      @email_template.body = "the problem is solution"
+      Emailer.receive(@email_template.to_s)
+
+      conversation = @project.conversations(true).first
+      conversation.simple.should == false
+      conversation.name.should == "Wat do I do?"
+      comment = @project.comments(true).first
+      comment.body.should == "the problem is solution"
+    end
+
     it "should post a comment to a conversation" do
       @email_template.to = "#{@project.permalink}+conversation+#{@conversation.id}@#{Teambox.config.smtp_settings[:domain]}"
       @email_template.body = "I am outraged!"

@@ -70,8 +70,8 @@
     
 - if user.new_record? || sub_action == 'settings'
   .language.select
-    = f.label :language, t('.language')
-    = f.select :language, User::LANGUAGES
+    = f.label :locale, t('.language')
+    = f.select :locale, locale_select_values
     
   .time_zone.select
     = f.label :time_zone, t('.time_zone')
@@ -135,6 +135,6 @@
     %p= link_to t('.account_deletion.delete_my_account'), destroy_user_path
 
 - if @sub_action == 'linked_accounts'
-  = render :partial => 'users/settings/linked_accounts'
+  = render 'users/settings/linked_accounts'
 
 = hidden_field_tag 'sub_action', sub_action

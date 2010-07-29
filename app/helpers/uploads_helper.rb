@@ -1,13 +1,11 @@
 module UploadsHelper
   
   def upload_primer(project)
-    render :partial => 'uploads/primer', :locals => { :project => project }
+    render 'uploads/primer', :project => project
   end
 
   def edit_upload_form(project,upload)
-    render :partial => 'uploads/edit', :locals => {
-      :project => project,
-      :upload => upload }
+    render 'uploads/edit', :project => project, :upload => upload
   end
 
   def link_to_upload(upload, text, attributes = {})
@@ -29,9 +27,9 @@ module UploadsHelper
   end
   
   def page_upload_actions_link(page, upload)
-    return unless upload.editable?(current_user)
-    render :partial => 'uploads/slot_actions',
-      :locals => { :upload => upload, :page => page }
+    if upload.editable?(current_user)
+      render 'uploads/slot_actions', :upload => upload, :page => page
+    end
   end
   
   def list_uploads_inline(uploads)
@@ -47,7 +45,7 @@ module UploadsHelper
   end
 
   def upload_form_params(comment)
-    render :partial => 'uploads/iframe_upload', :locals => { :comment => comment, :upload => Upload.new }
+    render 'uploads/iframe_upload', :comment => comment, :upload => Upload.new
   end
   
   def file_icon_image(upload,size='48px')

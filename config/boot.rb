@@ -1,15 +1,10 @@
-begin
-  # Try to require the preresolved locked set of gems.
-  require File.expand_path('../../.bundle/environment', __FILE__)
-rescue LoadError
-  # Fall back on doing an unlocked resolve at runtime.
-  unless defined? Bundler
-    require 'rubygems'
-    gem 'bundler', '~> 0.9.26'
-    require 'bundler'
-  end
-  Bundler.setup
+unless defined? Bundler
+  require 'rubygems'
+  gem 'bundler', '~> 1.0.0.rc'
+  require 'bundler'
 end
+
+Bundler.setup
 
 module Rails
   # so Rails doesn't think we have an "outdated" boot.rb file

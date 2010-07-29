@@ -12,12 +12,12 @@
 = javascript_projects_people [@current_project]
 
 - content_for :column do
-  = render :partial => 'people_list', :locals => { :project => @current_project, :compact => false }
+  = render 'recent_conversations', :project => @current_project, :conversations => @recent_conversations
+
+  = render 'people_list', :project => @current_project, :compact => false
   - if @current_project.users.size > 1
     .tip= t('.tip')
 
-  = render :partial => 'recent_conversations', :locals => { :project => @current_project, :conversations => @recent_conversations}
-    
   = instructions_for_feeds
   = instructions_for_calendars
   = #print_project_link(@current_project)

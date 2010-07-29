@@ -1,7 +1,7 @@
 module PageDividersHelper
 
   def divider_fields(f)
-    render :partial => 'dividers/fields', :locals => { :f => f }
+    render 'dividers/fields', :f => f
   end
   
   def new_page_divider_link(project,page)

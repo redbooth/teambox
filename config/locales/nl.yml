@@ -687,6 +687,8 @@ nl:
     sent: 
       email_sent: "<b>We hebben zojuist een e-mailbericht gestuurd naar deze gebruiker met een link om de projectuitnodiging te accepteren</b>. Als ze de e-mail niet kunnen vinden, zorg dan dat het niet geclassificeerd is als spam of probeer een ander e-mailadres. Als de problemen aanhouden, neem dan alstublieft contact op met onze medewerkers."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  locales: 
+    nl: Nederlands
   notes: 
     actions: 
       delete_confirm: "Weet u zeker dat u deze notitie wilt verwijderen?"
@@ -819,7 +821,6 @@ nl:
       confirm_delete: "Weet u het zeker dat u dit project voor altijd wilt verwijderen? ER IS GEEN MANIER OM HET PROJECT TERUG TE KRIJGEN. Als u het wilt bewaren, gebruik dan Project Archiveren inplaats van verwijderen."
       forever: "Verwijder dit project voor altijd"
       name: Naam
-      name_description: "Kies een korte en beschrijvende titel. Bijvoorbeeld: Taggart Transcontinental"
       owner: Eigenaar
       owner_description: "De eigenaar is de hoofdverantwoordelijke voor een project. Hij kan niet verwijderd worden uit het project tenzij eigendom wordt overgedragen aan een andere gebruiker."
       permalink: URL
@@ -828,12 +829,10 @@ nl:
       archived: "Toon %{count} Gearchiveerde projecten..."
       new_project: "Nieuw Project"
       projects: "Mijn projecten"
-      refreshes: "Vernieuwt elke minuut"
       rss: 
         description: "Overzicht van al uw projecten"
         title: "Projecten Overzicht"
       subscribe: "Inschrijven op de nieuws feed"
-      title: "Nieuws feed voor al uw projecten"
     new: 
       create_an_example_project: "Eerste keer in Teambox? <a href='%{link}'>Maak een voorbeeld project aan</a> om rond te spelen en te leren."
       created: "Uw project is aangemaakt!"
@@ -866,9 +865,7 @@ nl:
       item4: "<b>Plan</b> over wat er moet worden gedaan en post updates met taken."
       item5: "<b>Deel informatie</b> door makkelijke wijzigbare Pagina's voor elk project."
     show: 
-      invite_people: "Nodig mensen uit..."
       new_task_list_link: "Nieuwe Takenlijst"
-      people_in_project: "Mensen in dit project"
       rss: 
         description: "Recente activiteiten voor het project %{name}"
         title: "%{name}"

@@ -7,4 +7,4 @@
       :loading => full_thread_loading(thread_id)
     = loading_image("#{thread_id}_more_comments")
 - comments[0..1].reverse.each do |comment|
-  = render :partial => 'comments/comment', :locals => { :comment => comment, :threaded => true }
+  = render comment, :threaded => true

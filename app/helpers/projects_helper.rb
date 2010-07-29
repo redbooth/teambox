@@ -10,18 +10,10 @@ module ProjectsHelper
 
   def archive_project_link(project)
     link_to_function content_tag(:span,t('projects.fields.archiving')), 
-    "$('project_archived').value = 1; $('content').down('.edit_project').submit();",
-    :class => 'button'
+      "$('project_archived').value = 1; $('content').down('.edit_project').submit();",
+      :class => 'button'
   end
   
-  def project_column_navigation
-    render :partial => 'shared/project_column_navigation'
-  end
-
-  def project_new_primer
-    render :partial => 'projects/new_primer'    
-  end
-
   def permalink_example(permalink)
     out = host_with_protocol + projects_path + '/'
     out << content_tag(:span, permalink, :id => 'handle', :class => 'good')
@@ -33,7 +25,7 @@ module ProjectsHelper
   end
 
   def project_settings_navigation
-    render :partial => 'shared/project_settings_navigation'
+    render 'shared/project_settings_navigation'
   end
 
   def list_users_statuses(users)
@@ -42,13 +34,13 @@ module ProjectsHelper
   
   def list_projects(projects)
     if projects.any?
-      render :partial => 'shared/projects', :locals => { :projects => projects }
+      render 'shared/projects', :projects => projects
     end
   end
 
   def list_archived_projects(projects)
     if projects.any?
-      render(:partial => 'shared/archived_projects', :locals => { :projects => projects })
+      render 'shared/archived_projects', :projects => projects
     end
   end
   
@@ -57,47 +49,36 @@ module ProjectsHelper
   end
   
   def new_project_link
-    link_to content_tag(:span, t('.new_project')), new_project_path, :class => 'add_button', :id => 'new_project_link'
+    link_to content_tag(:span, t('.new_project')), new_project_path,
+      :class => 'add_button', :id => 'new_project_link'
   end
   
   def projects_tab_list(projects)
-    render :partial => "shared/projects_dropdown", :locals => {:projects => projects}
+    render 'shared/projects_dropdown', :projects => projects
   end
 
   def project_fields(f,project,sub_action='new')
-    render :partial => "projects/fields/#{sub_action}", 
-      :locals => { 
-        :f => f,
-        :project => project }
+    render "projects/fields/#{sub_action}",  :f => f, :project => project
   end
    
-  def project_primer
-    render :partial => 'projects/primer'
-  end
-
   def instructions_for_feeds
-    content_tag(:div,
-      link_to(t('shared.instructions.subscribe_to_feeds'), feeds_path),
-      :class => :subscribe)
+    link_to t('shared.instructions.subscribe_to_feeds'), feeds_path, :class => :subscribe
   end
 
   def subscribe_to_all_projects_link
-    content_tag(:div,
-      link_to(t('.subscribe_to_all'), user_rss_token(projects_path(:format => :rss))),
-      :class => :subscribe)
+    link_to t('.subscribe_to_all'),
+      user_rss_token(projects_path(:format => :rss)),
+      :class => 'subscribe subscribe_all'
   end
 
   def subscribe_to_project_link(project)
-    content_tag(:div,
-      link_to(t('.subscribe_to_project', :project => project),
-        user_rss_token(project_path(project, :format => :rss))),
-      :class => :subscribe)
+    link_to t('.subscribe_to_project', :project => project),
+      user_rss_token(project_path(project, :format => :rss)),
+      :class => :subscribe
   end
 
   def instructions_for_calendars
-    content_tag(:div,
-      link_to(t('shared.instructions.subscribe_to_calendars'), calendars_path),
-      :class => :calendars)
+    link_to t('shared.instructions.subscribe_to_calendars'), calendars_path, :class => :calendars_link
   end
 
   def instructions_for_email(project)
@@ -118,14 +99,11 @@ module ProjectsHelper
     end
 
     if email_help
-      content_tag(:div,
-        link_to_function(t('shared.instructions.send_email' + suffix), "$('email_help').setStyle({ display: 'block'})") +
-        content_tag(:span, {:id => 'email_help'}) do
-          #link_to_function(t('common.close'), "$('email_help').setStyle({ display: 'none'})", :class => "closeThis") +
-          '<a href="#" class="closeThis">' + t('common.close') + "</a>" +
-          email_help
-        end,
-        {:class => :email})
+      span = content_tag(:span, :id => 'email_help', :style => 'display:none') do
+        %(<p>#{email_help}</p><a href='#' class='closeThis'>#{t('common.close')}</a>)
+      end
+      link_to_function(t('shared.instructions.send_email' + suffix),
+        ("$('email_help').toggle()"), :class => :email_link) + span
     end
   end
 
@@ -147,40 +125,20 @@ module ProjectsHelper
       :class => :calendar_links)
   end
   
-  def print_projects_link
-    content_tag(:div,
-      link_to(t('common.print'), projects_path(:format => :print)),
-      :class => :print)
-  end
-
   def print_project_link(project)
-    content_tag(:div,
-      link_to(t('common.print'), project_path(project,:format => :print)),
-      :class => :print)
+    link_to t('common.print'), project_path(project,:format => :print), :class => :print
   end
   
   def quicklink_conversations(project)
-    desc = t('shared.project_navigation.conversations')
-    link_to image_tag('drop_conv.png',
-                      :alt => desc,
-                      :title => desc), 
-                      project_conversations_path(project)
+    link_to '', project_conversations_path(project), :class => :comment_icon
   end
   
   def quicklink_tasks(project)
-    desc = t('shared.project_navigation.task_lists')
-    link_to image_tag('drop_tasklist.png', 
-                      :alt => desc,
-                      :title => desc), 
-                      project_task_lists_path(project)
+    link_to '', project_task_lists_path(project), :class => :task_icon
   end
 
   def quicklink_pages(project)
-    desc = t('shared.project_navigation.pages')
-    link_to image_tag('drop_page.png',
-                      :alt => desc,
-                      :title => desc), 
-                      project_pages_path(project)
+    link_to '', project_pages_path(project), :class => :page_icon
   end
 
   def reset_autorefresh

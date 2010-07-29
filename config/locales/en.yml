@@ -33,7 +33,6 @@ en:
     delete_task: Are you sure you want to delete this task?
     delete_page: Are you sure you want to delete this page?
     delete_upload: Are you sure you want to delete this file?
-    delete_hook: Are you sure you want to delete this hook?
   not_found:
     user: "User does not exist."
     conversation: "Conversation %{id} not found in this project."
@@ -422,7 +421,7 @@ en:
       title: Recent conversations
       view_all: View all conversations
       new: "+ New conversation"
-      first: "+ Create a first conversation"
+      first: "+ Create the first conversation"
     fields:
       tracks_time: "Enable time tracking. <em>Will allow users to log time for tasks.</em>"
       archiving: "Archive this project"
@@ -929,31 +928,7 @@ en:
       video: What's Teambox about?
       submit: Login
       login_failed: "Couldn't log you in as %{login}"
-  hooks:
-    index:
-      title: "Your hooks for this project"
-      explain: Hooks allow you to integrate Teambox with other web applications' notifications.
-      explain_more: |
-        You can use our examples or
-        <a target='_blank' href='http://help.teambox.com/faqs/integrations/webhooks'>learn how to integrate
-        your own services</a> with your projects.
-      active_hooks: Active hooks
-      add_hook: Add an integration hook
-      new_hook: "Create your own Hook"
-    fields:
-      name: Name of your hook
-      message: Message template <span>(<a href="http://help.teambox.com/faqs/integrations/webhooks" target="_blank">Instructions on editing templates</a>)</span>
-      instructions: Instructions for this webhook
-    new:
-      title: "Create a new hook"
-      submit: Create webhook
-    edit:
-      title: "Edit the hook '{{hook}}'"
-      url: "URLs for '{{hook}}'"
-      submit: Save
-    destroy:
-      success: "The hook '{{hook}}' was successfully deleted."
-      
+
   shared:
     strip:
       archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
@@ -974,7 +949,6 @@ en:
       picture: Project Picture
       deletion: Project Archiving/Deletion
       ownership: Ownership
-      hooks: Integration Hooks
     project_navigation:
       overview: Overview
       all_conversations: All Conversations

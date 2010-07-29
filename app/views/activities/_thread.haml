@@ -4,7 +4,7 @@
 - comments = thread.comments
 .thread{ :id => "thread_#{thread_id}" }
   - if thread.is_a?(Conversation) and thread.simple and comments.size > 0
-    = render :partial => 'comments/comment', :locals => { :comment => comments.pop, :simpleconv => true }
+    = render comments.pop, :simpleconv => true
   - else
     .title
       .info
@@ -21,7 +21,7 @@
           = t('.on_task_list')
           = link_to thread.task_list, [thread.task_list.project, thread.task_list], :class => 'task_list'
   .comments{ :id => "thread_#{thread_id}_comments" }
-    = render :partial => 'activities/thread_comments', :locals => { :comments => comments, :thread => thread }
+    = render 'activities/thread_comments', :comments => comments, :thread => thread
   .reply{ :id => "thread_#{thread_id}_reply" }
     - unless thread.is_a?(Task) && thread.closed?
       = new_comment_form(thread.project, thread.project.comments.new, :target => thread, :thread => true)

@@ -1,8 +1,8 @@
 --- 
 es: 
   activerecord: 
-    attributes:
-      address:
+    attributes: 
+      address: 
         city: Ciudad
         country: País
         state: Provincia
@@ -187,7 +187,7 @@ es:
       social_networks: "Redes sociales"
       vcard: "Descargar vCard"
       websites: "Sitios web"
-    card_types:
+    card_types: 
       business: Negocios
       fax: Fax
       home: Casa
@@ -202,13 +202,13 @@ es:
       add_phone_numbers: "Añadir teléfono"
       add_social_networks: "Añadir perfil"
       add_websites: "Añadir web"
-  comments:
-    attach:
-      tooltip: Adjuntar
+  comments: 
     actions: 
       confirm_delete: "Seguro que quieres borrar este comentario?"
       convert_task: "Convertir en una tarea"
       edit: "Editar comentario"
+    attach: 
+      tooltip: Adjuntar
     comment: 
       cannot_edit: "El comentario no se puede editar 15 minutos después de publicarse"
       commented_on: "-"
@@ -231,7 +231,7 @@ es:
       submit: Publicar
       task: "Define qué debe hacerse en un comentario."
       task_list: "Comparte ideas para esta lista de tareas. Para crear y asignar tareas, usa la barra lateral."
-    preview:
+    preview: 
       close: Cerrar
       preview: Previsualizar
       showing: "..."
@@ -805,11 +805,11 @@ es:
     comments: Entradas
     entry_hours: hrs
     entry_total: Total
-    filter_assigned:
-      anybody: "Cualquiera"
+    filter_assigned: 
+      anybody: Cualquiera
       my_tasks: "Mis tareas"
     filter_by: "Filtrar por"
-    filter_project:
+    filter_project: 
       all: "Todos los proyectos"
     filters: 
       assigned_to: Usuarios
@@ -836,13 +836,6 @@ es:
     index_user: 
       no_invitations: "No tienes ninguna invitación pendiente."
       title: "Invitaciones pendientes"
-    invite_format:
-      title: "En la caja de texto, puedes introducir una lista de usuario o de direcciones de correo. ej.:"
-      enter_this:
-        title: Introduce
-      to_invite:
-        title: Invitarás a
-        not_example: '(Ni <span class="mention">@fred</span> ni <span class="mention">@lisa</span>)'     
     invitation: 
       discard: "Descartar invitación"
       invited_email: "%{inviter} ha invitado a <b>%{email}</b> al proyecto."
@@ -850,6 +843,13 @@ es:
       pending: "Se ha enviado un email a este usuario, pero aún no ha confirmado"
       resend: "Reenviar email de invitación"
       time_ago: "(hace %{time_ago_in_words})"
+    invite_format: 
+      enter_this: 
+        title: Introduce
+      title: "En la caja de texto, puedes introducir una lista de usuario o de direcciones de correo. ej.:"
+      to_invite: 
+        not_example: "(Ni <span class=\"mention\">@fred</span> ni <span class=\"mention\">@lisa</span>)"
+        title: "Invitarás a"
     pending: 
       invited_to_join: "%{by} te ha invitado a unirte al proyecto %{project}."
       invited_to_join_group: "%{by} te ha invitado a unirte al grupo %{group}."
@@ -860,8 +860,8 @@ es:
     resend: 
       resent: "Hemos reenviado la invitación a %{recipient}. Si no pueden encontrar el email, asegúrate de que no se ha clasificado como spam."
       return: "Volver atrás"
-    search:
-      help: "Ayuda"
+    search: 
+      help: Ayuda
       invite: "Buscar e invitar"
       invite_from_project: "Invitar a alguien desde otro proyecto"
       invite_people: "Invitar usuarios al proyecto"
@@ -871,6 +871,8 @@ es:
     sent: 
       email_sent: "<b>Hemos enviado un email avisando al usuario para que acepte tu invitación</b>. Si no pueden encontrar el email, asegúrate de que no se ha clasificado como spam. Si el problema persiste, escríbenos un email."
   latest_announcement: "Novedades: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versión Móvil, traducción al francés y alemán y API</a>"
+  locales: 
+    es: Español
   not_found: 
     user: "El usuario no existe"
   notes: 
@@ -918,11 +920,11 @@ es:
     index_task_lists: "Mis tareas"
     index_uploads: "Mis archivos"
     new_conversations: "Nueva Conversación"
-    results_search: Búsqueda
     new_example_projects: "Crear un proyecto de ejemplo"
     new_pages: "Página nueva"
     new_projects: "Nuevo proyecto"
     new_users: "Crear cuenta"
+    results_search: Búsqueda
     show_projects: Resumen
     welcome_users: ¡Bienvenido!
   pages: 
@@ -956,7 +958,7 @@ es:
       feature4: "<b>Wiki</b>. Actúan como un wiki, dando toda información de tu proyecto."
       footer1: "Usa Teambox como una <b>pizarra compartida</b> para información de uso frecuente."
       footer2: "También puedes adjuntar archivos a cualquier página del proyecto. Disfruta!"
-      submit: Crear página
+      submit: "Crear página"
       title: "Nueva página"
     primer: 
       create_first: "Crea la primera página!"
@@ -1022,7 +1024,6 @@ es:
       confirm_delete: "Estas seguro de que quieres borrar este proyecto definitivamente? NO HAY VUELTA ATRAS. Si quieres conservarlo, usa Archivar Proyecto."
       forever: "Borrar permanentemente este proyecto"
       name: Nombre
-      name_description: "Escoge un nombre breve y descriptivo. Por ejemplo: Taggart Transcontinental"
       owner: Propietario
       owner_description: "El propietario es el máximo responsable de un proyecto. No puede expulsarse del proyecto, a menos que otro usuario sea nombrado propietario."
       permalink: URL
@@ -1032,12 +1033,10 @@ es:
       archived: "Mostrar %{count} proyectos archivados..."
       new_project: "Nuevo proyecto"
       projects: "Mis proyectos"
-      refreshes: "Actualiza cada minuto"
       rss: 
         description: "Actividad en todos tus proyectos"
         title: Teambox
       subscribe: "Suscríbete al feed de actividades"
-      title: "Actividad en todos tus proyectos"
     new: 
       create_an_example_project: "¿Es tu primera vez en Teambox? <a href='%{link}'>Crea un proyecto de ejemplo</a> para experimentar y aprender."
       created: "Se ha creado el proyecto!"
@@ -1071,9 +1070,7 @@ es:
       item4: "<b>Planifica</b>lo que debe hacerse con las Tareas."
       item5: "<b>Comparte información</b> con Páginas dentro de cada proyecto."
     show: 
-      invite_people: "Invitar a alguien más..."
       new_task_list_link: "Nueva lista de tareas"
-      people_in_project: "Personas en este proyecto"
       rss: 
         description: "Actividad reciente para %{name}"
         title: "%{name}"
@@ -1329,9 +1326,9 @@ es:
       submit: Crear
       title: "Nueva tarea"
     overdue: "%{days} días tarde"
-    overview_box:
+    overview_box: 
+      status: Estado
       title: "Esta Tarea"
-      status: "Estado"
     show: 
       title: "Tarea: %{name}"
     status: 
@@ -1373,7 +1370,7 @@ es:
       item1: "<b>Más capacidad</b>. Sube archivos de cualquier tamaño y olvida las limitaciones del email."
       item2: "<b>Versiones</b>. Sube versiones nuevas de archivos y guarda el histórico."
       item3: "<b>Siempre disponibles</b>. Los archivos permanecen en Teambox para que puedas consultarlos en el futuro."
-    tooltip: Subir fichero
+    tooltip: "Subir fichero"
     upload: 
       download: Descargar
       on_: en
@@ -1494,40 +1491,38 @@ es:
       profile: Perfil
       projects: Proyectos
       recent_activity_for: "Actividad reciente de %{user_name}"
-    text_styles:
-      block_of_code: Paste your code indented (4 spaces or tabs) to paste it as a block of code.
-      enter_this:
+    text_styles: 
+      block_of_code: "Paste your code indented (4 spaces or tabs) to paste it as a block of code."
+      enter_this: 
         bold_text: "texto **negrita**"
         header: |
-          Cabecera
-          ========
+            Cabecera
+            ========
         image: "![alt texto](http://w3.org/img.jpg)"
         italic_text: "texto *italica*"
         link: "[Un enlace](http://teambox.com)"
         ordered_list: |
-          1. lista ordenada
-          2. deja una línea en blanco!
-        smaller_header: |
-          Cabecera pequeña
-          ----------------
-        title: Escribe esto
+            1. lista ordenada
+            2. deja una línea en blanco!
+        smaller_header: "Cabecera pequeña ----------------"
+        title: "Escribe esto"
         unordered_list: |
-          * lista ordenada
-          * deja una línea antes y después
-      to_see_this:
+            * lista ordenada
+            * deja una línea antes y después
+      to_see_this: 
         bold_text: "texto <strong style=\"font-weight: bold\">negrita</strong>"
         header: "<h3 style=\"font-size:18px\">Cabecera</h3>"
         image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
         italic_text: "texto <i>italica</i>"
         link: "<a href=\"http://www.teambox.com\">Un enlace</a>"
         ordered_list: |
-          <li>lista ordenada</li>
-          <li>deja una línea en blanco!</li>
+            <li>lista ordenada</li>
+            <li>deja una línea en blanco!</li>
         smaller_header: "<h4 style=\"font-size:14px\">Cabecera pequeña</h4>"
-        title: Para ver esto
+        title: "Para ver esto"
         unordered_list: |
-          <li>lista ordenada</li>
-          <li>deja una línea antes y después</li>
+            <li>lista ordenada</li>
+            <li>deja una línea antes y después</li>
     unconfirmed_email: 
       follow_the_link: "Así que <b>abre este email y sigue el enlace que hay en él</b> para activar tu cuenta."
       invitation_sent_to: "Hemos enviado una invitación a <i>%{email}</i>, para verificar tu dirección de email."

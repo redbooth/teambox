@@ -1,4 +1,5 @@
-.conversation{ :id => conversation_id(:item,project,conversation), :class => "#{ 'active' if current_target == conversation } conversation_item" }
-  = comments_count(conversation,:column)
+- classes = "#{ 'active' if current_target == conversation } conversation_item"
+.conversation{ :id => conversation_id(:item,project,conversation), :class => classes }
+  %span.comments_count= conversation.comments_count
   = the_conversation_link(conversation)
 .clear

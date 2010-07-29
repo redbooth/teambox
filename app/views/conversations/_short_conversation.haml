@@ -1,5 +1,5 @@
 .conversation
   %h2
-    = comments_count(conversation,:content)
+    %span.comments_count= t('common.comment', :count => conversation.comments_count)
     = the_conversation_link(conversation)
   = conversation_comment(conversation)

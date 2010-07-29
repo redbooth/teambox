@@ -685,6 +685,8 @@ it:
     sent: 
       email_sent: "<b>Abbiamo inviato una mail avvisando l'utente di accettare il tuo invito</b>. Se non riesce a trovare la mail, assicurati che non sia stata classificata come spam. Se il problema persiste, scrivici una mail."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  locales: 
+    it: Italiano
   notes: 
     actions: 
       delete_confirm: "Sei sicuro di voler cancellare questa nota?"
@@ -730,10 +732,10 @@ it:
     index_task_lists: "I miei compiti"
     index_uploads: "I miei files"
     new_conversations: "Nuova Conversazione"
-    results_search: Ricerca
     new_example_projects: "Creare un progetto di esempio"
     new_projects: "Nuovo progetto"
     new_users: "Crea account"
+    results_search: Ricerca
     show_projects: Panoramica
     welcome_users: Benvenuto!
   pages: 
@@ -813,7 +815,6 @@ it:
       confirm_delete: "Sei sicuro di voler eliminare questo progetto definitivamente? L'OPERAZIONE E' IRREVERSIBILE. Se vuoi conservarlo, usa Archivia il Progetto."
       forever: "Elimina definitivamente questo progetto"
       name: Nome
-      name_description: "Imposta nome breve e descrittivo. Per esempio: Taggart Transcontinental"
       owner: Proprietario
       owner_description: "Il propietario è il responsabile principale di un progetto. Il proprietario non può essere rimosso da un progetto a meno che la proprietà non venga trasferita ad un altro utente."
       permalink: URL
@@ -822,12 +823,10 @@ it:
       archived: "Mostra %{count} progetti archiviati..."
       new_project: "Nuovo progetto"
       projects: "I miei progetti"
-      refreshes: "Aggiorna ogni minuto"
       rss: 
         description: "Attività in tutti i tuoi progetti"
         title: Teambox
       subscribe: "Iscriviti al feed di attività"
-      title: "Attività in tutti i tuoi progetti"
     new: 
       create_an_example_project: "Questa è la tua prima volta in Teambox? <a href='%{link}'>Crea un progetto di esempio</a> per sperimentare e imparare."
       created: "Il progetto è stato creato!"
@@ -860,9 +859,7 @@ it:
       item4: "<b>Pianifica</b> quello che si deve fare con i Compiti."
       item5: "<b>Condividi informazioni</b> su Pagine dentro ciascun progetto."
     show: 
-      invite_people: "Invita qualcun altro..."
       new_task_list_link: "Nuova lista di compiti"
-      people_in_project: "Persone in questo progetto"
       rss: 
         description: "Attività recenti per %{name}"
         title: "%{name}"

@@ -2,14 +2,11 @@
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang'=>"en", :lang=>"en" }
   %head
     %meta{ 'http-equiv' => "content-type", :content => "text/html;charset=utf-8" }
-    - if current_user
-      %meta{ :name => 'current-username', :content => current_user.login }
+    = current_user_tag if current_user
     = csrf_meta_tag
     = auto_discovery_link_by_context(current_user, @current_project)
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
-    %title
-      = @page_title
-      Teambox
+    %title= "#{@page_title} Teambox"
     = stylesheet_link_tag 'application', :media => :screen
     = stylesheet_link_tag 'print', :media => :print
     = sprockets_include_tag
@@ -18,17 +15,15 @@
       = yield :js_templates
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}", :reload_url => reload_url}
     = javascript_include_tag 'modernizr', 'environment'
-    = strip(@current_project)
+    = archived_project_strip(@current_project)
     .container
-      = render 'shared/header'
+      = header
       = navigation(@current_project,current_user.projects,current_user.recent_projects)
       .wrapper
         = project_navigation(@current_project)
         - show_flash
-        
         - if yield :banner
           .banner= yield :banner
-        
         - content_for_column = yield :column
         %div{ :class => content_for_column.blank? ? 'content_wrap_single' : 'content_wrap' }
           .content#content= yield
@@ -36,6 +31,5 @@
           .column_wrap
             .column#column= content_for_column
       = footer
-      	 	
+    #screenflash
     = javascripts
-#screenflash= "placeholder"

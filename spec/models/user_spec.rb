@@ -431,15 +431,15 @@ describe User do
     end
   end
   
-  describe "#language" do
-    it "should set a valid language" do
-      user = Factory.create(:user, :language => 'es')
-      user.language.should == 'es'
+  describe "#locale" do
+    it "should set a valid locale" do
+      user = Factory.create(:user, :locale => 'es')
+      user.locale.should == 'es'
     end
     
-    it "should fall back to default language when setting not in list of available languages" do
-      user = Factory.create(:user, :language => 'xy')
-      user.language.should == 'en'
+    it "should fall back to default locale when setting not in list of available locales" do
+      user = Factory.create(:user, :locale => 'xy')
+      user.locale.should == 'en'
     end
   end
 

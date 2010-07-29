@@ -92,62 +92,47 @@
     font-size: 12px
     margin: 15px 0
     display: block
-  .subscribe
-    margin-top: 15px
-    a
-      font-size: 13px
-      padding-left: 25px
-      background: url(/images/feed.png) no-repeat left
-  .calendars
+
+  a.gantt_link, a.calendars_link, a.print_link, a.email_link, a.subscribe
+    display: block
     margin-top: 5px
-    padding-left: 3px
+    font-size: 13px
+    padding-left: 25px
+    color: #444
+  a.gantt_link
+    +gantt_icon
+  a.calendars_link
+    +calendar_icon
+  a.print_link
+    +print_icon
+  a.email_link
+    +mail_icon
+  a.subscribe
+    margin-top: 15px
+    +feed_icon
+  .subscribe_all
+    font-weight: bold
+  span#email_help
+    display: block
+    margin-top: 10px
+    padding: 10px
+    color: #505050
+    border: 1px solid #C8C8C8
+    background-color: #F0F0F0
+    word-wrap: break-word
     a
-      font-size: 13px
-      padding-left: 22px
-      background: url(/images/calendar_date_select/calendar.gif) no-repeat left
+      color: black
+      font-weight: bold
+
   .calendar_links, .calendar_links_all
     font-size: 13px
     padding-left: 25px
     margin: 8px 0
-    background: url(/images/calendar_date_select/calendar.gif) no-repeat left
+    +calendar_icon
   .calendar_links_all
     margin-bottom: 15px
     font-weight: bold
-  .print
-    margin-top: 5px
-    a
-      font-size: 13px
-      padding-left: 25px
-      background: url(/images/print.gif) no-repeat left
-  .email
-    margin-top: 5px
-    a
-      font-size: 13px
-      padding-left: 25px
-      background: url(/images/email.gif) no-repeat left
-    span
-      display: none
-      margin: 5px 0 0 25px
-      padding: 10px 25px 10px 10px
-      color: #505050
-      -moz-border-radius: 4px
-      border: 1px solid #C8C8C8
-      background-color: #F0F0F0
-      word-wrap: break-word
-      a
-        background-image: none
-        padding-left: 0
-      .closeThis
-        background: url(/images/close_help.png) no-repeat left
-        text-indent: -9999px
-        width: 15px
-        float: right
-        margin-top: -5px
-        margin-right: -20px
-  a.gantt_link
-    font-size: 13px
-    padding-left: 25px
-    background: url(/images/gantt.gif) no-repeat left
+
 
 @media print
   .index_projects
@@ -202,7 +187,7 @@
       .thumbnail
         display: none
 
-.edit_projects, .update_projects, .index_hooks, .edit_hooks, .new_hooks, .templates_hooks
+.edit_projects, .update_projects
   .content_wrap
     float: right
     padding: 10px
@@ -217,10 +202,6 @@
     margin-bottom: 20px
     .description
       margin: 20px 0
-
-.index_hooks
-  h3
-    margin-top: 30px
 
 form#new_project
   margin: 30px 0
@@ -251,7 +232,7 @@ form#new_project
   .submit
     margin-top: 20px
 
-form#new_project, form.edit_project, form.edit_hook, form.new_hook
+form#new_project, form.edit_project
   padding:
     left: 10px
   #project_name

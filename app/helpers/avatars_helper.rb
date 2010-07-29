@@ -1,13 +1,11 @@
 module AvatarsHelper
 
-  def thumb_avatar(user, round_corners = true)
-    render :partial => 'avatars/thumb_avatar', 
-      :locals => { :user => user, :round_corners => round_corners }
+  def thumb_avatar(user)
+    render 'avatars/thumb_avatar', :user => user
   end
 
   def micro_avatar(user)
-    render :partial => 'avatars/micro_avatar', 
-      :locals => { :user => user }
+    render 'avatars/micro_avatar', :user => user
   end
   
   def avatar_path_with_timestamp(user)

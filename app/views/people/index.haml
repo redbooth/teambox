@@ -2,8 +2,7 @@
   = render 'invitations/new', :project => @current_project, :invitation => Invitation.new(:role => 3)
 
 #people.people
-  = render :partial => 'invitations/invitation', :collection => @invitations,
-      :locals => { :group => nil, :project => @current_project, :target => @current_project }
+  = render @invitations, :group => nil, :project => @current_project, :target => @current_project
   = render @people, :project => @current_project
 
 - content_for :column do

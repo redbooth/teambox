@@ -75,38 +75,6 @@ replace_ids = function(s){
 }
 
 Event.addBehavior({
-  ".remove:mouseover": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/remove.*\.png/,'remove_hover.png')
-  },
-  ".remove:mouseout": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/remove.*\.png/,'remove.png')
-  },
-  ".drag:mouseover": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/drag.*\.png/,'drag_hover.png')
-  },
-  ".drag:mouseout": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/drag.*\.png/,'drag.png')
-  },
-  ".pencil:mouseover": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/pencil.*\.jpg/,'pencil_hover.jpg')
-  },
-  ".pencil:mouseout": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/pencil.*\.jpg/,'pencil.jpg')
-  },
-  ".trash:mouseover": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/trash.*\.jpg/,'trash_hover.jpg')
-  },
-  ".trash:mouseout": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')
-  },
   ".add_nested_item:click": function(e){
     link = $(this);
     template = eval(link.href.replace(/.*#/, ''))

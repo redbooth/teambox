@@ -1,0 +1,34 @@
+=sprite_16px($x_pos, $y_pos, $x_size: 0, $y_size: 0)
+  +sprite("/images/_sprites_16px.png", $x_pos, $y_pos, $x_size, $y_size)
+
+=hoverable_sprite_16px($x_pos, $y_pos, $x_size: 0, $y_size: 0)
+  display: inline-block
+  +sprite("/images/_sprites_16px.png", $x_pos, $y_pos, $x_size, $y_size)
+  &:hover
+    +sprite("/images/_sprites_16px.png", $x_pos, $y_pos+16px, $x_size, $y_size)
+
+=calendar_icon
+  +sprite_16px(16px*15, 16px*0)
+=feed_icon
+  +sprite_16px(16px*15, 16px*1)
+=mail_icon
+  +sprite_16px(16px*15, 16px*2)
+=gantt_icon
+  +sprite_16px(16px*15, 16px*3)
+=print_icon
+  +sprite_16px(16px*15, 16px*4)
+
+.trash_icon
+  +hoverable_sprite_16px(16px*0, 0px, 16px, 16px)
+.edit_icon
+  +hoverable_sprite_16px(16px*1, 0px, 16px, 16px)
+.attach_icon
+  +hoverable_sprite_16px(16px*8, 0px, 16px, 16px)
+.add_hours_icon
+  +hoverable_sprite_16px(16px*7, 0px, 16px, 16px)
+.comment_icon
+  +hoverable_sprite_16px(16px*3, 0px, 16px, 16px)
+.task_icon
+  +hoverable_sprite_16px(16px*4, 0px, 16px, 16px)
+.page_icon
+  +hoverable_sprite_16px(16px*6, 0px, 16px, 16px)

@@ -3,4 +3,4 @@
   %span.filename
     = link_to_upload(upload, upload.file_name)
   %span.size
-    = parenthesize(number_to_human_size(upload.size))
+    = '(' + number_to_human_size(upload.size).to_s + ')'
