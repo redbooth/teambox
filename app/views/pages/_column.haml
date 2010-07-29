@@ -4,6 +4,9 @@
       = new_page_link(project)
     - else
       %p= t('.cant_create')
-  .pages
-    %h2= t('.all_pages')
+  #column_pages.pages{:reorder_url => resort_project_pages_path(@current_project)}
+    %h2
+      = t('.all_pages')
+      %a#page_reorder{:href => '#'}= t('.reorder')
+      %a#page_reorder_done{:href => '#', :style => 'display:none'}= t('.reorder_done')
     = list_pages(pages,current_target)

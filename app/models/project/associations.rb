@@ -8,11 +8,11 @@ class Project
     project.has_many :tasks
     project.has_many :uploads
     project.has_many :invitations
+    project.has_many :pages
   end
   
   with_options :dependent => :destroy, :order => 'id DESC' do |project|
     project.has_many :conversations
-    project.has_many :pages
     project.has_many :comments
     project.has_many :activities
   end

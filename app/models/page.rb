@@ -6,8 +6,11 @@ class Page < RoleRecord
   has_many :slots, :class_name => 'PageSlot', :order => 'position ASC'
   
   attr_accessible :name, :description, :note_attributes
+  attr_accessor :suppress_activity
 
   validates_length_of :name, :minimum => 1
+  
+  default_scope :order => 'position ASC, created_at DESC'
   
   def self.widgets
      [Note, Divider]
@@ -100,7 +103,7 @@ class Page < RoleRecord
   end
   
   def after_update
-    project.log_activity(self, 'edit')
+    project.log_activity(self, 'edit') unless @suppress_activity
   end
   
   def to_s
