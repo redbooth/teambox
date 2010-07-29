@@ -7,17 +7,14 @@ require 'net/http'
 # Emails can be sent to project@app.server.com or project+model+id@app.server.com
 # Cases:
 #
-# keiretsu@app.server.com                  Will post a new comment on the project's activity wall
-# keiretsu+conversation@app.server.com     Will create a new conversation with Subject as a title and Body as a comment
+# keiretsu@app.server.com                  Will find or start a conversation with Subject as a title and Body as a comment
+# keiretsu+conversation@app.server.com     Will find or start a conversation with Subject as a title and Body as a comment
 # keiretsu+conversation+5@app.server.com   Will post a new comment in the conversation whose id is 5
 # keiretsu+task+12@app.server.com          Will post a new comment in the task whose id is 12
 #
 # Invalid or malformed emails will be ignored
 #
-# TODO: Enhance mime and plain messages treatment
-#       Parse HTML to Markdown
-#       Strip the quoted text from email replies
-#
+
 module Emailer::Incoming
 
   def self.fetch(settings)
@@ -73,7 +70,7 @@ module Emailer::Incoming
     get_action if @target.is_a?(Task)
 
     case @type
-    when :project then post_to(@target)
+    when :project then create_conversation
     when :conversation then @target ? post_to(@target) : create_conversation
     when :task then post_to(@target) if @target
     else raise "Invalid target type"
@@ -200,7 +197,12 @@ module Emailer::Incoming
   
   def create_conversation
     Rails.logger.info "Creating conversation '#{@subject}'"
-    conversation = @project.new_conversation(@user, :name => @subject)
+    
+    conversation = if @subject.empty?
+      @project.new_conversation(@user, :simple => true)
+    else
+      @project.new_conversation(@user, :name => @subject)
+    end
     conversation.body = @body
     conversation.save!
   end

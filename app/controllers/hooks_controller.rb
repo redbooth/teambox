@@ -3,76 +3,31 @@ class HooksController < ApplicationController
   no_login_required
   skip_before_filter :verify_authenticity_token
 
-  def initialize
-    @example_github_payload = <<-EOS
-      {
-        "before": "5aef35982fb2d34e9d9d4502f6ede1072793222d",
-        "repository": {
-          "url": "http://github.com/defunkt/github",
-          "name": "github",
-          "description": "You're lookin' at it.",
-          "watchers": 5,
-          "forks": 2,
-          "private": 1,
-          "owner": {
-            "email": "chris@ozmm.org",
-            "name": "defunkt"
-          }
-        },
-        "commits": [
-          {
-            "id": "41a212ee83ca127e3c8cf465891ab7216a705f59",
-            "url": "http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59",
-            "author": {
-              "email": "chris@ozmm.org",
-              "name": "Chris Wanstrath"
-            },
-            "message": "okay i give in",
-            "timestamp": "2008-02-15T14:57:17-08:00",
-            "added": ["filepath.rb"]
-          },
-          {
-            "id": "de8251ff97ee194a289832576287d6f8ad74e3d0",
-            "url": "http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0",
-            "author": {
-              "email": "chris@ozmm.org",
-              "name": "Chris Wanstrath"
-            },
-            "message": "update pricing a tad",
-            "timestamp": "2008-02-15T14:36:34-08:00"
-          }
-        ],
-        "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
-        "ref": "refs/heads/master"
-      }
-    EOS
-  end
-
   def create
     @source = params[:hook_name]
-    @payload = params[:payload] || @example_github_payload
-
     output = case @source
               when "github" then post_from_github
+              when "email"  then post_from_email
               else 'Invalid hook'
               end
 
-    render :text => output
+    render :text => output[0], :status => output[1]
   end
   
   protected
 
     def post_from_github
-      return "Invalid project" unless @current_project
+      return ["Invalid project", 400] unless @current_project
 
-      push = JSON.parse(@payload)
+      push = JSON.parse(params[:payload])
       commits = push["commits"]
 
-      text = "<h3>New code on <a href='#{push['repository']['url']}'>#{push['repository']['name']}</a></h3>\n\n"
+      text = "<h3>New code on <a href='#{push['repository']['url']}'>#{push['repository']['name']}</a> #{push['ref']}</h3>\n\n"
       text << commits[0,10].collect do |commit|
         message = commit['message'].strip.split("\n").first
         "#{commit['author']['name']} - <a href='#{commit['url']}'>#{message}</a>"
       end.join("<br/>")
+      text << "<br/>And #{commits.size - 10} more commits" if commits.size > 10
 
       user = @current_project.user
       target = nil
@@ -82,7 +37,31 @@ class HooksController < ApplicationController
         :user => @current_project.user
       }).save!
 
-      RDiscount.new(text).to_html
+      [RDiscount.new(text).to_html, 200]
     end
-  
+
+    # This code is optimized for Sendgrid's processing email: http://wiki.sendgrid.com/doku.php?id=parse_api
+    # Will accept emails from webhooks, like Sendgrid's, with these parameters:
+    # to:          The virtual address at Teambox. Needs to match teambox.yml settings.
+    # from:        The sender of the email. This accepts any format that looks like an email.
+    # text:        The email body in text format.
+    # subject:     Subject line
+    # attachments: Number of attachments in the email
+    def post_from_email
+      unless params[:from] and params[:text] and params[:subject] and params[:to]
+        return ["Error processing email: Bad parameters", 400]
+      end
+      email = TMail::Mail.new
+      email.from    = params[:from]
+      email.to      = params[:to].gsub('@reply', '@app') ## server migration
+      email.body    = params[:text]
+      email.subject = params[:subject]
+      email.body   += "\n\nThis email had #{params[:attachments]} attachments" if params[:attachments].to_i > 0
+      begin
+        Emailer.receive(email.to_s)
+      rescue
+        return ["Error processing email\n\n#{$!}", 400]
+      end
+      ['Email processed!', 200]
+    end
 end

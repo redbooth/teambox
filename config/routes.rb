@@ -63,6 +63,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.project_archived 'projects/archived.:format',  :controller => 'projects', :action => 'index', :sub_action => 'archived'
 
+  map.hooks             'hooks/:hook_name',     :controller => 'hooks',       :action => 'create',    :method => :post
+
   map.resources :projects,
       :has_many => [:pages, :people],
       :member => {:get_comments => :get, :accept => :post, :decline => :post, :transfer => :put} do |project|
