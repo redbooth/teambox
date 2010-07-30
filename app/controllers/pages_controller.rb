@@ -107,6 +107,20 @@ class PagesController < ApplicationController
       handle_api_success(f, @page)
     end
   end
+  
+  def resort
+    order = params[:pages].map(&:to_i)
+    
+    @current_project.pages.each do |page|
+      page.suppress_activity = true
+      page.position = order.index(page.id)
+      page.save
+    end
+    
+    respond_to do |f|
+      f.js { render :reorder }
+    end
+  end
 
   def destroy
     if @page.editable?(current_user)

@@ -16,12 +16,24 @@
     img
       cursor: move
 
-.pages
+#column_pages
   clear: both
   margin-top: 10px
+  h2 a
+    float: right
   div.page
     padding: 3px
     font-size: 12px
+    img.drag
+      display: none
+      padding-right: 3px
+
+#column_pages.reordering
+  div.page
+    img.drag
+      display: block
+      float: left
+      cursor: move
 
 #pages
   div.page

@@ -334,6 +334,41 @@ document.on('click', 'a.cancelPageWidget', function(e) {
   InsertionBar.clearWidgetForm();
 });
 
+document.on('click', '#page_reorder', function(e) {
+  e.stop();
+  $('page_reorder').hide();
+  $('page_reorder_done').show();
+  
+  Sortable.create('column_pages', {handle: 'drag', tag: 'div', only: 'page',
+    onUpdate: function() {
+      var csrf_param = $$('meta[name=csrf-param]').first(),
+          csrf_token = $$('meta[name=csrf-token]').first(),
+          serialized = Sortable.serialize('column_pages', {name: 'pages'});
+      
+      if (csrf_param) {
+        var param = csrf_param.readAttribute('content'),
+            token = csrf_token.readAttribute('content')
+        
+        serialized += '&' + param + '=' + token
+      }
+
+      new Ajax.Request($('column_pages').readAttribute('reorder_url'), { parameters: serialized });
+    } 
+  });
+  
+  $('column_pages').addClassName('reordering');
+});
+
+document.on('click', '#page_reorder_done', function(e) {
+  e.stop();
+  
+  $('column_pages').removeClassName('reordering');
+  $('page_reorder').show();
+  $('page_reorder_done').hide();
+  
+  Sortable.destroy('column_pages');
+});
+
 // Widget actions, forms
 
 document.on('ajax:before', '.page_slot .actions, .page_slot .slotActions', function(e) {
