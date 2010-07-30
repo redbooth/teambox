@@ -54,11 +54,11 @@ class Invitation < RoleRecord
   end
   
   def accept(current_user)
-    if target.class == Project
-      person = self.project.people.new(
+    if target.is_a? Project
+      person = project.people.new(
         :user => current_user,
-        :role => self.role || 3,
-        :source_user => self.user)
+        :role => role || 3,
+        :source_user => user)
       person.save
     else
       target.add_user(current_user)
