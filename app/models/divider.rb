@@ -34,4 +34,20 @@ class Divider < RoleRecord
       xml.tag! 'updated-at',   updated_at.to_s(:db)
     end
   end
+  
+  def to_api_hash(options = {})
+    {
+      :id => id,
+      :project_id => project_id,
+      :page_id => page_id,
+      :slot_id => page_slot.id,
+      :name => name,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db)
+    }
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
+  end
 end

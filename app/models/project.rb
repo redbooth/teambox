@@ -31,6 +31,13 @@ class Project < ActiveRecord::Base
       person.destroy
     end
   end
+  
+  def transfer_to(person)
+    self.user = person.user
+    saved = self.save
+    person.update_attribute(:role, Person::ROLES[:admin]) if saved # owners need to be admin!
+    saved
+  end
 
   def has_member?(user)
     Person.exists?(:project_id => self.id, :user_id => user.id)
@@ -101,6 +108,29 @@ class Project < ActiveRecord::Base
         end
       end
     end
+  end
+  
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :name => name,
+      :permalink => permalink,
+      :archived => archived,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :archived => archived,
+      :owner_user_id => user_id
+    }
+    
+    if Array(options[:include]).include? :people
+      base[:people] = people.map {|p| p.to_api_hash(options)}
+    end
+    
+    base
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
   end
 
   def to_ical(filter_user = nil)

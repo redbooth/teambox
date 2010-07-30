@@ -1,0 +1,29 @@
+%p= "A comment is the core model for communication in Teambox. "
+%p= "Comments can belong to a #{link_to_doc_model(:project)}, a #{link_to_doc_model(:conversation)}, or #{link_to_doc_model(:task)}."
+
+- doc_for :index, :example => [@comment.to_api_hash] do
+  %p= "Returns the 25 most recent comments in a the target."
+
+- doc_for :show,  :example => @comment.to_api_hash do
+  %p= "Returns the data for an comment."
+  
+- doc_for :create, :parameters => {:comment => {:body => 'Comment', :hours => 1} },
+                   :example => @comment.to_api_hash,
+                   :status => :created,
+                   :role => :commenter do
+  %p= "Creates a new comment. You can specify the target of the comment using one of the appropriate routes."
+
+- doc_for :update, :parameters => {:comment => {:body => @comment.body, :name => @comment.hours} },
+                   :status => :updated,
+                   :role => :commenter do
+  %p= "Updates the content of a comment. You can no longer update comments 15 minutes after they have been created."
+
+- doc_for :convert, :status => :updated,
+                    :parameters => { :task => {:name => @converted_comment.name}, :task_list_id => 'TASK_LIST_ID'},
+                    :example => @converted_comment.to_api_hash,
+                    :role => :commenter do
+  %p= "Converts a comment to a task. The task will be put into the task list specified by <tt>task_list_id</tt>."
+
+- doc_for :destroy, :status => :deleted,
+                    :role => :commenter do
+  %p= "Destroys a comment. You need to be either the owner of the comment, or an administrator of the target project for this to work."

@@ -152,6 +152,10 @@ class User < ActiveRecord::Base
       update_attribute(:visited_at, Time.now)
     end
   end
+  
+  def person_for(project)
+    self.people.find_by_project_id(project.id)
+  end
 
   def contacts_not_in_project(project)
     conditions = ["project_id IN (?)", Array(self.projects).collect{ |p| p.id } ]
@@ -191,6 +195,25 @@ class User < ActiveRecord::Base
       xml.tag! 'updated-at', updated_at.to_s(:db)
       xml.tag! 'avatar-url', avatar_or_gravatar_url(:thumb)
     end
+  end
+  
+  def to_api_hash(options = {})
+    {
+      :id => id,
+      :first_name => first_name,
+      :last_name => last_name,
+      :locale => locale,
+      :username => login,
+      :time_zone => time_zone,
+      :biography => biography,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :avatar_url => avatar_or_gravatar_url(:thumb)
+    }
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
   end
 
   def in_project(project)

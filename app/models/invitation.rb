@@ -5,6 +5,8 @@ class Invitation < RoleRecord
   belongs_to :invited_user, :class_name => 'User'
   
   validate :check_invite
+  
+  attr_accessor :is_silent
 
   def target
     project || group
@@ -72,6 +74,23 @@ class Invitation < RoleRecord
   before_create :generate_token
   after_create :send_email
   before_save :copy_user_email, :if => :invited_user
+  
+  def to_api_hash(options = {})
+    {
+      :id => id,
+      :user_id => user_id,
+      :invited_user_id => invited_user_id,
+      :role => role,
+      :project => {
+        :permalink => project.permalink,
+        :name => project.name
+      }
+    }
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
+  end
 
   protected
 
@@ -80,6 +99,7 @@ class Invitation < RoleRecord
   end
   
   def send_email
+    return if @is_silent
     if invited_user
       if project
         Emailer.deliver_project_invitation self

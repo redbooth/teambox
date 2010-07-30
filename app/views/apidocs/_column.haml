@@ -1,0 +1,24 @@
+- content_for :column do
+  = link_to "Overview", api_path
+  = link_to "API concepts", api_concepts_path
+  = link_to "API routes reference", api_routes_path
+  %br
+  = link_to "Users", api_model_path(:user)
+  %br
+  = link_to "Projects", api_model_path(:project)
+  = link_to "People (users in a project)", api_model_path(:person)
+  = link_to "Activities", api_model_path(:activity)
+  = link_to "Comments", api_model_path(:comment)
+  = link_to "Invitations", api_model_path(:invitation)
+  %br
+  = link_to "Conversations", api_model_path(:conversation)
+  %br
+  = link_to "Task Lists", api_model_path(:task_list)
+  = link_to "Tasks", api_model_path(:task)
+  %br
+  = link_to "Files", api_model_path(:upload)
+  %br
+  = link_to "Pages", api_model_path(:page)
+  = link_to "Page notes", api_model_path(:note)
+  = link_to "Page dividers", api_model_path(:divider)
+  = link_to "Page files", api_model_path(:upload)

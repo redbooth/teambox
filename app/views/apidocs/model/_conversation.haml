@@ -1,0 +1,31 @@
+%p= "A conversation is a group of comments. It can also act as a thread in the project overview."
+%p= "Comments belong to a #{link_to_doc_model(:project)}."
+
+- doc_for :index, :example => [@conversation.to_api_hash] do
+  %p= "Returns the 25 most recent conversations in a project."
+
+- doc_for :show,  :example => @conversation.to_api_hash(:include => :comments) do
+  %p= "Returns the data for a conversation."
+  
+- doc_for :create, :parameters => {:conversation => {:name => 'Conversation', :body => 'Well...'} },
+                   :example => @conversation.to_api_hash,
+                   :status => :created,
+                   :role => :participant do
+  %p= "Creates a new conversation."
+
+- doc_for :update, :parameters => {:comment => {:name => @conversation.name} },
+                   :status => :updated,
+                   :role => :participant do
+  %p= "Updates the title of a conversation."
+
+- doc_for :watch, :status => :updated,
+                  :role => :participant do
+  %p= "Adds the current user to the watchers list of the comment."
+
+- doc_for :unwatch, :status => :updated,  
+                    :role => :participant do
+  %p= "Removes the current user from the watchers list of the comment."
+
+- doc_for :destroy, :status => :deleted,
+                    :role => :participant do
+  %p= "Destroys a conversation."

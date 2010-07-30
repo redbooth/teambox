@@ -17,4 +17,22 @@ class PageSlot < ActiveRecord::Base
       end
     end
   end
+  
+  def to_api_hash(options = {})
+    base = {
+      :rel_object_id => rel_object_id,
+      :rel_object_type => rel_object_type,
+      :position => position
+    }
+    
+    if Array(options[:include]).include? :rel_object
+      base[:rel_object] = rel_object.to_api_hash(options)
+    end
+    
+    base
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
+  end
 end

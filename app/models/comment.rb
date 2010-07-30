@@ -165,4 +165,40 @@ class Comment < ActiveRecord::Base
       end
     end
   end
+  
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :body => body,
+      :body_html => body_html,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :user => {
+        :username => user.login,
+        :first_name => user.first_name,
+        :last_name => user.last_name,
+        :avatar_url => user.avatar_or_gravatar_url(:thumb)
+      },
+      :project_id => project_id,
+      :target_id => target_id,
+      :target_type => target_type
+    }
+    
+    if target.is_a? Task
+      base[:assigned_id] = assigned_id
+      base[:previous_assigned_id] = previous_assigned_id
+      base[:previous_status] = previous_status
+      base[:status] = status
+    end
+    
+    if uploads.any?
+      base[:uploads] = uploads.map {|u| u.to_api_hash(options)}
+    end
+    
+    base
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
+  end
 end
