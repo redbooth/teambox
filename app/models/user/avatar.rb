@@ -33,7 +33,7 @@ class User
     avatar?? avatar.url(size) : gravatar(size, secure)
   end
   
-  def avatar_or_gravatar_url(size, secure = false)
+  def avatar_or_gravatar_url(size = :thumb, secure = false)
     avatar_or_gravatar_path(size, secure).tap do |url|
       unless url.starts_with? 'http'
         scheme = secure ? 'https:' : 'http:'

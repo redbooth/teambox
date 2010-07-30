@@ -136,4 +136,27 @@ class Page < RoleRecord
       end
     end
   end
+  
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :project_id => project_id,
+      :user_id => user_id,
+      :name => name,
+      :description => description,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :watchers => Array.wrap(watchers_ids)
+    }
+    
+    if Array(options[:include]).include? :slots
+      base[:slots] = slots.map{|s| s.to_api_hash(options)}
+    end
+    
+    base
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
+  end
 end

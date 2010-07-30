@@ -5,28 +5,35 @@ class ApiV1::CommentsController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create, :update, :convert]
   
   def index
-    @comments = @target.comments
+    @comments = @target.comments.all(:conditions => api_range, :limit => api_limit)
     
-    respond_to do |f|
-      f.json  { render :as_json => @comments.to_xml }
-    end
+    api_respond @comments.to_json
   end
 
   def show
-    respond_to do |f|
-      f.json  { render :as_json => @comment.to_xml }
-    end
+    api_respond @comment.to_json
   end
   
   def create
     owner = params.has_key?(:project_id) ? @current_project : current_user
+    if @target.is_a? Task
+      @target.previous_status = @target.status
+      @target.previous_assigned_id = @target.assigned_id
+      if params[:comment]
+        @target.status = params[:comment][:status]
+        if params[:comment][:target_attributes]
+          @target.assigned_id = params[:comment][:target_attributes][:assigned_id]
+        end
+      end
+    end
+    
     @comment = owner.new_comment(current_user,@target,params[:comment])
 
     # If this is a status update, we'll turn it in a new `simple` Conversation
     if @comment.target.is_a?(Project)
       @conversation = @current_project.new_conversation(current_user, :simple => true )
       @conversation.body = @comment.body
-      if conversation.save
+      if @conversation.save
         comment = @conversation.comments.last
         comment.uploads = @comment.uploads
         @saved = comment.save
@@ -38,24 +45,20 @@ class ApiV1::CommentsController < ApiV1::APIController
       @saved = @comment.save
     end
 
-    respond_to do |f|
-      if @saved
-        handle_api_success(f, @conversation || @comment, :is_new => true)
-      else
-        handle_api_error(f, @conversation || @comment)
-      end
+    if @saved
+      handle_api_success(@conversation || @comment, :is_new => true)
+    else
+      handle_api_error(@conversation || @comment)
     end
   end
   
   def update
     @has_permission and @saved = @comment.update_attributes(params[:comment])
     
-    respond_to do |f|
-      if @saved
-        handle_api_success(f, @comment)
-      else
-        handle_api_error(f, @comment)
-      end
+    if @saved
+      handle_api_success(@comment)
+    else
+      handle_api_error(@comment)
     end
   end
 
@@ -67,23 +70,40 @@ class ApiV1::CommentsController < ApiV1::APIController
       false
     end
     
-    respond_to do |f|
-      if @has_permission
-        handle_api_success(f, @comment)
-      else
-        handle_api_error(f, @comment)
-      end
+    if @has_permission
+      handle_api_success(@comment)
+    else
+      handle_api_error(@comment)
     end
   end
   
   def convert
-    # !!!
+    if request.method == :put and @has_permission and @comment.target.class == Project and @target.class == TaskList and !@target.archived
+      # Make a new task in the target...
+      task_name = params[:task].nil? ? nil : params[:task][:name]
+      params = {
+        'name' => task_name || @comment.body.split('\n').first
+      }
+      @task = @current_project.create_task(current_user,@target,params)
+      
+      if @task.errors.empty?
+        @comment.target = @task
+        @comment.save
+      end
+    end
+    
+    if @task and !@task.new_record?
+      handle_api_success(@task, :is_new => true)
+    else
+      handle_api_error(@task)
+    end
   end
 
   protected
 
     def load_comment
       @comment = @current_project.comments.find params[:id]
+      api_status(:not_found) unless @comment
     end
 
     def load_target
@@ -95,20 +115,13 @@ class ApiV1::CommentsController < ApiV1::APIController
     end
     
     def check_timeless
-      if (action_name == 'edit' && params[:part] == 'task') || action_name == 'convert'
+      if action_name == 'convert'
         @checks_time = false
       end
     end
     
     def check_permissions
       # Can they even create comments?
-      if @comment.nil?
-        unless @current_project.commentable?(current_user)
-          api_error(t('common.not_allowed'), :unauthorized)
-          return false
-        end
-      end
-      
       if @comment
         @has_permission = true
         @checks_time = true if @checks_time.nil?
@@ -121,26 +134,18 @@ class ApiV1::CommentsController < ApiV1::APIController
           return if @comment.can_edit?(current_user, @checks_time)
         end
         
-        # Error update handled in rjs handlers
-        @has_permission = false
-        return if request.format == :js
-        
         # Process of elimination: don't allow this!
         api_error(t('comments.errors.cannot_update'), :unauthorized)
-        return false
+      else
+        unless @current_project.commentable?(current_user)
+          api_error(t('common.not_allowed'), :unauthorized)
+        end
       end
     end
 
     def assign_project_target
       if params.has_key?(:task_id)
-        t = @current_project.tasks.find(params[:task_id])
-        t.previous_status = t.status
-        t.previous_assigned_id = t.assigned_id
-        t.status = params[:comment][:status]
-        if params[:comment][:target_attributes]
-          t.assigned_id = params[:comment][:target_attributes][:assigned_id]
-        end
-        t
+        @current_project.tasks.find(params[:task_id])
       elsif params.has_key?(:task_list_id)
         @current_project.task_lists.find(params[:task_list_id])
       elsif params.has_key?(:conversation_id)

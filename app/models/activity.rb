@@ -121,6 +121,37 @@ class Activity < ActiveRecord::Base
       end if target
     end
   end
+  
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :action => action,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :user => {
+        :username => user.login,
+        :first_name => user.first_name,
+        :last_name => user.last_name,
+        :avatar_url => user.avatar_or_gravatar_url(:thumb)
+      }
+    }
+    
+    if Array(options[:include]).include? :project
+      base[:project] = {:id => project.id, :name => project.name, :permalink => project.permalink}
+    end
+    
+    if Array(options[:include]).include? :target
+      base[:target] = {:type => target_type}.merge(target.to_api_hash(options))
+    else
+      base[:target] = {:id => target_id, :type => target_type}
+    end
+    
+    base
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
+  end
 
   def self.get_threads(activities)
     activities.inject([]) do |result, a|

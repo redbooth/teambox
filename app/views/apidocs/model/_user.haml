@@ -1,0 +1,17 @@
+%p= "A user is an account within Teambox. You currently cannot create or manipulate users using the API."
+%p= "Users belong to projects via the #{link_to_doc_model(:person)} model."
+
+- doc_for :index, :example => [@user.to_api_hash] do
+  %p= "Returns users you know."
+
+- doc_for :show,  :example => @user.to_api_hash do
+  %p= "Returns the data for a user."
+  
+- ignore_doc_for :create
+- ignore_doc_for :update
+- ignore_doc_for :destroy
+
+- doc_for :current do
+  %p= "Returns the data for the current logged in user."
+
+

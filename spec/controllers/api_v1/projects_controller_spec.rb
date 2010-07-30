@@ -2,13 +2,7 @@ require 'spec_helper'
 
 describe ApiV1::ProjectsController do
   before do
-    @user = Factory.create(:confirmed_user)
-    @admin = Factory.create(:confirmed_user)
-    @project = Factory.create(:project)
-    @owner = @project.user
-    @project.add_user(@user)
-    @project.add_user(@admin)
-    @project.people.last.update_attribute(:role, Person::ROLES[:admin])
+    make_a_typical_project
   end
   
   describe "#index" do
@@ -17,7 +11,7 @@ describe ApiV1::ProjectsController do
       
       get :index
       response.should be_success
-      JSON.parse(response.body)['projects'].length.should == 1
+      JSON.parse(response.body).length.should == 1
     end
     
     it "does not show projects the user doesn't belong to" do
@@ -25,7 +19,7 @@ describe ApiV1::ProjectsController do
       
       get :index
       response.should be_success
-      JSON.parse(response.body)['projects'].length.should == 0
+      JSON.parse(response.body).length.should == 0
     end
   end
   
@@ -54,7 +48,7 @@ describe ApiV1::ProjectsController do
     it "should allow an admin to update the project" do
       login_as @admin
       
-      post :update, :id => @project.permalink, :project => {:permalink => 'ffffuuuuuu'}
+      put :update, :id => @project.permalink, :project => {:permalink => 'ffffuuuuuu'}
       response.should be_success
       
       @project.reload.permalink.should == 'ffffuuuuuu'
@@ -63,7 +57,7 @@ describe ApiV1::ProjectsController do
     it "should not allow a non-admin to update the project" do
       login_as @user
       
-      post :update, :id => @project.permalink, :project => {:permalink => 'ffffuuuuuu'}
+      put :update, :id => @project.permalink, :project => {:permalink => 'ffffuuuuuu'}
       response.status.should == '401 Unauthorized'
       
       @project.reload.permalink.should_not == 'ffffuuuuuu'
@@ -74,7 +68,7 @@ describe ApiV1::ProjectsController do
     it "should allow the owner to transfer the project" do
       login_as @owner
       
-      post :transfer, :id => @project.permalink, :project => {:user_id => @user.id}
+      put :transfer, :id => @project.permalink, :project => {:user_id => @user.id}
       response.should be_success
       
       @project.reload.user.should == @user
@@ -83,7 +77,7 @@ describe ApiV1::ProjectsController do
     it "should not allow non-owners to transfer the project" do
       login_as @user
       
-      post :transfer, :id => @project.permalink, :project => {:user_id => @user.id}
+      put :transfer, :id => @project.permalink, :project => {:user_id => @user.id}
       response.status.should == '401 Unauthorized'
       
       @project.reload.user.should == @owner
@@ -96,7 +90,7 @@ describe ApiV1::ProjectsController do
       
       get :show, :id => @project.permalink
       response.should be_success
-      JSON.parse(response.body).has_key?('project').should == true
+      JSON.parse(response.body)['id'].to_i.should == @project.id
     end
     
     it "should not show a project the user doesn't belong to" do
@@ -113,16 +107,16 @@ describe ApiV1::ProjectsController do
       login_as @owner
       
       Project.count.should == 1
-      post :destroy, :id => @project.permalink
+      put :destroy, :id => @project.permalink
       response.should be_success
       Project.count.should == 0
     end
     
-    it "should only allow the owner or an admin to destroy a project" do
-      login_as @user
+    it "should only allow the owner to destroy a project" do
+      login_as @admin
       
       Project.count.should == 1
-      post :destroy, :id => @project.permalink
+      put :destroy, :id => @project.permalink
       response.status.should == '401 Unauthorized'
       Project.count.should == 1
     end

@@ -99,6 +99,27 @@ class Upload < RoleRecord
     end
   end
   
+  def to_api_hash(options = {})
+    {
+      :id => id,
+      :page_id => page_id,
+      :slot_id => page_slot ? page_slot.id : nil,
+      :filename => asset_file_name,
+      :description => description,
+      :mime_type => asset_content_type,
+      :bytes => asset_file_size,
+      :download => url,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :user_id => user_id,
+      :comment_id => comment_id
+    }
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
+  end
+  
   protected
   
   def copy_ownership_from_comment

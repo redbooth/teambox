@@ -8,6 +8,10 @@ class Task
     assigned_ids = user.people.from_unarchived.all(:select => 'people.id')
     { :conditions => {:assigned_id => assigned_ids} }
   }
+  
+  named_scope :due_sooner_than_two_weeks, lambda {
+    { :conditions => ['tasks.due_on < ?', 2.weeks.from_now] }
+  }
 
   named_scope :due_today,
     :conditions => ["due_on = ? AND tasks.completed_at is null", 

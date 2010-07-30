@@ -4,15 +4,11 @@ class ApiV1::ProjectsController < ApiV1::APIController
   def index
     @projects = current_user.projects
     
-    respond_to do |f|
-      f.json  { render :as_json => @projects.to_xml }
-    end
+    api_respond @projects.to_json
   end
 
   def show
-    respond_to do |f|
-      f.json  { render :as_json => @current_project.to_xml }
-    end
+    api_respond @current_project.to_json(:include => :people)
   end
   
   def create
@@ -23,22 +19,18 @@ class ApiV1::ProjectsController < ApiV1::APIController
       return
     end
     
-    respond_to do |f|
-      if @project.save
-        handle_api_success(f, @project, :is_new => true)
-      else
-        handle_api_error(f, @project)
-      end
+    if @project.save
+      handle_api_success(@project, :is_new => true)
+    else
+      handle_api_error(@project)
     end
   end
   
   def update
-    respond_to do |f|
-      if @current_project.update_attributes(params[:project])
-        handle_api_success(f, @current_project)
-      else
-        handle_api_error(f, @current_project)
-      end
+    if @current_project.update_attributes(params[:project])
+      handle_api_success(@current_project)
+    else
+      handle_api_error(@current_project)
     end
   end
   
@@ -54,50 +46,39 @@ class ApiV1::ProjectsController < ApiV1::APIController
     saved = false
     
     # Transfer!
-    unless person.nil?
-      saved = @current_project.transfer_to(person)
-    end
+    saved = @current_project.transfer_to(person) unless person.nil?
     
-    respond_to do |f|
-      if saved
-        handle_api_success(f, @current_project)
-      else
-        handle_api_error(f, @current_project)
-      end
+    if saved
+      handle_api_success(@current_project)
+    else
+      handle_api_error(@current_project)
     end
   end
 
   def destroy
     @current_project.destroy
-    respond_to do |f|
-      handle_api_success(f,@current_project)
-    end
+    handle_api_success(@current_project)
   end
 
   protected
   
-  def api_load_project
-    project_id ||= params[:id]
-    
-    if project_id
+  def load_project
+    if project_id ||= params[:id]
       @current_project = Project.find_by_permalink(project_id)
-      
-      unless @current_project
-        api_status(:not_found)
-      end
+      api_status(:not_found) unless @current_project
     end
   end
   
   def can_modify?
     if !( @current_project.owner?(current_user) or 
           ( @current_project.admin?(current_user) and 
-            params[:controller] != 'transfer'))
+            !['transfer', 'destroy'].include?(params[:action])))
       
       api_error(t('common.not_allowed'), :unauthorized)
-      return false
+      false
+    else
+      true
     end
-    
-    true
   end
   
 end

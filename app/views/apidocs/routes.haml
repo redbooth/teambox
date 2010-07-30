@@ -1,0 +1,21 @@
+%h2 API routes
+
+%p This is a complete reference for the API routes of Teambox.
+%p
+  Following RESTful conventions most of the information can be read through GET requests.
+  POST requests are used to create content, PUT to update existing models and DELETE to
+  destroy them.
+%p
+  Make sure you understand the underlying logic of the
+  = link_to "API concepts", api_concepts_path
+  before you get working on these.
+
+.api_routes
+- for route in @routes
+  .route
+    - controller = link_to route[:controller], api_model_path(route[:controller].singularize)
+    %h3= "#{controller}##{route[:action]} #{route[:method]}"
+    %code= route[:path]
+
+= render 'apidocs/column'
+ 

@@ -1,41 +1,33 @@
 class ApiV1::TaskListsController < ApiV1::APIController
-  before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive]
-  before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy,:archive,:unarchive]
+  before_filter :load_task_list, :only => [:update,:show,:destroy,:archive,:unarchive]
+  before_filter :check_permissions, :only => [:create,:update,:destroy,:archive,:unarchive]
   
-
   def index
-    respond_to do |f|
-      f.json  { render :as_json => @task_lists.to_xml(:include => :tasks, :root => 'task-lists') }
-    end
+    @task_lists = @current_project.task_lists.all(:conditions => api_range, :limit => api_limit)
+    api_respond @task_lists.to_json(:include => :tasks)
   end
 
   def show
-    respond_to do |f|
-      f.json  { render :as_json => @task_list.to_xml(:include => [:tasks, :comments]) }
-    end
+    api_respond @task_list.to_json(:include => [:tasks, :comments])
   end
 
   def create
     @task_list = @current_project.create_task_list(current_user,params[:task_list])
     
-    respond_to do |f|
-      if !@task_list.new_record?
-        handle_api_success(f, @task_list, true)
-      else
-        handle_api_error(f, @task_list)
-      end
+    if @task_list.new_record?
+      handle_api_error(@task_list)
+    else
+      handle_api_success(@task_list, :is_new => true)
     end
   end
 
   def update
     @saved = @task_list.update_attributes(params[:task_list])
     
-    respond_to do |f|
-      if @saved
-        handle_api_success(f, @task_list)
-      else
-        handle_api_error(f, @task_list)
-      end
+    if @saved
+      handle_api_success(@task_list)
+    else
+      handle_api_error(@task_list)
     end
   end
 
@@ -45,9 +37,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
       @task_list.update_attribute(:position,idx.to_i)
     end
     
-    respond_to do |f|
-      handle_api_success(f, @task_list)
-    end
+    handle_api_success(@task_list)
   end
   
   def archive
@@ -73,13 +63,9 @@ class ApiV1::TaskListsController < ApiV1::APIController
       @task_list.archived = true
       @task_list.save!
       
-      respond_to do |f|
-        handle_api_success(f, @task_list)
-      end
+      handle_api_success(@task_list)
     else
-      respond_to do |f|
-        handle_api_error(f, @task_list)
-      end
+      handle_api_error(@task_list)
     end
   end
   
@@ -89,57 +75,29 @@ class ApiV1::TaskListsController < ApiV1::APIController
       @saved = @task_list.save
     end
     
-    respond_to do |f|
-      if @saved
-        handle_api_success(f, @task_list)
-      else
-        handle_api_error(f, @task_list)
-      end
+    if @saved
+      handle_api_success(@task_list)
+    else
+      handle_api_error(@task_list)
     end
   end
 
   def destroy
-    @has_permission = if @task_list.editable?(current_user)
-      @task_list.try(:destroy)
-      true
-    else
-      false
-    end
-    
-    respond_to do |f|
-      if @has_permission
-        handle_api_success(f, @task_list)
-      else
-        handle_api_error(f, @task_list)
-      end
-    end
-  end
-
-  def watch
-    @task_list.add_watcher(current_user)
-    respond_to do |f|
-      handle_api_success(f, @task_list)
-    end
-  end
-
-  def unwatch
-    @task_list.remove_watcher(current_user)
-    respond_to do |f|
-      handle_api_success(f, @task_list)
-    end
+    @task_list.destroy
+    handle_api_success(@task_list)
   end
   
-  private
+  protected
 
     def load_task_list
       @task_list = @current_project.task_lists.find(params[:id])
+      api_status(:not_found) unless @task_list
     end
     
     def check_permissions
       # Can they even edit the project?
       unless @current_project.editable?(current_user)
         api_error(t('common.not_allowed'), :unauthorized)
-        return false
       end
     end
   

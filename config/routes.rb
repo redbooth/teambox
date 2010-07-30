@@ -113,6 +113,43 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :comments, :only => [ :create ]
+
+  map.with_options :controller => 'apidocs' do |doc|
+    doc.api           'api',          :action => 'index'
+    doc.api_concepts  'api/concepts', :action => 'concepts'
+    doc.api_routes    'api/routes',   :action => 'routes'
+    doc.api_model     'api/:model',   :action => 'model'
+  end
+  
+  map.namespace(:api_v1, :path_prefix => 'api/1') do |api|
+    api.resources :projects, :member => {:transfer => :put} do |project|
+      project.resources :activities
+      project.resources :people
+      project.resources :comments, :member => {:convert => :post}
+      project.resources :conversations, :member => {:watch => :put, :unwatch => :put} do |conversation|
+        conversation.resources :comments
+      end
+      project.resources :invitations, :member => {:resend => :put, :accept => :put}
+      project.resources :task_lists, :member => {:archive => :put, :unarchive => :put}, :collection => {:reorder => :put} do |task_list|
+        task_list.resources :tasks
+      end
+      project.resources :tasks, :member => {:watch => :put, :unwatch => :put}, :collection => {:reorder => :put}  do |task|
+        task.resources :comments
+      end
+      project.resources :uploads
+      project.resources :pages, :member => {:reorder => :put}, :collection => {:resort => :put}
+      project.resources :notes
+      project.resources :dividers
+    end
+    api.resources :activities
+    api.resources :invitations, :member => {:accept => :put}
+    api.resources :users
+    api.resources :tasks, :member => {:watch => :put, :unwatch => :put}
+    api.resources :pages
+    
+    api.account 'account', :controller => :users, :action => :current, :conditions => { :method => :get }
+  end
+  
   map.resources :task_lists, :only => [ :index ], :collection => { :gantt_view => :get }
   # map.resources :conversations, :only => [ :index ]
   # map.resources :pages, :only => [ :index ]

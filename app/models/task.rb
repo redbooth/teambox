@@ -135,4 +135,34 @@ class Task < RoleRecord
       end
     end
   end
+  
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :project_id => project_id,
+      :task_list_id => task_list_id,
+      :user_id => user_id,
+      :name => name,
+      :position => position,
+      :comments_count => comments_count,
+      :assigned_id => assigned_id,
+      :status => status,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :watchers => Array.wrap(watchers_ids)
+    }
+    
+    base[:due_on] = due_on.to_s(:db) if due_on
+    base[:completed_at] = completed_at.to_s(:db) if completed_at
+    
+    if Array(options[:include]).include? :task_list
+      base[:task_list] = task_list.to_api_hash(options)
+    end
+    
+    base
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
+  end
 end

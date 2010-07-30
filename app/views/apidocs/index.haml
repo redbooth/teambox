@@ -1,0 +1,64 @@
+%img{ :src => "http://cl.ly/3784ed2a0825f5d9d3da/content", :style => 'width: 479px; height: 224px' }
+
+%p The Teambox API will allow you to connect your applications to Teambox.
+%p Some possibilities of what you will be able to do are:
+
+.together
+  %img{ :src => "/images/api.png", :style => 'float: left; padding-top: 40px' }
+  %ul{ :style => 'float: left' }
+    %li Create desktop and mobile clients to access Teambox.
+    %li Link your own GTD application with Teambox tasks.
+    %li Post messages from other applications, like your own CRM.
+    %li Program custom behaviours on Teambox.
+    %li Develop browser extensions.
+  .clear
+
+%p
+  We're here to help you understand how the Teambox API is
+  structured and how you can consume it.
+%p
+  First, you'll need to understand some basic concepts.
+  After, we'll run some basic examples and learn how to handle authorization.
+  Lastly, we'll jump to the documentation for models: Projects, users, tasks, etc.
+
+%h2 What you should know already
+
+%p
+  This documentation assumes you are familiar with HTTP and its usual verbs:
+  GET, POST, PUT, DELETE.
+%p
+  Teambox uses a RESTful JSON API. Routes will be specified in this document,
+  and the API will return the standard HTTP status codes.
+
+%h2 Your first request
+%p
+  Try this simple request from your command line to see how the API works:
+%pre
+  %code
+    == curl #{api_v1_projects_url} -u username:password
+%p It should return something like this:
+%pre
+  %code
+    = JSON.pretty_generate([@project.to_api_hash])
+%p This is the way we will be handling API requests and data exchange with Teambox.
+%p With this simple command, you can get recent activities from Teambox:
+
+%pre
+  %code
+    == curl #{api_v1_activities_url} -u username:password
+
+%p Try this code snippet from your terminal to post a comment to your projects:
+
+%pre
+  %code
+    = %(curl -X POST -H 'Accept: application/json' -H 'Content-Type: application/json' -u username:password -d '{body: \"Posting using the API!\"}' #{api_v1_project_comments_url('your_project')})
+
+%h2 Useful tools
+
+%p To post information into Teambox, you can do it through the terminal with curl.
+%p
+  But there's a very nice web interface called
+  = link_to "hurl", "http://hurl.it"
+  which will make it much easier to test and debug the output. So <strong>use it</strong>!
+
+= render 'apidocs/column'

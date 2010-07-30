@@ -5,17 +5,13 @@ class ApiV1::InvitationsController < ApiV1::APIController
   before_filter :load_invite, :except => [:index]
   
   def index
-    @invitations = @target.invitations
+    @invitations = @target.invitations.all(:conditions => api_range, :limit => api_limit)
     
-    respond_to do |f|
-      f.json  { render :as_json => @invitations.to_xml }
-    end
+    api_respond @invitations.to_json
   end
 
   def show
-    respond_to do |f|
-      f.json  { render :as_json => @invitation.to_xml }
-    end
+    api_respond @invitation.to_json
   end
   
   def create
@@ -31,11 +27,11 @@ class ApiV1::InvitationsController < ApiV1::APIController
       return api_error(t('invitations.errors.invalid'), :unprocessable_entity)
     end
     
-    respond_to do |f|
-      if @saved_count > 0
-        handle_api_success(f, @invitations, :is_new => true)
-      else
-        message = @invitations.length == 1 ? @invitations.first.errors.full_messages.first : t('people.errors.users_or_emails')
+    if @saved_count > 0
+      handle_api_success(f, @invitations, :is_new => true)
+    else
+      message = @invitations.length == 1 ? @invitations.first.errors.full_messages.first : t('people.errors.users_or_emails')
+      respond_do do |f|
         f.json { render :as_json => {'error' => message}, :status => :unprocessable_entity }
       end
     end
@@ -44,26 +40,20 @@ class ApiV1::InvitationsController < ApiV1::APIController
   def resend
     @invitation.send(:send_email)
     
-    respond_to do |f|
-      handle_api_success(f, @invitation)
-    end
+    handle_api_success(@invitation)
   end
   
   def accept
     @invitation.accept(current_user)
     @invitation.destroy
     
-    respond_to do |f|
-      handle_api_success(f, @invitation)
-    end
+    handle_api_success(@invitation)
   end
   
   def destroy
     @invitation.destroy
     
-    respond_to do |f|
-      handle_api_success(f, @invitation)
-    end
+    handle_api_success(@invitation)
   end
 
   protected

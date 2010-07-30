@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe User do
   it { should have_many(:projects_owned) }
@@ -20,8 +20,6 @@ describe User do
   it { should validate_presence_of(:email) }
   it { should validate_length_of(:email, :within => 6..100) }
   it { should validate_uniqueness_of(:email) }
-
-# it { should validate_associated :projects }
 
   describe "invited count" do
     before do
