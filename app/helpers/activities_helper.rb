@@ -17,7 +17,7 @@ module ActivitiesHelper
     haml_tag 'div', :class => "activity #{activity.action_type}" do
       haml_concat micro_avatar(activity.user)
       yield activity_title(activity)
-      haml_tag 'div', posted_date(activity.created_at), :class => 'date' unless rss?
+      haml_tag 'div', posted_date(activity.created_at), :class => :date unless rss?
     end
   end
 
@@ -30,6 +30,7 @@ module ActivitiesHelper
                       create_note edit_note
                       create_upload
                       create_person delete_person
+                      create_project
                       )
 
   def list_activities(activities)
@@ -91,6 +92,9 @@ module ActivitiesHelper
     when 'create_upload'
       text = object.description.presence || object.file_name
       { :file => link_to_unless(plain, text, project_uploads_path(activity.project, :anchor => dom_id(object))) }
+    when 'create_project'
+      { :person => link_to_unless(plain, activity.user, activity.user),
+        :project => link_to_unless(plain, activity.project, activity.project) }
     when 'create_comment'
       # one of Project, Task or Conversation
       object = object.target

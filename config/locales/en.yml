@@ -83,14 +83,18 @@ en:
       edit_note: edited note
       title: '%{user} edited the note "%{note}" in %{page}'
     create_person:
-      create_person: was invited to the project
+      create_person: joined the project
       by: by
-      title: "%{person} got invited to the project %{project}"
+      title: "%{person} joined the project %{project}"
     delete_person:
-      delete_person: was removed to the project
+      delete_person: left the project
       by: by
       left: left the project
       title: "%{person} left the project %{project}"
+    create_project:
+      left: created the project
+      title: "%{person} created the project %{project}"
+      
     thread:
       on_task_list: "on"
       more_comments:

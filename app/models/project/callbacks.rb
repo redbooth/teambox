@@ -10,6 +10,7 @@ class Project
   
   def after_create
     add_user(user)
+    log_activity(self, 'create', user_id)
   end
 
   private

@@ -148,8 +148,11 @@ es:
       title: "%{user} ha creado la página %{page}"
     create_person: 
       by: por
-      create_person: "ha sido añadido al proyecto"
-      title: "%{person} ha sido invitado al proyecto %{project}"
+      create_person: "se ha unido al proyecto"
+      title: "%{person} se ha unido al proyecto %{project}"
+    create_project:
+      create_person: "ha creado el proyecto"
+      title: "%{person} ha creado el proyecto %{project}"
     create_task: 
       create_task: "ha creado la tarea"
       title: "%{user} ha creado la tarea %{task} en %{task_list}"
@@ -160,7 +163,7 @@ es:
       title: "%{user} ha subido el archivo %{file}"
     delete_person: 
       by: por
-      delete_person: "ha sido eliminado del proyecto"
+      delete_person: "ha dejado el proyecto"
       left: "ha dejado el proyecto"
       title: "%{person} ha dejado el proyecto %{project}"
     edit_note: 
