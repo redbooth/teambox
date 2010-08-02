@@ -11,13 +11,12 @@ class Public::PagesController < Public::PublicController
   protected
 
     def load_page
-      begin
-        @page = @project.pages.find(params[:id])
-      rescue
+      @page = @project.pages.find_by_id(params[:id]) || @project.pages.find_by_permalink(params[:id])
+
+      unless @page
         flash[:error] = t('not_found.page', :id => params[:id])
+        redirect_to public_project_path(@project)
       end
-    
-      redirect_to public_project_path(@project) unless @page
     end
 
 

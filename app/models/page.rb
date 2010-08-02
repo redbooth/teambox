@@ -4,7 +4,9 @@ class Page < RoleRecord
   has_many :uploads
   
   has_many :slots, :class_name => 'PageSlot', :order => 'position ASC'
-  
+
+  has_permalink :name, :scope => :project_id
+
   attr_accessible :name, :description, :note_attributes
   attr_accessor :suppress_activity
 
@@ -108,6 +110,10 @@ class Page < RoleRecord
   
   def to_s
     name
+  end
+
+  def to_param
+    permalink || id.to_s
   end
   
   def user
