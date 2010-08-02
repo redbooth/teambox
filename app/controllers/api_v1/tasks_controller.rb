@@ -7,7 +7,7 @@ class ApiV1::TasksController < ApiV1::APIController
     if @current_project
       @tasks = (@task_list || @current_project).tasks.all(:conditions => api_range, :limit => api_limit)
     else
-      @tasks = Task.find_all_by_project_id(current_user.project_ids, :conditions => api_range)
+      @tasks = Task.find_all_by_project_id(current_user.project_ids, :conditions => api_range, :limit => api_limit)
     end
     
     api_respond @tasks.to_json

@@ -169,7 +169,7 @@ class ApidocsController < ApplicationController
           :action => route.defaults[:action],
           :path => route.to_s.scan(/\/api.*?[(\s]/).first.chomp('('),
           :method => route.to_s.split(" ").first }
-      end
+      end.sort_by { |route| route[:controller] }
       
       route_map = {}
       @consolidated_routes = @routes.map do |route|
