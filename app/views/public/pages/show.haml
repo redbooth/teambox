@@ -1,0 +1,12 @@
+- @title = "#{@page} - #{@project}"
+
+%h2= @page
+
+#slots
+  = render :partial => 'pages/slot', :collection => @page.slots, :locals => {:page => @page, :project => @project}
+
+.log_in_to_reply
+  = link_to "Log into Teambox", project_page_path(@project, @page)
+  to edit this page.
+
+= render 'public/projects/column'

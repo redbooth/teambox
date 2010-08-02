@@ -113,12 +113,14 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :comments, :only => [ :create ]
 
-  map.public_index '/public', :controller => 'public/projects', :action => :index
+  map.public_projects '/public', :controller => 'public/projects', :action => :index
 
-  map.namespace(:public, :path_prefix => 'public') do |p|
-    p.resources :projects, :only => [:index, :show] do |project|
-      project.resources :conversations
-    end
+  map.namespace(:public) do |p|
+    p.project ':id', :controller => 'projects', :action => :show
+    p.project_conversations ':project_id/conversations',     :controller => 'conversations', :action => :index
+    p.project_conversation  ':project_id/conversations/:id', :controller => 'conversations', :action => :show
+    p.project_pages         ':project_id/pages',     :controller => 'pages', :action => :index
+    p.project_page          ':project_id/pages/:id', :controller => 'pages', :action => :show
   end
 
   map.with_options :controller => 'apidocs' do |doc|
