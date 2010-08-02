@@ -1,0 +1,7 @@
+- content_for :column do
+  = link_to "Overview", public_project_path(@project)
+  = link_to "All Conversations", public_project_conversations_path(@project)
+  %br
+  = link_to "Join this group", project_path(@project)
+  %br
+  = link_to "Other public projects...", public_projects_path

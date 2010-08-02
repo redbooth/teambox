@@ -1,0 +1,35 @@
+!!! Strict
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang'=>"en", :lang=>"en" }
+  %head
+    %meta{ 'http-equiv' => "content-type", :content => "text/html;charset=utf-8" }
+    = csrf_meta_tag
+    %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
+    %title= @title || @project || "Teambox public projects"
+    = stylesheet_link_tag 'public'
+    = sprockets_include_tag
+
+  %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
+    = javascript_include_tag 'modernizr'
+    .top{ :style => 'background-color: rgb(255,255,220); border-bottom: 1px solid rgb(200,200,150); width: 100%; display: block; font-size: 12px; padding: 10px 0; text-align: center' }
+      = link_to "Log into Teambox", login_path
+      to post to this project. Don't have an account?
+      = link_to "Sign up for free", signup_path
+      to create your own projects.
+    .container
+      .wrapper
+        #header
+          = link_to image_tag('teambox-logo.gif', :alt => 'Teambox logo', :style => 'float:right'), root_path
+          %h1= @project || "Public projects"
+          .clear
+        .content
+          - show_flash
+          = yield
+        .column
+          #sidebar
+            = yield :column
+      .footer
+        %p.copyright
+          This community is powered by Teambox.
+          = link_to "Sign up for a free account", signup_path
+          to create your own community.
+      = javascripts

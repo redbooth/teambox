@@ -88,7 +88,7 @@ module ApplicationHelper
   end
 
   def posted_date(datetime)
-    datetime = datetime.in_time_zone(current_user.time_zone)
+    datetime = datetime.in_time_zone(current_user.time_zone) if current_user
 
     content_tag(:span, l(datetime, :format => :long), :id => "date_#{datetime.to_i}",
       :class => 'timeago', :alt => (datetime.to_i * 1000))

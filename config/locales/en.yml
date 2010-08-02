@@ -428,6 +428,7 @@ en:
       first: "+ Create the first conversation"
     fields:
       tracks_time: "Enable time tracking. <em>Will allow users to log time for tasks.</em>"
+      public_project: "Public project. <em>Anybody will be able to access it and join it at the <a href='/public'>public projects section</a>.</em>"
       archiving: "Archive this project"
       forever: "Delete this project forever"
       owner: "Owner"

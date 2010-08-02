@@ -13,7 +13,7 @@ class Project < ActiveRecord::Base
                  :permalink,
                  :invitations
 
-  attr_accessible :name, :permalink, :archived, :group_id, :tracks_time
+  attr_accessible :name, :permalink, :archived, :group_id, :tracks_time, :public
 
   def log_activity(target, action, creator_id=nil)
     creator_id ||= target.user_id
@@ -141,7 +141,7 @@ class Project < ActiveRecord::Base
     tasks = projects.collect{ |p| p.tasks }.flatten
     self.calendar_for_tasks(tasks, projects, filter_user, host, port)
   end
-
+  
   protected
 
     def self.calendar_for_tasks(tasks, projects, filter_user, host = nil, port = 80)

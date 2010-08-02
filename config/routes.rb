@@ -113,6 +113,14 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :comments, :only => [ :create ]
 
+  map.public_index '/public', :controller => 'public/projects', :action => :index
+
+  map.namespace(:public, :path_prefix => 'public') do |p|
+    p.resources :projects, :only => [:index, :show] do |project|
+      project.resources :conversations
+    end
+  end
+
   map.with_options :controller => 'apidocs' do |doc|
     doc.api           'api',          :action => 'index'
     doc.api_concepts  'api/concepts', :action => 'concepts'
