@@ -1,6 +1,6 @@
 %p
   Welcome to the Teambox community.
-  = link_to "Join the project"
+  = link_to "Join the project", public_project_path(@project)
   to receive community announcements or request support.
 
 .conversations
@@ -11,7 +11,7 @@
       %span
         == #{pluralize(conversation.comments_count, "message", "message")},
         == last one #{time_ago_in_words(conversation.updated_at)} ago
-  .conversation= link_to "+ New conversation", '', :class => :new_conversation
+  .conversation= link_to "+ New conversation", new_project_conversation_path(@projectt), :class => :new_conversation
 
 .tasks
   %h3 How to report issues and suggestions

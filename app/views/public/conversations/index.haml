@@ -1,6 +1,6 @@
 .conversations
   %h2 Conversations in this community
-  .conversation= link_to "+ Log into Teambox to create a new conversation", new_project_conversation_path(@projectt), :class => :new_conversation
+  .conversation= link_to "+ Log into Teambox to create a new conversation", new_project_conversation_path(@project), :class => :new_conversation
   %br
   - for conversation in @conversations
     .conversation
