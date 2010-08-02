@@ -31,6 +31,15 @@ describe ApiV1::PagesController do
       JSON.parse(response.body).length.should == 2
     end
     
+    it "limits pages" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body).length.should == 1
+    end
+    
     it "limits and offsets pages" do
       login_as @user
       

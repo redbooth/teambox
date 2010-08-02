@@ -15,8 +15,8 @@ class Public::PublicController < ApplicationController
       project_id = params[:project_id] || params[:id]
       if project_id
         @project = Project.find_by_permalink(project_id)
-        render :text => 'Unexisting project' unless @project
-        render :text => 'Not a public project' unless @project.try(:public)
+        return render :text => 'Unexisting project' unless @project
+        return render :text => 'Not a public project' unless @project.public
       end
     end
 

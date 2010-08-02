@@ -1,7 +1,7 @@
 class ApiV1::APIController < ApplicationController
   skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token
 
-  API_LIMIT = 25
+  API_LIMIT = 50
 
   protected
   
@@ -78,7 +78,11 @@ class ApiV1::APIController < ApplicationController
   end
   
   def api_limit
-    [params[:count].to_i, API_LIMIT].max
+    if params[:count]
+      [params[:count].to_i, API_LIMIT].min
+    else
+      API_LIMIT
+    end
   end
   
   def api_range

@@ -48,6 +48,15 @@ describe ApiV1::TasksController do
       JSON.parse(response.body).length.should == 3
     end
     
+    it "limits tasks" do
+      login_as @user
+      
+      get :index, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body).length.should == 1
+    end
+    
     it "limits and offsets tasks" do
       login_as @user
       

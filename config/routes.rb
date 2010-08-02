@@ -114,12 +114,13 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :comments, :only => [ :create ]
 
-  map.public_index '/public', :controller => 'public/projects', :action => :index
+  map.public_projects '/public', :controller => 'public/projects', :action => :index
 
-  map.namespace(:public, :path_prefix => 'public') do |p|
-    p.resources :projects, :only => [:index, :show] do |project|
-      project.resources :conversations
-    end
+  map.namespace(:public) do |p|
+    p.project ':id', :controller => 'projects', :action => :show
+    p.project_conversations ':project_id/conversations',     :controller => 'conversations', :action => :index
+    p.project_conversation  ':project_id/conversations/:id', :controller => 'conversations', :action => :show
+    p.project_page          ':project_id/:id',       :controller => 'pages', :action => :show
   end
 
   map.with_options :controller => 'apidocs' do |doc|
@@ -137,11 +138,11 @@ ActionController::Routing::Routes.draw do |map|
       project.resources :conversations, :except => [:new, :edit], :member => {:watch => :put, :unwatch => :put} do |conversation|
         conversation.resources :comments, :except => [:new, :edit]
       end
-      project.resources :invitations, :except => [:new, :edit, :update], :member => {:resend => :put, :accept => :put}
+      project.resources :invitations, :except => [:new, :edit, :update], :member => {:resend => :put}
       project.resources :task_lists, :except => [:new, :edit], :member => {:archive => :put, :unarchive => :put}, :collection => {:reorder => :put} do |task_list|
         task_list.resources :tasks, :except => [:new, :edit]
       end
-      project.resources :tasks, :except => [:new, :edit], :member => {:watch => :put, :unwatch => :put}, :collection => {:reorder => :put}  do |task|
+      project.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}, :collection => {:reorder => :put}  do |task|
         task.resources :comments, :except => [:new, :edit]
       end
       project.resources :uploads, :except => [:new, :edit, :update]
@@ -150,9 +151,9 @@ ActionController::Routing::Routes.draw do |map|
       project.resources :dividers, :except => [:new, :edit]
     end
     api.resources :activities, :only => [:index, :show]
-    api.resources :invitations, :except => [:new, :edit, :update], :member => {:accept => :put}
+    api.resources :invitations, :except => [:new, :edit, :update, :create], :member => {:accept => :put}
     api.resources :users, :only => [:index, :show]
-    api.resources :tasks, :except => [:new, :edit], :member => {:watch => :put, :unwatch => :put}
+    api.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}
     api.resources :pages, :except => [:new, :edit]
     
     api.account 'account', :controller => :users, :action => :current, :conditions => { :method => :get }

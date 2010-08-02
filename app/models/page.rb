@@ -4,13 +4,15 @@ class Page < RoleRecord
   has_many :uploads
   
   has_many :slots, :class_name => 'PageSlot', :order => 'position ASC'
-  
+
+  has_permalink :name, :scope => :project_id
+
   attr_accessible :name, :description, :note_attributes
   attr_accessor :suppress_activity
 
   validates_length_of :name, :minimum => 1
   
-  default_scope :order => 'position ASC, created_at DESC'
+  default_scope :order => 'position ASC, created_at DESC, id DESC'
   
   def self.widgets
      [Note, Divider]
@@ -108,6 +110,10 @@ class Page < RoleRecord
   
   def to_s
     name
+  end
+
+  def to_param
+    permalink || id.to_s
   end
   
   def user

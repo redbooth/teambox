@@ -144,13 +144,11 @@ class PagesController < ApplicationController
 
   private
     def load_page
-      begin
-        @page = @current_project.pages.find(params[:id])
-      rescue
-        flash[:error] = t('not_found.page', :id => params[:id])
-      end
+      page_id = params[:id]
+      @page = @current_project.pages.find_by_id(page_id) || @current_project.pages.find_by_permalink(page_id)
       
       unless @page
+        flash[:error] = t('not_found.page', :id => page_id)
         redirect_to project_path(@current_project)
       end
     end

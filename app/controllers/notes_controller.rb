@@ -91,7 +91,8 @@ class NotesController < ApplicationController
   
   private
     def load_page
-      @page = @current_project.pages.find(params[:page_id])
+      page_id = params[:page_id]
+      @page = @current_project.pages.find_by_id(page_id) || @current_project.pages.find_by_permalink(page_id)
     end
     
     def reload_page(extras={})
