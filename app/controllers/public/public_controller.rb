@@ -3,7 +3,7 @@ class Public::PublicController < ApplicationController
   skip_before_filter :login_required
   before_filter :set_english_locale
 
-  layout 'public'
+  layout 'public_projects'
 
   protected
 
