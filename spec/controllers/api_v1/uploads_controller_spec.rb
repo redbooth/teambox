@@ -19,6 +19,15 @@ describe ApiV1::UploadsController do
       JSON.parse(response.body).length.should == 1
     end
     
+    it "limits uploads" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body).length.should == 1
+    end
+    
     it "limits and offsets uploads" do
       login_as @user
       

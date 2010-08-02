@@ -27,6 +27,15 @@ describe ApiV1::ActivitiesController do
       JSON.parse(response.body).map{|a| a['id'].to_i}.sort.should == @project.activity_ids.sort
     end
     
+    it "limits activities" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body).length.should == 1
+    end
+    
     it "limits and offsets activities" do
       login_as @user
       

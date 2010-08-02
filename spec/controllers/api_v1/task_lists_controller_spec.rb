@@ -18,6 +18,15 @@ describe ApiV1::TaskListsController do
       JSON.parse(response.body).length.should == 1
     end
     
+    it "limits task lists" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body).length.should == 1
+    end
+    
     it "limits and offsets task lists" do
       login_as @user
       
