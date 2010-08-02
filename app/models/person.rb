@@ -48,10 +48,10 @@ class Person < ActiveRecord::Base
   end
   
   def after_create
-    project.log_activity(self, 'create', user_id)
-    if project.user == user
-      update_attribute :role, ROLES[:admin]
-    end
+    # for a new project, we log create_project, not create_person
+    project.log_activity(self, 'create', user_id) unless project.user == user
+    # promote the project owner to admin
+    update_attribute :role, ROLES[:admin] if project.user == user
   end
   
   def after_destroy

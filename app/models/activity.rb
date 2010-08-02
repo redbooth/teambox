@@ -74,6 +74,7 @@ class Activity < ActiveRecord::Base
     when 'Note'         then begin; Note.find_with_deleted(target_id); rescue; nil; end
     when 'Divider'      then begin; Divider.find_with_deleted(target_id); rescue; nil; end
     when 'Upload'       then begin; Upload.find_with_deleted(target_id); rescue; nil; end
+    when 'Project'      then begin; Project.find_with_deleted(target_id); rescue; nil; end
     end
   end
 
@@ -86,7 +87,7 @@ class Activity < ActiveRecord::Base
       target.target
     else
       target
-    end
+    end || project
   end
 
   def thread_id
@@ -155,9 +156,7 @@ class Activity < ActiveRecord::Base
 
   def self.get_threads(activities)
     activities.inject([]) do |result, a|
-      unless result.collect(&:thread_id).include?(a.thread_id)
-        result << a
-      end
+      result << a unless result.collect(&:thread_id).include?(a.thread_id)
       result
     end
   end

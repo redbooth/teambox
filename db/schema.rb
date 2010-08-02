@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100729134941) do
+ActiveRecord::Schema.define(:version => 20100802115606) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20100729134941) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "last_comment_id"
-    t.integer  "comments_count",  :default => 0, :null => false
+    t.integer  "comments_count",  :default => 0,     :null => false
     t.text     "watchers_ids"
     t.datetime "deleted_at"
     t.datetime "created_at"
@@ -235,6 +235,7 @@ ActiveRecord::Schema.define(:version => 20100729134941) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "public"
   end
 
   add_index "projects", ["deleted_at"], :name => "index_projects_on_deleted_at"

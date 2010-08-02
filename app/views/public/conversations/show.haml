@@ -1,0 +1,12 @@
+- @title = "#{@conversation} - #{@project}"
+
+%h2= @conversation
+
+.comments
+  = render :partial => 'public/comments/comment', :collection => @conversation.comments.reverse
+
+.log_in_to_reply
+  = link_to "Log into Teambox", project_conversation_path(@project, @conversation)
+  to reply to this thread.
+
+= render 'public/projects/column'
