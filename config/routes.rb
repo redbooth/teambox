@@ -136,11 +136,11 @@ ActionController::Routing::Routes.draw do |map|
       project.resources :conversations, :except => [:new, :edit], :member => {:watch => :put, :unwatch => :put} do |conversation|
         conversation.resources :comments, :except => [:new, :edit]
       end
-      project.resources :invitations, :except => [:new, :edit, :update], :member => {:resend => :put, :accept => :put}
+      project.resources :invitations, :except => [:new, :edit, :update], :member => {:resend => :put}
       project.resources :task_lists, :except => [:new, :edit], :member => {:archive => :put, :unarchive => :put}, :collection => {:reorder => :put} do |task_list|
         task_list.resources :tasks, :except => [:new, :edit]
       end
-      project.resources :tasks, :except => [:new, :edit], :member => {:watch => :put, :unwatch => :put}, :collection => {:reorder => :put}  do |task|
+      project.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}, :collection => {:reorder => :put}  do |task|
         task.resources :comments, :except => [:new, :edit]
       end
       project.resources :uploads, :except => [:new, :edit, :update]
@@ -149,9 +149,9 @@ ActionController::Routing::Routes.draw do |map|
       project.resources :dividers, :except => [:new, :edit]
     end
     api.resources :activities, :only => [:index, :show]
-    api.resources :invitations, :except => [:new, :edit, :update], :member => {:accept => :put}
+    api.resources :invitations, :except => [:new, :edit, :update, :create], :member => {:accept => :put}
     api.resources :users, :only => [:index, :show]
-    api.resources :tasks, :except => [:new, :edit], :member => {:watch => :put, :unwatch => :put}
+    api.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}
     api.resources :pages, :except => [:new, :edit]
     
     api.account 'account', :controller => :users, :action => :current, :conditions => { :method => :get }
