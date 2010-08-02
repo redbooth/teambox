@@ -23,7 +23,7 @@
   - if user.new_record? or sub_action == 'settings'
     .email.text_field
       = f.label :email, t('.email')
-      - if @invitation || @app_link
+      - if (@invitation || @app_link) && :email.nil?
         = f.text_field :email, :readonly => 'readonly', :style => 'color: #999'
       - else
         = f.text_field :email
