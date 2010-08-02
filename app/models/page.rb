@@ -10,7 +10,7 @@ class Page < RoleRecord
 
   validates_length_of :name, :minimum => 1
   
-  default_scope :order => 'position ASC, created_at DESC'
+  default_scope :order => 'position ASC, created_at DESC, id DESC'
   
   def self.widgets
      [Note, Divider]
