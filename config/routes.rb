@@ -119,8 +119,7 @@ ActionController::Routing::Routes.draw do |map|
     p.project ':id', :controller => 'projects', :action => :show
     p.project_conversations ':project_id/conversations',     :controller => 'conversations', :action => :index
     p.project_conversation  ':project_id/conversations/:id', :controller => 'conversations', :action => :show
-    p.project_pages         ':project_id/pages',     :controller => 'pages', :action => :index
-    p.project_page          ':project_id/pages/:id', :controller => 'pages', :action => :show
+    p.project_page          ':project_id/:id',       :controller => 'pages', :action => :show
   end
 
   map.with_options :controller => 'apidocs' do |doc|
