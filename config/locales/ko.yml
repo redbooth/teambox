@@ -169,6 +169,11 @@ ko:
       more_comments: 
         one: "1개의 기존 코멘트"
         other: "%{count}개의 기존 코멘트"
+  affiliate: 
+    index: 
+      addresses: 주소
+      send_invites: "팀박스로 초대"
+      twitter: 트위터
   avatars: 
     edit: 
       upload: "이 아바타를 업로드하기"
@@ -216,9 +221,11 @@ ko:
       confirm_delete: "정말로 이 코멘트를 지우시겠습니까?"
       hours: "{{hours}}시"
       hours_with_minutes: "{{hours}}시 {{minutes}}분"
+      loading: 로딩중...
     convert_form: 
       destination: "어떤 테스크 리스트로 하실지 선택해주세요."
       name: "이 테스크의 이름을 입력하세요."
+      submit: 변환
     edit: 
       submit: 저장
     errors: 
@@ -288,6 +295,7 @@ ko:
         body: "질문을 하고 새로운 소식을 알리세요. 논의를 시작합니다."
         name: "이메일 알람의 제목입니다. 가급적 짧게 해 주세요"
     index: 
+      new_conversation: "새로운 대화"
       rss: 
         description: "{{name}} 프로젝트내의 대화"
         title: "{{name}} 대화"
@@ -500,6 +508,8 @@ ko:
     NG: 나이지리아
     NI: 니카라과
     NL: 네덜란드
+    ? "NO"
+    : 노르웨이
     NP: 네팔
     NQ: "Dronning Maud Land"
     NR: 나우루
@@ -878,8 +888,6 @@ ko:
     sent: 
       email_sent: "초대장이 발송되었습니다."
   latest_announcement: "Teambox의 최신 소식은 <a href='http://blog.teambox.com'>블로그</a>를 읽어보세요."
-  locales: 
-    ko: 한국어
   not_found: 
     conversation: "해당 대화내용{{id}} 이 이 프로젝트에서 검색되지 않았습니다."
     group: "그룹 {{id}}이 존재하지 않습니다."

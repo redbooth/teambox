@@ -2,6 +2,12 @@
 ja: 
   activerecord: 
     attributes: 
+      address: 
+        city: 市名
+        country: 国名
+        state: 都道府県名
+        street: 町名
+        zip: 郵便番号
       card: 
         city: 市
         country: 国
@@ -163,6 +169,61 @@ ja:
     edit_page: 
       edit_page: ページを編集しました
       title: "%{user} ページ編集 %{page} "
+    thread: 
+      created: 
+        conversation: 会話を作成する
+        task: タスクを作成する
+      more_comments: 
+        one: 1つの以前のコメント
+        other: "%{count} つの以前のコメント"
+  affiliate: 
+    area: アフィリエイト・エリア
+    index: 
+      addresses: 住所
+      credits_earned: 獲得したクレジット
+      desc_1: 私達のパートナーツールを利用して、<strong>無料利用</strong>もしくは友人・知人に紹介して<strong>収益</strong>を得る事が出来ます。
+      desc_2: "Teambox新規有償ユーザーをご紹介頂き、<strong>売上の%{percent}%</strong>を得る事が出来ます。"
+      facebook: フェースブック
+      get_in_touch: 連絡して下さい
+      idea1: Teamboxの使い方、特に初心者のためのガイドを記載したサイトを作成しましょう。
+      idea2: Teamboxについてのあなたのブログにリンクをポストし、Teamboxがいかに便利かを語って下さい。
+      idea3: プロジェクトコラボレーションについてのイベントに参加し、参加者に紹介しましょう
+      idea4: 単に新しいユーザーの招待メールを送るのです。
+      ideas: アフィリエイト・プログラム導入例
+      learn_more: 更に詳しく
+      no_referred_users: まだ紹介ユーザーはございません。
+      option_1: オプション1：このリンクを利用する
+      option_2: オプション2：メールをアドレスを入力し、招待状を送る
+      option_3: オプション3：CSVファイルで連絡先をインポートし、招待する
+      over_200: 200米ドル以上いつでも
+      plan_for: のためのプラン
+      premium_plan: プレミアム・アカウント
+      refer_info: "%{users} のユーザーが%{plan}導入頂いた場合、毎月$%{credit}の収入"
+      referred_users: あなたの紹介ユーザー
+      send_invites: Teamboxに招待する
+      send_money: そして送金手続きをいたします。
+      sent_invites_to: 招待メールは以下のメールアドレスに送られます：
+      sent_number_of_invites: さんに招待メールは送られます
+      tracking1: Teamboxにあなたのユーザーとして登録する場合、ユーザーは特別なパラメータを持つページでサインアップする必要があります。
+      tracking2: このパラメーターはユニークであり、あなたのユーザーを追跡する事ができます。
+      tracking3: ユーザーがこのリンクをたどった場合、あなたの紹介という事が記録されます。
+      tracking4: 彼らがページから移動して、再度アクセスした場合でも、我々はセッションにデーターを格納しますので、彼らが登録した場合、あなたの紹介ユーザーという事を認識出来ます。
+      tracking5: あなたのサインアップのための特別なページは
+      tracking6: フェースブック、Twitterやご自分のサイトにリンクを掲載したり、招待メールを知人友人に送りましょう。登録の際は、あなたにその旨の連絡がメールでいきます。
+      twitter: Twitter
+      twitter_link: "Teamboxを+利用してみて下さい。+新しいプロジェクト管理の+コラボツールです。+無料で+お試し頂けます+%{link} "
+      use_money: この収益を
+      use_money_cash: もしくは現金を得ます
+      use_tracking_code: トラッキング・コードを利用する事により、どのユーザーがあなたの紹介ユーザーであるかを知る事が出来ます。
+      website: あなたのWEBで紹介する
+    notification: 
+      accepted_subscription: "%{name} (%{email})さんはTeamboxにあなたの紹介です登録をされました。"
+      check_your_earnings: どのくらいの収入になったか、確認しましょう
+      check_your_referrals: あなたの紹介ユーザーがどなたかを確認しましょう
+      new_signup: あなたの紹介ユーザーとして1人登録しました！
+      new_subscription: あなたの紹介ユーザーがアップ・グレードしました！
+      upgraded_subscription: "%{name} (%{email})さんがアップグレードした場合は、$%{price}の収入を得る事が出来ます"
+      wait: 現在登録中です。Teamboxパートナーエリアに反映されるには、しばらく時間がかかります。
   avatars: 
     edit: 
       upload: このアバターをアップロード
@@ -181,6 +242,14 @@ ja:
       social_networks: ソーシャルネットワーク
       vcard: vCardのダウンロード
       websites: ウェブサイト
+    card_types: 
+      business: ビジネス
+      fax: ファックス
+      home: 自宅
+      mobile: 携帯
+      other: その他
+      personal: 個人
+      work: 仕事
     field: 
       add_addresses: 住所の追加
       add_email_addresses: eメールの追加
@@ -193,6 +262,8 @@ ja:
       confirm_delete: このコメントを削除してもよろしいですか?
       convert_task: タスクに変えます
       edit: コメントを編集します
+    attach: 
+      tooltip: 添付
     comment: 
       cannot_edit: コメントは15分後に編集不可です
       commented_on: "-"
@@ -200,6 +271,7 @@ ja:
       confirm_delete: このコメントを削除してもよろしですか?
       hours: "%{hours}時"
       hours_with_minutes: "%{hours}時 %{minutes}分"
+      loading: 読み込み中
     convert_form: 
       destination: タスクリストの設置場所を選ぶ
       name: タスク名入力
@@ -211,6 +283,7 @@ ja:
       add_hours: 時間
       hours: 何時間このタスクのために稼働しましたか？
       time_tracking_docs: タイムトラッキングの利用法を学ぼう
+      tooltip: タスクに時間を加える
     new: 
       assigned_to: 指名先
       assigned_to_nobody: 未担当
@@ -219,6 +292,10 @@ ja:
       submit: 保存
       task: 必要事項を記述下さい。担当割当可能です。
       task_list: このタスクリストへのアイディアを共有しましょう。タスクの作成と割当てには、サイドバーを使ってください。
+    preview: 
+      close: 閉じる
+      preview: 概観
+      showing: "..."
   common: 
     accept: 了承
     and: と
@@ -245,6 +322,7 @@ ja:
       one: "1 タスク"
       other: "%{count} タスク"
   confirm: 
+    delete_group: このグループを削除してよいですか？
     delete_page: このページを削除しますか?
     delete_task: このタスクを削除しますか?
     delete_task_list: このタスクリストを削除しますか?
@@ -708,6 +786,7 @@ ja:
       plan_share_and_collaborate: 計画、共有、作業の終了の確認など。可能な限りシンプルになっています。
       report_abuse: このメールは、あなたのお知り合いからの要求に基づいて送付されています。もし悪用されているようでしたら、お知らせください。
       subject: "%{user} はあなたと [%{project}]を共有しました"
+      subject_without_project: "%{name}さんはあなたをTeamboxに招待しました"
       teambox_is_a_pm_platform: Teamboxは現実世界の共同作業のために作られた、プロジェクト管理プラットフォームです。
       you_have_been_invited_to: "あなたはプロジェクト<b>%{project}</b>に招待されました。"
     invitation_group: 
@@ -765,6 +844,8 @@ ja:
       no_edit: このグループを編集できません
       not_admin: このグループを管理できません
       not_enabled: このシステムではグループが有効になっていません
+      upgrade: "<b>独自のドメイン作成</b>には,  {{link}}をしてください。"
+      upgrade_account: アップグレードしましょう
     fields: 
       description: 説明
       name: 名前
@@ -794,7 +875,9 @@ ja:
       submit: 作成
       title: グループの作成
     primer: 
+      configure_domain: "カスタマイズ化されたサブドメイン、例えばをhttp://yourcompany.teambox.comやhttp://yourdomain.comのように所有されている独自のドメイン名を利用可能です。 <a href='{{link}}' target='_blank'>詳しくはこちら</a>. "
       create_group: グループを作成する
+      explain: "Teamboxはお客様のご希望する<b>Look & Feel</b>を可能にするカスタマイズ機能があります。ログイン・スクリーンに希望するロゴ表示と文字装飾が可能になります。"
       no_group_create: "グループを所有していません。%{link}"
     search: 
       invite: 招待する
@@ -809,7 +892,12 @@ ja:
     comments: "Time Entries"
     entry_hours: 時間
     entry_total: 合計
+    filter_assigned: 
+      anybody: 誰でも
+      my_tasks: 自分のタスク
     filter_by: によってフィルター
+    filter_project: 
+      all: 全てのプロジェクト
     filters: 
       assigned_to: 人々
       projects: プロジェクト
@@ -853,6 +941,7 @@ ja:
       resent: "招待を%{recipient}に再度送信しました。もしeメールが届いていないようでしたら、迷惑メールフォルダを確認してください。"
       return: 戻る
     search: 
+      help: ヘルプ
       invite: 招待
       invite_from_project: プロジェクトに招待する
       invite_people: このプロジェクトに招待する
@@ -862,8 +951,6 @@ ja:
     sent: 
       email_sent: <b>このユーザーにプロジェクトへの招待を受け入れるリンクを含んだeメールを送信しました。もしeメールが見つからないようであれば、迷惑メールに分類されていないか確認するか、異なるeメールアドレスを試して見てください。もし問題が解決しないようでしたら、我々のスタッフに連絡してください。
   latest_announcement: "Teamboxに関する最新の情報は<a href='http://blog.teambox.com'>ブログ(英語)</a>でお読みになれます。日本語での提供は下半期を2010年秋頃を予定してます。 "
-  locales: 
-    ja: 日本語
   not_found: 
     conversation: "チャット %{id} はこのプロジェクトにはありません"
     group: "グループ %{id} は存在しません。"
@@ -888,12 +975,17 @@ ja:
       format: 
         delimiter: ","
         format: "%u%n"
+        precision: 2
         separator: "."
         unit: Yen
     format: 
       delimiter: ","
+      precision: 3
       separator: "."
     human: 
+      format: 
+        delimiter: 　
+        precision: 1
       storage_units: 
         format: "%n %u"
         units: 
@@ -904,16 +996,27 @@ ja:
           kb: KB
           mb: MB
           tb: TB
+    percentage: 
+      format: 
+        delimiter: 　
+    precision: 
+      format: 
+        delimiter: 　
   oauth: 
     account_linked: アカウントがリンクされました。
     already_linked_to_your_account: このサービスは既にあなたのアカウントにリンクされています。ログイン可能です。
     already_taken_by_other_account: このサービスは既に他のアカウントとリンクされています。ログアウトをして頂き、そのサービスとログインして下さい。他のアカウントとリンクするには、現在のサービスからリンクを解いて頂く必要があります。
+    app_unlinked: アプリはリンクが外れています
     auth_status: OAuth認証
     auth_status_link: あなたのアカウントとリンク
     auth_status_linked: プロバイダーとリンクしています
+    link_account: アカウントをリンクする。
     logged_in: ログされました
     not_linked: そのサービスはあなたのTeamboxアカウントとリンクされていません
     this_account_will_be_linked_to: "このアカウントは%{provider} とリンクされます"
+    unlink_account: アカウントのリンクを外す。
+    user_already_exists_by_email: "%{email} はすでにTeamboxのアカウントを持っています。<br/>そのアカウントを利用しログインをして頂き、設定パネルよりリンクして下さい。"
+    user_already_exists_by_login: "%{login} はすでにTeamboxのアカウントを持っています。<br/>そのアカウントを利用しログインをして頂き、設定パネルよりリンクして下さい。"
     your_account_is_linked: "プロファイル%{provider}がTeamboxと<strong>リンクされました。</strong>"
     your_account_is_not_linked: "プロファイル %{provider}はTeambox と <strong>リンクされていません。</strong> "
   page_title: 
@@ -934,6 +1037,7 @@ ja:
     new_projects: 新規プロジェクト
     new_users: サインアップ
     results_search: 検索
+    show_plans: 計画
     show_projects: 概観
     welcome_users: ようこそ!
   pages: 
@@ -998,6 +1102,7 @@ ja:
       submit: ユーザー更新
     errors: 
       user_or_email: ユーザーが見つかりません。ユーザー名、またはeメールアドレスを入力してください。
+      users_or_emails: ユーザーネームとメアドが無効です
     fields: 
       admin: 管理者
       commenter: コメンター
@@ -1018,6 +1123,23 @@ ja:
       edit: 編集
     update: 
       success: "%{name}の役割を更新しました "
+  plans: 
+    copies: 
+      copy1: "如何でしたか？ <a href='{{link}}'>アップグレード</a> によりさらに便利になります。"
+      copy2: "<a href='{{link}}'>アップグレードはこちらから</a>プロジェクト数と容量アップ、さらにプロジェクト間の検索が可能になります。"
+      copy3: "プレミアムアカウントにより<a href='{{link}}'>容量アップ</a>。容量が追加され2000プロジェクまで利用可能です。"
+      copy4: "プレミアム・アカウントにより<a href='{{link}}'>効率アップ</a>: 全てのプロジェクトSearch bar across all projects."
+      copy5: "<a href='{{link}}'>アップ・グレードしましょう</a>そしてより一層のコラボレーションを実現しましょう "
+      copy6: "全てのプロジェクト内を検索できる”検索バー”は業務効率を大幅アップします。 <a href='{{link}}'>アップグレード</a>をお勧めします! "
+      copy7: "あなたのビジネスは私達にとっても重要です。プレミアム・プランで <a href='{{link}}'>より手厚いサポート</a>を提供しています。"
+    show: 
+      branding: 
+        configure: "ご利用中のプランは独自ブランドの利用及びドメイン名の設定可能です。こちらにて<a href='{{link}}'>独自ブランドの設定</a>ができます. "
+        not_available: ご利用中のプランは<strong>独自ブランドの利用</strong>不可です。アップデートをご利用ください。
+      current_plan: "あなたの現在のプランは<strong>{{name}}</strong>です"
+      max_projects: "{{max}}プロジェクトまで作成出来ます"
+      max_storage: "{{max}}まで保存できます"
+      plan: あなたのTeamboxプラン
   projects: 
     edit: 
       change_owner: オーナーを変更
@@ -1040,6 +1162,9 @@ ja:
       owner_description: オーナーはプロジェクトの責任者です。オーナーは、別のユーザーにその所有権を譲らない限り、プロジェクトから外すことはできません。
       permalink: URL
       permalink_description: あなたのプロジェクトのアドレスです。なるべく短くしましょう。空白を入れることはできません。
+      settings: 
+        upgrade: "<b>このプロジェクトをアーカイブから戻し</b>、編集可能にするには、<a href='{{link}}'>アップグレードを行い、容量及び機能アップ</a>するか、他のプロジェクトをアーカイブする必要があります。"
+        you_cant_unarchive: " {{active}}のプロジェクトを利用中です。現在のプランでは {{max}} のプロジェクトまでご利用可能です。"
       tracks_time: "タイム・トラッキング可能です。<em>Will allow users to log time for tasks.</em>"
     index: 
       archived: "%{count}個のアーカイブされたプロジェクト"
@@ -1050,13 +1175,25 @@ ja:
         title: プロジェクト概観
       subscribe: ニュースフィードを購読する
     new: 
+      active_projects: 
+        one: 一つの稼働中のプロジェクトがあります。
+        other: 稼働中のプロジェクトはございません。
+        zero: " {{count}}の稼働中のプロジェクトがございます。"
       create_an_example_project: "Teamboxは初めてですか? <a href='%{link}'>サンプルプロジェクトを作成して</a>、いろいろ試して学んでみましょう。"
       created: プロジェクトが作成されました!
       invalid_project: 無効なプロジェクトです。エラーを修正して再度実行してください。
+      invite_by_email: ご友人・知人のメールアドレスを入力して、招待しましょう
+      invite_people: プロジェクトに人々を招待しましょう
       new_project: 新規プロジェクト...
       not_allowed: このアカウントではプロジェクトの作成はできません。
       submit: プロジェクトを作成して招待を開始する
       title: プロジェクトの作成
+      upgrade: 
+        to_2: "<a href='{{link}}'>アップグレードはこちらから</a> to create <b>up to {{projects}} projects</b>, store up to <b>{{storage}} Gb</b> of files and use the <b>search bar across all projects</b>. "
+      you_can_create_more: 
+        one: あと一つプロジェクトを現在のプランで追加出来ます。
+        other: "プロジェクトの追加はこれ以上出来ません。<br/>現在ご利用のプランにおける最大プロジェクト数は{{max}}です。"
+        zero: "あと {{count}}のプロジェクトを現在のプランで追加出来ます。"
     new_primer: 
       define1: プロジェクトはチームメイトと共有するグループです。
       define2: "プロジェクト中では、チームメイトは以下のことができます:"
@@ -1134,6 +1271,12 @@ ja:
       project_invitations: "招待 (%{count})"
       settings: 設定
     instructions: 
+      send_email: メールで新しいコメントを投稿する...
+      send_email_conversations: メールで新しい会話を投稿する...
+      send_email_help_conversation: "新しい会話をこのタスクにポストするには、<a href=\"mailto:%{email}\">%{email}</a>にメールして下さい。プロジェクトのメンバーのみタスクにコメント出来ます。"
+      send_email_help_conversations: "新しい会話を作成するには、<a href=\"mailto:%{email}\">%{email}</a>にタイトルを題名に、本文をコメントとしてメールして下さい。プロジェクトのメンバーのみ新しい会話を作成出来ます。"
+      send_email_help_project: "新しいコメントをこのプジェクトの掲示板にポストするには、<a href=\"mailto:%{email}\">%{email}</a>にメールして下さい。プロジェクトのメンバーのみタスクにコメント出来ます。"
+      send_email_help_task: "新しいコメントをこのタスクにポストするには、<a href=\"mailto:%{email}\">%{email}</a>にメールして下さい。プロジェクトのメンバーのみタスクにコメント出来ます。"
       subscribe_to_calendars: カレンダー登録
       subscribe_to_feeds: フィード登録
     navigation: 
@@ -1146,6 +1289,7 @@ ja:
       all_task_lists: 全てのタスク
       conversations: チャット
       files: ファイル
+      gantt: カレンダーとチャート
       groups: プロジェクトグループ
       invitations: 招待
       login: ログイン
@@ -1195,7 +1339,9 @@ ja:
     user_navigation: 
       account_settings: アカウント設定
       delete_account: アカウント削除
+      linked_accounts: リンクされたアカウント
       notifications: 通知設定
+      plans_and_billing: 課金プラン
       profile_information: プロフィール
       profile_picture: プロフィール画像
     watchers: 
@@ -1229,6 +1375,7 @@ ja:
       title: 全てのアーカイブされたタスク
     column: 
       cant_create: このプロジェクトにおいてタスク作成の権限がありません
+      gantt_view: ガントとカレンダー
       new_task_list: 新規タスクリスト
       other_views: ビューの変更
       subscribe: ニュースフィードを購読する
@@ -1258,13 +1405,18 @@ ja:
       today: 今日
       tomorrow: 明日
       unassigned: 担当者未定
+    gantt_view: 
+      back_to_normal_view: 通常画面に戻る
+      view_for_all_projects: 全てのプロジェクトのカレンダーとガントを表示
     index: 
       add_link: 新規タスクリスト
       empty: このカテゴリーにタスクはありません
       ends_on: "終了日%{date} "
+      gantt_view: ガントチャートとカレンダー
       no_dates_assigned: 日付未設定
       other_views: ビューの変更
       rss: 
+        description: "この%{name} プロジェクトのタスクの全ての動き"
         title: "%{name} タスク更新"
       starts_on: "開始日%{date} "
       tasks_for_all_projects: 全てのプロジェクトのタスク
@@ -1338,6 +1490,9 @@ ja:
       submit: タスクを追加
       title: 新規タスク
     overdue: "%{days}日遅延"
+    overview_box: 
+      status: ステータス
+      title: このタスク
     show: 
       title: "タスク: %{name}"
     status: 
@@ -1379,6 +1534,7 @@ ja:
       item1: "<b>大きなファイル</b> どんなサイズのファイルもアップロードできます。eメールのように制限はありません。"
       item2: "<b>履歴管理</b> 新しいバージョンのファイルをアップロードすると、変更が管理されます。"
       item3: "<b>いつでも利用可能</b> ファイルは将来も参照しやすいように、プロジェクト中に保管されます。"
+    tooltip: ファイルをアップロード
     upload: 
       download: ダウンロード
       on_: オン
@@ -1421,6 +1577,7 @@ ja:
       submit: アカウントの更新
       title_delete: アカウントを削除
       title_deletion: "プロジェクト アーカイブ/削除"
+      title_linked_accounts: アプリケーションがリンクされたアカウント群
       title_notifications: 通知設定
       title_picture: プロフィール画像設定
       title_profile: プロフィール設定
@@ -1501,6 +1658,9 @@ ja:
       profile: プロフィール
       projects: プロジェクト
       recent_activity_for: "%{user_name}の最近の活動"
+    text_styles: 
+      to_see_this: 
+        image: "<img src=\"http://www.w3.org/Icons/valid-html401\"> "
     unconfirmed_email: 
       follow_the_link: <b>メールをご覧頂き、リンクをクリックして</b>アカウントを活性化して下さい。
       invitation_sent_to: "あなたのメールアドレスを確認するため、招待状が<i>%{email}</i>に送られました。"
