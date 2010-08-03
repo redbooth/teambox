@@ -145,7 +145,7 @@ class PagesController < ApplicationController
   private
     def load_page
       page_id = params[:id]
-      @page = @current_project.pages.find_by_id(page_id) || @current_project.pages.find_by_permalink(page_id)
+      @page = @current_project.pages.find_by_permalink(page_id) || @current_project.pages.find_by_id(page_id)
       
       unless @page
         flash[:error] = t('not_found.page', :id => page_id)

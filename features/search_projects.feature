@@ -21,7 +21,7 @@ Feature: Search comments in projects
     
     When the search index is rebuilt
     And I fill in "search" with "the mine"
-    And I press "search"
+    And I press "Search"
     Then I should see "1 results found"
     And I should see "I found a hunk of gold today in the mine!"
     But I should not see "finish this space elevator"

@@ -17,17 +17,17 @@ describe SearchController do
       Comment.should_receive(:search).
         with(*search_params([p1.id, p2.id])).and_return(@results)
       
-      get :results, :search => 'important'
+      get :index, :q => 'important'
       response.should be_success
       
-      assigns[:search].should == 'important'
+      assigns[:search_terms].should == 'important'
       assigns[:comments].should == @results
     end
     
     it "rejects unauthorized search" do
       controller.stub!(:user_can_search?).and_return(false)
       
-      get :results, :search => 'important'
+      get :index, :q => 'important'
       response.should redirect_to(root_path)
       
       flash[:notice].should == "Search is disabled"
@@ -45,7 +45,7 @@ describe SearchController do
       Comment.should_receive(:search).
         with(*search_params(project.id)).and_return(@results)
       
-      get :results, :search => 'important', :project_id => project.permalink
+      get :index, :q => 'important', :project_id => project.permalink
       response.should be_success
       
       assigns[:comments].should == @results
@@ -56,7 +56,7 @@ describe SearchController do
       
       project = Factory.create :project, :permalink => 'important-project'
       
-      get :results, :search => 'important', :project_id => project.permalink
+      get :index, :q => 'important', :project_id => project.permalink
       response.status.should == "403 Forbidden"
     end
     
