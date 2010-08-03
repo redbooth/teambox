@@ -174,8 +174,8 @@ ca:
         conversation: "va crear una conversa"
         task: "va crear una tasca"
       more_comments: 
-        altres: "%{count} comentaris previs"
-        un: "1 comentari previ"
+        one: "1 comentari previ"
+        other: "%{count} comentaris previs"
       on_task_list: a
   affiliate: 
     area: "Àrea d'afiliats"
@@ -1217,8 +1217,8 @@ ca:
     people_list: 
       invite_people: "Convidar persones... "
       pending_invitations: 
-        altres: "%{count} invitacions pendents"
-        una: "Una invitació pendent"
+        one: "Una invitació pendent"
+        other: "%{count} invitacions pendents"
       people_in_project: "Persones en aquest projecte"
     primer: 
       create_first: "Crea el teu primer projecte!"
