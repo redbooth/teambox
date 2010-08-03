@@ -1215,8 +1215,8 @@ es:
     people_list: 
       invite_people: "Invitar a personas..."
       pending_invitations: 
-        otros: "%{count} invitaciones pendientes"
-        uno: "Una invitación pendiente"
+        one: "Una invitación pendiente"
+        other: "%{count} invitaciones pendientes"
       people_in_project: "Personas en este proyecto"
     primer: 
       create_first: "Crea tu primer proyecto!"
