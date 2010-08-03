@@ -1128,7 +1128,9 @@ en:
     placeholder: "Search all projects"
     placeholder_in_project: "Search in project"
     submit: Search
-    results:
+    index:
+      title: Searching in all projects
+      title_in_project: "Searching in project: %{project}"
       search_again: Search again
       report: '%{count} results found for "%{term}"'
 

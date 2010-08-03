@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.register          '/register',            :controller => 'users',       :action => 'create'
   map.signup            '/signup',              :controller => 'users',       :action => 'new'
   
-  map.search            '/search',              :controller => 'search',      :action => 'results'
+  map.search            '/search',              :controller => 'search'
 
   map.welcome           '/welcome',             :controller => 'users',       :action => 'welcome'
   map.text_styles       '/text_styles',         :controller => 'users',       :action => 'text_styles'
@@ -104,7 +104,7 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :conversations, :has_many => [:comments,:uploads], :member => [:watch,:unwatch]
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }, :collection => { :resort => :post }
     
-    project.search 'search', :controller => 'search', :action => 'results'
+    project.search 'search', :controller => 'search'
   end
   
   map.resources :groups, :member => { :logo => :any, :projects => :any, :members => :any} do |group|

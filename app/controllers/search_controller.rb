@@ -1,12 +1,12 @@
 class SearchController < ApplicationController
   
-  before_filter :permission_to_search, :only => :results
+  before_filter :permission_to_search, :only => :index
   
-  def results
-    @search = params[:search]
+  def index
+    @search_terms = params[:q]
     
-    unless @search.blank?
-      @comments = Comment.search @search,
+    unless @search_terms.blank?
+      @comments = Comment.search @search_terms,
         :retry_stale => true, :order => 'created_at DESC',
         :with => { :project_id => project_ids },
         :page => params[:page]
