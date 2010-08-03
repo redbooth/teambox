@@ -588,7 +588,7 @@ nl:
       year: Jaar
     time_ago: "%{time_ago_in_words} geleden"
   deleted: 
-    conversation: "# Conversatie <b>%{name}</b> verwijderd"
+    conversation: "Conversatie <b>%{name}</b> verwijderd"
     left_project: "U heeft dit project verlaten"
     page: "Pagina <b>%{name}</b> verwijderd"
     person: "%{name} is niet langer in het project"
@@ -687,8 +687,6 @@ nl:
     sent: 
       email_sent: "<b>We hebben zojuist een e-mailbericht gestuurd naar deze gebruiker met een link om de projectuitnodiging te accepteren</b>. Als ze de e-mail niet kunnen vinden, zorg dan dat het niet geclassificeerd is als spam of probeer een ander e-mailadres. Als de problemen aanhouden, neem dan alstublieft contact op met onze medewerkers."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
-  locales: 
-    nl: Nederlands
   notes: 
     actions: 
       delete_confirm: "Weet u zeker dat u deze notitie wilt verwijderen?"

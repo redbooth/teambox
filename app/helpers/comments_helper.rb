@@ -175,7 +175,7 @@ module CommentsHelper
       if (last.length > 0)
       {
         var val = $(last[0]).readAttribute('id').split('_')[1];
-        $('last_comment_id').writeAttribute('value', val);
+        $$('#last_comment_id').each(function(e){ e.writeAttribute('value', val); });
       }
     EOS
   end
