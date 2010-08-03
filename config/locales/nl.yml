@@ -588,7 +588,7 @@ nl:
       year: Jaar
     time_ago: "%{time_ago_in_words} geleden"
   deleted: 
-    conversation: "# Conversatie <b>%{name}</b> verwijderd"
+    conversation: "Conversatie <b>%{name}</b> verwijderd"
     left_project: "U heeft dit project verlaten"
     page: "Pagina <b>%{name}</b> verwijderd"
     person: "%{name} is niet langer in het project"

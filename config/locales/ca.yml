@@ -811,7 +811,7 @@ ca:
       status: "Estat: %{status}"
       stop_watching: "<a href='%{stop_watching_url}'>Deixa de seguir</a> aquest element per a no rebre més emails sobre ell."
       task: "Tasca:"
-      task_commands: "Escriu #resoldre, #rebutjar o #mantingui a la part superior de la seva resposta per canviar l'estat de la tasca. Escriu #%{username} per assignar-lo a @%{username}, etc."
+      task_commands: "Escriu #resolve, #reject o #hold a la part superior de la seva resposta per canviar l'estat de la tasca. Escriu #%{username} per assignar-lo a @%{username}, etc."
       task_list: "Llista de tasques:"
       view_online: "Pots <a href='%{link}'>entrar a Teambox</a> per respondre i adjuntar arxius."
     reset_password: 
