@@ -3,8 +3,9 @@ if @new_conversation
     page.insert_html :top, :activities, show_threaded_activity(@comment.activity)
     page["thread_#{@comment.activity.thread_id}"].visual_effect :highlight, :duration => 3
     # We do it twice as the IDs change depending upon is we are in the timeline or in a page
-    page << "if $('new_comment') { $('new_comment').reset()}"
-    page << "if $$('.new_comment') { $$('.new_comment').reset()}"
+    # THIS IS WRONG, AS IT WILL CLEAR COMMENT YOU'RE TYPING ON OTHER BOXES WHEN PUBLISHING ON ONE
+    page << "if($('new_comment')) { $('new_comment').reset() };"
+    page << "if($$('.new_comment')) { $$('.new_comment').each(function(e){e.reset()}) };"
     page << "$$('#new_comment textarea[name*=\"[body]\"]').first().setStyle({ height: '' })"
     page.remove_form_errors(@comment, "new_comment")
   else
