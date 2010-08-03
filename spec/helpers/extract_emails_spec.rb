@@ -18,6 +18,10 @@ describe String, '#extract_emails' do
     it "handles two-part TLD from: james@cuppadev.co.uk" do
       should == %w[ james@cuppadev.co.uk ]
     end
+    
+    it "doesn't munge the username part from: a.fish@example.co.uk" do
+      should == %w[ a.fish@example.co.uk ]
+    end
 
     it "handles plus-addressing from: ohyeah+teambox@gmail.com" do
       should == %w[ ohyeah+teambox@gmail.com ]
