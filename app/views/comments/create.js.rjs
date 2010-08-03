@@ -63,7 +63,7 @@ else
         # page.update_task(@task)
         # page.replace_task_header(@current_project,@task_list,@task)
       else
-        page << "Form.reset('new_comment')"
+        # page << "Form.reset('new_comment')"
       end
 
       if display_watchers
