@@ -770,6 +770,8 @@ zh:
     sent: 
       email_sent: "<b>我们刚刚发布了一个提醒邮件给此用户，邮件中包含了一个接受您项目邀请的链接。</b>. 如果他们不能收到此邮件，请确保此邮件不会作为垃圾邮件处理，或者尝试换一个邮件地址。如果还有问题，请联系我们。"
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  locales: 
+    zh: 中文
   not_found: 
     conversation: "在这个项目中找不到话题%{id}。"
     group: "小组%{id}不存在。"

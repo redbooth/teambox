@@ -413,7 +413,6 @@ es:
     BM: Bermudas
     BN: Brunéi
     BO: Bolivia
-    BQ: "British Antarctic Territory"
     BR: Brasil
     BS: Bahamas
     BT: Bután
@@ -436,13 +435,11 @@ es:
     CP: "Isla Clipperton"
     CR: "Costa Rica"
     CS: "Serbia y Montenegro"
-    CT: "Canton and Enderbury Islands"
     CU: Cuba
     CV: "Cabo Verde"
     CX: "Isla Christmas"
     CY: Chipre
     CZ: "República Checa"
-    DD: "East Germany"
     DE: Alemania
     DG: "Diego García"
     DJ: Yibuti
@@ -464,7 +461,6 @@ es:
     FK: "Islas Malvinas [Islas Falkland]"
     FM: Micronesia
     FO: "Islas Feroe"
-    FQ: "French Southern and Antarctic Territories"
     FR: Francia
     FX: "Francia metropolitanad"
     GA: Gabón
@@ -507,7 +503,6 @@ es:
     JM: Jamaica
     JO: Jordania
     JP: Japón
-    JT: "Johnston Island"
     KE: Kenia
     KG: KirguistánR042
     KH: Camboya
@@ -537,7 +532,6 @@ es:
     MF: "San Martín"
     MG: Madagascar
     MH: "Islas Marshall"
-    MI: "Midway Islands"
     MK: "Macedonia [ERYM]"
     ML: Mali
     MM: "Myanmar [Birmania]"
@@ -564,14 +558,11 @@ es:
     ? "NO"
     : Noruega
     NP: Nepal
-    NQ: "Dronning Maud Land"
     NR: Nauru
-    NT: "Neutral Zone"
     NU: "Isla Niue"
     NZ: "Nueva Zelanda"
     OM: Omán
     PA: Panamá
-    PC: "Pacific Islands Trust Territory"
     PE: Perú
     PF: "Polinesia Francesa"
     PG: "Papúa Nueva Guinea"
@@ -583,10 +574,8 @@ es:
     PR: "Puerto Rico"
     PS: "Territorios Palestinos"
     PT: Portugal
-    PU: "U.S. Miscellaneous Pacific Islands"
     PW: Palau
     PY: Paraguay
-    PZ: "Panama Canal Zone"
     QA: Qatar
     QO: "Territorios alejados de Oceanía"
     RE: Reunión
@@ -610,7 +599,6 @@ es:
     SO: Somalia
     SR: SurinamR042
     ST: "Santo Tomé y Príncipe"
-    SU: "Union of Soviet Socialist Republics"
     SV: "El Salvador"
     SY: Siria
     SZ: Suazilandia
@@ -639,16 +627,13 @@ es:
     UZ: Uzbekistán
     VA: "Ciudad del Vaticano"
     VC: "San Vicente y las Granadinas"
-    VD: "Vietnam Norte"
     VE: Venezuela
     VG: "Islas Vírgenes Británicas"
     VI: "Islas Vírgenes de los Estados Unidos"
     VN: Vietnam
     VU: Vanuatu
     WF: "Wallis y Futuna"
-    WK: "Wake Island"
     WS: Samoa
-    YD: "People's Democratic Republic of Yemen"
     YE: Yemen
     YT: Mayotte
     ZA: Sudáfrica
@@ -963,6 +948,8 @@ es:
     sent: 
       email_sent: "<b>Hemos enviado un email avisando al usuario para que acepte tu invitación</b>. Si no pueden encontrar el email, asegúrate de que no se ha clasificado como spam. Si el problema persiste, escríbenos un email."
   latest_announcement: "Novedades: <a href='http://blog.teambox.com/whats-going-on-in-the-kitchen/'>Versión Móvil, traducción al francés y alemán y API</a>"
+  locales: 
+    es: Español
   not_found: 
     conversation: "No se encontró la conversación %{id} en este proyecto."
     group: "El grupo %{id} no existe."

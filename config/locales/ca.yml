@@ -413,7 +413,6 @@ ca:
     BM: Bermudes
     BN: Brunei
     BO: Bolívia
-    BQ: "British Antarctic Territory"
     BR: Brasil
     BS: Bahames
     BT: Bhutan
@@ -436,13 +435,11 @@ ca:
     CP: "Illa Clipperton"
     CR: "Costa Rica"
     CS: "Sèrbia i Montenegro"
-    CT: "Canton and Enderbury Islands"
     CU: Cuba
     CV: "Cap Verd"
     CX: "Illa Christmas"
     CY: Xipre
     CZ: "República Txeca"
-    DD: "East Germany"
     DE: Alemanya
     DG: "Diego Garcia"
     DJ: Djibouti
@@ -464,7 +461,6 @@ ca:
     FK: "Illes Malvines [Illes Falkland]"
     FM: Micronèsia
     FO: "Illes Fèroe"
-    FQ: "French Southern and Antarctic Territories"
     FR: França
     FX: "França metropolitanad"
     GA: Gabon
@@ -507,7 +503,6 @@ ca:
     JM: Jamaica
     JO: Jordània
     JP: Japó
-    JT: "Johnston Island"
     KE: Kenya
     KG: Kirguizistan
     KH: Cambodja
@@ -537,7 +532,6 @@ ca:
     MF: "Saint MartinRP3"
     MG: Madagascar
     MH: "Illes Marshall"
-    MI: "Midway Islands"
     MK: "Macedònia [Exrepública Iugoslava de Macedònia]"
     ML: Mali
     MM: "Myanmar [Birmània]"
@@ -564,14 +558,11 @@ ca:
     ? "NO"
     : Noruega
     NP: Nepal
-    NQ: "Dronning Maud Land"
     NR: Nauru
-    NT: "Neutral Zone"
     NU: Niue
     NZ: "Nova Zelanda"
     OM: Oman
     PA: Panamà
-    PC: "Pacific Islands Trust Territory"
     PE: Perú
     PF: "Polinèsia Francesa"
     PG: "Papua Nova Guinea"
@@ -583,10 +574,8 @@ ca:
     PR: "Puerto Rico"
     PS: Palestina
     PT: Portugal
-    PU: "U.S. Miscellaneous Pacific Islands"
     PW: Palau
     PY: Paraguai
-    PZ: "Panama Canal Zone"
     QA: Qatar
     QO: "Territoris allunyats d'Oceania"
     RE: "Illa de la Reunió"
@@ -610,7 +599,6 @@ ca:
     SO: Somàlia
     SR: Surinam
     ST: "São Tomé i Príncipe"
-    SU: "Union of Soviet Socialist Republics"
     SV: "El Salvador"
     SY: Síria
     SZ: Swazilàndia
@@ -639,16 +627,13 @@ ca:
     UZ: Uzbekistan
     VA: Vaticà
     VC: "Saint Vincent i les Grenadines"
-    VD: "North Vietnam"
     VE: Veneçuela
     VG: "Illes Verges Britàniques"
     VI: "Illes Verges Nord-americanes"
     VN: Vietnam
     VU: Vanuatu
     WF: "Wallis i Futuna"
-    WK: "Wake Island"
     WS: Samoa
-    YD: "People's Democratic Republic of Yemen"
     YE: Iemen
     YT: Mayotte
     ZA: "República de Sud-àfrica"
@@ -971,6 +956,8 @@ ca:
     task: "La tasca %{id} no es troba en aquest projecte."
     task_list: "LLista de tasques %{id} no es troba en aquest projecte."
     user: "L'usuari no existeix"
+  locales: 
+    ca: Català
   notes: 
     actions: 
       delete_confirm: "Segur que vols esborrar aquesta nota?"

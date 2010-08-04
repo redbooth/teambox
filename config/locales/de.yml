@@ -867,6 +867,8 @@ de:
     sent: 
       email_sent: "<b>Wir haben diesem Benutzer gerade eine Benachrichtigungs-Email gesendet mit einem Link, um die Einladung anzunehmen</b>. Wenn sie die Email nicht erhalten haben, stellen Sie sicher, dass sie nicht als Spam eingestuft wurde oder wählen Sie eine andere Email Adresse. Wenn weiterhin Probleme bestehen, nehmen Sie bitte Kontakt zu unserem Team auf."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  locales: 
+    de: Deutsch
   not_found: 
     conversation: "Konversation %{id} wurde nicht im Projekt gefunden."
     group: "Gruppe %{id} existiert nicht."
