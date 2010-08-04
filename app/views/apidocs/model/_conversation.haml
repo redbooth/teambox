@@ -1,8 +1,9 @@
 %p= "A conversation is a group of comments. It can also act as a thread in the project overview."
 %p= "Comments belong to a #{link_to_doc_model(:project)}."
 
-- doc_for :index, :example => [@conversation.to_api_hash] do
-  %p= "Returns the 25 most recent conversations in a project."
+- doc_for :index, :example => [@conversation.to_api_hash], :parameters => {:type => "thread|conversation"} do
+  %p= "Returns the most recent conversations in a project."
+  %p= "Conversations can either be threads (i.e. simple = true), or normal conversations visible in the conversations section. Use the <tt>type</tt> parameter to filter between the two, or omit it to enumerate both."
 
 - doc_for :show,  :example => @conversation.to_api_hash(:include => :comments) do
   %p= "Returns the data for a conversation."

@@ -7,6 +7,11 @@ describe ApiV1::ConversationsController do
     @conversation = @project.new_conversation(@user, {:name => 'Something needs to be done'})
     @conversation.body = 'Hell yes!'
     @conversation.save!
+    
+    @another_conversation = @project.new_conversation(@user, {:name => 'We need a meeting!'})
+    @another_conversation.simple = true
+    @another_conversation.body = 'Hell yes!'
+    @another_conversation.save!
   end
   
   describe "#index" do
@@ -16,7 +21,29 @@ describe ApiV1::ConversationsController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body).length.should == 2
+    end
+    
+    it "shows threads if specified" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :type => 'thread'
+      response.should be_success
+      
+      content = JSON.parse(response.body)
+      content.length.should == 1
+      content.each {|c| c['simple'].should == true}
+    end
+    
+    it "shows conversations only if specified" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :type => 'conversation'
+      response.should be_success
+      
+      content = JSON.parse(response.body)
+      content.length.should == 1
+      content.each {|c| c['simple'].should == false}
     end
     
     it "limits conversations" do
@@ -60,7 +87,7 @@ describe ApiV1::ConversationsController do
       post :create, :project_id => @project.permalink, :id => @conversation.id, :conversation => {:name => 'Created!', :body => 'Discuss...'}
       response.should be_success
       
-      @project.conversations(true).length.should == 2
+      @project.conversations(true).length.should == 3
       @project.conversations.first.name.should == 'Created!'
     end
     
@@ -70,7 +97,7 @@ describe ApiV1::ConversationsController do
       post :create, :project_id => @project.permalink, :id => @conversation.id, :conversation => {:name => 'Created!', :body => 'Discuss...'}
       response.status.should == '401 Unauthorized'
       
-      @project.conversations(true).length.should == 1
+      @project.conversations(true).length.should == 2
     end
   end
   
@@ -101,7 +128,7 @@ describe ApiV1::ConversationsController do
       put :destroy, :project_id => @project.permalink, :id => @conversation.id
       response.should be_success
       
-      @project.conversations(true).length.should == 0
+      @project.conversations(true).length.should == 1
     end
     
     it "should not allow observers to destroy a conversation" do
@@ -110,7 +137,7 @@ describe ApiV1::ConversationsController do
       put :destroy, :project_id => @project.permalink, :id => @conversation.id
       response.status.should == '401 Unauthorized'
       
-      @project.conversations(true).length.should == 1
+      @project.conversations(true).length.should == 2
     end
   end
 end

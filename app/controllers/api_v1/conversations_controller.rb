@@ -3,7 +3,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy,:watch,:unwatch]
   
   def index
-    @conversations = @current_project.conversations.all(:conditions => api_range, :limit => api_limit)
+    @conversations = @current_project.conversations.scoped(api_scope).all(:conditions => api_range, :limit => api_limit)
     
     api_respond @conversations.to_json
   end
@@ -63,6 +63,19 @@ class ApiV1::ConversationsController < ApiV1::APIController
   def load_conversation
     @conversation = @current_project.conversations.find(params[:id])
     api_status(:not_found) unless @conversation
+  end
+  
+  def api_scope
+    conditions = {}
+    if params[:type]
+      case params[:type]
+      when 'thread'
+        conditions[:simple] = true
+      when 'conversation'
+        conditions[:simple] = false
+      end
+    end
+    {:conditions => conditions}
   end
   
   def check_permissions
