@@ -78,6 +78,7 @@ class Conversation < RoleRecord
       :project_id => project_id,
       :user_id => user_id,
       :name => name,
+      :simple => simple,
       :created_at => created_at.to_s(:db),
       :updated_at => updated_at.to_s(:db),
       :watchers => Array.wrap(watchers_ids)
