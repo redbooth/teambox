@@ -888,6 +888,8 @@ ko:
     sent: 
       email_sent: "초대장이 발송되었습니다."
   latest_announcement: "Teambox의 최신 소식은 <a href='http://blog.teambox.com'>블로그</a>를 읽어보세요."
+  locales: 
+    ko: 한국어
   not_found: 
     conversation: "해당 대화내용{{id}} 이 이 프로젝트에서 검색되지 않았습니다."
     group: "그룹 {{id}}이 존재하지 않습니다."

@@ -685,6 +685,8 @@ it:
     sent: 
       email_sent: "<b>Abbiamo inviato una mail avvisando l'utente di accettare il tuo invito</b>. Se non riesce a trovare la mail, assicurati che non sia stata classificata come spam. Se il problema persiste, scrivici una mail."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  locales: 
+    it: Italiano
   notes: 
     actions: 
       delete_confirm: "Sei sicuro di voler cancellare questa nota?"

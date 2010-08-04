@@ -918,6 +918,8 @@ fr:
     sent: 
       email_sent: "<b>Nous avons envoyé un mail à cet utilisateur pour qu’il accepte votre invitation</b>. S’il ne trouve pas ce mail dans sa boîte de réception, il faut s’assurer qu’il n’a pas été classé dans le courrier indésirable. Si le problème persiste, n’hésitez pas à nous envoyer un mail."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  locales: 
+    fr: Français
   not_found: 
     conversation: "La conversation %{id} n’a pas été trouvée dans ce projet."
     group: "Le group %{id} n’existe pas."
