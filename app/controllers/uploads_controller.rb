@@ -2,6 +2,7 @@ class UploadsController < ApplicationController
   before_filter :find_upload, :only => [:destroy,:update,:thumbnail,:show]
   skip_before_filter :load_project, :only => [:download]
   before_filter :set_page_title
+  before_filter :check_permissions, :only => [:new,:create,:update,:destroy]
   
   SEND_FILE_METHOD = :default
 
@@ -49,12 +50,11 @@ class UploadsController < ApplicationController
   def create
     @upload = @current_project.uploads.new params[:upload]
     @upload.user = current_user
-    calculate_position if @upload.page
     @page = @upload.page
+    calculate_position(@upload) if @page
 
     if @upload.save
       @current_project.log_activity(@upload, 'create')
-      save_slot(@upload) if @upload.page
     end
 
     respond_to do |wants|

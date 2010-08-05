@@ -1,9 +1,10 @@
 class ApiV1::UploadsController < ApiV1::APIController
+  before_filter :load_page
   before_filter :load_upload, :only => [:update,:show,:destroy]
   before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
-    @uploads = @current_project.uploads.all(:conditions => api_range, :limit => api_limit)
+    @uploads = (@page || @current_project).uploads.all(:conditions => api_range, :limit => api_limit)
     
     api_respond @uploads.to_json
   end
@@ -14,13 +15,12 @@ class ApiV1::UploadsController < ApiV1::APIController
   
   def create
     @upload = @current_project.uploads.new params[:upload]
+    @upload.page = @page if @page
     @upload.user = current_user
-    calculate_position if @upload.page
-    @page = @upload.page
+    calculate_position(@upload) if @upload.page
 
     if @upload.save
       @current_project.log_activity(@upload, 'create')
-      save_slot(@upload) if @upload.page
     end
 
     if @upload.new_record?
@@ -36,6 +36,10 @@ class ApiV1::UploadsController < ApiV1::APIController
   end
 
   protected
+  
+  def load_page
+    @page = @current_project.pages.find params[:page_id] if params[:page_id]
+  end
   
   def load_upload
     @upload = @current_project.uploads.find(params[:id])

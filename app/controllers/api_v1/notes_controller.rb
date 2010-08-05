@@ -14,11 +14,10 @@ class ApiV1::NotesController < ApiV1::APIController
   end
   
   def create
-    calculate_position
-    
     @note = @page.build_note(params[:note])
     @note.updated_by = current_user
-    save_slot(@note) if @note.save
+    calculate_position(@note)
+    @note.save
     
     if @note.new_record?
       handle_api_error(@note)

@@ -1,6 +1,6 @@
 widget_id = "note_#{@note.id}"
 
-if @insert_element.nil?
+if @note.slot_insert[:element].nil?
   page.insert_widget(widget_id,
                    :bottom,
                    'slots',
@@ -9,8 +9,8 @@ if @insert_element.nil?
                    :locals => {:page => @page, :project => @current_project})
 else  
   page.insert_widget(widget_id,
-                   (@insert_before ? :before : :after),
-                    @insert_element,
+                   (@note.slot_insert[:before] ? :before : :after),
+                    @note.slot_insert[:element],
                     :partial => 'pages/slot',
                     :object => @note.page_slot,
                     :locals => {:page => @page, :project => @current_project})

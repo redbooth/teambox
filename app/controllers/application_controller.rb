@@ -226,33 +226,24 @@ class ApplicationController < ActionController::Base
       @current_user = current_user || nil
     end
     
-    def calculate_position
+    def calculate_position(obj)
+      options = {}
       if pos = params[:position].presence
-        @insert_id = pos[:slot].to_i
-        if @insert_id < 0
-          @insert_id = 0
-          @insert_before = false
-          @insert_footer = true
+        options[:id] = pos[:slot].to_i
+        if options[:id] < 0
+          options[:id] = 0
+          options[:before] = false
+          options[:footer] = true
         else
-          @insert_before = @insert_id == 0 ? true : (pos[:before].to_i == 1)
-          @insert_footer = false
+          options[:before] = options[:id] == 0 ? true : (pos[:before].to_i == 1)
+          options[:footer] = false
         end
       else
-        @insert_id = nil
-        @insert_before = true
-        @insert_footer = false
+        options[:id] = nil
+        options[:before] = true
+        options[:footer] = false
       end
-    end
-    
-    def save_slot(obj)
-      @slot = obj.page.new_slot(@insert_id, @insert_before, obj)
-
-      if @insert_footer
-        @insert_element = nil
-        @insert_before = true
-      else
-        @insert_element = @insert_id == 0 ? nil : "page_slot_#{@insert_id}"
-      end
+      obj.slot_insert = options
     end
     
     def signups_enabled?

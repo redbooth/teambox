@@ -13,6 +13,8 @@ class Upload < RoleRecord
   before_create :copy_ownership_from_comment
 
   default_scope :order => 'created_at DESC'
+  
+  include PageWidget
 
   has_attached_file :asset,
     :styles => { :thumb => "64x48>" },
@@ -50,16 +52,13 @@ class Upload < RoleRecord
   def description
     self[:description] || (comment ? truncate(comment.body, :length => 80) : nil)
   end
-
-  def clear_slot
-    page_slot.destroy if page_slot
-  end
   
   def slot_view
     'uploads/upload_slot'
   end
 
   def after_create
+    save_slot if page
     project.log_activity(self, 'create', user_id) if page_id
   end
   

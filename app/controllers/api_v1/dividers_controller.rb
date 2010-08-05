@@ -14,11 +14,10 @@ class ApiV1::DividersController < ApiV1::APIController
   end
   
   def create
-    calculate_position
-    
     @divider = @page.build_divider(params[:divider])
     @divider.updated_by = current_user
-    save_slot(@divider) if @divider.save
+    calculate_position(@divider)
+    @divider.save
     
     if @divider.new_record?
       handle_api_error(@divider)
