@@ -13,6 +13,10 @@ class Upload < RoleRecord
   before_create :copy_ownership_from_comment
 
   default_scope :order => 'created_at DESC'
+
+  attr_accessible :asset,
+                  :page_id,
+                  :description
   
   include PageWidget
 
@@ -27,6 +31,13 @@ class Upload < RoleRecord
   
   validates_attachment_size :asset, :less_than => Teambox.config.asset_max_file_size.to_i.megabytes
   validates_attachment_presence :asset
+  validate :check_page
+  
+  def check_page
+    if page && (page.project_id != project_id)
+      @errors.add :project, 'is not valid'
+    end
+  end
   
   def image?
     !(asset_content_type =~ /^image.*/).nil?
