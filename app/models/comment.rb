@@ -17,7 +17,6 @@ class Comment < ActiveRecord::Base
   validate_on_create :check_duplicates
   validate :check_body
 
-  attr_accessor :mentioned # used by format_usernames to set who's being mentioned
   attr_accessor :activity
 
   def hours?
