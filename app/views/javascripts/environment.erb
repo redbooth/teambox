@@ -1,10 +1,12 @@
-<%= if ( current_user && current_user.first_day_of_week == 'monday' )
-      "Date.weekdays = $w('M T W T F S S'); Date.first_day_of_week = 1;"
-    else
-      "Date.weekdays = $w('S M T W T F S'); Date.first_day_of_week = 0;"
-    end
-    "AppConfig = new Object(); AppConfig.project_permalink_min_length = #{APP_CONFIG['project_permalink_min_length']};"
+<% 
+  if ( current_user && current_user.first_day_of_week == 'monday' )
+    date_select_init = "Date.weekdays = $w('M T W T F S S'); Date.first_day_of_week = 1;"
+  else
+    date_select_init = "Date.weekdays = $w('S M T W T F S'); Date.first_day_of_week = 0;"
+  end
 %>
+<%= date_select_init %>
+<%= "AppConfig = new Object(); AppConfig.project_permalink_min_length = #{APP_CONFIG['project_permalink_min_length']};" %>
 _translations = {'OK':'OK','Now':'Now','Today':'Today'}; Date.months = $w('January February March April May June July August September October November December');
 
 <% 
