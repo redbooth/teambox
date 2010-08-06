@@ -81,7 +81,7 @@ class Object # I'd love to make this class SeedProject < Project, but that doesn
   end
 
   def make_note(user, name, body)
-    pages.last.notes.new(:name => name, :body => body) do |note|
+    pages.first.notes.new(:name => name, :body => body) do |note|
       note.user = user
       note.updated_by = user # if this is left undefined, note fails. note should validate updated_by
       note.project_id = self.id # this should not be needed, since notes should know who they belong to
