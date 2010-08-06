@@ -415,6 +415,7 @@ en:
       new_task_list_link: New Task List
       subscribe: Subscribe to the news feed
       tip: Mentioning somebody's @username will send them an email with your message
+      public_project: Public site for this project
       rss:
         title: "%{name} activity feed"
         description: "Recent activities for the project %{name}"
