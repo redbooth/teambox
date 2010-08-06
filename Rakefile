@@ -8,5 +8,4 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
-require 'tolk/tasks'
 require 'thinking_sphinx/tasks'
