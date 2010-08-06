@@ -3,7 +3,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy,:archive,:unarchive]
   
   def index
-    @task_lists = @current_project.task_lists.all(:conditions => api_range, :limit => api_limit)
+    @task_lists = @current_project.task_lists.scoped(api_scope).all(:conditions => api_range, :limit => api_limit)
     api_respond @task_lists.to_json(:include => :tasks)
   end
 
@@ -92,6 +92,14 @@ class ApiV1::TaskListsController < ApiV1::APIController
     def load_task_list
       @task_list = @current_project.task_lists.find(params[:id])
       api_status(:not_found) unless @task_list
+    end
+    
+    def api_scope
+      conditions = {}
+      unless params[:archived].nil?
+        conditions[:archived] = api_truth(params[:archived])
+      end
+      {:conditions => conditions}
     end
     
     def check_permissions

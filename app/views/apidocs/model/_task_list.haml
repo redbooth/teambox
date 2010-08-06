@@ -1,7 +1,9 @@
 %p= "A task list is a collection of #{link_to_doc_model(:task)}s in a #{link_to_doc_model(:project)}."
 
-- doc_for :index, :example => [@task_list.to_api_hash(:include => [:tasks])] do
-  %p= "Returns the 25 most recent task lists in a project."
+- doc_for :index,
+          :parameters => {:archived => 'true|false'},
+          :example => [@task_list.to_api_hash(:include => [:tasks])] do
+  %p= "Returns the most recent task lists in a project. To filter by archived or unarchived lists, pass in the optional <tt>archived</tt> parameter. To view everything, simply omit the <tt>archived</tt> parameter."
 
 - doc_for :show,  :example => @task_list.to_api_hash(:include => [:tasks, :comments]) do
   %p= "Returns the data for a task list."
