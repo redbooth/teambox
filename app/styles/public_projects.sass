@@ -92,7 +92,7 @@ h2
   font-family: Helvetica, Arial, Verdana, sans-serif
   font-size: 18px
   margin: 20px 0 15px 0
-  font-weight: bold
+  font-weight: normal
 
 h3
   margin: 30px 0 15px 0
@@ -203,6 +203,22 @@ h2
       float: right
       color: #999
 
+.task_lists
+  p.task_list
+    display: block
+    margin: 5px 10px 5px 0
+    color: #777
+    a
+      display: inline
+      border: none
+      font-size: 12px
+      color: #777
+      &:hover
+        text-decoration: underline
+    b
+      a
+        color: #00f
+  
 .pages
   div.page
     display: inline-block
