@@ -10,5 +10,8 @@
   - else
     %p No pages on this project
   .section
-    = link_to "Join this group", project_path(@project)
+    - if @projects.include? @project
+      %b= link_to "View inside Teambox", project_path(@project)
+    - else
+      %b= link_to "Join this group", project_path(@project)
     = link_to "Other public projects...", public_projects_path

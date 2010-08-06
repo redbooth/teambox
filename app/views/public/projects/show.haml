@@ -1,7 +1,14 @@
-%p
-  Welcome to the Teambox community.
-  = link_to "Join the project", project_path(@project)
-  to receive community announcements or request support.
+- if @projects.include? @project
+  %p
+    This is the public view for this project. 
+    = link_to "Go inside Teambox", project_path(@project)
+    to access its conversations, tasks and pages.
+    
+- else
+  %p
+    Welcome to the Teambox community.
+    = link_to "Join the project", project_path(@project)
+    to receive community announcements or request support.
 
 - if @project.pages.any?
   .pages
@@ -14,10 +21,12 @@
   %h2 Recent conversations
   - for conversation in @recent_conversations
     .conversation
-      = link_to conversation, public_project_conversation_path(@project, conversation), :class => :conversation
+      = link_to conversation, seo_public_project_conversation_path(@project, conversation), :class => :conversation
       %span
         == #{pluralize(conversation.comments_count, "message", "message")},
         == last one #{time_ago_in_words(conversation.updated_at)} ago
+  - if @recent_conversations.size == 11
+    .conversation= link_to "View all conversations...", new_project_conversation_path(@project), :class => :new_conversation
   .conversation= link_to "+ New conversation", new_project_conversation_path(@project), :class => :new_conversation
 
 .tasks

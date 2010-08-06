@@ -10,11 +10,12 @@
 
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
     = javascript_include_tag 'modernizr'
-    .top{ :style => 'background-color: rgb(255,255,220); border-bottom: 1px solid rgb(200,200,150); width: 100%; display: block; font-size: 12px; padding: 10px 0; text-align: center' }
-      = link_to "Log into Teambox", login_path
-      to post to this project. Don't have an account?
-      = link_to "Sign up for free", signup_path
-      to create your own projects.
+    - unless current_user
+      .top{ :style => 'background-color: rgb(255,255,220); border-bottom: 1px solid rgb(200,200,150); width: 100%; display: block; font-size: 12px; padding: 10px 0; text-align: center' }
+        = link_to "Log into Teambox", login_path
+        to post to this project. Don't have an account?
+        = link_to "Sign up for free", signup_path
+        to create your own projects.
     .container
       .wrapper
         #header
