@@ -97,25 +97,25 @@ class Object # I'd love to make this class SeedProject < Project, but that doesn
   
   def fake_time
     @fake_time ||= 120.minutes.ago
-    @fake_time += 2.minute
+    @fake_time += 2.minutes
   end
 end
 
-@users = [%w(Frank Kramer frank_pm),
+users = [%w(Frank Kramer frank_pm),
           %w(Corrina Kottke corrina),
           %w(Tomas Santiago webdevtom),
           %w(Maya Bhaskaran maya_pa),
           %w(Marco Fizzulo donmarco)].collect do |a,b,u|
-  @user = User.create!(:login => u,
+  user = User.create!(:login => u,
                       :password => "papapa",
                       :password_confirmation => "papapa",
                       :first_name => a, :last_name => b,
                       :email => "example_#{a}@teambox.com")
-  @user.activate!
-  @user
+  user.activate!
+  user
 end
 
-frank, corrina, tomas, maya, marco = @users
+frank, corrina, tomas, maya, marco = users
 
 earthworks = frank.projects.new(:name => "Earthworks Yoga", :permalink => "earthworks", :public => true).tap { |p| p.save! }
 
