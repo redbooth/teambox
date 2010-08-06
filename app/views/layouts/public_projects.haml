@@ -31,6 +31,7 @@
       .footer
         %p.copyright
           This community is powered by Teambox.
-          = link_to "Sign up for a free account", signup_path
-          to create your own community.
+          - unless current_user
+            = link_to "Sign up for a free account", signup_path
+            to create your own community.
       = javascripts
