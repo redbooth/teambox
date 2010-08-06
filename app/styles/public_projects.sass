@@ -222,12 +222,27 @@ h2
       color: #999
 
 .comment
-  h3
-    span
-      font-weight: normal
-      font-size: 12px
-      float: right
-      color: #aaa
+  margin: 25px 0
+  .avatar
+    float: left
+    padding-top: 10px
+    a
+      +rounded(5px)
+      display: inline-block
+      height: 48px
+      width: 48px
+  .body
+    h3
+      margin: 10px 0 0 0
+      span
+        font-weight: normal
+        font-size: 12px
+        float: right
+        color: #aaa
+    display: inline-block
+    float: left
+    width: 570px
+    padding-left: 20px
 
 .log_in_to_reply
   padding: 10px
