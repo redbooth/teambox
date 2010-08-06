@@ -15,7 +15,9 @@
     %h2 Documentation
     - for page in @project.pages
       .page
+        .icon
         = link_to page, public_project_page_path(@project, page), :class => :page
+        .clear
 
 .conversations
   %h2 Recent conversations
