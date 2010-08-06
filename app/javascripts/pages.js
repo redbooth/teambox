@@ -394,7 +394,7 @@ document.on('ajax:create', 'form.edit_note', function(e, element) {
 });
 
 document.on('submit', 'body.show_pages form#new_upload', function(e, form) {
-  var iframe = new Element('iframe', { id: 'file_upload_iframe' }).hide()
+  var iframe = new Element('iframe', { id: 'file_upload_iframe', name: 'file_upload_iframe' }).hide()
   $(document.body).insert(iframe)
   form.target = iframe.id
   form.insert(new Element('input', { type: 'hidden', name: 'iframe', value: 'true' }))
