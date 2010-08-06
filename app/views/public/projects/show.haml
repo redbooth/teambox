@@ -3,11 +3,12 @@
   = link_to "Join the project", project_path(@project)
   to receive community announcements or request support.
 
-.pages
-  %h2 Documentation
-  - for page in @project.pages
-    .page
-      = link_to page, public_project_page_path(@project, page), :class => :page
+- if @project.pages.any?
+  .pages
+    %h2 Documentation
+    - for page in @project.pages
+      .page
+        = link_to page, public_project_page_path(@project, page), :class => :page
 
 .conversations
   %h2 Recent conversations
