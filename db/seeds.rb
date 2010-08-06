@@ -117,7 +117,7 @@ end
 
 frank, corrina, tomas, maya, marco = @users
 
-earthworks = frank.projects.new(:name => "Earthworks Yoga", :permalink => "earthworks").tap { |p| p.save! }
+earthworks = frank.projects.new(:name => "Earthworks Yoga", :permalink => "earthworks", :public => true).tap { |p| p.save! }
 
 earthworks.make_comment(frank, "Getting started. Sending invites for project.")
 earthworks.add_users [corrina, tomas, maya, marco]
