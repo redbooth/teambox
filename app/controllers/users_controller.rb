@@ -62,7 +62,7 @@ class UsersController < ApplicationController
     load_app_link
 
     @user.confirmed_user = ((@invitation && @invitation.email == @user.email) or
-                            Rails.env.develpment? or
+                            Rails.env.development? or
                             !!@app_link)
 
     unless @invitation || signups_enabled?
