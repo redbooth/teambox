@@ -15,3 +15,7 @@
     - else
       %b= link_to "Join this group", project_path(@project)
     = link_to "Other public projects...", public_projects_path
+  .section
+    %p== This project has #{@project.users.size} members
+    - for user in @project.users[0,28]
+      = micro_avatar(user)

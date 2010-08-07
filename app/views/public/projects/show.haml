@@ -25,7 +25,7 @@
     .conversation
       = link_to conversation, seo_public_project_conversation_path(@project, conversation), :class => :conversation
       %span
-        == #{pluralize(conversation.comments_count, "message", "message")},
+        == #{pluralize(conversation.comments_count, "message", "messages")},
         == last one #{time_ago_in_words(conversation.updated_at)} ago
   - if @recent_conversations.size == 11
     .conversation= link_to "View all conversations...", new_project_conversation_path(@project), :class => :new_conversation
