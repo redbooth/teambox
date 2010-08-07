@@ -20,6 +20,7 @@ class ResetPasswordsController < ApplicationController
     
     respond_to do |format|
       if @reset_password.save
+        flash[:error] = nil
         Emailer.deliver_forgot_password(@reset_password)
         format.html { redirect_to sent_password_path(:email => @reset_password.email) }
         format.m    { redirect_to sent_password_path(:email => @reset_password.email) }
@@ -51,15 +52,16 @@ class ResetPasswordsController < ApplicationController
     @reset_password = ResetPassword.find_by_reset_code(params[:reset_code])
     
     respond_to do |format|
-      if !@reset_password.nil? and @reset_password.valid?
+      if @reset_password and @reset_password.valid?
         @user = @reset_password.user
         @user.performing_reset = true
         if @user.update_attributes(params[:user])
           @reset_password.destroy
           Emailer.deliver_reset_password(@user)
           flash[:success] = I18n.t('reset_passwords.create.password_updated')
-          format.html { redirect_to login_path }
-          format.m    { redirect_to login_path }
+          self.current_user = @user
+          format.html { redirect_to projects_path }
+          format.m    { redirect_to projects_path }
         else
           format.html do
             flash.now[:error] = I18n.t("reset_passwords.create.password_not_updated")

@@ -29,14 +29,11 @@ Feature: Resetting passwords
     When I open the email
     Then I should see "Hey, Mislav Marohnić!" in the email body
     When I follow "Log into Teambox now!" in the email
-    Then I should see "You can now reset your password!"
+    Then I should see "You can now reset your password"
     When I fill in "Password" with "thirstycups"
-    And I fill in "Confirm Password" with "thirstycups"
-    And I press "Reset password!"
+    And I fill in "Password confirmation" with "thirstycups"
+    And I press "Reset my password"
     Then I should see "Password was successfully updated."
-    When I fill in "login" with "mislav"
-    And I fill in "password" with "thirstycups"
-    And I press "Login"
     Then I should see "All Projects"
 
   # test what happens if a user already logged in uses a code
@@ -45,7 +42,7 @@ Feature: Resetting passwords
     Given a confirmed user exists with login: "balint", email: "balint@codigoergosum.com"
     And the user with login: "balint" has asked to reset his password
     When I follow the reset password link
-    And I press "Reset password!"
+    And I press "Reset my password"
     Then I should see an error message: "New password is not valid. Try again."
     And I should see "Please enter a new password and confirm it"
 
