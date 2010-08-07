@@ -1358,6 +1358,11 @@ en:
             name:
               no_title: "Please give this conversation a title."
 
+  locales:
+    en: English
+    pl: Polish
+    tr: Turkish
+
   date:
     yesterday: Yesterday
     formats:
