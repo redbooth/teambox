@@ -57,12 +57,12 @@ unless location_name? %w(welcome_users new_projects show_users edit_users new_av
         end
 
         # conversations are accessible through Project#show sidebar
-        #add_tab do |t|
-        #  t.named t('.conversations')
-        #  t.links_to  project_conversations_path(project)
-        #  t.highlights_on :controller => :conversations
-        #  t.tab_index = 151
-        #end
+        add_tab do |t|
+          t.named t('.conversations')
+          t.links_to  project_conversations_path(project)
+          t.highlights_on :controller => :conversations
+          t.tab_index = 151
+        end
 
         add_tab do |t|
           t.named t('.task_lists')

@@ -171,17 +171,18 @@ en:
       password_confirmation: Confirm Password
       sunday: Sunday
       monday: Monday
+      betatester: Use beta features (less stable) before they're released.
       first_day_of_week: Week starts on
       change_password: Change password
       confirm_password: Confirm password
-      use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
-      notify_mentions: "Notify me when I'm mentioned e.g. Howdy @%{login}! You'll receive an email!"
-      notify_conversations: Notify me when I'm watching a conversation
-      notify_task_lists: Notify me when I'm watching a task list
-      notify_tasks: Notify me when I'm watching a task
-      wants_task_reminder: "Send me a daily email reminder of my tasks"
+      notifications:
+        notify_mentions: "Notify me when I'm mentioned e.g. Howdy @%{login}! You'll receive an email!"
+        notify_conversations: Notify me when I'm watching a conversation
+        notify_task_lists: Notify me when I'm watching a task list
+        notify_tasks: Notify me when I'm watching a task
+        wants_task_reminder: "Send me a daily email reminder of my tasks"
       invalid_login: "use only letters, numbers and underscores"
-      account_deletion:
+      delete:
         steps_before_1: "To delete your Teambox account, you first need to leave or delete all your current projects."
         steps_before_2: "This will ensure that no other users will lose data on their projects when you delete your account."
         steps_before_3: "Leave or delete your current projects and then come back to this page to delete your account."
@@ -189,12 +190,12 @@ en:
         delete_my_account: "Delete my account now"
         account_deleted: "Your account has been deleted. We will miss you!"
         couldnt_delete_account: "We can't delete your account because you still have active or archived projects."
-      avatar:
+      picture:
         field: New avatar
         presence: "You can't upload a blank file"
         max_size: "File size can't exceed %{mb}"
         we_have_this_avatar: "This is the picture we currently have of you:"
-        gravatar_in_use: "We don't have a picture of you, so we're using %{gravatar}:"
+        gravatar_in_use: "We don't have a picture of you, so we're using %{gravatar}."
         upload_here_or_at_gravatar: "You can either upload a picture here or set one on %{gravatar}."
         destroy: Delete avatar
       tooltips:
@@ -207,6 +208,7 @@ en:
     new:
       title: Create an Account
       submit: Create account
+      use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
       no_public_signup: "Public signups are not allowed on this system."
       you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
       existing_user: "If you already have an account, <a href='%{login_url}'>log in</a> or <a href='%{forgot_url}'>retrieve your password</a>."
@@ -544,6 +546,7 @@ en:
       invite_users: You are the only user in this project!
       no_users_yet: "Conversations are more useful when shared. <a href='%{invite_link}'>Invite some users</a> to this project now so they can access this conversation, answer and receive updates."
       people_all: "All people in project"
+      cant_notify: "This is a public project. To avoid unwanted emails, we're not showing the list of users that you can notify."
     edit:
       submit: 'Update Conversation'
     index:
@@ -1356,6 +1359,11 @@ en:
               no_body_generic: "Please write a comment to start the conversation."
             name:
               no_title: "Please give this conversation a title."
+
+  locales:
+    en: English
+    pl: Polish
+    tr: Turkish
 
   date:
     yesterday: Yesterday

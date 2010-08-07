@@ -1546,7 +1546,7 @@ fr:
       title: "Synchroniser vos flux de nouvelles"
       your_feeds: "Vos flux de nouvelles"
     form: 
-      account_deletion: 
+      delete: 
         account_deleted: "Votre compte a été supprimé. Vous allez nous manquer !"
         couldnt_delete_account: "Nous ne pouvons pas supprimer votre compte car vous avez toujours des projets actifs ou archivés."
         delete_my_account: "Supprimer mon compte"
@@ -1554,7 +1554,7 @@ fr:
         steps_before_2: "Cela va garantir que les autres utilisateurs ne perdent pas de données sur leurs projets quand vous supprimerez votre compte."
         steps_before_3: "Quittez ou supprimez vos projets en cours puis revenez à cette page pour supprimer votre compte."
         what_will_happen: "Après suppression de votre compte, votre profil Teambox ne sera plus accessible."
-      avatar: 
+      picture: 
         destroy: "Supprimer l'image de profil"
         field: "Votre image"
         gravatar_in_use: "Nous n'avons pas d'image de vous, nous utilisons donc %{gravatar} :"
@@ -1573,10 +1573,12 @@ fr:
       last_name: Nom
       login: "Nom d’utilisateur"
       monday: Lundi
-      notify_conversations: "Envoyez‑moi une notification lorsque je regarde une conversation"
-      notify_mentions: "Envoyez‑moi une notification lorsque je suis mentionné, par exemple Bonjour @%{login} ! Vous recevrez un mail !"
-      notify_task_lists: "Envoyez‑moi une notification lorsque je regarde une liste de tâches"
-      notify_tasks: "Envoyez‑moi une notification lorsque je regarde une tâche"
+      notifications:
+        notify_conversations: "Envoyez‑moi une notification lorsque je regarde une conversation"
+        notify_mentions: "Envoyez‑moi une notification lorsque je suis mentionné, par exemple Bonjour @%{login} ! Vous recevrez un mail !"
+        notify_task_lists: "Envoyez‑moi une notification lorsque je regarde une liste de tâches"
+        notify_tasks: "Envoyez‑moi une notification lorsque je regarde une tâche"
+        wants_task_reminder: "Envoyez‑moi une notification journalière de mes tâches"
       password: "Mot de passe"
       password_confirmation: "Confirmer le mot de passe"
       phone: "Numéro de téléphone"
@@ -1590,12 +1592,11 @@ fr:
         login: "Vous pouvez utiliser un nom d’utilisateur court pour vous connecter. Il doit être en minuscules et sans espace. Vous pouvez utiliser _."
         password: "Combiner des lettres, des chiffres, des majuscules et des minuscules est une bonne idée."
         phone: "De préférence un téléphone portable. A entrer en ajouter le code pays, par exemple +33 1 23 45 67 89"
-      use_this_email: "Vous avez été invité(e) à utiliser Teambox avec cette adresse email. Si vous voulez accéder aux projets de la personne qui vous a invité(e), ne changez pas l’adresse email. Vous pourrez changer d’adresse email par la suite, une fois enregistré(e) dans Teambox."
-      wants_task_reminder: "Envoyez‑moi une notification journalière de mes tâches"
     new: 
       existing_user: "Si vous avez déjà un compte, <a href='%{login_url}'>identifiez‑vous</a> ou <a href='%{forgot_url}'>réinitialisé votre mot de passe</a>."
       no_public_signup: "Le publique n’est pas autorisé à s’inscrire sur ce système."
       submit: "Créer le compte"
+      use_this_email: "Vous avez été invité(e) à utiliser Teambox avec cette adresse email. Si vous voulez accéder aux projets de la personne qui vous a invité(e), ne changez pas l’adresse email. Vous pourrez changer d’adresse email par la suite, une fois enregistré(e) dans Teambox."
       title: "Créer un compte"
       you_already_have_an_account: "Vous avez déjà un compte Teambox pour l’adresse %{email}. <a href='%{login_link}'>Connecté vous avec cet adresse</a> ou <a href='%{reset_password_link}'>réinitialisé votre mot de passe</a> si vous l’avez oublié."
       you_are_logged_in: "Vous avez déjà un compte sur Teambox. Si vous voulez vous enregistrer comme autre utilisateur, fermez la session et essayez de nouveau."

@@ -1127,7 +1127,7 @@ it:
       title_profile: "Informazioni sul profilo"
       title_settings: Preferenze
     form: 
-      avatar: 
+      picture: 
         field: "La tua icona"
         max_size: "Il file non può essere superiore di %{mb}"
         presence: "Non puoi caricare un file vuoto"
@@ -1144,10 +1144,12 @@ it:
       last_name: Cognome
       login: "Nome utente"
       monday: Lunedì
-      notify_conversations: "Mandami una notifica delle conversazioni che seguo"
-      notify_mentions: "Mandami una notifica quando mi nominano in un commento, per esempio: Ciao @%{login}!"
-      notify_task_lists: "Mandami una notifica dei commenti nelle liste di compiti che seguo"
-      notify_tasks: "Mandami una notifica dei commenti nei compiti che seguo"
+      notifications:
+        notify_conversations: "Mandami una notifica delle conversazioni che seguo"
+        notify_mentions: "Mandami una notifica quando mi nominano in un commento, per esempio: Ciao @%{login}!"
+        notify_task_lists: "Mandami una notifica dei commenti nelle liste di compiti che seguo"
+        notify_tasks: "Mandami una notifica dei commenti nei compiti che seguo"
+        wants_task_reminder: "Voglio ricevere una mail giornaliera dei miei compiti"
       password: Password
       password_confirmation: "Conferma password"
       sunday: Domenica
@@ -1158,12 +1160,11 @@ it:
         last_name: "Fino a 20 caratteri."
         login: "Puoi utilizzare un nome utente breve per loggarti. Deve essere in lettere minuscole e senza spazi. Puoi utilizzare _."
         password: "Combinare lettere, numeri, maiuscole e minuscole è una buona idea."
-      use_this_email: "Sei stato invitato in Teambox con questo indirizzo email. Se vuoi accedere ai progetti di chi ti ha invitato, non cambiare l'inidirzzo emal. Potrai cambiare la tua mail una volta che avrai terminato il processo d'iscrizione."
-      wants_task_reminder: "Voglio ricevere una mail giornaliera dei miei compiti"
     new: 
       existing_user: "Se hai già un account, <a href='%{login_url}'>entra</a> o <a href='%{forgot_url}'>reimposta la tua password</a>."
       submit: "Crea account"
       title: "Crea un account"
+      use_this_email: "Sei stato invitato in Teambox con questo indirizzo email. Se vuoi accedere ai progetti di chi ti ha invitato, non cambiare l'inidirzzo emal. Potrai cambiare la tua mail una volta che avrai terminato il processo d'iscrizione."
       you_are_logged_in: "Hai già un account di Teambox. Se voi entrare con un'altro utente, esci e riprova l'accesso."
     show: 
       pending_invite: "%{name} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."

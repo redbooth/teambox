@@ -1606,7 +1606,7 @@ es:
       title: "Sincroniza tus actividades"
       your_feeds: "Tus feeds de noticias"
     form: 
-      account_deletion: 
+      delete: 
         account_deleted: "Tu cuenta ha sido borrada. ¡Te echaremos de menos!"
         couldnt_delete_account: "No podemos borrar tu cuenta porque aún tienes proyectos activos o archivados."
         delete_my_account: "Borrar mi cuenta ahora"
@@ -1614,7 +1614,7 @@ es:
         steps_before_2: "Esto asegurará que otros usuarios no perderán datos cuando borres tu cuenta."
         steps_before_3: "Abandona o borra tus proyectos y vuelve a esta página para borrar tu cuenta."
         what_will_happen: "Después de borrar tu cuenta, tu perfil en Teambox ya no será accesible."
-      avatar: 
+      picture: 
         destroy: "Borrar imagen de perfil"
         field: "Tu icono"
         gravatar_in_use: "No tenemos ninguna imagen de perfil tuya, así que estamos usando %{gravatar}:"
@@ -1633,10 +1633,12 @@ es:
       last_name: Apellidos
       login: "Nombre de usuario"
       monday: Lunes
-      notify_conversations: "Notificarme de conversaciones que sigo"
-      notify_mentions: "Notificarme cuando me mencionen en un comentario, por ejemplo: Hola @%{login}!"
-      notify_task_lists: "Notificarme de comentarios en listas de tareas que sigo"
-      notify_tasks: "Notificarme de comentarios en tareas que sigo"
+      notifications:
+        notify_conversations: "Notificarme de conversaciones que sigo"
+        notify_mentions: "Notificarme cuando me mencionen en un comentario, por ejemplo: Hola @%{login}!"
+        notify_task_lists: "Notificarme de comentarios en listas de tareas que sigo"
+        notify_tasks: "Notificarme de comentarios en tareas que sigo"
+        wants_task_reminder: "Recibir un email diario con mis tareas"
       password: Contraseña
       password_confirmation: "Confirmar contraseña"
       phone: Teléfono
@@ -1650,12 +1652,11 @@ es:
         login: "Puedes usar un nombre de usuario corto para entrar. Debe ser en minúsculas y sin espacios. Puedes usar _."
         password: "Combinar letras, números, mayúsculas y minúsculas es buena idea."
         phone: "El teléfono que será visible para tus compañeros. Introduce el código de país: +34661939945"
-      use_this_email: "Has sido invitado a Teambox con esta dirección de correo. Si quieres acceder a los proyectos de quien te invitó, no cambies la dirección de correo. Podrás cambiar tu email una vez estés dado de alta."
-      wants_task_reminder: "Recibir un email diario con mis tareas"
     new: 
       existing_user: "Si ya tienes una cuenta, <a href='%{login_url}'>identifícate</a> o <a href='%{forgot_url}'>restablece tu contraseña</a>."
       no_public_signup: "No están permitido crear cuentas sin invitación"
       submit: "Crear cuenta"
+      use_this_email: "Has sido invitado a Teambox con esta dirección de correo. Si quieres acceder a los proyectos de quien te invitó, no cambies la dirección de correo. Podrás cambiar tu email una vez estés dado de alta."
       title: "Crear una cuenta"
       you_already_have_an_account: "Ya tienes una cuenta de Teambox en %{email}. <a href='%{login_link}'>Accede a tu cuenta</a> o <a href='%{reset_password_link}'>recupera tu contraseña</a> si la has olvidado."
       you_are_logged_in: "Ya tienes una cuenta de Teambox. Si quieres entrar como otro usuario, cierra la sesión e inténtalo de nuevo."

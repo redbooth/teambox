@@ -1,0 +1,16 @@
+.first_name.text_field
+  = f.label :first_name, t('users.form.first_name')
+  = f.text_field :first_name, :autofocus => 'autofocus'
+  = errors_for user, :first_name
+  - tooltip t('users.form.tooltips.first_name')
+.last_name.text_field
+  = f.label :last_name, t('users.form.last_name')
+  = f.text_field :last_name
+  = errors_for user, :last_name
+  - tooltip t('users.form.tooltips.last_name')
+
+.description.text_area
+  = f.label :biography, t('users.form.biography')
+  = f.text_area :biography
+
+= list_card_fields(f,%w(phone_numbers email_addresses websites addresses ims social_networks))

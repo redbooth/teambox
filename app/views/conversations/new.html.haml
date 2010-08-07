@@ -6,7 +6,7 @@
 
 - form_for [@current_project,@conversation], :html => { :'data-project' => @current_project.permalink } do |f|
   = conversation_fields(f,@current_project,@conversation)
-  = conversation_watcher_fields(@current_project,@conversation)
+  = conversation_watcher_fields(@current_project,@conversation) 
   .submit
     %span.help
       = formatting_documentation_link

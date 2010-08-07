@@ -11,6 +11,7 @@ Things that should be added to seed data:
   - Upload files inside and outside comments
   - Build another project to test overview for all tasks
   - The last comment by Corrina doesn't have a reply field
+
 EOS
 
 class Object # I'd love to make this class SeedProject < Project, but that doesn't work
@@ -73,21 +74,25 @@ class Object # I'd love to make this class SeedProject < Project, but that doesn
   end
 
   def make_page(user, name, description)
+    time = fake_time
     pages.new(:name => name, :description => description).tap do |p|
       p.user = user
-      p.created_at = fake_time
+      p.created_at = time
       p.save!
     end
+    Activity.last.update_attribute :created_at, time
   end
 
   def make_note(user, name, body)
+    time = fake_time
     pages.first.notes.new(:name => name, :body => body) do |note|
       note.user = user
       note.updated_by = user # if this is left undefined, note fails. note should validate updated_by
       note.project_id = self.id # this should not be needed, since notes should know who they belong to
-      note.created_at = fake_time
+      note.created_at = time
       note.save!
     end
+    Activity.last.update_attribute :created_at, time
   end
 
   def add_users(users)
@@ -96,7 +101,7 @@ class Object # I'd love to make this class SeedProject < Project, but that doesn
   end
   
   def fake_time
-    @fake_time ||= 120.minutes.ago
+    @fake_time ||= 150.minutes.ago
     @fake_time += 2.minutes
   end
 end
@@ -110,6 +115,11 @@ users = [%w(Frank Kramer frank_pm),
                       :password => "papapa",
                       :password_confirmation => "papapa",
                       :first_name => a, :last_name => b,
+                      :betatester => true,
+                      :notify_mentions => false,
+                      :notify_conversations => false,
+                      :notify_task_lists => false,
+                      :notify_tasks => false,
                       :email => "example_#{a}@teambox.com")
   user.activate!
   user
@@ -159,15 +169,25 @@ earthworks.status_update(frank, "Go to http://adwords.google.com to set up AdWor
 earthworks.status_update(frank, "Let me know if you need anything from me, Maya.")
 
 earthworks.make_task_list(frank, "Design")
+earthworks.make_task(corrina, "Create Flash banners")
+earthworks.status_update(corrina, "Based on the Earthworks Yoga logo assets I uploaded to files, create 3 Flash banners in the Skyscraper sizes as determined by the IAB guidelines (http://bit.ly/6cWKxh).", maya)
+earthworks.status_update(maya, "My Flash isn’t the greatest. I’ve done a rough job of something decent and uploaded it to Files. What do you think?")
+earthworks.status_update(corrina, "Hmm. Those are pretty rough, but I can make ‘em pretty. Come over around 3pm if you wanna look over my shoulder. I’ll put this task on Hold for now.", :hold)
+
+earthworks.make_page(frank, "Site content", "This new Page was created for @DonMarco to contribute his site content. He'll be supplying us with Home, About Us, Classes, Join Now, and Contact Us.")
+earthworks.make_note(marco, "Home", "Earthworks Yoga is a magical place where time stops and renewal begins. Marco promotes a comprehensive approach to wellness with hands-on bodywork, Yoga and Meditation, Yoga Heal-a-Thons, and high-tech energy medicine tools that detoxify and strengthen the body.\n\nEarthworks Yoga provides sacred space and support for transformation on all levels, fostering connection with the Highest Self and the Soul’s true purpose in this life. Living in harmony calls for clearing the physical and subtle bodies of all trauma which cuts off the flow of life force. The True Self emerges as lifelong patterns of fear, pain, and self-limitation dissolve.")
+earthworks.make_note(marco, "About Us", "Marco opened Earthworks Yoga 20 years ago, with a passion and commitment to support healing within the yoga community. Calming the brain and nervous system directly influences the yogic energy channels, and creates an environment where wellness and wholeness can thrive. Marco’s methods are firmly rooted in both physical and esoteric anatomy. Nationally Certified in bodywork, she trained extensively in structural massage for chronic pain before discovering CranioSacral, SomatoEmotional, and Heart Centered Therapies. Earthworks Yoga’s healing evolution parallels the yogic journey … from the outer body to the inner fibers, cells, and soul. The root causes of suffering reveal themselves through chronic holding patterns in the physical and subtle bodies, and it is on all these levels that Marco works.")
+earthworks.make_note(marco, "Classes", "9:15-10:35 AM Hatha Duane 12\n12:30-1:30 PM Level 1-2  Laura M 12\n4:30-5:50 PM  Gentle Flow Mary  6\n6:05-7:25 PM  Flow 2  Tyler  12\n6:05-7:25 PM  Yoga BasicsLaura M 12")
+earthworks.make_note(marco, "Join Now", "- Unlimited access for just 33 cents a day\n- Less than one DVD or studio class\n- Experience our growing library of videos\n- On demand anytime, anywhere\n- Billing recurs monthly, cancel anytime\n- No contract, no obligation")
+earthworks.make_note(marco, "Contact Us", "The answers to most questions will be found in the FAQ page. A lot of the information will be found in the different pages of this site.\n\nFor comments and suggestions regarding this web site, please e-mail Webmaster@earthworksyoga.com\n\nFor schedule and other local information, please contact Marco [link to email].")
+
 earthworks.make_task(frank, "Collect collateral for online marketing design")
 earthworks.status_update(frank, "The online marketing collateral should include ads in all the common online sizes as determined by the IAB guidelines (http://bit.ly/6cWKxh). Let me know if you have any questions.", corrina)
 earthworks.status_update(corrina, "It's done!", frank)
 earthworks.status_update(frank, "Please install and configure the WordPress plugin called “All in One SEO Pack”.", tomas)
 
-earthworks.make_task(corrina, "Create Flash banners")
-earthworks.status_update(corrina, "Based on the Earthworks Yoga logo assets I uploaded to files, create 3 Flash banners in the Skyscraper sizes as determined by the IAB guidelines (http://bit.ly/6cWKxh).", maya)
-earthworks.status_update(maya, "My Flash isn’t the greatest. I’ve done a rough job of something decent and uploaded it to Files. What do you think?")
-earthworks.status_update(corrina, "Hmm. Those are pretty rough, but I can make ‘em pretty. Come over around 3pm if you wanna look over my shoulder. I’ll put this task on Hold for now.", :hold)
+earthworks.make_page(frank, "Staff bios", " I know it's cheesy to do these 3rd-person things, but it's the norm and it would be goof for our clients to know JUST HOW COOL WE ARE!")
+earthworks.make_note(tomas, "Tom's bio", "Tomas has been building websites since 1991, when he and Al Gore invented the internet together. Since then, he’s been involved with the development of websites and microsites for such conglomerates as Nike, the North Face, Cabela’s, Visa, and Toys’R’Us. In his free time, Tomas enjoys the music of the Kinks and the beers of Brooklyn Brewery.")
 
 earthworks.make_task(corrina, "Earthworks images for site")
 earthworks.status_update(corrina, "Please upload images to the Files tab here. Images should include those of the Earthworks Yoga studio and any other images you want incorporated into site design. Thanks!", marco)
@@ -177,15 +197,6 @@ earthworks.status_update(marco, "I uploaded the images to the Teambox Files tab 
 earthworks.make_task(frank, "Contact area businesses for banner exchange")
 earthworks.status_update(frank, "Please contact Green Earth Cafe, Nellie’s Tacos, Fenton’s, ROOZ, and Cato’s about a banner exchange with EarthworksYoga.com. Verbiage for your email can be found here in Teambox on the Pages tab.", maya)
 
-earthworks.make_page(frank, "Site content", "This new Page was created for @DonMarco to contribute his site content. He'll be supplying us with Home, About Us, Classes, Join Now, and Contact Us.")
-earthworks.make_note(marco, "Home", "Earthworks Yoga is a magical place where time stops and renewal begins. Marco promotes a comprehensive approach to wellness with hands-on bodywork, Yoga and Meditation, Yoga Heal-a-Thons, and high-tech energy medicine tools that detoxify and strengthen the body.\n\nEarthworks Yoga provides sacred space and support for transformation on all levels, fostering connection with the Highest Self and the Soul’s true purpose in this life. Living in harmony calls for clearing the physical and subtle bodies of all trauma which cuts off the flow of life force. The True Self emerges as lifelong patterns of fear, pain, and self-limitation dissolve.")
-earthworks.make_note(marco, "About Us", "Marco opened Earthworks Yoga 20 years ago, with a passion and commitment to support healing within the yoga community. Calming the brain and nervous system directly influences the yogic energy channels, and creates an environment where wellness and wholeness can thrive. Marco’s methods are firmly rooted in both physical and esoteric anatomy. Nationally Certified in bodywork, she trained extensively in structural massage for chronic pain before discovering CranioSacral, SomatoEmotional, and Heart Centered Therapies. Earthworks Yoga’s healing evolution parallels the yogic journey … from the outer body to the inner fibers, cells, and soul. The root causes of suffering reveal themselves through chronic holding patterns in the physical and subtle bodies, and it is on all these levels that Marco works.")
-earthworks.make_note(marco, "Classes", "9:15-10:35 AM Hatha Duane 12\n12:30-1:30 PM Level 1-2  Laura M 12\n4:30-5:50 PM  Gentle Flow Mary  6\n6:05-7:25 PM  Flow 2  Tyler  12\n6:05-7:25 PM  Yoga BasicsLaura M 12")
-earthworks.make_note(marco, "Join Now", "- Unlimited access for just 33 cents a day\n- Less than one DVD or studio class\n- Experience our growing library of videos\n- On demand anytime, anywhere\n- Billing recurs monthly, cancel anytime\n- No contract, no obligation")
-earthworks.make_note(marco, "Contact Us", "The answers to most questions will be found in the FAQ page. A lot of the information will be found in the different pages of this site.\n\nFor comments and suggestions regarding this web site, please e-mail Webmaster@earthworksyoga.com\n\nFor schedule and other local information, please contact Marco [link to email].")
-
-earthworks.make_page(frank, "Staff bios", " I know it's cheesy to do these 3rd-person things, but it's the norm and it would be goof for our clients to know JUST HOW COOL WE ARE!")
-earthworks.make_note(tomas, "Tom's bio", "Tomas has been building websites since 1991, when he and Al Gore invented the internet together. Since then, he’s been involved with the development of websites and microsites for such conglomerates as Nike, the North Face, Cabela’s, Visa, and Toys’R’Us. In his free time, Tomas enjoys the music of the Kinks and the beers of Brooklyn Brewery.")
 earthworks.make_note(corrina, "Corrina's bio", "Corrina is a self-proclaimed design dork. After finishing cum laude from RISD in 2000, she went on to get a MFA at the Tisch School in New york City. Aside from her graphic design work , Corrina teaches two classes at the California College of Arts and Crafts in Oakland, California. Corrina loves Oakland and lives with her two cats. When she’s not at her desk in Photoshop, she’s running around Lake Merritt and enjoying yoga classes at Earthworks Yoga.")
 
 earthworks.make_comment(corrina, "I found a yoga website that I really love. It’s a dumb name for a studio, but the website design is flawless: Let’s Get Bent: http://bit.ly/8p0gmf")

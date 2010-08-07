@@ -1615,7 +1615,7 @@ pl:
       title: "Synchronizuj kanał aktywności"
       your_feeds: "Twój kanał aktywności"
     form: 
-      account_deletion: 
+      delete: 
         account_deleted: "Twoje Konto zostało usunięte. Będzie nam cię brakowało!"
         couldnt_delete_account: "Nie możemy usunąć twojego konta ponieważ nadal posiadasz aktywne i archiwizowane projekty."
         delete_my_account: "Usuń moje konto teraz"
@@ -1623,7 +1623,7 @@ pl:
         steps_before_2: "To zapewni to że żaden użytkownik nie straci danych ze swoich projektów gdy usuniesz swoje konto."
         steps_before_3: "Opuść lub usuń swoje obecne projekty i potem wróć do tej strony by usunąć swoje konto."
         what_will_happen: "Po usunięciu konta, twój profil Teambox przestanie być dostępny."
-      avatar: 
+      picture: 
         destroy: "Usuń avatar"
         field: "Nowy avatar"
         gravatar_in_use: "Nie mamy twojego zdjęcia, więc używamy  %{gravatar}:"
@@ -1642,10 +1642,12 @@ pl:
       last_name: Nazwisko
       login: "Nazwa Użytkownika"
       monday: Poniedziałek
-      notify_conversations: "Powiadom mnie gdy obserwuje konwersacje"
-      notify_mentions: "Powiadom mnie kiedy zostanę wspomniany np. Cześć @%{login}! Dostałeś email!"
-      notify_task_lists: "Powiadom mnie gdy obserwuje listę zadań"
-      notify_tasks: "Powiadom mnie gdy obserwuje zadanie"
+      notifications:
+        notify_conversations: "Powiadom mnie gdy obserwuje konwersacje"
+        notify_mentions: "Powiadom mnie kiedy zostanę wspomniany np. Cześć @%{login}! Dostałeś email!"
+        notify_task_lists: "Powiadom mnie gdy obserwuje listę zadań"
+        notify_tasks: "Powiadom mnie gdy obserwuje zadanie"
+        wants_task_reminder: "Przysyłaj mi codziennie email przypominający o moich zadaniach"
       password: Hasło
       password_confirmation: "Potwierdź Hasło"
       phone: "Numer Telefonu"
@@ -1659,13 +1661,12 @@ pl:
         login: "Potrzebujesz nazwy użytkownika w celu zalogowania. Ludzie będą Cię mogli znaleźć za pomocą nazwy użytkownika. Nazwa musi się składać z małych liter, bez spacji. Możesz używać podkreślnika."
         password: "Łączenie liter,  cyfr, dużych i małych znaków to dobry pomysł"
         phone: "Najlepiej numer komórkowy. Wprowadź go poprzedzając kodem kraju, +48 dla Polski."
-      use_this_email: "Masz zaproszenia do dzielenia się projektami dla tego adresu email. Jeśli chcesz uzyskać do nich dostęp nie zmieniaj adresu email. Możesz zmienić go dopiero po zakończeniu procesu rejestracji."
-      wants_task_reminder: "Przysyłaj mi codziennie email przypominający o moich zadaniach"
     new: 
       existing_user: "Jeśli posiadasz już kontot, <a href='%{login_url}'>zaloguj się</a> lub <a href='%{forgot_url}'>odzyskaj swoje hasło</a>."
       no_public_signup: "Publiczne zapisy są niedostępne w tym systemie."
       submit: "Stwórz konto"
       title: "Stwórz konto"
+      use_this_email: "Masz zaproszenia do dzielenia się projektami dla tego adresu email. Jeśli chcesz uzyskać do nich dostęp nie zmieniaj adresu email. Możesz zmienić go dopiero po zakończeniu procesu rejestracji."
       you_already_have_an_account: "Już posiadasz konto na Teambox dla adresu %{email}. <a href='%{login_link}'>Zaloguj się tym adresem</a> lub </a> or <a href='%{reset_password_link}'>zresetuj swoje hasło</a> jeśli je zapomniałeś."
       you_are_logged_in: "Już masz konto. Wyloguj się w celu zalogowania jako inny użytkownik."
     show: 

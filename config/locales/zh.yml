@@ -1246,7 +1246,7 @@ zh:
       title_profile: 您的个性设置
       title_settings: 您的帐号设置
     form: 
-      avatar: 
+      picture: 
         field: 您的头像
         max_size: "文件大小不能超过%{mb}"
         presence: 您不能上传空文件
@@ -1263,10 +1263,12 @@ zh:
       last_name: 名
       login: 用户名
       monday: 周一
-      notify_conversations: 在我关注的话题变化时通知我
-      notify_mentions: "在消息中提及我时通知我。例如：“你好，@%{login}!”您将收到一封提醒的电子邮件"
-      notify_task_lists: 在我关注的任务列表变化时通知我
-      notify_tasks: 在我关注的任务变化时通知我
+      notifications:
+        notify_conversations: 在我关注的话题变化时通知我
+        notify_mentions: "在消息中提及我时通知我。例如：“你好，@%{login}!”您将收到一封提醒的电子邮件"
+        notify_task_lists: 在我关注的任务列表变化时通知我
+        notify_tasks: 在我关注的任务变化时通知我
+        wants_task_reminder: 发送我的任务每日情况报告
       password: 密码
       password_confirmation: 确认密码
       sunday: 周日
@@ -1277,12 +1279,11 @@ zh:
         last_name: 最多20个字符.
         login: 您需要用户名才能登录。其他人通过用户名可以找到你。必须全为小写字母，不能有空格，可以使用下划线。
         password: 组合字母，数字，大小写混合是个好注意。
-      use_this_email: 您已经被邀请使用此电子邮件地址共享使用项目。如果您希望使用这些项目，请不要修改此邮件地址。在您完成注册过程后，您可以修改您的邮件地址。
-      wants_task_reminder: 发送我的任务每日情况报告
     new: 
       existing_user: "如果您已经有一个帐号，请<a href='%{login_url}'>登录</a>或者<a href='%{forgot_url}'>找回密码</a>。"
       no_public_signup: 此系统不允许公共注册。
       submit: 创建帐号
+      use_this_email: 您已经被邀请使用此电子邮件地址共享使用项目。如果您希望使用这些项目，请不要修改此邮件地址。在您完成注册过程后，您可以修改您的邮件地址。
       title: 创建新帐号
       you_already_have_an_account: "您已经有一个使用了地址%{email}的Teambox帐号。<a href='%{login_link}'>使用此邮箱登录</a>或<a href='%{reset_password_link}'>重置密码</a>，如果您已经忘记密码。"
       you_are_logged_in: 您已经有一个帐号。请先注销，并使用另一个帐号登录。
