@@ -84,6 +84,18 @@ def mock_uploader(file, type = 'image/png', data=nil)
   uploader
 end
 
+def mock_file(user, page=nil)
+  @project.uploads.new(mock_file_params).tap do |page_upload|
+    page_upload.page = page
+    page_upload.user = user
+    page_upload.save!
+  end
+end
+
+def mock_file_params
+  {:asset => mock_uploader("#{rand}.js", 'application/javascript', "1/0")}
+end
+
 def make_a_typical_project
     @user = Factory.create(:confirmed_user)
     @project = Factory.create(:project)

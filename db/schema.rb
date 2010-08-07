@@ -313,34 +313,6 @@ ActiveRecord::Schema.define(:version => 20100802193633) do
   add_index "tasks", ["project_id"], :name => "index_tasks_on_project_id"
   add_index "tasks", ["task_list_id"], :name => "index_tasks_on_task_list_id"
 
-  create_table "tolk_locales", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tolk_locales", ["name"], :name => "index_tolk_locales_on_name", :unique => true
-
-  create_table "tolk_phrases", :force => true do |t|
-    t.string   "key"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tolk_phrases", ["key"], :name => "index_tolk_phrases_on_key", :unique => true
-
-  create_table "tolk_translations", :force => true do |t|
-    t.integer  "phrase_id"
-    t.integer  "locale_id"
-    t.text     "text"
-    t.text     "previous_text"
-    t.boolean  "primary_updated", :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tolk_translations", ["phrase_id", "locale_id"], :name => "index_tolk_translations_on_phrase_id_and_locale_id", :unique => true
-
   create_table "uploads", :force => true do |t|
     t.integer  "user_id"
     t.integer  "project_id"

@@ -1,5 +1,5 @@
 ;(function(){
-  var element, imageMaxWidth = 700, imageMaxHeight = 300
+  var element, imageMaxWidth = 700, imageMaxHeight = 300, screenMinWidth = 75
   
   var Facebox = {
     open: function(html, classname, extra) {
@@ -18,7 +18,7 @@
       image.onload = function() {
         this.open('<a href="' + src + '"><img src="' + src + '"></a>', 'image', alt)
         var img = element.down('.facebox-content img'),
-            screenWidth = Math.min(image.width, imageMaxWidth)
+            screenWidth = Math.max(Math.min(image.width, imageMaxWidth), screenMinWidth)
 
         img.setStyle({ maxWidth:imageMaxWidth+'px', maxHeight:imageMaxHeight+'px' })
         element.down('.facebox-wrapper').setStyle({ width: screenWidth+'px' })

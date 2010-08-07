@@ -77,6 +77,10 @@ class ApiV1::APIController < ApplicationController
     end
   end
   
+  def api_truth(value)
+    ['true', '1'].include?(value) ? true : false
+  end
+  
   def api_limit
     if params[:count]
       [params[:count].to_i, API_LIMIT].min

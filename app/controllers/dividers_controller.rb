@@ -1,6 +1,7 @@
 class DividersController < ApplicationController
   before_filter :load_page
   before_filter :load_divider, :only => [:show, :edit, :update, :destroy]
+  before_filter :check_permissions
   
   def new
     @divider = @page.build_divider(params[:divider])
@@ -12,11 +13,10 @@ class DividersController < ApplicationController
   end
   
   def create
-    calculate_position
-    
     @divider = @page.build_divider(params[:divider])
     @divider.updated_by = current_user
-    save_slot(@divider) if @page.editable?(current_user) && @divider.save
+    calculate_position(@divider)
+    @divider.save
     
     respond_to do |f|
       if !@divider.new_record?

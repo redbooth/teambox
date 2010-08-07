@@ -107,8 +107,8 @@ tr:
       template: 
         body: "Aşağıdaki alanlarla ilgili sorunlar oluştu:"
         header: 
-          bir: "1 hata sebebiyle bu {{model}} kaydedilemedi"
-          diğer: "{{count}} hata sebebiyle bu {{model}} kaydedilemedi"
+          one: "1 hata sebebiyle bu {{model}} kaydedilemedi"
+          other: "{{count}} hata sebebiyle bu {{model}} kaydedilemedi"
     models: 
       address: Adres
       card: Kart
@@ -174,8 +174,8 @@ tr:
         conversation: "sohbeti başlattı"
         task: "bir görev oluşturdu"
       more_comments: 
-        bir: "1 geçmiş yorum"
-        diğer: "%{count} geçmiş yorum"
+        one: "1 geçmiş yorum"
+        other: "%{count} geçmiş yorum"
       on_task_list: "*** ??"
   affiliate: 
     area: "İş ortakları Alanı"
@@ -306,8 +306,8 @@ tr:
     cancel: İptal
     close: Kapat
     comment: 
-      bir: "%{count} yorum"
-      diğer: "%{count} yorum"
+      one: "%{count} yorum"
+      other: "%{count} yorum"
     decline: Reddet
     delete: Sil
     edit: Düzenle
@@ -322,8 +322,8 @@ tr:
     save: Kaydet
     show_more: "Daha fazlasını göster"
     tasks: 
-      bir: "1 görev"
-      diğer: "%{count} görev"
+      one: "1 görev"
+      other: "%{count} görev"
   confirm: 
     delete_group: "Bu grubu silmek istediğinizden emin misiniz?"
     delete_page: "Bu sayfayı silmek istediğinizden emin misiniz?"
@@ -708,39 +708,39 @@ tr:
   datetime: 
     distance_in_words: 
       about_x_hours: 
-        bir: "yaklaşık 1 saat"
-        diğer: "yaklaşık %{count} saat"
+        one: "yaklaşık 1 saat"
+        other: "yaklaşık %{count} saat"
       about_x_months: 
-        bir: "yaklaşık 1 ay"
-        diğer: "yaklaşık %{count} ay"
+        one: "yaklaşık 1 ay"
+        other: "yaklaşık %{count} ay"
       about_x_years: 
-        bir: "yaklaşık 1 yıl"
-        diğer: "yaklaşık %{count} yıl"
+        one: "yaklaşık 1 yıl"
+        other: "yaklaşık %{count} yıl"
       almost_x_years: 
-        bir: "neredeyse 1 yıl"
-        diğer: "neredesye %{count} yıl"
+        one: "neredeyse 1 yıl"
+        other: "neredesye %{count} yıl"
       half_a_minute: "yarım dakika"
       less_than_x_minutes: 
-        bir: şimdi
-        diğer: "%{count} dakikadan az"
+        one: şimdi
+        other: "%{count} dakikadan az"
       less_than_x_seconds: 
-        bir: şimdi
-        diğer: şimdi
+        one: şimdi
+        other: şimdi
       over_x_years: 
-        bir: "1 yıldan fazla"
-        diğer: "%{count} yıldan fazla"
+        one: "1 yıldan fazla"
+        other: "%{count} yıldan fazla"
       x_days: 
-        bir: "1 gün"
-        diğer: "%{count} gün"
+        one: "1 gün"
+        other: "%{count} gün"
       x_minutes: 
-        bir: "1 dakika"
-        diğer: "%{count} dakika"
+        one: "1 dakika"
+        other: "%{count} dakika"
       x_months: 
-        bir: "1 ay"
-        diğer: "%{count} ay"
+        one: "1 ay"
+        other: "%{count} ay"
       x_seconds: 
-        bir: şimdi
-        diğer: şimdi
+        one: şimdi
+        other: şimdi
     prompts: 
       day: Gün
       hour: Saat

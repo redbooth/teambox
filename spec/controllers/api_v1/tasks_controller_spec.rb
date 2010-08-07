@@ -13,6 +13,7 @@ describe ApiV1::TasksController do
     @task = @project.create_task(@owner,@task_list,{:name => 'Something TODO'})
     @task.save!
     @other_task = @project.create_task(@owner,@other_list,{:name => 'Something else TODO'})
+    @other_task.status = 3
     @other_task.save!
   end
   
@@ -46,6 +47,15 @@ describe ApiV1::TasksController do
       response.should be_success
       
       JSON.parse(response.body).length.should == 3
+    end
+    
+    it "restricts by status" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :status => [3]
+      response.should be_success
+      
+      JSON.parse(response.body).map{|t| t['id'].to_i}.sort.should == [@other_task.id]
     end
     
     it "limits tasks" do

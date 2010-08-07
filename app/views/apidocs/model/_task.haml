@@ -1,7 +1,10 @@
 %p= "A task tracks tasks which need to be completed in a #{link_to_doc_model(:task_list)}, contained in a #{link_to_doc_model(:project)}."
 
-- doc_for :index, :example => [@task.to_api_hash] do
-  %p= "Returns the 25 most recent tasks in a task list."
+- doc_for :index,
+          :parameters => {:status => "0...4|[0,1,2,3,4]"},
+          :example => [@task.to_api_hash] do
+  %p= "Returns the most recent tasks in the #{link_to_doc_model(:task_list)}, #{link_to_doc_model(:project)}, or projects you belong to."
+  %p= "Use the optional <tt>status</tt> parameter to filter tasks by their status id. For example, to only view new or open tasks, you would query <code>?status[]=0&status[]=1</code>."
 
 - doc_for :show,  :example => @task.to_api_hash do
   %p= "Returns the data for a task."

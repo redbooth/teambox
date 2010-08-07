@@ -6,6 +6,10 @@ describe ApiV1::TaskListsController do
     
     @task_list = @project.create_task_list(@owner, {:name => 'A TODO list'})
     @task_list.save!
+    
+    @other_task_list = @project.create_task_list(@owner, {:name => 'Another TODO list'})
+    @other_task_list.archived = true
+    @other_task_list.save!
   end
   
   describe "#index" do
@@ -13,6 +17,24 @@ describe ApiV1::TaskListsController do
       login_as @user
       
       get :index, :project_id => @project.permalink
+      response.should be_success
+      
+      JSON.parse(response.body).length.should == 2
+    end
+    
+    it "restricts by archived lists" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :archived => true
+      response.should be_success
+      
+      JSON.parse(response.body).length.should == 1
+    end
+    
+    it "restricts by unarchived lists" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :archived => false
       response.should be_success
       
       JSON.parse(response.body).length.should == 1
@@ -58,7 +80,7 @@ describe ApiV1::TaskListsController do
       post :create, :project_id => @project.permalink, :id => @task_list.id, :task_list => {:name => 'Another list!'}
       response.should be_success
       
-      @project.task_lists(true).length.should == 2
+      @project.task_lists(true).length.should == 3
       @project.task_lists.first.name.should == 'Another list!'
     end
     
@@ -68,7 +90,7 @@ describe ApiV1::TaskListsController do
       post :create, :project_id => @project.permalink, :id => @task_list.id, :task_list => {:name => 'Another list!'}
       response.status.should == '401 Unauthorized'
       
-      @project.task_lists(true).length.should == 1
+      @project.task_lists(true).length.should == 2
     end
   end
   
@@ -162,7 +184,7 @@ describe ApiV1::TaskListsController do
       put :destroy, :project_id => @project.permalink, :id => @task_list.id
       response.should be_success
       
-      @project.task_lists(true).length.should == 0
+      @project.task_lists(true).length.should == 1
     end
     
     it "should not allow observers to destroy a task list" do
@@ -171,7 +193,7 @@ describe ApiV1::TaskListsController do
       put :destroy, :project_id => @project.permalink, :id => @task_list.id
       response.status.should == '401 Unauthorized'
       
-      @project.task_lists(true).length.should == 1
+      @project.task_lists(true).length.should == 2
     end
   end
 end

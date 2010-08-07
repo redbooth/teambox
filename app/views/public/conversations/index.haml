@@ -4,7 +4,7 @@
   %br
   - for conversation in @conversations
     .conversation
-      = link_to conversation, public_project_conversation_path(@project, conversation), :class => :conversation
+      = link_to conversation, seo_public_project_conversation_path(@project, conversation), :class => :conversation
       %span
         == #{pluralize(conversation.comments_count, "message", "message")},
         == last one #{time_ago_in_words(conversation.updated_at)} ago

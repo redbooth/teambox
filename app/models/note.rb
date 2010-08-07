@@ -5,23 +5,22 @@ class Note < RoleRecord
   acts_as_paranoid
   versioned
   
+  include PageWidget
+  
   before_destroy :clear_slot
-    
+  
   formats_attributes :body
-    
+  
   attr_accessor :deleted
   attr_accessible :body, :deleted, :name
   
   def after_create
+    save_slot
     project.log_activity(self, 'create', updated_by.id)
   end
   
   def after_update
     project.log_activity(self, 'edit', updated_by.id)
-  end
-  
-  def clear_slot
-    page_slot.destroy
   end
   
   def slot_view

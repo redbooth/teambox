@@ -81,7 +81,7 @@ class Object # I'd love to make this class SeedProject < Project, but that doesn
   end
 
   def make_note(user, name, body)
-    pages.last.notes.new(:name => name, :body => body) do |note|
+    pages.first.notes.new(:name => name, :body => body) do |note|
       note.user = user
       note.updated_by = user # if this is left undefined, note fails. note should validate updated_by
       note.project_id = self.id # this should not be needed, since notes should know who they belong to
@@ -97,27 +97,27 @@ class Object # I'd love to make this class SeedProject < Project, but that doesn
   
   def fake_time
     @fake_time ||= 120.minutes.ago
-    @fake_time += 2.minute
+    @fake_time += 2.minutes
   end
 end
 
-@users = [%w(Frank Kramer frank_pm),
+users = [%w(Frank Kramer frank_pm),
           %w(Corrina Kottke corrina),
           %w(Tomas Santiago webdevtom),
           %w(Maya Bhaskaran maya_pa),
           %w(Marco Fizzulo donmarco)].collect do |a,b,u|
-  @user = User.create!(:login => u,
+  user = User.create!(:login => u,
                       :password => "papapa",
                       :password_confirmation => "papapa",
                       :first_name => a, :last_name => b,
                       :email => "example_#{a}@teambox.com")
-  @user.activate!
-  @user
+  user.activate!
+  user
 end
 
-frank, corrina, tomas, maya, marco = @users
+frank, corrina, tomas, maya, marco = users
 
-earthworks = frank.projects.new(:name => "Earthworks Yoga", :permalink => "earthworks").tap { |p| p.save! }
+earthworks = frank.projects.new(:name => "Earthworks Yoga", :permalink => "earthworks", :public => true).tap { |p| p.save! }
 
 earthworks.make_comment(frank, "Getting started. Sending invites for project.")
 earthworks.add_users [corrina, tomas, maya, marco]

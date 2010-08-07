@@ -27,7 +27,7 @@ module UploadsHelper
   end
   
   def page_upload_actions_link(page, upload)
-    if upload.editable?(current_user)
+    if current_user && upload.editable?(current_user)
       render 'uploads/slot_actions', :upload => upload, :page => page
     end
   end

@@ -1,5 +1,5 @@
 %div[divider]
-  - if divider.editable?(current_user)
+  - if current_user && divider.editable?(current_user)
     = render 'dividers/actions', :divider => divider
   %h3
     %span

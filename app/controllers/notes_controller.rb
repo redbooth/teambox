@@ -1,6 +1,7 @@
 class NotesController < ApplicationController
   before_filter :load_page
   before_filter :load_note, :only => [:show, :edit, :update, :destroy]
+  before_filter :check_permissions
   
   def new
     @note = @page.build_note(params[:note])
@@ -12,11 +13,10 @@ class NotesController < ApplicationController
   end
   
   def create
-    calculate_position
-    
     @note = @page.build_note(params[:note])
     @note.updated_by = current_user
-    save_slot(@note) if @page.editable?(current_user) && @note.save
+    calculate_position(@note)
+    @note.save
     
     respond_to do |f|
       if !@note.new_record?

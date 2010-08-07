@@ -14,6 +14,12 @@ class Upload < RoleRecord
 
   default_scope :order => 'created_at DESC'
 
+  attr_accessible :asset,
+                  :page_id,
+                  :description
+  
+  include PageWidget
+
   has_attached_file :asset,
     :styles => { :thumb => "64x48>" },
     :url  => "/assets/:id/:style/:basename.:extension",
@@ -25,6 +31,13 @@ class Upload < RoleRecord
   
   validates_attachment_size :asset, :less_than => Teambox.config.asset_max_file_size.to_i.megabytes
   validates_attachment_presence :asset
+  validate :check_page
+  
+  def check_page
+    if page && (page.project_id != project_id)
+      @errors.add :project, 'is not valid'
+    end
+  end
   
   def image?
     !(asset_content_type =~ /^image.*/).nil?
@@ -50,16 +63,13 @@ class Upload < RoleRecord
   def description
     self[:description] || (comment ? truncate(comment.body, :length => 80) : nil)
   end
-
-  def clear_slot
-    page_slot.destroy if page_slot
-  end
   
   def slot_view
     'uploads/upload_slot'
   end
 
   def after_create
+    save_slot if page
     project.log_activity(self, 'create', user_id) if page_id
   end
   

@@ -5,13 +5,15 @@ class Divider < RoleRecord
   acts_as_paranoid
   versioned
   
+  include PageWidget
+  
   before_destroy :clear_slot
 
   attr_accessor :deleted
   attr_accessible :body, :deleted, :name
   
-  def clear_slot
-    page_slot.destroy
+  def after_create
+    save_slot
   end
 
   def slot_view
