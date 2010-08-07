@@ -11,29 +11,42 @@
         color: rgb(150, 150, 150)
 
 .index_conversations
-  h2
-    margin-top: 0px
   #conversations
     .conversation
       color: rgb(30, 30, 30)
-      margin-bottom: 10px
-      h2
-        font-family: "Lucida Grande", "Helvetica Neue", Verdana, Arial, Helvetica, sans-serif
-        margin: 0px
-        padding: 0px
-        font-size: 16px
-        a
-          color: rgb(0, 0, 140)
+      margin-bottom: 30px
       .comment
+        h2.title
+          font-family: "Lucida Grande", "Helvetica Neue", Verdana, Arial, Helvetica, sans-serif
+          margin: 0px
+            bottom: 10px
+          padding: 0px
+          font-size: 16px
+          a
+            color: #333
+            &:hover
+              color: red
+          span
+            padding: 1px 5px
+            color: #999
         -moz-border-radius: 6px
         -webkit-border-radius: 6px
         padding: 5px 8px
         margin: 0px
           top: 2px
+        .body
+          margin-top: 0
         .info
           width: 54px
-        .info .info
+        .info .info, .name
           display: none
+        .go_to_thread
+          font-size: 11px
+          color: #999
+          margin: 0
+          a
+            color: #999
+            text-decoration: underline
 
 .new_conversations, .create_conversations
   .content
