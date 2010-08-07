@@ -10,8 +10,8 @@ class UsersController < ApplicationController
   def index
     # show current user
     respond_to do |f|
-      f.html { redirect_to '/' }
-      f.m { redirect_to '/' }
+      f.html  { redirect_to root_path }
+      f.m     { redirect_to root_path }
       f.xml   { render :xml     => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
       f.json  { render :as_json => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
       f.yaml  { render :as_yaml => @current_user.users_with_shared_projects.to_xml(:root => 'users')}
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
       return redirect_to root_path
     end
 
-    if @user && @user.save && @user.errors.empty?
+    if @user && @user.save
       self.current_user = @user
 
       if @app_link

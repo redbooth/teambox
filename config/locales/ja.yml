@@ -1602,7 +1602,7 @@ ja:
       title: あなたの行動フィードを同期
       your_feeds: 新しいニュースフィード
     form: 
-      account_deletion: 
+      delete: 
         account_deleted: アカウントは削除されました。再度のご利用、お待ちしています。
         couldnt_delete_account: 活性化もしくは記録されているプロジェクトがあるために、アカウントを削除出来ませんでした。
         delete_my_account: 直ちにアカウントを削除
@@ -1610,7 +1610,7 @@ ja:
         steps_before_2: アカウントを削除した場合、他のユーザーが彼らのプロジェクトのデーターを失わない事を確実にします。
         steps_before_3: 現在ご利用中のプロジェクから退出、もしくは削除をしてください。その後再びこのページに戻り、アカウントを削除してください。
         what_will_happen: アカウント削除後は、あなたのTeamboxプロファイールにはアクセス出来ません。
-      avatar: 
+      picture: 
         destroy: アバターを削除
         field: あなたのアバター
         gravatar_in_use: "あなたの写真がありませんので%{gravatar}: を利用しています。"
@@ -1629,10 +1629,12 @@ ja:
       last_name: 姓
       login: ユーザ名
       monday: 月曜
-      notify_conversations: チャットに参加しているときに通知する
-      notify_mentions: "自分に言及されたら通知する。 例. やぁ @%{login}! これでメールが届くよ"
-      notify_task_lists: タスクリストをウォッチしている時に通知する
-      notify_tasks: タスクをウォッチしている時に通知する
+      notifications:
+        notify_conversations: チャットに参加しているときに通知する
+        notify_mentions: "自分に言及されたら通知する。 例. やぁ @%{login}! これでメールが届くよ"
+        notify_task_lists: タスクリストをウォッチしている時に通知する
+        notify_tasks: タスクをウォッチしている時に通知する
+        wants_task_reminder: 毎日、自分のタスクをメールで送信する
       password: パスワード
       password_confirmation: パスワード確認
       phone: 電話番号
@@ -1646,12 +1648,11 @@ ja:
         login: ログインにはユーザー名が必要です。人々はユーザー名であなたを見つける事が出来ます。ユーザー名は小文字と下線(underscore)のみで、空白はご利用出来ません。
         password: 大文字と小文字、数字などを混在させるのは良い考えです。
         phone: 携帯電話の番号をお勧めします。カントリーコードを+の後に入れてください。日本の場合は"+81"となります。
-      use_this_email: このメールアドレス宛にプロジェクトへの招待状が届いています。プロジェクトにアクセスを希望する場合は、メールアドレスを変更しないでください。登録終了後、メールアドレスの変更が出来ます。
-      wants_task_reminder: 毎日、自分のタスクをメールで送信する
     new: 
       existing_user: "もしアカウントを既にお持ちならば、<a href='%{login_url}'>ログイン</a> もsくは <a href='%{forgot_url}'>パスワードの再取得をお願いします。</a>. "
       no_public_signup: "Public signupsはこのシステムでは承認されていません。"
       submit: アカウントの作成
+      use_this_email: このメールアドレス宛にプロジェクトへの招待状が届いています。プロジェクトにアクセスを希望する場合は、メールアドレスを変更しないでください。登録終了後、メールアドレスの変更が出来ます。
       title: アカウントの作成
       you_already_have_an_account: "Teamboxアカウントを%{email}のメールアドレスでお持ちです。 <a href='%{login_link}'>このメールアドレスでログイン</a> もしくはパスワードをお忘れの場合 <a href='%{reset_password_link}'>パスワードをリセットしてください。</a>"
       you_are_logged_in: あなたは既にアカウントをお持ちです。別のユーザーとして登録する場合は、まずログアウトをして下さい。

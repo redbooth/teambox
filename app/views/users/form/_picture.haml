@@ -1,0 +1,14 @@
+%p= t(user.avatar?? '.we_have_this_avatar' : '.gravatar_in_use', :gravatar => gravatar_url)
+%p= t('.upload_here_or_at_gravatar', :gravatar => gravatar_url)
+%p
+  = f.label :avatar, t('.field')
+  = f.file_field :avatar
+- if user.avatar?
+  %p
+    = f.label :avatar_destroy, t('.destroy')
+    = f.check_box :avatar_destroy
+
+.your_avatars
+  = image_tag avatar_or_gravatar(user, :profile)
+  = image_tag avatar_or_gravatar(user, :thumb)
+  = image_tag avatar_or_gravatar(user, :micro)

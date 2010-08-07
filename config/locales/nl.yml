@@ -1140,7 +1140,7 @@ nl:
       title_profile: "Uw Profiel Instellingen"
       title_settings: "Uw Account Instellingen"
     form: 
-      avatar: 
+      picture: 
         field: "Uw avatar"
         max_size: "Bestandsgrootte mag niet meer zijn dan %{mb}"
         presence: "U kunt geen leeg bestand uploaden"
@@ -1157,10 +1157,12 @@ nl:
       last_name: Achternaam
       login: Gebruikersnaam
       monday: Maandag
-      notify_conversations: "Laat me weten wanneer ik een conversatie volg"
-      notify_mentions: "Laat me weten wanneer ik ben vermeld bijv. Howdy @%{login}! U heeft een nieuwe e-mail!"
-      notify_task_lists: "Laat me weten wanneer ik een takenlijst volg"
-      notify_tasks: "Laat me weten wanneer ik een taak volg"
+      notifications:
+        notify_conversations: "Laat me weten wanneer ik een conversatie volg"
+        notify_mentions: "Laat me weten wanneer ik ben vermeld bijv. Howdy @%{login}! U heeft een nieuwe e-mail!"
+        notify_task_lists: "Laat me weten wanneer ik een takenlijst volg"
+        notify_tasks: "Laat me weten wanneer ik een taak volg"
+        wants_task_reminder: "Stuur me een dagelijkse e-mail van mij taken"
       password: Wachtwoord
       password_confirmation: "Wachtwoord bevestigen"
       sunday: Zondag
@@ -1171,12 +1173,11 @@ nl:
         last_name: "Maximaal 20 tekens."
         login: "U heeft een gebruikersnaam nodig om in te loggen. Leden kunnen u op uw gebruikersnaam vinden. De gebruikersnaam kan alleen bestaan uit kleine letters. Spaties zijn niet toegestaan. U kunt ook de underscore gebruiken."
         password: "De combinatie van letters, cijfers, hoofdletters en kleine letters is een goed idee."
-      use_this_email: "U heeft voor dit e-mailadres uitnodigingen om projecten te delen. Als bij deze projecten deel wilt nemen, verander dan het wachtwoord niet. U kunt uw wachtwoord veranderen na het aanmeldproces."
-      wants_task_reminder: "Stuur me een dagelijkse e-mail van mij taken"
     new: 
       existing_user: "Als u al een account heeft, <a href='%{login_url}'>log in</a> of <a href='%{forgot_url}'>herstel uw wachtwoord</a>."
       submit: "Maak account aan"
       title: "Maak een Account aan"
+      use_this_email: "U heeft voor dit e-mailadres uitnodigingen om projecten te delen. Als bij deze projecten deel wilt nemen, verander dan het wachtwoord niet. U kunt uw wachtwoord veranderen na het aanmeldproces."
       you_already_have_an_account: "U heeft al een Teambox account voor het adres %{email}. <a href='%{login_link}'>Log in met dit adres</a> of <a href='%{reset_password_link}'>reset uw wachtwoord</a> als u het vergeten heeft."
       you_are_logged_in: "U heeft al een account. Log eerst uit om als een andere gebruiker aan te melden."
     show: 

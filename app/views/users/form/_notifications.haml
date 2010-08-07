@@ -1,0 +1,16 @@
+.check_boxes.notifications
+  .check_box.notify
+    = f.check_box :notify_mentions
+    = f.label :notify_mentions, t('.notify_mentions', :login => user.login)
+  .check_box.notify
+    = f.check_box :notify_conversations
+    = f.label :notify_conversations, t('.notify_conversations')
+  .check_box.notify  
+    = f.check_box :notify_task_lists
+    = f.label :notify_task_lists, t('.notify_task_lists')
+  .check_box.notify
+    = f.check_box :notify_tasks
+    = f.label :notify_tasks, t('.notify_tasks')
+  .check_box.notify
+    = f.check_box :wants_task_reminder
+    = f.label :wants_task_reminder, t('.wants_task_reminder')

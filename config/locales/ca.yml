@@ -1608,7 +1608,7 @@ ca:
       title: "Sincronitza els teus feeds d'activitat"
       your_feeds: "Els vostres feeds de notícies"
     form: 
-      account_deletion: 
+      delete: 
         account_deleted: "El vostre compte s'ha esborrat. Us enyorarem!"
         couldnt_delete_account: "No podem esborrar el vostre compte perquè encara teniu actius o arxivats projectes."
         delete_my_account: "Esborrar el meu compte ara"
@@ -1616,7 +1616,7 @@ ca:
         steps_before_2: "Això assegurarà que cap altre usuari perdrà les dades sobre els seus projectes en eliminar el compte."
         steps_before_3: "Deixa o esborra els teus projectes actuals i després torna a aquesta pàgina per eliminar el compte."
         what_will_happen: "Després d'esborrar el vostre compte, el vostre perfil de Teambox no podrà ser accesible mai més."
-      avatar: 
+      picture: 
         destroy: "Esborrar l'avatar"
         field: "La teva icona"
         gravatar_in_use: "No tenim una fota teva, així que estem utilitzant  %{gravatar}:"
@@ -1635,10 +1635,12 @@ ca:
       last_name: Cognoms
       login: "Nom d'usuari"
       monday: Dilluns
-      notify_conversations: "Notificarme les converses que segueixo"
-      notify_mentions: "Notificarme quan em mencionin en un comentari, per exemple: Hola @%{login}!"
-      notify_task_lists: "Notificarme els comentaris a les llistes de tasques que segueixo"
-      notify_tasks: "Notificarme els comentaris a tasques que segueixo"
+      notifications:
+        notify_conversations: "Notificarme les converses que segueixo"
+        notify_mentions: "Notificarme quan em mencionin en un comentari, per exemple: Hola @%{login}!"
+        notify_task_lists: "Notificarme els comentaris a les llistes de tasques que segueixo"
+        notify_tasks: "Notificarme els comentaris a tasques que segueixo"
+        wants_task_reminder: "Rebre un correu diari amb les meves tasques"
       password: Contrasenya
       password_confirmation: "Confirmar Contrasenya"
       phone: "Número de telèfon"
@@ -1652,12 +1654,11 @@ ca:
         login: "Pots utilitzar un nom d'usuari curt per entrar. Ha de ser en minuscules i sense espais. Pots utilitzar _."
         password: "Combinar lletres, números, majúscules i minúscules és bona idea."
         phone: "Preferentment telèfon mòbil. Introduïu el número sencer inclós el codi de país, e.g. +1 (415) 1234-567"
-      use_this_email: "Has estat convidat a Teambox amb aquesta adreça de correu. Si vols accedir als projectes de qui et va convidar, no canviïs l'adreça de correu. Podràs canviar el teu correu una vegada estiguis donat d'alta."
-      wants_task_reminder: "Rebre un correu diari amb les meves tasques"
     new: 
       existing_user: "Si ja tens un compte, <a href='%{login_url}'>identifíca't</a> o <a href='%{forgot_url}'>restableix la teva contrasenya</a>."
       no_public_signup: "No es permeten subscripcions públiques en aquest sistema"
       submit: "Crear un compte"
+      use_this_email: "Has estat convidat a Teambox amb aquesta adreça de correu. Si vols accedir als projectes de qui et va convidar, no canviïs l'adreça de correu. Podràs canviar el teu correu una vegada estiguis donat d'alta."
       title: "Crear un compte"
       you_already_have_an_account: "Ja tens un compte a Teambox amb l'adreça %{email}. <a href='%{login_link}'>logat amb aquest email</a> o <a href='%{reset_password_link}'>restableix la teva contrasenya</a> si se't va oblidar."
       you_are_logged_in: "Ja tens un compte de Teambox. Si vols entrar com un altre usuari, tanca la sessió i intenta-ho de nou."

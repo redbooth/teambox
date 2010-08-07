@@ -1490,7 +1490,7 @@ de:
       title: "Synchronisieren Sie Ihre Aktivitäten-Feeds"
       your_feeds: "Ihre Nachrichten-Feeds"
     form: 
-      account_deletion: 
+      delete: 
         account_deleted: "Ihr Konto wurde gelöscht. Wir werden Sie vermissen!"
         couldnt_delete_account: "Wir können Ihr Konto nicht löschen, da Sie noch aktive oder archivierte Projekte haben. "
         delete_my_account: "Löschen Sie mein Konto jetzt"
@@ -1498,7 +1498,7 @@ de:
         steps_before_2: "Das stellt sicher, dass andere Benutzer die Daten behalten, wenn Sie Ihr Konto löschen. "
         steps_before_3: "Verlassen Sie oder löschen Sie Ihre aktuellen Projekte, und kehren Sie dann auf diese Seite zurück, um Ihr Konto zu löschen. "
         what_will_happen: "Nach dem Löschen Ihres Kontos werden Sie auf Ihr Teambox-Profil nicht mehr zugreifen können."
-      avatar: 
+      picture: 
         destroy: "Avatar löschen"
         field: "Ihr Avatar"
         gravatar_in_use: "Wir haben kein Bild von Ihnen, daher benutzen wir %{gravatar}: "
@@ -1517,10 +1517,12 @@ de:
       last_name: Nachname
       login: Benutzername
       monday: Montag
-      notify_conversations: "Benachrichtigen Sie mich, wenn ich eine Konversation verfolge"
-      notify_mentions: "Benachrichtigen Sie mich, wenn ich angesprochen werde z.B. Hallo @%{login}! Sie haben eine neue Email!"
-      notify_task_lists: "Benachrichtigen Sie mich, wenn ich eine Aufgabenliste verfolge"
-      notify_tasks: "Benachrichtigen Sie mich, wenn ich eine Aufgabe verfolge"
+      notifications:
+        notify_conversations: "Benachrichtigen Sie mich, wenn ich eine Konversation verfolge"
+        notify_mentions: "Benachrichtigen Sie mich, wenn ich angesprochen werde z.B. Hallo @%{login}! Sie haben eine neue Email!"
+        notify_task_lists: "Benachrichtigen Sie mich, wenn ich eine Aufgabenliste verfolge"
+        notify_tasks: "Benachrichtigen Sie mich, wenn ich eine Aufgabe verfolge"
+        wants_task_reminder: "Senden Sie mir täglich eine Email mit meinen Aufgaben"
       password: Passwort
       password_confirmation: "Passwort bestätigen"
       phone: Telefnonnummer
@@ -1534,12 +1536,11 @@ de:
         login: "Für die Anmeldung brauchen Sie einen Benutzernamen. Mitglieder können Sie über den Benutzernamen suchen. Der Benutzername darf nur aus Kleinbuchstaben bestehen. Leerzeichen sind nicht erlaubt. Sie können Unterstriche benutzen."
         password: "Eine Kombination aus Großbuchstaben, Kleinbuchstaben und Zahlen wird für ein sicheres Passwort empfohlen."
         phone: "Vorzugsweise Mobiltelefon. Geben Sie Ihre Landesvorwahl ein, z.B. +49 (2345) 1234-567"
-      use_this_email: "Sie haben für diese Email Einladungen zur Teilnahme an Projekten. Wenn Sie an den Projekten teilnehmen wollen, ändern Sie diese Email Adresse nicht. Sie können sie ändern, nachdem sie die Anmeldung abgeschlossen haben."
-      wants_task_reminder: "Senden Sie mir täglich eine Email mit meinen Aufgaben"
     new: 
       existing_user: "Wenn Sie bereits ein Benutzerkonto haben, <a href='%{login_url}'> melden Sie sich an</a> oder <a href='%{forgot_url}'>lassen Sie sich Ihr Passwort zusenden</a>."
       no_public_signup: "Public signup wird vom System leider nicht unterstützt."
       submit: "Benutzerkonto erstellen"
+      use_this_email: "Sie haben für diese Email Einladungen zur Teilnahme an Projekten. Wenn Sie an den Projekten teilnehmen wollen, ändern Sie diese Email Adresse nicht. Sie können sie ändern, nachdem sie die Anmeldung abgeschlossen haben."
       title: "Erstellen eines Benutzerkontos"
       you_already_have_an_account: "Sie haben schon ein Teambox-Konto für die Adresse %{email}. <a href='%{login_link}'>Melden Sie sich mit dieser Email an</a> oder <a href='%{reset_password_link}'>setzen Sie Ihr Passwort zurück</a>, wenn Sie es nicht mehr kennen. "
       you_are_logged_in: "Sie haben bereits ein Benutzerkonto. Melden Sie sich ab, um sich als anderer Benutzer anzumelden."

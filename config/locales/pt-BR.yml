@@ -1407,11 +1407,11 @@ pt-BR:
       title_profile: "Informação do perfil"
       title_settings: Preferências
     form: 
-      account_deletion: 
+      delete: 
         steps_before_1: "Para eliminar sua conta, primeiro necessita deixar ou eliminar todos os seus projetos."
         steps_before_2: "This will ensure that no other users will lose data on their projects when you delete your account."
         steps_before_3: "Leave or delete your current projects and then come back to this page to delete your account."
-      avatar: 
+      picture: 
         destroy: "Eliminar avatar"
         field: "Novo avatar"
         gravatar_in_use: "Não temos nenhuma foto sua, então iremos utilizar %{gravatar}:"
@@ -1430,10 +1430,12 @@ pt-BR:
       last_name: Sobrenome
       login: "Nome de usuário"
       monday: Segunda-feira
-      notify_conversations: "Notificarme de conversaciones que sigo"
-      notify_mentions: "Notificarme cuando me mencionen en un comentario, por ejemplo: Hola @%{login}!"
-      notify_task_lists: "Notificarme de comentarios en listas de tareas que sigo"
-      notify_tasks: "Notificarme de comentarios en tareas que sigo"
+      notifications:
+        notify_conversations: "Notificarme de conversaciones que sigo"
+        notify_mentions: "Notificarme cuando me mencionen en un comentario, por ejemplo: Hola @%{login}!"
+        notify_task_lists: "Notificarme de comentarios en listas de tareas que sigo"
+        notify_tasks: "Notificarme de comentarios en tareas que sigo"
+        wants_task_reminder: "Recibir un email diario con mis tareas"
       password: Senha
       password_confirmation: "Confirmar contraseña"
       sunday: Domingo
@@ -1445,12 +1447,11 @@ pt-BR:
         login: "Você necessita de um nome de usuário para acessar. As pessõas irão conseguir achar você pelo nome de usuário. Tem que ser em minúsculas, sem espaços. Você pode utlizar traço baixo (_)."
         password: "Combinando letras, números, letras maiúsculas e minúsculas é uma boa idéia."
         phone: "O número de telefóne do trabalho estará visível para os companheiros. Inseri-lo na íntegra, ex. +55 11 12345678"
-      use_this_email: "Has sido invitado a Teambox con esta dirección de correo. Si quieres acceder a los proyectos de quien te invitó, no cambies la dirección de correo. Podrás cambiar tu email una vez estés dado de alta."
-      wants_task_reminder: "Recibir un email diario con mis tareas"
     new: 
       existing_user: "Se já tem uma conta, <a href='%{login_url}'>ingressa</a> ou <a href='%{forgot_url}'>redefine tua senha</a>."
       no_public_signup: "Não está permitido criar contas sem um convite"
       submit: "Criar conta"
+      use_this_email: "Has sido invitado a Teambox con esta dirección de correo. Si quieres acceder a los proyectos de quien te invitó, no cambies la dirección de correo. Podrás cambiar tu email una vez estés dado de alta."
       title: "Criar uma conta"
       you_already_have_an_account: "Já tem uma conta no Teambox em %{email}. <a href='%{login_link}'>Acessa na tua conta</a> ou <a href='%{reset_password_link}'>redefine tua senha</a> se você esqueceu."
       you_are_logged_in: "Você já tem uma conta de Teambox. Se quiser ingressar com outro usuário, feche a sessão e tenta novamente."

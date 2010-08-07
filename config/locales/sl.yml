@@ -1114,9 +1114,9 @@ sl:
       subscribe_to_all: "Aktivnost za Vse Projekte"
       subscribe_to_project: "Aktivnosti za %{project}"
     form: 
-      account_deletion: 
+      delete: 
         delete_my_account: "Odstrani moj račun zdaj"
-      avatar: 
+      picture: 
         destroy: "Odstrani avatar"
         field: "Nov avatar"
       biography: "Kratek opis"
@@ -1129,10 +1129,11 @@ sl:
       last_name: Priimek
       login: "Uporabniško ime"
       monday: Ponedeljkom
-      notify_conversations: "Obvesti me, ko nekdo posodobi pogovor, ki ga spremljam."
-      notify_mentions: "Obvesti me, ko me nekdo omeni recimo: Živjo @%{login}! V tem primeru boš prejel/a poštol!"
-      notify_task_lists: "Obvesti me, ko nekdo posodobi seznam opravil, ki jih spremljam."
-      notify_tasks: "Obvesti me, ko nekdo posodobi opravilo, ki ga spremljam."
+      notifications:
+        notify_conversations: "Obvesti me, ko nekdo posodobi pogovor, ki ga spremljam."
+        notify_mentions: "Obvesti me, ko me nekdo omeni recimo: Živjo @%{login}! V tem primeru boš prejel/a poštol!"
+        notify_task_lists: "Obvesti me, ko nekdo posodobi seznam opravil, ki jih spremljam."
+        notify_tasks: "Obvesti me, ko nekdo posodobi opravilo, ki ga spremljam."
       password: Geslo
       password_confirmation: "Potrdi geslo"
       phone: "Telefonska številka"

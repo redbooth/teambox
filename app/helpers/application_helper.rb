@@ -232,7 +232,7 @@ module ApplicationHelper
   end
   
   def tooltip(text)
-    haml_tag :p, h(text), :class => 'fyi'
+    haml_tag :p, h(text), :class => 'fyi', :style => 'display: none'
   end
 
   def auto_discovery_link_by_context(user, project)
