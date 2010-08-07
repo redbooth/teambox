@@ -36,3 +36,7 @@
 .time_zone.select
   = f.label :time_zone, t('users.form.time_zone')
   = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"    
+
+.betatester.check_box
+  = f.check_box :betatester
+  = f.label :betatester, t('users.form.betatester'), :style => 'float: none'

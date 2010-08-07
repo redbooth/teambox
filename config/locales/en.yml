@@ -171,6 +171,7 @@ en:
       password_confirmation: Confirm Password
       sunday: Sunday
       monday: Monday
+      betatester: Use beta features (less stable) before they're released.
       first_day_of_week: Week starts on
       change_password: Change password
       confirm_password: Confirm password

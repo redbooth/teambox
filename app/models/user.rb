@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
                   :time_zone,
                   :locale,
                   :first_day_of_week,
+                  :betatester,
                   :card_attributes,
                   :notify_mentions,
                   :notify_conversations,
