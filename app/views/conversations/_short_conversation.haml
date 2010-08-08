@@ -1,22 +1,22 @@
-.conversation
-  - comment = conversation.comments.find(:first, :order => 'id asc', :limit => 1)
-  .comment
-    .info= thumb_avatar(comment.user)
-    .block
-      .body.textilized
-        %h2.title
-          = link_to conversation, project_conversation_path(@current_project, conversation)
-          %span= t('common.comment', :count => conversation.comments_count)
-        ~ comment.body_html
-      - if comment.uploads.any?
-        - if comment.uploads.all? { |upload| upload.image? }
-          .upload_images
-            = list_uploads_inline_with_thumbnails(comment.uploads)
-        - else
-          .upload_list
-            = list_uploads_inline(comment.uploads)
-      %p.go_to_thread
-        = link_to "Reply", project_conversation_path(@current_project, conversation)
-        = t('common.or')
-        = link_to "view the rest of the thread", project_conversation_path(@current_project, conversation)
-    .clear
+- if comment = conversation.comments.find(:first, :order => 'id asc', :limit => 1)
+  .conversation
+    .comment
+      .info= thumb_avatar(comment.user)
+      .block
+        .body.textilized
+          %h2.title
+            = link_to conversation, project_conversation_path(@current_project, conversation)
+            %span= t('common.comment', :count => conversation.comments_count)
+          ~ comment.body_html
+        - if comment.uploads.any?
+          - if comment.uploads.all? { |upload| upload.image? }
+            .upload_images
+              = list_uploads_inline_with_thumbnails(comment.uploads)
+          - else
+            .upload_list
+              = list_uploads_inline(comment.uploads)
+        %p.go_to_thread
+          = link_to "Reply", project_conversation_path(@current_project, conversation)
+          = t('common.or')
+          = link_to "view the rest of the thread", project_conversation_path(@current_project, conversation)
+      .clear

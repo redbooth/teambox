@@ -18,9 +18,10 @@
     = archived_project_strip(@current_project)
     .container
       = header
-      = navigation(@current_project,current_user.projects,current_user.recent_projects)
+      = navigation(@current_project,current_user.projects,current_user.recent_projects) unless current_user.betatester
+      = compact_navigation(@current_project) if current_user.betatester
       .wrapper
-        = project_navigation(@current_project)
+        = project_navigation(@current_project) unless current_user.betatester
         - show_flash
         - if yield :banner
           .banner= yield :banner

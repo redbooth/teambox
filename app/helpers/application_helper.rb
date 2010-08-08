@@ -54,6 +54,10 @@ module ApplicationHelper
     render 'shared/project_navigation', :project => project
   end
 
+  def compact_navigation(project)
+    render 'shared/compact_navigation', :project => project
+  end
+
   def search_bar
     render 'shared/search_bar'
   end
