@@ -1,6 +1,5 @@
 puts <<-EOS
 This will create some example users and a pre-populated project for development.
-Log in as "frank_pm" with the password "papap"
 
 Things that should be added to seed data:
   - Bio and cards
@@ -11,6 +10,8 @@ Things that should be added to seed data:
   - Upload files inside and outside comments
   - Build another project to test overview for all tasks
   - The last comment by Corrina doesn't have a reply field
+
+You can now log in as "frank_pm" or others with the password "papapa"
 
 EOS
 
