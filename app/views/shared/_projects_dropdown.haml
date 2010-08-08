@@ -1,7 +1,20 @@
 %ul#projects_tab_list.nav_tab_list
   - if current_user.betatester
     %li= link_to(t('.all_projects'), projects_path, :class => 'tab_item', :style => 'font-weight: bold; margin: 3px 0 5px')
-  - (projects*3).each do |project|
+    - if projects.size > 12 # separate recent projects when there are many
+      %li
+        %p.div= t('.recent_projects')
+      - current_user.recent_projects.each do |project|
+        %li
+          = link_to(truncate(project.name, :length => 30), project_path(project), :class => 'tab_item')
+          .quicklinks
+            = quicklink_conversations(project)
+            = quicklink_tasks(project)
+            = quicklink_pages(project)
+          .clear
+      %li
+        %p.div= t('.rest_of_the_projects')
+  - projects.each do |project|
     %li
       = link_to(truncate(project.name, :length => 30), project_path(project), :class => 'tab_item')
       .quicklinks
