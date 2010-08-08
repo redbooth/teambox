@@ -980,6 +980,9 @@ en:
       files: Files
       invitations: Invitations
       groups: Project Groups
+    projects_dropdown:
+      all_projects: Overview for all projects
+      new_project: + New project
     global_navigation:
       project_invitations: Project Invitations
       home: Home

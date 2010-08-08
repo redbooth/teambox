@@ -1,0 +1,109 @@
+<div class="project_navigation"><%
+  render_tabnav :project do
+    add_tab({:html => {:id => 'projects_tab',
+                       :class => 'nav_tab',
+                       :li_class => 'nav_tab_container',
+                       :li_end => projects_tab_list(current_user.projects.unarchived)}
+            }) do |t|
+      name = truncate(project ? project.name : t('shared.navigation.all_projects'), :length => 30)
+      t.named "#{name} #{image_tag('triangle.png', :class => 'triangle')}"
+      t.links_to (project ? project_path(project) : projects_path)
+      t.highlights_on :controller => :projects, :action => :index
+      t.highlights_on :controller => :projects, :action => :show
+      t.tab_index = 101
+    end
+
+    if project.nil?
+      add_tab do |t|
+       t.named t('shared.project_navigation.all_task_lists')
+       t.links_to task_lists_path
+       t.highlights_on :controller => :task_lists, :action => :index
+      end
+
+      add_tab do |t|
+       t.named t('shared.project_navigation.gantt')
+       t.links_to gantt_view_task_lists_path
+       t.highlights_on :controller => :task_lists, :action => :gantt_view
+      end
+
+      if time_tracking_enabled?
+        add_tab do |t|
+          t.named t('shared.project_navigation.time_tracking')
+          t.links_to time_path
+          t.highlights_on :controller => :hours, :action => :index
+        end
+      end
+
+      if groups_enabled?
+        add_tab do |t|
+         t.named t('shared.project_navigation.groups')
+         t.links_to groups_path
+         t.highlights_on :controller => :groups
+         t.li_class = 'groups'
+         t.li_class = 'right_side'
+         t.tab_index = 102
+        end
+      end
+
+    else
+      add_tab do |t|
+        t.named t('shared.project_navigation.conversations')
+        t.links_to  project_conversations_path(project)
+        t.highlights_on :controller => :conversations
+        t.tab_index = 151
+      end
+
+      add_tab do |t|
+        t.named t('shared.project_navigation.task_lists')
+        t.links_to  project_task_lists_path(project)
+        t.highlights_on :controller => :task_lists
+        t.highlights_on :controller => :tasks
+        t.tab_index = 152
+      end
+
+      add_tab(:html => {:id => 'pages_tab',
+                        :class => 'nav_tab',
+                        :li_class => 'nav_tab_container',
+                        :li_end => pages_tab_list(project, project.pages)
+      }) do |t|
+        t.named "#{t('shared.project_navigation.pages')} #{image_tag('triangle.png', :class => 'triangle')}"
+        t.links_to  project_pages_path(project)
+        t.highlights_on :controller => :pages
+        t.tab_index = 153
+      end
+
+      if time_tracking_enabled? and project.tracks_time
+        add_tab do |t|
+          t.named t('shared.project_navigation.time_tracking')
+          t.links_to  project_time_path(project)
+          t.highlights_on :controller => :hours
+        end
+      end
+
+      add_tab do |t|
+        t.named t('shared.project_navigation.files')
+        t.links_to  project_uploads_path(project)
+        t.highlights_on :controller => :uploads
+        t.tab_index = 154
+      end
+
+      add_tab do |t|
+        t.named t('shared.project_navigation.people')
+        t.links_to  project_people_path(project)
+        t.highlights_on :controller => :people
+        t.li_class = 'right_side'
+        t.tab_index = 156
+      end
+
+      if project.admin?(current_user)
+        add_tab do |t|
+          t.named t('shared.project_navigation.project_settings')
+          t.links_to  project_settings_path(project)
+          t.highlights_on :controller => :projects, :action => :edit
+          t.li_class = 'right_side'
+          t.tab_index = 155
+        end
+      end
+    end
+  end
+%><div class="clear"></div></div>

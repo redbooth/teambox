@@ -1,8 +1,12 @@
 %ul#projects_tab_list.nav_tab_list
-  - projects.each do |project|
+  - if current_user.betatester
+    %li= link_to(t('.all_projects'), projects_path, :class => 'tab_item', :style => 'font-weight: bold; margin: 3px 0 5px')
+  - (projects*3).each do |project|
     %li
-      = link_to(truncate(project.name, :length => 30), project_url(project), :class => 'tab_item')
+      = link_to(truncate(project.name, :length => 30), project_path(project), :class => 'tab_item')
       .quicklinks
         = quicklink_conversations(project)
         = quicklink_tasks(project)
         = quicklink_pages(project)
+  - if current_user.betatester
+    %li= link_to(t('.new_project'), new_project_path, :class => 'tab_item', :style => 'font-weight: bold; margin-top: 5px')
