@@ -107,4 +107,5 @@ def make_a_typical_project
     @admin = Factory.create(:confirmed_user)
     @project.add_user(@admin)
     @project.people(true).last.update_attribute(:role, Person::ROLES[:admin])
+    @project
 end

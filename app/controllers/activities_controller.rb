@@ -18,7 +18,10 @@ class ActivitiesController < ApplicationController
   end
 
   def show_more
-    @activities = Project.get_activities_for @target, :before => params[:id]
+    opts = {:before => params[:id]}
+    opts[:user_id] = @user.id if @user
+    
+    @activities = Project.get_activities_for @target, opts
     @last_activity = @activities.last
     
     respond_to do |format|
@@ -67,11 +70,14 @@ class ActivitiesController < ApplicationController
     def get_target
       @target = if params[:project_id]
         @current_project = @current_user.projects.find_by_permalink(params[:project_id])
+      elsif params[:user_id]
+        @user = User.find_by_id(params[:user_id])
+        @user.projects_shared_with(@current_user)
       else
         @current_user.projects.find :all
       end
       
-      unless @target
+      if @target.nil? or (@user and @target.empty?)
         redirect_to '/'
         return false
       end

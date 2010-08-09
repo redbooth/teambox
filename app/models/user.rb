@@ -128,14 +128,6 @@ class User < ActiveRecord::Base
     User.find(:all, :conditions => {:id => ids.uniq})
   end
 
-  def activities_visible_to_user(user)
-    ids = projects_shared_with(user).collect { |project| project.id }
-
-    self.activities.all(:limit => 40, :order => 'created_at DESC').select do |activity|
-      ids.include?(activity.project_id) || activity.comment_type == 'User'
-    end
-  end
-
   def new_comment(user,target,comment)
     self.comments.new(comment) do |comment|
       comment.user_id = user.id

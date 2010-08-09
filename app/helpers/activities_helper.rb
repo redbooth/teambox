@@ -183,12 +183,16 @@ module ActivitiesHelper
 
     if location_name == 'index_projects'
       url = show_more_path(options[:last_activity].id)
-    elsif location_name == 'show_more_activities' and params[:project_id].nil?
+    elsif location_name == 'show_more_activities' and params[:project_id].nil? and params[:user_id].nil?
       url = show_more_path(options[:last_activity].id)
+    elsif location_name == 'show_users'
+        url = user_show_more_path(@user.id, options[:last_activity].id)
     elsif location_name == 'show_projects'
       url = project_show_more_path(@current_project.permalink, options[:last_activity].id)
     elsif location_name == 'show_more_activities' and params[:project_id]
       url = project_show_more_path(params[:project_id], options[:last_activity].id)
+    elsif location_name == 'show_more_activities' and params[:user_id]
+        url = user_show_more_path(params[:user_id], options[:last_activity].id)
     else
       raise "unexpected location #{location_name}"
     end
