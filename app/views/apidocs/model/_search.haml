@@ -1,0 +1,8 @@
+%p= "Searches are performed using Search. A search is technically not a model, instead it acts like a specialized interface for querying objects in Teambox."
+%p= "Currently the only objects returned from a search are #{link_to_doc_model(:comment)}s."
+
+- doc_for :index, 
+          :example => [@comment.to_api_hash],
+          :parameters => {:q => 'ideas'} do
+  %p= "Returns the first set of comments which match the search query. Either the current project or the current users projects will be used to filter the search, depending on the route used."
+  %p= "<tt>q</tt> is the actual search term used."
