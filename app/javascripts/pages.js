@@ -217,7 +217,9 @@ var InsertHereFunc = function(evt){
     return;
 
   var el = $(evt.target);
-  var slot = ((el.readAttribute('id') == "PIB") || el.hasClassName('page_slot')) ? el : el.up('div.page_slot');
+  if (el.readAttribute('id') == "PIB")
+    return;
+  var slot = el.hasClassName('page_slot') ? el : el.up('div.page_slot');
   if (!slot)
     return;
   
@@ -226,7 +228,7 @@ var InsertHereFunc = function(evt){
       delta = pt.x - offset.left,
       w = slot.getDimensions().width;
   
-  if (delta > 0 && delta < (w-32)) {
+  if (delta < (w-32)) {
     // Show bar here *if* we are within the slot
     var h = slot.getHeight(),
         thr_b = Math.min(h / 2, Page.SLOT_VERGE_BEFORE), thr_a = Math.min(h / 2, Page.SLOT_VERGE_AFTER);
@@ -238,7 +240,7 @@ var InsertHereFunc = function(evt){
       InsertHere.show(slot, false);
     else
       InsertHere.hide();
-  } else if (el.readAttribute('id') != "PIB") {
+  } else {
     InsertHere.hide();
   }
 }
