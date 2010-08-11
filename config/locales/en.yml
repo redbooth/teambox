@@ -476,7 +476,6 @@ en:
       new_project: New Project...
       created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
-      create_an_example_project: "First time in Teambox? <a href='%{link}'>Create an example project</a> to play around and learn."
       invite_people: Invite people to the project
       invite_by_email: Invite users by entering their email addresses
       not_allowed: "You can't create any more projects with your current account."
