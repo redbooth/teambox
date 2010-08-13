@@ -706,8 +706,8 @@ ca:
         one: "al voltant d'1 any"
         other: "al voltant de %{count} anys"
       almost_x_years: 
-        altra: "almenys {{count}} anys"
-        una: "almenys 1 any"
+        other: "almenys {{count}} anys"
+        one: "almenys 1 any"
       half_a_minute: "mig minut"
       less_than_x_minutes: 
         one: "menys d'1 minut"
@@ -1170,9 +1170,9 @@ ca:
       subscribe: "Subscriu-te al feed d'activitats"
     new: 
       active_projects: 
-        altra: "Tu tens {{count}} projectes actius."
-        cero: "No tens actius projectes."
-        una: "Tu tens un projecte actiu."
+        other: "Tu tens {{count}} projectes actius."
+        zero: "No tens actius projectes."
+        one: "Tu tens un projecte actiu."
       create_an_example_project: "És la teva primera vegada a Teambox? <a href='%{link}'>Crea un projecte d'exemple</a> per experimentar i aprendre."
       created: "S´ha creat el projecte!"
       invalid_project: "Projecte no vàlid, corregeix els errors i intenta-ho de nou."
@@ -1185,9 +1185,9 @@ ca:
       upgrade: 
         to_2: "<a href='{{link}}'>Actualitza el teu compte ara</a> per crear <b>fins a {{projects}} projectes</b>, permet emmagatzemar fins a <b>{{storage}} Gb</b> d'arxius i utilitzar la <b>barra de búsqueda per a tots els projectes</b>."
       you_can_create_more: 
-        altra: "Tu pots crear {{count}} projectes més amb el teu pla actual."
-        cero: "No pots crear cap més projecte.<br/>El màxim de projectes amb el teu pla es de {{max}}."
-        una: "Tu pots crear un projecte més amb el teu pla actual."
+        other: "Tu pots crear {{count}} projectes més amb el teu pla actual."
+        zero: "No pots crear cap més projecte.<br/>El màxim de projectes amb el teu pla es de {{max}}."
+        one: "Tu pots crear un projecte més amb el teu pla actual."
     new_primer: 
       define1: "Un projecte és un grup compartit amb els teus contactes."
       define2: "Dins de cada projecte, cadascun dels membres pot:"
@@ -1332,8 +1332,8 @@ ca:
       hide_archived_tasks: "Amagar les tasques arxivades"
       my_assigned_tasks: "Només tasques asignades a mi"
       my_tasks: 
-        altra: "Les meves %{count} Tasques"
-        una: " La meva tasca"
+        other: "Les meves %{count} Tasques"
+        one: " La meva tasca"
       unarchived_tasks: "Unarchived Tasks"
     upcoming_events_primer: 
       title: "No hi ha tasques que mostrar"
