@@ -19,8 +19,7 @@ class ApplicationController < ActionController::Base
                 :touch_user, 
                 :belongs_to_project?,
                 :load_community_organization,
-                :set_client,
-                :set_user
+                :set_client
   
   private
 
@@ -223,10 +222,6 @@ class ApplicationController < ActionController::Base
         f.json { head :ok }
         f.yaml { head :ok }
       end
-    end
-    
-    def set_user
-      @current_user = current_user || nil
     end
     
     def calculate_position(obj)
