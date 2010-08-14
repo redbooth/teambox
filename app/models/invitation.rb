@@ -62,7 +62,7 @@ class Invitation < RoleRecord
         :role => role || 3,
         :source_user => user)
       person.save
-    else
+    elsif target
       target.add_user(current_user)
     end
   end

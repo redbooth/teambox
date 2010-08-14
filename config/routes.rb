@@ -56,6 +56,8 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :task_lists,    :has_many => [:comments]  do |task_lists|
       task_lists.resources :tasks, :has_many => [:comments]
     end
+    
+    user.show_more   'activities/users/:id/show_more.:format',  :controller => 'activities', :action => 'show_more',  :method => :get
   end
 
   map.activities 'activities.:format',               :controller => 'activities', :action => 'show',      :method => :get

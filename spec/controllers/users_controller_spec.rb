@@ -39,6 +39,29 @@ describe UsersController do
       response.should render_template('users/new')
     end
   end
+  
+  describe "#show" do
+    before do
+      @first_project = make_a_typical_project
+      @first_user = @user
+
+      @second_project = make_a_typical_project
+      @second_user = @user
+    end
+    
+    it "should not show unknown users" do
+      login_as @first_user
+      get :show, :id => @second_user.id
+      response.should_not render_template('users/show')
+      response.status.should == '302 Found'
+    end
+    
+    it "should show known users" do
+      login_as @first_user
+      get :show, :id => @first_project.user.id
+      response.should render_template('users/show')
+    end
+  end
 
     
   def do_create(options = {})

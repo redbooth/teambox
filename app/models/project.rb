@@ -71,7 +71,12 @@ class Project < ActiveRecord::Base
     else
       conditions = ["project_id IN (?)", Array(projects).collect{ |p| p.id } ]
     end
-
+    
+    if options[:user_id]
+      conditions[0] += ' AND user_id = ?'
+      conditions << options[:user_id]
+    end
+    
     Activity.find(:all, :conditions => conditions,
                         :order => 'id DESC',
                         :limit => options[:limit] || APP_CONFIG['activities_per_page'])

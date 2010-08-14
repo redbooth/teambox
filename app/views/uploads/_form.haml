@@ -18,3 +18,6 @@
       = page_slot_fields
       = f.hidden_field :page_id
     = submit_tag t('.upload')
+    - if page
+      = t('common.or')
+      = link_to t('common.cancel'), '#', :class => 'cancelPageWidget'

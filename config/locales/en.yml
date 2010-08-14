@@ -205,10 +205,11 @@ en:
         email: Enter your real email so your teammates can contact you.
         password: "Combining uppercase and lowercase letters and numbers is a good idea."
         phone: "Preferrably cell phone. Enter it including the country code, e.g. +1 (415) 1234-567"
+      new:
+        use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
     new:
       title: Create an Account
       submit: Create account
-      use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
       no_public_signup: "Public signups are not allowed on this system."
       you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
       existing_user: "If you already have an account, <a href='%{login_url}'>log in</a> or <a href='%{forgot_url}'>retrieve your password</a>."
