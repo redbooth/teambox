@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   before_filter :rss_token, 
                 :confirmed_user?, 
                 :load_project, 
+                :load_organizations,
                 :login_required, 
                 :set_locale, 
                 :touch_user, 
@@ -93,7 +94,23 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    
+
+    # When you only belong to one organization, every page will be branded with its logo and colors.
+    # If you belong to 2+ organizations, common pages will not be branded and others will be organization branded
+    def load_organizations
+      if logged_in? 
+        @organizations = current_user.organizations
+        @organization = case @organizations.size
+        when 0
+          current_user.projects.try(:first).try(:organization)
+        when 1
+          @organizations.first
+        else
+          @current_project.try(:organization)
+        end
+      end
+    end
+
     def set_locale
       I18n.locale = logged_in? ? current_user.locale : user_agent_locale
     end

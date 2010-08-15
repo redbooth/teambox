@@ -1,5 +1,6 @@
 .header
-  %h1= link_to image_tag(logo_image, :alt => "Teambox"), root_path
+  - logo = @organization ? @organization.logo(:top) : logo_image
+  %h1= link_to image_tag(logo, :alt => "Teambox"), root_path
   
   - unless request.format == :m
     = render 'shared/global_navigation'

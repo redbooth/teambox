@@ -1,5 +1,7 @@
 - unless @organization.new_record?
   %p== Your organization's site is http://#{@organization.permalink}.teambox.com
+  %p= @organization.has_logo? #src = group.has_logo? ? group.logo.url(:icon) : "/images/icon_logo_black.png"
+  %p= @organization.logo.url(:square)
 
 .text_field
   %label Organization name
@@ -18,7 +20,9 @@
 .option_fields
   %label Logo
   .option
-    = f.file_field :asset
+    = f.file_field :logo
+  %img.logo_square{ :src => @organization.logo.url(:square) }
+  %img.logo_top{ :src => @organization.logo.url(:top) }
 .text_area
   %label HTML to be displayed on the entrance page
   = errors_for @organization, :description

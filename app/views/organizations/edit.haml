@@ -7,7 +7,7 @@
   = t('.number_of_projects', :count => @organization.projects.count)
   = link_to "(admin projects)", projects_organization_path(@organization)
 
-- form_for @organization do |f|
+- form_for @organization, :html => { :multipart => true } do |f|
   = f.error_messages
   = render 'organizations/fields', :f => f
   .submit

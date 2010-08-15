@@ -3,10 +3,13 @@
     = link_to organization.name, organization
     - role = current_user.memberships.find_by_organization_id(organization.id).role_name
     %span== You're an <strong>#{t(".#{role}")}</strong> of this organization
-  %p= t('.number_of_projects', :count => organization.projects.count)
-  %p
-    - organization.users.each do |user|
-      = micro_avatar(user)
-    - if organization.users.size > 28
-      %span.more_users= "and #{organization.users.size-28} more users"
-    .clear
+  %img.logo{ :src => organization.logo.url(:square) }
+  .details
+    %p= t('.number_of_projects', :count => organization.projects.count)
+    .users
+      - organization.users.each do |user|
+        = micro_avatar(user)
+      - if organization.users.size > 28
+        %span.more_users= "and #{organization.users.size-28} more users"
+      .clear
+  .clear

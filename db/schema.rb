@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100810105248) do
+ActiveRecord::Schema.define(:version => 20100815125626) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -191,13 +191,17 @@ ActiveRecord::Schema.define(:version => 20100810105248) do
 
   create_table "organizations", :force => true do |t|
     t.string   "name"
-    t.string   "permalink",                                             :null => false
-    t.string   "language",    :default => "en"
-    t.string   "time_zone",   :default => "Eastern Time (US & Canada)"
+    t.string   "permalink",                                                   :null => false
+    t.string   "language",          :default => "en"
+    t.string   "time_zone",         :default => "Eastern Time (US & Canada)"
     t.string   "domain"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
   end
 
   create_table "page_slots", :force => true do |t|

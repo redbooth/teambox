@@ -2,7 +2,7 @@
 
 %p= t('.explain')
 
-- form_for @group do |f|
+- form_for @group, :html => { :multipart => true }  do |f|
   = f.error_messages
   = render 'groups/fields', :f => f
   = group_logo_fields(@group, f)

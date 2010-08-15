@@ -23,11 +23,6 @@ module OrganizationsHelper
         t.links_to projects_organization_path(@organization)
         t.highlights_on :controller => :organizations, :action => :projects
       end
-      add_tab do |t|
-        t.named t('.billing')
-        t.links_to '#'
-        t.highlights_on :controller => :organizations, :action => :billing
-      end
     end
   end
 

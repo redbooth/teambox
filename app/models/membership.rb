@@ -4,7 +4,7 @@ class Membership < ActiveRecord::Base
 
   validates_presence_of :user, :organization
   validates_inclusion_of :role, :in => [10,20,30]
-  
+
   ROLES = {:external => 10, :participant => 20, :admin => 30}
 
   attr_accessor :user_or_email

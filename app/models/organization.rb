@@ -15,7 +15,24 @@ class Organization < ActiveRecord::Base
 
   before_validation_on_create :check_permalink
   
-  attr_accessible :name, :permalink, :description
+  attr_accessible :name, :permalink, :description, :logo
+
+  LogoSizes = {
+    :square   => [96, 96],
+    :top      => [134, 36]
+  }
+
+  has_attached_file :logo, 
+    :url  => "/logos/:id/:style.png",
+    :path => (Teambox.config.amazon_s3 ? "logos/:id/:style.png" : ":rails_root/public/logos/:id/:style.png"),
+    :styles => LogoSizes.each_with_object({}) { |(name, size), all|
+        all[name] = ["%dx%d>" % [size[0], size[1]], :png]
+      }
+
+  #validates_attachment_presence :avatar, :unless => Proc.new { |user| user.new_record? }
+  validates_attachment_size :logo, :less_than => 5.megabytes, :if => :has_logo?
+  validates_attachment_content_type :logo,
+    :content_type => %w[image/jpeg image/pjpeg image/png image/x-png image/gif]
 
   def add_member(user_id, role=Membership::ROLES[:admin])
     user_id = user_id.id if user_id.is_a? User
@@ -53,12 +70,16 @@ class Organization < ActiveRecord::Base
     memberships.find_by_user_id(user.id).try(:role) == Membership::ROLES[:participant]
   end
 
+  def has_logo?
+    !!logo.original_filename
+  end
+
   protected
 
-  def check_permalink
-    if permalink.blank?
-      self.permalink = name.parameterize.to_s
+    def check_permalink
+      if permalink.blank?
+        self.permalink = name.parameterize.to_s
+      end
     end
-  end
 
 end
