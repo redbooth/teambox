@@ -145,7 +145,7 @@ class ApplicationController < ActionController::Base
           when 'edit_users'
             user_name = current_user.name
           when 'show_users'
-            user_name = current_user.name            
+            user_name = @user.name
         end    
         @page_title = "#{user_name ? user_name + ' — ' : ''}#{translate_location_name}"
       end    
