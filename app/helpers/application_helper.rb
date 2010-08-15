@@ -49,14 +49,6 @@ module ApplicationHelper
       :projects => projects,
       :recent_projects => recent_projects
   end
-  
-  def project_navigation(project)
-    render 'shared/project_navigation', :project => project
-  end
-
-  def compact_navigation(project)
-    render 'shared/compact_navigation', :project => project
-  end
 
   def search_bar
     render 'shared/search_bar'

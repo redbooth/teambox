@@ -1059,7 +1059,6 @@ en:
       all_projects: Overview for all projects
       new_project: + New project
       recent_projects: Recent projects
-      rest_of_the_projects: Other projects
     global_navigation:
       project_invitations: Project Invitations
       home: Home
