@@ -37,6 +37,8 @@ ActionController::Routing::Routes.draw do |map|
     org.resources :memberships, :member => [:change_role, :add, :remove]
   end
 
+  map.resources :sites, :only => [:show, :new, :create]
+
   map.with_options :controller => 'users', :action => 'edit' do |account|
     account.account_settings        '/account/settings',        :sub_action => 'settings'
     account.account_picture         '/account/picture',         :sub_action => 'picture'

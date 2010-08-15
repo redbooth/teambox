@@ -449,6 +449,7 @@ en:
     edit:
       there_are_x_users: "There are %{count} users"
       admin_users: "(admin users)"
+      public_site: "Your organization's public site is %{link}"
       number_of_projects: "%{count} projects"
       submit: Save changes
     external_view:
@@ -457,9 +458,10 @@ en:
       title: "%{name}"
       you_cant_access: You don't have permission to access or edit this organization.
     fields:
+      logo: Logo
       name: "Organization name"
       name_placeholder: Your organization
-      permalink: URL address <em>Your organization will have its own website</em>
+      permalink: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
     index:
       about:
         title: About Organizations
@@ -969,6 +971,13 @@ en:
       video: What's Teambox about?
       submit: Login
       login_failed: "Couldn't log you in as %{login}"
+  sites:
+    show:
+      submit: Log in
+      title: Private area
+    fields:
+      password: Password
+      username_or_email: Email or username
 
   shared:
     strip:

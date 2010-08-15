@@ -1,5 +1,7 @@
 %h2= @organization
 
+%p= t('.public_site', :link => link_to(public_url_for_organization(@organization), public_url_for_organization(@organization)))
+
 %p
   = t('.there_are_x_users', :count => @organization.users.count)
   = link_to t('.admin_users'), organization_memberships_path(@organization)

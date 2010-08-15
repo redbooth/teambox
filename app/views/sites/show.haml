@@ -1,0 +1,17 @@
+%h1= image_tag @organization.logo.url(:top), :alt => @organization.name
+
+.custom_html
+  %p= @organization.description
+
+- content_for :column do
+  %h2= t('.title')
+  - form_tag sites_path, :class => 'new_session', :id => 'new_session' do
+    = hidden_field_tag :id, @organization.permalink
+    = upgrade_browser
+    = render 'sites/fields'
+    = submit_tag t('.submit')
+
+  .signup_or_forgot_links
+    %p= link_to t('sessions.fields.forgot'), forgot_password_path, :tabindex => 203
+
+  = javascript_tag("$('new_session').auto_focus();")

@@ -1,14 +1,9 @@
-- unless @organization.new_record?
-  %p== Your organization's site is http://#{@organization.permalink}.teambox.com
-  %p= @organization.has_logo?
-  %p= @organization.logo.url(:square)
-
 .text_field
-  %label Organization name
+  %label= t('.name')
   = errors_for @organization, :name
   = f.text_field :name
 .text_field
-  %label Short organization code <em>No spaces allowed. Will be used for the web address.</em>
+  %label= t('.permalink')
   = errors_for @organization, :permalink
   = f.text_field :permalink
 -#.text_field
@@ -18,7 +13,7 @@
 -#  %label Default timezone <em>for new users</em>
 -#  = select_tag :timezone, "<option>GMT+1 Madrid</option>"
 .option_fields
-  %label Logo
+  %label= t('.logo')
   .option
     = f.file_field :logo
   %img.logo_square{ :src => @organization.logo.url(:square) }

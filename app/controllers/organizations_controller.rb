@@ -51,7 +51,7 @@ class OrganizationsController < ApplicationController
   def update
     @page_title = @organization
     if @organization.update_attributes(params[:organization])
-      flash[:success] = "Changes saved"
+      flash.now[:success] = "Changes saved"
     end
     render :edit
   end

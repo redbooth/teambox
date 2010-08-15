@@ -26,3 +26,4 @@ Given /the project "([^\"]*)" belongs to "([^\"]*)" organization$/ do |project,o
   project.organization = organization
   project.save!
 end
+

@@ -26,5 +26,8 @@ module OrganizationsHelper
     end
   end
 
+  def public_url_for_organization(organization)
+    site_url(@organization)
+  end
 
 end
