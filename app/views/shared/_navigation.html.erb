@@ -10,7 +10,7 @@
       t.links_to(project ? project_path(project) : projects_path)
       t.highlights_on :controller => :projects, :action => :index
       t.highlights_on :controller => :projects, :action => :show
-      t.tab_index = 101
+      t.tab_index = 100
     end
 
     if project.nil?
@@ -18,12 +18,14 @@
        t.named t('shared.project_navigation.all_task_lists')
        t.links_to task_lists_path
        t.highlights_on :controller => :task_lists, :action => :index
+       t.tab_index = 110
       end
 
       add_tab do |t|
        t.named t('shared.project_navigation.gantt')
        t.links_to gantt_view_task_lists_path
        t.highlights_on :controller => :task_lists, :action => :gantt_view
+       t.tab_index = 120
       end
 
       if time_tracking_enabled?
@@ -31,6 +33,7 @@
           t.named t('shared.project_navigation.time_tracking')
           t.links_to time_path
           t.highlights_on :controller => :hours, :action => :index
+          t.tab_index = 130
         end
       end
 
@@ -40,7 +43,7 @@
        t.highlights_on :controller => :organizations
        t.li_class = 'organizations'
        t.li_class = 'right_side'
-       t.tab_index = 102
+       t.tab_index = 140
       end
 
     else
@@ -48,7 +51,7 @@
         t.named t('shared.project_navigation.conversations')
         t.links_to  project_conversations_path(project)
         t.highlights_on :controller => :conversations
-        t.tab_index = 151
+        t.tab_index = 110
       end
 
       add_tab do |t|
@@ -56,7 +59,7 @@
         t.links_to  project_task_lists_path(project)
         t.highlights_on :controller => :task_lists
         t.highlights_on :controller => :tasks
-        t.tab_index = 152
+        t.tab_index = 120
       end
 
       add_tab(:html => {:id => 'pages_tab',
@@ -66,7 +69,7 @@
         t.named "#{t('shared.project_navigation.pages')} #{image_tag('triangle.png', :class => 'triangle')}"
         t.links_to  project_pages_path(project)
         t.highlights_on :controller => :pages
-        t.tab_index = 153
+        t.tab_index = 130
       end
 
       if time_tracking_enabled? and project.tracks_time
@@ -74,6 +77,7 @@
           t.named t('shared.project_navigation.time_tracking')
           t.links_to  project_time_path(project)
           t.highlights_on :controller => :hours
+          t.tab_index = 140
         end
       end
 
@@ -81,7 +85,7 @@
         t.named t('shared.project_navigation.files')
         t.links_to  project_uploads_path(project)
         t.highlights_on :controller => :uploads
-        t.tab_index = 154
+        t.tab_index = 150
       end
 
       add_tab do |t|
@@ -89,7 +93,7 @@
         t.links_to  project_people_path(project)
         t.highlights_on :controller => :people
         t.li_class = 'right_side'
-        t.tab_index = 156
+        t.tab_index = 170
       end
 
       if project.admin?(current_user)
@@ -98,7 +102,7 @@
           t.links_to  project_settings_path(project)
           t.highlights_on :controller => :projects, :action => :edit
           t.li_class = 'right_side'
-          t.tab_index = 155
+          t.tab_index = 160
         end
       end
     end
