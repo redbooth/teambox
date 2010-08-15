@@ -148,6 +148,26 @@ class ProjectsController < ApplicationController
     end
   end
 
+  skip_before_filter :belongs_to_project?, :only => [:join]
+
+  def join
+    if @current_project.organization.is_admin?(current_user)
+      @current_project.people.create!(
+        :user => current_user,
+        :role => Person::ROLES[:admin])
+      flash[:success] = t('projects.join.welcome')
+      redirect_to project_path(@current_project)
+    elsif @current_project.public
+      @current_project.people.create!(
+        :user => current_user,
+        :role => Person::ROLES[:commenter])
+      flash[:success] = t('projects.join.welcome')
+      redirect_to project_path(@current_project)
+    else
+      render :text => "You're not authorized to join this project"
+    end
+  end
+
   protected
   
     def load_task_lists

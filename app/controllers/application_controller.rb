@@ -48,15 +48,9 @@ class ApplicationController < ActionController::Base
         unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
           if Invitation.exists?(:project_id => @current_project.id, :invited_user_id => current_user.id)
             redirect_to project_invitations_path(@current_project)
-          elsif @current_project.public
-            person = @current_project.people.new(
-              :user => current_user,
-              :role => 2)
-            person.save
-            flash[:success] = "You've joined the project #{@current_project}"
-          else 
+          else
             current_user.remove_recent_project(@current_project)
-            render :text => "You don't have permission to view this project", :status => :forbidden
+            render 'projects/not_in_project'
           end
         end
       end

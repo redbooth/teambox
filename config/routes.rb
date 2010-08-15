@@ -74,7 +74,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :projects,
       :has_many => [:pages, :people],
-      :member => {:get_comments => :get, :accept => :post, :decline => :post, :transfer => :put} do |project|
+      :member => {:get_comments => :get, :accept => :post, :decline => :post, :transfer => :put, :join => :get} do |project|
     project.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
     project.time 'time', :controller => 'hours', :action => 'index'
 

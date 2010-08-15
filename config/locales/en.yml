@@ -440,6 +440,14 @@ en:
       invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
       success: Project updated
       error: Couldn't change project settings
+    not_in_project:
+      title: Join "%{project}" project?"
+      explain_admin: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because you're an administrator of the <b>%{organization}</b> organization."
+      explain_public: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because this is a <b>public project</b>."
+      not_allowed: This is a private project and you're not authorized to access it.
+      join: Join this project
+    join:
+      welcome: You're now part of this project
   organizations:
     column:
       general_settings: General settings

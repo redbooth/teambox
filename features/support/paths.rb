@@ -64,6 +64,8 @@ module NavigationHelpers
       account_settings_path
     when /the signup page/
       signup_path
+    when /the public projects page/
+      public_projects_path
     when /the public site for "([^\"]*)" organization/
       organization = Organization.find_by_name($1)
       site_path(organization)
