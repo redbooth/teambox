@@ -881,6 +881,7 @@ en:
       you_can_leave: "You can leave this project at any time. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
       leave_project: "Leave this project"
       confirm_delete: Are you sure you want to leave this project?
+      leave_project: Leave project
   comments:
     attach:
       tooltip: Attach

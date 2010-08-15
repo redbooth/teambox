@@ -124,7 +124,15 @@ module ProjectsHelper
       link_to(t('shared.task_navigation.my_assigned_tasks'), user_rss_token(project_path(project, :format => :ics), 'mine')),
       :class => :calendar_links)
   end
-  
+
+  def leave_project_link(project)
+    unless project.user == current_user
+      link_to t('people.column.leave_project'),
+        project_person_path(project, current_user.people.detect { |p| p.project_id == project.id }),
+        :method => :delete, :confirm => t('people.column.confirm_delete'), :class => :leave_link
+    end
+  end
+
   def quicklink_conversations(project)
     link_to '', project_conversations_path(project), :class => :comment_icon
   end

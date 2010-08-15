@@ -22,6 +22,5 @@
   = instructions_for_feeds
   = instructions_for_calendars
   = instructions_for_email(@current_project)
-  = link_to @current_project.organization, @current_project.organization
-  = link_to t('.public_project'), public_project_path(@current_project), :class => :public_link
-  
+  = link_to t('.public_project'), public_project_path(@current_project), :class => :public_link if @current_project.public
+  = leave_project_link(@current_project)
