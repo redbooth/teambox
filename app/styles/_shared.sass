@@ -2,6 +2,8 @@ $highlight: #fff9da
 $navbar: #78acd7
 $text: #333
 $typeface: "Lucida Grande", Helvetica, "Helvetica Neue", Arial, Verdana, sans-serif
+$link: $navbar - #220
+$link_hover: #df5249
 
 =rounded($n)
   border-radius: $n
@@ -14,7 +16,7 @@ $typeface: "Lucida Grande", Helvetica, "Helvetica Neue", Arial, Verdana, sans-se
   -webkit-border-top-left-radius: $n
   -webkit-border-top-right-radius: $n
 =rounded-bottom($n)
-  border-radius: $n $n 0 0
+  border-radius: 0 0 $n $n
   -moz-border-radius-bottomleft: $n
   -moz-border-radius-bottomright: $n
   -webkit-border-bottom-left-radius: $n
