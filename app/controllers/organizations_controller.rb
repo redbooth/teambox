@@ -56,12 +56,20 @@ class OrganizationsController < ApplicationController
     render :edit
   end
 
+  def external_view
+    @organization = Organization.find_by_permalink(params[:id])
+  end
+
   protected
 
     def load_organization
       unless @organization = current_user.organizations.find_by_permalink(params[:id])
-        flash[:error] = "You're not part of this organization"
-        redirect_to root_path
+        if organization = Organization.find_by_permalink(params[:id])
+          redirect_to external_view_organization_path(@organization)
+        else
+          flash[:error] = "Invalid organization"
+          redirect_to root_path
+        end
       end
     end
 

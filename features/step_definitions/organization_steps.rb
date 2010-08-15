@@ -20,3 +20,9 @@ Given /"([^\"]*)" is a participant in the organization called "([^\"]*)"$/ do |u
   organization.add_member(user, :participant)
 end
 
+Given /the project "([^\"]*)" belongs to "([^\"]*)" organization$/ do |project,organization|
+  project = Project.find_by_name(project)
+  organization = Organization.find_by_name(organization)
+  project.organization = organization
+  project.save!
+end

@@ -501,6 +501,11 @@ en:
       admin_users: "(admin users)"
       number_of_projects: "%{count} projects"
       submit: Save changes
+    external_view:
+      create_your_own_org: "However, you can <a href='%{link}'>create your own organization</a> for your projects."
+      request_permission: "To access this organization, you must request permission to some of the administrators:"
+      title: "%{name}"
+      you_cant_access: You don't have permission to access or edit this organization.
     fields:
       name: "Organization name"
       name_placeholder: Your organization

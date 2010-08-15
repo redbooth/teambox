@@ -69,5 +69,36 @@ Feature: Managing organizations
     And I follow "remove from this organization"
     Then I should see "Jordi" within ".users_external"
 
-  Scenario: I 
+  Scenario: I can't manage users as a participant
+    Given I log out
+    And I am logged in as "pablo"
+    When I go to the organizations page
+    And I follow "ACME"
+    And I follow "Manage users"
+    Then I should not see "Remove admin rights" within ".users_admins"
+    And I should not see "remove from this organization" within ".users_admins"
+    And I should not see "Add to the organization as a participant"
+    And I should not see "add as an admin"
 
+  Scenario: I can't see projects I don't belong to as a participant
+    Given a project exists with name: "Secret Tactics"
+    And the project "Secret Tactics" belongs to "ACME" organization
+    And "mislav" is in the project called "Secret Tactics"
+    When I go to the organizations page
+    And I follow "ACME"
+    And I follow "Manage projects"
+    Then I should see "Secret Tactics"
+    And I log out
+    And I am logged in as "pablo"
+    When I go to the organizations page
+    And I follow "ACME"
+    And I follow "Manage projects"
+    And I should not see "Secret Tactics"
+
+  Scenario: I can't access organizations as an external user
+    Given I log out
+    And I am logged in as "jordi"
+    When I follow "ACME"
+    Then I should see "You don't have permission to access or edit this organization."
+    And I should see "Mislav" within ".users_admins"
+  
