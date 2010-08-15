@@ -58,12 +58,6 @@ Factory.define :archived_project, :parent => :project do |project|
   project.archived true
 end
 
-Factory.define :group do |group|
-  group.name { Factory.next(:name) }
-  group.permalink { Factory.next(:permalink) }
-  group.association(:user)
-end
-
 Factory.define :conversation do |conversation|
   conversation.name 'The Master Plan'
   conversation.body 'I left it somewhere round here!'

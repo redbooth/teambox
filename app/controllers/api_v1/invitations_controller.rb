@@ -63,13 +63,9 @@ class ApiV1::InvitationsController < ApiV1::APIController
   end
   
   def load_target
-    if params[:project_id]
-      load_project
-    elsif params[:group_id]
-      load_group
-    end
+    load_project
     
-    @target = @current_group || @current_project || current_user
+    @target = @current_project || current_user
   end
   
   def make_invitation(user_or_email, role)
@@ -84,11 +80,6 @@ class ApiV1::InvitationsController < ApiV1::APIController
   def belongs_to_target?
     if @current_project
       unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-        api_error(t('common.not_allowed'), :unauthorized)
-        false
-      end
-    elsif @current_group
-      unless @current_group.users.include? current_user
         api_error(t('common.not_allowed'), :unauthorized)
         false
       end

@@ -112,10 +112,6 @@ ActionController::Routing::Routes.draw do |map|
     project.search 'search', :controller => 'search'
   end
   
-  map.resources :groups, :member => { :logo => :any, :projects => :any, :members => :any} do |group|
-    group.resources :invitations, :member => [:accept,:decline,:resend]
-  end
-  
   map.resources :comments, :only => [ :create ]
 
   map.public_projects '/public', :controller => 'public/projects', :action => :index

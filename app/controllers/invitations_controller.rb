@@ -1,6 +1,6 @@
 class InvitationsController < ApplicationController
   skip_before_filter :load_project
-  before_filter :load_group_or_project, :except => [:invite_format]
+  before_filter :load_target_project, :except => [:invite_format]
   before_filter :admins_target?, :except => [:index, :accept, :decline, :invite_format]
   before_filter :set_page_title
   
@@ -12,12 +12,7 @@ class InvitationsController < ApplicationController
         # Do we have an invite?
         @invitation = @invite_target.invitations.find(:first, :conditions => {:invited_user_id => current_user.id})
         if @invitation.nil?
-          if @current_group
-            render :text => "You don't have permission to view this group", :status => :forbidden
-          else
-            render :text => "You don't have permission to view this project", :status => :forbidden
-          end
-          
+          render :text => "You don't have permission to view this project", :status => :forbidden
           return
         end
       end
@@ -25,9 +20,9 @@ class InvitationsController < ApplicationController
       respond_to do |f|
         f.html { 
           if @invitation
-            render :action => (@current_project ? 'index_project' : 'index_group')
+            render :action => 'index_project'
           else
-            redirect_to @current_project ? project_people_path(@current_project) : group_path(@current_group)
+            redirect_to project_people_path(@current_project)
           end }
       end
     else
@@ -104,11 +99,7 @@ class InvitationsController < ApplicationController
   def accept
     @invitation.accept(current_user)
     @invitation.destroy
-    if @invitation.project
-      redirect_to(project_path(@invitation.project))
-    else
-      redirect_to(group_path(@invitation.group))
-    end
+    redirect_to project_path(@invitation.project)
   end
   
   def decline
@@ -121,27 +112,15 @@ class InvitationsController < ApplicationController
   end
   
   private
-    def load_group_or_project
-      project_id = params[:project_id]
-      group_id = params[:group_id]
-
-      if project_id
-        load_project
-      elsif group_id
-        load_group
-      end
+    def load_target_project
+      load_project
       
-      @invite_target = @current_group || @current_project
+      @invite_target = @current_project
     end
     
     def load_user_invitation
-      conds = if @current_project
-        { :project_id => @current_project.id,
-          :invited_user_id => current_user.id}
-      else
-        { :group_id => @current_group.id,
-          :invited_user_id => current_user.id}
-      end
+      conds = { :project_id => @current_project.id,
+                :invited_user_id => current_user.id }
       
       @invitation = Invitation.find(:first,:conditions => conds)
       unless @invitation
@@ -151,15 +130,11 @@ class InvitationsController < ApplicationController
     end
     
     def target
-      @current_project || @current_group
+      @current_project
     end
     
     def target_people_path
-      if @current_project
-        project_people_path(@current_project)
-      else
-        group_path(@current_group)
-      end
+      project_people_path(@current_project)
     end
     
     def make_invitation(user_or_email, role)
@@ -177,11 +152,7 @@ class InvitationsController < ApplicationController
             message = t('common.not_allowed')
             f.html {
               flash[:error] = message
-              if @current_project
-                redirect_to project_path(@current_project)
-              else
-                redirect_to group_path(@current_group)
-              end 
+              redirect_to project_path(@current_project)
             }
             f.js { render :text => "alert('#{message}')" }
           end

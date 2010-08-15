@@ -13,7 +13,7 @@ class Project < ActiveRecord::Base
                  :permalink,
                  :invitations
 
-  attr_accessible :name, :permalink, :archived, :group_id, :tracks_time, :public, :organization_name
+  attr_accessible :name, :permalink, :archived, :tracks_time, :public, :organization_name
   attr_accessor :organization_name
 
   def log_activity(target, action, creator_id=nil)

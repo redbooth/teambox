@@ -12,12 +12,8 @@ module ApplicationHelper
   end
   
   def logo_image
-    header_group = @current_project.try(:group) || @group
-    if header_group.try(:logo?)
-      header_group.logo.url(:top)
-    else
-      'header_logo_black.png'
-    end
+    logo = @organization ? @organization.logo(:top) : "header_logo_black.png"
+    image_tag(logo, :alt => "Teambox")
   end
 
   def archived_project_strip(project)

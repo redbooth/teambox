@@ -60,11 +60,6 @@ module NavigationHelpers
     when /the profile of "([^\"]*)"/
       user = User.find_by_login($1)
       user_path(user)
-    when /the groups page/
-      groups_path
-    when /the page of the "([^\"]*)" group/
-      group = Group.find_by_name($1)
-      group_path(group)
     when /my settings page/
       account_settings_path
     when /the signup page/

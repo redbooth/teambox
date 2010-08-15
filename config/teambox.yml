@@ -77,8 +77,6 @@ defaults: &defaults
   # When set to true, "reply above this line" notice will be displayed where relevant and accept emails.
   allow_incoming_email: false
 
-  allow_groups: true
-
   # You will need to:
   # * Setup catch-all address for email received for any username of the incoming mail server.
   # * Run `rake mail:inbox` periodically from cron to process incoming emails.

@@ -61,22 +61,7 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    
-    def load_group
-      group_id ||= params[:group_id]
-      
-      if group_id
-        @current_group = Group.find_by_permalink(group_id)
-        
-        if @current_group
-          # ...
-        else
-          flash[:error] = t('not_found.group', :id => group_id)
-          redirect_to groups_path, :status => 301
-        end
-      end
-    end
-    
+
     def load_project
       project_id ||= params[:project_id]
       project_id ||= params[:id]
@@ -266,12 +251,7 @@ class ApplicationController < ActionController::Base
     def signups_enabled?
       APP_CONFIG['allow_signups'] || User.count == 0
     end
-    
-    def groups_enabled?
-      !!Teambox.config.allow_groups
-    end
-    helper_method :groups_enabled?
-    
+
     def time_tracking_enabled?
       APP_CONFIG['allow_time_tracking'] || false
     end

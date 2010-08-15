@@ -1,6 +1,0 @@
-- form_for group, :url => projects_group_path(group), :html => {:id => 'group_project_form', :style => 'display:none', :method => 'put'} do |f| 
-  .text_field
-    = select_tag 'group[project_ids][]', options_for_select(options_for_owned_projects(current_user, projects))
-  = f.submit t('groups.index.submit_project')
-  = t('common.or')
-  = link_to_function t('common.cancel'), hide_group_project_form

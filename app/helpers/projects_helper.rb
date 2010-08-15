@@ -125,10 +125,6 @@ module ProjectsHelper
       :class => :calendar_links)
   end
   
-  def print_project_link(project)
-    link_to t('common.print'), project_path(project,:format => :print), :class => :print
-  end
-  
   def quicklink_conversations(project)
     link_to '', project_conversations_path(project), :class => :comment_icon
   end

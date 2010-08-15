@@ -37,7 +37,6 @@ en:
     user: "User does not exist."
     conversation: "Conversation %{id} not found in this project."
     project: "The project %{id} doesn't exist."
-    group: "The group %{id} doesn't exist."
     page: "Page %{id} not found in this project."
     task_list: "Task list %{id} not found in this project."
     task: "Task %{id} not found in this project."
@@ -343,55 +342,6 @@ en:
         unordered_list: |
           <li>unordered list</li>
           <li>leave empty lines around</li>
-  groups:
-    index:
-      title: Groups
-      whats_this: "What is this?"
-      groups_in: "Groups you are in"
-      your_group: "Your group"
-      no_groups: "You do not belong to any groups."
-      description: "Use groups to share resources with others, and to band together projects under a single name!"
-      submit_project: Add
-      remove_project: Remove
-    column_group:
-      your_groups: Your groups
-      projects: Projects
-    primer:
-      no_group_create: "You do not own a group. %{link}."
-      create_group: "Create a group"
-    header:
-      leave: Leave
-      remove: Remove
-    logo_fields:
-      current: Current logo
-      delete: Remove
-      description: This logo will appear on all projects belonging to this group
-      upload: Upload
-    search:
-      username_or_email: Username or email
-      invite: Invite
-      invite_people: Invite people to the group
-    fields:
-      name: Name
-      description: Description
-      permalink: Permalink
-      permalink_description: Domain your group can be accessed from
-    new:
-      submit: Create
-      explain: You can only have one group.
-      title: Create group
-      created: Your group has been created
-      invalid_group: Invalid group
-    edit:
-      submit: Update
-    show:
-      edit: Edit
-      add_project: Add a project
-    errors:
-      already_own: "You already own a group!"
-      not_enabled: "Groups are not enabled on this system"
-      not_admin: "You cannot admin this group"
-      no_edit: "You cannot edit this group"
   projects:
     index:
       projects: My Projects
@@ -574,9 +524,7 @@ en:
       email_sent: "Email invitation has been sent"
     pending:
       to_access_or: to access the project or
-      to_access_or_group: to access the group or
       invited_to_join: "%{by} has invited you to join the project %{project}."
-      invited_to_join_group: "%{by} has invited you to join the group %{group}."
     resend:
       resent: "The invitation has been resent to %{recipient}"
       return: Go back
@@ -1058,7 +1006,6 @@ en:
       signup: Signup
       files: Files
       invitations: Invitations
-      groups: Project Groups
       organizations: Organizations
     projects_dropdown:
       all_projects: Overview for all projects
@@ -1142,9 +1089,6 @@ en:
       teambox_is_a_pm_platform: "Teambox is a project management platform made for real-world collaboration."
       plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
       report_abuse: "This email was sent to you at your contact's request. Please report any abuse."
-    invitation_group:
-      subject: "%{user} shared [%{group}] with you"
-      you_have_been_invited_to: "You have been invited to the group <b>%{group}</b>"
     confirm:
       subject: "Get started with Teambox"
       hey: "Hey, %{user_name}!"

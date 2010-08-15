@@ -80,10 +80,9 @@ class UsersController < ApplicationController
       end
 
       if @invitation
+        # Can be an invitation to a project or just to Teambox
         if @invitation.project
           redirect_to(project_path(@invitation.project))
-        else
-          redirect_to(group_path(@invitation.group))
         end
       else
         redirect_back_or_default root_path

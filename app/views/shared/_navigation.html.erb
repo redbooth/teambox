@@ -34,17 +34,6 @@
         end
       end
 
-      if groups_enabled?
-        add_tab do |t|
-         t.named t('shared.project_navigation.groups')
-         t.links_to groups_path
-         t.highlights_on :controller => :groups
-         t.li_class = 'groups'
-         t.li_class = 'right_side'
-         t.tab_index = 102
-        end
-      end
-
       add_tab do |t|
        t.named t('shared.project_navigation.organizations')
        t.links_to organizations_path

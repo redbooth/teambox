@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100815125626) do
+ActiveRecord::Schema.define(:version => 20100815175602) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -128,24 +128,6 @@ ActiveRecord::Schema.define(:version => 20100815125626) do
     t.datetime "created_on"
   end
 
-  create_table "groups", :force => true do |t|
-    t.string   "name",              :limit => 40
-    t.text     "description"
-    t.string   "permalink",         :limit => 40
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "deleted_at"
-    t.string   "logo_file_name"
-    t.string   "logo_content_type"
-    t.integer  "logo_file_size"
-  end
-
-  create_table "groups_users", :id => false, :force => true do |t|
-    t.integer "group_id"
-    t.integer "user_id"
-  end
-
   create_table "ims", :force => true do |t|
     t.integer "card_id"
     t.string  "name"
@@ -157,7 +139,6 @@ ActiveRecord::Schema.define(:version => 20100815125626) do
     t.integer  "user_id"
     t.integer  "project_id"
     t.integer  "role",            :default => 2
-    t.integer  "group_id"
     t.string   "email"
     t.integer  "invited_user_id"
     t.string   "token"
@@ -248,7 +229,6 @@ ActiveRecord::Schema.define(:version => 20100815125626) do
   end
 
   create_table "projects", :force => true do |t|
-    t.integer  "group_id"
     t.integer  "user_id"
     t.string   "name"
     t.string   "permalink"
