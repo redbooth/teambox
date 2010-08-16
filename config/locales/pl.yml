@@ -752,12 +752,12 @@ pl:
       second: Sekunda
       year: Rok
     time_ago: "%{time_ago_in_words} temu"
-  calendar:
+  calendar: 
     abbr_weekdays: [N, P, W, Ś, C, P, S]
     ok: OK
     now: Teraz
     today: Dziś
-    clear: Jasny
+    clear: Oczyścić
   deleted: 
     conversation: "Usunięto konwersacje <b>%{name}</b>"
     left_project: "Nie uczestniczysz już w tym projekcie"
