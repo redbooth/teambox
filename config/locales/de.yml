@@ -672,6 +672,12 @@ de:
       second: Sekunde
       year: Jahr
     time_ago: "%{time_ago_in_words} vorher"
+  calendar:
+    abbr_weekdays: [So, Mo, Di, Mi, Do, Fr, Sa]
+    ok: Ok
+    now: Jetzt
+    today: Heute
+    clear: Löschen
   deleted: 
     conversation: "Konversation <b>%{name}</b> gelöscht"
     left_project: "Sie haben dieses Projekt verlassen"

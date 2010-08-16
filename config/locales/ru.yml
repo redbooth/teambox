@@ -633,6 +633,12 @@ ru:
       second: Секунда
       year: Год
     time_ago: "%{time_ago_in_words} назад"
+  calendar:
+    abbr_weekdays: [Вс, Пн, Вт, Ср, Чт, Пт, Сб]
+    ok: OK
+    now: Сейчас
+    today: Сегодня
+    clear: Ясно
   deleted: 
     conversation: "Обсуждение <b>%{name}</b> удалено"
     left_project: "Вы больше не участвуете в этом проекте"

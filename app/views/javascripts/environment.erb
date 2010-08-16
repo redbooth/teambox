@@ -1,11 +1,22 @@
-<%= if ( current_user && current_user.first_day_of_week == 'monday' )
-      "Date.weekdays = Date.first_day_of_week = 1;"
+<%=
+    weekday_list = t('calendar.abbr_weekdays')
+    
+    if ( current_user && current_user.first_day_of_week == 'monday' )
+      weekday_list << weekday_list.shift
+      "Date.weekdays = $w('#{weekday_list.join(' ')}'); Date.first_day_of_week = 1;"
     else
-      "Date.weekdays = Date.first_day_of_week = 0;"
+      "Date.weekdays = $w('#{weekday_list.join(' ')}'); Date.first_day_of_week = 0;"
     end
 %>
 
-<%= javascript_calendar_date_translations %>
+Date.months = $w('<%= I18n.t('date.month_names').join(" ").strip %>');
+
+_translations = {
+  "OK": "<%= t('calendar.ok') %>",
+  "Now": "<%= t('calendar.now') %>",
+  "Today": "<%= t('calendar.today') %>",
+  "Clear": "<%= t('calendar.clear') %>"
+};
 
 <% 
   less_than_one = I18n.t('datetime.distance_in_words.less_than_x_minutes.one')
