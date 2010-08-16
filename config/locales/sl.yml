@@ -598,6 +598,12 @@ sl:
       second: "Sekunda "
       year: Leto
     time_ago: "%{time_ago_in_words} pred"
+  calendar: 
+    abbr_weekdays: [Ne, Po, Ut, St, Št, Pi, So]
+    ok: OK
+    now: Teraz
+    today: Dnes
+    clear: Vymazať
   deleted: 
     conversation: "Odstrani pogovor <b>%{name}</b>"
     page: "Odstrani stran <b>%{name}</b>"
