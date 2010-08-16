@@ -40,6 +40,17 @@ class Organization < ActiveRecord::Base
     membership = memberships.new(:user_id => user_id.to_i, :role => role.to_i)
     membership.save
   end
+  
+  def ensure_member(user_id, role=Membership::ROLES[:participant])
+    user_id = user_id.id if user_id.is_a? User
+    member = memberships.find_by_user_id(user_id)
+    
+    if member and member.role < role
+      member.update_attribute(:role, role)
+    else
+      add_member(user_id, role)
+    end
+  end
 
   def name
     read_attribute(:name) || "Undefined"

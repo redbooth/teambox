@@ -3,7 +3,7 @@ Feature: Update Project
   Background: 
     Given I am logged in as mislav
     And I am currently in the project ruby_rockstars
-    And I go to project settings path
+    And I go to project settings page
 
   Scenario: Mislav archives a project
     Given I follow "General Settings"

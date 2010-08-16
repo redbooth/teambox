@@ -7,7 +7,7 @@ Feature: Showing users
       | pablo  | pablo@teambox.com     | Pablo      | Villalba  |
     Given I am logged in as mislav
     And I am currently in the project ruby_rockstars
-    And I go to project settings path
+    And I go to project settings page
     Given "balint" is in the project called "Ruby Rockstars"
     And "balint" is in the project called "Genius"
     And "pablo" is not in the project called "Ruby Rockstars"

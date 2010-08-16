@@ -27,3 +27,20 @@ Given /the project "([^\"]*)" belongs to "([^\"]*)" organization$/ do |project,o
   project.save!
 end
 
+Then /"([^\"]*)" should belong to the organization "([^\"]*)" as (?:a|an) ([^\"]*)$/ do |login, organization,role|
+  user = User.find_by_login(login)
+  organization = Organization.find_by_name(organization)
+  organization.memberships.find_by_user_id(user.id).role.should == Membership::ROLES[role.to_sym]
+end
+
+Then /"([^\"]*)" should not belong to the organization "([^\"]*)"$/ do |login, organization|
+  user = User.find_by_login(login)
+  organization = Organization.find_by_name(organization)
+  organization.memberships.find_by_user_id(user.id).should be_nil
+end
+
+Then /"([^\"]*)" should be an external user in the organization "([^\"]*)"$/ do |login, organization|
+  user = User.find_by_login(login)
+  organization = Organization.find_by_name(organization)
+  organization.memberships.find_by_user_id(user.id).role.should == 10
+end

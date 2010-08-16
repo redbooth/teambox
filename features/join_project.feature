@@ -23,7 +23,7 @@ Scenario: Pablo joins the project as an admin because he's an administrator in t
 
 Scenario: Pablo joins the project as a commenter because it's a public project
   Given I go to to the page of the "Ruby Rockstars" project
-  And I go to the project settings path
+  And I go to the project settings page
   And I check "project_public"
   And I press "Save Changes"
   And I log out

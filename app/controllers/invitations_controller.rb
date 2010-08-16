@@ -40,12 +40,13 @@ class InvitationsController < ApplicationController
   def create
     if params[:invitation]
       user_or_email = params[:invitation][:user_or_email]
-      role = params[:invitation][:role] || 2
+      params[:invitation][:role] ||= 2
+      params[:invitation][:membership] ||= 10
       
       @targets = user_or_email.extract_emails
       @targets = user_or_email.split if @targets.empty?
       
-      @invitations = @targets.map { |target| make_invitation(target, role) }
+      @invitations = @targets.map { |target| make_invitation(target, params[:invitation]) }
     else
       flash[:error] = t('invitations.errors.invalid')
       redirect_to target_people_path
@@ -137,9 +138,8 @@ class InvitationsController < ApplicationController
       project_people_path(@current_project)
     end
     
-    def make_invitation(user_or_email, role)
-      invitation = @invite_target.invitations.new(:user_or_email => user_or_email.strip)
-      invitation.role = role
+    def make_invitation(user_or_email, params)
+      invitation = @invite_target.invitations.new(params.merge({:user_or_email => user_or_email.strip}))
       invitation.user = current_user
       @saved_count ||= 0
       @saved_count += 1 if invitation.save

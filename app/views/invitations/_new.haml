@@ -9,5 +9,9 @@
   .text_field
     = f.label :role, t('invitations.search.role')
     = f.select :role, options_from_person_roles
+  - if @current_project.organization.is_admin?(current_user)
+    .text_field
+      = f.label :membership, "Invite also to the organization '#{@current_project.organization}'?"
+      = f.select :membership, options_from_organization_roles
   .submit
     = f.submit t('invitations.search.invite')

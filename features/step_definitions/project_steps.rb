@@ -35,3 +35,9 @@ Given(/^the following conversations exist in the project "([^\"]*)" owned by ([a
     conversation.save!
   end
 end
+
+Then /"([^\"]*)" should belong to the project "([^\"]*)" as (?:a|an) ([^\"]*)$/ do |login, project, role|
+  user = User.find_by_login(login)
+  project = Project.find_by_name(project)
+  project.people.find_by_user_id(user.id).role.should == Person::ROLES[role.to_sym]
+end

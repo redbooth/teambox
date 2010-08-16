@@ -441,7 +441,7 @@ en:
       success: Project updated
       error: Couldn't change project settings
     not_in_project:
-      title: Join "%{project}" project?"
+      title: "Join '%{project}' project?"
       explain_admin: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because you're an administrator of the <b>%{organization}</b> organization."
       explain_public: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because this is a <b>public project</b>."
       not_allowed: This is a private project and you're not authorized to access it.
@@ -517,6 +517,10 @@ en:
       make_admin: Give admin rights
       remove_admin: Remove admin rights
       remove: remove from this organization
+    roles:
+      external: Don't invite. User won't be able to create projects in this organization.
+      participant: As a participant. Will be able to create his own projects.
+      admin: As an administrator. Will be able to add new users and manage the organization.
   invitations:
     fields:
       user_or_email: "Enter your teammate's username or email:"
@@ -545,7 +549,7 @@ en:
       username_or_email: "Enter your teammate's username or email"
       invite_people: Invite people to this project
       invite: Invite
-      role: "Select a role"
+      role: "Select a role for this project"
       submit: Send
       invite_from_project: "Invite from Project"
       help: Help
