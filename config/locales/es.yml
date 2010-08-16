@@ -738,6 +738,12 @@ es:
       second: Segundos
       year: Año
     time_ago: "Hace %{time_ago_in_words}"
+  calendar:
+    abbr_weekdays: [Do, Lu, Ma, Mi, Ju, Vi, Sa]
+    ok: OK
+    now: Ahora
+    today: Hoy
+    clear: Limpiar
   deleted: 
     conversation: "Se ha borrado la conversación <b>%{name}</b>"
     left_project: "Has dejado el proyecto"

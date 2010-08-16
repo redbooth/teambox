@@ -1,13 +1,22 @@
-<% 
-  if ( current_user && current_user.first_day_of_week == 'monday' )
-    date_select_init = "Date.weekdays = $w('M T W T F S S'); Date.first_day_of_week = 1;"
-  else
-    date_select_init = "Date.weekdays = $w('S M T W T F S'); Date.first_day_of_week = 0;"
-  end
+<%=
+    weekday_list = t('calendar.abbr_weekdays')
+    
+    if ( current_user && current_user.first_day_of_week == 'monday' )
+      weekday_list << weekday_list.shift
+      "Date.weekdays = $w('#{weekday_list.join(' ')}'); Date.first_day_of_week = 1;"
+    else
+      "Date.weekdays = $w('#{weekday_list.join(' ')}'); Date.first_day_of_week = 0;"
+    end
 %>
-<%= date_select_init %>
-<%= "AppConfig = new Object(); AppConfig.project_permalink_min_length = #{APP_CONFIG['project_permalink_min_length']};" %>
-_translations = {'OK':'OK','Now':'Now','Today':'Today'}; Date.months = $w('January February March April May June July August September October November December');
+
+Date.months = $w('<%= I18n.t('date.month_names').join(" ").strip %>');
+
+_translations = {
+  "OK": "<%= t('calendar.ok') %>",
+  "Now": "<%= t('calendar.now') %>",
+  "Today": "<%= t('calendar.today') %>",
+  "Clear": "<%= t('calendar.clear') %>"
+};
 
 <% 
   less_than_one = I18n.t('datetime.distance_in_words.less_than_x_minutes.one')

@@ -722,6 +722,12 @@ fr:
       second: Seconds
       year: Year
     time_ago: "Il y a %{time_ago_in_words}"
+  calendar:
+    abbr_weekdays: [D, L, Ma, Me, J, V, S]
+    ok: OK
+    now: Maintenant
+    today: Aujourd'hui
+    clear: Claire
   deleted: 
     conversation: "La conversation <b>%{name}</b> a été effacée"
     left_project: "Vous avez quitté le project"
