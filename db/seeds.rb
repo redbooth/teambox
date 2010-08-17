@@ -128,7 +128,22 @@ end
 
 frank, corrina, tomas, maya, marco = users
 
-earthworks = frank.projects.new(:name => "Earthworks Yoga", :permalink => "earthworks", :public => true).tap { |p| p.save! }
+home_page = " <h1>Our design firm</h1>
+              <p>This is an example site. You can log in as <b>frank_pm</b>, <b>corrina</b>, <b>webdevtom</b>, <b>maya_pa</b> or <b>donmarco</b>. The password is always <b>papapa</b>.</p>"
+organization = Organization.create!(:name => "Design projects", :description => home_page)
+
+organization.add_member(frank,   :admin)
+organization.add_member(corrina, :admin)
+organization.add_member(tomas,   :participant)
+organization.add_member(maya,    :participant)
+# marco is not part of the organization
+
+earthworks = frank.projects.new(:name => "Earthworks Yoga",
+                                :permalink => "earthworks",
+                                :public => true).tap do |p| 
+  p.organization = organization
+  p.save!
+end
 
 earthworks.make_comment(frank, "Getting started. Sending invites for project.")
 earthworks.add_users [corrina, tomas, maya, marco]
