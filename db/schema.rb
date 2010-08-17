@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100815175602) do
+ActiveRecord::Schema.define(:version => 20100817104609) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -349,7 +349,6 @@ ActiveRecord::Schema.define(:version => 20100815175602) do
     t.integer  "invitations_count",                        :default => 0,                            :null => false
     t.string   "login_token",               :limit => 40
     t.datetime "login_token_expires_at"
-    t.boolean  "welcome",                                  :default => false
     t.boolean  "confirmed_user",                           :default => false
     t.integer  "last_read_announcement"
     t.datetime "deleted_at"

@@ -150,16 +150,6 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-  def welcome
-    @pending_projects = current_user.invitations
-
-    if current_user.welcome
-      respond_to do |format|
-        format.html { redirect_to projects_path }
-      end
-    end
-  end
-
   def text_styles
     render :layout => false
   end
@@ -170,13 +160,6 @@ class UsersController < ApplicationController
   def feeds
   end
 
-  def close_welcome
-    @current_user.update_attribute(:welcome,true)
-    respond_to do |format|
-      format.html { redirect_to projects_path }
-    end
-  end
-  
   def destroy
     if current_user.projects.count == 0 && current_user.projects.archived.count == 0
       user = current_user
