@@ -23,7 +23,8 @@ Feature: Public sites for organizations. Allow to view an entrance page and log 
     When I fill in the following:
       | login     | pablo  |
       | password  | wrong |
-    And I press "Log in"
+    Then show me the page
+    And I press "Login"
     Then I should see "Couldn't log you in as pablo" within ".flash"
     When I fill in the following:
       | login     | mislav       |

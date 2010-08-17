@@ -8,7 +8,8 @@
     = t('.you_already_have_an_account', :email => @user.email, :login_link => login_path, :reset_password_link => forgot_password_path)
 
 - else
-  %p= t('.existing_user', :login_url => login_path, :forgot_url => forgot_password_path)
+  - if !Teambox.config.community or @invitation
+    %p= t('.existing_user', :login_url => login_path, :forgot_url => forgot_password_path)
 
   - secure_url = Teambox.config.secure_logins ? users_url(:protocol => 'https') : nil
 

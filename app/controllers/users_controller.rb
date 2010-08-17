@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   skip_before_filter :confirmed_user?, :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password, :unconfirmed_email ]
   skip_before_filter :load_project
   before_filter :set_page_title
+  before_filter :can_users_signup?, :only => [:new, :create]
 
   def index
     # show current user
@@ -65,11 +66,6 @@ class UsersController < ApplicationController
     @user.confirmed_user = ((@invitation && @invitation.email == @user.email) or
                             Rails.env.development? or
                             !!@app_link)
-
-    unless @invitation || signups_enabled?
-      flash[:error] = t('users.new.no_public_signup')
-      return redirect_to root_path
-    end
 
     if @user && @user.save
       self.current_user = @user
@@ -234,6 +230,13 @@ class UsersController < ApplicationController
         @user.last_name     = @user.last_name.presence  || @profile[:last_name]
         @user.login       ||= @profile[:login]
         @user.email       ||= @profile[:email]
+      end
+    end
+    
+    def can_users_signup?
+      unless @invitation || signups_enabled?
+        flash[:error] = t('users.new.no_public_signup')
+        return redirect_to root_path
       end
     end
 end

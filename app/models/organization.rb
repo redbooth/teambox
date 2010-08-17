@@ -13,6 +13,8 @@ class Organization < ActiveRecord::Base
   validates_length_of     :permalink, :minimum => 4
   validates_exclusion_of  :permalink, :in => %w(www help support mail pop smtp ftp)
 
+  validate :ensure_unicity_for_community_version, :on => :create
+
   before_validation_on_create :check_permalink
   
   attr_accessible :name, :permalink, :description, :logo
@@ -81,6 +83,10 @@ class Organization < ActiveRecord::Base
     memberships.find_by_user_id(user.id).try(:role) == Membership::ROLES[:participant]
   end
 
+  def is_user?(user)
+    !!memberships.find_by_user_id(user.id)
+  end
+
   def has_logo?
     !!logo.original_filename
   end
@@ -93,4 +99,9 @@ class Organization < ActiveRecord::Base
       end
     end
 
+    def ensure_unicity_for_community_version
+      if Teambox.config.community && new_record?
+        errors.add_to_base("Can't have more than one organization") if Organization.count > 0
+      end
+    end
 end

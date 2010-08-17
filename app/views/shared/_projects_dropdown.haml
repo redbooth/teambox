@@ -26,4 +26,5 @@
           = quicklink_pages(project)
         .clear
 
-  %li= link_to(t('.new_project'), new_project_path, :class => 'tab_item', :style => 'font-weight: bold; margin-top: 5px')
+  - if !Teambox.config.community || (@community_organization && !@community_role.nil?)
+    %li= link_to(t('.new_project'), new_project_path, :class => 'tab_item', :style => 'font-weight: bold; margin-top: 5px')

@@ -4,6 +4,4 @@
   = render 'sessions/fields'
   = submit_tag t('.submit')
   
-  - if @signups_enabled
-    %p= link_to t('sessions.fields.signup'), signup_path, :tabindex => 202
   %p= link_to t('sessions.fields.forgot'), forgot_password_path, :tabindex => 203

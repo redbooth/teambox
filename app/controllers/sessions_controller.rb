@@ -1,4 +1,4 @@
-# This controller handles the login/logout function of the site.  
+# This controller handles the login/logout function of the site.
 class SessionsController < ApplicationController
 
   force_ssl :only => :new
@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
   skip_before_filter :load_project
   skip_before_filter :verify_authenticity_token, :only => :create
   before_filter :set_page_title
+  before_filter :community_version_check, :except => :create
 
   def new
     # Cleanup OAuth login parameters if present
@@ -52,5 +53,19 @@ protected
   def note_failed_signin
     flash[:error] = t('sessions.new.login_failed', :login => params[:login])
     logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
+  end
+  
+  def community_version_check
+    return if logged_in?
+    if Teambox.config.community
+      if User.count == 0
+        render 'configure_your_deployment.haml'
+      elsif @organization = Organization.first
+        render 'sites/show', :layout => 'sites'
+      else
+        flash[:error] = "The configuration didn't finish. Please log in as #{User.first} and complete it by creating an organization."
+        render :new
+      end
+    end
   end
 end

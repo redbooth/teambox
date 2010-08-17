@@ -1,6 +1,7 @@
 class OrganizationsController < ApplicationController
   skip_before_filter :load_project
   before_filter :load_organization, :only => [:show, :edit, :update, :projects]
+  before_filter :redirect_community, :only => [:index, :new, :create]
 
   def index
     @page_title = "Organizations"
@@ -70,6 +71,13 @@ class OrganizationsController < ApplicationController
           flash[:error] = "Invalid organization"
           redirect_to root_path
         end
+      end
+    end
+
+    def redirect_community
+      if Teambox.config.community
+        flash[:error] = "The community version doesn't support multiple organizations"
+        redirect_to root_path
       end
     end
 

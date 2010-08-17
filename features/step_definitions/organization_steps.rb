@@ -1,3 +1,7 @@
+Given /^I am using the community version$/ do
+  Teambox.config.community = true
+end
+
 Given /I am an administrator in the organization called "([^\"]*)"$/ do |name|
   organization = Organization.find_by_name(name) || Organization.create!(:name => name, :permalink => name)
   organization.add_member(@current_user, :admin)
@@ -25,6 +29,11 @@ Given /the project "([^\"]*)" belongs to "([^\"]*)" organization$/ do |project,o
   organization = Organization.find_by_name(organization)
   project.organization = organization
   project.save!
+end
+
+Given /^the database is empty$/ do
+  User.destroy_all
+  Organization.destroy_all
 end
 
 Then /"([^\"]*)" should belong to the organization "([^\"]*)" as (?:a|an) ([^\"]*)$/ do |login, organization,role|

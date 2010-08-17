@@ -22,5 +22,5 @@ Feature: Logging In
     When I have confirmed my email
     And It is my first time logging in
     When I go to the home page
-    Then I should see "Welcome"
+    Then I should see "Create your first project!"
 

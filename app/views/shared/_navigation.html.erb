@@ -37,13 +37,25 @@
         end
       end
 
-      add_tab do |t|
-       t.named t('shared.project_navigation.organizations')
-       t.links_to organizations_path
-       t.highlights_on :controller => :organizations
-       t.li_class = 'organizations'
-       t.li_class = 'right_side'
-       t.tab_index = 140
+      # If we're on the community version, we'll show only one organization
+      if Teambox.config.community && Organization.last
+        add_tab do |t|
+         t.named t('shared.project_navigation.organization')
+         t.links_to organization_path(Organization.last)
+         t.highlights_on :controller => :organizations
+         t.li_class = 'organizations'
+         t.li_class = 'right_side'
+         t.tab_index = 140
+        end
+      else
+        add_tab do |t|
+         t.named t('shared.project_navigation.organizations')
+         t.links_to organizations_path
+         t.highlights_on :controller => :organizations
+         t.li_class = 'organizations'
+         t.li_class = 'right_side'
+         t.tab_index = 140
+        end
       end
 
     else

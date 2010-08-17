@@ -986,11 +986,11 @@ en:
       login_failed: "Couldn't log you in as %{login}"
   sites:
     show:
-      submit: Log in
+      submit: Login
       title: Private area
     fields:
       password: Password
-      username_or_email: Email or username
+      username_or_email: Email or Username
 
   shared:
     strip:
@@ -1029,6 +1029,7 @@ en:
       files: Files
       invitations: Invitations
       organizations: Organizations
+      organization: Organization
     projects_dropdown:
       all_projects: Overview for all projects
       new_project: + New project

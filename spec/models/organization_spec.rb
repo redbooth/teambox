@@ -84,9 +84,19 @@ describe Organization do
     end
   end
 
+  describe "single organization mode" do
+    before { Teambox.config.community = true }
+    after  { Teambox.config.community = false }
+    it "should allow creating one organization" do
+      Organization.destroy_all
+      Factory(:organization).valid?.should be_true
+      Factory.build(:organization).valid?.should be_false
+    end
+  end
+
   describe "factories" do
     it "should generate a valid organization" do
-      organization = Factory.create(:organization)
+      organization = Factory(:organization)
       organization.valid?.should be_true
       organization.users.should be_empty
       organization.projects.should be_empty

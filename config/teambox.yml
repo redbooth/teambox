@@ -25,11 +25,6 @@ defaults: &defaults
 
   asset_max_file_size: 50 # in megabytes
 
-  # If signups are disabled, the only way to create an account will be being invited
-  # by another user. If there are no users in the system, you will be asked to
-  # create the first one.
-  allow_signups: true
-
   # Enable secure signup and logins over HTTPS.
   # Make sure your domain has a valid SSL certificate
   secure_logins: false

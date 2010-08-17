@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
                 :set_locale, 
                 :touch_user, 
                 :belongs_to_project?,
+                :load_community_organization,
                 :set_client,
                 :set_user
   
@@ -241,13 +242,23 @@ class ApplicationController < ActionController::Base
       end
       obj.slot_insert = options
     end
-    
+
     def signups_enabled?
-      APP_CONFIG['allow_signups'] || User.count == 0
+      !Teambox.config.community || User.count == 0
     end
 
     def time_tracking_enabled?
       APP_CONFIG['allow_time_tracking'] || false
+    end
+
+    def load_community_organization
+      if logged_in? and Teambox.config.community
+        @community_organization = Organization.first
+        @community_role = if @community_organization
+          role_id = @community_organization.memberships.find_by_user_id(current_user.id).try(:role)
+          Membership::ROLES.index(role_id)
+        end
+      end
     end
 
 end

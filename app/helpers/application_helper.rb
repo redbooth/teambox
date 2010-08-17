@@ -234,6 +234,19 @@ module ApplicationHelper
     end
   end
   
+  def configure_this_organization
+    if Teambox.config.community && @community_role == :admin && @community_organization.description.blank? && params[:organization].nil?
+      message = if location_name != "edit_organizations"
+        link_to("Click here", organization_path(@community_organization)) + " to configure your organization"
+      else
+        "Introduce some HTML code for your main site to configure your site"
+      end
+      %(<div style="background-color: rgb(255,255,220); border-bottom: 1px solid rgb(200,200,150); width: 100%; display: block; font-size: 12px; padding: 10px 0; text-align: center">
+        #{message}
+      </div>)
+    end
+  end
+  
   def locale_select_values
     I18n.available_locales.map { |code|
       [t(code, :scope => :locales, :locale => code), code.to_s]

@@ -1,7 +1,8 @@
 %h2= t('.title', :name => @organization)
 
 %p= t('.you_cant_access')
-%p= t('.create_your_own_org', :link => organizations_path)
+- unless Teambox.config.community
+  %p= t('.create_your_own_org', :link => organizations_path)
 
 %br
 

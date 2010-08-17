@@ -2,6 +2,7 @@ class ProjectsController < ApplicationController
   before_filter :can_modify?, :only => [:edit, :update, :transfer, :destroy]
   before_filter :load_projects, :only => [:index]
   before_filter :set_page_title
+  before_filter :disallow_for_community, :only => [:new, :create]
   
   def index
     @activities = Project.get_activities_for(@projects)
@@ -199,6 +200,13 @@ class ProjectsController < ApplicationController
       else
         @sub_action = 'all'
         @projects = current_user.projects.unarchived
+      end
+    end
+
+    # For community (single organization) version, disallow creating more than one organization
+    def disallow_for_community
+      if @community_organization && @community_role.nil?
+        render :text => "You're not authorized to create projects on this organization."
       end
     end
 

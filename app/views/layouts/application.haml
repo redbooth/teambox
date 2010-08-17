@@ -17,6 +17,7 @@
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}", :reload_url => reload_url}
     = javascript_include_tag 'modernizr', 'environment'
     = archived_project_strip(@current_project)
+    = configure_this_organization
     .container
       = header
       = navigation(@current_project,current_user.projects,current_user.recent_projects)
