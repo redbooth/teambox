@@ -18,9 +18,7 @@ Feature: Logging In
     And I go to the home page
     Then I should see "Confirm your email"
 
-  Scenario: Mislav logs in for the first time and sees the welcome tab (he is not impressed)
+  Scenario: Mislav logs in for the first time and sees the new project primer (he is not impressed)
     When I have confirmed my email
-    And It is my first time logging in
-    When I go to the home page
+    And I go to the home page
     Then I should see "Create your first project!"
-

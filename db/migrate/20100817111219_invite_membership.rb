@@ -4,6 +4,6 @@ class InviteMembership < ActiveRecord::Migration
   end
 
   def self.down
-    remove :invitations, :membership
+    remove_column :invitations, :membership
   end
 end
