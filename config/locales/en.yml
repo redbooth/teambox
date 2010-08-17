@@ -466,10 +466,11 @@ en:
       title: "%{name}"
       you_cant_access: You don't have permission to access or edit this organization.
     fields:
-      logo: Logo
+      logo: Logo <em>Ideally should be 134x36 pixels</em>
       name: "Organization name"
       name_placeholder: Your organization
       permalink: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
+      description: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
     index:
       about:
         title: About Organizations

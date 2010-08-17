@@ -31,7 +31,6 @@ class Organization < ActiveRecord::Base
         all[name] = ["%dx%d>" % [size[0], size[1]], :png]
       }
 
-  #validates_attachment_presence :avatar, :unless => Proc.new { |user| user.new_record? }
   validates_attachment_size :logo, :less_than => 5.megabytes, :if => :has_logo?
   validates_attachment_content_type :logo,
     :content_type => %w[image/jpeg image/pjpeg image/png image/x-png image/gif]

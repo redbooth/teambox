@@ -19,7 +19,7 @@
   %img.logo_square{ :src => @organization.logo.url(:square) }
   %img.logo_top{ :src => @organization.logo.url(:top) }
 .text_area
-  %label HTML to be displayed on the entrance page
+  %label= t('.description')
   = errors_for @organization, :description
   = f.text_area :description
 
