@@ -7,7 +7,7 @@ Feature: Invite a user to a project
     And "mislav" is the owner of the project "Ruby Rockstars"
 
   Scenario: Mislav invites some friends to a project
-    Given I am logged in as "mislav"
+    Given I am logged in as mislav
     When I go to the people page of the "Ruby Rockstars" project
     Then I should see "Invite people to this project"
     And I should see "Mislav Marohnić"
@@ -42,7 +42,7 @@ Feature: Invite a user to a project
     And I should see "Mislav Marohnić"
 
   Scenario: Mislav is invited to a project by someone else
-    Given I am logged in as "mislav"
+    Given I am logged in as mislav
     Given there is a project called "Teambox Roulette"
     When I go to the page of the "Teambox Roulette" project
     Then I should see "This is a private project and you're not authorized to access it."

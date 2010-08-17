@@ -5,7 +5,7 @@ Feature: Search comments in projects
   I want to search for keywords
 
   Background: 
-    Given I am logged in as "voodoo_prince"
+    Given I am logged in as voodoo_prince
     And I am in the project called "Gold Digging"
     And I am in the project called "Space elevator"
 

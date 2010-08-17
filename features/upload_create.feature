@@ -3,7 +3,7 @@ Feature: Uploading a file
   Background: 
     Given a project exists with name: "Ruby Rockstars"
     And a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić"
-    And I am logged in as "mislav"
+    And I am logged in as mislav
     And I am in the project called "Ruby Rockstars"
     When I go to the uploads page of the "Ruby Rockstars" project
     And I follow "Upload a File"

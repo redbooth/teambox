@@ -13,7 +13,7 @@ Feature: Send email to users mentioned in comments
   Scenario: Mention several users
     Given a project exists with name: "Surpass Basecamp"
     And all the users are in the project with name: "Surpass Basecamp"
-    When I am logged in as "balint"
+    When I am logged in as balint
     And I go to the page of the "Surpass Basecamp" project
     And I fill in "comment_body" with "@pablo @james Check this out!"
     And I press "Pubblica"
@@ -28,7 +28,7 @@ Feature: Send email to users mentioned in comments
   Scenario: Mention all users by using @all in a project comment
     Given a project exists with name: "Surpass Basecamp"
     And all the users are in the project with name: "Surpass Basecamp"
-    And I am logged in as "balint"
+    And I am logged in as balint
     And I go to the page of the "Surpass Basecamp" project
     And I fill in "comment_body" with "@all Check this out!"
     And I press "Pubblica"
@@ -47,7 +47,7 @@ Feature: Send email to users mentioned in comments
     And the following task with associations exist:
       | name     | task_list | project          |
       | Lure DHH | Urgent    | Surpass Basecamp |
-    And I am logged in as "balint"
+    And I am logged in as balint
     When I go to the page of the "Lure DHH" task
     And I fill in "comment_body" with "@all That would be cool!"
     And I press "Pubblica"
@@ -62,7 +62,7 @@ Feature: Send email to users mentioned in comments
     And the following conversation with associations exist:
       | name               | project          | user   |
       | Long-term strategy | Surpass Basecamp | balint |
-    And I am logged in as "balint"
+    And I am logged in as balint
     When I go to the page of the "Long-term strategy" conversation
     And I fill in "comment_body" with "@all Think outside of the box!"
     And I press "Pubblica"

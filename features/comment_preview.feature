@@ -3,7 +3,7 @@ Feature: Preview
 
   Background:
     Given a project exists with name: "Ruby Rockstars"
-    And I am logged in as "mislav"
+    And I am logged in as mislav
     And I am in the project called "Ruby Rockstars"
 
   Scenario: I compose a comment with line breaks

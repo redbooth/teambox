@@ -12,7 +12,7 @@ Background:
 Scenario: Pablo joins the project as an admin because he's an administrator in the organization
   Given "pablo" is an administrator in the organization called "ACME"
   And I log out
-  When I am logged in as "pablo"
+  When I am logged in as pablo
   And I go to the organizations page
   And I follow "ACME"
   And I follow "Manage projects"
@@ -27,7 +27,7 @@ Scenario: Pablo joins the project as a commenter because it's a public project
   And I check "project_public"
   And I press "Save Changes"
   And I log out
-  When I am logged in as "pablo"
+  When I am logged in as pablo
   And I go to the public projects page
   And I follow "Ruby Rockstars"
   And I follow "Join this group"
@@ -37,6 +37,6 @@ Scenario: Pablo joins the project as a commenter because it's a public project
 
 Scenario: Pablo can't join a project because he's not authorized
   Given I log out
-  When I am logged in as "pablo"
+  When I am logged in as pablo
   And I go to to the page of the "Ruby Rockstars" project
   Then I should see "This is a private project and you're not authorized to access it."

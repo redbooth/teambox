@@ -25,7 +25,7 @@ Feature: See tasks in different, common groupings
     And the task called "Tell the tech bloggers" is open
     And the task called "Post on Digg and Hacker News" is hold
     And the task called "Beg Apple to approve of the iPhone app" is rejected
-    And I am logged in as "balint"
+    And I am logged in as balint
     When I go to the "Market Teambox" tasks page
     Then I should see the following tasks:
       | task_list_name | task_name                    |
@@ -35,7 +35,7 @@ Feature: See tasks in different, common groupings
     And I should not see the task called "Beg Apple to approve of the iPhone app" in the "Later" task list
 
   Scenario: See only my tasks
-    Given I am logged in as "balint"
+    Given I am logged in as balint
     And the task called "Tell my friends" is assigned to me
     And the task called "Tell my friends" is resolved
     And the task called "Post on Digg and Hacker News" is assigned to me
@@ -60,7 +60,7 @@ Feature: See tasks in different, common groupings
       | Later          | Beg Apple to approve of the iPhone app |
 
   Scenario: See archived tasks
-    Given I am logged in as "balint"
+    Given I am logged in as balint
     And the task called "Tell my friends" is resolved
     And the task called "Post on Digg and Hacker News" is resolved
     When I go to the "Market Teambox" tasks page
@@ -72,7 +72,7 @@ Feature: See tasks in different, common groupings
       | This week      | Post on Digg and Hacker News |
 
   Scenario: See reopened task
-    Given I am logged in as "balint"
+    Given I am logged in as balint
     And the task called "Tell my friends" is resolved
     When I go to the "Market Teambox" tasks page
     And I follow "This week"

@@ -27,7 +27,7 @@ Feature: Public sites for organizations. Allow to view an entrance page and log 
     Then I should see "Couldn't log you in as pablo" within ".flash"
     When I fill in the following:
       | login     | mislav       |
-      | password  | makeabarrier |
+      | password  | dragons      |
     And I press "Login"
     Then I should see "ACME" within "ul#projects_tab_list"
 

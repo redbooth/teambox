@@ -20,8 +20,8 @@ Feature: When I use Teambox community version, there is only one organization
       | First name       | Mislav                    |
       | Last name        | Marohnić                  |
       | Email            | mislav@fuckingawesome.com |
-      | Password         | makeabarrier              |
-      | Confirm password | makeabarrier              |
+      | Password         | dragons                   |
+      | Confirm password | dragons                   |
     And I press "Create account"
     Then I should see "Confirm your email"
     And "mislav@fuckingawesome.com" should receive an email
@@ -74,7 +74,7 @@ Feature: When I use Teambox community version, there is only one organization
     And I press "Login"
     Then I should see "Couldn't log you in as mislav"
     When I fill in "login" with "mislav"
-    And I fill in "password" with "makeabarrier"
+    And I fill in "password" with "dragons"
     And I press "Login"
     Then I should see "All Projects"
     And I should see "Organization"

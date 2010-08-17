@@ -2,7 +2,7 @@
 Feature: Making project pages
   Background:
     Given a project exists with name: "Ruby Rockstars"
-    And I am logged in as "mislav"
+    And I am logged in as mislav
     And I am in the project called "Ruby Rockstars"
 
   Scenario: I create a page

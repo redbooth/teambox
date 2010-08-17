@@ -8,8 +8,8 @@ Feature: Signing up
       | First name       | Mislav                    |
       | Last name        | Marohnić                  |
       | Email            | mislav@fuckingawesome.com |
-      | Password         | makeabarrier              |
-      | Confirm password | makeabarrier              |
+      | Password         | dragons                   |
+      | Confirm password | dragons                   |
     And I select "(GMT+01:00) Amsterdam" from "Time Zone"
     And I press "Create account"
     Then I should see "Confirm your email"
@@ -26,8 +26,8 @@ Feature: Signing up
       | First name       | Al                  |
       | Last name        | Lane                |
       | Email            | al.lane@example.com |
-      | Password         | makeabarrier        |
-      | Confirm password | makeabarrier        |
+      | Password         | dragons             |
+      | Confirm password | dragons             |
     And I press "Create account"
     Then I should see "is reserved"
     And "al.lane@example.com" should receive no emails

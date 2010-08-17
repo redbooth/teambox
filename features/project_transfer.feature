@@ -23,7 +23,7 @@ Feature: Transfer Project
     Then I should not see "Ownership"
     Then the user called "balint" should administrate the project called "Ruby Rockstars"
     Given I log out
-    And I am logged in as "balint"
+    And I am logged in as balint
     And I go to project settings page
     Then I should see "Ownership"
 

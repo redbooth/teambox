@@ -5,7 +5,7 @@ Feature: Logging In
     Given I am currently "mislav"
     And I go to the login page
     And I fill in "Email or Username" with "mislav"
-    And I fill in "Password" with "makeabarrier"
+    And I fill in "Password" with "dragons"
     And I press "Login"
 
   Scenario: Mislav successfully logs in with a confirmed email

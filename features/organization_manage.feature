@@ -71,7 +71,7 @@ Feature: Managing organizations
 
   Scenario: As a participant, I can't edit the organization's settings
     Given I log out
-    And I am logged in as "pablo"
+    And I am logged in as pablo
     When I go to the organizations page
     And I follow "ACME"
     Then I should see "You are not an admin of this organization. Only admins can edit its settings and manage users."
@@ -79,7 +79,7 @@ Feature: Managing organizations
 
   Scenario: I can't manage users as a participant
     Given I log out
-    And I am logged in as "pablo"
+    And I am logged in as pablo
     When I go to the organizations page
     And I follow "ACME"
     And I follow "Manage users"
@@ -98,7 +98,7 @@ Feature: Managing organizations
     And I follow "Manage projects"
     Then I should see "Secret Tactics"
     And I log out
-    And I am logged in as "pablo"
+    And I am logged in as pablo
     When I go to the organizations page
     And I follow "ACME"
     And I follow "Manage projects"
@@ -106,7 +106,7 @@ Feature: Managing organizations
 
   Scenario: I can't access organizations as an external user
     Given I log out
-    And I am logged in as "jordi"
+    And I am logged in as jordi
     When I follow "ACME"
     Then I should see "You don't have permission to access or edit this organization."
     And I should see "Mislav" within ".users_admins"
