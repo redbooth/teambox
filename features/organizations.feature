@@ -69,12 +69,21 @@ Feature: Managing organizations
     And I follow "remove from this organization"
     Then I should see "Jordi" within ".users_external"
 
+  Scenario: As a participant, I can't edit the organization's settings
+    Given I log out
+    And I am logged in as "pablo"
+    When I go to the organizations page
+    And I follow "ACME"
+    Then I should see "You are not an admin of this organization. Only admins can edit its settings and manage users."
+    And I should not see "Save changes"
+
   Scenario: I can't manage users as a participant
     Given I log out
     And I am logged in as "pablo"
     When I go to the organizations page
     And I follow "ACME"
     And I follow "Manage users"
+    Then I should see "You are not an admin of this organization. Only admins can edit its settings and manage users."
     Then I should not see "Remove admin rights" within ".users_admins"
     And I should not see "remove from this organization" within ".users_admins"
     And I should not see "Add to the organization as a participant"

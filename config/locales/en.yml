@@ -499,6 +499,7 @@ en:
       last_activity: "last activity at %{date}"
       instructions: "These are the projects for this organization. If you're an admin, you can transfer a project to <a href='%{organizations_link}'>other organizations</a> by opening the project's settings."
       settings: settings
+    you_are_not_admin: You are not an admin of this organization. Only admins can edit its settings and manage users.
   memberships:
     index:
       title: "'%{name}' organization"
