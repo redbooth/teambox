@@ -48,6 +48,16 @@ class SessionsController < ApplicationController
     redirect_back_or_default root_path
   end
 
+  # This puts a parameter on your session to force mobile or web version
+  def change_format
+    if %w(m html).include? params[:f]
+      session[:format] = params[:f]
+    else
+      flash[:error] = "Invalid format"
+    end
+    redirect_to root_path
+  end
+
 protected
   # Track failed login attempts
   def note_failed_signin

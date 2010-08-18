@@ -14,5 +14,5 @@
     = project_navigation(@current_project) if @current_project
     = yield
   #footer
-    =# link_to "Use full Teambox", root_path
+    = link_to "Use full Teambox", change_format_path(:html)
     = link_to t('shared.global_navigation.logout'), logout_path

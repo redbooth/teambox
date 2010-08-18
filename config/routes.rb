@@ -18,6 +18,8 @@ ActionController::Routing::Routes.draw do |map|
   map.update_after_forgetting   '/forgetting',  :controller => 'reset_passwords',   :action => 'update_after_forgetting', :method => :put
   map.sent_password     '/reset_password_sent', :controller => 'reset_passwords',   :action => 'sent'
 
+  map.change_format     '/format/:f',           :controller => 'sessions',    :action => 'change_format'
+
   map.new_example_project    '/example/new',    :controller => 'example_projects', :action => 'new'
   map.create_example_project '/example/create', :controller => 'example_projects', :action => 'create'
 

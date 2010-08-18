@@ -113,7 +113,7 @@ module ApplicationHelper
   end
 
   def mobile_link
-    link_to t('.mobile'), activities_path(:format => :m)
+    link_to t('.mobile'), change_format_path(:m)
   end
 
   def help_link
