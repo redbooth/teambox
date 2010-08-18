@@ -6,7 +6,7 @@ class Invitation < RoleRecord
   validate :check_invite
   
   attr_accessor :is_silent
-  attr_accessible :user_or_email, :role, :membership
+  attr_accessible :user_or_email, :role, :membership, :invited_user
 
   # Reserved so invitations can be sent for other targets, in addition to Project
   def target

@@ -52,20 +52,8 @@ class ProjectsController < ApplicationController
   
   def create
     @project = current_user.projects.new(params[:project])
-    @project.organization = current_user.organizations.find_by_id(params[:project][:organization_id])
-
-    unless @project.organization
-      if params[:project][:organization_name]
-        @organization = Organization.new(:name => params[:project][:organization_name])
-        unless @organization.save
-          @project.errors.add :organization_name, ""
-          render :new
-          return
-        end
-        @organization.memberships.create!(:user_id => current_user.id, :role => Membership::ROLES[:admin])
-        @project.organization = @organization
-      end
-    end
+    organization = @project.ensure_organization(current_user, params[:project])
+    @organization = organization unless organization.nil?
     
     unless current_user.can_create_project?
       flash[:error] = t('projects.new.not_allowed')
@@ -92,14 +80,8 @@ class ProjectsController < ApplicationController
   
   def update
     @sub_action = params[:sub_action] || 'settings'
-
-    if params[:project] && params[:project][:organization_id]
-      unless @current_project.organization.is_admin?(current_user)
-        @current_project.errors.add(:organization_id, "You're not allowed to modify projects in this organization")
-        return render :edit
-      end
-      @current_project.organization_id = params[:project][:organization_id]
-    end
+    organization = @current_project.ensure_organization(current_user, params[:project])
+    @organization = organization unless organization.nil?
 
     if @current_project.update_attributes(params[:project])
       flash.now[:success] = t('projects.edit.success')

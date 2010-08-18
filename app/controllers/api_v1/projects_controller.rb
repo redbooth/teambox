@@ -13,6 +13,9 @@ class ApiV1::ProjectsController < ApiV1::APIController
   
   def create
     @project = current_user.projects.new(params[:project])
+    unless @project.ensure_organization(current_user, params[:project])
+      return handle_api_error(@project)
+    end
     
     unless current_user.can_create_project?
       api_error(t('projects.new.not_allowed'), :unauthorized)
@@ -27,6 +30,10 @@ class ApiV1::ProjectsController < ApiV1::APIController
   end
   
   def update
+    unless @current_project.ensure_organization(current_user, params[:project])
+      return handle_api_error(@current_project)
+    end
+
     if @current_project.update_attributes(params[:project])
       handle_api_success(@current_project)
     else

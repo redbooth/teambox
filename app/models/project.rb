@@ -33,6 +33,30 @@ class Project < ActiveRecord::Base
     end
   end
   
+  def ensure_organization(current_user, params)
+    unless new_record?
+      unless self.organization.is_admin?(current_user)
+        self.errors.add(:organization_id, "You're not allowed to modify projects in this organization")
+        return nil
+      end
+    end
+    
+    self.organization = user.organizations.find_by_id(params[:organization_id]) if params[:organization_id]
+    
+    unless self.organization
+      if params[:organization_name]
+        new_org = Organization.new(:name => params[:organization_name])
+        unless new_org.save
+          self.errors.add :organization_name, ""
+          return new_org
+        end
+        new_org.memberships.create!(:user_id => current_user.id, :role => Membership::ROLES[:admin])
+        self.organization = new_org
+      end
+    end
+    self.organization
+  end
+  
   def transfer_to(person)
     self.user = person.user
     saved = self.save
@@ -119,6 +143,7 @@ class Project < ActiveRecord::Base
   def to_api_hash(options = {})
     base = {
       :id => id,
+      :organization_id => organization_id,
       :name => name,
       :permalink => permalink,
       :archived => archived,

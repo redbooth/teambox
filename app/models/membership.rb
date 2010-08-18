@@ -4,6 +4,7 @@ class Membership < ActiveRecord::Base
 
   validates_presence_of :user, :organization
   validates_inclusion_of :role, :in => [10,20,30]
+  validates_uniqueness_of :user_id, :scope => :organization_id
 
   ROLES = {:external => 10, :participant => 20, :admin => 30}
 

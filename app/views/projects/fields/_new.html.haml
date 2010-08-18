@@ -8,7 +8,8 @@
   - when 0
     = f.label :organization_id, t('.choose_organization.new_org_name')
     = f.text_field :organization_name, :placeholder => t('organizations.fields.name_placeholder')
-    = errors_for(@organization, :name) || errors_for(@organization, :permalink)
+    - if @organization
+      = errors_for(@organization, :name) || errors_for(@organization, :permalink)
   - else
     - if Teambox.config.community # single organization
       = f.hidden_field :organization_id, :value => Organization.last.id

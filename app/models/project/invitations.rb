@@ -22,11 +22,11 @@ class Project
     emails_to_invite = invite_emails.to_s.extract_emails - users_to_invite.map(&:email)
     
     for user in users_to_invite
-      invitations.create!(:user => self.user, :invited_user => user)
+      create_invitation(self.user, {:invited_user => user})
     end
     
     for email in emails_to_invite
-      invitations.create!(:user => self.user, :user_or_email => email)
+      create_invitation(self.user, {:user_or_email => email})
     end
   end
 end

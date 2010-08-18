@@ -40,8 +40,8 @@ class InvitationsController < ApplicationController
   def create
     if params[:invitation]
       user_or_email = params[:invitation][:user_or_email]
-      params[:invitation][:role] ||= 2
-      params[:invitation][:membership] ||= 10
+      params[:invitation][:role] ||= Person::ROLES[:participant]
+      params[:invitation][:membership] ||= Membership::ROLES[:external]
       
       @targets = user_or_email.extract_emails
       @targets = user_or_email.split if @targets.empty?

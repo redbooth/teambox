@@ -13,7 +13,7 @@
         = user.name
         - if @organization.is_admin?(current_user) and user != current_user
           %span.role
-            = link_to t('.remove_admin'), change_role_organization_membership_path(@organization, user.id, :role => 20)
+            = link_to t('.remove_admin'), change_role_organization_membership_path(@organization, user.id, :role => Membership::ROLES[:participant])
             = t('common.or')
             = link_to t('.remove'), remove_organization_membership_path(@organization, user.id)
         .clear
@@ -30,7 +30,7 @@
         = user.name
         - if @organization.is_admin?(current_user)
           %span.role
-            = link_to t('.make_admin'), change_role_organization_membership_path(@organization, user.id, :role => 30)
+            = link_to t('.make_admin'), change_role_organization_membership_path(@organization, user.id, :role => Membership::ROLES[:admin])
             = t('common.or')
             = link_to t('.remove'), remove_organization_membership_path(@organization, user.id)
         .clear
