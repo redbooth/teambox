@@ -95,84 +95,6 @@ describe Comment do
     end
   end
 
-  #describe "marking as read"
-
-  describe "formatting" do
-    before do
-      @project = Factory(:project)
-      @user = @project.user
-    end
-
-    it "should format text" do
-      body = "She **used** to _mean_ so much to ME!"
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>She <strong>used</strong> to <em>mean</em> so much to ME!</p>\n"
-    end
-
-    it "should format lists" do
-      body = "She used to mean:\n\n* So\n* much\n* to\n * me!"
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>She used to mean:</p>\n\n<ul>\n<li>So</li>\n<li>much</li>\n<li>to</li>\n<li>me!</li>\n</ul>\n\n"
-    end
-
-    it "should format emails and links" do
-      body = 'she@couchsurfing.org used to mean so much to www.teambox.com'
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p><a href=\"mailto:she@couchsurfing.org\">she@couchsurfing.org</a> used to mean so much to <a href=\"http://www.teambox.com\">www.teambox.com</a></p>\n"
-    end
-
-    it "should convert markdown links" do
-      body = 'I loved that quote: ["I like the Divers, but they want me want to go to a war."](http://www.shmoop.com/tender-is-the-night/tommy-barban.html) Great page, too.'
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == %Q{<p>I loved that quote: <a href="http://www.shmoop.com/tender-is-the-night/tommy-barban.html">"I like the Divers, but they want me want to go to a war."</a> Great page, too.</p>\n}
-    end
-
-    it "should add http:// in front of links to www.site.com" do
-      body = "I'd link my competitors' mistakes (www.failblog.org) but that'd give them free traffic. So instead I link www.google.com."
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == %Q{<p>I'd link my competitors' mistakes (<a href="http://www.failblog.org">www.failblog.org</a>) but that'd give them free traffic. So instead I link <a href="http://www.google.com">www.google.com</a>.</p>\n}
-    end
-
-    it "should preserve html links and images" do
-      body = 'Did you know the logo from Teambox has <a href="http://en.wikipedia.org/wiki/Color_theory">carefully selected colors</a>? <img src="http://app.teambox.com/images/header_logo_large.jpg"/>'
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == %Q{<p>Did you know the logo from Teambox has <a href="http://en.wikipedia.org/wiki/Color_theory">carefully selected colors</a>? <img src="http://app.teambox.com/images/header_logo_large.jpg" /></p>\n}
-    end
-
-    it "should truncate links longer than 80 chars" do
-      body = 'This commit needs a spec: http://github.com/teambox/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/lib/html_formatting.rb'
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>This commit needs a spec: <a href=\"http://github.com/teambox/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/lib/html_formatting.rb\">http://github.com/teambox/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e...</a></p>\n"
-    end
-
-    it "should not truncate links shorter or equal than 80 chars" do
-      body = 'This commit needs a spec: http://github.com/teambox/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e8'
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>This commit needs a spec: <a href=\"http://github.com/teambox/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e8\">http://github.com/teambox/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e8</a></p>\n"
-    end
-
-    it "should preserve <pre> blocks" do
-      body = "Lorem ipsum dolor sit amet.\n\n<pre>*lorem* _ipsum_ weird_var_name</pre>\n\nExcepteur sint occaecat cupidatat non proident."
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>Lorem ipsum dolor sit amet.</p>\n\n<pre>*lorem* _ipsum_ weird_var_name</pre>\n\n\n<p>Excepteur sint occaecat cupidatat non proident.</p>\n"
-    end
-
-    it "should allow youtube videos"
-
-    it "should use insert <br> between lines" do
-      body = "This is a comment\nwith multiple lines\n\nJordi."
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>This is a comment<br />\nwith multiple lines</p>\n\n<p>Jordi.</p>\n"
-    end
-
-    it "should not insert <em> in underscored words" do
-      body = "This is a comment with an_underscored_word"
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>This is a comment with an_underscored_word</p>\n"
-    end
-
-  end
-
   describe "mentioning @user" do
     before do
       @project = Factory(:project)
@@ -184,6 +106,14 @@ describe Comment do
       body = "@existing, hey, @existing"
       comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
       comment.body_html.should == %Q{<p><a href="/users/existing" class="mention">@existing</a>, hey, <a href="/users/existing" class="mention">@existing</a></p>\n}
+      comment.mentioned.should == [@user]
+    end
+
+    it "should not link a user if his username is part of an email address" do
+      @project.add_user(@user)
+      body = "@existing links, but not an@existing.com email"
+      comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
+      comment.body_html.should == %Q{<p><a href=\"/users/existing\" class=\"mention\">@existing</a> links, but not <a href=\"mailto:an@existing.com\">an@existing.com</a> email</p>\n}
       comment.mentioned.should == [@user]
     end
 
