@@ -47,7 +47,7 @@
          t.li_class = 'right_side'
          t.tab_index = 140
         end
-      else
+      elsif !Teambox.config.community
         add_tab do |t|
          t.named t('shared.project_navigation.organizations')
          t.links_to organizations_path
