@@ -83,7 +83,6 @@ class ApidocsController < ApplicationController
         note.updated_by = @apiman
         note.created_at = autogen_created_at
         note.save!
-        save_slot(note)
       end
     end
     
@@ -92,7 +91,6 @@ class ApidocsController < ApplicationController
         divider.updated_by = @apiman
         divider.created_at = autogen_created_at
         divider.save!
-        save_slot(divider)
       end
     end
     
@@ -123,8 +121,21 @@ class ApidocsController < ApplicationController
     def load_example_data
       @apiman = User.find_or_create_example_user('API Man', 'example_api_user')
       @project = @apiman.projects.first
+      @organization = @apiman.organizations.first
       if @project.nil?
+        if @organization.nil?
+          if Organization.count == 0
+            render :text => 'In order to view the api documentation, you must first configure your app and build an organization.'
+            return
+          end
+          @organization = Organization.new(:name => 'API Corp')
+          @organization.is_example = true
+          @organization.save!
+          @organization.memberships.create!(:user_id => @apiman.id, :role => Membership::ROLES[:admin])
+        end
+        
         @project = @apiman.projects.new(:name => 'Teambox Api Example Project', :user_id => @apiman.id)
+        @project.organization = @organization
         @project.save!
         
         example_comment(@project, @task, "Testing the API!")
