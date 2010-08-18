@@ -1,5 +1,5 @@
-class Project  
-  
+class Project
+
   def after_destroy
     remove_from_recent_projects
   end

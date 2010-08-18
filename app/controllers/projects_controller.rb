@@ -2,6 +2,7 @@ class ProjectsController < ApplicationController
   before_filter :can_modify?, :only => [:edit, :update, :transfer, :destroy]
   before_filter :load_projects, :only => [:index]
   before_filter :set_page_title
+  before_filter :disallow_for_community, :only => [:new, :create]
   
   def index
     @activities = Project.get_activities_for(@projects)
@@ -46,10 +47,13 @@ class ProjectsController < ApplicationController
   
   def new
     @project = Project.new
+    @organization = Organization.new
   end
   
   def create
     @project = current_user.projects.new(params[:project])
+    organization = @project.ensure_organization(current_user, params[:project])
+    @organization = organization unless organization.nil?
     
     unless current_user.can_create_project?
       flash[:error] = t('projects.new.not_allowed')
@@ -62,12 +66,10 @@ class ProjectsController < ApplicationController
         flash[:notice] = I18n.t('projects.new.created')
         f.html { redirect_to project_path(@project) }
         f.m    { redirect_to project_path(@project) }
-        handle_api_success(f, @project, true)
       else
         flash.now[:error] = I18n.t('projects.new.invalid_project')
         f.html { render :new }
         f.m    { render :new }
-        handle_api_error(f, @project)
       end
     end
   end
@@ -77,26 +79,23 @@ class ProjectsController < ApplicationController
   end
   
   def update
-    respond_to do |f|
-      if @current_project.update_attributes(params[:project])
-        f.html { redirect_to project_path(@current_project) }
-        handle_api_success(f, @current_project)
-      else
-        f.html {
-          @sub_action = params.has_key?(:sub_action) ? params[:sub_action] : 'settings'
-          render :edit
-        }
-        handle_api_error(f, @current_project)
-      end
+    @sub_action = params[:sub_action] || 'settings'
+    organization = @current_project.ensure_organization(current_user, params[:project])
+    @organization = organization unless organization.nil?
+
+    if @current_project.update_attributes(params[:project])
+      flash.now[:success] = t('projects.edit.success')
+    else
+      flash.now[:error] = t('projects.edit.error')
     end
+
+    render :edit
   end
   
   def transfer
     unless @current_project.owner?(current_user)
-        respond_to do |f|
-          flash[:error] = t('common.not_allowed')
-          f.html { redirect_to projects_path }
-        end
+      flash[:error] = t('common.not_allowed')
+      redirect_to projects_path
       return
     end
     
@@ -132,6 +131,26 @@ class ProjectsController < ApplicationController
     end
   end
 
+  skip_before_filter :belongs_to_project?, :only => [:join]
+
+  def join
+    if @current_project.organization.is_admin?(current_user)
+      @current_project.people.create!(
+        :user => current_user,
+        :role => Person::ROLES[:admin])
+      flash[:success] = t('projects.join.welcome')
+      redirect_to project_path(@current_project)
+    elsif @current_project.public
+      @current_project.people.create!(
+        :user => current_user,
+        :role => Person::ROLES[:commenter])
+      flash[:success] = t('projects.join.welcome')
+      redirect_to project_path(@current_project)
+    else
+      render :text => "You're not authorized to join this project"
+    end
+  end
+
   protected
   
     def load_task_lists
@@ -163,6 +182,13 @@ class ProjectsController < ApplicationController
       else
         @sub_action = 'all'
         @projects = current_user.projects.unarchived
+      end
+    end
+
+    # For community (single organization) version, disallow creating more than one organization
+    def disallow_for_community
+      if @community_organization && @community_role.nil?
+        render :text => "You're not authorized to create projects on this organization."
       end
     end
 

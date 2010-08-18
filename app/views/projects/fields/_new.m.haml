@@ -3,8 +3,17 @@
   = errors_for project, :name
   = f.text_field :name
   - tooltip t('projects.fields.name_description')
-.permalink.text_field
-  = f.label :permalink, t('projects.fields.permalink')
-  = errors_for project, :permalink
-  = f.text_field :permalink
-  - tooltip t('projects.fields.permalink_description')
+
+.organization.text_field
+  - case current_user.organizations.size
+  - when 0
+    = f.label :organization_id, t('.choose_organization.new_org_name')
+    = f.text_field :organization_name, :placeholder => t('organizations.fields.name_placeholder')
+    = errors_for(@organization, :name) || errors_for(@organization, :permalink)
+  - else
+    - if Teambox.config.community # single organization
+      = f.hidden_field :organization_id, :value => Organization.last.id
+    - else
+      = f.label :organization_name, t('.choose_organization.choose_org')
+      = f.select :organization_id, options_for_organizations(current_user.organizations)
+      = errors_for project, :organization_id

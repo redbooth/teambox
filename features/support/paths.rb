@@ -45,7 +45,7 @@ module NavigationHelpers
       project_task_list_path(@current_project,@task_list)
     when /its task page/
       project_task_list_task_path(@current_project,@task_list,@task)
-    when /project settings path/
+    when /project settings page/
       project_settings_path(@current_project)
     when /the "(.+)" tasks page/
       project = Project.find_by_name($1)
@@ -60,15 +60,19 @@ module NavigationHelpers
     when /the profile of "([^\"]*)"/
       user = User.find_by_login($1)
       user_path(user)
-    when /the groups page/
-      groups_path
-    when /the page of the "([^\"]*)" group/
-      group = Group.find_by_name($1)
-      group_path(group)
     when /my settings page/
       account_settings_path
     when /the signup page/
       signup_path
+    when /the public projects page/
+      public_projects_path
+    when /the organizations page/
+      organizations_path
+    when /the new organization page/
+      new_organization_path
+    when /the public site for "([^\"]*)" organization/
+      organization = Organization.find_by_name($1)
+      site_path(organization)
     else
       begin
         page_name =~ /the (.*) page/

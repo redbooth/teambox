@@ -2,7 +2,7 @@
   = render 'invitations/new', :project => @current_project, :invitation => Invitation.new(:role => 3)
 
 #people.people
-  = render @invitations, :group => nil, :project => @current_project, :target => @current_project
+  = render @invitations
   = render @people, :project => @current_project
 
 - content_for :column do
@@ -28,6 +28,4 @@
     - current_person = @people.find { |p| p.user == current_user }
     %h2= t('people.column.leaving')
     %p= t('people.column.you_can_leave')
-    %p= link_to t('people.column.leave_project'),
-          project_person_path(@current_project, current_person), 
-          :method => :delete, :confirm => t('people.column.confirm_delete')
+    %p= leave_project_link(@current_project)

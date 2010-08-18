@@ -1,10 +1,5 @@
 module InvitationsHelper
 
-  def list_invitations_for_group(group,invitations)
-    render :partial => 'invitations/group_invitation', :collection => invitations,
-      :locals => { :group => group, :project => nil, :target => group }
-  end
-
   def list_pending_invites(invitations)
     render :partial => 'invitations/pending', :as => :invitation, :collection => invitations
   end
@@ -12,18 +7,17 @@ module InvitationsHelper
   def delete_invitation_link(invitation)
     if invitation.editable?(current_user)
       target = invitation.target
-      link = target.class == Project ? project_invitation_path(target,invitation) : group_invitation_path(target,invitation)
       link_to_remote t('invitations.invitation.discard'),
-        :url => link,
+        :url => project_invitation_path(target,invitation),
         :method => :delete
     end
   end
   
   def resend_invitation_link(target,invitation)
     if invitation.editable?(current_user)
-      link = target.class == Project ? resend_project_invitation_path(target,invitation) : resend_group_invitation_path(target,invitation)
+      
       link_to_remote t('invitations.invitation.resend'),
-        :url => link,
+        :url => resend_project_invitation_path(target,invitation),
         :loading => show_loading('resend_invitation',invitation.id),
         :html => { :id => "resend_invitation_#{invitation.id}_link" }
     end

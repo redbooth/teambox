@@ -17,7 +17,7 @@ class ApiV1::InvitationsController < ApiV1::APIController
   def create
     if params[:invitation] and @target != current_user
       user_or_email = params[:invitation][:user_or_email]
-      role = params[:invitation][:role] || 2
+      role = params[:invitation][:role] || Person::ROLES[:participant]
       
       @targets = user_or_email.extract_emails
       @targets = user_or_email.split if @targets.empty?
@@ -63,13 +63,9 @@ class ApiV1::InvitationsController < ApiV1::APIController
   end
   
   def load_target
-    if params[:project_id]
-      load_project
-    elsif params[:group_id]
-      load_group
-    end
+    load_project
     
-    @target = @current_group || @current_project || current_user
+    @target = @current_project || current_user
   end
   
   def make_invitation(user_or_email, role)
@@ -84,11 +80,6 @@ class ApiV1::InvitationsController < ApiV1::APIController
   def belongs_to_target?
     if @current_project
       unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-        api_error(t('common.not_allowed'), :unauthorized)
-        false
-      end
-    elsif @current_group
-      unless @current_group.users.include? current_user
         api_error(t('common.not_allowed'), :unauthorized)
         false
       end

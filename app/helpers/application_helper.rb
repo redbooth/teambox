@@ -12,12 +12,8 @@ module ApplicationHelper
   end
   
   def logo_image
-    header_group = @current_project.try(:group) || @group
-    if header_group.try(:logo?)
-      header_group.logo.url(:top)
-    else
-      'header_logo_black.png'
-    end
+    logo = @organization ? @organization.logo(:top) : "header_logo_black.png"
+    image_tag(logo, :alt => "Teambox")
   end
 
   def archived_project_strip(project)
@@ -49,13 +45,9 @@ module ApplicationHelper
       :projects => projects,
       :recent_projects => recent_projects
   end
-  
+
   def project_navigation(project)
     render 'shared/project_navigation', :project => project
-  end
-
-  def compact_navigation(project)
-    render 'shared/compact_navigation', :project => project
   end
 
   def search_bar
@@ -125,7 +117,7 @@ module ApplicationHelper
   end
 
   def mobile_link
-    link_to t('.mobile'), activities_path(:format => :m)
+    link_to t('.mobile'), change_format_path(:m)
   end
 
   def help_link
@@ -243,6 +235,19 @@ module ApplicationHelper
     if user
       path = project ? project_path(project, :format => :rss) : projects_path(:format => :rss)
       auto_discovery_link_tag(:rss, user_rss_token(path))
+    end
+  end
+  
+  def configure_this_organization
+    if Teambox.config.community && @community_role == :admin && @community_organization.description.blank? && params[:organization].nil?
+      message = if location_name != "edit_organizations"
+        link_to("Click here", organization_path(@community_organization)) + " to configure your organization"
+      else
+        "Introduce some HTML code for your main site to configure your site"
+      end
+      %(<div style="background-color: rgb(255,255,220); border-bottom: 1px solid rgb(200,200,150); width: 100%; display: block; font-size: 12px; padding: 10px 0; text-align: center">
+        #{message}
+      </div>)
     end
   end
   

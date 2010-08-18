@@ -34,26 +34,11 @@ class Emailer < ActionMailer::Base
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
   
-  def group_invitation(invitation)
-    defaults
-    recipients    invitation.email
-    from          from_user(nil, invitation.user)
-    subject       I18n.t("emailer.invitation_group.subject", :user => invitation.user.name, :group => invitation.group.name)
-    body          :referral => invitation.user, :group => invitation.group, :invitation => invitation
-  end
-
   def signup_invitation(invitation)
     defaults
     recipients    invitation.email
     subject       I18n.t("emailer.invitation.subject", :user => invitation.user.name, :project => invitation.project.name)
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
-  end
-
-  def signup_group_invitation(invitation)
-    defaults
-    recipients    invitation.email
-    subject       I18n.t("emailer.invitation_group.subject", :user => invitation.user.name, :group => invitation.group.name)
-    body          :referral => invitation.user, :group => invitation.group, :invitation => invitation
   end
 
   def notify_comment(user, project, comment)

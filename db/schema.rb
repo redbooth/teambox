@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100807200706) do
+ActiveRecord::Schema.define(:version => 20100817111219) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -128,24 +128,6 @@ ActiveRecord::Schema.define(:version => 20100807200706) do
     t.datetime "created_on"
   end
 
-  create_table "groups", :force => true do |t|
-    t.string   "name",              :limit => 40
-    t.text     "description"
-    t.string   "permalink",         :limit => 40
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "deleted_at"
-    t.string   "logo_file_name"
-    t.string   "logo_content_type"
-    t.integer  "logo_file_size"
-  end
-
-  create_table "groups_users", :id => false, :force => true do |t|
-    t.integer "group_id"
-    t.integer "user_id"
-  end
-
   create_table "ims", :force => true do |t|
     t.integer "card_id"
     t.string  "name"
@@ -157,11 +139,19 @@ ActiveRecord::Schema.define(:version => 20100807200706) do
     t.integer  "user_id"
     t.integer  "project_id"
     t.integer  "role",            :default => 2
-    t.integer  "group_id"
     t.string   "email"
     t.integer  "invited_user_id"
     t.string   "token"
     t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "membership",      :default => 10
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "organization_id"
+    t.integer  "role",            :default => 20
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -180,6 +170,21 @@ ActiveRecord::Schema.define(:version => 20100807200706) do
   end
 
   add_index "notes", ["deleted_at"], :name => "index_notes_on_deleted_at"
+
+  create_table "organizations", :force => true do |t|
+    t.string   "name"
+    t.string   "permalink",                                                   :null => false
+    t.string   "language",          :default => "en"
+    t.string   "time_zone",         :default => "Eastern Time (US & Canada)"
+    t.string   "domain"
+    t.text     "description"
+    t.datetime "deleted_at"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "page_slots", :force => true do |t|
     t.integer "page_id"
@@ -225,7 +230,6 @@ ActiveRecord::Schema.define(:version => 20100807200706) do
   end
 
   create_table "projects", :force => true do |t|
-    t.integer  "group_id"
     t.integer  "user_id"
     t.string   "name"
     t.string   "permalink"
@@ -237,6 +241,7 @@ ActiveRecord::Schema.define(:version => 20100807200706) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "public"
+    t.integer  "organization_id"
   end
 
   add_index "projects", ["deleted_at"], :name => "index_projects_on_deleted_at"
@@ -345,7 +350,6 @@ ActiveRecord::Schema.define(:version => 20100807200706) do
     t.integer  "invitations_count",                        :default => 0,                            :null => false
     t.string   "login_token",               :limit => 40
     t.datetime "login_token_expires_at"
-    t.boolean  "welcome",                                  :default => false
     t.boolean  "confirmed_user",                           :default => false
     t.integer  "last_read_announcement"
     t.datetime "deleted_at"

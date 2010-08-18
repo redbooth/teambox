@@ -25,8 +25,7 @@ describe User do
     before do
       @project = Factory(:project)
       @user = @project.user
-      invitation = Invitation.new(:user => @user, :project => @project, :user_or_email => "invited@user.com")
-      invitation.save!
+      @project.create_invitation(@user, :user_or_email => "invited@user.com")
       @new_user = Factory(:user, :email => "invited@user.com")
       @user.reload
     end

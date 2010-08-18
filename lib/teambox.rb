@@ -62,6 +62,10 @@ module Teambox
         @teambox.app_domain = ENV['URL']
       end
 
+      # By default, we'll run on the community mode, but test on the non-community version
+      @teambox.community = (@teambox.community.nil? || @teambox.community)
+      @teambox.community = false if %w(test cucumber).include?(RAILS_ENV)
+
       @teambox.amazon_s3 = true if heroku?
 
       self.time_zone = @teambox.time_zone

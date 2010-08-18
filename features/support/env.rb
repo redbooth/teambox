@@ -89,7 +89,7 @@ if defined?(ActiveRecord::Base)
 end
 
 require 'rack/test' 
-require 'rack/test/cookie_jar' 
+require 'rack/test/cookie_jar'
 
 # quick fix for Rails 2.3.6+
 # http://groups.google.com/group/ruby-capybara/browse_thread/thread/3889bda967163eb6
@@ -103,4 +103,9 @@ Rack::Test::CookieJar.class_eval do
       self << cookie if cookie.valid?(uri) 
     end 
   end 
+end
+
+Before do
+  # Tests are written to target non-community version, except where noted (I am using the community version)
+  Teambox.config.community = false
 end

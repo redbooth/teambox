@@ -1,0 +1,33 @@
+%h2= t('.title', :name => @organization)
+
+%p= t('.instructions', :organizations_link => organizations_path)
+
+%p.new_project= link_to t('.new_project'), new_project_path, :class => :add_button
+
+%h3= t('.active_projects')
+.projects
+  - @organization.projects.unarchived.each do |project|
+    - role = @people.detect { |p| p.project_id == project.id }.try(:role)
+    - if role
+      %p.project
+        = link_to project, project
+        %span.status
+          = t('.role', :role => @roles[role])
+          - if @roles[role] == 'admin'
+            = "(" + link_to(t('.settings'), edit_project_path(project)) + ")"
+    - elsif @organization.is_admin? current_user
+      %p.project
+        = link_to project, project
+        %span.status
+          You're not part of this project
+
+- if @organization.projects.archived.any?
+  %h3= t('.archived_projects')
+  .projects
+    - @organization.projects.archived.each do |project|
+      %p.project
+        = link_to project, project
+        %span.status
+          = t('.last_activity', :date => project.updated_at.to_date)
+
+= render 'organizations/column'

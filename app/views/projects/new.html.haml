@@ -2,7 +2,6 @@
 
 - form_for @project do |f|
   = project_fields(f,@project)
-
   - contacts = current_user.contacts
   .invite_contacts
     %h3= t('.invite_people')
@@ -13,7 +12,7 @@
             = check_box_tag 'project[invite_users][]', user.id
             &= user.name
     .clear
-    %p
+    %p.invite_by_email
       = t('.invite_by_email')
       = f.text_area :invite_emails, :placeholder => "john@galt.com, francisco@danconia.com"
   
@@ -21,5 +20,4 @@
     = f.submit t('.submit')
   
 - content_for :column do
-  %p.new_example_project= t('.create_an_example_project', :link => new_example_project_path)
   = render 'projects/new_primer'

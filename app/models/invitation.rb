@@ -1,20 +1,21 @@
 require 'digest/sha1'
 
 class Invitation < RoleRecord
-  belongs_to :group
   belongs_to :invited_user, :class_name => 'User'
   
   validate :check_invite
   
   attr_accessor :is_silent
+  attr_accessible :user_or_email, :role, :membership, :invited_user
 
+  # Reserved so invitations can be sent for other targets, in addition to Project
   def target
-    project || group
+    project
   end
   
   def check_invite
-    if project.nil? and group.nil?
-      @errors.add_to_base('Must belong to a project or group')
+    if target.nil?
+      @errors.add_to_base('Must belong to a project')
       return
     end
     @errors.add_to_base('Must belong to a valid user') if user.nil? or user.deleted? or !(target.admin?(user))
@@ -22,10 +23,7 @@ class Invitation < RoleRecord
     # Check user
     check_user = invited_user
     unless check_user.nil?
-      if group and group.has_member?(check_user)
-        @errors.add :user_or_email, 'is already a member of the group'
-        return
-      elsif project and Person.exists?(:project_id => project_id, :user_id => check_user.id)
+      if project and Person.exists?(:project_id => project_id, :user_id => check_user.id)
         @errors.add :user_or_email, 'is already a member of the project'
         return
       elsif Invitation.exists?(:project_id => project_id, :invited_user_id => check_user.id)
@@ -57,18 +55,19 @@ class Invitation < RoleRecord
   
   def accept(current_user)
     if target.is_a? Project
+      target.organization.ensure_member(current_user, membership)
       person = project.people.new(
         :user => current_user,
         :role => role || 3,
         :source_user => user)
       person.save
-    elsif target
-      target.add_user(current_user)
+    elsif target.is_a? Organization
+      target.add_member(current_user, membership)
     end
   end
   
   def editable?(user)
-    (project || group).admin?(user) or self.user_id == user.id or self.invited_user_id == user.id
+    project.admin?(user) or self.user_id == user.id or self.invited_user_id == user.id
   end
 
   before_create :generate_token
@@ -101,17 +100,9 @@ class Invitation < RoleRecord
   def send_email
     return if @is_silent
     if invited_user
-      if project
-        Emailer.deliver_project_invitation self
-      else
-        Emailer.deliver_group_invitation self
-      end
+      Emailer.deliver_project_invitation self
     else
-      if project
-        Emailer.deliver_signup_invitation self
-      else
-        Emailer.deliver_signup_group_invitation self
-      end
+      Emailer.deliver_signup_invitation self
     end
   end
   

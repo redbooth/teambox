@@ -13,10 +13,12 @@ class ApplicationController < ActionController::Base
   before_filter :rss_token, 
                 :confirmed_user?, 
                 :load_project, 
+                :load_organizations,
                 :login_required, 
                 :set_locale, 
                 :touch_user, 
                 :belongs_to_project?,
+                :load_community_organization,
                 :set_client,
                 :set_user
   
@@ -46,35 +48,14 @@ class ApplicationController < ActionController::Base
         unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
           if Invitation.exists?(:project_id => @current_project.id, :invited_user_id => current_user.id)
             redirect_to project_invitations_path(@current_project)
-          elsif @current_project.public
-            person = @current_project.people.new(
-              :user => current_user,
-              :role => 2)
-            person.save
-            flash[:success] = "You've joined the project #{@current_project}"
-          else 
+          else
             current_user.remove_recent_project(@current_project)
-            render :text => "You don't have permission to view this project", :status => :forbidden
+            render 'projects/not_in_project'
           end
         end
       end
     end
-    
-    def load_group
-      group_id ||= params[:group_id]
-      
-      if group_id
-        @current_group = Group.find_by_permalink(group_id)
-        
-        if @current_group
-          # ...
-        else
-          flash[:error] = t('not_found.group', :id => group_id)
-          redirect_to groups_path, :status => 301
-        end
-      end
-    end
-    
+
     def load_project
       project_id ||= params[:project_id]
       project_id ||= params[:id]
@@ -92,7 +73,23 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    
+
+    # When you only belong to one organization, every page will be branded with its logo and colors.
+    # If you belong to 2+ organizations, common pages will not be branded and others will be organization branded
+    def load_organizations
+      if logged_in? 
+        @organizations = current_user.organizations
+        @organization = case @organizations.size
+        when 0
+          current_user.projects.try(:first).try(:organization)
+        when 1
+          @organizations.first
+        else
+          @current_project.try(:organization)
+        end
+      end
+    end
+
     def set_locale
       I18n.locale = logged_in? ? current_user.locale : user_agent_locale
     end
@@ -144,7 +141,7 @@ class ApplicationController < ActionController::Base
           when 'edit_users'
             user_name = current_user.name
           when 'show_users'
-            user_name = current_user.name            
+            user_name = @user.name
         end    
         @page_title = "#{user_name ? user_name + ' — ' : ''}#{translate_location_name}"
       end    
@@ -153,10 +150,16 @@ class ApplicationController < ActionController::Base
     MobileClients = /(iPhone|iPod|Android|Opera mini|Blackberry|Palm|Windows CE|Opera mobi|iemobile|webOS)/i
 
     def set_client
-      mobile =   request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][MobileClients]
-      mobile ||= request.env["HTTP_PROFILE"] || request.env["HTTP_X_WAP_PROFILE"]
-      if mobile and request.format == :html
-        request.format = :m
+      if [:html, :m].include?(request.format.to_sym) and session[:format]
+        # Format has been forced by Sessions#change_format
+        request.format = session[:format].to_sym
+      else
+        # We should autodetect mobile clients and redirect if they ask for html
+        mobile =   request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][MobileClients]
+        mobile ||= request.env["HTTP_PROFILE"] || request.env["HTTP_X_WAP_PROFILE"]
+        if mobile and request.format == :html
+          request.format = :m
+        end
       end
     end
     
@@ -244,18 +247,23 @@ class ApplicationController < ActionController::Base
       end
       obj.slot_insert = options
     end
-    
+
     def signups_enabled?
-      APP_CONFIG['allow_signups'] || User.count == 0
+      !Teambox.config.community || User.count == 0
     end
-    
-    def groups_enabled?
-      !!Teambox.config.allow_groups
-    end
-    helper_method :groups_enabled?
-    
+
     def time_tracking_enabled?
       APP_CONFIG['allow_time_tracking'] || false
+    end
+
+    def load_community_organization
+      if logged_in? and Teambox.config.community
+        @community_organization = Organization.first
+        @community_role = if @community_organization
+          role_id = @community_organization.memberships.find_by_user_id(current_user.id).try(:role)
+          Membership::ROLES.index(role_id)
+        end
+      end
     end
 
 end

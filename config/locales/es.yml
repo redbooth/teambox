@@ -1153,7 +1153,7 @@ es:
       archiving: "Archivar este proyecto"
       confirm_delete: "Estas seguro de que quieres borrar este proyecto definitivamente? NO HAY VUELTA ATRAS. Si quieres conservarlo, usa Archivar Proyecto."
       forever: "Borrar permanentemente este proyecto"
-      name: "Nombre <em>Corto y descriptivo</em>"
+      name: "Nombre del proyecto <em>Manténlo breve, por ejemplo: Marketing</em>"
       new: 
         time_tracking_docs: "Aprende más."
       owner: Propietario
@@ -1164,6 +1164,7 @@ es:
         upgrade: "Para <b>desarchivar este proyecto</b> y poder editarlo, debes <a href='{{link}}'>conseguir una cuenta con más capacidad</a> o archivar otros proyectos."
         you_cant_unarchive: "Tienes {{active}} proyectos activos, y tu plan actual sólo permite {{max}} proyectos."
       tracks_time: "Activar time tracking. <em>Esto permite a los usuarios reportar cuántas horas han trabajado en cada tarea, y extraer informes</em>,"
+      extra_options: "Más opciones"
     index: 
       archived: "Mostrar %{count} proyectos archivados..."
       new_project: "Nuevo proyecto"
@@ -1180,8 +1181,8 @@ es:
       create_an_example_project: "¿Es tu primera vez en Teambox? <a href='%{link}'>Crea un proyecto de ejemplo</a> para experimentar y aprender."
       created: "Se ha creado el proyecto!"
       invalid_project: "Proyecto no válido, corrige los errores e inténtalo de nuevo."
-      invite_by_email: "Invita usuario introduciendo su dirección de email"
-      invite_people: "Invita gente al proyecto"
+      invite_by_email: Invita a usuarios introduciendo sus direcciones de email
+      invite_people: Invitar a usuarios al proyecto
       new_project: "Nuevo proyecto..."
       not_allowed: "No puedes crear proyectos con tu tipo de cuenta."
       submit: "Crear proyecto y empezar a invitar usuarios"

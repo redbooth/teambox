@@ -9,6 +9,7 @@ class Project
 
   # needs an owner
   validates_presence_of :user         # A project _needs_ an owner
+  validates_presence_of :organization
   
   def permalink_length_valid?
     self.permalink.length >= APP_CONFIG['project_permalink_min_length']

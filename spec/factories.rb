@@ -29,6 +29,21 @@ Factory.define :confirmed_user, :parent => :user do |user|
   user.confirmed_user true
 end
 
+Factory.define :mislav, :class => 'User' do |user|
+  user.login 'mislav'
+  user.email 'mislav@fuckingawesome.com'
+  user.first_name 'Mislav'
+  user.last_name 'Marohnić'
+  user.password 'dragons'
+  user.password_confirmation 'dragons'
+  user.confirmed_user true
+end
+
+Factory.define :organization do |organization|
+  organization.name { Factory.next(:name) }
+  organization.permalink { Factory.next(:permalink )}
+end
+
 Factory.define :person do |person|
   person.association(:project)
   person.association(:user)
@@ -37,16 +52,20 @@ end
 Factory.define :project do |project|
   project.name { Factory.next(:name) }
   project.association(:user, :factory => :confirmed_user)
+  project.association(:organization, :factory => :organization)
+end
+
+Factory.define :ruby_rockstars, :class => 'Project' do |project|
+  project.name "Ruby Rockstars"
+  project.permalink "ruby_rockstars"
+  project.user_id do
+    (User.find_by_login('mislav') || Factory(:mislav)).id
+  end
+  project.association(:organization, :name => "ACME")
 end
 
 Factory.define :archived_project, :parent => :project do |project|
   project.archived true
-end
-
-Factory.define :group do |group|
-  group.name { Factory.next(:name) }
-  group.permalink { Factory.next(:permalink) }
-  group.association(:user)
 end
 
 Factory.define :conversation do |conversation|
@@ -117,34 +136,6 @@ Factory.define :page do |page|
   page.association(:user)
   page.association(:project)
   page.name 'Keys to the Castle'
-end
-
-Factory.define :mislav, :class => 'User' do |user|
-  user.login 'mislav'
-  user.email 'mislav@fuckingawesome.com'
-  user.first_name 'Mislav'
-  user.last_name 'Marohnić'
-  user.password 'makeabarrier'
-  user.password_confirmation 'makeabarrier'
-  user.confirmed_user true
-end
-
-Factory.define :geoffrey, :class => 'User' do |user|
-  user.login 'geoffrey'
-  user.email 'geoffrey@peepcode.com'
-  user.first_name 'Geoffrey'
-  user.last_name 'Grosenbach'
-  user.password 'smoothlistening'
-  user.password_confirmation 'smoothlistening'
-  user.confirmed_user true
-end
-
-Factory.define :ruby_rockstars, :class => 'Project' do |project|
-  project.name "Ruby Rockstars"
-  project.permalink "ruby_rockstars"
-  project.user_id do
-    (User.find_by_login('mislav') || Factory(:mislav)).id
-  end
 end
 
 Factory.define :reset_password do |reset_pw|

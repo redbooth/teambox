@@ -13,11 +13,12 @@ ActionController::Routing::Routes.draw do |map|
   map.invite_format     '/invite_format',       :controller => 'invitations', :action => 'invite_format'
   map.feeds             '/feeds',               :controller => 'users',       :action => 'feeds'
   map.calendars         '/calendars',           :controller => 'users',       :action => 'calendars'
-  map.close_wecome_tab  '/close_welcome_tab',   :controller => 'users',       :action => 'close_welcome'
   map.forgot_password   '/forgot',              :controller => 'reset_passwords',   :action => 'new'
   map.reset_password    '/reset/:reset_code',   :controller => 'reset_passwords',   :action => 'reset'
   map.update_after_forgetting   '/forgetting',  :controller => 'reset_passwords',   :action => 'update_after_forgetting', :method => :put
   map.sent_password     '/reset_password_sent', :controller => 'reset_passwords',   :action => 'sent'
+
+  map.change_format     '/format/:f',           :controller => 'sessions',    :action => 'change_format'
 
   map.new_example_project    '/example/new',    :controller => 'example_projects', :action => 'new'
   map.create_example_project '/example/create', :controller => 'example_projects', :action => 'create'
@@ -33,6 +34,11 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reset_passwords
   map.resource :session
+  map.resources :organizations, :member => [:projects, :external_view] do |org|
+    org.resources :memberships, :member => [:change_role, :add, :remove]
+  end
+
+  map.resources :sites, :only => [:show, :new, :create]
 
   map.hook_push '/hooks/:key/:format', :controller => 'hooks', :action => 'push', :format => 'post'
 
@@ -71,7 +77,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :projects,
       :has_many => [:pages, :people],
-      :member => {:get_comments => :get, :accept => :post, :decline => :post, :transfer => :put} do |project|
+      :member => {:get_comments => :get, :accept => :post, :decline => :post, :transfer => :put, :join => :get} do |project|
     project.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
     project.time 'time', :controller => 'hours', :action => 'index'
 
@@ -108,10 +114,6 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }, :collection => { :resort => :post }
     
     project.search 'search', :controller => 'search'
-  end
-  
-  map.resources :groups, :member => { :logo => :any, :projects => :any, :members => :any} do |group|
-    group.resources :invitations, :member => [:accept,:decline,:resend]
   end
   
   map.resources :comments, :only => [ :create ]

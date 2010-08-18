@@ -1,9 +1,0 @@
-.person_header{ :id => "#{js_id(group,user)}_header" }
-  .name
-    %h2
-      = user_link(user)
-      = "@#{user.login}"
-    %p
-      = time_ago_in_words(user.updated_at)
-  .actions
-    = remove_member_link(group,user,current_user)

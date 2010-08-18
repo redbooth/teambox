@@ -26,19 +26,23 @@ describe ApiV1::ProjectsController do
   describe "#create" do
     it "creates a project with invitations" do
       login_as @user
-    
+      
       @user2 = Factory.create(:user)
-    
-      project_attributes = Factory.attributes_for(:project, :user => nil,
+      @org = Factory.create(:organization)
+      @org.add_member(@user)
+      
+      project_attributes = Factory.attributes_for(:project,
         :invite_users => [@user2.id],
-        :invite_emails => "richard.roe@law.uni"
+        :invite_emails => "richard.roe@law.uni",
+        :organization_id => @org.id
       )
 
       lambda {
         post :create, :project => project_attributes
         response.status.should == '201 Created'
       }.should change(Project, :count)
-    
+      
+      JSON.parse(response.body)['organization_id'].to_i.should == @org.id
       project = Project.last(:order => 'id')
       project.should have(2).invitations
     end

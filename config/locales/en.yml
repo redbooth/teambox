@@ -37,7 +37,6 @@ en:
     user: "User does not exist."
     conversation: "Conversation %{id} not found in this project."
     project: "The project %{id} doesn't exist."
-    group: "The group %{id} doesn't exist."
     page: "Page %{id} not found in this project."
     task_list: "Task list %{id} not found in this project."
     task: "Task %{id} not found in this project."
@@ -343,55 +342,6 @@ en:
         unordered_list: |
           <li>unordered list</li>
           <li>leave empty lines around</li>
-  groups:
-    index:
-      title: Groups
-      whats_this: "What is this?"
-      groups_in: "Groups you are in"
-      your_group: "Your group"
-      no_groups: "You do not belong to any groups."
-      description: "Use groups to share resources with others, and to band together projects under a single name!"
-      submit_project: Add
-      remove_project: Remove
-    column_group:
-      your_groups: Your groups
-      projects: Projects
-    primer:
-      no_group_create: "You do not own a group. %{link}."
-      create_group: "Create a group"
-    header:
-      leave: Leave
-      remove: Remove
-    logo_fields:
-      current: Current logo
-      delete: Remove
-      description: This logo will appear on all projects belonging to this group
-      upload: Upload
-    search:
-      username_or_email: Username or email
-      invite: Invite
-      invite_people: Invite people to the group
-    fields:
-      name: Name
-      description: Description
-      permalink: Permalink
-      permalink_description: Domain your group can be accessed from
-    new:
-      submit: Create
-      explain: You can only have one group.
-      title: Create group
-      created: Your group has been created
-      invalid_group: Invalid group
-    edit:
-      submit: Update
-    show:
-      edit: Edit
-      add_project: Add a project
-    errors:
-      already_own: "You already own a group!"
-      not_enabled: "Groups are not enabled on this system"
-      not_admin: "You cannot admin this group"
-      no_edit: "You cannot edit this group"
   projects:
     index:
       projects: My Projects
@@ -440,13 +390,23 @@ en:
       forever: "Delete this project forever"
       owner: "Owner"
       owner_description: "The owner is the main responsible for a project. He or she cannot be removed from the project before ownership is transferred to another user."
-      name: "Name <em>Keep it short and descriptive, for example: Taggart Transcontinental.</em>"
+      name: "Project Name <em>Keep it short and descriptive, for example: Taggart Transcontinental.</em>"
+      name_example: Project name
       permalink: "Permalink <em>Short identifier for the project</em>"
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
-      archived: Archive this Project
+      archived: "Archive this Project <em>This will keep it accessible for its members, but not writable anymore.</em>"
       confirm_delete: "Are you sure you want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you'd rather keep it, use Archive Project instead."
+      extra_options: "More options"
+      organization: Organization
       new:
         time_tracking_docs: Learn more.
+        choose_organization:
+          new_org_name: "Organization name <em>Optional. Does this project belong to a company?</em>"
+          choose_org: "Organization <em>Which organization does this project belong to?</em>"
+          or_create_a_new_org: "or create a <a href='%{link}'>new organization</a>"
+      settings:
+        you_cant_transfer_this_project: "This project belongs to the <b>%{organization}</b> organization. You don't have the rights to transfer it."
+        manage_organizations: Manage organizations.
     new_primer:
       define1: A project is a shared group with your teammates.
       define2: "Inside a project, each team member can:"
@@ -466,7 +426,6 @@ en:
       new_project: New Project...
       created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
-      create_an_example_project: "First time in Teambox? <a href='%{link}'>Create an example project</a> to play around and learn."
       invite_people: Invite people to the project
       invite_by_email: Invite users by entering their email addresses
       not_allowed: "You can't create any more projects with your current account."
@@ -479,6 +438,91 @@ en:
       change_owner: Change owner
       transferred: "Project ownership has been transferred."
       invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
+      success: Project updated
+      error: Couldn't change project settings
+    not_in_project:
+      title: "Join '%{project}' project?"
+      explain_admin: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because you're an administrator of the <b>%{organization}</b> organization."
+      explain_public: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because this is a <b>public project</b>."
+      not_allowed: This is a private project and you're not authorized to access it.
+      join: Join this project
+    join:
+      welcome: You're now part of this project
+  organizations:
+    column:
+      general_settings: General settings
+      admin_users: Manage users
+      admin_projects: Manage projects
+      billing: Billing
+    edit:
+      there_are_x_users: "There are %{count} users"
+      admin_users: "(admin users)"
+      public_site: "Your organization's public site is %{link}"
+      number_of_projects: "%{count} projects"
+      submit: Save changes
+    external_view:
+      create_your_own_org: "However, you can <a href='%{link}'>create your own organization</a> for your projects."
+      request_permission: "To access this organization, you must request permission to some of the administrators:"
+      title: "%{name}"
+      you_cant_access: You don't have permission to access or edit this organization.
+    fields:
+      logo: Logo <em>Ideally should be 134x36 pixels</em>
+      name: "Organization name"
+      name_placeholder: Your organization
+      permalink: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
+      description: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
+    index:
+      about:
+        title: About Organizations
+        explain1: An organization allows you to group projects and users under a brand name.
+        explain2: "You can link them to your own domain to customize your Teambox space. Use your own logo and login page, and share it with your clients."
+      new:
+        create: "+ Create a new Organization"
+        explain: "Brand it with your own logo and website, and create projects inside."
+      title: Organizations
+    new:
+      title: New Organization
+      explain: Organize your people and projects inside an organization.
+      submit: Create Organization
+    organization:
+      admin: admin
+      participant: participant
+      external: external worker
+      number_of_projects:
+        one: One project
+        other: %{count} projects
+    projects:
+      title: "'%{name}' organization"
+      new_project: New project
+      active_projects: Active projects
+      archived_projects: Archived projects
+      role: "you're an <strong>%{role}</strong>"
+      last_activity: "last activity at %{date}"
+      instructions: "These are the projects for this organization. If you're an admin, you can transfer a project to <a href='%{organizations_link}'>other organizations</a> by opening the project's settings."
+      settings: settings
+    you_are_not_admin: You are not an admin of this organization. Only admins can edit its settings and manage users.
+  memberships:
+    index:
+      title: "'%{name}' organization"
+      admins:
+        title: Admins
+        explain: "Can access any project and manage the organization's settings."
+      users:
+        title: Participants
+        explain: "Can create projects inside the organization, but only access the projects they're invited to."
+      in_projects_but_not_in_the_organization:
+        title: External people
+        explain: Can access only the projects they are invited to. Can't create projects inside the organization.
+      no_users: No users here
+      add_to_the_org: Add to the organization as a participant
+      add_as_admin: add as an admin
+      make_admin: Give admin rights
+      remove_admin: Remove admin rights
+      remove: remove from this organization
+    roles:
+      external: Don't invite. User won't be able to create projects in this organization.
+      participant: As a participant. Will be able to create his own projects.
+      admin: As an administrator. Will be able to add new users and manage the organization.
   invitations:
     fields:
       user_or_email: "Enter your teammate's username or email:"
@@ -496,9 +540,7 @@ en:
       email_sent: "Email invitation has been sent"
     pending:
       to_access_or: to access the project or
-      to_access_or_group: to access the group or
       invited_to_join: "%{by} has invited you to join the project %{project}."
-      invited_to_join_group: "%{by} has invited you to join the group %{group}."
     resend:
       resent: "The invitation has been resent to %{recipient}"
       return: Go back
@@ -509,7 +551,7 @@ en:
       username_or_email: "Enter your teammate's username or email"
       invite_people: Invite people to this project
       invite: Invite
-      role: "Select a role"
+      role: "Select a role for this project"
       submit: Send
       invite_from_project: "Invite from Project"
       help: Help
@@ -853,6 +895,7 @@ en:
       you_can_leave: "You can leave this project at any time. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
       leave_project: "Leave this project"
       confirm_delete: Are you sure you want to leave this project?
+      leave_project: Leave project
   comments:
     attach:
       tooltip: Attach
@@ -943,6 +986,13 @@ en:
       video: What's Teambox about?
       submit: Login
       login_failed: "Couldn't log you in as %{login}"
+  sites:
+    show:
+      submit: Login
+      title: Private area
+    fields:
+      password: Password
+      username_or_email: Email or Username
 
   shared:
     strip:
@@ -980,12 +1030,12 @@ en:
       signup: Signup
       files: Files
       invitations: Invitations
-      groups: Project Groups
+      organizations: Organizations
+      organization: Organization
     projects_dropdown:
       all_projects: Overview for all projects
       new_project: + New project
       recent_projects: Recent projects
-      rest_of_the_projects: Other projects
     global_navigation:
       project_invitations: Project Invitations
       home: Home
@@ -1045,6 +1095,11 @@ en:
       send_email_help_conversations: "To create a new conversation send an email to <a href=\"mailto:%{email}\">%{email}</a> with Subject for the title and Body for the comment. Only members from the project can create a new conversation."
       send_email_help_conversation: "To post a new comment to this conversation send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the conversation."
       send_email_help_task: "To post a new comment to this task send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can comment to the task."
+  roles:
+    observer: observer
+    commenter: commenter
+    participant: participant
+    admin: admin
   emailer:
     common:
       do_not_answer: "Do not reply to this email."
@@ -1059,9 +1114,6 @@ en:
       teambox_is_a_pm_platform: "Teambox is a project management platform made for real-world collaboration."
       plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
       report_abuse: "This email was sent to you at your contact's request. Please report any abuse."
-    invitation_group:
-      subject: "%{user} shared [%{group}] with you"
-      you_have_been_invited_to: "You have been invited to the group <b>%{group}</b>"
     confirm:
       subject: "Get started with Teambox"
       hey: "Hey, %{user_name}!"

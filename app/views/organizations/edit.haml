@@ -1,0 +1,22 @@
+%h2= @organization
+
+%p= t('.public_site', :link => link_to(public_url_for_organization(@organization), public_url_for_organization(@organization)))
+
+- if Membership.find_by_user_id(current_user.id).role == Membership::ROLES[:admin]
+  %p
+    = t('.there_are_x_users', :count => @organization.users.count)
+    = link_to t('.admin_users'), organization_memberships_path(@organization)
+    = t('common.and')
+    = t('.number_of_projects', :count => @organization.projects.count)
+    = link_to "(admin projects)", projects_organization_path(@organization)
+
+  - form_for @organization, :html => { :multipart => true } do |f|
+    = f.error_messages
+    = render 'organizations/fields', :f => f
+    .submit
+      = f.submit t('.submit')
+
+- else
+  %p= t('organizations.you_are_not_admin')
+
+= render 'organizations/column'

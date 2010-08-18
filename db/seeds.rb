@@ -1,6 +1,5 @@
 puts <<-EOS
 This will create some example users and a pre-populated project for development.
-Log in as "frank_pm" with the password "papap"
 
 Things that should be added to seed data:
   - Bio and cards
@@ -11,6 +10,8 @@ Things that should be added to seed data:
   - Upload files inside and outside comments
   - Build another project to test overview for all tasks
   - The last comment by Corrina doesn't have a reply field
+
+You can now log in as "frank_pm" or others with the password "papapa"
 
 EOS
 
@@ -127,7 +128,22 @@ end
 
 frank, corrina, tomas, maya, marco = users
 
-earthworks = frank.projects.new(:name => "Earthworks Yoga", :permalink => "earthworks", :public => true).tap { |p| p.save! }
+home_page = " <h1>Our design firm</h1>
+              <p>This is an example site. You can log in as <b>frank_pm</b>, <b>corrina</b>, <b>webdevtom</b>, <b>maya_pa</b> or <b>donmarco</b>. The password is always <b>papapa</b>.</p>"
+organization = Organization.create!(:name => "Design projects", :description => home_page)
+
+organization.add_member(frank,   :admin)
+organization.add_member(corrina, :admin)
+organization.add_member(tomas,   :participant)
+organization.add_member(maya,    :participant)
+# marco is not part of the organization
+
+earthworks = frank.projects.new(:name => "Earthworks Yoga",
+                                :permalink => "earthworks",
+                                :public => true).tap do |p| 
+  p.organization = organization
+  p.save!
+end
 
 earthworks.make_comment(frank, "Getting started. Sending invites for project.")
 earthworks.add_users [corrina, tomas, maya, marco]

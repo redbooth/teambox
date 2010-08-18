@@ -1,0 +1,19 @@
+- content_for :column do
+  - unless @organization.new_record?
+    = organization_navigation(@organization)
+
+  .todo{ :style => 'color:red; display: none' }
+    Invite to organization (UserController#create has some logic)
+    Leave org, delete org
+
+    Users should be observable (User#show) when you share an organization or project (spec)
+
+    Careful with premium checks for Groups on hosted..
+
+    Revisit mobile version completely
+
+    Invitation emails should..
+    Have organization's name
+
+    Invite people from the organization
+    Invite people already in the org to a project

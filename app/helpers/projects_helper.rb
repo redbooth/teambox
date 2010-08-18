@@ -49,8 +49,10 @@ module ProjectsHelper
   end
   
   def new_project_link
-    link_to content_tag(:span, t('.new_project')), new_project_path,
-      :class => 'add_button', :id => 'new_project_link'
+    if !Teambox.config.community || (@community_organization && !@community_role.nil?)
+      link_to content_tag(:span, t('.new_project')), new_project_path,
+        :class => 'add_button', :id => 'new_project_link'
+    end
   end
   
   def projects_tab_list(projects)
@@ -124,11 +126,15 @@ module ProjectsHelper
       link_to(t('shared.task_navigation.my_assigned_tasks'), user_rss_token(project_path(project, :format => :ics), 'mine')),
       :class => :calendar_links)
   end
-  
-  def print_project_link(project)
-    link_to t('common.print'), project_path(project,:format => :print), :class => :print
+
+  def leave_project_link(project)
+    unless project.user == current_user
+      link_to t('people.column.leave_project'),
+        project_person_path(project, current_user.people.detect { |p| p.project_id == project.id }),
+        :method => :delete, :confirm => t('people.column.confirm_delete'), :class => :leave_link
+    end
   end
-  
+
   def quicklink_conversations(project)
     link_to '', project_conversations_path(project), :class => :comment_icon
   end
