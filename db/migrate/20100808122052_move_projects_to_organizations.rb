@@ -1,31 +1,32 @@
 class MoveProjectsToOrganizations < ActiveRecord::Migration
   def self.up
-    organization_for_group = {}
-    organization_for_user = {}
-    Project.find_each(:batch_size => 500) do |project|
-      if project.group
-        # Project in a group (migration from groups to companies)
-        if org_id = organization_for_group[project.group.id]
-          organization = Organization.find(org_id)
-        else
-          organization = Organization.create!(:name => project.group.name, :permalink => project.group.permalink)
-          organization_for_group[project.group.id] = organization.id
-          project.group.users.each { |user| organization.add_member(user) }
-        end
-      else
-        # Project just belongs to a user (we must create a company)
-        if org_id = organization_for_user[project.user.id]
-          organization = Organization.find(org_id)
-        else
-          permalink = Organization.find_by_permalink(project.user.login) ? "user-#{login}" : project.user.login
-          organization = Organization.create!(:name => "Projects from #{project.user}", :permalink => permalink)
-          organization_for_user[project.user.id] = organization.id
-          organization.add_member(project.user)
-        end
-      end
-      organization.add_project(project)
+    description = if User.count > 0 # existing installation
+      %(
+        <h1>You just upgraded Teambox</h1>
+        <p>We've added new features to this version, like better <b>user role management</b> and <b>first page customization</b></p>
+        <p>To configure your installation, follow these steps:</p>
+        <ol>
+          <li>Log in normally.</li>
+          <li>Go to your <a href='/organizations'>organization page</a>.</li>
+          <li>Manage users. At this moment, they are all administrators. You probably don't want that.</li>
+          <li>Configure the HTML for the entrance page.</li>
+          <li>Optionally upload a logo for your organization.</li>
+        </ol>
+        <p>You're all set up! For support, refer to the <a href="http://teambox.com/community">Teambox community</a>.</p>
+        <p>Enjoy!</p>
+        <br/>
+        <p style="font-size: 10px">If you like what we're doing, why not tell your friends about us or blog about it?</p>
+      )
     end
-    puts "going up"
+    
+    organization = Organization.create!(:name => "Your company name", :permalink => "organization", :description => description)
+    
+    Project.find_each(:batch_size => 500) do |project|
+      project.update_attribute :organization_id, organization.id
+    end
+    User.find_each(:batch_size => 500) do |user|
+      organization.add_member(user)
+    end
   end
 
   def self.down
@@ -33,7 +34,5 @@ class MoveProjectsToOrganizations < ActiveRecord::Migration
       project.update_attribute :organization_id, nil
     end
     Organization.destroy_all
-    
-    puts "going down"
   end
 end
