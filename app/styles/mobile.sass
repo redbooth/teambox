@@ -1,17 +1,24 @@
 @import shared
 
+$background: #edeff4
+$color: #333
+
 body
   margin: 0
   font-family: Helvetica
   overflow-x: hidden
-  color: #333333
+  color: $color
   -webkit-user-select: none
   -webkit-text-size-adjust: none
-  background-color: #edeff4
+  background-color: $background
 
 label, input
   margin: 2px 0
   display: block
+  em
+    font-style: normal
+    font-size: 10px
+    color: #999
 
 .clear
   clear: both
@@ -61,27 +68,26 @@ h2
     color: #999999
   #menubar
     -webkit-box-sizing: border-box
-    background-color: #edeff4
+    background-color: $background
     border-bottom: 1px solid #d8dfea
     height: 34px
     position: relative
     a
       -webkit-box-sizing: border-box
-      background-color: #b0e1ed
-      border: 1px solid #b0e1ed
-      color: #0083a2
+      background-color: $navbar
+      border: 1px solid $navbar
+      color: black
       display: block
       float: left
       font-size: 14px
-      font-weight: bold
       height: 28px
       line-height: 28px
-      margin-left: 2%
+      margin-left: 1%
       margin-top: 6px
       text-align: center
       text-decoration: none
       overflow: hidden
-      width: 31%
+      width: 30%
     a.selected
       background-color: white
       border-bottom: 1px solid white
@@ -107,9 +113,9 @@ h2
         weight: bold
       height: 22px
       line-height: 20px
-      width: 23%
+      width: 22%
       margin:
-        left: 2%
+        left: 1%
         top: 2px
         bottom: 6px
       text:

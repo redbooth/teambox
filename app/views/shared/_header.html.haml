@@ -1,7 +1,5 @@
 .header
-  %h1= link_to logo_image, root_path
-  
-  - unless request.format == :m
-    = render 'shared/global_navigation'
+  %h1= link_to logo_image, projects_path
+  = render 'shared/global_navigation'
 
   = search_bar
