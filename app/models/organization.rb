@@ -13,10 +13,11 @@ class Organization < ActiveRecord::Base
   validates_length_of     :permalink, :minimum => 4
   validates_exclusion_of  :permalink, :in => %w(www help support mail pop smtp ftp)
 
-  validate :ensure_unicity_for_community_version, :on => :create
+  validate :ensure_unicity_for_community_version, :on => :create, :unless => :is_example
 
   before_validation_on_create :check_permalink
   
+  attr_accessor :is_example
   attr_accessible :name, :permalink, :description, :logo
 
   LogoSizes = {
@@ -88,6 +89,35 @@ class Organization < ActiveRecord::Base
 
   def has_logo?
     !!logo.original_filename
+  end
+  
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :name => name,
+      :permalink => permalink,
+      :language => language,
+      :time_zone => time_zone,
+      :domain => domain,
+      :description => description,
+      :logo_url => logo.url,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db)
+    }
+    
+    if Array(options[:include]).include? :members
+      base[:members] = memberships.map {|p| p.to_api_hash(options)}
+    end
+    
+    if Array(options[:include]).include? :projects
+      base[:projects] = projects.map {|p| p.to_api_hash(options)}
+    end
+    
+    base
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
   end
 
   protected

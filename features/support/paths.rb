@@ -73,6 +73,8 @@ module NavigationHelpers
     when /the public site for "([^\"]*)" organization/
       organization = Organization.find_by_name($1)
       site_path(organization)
+    when /the apidocs page/
+      '/api'
     else
       begin
         page_name =~ /the (.*) page/

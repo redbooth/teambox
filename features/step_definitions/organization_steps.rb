@@ -31,7 +31,7 @@ Given /the project "([^\"]*)" belongs to "([^\"]*)" organization$/ do |project,o
   project.save!
 end
 
-Then /"([^\"]*)" should belong to the organization "([^\"]*)" as (?:a|an) ([^\"]*)$/ do |login, organization,role|
+Then /"([^\"]*)" should belong to the organization "([^\"]*)" as (?:a|an) ([a-zA-Z]+)$/ do |login, organization,role|
   user = User.find_by_login(login)
   organization = Organization.find_by_name(organization)
   organization.memberships.find_by_user_id(user.id).role.should == Membership::ROLES[role.to_sym]
