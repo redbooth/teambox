@@ -1,5 +1,13 @@
 %h2 Configure your site
 
+- if Teambox.config.app_domain.starts_with? 'localhost'
+  %div{ :style => 'background-color: rgb(255,255,230); padding: 10px; border: 1px solid rgb(155,155,130); margin-bottom: 10px' }
+    %p You haven't configured the correct domain name in <b>config/teambox.yml</b>. This will cause stylesheets not to work properly in production mode.
+
+- if Teambox.config.smtp_settings[:domain] == 'domain.com'
+  %div{ :style => 'background-color: rgb(255,255,230); padding: 10px; border: 1px solid rgb(155,155,130); margin-bottom: 10px' }
+    %p You haven't configured outgoing email. You won't be able to create users without this working.
+
 %p
   Now you have Teambox running. You'll now need to:
 
