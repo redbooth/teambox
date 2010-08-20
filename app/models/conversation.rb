@@ -1,6 +1,7 @@
-include ActionView::Helpers::TextHelper
-
 class Conversation < RoleRecord
+
+  include ActionView::Helpers::TextHelper
+
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
