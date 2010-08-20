@@ -99,15 +99,16 @@ end
 def make_a_typical_project
     @user = Factory.create(:confirmed_user)
     @project = Factory.create(:project)
-    @project.organization.ensure_member(@user, Membership::ROLES[:participant])
+    @organization = @project.organization
+    @organization.ensure_member(@user, Membership::ROLES[:participant])
     @owner = @project.user
     @project.add_user(@user)
     @observer = Factory.create(:confirmed_user)
-    @project.organization.ensure_member(@observer, Membership::ROLES[:participant])
+    @organization.ensure_member(@observer, Membership::ROLES[:participant])
     @project.add_user(@observer)
     @project.people(true).last.update_attribute(:role, Person::ROLES[:observer])
     @admin = Factory.create(:confirmed_user)
-    @project.organization.ensure_member(@admin, Membership::ROLES[:admin])
+    @organization.ensure_member(@admin, Membership::ROLES[:admin])
     @project.add_user(@admin)
     @project.people(true).last.update_attribute(:role, Person::ROLES[:admin])
     @project
