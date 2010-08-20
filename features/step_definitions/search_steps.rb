@@ -3,3 +3,7 @@ When /^the search index is re(indexed|built)$/ do |action|
   # seems to be necessary before hitting sphinx
   sleep(0.2)
 end
+
+When /^I fill in the search box with "(.+)"$/ do |value|
+  When(%(I fill in "q" with "#{value}"))
+end
