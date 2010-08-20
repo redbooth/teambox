@@ -70,7 +70,7 @@ tr:
         name: "Web sitesi"
     errors: 
       full_messages: 
-        format: "{{attribute}} {{message}}"
+        format: "%{attribute} %{message}"
       messages: 
         accepted: "kabul edilmelidir"
         blank: "boş bırakılamaz"
@@ -107,8 +107,8 @@ tr:
       template: 
         body: "Aşağıdaki alanlarla ilgili sorunlar oluştu:"
         header: 
-          one: "1 hata sebebiyle bu {{model}} kaydedilemedi"
-          other: "{{count}} hata sebebiyle bu {{model}} kaydedilemedi"
+          one: "1 hata sebebiyle bu %{model} kaydedilemedi"
+          other: "%{count} hata sebebiyle bu %{model} kaydedilemedi"
     models: 
       address: Adres
       card: Kart

@@ -718,7 +718,7 @@ ja:
         other: "%{count}年程度"
       almost_x_years: 
         one: ほぼ１年
-        other: "ほぼ {{count}} 年"
+        other: "ほぼ %{count} 年"
       half_a_minute: 30秒
       less_than_x_minutes: 
         one: １分未満
@@ -844,7 +844,7 @@ ja:
       no_edit: このグループを編集できません
       not_admin: このグループを管理できません
       not_enabled: このシステムではグループが有効になっていません
-      upgrade: "<b>独自のドメイン作成</b>には,  {{link}}をしてください。"
+      upgrade: "<b>独自のドメイン作成</b>には,  %{link}をしてください。"
       upgrade_account: アップグレードしましょう
     fields: 
       description: 説明
@@ -875,7 +875,7 @@ ja:
       submit: 作成
       title: グループの作成
     primer: 
-      configure_domain: "カスタマイズ化されたサブドメイン、例えばをhttp://yourcompany.teambox.comやhttp://yourdomain.comのように所有されている独自のドメイン名を利用可能です。 <a href='{{link}}' target='_blank'>詳しくはこちら</a>. "
+      configure_domain: "カスタマイズ化されたサブドメイン、例えばをhttp://yourcompany.teambox.comやhttp://yourdomain.comのように所有されている独自のドメイン名を利用可能です。 <a href='%{link}' target='_blank'>詳しくはこちら</a>. "
       create_group: グループを作成する
       explain: "Teamboxはお客様のご希望する<b>Look & Feel</b>を可能にするカスタマイズ機能があります。ログイン・スクリーンに希望するロゴ表示と文字装飾が可能になります。"
       no_group_create: "グループを所有していません。%{link}"
@@ -1127,20 +1127,20 @@ ja:
       success: "%{name}の役割を更新しました "
   plans: 
     copies: 
-      copy1: "如何でしたか？ <a href='{{link}}'>アップグレード</a> によりさらに便利になります。"
-      copy2: "<a href='{{link}}'>アップグレードはこちらから</a>プロジェクト数と容量アップ、さらにプロジェクト間の検索が可能になります。"
-      copy3: "プレミアムアカウントにより<a href='{{link}}'>容量アップ</a>。容量が追加され2000プロジェクまで利用可能です。"
-      copy4: "プレミアム・アカウントにより<a href='{{link}}'>効率アップ</a>: 全てのプロジェクトSearch bar across all projects."
-      copy5: "<a href='{{link}}'>アップ・グレードしましょう</a>そしてより一層のコラボレーションを実現しましょう "
-      copy6: "全てのプロジェクト内を検索できる”検索バー”は業務効率を大幅アップします。 <a href='{{link}}'>アップグレード</a>をお勧めします! "
-      copy7: "あなたのビジネスは私達にとっても重要です。プレミアム・プランで <a href='{{link}}'>より手厚いサポート</a>を提供しています。"
+      copy1: "如何でしたか？ <a href='%{link}'>アップグレード</a> によりさらに便利になります。"
+      copy2: "<a href='%{link}'>アップグレードはこちらから</a>プロジェクト数と容量アップ、さらにプロジェクト間の検索が可能になります。"
+      copy3: "プレミアムアカウントにより<a href='%{link}'>容量アップ</a>。容量が追加され2000プロジェクまで利用可能です。"
+      copy4: "プレミアム・アカウントにより<a href='%{link}'>効率アップ</a>: 全てのプロジェクトSearch bar across all projects."
+      copy5: "<a href='%{link}'>アップ・グレードしましょう</a>そしてより一層のコラボレーションを実現しましょう "
+      copy6: "全てのプロジェクト内を検索できる”検索バー”は業務効率を大幅アップします。 <a href='%{link}'>アップグレード</a>をお勧めします! "
+      copy7: "あなたのビジネスは私達にとっても重要です。プレミアム・プランで <a href='%{link}'>より手厚いサポート</a>を提供しています。"
     show: 
       branding: 
-        configure: "ご利用中のプランは独自ブランドの利用及びドメイン名の設定可能です。こちらにて<a href='{{link}}'>独自ブランドの設定</a>ができます. "
+        configure: "ご利用中のプランは独自ブランドの利用及びドメイン名の設定可能です。こちらにて<a href='%{link}'>独自ブランドの設定</a>ができます. "
         not_available: ご利用中のプランは<strong>独自ブランドの利用</strong>不可です。アップデートをご利用ください。
-      current_plan: "あなたの現在のプランは<strong>{{name}}</strong>です"
-      max_projects: "{{max}}プロジェクトまで作成出来ます"
-      max_storage: "{{max}}まで保存できます"
+      current_plan: "あなたの現在のプランは<strong>%{name}</strong>です"
+      max_projects: "%{max}プロジェクトまで作成出来ます"
+      max_storage: "%{max}まで保存できます"
       plan: あなたのTeamboxプラン
   projects: 
     edit: 
@@ -1165,8 +1165,8 @@ ja:
       permalink: URL
       permalink_description: あなたのプロジェクトのアドレスです。なるべく短くしましょう。空白を入れることはできません。
       settings: 
-        upgrade: "<b>このプロジェクトをアーカイブから戻し</b>、編集可能にするには、<a href='{{link}}'>アップグレードを行い、容量及び機能アップ</a>するか、他のプロジェクトをアーカイブする必要があります。"
-        you_cant_unarchive: " {{active}}のプロジェクトを利用中です。現在のプランでは {{max}} のプロジェクトまでご利用可能です。"
+        upgrade: "<b>このプロジェクトをアーカイブから戻し</b>、編集可能にするには、<a href='%{link}'>アップグレードを行い、容量及び機能アップ</a>するか、他のプロジェクトをアーカイブする必要があります。"
+        you_cant_unarchive: " %{active}のプロジェクトを利用中です。現在のプランでは %{max} のプロジェクトまでご利用可能です。"
       tracks_time: "タイム・トラッキング可能です。<em>Will allow users to log time for tasks.</em>"
     index: 
       archived: "%{count}個のアーカイブされたプロジェクト"
@@ -1180,7 +1180,7 @@ ja:
       active_projects: 
         one: 一つの稼働中のプロジェクトがあります。
         other: 稼働中のプロジェクトはございません。
-        zero: " {{count}}の稼働中のプロジェクトがございます。"
+        zero: " %{count}の稼働中のプロジェクトがございます。"
       create_an_example_project: "Teamboxは初めてですか? <a href='%{link}'>サンプルプロジェクトを作成して</a>、いろいろ試して学んでみましょう。"
       created: プロジェクトが作成されました!
       invalid_project: 無効なプロジェクトです。エラーを修正して再度実行してください。
@@ -1191,11 +1191,11 @@ ja:
       submit: プロジェクトを作成して招待を開始する
       title: プロジェクトの作成
       upgrade: 
-        to_2: "<a href='{{link}}'>アップグレードはこちらから</a> to create <b>up to {{projects}} projects</b>, store up to <b>{{storage}} Gb</b> of files and use the <b>search bar across all projects</b>. "
+        to_2: "<a href='%{link}'>アップグレードはこちらから</a> to create <b>up to %{projects} projects</b>, store up to <b>%{storage} Gb</b> of files and use the <b>search bar across all projects</b>. "
       you_can_create_more: 
         one: あと一つプロジェクトを現在のプランで追加出来ます。
-        other: "プロジェクトの追加はこれ以上出来ません。<br/>現在ご利用のプランにおける最大プロジェクト数は{{max}}です。"
-        zero: "あと {{count}}のプロジェクトを現在のプランで追加出来ます。"
+        other: "プロジェクトの追加はこれ以上出来ません。<br/>現在ご利用のプランにおける最大プロジェクト数は%{max}です。"
+        zero: "あと %{count}のプロジェクトを現在のプランで追加出来ます。"
     new_primer: 
       define1: プロジェクトはチームメイトと共有するグループです。
       define2: "プロジェクト中では、チームメイトは以下のことができます:"

@@ -823,7 +823,7 @@ fr:
       no_edit: "Vous ne pouvez pas modifier ce groupe"
       not_admin: "Vous ne pouvez pas administrer ce groupe"
       not_enabled: "Les groupes ne sont pas activés sur ce système"
-      upgrade: "Pour <b>créer des domaines de marque<b>, vous devez {{link}}."
+      upgrade: "Pour <b>créer des domaines de marque<b>, vous devez %{link}."
       upgrade_account: "Améliorez votre compte"
     fields: 
       description: Description
@@ -854,7 +854,7 @@ fr:
       submit: Créer
       title: "Créer un groupe"
     primer: 
-      configure_domain: "Vous pouvez utiliser un sous-domaine, comme http://yourcompany.teambox.com, ou il peut être relié à votre propre domaine, comme http://yourdomain.com. <a href='{{link}}' target='_blank'>Apprenez à le faire</a>."
+      configure_domain: "Vous pouvez utiliser un sous-domaine, comme http://yourcompany.teambox.com, ou il peut être relié à votre propre domaine, comme http://yourdomain.com. <a href='%{link}' target='_blank'>Apprenez à le faire</a>."
       create_group: "Créer un groupe"
       explain: "Les groupes sont un moyen de marquer votre expérience sur Teambox. Vous pouvez avoir une page d'incription avec votre propre logo et texte HTML"
       no_group_create: "Vous ne possédez pas de groupe. %{link}."
@@ -1093,20 +1093,20 @@ fr:
       success: "Vous avez mis à jour le rôle de %{name}"
   plans: 
     copies: 
-      copy1: "Vous aimez Teambox? Nous travaillons à plein-temps! <a href='{{link}}'>S'améliorer maintenant</a> pour soutenir notre développement!"
-      copy2: "<a href='{{link}}'>S'améliorez maintenant</a> pour obtenir plus de projets, stockages et recherches à travers tous les projets."
-      copy3: "<a href='{{link}}'>Obtenez plus</a> avec un compte premium! Stockage pour plus de 2000 projets."
-      copy4: "<a href='{{link}}'>Travaillez mieux</a> avec un compte premium: Barre de recherche à travers tous les projets."
-      copy5: "<a href='{{link}}'>Améliorez votre compte Teambox maintenant</a> et profitez de la collaboration professionnelle!"
-      copy6: "La barre de recherche pour tous vos projets peut vous faire gagner du temps. <a href='{{link}}'>S'améliorez maintenant pour l'avoir!"
-      copy7: "Vos affaires! <a href='{{link}}'>Obtenez le meilleur support</a> de Teambox avec nos plans premium."
+      copy1: "Vous aimez Teambox? Nous travaillons à plein-temps! <a href='%{link}'>S'améliorer maintenant</a> pour soutenir notre développement!"
+      copy2: "<a href='%{link}'>S'améliorez maintenant</a> pour obtenir plus de projets, stockages et recherches à travers tous les projets."
+      copy3: "<a href='%{link}'>Obtenez plus</a> avec un compte premium! Stockage pour plus de 2000 projets."
+      copy4: "<a href='%{link}'>Travaillez mieux</a> avec un compte premium: Barre de recherche à travers tous les projets."
+      copy5: "<a href='%{link}'>Améliorez votre compte Teambox maintenant</a> et profitez de la collaboration professionnelle!"
+      copy6: "La barre de recherche pour tous vos projets peut vous faire gagner du temps. <a href='%{link}'>S'améliorez maintenant pour l'avoir!"
+      copy7: "Vos affaires! <a href='%{link}'>Obtenez le meilleur support</a> de Teambox avec nos plans premium."
     show: 
       branding: 
-        configure: "Votre plan supporte une marque et des noms de domaines. <a href='{{link}}'>Configurez votre marque ici</a>;"
+        configure: "Votre plan supporte une marque et des noms de domaines. <a href='%{link}'>Configurez votre marque ici</a>;"
         not_available: "Votre plan ne supporte pas <strong>une marque</strong>. Accédez à un compte supérieur pour l'obtenir."
-      current_plan: "Votre plan actuel est <strong>{{name}}</strong>."
-      max_projects: "Vous pouvez avoir jusqu'à {{max}} projets."
-      max_storage: "Vous pouvez stocker jusqu'à {{max}}."
+      current_plan: "Votre plan actuel est <strong>%{name}</strong>."
+      max_projects: "Vous pouvez avoir jusqu'à %{max} projets."
+      max_storage: "Vous pouvez stocker jusqu'à %{max}."
       plan: "Votre plan Teambox"
   projects: 
     edit: 
@@ -1131,8 +1131,8 @@ fr:
       permalink: URL
       permalink_description: "Ceci sera l’adresse internet de votre projet. Choisissez‑la concise et sans espace."
       settings: 
-        upgrade: "Pour <b>ne pas sauvegarder ce projet<b> et pouvoir l'éditer, vous devez <a href='{{link}}'>améliorer votre compte et obtenir plus de stockage et de données </a>ou sauvegarder d'autres projets."
-        you_cant_unarchive: "Vous avez des {{active}} projets actifs, et votre plan actuel permet seulement {{max}} projets"
+        upgrade: "Pour <b>ne pas sauvegarder ce projet<b> et pouvoir l'éditer, vous devez <a href='%{link}'>améliorer votre compte et obtenir plus de stockage et de données </a>ou sauvegarder d'autres projets."
+        you_cant_unarchive: "Vous avez des %{active} projets actifs, et votre plan actuel permet seulement %{max} projets"
       tracks_time: "Activer time‑tracking"
     index: 
       archived: "Montrer %{count} projets archivés…"
@@ -1145,7 +1145,7 @@ fr:
     new: 
       active_projects: 
         one: "Vous avez un projet actif."
-        other: "Vous avez des {{count}} projets actifs."
+        other: "Vous avez des %{count} projets actifs."
         zero: "Vous n'avez pas de projet actif"
       create_an_example_project: "C’est la première fois que vous utilisez Teambox ? <a href='%{link}'>Créez un projet‑exemple</a> pour expérimenter toutes les possibilités et apprendre à vous servir de Teambox."
       created: "Le projet a été créé !"
@@ -1157,11 +1157,11 @@ fr:
       submit: "Créer un projet et commencer à inviter des utilisateurs"
       title: "Créer un projet"
       upgrade: 
-        to_2: "<a href='{{link}}'>Améliorer votre compte maintenant</a> pour créer <b>plus de {{projects}} projets<b>, stocker <b>{{storage}} Gb<b> de fichiers et utilisez la <b>barre de recherches à travers tous vos projets<b>."
+        to_2: "<a href='%{link}'>Améliorer votre compte maintenant</a> pour créer <b>plus de %{projects} projets<b>, stocker <b>%{storage} Gb<b> de fichiers et utilisez la <b>barre de recherches à travers tous vos projets<b>."
       you_can_create_more: 
         one: "Vous pouvez créer un projet supplémentaire avec votre plan actuel."
-        other: "Vous pouvez créer {{count}} des projets supplémentaires avec votre plan actuel."
-        zero: "Vous ne pouvez plus créer de projet.<br/>La limite de projets avec votre plan actuel est {{max}}."
+        other: "Vous pouvez créer %{count} des projets supplémentaires avec votre plan actuel."
+        zero: "Vous ne pouvez plus créer de projet.<br/>La limite de projets avec votre plan actuel est %{max}."
     new_primer: 
       define1: "Un projet est un groupe partagé avec vos contacts."
       define2: "À l’intérieur d’un projet, chaque membre a la possibilité de:"

@@ -70,7 +70,7 @@ pl:
         name: Strona
     errors: 
       full_messages: 
-        format: "{{attribute}} {{message}}"
+        format: "%{attribute} %{message}"
       messages: 
         accepted: "musi zostać zaakceptowana "
         blank: "nie może być pusta"
@@ -107,8 +107,8 @@ pl:
       template: 
         body: "Były problemy z następującymi polami:"
         header: 
-          one: "1 problem uniemożliwił {{model}} zapisanie"
-          other: "{{count}} problemów uniemożliwiło {{model}} zapisanie"
+          one: "1 problem uniemożliwił %{model} zapisanie"
+          other: "%{count} problemów uniemożliwiło %{model} zapisanie"
     models: 
       address: Adres
       card: Karta
@@ -884,7 +884,7 @@ pl:
       submit: Stwórz
       title: "Stwórz grupę"
     primer: 
-      configure_domain: "Możesz użyć dowolnej subdomeny, np. http://yourcompany.teambox.com, albo możesz użyć odnośnika do własnej domeny, np.http://yourdomain.com. <a href='{{link}}' target='_blank'>Sprawdź jak to zrobić</a>. "
+      configure_domain: "Możesz użyć dowolnej subdomeny, np. http://yourcompany.teambox.com, albo możesz użyć odnośnika do własnej domeny, np.http://yourdomain.com. <a href='%{link}' target='_blank'>Sprawdź jak to zrobić</a>. "
       create_group: "Stwórz grupę"
       explain: "Grupy są doskonałym narzędziem do dzielenia się doświadczeniem. Możesz mieć ekran logowania z w łąsnym logo i tekstem HTML"
       no_group_create: "Nie posiadasz grupy. %{link}."
@@ -1133,20 +1133,20 @@ pl:
       success: "Edytowałeś role  %{name}'a"
   plans: 
     copies: 
-      copy1: "Lubisz Teambox? Jesteśmy pełno-etatowymi pracownikami! <a href='{{link}}'>Upgrade'uj teraz</a> by wspierać jego rozwój!"
-      copy2: "<a href='{{link}}'>Upgrade'uj teraz</a> by dostać więcej projektów, przestrzeni i wyszukiwarkę wszystkich projektów."
-      copy3: "<a href='{{link}}'>Osiągnij więcej</a> za pomocą konta premium! Dodatkowe miejsce i do 2000 projektów."
-      copy4: "<a href='{{link}}'>Pracuj lepiej</a> z kontem premium: Wyszukiwarka obejmująca wszystkie projekty."
-      copy5: "<a href='{{link}}'>Upgrade'uj swoje konto Teambox teraz</a> i ciesz się profesjonalną kolaboracją!"
-      copy6: "Wyszukiwarka obejmująca wszystkie projekty może zaoszczędzić godziny. <a href='{{link}}'>Upgrade'uj teraz</a> by ją mieć!"
-      copy7: "Twój biznes coś znaczy! <a href='{{link}}'>Zdobądź najlepszą pomoc</a> dla Teambox z naszym planem premium."
+      copy1: "Lubisz Teambox? Jesteśmy pełno-etatowymi pracownikami! <a href='%{link}'>Upgrade'uj teraz</a> by wspierać jego rozwój!"
+      copy2: "<a href='%{link}'>Upgrade'uj teraz</a> by dostać więcej projektów, przestrzeni i wyszukiwarkę wszystkich projektów."
+      copy3: "<a href='%{link}'>Osiągnij więcej</a> za pomocą konta premium! Dodatkowe miejsce i do 2000 projektów."
+      copy4: "<a href='%{link}'>Pracuj lepiej</a> z kontem premium: Wyszukiwarka obejmująca wszystkie projekty."
+      copy5: "<a href='%{link}'>Upgrade'uj swoje konto Teambox teraz</a> i ciesz się profesjonalną kolaboracją!"
+      copy6: "Wyszukiwarka obejmująca wszystkie projekty może zaoszczędzić godziny. <a href='%{link}'>Upgrade'uj teraz</a> by ją mieć!"
+      copy7: "Twój biznes coś znaczy! <a href='%{link}'>Zdobądź najlepszą pomoc</a> dla Teambox z naszym planem premium."
     show: 
       branding: 
-        configure: "Twój plan wspiera indywidualny branding i nazwy. <a href='{{link}}'>Skonfiguruj swój branding tu</a>."
+        configure: "Twój plan wspiera indywidualny branding i nazwy. <a href='%{link}'>Skonfiguruj swój branding tu</a>."
         not_available: "Twój program nie wspiera <strong>indywidualnego brandingu</strong>. Upgrade'uj do wyższego planu by go zdobyć."
-      current_plan: "Twój obecny plan to <strong>{{name}}</strong>."
-      max_projects: "Możesz prowadzić do {{max}} projektów."
-      max_storage: "Możesz gromadzić do {{max}}."
+      current_plan: "Twój obecny plan to <strong>%{name}</strong>."
+      max_projects: "Możesz prowadzić do %{max} projektów."
+      max_storage: "Możesz gromadzić do %{max}."
       plan: "Twój Teambox Plan"
   projects: 
     edit: 
@@ -1171,8 +1171,8 @@ pl:
       permalink: "Permalink <em>krótki identyfikator projektu</em>"
       permalink_description: "To będzie adres projektu. Trzymaj go najkrócej jak się da. Spacje są dopuszczalne."
       settings: 
-        upgrade: "żeby <b>przywrócić projekt z archiwum</b> i móc go edytować musisz <a href='{{link}}'>podnieść status swojego konta dostając więcej pojemności i możliwości</a>  albo zarchiwizować inne projekty"
-        you_cant_unarchive: "Masz {{active}} aktywnych projektów a Twój aktualny plan pozwala na maksimum {{max}}  projektów"
+        upgrade: "żeby <b>przywrócić projekt z archiwum</b> i móc go edytować musisz <a href='%{link}'>podnieść status swojego konta dostając więcej pojemności i możliwości</a>  albo zarchiwizować inne projekty"
+        you_cant_unarchive: "Masz %{active} aktywnych projektów a Twój aktualny plan pozwala na maksimum %{max}  projektów"
       tracks_time: "Włącz śledzenie czasu. <em> Pozwoli użytkownikom zapisywać daty do poszczególnych zadań</em>"
     index: 
       archived: "Pokaż %{count} Archiwizowanych Zadań..."
@@ -1185,7 +1185,7 @@ pl:
     new: 
       active_projects: 
         one: "Masz 1 aktywny projekt."
-        other: "Masz {{count}} aktywnych projektów."
+        other: "Masz %{count} aktywnych projektów."
         zero: "Nie masz aktywnych projektów."
       create_an_example_project: "Pierwszy raz na Teambox? <a href='%{link}'>Stwórz nowy projekt</b> by się pobawić i pouczyć."
       created: "Twój projekt został stworzony!"
@@ -1197,11 +1197,11 @@ pl:
       submit: "Stwórz konto i zacznij współpracować"
       title: "Stwórz Projekt"
       upgrade: 
-        to_2: "<a href='{{link}}'>Ulepsz swoje konto</a>by móc stworzyć<b>nawet do{{projects}} projektów</b>, zgromadzić nawet<b>{{storage}} Gb</b>danych i używać paska wyszukiwarki we wszystkich projektach"
+        to_2: "<a href='%{link}'>Ulepsz swoje konto</a>by móc stworzyć<b>nawet do%{projects} projektów</b>, zgromadzić nawet<b>%{storage} Gb</b>danych i używać paska wyszukiwarki we wszystkich projektach"
       you_can_create_more: 
-        one: "Możesz stworzyć {{count}} projektów w obecnym planie pracy."
+        one: "Możesz stworzyć %{count} projektów w obecnym planie pracy."
         other: "Możesz stworzyć jeden dodatkowy projekt w obecnym planie racy."
-        zero: "Nie możesz dodać nowego projektu.<br/>Maksymalna liczba projektów które możesz utworzyć to {{max}}."
+        zero: "Nie możesz dodać nowego projektu.<br/>Maksymalna liczba projektów które możesz utworzyć to %{max}."
     new_primer: 
       define1: "Projekt jest dzielony z twoimi współpracownikami."
       define2: "W projekcie, każdy użytkownik może:"
