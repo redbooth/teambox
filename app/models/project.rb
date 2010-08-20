@@ -190,7 +190,7 @@ class Project < ActiveRecord::Base
       ical.custom_property("X-WR-CALNAME;VALUE=TEXT", calendar_name)
       ical.custom_property("METHOD","PUBLISH")
       tasks.each do |task|
-        next unless task.due_on
+        next unless task.due_on && task.active?
         date = task.due_on
         created_date = task.created_at.to_time.to_datetime
         ical.event do

@@ -840,7 +840,7 @@ es:
       no_edit: "No puedes editar este grupo"
       not_admin: "No puedes administrar este grupo"
       not_enabled: "Los grupos no están activados para esta versión de Teambox"
-      upgrade: "Para crear <b>dominios personalizados</b>, debes {{link}}."
+      upgrade: "Para crear <b>dominios personalizados</b>, debes %{link}."
       upgrade_account: "contrata un plan superior"
     fields: 
       description: "El HTML que se mostrará en la página inicial"
@@ -871,7 +871,7 @@ es:
       submit: Crear
       title: "Crear grupo"
     primer: 
-      configure_domain: "Puedes usar dominios personalizados, como http://tuempresa.teambox.com, o puedes enlazarlo a http://tudominio.com. <a href='{{link}}' target='_blank'>Aprende a hacer esto</a>."
+      configure_domain: "Puedes usar dominios personalizados, como http://tuempresa.teambox.com, o puedes enlazarlo a http://tudominio.com. <a href='%{link}' target='_blank'>Aprende a hacer esto</a>."
       create_group: "Crear un grupo"
       explain: "Los grupos son una forma de personalizar la forma de la que usas Teambox. Puedes crear tu propia página de entrada con tu texto en HTML."
       no_group_create: "No has creado tu propio grupo. %{link}."
@@ -1123,20 +1123,20 @@ es:
       success: "Has actualizado el rol de %{name}"
   plans: 
     copies: 
-      copy1: "¿Te gusta Teambox? ¡Somos trabajadores como tú! <a href='{{link}}'>Compra una cuenta premium</a> para apoyarnos."
-      copy2: "<a href='{{link}}'>Consigue una cuenta premium</a> para tener más proyectos y almacenamiento."
-      copy3: "<a href='{{link}}'>Trabaja mejor</a> con una cuenta premium! Más almacenamiento, más proyectos."
-      copy4: "Por el precio de unas tapas, <a href='{{link}}'>consigue una cuenta premium</a> en Teambox."
-      copy5: "<a href='{{link}}'>Haz una cuenta premium</a> y lleva tu colaboración a un nivel profesional."
-      copy6: "La barra de búsqueda para todos los proyectos puede ahorrarte horas. <a href='{{link}}'>Consíguela ahora</a>!"
-      copy7: "Tu negocio importa! <a href='{{link}}'>Contrata el mejor soporte técnico</a> para Teambox."
+      copy1: "¿Te gusta Teambox? ¡Somos trabajadores como tú! <a href='%{link}'>Compra una cuenta premium</a> para apoyarnos."
+      copy2: "<a href='%{link}'>Consigue una cuenta premium</a> para tener más proyectos y almacenamiento."
+      copy3: "<a href='%{link}'>Trabaja mejor</a> con una cuenta premium! Más almacenamiento, más proyectos."
+      copy4: "Por el precio de unas tapas, <a href='%{link}'>consigue una cuenta premium</a> en Teambox."
+      copy5: "<a href='%{link}'>Haz una cuenta premium</a> y lleva tu colaboración a un nivel profesional."
+      copy6: "La barra de búsqueda para todos los proyectos puede ahorrarte horas. <a href='%{link}'>Consíguela ahora</a>!"
+      copy7: "Tu negocio importa! <a href='%{link}'>Contrata el mejor soporte técnico</a> para Teambox."
     show: 
       branding: 
-        configure: "Tu plan admite personalización con tu logotipo y dominio. <a href='{{link}}'>Configúralo aquí</a>."
+        configure: "Tu plan admite personalización con tu logotipo y dominio. <a href='%{link}'>Configúralo aquí</a>."
         not_available: "Tu plan no dispone de <strong>personalización</strong>. Cambia a un plan superior para usar Teambox con tu propia página de bienvenida, logotipo y en tu dominio."
-      current_plan: "Tu cuenta actual es <strong>{{name}}</strong>."
-      max_projects: "Puedes tener hasta {{max}} proyectos activos."
-      max_storage: "Puedes almacenar hasta {{max}}."
+      current_plan: "Tu cuenta actual es <strong>%{name}</strong>."
+      max_projects: "Puedes tener hasta %{max} proyectos activos."
+      max_storage: "Puedes almacenar hasta %{max}."
       plan: "Tu plan de Teambox"
   projects: 
     edit: 
@@ -1161,8 +1161,8 @@ es:
       permalink: "Permalink: <em>Un código para el proyecto</em>"
       permalink_description: "Esto formará la dirección web de tu proyecto. Mantenla breve. No se permiten espacios"
       settings: 
-        upgrade: "Para <b>desarchivar este proyecto</b> y poder editarlo, debes <a href='{{link}}'>conseguir una cuenta con más capacidad</a> o archivar otros proyectos."
-        you_cant_unarchive: "Tienes {{active}} proyectos activos, y tu plan actual sólo permite {{max}} proyectos."
+        upgrade: "Para <b>desarchivar este proyecto</b> y poder editarlo, debes <a href='%{link}'>conseguir una cuenta con más capacidad</a> o archivar otros proyectos."
+        you_cant_unarchive: "Tienes %{active} proyectos activos, y tu plan actual sólo permite %{max} proyectos."
       tracks_time: "Activar time tracking. <em>Esto permite a los usuarios reportar cuántas horas han trabajado en cada tarea, y extraer informes</em>,"
       extra_options: "Más opciones"
     index: 
@@ -1176,7 +1176,7 @@ es:
     new: 
       active_projects: 
         one: "Sólo tienes un proyecto activo."
-        other: "Tienes {{count}} proyectos activos."
+        other: "Tienes %{count} proyectos activos."
         zero: "No tienes proyectos activos."
       create_an_example_project: "¿Es tu primera vez en Teambox? <a href='%{link}'>Crea un proyecto de ejemplo</a> para experimentar y aprender."
       created: "Se ha creado el proyecto!"
@@ -1188,11 +1188,11 @@ es:
       submit: "Crear proyecto y empezar a invitar usuarios"
       title: "Crear un proyecto"
       upgrade: 
-        to_2: "<a href='{{link}}'>Compra una cuenta de más capacidad</a> para crear <b>hasta {{projects}} proyects</b>, almacenar hasta <b>{{storage}} Gb</b> de archivos y usar la <b>barra de búsqueda en proyectos</b>."
+        to_2: "<a href='%{link}'>Compra una cuenta de más capacidad</a> para crear <b>hasta %{projects} proyects</b>, almacenar hasta <b>%{storage} Gb</b> de archivos y usar la <b>barra de búsqueda en proyectos</b>."
       you_can_create_more: 
         one: "Puedes crear un proyecto más con tu cuenta."
-        other: "Puedes crear {{count}} proyectos más con tu cuenta."
-        zero: "No puedes crear más proyectos.<br/>Sólo puedes tener {{max}} proyectos con tu cuenta."
+        other: "Puedes crear %{count} proyectos más con tu cuenta."
+        zero: "No puedes crear más proyectos.<br/>Sólo puedes tener %{max} proyectos con tu cuenta."
     new_primer: 
       define1: "Un proyecto es un grupo compartido con tus contactos."
       define2: "Dentro de un proyecto, cada miembro puede:"

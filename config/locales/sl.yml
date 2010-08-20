@@ -64,7 +64,7 @@ sl:
         name: Stran
     errors: 
       full_messages: 
-        format: "{{attribute}} {{message}}"
+        format: "%{attribute} %{message}"
       messages: 
         accepted: "mora biti potrjeno"
         blank: "ne sme biti prazno"
@@ -567,23 +567,23 @@ sl:
         other: "približno %{count} let"
       almost_x_years: 
         one: "skoraj 1 leto"
-        other: "skoraj {{count}} let"
+        other: "skoraj %{count} let"
       half_a_minute: "pol minute"
       less_than_x_minutes: 
         one: "manj kot minuto"
-        other: "manj kot {{count}} minut"
+        other: "manj kot %{count} minut"
       less_than_x_seconds: 
         one: "manj kot 1 sekundo"
         other: "manj kot %{count} sekund"
       over_x_years: 
         one: "preko 1 leta"
-        other: "preko {{count}} let"
+        other: "preko %{count} let"
       x_days: 
         one: "1 dan"
         other: "%{count} dni"
       x_minutes: 
         one: "1 minuta"
-        other: "{{count}} minut"
+        other: "%{count} minut"
       x_months: 
         one: "1 mesec"
         other: "%{count} mesecev"

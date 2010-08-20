@@ -70,7 +70,7 @@ ca:
         name: Adreça
     errors: 
       full_messages: 
-        format: "{{attribute}} {{message}}"
+        format: "%{attribute} %{message}"
       messages: 
         accepted: "ha de ser acceptat"
         blank: "no pot estar en blanc"
@@ -706,7 +706,7 @@ ca:
         one: "al voltant d'1 any"
         other: "al voltant de %{count} anys"
       almost_x_years: 
-        other: "almenys {{count}} anys"
+        other: "almenys %{count} anys"
         one: "almenys 1 any"
       half_a_minute: "mig minut"
       less_than_x_minutes: 
@@ -834,7 +834,7 @@ ca:
       no_edit: "No pots editar aquest grup"
       not_admin: "No pots administrar aquest grup"
       not_enabled: "Els Grups no estan permesos en aquest sistema"
-      upgrade: "Per tal de <b>crear dominis amb el teu branding </b>, hauràs de {{link}}."
+      upgrade: "Per tal de <b>crear dominis amb el teu branding </b>, hauràs de %{link}."
       upgrade_account: "Actualitza el teu compte"
     fields: 
       description: "HTML que es mostrarà a la pàgina principal"
@@ -865,7 +865,7 @@ ca:
       submit: Crear
       title: "Crear grup"
     primer: 
-      configure_domain: "Pots utilitzar un subtítol personalitzat, com http://lateva companyia.teambox.com, o pot estar vinculada al seu propi nom de domini, com a http://elteudomini.com. <a href='{{link}}' target='_blank'>Aprèn com fer això</a>."
+      configure_domain: "Pots utilitzar un subtítol personalitzat, com http://lateva companyia.teambox.com, o pot estar vinculada al seu propi nom de domini, com a http://elteudomini.com. <a href='%{link}' target='_blank'>Aprèn com fer això</a>."
       create_group: "Crear un grup"
       explain: "Els grups són una forma de branding de la seva experiència amb Teambox. Podeu tenir una pantalla d'accés amb el vostre propi logotip i text HTML."
       no_group_create: "No ets propietari d'un grup. %{link}."
@@ -1119,20 +1119,20 @@ ca:
       success: "Has actualitzat el rol de %{name}"
   plans: 
     copies: 
-      copy1: "T'agrada Teambox? Som treballadors a temps complet! <a href='{{link}}'>Actualitza't ara</a> per donar suport al nostre desenvolupament!"
-      copy2: "<a href='{{link}}'>Actualitza't ara</a> per aconseguir més projectes, capacitat i búsqueda entre tots els projectes."
-      copy3: "<a href='{{link}}'>Aconsegueix més</a> amb un compte premium! Extra capacitat, projectes il.limitats."
-      copy4: "<a href='{{link}}'>Treballa millor</a> amb un compte premium: barra de búsqueda per a tots els projectes."
-      copy5: "<a href='{{link}}'>Actualitza el teu compte de Teambox ara</a> i gaudeix de la col.laboració professional!"
-      copy6: "La barra de búsqueda pot estalviar-te temps. <a href='{{link}}'>Actualitza't ara</a> per aconseguir-la!"
-      copy7: "Els teus assumptes de negocis! <a href='{{link}}'>Obté el millor suport</a> per a Teambox amb els nostres plans premium."
+      copy1: "T'agrada Teambox? Som treballadors a temps complet! <a href='%{link}'>Actualitza't ara</a> per donar suport al nostre desenvolupament!"
+      copy2: "<a href='%{link}'>Actualitza't ara</a> per aconseguir més projectes, capacitat i búsqueda entre tots els projectes."
+      copy3: "<a href='%{link}'>Aconsegueix més</a> amb un compte premium! Extra capacitat, projectes il.limitats."
+      copy4: "<a href='%{link}'>Treballa millor</a> amb un compte premium: barra de búsqueda per a tots els projectes."
+      copy5: "<a href='%{link}'>Actualitza el teu compte de Teambox ara</a> i gaudeix de la col.laboració professional!"
+      copy6: "La barra de búsqueda pot estalviar-te temps. <a href='%{link}'>Actualitza't ara</a> per aconseguir-la!"
+      copy7: "Els teus assumptes de negocis! <a href='%{link}'>Obté el millor suport</a> per a Teambox amb els nostres plans premium."
     show: 
       branding: 
-        configure: "El seu pla de suport personalitzat de marca i noms de domini. <a href='{{link}}'> Configuri la seva marca aquí </ a>."
+        configure: "El seu pla de suport personalitzat de marca i noms de domini. <a href='%{link}'> Configuri la seva marca aquí </ a>."
         not_available: "El teu pla no és compatible amb <strong> branding personalitzat de marca </ strong>. Actualitza't a un compte més alt per aconseguir-ho."
-      current_plan: "El vostre pla actual és <strong>{{name}}</strong>."
-      max_projects: "Pots tenir un màxim de  {{max}} projectes."
-      max_storage: "Pots emmagatzemar fins a {{max}}."
+      current_plan: "El vostre pla actual és <strong>%{name}</strong>."
+      max_projects: "Pots tenir un màxim de  %{max} projectes."
+      max_storage: "Pots emmagatzemar fins a %{max}."
       plan: "El vostre Teambox Plan"
   projects: 
     edit: 
@@ -1157,8 +1157,8 @@ ca:
       permalink: URL
       permalink_description: "Això formarà l'adreça web del teu projecte. L'has de mantenir breu. No es permeten espais"
       settings: 
-        upgrade: "Per <b>desarxivar aquest projecte</b> i poder modificar-lo, has <a href='{{link}}'>d'actualitzar el teu compte i obtenir major capacitat d'emmagatzematge i característiques</a> o arxivar altres projectes."
-        you_cant_unarchive: "Tens {{active}} projectes actius i el teu pla actual només  permet {{max}} projectes"
+        upgrade: "Per <b>desarxivar aquest projecte</b> i poder modificar-lo, has <a href='%{link}'>d'actualitzar el teu compte i obtenir major capacitat d'emmagatzematge i característiques</a> o arxivar altres projectes."
+        you_cant_unarchive: "Tens %{active} projectes actius i el teu pla actual només  permet %{max} projectes"
       tracks_time: "Habilita el tome tracking. <em> permetrà als usuaris el registre de temps per a les tasques. </ em>"
     index: 
       archived: "Veure %{count} projectes arxivats..."
@@ -1170,7 +1170,7 @@ ca:
       subscribe: "Subscriu-te al feed d'activitats"
     new: 
       active_projects: 
-        other: "Tu tens {{count}} projectes actius."
+        other: "Tu tens %{count} projectes actius."
         zero: "No tens actius projectes."
         one: "Tu tens un projecte actiu."
       create_an_example_project: "És la teva primera vegada a Teambox? <a href='%{link}'>Crea un projecte d'exemple</a> per experimentar i aprendre."
@@ -1183,10 +1183,10 @@ ca:
       submit: "Crear projecte i convidar usuaris"
       title: "Crear un projecte"
       upgrade: 
-        to_2: "<a href='{{link}}'>Actualitza el teu compte ara</a> per crear <b>fins a {{projects}} projectes</b>, permet emmagatzemar fins a <b>{{storage}} Gb</b> d'arxius i utilitzar la <b>barra de búsqueda per a tots els projectes</b>."
+        to_2: "<a href='%{link}'>Actualitza el teu compte ara</a> per crear <b>fins a %{projects} projectes</b>, permet emmagatzemar fins a <b>%{storage} Gb</b> d'arxius i utilitzar la <b>barra de búsqueda per a tots els projectes</b>."
       you_can_create_more: 
-        other: "Tu pots crear {{count}} projectes més amb el teu pla actual."
-        zero: "No pots crear cap més projecte.<br/>El màxim de projectes amb el teu pla es de {{max}}."
+        other: "Tu pots crear %{count} projectes més amb el teu pla actual."
+        zero: "No pots crear cap més projecte.<br/>El màxim de projectes amb el teu pla es de %{max}."
         one: "Tu pots crear un projecte més amb el teu pla actual."
     new_primer: 
       define1: "Un projecte és un grup compartit amb els teus contactes."

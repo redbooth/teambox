@@ -64,7 +64,7 @@ de:
         name: Webseite
     errors: 
       full_messages: 
-        format: "{{attribute}} {{message}} "
+        format: "%{attribute} %{message} "
       messages: 
         accepted: "muss angenommen werden"
         blank: "darf nicht leer sein"
@@ -772,7 +772,7 @@ de:
       no_edit: "Sie können diese Gruppe nicht editieren"
       not_admin: "Sie haben keine Administratorrechte für diese Gruppe"
       not_enabled: "Gruppen werden auf diesem System nicht unterstützt!"
-      upgrade: "Um eine<b>Marken Domäne</b> zu erstellen, müssen Sie {{link}}. "
+      upgrade: "Um eine<b>Marken Domäne</b> zu erstellen, müssen Sie %{link}. "
       upgrade_account: "stufen Sie Ihren Tarif hoch"
     fields: 
       description: Beschreibung
@@ -803,7 +803,7 @@ de:
       submit: Erstellen
       title: "Gruppe erstellen"
     primer: 
-      configure_domain: "Sie können eine Unterdomäne benutzen, wie http://ihrefirma.teambox.com, oder sie können auf ihren Domänennamen umleiten, wie in http://yourdomain.com. <a href='{{link}}' target='_blank'>Lernen Sie, wie es funktioniert</a>. "
+      configure_domain: "Sie können eine Unterdomäne benutzen, wie http://ihrefirma.teambox.com, oder sie können auf ihren Domänennamen umleiten, wie in http://yourdomain.com. <a href='%{link}' target='_blank'>Lernen Sie, wie es funktioniert</a>. "
       create_group: "Gruppe erstellen"
       explain: "Gruppen sind eine Möglichkeit, Teambox in Ihrem eigenen Design zu gestalten. Sie können eine Anmeldemaske mit Ihrem eigenen Logo und HTML Text verwenden."
       no_group_create: "Sie besitzen keine Gruppen. %{link}."
@@ -1039,20 +1039,20 @@ de:
       success: "Sie haben die Rolle von %{name} aktualisiert"
   plans: 
     copies: 
-      copy1: "Teambox gefällt Ihnen? Wir sind Vollzeitkräfte! <a href='{{link}}'>Stufen Sie Ihren Tarif hoch</a>, um unsere Leistung zu unterstützen! "
-      copy2: "<a href='{{link}}'>Stufen Sie Ihren Tarif hoch</a> für mehr Projekte, mehr Speicherplatz und für die Suche über alle Projekte. "
-      copy3: "<a href='{{link}}'>Mehr Leistung</a> mit einem Premium Tarif! Mehr Speicherplatz, bis zu 2000 Projekte. "
-      copy4: "<a href='{{link}}'>Arbeiten Sie besser</a> mit einem Premium Tarif: Suchleiste über alle Projekte. "
-      copy5: "<a href='{{link}}'>Stufen Sie Ihren Teamboxtarif jetzt hoch</a> und genießen Sie professionelle Zusammenarbeit! "
-      copy6: "Die Suchleiste über alle Projekte kann Ihnen viele Stunden Suche ersparen. <a href='{{link}}'>Stufen sie jetzt hoch</a>, um sie zu nutzen! "
-      copy7: "Ihr Geschäft ist wichtig! <a href='{{link}}'>Erhalten Sie den besten Support</a> für Teambox mit unseren Premium Tarifen. "
+      copy1: "Teambox gefällt Ihnen? Wir sind Vollzeitkräfte! <a href='%{link}'>Stufen Sie Ihren Tarif hoch</a>, um unsere Leistung zu unterstützen! "
+      copy2: "<a href='%{link}'>Stufen Sie Ihren Tarif hoch</a> für mehr Projekte, mehr Speicherplatz und für die Suche über alle Projekte. "
+      copy3: "<a href='%{link}'>Mehr Leistung</a> mit einem Premium Tarif! Mehr Speicherplatz, bis zu 2000 Projekte. "
+      copy4: "<a href='%{link}'>Arbeiten Sie besser</a> mit einem Premium Tarif: Suchleiste über alle Projekte. "
+      copy5: "<a href='%{link}'>Stufen Sie Ihren Teamboxtarif jetzt hoch</a> und genießen Sie professionelle Zusammenarbeit! "
+      copy6: "Die Suchleiste über alle Projekte kann Ihnen viele Stunden Suche ersparen. <a href='%{link}'>Stufen sie jetzt hoch</a>, um sie zu nutzen! "
+      copy7: "Ihr Geschäft ist wichtig! <a href='%{link}'>Erhalten Sie den besten Support</a> für Teambox mit unseren Premium Tarifen. "
     show: 
       branding: 
-        configure: "Ihr Tarif unterstützt ein eigenes Layout und Domänen-Namen. <a href='{{link}}'>Bearbeiten Sie die Einstellungen hier</a>. "
+        configure: "Ihr Tarif unterstützt ein eigenes Layout und Domänen-Namen. <a href='%{link}'>Bearbeiten Sie die Einstellungen hier</a>. "
         not_available: "Ihr Tarif unterstützt kein <strong>eigenes Layout</strong>. Stufen Sie Ihren Tarif hoch für ein eigenes Layout. "
-      current_plan: "Ihr aktueller Tarif ist <strong>{{name}}</strong>. "
-      max_projects: "Sie können bis zu {{max}} Projekte anlegen. "
-      max_storage: "Ihr Speicherplatz beträgt bis zu {{max}}. "
+      current_plan: "Ihr aktueller Tarif ist <strong>%{name}</strong>. "
+      max_projects: "Sie können bis zu %{max} Projekte anlegen. "
+      max_storage: "Ihr Speicherplatz beträgt bis zu %{max}. "
       plan: "Ihr Teambox Tarif"
   projects: 
     edit: 
@@ -1077,8 +1077,8 @@ de:
       permalink: URL
       permalink_description: "Dies wird die Web-Adresse Ihres Projektes. Wählen Sie sie so kurz wie möglich und vermeiden Sie Leerzeichen."
       settings: 
-        upgrade: "Um <b>dieses Projekt wiederherzustellen</b> und es wieder zu bearbetiten, müssen Sie <a href='{{link}}'>Ihren Tarif hochstufen. Sie erhalten mehr Speicherplatz und mehr Möglichkeiten </a> oder Sie archivieren andere Projekte. "
-        you_cant_unarchive: "Sie haben {{active}} aktive Projekte, und Ihr Tarif erlaubt maximal {{max}} Projekte"
+        upgrade: "Um <b>dieses Projekt wiederherzustellen</b> und es wieder zu bearbetiten, müssen Sie <a href='%{link}'>Ihren Tarif hochstufen. Sie erhalten mehr Speicherplatz und mehr Möglichkeiten </a> oder Sie archivieren andere Projekte. "
+        you_cant_unarchive: "Sie haben %{active} aktive Projekte, und Ihr Tarif erlaubt maximal %{max} Projekte"
       tracks_time: "Zeiterfassung aktivieren"
     index: 
       archived: "Zeige %{count} archivierte Projekte..."
@@ -1091,7 +1091,7 @@ de:
     new: 
       active_projects: 
         one: "Sie haben ein aktives Projekt"
-        other: "Sie haben {{count}} aktive Projekte."
+        other: "Sie haben %{count} aktive Projekte."
         zero: "Sie haben keine aktiven Projekte."
       create_an_example_project: "Zum ersten Mal bei Teambox? <a href='%{link}'>Erstellen Sie ein Beispiel-Projekt</a> zum Ausprobieren und Lernen."
       created: "Ihr Projekt wurde erstellt!"
@@ -1101,11 +1101,11 @@ de:
       submit: "Neues Projekt erstellen und Teilnehmer einladen"
       title: "Ein neues Projekt erstellen"
       upgrade: 
-        to_2: "<a href='{{link}}'>Stufen Sie Ihren Tarif hoch</a>für <b>bis zu {{projects}} Projekte</b>, speichern Sie bis zu <b>{{storage}} Gb</b> Dateien und nutzen Sie die <b>Suchleiste über alle Projekte</b>. "
+        to_2: "<a href='%{link}'>Stufen Sie Ihren Tarif hoch</a>für <b>bis zu %{projects} Projekte</b>, speichern Sie bis zu <b>%{storage} Gb</b> Dateien und nutzen Sie die <b>Suchleiste über alle Projekte</b>. "
       you_can_create_more: 
         one: "Sie können mit Ihrem aktuellen Tarif noch ein Projekt erstellen."
-        other: "Sie können mit Ihrem aktuellen Tarif noch {{count}} Projekte erstellen."
-        zero: "Sie können keine Projekte mehr erstellen. <br/>Die maximale Anzahl von Projekten mit Ihrem aktuellen Tarif ist {{max}}."
+        other: "Sie können mit Ihrem aktuellen Tarif noch %{count} Projekte erstellen."
+        zero: "Sie können keine Projekte mehr erstellen. <br/>Die maximale Anzahl von Projekten mit Ihrem aktuellen Tarif ist %{max}."
     new_primer: 
       define1: "Ein Projekt ist eine freigegebene Gruppe mit Ihren Teammitgliedern."
       define2: "In einem Projekt kann jedes Teammitglied:"
