@@ -159,6 +159,12 @@ ActionController::Routing::Routes.draw do |map|
     api.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}
     api.resources :pages, :except => [:new, :edit]
     
+    
+    api.resources :organizations, :except => [:new, :edit, :destroy] do |organization|
+      organization.resources :projects, :except => [:new, :edit], :member => {:transfer => :put}
+      organization.resources :memberships, :except => [:new, :edit, :create]
+    end
+    
     api.account 'account', :controller => :users, :action => :current, :conditions => { :method => :get }
   end
   

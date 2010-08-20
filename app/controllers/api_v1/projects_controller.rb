@@ -1,4 +1,5 @@
 class ApiV1::ProjectsController < ApiV1::APIController
+  before_filter :load_organization
   before_filter :can_modify?, :only => [:edit, :update, :transfer, :destroy]
   
   def index
@@ -16,6 +17,8 @@ class ApiV1::ProjectsController < ApiV1::APIController
     unless @project.ensure_organization(current_user, params[:project])
       return handle_api_error(@project)
     end
+    
+    @project.organization = @organization if @organization
     
     unless current_user.can_create_project?
       api_error(t('projects.new.not_allowed'), :unauthorized)

@@ -22,5 +22,23 @@ class Membership < ActiveRecord::Base
   def role_name
     ROLES.index(role)
   end
+  
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :user_id => user_id,
+      :user => user.to_api_hash,
+      :organization_id => organization_id,
+      :role => role,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db)
+    }
+    
+    base
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
+  end
 
 end
