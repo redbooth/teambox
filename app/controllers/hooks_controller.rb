@@ -1,10 +1,4 @@
 class HooksController < ApplicationController
-  before_filter :find_hook, :only => [:edit, :update, :destroy]
-  before_filter :find_templates, :only => [:index, :new]
-  before_filter :can_modify?, :except => [:push]
-  no_login_required :only => [:push]
-  skip_before_filter :verify_authenticity_token, :only => [:push]
-
 
   no_login_required
   skip_before_filter :verify_authenticity_token
