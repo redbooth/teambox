@@ -12,7 +12,7 @@
       = errors_for(@organization, :name) || errors_for(@organization, :permalink)
   - else
     - if Teambox.config.community # single organization
-      = f.hidden_field :organization_id, :value => Organization.last.id
+      = f.hidden_field :organization_id, :value => current_user.organizations.first.id
     - else
       = f.label :organization_name, t('.choose_organization.choose_org')
       = f.select :organization_id, options_for_organizations(current_user.organizations)
