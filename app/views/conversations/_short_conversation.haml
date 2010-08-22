@@ -3,11 +3,12 @@
     .comment
       .info= thumb_avatar(comment.user)
       .block
-        .body.textilized
+        .body
           %h2.title
             = link_to conversation, project_conversation_path(@current_project, conversation)
             %span= t('common.comment', :count => conversation.comments_count)
-          ~ comment.body_html
+          .textilized
+            ~ comment.body_html
         - if comment.uploads.any?
           - if comment.uploads.all? { |upload| upload.image? }
             .upload_images
