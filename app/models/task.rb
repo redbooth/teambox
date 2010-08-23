@@ -1,4 +1,6 @@
 class Task < RoleRecord
+  
+  include Watchable
 
   STATUS_NAMES = [:new, :open, :hold, :resolved, :rejected]
 
@@ -16,8 +18,6 @@ class Task < RoleRecord
 
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| %w[body hours human_hours].all? { |k| comment[k].blank? } }
-
-  serialize :watchers_ids
 
   acts_as_list :scope => :task_list
 
@@ -114,7 +114,6 @@ class Task < RoleRecord
         Emailer.send_with_language(:notify_task, user.locale, user, self.project, self) # deliver_notify_task
       end
     end
-    self.sync_watchers
   end
 
   def to_s

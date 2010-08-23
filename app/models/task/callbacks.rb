@@ -1,7 +1,6 @@
 class Task
   def after_create
     project.log_activity(self, 'create')
-    add_watcher(self.user)
   end
 
   def before_save
@@ -9,9 +8,7 @@ class Task
       last_position = task_list.tasks.first(:select => 'position')
       self.position = last_position.try(:position).try(:succ) || 1
     end
-    if assigned.try(:user) && watchers_ids && !watchers_ids.include?(assigned.user.id)
-      add_watcher(assigned.user)
-    end
+    add_watcher(assigned.user, false) if assigned
     true
   end
 

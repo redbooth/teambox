@@ -39,5 +39,17 @@ describe Conversation do
     conversation.save.should be_true
     conversation.name.should be_nil
   end
+  
+  it "allows watchers id on create" do
+    project = Factory.create(:project)
+    other_guy = Factory.create(:confirmed_user)
+    person = Factory.create(:person, :project => project, :user => other_guy)
+    
+    conversation = Factory.create(:conversation, :project => project, :user => project.user,
+      :watchers_ids => [other_guy.id.to_s])
+    
+    conversation.watchers.should include(conversation.user)
+    conversation.watchers.should include(person.user)
+  end
 
 end

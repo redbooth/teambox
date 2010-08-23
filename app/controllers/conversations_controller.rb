@@ -12,12 +12,7 @@ class ConversationsController < ApplicationController
     @conversation = @current_project.conversations.new_by_user(current_user, params[:conversation])
 
     if @conversation.save
-      # if params[:user_all] == "1"
-      #   @conversation.add_watchers @current_project.users
-      # else
-      #   add_watchers params[:user]
-      # end
-      # @conversation.notify_new_comment(@conversation.comments.first)
+      @conversation.notify_new_comment(@conversation.comments.first)
       
       respond_to do |f|
         f.html {
@@ -125,13 +120,4 @@ class ConversationsController < ApplicationController
     def current_conversation
       [@current_project, @conversation]
     end
-    
-    # def add_watchers(hash)
-    #   (hash || []).each do |user_id, should_notify|
-    #     if should_notify == "1" and Person.exists? :project_id => @conversation.project_id, :user_id => user_id
-    #       user = User.find user_id
-    #       @conversation.add_watcher user# if user
-    #     end
-    #   end
-    # end
 end

@@ -3,6 +3,8 @@ class Conversation < RoleRecord
   # needed for `truncate`
   include ActionView::Helpers::TextHelper
   
+  include Watchable
+  
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
   
@@ -19,11 +21,8 @@ class Conversation < RoleRecord
   named_scope :not_simple, :conditions => { :simple => false }
   named_scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
 
-  serialize :watchers_ids
-
   def after_create
     project.log_activity(self,'create')
-    add_watcher(self.user) 
   end
 
   def after_destroy
@@ -49,7 +48,6 @@ class Conversation < RoleRecord
         Emailer.send_with_language(:notify_conversation, user.locale, user, self.project, self) # deliver_notify_conversation
       end
     end
-    self.sync_watchers
   end
   
   def to_s
