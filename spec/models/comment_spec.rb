@@ -352,6 +352,17 @@ describe Comment do
       comment.reload.should have(0).uploads
       comment.body.should == "File deleted"
     end
+    
+    it "touches comment on upload destroy" do
+      upload = Factory.create :upload
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
+        :body => "Can't touch this"
+      Comment.update_all({:updated_at => 15.minutes.ago}, :id => comment.id)
+
+      comment.reload.updated_at.should be_close(15.minutes.ago, 1)
+      upload.reload.destroy
+      comment.reload.updated_at.should be_close(Time.now, 1)
+    end
   end
   
   context "hours" do
