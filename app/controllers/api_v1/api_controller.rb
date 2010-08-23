@@ -1,4 +1,5 @@
 class ApiV1::APIController < ApplicationController
+  skip_before_filter :load_organization
   skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token
 
   API_LIMIT = 50
@@ -12,6 +13,11 @@ class ApiV1::APIController < ApplicationController
       @current_project = Project.find_by_permalink(project_id)
       api_status(:not_found) unless @current_project
     end
+  end
+  
+  def load_organization
+    @organization = current_user.organizations.find_by_permalink(params[:organization_id])
+    api_status(:not_found) if params[:organization_id] and @organization.nil?
   end
   
   def belongs_to_project?

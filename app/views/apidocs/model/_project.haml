@@ -1,7 +1,7 @@
 %p= "Projects contain most of the objects present in Teambox."
 
 - doc_for :index, :example => [@project.to_api_hash] do
-  %p= "Returns the 25 most recent projects you own or belong to."
+  %p= "Returns the most recent projects you own or belong to. You can also filter by organization by passing in <tt>organization_id</tt>."
 
 - doc_for :show, :example => @project.to_api_hash(:include => :people) do
   %p= "Returns the data for a given project"

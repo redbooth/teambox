@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.complete_signup '/complete_signup',          :controller => 'users', :action => 'complete_signup'
   map.unlink_app      '/oauth/:provider/unlink',   :controller => 'users', :action => 'unlink_app'
 
-  map.javascript_environment '/javascripts/environment.js', :controller => 'javascripts', :action => 'environment'
+  map.javascript_environment '/i18n/environment.js', :controller => 'javascripts', :action => 'environment'
 
   map.resources :reset_passwords
   map.resource :session
@@ -158,6 +158,12 @@ ActionController::Routing::Routes.draw do |map|
     api.resources :users, :only => [:index, :show]
     api.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}
     api.resources :pages, :except => [:new, :edit]
+    
+    
+    api.resources :organizations, :except => [:new, :edit, :destroy] do |organization|
+      organization.resources :projects, :except => [:new, :edit], :member => {:transfer => :put}
+      organization.resources :memberships, :except => [:new, :edit, :create]
+    end
     
     api.account 'account', :controller => :users, :action => :current, :conditions => { :method => :get }
   end

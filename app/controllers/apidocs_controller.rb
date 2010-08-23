@@ -8,7 +8,7 @@ class ApidocsController < ApplicationController
   before_filter :load_example_data
   before_filter :load_api_routes, :only => [:routes,:model]
   
-  DOCUMENTED_MODELS = %w{activity comment conversation divider invitation note page person project task_list task upload user}
+  DOCUMENTED_MODELS = %w{activity comment conversation divider invitation membership note organization page person project task_list task upload user}
 
   def index
   end
@@ -155,6 +155,7 @@ class ApidocsController < ApplicationController
       end
       
       @invitation = @project.invitations.first
+      @membership = @organization.memberships.first
       @person = @project.people.first
       @user = @person.user
       @activity = @project.activities.first

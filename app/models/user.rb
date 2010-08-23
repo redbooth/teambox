@@ -151,6 +151,10 @@ class User < ActiveRecord::Base
   def person_for(project)
     self.people.find_by_project_id(project.id)
   end
+  
+  def member_for(organization)
+    self.memberships.find_by_organization_id(organization.id)
+  end
 
   def contacts_not_in_project(project)
     conditions = ["project_id IN (?)", Array(self.projects).collect{ |p| p.id } ]

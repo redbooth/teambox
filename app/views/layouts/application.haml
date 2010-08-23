@@ -15,7 +15,7 @@
     - javascript_tag do
       = yield :js_templates
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}", :reload_url => reload_url}
-    = javascript_include_tag 'modernizr', 'environment'
+    = javascript_include_tag 'modernizr', '/i18n/environment'
     = archived_project_strip(@current_project)
     = configure_this_organization
     .container
