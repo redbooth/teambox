@@ -47,16 +47,21 @@ class ActivitiesController < ApplicationController
   end
 
   def show_thread
-    if params[:thread_type] == "Task"
-      target = Task.find(params[:id])
-    else
-      target = Conversation.find(params[:id])
-    end
-    @comments = target ? target.comments.all : []
-    @comments.pop if target.is_a?(Conversation) and target.simple
+    # FIXME: insecure!
+    target = params[:thread_type].constantize.find params[:id]
+
+    @comments = target.comments
+    # TODO: ask why
+    @comments.pop if target.is_a?(Conversation) and target.simple?
+    
     respond_to do |format|
-      format.html { redirect_to projects_path }
-      format.js
+      format.html {
+        if request.xhr?
+          render :partial => 'comments/comment',
+            :collection => @comments.reverse, # regular chronological order
+            :locals => { :threaded => true }
+        end
+      }
       format.xml  { render :xml     => @comments.to_xml }
       format.json { render :as_json => @comments.to_xml }
       format.yaml { render :as_yaml => @comments.to_xml }

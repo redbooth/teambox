@@ -13,8 +13,9 @@
           = list_tasks(task_list,task_list.tasks.unarchived,task_list_editable?(task_list,current_user))
       - if task_list_editable?(task_list,current_user)
         .new_task
-          = task_link(project,task_list)
-          = task_form(project,task_list,task_list.new_task(current_user))
+          = link_to t('tasks.link.new'), [:new, project, task_list, :task]
+          = render 'tasks/form', :project => project, :task_list => task_list, :task => task_list.tasks.build
+          
           %span{ :id => task_list_id(:archive_link,project,task_list), :style => (show_archive_link ? nil : 'display:none') }
             = t('common.or')
             = archive_task_list_link(project,task_list, header_on_index)

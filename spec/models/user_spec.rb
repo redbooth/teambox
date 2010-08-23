@@ -71,7 +71,7 @@ describe User do
 
   describe "activation" do
     before do
-      @user = Factory.create(:user)
+      @user = Factory.create(:unconfirmed_user)
     end
 
     it "should not be active on creation" do
@@ -218,7 +218,7 @@ describe User do
     end
 
     it "should send an activation email when signing up without an invitation" do
-      @user = Factory.build(:user)
+      @user = Factory.build(:unconfirmed_user)
       Emailer.should_receive(:deliver_confirm_email).once
       @user.save
     end
@@ -230,7 +230,7 @@ describe User do
     end
 
     it "should not be active when first created" do
-      user = Factory.create(:user)
+      user = Factory.create(:unconfirmed_user)
       user.is_active?.should be_false
     end
   end

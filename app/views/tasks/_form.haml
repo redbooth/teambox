@@ -1,3 +1,8 @@
-- task_form_for(project,task_list,task) do |f|
-  = task_fields(f,project,task_list,task)
-  = task_submit(project,task_list,task)
+- shown = %w[new edit].include?(action_name)
+
+- form_for [project, task_list, task], :html => { :class => "app_form #{task.new_record?? 'new' : 'edit'}_task", :style => shown ? nil : 'display:none', :'data-remote' => !shown || nil } do |form|
+  = render 'tasks/fields', :f => form, :project => project
+  .submit
+    - unless shown
+      = link_to t('common.cancel'), '#cancel'
+    = form.submit t("tasks.#{form.object.new_record?? 'new' : 'edit'}.submit")

@@ -2,15 +2,19 @@
   .invitations
     = list_pending_invites(@pending_projects)
 
-- if @current_project.commentable?(current_user) && !@current_project.archived
-  = new_comment_form(@current_project,@current_project.comments.new)
-
+- if can?(:converse, @current_project) and not @current_project.archived?
+  - form_for [@current_project, @new_conversation], :html => { :multipart => true, :class => 'new_conversation new_comment', :'data-remote' => true } do |form|
+    = form.hidden_field :simple
+  
+    - form.object.comments.build
+    - form.fields_for :comments do |fields|
+      = render 'comments/fields', :f => fields, :placeholder => t('comments.new.project')
+  
 #activities
   = list_threads(@threads)
   = show_more_button(@activities)
 
-= javascript_tag autorefresh(@activities, @current_project)
-= javascript_projects_people [@current_project]
+=# javascript_tag autorefresh(@activities, @current_project)
 
 - content_for :column do
   = render 'recent_conversations', :project => @current_project, :conversations => @recent_conversations

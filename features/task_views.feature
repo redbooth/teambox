@@ -70,17 +70,3 @@ Feature: See tasks in different, common groupings
       | task_list_name | task_name                    |
       | This week      | Tell my friends              |
       | This week      | Post on Digg and Hacker News |
-
-  Scenario: See reopened task
-    Given I am logged in as balint
-    And the task called "Tell my friends" is resolved
-    When I go to the "Market Teambox" tasks page
-    And I follow "This week"
-    And I follow "Tell my friends"
-    And I follow "Reopen this task"
-    And I wait for .3 seconds
-    And I fill in "comment_body" with "Got some new friends"
-    And I press "Save"
-    And I go to the "Market Teambox" tasks page
-    Then I should see the task called "Tell my friends" in the "This week" task list
-

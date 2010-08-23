@@ -1,6 +1,38 @@
+document.on('click', '.task_header .text_actions a[href$="/edit"]', function(e, link) {
+  if (!e.isMiddleClick()) {
+    e.stop()
+    link.up('.task_header').hide().next('form.edit_task').forceShow().focusFirstElement()
+  }
+})
+
+var hideEditTaskFormAndShowHeader = function(form) {
+  Form.reset(form).hide().previous('.task_header').show()
+}
+
+document.on('click', '.task_header + .edit_task a[href="#cancel"]', function(e, link) {
+  e.stop()
+  hideEditTaskFormAndShowHeader(link.up('.edit_task'))
+})
+
+document.on('keyup', '.task_header + .edit_task:has(a[href="#cancel"])', function(e, form) {
+  if (e.keyCode == Event.KEY_ESC) hideEditTaskFormAndShowHeader(form)
+})
+
+document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
+  var name = form.down('input[name="task[name]"]').getValue(),
+      dueDate = form.down('input[name="task[due_on]"]').getValue()
+
+  form.up('.content').select('.task_header h2, .task .thread_title a.task').invoke('update', name)
+  $('column').down('.due_on').update(dueDate)
+  
+  hideEditTaskFormAndShowHeader(form)
+})
+
 Task = {
 
   makeSortable: function(task_id, all_task_ids) {
+    var currentDraggable
+    
     Sortable.create(task_id, {
       constraint:'vertical',
       containment: all_task_ids,
@@ -10,13 +42,18 @@ Task = {
       // that makes the task disappear when it leaves its original task list
       // only:'task',
       tag:'div',
+      onChange: function(draggable){
+        currentDraggable = draggable
+      },
       onUpdate: function(){
-        new Ajax.Request($(task_id).readAttribute("reorder_url"), {
-          asynchronous: true,
-          evalScripts: true,
-          parameters: Sortable.serialize(task_id)
-        })
-      }
+        console.log(currentDraggable)
+        console.log(currentDraggable.up('.task_list'))
+        // new Ajax.Request($(task_id).readAttribute("reorder_url"), {
+        //   asynchronous: true,
+        //   evalScripts: true,
+        //   parameters: Sortable.serialize(task_id)
+        // })
+      }.debounce(100)
     })
   },
 
@@ -26,25 +63,6 @@ Task = {
     })
     task_div_ids.each(function(task_div_id){
       Task.makeSortable(task_div_id, task_div_ids);
-    })
-  },
-
-  update: function(form, url) {
-    new Ajax.Request(url, {
-      asynchronous: true,
-      evalScripts: true,
-      parameters: form.serialize(),
-      onLoading: function() {
-        // show loading bubbles
-        form.down('.loading').show();
-      },
-      onSuccess: function(response){
-        form.down('.loading').hide();
-        // make the form disappear
-        form.hide();
-        // make the Add task link appear
-        form.up().down(".new_task_link").show();
-      }
     })
   },
 
@@ -64,66 +82,8 @@ Task = {
     var container = archived ? $(task_list_id + '_the_closed_tasks') : $(task_list_id + '_the_main_tasks');
     container.innerHTML = html;
     TaskList.updateList(task_list_id);
-  },
-
-  destroy: function(element, url) {
-    new Ajax.Request(url, {
-      method: 'delete',
-      asynchronous: true,
-      evalScripts: true,
-      onLoading: function() {
-        //element.up('.actions_menu').hide();
-      },
-      onSuccess: function(response){
-        // ...
-      },
-      onFailure: function(response){	
-        //element.up('.actions_menu').show();
-      }
-    });
   }
 }
-
-Element.addMethods({
-  toggleAttribute: function(element, attr, values) {
-    element = $(element);
-    var value = element.readAttribute(attr);
-    var newIndex = (values.indexOf(value) + 1) % values.length;
-    element.writeAttribute(attr, values[newIndex]);
-  },
-  toggleShowAttribute: function(element, values) {
-    element.toggleAttribute("show", values);
-  }
-})
-
-document.on('mouseover', '.task_list .task', function(e, element) {
-  var drag = element.down('img.task_drag');
-  if (drag) {
-    drag.setAttribute('style', 'display:block');
-    //element.down('span.task_status').hide();
-  }
-});
-
-document.on('mouseout', '.task_list .task', 	function(e, element) {
-  $$(".task img.task_drag").each(function(e){ e.hide(); });
-  //$$(".task span.task_status").each(function(e){ e.show(); });
-});
-
-document.on('click', 'a.taskDelete', function(e, el) {
-  e.stop();
-  if (confirm(el.readAttribute('aconfirm')))
-    Task.destroy(el, el.readAttribute('action_url'));
-});
-
-document.on('click', 'a.new_task_link', function(e, el) {
-  e.stop();
-  Jenny.toggleElement(el);
-});
-
-document.on('click', 'a.edit_task_link', function(e, el) {
-  e.stop();
-  Jenny.toggleElement(el);
-});
 
 document.on('click', 'a.show_archived_tasks_link', function(e, el) {
   e.stop();
@@ -161,5 +121,3 @@ document.observe('dom:loaded', function(e) {
 	if ($$('.tasks').length > 0)
 	  Task.make_all_sortable();
 });
-
-Event.addBehavior.reassignAfterAjax = true;

@@ -12,10 +12,10 @@ Feature: Search comments in projects
   Scenario: Search all projects
     When I go to the projects page
     And I follow "Gold Digging"
-    And I fill in "comment_body" with "I found a hunk of gold today in the mine!"
+    And I fill in the comment box with "I found a hunk of gold today in the mine!"
     And I press "Save"
     And I follow "Space elevator"
-    And I fill in "comment_body" with "Let's finish this space elevator before Tuesday."
+    And I fill in the comment box with "Let's finish this space elevator before Tuesday."
     And I press "Save"
     And I go to the projects page
     

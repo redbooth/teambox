@@ -64,6 +64,8 @@ module Emailer::Incoming
 
   REPLY_REGEX = /(re|fwd):/i
 
+  # Instance method invoked by class method of the same name.
+  # Receives a parsed and decoded TMail::Mail object.
   def receive(email)
     process email
     get_target
@@ -141,23 +143,19 @@ module Emailer::Incoming
   # Determines the #action
   # The commands are #resolve / #resolved, #username, #reject / #rejected and #hold.
   def get_action
-    tag = /^\s*#([a-zA-Z0-9_]*)/.match(@body.gsub(/\n/, ' '))
-    tag = tag ? tag[1] : nil
-    
-    case tag
-    when 'open', 'reopen'
-      @target_action = :open
-    when 'resolve', 'resolved'
-      @target_action = :resolve
-    when 'reject', 'rejected'
-      @target_action = :reject
-    when 'hold'
-      @target_action = :hold
-    else
-      people = @target.project.people.reject{ |r| r.login != tag }
-      unless people.empty?
-        @target_action = :assign
-        @target_person = people.first
+    if @body =~ /^\s*#(\w+)/
+      tag = $1.downcase
+      
+      @target_action = case tag
+      when 'open', 'reopen'      then :open
+      when 'resolve', 'resolved' then :resolved
+      when 'reject', 'rejected'  then :rejected
+      when 'hold'                then :hold
+      else
+        if person = @target.project.people.by_login(tag).first
+          @target_person = person
+          :assign
+        end
       end
     end
   end
@@ -165,45 +163,36 @@ module Emailer::Incoming
   def post_to(target)
     Rails.logger.info "Posting to #{target.class.to_s} #{target.id} '#{@subject}'"
 
-    comment = @project.new_comment(@user, target, :name => @subject)
-    comment.body = @body
-    if target.class == Task
-      target.previous_status = target.status
-      target.previous_assigned_id = target.assigned_id
-      comment.status = target.status
+    if target.is_a? Task
+      target.updating_user = @user
+      target.comments_attributes = [{:body => @body}]
       
       case @target_action
-      when :open
-        comment.status = Task::STATUSES[:open]
-        comment.assigned_id = @project.people.find_by_user_id(@user.id)
-      when :resolve
-        comment.status = Task::STATUSES[:resolved]
-      when :reject
-        comment.status = Task::STATUSES[:rejected]
-      when :hold
-        comment.status = Task::STATUSES[:hold]
       when :assign
-        comment.status = Task::STATUSES[:open]
-        comment.assigned_id = @target_person.id
-      else
-        comment.assigned_id = target.assigned_id
+        target.status_name = :open
+        target.assigned = @target_person
+      when Symbol
+        target.status_name = @target_action
       end
       
-      target.status = comment.status
-      target.assigned_id = comment.assigned_id
+      target.save!
+    else
+      comment = target.comments.new_by_user(@user, :body => @body)
+      comment.save!
     end
-    comment.save!
   end
   
   def create_conversation
     Rails.logger.info "Creating conversation '#{@subject}'"
     
-    conversation = if @subject.empty?
-      @project.new_conversation(@user, :simple => true)
+    conversation = @project.conversations.new_by_user(@user, :body => @body)
+    
+    if @subject.blank?
+      conversation.simple = true
     else
-      @project.new_conversation(@user, :name => @subject)
+      conversation.name = @subject
     end
-    conversation.body = @body
+    
     conversation.save!
   end
 

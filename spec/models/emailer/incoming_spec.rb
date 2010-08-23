@@ -1,5 +1,4 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
-require_dependency 'emailer/incoming'
+require 'spec_helper'
 
 describe Emailer do 
   describe 'incoming emails' do 
@@ -23,12 +22,10 @@ describe Emailer do
       
       @task.reload
       comment = @task.comments.last
-      @task.assigned_id.should == nil
-      @task.status.should == Task::STATUSES[:new]
-      comment.assigned_id.should == nil
-      comment.status.should == Task::STATUSES[:new]
-      comment.previous_assigned_id.should == nil
-      comment.previous_status.should == Task::STATUSES[:new]
+      @task.assigned?.should be_false
+      @task.status_name.should == :new
+      comment.assigned_id.should be_nil
+      comment.status.should be_nil
     end
     
     it "should assign the task to fred with #fred" do
@@ -63,21 +60,9 @@ describe Emailer do
       
       @task.reload
       comment = @task.comments.last
-      @task.status.should == Task::STATUSES[:resolved]
+      @task.status_name.should == :resolved
       comment.status.should == Task::STATUSES[:resolved]
       comment.previous_status.should == 0
-    end
-    
-    it "should resolve the task with #resolve" do
-      @email_template.to = "#{@project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}"
-      @email_template.body = "#resolve\nWe did some stuff"
-      Emailer.receive(@email_template.to_s)
-      
-      @task.reload
-      comment = @task.comments.last
-      @task.status.should == Task::STATUSES[:resolved]
-      comment.status.should == Task::STATUSES[:resolved]
-      comment.previous_status.should == Task::STATUSES[:new]
     end
     
     it "should hold the task with #hold" do
@@ -142,9 +127,12 @@ describe Emailer do
     it "should post a comment to a conversation" do
       @email_template.to = "#{@project.permalink}+conversation+#{@conversation.id}@#{Teambox.config.smtp_settings[:domain]}"
       @email_template.body = "I am outraged!"
-      Emailer.receive(@email_template.to_s)
       
-      comment = @conversation.comments(true).last
+      lambda {
+        Emailer.receive(@email_template.to_s)
+      }.should change(Comment, :count).by(1)
+      
+      comment = @conversation.comments(true).last(:order => 'comments.id')
       comment.body.should == "I am outraged!"
     end
 

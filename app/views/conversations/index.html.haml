@@ -2,6 +2,6 @@
 
 - if @conversations.any?
   #conversations
-    = list_short_conversations(@conversations)
+    = render :partial => 'conversations/short_conversation', :as => :conversation, :collection => @conversations
 - else
   = conversations_primer(@current_project)

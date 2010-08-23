@@ -4,12 +4,19 @@
   - else
     - if project.users.size > 1
       %h3= t('.add_suscribers')
+
       .user_all
-        = all_users_checkbox
+        %label
+          = check_box_tag :user_all, "1", true, :name => nil
+          = t('conversations.watcher_fields.people_all')
+        
       - for user in project.users
         - unless user == current_user
           .user
-            = user_checkbox(user)
+            %label
+              = check_box_tag 'conversation[watchers_ids][]', user.id, true, :id => nil
+              = user.name
+          
       .clear
       %p= t('.subscribe_note')
     - else

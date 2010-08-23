@@ -1,13 +1,8 @@
 module ConversationsHelper
-
+  
   def conversation_id(element,project,conversation=nil)
     conversation ||= project.conversations.new
     js_id(element,project,conversation)
-  end
-  
-  def conversation_link(project,conversation)
-    conversation ||= project.conversations.new
-    unobtrusive_app_link(project,conversation)
   end
 
   def conversation_form_for(project,conversation,&proc)
@@ -57,48 +52,10 @@ module ConversationsHelper
     link_to h(conversation.name), project_conversation_path(conversation.project,conversation), :class => 'conversation_link'
   end
   
-  def delete_conversation_link(project,conversation)
-    link_to t('common.delete'), project_conversation_path(project,conversation),
-      :aconfirm => t('.confirm_delete'),
-      :class => 'delete_conversation_link',
-      :action_url => project_conversation_path(project,conversation)
-  end
-  
-  def conversation_header(project,conversation)
-    render 'conversations/header', :project => project, :conversation => conversation
-  end
-
-  def conversation_action_links(project,conversation)
-    render 'conversations/actions', :project => project, :conversation => conversation
-  end
-
   def conversation_comment(conversation)
     if comment = conversation.comments.first
       render 'comments/comment', :comment => comment
     end
-  end
-  
-  def list_short_conversations(conversations)
-    render :partial => 'conversations/short_conversation',
-      :as => :conversation,
-      :collection => conversations
-  end
-  
-  def conversation_watcher_fields(project,conversation)
-    render 'conversations/watcher_fields',
-      :project => project, 
-      :conversation => conversation
-  end
-  
-  def conversation_fields(f,project,conversation)
-    render 'conversations/fields',
-      :f => f, 
-      :project => project, 
-      :conversation => conversation
-  end
-  
-  def list_conversations(project,conversations,current_target = nil)
-    render conversations, :project => project, :current_target => current_target
   end
   
   def conversation_comments_count(conversation)
@@ -118,23 +75,6 @@ module ConversationsHelper
       :conversations => conversations,
       :conversation => options[:conversation],
       :show_conversation_settings =>  options[:show_conversation_settings]
-  end
-  
-  def replace_conversation(project,conversation)
-    page.replace conversation_id(:item,project,conversation),
-      :partial => 'conversations/conversation', 
-      :locals => { 
-        :project => project,
-        :conversation => conversation,
-        :current_target => conversation }
-  end
-
-  def replace_conversation_header(project,conversation)
-    page.replace conversation_id(:edit_header,project,conversation),
-      :partial => 'conversations/header', 
-      :locals => { 
-        :project => project,
-        :conversation => conversation }
   end
 
 end

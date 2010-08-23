@@ -1,10 +1,10 @@
 #show_task
-  = task_header(@current_project,@task_list,@task)
-  = task_form(@current_project,@task_list,@task) unless @task.closed?
+  = render 'header', :project => @current_project, :task_list => @task_list, :task => @task
   = people_watching(@current_project,@current_user,@task)
-  = new_comment_form(@current_project,@comment, :target => @task) unless @task.closed?
-  = #task_archive_box(@current_project,@task_list,@task)
 
 #page
-  #activities
-    = list_comments(@task.comments,@task)
+  #activities= list_comments(@task.comments,@task)
+
+- if can? :comment, @task
+  - form_for [@current_project, @task, @task.comments.build], :html => {:id => nil, 'data-project-id' => @current_project.id} do |form|
+    = render 'comments/fields', :f => form, :placeholder => t("comments.new.task")

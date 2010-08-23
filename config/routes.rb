@@ -51,14 +51,14 @@ ActionController::Routing::Routes.draw do |map|
 
   map.destroy_user '/account/destroy', :controller => 'users', :action => 'destroy'
 
-  map.resources :users, :has_many => [:invitations,:comments], :member => {
+  map.resources :users, :has_many => [:invitations], :member => {
                           :unconfirmed_email => :get,
                           :confirm_email => :get,
                           :contact_importer => :get } do |user|
 
-    user.resources :conversations, :has_many => [:comments]
-    user.resources :task_lists,    :has_many => [:comments]  do |task_lists|
-      task_lists.resources :tasks, :has_many => [:comments]
+    user.resources :conversations
+    user.resources :task_lists do |task_lists|
+      task_lists.resources :tasks
     end
     
     user.show_more   'activities/users/:id/show_more.:format',  :controller => 'activities', :action => 'show_more',  :method => :get
@@ -75,7 +75,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :projects,
       :has_many => [:pages, :people],
-      :member => {:get_comments => :get, :accept => :post, :decline => :post, :transfer => :put, :join => :get} do |project|
+      :member => {:accept => :post, :decline => :post, :transfer => :put, :join => :get} do |project|
     project.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
     project.time 'time', :controller => 'hours', :action => 'index'
 
@@ -85,10 +85,6 @@ ActionController::Routing::Routes.draw do |map|
     project.ownership 'ownership', :controller => 'projects', :action => 'edit', :sub_action => 'ownership'
 
     project.resources :invitations, :member => [:accept,:decline,:resend]
-
-    project.resources :comments, :member => {:convert => :put} do |comment|
-      comment.resources :uploads
-    end
 
     project.activities 'activities.:format',               :controller => 'activities', :action => 'show',      :method => :get
     project.show_new   'activities/:id/show_new.:format',  :controller => 'activities', :action => 'show_new',  :method => :get
@@ -101,22 +97,22 @@ ActionController::Routing::Routes.draw do |map|
     project.reorder_task_lists 'reorder_task_lists', :controller => 'task_lists', :action => 'reorder', :method => :post
     project.reorder_tasks 'task_lists/:task_list_id/reorder_task_list', :controller => 'tasks', :action => 'reorder', :method => :post
 
-    project.resources :task_lists, :has_many => [:comments],
+    project.resources :task_lists,
       :collection => { :gantt_view => :get, :sortable => :get, :archived => :get  },
-      :member => [:archive,:unarchive,:watch,:unwatch] do |task_lists|
-        task_lists.resources :tasks, :has_many => [:comments], :member => { :watch => :post, :unwatch => :post, :archive => :put, :unarchive => :put, :reopen => :get, :show_in_main_content => :get }
+      :member => { :watch => :put, :unwatch => :put, :archive => :put, :unarchive => :put } do |task_lists|
+        task_lists.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put }
     end
+    
+    project.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put }
     
     project.contacts 'contacts', :controller => :people, :action => :contacts, :method => :get
     project.resources :people, :member => { :destroy => :get }
-    project.resources :conversations, :has_many => [:comments,:uploads], :member => [:watch,:unwatch]
+    project.resources :conversations, :has_many => [:comments], :member => { :watch => :put, :unwatch => :put }
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }, :collection => { :resort => :post }
     
     project.search 'search', :controller => 'search'
   end
   
-  map.resources :comments, :only => [ :create ]
-
   map.public_projects '/public', :controller => 'public/projects', :action => :index
 
   map.namespace(:public) do |p|
@@ -169,7 +165,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :task_lists, :only => [ :index ], :collection => { :gantt_view => :get }
-  # map.resources :conversations, :only => [ :index ]
+  map.resources :conversations, :only => [ :create ]
   # map.resources :pages, :only => [ :index ]
 
   map.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }

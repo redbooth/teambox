@@ -1,46 +1,46 @@
 class Conversation < RoleRecord
 
+  # needed for `truncate`
   include ActionView::Helpers::TextHelper
-
+  
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
+  
+  accepts_nested_attributes_for :comments, :allow_destroy => false,
+    :reject_if => lambda { |comment| comment['body'].blank? }
 
-  serialize :watchers_ids
-
-  attr_accessible :name, :simple
-  attr_accessor :body
+  attr_accessible :name, :simple, :body, :comments_attributes
 
   validates_presence_of :name, :message => :no_title, :unless => :simple?
-  validates_presence_of :body, :message => :no_body_generic, :on => :create
+  
+  validate :check_comments_presence, :on => :create
 
   named_scope :only_simple, :conditions => { :simple => true }
   named_scope :not_simple, :conditions => { :simple => false }
   named_scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
 
+  serialize :watchers_ids
+
   def after_create
     project.log_activity(self,'create')
     add_watcher(self.user) 
-
-    if @body
-      comment = self.comments.new do |comment|
-        comment.project_id = self.project_id
-        comment.user_id = self.user_id
-        comment.body = self.body
-      end
-
-      comment.save!
-    end
-    if simple
-      update_attribute :name, truncate(body.chomp.split("\n").first.strip, :length => 50)
-    end
   end
 
   def after_destroy
-    Activity.destroy_all  :target_id => self.id, :target_type => self.class.to_s
+    Activity.destroy_all :target_id => self.id, :target_type => self.class.to_s
   end
 
   def owner?(u)
     user == u
+  end
+  
+  def name=(value)
+    value = nil if value.blank?
+    self[:name] = value
+  end
+  
+  def body=(value)
+    self.comments_attributes = [{ :body => value }] unless value.nil?
   end
 
   def notify_new_comment(comment)
@@ -94,5 +94,13 @@ class Conversation < RoleRecord
   
   def to_json(options = {})
     to_api_hash(options).to_json
+  end
+  
+  protected
+  
+  def check_comments_presence
+    unless comments.any?
+      errors.add :comments, :must_have_one
+    end
   end
 end

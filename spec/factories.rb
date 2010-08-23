@@ -70,9 +70,15 @@ end
 
 Factory.define :conversation do |conversation|
   conversation.name 'The Master Plan'
-  conversation.body 'I left it somewhere round here!'
+  conversation.body 'Shorter than a New York minute'
+  conversation.simple false
   conversation.association(:user)
   conversation.association(:project)
+end
+
+Factory.define :simple_conversation, :parent => :conversation do |conversation|
+  conversation.name nil
+  conversation.simple true
 end
 
 Factory.define :task_list do |task_list|
@@ -123,6 +129,7 @@ end
 Factory.define :comment do |comment|
   comment.association(:user)
   comment.association(:project)
+  comment.target { |comment| comment.project }
   comment.body 'Just finished posting this comment'
 end
 

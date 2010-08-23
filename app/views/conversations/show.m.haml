@@ -1,9 +1,11 @@
 %h2= @conversation
 
-= conversation_form(@current_project,@conversation)
 = people_watching(@current_project,current_user,@conversation)
-= new_comment_form(@current_project,@current_project.comments.new,:target => @conversation)
 
 #page
   #activities
-    = list_comments(@comments,@conversation)
+    = list_comments(@conversation.comments,@conversation)
+
+- can? :comment, @conversation
+  - form_for [@current_project, @conversation, @conversation.comments.build], :html => {:id => nil, 'data-project-id' => @current_project.id} do |form|
+    = render 'comments/fields', :f => form, :placeholder => t("comments.new.conversation")

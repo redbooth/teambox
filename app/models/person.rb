@@ -21,6 +21,10 @@ class Person < ActiveRecord::Base
   
   named_scope :from_unarchived, :joins => :project,
     :conditions => ['projects.archived = ?', false]
+  
+  named_scope :by_login, lambda { |login|
+    {:include => :user, :conditions => {'users.login' => login}}
+  }
 
   def owner?
     project.owner?(user)
@@ -61,6 +65,19 @@ class Person < ActiveRecord::Base
   def self.users_from_projects(projects)
     user_ids = Person.find(:all, :conditions => {:project_id => projects.map(&:id)}).map(&:user_id).uniq
     User.find(:all, :conditions => {:id => user_ids}, :select => 'id, login, first_name, last_name').sort_by(&:name)
+  end
+  
+  def self.user_names_from_projects(projects)
+    project_ids = Array.wrap(projects).map(&:id)
+    connection.select_rows(<<-SQL)
+      SELECT people.project_id, users.login, users.first_name, users.last_name
+      FROM people
+      INNER JOIN projects ON projects.id = people.project_id
+      INNER JOIN users ON users.id = people.user_id
+      WHERE people.project_id IN (#{project_ids.join(',')})
+        AND people.deleted_at IS NULL
+      ORDER BY users.login
+    SQL
   end
   
   def user

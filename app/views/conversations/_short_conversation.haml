@@ -1,11 +1,11 @@
-- if comment = conversation.comments.find(:first, :order => 'id asc', :limit => 1)
+- if comment = conversation.comments.first(:order => 'id asc')
   .conversation
     .comment
       .info= thumb_avatar(comment.user)
       .block
         .body
           %h2.title
-            = link_to conversation, project_conversation_path(@current_project, conversation)
+            = link_to conversation, [@current_project, conversation]
             %span= t('common.comment', :count => conversation.comments_count)
           .textilized
             ~ comment.body_html
@@ -17,7 +17,5 @@
             .upload_list
               = list_uploads_inline(comment.uploads)
         %p.go_to_thread
-          = link_to "Reply", project_conversation_path(@current_project, conversation)
-          = t('common.or')
-          = link_to "view the rest of the thread", project_conversation_path(@current_project, conversation)
+          = link_to t('conversations.index.view_single'), [@current_project, conversation]
       .clear
