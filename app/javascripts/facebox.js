@@ -80,7 +80,7 @@
           var source = $(RegExp.$1)
           if (source) Facebox.open(source.innerHTML, 'html', extra)
         }
-        else if (/\.(png|jpe?g|gif)$/i.test(href)) {
+        else if (/\.(png|jpe?g|gif|bmp|tga)$/i.test(href)) {
           Facebox.openImage(href, extra)
         }
         else {
