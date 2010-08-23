@@ -23,20 +23,22 @@ Factory.define :user do |user|
   user.last_name 'Wiggin'
   user.password 'dragons'
   user.password_confirmation 'dragons'
-end
-
-Factory.define :confirmed_user, :parent => :user do |user|
   user.confirmed_user true
 end
 
-Factory.define :mislav, :class => 'User' do |user|
+# compatibility with older specs/cukes
+Factory.define :confirmed_user, :parent => :user do |user|
+end
+
+Factory.define :unconfirmed_user, :parent => :user do |user|
+  user.confirmed_user false
+end
+
+Factory.define :mislav, :parent => :user do |user|
   user.login 'mislav'
   user.email 'mislav@fuckingawesome.com'
   user.first_name 'Mislav'
   user.last_name 'Marohnić'
-  user.password 'dragons'
-  user.password_confirmation 'dragons'
-  user.confirmed_user true
 end
 
 Factory.define :organization do |organization|
@@ -51,8 +53,8 @@ end
 
 Factory.define :project do |project|
   project.name { Factory.next(:name) }
-  project.association(:user, :factory => :confirmed_user)
-  project.association(:organization, :factory => :organization)
+  project.association(:user)
+  project.association(:organization)
 end
 
 Factory.define :ruby_rockstars, :class => 'Project' do |project|
