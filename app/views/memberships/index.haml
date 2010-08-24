@@ -1,6 +1,6 @@
 %h2= t('.title', :name => @organization)
 
-- if @organization.memberships.find_by_user_id(current_user.id).role != Membership::ROLES[:admin]
+- unless @organization.is_admin? current_user
   %p= t('organizations.you_are_not_admin')
 
 %h3= t('.admins.title')

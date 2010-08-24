@@ -76,11 +76,11 @@ class Organization < ActiveRecord::Base
   end
 
   def is_admin?(user)
-    memberships.find_by_user_id(user.id).try(:role) == Membership::ROLES[:admin]
+    memberships.admin?.count(:conditions => {:user_id => user.id} ) > 0
   end
 
   def is_participant?(user)
-    memberships.find_by_user_id(user.id).try(:role) == Membership::ROLES[:participant]
+    memberships.participant?.count(:conditions => {:user_id => user.id} ) > 0
   end
 
   def is_user?(user)
