@@ -531,13 +531,17 @@ en:
       title: New Organization
       explain: Organize your people and projects inside an organization.
       submit: Create Organization
+      created: Your organization has been created!
+      invalid_organization: Invalid organization, correct errors and try again.
     organization:
+      you_are: "You're an <strong>%{role}</strong> of this organization"
       admin: admin
       participant: participant
       external: external worker
       number_of_projects:
         one: One project
         other: %{count} projects
+      more_users: "and %{count} more users"
     projects:
       title: "'%{name}' organization"
       new_project: New project
@@ -1449,6 +1453,7 @@ en:
       note: Text
       invitation: Invitation
       upload: Upload
+      organization: Organization
     attributes:
       address:
         city: City
