@@ -2,7 +2,7 @@
 
 %p= t('.public_site', :link => link_to(public_url_for_organization(@organization), public_url_for_organization(@organization)))
 
-- if Membership.find_by_user_id(current_user.id).role == Membership::ROLES[:admin]
+- if @organization.memberships.find_by_user_id(current_user.id).role == Membership::ROLES[:admin]
   %p
     = t('.there_are_x_users', :count => @organization.users.count)
     = link_to t('.admin_users'), organization_memberships_path(@organization)
