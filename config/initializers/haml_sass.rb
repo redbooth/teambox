@@ -4,6 +4,8 @@ require 'haml/template'
 require 'sass'
 require 'sass/plugin'
 
+Haml::Template::options[:format] = :html5
+
 css_dir = Rails.configuration.heroku? ? "tmp" : "public"
 
 Sass::Plugin.add_template_location(Rails.root + 'app/styles', Rails.root + css_dir + 'stylesheets')
