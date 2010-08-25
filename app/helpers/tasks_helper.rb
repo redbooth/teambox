@@ -52,7 +52,7 @@ module TasksHelper
   #
 
   def insert_unarchive_box(project,task)
-    page.insert_html :after, 'new_comment',
+    page.insert_html :after, "new_comment_Task_#{task.id}",
       :partial => 'tasks/unarchive_box', :locals => {
       :project => project,
       :task_list => task.task_list,

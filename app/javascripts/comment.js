@@ -54,9 +54,9 @@ Comment = {
         Comment.setLoading('comment_new' + thread_id, false);
         if ($(document.body).hasClassName('show_tasks'))
           TaskList.updatePage('column', TaskList.restoreColumn);
-			},
-			onComplete: function(){
-				format_posted_date();
+      },
+      onComplete: function(){
+        format_posted_date();
       }
     });
   },
@@ -176,7 +176,7 @@ Comment = {
         else  
           Comment.mark_status(e.up('.status'))
       }
-    })
+    });
   },
   paint_status_boxes: function(){
     $$('.statuses input[type=radio]').each(function(el) {

@@ -52,7 +52,7 @@ else
       if @target == @task
         if @task.closed?
            page.insert_unarchive_box(@current_project,@task)
-           page['new_comment'].remove
+           page["new_comment_Task_#{@task.id}"].remove
            page['watching'].hide
            display_watchers = false
            #page[task_id(:edit_form,@current_project,@task_list,@task)].remove
