@@ -460,6 +460,8 @@ en:
       public_site: "Your organization's public site is %{link}"
       number_of_projects: "%{count} projects"
       submit: Save changes
+      saved: Changes saved
+      invalid: Invalig organization
     external_view:
       create_your_own_org: "However, you can <a href='%{link}'>create your own organization</a> for your projects."
       request_permission: "To access this organization, you must request permission to some of the administrators:"
@@ -480,6 +482,8 @@ en:
         create: "+ Create a new Organization"
         explain: "Brand it with your own logo and website, and create projects inside."
       title: Organizations
+    not_admin: "You can't access the billing page because you are not an administrator."
+    not_in_community: "The community version doesn't support multiple organizations"
     new:
       title: New Organization
       explain: Organize your people and projects inside an organization.

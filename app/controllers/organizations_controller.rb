@@ -4,7 +4,7 @@ class OrganizationsController < ApplicationController
   before_filter :redirect_community, :only => [:index, :new, :create]
 
   def index
-    @page_title = "Organizations"
+    @page_title = t('organizations.index.title')
     @organizations = current_user.organizations
   end
 
@@ -52,7 +52,7 @@ class OrganizationsController < ApplicationController
   def update
     @page_title = @organization
     if @organization.update_attributes(params[:organization])
-      flash.now[:success] = "Changes saved"
+      flash.now[:success] = t('organizations.edit.saved')
     end
     render :edit
   end
@@ -68,7 +68,7 @@ class OrganizationsController < ApplicationController
         if organization = Organization.find_by_permalink(params[:id])
           redirect_to external_view_organization_path(@organization)
         else
-          flash[:error] = "Invalid organization"
+          flash[:error] = t('organizations.edit.invalid')
           redirect_to root_path
         end
       end
@@ -76,7 +76,7 @@ class OrganizationsController < ApplicationController
 
     def redirect_community
       if Teambox.config.community
-        flash[:error] = "The community version doesn't support multiple organizations"
+        flash[:error] = t('organizations.not_in_community')
         redirect_to root_path
       end
     end
