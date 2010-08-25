@@ -1,12 +1,16 @@
 class Membership < ActiveRecord::Base
+  ROLES = {:external => 10, :participant => 20, :admin => 30}
+
   belongs_to :user
   belongs_to :organization
+
+  named_scope :admin?, :conditions => {'memberships.role' => ROLES[:admin]}
+  named_scope :participant?, :conditions => {'memberships.role' => ROLES[:participant]}
 
   validates_presence_of :user, :organization
   validates_inclusion_of :role, :in => [10,20,30]
   validates_uniqueness_of :user_id, :scope => :organization_id
 
-  ROLES = {:external => 10, :participant => 20, :admin => 30}
 
   attr_accessor :user_or_email
 

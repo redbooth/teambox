@@ -1284,8 +1284,8 @@ es:
       project_invitations: "Invitaciones (%{count})"
       settings: Opciones
     instructions: 
-      send_email: "Publicar un nuevo comentario por email..."
-      send_email_conversations: "Publica una nueva conversación por email..."
+      send_email: "Publicar un comentario por email..."
+      send_email_conversations: "Publica una conversación por email..."
       send_email_help_conversation: "Para publicar un comentario en esta conversación envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Solo los miembros de este proyecto pueden publicar en esta conversación."
       send_email_help_conversations: "Para crear una nueva conversación envía un email a <a href=\"mailto:%{email}\">%{email}</a> con el tema para el título y el cuerpo para el comentario. Solo los miembros del proyecto pueden crear una nueva conversación."
       send_email_help_project: "Para publicar un nuevo comentario en el muro de actividad del proyecto envía un email a <a href=\"mailto:%{email}\">%{email}</a>. Solo los miembros del proyecto pueden publicar en el muro."
