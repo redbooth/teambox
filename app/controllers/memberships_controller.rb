@@ -5,7 +5,7 @@ class MembershipsController < ApplicationController
   before_filter :can_modify?, :except => :index
 
   def index
-    @users_not_belonging_to_org = @organization.users_in_projects - @organization.users
+    @users_not_belonging_to_org = @organization.external_users
   end
 
   def change_role

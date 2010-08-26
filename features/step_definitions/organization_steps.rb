@@ -43,8 +43,3 @@ Then /"([^\"]*)" should not belong to the organization "([^\"]*)"$/ do |login, o
   organization.memberships.find_by_user_id(user.id).should be_nil
 end
 
-Then /"([^\"]*)" should be an external user in the organization "([^\"]*)"$/ do |login, organization|
-  user = User.find_by_login(login)
-  organization = Organization.find_by_name(organization)
-  organization.memberships.find_by_user_id(user.id).role.should == 10
-end

@@ -39,18 +39,15 @@ class Organization < ActiveRecord::Base
   def add_member(user_id, role=Membership::ROLES[:admin])
     user_id = user_id.id if user_id.is_a? User
     role = Membership::ROLES[role] if role.is_a? Symbol
-    membership = memberships.new(:user_id => user_id.to_i, :role => role.to_i)
-    membership.save
-  end
-  
-  def ensure_member(user_id, role=Membership::ROLES[:participant])
-    user_id = user_id.id if user_id.is_a? User
+    return true if role == Membership::ROLES[:external]
     member = memberships.find_by_user_id(user_id)
-    
-    if member and member.role < role
+    if member.nil?
+      member = memberships.new(:user_id => user_id.to_i, :role => role.to_i)
+      member.save
+    elsif member.role < role
       member.update_attribute(:role, role)
     else
-      add_member(user_id, role)
+      false
     end
   end
 
@@ -67,7 +64,7 @@ class Organization < ActiveRecord::Base
   end
 
   def users_in_projects
-    projects.collect { |p| p.users }.flatten.uniq
+    User.find(:all, :joins => :people, :conditions => {:people => {:project_id => project_ids}}).uniq
   end
 
   # External users are simply involved in some project of the organization
