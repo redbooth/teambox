@@ -157,6 +157,26 @@ class Project < ActiveRecord::Base
       base[:people] = people.map {|p| p.to_api_hash(options)}
     end
     
+    if Array(options[:include]).include? :task_lists
+      base[:task_lists] = task_lists.map {|p| p.to_api_hash(options)}
+    end
+    
+    if Array(options[:include]).include? :invitations
+      base[:invitations] = invitations.map {|p| p.to_api_hash(options)}
+    end
+    
+    if Array(options[:include]).include? :pages
+      base[:pages] = pages.map {|p| p.to_api_hash(options)}
+    end
+    
+    if Array(options[:include]).include? :uploads
+      base[:uploads] = uploads.map {|p| p.to_api_hash(options)}
+    end
+    
+    if Array(options[:include]).include? :conversations
+      base[:conversations] = conversations.map {|p| p.to_api_hash(options)}
+    end
+    
     base
   end
   
