@@ -14,7 +14,7 @@ class ApiV1::TasksController < ApiV1::APIController
   end
 
   def show
-    api_respond @task.to_json
+    api_respond @task.to_json(:include => [:comments, :users])
   end
   
   def create

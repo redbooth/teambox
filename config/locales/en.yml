@@ -455,8 +455,8 @@ en:
       admin_projects: Manage projects
       billing: Billing
     edit:
-      there_are_x_users: "There are %{count} users"
-      admin_users: "(admin users)"
+      there_are: "There are"
+      number_of_users: "%{count} users"
       public_site: "Your organization's public site is %{link}"
       number_of_projects: "%{count} projects"
       submit: Save changes

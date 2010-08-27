@@ -84,16 +84,16 @@ describe Organization do
     end
     it "should not add members twice" do
       user = Factory(:user)
-      @organization.add_member(user, 10).should be_true
+      @organization.add_member(user, 20).should be_true
       @organization.memberships.last.user_id.should == user.id
       @organization.memberships.length.should == 1
-      @organization.add_member(user, 40).should be_false
+      @organization.add_member(user, 20).should be_false
       @organization.memberships.length.should == 1
     end
     it "should upgrade participants" do
       user = Factory(:user)
-      @organization.ensure_member(user, 10).should be_true
-      @organization.ensure_member(user, 30).should be_true
+      @organization.add_member(user, 10).should be_true
+      @organization.add_member(user, 30).should be_true
       @organization.memberships.last.user_id.should == user.id
       @organization.memberships.last.role.should == 30
       @organization.memberships.length.should == 1

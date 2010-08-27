@@ -4,11 +4,10 @@
 
 - if @organization.is_admin? current_user
   %p
-    = t('.there_are_x_users', :count => @organization.users.count)
-    = link_to t('.admin_users'), organization_memberships_path(@organization)
+    = t('.there_are')
+    = link_to t('.number_of_users', :count => @organization.users.count), organization_memberships_path(@organization)
     = t('common.and')
-    = t('.number_of_projects', :count => @organization.projects.count)
-    = link_to "(admin projects)", projects_organization_path(@organization)
+    = link_to t('.number_of_projects', :count => @organization.projects.count), projects_organization_path(@organization)
 
   - form_for @organization, :html => { :multipart => true } do |f|
     = f.error_messages

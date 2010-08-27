@@ -29,7 +29,7 @@ class Invitation < RoleRecord
   
   def accept(current_user)
     if target.is_a? Project
-      target.organization.ensure_member(current_user, membership)
+      target.organization.add_member(current_user, membership)
       person = project.people.new(
         :user => current_user,
         :role => role || 3,

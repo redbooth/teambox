@@ -9,7 +9,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
   end
 
   def show
-    api_respond @conversation.to_json(:include => :comments)
+    api_respond @conversation.to_json(:include => [:comments, :users])
   end
   
   def create

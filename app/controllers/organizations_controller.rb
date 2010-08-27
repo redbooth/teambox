@@ -15,7 +15,7 @@ class OrganizationsController < ApplicationController
 
   def members
     @page_title = @organization
-    @users_not_belonging_to_org = @organization.users_in_projects - @organization.users
+    @users_not_belonging_to_org = @organization.external_users
   end
 
   def projects

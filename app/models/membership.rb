@@ -17,7 +17,7 @@ class Membership < ActiveRecord::Base
   # Roles are..
   #   30 for an admin. Can modify the organization, manage users and access any project.
   #   20 for a participant. Can create projects inside the organization, and only access projects where he's been invited to.
-  #   10 for an external user. Can only access projects where he's been invited to.
+  #   10 for an external user. Can only access projects where he's been invited to. (NOT stored in database)
 
   def before_validation_on_create
     self.role ||= ROLES[:admin]

@@ -9,7 +9,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
                         :order => 'id DESC',
                         :limit => api_limit)
 
-    api_respond(@activities.to_json(:include => [:project, :target]))
+    api_respond(@activities.to_json(:include => [:project, :target, :users]))
   end
 
   def show
@@ -20,7 +20,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     end
     
     if current_user.project_ids.include? @activity.project_id
-      api_respond(@activity.to_json(:include => [:project, :target]))
+      api_respond(@activity.to_json(:include => [:project, :target, :users]))
     else
       api_status(:unauthorized)
     end

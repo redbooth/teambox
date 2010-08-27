@@ -172,12 +172,7 @@ class Comment < ActiveRecord::Base
       :body_html => body_html,
       :created_at => created_at.to_s(:db),
       :updated_at => updated_at.to_s(:db),
-      :user => {
-        :username => user.login,
-        :first_name => user.first_name,
-        :last_name => user.last_name,
-        :avatar_url => user.avatar_or_gravatar_url(:thumb)
-      },
+      :user_id => user_id,
       :project_id => project_id,
       :target_id => target_id,
       :target_type => target_type
@@ -192,6 +187,15 @@ class Comment < ActiveRecord::Base
     
     if uploads.any?
       base[:uploads] = uploads.map {|u| u.to_api_hash(options)}
+    end
+    
+    if Array(options[:include]).include? :users
+      base[:user] = {
+        :username => user.login,
+        :first_name => user.first_name,
+        :last_name => user.last_name,
+        :avatar_url => user.avatar_or_gravatar_url(:thumb)
+      }
     end
     
     base
