@@ -8,7 +8,7 @@
     - if !header_on_index
       = task_list_archive_box(project,task_list)
     - if show_the_lists
-      .tasks.open{ :id => task_list_id(:the_main_tasks,project,task_list), :reorder_url => project_reorder_tasks_path(project,task_list) }
+      .tasks.open{ :id => task_list_id(:the_main_tasks,project,task_list) }
         - if !task_list.archived
           = list_tasks(task_list,task_list.tasks.unarchived,task_list_editable?(task_list,current_user))
       - if task_list_editable?(task_list,current_user)

@@ -132,7 +132,6 @@ module TasksHelper
     update_page_tag do |page|
       page.sortable(task_list_id(:the_tasks,project,task_list),{
         :tag => 'div',
-        :url => project_reorder_tasks_path(project,task_list),
         :only => 'task',
         :format => page.literal('/task_(\d+)/'),
         :handle => 'img.drag',

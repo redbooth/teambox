@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_filter :load_task, :except => [:new, :create]
+  before_filter :load_task, :except => [:new, :create, :reorder]
   before_filter :load_task_list, :only => [:new, :create]
   before_filter :set_page_title
 
@@ -89,18 +89,18 @@ class TasksController < ApplicationController
     end
   end
 
-  # FIXME: zomg
   def reorder
-    @task_list_id = "project_#{@current_project.id}_task_list_#{@task_list.id}_the_main_tasks"
-    new_task_ids_for_task_list = (params[@task_list_id] || []).reject { |task_id| task_id.blank? }.map(&:to_i)
-    moved_task_ids = new_task_ids_for_task_list.to_set - @task_list.task_ids.to_set
-    moved_task_ids.each do |moved_task_id|
-      Task.find(moved_task_id).update_attribute(:task_list, @task_list)
+    @task = @current_project.tasks.find params[:id]
+    target_task_list = @current_project.task_lists.find params[:task_list_id]
+
+    if @task.task_list != target_task_list
+      @task.remove_from_list
+      @task.task_list = target_task_list
     end
-    new_task_ids_for_task_list.each_with_index do |task_id,idx|
-      task = @task_list.tasks.find(task_id)
-      task.update_attribute(:position,idx.to_i)
-    end
+    
+    @task.insert_at params[:position].to_i
+    
+    head :ok
   end
 
   def watch

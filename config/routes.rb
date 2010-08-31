@@ -94,16 +94,13 @@ ActionController::Routing::Routes.draw do |map|
 
     project.hooks      'hooks/:hook_name',                 :controller => 'hooks',      :action => 'create',    :method => :post
 
-    project.reorder_task_lists 'reorder_task_lists', :controller => 'task_lists', :action => 'reorder', :method => :post
-    project.reorder_tasks 'task_lists/:task_list_id/reorder_task_list', :controller => 'tasks', :action => 'reorder', :method => :post
-
     project.resources :task_lists,
       :collection => { :gantt_view => :get, :sortable => :get, :archived => :get  },
       :member => { :watch => :put, :unwatch => :put, :archive => :put, :unarchive => :put } do |task_lists|
         task_lists.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put }
     end
     
-    project.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put }
+    project.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put, :reorder => :put }
     
     project.contacts 'contacts', :controller => :people, :action => :contacts, :method => :get
     project.resources :people, :member => { :destroy => :get }

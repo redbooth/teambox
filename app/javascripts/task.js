@@ -29,31 +29,37 @@ document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
 })
 
 Task = {
+  
+  sortableChange: function(draggable) {
+    this.currentDraggable = draggable
+  },
+  
+  sortableUpdate: function() {
+    var taskID = this.currentDraggable.id.split('_').last(),
+        taskList = this.currentDraggable.up('.task_list'),
+        position = taskList.select('.tasks .task').indexOf(this.currentDraggable) + 1,
+        ids = taskList.id.match(/project_(\d+)_task_list_(\d+)/)
+    
+    new Ajax.Request('/projects/' + ids[1] + '/tasks/' + taskID + '/reorder', {
+      method: 'put',
+      parameters: { task_list_id: ids[2], position: position }
+    })
+  }.debounce(100),
 
   makeSortable: function(task_id, all_task_ids) {
-    var currentDraggable
+    console.log(task_id)
     
     Sortable.create(task_id, {
       constraint:'vertical',
       containment: all_task_ids,
-      format: /.*task_(\d+)_task_task/,
+      // format: /.*task_(\d+)_task_task/,
       handle:'img.task_drag',
       dropOnEmpty: true,
       // that makes the task disappear when it leaves its original task list
       // only:'task',
       tag:'div',
-      onChange: function(draggable){
-        currentDraggable = draggable
-      },
-      onUpdate: function(){
-        console.log(currentDraggable)
-        console.log(currentDraggable.up('.task_list'))
-        // new Ajax.Request($(task_id).readAttribute("reorder_url"), {
-        //   asynchronous: true,
-        //   evalScripts: true,
-        //   parameters: Sortable.serialize(task_id)
-        // })
-      }.debounce(100)
+      onChange: Task.sortableChange.bind(Task),
+      onUpdate: Task.sortableUpdate.bind(Task)
     })
   },
 
