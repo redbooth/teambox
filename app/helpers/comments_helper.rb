@@ -7,7 +7,7 @@ module CommentsHelper
       key << '-destructable' if comment.can_destroy?(current_user)
       key << '-threaded' if threaded
       key << '-simpleconv' if simpleconv
-      key << ".#{request.format}"
+      key << ".#{request.format.to_sym}" if request.format.to_sym.to_s =~ /^\w+$/
     }, &block)
   end
   
