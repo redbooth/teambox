@@ -40,3 +40,7 @@ When /^I fill in "([^\"]*)" with "([^\"]*)" in the new task form of the "([^\"]*
     fill_in(field, :with => value)
   end
 end
+
+Then /^(?:|I )should see "([^\"]*)" as a task in the task list$/ do |text|
+  Then %(I should see "#{text}" within ".tasks .task")
+end

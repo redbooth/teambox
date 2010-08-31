@@ -10,6 +10,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 require 'email_spec/helpers'
 require 'email_spec/matchers'
+require 'cancan/matchers'
 
 Spec::Runner.configure do |config|
   config.include AuthenticatedTestHelper, EmailSpec::Helpers, EmailSpec::Matchers

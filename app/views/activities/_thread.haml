@@ -1,8 +1,9 @@
-- thread = activity.thread
+- thread ||= activity.thread # you can pass :thread or :activity into the partial
 - thread_id = "#{thread.class.to_s}_#{thread.id}"
 - thread_link = thread.is_a?(Task) ? [thread.task_list.project, thread.task_list, thread] : [thread.project, thread]
 - comments = thread.comments
-.thread{ :id => "thread_#{thread_id}" }
+
+.thread[thread]
   - if thread.is_a?(Conversation) and thread.simple and comments.size > 0
     = render comments.pop, :simpleconv => true
   - else
@@ -20,8 +21,15 @@
         - if thread.is_a?(Task)
           = t('.on_task_list')
           = link_to thread.task_list, [thread.task_list.project, thread.task_list], :class => 'task_list'
-  .comments{ :id => "thread_#{thread_id}_comments" }
+
+  .comments
     = render 'activities/thread_comments', :comments => comments, :thread => thread
-  .reply{ :id => "thread_#{thread_id}_reply" }
-    - unless thread.is_a?(Task) && thread.closed?
-      = new_comment_form(thread.project, thread.project.comments.new, :target => thread, :thread => true)
+  
+  - if thread.is_a? Task
+    - form_for [thread.project, thread], :html => {:multipart => true, :id => nil, :class => 'new_comment edit_task', :'data-project-id' => thread.project.id, :'data-remote' => true} do |form|
+      - form.fields_for :comments, thread.comments.build do |comment_fields|
+        = render 'comments/fields', :f => comment_fields, :task_form => form, :placeholder => t("comments.new.#{thread.class.name.underscore}")
+      
+  - else
+    - form_for [thread.project, thread, thread.comments.build], :html => {:multipart => true, :id => nil, :'data-project-id' => thread.project.id, :'data-remote' => true} do |form|
+      = render 'comments/fields', :f => form, :placeholder => t("comments.new.#{thread.class.name.underscore}")

@@ -1,10 +1,9 @@
 - thread_id = "#{thread.class.to_s}_#{thread.id}"
+
 - if comments.size > 2
   %span.more_comments
-    = link_to_remote t('activities.thread.more_comments', :count => comments.size - 2),
-      :url => show_thread_path(thread, :thread_type => thread.class.to_s),
-      :method => :get,
-      :loading => full_thread_loading(thread_id)
-    = loading_image("#{thread_id}_more_comments")
-- comments[0..1].reverse.each do |comment|
-  = render comment, :threaded => true
+    = link_to t('activities.thread.more_comments', :count => comments.size - 2),
+      show_thread_path(thread, :thread_type => thread.class.to_s),
+      :'data-remote' => true
+
+= render comments[0..1].reverse, :threaded => true

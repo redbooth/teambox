@@ -1,7 +1,5 @@
 class Comment
 
-  named_scope :last_two, :order => "id DESC", :limit => 2
-
   def self.find_by_year(year=nil)
     year ||= Time.new.year
     find(:all, :conditions => ["YEAR(created_at) = ?", year], :order => 'created_at DESC')

@@ -97,8 +97,8 @@ en:
     thread:
       on_task_list: "on"
       more_comments:
-        one: "1 previous comment"
-        other: "%{count} previous comments"
+        one: "Show one previous comment"
+        other: "Show %{count} previous comments"
       created:
         task: "created a task"
         conversation: "created the conversation"
@@ -364,7 +364,7 @@ en:
       footer: "Projects are a centralized way of collaborating, so you'll never need to email your team again."
     show:
       update_your_status: "Update your status..."
-      text_styling: Text Styling
+      text_styling: Formatting help
       new_task_list_link: New Task List
       subscribe: Subscribe to the news feed
       tip: Mentioning somebody's @username will send them an email with your message
@@ -598,6 +598,7 @@ en:
       submit: 'Update Conversation'
     index:
       new_conversation: "New Conversation"
+      view_single: Read more
       rss:
         title: "%{name} conversations"
         description: "Conversations for project %{name}"
@@ -665,6 +666,7 @@ en:
       assigned_to_nobody: Nobody
     assigned:
       assigned_to: "Assigned to %{user}"
+      myself: "Assign to myself (%{user})"
     due_on:
       due_on: Due on
       today: Today
@@ -698,7 +700,7 @@ en:
     overdue: "%{days} days late"
     status:
       new: new
-      open: assigned
+      open: open
       hold: hold
       resolved: resolved
       rejected: rejected
@@ -938,7 +940,7 @@ en:
       convert_task: Convert to task
       edit: Edit comment
     preview:
-      close: Close
+      close: Hide preview
       preview: Preview
       showing: "..."
   example_projects:
@@ -1420,14 +1422,18 @@ en:
         comment:
           attributes:
             body:
-              no_body_generic: "Please write about what you have done in the box above."
-              no_body_task: "Please write about what you have done for this task in the box above."
+              blank: "Can't post an empty comment."
+              duplicate: "Duplicate comment"
         conversation:
           attributes:
-            body:
-              no_body_generic: "Please write a comment to start the conversation."
             name:
               no_title: "Please give this conversation a title."
+            comments:
+              must_have_one: "The conversation cannot start with an empty comment."
+        task:
+          attributes:
+            assigned:
+              doesnt_belong: "Assigned user doesn't belong to the project"
 
   locales:
     en: English

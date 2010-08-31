@@ -35,7 +35,7 @@ class Object # I'd love to make this class SeedProject < Project, but that doesn
   end
 
   def make_comment(user, body, target=nil, status=nil, assigned=nil)
-    comments.new(:user_id => user.id, :body => body).tap do |comment|
+    comments.new_by_user (user, :body => body).tap do |comment|
       comment.target = target
       if assigned && status
         comment.status = status

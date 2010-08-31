@@ -49,6 +49,10 @@ module ActivitiesHelper
     end
   end
 
+  def render_thread(thread)
+    render 'activities/thread', :thread => thread
+  end
+
   def show_activity(activity)
     if activity.target && ActivityTypes.include?(activity.action_type)
       render "activities/#{activity.action_type}", :activity => activity,
@@ -208,12 +212,6 @@ module ActivitiesHelper
     update_page do |page|
       page['activity_paginate_link'].hide
       page['activity_paginate_loading'].show
-    end
-  end
-
-  def full_thread_loading(thread_id)
-    update_page do |page|
-      page["#{thread_id}_more_comments"].show
     end
   end
 

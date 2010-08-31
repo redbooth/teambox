@@ -25,13 +25,8 @@ module CalendarsHelper
   end
 
   def day_hours(comments)
-    @users_displayed ||= []
-    day_hours = {}
-    comments.group_by(&:day).each do |day, comments|
-      comments.each { |c| @users_displayed << c.user }
-      day_hours[day] = comments
-    end
-    day_hours
+    @users_displayed ||= comments.map(&:user)
+    comments.group_by { |c| c.created_at.mday }
   end
 
   def user_class_name(user,text = 'hours')

@@ -1,3 +1,40 @@
-= hidden_field_tag :original_controller, controller_name
-.body.text_area
-  = f.text_area :body
+- project = f.object.project || f.object.target.try(:project)
+- task_form = nil unless local_assigns[:task_form]
+
+.field.text_area
+  = micro_avatar current_user
+  = f.text_area :body, :placeholder => local_assigns[:placeholder], :id => nil
+
+- autocomplete_from_project(project)
+
+.extra
+  - if task_form
+    .field.text_field.hours_field
+      %label
+        = t('comments.hours.hours')
+        = f.text_field :human_hours
+      = time_tracking_doc
+
+  .upload_area
+    %p= t('uploads.new.select_a_file')
+  
+    - f.object.uploads.build
+    - f.fields_for :uploads do |fields|
+      = fields.file_field :asset, :id => 'upload_file'
+
+  .actions
+    = link_to t('uploads.comment_upload_link'), project ? [:new, project, :upload] : '#uploads', :class => 'attach_icon'
+  
+    - if task_form
+      = link_to t('comments.hours.tooltip'), '#hours', :class => 'add_hours_icon'
+    
+      .task_actions
+        = task_form.label :status
+        = task_form.select :status, task_statuses_for_select
+        = task_form.label :assigned_id, t('comments.new.assigned_to')
+        = task_form.select :assigned_id, people_from_project_for_select(project)
+
+  .submit
+    %span.help= formatting_documentation_link
+    %button.preview{ :data => {:alternate => t('comments.preview.close')} }= t('comments.preview.preview')
+    = f.submit t('comments.new.submit')

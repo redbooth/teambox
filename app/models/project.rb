@@ -16,6 +16,14 @@ class Project < ActiveRecord::Base
   attr_accessible :name, :permalink, :archived, :tracks_time, :public, :organization_name
   attr_accessor :organization_name
 
+  def self.find_by_id_or_permalink(param)
+    if param =~ /^\d+$/
+      find(param)
+    else
+      find_by_permalink(param)
+    end
+  end
+
   def log_activity(target, action, creator_id=nil)
     creator_id ||= target.user_id
     Activity.log(self, target, action, creator_id)

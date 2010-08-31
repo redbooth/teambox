@@ -9,24 +9,24 @@ Feature: Changing Task Status from New
     And I am on its task page
 
   Scenario: Mislav doesn't change task (new -> new)
-    When I fill in "comment_body" with "I need to wait till the engine cools down"
-    And I click the element "status_new"
+    When I fill in the comment box with "I need to wait till the engine cools down"
+    And I select "new" from "Status"
     And I press "Save"
-    And I wait for 0.1 second
+    And I wait for 0.2 second
     Then I should see "new" within ".task_status_new"
     And I should see "I need to wait till the engine cools down" within ".body"
     And I should see "Status: new"
 
   Scenario: Mislav changes task (new -> open:Mislav)
-    When I fill in "comment_body" with "I fused the dino eggs to the engine"
-    And I select "Mislav Marohnić" from "comment_target_attributes_assigned_id"
+    When I fill in the comment box with "I fused the dino eggs to the engine"
+    And I select "Mislav Marohnić" from "Assigned to"
     And I press "Save"
     Then I should see "Status: open"
     And I should see "Assigned to Mislav Marohnić"
 
   Scenario: Mislav changes task (new -> hold)
-    When I fill in "comment_body" with "I need to wait till the engine cools down"
-    And I click the element "status_hold"
+    When I fill in the comment box with "I need to wait till the engine cools down"
+    And I select "hold" from "Status"
     And I press "Save"
     And I wait for .2 seconds
     Then I should see "new → hold"
@@ -35,8 +35,8 @@ Feature: Changing Task Status from New
 
   # And I choose "comment_status_2"
   Scenario: Mislav changes task (new -> resolved)
-    When I fill in "comment_body" with "I need to wait till the engine cools down"
-    And I click the element "status_resolved"
+    When I fill in the comment box with "I need to wait till the engine cools down"
+    And I select "resolved" from "Status"
     And I press "Save"
     And I wait for .2 seconds
     Then I should see "new → resolved"
@@ -44,8 +44,8 @@ Feature: Changing Task Status from New
     And I should see "Status: resolved"
 
   Scenario: Mislav changes task (new -> rejected)
-    When I fill in "comment_body" with "I need to wait till the engine cools down"
-    And I click the element "status_rejected"
+    When I fill in the comment box with "I need to wait till the engine cools down"
+    And I select "rejected" from "Status"
     And I press "Save"
     And I wait for .2 seconds
     Then I should see "new → rejected"
@@ -58,8 +58,8 @@ Feature: Changing Task Status from New
 
   Scenario: Mislav changes task (hold -> resolved)
     Given I have a task on hold
-    When I fill in "comment_body" with "done!"
-    And I click the element "status_resolved"
+    When I fill in the comment box with "done!"
+    And I select "resolved" from "Status"
     And I press "Save"
     And I wait for .2 seconds
     And I should see "hold → resolved"
@@ -68,8 +68,8 @@ Feature: Changing Task Status from New
 
   Scenario: Mislav changes task (hold -> rejected)
     Given I have a task on hold
-    When I fill in "comment_body" with "done!"
-    And I click the element "status_rejected"
+    When I fill in the comment box with "done!"
+    And I select "rejected" from "Status"
     And I press "Save"
     And I wait for .2 seconds
     And I should see "hold → rejected"

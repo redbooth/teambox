@@ -15,7 +15,7 @@ Feature: Send email to users mentioned in comments
     And all the users are in the project with name: "Surpass Basecamp"
     When I am logged in as balint
     And I go to the page of the "Surpass Basecamp" project
-    And I fill in "comment_body" with "@pablo @james Check this out!"
+    And I fill in the comment box with "@pablo @james Check this out!"
     And I press "Pubblica"
     And I wait for 1 second
     Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"
@@ -30,7 +30,7 @@ Feature: Send email to users mentioned in comments
     And all the users are in the project with name: "Surpass Basecamp"
     And I am logged in as balint
     And I go to the page of the "Surpass Basecamp" project
-    And I fill in "comment_body" with "@all Check this out!"
+    And I fill in the comment box with "@all Check this out!"
     And I press "Pubblica"
     And I wait for 1 second
     Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"
@@ -49,7 +49,7 @@ Feature: Send email to users mentioned in comments
       | Lure DHH | Urgent    | Surpass Basecamp |
     And I am logged in as balint
     When I go to the page of the "Lure DHH" task
-    And I fill in "comment_body" with "@all That would be cool!"
+    And I fill in the comment box with "@all That would be cool!"
     And I press "Pubblica"
     Then I should see "James Urquhart"
     And I should see "Pablo Villalba"
@@ -64,7 +64,7 @@ Feature: Send email to users mentioned in comments
       | Long-term strategy | Surpass Basecamp | balint |
     And I am logged in as balint
     When I go to the page of the "Long-term strategy" conversation
-    And I fill in "comment_body" with "@all Think outside of the box!"
+    And I fill in the comment box with "@all Think outside of the box!"
     And I press "Pubblica"
     And I wait for 3 seconds
     Then "pablo@teambox.com" should receive an email with subject "surpass-basecamp"

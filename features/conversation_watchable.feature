@@ -20,14 +20,13 @@ Feature: Watchable Objects
 
   Scenario: New conversation watchers
     When I go to the new conversation page
-    And I fill in the following:
-      | conversation_name | Talk!               |
-      | conversation_body | We need to discuss! |
+    And I fill in "Title" with "Talk!"
+    And I fill in the comment box with "We need to discuss!"
     And I press "Create"
     Then "balint" should be watching the conversation "Talk!"
     Then "pablo" should be watching the conversation "Talk!"
     Then "james" should be watching the conversation "Talk!"
-    When I fill in "comment_body" with "Rockets!"
+    When I fill in the comment box with "Rockets!"
     And I press "Save"
     Then "balint.erdi@gmail.com" should receive 2 emails
     Then "pablo@teambox.com" should receive 2 emails
@@ -37,9 +36,9 @@ Feature: Watchable Objects
     Given "balint" stops watching the conversation "Politics"
     When I go to the conversations page
     And I follow "Politics"
-    When I fill in "comment_body" with "Senators!"
+    When I fill in the comment box with "Senators!"
     And I press "Save"
-    When I fill in "comment_body" with "Rockets!"
+    When I fill in the comment box with "Rockets!"
     And I press "Save"
     Then "balint.erdi@gmail.com" should receive no emails
     Then "pablo@teambox.com" should receive 2 emails
@@ -49,9 +48,9 @@ Feature: Watchable Objects
     Given "pablo" is not in the project called "Ruby Rockstars"
     When I go to the conversations page
     And I follow "Politics"
-    When I fill in "comment_body" with "Celebrities!"
+    When I fill in the comment box with "Celebrities!"
     And I press "Save"
-    When I fill in "comment_body" with "Controversy!"
+    When I fill in the comment box with "Controversy!"
     And I press "Save"
     Then "balint.erdi@gmail.com" should receive 2 emails
     Then "pablo@teambox.com" should receive no emails

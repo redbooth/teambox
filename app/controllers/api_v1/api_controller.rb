@@ -6,6 +6,10 @@ class ApiV1::APIController < ApplicationController
 
   protected
   
+  rescue_from CanCan::AccessDenied do |exception|
+    api_status(:unauthorized)
+  end
+  
   def load_project
     project_id ||= params[:project_id]
     

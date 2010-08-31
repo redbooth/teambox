@@ -12,16 +12,15 @@ Feature: Creating a conversation
     When I go to the conversations page
     And I follow "Create the first conversation in this project"
     Then I should see "New Conversation"
-    When I fill in the following:
-      | conversation_name | Lets code the next big thing                                            |
-      | conversation_body | Im having some ideas for an upcoming project: *Getting Laid*, the book. |
+    When I fill in "Title" with "Lets code the next big thing"
+    And I fill in the comment box with "Im having some ideas for an upcoming project: *Getting Laid*, the book."
     And I press "Create"
     Then I should see "Lets code the next big thing"
     And I should see "Im having some ideas for an upcoming project: Getting Laid, the book."
     And I should see "People watching:"
     And I should see "Mislav Marohnić"
     And I should see "Unwatch"
-    When I fill in "comment_body" with "Rockets!"
+    When I fill in the comment box with "Rockets!"
     And I press "Save"
     Then I should see "Im having some ideas for an upcoming project: Getting Laid, the book."
     And I should see "Rockets!"
@@ -31,9 +30,8 @@ Feature: Creating a conversation
     When I go to the conversations page
     And I follow "Create the first conversation in this project"
     Then I should see "New Conversation"
-    When I fill in the following:
-      | conversation_name | Lets code the next big thing |
-      | conversation_body |                              |
+    When I fill in "Title" with "Lets code the next big thing"
+    And I fill in the comment box with ""
     And I press "Create"
-    Then I should see "Please write a comment to start the conversation."
+    Then I should see "The conversation cannot start with an empty comment."
 

@@ -1,13 +1,11 @@
 .text_field.name
   = f.label :name, t('.name')
   = f.text_field :name
-  = errors_for conversation, :name
+  = errors_for f.object, :name
 
-- if conversation.new_record?
-  .text_area.body
-    = f.label :body, t('.body')
-    = f.text_area :body, :id => :conversation_body
-    .autocomplete{ :style => 'display:none' }
-    .previewBox.textilized{:style => 'display:none'}
-    = errors_for conversation, :body
-    - tooltip t('.body')
+- if f.object.new_record?
+  - f.object.comments.build
+  - f.fields_for :comments do |fields|
+    .field.text_area
+      = fields.text_area :body, :placeholder => t('comments.new.conversation')
+      - autocomplete_from_project(project)

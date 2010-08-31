@@ -1,4 +1,4 @@
-.watching#watching{ :style => "#{style_settings}"}
+.watching#watching
   = watch_link(project,user,target)
   - if target.watchers.empty?
     = t('.nobody_watching')

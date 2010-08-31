@@ -1,16 +1,16 @@
+-# this code supports the "tasks_for_all_projects" template
+- project ||= task.project
 - task_list ||= task.task_list
-- project ||= task.task_list.project
-.task.has_tooltip{ :id => task_id(:task,project,task), :class => task_classes(task)}
-  .tooltip{ :style => 'right: 10px' }
-    == #{localized_status_name(task)} - #{t('common.comment', :count => task.comments_count)}
+
+%div[task]{ :class => task_classes(task) }
   .inner
     .taskStatus	
       - if editable and !task.archived?
-        %div{:style => 'height:0px;'}= task_drag_link(task)
+        = image_tag('drag.png', :class => 'task_drag')
       = task_status(task,:content)
     .taskName{ :class => "task_item_#{task.status_name}"}
       %span.status= localized_status_name(task)
-      = link_to task, project_task_list_task_path(project,task_list,task), :class => :name
+      = link_to task, [project, task_list, task], :class => 'name'
       - unless (task.due_on.nil? && task.unassigned?) || task.closed?
         %span.assigned
           = due_on(task) if task.due_on
@@ -18,8 +18,8 @@
           = link_to task.assigned.short_name, user_path(task.assigned.user) if task.assigned
       .task_extended
         %span.project
-          = link_to task.project, project_path(task.project)
+          = link_to project, project
           &rarr;
         %span.task_list
-          = link_to task.task_list, project_task_list_path(task.project, task.task_list)
+          = link_to task_list, [project, task_list]
     .clear

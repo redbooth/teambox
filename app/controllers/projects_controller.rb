@@ -9,6 +9,8 @@ class ProjectsController < ApplicationController
     @last_activity = @activities.last
     @pending_projects = @current_user.invitations.reload # adding reload to avoid a strange bug
     @archived_projects = @current_user.projects.archived
+    
+    @new_conversation = Conversation.new(:simple => true)
 
     respond_to do |f|
       f.html  { @threads = Activity.get_threads(@activities) }
@@ -26,12 +28,9 @@ class ProjectsController < ApplicationController
     @activities = Project.get_activities_for @current_project
     @last_activity = @activities.last
     @pending_projects = @current_user.invitations.reload
-    @recent_conversations = Conversation.not_simple.recent(4).find_all_by_project_id(@current_project.id)
+    @recent_conversations = @current_project.conversations.not_simple.recent(4)
 
-    #   Use this snippet to test the notification emails that we send:
-    #@project = @current_project
-    #render :file => 'emailer/notify_comment', :layout => false
-    #return
+    @new_conversation = @current_project.conversations.new(:simple => true)
 
     respond_to do |f|
       f.html  { @threads = Activity.get_threads(@activities) }
