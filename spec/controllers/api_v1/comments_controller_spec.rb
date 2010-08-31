@@ -65,15 +65,6 @@ describe ApiV1::CommentsController do
   end
   
   describe "#create" do
-    it "should allow commenters to post a comment" do
-      login_as @project.user
-      
-      post :create, :project_id => @project.permalink, :comment => {:body => 'Created!'}
-      response.should be_success
-      
-      @project.comments(true).length.should == 2
-    end
-    
     it "show allow commenters to post a comment in a task" do
       login_as @project.user
       
@@ -101,89 +92,13 @@ describe ApiV1::CommentsController do
     it "should not allow observers to post a comment" do
       login_as @observer
       
-      post :create, :project_id => @project.permalink, :comment => {:body => 'Created!'}
+      conversation = Factory.create(:conversation, :project => @project)
+      conversation.comments.length.should == 1
+      
+      post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :comment => {:body => 'Created!'}
       response.status.should == '401 Unauthorized'
       
-      @project.comments(true).length.should == 1
-    end
-  end
-  
-  describe "#convert" do
-    it "should allow commenters to convert a comment into a task" do
-      login_as @project.user
-      
-      task_list = @project.create_task_list(@owner, {:name => 'A TODO list'})
-      task_list.save!
-      
-      put :convert, :project_id => @project.permalink, :id => @comment.id, :task_list_id => task_list.id, :task => {:name => 'Created!'}
-      response.should be_success
-      
-      JSON.parse(response.body)['id'].to_i.should == @project.tasks(true).last.id
-      @comment.reload.target.task_list.should == task_list
-      @project.tasks.length.should == 1
-    end
-    
-    it "should not allow observers to convert a comment into a task" do
-      login_as @observer
-      
-      task_list = @project.create_task_list(@owner, {:name => 'A TODO list'})
-      task_list.save!
-      
-      put :convert, :project_id => @project.permalink, :id => @comment.id,:task_list_id => task_list.id, :task => {:name => 'Created!'}
-      response.status.should == '401 Unauthorized'
-      
-      @comment.reload.target.should == @project
-      @project.tasks.length.should == 0
-    end
-  end
-  
-  describe "#update" do
-    it "should allow the owner to modify a comment within 15 minutes" do
-      login_as @user
-      
-      put :update, :project_id => @project.permalink, :id => @comment.id, :comment => {:body => 'Updated!'}
-      response.should be_success
-      
-      @comment.update_attribute(:created_at, Time.now - 16.minutes)
-      
-      put :update, :project_id => @project.permalink, :id => @comment.id, :comment => {:body => 'Updated FAIL!'}
-      response.status.should == '401 Unauthorized'
-    end
-    
-    it "should not allow anyone else to modify another comment" do
-      login_as @project.user
-      
-      put :update, :project_id => @project.permalink, :id => @comment.id, :comment => {:body => 'Updated!'}
-      response.status.should == '401 Unauthorized'
-    end
-  end
-  
-  describe "#destroy" do
-    it "should allow an admin to destroy a comment" do
-      login_as @project.user
-      
-      put :destroy, :project_id => @project.permalink, :id => @comment.id
-      response.should be_success
-      
-      @project.comments(true).length.should == 0
-    end
-    
-    it "should allow the owner to destroy a comment" do
-      login_as @user
-      
-      put :destroy, :project_id => @project.permalink, :id => @comment.id
-      response.should be_success
-      
-      @project.comments(true).length.should == 0
-    end
-    
-    it "should not allow a non-admin to destroy another comment" do
-      login_as @observer
-      
-      put :destroy, :project_id => @project.permalink, :id => @comment.id
-      response.status.should == '422 Unprocessable Entity'
-      
-      @project.comments(true).length.should == 1
+      conversation.reload.comments(true).length.should == 1
     end
   end
 end
