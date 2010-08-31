@@ -1,7 +1,0 @@
-.upload_area#upload_area{:style => 'display: none;'}
-  %h3#upload_header= t('uploads.new.select_a_file')
-  
-  - form.object.uploads.build
-
-  - form.fields_for :uploads do |f|
-    = f.file_field :asset, :id => 'upload_file'

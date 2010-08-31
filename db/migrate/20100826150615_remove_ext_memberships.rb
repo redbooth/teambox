@@ -1,6 +1,6 @@
 class RemoveExtMemberships < ActiveRecord::Migration
   def self.up
-    Membership.find_all_by_role(10).each{|d|d.destroy}
+    Membership.delete_all(:role => 10)
   end
 
   def self.down

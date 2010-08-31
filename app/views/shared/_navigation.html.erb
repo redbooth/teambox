@@ -73,12 +73,11 @@
         t.highlights_on :controller => :tasks
         t.tab_index = 120
       end
-
-      add_tab(:html => {:id => 'pages_tab',
-                        :class => 'nav_tab',
-                        :li_class => 'nav_tab_container',
-                        :li_end => pages_tab_list(project, project.pages) }) do |t|
-        t.named "#{t('shared.project_navigation.pages')} #{image_tag('triangle.png', :class => 'triangle')}"
+			
+			page_tab = project.has_member?(current_user) ? {:id => 'pages_tab', :class => 'nav_tab', :li_class => 'nav_tab_container', :li_end => pages_tab_list(project, project.pages) } : {}
+			
+      add_tab(:html => page_tab) do |t|
+        t.named "#{t('shared.project_navigation.pages')} #{image_tag('triangle.png', :class => 'triangle') if project.has_member?(current_user)}"
         t.links_to  project_pages_path(project)
         t.highlights_on :controller => :pages
         t.tab_index = 130

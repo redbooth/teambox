@@ -1,264 +1,119 @@
-Comment = {
-  update_uploads_current: function(e) {
-    if (e.select('div.upload_thumbnail').length == 0)
-      e.hide();
-    else
-      e.show();
-  },
-  update: function() {
-    var params = {};
-    if ($('sort_uploads').checked) {
-      params = { show: 'uploads' };
-    } else if ($('sort_hours').checked) {
-      params = { show: 'hours' };
-    }
-    new Ajax.Request(comments_update_url, { method: 'get', parameters: $H(params).merge(comments_parameters) });
-  },
+var iframeCounter = 0
 
-  setLoading: function(id, value) {
-    var submit_el = $(id + '_submit');
-    var loading_el = $(id + '_loading');
-    if (value)
-    {
-      if (submit_el)
-        submit_el.hide();
-      if (loading_el)
-        loading_el.show();
-    }
-    else
-    {
-      if (submit_el)
-        submit_el.show();
-      if (loading_el)
-        loading_el.hide();
-    }
-  },
-  create: function(form) {
-    var update_id = form.readAttribute('update_id');
-    var thread_id_ = form.down('#thread_id');
-    thread_id = thread_id_ ? '_' + thread_id_.getValue() : "";
-
-    new Ajax.Request(form.readAttribute('action'), {
-      asynchronous: true,
-      evalScripts: true,
-      method: form.readAttribute('method'),
-      parameters: form.serialize(),
-      onLoading: function() {
-        Comment.setLoading('comment_new' + thread_id, true);
-        form.closePreview();
-      },
-      onFailure: function(response) {
-        Comment.setLoading('comment_new' + thread_id, false);
-      },
-      onSuccess: function(response){
-        Comment.setLoading('comment_new' + thread_id, false);
-        if ($(document.body).hasClassName('show_tasks'))
-          TaskList.updatePage('column', TaskList.restoreColumn);
-      },
-      onComplete: function(){
-        format_posted_date();
-      }
-    });
-  },
-
-  submitConvert: function(form) {
-    var update_id = form.readAttribute('update_id');
-    new Ajax.Request(form.readAttribute('action'), {
-      method: 'put',
-      asynchronous: true,
-      evalScripts: true,
-      parameters: form.serialize(),
-      onLoading: function() {
-        Comment.setLoading(update_id, false);
-      },
-      onSuccess: function(response){
-        Comment.setLoading(update_id, false);
-        if ($(document.body).hasClassName('show_tasks'))
-          TaskList.updatePage('column', TaskList.restoreColumn);
-      },
-      onFailure: function(response){
-        Comment.setLoading(update_id, false);
-      }
-    });
-  },
-
-  submitEdit: function(form) {
-    var update_id = form.readAttribute('update_id');
-    new Ajax.Request(form.readAttribute('action'), {
-      method: 'put',
-      asynchronous: true,
-      evalScripts: true,
-      parameters: form.serialize(),
-      onLoading: function() {
-        Comment.setLoading(update_id, false);
-      },
-      onSuccess: function(response){
-        Comment.setLoading(update_id, false);
-        if ($(document.body).hasClassName('show_tasks'))
-          TaskList.updatePage('column', TaskList.restoreColumn);
-      },
-      onFailure: function(response){
-        Comment.setLoading(update_id, false);
-      }
-    });
-  },
-
-  cancelEdit: function(form) {
-    var update_id = form.readAttribute('update_id');
-    var has_threads = form.up('.thread') ? 'true' : 'false';
-    new Ajax.Request(form.readAttribute('action_cancel'), {
-      method: 'get',
-      asynchronous: true,
-      evalScripts: true,
-      parameters: {'thread': has_threads},
-      onLoading: function() {
-        Comment.setLoading(update_id, true);
-      },
-      onSuccess: function(response){
-      },
-      onFailure: function(response){
-        Comment.setLoading(update_id, false);
-      }
-    });
-  },
-
-  edit: function(element, url) {
-    var has_threads = element.up('.thread') ? 'true' : 'false';
-    new Ajax.Request(url, {
-      method: 'get',
-      asynchronous: true,
-      evalScripts: true,
-      parameters: {'thread': has_threads},
-      onLoading: function() {
-        Actions.setLoading(element, true);
-      },
-      onSuccess: function(response){
-        Actions.setActions(element, false);
-        Actions.setLoading(element, false);
-      },
-      onFailure: function(response){	
-        Actions.setLoading(element, false);
-      }
-    });
-  },
- 
-  destroy: function(element, url) {
-    new Ajax.Request(url, {
-      method: 'delete',
-      asynchronous: true,
-      evalScripts: true,
-      onLoading: function() {
-        Actions.setLoading(element, true);
-      },
-      onSuccess: function(response){
-        Actions.setActions(element, false);
-        Actions.setLoading(element, false);
-      },
-      onFailure: function(response){	
-        Actions.setLoading(element, false);
-      }
-    });
-  },
-
-  unselect_all_statuses: function(){
-    $$('.statuses .active').each(function(ee){ ee.removeClassName('active') })
-    $$('.statuses input').each(function(ee){ ee.checked = false })    
-  },
-  mark_status: function(e){
-    e.down('input').checked = true
-    e.addClassName('active')    
-  },
-  mark_status_for_assigned: function(e){
-    $$('.new_comment .statuses option').each(function(ee){
-      if(ee.value == ''){
-        if(ee.selected == true)
-          Comment.mark_status(e.up('.statuses').down('.hold'))
-        else  
-          Comment.mark_status(e.up('.status'))
-      }
-    });
-  },
-  paint_status_boxes: function(){
-    $$('.statuses input[type=radio]').each(function(el) {
-      if (el.checked) {
-        el.up('.status').addClassName('active')
-      }
+Element.addMethods('form', {
+  hasFileUploads: function(form) {
+    return $(form).select('input[type=file]').any(function(input) {
+      return input.getValue()
     })
-  },
-  assign_to_nobody: function(){
-    $$('.new_comment .statuses option').each(function(e){
-      if(e.value == '')
-        e.selected = true
-      else
-        e.selected = false
-    })
-  },
+  }
+})
 
-  check_edit: function(){
-    var list = Comment.edit_watch_list;
-    var len = list.length;
-    var now = new Date();
-    Comment.edit_watch_list = list.reject(function(c){
-      if (now > c.date) {
-        var el = $(c.id);
-        if (el)
-        {
-          el.select('a.taction').each(function(e){ e.hide(); });
-          el.select('.tactione').each(function(e){ e.show(); });
-        }
-        return true;
+document.on('ajax:create', 'form.new_conversation, .thread form', function(e) {
+  // don't favor RJS; state we want HTML instead
+  e.memo.request.options.requestHeaders = {'Accept': 'text/html'}
+})
+
+// async file uploads in comments via iframe
+document.on('ajax:before', 'form.new_conversation, .thread form', function(e, form) {
+  if (form.hasFileUploads()) {
+    e.stop()
+    
+    var iframeID = 'file_upload_iframe' + (iframeCounter++)
+    var iframe = new Element('iframe', { id: iframeID, name: iframeID }).hide()
+    $(document.body).insert(iframe)
+    form.target = iframeID
+    form.insert(new Element('input', { type: 'hidden', name: 'iframe', value: 'true' }))
+    
+    var callback = function() {
+      // contentDocument doesn't work in IE (7)
+      var iframeBody = (iframe.contentDocument || iframe.contentWindow.document).body
+      
+      if (iframeBody.className == "error") {
+        var json = iframeBody.firstChild.innerHTML.evalJSON()
+        form.fire('ajax:failure', {responseJSON: json})
+      } else {
+        form.fire('ajax:success', {responseText: iframeBody.innerHTML})
       }
-      return false;
-    });
+      
+      iframe.remove()
+      form.target = null
+      var extraInput = form.down('input[name=iframe]')
+      if (extraInput) extraInput.remove()
+    }
     
-    if (Comment.edit_watch_list.length > 0)
-      Comment.edit_watch_timer = setTimeout(Comment.check_edit, 1000);
-  },
-  cancel_watch_edit: function(){
-    if (Comment.edit_watch_timer)
-      clearTimeout(Comment.edit_watch_timer);
-    Comment.edit_watch_timer = null;
-  },
-  watch_edit: function(){
-    Comment.cancel_watch_edit();
-    var date = new Date();
-    
-    Comment.edit_watch_list = $$('div.comment').map(function(c){
-        var time = new Date();
-        time.setTime(c.readAttribute('immutable_at'));
-        return {id: c.readAttribute('id'), date:time};
-    }).reject(function(c){
-        if (date >= c.date) {
-          $$('#' + c.id + ' a.taction').each(function(e){ e.hide(); });
-          $$('#' + c.id + ' .tactione').each(function(e){ e.show(); });
-          return true;
-        } else {
-          $$('#' + c.id + ' a.taction').each(function(e){ e.show(); });
-          $$('#' + c.id + ' .tactione').each(function(e){ e.hide(); });
-        }
-        return false;
-    });
-    Comment.check_edit();
+    // for IE (7)
+    iframe.onreadystatechange = function() {
+      if (this.readyState == 'complete') callback()
+    }
+    // non-IE
+    iframe.onload = callback
+
+    // we may have cancelled xhr, but we still need to trigger form submit manually
+    form.submit()
   }
-};
+})
 
-document.on('submit', 'form.new_comment', function(e, form) {
-  if (!form.select('input[type=file]').any(function(i){ return i.getValue() })) {
-    e.stop();
-    Comment.create(form);
+function resetCommentsForm(form) {
+  // clear comment and reset textarea height
+  form.down('textarea[name*="[body]"]').setValue('').setStyle({ height: '' })
+  // clear populated file uploads
+  form.select('input[type=file]').each(function(input) {
+    if (input.getValue()) input.remove()
+  })
+  // clear and hide the preview area
+  var preview = form.down('.previewBox')
+  if (preview && preview.visible()) togglePreviewBox(preview.update(''))
+  // clear hours
+  var hours = form.down('input[name*="[human_hours]"]')
+  if (hours) hours.setValue('')
+  // hide initially hidden areas
+  form.select('.hours_field, .upload_area').invoke('hide')
+  // clear errors
+  form.select('.error').invoke('remove')
+}
+
+// insert new simple conversation into stream after posting
+document.on('ajax:success', 'form.new_conversation', function(e, form) {
+  resetCommentsForm(form)
+  $('activities').insert({top: e.memo.responseText}).down('.thread').highlight({ duration: 1 })
+})
+
+// "Show N previous comments" action in threads
+document.on('ajax:success', '.thread .comments .more_comments', function(e, el) {
+  el.up('.comments').update(e.memo.responseText).highlight({ duration: 2 })
+})
+
+// insert new comment into thread after posting
+document.on('ajax:success', '.thread form', function(e, form) {
+  resetCommentsForm(form)
+  form.up('.thread').down('.comments').insert(e.memo.responseText).
+    down('.comment:last-child').highlight({ duration: 1 })
+})
+
+document.on('ajax:failure', 'form.new_conversation, .thread form', function(e, form) {
+  var message = e.memo.responseJSON.first()[1]
+  form.down('div.text_area').insert(new Element('p', { 'class': 'error' }).update(message))
+})
+
+// toggle between hidden upload area and a link to show it
+hideBySelector('form .upload_area')
+
+document.on('click', 'form .attach_icon', function(e, link) {
+  if (!e.isMiddleClick()) {
+    link.up('form').down('.upload_area').forceShow().highlight()
+    e.stop()
   }
-});
+})
 
-document.on('submit', 'form.edit_comment', function(e, el) {
-  e.stop();
-  Comment.submitEdit(el);
-});
+// toggle between hidden time tracking input and a link to show it
+hideBySelector('form .hours_field')
 
-document.on('submit', 'form.convert_comment', function(e, el) {
-  e.stop();
-  Comment.submitConvert(el);
-});
+document.on('click', 'form .add_hours_icon', function(e, link) {
+  link.up('form').down('.hours_field').forceShow().down('input').focus()
+  e.stop()
+})
 
+// FIXME: I broked the edit links
 document.on('click', 'a.edit_comment_cancel', function(e, el) {
   e.stop();
   Comment.cancelEdit(el.up('form'));
@@ -292,63 +147,15 @@ document.on('click', '#sort_uploads, #sort_all, #sort_hours', function(e,el) {
   Comment.update();
 });
 
-document.on('click', 'form .showPreview button', function(e, link) {
-  e.stop();
-  link.up('form').showPreview();
-});
-
-document.on('click', 'form .showPreview a', function(e, link) {
-  e.stop();
-  link.up('form').closePreview();
-});
-
 // Open links inside Comments and Notes textilized areas in new windows
 document.on('mouseover', '.textilized a', function(e, link) {
   link.writeAttribute("target", "_blank");
 });
 
-document.on('change', '.statuses .status.open select', function(e, selectbox) {
-  Comment.unselect_all_statuses()
-  Comment.mark_status_for_assigned(selectbox)
-})
-document.on('click', '.statuses .status:not(.open)', function(e, status) {
-  Comment.unselect_all_statuses()
-  Comment.assign_to_nobody()
-  Comment.mark_status(status)
-})
+hideBySelector('#activities .thread form.new_comment .extra')
 
-document.on('dom:loaded', function() {
-  $$('.statuses input[type=checkbox]').each(function(el) {
-    if (el.checked) {
-      el.up('.status').addClassName('active')
-    }
-  })
-})
-
-document.on('click', 'form.new_comment #comment_upload_link', function(e, link) {
-  if (!e.isMiddleClick()) {
-    e.preventDefault()
-    link.up().next('.upload_area').show()
-    link.hide()
-  }
-})
-
-document.on('click', 'form.new_comment #comment_hours_link', function(e, link) {
-  e.preventDefault()
-  link.hide()
-  link.up().next('.hours').show()
-})
-
-hideBySelector('.thread form.new_comment .extra')
-
-document.on('focusin', '.thread form.new_comment textarea', function(e, input) {
-  input.up('form').down('.extra').setStyle({display: 'block'})
-})
-
-document.on('focusin', 'form.new_comment textarea, form.new_conversation textarea', function(e, input) {
-  project_id = input.up('form').readAttribute('data-project') || input.up('form').down('select[name=project_id]').value
-  people = _projects_people.get(project_id)
-  new Autocompleter.Local(input, input.next('.autocomplete'), people, {tokens:[' ']})
+document.on('focusin', '#activities .thread form.new_comment textarea', function(e, input) {
+  input.up('form').down('.extra').forceShow()
 })
 
 // document.on('focusout', '.thread form.new_comment textarea', function(e, input) {
@@ -357,6 +164,65 @@ document.on('focusin', 'form.new_comment textarea, form.new_conversation textare
 //   }
 // })
 
-document.observe("dom:loaded", function() {
-  new PeriodicalExecuter(Comment.watch_edit, 30);
-});
+// enable username autocompletion for main textarea in comment forms
+document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
+  var form = e.findElement('form'),
+      project = form.readAttribute('data-project-id')
+  
+  // projects index page has a global comment box with projects selector
+  if (!project) {
+    var projectSelect = form.down('select[name=project_id]')
+    if (projectSelect) project = projectSelect.getValue()
+  }
+  
+  if (project) {
+    var people = _people_autocomplete[project],
+        autocompleter = input.retrieve('autocompleter')
+        
+    if (autocompleter) {
+      // update options array in case the projects selector changed value
+      autocompleter.options.array = people
+    } else {
+      var container = new Element('div', { 'class': 'autocomplete' }).hide()
+      input.insert({ after: container })
+      autocompleter = new Autocompleter.Local(input, container, people, { tokens:[' '] })
+      input.store('autocompleter', autocompleter)
+    }
+  }
+})
+
+function togglePreviewBox(previewBox, enabled, button) {
+  if (enabled == undefined) enabled = previewBox.visible()
+  if (button == undefined) button = previewBox.up('form').down('button.preview')
+  
+  if (enabled) previewBox.hide()
+  else previewBox.show()
+  
+  var text = button.innerHTML
+  button.update(button.readAttribute('data-alternate')).writeAttribute('data-alternate', text)
+}
+
+document.on('click', 'form button.preview', function(e, button) {
+  e.stop()
+  
+  var enabled = false,
+      textarea = e.findElement('form').down('textarea'),
+      previewBox = textarea.next('.previewBox')
+  
+  if (!previewBox) {
+    previewBox = new Element('div', { 'class': 'previewBox' })
+    textarea.insert({ after: previewBox })
+    
+    var formatter = new Showdown.converter;
+    formatter.makeHtml = formatter.makeHtml.wrap(function(make) {
+      previewBox.update(make(textarea.getValue()))
+    })
+    
+    textarea.on('keyup', formatter.makeHtml.bind(formatter).throttle(300))
+    formatter.makeHtml()
+  } else {
+    enabled = previewBox.visible()
+  }
+  
+  togglePreviewBox(previewBox, enabled, button)
+})

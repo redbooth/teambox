@@ -216,7 +216,7 @@ class User < ActiveRecord::Base
   end
 
   def in_project(project)
-    project.people.select { |person| person.user_id == self.id }.first
+    project.people.find_by_user_id(self)
   end
 
   def contacts

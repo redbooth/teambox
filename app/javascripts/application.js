@@ -89,69 +89,10 @@ Event.addBehavior({
 });
 
 Element.addMethods({
-  showPreview: function(element) {
-    var form = $(element),
-        block = form.down('.showPreview'),
-        textarea = form.down('textarea'),
-        previewBox = form.down('.previewBox')
-        button = block.down('button'),
-        cancel = block.down('a');
-
-    button.disabled = true;
-    button.down('.default').hide();
-    button.down('.showing').show();
-    
-    var formatter = new Showdown.converter;
-    formatter.makeHtml = formatter.makeHtml.wrap(function(make) {
-      previewBox.update(make(textarea.getValue()))
-    })
-    
-    textarea.updatePreview = textarea.on('keyup', formatter.makeHtml.bind(formatter).throttle(300))
-    
-    formatter.makeHtml()
-    
-    if (!previewBox.visible()) {
-      previewBox.blindDown({duration: 0.3});
-      button.hide();
-      cancel.show();
-    }
-
-    return element;
-  },
-  closePreview: function(element) {
-    var form = $(element),
-        block = form.down('.showPreview'),
-        textarea = form.down('textarea'),
-        button = block.down('button'),
-        cancel = block.down('a'),
-        previewBox = block.up('form').down('.previewBox');
-
-    textarea.updatePreview.stop()
-    
-    cancel.hide();
-    button.down('.default').show();
-    button.down('.showing').hide();
-    button.show().disabled = false;
-
-    if (previewBox.visible()) previewBox.blindUp({duration: 0.15});
-    return element;
-  },
-  nextText: function(element, texts) {
-    element = $(element);
-    var currentText = element.innerHTML;
-    var nextIndex = (texts.indexOf(currentText) + 1) % texts.length;
-    return texts[nextIndex];
-  },
-  resizeToText: function(area, force) {
-    if (area.scrollHeight > area.clientHeight) {
-      var wanted = area.getHeight() + (area.scrollHeight - area.clientHeight) + 15,
-        available = document.viewport.getHeight() - area.viewportOffset().top - 60
-      
-      var possible = force ? wanted : Math.min(wanted, available)
-      area.setStyle({ height: possible + 'px' })
-    }
+  forceShow: function(element) {
+    return $(element).setStyle({ display: 'block' })
   }
-});
+})
 
 Project = {
   valid_url: function(){
@@ -170,7 +111,7 @@ Project = {
 
 document.on('click', 'a.closeThis', function(e, link) {
   e.preventDefault()
-  $(link.parentNode).setStyle('display: none')
+  $(link.parentNode).hide()
 })
 
 if (Prototype.Browser.Gecko) {

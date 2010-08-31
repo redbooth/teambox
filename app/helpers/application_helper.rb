@@ -11,6 +11,10 @@ module ApplicationHelper
     end
   end
   
+  def content_for(*args)
+    super unless args.first.to_sym == :column and mobile?
+  end
+  
   def logo_image
     logo = @organization ? @organization.logo(:top) : "header_logo_black.png"
     image_tag(logo, :alt => "Teambox")
@@ -131,38 +135,22 @@ module ApplicationHelper
                       :last_word_connector => " #{t('common.and')} ")
   end
 
-  def watch_link(project,user,target,js=true)
-    unless %w[Task TaskList Conversation].include?(target.class.to_s)
-      raise ArgumentError, "Invalid Model, was expecting Task, TaskList or Conversation but got #{target.class}"
+  def watch_link(project, user, target)
+    unless target.respond_to? :watching?
+      raise ArgumentError, "expected something Watchable, got #{target.class}"
     end
-    target_name   = target.class.to_s.tableize
-    task_list_url = target.is_a?(Task) ? "task_lists/#{target.task_list.id}/" : ''
-    watch_status  = target.watching?(user) ? 'unwatch' : 'watch'
+    action = target.watching?(user) ? :unwatch : :watch
     
-    # Bail if assigned
-    return "" if target.is_a?(Task) && user.in_project(project).id == target.assigned_id
-
-    url = "/projects/#{project.permalink}/#{task_list_url}#{target_name}/#{target.id}/#{watch_status}"
-
-    if js
-      link_to_remote "<span>#{t(".#{watch_status}")}</span>",
-        :url => url, :html => { :id => 'watch_link', :class => 'button' }
-    else
-      link_to "<span>#{t(".#{watch_status}")}</span>", url
-    end
+    link_to "<span>#{t(".#{action}")}</span>", [action, project, target],
+      :id => 'watch_link', :class => 'button', :'data-method' => 'put', :'data-remote' => true
   end
 
   def people_watching(project,user,target,state = :normal)
-    if target.is_a?(Task)
-      style_settings = target.closed? ? 'display:none' : ''
-    end
-
     render :partial => 'shared/watchers', :locals => {
       :project => project,
       :user => user,
       :target => target,
-      :state => state,
-      :style_settings => style_settings }
+      :state => state }
   end
 
   def upgrade_browser

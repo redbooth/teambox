@@ -5,8 +5,8 @@ class Task
   named_scope :active, :conditions => {:status => ACTIVE_STATUS_CODES}
   
   named_scope :assigned_to, lambda { |user|
-    assigned_ids = user.people.from_unarchived.all(:select => 'people.id')
-    { :conditions => {:assigned_id => assigned_ids} }
+    people = user.people.from_unarchived.all(:select => 'people.id')
+    { :conditions => {:assigned_id => people} }
   }
   
   named_scope :due_sooner_than_two_weeks, lambda {

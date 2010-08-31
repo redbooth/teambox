@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100817111219) do
+ActiveRecord::Schema.define(:version => 20100826150615) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(:version => 20100817111219) do
     t.text     "body_html"
     t.float    "hours"
     t.boolean  "billable"
-    t.integer  "status",               :default => 0
-    t.integer  "previous_status",      :default => 0
+    t.integer  "status"
+    t.integer  "previous_status"
     t.integer  "assigned_id"
     t.integer  "previous_assigned_id"
     t.datetime "deleted_at"

@@ -1,8 +1,9 @@
 class TaskList < RoleRecord
+
+  include Watchable
+
   acts_as_list :scope => :project
   attr_accessible :name, :start_on, :finish_on
-
-  serialize :watchers_ids
 
   concerned_with :validation,
                  :initializers,
@@ -18,7 +19,6 @@ class TaskList < RoleRecord
         Emailer.send_with_language(:notify_task_list, user.locale, user, self.project, self) # deliver_notify_task_list
       end
     end
-    self.sync_watchers
   end
 
   def to_s

@@ -42,33 +42,27 @@ class ApplicationController < ActionController::Base
     end
 
     def belongs_to_project?
-      if @current_project && current_user
-        # If the user is not in the project...
-        unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-          if Invitation.exists?(:project_id => @current_project.id, :invited_user_id => current_user.id)
-            redirect_to project_invitations_path(@current_project)
-          else
-            current_user.remove_recent_project(@current_project)
-            render 'projects/not_in_project'
+      if @current_project and logged_in?
+        if current_user.projects.exists? @current_project
+          # user is a project member
+          unless @current_project.archived?
+            current_user.add_recent_project(@current_project)
           end
+        elsif @current_project.invitations.exists?(:invited_user_id => current_user)
+          # there is an invitation pending for accept
+          redirect_to project_invitations_path(@current_project)
+        else
+          # sorry, no dice
+          render :template => 'projects/not_in_project', :status => :forbidden
         end
       end
     end
 
     def load_project
-      project_id ||= params[:project_id]
-      project_id ||= params[:id]
-      
-      if project_id
-        @current_project = Project.find_by_permalink(project_id)
-        
-        if @current_project
-          if current_user && !@current_project.archived?
-            current_user.add_recent_project(@current_project)
-          end
-        else
+      if project_id = params[:project_id] || params[:id]
+        unless @current_project = Project.find_by_id_or_permalink(project_id)
           flash[:error] = t('not_found.project', :id => project_id)
-          redirect_to projects_path, :status => 301
+          redirect_to projects_path
         end
       end
     end
@@ -159,6 +153,24 @@ class ApplicationController < ActionController::Base
         if mobile and request.format == :html
           request.format = :m
         end
+      end
+    end
+    
+    def mobile?
+      request.format == :m
+    end
+    helper_method :mobile?
+    
+    def iframe?
+      params[:iframe] == 'true'
+    end
+    
+    def output_errors_json(record)
+      if request.xhr?
+        response.content_type = Mime::JSON
+        render :json => record.errors, :status => 400
+      elsif iframe?
+        render :template => 'shared/iframe_error', :layout => false, :locals => { :data => record.errors }
       end
     end
     

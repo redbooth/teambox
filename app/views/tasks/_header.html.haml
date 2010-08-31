@@ -1,3 +1,15 @@
-.task_header{ :id => "#{task_id(:edit_header,project,task_list,task)}" }
-  = task_action_links(project,task_list,task) unless task.closed?
+- can_update = !mobile? and can?(:update, task)
+
+.task_header
+  - if can_update
+    .text_actions
+      = link_to t('tasks.link.edit'), [:edit, project, task_list, task]
+      - if can? :destroy, task
+        = t('common.or')
+        = link_to t('common.delete'), [project, task_list, task], :'data-method' => 'delete',
+          :'data-confirm' => t('confirm.delete_task')
+  
   %h2= task.name
+
+- if can_update
+  = render 'form', :project => project, :task_list => task_list, :task => task
