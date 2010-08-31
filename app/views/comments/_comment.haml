@@ -17,11 +17,11 @@
             .extra
               - if comment.target.is_a?(Project) and comment.project.editable?(current_user)
                 = convert_comment_link(comment)
-              - if comment.can_edit?(current_user)
+              - if can? :edit, comment
                 = edit_comment_link(comment)
               .tactione{:style => (comment.can_edit?(current_user) ? 'display:none' : nil)}
                 = t('.cannot_edit')
-              - if comment.can_destroy?(current_user)
+              - if can? :destroy, comment
                 = delete_comment_link(comment)
       .name
         - if threaded || simpleconv

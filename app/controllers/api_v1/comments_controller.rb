@@ -63,7 +63,7 @@ class ApiV1::CommentsController < ApiV1::APIController
   end
 
   def destroy
-    @has_permission = if @comment.can_destroy?(current_user)
+    @has_permission = if can? :destroy, @comment
       @comment.destroy
       true
     else  
