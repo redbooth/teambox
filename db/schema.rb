@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100826150615) do
+ActiveRecord::Schema.define(:version => 20100901153649) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -185,6 +185,9 @@ ActiveRecord::Schema.define(:version => 20100826150615) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "organizations", ["domain"], :name => "index_organizations_on_domain"
+  add_index "organizations", ["permalink"], :name => "index_organizations_on_permalink"
 
   create_table "page_slots", :force => true do |t|
     t.integer "page_id"
