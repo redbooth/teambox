@@ -31,7 +31,7 @@ class Task < RoleRecord
   # set by controller to indicate user that's doing task updating
   attr_accessor :updating_user
   
-  before_save :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
+  before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_save :set_comments_author, :if => :updating_user
   before_save :save_changes_to_comment, :if => :track_changes?
   
