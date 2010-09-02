@@ -37,44 +37,5 @@ module CommentsHelper
   def list_comments(comments, target)
     content_tag :div, render(comments), :class => 'comments', :id => 'comments'
   end
-  
-  def cancel_edit_comment_link(comment)
-    link_to t('common.cancel'),
-      project_comment_path(comment.project, comment),
-      :class => 'edit_comment_cancel'
-  end
-  
-  def cancel_convert_comment_link(comment)
-    link_to t('common.cancel'),
-      project_path(comment.project),
-      :class => 'convert_comment_cancel'
-  end
-  
-  def convert_comment_link(comment)
-    link_to t('comments.actions.convert_task'),
-      project_comment_path(comment.project, comment),
-      :id => "convert_comment_#{comment.id}_link", 
-      :class => 'commentConvert',
-      :action_url => edit_project_comment_path(comment.project, comment, :part => 'task')
-  end
-
-  def edit_comment_link(comment)
-    if comment.user_id == current_user.id
-      link_to t('comments.actions.edit'),
-        edit_project_comment_path(comment.project, comment),
-        :id => "edit_comment_#{comment.id}_link", 
-        :class => 'commentEdit taction',
-        :action_url => edit_project_comment_path(comment.project, comment)
-    end
-  end
-    
-  def delete_comment_link(comment)
-    link_to t('common.delete'),
-      project_comment_path(comment.project, comment),
-      :id => "delete_comment_#{comment.id}_link", 
-      :class => 'commentDelete action',
-      :aconfirm => t('.confirm_delete'),
-      :action_url => project_comment_path(comment.project, comment)
-  end
 
 end

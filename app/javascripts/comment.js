@@ -5,6 +5,17 @@ Element.addMethods('form', {
     return $(form).select('input[type=file]').any(function(input) {
       return input.getValue()
     })
+  },
+  isDirty: function(form) {
+    form = $(form)
+    return form.hasFileUploads() ||
+      form.select('textarea').any(function(area) { return area.getValue() != area.innerHTML }) ||
+      form.select('input:not([type=submit],[type=hidden],[type=checkbox],[type=radio])').
+        any(function(input) { return input.getValue() != (input.readAttribute('value') || '') }) ||
+      form.select('select').any(function(select) {
+        option = select.down('option[selected]') || select.down('option')
+        select.getValue() != option.value
+      })
   }
 })
 
@@ -14,7 +25,7 @@ document.on('ajax:create', 'form.new_conversation, .thread form', function(e) {
 })
 
 // async file uploads in comments via iframe
-document.on('ajax:before', 'form.new_conversation, .thread form', function(e, form) {
+document.on('ajax:before', 'form.new_conversation, .thread form, #facebox form.edit_comment', function(e, form) {
   if (form.hasFileUploads()) {
     e.stop()
     
@@ -95,6 +106,19 @@ document.on('ajax:failure', 'form.new_conversation, .thread form', function(e, f
   form.down('div.text_area').insert(new Element('p', { 'class': 'error' }).update(message))
 })
 
+// update edited comment
+document.on('ajax:success', '#facebox form.edit_comment', function(e, form) {
+  var commentID = form.readAttribute('action').match(/\d+/g).last()
+  $('comment_' + commentID).replace(e.memo.responseText)
+  Prototype.Facebox.close()
+  $('comment_' + commentID).highlight()
+})
+
+// remove deleted comment
+document.on('ajax:success', '.comment .actions_menu a[data-method=delete]', function(e, link) {
+  e.findElement('.comment').remove()
+})
+
 // toggle between hidden upload area and a link to show it
 hideBySelector('form .upload_area')
 
@@ -112,40 +136,6 @@ document.on('click', 'form .add_hours_icon', function(e, link) {
   link.up('form').down('.hours_field').forceShow().down('input').focus()
   e.stop()
 })
-
-// FIXME: I broked the edit links
-document.on('click', 'a.edit_comment_cancel', function(e, el) {
-  e.stop();
-  Comment.cancelEdit(el.up('form'));
-});
-
-document.on('click', 'a.convert_comment_cancel', function(e, el) {
-  e.stop();
-  // This one is easy!
-  Actions.setActions(el, true);
-  el.up('.comment').down('form.convert_comment').remove();
-});
-
-document.on('click', 'a.commentEdit', function(e, el) {
-  e.stop();
-  Comment.edit(el, el.readAttribute('action_url'));
-});
-
-document.on('click', 'a.commentConvert', function(e, el) {
-  e.stop();
-  Comment.edit(el, el.readAttribute('action_url'));
-});
-
-document.on('click', 'a.commentDelete', function(e, el) {
-  e.stop();
-  if (confirm(el.readAttribute('aconfirm')))
-    Comment.destroy(el, el.readAttribute('action_url'));
-});
-
-document.on('click', '#sort_uploads, #sort_all, #sort_hours', function(e,el) {
-  e.stop();
-  Comment.update();
-});
 
 // Open links inside Comments and Notes textilized areas in new windows
 document.on('mouseover', '.textilized a', function(e, link) {
@@ -226,3 +216,17 @@ document.on('click', 'form button.preview', function(e, button) {
   
   togglePreviewBox(previewBox, enabled, button)
 })
+
+new PeriodicalExecuter(function() {
+  var now = new Date()
+
+  $$('.comment[data-editable-before] a[data-uneditable-message]').each(function(link) {
+    var timestamp = link.up('.comment').readAttribute('data-editable-before'),
+        editableBefore = new Date(parseInt(timestamp))
+    
+    if (now >= editableBefore) {
+      var message = link.readAttribute('data-uneditable-message')
+      link.replace(new Element('span').update(message))
+    }
+  })  
+}, 30)

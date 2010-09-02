@@ -1,12 +1,18 @@
 class CommentsController < ApplicationController
+
+  before_filter :load_comment, :except => :create
   
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:error] = exception.message
-    redirect_to root_url
+    if request.xhr?
+      head :forbidden
+    else
+      flash[:error] = exception.message
+      redirect_to root_url
+    end
   end
   
   def create
-    # pass the project as extra parameter so target.project doesn't reload it
+    # pass the project so target.project lookup can be skipped
     authorize! :comment, target, @current_project
     
     comment = target.comments.create_by_user current_user, params[:comment]
@@ -17,13 +23,44 @@ class CommentsController < ApplicationController
           if comment.new_record?
             output_errors_json(comment)
           else
-            render :partial => 'comments/comment',
-              :locals => { :comment => comment, :threaded => true }
+            render :partial => 'comment', :locals => { :comment => comment, :threaded => true }
           end
         else
           redirect_to :back
         end
       }
+    end
+  end
+  
+  def edit
+    authorize! :edit, @comment
+    render :layout => false if request.xhr?
+  end
+  
+  def update
+    authorize! :update, @comment
+    
+    @comment.update_attributes params[:comment]
+    
+    respond_to do |wants|
+      wants.html {
+        if request.xhr? or iframe?
+          render :partial => 'comment', :locals => { :comment => @comment, :threaded => true }
+        else
+          redirect_to [target.project, target]
+        end
+      }
+    end
+  end
+  
+  def destroy
+    authorize! :destroy, @comment
+    @comment.destroy
+    
+    if request.xhr?
+      head :ok
+    else
+      redirect_to [target.project, target]
     end
   end
   
@@ -36,6 +73,10 @@ class CommentsController < ApplicationController
     else
       @current_project.tasks.find params[:task_id]
     end
+  end
+  
+  def load_comment
+    @comment = target.comments.find params[:id]
   end
   
 end
