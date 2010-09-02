@@ -13,7 +13,7 @@ span.comments_count
     width: 16px
     text-align: center
 
-form.new_comment
+form.new_comment, form.edit_comment
   padding-bottom: 3px
   margin-bottom: 30px
   .micro_avatar
@@ -29,6 +29,8 @@ form.new_comment
       font-size: 13px
       height: 1.4em
       color: rgb(0, 0, 0)
+      #facebox &
+        width: 575px
     .previewBox
       margin: 4px
       padding: 4px
@@ -155,6 +157,3 @@ div.thread
   a.mention
     &:hover
       color: $navbar
-.tooltip.attach
-  margin-top: 30px
-  margin-left: 10px

@@ -36,14 +36,14 @@
           this.open('There has been an error.', 'error')
         }.bind(this)
       })
+    },
+    close: function() {
+      if (element.getStyle('display') == 'block') {
+        element.hide().fire('facebox:closed')
+      }
     }
   }
   
-  var close = function() {
-    if (element.getStyle('display') == 'block') {
-      element.hide().fire('facebox:closed')
-    }
-  }
   var setElement = function(fn) {
     $(document.body).insert({ bottom: "<div id='facebox' style='display: none'>\
       <div class='facebox-wrapper html'>\
@@ -61,11 +61,11 @@
       box.on('click', function(e) {
         if (e.findElement('.facebox-extra .close') || !e.findElement('.facebox-wrapper')) {
           e.preventDefault()
-          close()
+          Facebox.close()
         }
       })
       document.on('keyup', function(e) {
-        if (e.keyCode == Event.KEY_ESC) close()
+        if (e.keyCode == Event.KEY_ESC) Facebox.close()
       })
       document.on('click', 'a[href][rel=facebox]', function(e) {
         if (e.isMiddleClick()) return

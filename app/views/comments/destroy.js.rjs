@@ -1,7 +1,0 @@
-if @has_permission
-  page["comment_#{@comment.id}"].remove
-else
-  # Alert!!
-  error_msg = t('comments.errors.cannot_update')
-  page << "alert(\"#{error_msg}\");"
-end
