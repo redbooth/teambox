@@ -28,6 +28,13 @@ describe Task do
       @task.assigned.should be_nil
     end
   end
+  
+  it "doesn't break when assigning user on create" do
+    task_list = Factory(:task_list)
+    person = Factory(:person, :project => task_list.project)
+    task = Factory.build(:task, :task_list => task_list, :project => nil, :assigned => person)
+    lambda { task.save }.should_not raise_error
+  end
 
   describe "assigning tasks" do
     before do
