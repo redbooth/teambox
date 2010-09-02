@@ -10,7 +10,7 @@ class Organization < ActiveRecord::Base
 
   validates_presence_of   :permalink
   validates_uniqueness_of :permalink, :case_sensitive => false
-  validates_uniqueness_of :domain, :case_sensitive => false
+  validates_uniqueness_of :domain, :case_sensitive => false, :allow_nil => true
   validates_length_of     :permalink, :minimum => 4
   validates_exclusion_of  :permalink, :in => %w(www help support mail pop smtp ftp)
 
