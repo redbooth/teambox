@@ -51,7 +51,6 @@ class User
         :password_confirmation => pass)
       user.notify_mentions = false
       user.notify_conversations = false
-      user.notify_task_lists = false
       user.notify_tasks = false
       user.activate!
     end
@@ -61,21 +60,18 @@ class User
     def remember_notification_settings
       @remember_notify_mentions      = self.notify_mentions
       @remember_notify_conversations = self.notify_conversations
-      @remember_notify_task_lists    = self.notify_task_lists
-      @remember_notify_tasks         = self.notify_tasks      
+      @remember_notify_tasks         = self.notify_tasks
     end
     
     def restore_notification_settings
       self.notify_mentions      = @remember_notify_mentions
       self.notify_conversations = @remember_notify_conversations
-      self.notify_task_lists    = @remember_notify_task_lists
-      self.notify_tasks         = @remember_notify_tasks      
+      self.notify_tasks         = @remember_notify_tasks
     end
     
     def disable_all_notifications
       self.notify_mentions      = false
       self.notify_conversations = false
-      self.notify_task_lists    = false
       self.notify_tasks         = false
       self.save!
     end

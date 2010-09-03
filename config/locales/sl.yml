@@ -1132,7 +1132,6 @@ sl:
       notifications:
         notify_conversations: "Obvesti me, ko nekdo posodobi pogovor, ki ga spremljam."
         notify_mentions: "Obvesti me, ko me nekdo omeni recimo: Živjo @%{login}! V tem primeru boš prejel/a poštol!"
-        notify_task_lists: "Obvesti me, ko nekdo posodobi seznam opravil, ki jih spremljam."
         notify_tasks: "Obvesti me, ko nekdo posodobi opravilo, ki ga spremljam."
       password: Geslo
       password_confirmation: "Potrdi geslo"

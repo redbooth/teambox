@@ -12,4 +12,6 @@ Teambox::Initializer.run do |config|
     SprocketsApplication.use_page_caching = !config.heroku?
     ActiveSupport::XmlMini.backend = 'LibXML'
   end
+  
+  config.active_record.observers = :notifications_observer
 end

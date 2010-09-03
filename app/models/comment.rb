@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
   belongs_to :project
   belongs_to :target, :polymorphic => true, :counter_cache => true
   belongs_to :assigned, :class_name => 'Person'
-  belongs_to :previous_assigned, :class_name => 'Person'  
+  belongs_to :previous_assigned, :class_name => 'Person'
   
   def task_comment?
     self.target_type == "Task"
@@ -23,9 +23,7 @@ class Comment < ActiveRecord::Base
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
                   :upload_ids, :uploads_attributes
 
-  named_scope :by_user, lambda { |user|
-    { :conditions => {:user_id => user} }
-  }
+  named_scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
   named_scope :latest, :order => 'id DESC'
 
   # TODO: investigate how we can enable this and not break nested attributes
@@ -130,7 +128,6 @@ class Comment < ActiveRecord::Base
       new_watchers << self.user if self.user
       target.add_watchers new_watchers
     end
-    target.notify_new_comment(self) if target.respond_to?(:notify_new_comment)
   end
   
   def cleanup_activities # after_destroy

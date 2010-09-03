@@ -23,7 +23,6 @@ class ApiV1::ConversationsController < ApiV1::APIController
       else
         add_watchers params[:user]
       end
-      @conversation.notify_new_comment(@conversation.comments.first)
     end
     
     if @saved

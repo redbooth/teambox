@@ -368,43 +368,6 @@ describe User do
     end
   end
 
-  describe "when in a project" do
-    before do
-      @user = Factory(:confirmed_user, :login => "balint")
-      @project = Factory(:project)
-      @project.add_user(@user)
-    end
-    describe "and a comment comes in" do
-      before do
-      end
-      it "should be notified of a comment if he is mentioned by login" do
-        comment = Factory(:comment, :project => @project, :body => "@balint Do this!")
-        @user.notify_of_project_comment?(comment).should == true
-      end
-
-      it "should be notified of a comment if it is addressed to all" do
-        comment = Factory(:comment, :project => @project, :body => "@all Check this out!")
-        @user.notify_of_project_comment?(comment).should == true
-      end
-
-      it "should not be notified of a comment if he is not mentioned" do
-        comment = Factory(:comment, :project => @project, :body => "@jamesu This is yours.")
-        @user.notify_of_project_comment?(comment).should == false
-      end
-
-      it "should not be notified of a comment if he is the author" do
-        comment = Factory(:comment, :user => @user, :project => @project, :body => "@balint Note to self.")
-        @user.notify_of_project_comment?(comment).should == false
-      end
-
-      it "should not be notified of a comment if he turned mention notifications off" do
-        @user.update_attribute(:notify_mentions, false)
-        comment = Factory(:comment, :project => @project, :body => "@balint This is urgent!")
-        @user.notify_of_project_comment?(comment).should == false
-      end
-    end
-  end
-
   describe "finding an available username" do
     it "should return the proposed one if it's free" do
       User.find_available_login("donnie").should == "donnie"

@@ -1638,7 +1638,6 @@ ca:
       notifications:
         notify_conversations: "Notificarme les converses que segueixo"
         notify_mentions: "Notificarme quan em mencionin en un comentari, per exemple: Hola @%{login}!"
-        notify_task_lists: "Notificarme els comentaris a les llistes de tasques que segueixo"
         notify_tasks: "Notificarme els comentaris a tasques que segueixo"
         wants_task_reminder: "Rebre un correu diari amb les meves tasques"
       password: Contrasenya

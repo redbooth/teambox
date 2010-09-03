@@ -53,7 +53,6 @@ class User < ActiveRecord::Base
                   :card_attributes,
                   :notify_mentions,
                   :notify_conversations,
-                  :notify_task_lists,
                   :notify_tasks,
                   :wants_task_reminder
 
@@ -238,12 +237,6 @@ class User < ActiveRecord::Base
 
   def can_create_project?
     true
-  end
-
-  def notify_of_project_comment?(comment)
-    self.notify_mentions &&
-      comment.user != self &&
-      !!( comment.body =~ /@all/i || comment.body =~ /@#{self.login}[^a-z0-9_]/i )
   end
 
   DELETED_TAG = "deleted"

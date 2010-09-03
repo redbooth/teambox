@@ -12,8 +12,6 @@ class ConversationsController < ApplicationController
     @conversation = @current_project.conversations.new_by_user(current_user, params[:conversation])
 
     if @conversation.save
-      @conversation.notify_new_comment(@conversation.comments.first)
-      
       respond_to do |f|
         f.html {
           if request.xhr? or iframe?
