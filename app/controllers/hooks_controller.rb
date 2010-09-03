@@ -111,7 +111,8 @@ class HooksController < ApplicationController
       end
       email = TMail::Mail.new
       email.from    = params[:from]
-      email.to      = params[:to].gsub('@reply', '@app') ## server migration
+      email.to      = params[:to]
+      email.cc      = params[:cc]
       email.body    = params[:text]
       email.subject = params[:subject]
       email.body   += "\n\nThis email had #{params[:attachments]} attachments" if params[:attachments].to_i > 0
