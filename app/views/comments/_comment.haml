@@ -12,17 +12,19 @@
       - unless rss?
         .actions_menu
           %span.actiondate= posted_date comment.created_at
-          - if can?(:update, comment) or can?(:destroy, comment)
-            = image_tag('triangle.png', :class => 'triangle')
-            .extra
-              - if can?(:update, comment)
-                = link_to t('comments.actions.edit'), [:edit, comment.project, comment.target, comment],
-                    :rel => 'facebox', :'data-uneditable-message' => t('.cannot_edit')
-              - else
-                %span= t('.cannot_edit')
-              - if can?(:destroy, comment)
-                = link_to t('common.delete'), [comment.project, comment.target, comment], :'data-method' => 'delete',
-                    :'data-confirm' => t('.confirm_delete'), :'data-remote' => true
+          = image_tag('triangle.png', :class => 'triangle')
+          .extra
+            - case comment.target
+            - when Conversation
+              = link_to t('comments.actions.conversation_url'), project_conversation_path(comment.project, comment.target)
+            - if can?(:update, comment)
+              = link_to t('comments.actions.edit'), [:edit, comment.project, comment.target, comment],
+                  :rel => 'facebox', :'data-uneditable-message' => t('.cannot_edit')
+            - else
+              %span= t('.cannot_edit')
+            - if can?(:destroy, comment)
+              = link_to t('common.delete'), [comment.project, comment.target, comment], :'data-method' => 'delete',
+                  :'data-confirm' => t('.confirm_delete'), :'data-remote' => true
       .name
         - if threaded || simpleconv
           = link_to(comment.user.name, comment.user)
