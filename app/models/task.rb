@@ -108,14 +108,6 @@ class Task < RoleRecord
     self.save!
   end
 
-  def notify_new_comment(comment)
-    self.watchers.each do |user|
-      if user != comment.user and user.notify_tasks
-        Emailer.send_with_language(:notify_task, user.locale, user, self.project, self) # deliver_notify_task
-      end
-    end
-  end
-
   def to_s
     name
   end

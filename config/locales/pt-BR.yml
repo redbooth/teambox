@@ -1433,7 +1433,6 @@ pt-BR:
       notifications:
         notify_conversations: "Notificarme de conversaciones que sigo"
         notify_mentions: "Notificarme cuando me mencionen en un comentario, por ejemplo: Hola @%{login}!"
-        notify_task_lists: "Notificarme de comentarios en listas de tareas que sigo"
         notify_tasks: "Notificarme de comentarios en tareas que sigo"
         wants_task_reminder: "Recibir un email diario con mis tareas"
       password: Senha

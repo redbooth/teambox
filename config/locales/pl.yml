@@ -1651,7 +1651,6 @@ pl:
       notifications:
         notify_conversations: "Powiadom mnie gdy obserwuje konwersacje"
         notify_mentions: "Powiadom mnie kiedy zostanę wspomniany np. Cześć @%{login}! Dostałeś email!"
-        notify_task_lists: "Powiadom mnie gdy obserwuje listę zadań"
         notify_tasks: "Powiadom mnie gdy obserwuje zadanie"
         wants_task_reminder: "Przysyłaj mi codziennie email przypominający o moich zadaniach"
       password: Hasło

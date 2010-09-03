@@ -42,14 +42,6 @@ class Conversation < RoleRecord
     self.comments_attributes = [{ :body => value }] unless value.nil?
   end
 
-  def notify_new_comment(comment)
-    self.watchers.each do |user|
-      if user != comment.user and user.notify_conversations
-        Emailer.send_with_language(:notify_conversation, user.locale, user, self.project, self) # deliver_notify_conversation
-      end
-    end
-  end
-  
   def to_s
     name
   end

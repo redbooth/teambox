@@ -84,14 +84,6 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def notify_new_comment(comment)
-    users.each do |user|
-      if user.notify_of_project_comment?(comment)
-        Emailer.send_with_language(:notify_comment, user.locale, user, self, comment) # deliver_notify_comment
-      end
-    end
-  end
-
   # Optimized way of getting activities for one or more project.
   # Can limit the number of records and page.
   def self.get_activities_for(projects, *args)

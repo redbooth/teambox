@@ -1526,7 +1526,6 @@ de:
       notifications:
         notify_conversations: "Benachrichtigen Sie mich, wenn ich eine Konversation verfolge"
         notify_mentions: "Benachrichtigen Sie mich, wenn ich angesprochen werde z.B. Hallo @%{login}! Sie haben eine neue Email!"
-        notify_task_lists: "Benachrichtigen Sie mich, wenn ich eine Aufgabenliste verfolge"
         notify_tasks: "Benachrichtigen Sie mich, wenn ich eine Aufgabe verfolge"
         wants_task_reminder: "Senden Sie mir täglich eine Email mit meinen Aufgaben"
       password: Passwort

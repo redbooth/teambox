@@ -169,12 +169,6 @@ module ApplicationHelper
     "<div class='errors_for'>#{error}</div>"
   end
 
-  def link_to_public_page(name)
-    if url = Teambox.config["#{name}_url"]
-      link_to t("shared.public_navigation.#{name}"), url
-    end
-  end
-
   def formatting_documentation_link
     link_to t('projects.show.text_styling'), text_styles_path, :rel => :facebox
   end

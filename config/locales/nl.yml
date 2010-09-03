@@ -1160,7 +1160,6 @@ nl:
       notifications:
         notify_conversations: "Laat me weten wanneer ik een conversatie volg"
         notify_mentions: "Laat me weten wanneer ik ben vermeld bijv. Howdy @%{login}! U heeft een nieuwe e-mail!"
-        notify_task_lists: "Laat me weten wanneer ik een takenlijst volg"
         notify_tasks: "Laat me weten wanneer ik een taak volg"
         wants_task_reminder: "Stuur me een dagelijkse e-mail van mij taken"
       password: Wachtwoord

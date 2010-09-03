@@ -1632,7 +1632,6 @@ ja:
       notifications:
         notify_conversations: チャットに参加しているときに通知する
         notify_mentions: "自分に言及されたら通知する。 例. やぁ @%{login}! これでメールが届くよ"
-        notify_task_lists: タスクリストをウォッチしている時に通知する
         notify_tasks: タスクをウォッチしている時に通知する
         wants_task_reminder: 毎日、自分のタスクをメールで送信する
       password: パスワード

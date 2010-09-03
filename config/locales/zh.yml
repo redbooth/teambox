@@ -1266,7 +1266,6 @@ zh:
       notifications:
         notify_conversations: 在我关注的话题变化时通知我
         notify_mentions: "在消息中提及我时通知我。例如：“你好，@%{login}!”您将收到一封提醒的电子邮件"
-        notify_task_lists: 在我关注的任务列表变化时通知我
         notify_tasks: 在我关注的任务变化时通知我
         wants_task_reminder: 发送我的任务每日情况报告
       password: 密码

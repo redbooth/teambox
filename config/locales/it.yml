@@ -1147,7 +1147,6 @@ it:
       notifications:
         notify_conversations: "Mandami una notifica delle conversazioni che seguo"
         notify_mentions: "Mandami una notifica quando mi nominano in un commento, per esempio: Ciao @%{login}!"
-        notify_task_lists: "Mandami una notifica dei commenti nelle liste di compiti che seguo"
         notify_tasks: "Mandami una notifica dei commenti nei compiti che seguo"
         wants_task_reminder: "Voglio ricevere una mail giornaliera dei miei compiti"
       password: Password

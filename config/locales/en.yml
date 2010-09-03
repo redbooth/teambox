@@ -177,7 +177,6 @@ en:
       notifications:
         notify_mentions: "Notify me when I'm mentioned e.g. Howdy @%{login}! You'll receive an email!"
         notify_conversations: Notify me when I'm watching a conversation
-        notify_task_lists: Notify me when I'm watching a task list
         notify_tasks: Notify me when I'm watching a task
         wants_task_reminder: "Send me a daily email reminder of my tasks"
       invalid_login: "use only letters, numbers and underscores"

@@ -1525,7 +1525,6 @@ ko:
       notifications:
         notify_conversations: "대화를 \"살펴보기\" 하면 알림"
         notify_mentions: "예를 들어 Howdy @%{login}을 언급하게 되면 알려주세요. 이메일을 발송해 드립니다."
-        notify_task_lists: "테스크 리스트를 \"살펴보기\" 하면 알림"
         notify_tasks: "테스크를 \"살펴보기\" 하면 알림"
         wants_task_reminder: "매일 내 테스크들에 대한 이메일 보내기"
       password: 패스워드

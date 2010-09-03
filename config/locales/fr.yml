@@ -1582,7 +1582,6 @@ fr:
       notifications:
         notify_conversations: "Envoyez‑moi une notification lorsque je regarde une conversation"
         notify_mentions: "Envoyez‑moi une notification lorsque je suis mentionné, par exemple Bonjour @%{login} ! Vous recevrez un mail !"
-        notify_task_lists: "Envoyez‑moi une notification lorsque je regarde une liste de tâches"
         notify_tasks: "Envoyez‑moi une notification lorsque je regarde une tâche"
         wants_task_reminder: "Envoyez‑moi une notification journalière de mes tâches"
       password: "Mot de passe"
