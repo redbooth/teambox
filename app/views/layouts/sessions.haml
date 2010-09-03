@@ -14,12 +14,7 @@
       .navigation_wrap
         .navigation
           %ul
-            %li= link_to_public_page 'home'
-            %li= link_to_public_page 'tour'
-            %li= link_to_public_page 'users'
-            %li= link_to_public_page 'services'
-            %li= link_to_public_page 'community'
-            %li= link_to_public_page 'help'
+            %li= link_to 'Home', root_path
       .wrapper
         .content
           - show_flash
@@ -30,8 +25,4 @@
             = yield :column
       .footer
         %p.copyright Copyright &copy; 2010 Teambox. All rights reserved
-        %p.footer_nav
-          = link_to_public_page 'privacy'
-          &#183;
-          = link_to_public_page 'terms'
-      = javascripts
+    = javascripts

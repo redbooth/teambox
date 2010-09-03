@@ -88,17 +88,8 @@ defaults: &defaults
   # Destination where your users could write to ask for help. Accepts an email or website.
   support: http://help.teambox.com
 
-  # These links are used for the login page. Delete a line to remove the link from the interface.
-  home_url: http://www.teambox.com
-  tour_url: http://www.teambox.com/tour
-  users_url: http://www.teambox.com/testimonials
-  services_url: http://www.teambox.com/services
-  community_url: http://www.teambox.com/community
-  blog_url: http://blog.teambox.com
   help_url: http://help.teambox.com/faqs/using-teambox
   support_url: http://teambox.com/community
-  privacy_url: http://www.teambox.com/privacy
-  terms_url: http://www.teambox.com/terms
 
   # OAuth single-click login. You can configure Teambox to log in with Github, Facebook and others.
   #
