@@ -24,7 +24,7 @@ describe Conversation do
     
     lambda {
       conversation.save.should be_false
-      conversation.errors.on(:comments).should == "The conversation must start with a non-blank comment."
+      conversation.errors.on(:comments).should == "The conversation cannot start with an empty comment."
     }.should_not change(described_class, :count)
   end
   
