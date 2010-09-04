@@ -50,13 +50,14 @@ module TasksHelper
 
   def comment_task_status(comment)
     if comment.status_transition?
-      haml_tag :span, :class => "task_status task_status_#{comment.previous_status_name}" do
-        haml_concat localized_status_name(comment.previous_status_name)
-      end
-      haml_tag :span, '&rarr;', :class => "arr status_arr"
-      haml_tag :span, :class => "task_status task_status_#{comment.status_name}" do
-        haml_concat localized_status_name(comment.status_name)
-      end
+      content_tag(:span, localized_status_name(comment.previous_status_name),
+        :class => "task_status task_status_#{comment.previous_status_name}") +
+      content_tag(:span, '&rarr;', :class => "arr status_arr") +
+      content_tag(:span, localized_status_name(comment.status_name),
+        :class => "task_status task_status_#{comment.status_name}")
+    elsif comment.initial_status?
+      content_tag(:span, localized_status_name(comment.status_name),
+            :class => "task_status task_status_#{comment.status_name}")
     end
   end
 

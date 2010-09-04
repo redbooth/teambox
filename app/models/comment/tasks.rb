@@ -7,7 +7,11 @@ class Comment
   def transition?
     status_transition? || assigned_transition?
   end
-    
+
+  def initial_status?
+    status && previous_status.nil?
+  end
+
   def assigned_transition?
     assigned != previous_assigned
   end
@@ -17,7 +21,7 @@ class Comment
   end
 
   def assigned?
-    !assigned.nil?    
+    !assigned.nil?
   end
 
   def previous_assigned?
