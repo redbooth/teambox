@@ -8,3 +8,8 @@
       %p= t('hours.filters.projects')
       .filter
         = filter_project_dropdown('hours_main_project_filter')
+    #organization_filters
+      %p= t('hours.filters.organizations')
+      .filter
+        = filter_organization_dropdown('hours_main_organization_filter')
+
