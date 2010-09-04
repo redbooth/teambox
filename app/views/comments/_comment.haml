@@ -31,7 +31,7 @@
         - else
           = activity_title(comment)
         - if comment.task_comment?
-          - comment_task_status(comment)
+          = comment_task_status(comment)
         - if comment.hours?
           %span.hours= friendly_hours_value(comment.hours)
         = activity_project_link(comment.project) unless threaded || comment.target.is_a?(Project)
