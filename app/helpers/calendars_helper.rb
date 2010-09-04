@@ -243,15 +243,18 @@ module CalendarsHelper
   def hours_js(year, month, comments)
     taskmap = {}
     projectmap = {}
+    organizationmap = {}
 
     args = @comments.map do |comment|
       date = comment.created_at.in_time_zone(current_user.time_zone)
       task = (comment.target && comment.target.class == Task) ? comment.target : nil
+      organizationmap[comment.project.organization_id] ||= comment.project.organization.name
       projectmap[comment.project_id] ||= comment.project.name
       taskmap[task.id] ||= task.name unless task.nil?
       { :id => comment.id,
         :date => [date.year, date.month-1, date.day],
         :project_id => comment.project_id,
+        :organization_id => comment.project.organization_id,
         :user_id => comment.user_id,
         :task_id => task ? task.id : 0,
         :hours => comment.hours.to_f
@@ -277,6 +280,7 @@ module CalendarsHelper
      Hours.userNameMap = #{usernamemap.to_json};
      Hours.taskMap = #{taskmap.to_json};
      Hours.projectMap = #{projectmap.to_json};
+     Hours.organizationMap = #{organizationmap.to_json};
      Hours.update();
     });
     EOS
@@ -300,6 +304,13 @@ module CalendarsHelper
     options += [['--------', 'divider']]
     options += current_user.projects.sort_by(&:name).collect { |p| [p.name, p.id] }
     select(:hours_project_filter, :assigned, options, :disabled => 'divider', :id => target_id)
+  end
+
+  def filter_organization_dropdown(target_id)
+    options = [[t('hours.filter_organization.all'),     0]]
+    options += [['--------', 'divider']]
+    options += current_user.organizations.sort_by(&:name).collect { |p| [p.name, p.id] }
+    select(:hours_organization_filter, :assigned, options, :disabled => 'divider', :id => target_id)
   end
 
   def calendar_nav(project,year,month)

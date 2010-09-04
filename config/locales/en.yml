@@ -645,11 +645,14 @@ en:
       assigned_to: People
       tasks: Tasks
       projects: Projects
+      organizations: Organizations
     filter_assigned:
       anybody: "Anybody"
       my_tasks: "My tasks"
     filter_project:
       all: "All projects"
+    filter_organization:
+      all: "All organizations"
 
   tasks:
     errors:

@@ -7,11 +7,13 @@ var Hours = {
     this.userMap = {};
     this.taskMap = {};
     this.projectMap = {};
+    this.organizationMap = {};
     this.showWeekends = false;
     
     this.filters = {
       'user': null,
-      'project': null
+      'project': null,
+      'organization': null,
     };
     
     this.currentReport = 'user';
@@ -19,9 +21,12 @@ var Hours = {
     // Link in filter checkboxes
     document.on('change', '#user_filters select', Hours.userFilterHandler);
     document.on('change', '#project_filters select', Hours.projectFilterHandler);
-    
+    document.on('change', '#organization_filters select', Hours.organizationFilterHandler);
+
+
     this.setProjectFilter(0, true);
     this.setUserFilter(0, true);
+    this.setOrganizationFilter(0, true);
   },
   
   clearAll: function(selector, enabled) {
@@ -30,7 +35,30 @@ var Hours = {
       e.disabled = !enabled;
     });
   },
-  
+
+  setOrganizationFilter: function(id, enabled) {
+    if (id == 0)
+    {
+      // All organizations
+      if (enabled)
+      {
+        this.filters.organization = null;
+      }
+      else
+      {
+        this.filters.organization = [];
+      }
+    }
+    else
+    {
+      if (enabled)
+        this.filters.organization.push(id);
+      else
+        this.filters.organization = Hours.filters.organization.without(id);
+    }
+  },
+
+
   setProjectFilter: function(id, enabled) {
     if (id == 0)
     {
@@ -56,7 +84,7 @@ var Hours = {
   setUserFilter: function(id, enabled) {
     if (id == 0)
     {
-      // All projects
+      // All users
       if (enabled)
       {
         Hours.filters.user = null;
@@ -74,7 +102,17 @@ var Hours = {
         Hours.filters.user = Hours.filters.user.without(id);
     }
   },
-  
+
+  organizationFilterHandler: function(evt, el) {
+    var value = el.getValue();
+
+    Hours.setOrganizationFilter(0, false);
+    Hours.setOrganizationFilter(parseInt(value), true);
+
+    Hours.update();
+    return true;
+  },
+
   projectFilterHandler: function(evt, el) {
     var value = el.getValue();
     
@@ -101,6 +139,7 @@ var Hours = {
         id: comment.id,
         date: new Date(comment.date[0], comment.date[1], comment.date[2],0,0,0,0),
         week: comment.week,
+        organization_id: comment.organization_id,
         project_id: comment.project_id,
         user_id: comment.user_id,
         task_id: comment.task_id,
@@ -248,11 +287,13 @@ var Hours = {
   getFilteredComments: function(){
     var projectFilters = this.filters.project;
     var userFilters = this.filters.user;
-    
+    var organizationFilters = this.filters.organization;
+
     return this.mapComments(this.hours, function(c) {
       if (!Hours.applyFilter(c,
                           projectFilters,
-                          userFilters))
+                          userFilters,
+                          organizationFilters))
         return null;
       
       return {key:c.key, value:c};
@@ -288,7 +329,13 @@ var Hours = {
     return res;
   },
   
-  applyFilter: function(hour, projectFilters, userFilters){
+  applyFilter: function(hour, projectFilters, userFilters, organizationFilters){
+    if (organizationFilters != null) {
+      // Organization?
+      if (organizationFilters.indexOf(hour.organization_id) == -1)
+        return false;
+    }
+
     if (projectFilters != null) {
       // Project?
       if (projectFilters.indexOf(hour.project_id) == -1)
