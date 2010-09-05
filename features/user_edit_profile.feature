@@ -34,7 +34,6 @@ Feature: Update a profile
     Then I should see "Your Notifications"
     When I check "Notify me when I'm mentioned e.g. Howdy @mislav! You'll receive an email!"
     And I uncheck "Notify me when I'm watching a conversation"
-    And I check "Notify me when I'm watching a task list"
     And I check "Notify me when I'm watching a task"
     And I check "Send me a daily email reminder of my tasks"
     And I press "Update account"
@@ -43,7 +42,6 @@ Feature: Update a profile
     Then I should see "Your Notifications"
     And the "Notify me when I'm mentioned e.g. Howdy @mislav! You'll receive an email!" checkbox should be checked
     And the "Notify me when I'm watching a conversation" checkbox should not be checked
-    And the "Notify me when I'm watching a task list" checkbox should be checked
     And the "Notify me when I'm watching a task" checkbox should be checked
     And the "Send me a daily email reminder of my tasks" checkbox should be checked
 
