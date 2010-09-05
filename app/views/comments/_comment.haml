@@ -27,8 +27,8 @@
                   :'data-confirm' => t('.confirm_delete'), :'data-remote' => true
       .body.textilized
 
-        // In order to make the display more compact, we're adding
-        // the username, task status and hours inline
+        -# In order to make the display more compact, we're adding
+        -# the username, task status and hours inline
         - insert_inline  = link_to(comment.user.name, comment.user, :class => :user) + " "
         - if comment.task_comment?
           - insert_inline += comment_task_status(comment)
