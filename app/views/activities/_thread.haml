@@ -12,11 +12,11 @@
         = thumb_avatar(thread.user) if thread.user
       %div.date
         = posted_date(thread.created_at)
-      %span.starter
+      %p.starter
         = link_to(thread.user.name, thread.user) if thread.user
         = t("activities.thread.created.#{thread.class.to_s.downcase}", :project => thread.project.name)
         = activity_project_link(thread.project)
-      %span.thread_title
+      %p.thread_title
         = link_to thread, thread_link, :class => thread.class.to_s.downcase
         - if thread.is_a?(Task)
           = t('.on_task_list')
