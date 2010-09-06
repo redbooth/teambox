@@ -23,8 +23,12 @@
             - else
               %span= t('.cannot_edit')
             - if can?(:destroy, comment)
-              = link_to t('common.delete'), [comment.project, comment.target, comment], :'data-method' => 'delete',
-                  :'data-confirm' => t('.confirm_delete'), :'data-remote' => true
+              - if comment.target.is_a? Project # legacy comments targeting a Project
+                = link_to t('common.delete'), [comment.project, comment], :'data-method' => 'delete',
+                    :'data-confirm' => t('.confirm_delete'), :'data-remote' => true
+              - else
+                = link_to t('common.delete'), [comment.project, comment.target, comment], :'data-method' => 'delete',
+                    :'data-confirm' => t('.confirm_delete'), :'data-remote' => true
       .body.textilized
         .before
           = link_to(comment.user.name, comment.user, :class => :user) + " "
