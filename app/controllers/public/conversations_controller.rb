@@ -1,7 +1,7 @@
 class Public::ConversationsController < Public::PublicController
 
   def index
-    @conversations = @project.conversations
+    @conversations = @project.conversations.not_simple
   end
 
   def show
