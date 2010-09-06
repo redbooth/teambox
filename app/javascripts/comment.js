@@ -137,6 +137,23 @@ document.on('click', 'form .add_hours_icon', function(e, link) {
   e.stop()
 })
 
+document.on('click', '.start-timer', function(e, element) {
+	var timerDisplay = element.next('.timer');
+	var timer = timerDisplay.retrieve('task.timer', new Stopwatch(function(watch){
+	  timerDisplay.update(watch.toString());
+	}, 1000));
+	timer.start();
+  e.stop();
+});
+
+document.on('click', '.stop-timer', function(e, element) {
+	var timerDisplay = element.next('.timer');
+	var timer = timerDisplay.retrieve('task.timer');
+	timer.stop();
+	element.next('input').setValue(timer.getElapsed().hours);
+  e.stop();
+})
+
 // Open links inside Comments and Notes textilized areas in new windows
 document.on('mouseover', '.textilized a', function(e, link) {
   link.writeAttribute("target", "_blank");

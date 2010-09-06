@@ -13,6 +13,14 @@
       %label
         = t('comments.hours.hours')
         = f.text_field :human_hours
+        (
+        %span.start-timer
+          = image_tag "control_play_blue.png", :alt => 'start the timer'
+        %span.stop-timer
+          = image_tag "control_pause_blue.png", :alt => 'stop the timer'
+        %span.timer
+          00:00        
+        )
       = time_tracking_doc
 
   .upload_area
