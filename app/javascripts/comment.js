@@ -149,8 +149,16 @@ document.on('click', '.start-timer', function(e, element) {
 document.on('click', '.stop-timer', function(e, element) {
 	var timerDisplay = element.next('.timer');
 	var timer = timerDisplay.retrieve('task.timer');
-	timer.stop();
-	element.next('input').setValue(timer.getElapsed().hours);
+	if (timer.started) {
+		timer.stop();
+	}
+	else {
+		timer.reset();
+		var timerDisplay = element.next('.timer');		
+		timerDisplay.update(timer.toString());
+	}
+	
+	element.previous('input').setValue(timer.getElapsed().hours);
   e.stop();
 })
 
