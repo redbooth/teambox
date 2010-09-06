@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
   skip_before_filter :load_project
   skip_before_filter :verify_authenticity_token, :only => :create
   before_filter :set_page_title
-  before_filter :community_version_check, :except => :create
+  before_filter :community_version_check, :except => [:create, :backdoor]
 
   def new
     # Cleanup OAuth login parameters if present
@@ -46,6 +46,13 @@ class SessionsController < ApplicationController
   def destroy
     logout_killing_session!
     redirect_back_or_default root_path
+  end
+  
+  # for cucumber testing only
+  def backdoor
+    logout_killing_session!
+    self.current_user = User.find_by_login!(params[:username])
+    head :ok
   end
 
   # This puts a parameter on your session to force mobile or web version

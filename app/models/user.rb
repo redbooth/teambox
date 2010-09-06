@@ -153,6 +153,10 @@ class User < ActiveRecord::Base
   def member_for(organization)
     self.memberships.find_by_organization_id(organization.id)
   end
+  
+  def watching?(object)
+    object.has_watcher? self
+  end
 
   def contacts_not_in_project(project)
     conditions = ["project_id IN (?)", Array(self.projects).collect{ |p| p.id } ]

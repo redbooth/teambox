@@ -6,7 +6,12 @@ Given /^I am currently "([^\"]*)"$/ do |login|
   @user = @current_user
 end
 
-Given /^I am logged in as ([^\"]*)$/ do |login|
+Given /^(?:I am|I'm) logged in as @(\w+)$/ do |username|
+  visit "/login/#{username}"
+  @current_user = User.find_by_login(username)
+end
+
+Given /^I am logged in as ([^@][^\"]*)$/ do |login|
   Given %(I am currently "#{login}")
     And %(I have confirmed my email)
     And "I go to the login page"
@@ -29,35 +34,6 @@ end
 
 Given /It is my first time logging in/ do
   @current_user.update_attribute(:welcome,false)
-end
-
-Given /I am currently in the project (.*)$/ do |project_type|
-  @current_project ||= Factory(project_type.to_sym)
-  visit(projects_path(@current_project))
-end
-
-Given /I am in the project called "([^\"]*)"$/ do |name|
-  Given %(there is a project called "#{name}")
-  project = Project.find_by_name(name)
-  project.add_user(@current_user)
-end
-
-Given /^"([^\"]*)" is in the project called "([^\"]*)"$/ do |username,name|
-  Given %(there is a project called "#{name}")
-  project = Project.find_by_name(name)
-  project.add_user User.find_by_login(username)
-end
-
-Given /^"([^\"]*)" is not in the project called "([^\"]*)"$/ do |username,name|
-  Given %(there is a project called "#{name}")
-  project = Project.find_by_name(name)
-  project.remove_user User.find_by_login(username)
-end
-
-Given /^all the users are in the project with name: "([^\"]*)"$/ do |name|
-  Given %(there is a project called "#{name}")
-  project = Project.find_by_name(name)
-  User.all.each { |user| project.add_user(user) }
 end
 
 Given /^there is a user called "([^\"]*)"$/ do |login|
@@ -83,6 +59,20 @@ end
 Given /^the user with login: "([^\"]*)" is deleted$/ do |login|
   user = User.find_by_login(login)
   user.destroy unless user.nil?
+end
+
+Given /^(@.+) (?:has|have) (?:his|her|their) locale set to (.+)$/ do |users, name|
+  locale = case name.downcase
+  when "english" then "en"
+  when "spanish" then "es"
+  when "italian" then "it"
+  else
+    raise ArgumentError, "don't know locale #{name}"
+  end
+  
+  each_user(users) do |user|
+    user.update_attribute :locale, locale
+  end
 end
 
 Given /I am the user (.*)$/ do |login|

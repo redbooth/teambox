@@ -17,7 +17,7 @@ module Watchable
   end
   
   def add_watcher(user, persist = !new_record?)
-    unless watching?(user)
+    unless has_watcher?(user)
       watchers_ids << user.id
       flush_cache :watchers # memoize
       save(false) if persist
@@ -31,14 +31,14 @@ module Watchable
     save(false) if persist
   end
   
-  def watching?(user)
+  def has_watcher?(user)
     watchers_ids.include? user.id
   end
 
-  def remove_watcher(user)
+  def remove_watcher(user, persist = !new_record?)
     if watchers_ids.delete user.id
       flush_cache :watchers # memoize
-      save(false)
+      save(false) if persist
     end
   end
   
