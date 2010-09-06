@@ -32,18 +32,16 @@ Feature: Update a profile
   Scenario: Mislav updates his notifications
     When I follow "Notifications"
     Then I should see "Your Notifications"
-    When I check "Notify me when I'm mentioned e.g. Howdy @mislav! You'll receive an email!"
-    And I uncheck "Notify me when I'm watching a conversation"
-    And I check "Notify me when I'm watching a task"
-    And I check "Send me a daily email reminder of my tasks"
+    And I uncheck "Notify me of updates to conversations I'm watching"
+    And I check "Notify me of updates to tasks I'm watching"
+    And I check "Send me a daily reminder of tasks assigned to me that are due soon"
     And I press "Update account"
     Then I should see "User profile updated!"
     When I follow "Notifications"
     Then I should see "Your Notifications"
-    And the "Notify me when I'm mentioned e.g. Howdy @mislav! You'll receive an email!" checkbox should be checked
-    And the "Notify me when I'm watching a conversation" checkbox should not be checked
-    And the "Notify me when I'm watching a task" checkbox should be checked
-    And the "Send me a daily email reminder of my tasks" checkbox should be checked
+    And the "Notify me of updates to conversations I'm watching" checkbox should not be checked
+    And the "Notify me of updates to tasks I'm watching" checkbox should be checked
+    And the "Send me a daily reminder of tasks assigned to me that are due soon" checkbox should be checked
 
   Scenario: Mislav updates his username
     When I follow "Account Settings"

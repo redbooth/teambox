@@ -51,7 +51,6 @@ class User < ActiveRecord::Base
                   :first_day_of_week,
                   :betatester,
                   :card_attributes,
-                  :notify_mentions,
                   :notify_conversations,
                   :notify_tasks,
                   :wants_task_reminder
