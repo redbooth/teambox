@@ -50,13 +50,13 @@ module TasksHelper
 
   def comment_task_status(comment)
     if comment.status_transition?
-      content_tag(:span, localized_status_name(comment.previous_status_name),
+      content_tag(:span, short_status_name(comment, true),
         :class => "task_status task_status_#{comment.previous_status_name}") +
       content_tag(:span, '&rarr;', :class => "arr status_arr") +
-      content_tag(:span, localized_status_name(comment.status_name),
+      content_tag(:span, short_status_name(comment, false),
         :class => "task_status task_status_#{comment.status_name}")
     elsif comment.initial_status?
-      content_tag(:span, localized_status_name(comment.status_name),
+      content_tag(:span, short_status_name(comment, false),
             :class => "task_status task_status_#{comment.status_name}")
     end
   end
@@ -104,6 +104,15 @@ module TasksHelper
       :task_list => task_list,
       :current_target => nil,
       :editable => editable}}
+  end
+
+  def short_status_name(comment, previous = false)
+    prev = previous ? 'previous_' : ''
+    if comment.try("#{prev}status_open?") && comment.try("#{prev}assigned?")
+      comment.try("#{prev}assigned").user.short_name
+    else
+      localized_status_name(comment.try("#{prev}status_name"))
+    end
   end
 
   def localized_status_name(task_or_status)
