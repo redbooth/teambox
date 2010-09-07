@@ -6,6 +6,6 @@
   #activities
     = list_comments(@conversation.comments,@conversation)
 
-- can? :comment, @conversation
+- if can? :comment, @conversation
   - form_for [@current_project, @conversation, @conversation.comments.build], :html => {:id => nil, 'data-project-id' => @current_project.id} do |form|
     = render 'comments/fields', :f => form, :placeholder => t("comments.new.conversation")

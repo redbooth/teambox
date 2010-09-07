@@ -136,13 +136,16 @@ div.thread
       font-size: 10px
       color: #9da3a7
     .body
-      max-height: 350px
+      .before
+        display: inline
       a.user
         text-decoration: none
         font-weight: bold
       p
         margin-top: 0
         margin-bottom: 2px
+      .before:first-child+p
+        display: inline
   .mention
     padding: 0 3px
     background-color: #eee
