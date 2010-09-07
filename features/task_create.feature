@@ -37,7 +37,7 @@ Feature: Creating a task
     And I fill in "Task title" with "Uh Ohhh ya"
     And I press "Update Task"
     And I wait for 1 second
-    Then I should see "Uh Ohhh ya" within ".task_header h2"
+    Then I should see "Uh Ohhh ya" in the title
 
   Scenario: User creates multiple tasks one after the other
     When I go to the "Awesome Ruby Yahh" task list page of the "Ruby Rockstars" project

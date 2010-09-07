@@ -7,7 +7,7 @@ Feature: Update a profile
 
   Scenario: Mislav updates his profile
     When I follow "Profile Information"
-    Then I should see "Your Profile Settings" within "h2"
+    Then I should see "Your Profile Settings" in the title
     When I fill in the following:
       | First name | Mis                      |
       | Last name  | Mar                      |

@@ -19,12 +19,12 @@ Feature: Public sites for organizations. Allow to view an entrance page and log 
   Scenario: I visit the public site of the organization and log in
     Given I log out
     When I go to the public site for "ACME" organization
-    Then I should see "A title!" within "h2"
+    Then I should see "A title!" in the title
     When I fill in the following:
       | login     | pablo  |
       | password  | wrong |
     And I press "Login"
-    Then I should see "Couldn't log you in as pablo" within ".flash"
+    Then I should see an error message: "Couldn't log you in as pablo"
     When I fill in the following:
       | login     | mislav       |
       | password  | dragons      |
