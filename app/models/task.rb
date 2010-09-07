@@ -34,6 +34,7 @@ class Task < RoleRecord
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_save :set_comments_author, :if => :updating_user
   before_save :save_changes_to_comment, :if => :track_changes?
+  before_save :transition_from_new_to_open, :if => :assigned_id?
   
   def track_changes?
     updating_user and (status_changed? or assigned_id_changed?)
@@ -201,5 +202,9 @@ class Task < RoleRecord
   
   def copy_project_from_task_list
     self.project_id = task_list.project_id
+  end
+  
+  def transition_from_new_to_open # before_save
+    self.status_name = :open if self.status_name == :new
   end
 end

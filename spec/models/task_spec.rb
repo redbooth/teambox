@@ -41,12 +41,29 @@ describe Task do
       @user = Factory(:user)
       @task = Factory(:task)
     end
-
-    it "should add the assigned user as a watcher" do
-      @task.project.add_user @user
-      @task.assign_to @user
-      @task.should be_assigned_to(@user)
-      @task.watchers.should include(@user)
+    
+    context "valid user" do
+      before do
+        @task.project.add_user @user
+      end
+      
+      it "should add the assigned user as a watcher" do
+        @task.assign_to @user
+        @task.should be_assigned_to(@user)
+        @task.watchers.should include(@user)
+      end
+    
+      it "transitions from new to open" do
+        @task.assign_to @user
+        @task.status_name.should == :open
+      end
+    
+      it "doesn't transition from closed to open" do
+        @task.status_name = :resolved
+        @task.save(false)
+        @task.assign_to @user
+        @task.status_name.should == :resolved
+      end
     end
 
     it "should not allow assigning it to users outside the project" do
