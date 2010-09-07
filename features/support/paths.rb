@@ -75,6 +75,8 @@ module NavigationHelpers
       site_path(organization)
     when /the apidocs page/
       '/api'
+    when /time tracking/
+      time_path
     else
       begin
         page_name =~ /the (.*) page/
