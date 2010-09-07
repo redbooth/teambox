@@ -29,7 +29,7 @@ class TasksController < ApplicationController
           render :partial => 'tasks/task', :locals => {
             :project => @current_project,
             :task_list => @task_list,
-            :task => @task,
+            :task => @task.reload,
             :editable => true
           }
         else
