@@ -23,8 +23,6 @@ gem 'hpricot', '~> 0.8.2'
 gem 'json'
 gem 'oauth2'
 gem 'oauth'
-gem 'mustache', '~> 0.11.0'
-gem 'crack', '~> 0.1.7'
 
 group :plugins do
   gem 'sprockets-rails', '~> 0.0.1'
