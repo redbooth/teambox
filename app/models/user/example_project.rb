@@ -49,7 +49,7 @@ class User
         :last_name => last_name,
         :password => pass,
         :password_confirmation => pass)
-      user.notify_mentions = false
+      
       user.notify_conversations = false
       user.notify_tasks = false
       user.activate!
@@ -58,19 +58,16 @@ class User
   
   protected
     def remember_notification_settings
-      @remember_notify_mentions      = self.notify_mentions
       @remember_notify_conversations = self.notify_conversations
       @remember_notify_tasks         = self.notify_tasks
     end
     
     def restore_notification_settings
-      self.notify_mentions      = @remember_notify_mentions
       self.notify_conversations = @remember_notify_conversations
       self.notify_tasks         = @remember_notify_tasks
     end
     
     def disable_all_notifications
-      self.notify_mentions      = false
       self.notify_conversations = false
       self.notify_tasks         = false
       self.save!

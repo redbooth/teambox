@@ -46,63 +46,6 @@ describe Comment do
       @comment.project.should be_nil
     end
   end
-
-  describe "posting to a project" do
-    before do
-      @project = Factory(:project)
-      @user = @project.user
-    end
-
-    it "should add it as an activity" do
-      comment = Factory(:comment, :project => @project, :user => @user)
-      @project.reload.activities.first.target.should == comment
-    end
-
-    it "should notify mentioned @user in the project" do
-      pending "revisit this after notification refactoring"
-      @other = Factory(:confirmed_user, :notify_mentions => true)
-      @project.add_user(@other)
-
-      comment = Factory.build(:comment, :project => @project, :user => @user,
-        :body => "Hey @#{@other.login}, how are you?")
-        
-      Emailer.should_receive(:deliver_notify_conversation).
-        with(@other, @project, instance_of(Conversation))
-      comment.save!
-    end
-
-    it "should not notify mentions to @user if he doesn't allow notifications" do
-      pending "figure out which type of notifications take place here"
-      @other = Factory(:confirmed_user, :notify_mentions => false)
-      @project.add_user(@other)
-      
-      comment = Factory.build(:comment, :project => @project, :user => @user,
-        :body => "Hey @#{@other.login}")
-      
-      Emailer.should_not_receive(:deliver_notify_conversation)
-      comment.save!
-    end
-
-    it "should not notify mentions to @user if he doesn't belong to the project" do
-      @other = Factory(:confirmed_user, :notify_mentions => true)
-      
-      comment = Factory.build(:comment, :project => @project, :user => @user,
-        :body => "Hey @#{@other.login}")
-      
-      Emailer.should_not_receive(:deliver_notify_conversation)
-      comment.save!
-    end
-
-    it "should not notify mentions to the users who posts them" do
-      @user.update_attribute :notify_mentions, true
-
-      comment = Factory.build(:comment, :project => @project, :user => @user,
-        :body => "My name is @#{@user.login}")
-      
-      Emailer.should_not_receive(:deliver_notify_conversation)
-      comment.save!
-    end
-  end
   
   describe "posting to a task" do
     before do

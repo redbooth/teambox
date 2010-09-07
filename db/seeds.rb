@@ -118,9 +118,7 @@ users = [%w(Frank Kramer frank),
                       :password_confirmation => "papapa",
                       :first_name => a, :last_name => b,
                       :betatester => true,
-                      :notify_mentions => false,
                       :notify_conversations => false,
-                      :notify_task_lists => false,
                       :notify_tasks => false,
                       :email => "example_#{a}@teambox.com")
   user.activate!

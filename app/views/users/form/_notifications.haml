@@ -1,7 +1,5 @@
 .check_boxes.notifications
-  .check_box.notify
-    = f.check_box :notify_mentions
-    = f.label :notify_mentions, t('.notify_mentions', :login => user.login)
+  %p= t('.clarification', :login => user.login)
   .check_box.notify
     = f.check_box :notify_conversations
     = f.label :notify_conversations, t('.notify_conversations')

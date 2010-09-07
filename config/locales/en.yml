@@ -175,10 +175,12 @@ en:
       change_password: Change password
       confirm_password: Confirm password
       notifications:
-        notify_mentions: "Notify me when I'm mentioned e.g. Howdy @%{login}! You'll receive an email!"
-        notify_conversations: Notify me when I'm watching a conversation
-        notify_tasks: Notify me when I'm watching a task
-        wants_task_reminder: "Send me a daily email reminder of my tasks"
+        clarification: |
+          When someone mentions you (as '@%{login}' or '@all') in conversation or a task,
+          you will be notified and added as a watcher for that item.
+        notify_conversations: Notify me of updates to conversations I'm watching
+        notify_tasks: Notify me of updates to tasks I'm watching
+        wants_task_reminder: Send me a daily reminder of tasks assigned to me that are due soon
       invalid_login: "use only letters, numbers and underscores"
       delete:
         steps_before_1: "To delete your Teambox account, you first need to leave or delete all your current projects."
