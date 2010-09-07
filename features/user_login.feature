@@ -22,3 +22,11 @@ Feature: Logging In
     When I have confirmed my email
     And I go to the home page
     Then I should see "Create your first project!"
+
+  Scenario: Mislav logout and try to login with wrong password and username
+    When I log out
+    Then I should see "Email or Username"
+    And I fill in "Email or Username" with "dragons"
+    And I fill in "Password" with "mislav"
+    And I press "Login"
+    Then I should see an error message: "Couldn't log you in as dragons"
