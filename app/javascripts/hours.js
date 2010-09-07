@@ -38,17 +38,7 @@ var Hours = {
 
   setOrganizationFilter: function(id, enabled) {
     if (id == 0)
-    {
-      // All organizations
-      if (enabled)
-      {
-        this.filters.organization = null;
-      }
-      else
-      {
-        this.filters.organization = [];
-      }
-    }
+      this.filters.organization = enabled ? null : [];
     else
     {
       if (enabled)
@@ -61,17 +51,7 @@ var Hours = {
 
   setProjectFilter: function(id, enabled) {
     if (id == 0)
-    {
-      // All projects
-      if (enabled)
-      {
-        this.filters.project = null;
-      }
-      else
-      {
-        this.filters.project = [];
-      }
-    }
+      this.filters.project = enabled ? null : [];
     else
     {
       if (enabled)
@@ -83,17 +63,7 @@ var Hours = {
   
   setUserFilter: function(id, enabled) {
     if (id == 0)
-    {
-      // All users
-      if (enabled)
-      {
-        Hours.filters.user = null;
-      }
-      else
-      {
-        Hours.filters.user = [];
-      }
-    }
+      Hours.filters.user = enabled ? null : [];
     else
     {
       if (enabled)

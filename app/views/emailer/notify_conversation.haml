@@ -7,8 +7,11 @@
     = link_to @project.name, project_url(@project)
 
   %h2{ :style => email_text(:big) }
-    = t('emailer.notify.conversation')
-    = link_to @conversation.name, project_conversation_url(@project, @conversation)
+    - if @conversation.name.blank?
+      = link_to t('emailer.notify.conversation'), project_conversation_url(@project, @conversation)
+    - else
+      = t('emailer.notify.conversation')
+      = link_to @conversation.name, project_conversation_url(@project, @conversation)
 
   = emailer_list_comments(@conversation.comments)
   = emailer_recent_conversations(@project)

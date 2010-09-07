@@ -45,7 +45,7 @@ Feature: Joining organizations
     And I select "Don't invite. User won't be able to create projects in this organization." from "invitation_membership"
     And I press "Invite"
     When "jordi" accepts the invitation from "jordi@teambox.com"
-    Then "jordi" should be an external user in the organization "ACME"
+    Then "jordi" should not belong to the organization "ACME"
     And "jordi" should belong to the project "Ruby Rockstars" as an admin
 
   Scenario: Mislav invites Jordi to a project and to the organization as a participant

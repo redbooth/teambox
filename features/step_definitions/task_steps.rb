@@ -26,6 +26,17 @@ Given /^the following tasks? with associations exists?:?$/ do |table|
   end
 end
 
+Given /^the following tasks? with hours exists?:?$/ do |table|
+  table.hashes.each do |hash|
+    Factory(:task,
+      :name => hash[:name],
+      :task_list => TaskList.find_by_name(hash[:task_list]),
+      :project => Project.find_by_name(hash[:project]),
+      :user => @current_user
+      ).comments.create :body => hash[:comment], :human_hours => hash[:hours]
+  end
+end
+
 Given /^the task called "([^\"]*)" belongs to the task list called "([^\"]*)"$/ do |task_name, task_list_name|
   Given %(there is a task called "#{task_name}")
   Given %(there is a task list called "#{task_list_name}")
