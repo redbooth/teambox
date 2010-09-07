@@ -26,20 +26,13 @@
               = link_to t('common.delete'), [comment.project, comment.target, comment], :'data-method' => 'delete',
                   :'data-confirm' => t('.confirm_delete'), :'data-remote' => true
       .body.textilized
-
-        -# In order to make the display more compact, we're adding
-        -# the username, task status and hours inline
-        - insert_inline  = link_to(comment.user.name, comment.user, :class => :user) + " "
-        - if comment.task_comment?
-          - insert_inline += comment_task_status(comment)
-          - insert_inline += " "
-        - if comment.hours?
-          - insert_inline += content_tag(:span, friendly_hours_value(comment.hours), :class => :hours)
-          - insert_inline += " "
-        - if String(comment.body_html).starts_with? "<p>"
-          ~ ("----> #{comment.body_html}").gsub /----> <p>/, "<p>#{insert_inline} "
-        - else
-          ~ "<p>#{insert_inline}</p> #{comment.body_html}"
+        .before
+          = link_to(comment.user.name, comment.user, :class => :user) + " "
+          - if comment.task_comment?
+            = comment_task_status(comment)
+          - if comment.hours?
+            = content_tag(:span, friendly_hours_value(comment.hours), :class => :hours)
+        ~ comment.body_html
 
       - if comment.uploads.any?
         - if comment.uploads.all? { |upload| upload.image? }
