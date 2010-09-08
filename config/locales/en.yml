@@ -2,7 +2,7 @@
 # Mark missing translations by adding ##### at the end of the line
 en:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  latest_announcement: "<strong>New</strong>: Earn money by referring new users into Teambox. Log in and go into your affiliate area to make up a 15% of the income you generate!<br/><br/>Read <a href='http://blog.teambox.com'>our blog</a> for more news about Teambox."
   common:
     and: and
     or: or
@@ -33,6 +33,7 @@ en:
     delete_task: Are you sure you want to delete this task?
     delete_page: Are you sure you want to delete this page?
     delete_upload: Are you sure you want to delete this file?
+    delete_group: Are you sure you want to delete this group?
   not_found:
     user: "User does not exist."
     conversation: "Conversation %{id} not found in this project."
@@ -397,6 +398,9 @@ en:
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
       archived: "Archive this Project <em>This will keep it accessible for its members, but not writable anymore.</em>"
       confirm_delete: "Are you sure you want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you'd rather keep it, use Archive Project instead."
+      settings:
+        you_cant_unarchive: "You have {{active}} active projects, and your current plan only allows {{max}} projects"
+        upgrade: "In order to <b>unarchive this project</b> and be able to edit it, you must <a href='{{link}}'>upgrade your account and get more storage and features</a> or archive other projects."
       extra_options: "More options"
       organization: Organization
       new:
@@ -427,6 +431,17 @@ en:
       new_project: New Project...
       created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
+      create_an_example_project: "First time in Teambox? <a href='%{link}'>Create an example project</a> to play around and learn."
+      active_projects:
+        zero: You have no active projects.
+        one: You have one active project.
+        other: "You have {{count}} active projects."
+      you_can_create_more:
+        zero: "You can't create any more projects.<br/>The maximum of projects with your current plan is {{max}}."
+        one: You can create one more project with your current plan.
+        other: "You can create {{count}} more projects with your current plan."
+      upgrade:
+        to_2: "<a href='{{link}}'>Upgrade your account now</a> to create <b>up to {{projects}} projects</b>, store up to <b>{{storage}} Gb</b> of files and use the <b>search bar across all projects</b>."
       invite_people: Invite people to the project
       invite_by_email: Invite users by entering their email addresses
       not_allowed: "You can't create any more projects with your current account."
@@ -454,7 +469,7 @@ en:
       general_settings: General settings
       admin_users: Manage users
       admin_projects: Manage projects
-      billing: Billing
+      billing: Plans and Billing
     edit:
       there_are: "There are"
       number_of_users: "%{count} users"
@@ -468,11 +483,38 @@ en:
       request_permission: "To access this organization, you must request permission to some of the administrators:"
       title: "%{name}"
       you_cant_access: You don't have permission to access or edit this organization.
+    usage:
+      active_projects:
+        title: "%{now} / %{max} active projects"
+        explain: Deleted and archived projects don't count against the limit.
+      storage:
+        title: "%{now} / %{max}"
+        explain: Attached files on your organization.
+    billing:
+      billing_email: Billing e-mail <em>We will send invoices to this address</em>
+      submit: Update billing e-mail
+      plan: Plan
+      storage: Storage
+      projects: Projects
+      search: Search
+      upgrade: Upgrade now!
+      current_plan: Your current plan
+      downgrade: Downgrade
+      billing_area: "You can access your invoices, downgrade or change your billing options at any time from the <a href='%{link}'>billing area</a>."
+      suggested_upgrade:
+        upgrade_to: "Upgrade to %{plan}"
+        for_only: "for $%{price} more a month"
+        get_projects: "Up to <b>%{number} projects</b>"
+        get_storage: "Up to <b>%{number}</b>"
+      yearly_plans:
+        save_with_yearly_plans: <b>Save 20%</b>. You can also sign up for any plan yearly and <b>get two months free</b>.
+        signup_links: "Sign up yearly for <a href='%{corporate}'>Corporate ($2990)</a>, <a href='%{pro}'>Pro ($990)</a>, <a href='%{basic}'>Basic ($290)</a> or <a href='%{personal}'>Personal ($120)</a>."
     fields:
       logo: Logo <em>Ideally should be 134x36 pixels</em>
       name: "Organization name"
       name_placeholder: Your organization
       permalink: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
+      domain: "Domain <em>You can use your own domain for your organization, check the <a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='How to use your own domain for your organization in Teambox'>documentation</a>.</em>"
       description: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
     index:
       about:
@@ -1004,6 +1046,27 @@ en:
     fields:
       password: Password
       username_or_email: Email or Username
+  plans:
+    thanks:
+      title: Thank you for your support!
+      explain: "By purchasing a premium account, you're contributing to Teambox's development and getting much more."
+      you_can_now_create: "You can now create up to %{projects} projects."
+    show:
+      plan: Teambox plans
+      current_plan: "Your current plan is <strong>{{name}}</strong>."
+      max_projects: "You can have up to {{max}} projects."
+      max_storage: "You can store up to {{max}}."
+      branding:
+        configure: "Your plan supports custom branding and domain names. <a href='{{link}}'>Configure your branding here</a>."
+        not_available: "Your plan doesn't support <strong>custom branding</strong>. Upgrade to a higher account to get it."
+    copies:
+      copy1: "Liking Teambox? We're full-time workers! <a href='{{link}}'>Upgrade now</a> to support our development!"
+      copy2: "<a href='{{link}}'>Upgrade now</a> to get more projects, storage and search across all projects."
+      copy3: "<a href='{{link}}'>Get more done</a> with a premium account! Extra storage, up to 2000 projects."
+      copy4: "<a href='{{link}}'>Work better</a> with a premium account: Search bar across all projects."
+      copy5: "<a href='{{link}}'>Upgrade your Teambox account now</a> and enjoy professional collaboration!"
+      copy6: "Search bar across all projects could save you hours. <a href='{{link}}'>Upgrade now</a> to have it!"
+      copy7: "Your business matters! <a href='{{link}}'>Get the best support</a> for Teambox with our premium plans."
 
   shared:
     strip:
@@ -1043,6 +1106,7 @@ en:
       invitations: Invitations
       organizations: Organizations
       organization: Organization
+      affiliate_area: Affiliate Area
     projects_dropdown:
       all_projects: Overview for all projects
       new_project: + New project
@@ -1069,6 +1133,7 @@ en:
       profile_picture: Profile Picture
       linked_accounts: Linked Accounts
       notifications: Notifications
+      plans_and_billing: Plans and Billing
       delete_account: Delete Account...
     task_navigation:
       all_tasks: "All Tasks"
@@ -1082,7 +1147,7 @@ en:
     footer:
       support: Feedback and bugs
       mobile: Mobile version
-      help: Help
+      help: Help and Support
     watchers:
       unwatch: Unwatch
       watch: Watch
@@ -1106,6 +1171,54 @@ en:
       send_email_help_conversations: "To create a new conversation send an email to <a href=\"mailto:%{email}\">%{email}</a> with Subject for the title and Body for the comment. Only members from the project can create a new conversation."
       send_email_help_conversation: "To post a new comment to this conversation send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the conversation."
       send_email_help_task: "To post a new comment to this task send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can comment to the task."
+  affiliate:
+    area: Affiliate Area
+    index:
+      facebook: Facebook
+      twitter: Twitter
+      website: "Share it on your website,"
+      send_invites: Invite to Teambox
+      sent_invites_to: "The invitation email will be sent to the following addresses:"
+      refer_info: "Refer %{users} users on %{plan} accounts, get $%{credit} every month."
+      desc_1: "With our partner tools, you can get <strong>free months</strong> using Teambox or make <strong>real money</strong> by referring others."
+      desc_2: "Bring new users to Teambox, and get <strong>%{percent}% of the income</strong> your referred users generate, <strong>forever</strong>."
+      option_1: "Option 1: Share this link"
+      option_2: "Option 2: Invite your contacts by entering their email"
+      option_3: "Option 3: Invite your contacts by importing contacts from a CSV file"
+      twitter_link: "Try+Teambox+to+collaborate+with+your+team,+sign+up+for+free+at+%{link}"
+      referred_users: "Your referred users "
+      no_referred_users: "You don't have any referred users yet."
+      credits_earned: "Credit you've earned"
+      use_money: "You can use this money to get a"
+      premium_plan: "premium account"
+      use_money_cash: "or to earn real cash."
+      plan_for: "plan for"
+      over_200: "Whenever you have over $200,"
+      send_money: "and we will send you the money you've earned."
+      get_in_touch: "get in touch with us"
+      ideas: "Some ideas to make the most out of Teambox"
+      idea1: "Create a site about how to use Teambox, with guides for beginners."
+      idea2: "Post a link to Teambox on your blog and talk about how it helped you."
+      idea3: "Run an event about Project Collaboration and refer your attendees."
+      idea4: "Simply email invitations to new users."
+      learn_more: "Learn more..."
+      use_tracking_code: "You must use a tracking code so we can know which users are coming from you."
+      tracking1: "When you refer users to Teambox, they must sign up at a page with a special parameter."
+      tracking2: "This parameter is unique for you, and it allows us to track your users."
+      tracking3: "Once a user follows this link, they will be marked as coming from you."
+      tracking4: "Even if they navigate away from the page and come later, we store this data in their session so when they sign up we still remember they came from you."
+      tracking5: "Your special page for signup is"
+      tracking6: "Post this link on Facebook, Twitter, on your own site, or send it by email to a friend. After they sign up you will receive an email confirmation."
+      addresses: "addresses"
+      sent_number_of_invites: "The invitation email will be sent to"
+    notification:
+      new_signup: "A user signed up on Teambox using your referral code!"
+      new_subscription: "A user upgraded his account on Teambox using your referral code!"
+      accepted_subscription: "%{name} (%{email}) just signed up on Teambox using your referral code."
+      upgraded_subscription: "%{name} (%{email}) just upgraded his account on Teambox, and you are earning $%{price} in credit"
+      check_your_earnings: "Go check your earnings from referrals on Teambox"
+      check_your_referrals: "Go check your referred users on Teambox"
+      wait: "The transaction has been just processed, but may take a while to be reflected on your Teambox Partner area"
   roles:
     observer: observer
     commenter: commenter
@@ -1125,6 +1238,7 @@ en:
       teambox_is_a_pm_platform: "Teambox is a project management platform made for real-world collaboration."
       plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
       report_abuse: "This email was sent to you at your contact's request. Please report any abuse."
+      subject_without_project: "%{name} invited you to Teambox"
     confirm:
       subject: "Get started with Teambox"
       hey: "Hey, %{user_name}!"
@@ -1196,6 +1310,7 @@ en:
     new_example_projects: Create an Example Project
     new_conversations: New Conversation
     results_search: Search
+    show_plans: Plans
 
   search:
     placeholder: "Search all projects"
