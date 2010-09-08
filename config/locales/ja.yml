@@ -150,6 +150,9 @@ ja:
       by: by
       create_person: はプロジェクトに招待されました
       title: "%{person} プロジェクトに招待されました %{project} "
+    create_project: 
+      left: プロジェクトを作成
+      title: "%{person} さんが %{project}プロジェクトを作成しました "
     create_task: 
       create_task: タスクを作成しました。
       title: "%{user} タスク作成 %{task} in %{task_list} "
@@ -176,6 +179,7 @@ ja:
       more_comments: 
         one: 1つの以前のコメント
         other: "%{count} つの以前のコメント"
+      on_task_list: 生き
   affiliate: 
     area: アフィリエイト・エリア
     index: 
@@ -275,6 +279,7 @@ ja:
     convert_form: 
       destination: タスクリストの設置場所を選ぶ
       name: タスク名入力
+      submit: 変換
     edit: 
       submit: 保存
     errors: 
@@ -287,6 +292,7 @@ ja:
     new: 
       assigned_to: 指名先
       assigned_to_nobody: 未担当
+      comment_on_project: コメントする
       conversation: グループにメッセージを送る
       project: "今何をしていますか? アイディアや、リンクや、状況などを共有しましょう。"
       submit: 保存
@@ -345,6 +351,7 @@ ja:
         body: 質問をしたり、何をしているかをチームに伝えたり、議論を始めたりしましょう。
         name: できるだけ短くしましょう。この部分は通知eメールのサブジェクトになります。
     index: 
+      new_conversation: 新規会話
       rss: 
         description: "%{name}プロジェクトのチャット"
         title: "%{name} 会話"
@@ -818,6 +825,7 @@ ja:
       problems: "もし問題がありましたら、%{support}に連絡してください。"
       report_abuse: "このメールは、あなたが%{email}でTeamboxにサインアップしたために送付されています。"
       subject: パスワードのリセット完了
+      successfully_reset: パスワードはリセットされました。
     upload: 
       file: "ファイル:"
       uploaded_by: "アップロード by"
@@ -930,6 +938,13 @@ ja:
       pending: このユーザーに招待メールを送信しましたが、まだ確認されていません
       resend: 招待メールを再送する
       time_ago: "(%{time_ago_in_words} 前)"
+    invite_format: 
+      enter_this: 
+        title: これを入力して下さい
+      title: "ユーザー名/メールボックス内では、ユーザー名のリスト若しくはメールアドレスを利用して下さい。例えば "
+      to_invite: 
+        not_example: "(NOT <span class=\"mention\">@fred</span> or <span class=\"mention\">@lisa</span>)"
+        title: 招待
     pending: 
       invited_to_join: "%{by}があなたを%{project}プロジェクトに招待しました。"
       invited_to_join_group: "%{by}があなたを%{group}グループに招待しました。"
@@ -952,7 +967,53 @@ ja:
       email_sent: <b>このユーザーにプロジェクトへの招待を受け入れるリンクを含んだeメールを送信しました。もしeメールが見つからないようであれば、迷惑メールに分類されていないか確認するか、異なるeメールアドレスを試して見てください。もし問題が解決しないようでしたら、我々のスタッフに連絡してください。
   latest_announcement: "Teamboxに関する最新の情報は<a href='http://blog.teambox.com'>ブログ(英語)</a>でお読みになれます。日本語での提供は下半期を2010年秋頃を予定してます。 "
   locales: 
+    ar: アラビア語
+    bs: ボスニア語
+    bt: ブルガリア語
+    ca: カタラン語
+    cz: チェコ語
+    da: デンマーク語
+    de: ドイツ語
+    dsb: 下ソルブ語
+    el: ギリシャ語
+    en: 英語
+    es: スペイン語
+    et: エストニア語
+    fa: ペルシア語
+    fi: フィンランド語
+    fr: フランス語
+    he: ヘブライ語
+    hr: クロアチア語
+    hsb: 上ソルブ語
+    hu: ハンガリー語
+    id: インドネシア語
+    is: アイスランド語
+    it: イタリア語
     ja: 日本語
+    ko: 韓国語
+    lo: ラオ語
+    lt: リトアニア語
+    lv: ラトビア語
+    mk: マケドニア語
+    nl: オランダ語
+    ? "no"
+    : ノルウェー語
+    pl: ポーランド語
+    pt-BR: ポルトガル語（ブラジル）
+    pt-PT: ボルトガル語
+    ro: ルーマニア語
+    ru: ロシア語
+    se: スウェーデン語
+    sk: スロバキア語
+    sl: スロベニア
+    sr: セルビア語
+    sw: スワヒリ語
+    th: タイ語
+    tr: トルコ語
+    uk: ウクライナ語
+    vi: ベトナム語
+    zh: 中国語
+    zh-TW: 中国語（繁体字）
   not_found: 
     conversation: "チャット %{id} はこのプロジェクトにはありません"
     group: "グループ %{id} は存在しません。"
@@ -1052,6 +1113,8 @@ ja:
       all_pages: 全てのページ
       cant_create: ページをこのプロジェクトにおいて作成する権限がありません。
       new_page: 新しいページ
+      reorder: 再整列
+      reorder_done: 完了
     edit: 
       submit: 更新
       title: ページの編集
@@ -1164,6 +1227,7 @@ ja:
       owner_description: オーナーはプロジェクトの責任者です。オーナーは、別のユーザーにその所有権を譲らない限り、プロジェクトから外すことはできません。
       permalink: URL
       permalink_description: あなたのプロジェクトのアドレスです。なるべく短くしましょう。空白を入れることはできません。
+      public_project: "公開プロジェクト。<em>誰でもアクセス及び参加が<a href='/public'>公開プロジェクトセクション</a>から出来ます。</em> "
       settings: 
         upgrade: "<b>このプロジェクトをアーカイブから戻し</b>、編集可能にするには、<a href='%{link}'>アップグレードを行い、容量及び機能アップ</a>するか、他のプロジェクトをアーカイブする必要があります。"
         you_cant_unarchive: " %{active}のプロジェクトを利用中です。現在のプランでは %{max} のプロジェクトまでご利用可能です。"
@@ -1209,17 +1273,28 @@ ja:
       footer: このプロジェクトはあなたが所有していますが、いつでも他のユーザーに譲ることができます。
       limited: "無料アカウントでは、ファイルは 50 Mbまでアップロード可能です。"
       upgrade: アカウントをアップグレードしてください!
+    people_list: 
+      invite_people: 招待する
+      pending_invitations: 
+        one: １つの紹介は保留中です
+        other: "%{count} つの紹介が保留中です"
+      people_in_project: このプロジェクトの参加者
     primer: 
       create_first: 最初のプロジェクトを作成しよう!
       define1: "プロジェクトを使って、人々と<b>共同作業</b>をしましょう: ウェブサイトやパーティの計画、仕事など..."
       define2: "あなたは、オンラインの様々な人々と共有するために、<b>好きなだけ多くのプロジェクト</b> を作成することができます。"
       empty: まだプロジェクトのオーナーでもメンバーでもありません。
-      footer: プロジェクトは共同作業を集約します。もうチームメンバーにeメールを送る必要はありません。
+      footer: プロジェクトにより、共同作業を集約する事が出来ます。もうチームメンバーにメールを送る必要はありません。
       item1: "<b>プロジェクトを作成し</b>、名前をつけて <b>友達を招待して</b> ください。"
       item2: "<b>コメント</b> プロジェクト全体の時系列の中で、あなたが何をしているかについてコメントしましょう。"
       item3: " 「チャット」で重要な決定について<b>議論</b>しましょう。"
       item4: "<b>計画</b> 「タスク」で何が必要かを計画し、最新情報を投稿しましょう。"
       item5: "<b>情報共有</b> それぞれのプロジェクトにある、簡単に編集できる「ページ」で情報共有しましょう。"
+    recent_conversations: 
+      first: "+ 新たな会話を始める"
+      new: "+ 新たな会話"
+      title: 最近の会話
+      view_all: 全ての会話を見る
     show: 
       new_task_list_link: 新規タスクリスト
       rss: 
@@ -1240,12 +1315,24 @@ ja:
       email: サインアップしたメールアドレスはどちらですか？
       submit: パスワードリセットのリンクを送信する
       title: パスワードを忘れましたか?
+    reset: 
+      submit: パスワードをリセットする
+      title: パスワードをリセット出来ます
     sent: 
       change_password_now: ログインしました。忘れないように、<b>新しいパスワードを今決めて</b>ください。
       follow_the_link: eメールに記載されたリンクをたどることで、Teamboxにログインできます。eメールが見つからない場合は、迷惑メールフォルダを探してみてください。
       login_link_sent: "パスワードの再取得のため､メールを%{email}にお送りしました。"
       not_found: "このメールアドレス<b>%{email}</b>はどのTeamboxユーザーのものでもありません。スペルを確認してみてください。"
       title: パスワードリセット
+  search: 
+    index: 
+      report: "%{count}件の結果が \"%{term}\"で見つかりました "
+      search_again: 再検索
+      title: 全てのプロジェクトを検索中
+      title_in_project: "%{project} 内を検索中 "
+    placeholder: 全てのプロジェクトを検索
+    placeholder_in_project: プロジェクト内検索
+    submit: 検索
   sessions: 
     fields: 
       forgot: パスワードを忘れましたか?
@@ -1545,7 +1632,7 @@ ja:
   users: 
     activation: 
       activated: "あなたのアカウントは活性化されました。Teamboxにようこそ :)"
-      already_done: あなたのメールアドレスが確認されています。Teamboxをご利用頂けます？
+      already_done: メールアドレスは既に確認されています。これからTeamboxをご利用頂くことができます。
       invalid: <p>無効もしくは期限の切れたリンクです。メールアドレスとパスワードでログインしてください。</p><p>ログインに関するデーターが不明な場合は、こちらの”パスワードを忘れましたか”リンクを利用ください。</p>
       invalid_user: 無効なユーザー
       resent: 活性化のためのメールを再送しました。メールをご確認下さい。
@@ -1647,11 +1734,12 @@ ja:
         login: ログインにはユーザー名が必要です。人々はユーザー名であなたを見つける事が出来ます。ユーザー名は小文字と下線(underscore)のみで、空白はご利用出来ません。
         password: 大文字と小文字、数字などを混在させるのは良い考えです。
         phone: 携帯電話の番号をお勧めします。カントリーコードを+の後に入れてください。日本の場合は"+81"となります。
+      new:
+        use_this_email: このメールアドレス宛にプロジェクトへの招待状が届いています。プロジェクトにアクセスを希望する場合は、メールアドレスを変更しないでください。登録終了後、メールアドレスの変更が出来ます。
     new: 
       existing_user: "もしアカウントを既にお持ちならば、<a href='%{login_url}'>ログイン</a> もsくは <a href='%{forgot_url}'>パスワードの再取得をお願いします。</a>. "
       no_public_signup: "Public signupsはこのシステムでは承認されていません。"
       submit: アカウントの作成
-      use_this_email: このメールアドレス宛にプロジェクトへの招待状が届いています。プロジェクトにアクセスを希望する場合は、メールアドレスを変更しないでください。登録終了後、メールアドレスの変更が出来ます。
       title: アカウントの作成
       you_already_have_an_account: "Teamboxアカウントを%{email}のメールアドレスでお持ちです。 <a href='%{login_link}'>このメールアドレスでログイン</a> もしくはパスワードをお忘れの場合 <a href='%{reset_password_link}'>パスワードをリセットしてください。</a>"
       you_are_logged_in: あなたは既にアカウントをお持ちです。別のユーザーとして登録する場合は、まずログアウトをして下さい。
@@ -1661,8 +1749,37 @@ ja:
       projects: プロジェクト
       recent_activity_for: "%{user_name}の最近の活動"
     text_styles: 
+      block_of_code: インデントコード(4つの空白、若しくはタブ)を貼付ける事により、ブロックコードとして機能します。
+      enter_this: 
+        bold_text: "**太字** テキスト "
+        header: |-
+            ヘッダー
+            ======
+        image: "![alt text](http://w3.org/img.jpg)"
+        italic_text: "*イタリア体* テキスト "
+        link: "[A link](http://teambox.com) "
+        ordered_list: |-
+            1. リストの整列
+            2. 空行を残して下さい!
+        smaller_header: "より小さいヘッダー--------- "
+        title: これを入力
+        unordered_list: |-
+            * 順番を整えていないリスト
+            * まわりに空行を残して下さい
       to_see_this: 
+        bold_text: "<strong style=\"font-weight: bold\">太字</strong>テキスト "
+        header: "<h3 style=\"font-size:18px\">ヘッダー</h3>"
         image: "<img src=\"http://www.w3.org/Icons/valid-html401\"> "
+        italic_text: "<i>斜体</i> テキスト "
+        link: "<a href=\"http://www.teambox.com\">何かしらのリンク</a> "
+        ordered_list: |-
+            <li>順番を整えたリスト</li>
+            <li>まわりに空行を残して下さい</li>
+        smaller_header: "<h4 style=\"font-size:14px\">より小さいヘッダー</h4>"
+        title: これを見る
+        unordered_list: |-
+            <li>順番を整えていないリスト</li>
+            <li>まわりに空行を残して下さい</li>
     unconfirmed_email: 
       follow_the_link: <b>メールをご覧頂き、リンクをクリックして</b>アカウントを活性化して下さい。
       invitation_sent_to: "あなたのメールアドレスを確認するため、招待状が<i>%{email}</i>に送られました。"
