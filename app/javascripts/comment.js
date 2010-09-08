@@ -87,6 +87,7 @@ function resetCommentsForm(form) {
 document.on('ajax:success', 'form.new_conversation', function(e, form) {
   resetCommentsForm(form)
   $('activities').insert({top: e.memo.responseText}).down('.thread').highlight({ duration: 1 })
+	format_posted_date()
 })
 
 // "Show N previous comments" action in threads
@@ -99,6 +100,7 @@ document.on('ajax:success', '.thread form', function(e, form) {
   resetCommentsForm(form)
   form.up('.thread').down('.comments').insert(e.memo.responseText).
     down('.comment:last-child').highlight({ duration: 1 })
+	format_posted_date()
 })
 
 document.on('ajax:failure', 'form.new_conversation, .thread form', function(e, form) {
