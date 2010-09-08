@@ -4,8 +4,6 @@ require 'teambox'
 Bundler.require(:default, RAILS_ENV)
 
 Teambox::Initializer.run do |config|
-  config.action_controller.session_store = :active_record_store
-
   config.action_view.sanitized_allowed_tags = 'table', 'th', 'tr', 'td'
 
   config.after_initialize do
