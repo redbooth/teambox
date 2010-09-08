@@ -406,7 +406,7 @@ en:
       new:
         time_tracking_docs: Learn more.
         choose_organization:
-          new_org_name: "Organization name <em>Optional. Does this project belong to a company?</em>"
+          new_org_name: "Organization name <em>You may later add more projects to this same organization</em>"
           choose_org: "Organization <em>Which organization does this project belong to?</em>"
           or_create_a_new_org: "or create a <a href='%{link}'>new organization</a>"
       settings:
