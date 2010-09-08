@@ -28,9 +28,9 @@ if @activities.any?
     end
   end
 
-  unless @activities.all? { |a| a.user_id == current_user.id }
-    page << "Sound.play('/sounds/laser.wav')"
-  end
+  # unless @activities.all? { |a| a.user_id == current_user.id }
+  #   page << "Sound.play('/sounds/laser.wav')"
+  # end
 end
 
 # This code has a problem: If you post a comment in Project#show, there's a chance
