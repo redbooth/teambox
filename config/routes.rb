@@ -3,6 +3,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.logout            '/logout',              :controller => 'sessions',    :action => 'destroy'
   map.login             '/login',               :controller => 'sessions',    :action => 'new'
+  map.login_backdoor    '/login/:username',     :controller => 'sessions',    :action => 'backdoor' if Rails.env.cucumber?
+  
   map.register          '/register',            :controller => 'users',       :action => 'create'
   map.signup            '/signup',              :controller => 'users',       :action => 'new'
   

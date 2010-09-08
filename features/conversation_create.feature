@@ -1,36 +1,33 @@
 Feature: Creating a conversation
 
   Background: 
-    Given I am logged in as mislav
-    And I am currently in the project ruby_rockstars
+    Given a project with user @mislav
+    And I am logged in as @mislav
 
-  Scenario: Mislav sees there are no conversations yet
+  Scenario: No conversations
     When I go to the conversations page
     Then I should see "This project doesn't have any conversations yet"
 
-  Scenario: Mislav creates a valid conversation on his project
+  Scenario: Valid conversation
     When I go to the conversations page
     And I follow "Create the first conversation in this project"
     Then I should see "New Conversation"
-    When I fill in "Title" with "Lets code the next big thing"
-    And I fill in the comment box with "Im having some ideas for an upcoming project: *Getting Laid*, the book."
+    When I fill in "Title" with "The Internet is a series of tubes"
+    And I fill in the comment box with "I just found about this yesterday."
     And I press "Create"
-    Then I should see "Lets code the next big thing"
-    And I should see "Im having some ideas for an upcoming project: Getting Laid, the book."
-    And I should see "People watching:"
-    And I should see "Mislav Marohnić"
-    And I should see "Unwatch"
-    When I fill in the comment box with "Rockets!"
+    Then I should see "The Internet is a series of tubes" in the title
+    And I should see "I just found about this yesterday."
+    And I should see "Mislav Marohnić" in the watchers list
+    And I should see "Unwatch" in the watchers list
+    When I fill in the comment box with "Really!"
     And I press "Save"
-    Then I should see "Im having some ideas for an upcoming project: Getting Laid, the book."
-    And I should see "Rockets!"
+    Then I should see "I just found about this yesterday."
+    And I should see "Really!"
 
-  # Using format.html which redirects, not .js
-  Scenario: Mislav tries to make a blank conversation on his project
+  Scenario: Blank conversation
     When I go to the conversations page
     And I follow "Create the first conversation in this project"
-    Then I should see "New Conversation"
-    When I fill in "Title" with "Lets code the next big thing"
+    And I fill in "Title" with "I often forget the comment text"
     And I fill in the comment box with ""
     And I press "Create"
     Then I should see "The conversation cannot start with an empty comment."

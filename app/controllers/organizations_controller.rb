@@ -1,6 +1,7 @@
 class OrganizationsController < ApplicationController
   skip_before_filter :load_project
   before_filter :load_organization, :only => [:show, :edit, :update, :projects]
+  before_filter :load_page_title, :only => [:show, :members, :projects, :edit, :update]
   before_filter :redirect_community, :only => [:index, :new, :create]
 
   def index
@@ -9,7 +10,6 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @page_title = @organization
     redirect_to edit_organization_path(@organization)
   end
 
@@ -19,7 +19,6 @@ class OrganizationsController < ApplicationController
   end
 
   def projects
-    @page_title = @organization
     @people = current_user.people
     @roles = {  Person::ROLES[:observer] =>    t('roles.observer'),
                 Person::ROLES[:commenter] =>   t('roles.commenter'),
@@ -36,21 +35,19 @@ class OrganizationsController < ApplicationController
 
     if @organization.save
       @organization.memberships.create!(:user_id => current_user.id, :role => Membership::ROLES[:admin])
-      flash[:notice] = I18n.t('projects.new.created')
+      flash[:notice] = t('organizations.new.created')
       redirect_to organization_path(@organization)
     else
-      flash.now[:error] = I18n.t('projects.new.invalid_project')
+      flash.now[:error] = t('organizations.new.invalid_organization')
       render :new
     end
     
   end
   
   def edit
-    @page_title = @organization
   end
 
   def update
-    @page_title = @organization
     if @organization.update_attributes(params[:organization])
       flash.now[:success] = t('organizations.edit.saved')
     end
@@ -72,6 +69,10 @@ class OrganizationsController < ApplicationController
           redirect_to root_path
         end
       end
+    end
+
+    def load_page_title
+      @page_title = @organization
     end
 
     def redirect_community

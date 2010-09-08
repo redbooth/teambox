@@ -20,7 +20,11 @@ class UsersController < ApplicationController
   end
   
   def new
-    if logged_in?
+    if @invitation and logged_in?
+      @invitation.invited_user = current_user
+      @invitation.save
+      redirect_to projects_url(:invitation => @invitation.token)
+    elsif logged_in?
       flash[:success] = t('users.new.you_are_logged_in')
       redirect_to projects_path
     else

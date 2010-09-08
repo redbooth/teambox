@@ -79,12 +79,12 @@ tr:
         equal_to: "%{count} olmalı"
         even: "çift olmalı"
         exclusion: ayrılmış
-        greater_than: "***%{count} den/dan büyük olmalı"
-        greater_than_or_equal_to: "*** %{count} sayısından büyük veya eşit olmalı"
+        greater_than: "%{count} den/dan büyük olmalı"
+        greater_than_or_equal_to: "%{count} sayısından büyük veya eşit olmalı"
         inclusion: "listeye dahil değil"
         invalid: geçersiz
-        less_than: "*** %{count} sayısından küçük olmalı"
-        less_than_or_equal_to: "*** %{count} sayısından küçük veya eşit olmalı"
+        less_than: "%{count} sayısından küçük olmalı"
+        less_than_or_equal_to: "%{count} sayısından küçük veya eşit olmalı"
         not_a_number: "sayı değil"
         odd: "tek olmalı"
         record_invalid: "Doğrulama başarısız oldu: %{errors}"
@@ -118,8 +118,8 @@ tr:
       email_address: E-posta
       im: IM
       invitation: Davet
-      note: "***Metin"
-      page: "***Sayfa"
+      note: "Metin"
+      page: "Sayfa"
       phone_number: Telefon
       project: Proje
       social_network: "Sosyal ağ"
@@ -132,7 +132,7 @@ tr:
       create_comment: "yorumu oluşturdu"
       title: "%{user} %{target} hakkında yorum yaptı"
     create_comment_conversation: 
-      title: "*** %{user} %{target} sohbetini takip ediyor"
+      title: "%{user} %{target} sohbetini takip ediyor"
     create_comment_project: 
       title: "%{user}, %{target} ile ilgili durumunu güncelledi"
     create_comment_task: 
@@ -147,9 +147,12 @@ tr:
       create_page: "sayfayı oluşturdu"
       title: "%{user}, %{page} sayfasını oluşturdu"
     create_person: 
-      by: "*** tarafından"
-      create_person: "projeye davet edildi"
-      title: "%{person}, %{project} projesine davet edildi"
+      by: "tarafından"
+      create_person: "projeye katıldı"
+      title: "%{person}, %{project} projesine katıldı"
+    create_project: 
+      left: "projeyi oluşturdu"
+      title: "%{person} %{project} adlı projeyi oluşturdu"
     create_task: 
       create_task: "görevi oluşturdu"
       title: "%{user}, %{task_list} görev listesinde %{task} görevini oluşturdu"
@@ -159,8 +162,8 @@ tr:
     create_upload: 
       title: "%{user}, %{file} dosyasını yükledi"
     delete_person: 
-      by: "*** tarafından"
-      delete_person: "*** projeden silindi"
+      by: "tarafından"
+      delete_person: "projeden ayrıldı"
       left: "projeden ayrıldı"
       title: "%{person}, %{project} projesinnden ayrıldı"
     edit_note: 
@@ -176,11 +179,10 @@ tr:
       more_comments: 
         one: "1 geçmiş yorum"
         other: "%{count} geçmiş yorum"
-      on_task_list: "*** ??"
   affiliate: 
     area: "İş ortakları Alanı"
     index: 
-      addresses: "*** adresler"
+      addresses: "adresler"
       credits_earned: "Kazandığınız krediler"
       desc_1: "Ortaklarımız için geliştirdiğimiz araçlarla, başka kişilere Teambox'ı önerdiğinizde, <strong>ücretsiz aylık kullanımlar</strong> veya <stong>gerçek para</strong> kazanabilirsiniz."
       desc_2: "Yeni kullanıcıları Teambox ile tanıştırın ve tanıştırdığınız kişilerden elde edilen gelir üzerinden <strong>%{percent}% komisyon kazanın</strong>, hem de <strong>sürekli olarak</strong>."
@@ -197,9 +199,9 @@ tr:
       option_2: "Seçenek 2: Adres defterinizdeki kişileri, e-posta adreslerini girerek, davet edin"
       option_3: "Seçenek 3: Adres defterinizdeki kişileri, bilgilerini bir CSV dosyasından alarak davet edin"
       over_200: "Hesabınızda $200 üzerinde bir tutar biriktiğinde,"
-      plan_for: "*** premium hesaba"
-      premium_plan: "*** geçiş yapın"
-      refer_info: "*** %{plan} hesapları için  %{users} kullanıcı önerin, her ay $%{credit} kazanın."
+      plan_for: "premium hesaba"
+      premium_plan: "geçiş yapın"
+      refer_info: "%{plan} hesapları için  %{users} kullanıcı önerin, her ay $%{credit} kazanın."
       referred_users: "Önerdiğiniz kullanıcılar"
       send_invites: "Teambox'a devat edin"
       send_money: "bize de kazandığınız parayı size gönderelim."
@@ -213,7 +215,7 @@ tr:
       tracking6: "Bu linki Facebook'a, Twitter'a veya kendi sitenize yapıştırın veya arkadaşlarınıza e-posta ile gönderin. Arkadaşlarınız üye olduklarında, size e-posta ile haber verilir."
       twitter: Twitter
       twitter_link: "Takım+arkadaşlarınızla+iletişim+kurmak+için+Teambox'ı+deneyin,+ücretsiz+hesap+açın+%{link}"
-      use_money: "***Bu parayı şunun için kullanabilir:"
+      use_money: "Bu parayı şunun için kullanabilir:"
       use_money_cash: "veya gerçek paraya çevirebilirsiniz."
       use_tracking_code: "Hangi kullanıcıların rizin referansınızla geldiklerini anlayabilmemiz için bir takip kodu kullanmalısınız."
       website: "Web sitenizde paylaşın,"
@@ -289,7 +291,7 @@ tr:
     new: 
       assigned_to: "Sorumlusu:"
       assigned_to_nobody: "Sorumlusu yok"
-      comment_on_project: "*** Yorum:"
+      comment_on_project: "Yorum:"
       conversation: "Grubun geri kalanına mesaj gönderin."
       project: "Şu an ne üzerinde çalışıyorsunuz? Fikirlerinizi, linklerinizi ve güncellemelerinizi paylaşın."
       submit: Kaydet
@@ -312,7 +314,6 @@ tr:
     delete: Sil
     edit: Düzenle
     gantt_chart: "Gannt Chart"
-    in_project: "***"
     next: Sonraki
     not_allowed: "Bunu yapma izniniz bulunmuyor!"
     or: veya
@@ -369,11 +370,11 @@ tr:
       item4: "<b>Gelen kutusundan işlem yapma?</b> Bir sohbete, e-postanızdan cevap yazabilirsiniz."
     short_conversation: 
       comment: yorum
-      comments: "*** yorum"
+      comments: "yorum"
     show: 
       edit: "Başlığı güncelle"
       message: mesaj
-      messages: "*** mesaj"
+      messages: "mesaj"
       started_by: Başlatan
     watcher_fields: 
       add_suscribers: "Bu sohbeti kimler izleyecek?"
@@ -688,8 +689,8 @@ tr:
       - Cumartesi
     formats: 
       default: "%Y-%a-%g"
-      long: "*** %B %g, %Y"
-      short: "***%b %g"
+      long: "%B %g, %Y"
+      short: "%b %g"
     month_names: 
       - ~
       - Ocak
@@ -704,6 +705,7 @@ tr:
       - Ekim
       - Kasım
       - Aralık
+    order: [ :day, :month, :year ]
     yesterday: Dün
   datetime: 
     distance_in_words: 
@@ -773,9 +775,7 @@ tr:
       hey: "Selam, %{user_name}!"
       log_in: "Teambox'a şimdi giriş yapın!"
       plaintext_link: "Bu işlem işe yaramıyorsa, aşağıdaki linki kopyalayın ve tarayıcınızın çubuğuna yapıştırın:"
-      problems: |-
-          ***
-          Herhangi bir probleminiz olması halinde, %{support} üzerinden bizimle iletişime geçin.
+      problems: "Herhangi bir probleminiz olması halinde, %{support} üzerinden bizimle iletişime geçin."
       report_abuse: "Bu mesajı almanızın sebebi, %{email} adresi ile bir Teambox hesabı açmış olmanızdır."
       subject: "Teambox'a giriş"
     forgot_password: 
@@ -801,10 +801,384 @@ tr:
       comments: "%{number} yorum"
       conversation: "Sohbet:"
       due_on: "Teslim tarihi %{date}"
-      my_tasks: |-
-          ***
-          %{project} projesinde size atanan diğer görevler
+      my_tasks: "%{project} projesinde size atanan diğer görevler"
       notification_settings: "İleride alacağınız e-postalar için <a href='%{url}'>bildirim ayarlarınızı</a> değiştirebilirsiniz."
       project: "Teambox Projesi:"
       recent_conversations: "%{project} projesinin güncel sohbetleri"
       reply: "Bu e-postayı cevaplayarak, sohbete cevap yazabilirsiniz."
+      status: "Durum: %{status}"
+      stop_watching: "E-posta bildirimleri almak istemiyorsanız bu konu başlığını<a href='%{stop_watching_url}'>İzlemeyi durdur</a>abilirsiniz."
+      task: "Görev:"
+      task_commands: "Görevin durumunu değiştirmek için cevabınızın üst kısmına #resolve, #reject veya #hold yazın. Görevi @%{username} adlı kişiye atamak için #%{username} yazın."
+      task_list: "Görev Listesi:"
+      view_online: "Cevap yazmak veya dosya eklemek için <a href='%{link}'>bu sohbeti çevrimiçi görüntüle</a>yebilirsiniz."
+    reset_password: 
+      follow_the_link: "Teambox'ta <b>yeni bir parola oluşturmak</b> için, aşağıdaki bağlantıyı kullanarak giriş yapmalısınız:"
+      hey: "Merhaba, %{user_name}!"
+      log_in: "Teambox'a şimdi giriş yapın!"
+      plaintext_link: "Bu işe yaramıyorsa, aşağıdaki bağlantıyı kopyalayın ve tarayıcınızın adres çubuğuna yapıştırın:"
+      problems: "Herhangi bir probleminiz olması halinde, %{support} adresinden destek birimimize ulaşabilirsiniz."
+      report_abuse: "Bu mesajı %{email} e-posta hesabınızla Teambox'a kayıt olduğunuz için almaktasınız"
+      subject: "Parolanız sırılandı"
+      successfully_reset: "Parolanız sıfırlandı."
+    upload: 
+      file: "Dosya:"
+      uploaded_by: yükleyen
+  example_projects: 
+    new: 
+      create: "Örnek proje oluştur"
+      error: "Örnek proje oluşturulamadı."
+      error_list: "Örnek proje oluşturulamadı. Şu projeler geçersiz: %{list}."
+      learn: "Örnekle öğrenin!"
+      line1: "Teambox'ı ilk defa kullanıyorsanız, içerikleri olan örnek bir proje oluşturabilirsiniz."
+      line2: "Sayfalarda dolaştığınızda, Teambox'ın tüm özelliklerini öğreneceksiniz."
+      line3: "<b>Talimatları okuyun</b>, öğeler oluşturarak, öğeleri düzenleyerek ve silerek denemeler yapın!"
+      line4: "Bu projeye diğer kullanıcıları davet edemezsiniz, ancak diğer tüm işlemleri gerçekleştirebilirsiniz."
+  form: 
+    cancel: İptal
+  groups: 
+    column_group: 
+      projects: Projeler
+      your_groups: Gruplarınız
+    edit: 
+      submit: Güncelle
+    errors: 
+      already_own: "Zaten bir grubunuz var!"
+      no_edit: "Bu grubu düzenleyemezsiniz"
+      not_admin: "Bu grubun yöneticisi olamazsınız"
+      not_enabled: "Bu sistemde gruplar etkin değil"
+      upgrade: "<b>Markalı alan adları oluşturmak</b> için, %{link}."
+      upgrade_account: "hesabınızı yükseltin"
+    fields: 
+      description: "Ön sayfada görüntülenecek olan HTML"
+      name: İsim
+      permalink: "Kalıcı bağlantı"
+    header: 
+      leave: Çık
+      remove: Kaldır
+    index: 
+      description: "Kaynakları diğer kişilerle paylaşmak ve projeleri tek bir isim altında birleştirmek için grupları kullanın!"
+      groups_in: "Dahil olduğunuz gruplar"
+      no_groups: "Hiçbir gruba dahil değilsiniz."
+      remove_project: Çıkart
+      submit_project: Ekle
+      title: Gruplar
+      whats_this: "Bu nedir?"
+      your_group: Grubunuz
+    logo_fields: 
+      current: "Geçerli logo"
+      delete: Kaldır
+      description: "Bu logo, bu grubun tüm projelerinde görünecektir"
+      upload: Yükle
+    new: 
+      created: "Grubunuz oluşturuldu"
+      explain: "Sadece bir grubununz olabilir."
+      invalid_group: "geçersiz grup"
+      submit: Oluştur
+      title: "Grup oluştur"
+    primer: 
+      configure_domain: "http://sirketinizinadi.teambox.com şeklinde özel bir alt alan adı kullanabilir veya http://sizinalanadiniz.com örneğinde olduğu gibi bu alanı kendi alan adınıza bağlayabilirsiniz. <a href='%{link}' target='_blank'>Nasıl yapılacağını öğrenin.</a>."
+      create_group: "Grup oluştur"
+      explain: "Gruplar Teambox deneyiminizi markanız altında yaşamanızı sağlar. Giriş ekranını kendi logonuz ve HTML metninizle oluşturabilirsiniz."
+      no_group_create: "Grubunuz yok. %{link}."
+    search: 
+      invite: "Davet et"
+      invite_people: "Gruba kişileri davet et"
+      username_or_email: "Kullanıcı adı veya e-posta"
+    show: 
+      add_project: "Proje ekle"
+      edit: Düzenle
+  hours: 
+    all_tasks: "Tüm görevler"
+    all_users: "Tüm kullanıcılar"
+    comments: "Süre Girişleri"
+    entry_hours: s
+    entry_total: Toplam
+    filter_assigned: 
+      anybody: "Herhangi biri"
+      my_tasks: "Benim görevlerim"
+    filter_by: "Filtre kriteri"
+    filter_project: 
+      all: "Tüm projeler"
+    filters: 
+      assigned_to: Kişiler
+      projects: Projeler
+      tasks: Görevler
+    report: Rapor
+    reports: 
+      project: Projeler
+      task: Görevler
+      user: Kullanıcılar
+    week_num: "Hafta %{num}"
+    week_total: Toplam
+  invitations: 
+    destroy: 
+      discarded: "%{user} kullanıcısına yapılan davet iptal edildi"
+    errors: 
+      invalid: "Geçersiz davet"
+      invalid_code: "Geçersiz davet kodu"
+    fields: 
+      user_or_email: "Takım arkadaşınızın kullanıcı adını veya e-postasını girin:"
+    group_invitation: 
+      invited_email: "%{inviter}, <b>%{email}</b> e-posta adresinin sahibini gruba davet etti."
+      invited_user: "%{inviter}, <b>%{invitee}</b> adlı kişiyi gruba davet etti. "
+    index_user: 
+      no_invitations: "Bekleyen proje davetiniz yok."
+      title: "Bekleyen davetler"
+    invitation: 
+      discard: "Daveti redded"
+      invited_email: "%{inviter}, <b>%{email}</b> e-posta adresinin sahibini projeye davet etti."
+      invited_user: "%{inviter}, <b>%{invitee}</b> adlı kişiyi projeye davet etti."
+      pending: "Kullanıcıya bir e-posta gönderildi fakat kullanıcı henüz teyit etmedi."
+      resend: "Davet e-postasını tekrar gönder"
+      time_ago: "(%{time_ago_in_words} önce)"
+    invite_format: 
+      enter_this: 
+        title: "Bunu girin"
+      title: "Kullanıcı adı / e-posta kutusunda, kullanıcı adları listesi veya e-posta adresleri listesi kullanın. Örn:"
+    pending: 
+      invited_to_join: "%{by} sizi %{project} adlı projeye davet etti."
+      invited_to_join_group: "%{by} sizi %{group} adlı gruba davet etti."
+    recent: 
+      invite: "%{username} adlı kişiyi davet et"
+    resend: 
+      resent: "Davet %{recipient} adlı kişiye tekrar gönderildi"
+      return: "Geri git"
+    search: 
+      help: Yardım
+      invite: "Davet et"
+      invite_from_project: "Projeden davet et"
+      invite_people: "Kişileri bu projeye davet et"
+      role: "Yetki seç"
+      submit: Gönder
+      username_or_email: "Takım arkadaşınızın kullanıcı adını veya e-posta adresini girin"
+    sent: 
+      email_sent: "E-posta deveti gönderildi"
+  latest_announcement: "<strong>Yeni</strong>: Teambox'ı yeni kullanıcılara önererek kazanç elde edin. Kullanıcı girişinini ardından iş ortakları alanına girin ve oluşturduğunuz cirodan %15 gelir sağlayın!<br/><br/>Teambox ile ilgili yenilikler için <a href='http://blog.teambox.com'>bloglarımızı</a> okuyun."
+  locales: 
+    ar: Arapça
+    bs: Boşnakça
+    bt: Bulgarca
+    ca: Katalanca
+    cz: Çekce
+    da: Danca
+    de: almanca
+    el: Yunanca
+    en: İngilizce
+    es: İspanyolca
+    et: Estonyaca
+    fa: Farsça
+    fi: Fince
+    fr: Fransızca
+    he: İbranice
+    hr: Hırvatça
+    hu: Macarca
+    id: Endonezyaca
+    is: İzlandaca
+    it: İtalyanca
+    ja: Japonca
+    ko: Korece
+    lo: Lao
+    lt: Litvanca
+    lv: Letonca
+    mk: Makedonca
+    nl: Felemenkçe
+    ? "no"
+    : Norveççe
+    pl: Lehce
+    pt-BR: "Protekizce (Brezilya)"
+    pt-PT: "Protekizce (Portekiz)"
+    ro: Romence
+    ru: Rusca
+    se: İsceççe
+    sk: Slovakça
+    sl: Slovence
+    sr: Sırpça
+    sw: "Swahili dili"
+    th: "Tay dili"
+    tr: Türkçe
+    uk: Ukraynaca
+    vi: Viyetnamca
+    zh: Çince
+    zh-TW: "Çince (Geleneksel)"
+  not_found: 
+    conversation: "Bu projede sohbet %{id} bulunamadı."
+    group: "Grup %{id} bulunamadı."
+    page: "Bu projede sayfa %{id} bulunamadı."
+    project: "Proje %{id} mevcut değil."
+    task: "Bu projede görev %{id} bulunamadı."
+    task_list: "Bu projede görev listesi %{id} bulunamadı."
+    user: "Kullanıcı yok"
+  notes: 
+    actions: 
+      delete_confirm: "Bu notu silmek istediğinizden emin misiniz?"
+    edit: 
+      submit: "Notu Güncelle"
+    fields: 
+      body: Gövde
+      text_styling: "Metin Stilleri"
+      title: Başlık
+    new: 
+      submit: "Not Ekle"
+  number: 
+    currency: 
+      format: 
+        delimiter: "."
+        format: "%u%n"
+        precision: 2
+        separator: ","
+        unit: "TL"
+    format: 
+      delimiter: "."
+      precision: 3
+      separator: ","
+    human: 
+      format: 
+        precision: 1
+      storage_units: 
+        format: "%n %u"
+        units: 
+          byte: 
+            one: bayt
+            other: bayt
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+  oauth: 
+    account_linked: "Hesabınız bağlandı."
+    already_linked_to_your_account: "Bu hizmet zaten hesabınıza bağlı. Onunla giriş yapabilirsiniz."
+    already_taken_by_other_account: "Bu hizmet sistem üzerinde farklı bir hesaba bağlı. Çıkış yapın ve onunla giriş yapmayı deneyin. Farklı bir hesaba bağlamak isterseniz önce geçerli olanla bağlantısını kesin."
+    auth_status_link: "Hesabınıza bağlayın"
+    auth_status_linked: "Sağlayıcıyla bağlı"
+    link_account: "Hesabı bağla."
+    logged_in: "Giriş yapıldı"
+    not_linked: "Bu hizmet Teambox hesabınıza bağlı değil."
+    this_account_will_be_linked_to: "Bu hesap %{provider} ile bağlı."
+    unlink_account: "Hesabın bağlantısını kesin."
+    user_already_exists_by_email: "%{email} kullanıcısının zaten bir Teambox hesabı var. <br/>O hesapla giriş yapın ve Ayar panelinizden o hesabı bağlayın."
+    user_already_exists_by_login: "%{login} kullanıcısının zaten bir Teambox hesabı var. <br/>O hesapla giriş yapın ve Ayar panelinizden o hesabı bağlayın."
+    your_account_is_linked: "%{provider} profiliniz Teambox'a <strong>bağlı</strong>."
+    your_account_is_not_linked: "%{provider} profiliniz Teambox'a <strong>bağlı değil</strong>."
+  page_title: 
+    archived_task_lists: "Arşivlenmiş Görevler"
+    create_uploads: "Dosya Gönderimi"
+    create_users: "Kayıt ol"
+    edit_projects: "Projeyi Düzenle"
+    edit_users: Düzenle
+    index_conversations: "Tüm Sohbetler"
+    index_pages: "Tüm Sayfalar"
+    index_people: Kişiler
+    index_projects: "Tüm Projeler"
+    index_task_lists: "Tüm Görev Listeleri"
+    index_uploads: "Tüm Yüklenmiş Dosyalar"
+    new_conversations: "Yeni Sohbet"
+    new_example_projects: "Örnek bir Proje Oluştur"
+    new_pages: "Yeni Sayfa"
+    new_projects: "Yeni Proje"
+    new_users: "Kayıt ol"
+    results_search: Ara
+    show_plans: Planlar
+    show_projects: "Genel bakış"
+    welcome_users: Hoşgeldiniz!
+  pages: 
+    buttons: 
+      new_divider: Ayırıcı
+      new_note: Metin
+      new_task_list: "Görev Listesi"
+      new_upload: Yükle
+    column: 
+      all_pages: "Tüm Sayfalar"
+      cant_create: "Bu projede sayfa oluşturma yetkiniz yok"
+      new_page: "Yeni Sayfa"
+      reorder: "Yeniden sırala"
+      reorder_done: Bitti
+    edit: 
+      submit: Güncelle
+      title: "Sayfayı Düzenle"
+    fields: 
+      description: Açıklama
+      description_description: "İsteğe bağlı kısa notlar. Metin biçimlerini desteklemez."
+      name: İsim
+      name_description: "Kısa ve açıklayıcı bir başlık seçin"
+    index: 
+      pages_in_this_project: "Bu projedeki sayfalar"
+      rss: 
+        description: "%{name} adlı projedeki sayfalar"
+        title: "%{name} sayfaları"
+    new: 
+      define1: "Burada takımınızla <b>kullanışlı bilgileri paylaşabilirsiniz</b>: Bu bilgiler bir yol planı, ilginç linkler, talimatlar, e-posta şablonları olabilir..."
+      define2: "Sayfa düzenlemek, öğeleri sürükleme ve bırakma yöntemiyle kolay ve eğlencelidir."
+      feature1: "<b>Paylaşın</b>. Tüm takım arkadaşlarınız projenin sayfalarını görüntüleyebilir ve düzenleyebilir."
+      feature2: "<b>Yayınlayın</b>. Paylaşılan sayfalarla anında webe yayın yapın. Dünyaya gösterin."
+      feature3: "<b>Yazdırın</b>. Sayfalar yazıcı dostudur. Yazdırmayı veya PDF olarak kaydetmeyi deneyin!"
+      feature4: "<b>Wiki</b>. Sayfalar, proje bilgilerine hızlı erişim sağlayan wikiler gibi çalışır."
+      footer1: "Teambox'ı sık kullandığınız dosyalar için <b>ortak yazı tahtanız</b> olarak kullanın."
+      footer2: "Her notun içindeki sayfaya dilediğiniz dosyayuı da ekleyebilirsiniz. Tadını çıkartın!"
+      submit: "Sayfa oluştur"
+      title: "Yeni Sayfa"
+    primer: 
+      create_first: "Bu projedeki ilk sayfayı oluşturun!"
+      define1: "Burada takımınızla <b>kullanışlı bilgileri paylaşabilirsiniz</b>: Bu bilgiler bir yol planı, ilginç linkler, talimatlar, e-posta şablonları olabilir..."
+      define2: "Sayfa düzenlemek, öğeleri sürükleme ve bırakma yöntemiyle kolay ve eğlencelidir."
+      empty: "Bu projenin henüz bir sayfası yok."
+      footer1: "Teambox'ı sık kullandığınız dosyalar için <b>ortak yazı tahtanız</b> olarak kullanın."
+      footer2: "Her notun içindeki sayfaya dilediğiniz dosyayuı da ekleyebilirsiniz. Tadını çıkartın!"
+      item1: "<b>Paylaşın</b>. Tüm takım arkadaşlarınız projenin sayfalarını görüntüleyebilir ve düzenleyebilir."
+      item2: "<b>Yayınlayın</b>. Paylaşılan sayfalarla anında webe yayın yapın. Dünyaya gösterin."
+      item3: "<b>Yazdırın</b>. Sayfalar yazıcı dostudur. Yazdırmayı veya PDF olarak kaydetmeyi deneyin!"
+      item4: "<b>Wiki</b>. Sayfalar, proje bilgilerine hızlı erişim sağlayan wikiler gibi çalışır."
+    slots: 
+      insert_here: "Buraya Ekle"
+  people: 
+    column: 
+      confirm_delete: "Bu projeden çıkmak istediğinizden emin misiniz?"
+      contact_admins: "Bu projede sadece %{admins} yeni üye davet edebilir."
+      inviting: "Diğer kullanıcıları davet etme"
+      leave_project: "Projeden çık"
+      leaving: "Projeden çıkma"
+      no_contacts: "Davet edilecek kişi yok."
+      only_admins_can_invite: "Bu projeye sadece yöneticiler kişileri davet edebilir."
+      select_project: "Proje seçin"
+      you_can_leave: "Bu projeden dilediğiniz zaman çıkabilirsiniz. Projeden çıktığınızda, projenin verilerine bir daha erişemezsiniz ve bilgilendirme e-postaları alamazsınız. Diğer kullanıcılar projeye erişmeye devam ederler ve hiçbir verileri kaybolmaz."
+    edit: 
+      submit: "Kişiyi güncelle"
+    errors: 
+      user_or_email: "Kullanıcı bulunamadı. Kullanıcının kullanıcı adını veya e-posta adresini girin."
+      users_or_emails: "Geçersiz kullanıcı adları ve e-posta adresleri"
+    fields: 
+      admin: "Yönetici. Projeye kullanıcıları davet edebilir ve yorumları silebilir."
+      commenter: "Yorumcu. Yorum yazabilir, ancak yeni öğeler oluşturamaz."
+      observer: "Gözlemci. Projeye sadece izleyici olarak katılabilir."
+      participant: "Katılımcı. Herşeyi yapabilir, ancak kullanıcıları davet edemez."
+      role: Yetki
+    header: 
+      admin: Yönetici
+      commenter: Yorumcu
+      confirm_delete: "Bu kişiyi projeden çıkartmak istediğinizden emin misiniz?"
+      leave_project: "Projeden Çık"
+      observer: Gözlemci
+      owner: "Proje Sahibi"
+      participant: Katılımcı
+      remove: Çıkart
+      transfer: "Proje sahipliğini transfer et"
+    link: 
+      edit: Düzenle
+    update: 
+      success: "%{name} adlı kullanıcının yetkisini güncellediniz"
+  plans: 
+    copies: 
+      copy1: "Teambox'ı beğendiniz mi? Biz tam zamanlı çalışanlarız! Ürünü geliştirmemize destek olmak için <a href='%{link}'>Üyeliğinizi bir üst plan yükseltin</a>!"
+      copy2: "<a href='%{link}'>Üyeliğinizi bir üst plana yükseltin</a> ve daha fazla proje ekleme hakkına, daha fazla dosya depolama alanına ve projeler arasında arama yapma imkanına sahip olun."
+      copy3: "Premium üyelikle <a href='%{link}'>Daha fazlasını başarın</a>! Ekstra depolama alanı ve 2000 proje ekleme imkanına hak kazanın."
+      copy4: "Premium üyelikle <a href='%{link}'>daha verimli çalışın</a>: Tüm projelerin içinde arama yapın."
+      copy5: "<a href='%{link}'>Teambox üyeliğinizi bir üst plan yükseltin</a> ve profesyonel işbirliğinin tadını çıkartın!"
+      copy6: "Tüm projelerde tek noktadan arama yapmak size saatler kazandırabilir. Bu özelliğe sahip olmak için <a href='%{link}'>Teambox üyeliğinizi bir üst plan yükseltin</a>!"
+      copy7: "İşiniz çok önemlidir! Premium planlarımızla Teambox'tan <a href='%{link}'>En iyi desteği alın</a>."
+    show: 
+      branding: 
+        configure: "Planınız, kendi özel kurumsal kimliğinizi ve alan adlarınızı kullanmanızı destekliyor. <a href='%{link}'>Kurumsal kimliğinizi buradan düzenleyin.</a>."
+        not_available: "Planınız <strong>kurumsal kimliğininizi</strong> kullanmanızı desteklemiyor. Bu özelliği kullanmak için bir üst pakete geçmelisiniz."
+      current_plan: "Geçerli planınız <strong>%{name}</strong>."
+      max_projects: "En fazla %{max} projeniz olabilir."
+      max_storage: "En fazla %{max} depolayabilirsiniz."

@@ -14,7 +14,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
   
   def create
     @conversation = @current_project.new_conversation(current_user,params[:conversation])
-    @conversation.body = params[:conversation][:body]
+    @conversation.body = params[:conversation][:body] if params[:conversation]
     @saved = @conversation.save
     
     if @saved
