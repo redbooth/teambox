@@ -200,7 +200,7 @@ document.on('click', 'form button.preview', function(e, button) {
       previewBox = textarea.next('.previewBox')
   
   if (!previewBox) {
-    previewBox = new Element('div', { 'class': 'previewBox' })
+    previewBox = new Element('div', { 'class': 'previewBox textilized' })
     textarea.insert({ after: previewBox })
     
     var formatter = new Showdown.converter;
