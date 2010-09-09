@@ -11,5 +11,5 @@ Teambox::Initializer.run do |config|
     ActiveSupport::XmlMini.backend = 'LibXML'
   end
   
-  config.active_record.observers = :notifications_observer
+  config.active_record.observers = :notifications_observer, :threads_observer
 end

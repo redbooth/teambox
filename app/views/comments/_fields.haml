@@ -2,7 +2,7 @@
 - task_form = nil unless local_assigns[:task_form]
 
 .field.text_area
-  = micro_avatar current_user
+  %a.micro_avatar.my_avatar{ :href => '#' }
   = f.text_area :body, :placeholder => local_assigns[:placeholder], :id => nil
 
 - autocomplete_from_project(project)

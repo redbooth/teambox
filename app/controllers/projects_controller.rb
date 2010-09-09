@@ -5,12 +5,11 @@ class ProjectsController < ApplicationController
   before_filter :disallow_for_community, :only => [:new, :create]
   
   def index
+    @pending_projects = @current_user.invitations.reload # adding reload to avoid a strange bug
+    @new_conversation = Conversation.new(:simple => true)
     @activities = Project.get_activities_for(@projects)
     @last_activity = @activities.last
-    @pending_projects = @current_user.invitations.reload # adding reload to avoid a strange bug
     @archived_projects = @current_user.projects.archived
-    
-    @new_conversation = Conversation.new(:simple => true)
 
     respond_to do |f|
       f.html  { @threads = Activity.get_threads(@activities) }

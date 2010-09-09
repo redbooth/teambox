@@ -42,16 +42,16 @@ module ActivitiesHelper
   end
 
   def show_threaded_activity(activity)
-    if activity.thread.is_a?(Task) || activity.thread.is_a?(Conversation)
-      render 'activities/thread', :activity => activity
+    if activity.thread_id.starts_with? "Task_" or activity.thread_id.starts_with? "Conversation_"
+      mode = (controller.controller_name == "projects") ? "short" : "full"
+      Rails.cache.fetch("#{mode}-thread/#{activity.thread_id}/#{current_user.locale}") do
+        render('activities/thread', :activity => activity).to_s
+      end
     else
-      show_activity(activity)
+      Rails.cache.fetch(activity.cache_key) { show_activity(activity).to_s }
     end
   end
 
-  def render_thread(thread)
-    render 'activities/thread', :thread => thread
-  end
 
   def show_activity(activity)
     if activity.target && ActivityTypes.include?(activity.action_type)

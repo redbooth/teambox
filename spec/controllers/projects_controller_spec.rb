@@ -8,10 +8,10 @@ describe ProjectsController do
     
       @user2 = Factory.create(:user)
     
-      project_attributes = Factory.attributes_for(:project, :user => nil,
+      project_attributes = Factory.attributes_for(:project,
         :invite_users => [@user2.id],
         :invite_emails => "richard.roe@law.uni",
-        :organization_name => 'TeamCo'
+        :organization_id => Factory(:organization).id
       )
 
       lambda {
