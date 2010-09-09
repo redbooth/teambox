@@ -11,6 +11,11 @@ class Project
   def after_create
     add_user(user)
     log_activity(self, 'create', user_id)
+
+    # We'll add automagically an administration membership to the creator of the first project
+    if organization.memberships.count == 0 and organization.projects.count == 1
+      organization.memberships.create! :user => user, :role => Membership::ROLES[:admin]
+    end
   end
 
   private

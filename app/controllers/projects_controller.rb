@@ -43,36 +43,34 @@ class ProjectsController < ApplicationController
       f.print { render :layout  => 'print' }
     end
   end
-  
+
   def new
     @project = Project.new
-    @organization = Organization.new
+    @project.build_organization
   end
-  
+
   def create
     @project = current_user.projects.new(params[:project])
-    organization = @project.ensure_organization(current_user, params[:project])
-    @organization = organization unless organization.nil?
-    
+
     unless current_user.can_create_project?
       flash[:error] = t('projects.new.not_allowed')
       redirect_to root_path
       return
     end
-    
+
     respond_to do |f|
       if @project.save
-        flash[:notice] = I18n.t('projects.new.created')
-        f.html { redirect_to project_path(@project) }
-        f.m    { redirect_to project_path(@project) }
+        flash[:notice] = t('projects.new.created')
+        f.html { redirect_to @project }
+        f.m    { redirect_to @project }
       else
-        flash.now[:error] = I18n.t('projects.new.invalid_project')
+        flash.now[:error] = t('projects.new.invalid_project')
         f.html { render :new }
         f.m    { render :new }
       end
     end
   end
-  
+
   def edit
     @sub_action = params[:sub_action] || 'settings'
   end

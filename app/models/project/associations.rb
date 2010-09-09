@@ -1,6 +1,7 @@
 class Project
   belongs_to :user
   belongs_to :organization
+  accepts_nested_attributes_for :organization
 
   with_options :dependent => :delete_all do |delete|
     delete.has_many :people

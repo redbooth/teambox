@@ -52,10 +52,6 @@ class Organization < ActiveRecord::Base
     end
   end
 
-  def name
-    read_attribute(:name) || "Undefined"
-  end
-  
   def to_s
     name
   end
@@ -131,4 +127,5 @@ class Organization < ActiveRecord::Base
         errors.add_to_base("Can't have more than one organization") if Organization.count > 0
       end
     end
+
 end
