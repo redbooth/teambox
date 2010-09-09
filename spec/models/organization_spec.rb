@@ -9,6 +9,16 @@ describe Organization do
   it { should validate_length_of(:name, :minimum => 4) }
   it { should validate_length_of(:permalink, :minimum => 4) }
 
+  it "should check weird permalinks" do
+    %w(www help mail with.dots with%percent with$dolars with&ampersands with^carets).each do |sym|
+      Factory.build(:organization, :permalink => sym).should_not be_valid
+    end
+
+    %w(with_underscores with-dashes fuckingnormaldomain).each do |sym|
+      Factory.build(:organization, :permalink => sym).should be_valid
+    end
+  end
+
   describe "projects" do
     before do
       @organization = Factory(:organization)
@@ -57,12 +67,12 @@ describe Organization do
     end
     it "should list people in projects as external users" do
       project = Factory(:project, :organization => @organization)
-      @organization.users.should == []
-      @organization.admins.should == []
+      @organization.users.should == [project.user]
+      @organization.admins.should == [project.user]
       @organization.participants.should == []
-      @organization.external_users.should == [project.user]
+      @organization.external_users.should == []
       @organization.users_in_projects.should == [project.user]
-      @organization.is_admin?(project.user).should be_false
+      @organization.is_admin?(project.user).should be_true
       @organization.is_participant?(project.user).should be_false
     end
     it "should list people in projects and the org as users" do
@@ -87,7 +97,7 @@ describe Organization do
       @organization.add_member(user, 20).should be_true
       @organization.memberships.last.user_id.should == user.id
       @organization.memberships.length.should == 1
-      @organization.add_member(user, 20).should be_false
+      @organization.add_member(user, 20)
       @organization.memberships.length.should == 1
     end
     it "should upgrade participants" do

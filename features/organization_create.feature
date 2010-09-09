@@ -13,7 +13,7 @@ Feature: Creating an organization
   Scenario: I can't create a project with a short organization name
     When I go to the new project page
     When I fill in "Name" with "Bombs Factory"
-    When I fill in "project_organization_name" with "a"
+    When I fill in "Organization" with "a"
     And I press "Create project and start collaborating"
     Then I should see "is too short"
 
@@ -21,7 +21,7 @@ Feature: Creating an organization
     When I go to the new project page
     When I fill in the following:
       | Project Name              | Rockets Factory |
-      | project_organization_name | ACME            |
+      | Organization              | ACME            |
     And I press "Create project and start collaborating"
     Then I should see "Rockets Factory"
     When I go to the organizations page
@@ -31,7 +31,7 @@ Feature: Creating an organization
     When I go to the new project page
     When I fill in the following:
       | Project Name              | Rockets Factory |
-      | project_organization_name | ACME            |
+      | Organization              | ACME            |
     And I press "Create project and start collaborating"
     And I go to the new project page
     When I fill in "Name" with "Bombs Factory"

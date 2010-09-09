@@ -1226,7 +1226,7 @@ ca:
     people_list: 
       invite_people: "Convidar persones... "
       pending_invitations: 
-        altres: "%{count} invitacions pendents"
+        other: "%{count} invitacions pendents"
         one: "Una invitació pendent"
       people_in_project: "Persones en aquest projecte"
     primer: 

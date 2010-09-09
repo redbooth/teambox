@@ -11,6 +11,15 @@ Given /^(?:I am|I'm) logged in as @(\w+)$/ do |username|
   @current_user = User.find_by_login(username)
 end
 
+Given /^(@\w+) exists?$/ do |username|
+  each_user(username, true) {}
+end
+
+Given /^@(\w+) exists and is logged in$/ do |username|
+  Given %(@#{username} exists)
+    And %(I'm logged in as @#{username})
+end
+
 Given /^I am logged in as ([^@][^\"]*)$/ do |login|
   Given %(I am currently "#{login}")
     And %(I have confirmed my email)

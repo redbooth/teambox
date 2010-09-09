@@ -197,7 +197,11 @@ class User < ActiveRecord::Base
       xml.tag! 'avatar-url', avatar_or_gravatar_url(:thumb)
     end
   end
-  
+
+  def utc_offset
+    @utc_offset ||= ActiveSupport::TimeZone[time_zone].utc_offset
+  end
+
   def to_api_hash(options = {})
     {
       :id => id,
@@ -206,6 +210,7 @@ class User < ActiveRecord::Base
       :locale => locale,
       :username => login,
       :time_zone => time_zone,
+      :utc_offset => utc_offset,
       :biography => biography,
       :created_at => created_at.to_s(:db),
       :updated_at => updated_at.to_s(:db),

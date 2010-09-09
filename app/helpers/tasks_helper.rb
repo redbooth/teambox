@@ -136,17 +136,6 @@ module TasksHelper
     options.concat people.map { |p| [p.name, p.id] }.compact.sort_by(&:first)
   end
 
-  def tasks_sortable(project,task_list)
-    update_page_tag do |page|
-      page.sortable(task_list_id(:the_tasks,project,task_list),{
-        :tag => 'div',
-        :only => 'task',
-        :format => page.literal('/task_(\d+)/'),
-        :handle => 'img.drag',
-        :constraint => 'vertical' })
-    end
-  end
-
   def task_overview_box(task)
     render 'tasks/overview_box', :task => task
   end

@@ -1,5 +1,5 @@
 class TaskListsController < ApplicationController
-  before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive]
+  before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive,:reorder]
   before_filter :load_task_lists, :only => [:index]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy,:archive,:unarchive]
   before_filter :set_page_title
@@ -103,21 +103,9 @@ class TaskListsController < ApplicationController
     end
   end
 
-  def sortable
-    @task_lists = @current_project.task_lists
-    respond_to {|f|f.js}
-  end
-
   def reorder
-    params[:task_lists].each_with_index do |task_list_id,idx|
-      task_list = @current_project.task_lists.find(task_list_id)
-      task_list.update_attribute(:position,idx.to_i)
-    end
-    
-    respond_to do |f|
-      f.js{}
-      handle_api_success(f, @task_list)
-    end
+    @task_list.insert_at params[:position].to_i
+    head :ok
   end
   
   def archive

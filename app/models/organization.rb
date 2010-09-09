@@ -13,6 +13,7 @@ class Organization < ActiveRecord::Base
   validates_uniqueness_of :domain, :case_sensitive => false, :allow_nil => true
   validates_length_of     :permalink, :minimum => 4
   validates_exclusion_of  :permalink, :in => %w(www help support mail pop smtp ftp)
+  validates_format_of     :permalink, :with => /^[\w\_\-]+$/
 
   validate :ensure_unicity_for_community_version, :on => :create, :unless => :is_example
 
@@ -45,17 +46,11 @@ class Organization < ActiveRecord::Base
     if member.nil?
       member = memberships.new(:user_id => user_id.to_i, :role => role.to_i)
       member.save
-    elsif member.role < role
-      member.update_attribute(:role, role)
     else
-      false
+      member.update_attribute(:role, role)
     end
   end
 
-  def name
-    read_attribute(:name) || "Undefined"
-  end
-  
   def to_s
     name
   end
@@ -131,4 +126,5 @@ class Organization < ActiveRecord::Base
         errors.add_to_base("Can't have more than one organization") if Organization.count > 0
       end
     end
+
 end
