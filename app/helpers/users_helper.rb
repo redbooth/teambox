@@ -43,4 +43,30 @@ module UsersHelper
     card = user.card || user.build_card
     card.phone_numbers.build unless card.phone_numbers.any?
   end
+  
+  def load_javascript_user_data
+    javascript_tag %(
+      my_user = #{json_user}
+      my_projects = #{json_people}
+    )
+  end
+
+  protected
+
+    def json_user
+      current_user.to_json
+    end
+
+    def json_people
+      projects = {}
+      # FIXME: current_user.people should use eager loading to get projects too
+      current_user.people.to_a.collect do |p|
+        projects[p.project.id] = {
+          :permalink => p.project.permalink,
+          :role => p.role,
+          :name => p.project.name }
+      end
+      projects.to_json
+    end
+
 end
