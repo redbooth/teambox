@@ -91,6 +91,10 @@ Event.addBehavior({
 Element.addMethods({
   forceShow: function(element) {
     return $(element).setStyle({ display: 'block' })
+  },
+  swapVisibility: function(element, other) {
+    $(other).forceShow()
+    return $(element).hide()
   }
 })
 

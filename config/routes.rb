@@ -97,8 +97,8 @@ ActionController::Routing::Routes.draw do |map|
     project.hooks      'hooks/:hook_name',                 :controller => 'hooks',      :action => 'create',    :method => :post
 
     project.resources :task_lists,
-      :collection => { :gantt_view => :get, :sortable => :get, :archived => :get  },
-      :member => { :watch => :put, :unwatch => :put, :archive => :put, :unarchive => :put } do |task_lists|
+      :collection => { :gantt_view => :get, :archived => :get  },
+      :member => { :watch => :put, :unwatch => :put, :archive => :put, :unarchive => :put, :reorder => :put } do |task_lists|
         task_lists.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put }
     end
     
@@ -137,10 +137,10 @@ ActionController::Routing::Routes.draw do |map|
         conversation.resources :comments, :except => [:new, :edit, :update, :destroy]
       end
       project.resources :invitations, :except => [:new, :edit, :update], :member => {:resend => :put}
-      project.resources :task_lists, :except => [:new, :edit], :member => {:archive => :put, :unarchive => :put}, :collection => {:reorder => :put} do |task_list|
+      project.resources :task_lists, :except => [:new, :edit], :member => {:archive => :put, :unarchive => :put} do |task_list|
         task_list.resources :tasks, :except => [:new, :edit]
       end
-      project.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}, :collection => {:reorder => :put}  do |task|
+      project.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}  do |task|
         task.resources :comments, :except => [:new, :edit, :update, :destroy]
       end
       project.resources :uploads, :except => [:new, :edit, :update]
