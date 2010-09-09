@@ -46,10 +46,8 @@ class Organization < ActiveRecord::Base
     if member.nil?
       member = memberships.new(:user_id => user_id.to_i, :role => role.to_i)
       member.save
-    elsif member.role < role
-      member.update_attribute(:role, role)
     else
-      false
+      member.update_attribute(:role, role)
     end
   end
 
