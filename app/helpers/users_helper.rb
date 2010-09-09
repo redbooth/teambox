@@ -59,8 +59,7 @@ module UsersHelper
 
     def json_people
       projects = {}
-      # FIXME: current_user.people should use eager loading to get projects too
-      current_user.people.to_a.collect do |p|
+      current_user.people.all(:include => :project).to_a.collect do |p|
         projects[p.project.id] = {
           :permalink => p.project.permalink,
           :role => p.role,
