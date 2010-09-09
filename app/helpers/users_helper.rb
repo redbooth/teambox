@@ -59,7 +59,7 @@ module UsersHelper
 
     def json_people
       projects = {}
-      current_user.people.all(:include => :project).to_a.collect do |p|
+      current_user.people.all(:include => :project).collect do |p|
         projects[p.project.id] = {
           :permalink => p.project.permalink,
           :role => p.role,
