@@ -39,6 +39,13 @@ describe Conversation do
     conversation.save.should be_true
     conversation.name.should be_nil
   end
+
+  it "destroy itself when the last comment is destroy if simple" do
+    conversation = Factory.build(:conversation, :simple => true)
+    conversation.save
+    @comment = conversation.comments.first.destroy
+    Conversation.find_by_id(@comment.target.id).should be_nil
+  end
   
   it "allows watchers id on create" do
     project = Factory.create(:project)
