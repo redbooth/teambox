@@ -174,8 +174,8 @@ es:
       title: "%{user} ha editado la página %{page}"
     thread: 
       created: 
-        conversation: "Creada la conversación"
-        task: "Creada la tarea"
+        conversation: "ha creado la conversación"
+        task: "ha creado la tarea"
       more_comments: 
         one: "1 comentario anterior"
         other: "%{count} comentarios anteriores"
