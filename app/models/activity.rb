@@ -8,7 +8,7 @@ class Activity < ActiveRecord::Base
   named_scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_type = 'Conversation'"
   
   named_scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
-      
+
   def self.log(project,target,action,creator_id)
     project_id = project.try(:id)
 
@@ -79,7 +79,7 @@ class Activity < ActiveRecord::Base
   end
 
   def user
-    User.find_with_deleted(user_id)
+    @user ||= User.find_with_deleted(user_id)
   end
 
   def thread
@@ -91,7 +91,16 @@ class Activity < ActiveRecord::Base
   end
 
   def thread_id
-    "#{thread.class}_#{thread.id}"
+    @thread_id ||= Rails.cache.fetch("#{cache_key}/thread_id") do
+      "#{thread.class}_#{thread.id}"
+    end
+  end
+
+  def self.get_threads(activities)
+    activities.inject([]) do |result, a|
+      result << a unless result.collect(&:thread_id).include?(a.thread_id)
+      result
+    end
   end
 
   def to_xml(options = {})
@@ -152,13 +161,6 @@ class Activity < ActiveRecord::Base
   
   def to_json(options = {})
     to_api_hash(options).to_json
-  end
-
-  def self.get_threads(activities)
-    activities.inject([]) do |result, a|
-      result << a unless result.collect(&:thread_id).include?(a.thread_id)
-      result
-    end
   end
 
 end

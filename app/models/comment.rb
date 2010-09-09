@@ -98,6 +98,10 @@ class Comment < ActiveRecord::Base
       self.send(prop) == another.send(prop)
     }
   end
+
+  def thread_id
+    "#{target_type}_#{target_id}"
+  end
   
   protected
 
