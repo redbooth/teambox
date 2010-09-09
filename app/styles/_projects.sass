@@ -192,7 +192,7 @@
       .thumbnail
         display: none
 
-.edit_projects, .update_projects
+.edit_projects, .update_projects, .index_hooks, .edit_hooks, .new_hooks, .templates_hooks
   .content_wrap
     float: right
     padding: 10px
@@ -211,6 +211,10 @@
       margin: 20px 0
   .text_field
     margin: 20px 0
+
+.index_hooks
+  h3
+    margin-top: 30px
 
 form#new_project
   margin: 30px 0
@@ -243,7 +247,7 @@ form#new_project
   .submit
     margin-top: 20px
 
-form#new_project, form.edit_project
+form#new_project, form.edit_project, form.edit_hook, form.new_hook
   padding:
     left: 10px
   .text_field label, h3

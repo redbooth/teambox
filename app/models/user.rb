@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   has_many :uploads
   has_many :app_links
   has_many :memberships
+  has_many :hooks, :dependent => :destroy
 
   has_many :organizations, :through => :memberships
   has_many :admin_organizations, :through => :memberships, :source => :organization, :conditions => {'memberships.role' => Membership::ROLES[:admin]}

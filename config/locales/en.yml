@@ -33,7 +33,7 @@ en:
     delete_task: Are you sure you want to delete this task?
     delete_page: Are you sure you want to delete this page?
     delete_upload: Are you sure you want to delete this file?
-    delete_group: Are you sure you want to delete this group?
+    delete_hook: Are you sure you want to delete this hook?
   not_found:
     user: "User does not exist."
     conversation: "Conversation %{id} not found in this project."
@@ -1071,7 +1071,30 @@ en:
       copy5: "<a href='{{link}}'>Upgrade your Teambox account now</a> and enjoy professional collaboration!"
       copy6: "Search bar across all projects could save you hours. <a href='{{link}}'>Upgrade now</a> to have it!"
       copy7: "Your business matters! <a href='{{link}}'>Get the best support</a> for Teambox with our premium plans."
-
+  hooks:
+    index:
+      title: "Your hooks for this project"
+      explain: Hooks allow you to integrate Teambox with other web applications' notifications.
+      explain_more: |
+        You can use our examples or
+        <a target='_blank' href='http://help.teambox.com/faqs/integrations/webhooks'>learn how to integrate
+        your own services</a> with your projects.
+      active_hooks: Active hooks
+      add_hook: Add an integration hook
+      new_hook: "Create your own Hook"
+    fields:
+      name: Name of your hook
+      message: Message template <span>(<a href="http://help.teambox.com/faqs/integrations/webhooks" target="_blank">Instructions on editing templates</a>)</span>
+      instructions: Instructions for this webhook
+    new:
+      title: "Create a new hook"
+      submit: Create webhook
+    edit:
+      title: "Edit the hook '{{hook}}'"
+      url: "URLs for '{{hook}}'"
+      submit: Save
+    destroy:
+      success: "The hook '{{hook}}' was successfully deleted."
   shared:
     strip:
       archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
@@ -1092,6 +1115,7 @@ en:
       picture: Project Picture
       deletion: Project Archiving/Deletion
       ownership: Ownership
+      hooks: Integration Hooks
     project_navigation:
       overview: Overview
       all_conversations: All Conversations

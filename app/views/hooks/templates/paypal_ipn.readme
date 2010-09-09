@@ -1,0 +1,7 @@
+### IPN need to be configured from your Paypal Merchant account:
+
+You need to configure your account or purchase link IPN address to your Hook URL.
+
+_More information about [Paypal IPN](https://www.paypal.com/ipn)._
+
+_Hook URL can be found once you save your template. You need to click the Hook name to get the list. For Paypal IPN, choose the 'Raw post' URL_

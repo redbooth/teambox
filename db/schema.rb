@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100903152418) do
+ActiveRecord::Schema.define(:version => 20100909110238) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -126,6 +126,16 @@ ActiveRecord::Schema.define(:version => 20100903152418) do
     t.integer  "last_send_attempt", :default => 0
     t.text     "mail"
     t.datetime "created_on"
+  end
+
+  create_table "hooks", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.string   "key"
+    t.string   "name"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "ims", :force => true do |t|

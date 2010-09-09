@@ -13,6 +13,12 @@ render_tabnav :project do
     #end
 
     add_tab do |t|
+      t.named t('.hooks')
+      t.links_to project_hooks_path
+      t.highlights_on :controller => 'hooks'
+    end
+
+    add_tab do |t|
       t.named t('.deletion')
       t.links_to project_deletion_path :project_id => @current_project.permalink
       t.highlights_on :controller => 'projects', :action => 'edit', :sub_action => 'deletion'

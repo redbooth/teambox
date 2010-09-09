@@ -9,6 +9,7 @@ class Project
     delete.has_many :invitations
     delete.has_many :uploads
     delete.has_many :pages
+    delete.has_many :hooks
     
     delete.with_options :order => 'id DESC' do |ordered|
       ordered.has_many :conversations
