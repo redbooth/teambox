@@ -9,6 +9,16 @@ describe Organization do
   it { should validate_length_of(:name, :minimum => 4) }
   it { should validate_length_of(:permalink, :minimum => 4) }
 
+  it "should check weird permalinks" do
+    %w(www help mail with.dots with%percent with$dolars with&ampersands with^carets).each do |sym|
+      Factory.build(:organization, :permalink => sym).should_not be_valid
+    end
+
+    %w(with_underscores with-dashes fuckingnormaldomain).each do |sym|
+      Factory.build(:organization, :permalink => sym).should be_valid
+    end
+  end
+
   describe "projects" do
     before do
       @organization = Factory(:organization)
