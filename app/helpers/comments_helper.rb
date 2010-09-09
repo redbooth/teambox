@@ -1,10 +1,8 @@
 module CommentsHelper
 
-  def cache_editable_comment(comment, threaded, simpleconv, &block)
+  def cache_comment(comment, threaded, simpleconv, &block)
     cache(comment.cache_key.tap { |key|
       key << "-#{comment.user.avatar_updated_at.to_i}-#{comment.project.permalink}"
-      key << '-editable' if can?(:edit, comment)
-      key << '-destructable' if can?(:destroy, comment)
       key << '-threaded' if threaded
       key << '-simpleconv' if simpleconv
       key << ".#{request.format.to_sym}" if request.format.to_sym.to_s =~ /^\w+$/

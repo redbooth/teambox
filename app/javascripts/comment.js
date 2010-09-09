@@ -218,17 +218,3 @@ document.on('click', 'form button.preview', function(e, button) {
   
   togglePreviewBox(previewBox, enabled, button)
 })
-
-new PeriodicalExecuter(function() {
-  var now = new Date()
-
-  $$('.comment[data-editable-before] a[data-uneditable-message]').each(function(link) {
-    var timestamp = link.up('.comment').readAttribute('data-editable-before'),
-        editableBefore = new Date(parseInt(timestamp))
-    
-    if (now >= editableBefore) {
-      var message = link.readAttribute('data-uneditable-message')
-      link.replace(new Element('span').update(message))
-    }
-  })  
-}, 30)
