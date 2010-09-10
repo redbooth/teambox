@@ -477,7 +477,7 @@ en:
       number_of_projects: "%{count} projects"
       submit: Save changes
       saved: Changes saved
-      invalid: Invalig organization
+      invalid: Invalid organization
     external_view:
       create_your_own_org: "However, you can <a href='%{link}'>create your own organization</a> for your projects."
       request_permission: "To access this organization, you must request permission to some of the administrators:"
