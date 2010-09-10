@@ -14,25 +14,25 @@ module AuthenticatedSystem
     end
   end
 
+  # Returns true or false if the user is logged in.
+  # Preloads @current_user with the user model if they're logged in.
+  def logged_in?
+    !!current_user
+  end
+
+  # Accesses the current user from the session.
+  # Future calls avoid the database because nil is not equal to false.
+  def current_user
+    @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie) unless @current_user == false
+  end
+
   protected
-    # Returns true or false if the user is logged in.
-    # Preloads @current_user with the user model if they're logged in.
-    def logged_in?
-      !!current_user
-    end
-
-    # Accesses the current user from the session.
-    # Future calls avoid the database because nil is not equal to false.
-    def current_user
-      @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie) unless @current_user == false
-    end
-
     # Store the given user id in the session.
     def current_user=(new_user)
       session[:user_id] = new_user ? new_user.id : nil
       @current_user = new_user || false
     end
-    
+
     # Store current user without updating session data (used for viewing RSS feeds)
     def set_current_user(new_user)
       @current_user = new_user
