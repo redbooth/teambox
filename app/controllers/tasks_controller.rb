@@ -53,13 +53,17 @@ class TasksController < ApplicationController
   def update
     @task.updating_user = current_user
     success = @task.update_attributes params[:task]
-    
+
     respond_to do |f|
       f.html {
         if request.xhr? or iframe?
-          comment = @task.comments.last(:order => 'id')
-          render :partial => 'comments/comment',
-            :locals => { :comment => comment, :threaded => true }
+          if @task.comment_created?
+            comment = @task.comments.last(:order => 'id')
+            render :partial => 'comments/comment',
+              :locals => { :comment => comment, :threaded => true }
+          else
+            render :nothing => true
+          end
         else
           if success
             redirect_to_task
