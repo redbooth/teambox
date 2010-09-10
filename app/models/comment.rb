@@ -35,7 +35,7 @@ class Comment < ActiveRecord::Base
   # was before_create, but must happen before format_attributes
   before_save   :copy_ownership_from_target, :if => lambda { |c| c.new_record? and c.target_id? }
   after_create  :trigger_target_callbacks
-  after_destroy :cleanup_activities
+  after_destroy :cleanup_activities, :cleanup_conversation
 
   # must happen after copy_ownership_from_target
   formats_attributes :body
@@ -138,4 +138,10 @@ class Comment < ActiveRecord::Base
     Activity.destroy_all :target_type => self.class.name, :target_id => self.id
   end
   
+  def cleanup_conversation
+    if self.target.class == Conversation
+      @conversation = self.target
+      @conversation.destroy if @conversation.simple and @conversation.comments.count == 0
+    end
+  end
 end
