@@ -107,13 +107,6 @@ class Task < RoleRecord
     comments.sum('hours')
   end
 
-  def after_comment(comment)
-    if comment.status == 0 && self.assigned_id != nil
-      self.status, comment.status = 1,1
-    end
-    self.save!
-  end
-
   def to_s
     name
   end

@@ -125,8 +125,6 @@ class Comment < ActiveRecord::Base
   def trigger_target_callbacks # after_create
     @activity = project.log_activity(self, 'create') if project_id?
 
-    target.after_comment(self) if target.respond_to?(:after_comment)
-
     if target.respond_to?(:add_watchers)
       new_watchers = defined?(@mentioned) ? @mentioned.to_a : []
       new_watchers << self.user if self.user
