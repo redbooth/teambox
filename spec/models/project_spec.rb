@@ -94,32 +94,32 @@ describe Project do
       Activity.last.comment_type.should == nil
       Activity.last.target.should == person
       Activity.last.action.should == 'create'
-      Activity.last.user.should == @user
+      Activity.last.user.should == @owner
       person.reload.source_user.should == @owner
     end
   end
-
+  
   describe "preinviting users on project creation" do
     before do
       @user1 = Factory.create(:user)
       @user2 = Factory.create(:user)
       @user3 = Factory.create(:user)
-
+      
       @project = Factory.create(:project,
         :invite_users => [@user1.id, @user2.id],
         :invite_emails => "#{@user2.email} #{@user3.email} richard.roe@law.uni"
       )
     end
-
+    
     it "creates 4 invitations" do
       @project.should have(4).invitations
     end
-
+    
     it "doesn't invite same user twice" do
       to_user2 = @project.invitations.select { |i| i.email == @user2.email }
       to_user2.size.should == 1
     end
-
+    
     it "invites non-existing user" do
       to_richard = @project.invitations.find_by_email 'richard.roe@law.uni'
       to_richard.invited_user.should be_nil
