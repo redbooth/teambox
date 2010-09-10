@@ -103,6 +103,10 @@ class Task < RoleRecord
     due_on == (Time.current + 1.day).to_date
   end
   
+  def due_in?(time_end)
+    due_on >= Time.current.to_date && due_on < (Time.current+time_end).to_date
+  end
+  
   def total_hours
     comments.sum('hours')
   end
