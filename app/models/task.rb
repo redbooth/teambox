@@ -104,7 +104,7 @@ class Task < RoleRecord
   end
   
   def due_in?(time_end)
-    due_on >= Time.current.to_date && due_on < (Time.current+time_end).to_date
+    due_on && due_on >= Time.current.to_date && due_on < (Time.current+time_end).to_date
   end
   
   def total_hours
