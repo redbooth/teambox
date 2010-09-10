@@ -4,6 +4,10 @@ module TasksHelper
     [].tap do |classes|
       classes << 'due_today' if task.due_today?
       classes << 'due_tomorrow' if task.due_tomorrow?
+      classes << 'due_week' if task.due_in?(1.weeks)
+      classes << 'due_2weeks' if task.due_in?(2.weeks)
+      classes << 'due_3weeks' if task.due_in?(3.weeks)
+      classes << 'due_month' if task.due_in?(1.months)
       classes << 'overdue' if task.overdue?
       classes << 'unassigned_date' if task.due_on.nil?
       classes << (task.assigned.nil? ? 'unassigned' : "user_#{task.assigned.user_id}")

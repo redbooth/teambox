@@ -2,11 +2,11 @@
 Feature: Managing organizations
 
   Background: 
-    Given I am logged in as mislav
-    And the following confirmed users exist
+    Given the following confirmed users exist
       | login  | email                    | first_name | last_name |
       | pablo  | pablo@teambox.com        | Pablo      | Villalba  |
       | jordi  | jordi@teambox.com        | Jordi      | Romero    |
+    And @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And "jordi" is in the project called "Ruby Rockstars"
     And "pablo" is in the project called "Ruby Rockstars"
@@ -70,16 +70,14 @@ Feature: Managing organizations
     Then I should see "Jordi" within ".users_external"
 
   Scenario: As a participant, I can't edit the organization's settings
-    Given I log out
-    And I am logged in as pablo
+    Given I am logged in as @pablo
     When I go to the organizations page
     And I follow "ACME"
     Then I should see "You are not an admin of this organization. Only admins can edit its settings and manage users."
     And I should not see "Save changes"
 
   Scenario: I can't manage users as a participant
-    Given I log out
-    And I am logged in as pablo
+    Given I am logged in as @pablo
     When I go to the organizations page
     And I follow "ACME"
     And I follow "Manage users"
@@ -97,17 +95,35 @@ Feature: Managing organizations
     And I follow "ACME"
     And I follow "Manage projects"
     Then I should see "Secret Tactics"
-    And I log out
-    And I am logged in as pablo
+    And I am logged in as @pablo
     When I go to the organizations page
     And I follow "ACME"
     And I follow "Manage projects"
     And I should not see "Secret Tactics"
 
   Scenario: I can't access organizations as an external user
-    Given I log out
-    And I am logged in as jordi
+    Given I am logged in as @jordi
+    And I go to the organizations page
     When I follow "ACME"
     Then I should see "You don't have permission to access or edit this organization."
     And I should see "Mislav" within ".users_admins"
-  
+
+  Scenario: I can't delete an organization if I'm not an admin
+    Then I follow "ACME"
+    And I should see "Delete"
+    When I am a participant in the organization called "ACME"
+    And I go to the organizations page
+    And I follow "ACME"
+    Then I should not see "Delete"
+
+  Scenario: I can't delete an organization if it has projects
+    Then I follow "ACME"
+    And I follow "Delete"
+    Then I should see "You need to delete or transfer all the projects"
+
+  Scenario: I can delete an organization if it has no projects
+    When the organization called "ACME" has no projects
+    Then I follow "ACME"
+    And I follow "Delete"
+    And I follow "Delete this organization"
+    Then I should see a notice: "You deleted the organization"

@@ -31,6 +31,10 @@ Given /the project "([^\"]*)" belongs to "([^\"]*)" organization$/ do |project,o
   project.save!
 end
 
+Given /^the organization called "([^\"]*)" has no projects?$/ do |organization|
+  Organization.find_by_name(organization).projects.destroy_all
+end
+
 Then /"([^\"]*)" should belong to the organization "([^\"]*)" as (?:a|an) ([a-zA-Z]+)$/ do |login, organization,role|
   user = User.find_by_login(login)
   organization = Organization.find_by_name(organization)

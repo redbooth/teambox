@@ -24,7 +24,11 @@ module TaskListsHelper
               [t('task_lists.filter.no_date_assigned'),  'unassigned_date'],
               ['--------',          'divider'],
               [t('task_lists.filter.today'),             'due_today'],
-              [t('task_lists.filter.tomorrow'),          'due_tomorrow']
+              [t('task_lists.filter.tomorrow'),          'due_tomorrow'],
+              [t('task_lists.filter.week'),              'due_week'],
+              [t('task_lists.filter.2weeks'),            'due_2weeks'],
+              [t('task_lists.filter.3weeks'),            'due_3weeks'],
+              [t('task_lists.filter.month'),             'due_month']
     
     select(:filter, :due_date, options, :disabled => 'divider')
   end

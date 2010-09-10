@@ -18,6 +18,7 @@ class Organization < ActiveRecord::Base
   validate :ensure_unicity_for_community_version, :on => :create, :unless => :is_example
 
   before_validation_on_create :check_permalink
+  before_destroy :prevent_if_projects
   
   attr_accessor :is_example
   attr_accessible :name, :permalink, :description, :logo
@@ -125,6 +126,10 @@ class Organization < ActiveRecord::Base
       if Teambox.config.community && new_record?
         errors.add_to_base("Can't have more than one organization") if Organization.count > 0
       end
+    end
+
+    def prevent_if_projects
+      projects.empty?
     end
 
 end

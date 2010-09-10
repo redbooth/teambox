@@ -23,6 +23,11 @@ module OrganizationsHelper
         t.links_to projects_organization_path(@organization)
         t.highlights_on :controller => :organizations, :action => :projects
       end
+      add_tab do |t|
+        t.named t('.delete')
+        t.links_to delete_organization_path(@organization)
+        t.highlights_on :controller => :organizations, :action => :delete
+      end if organization.is_admin? current_user
     end
   end
 

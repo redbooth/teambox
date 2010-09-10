@@ -35,6 +35,7 @@ class Task < RoleRecord
   before_save :set_comments_author, :if => :updating_user
   before_save :save_changes_to_comment, :if => :track_changes?
   before_save :transition_from_new_to_open, :if => :assigned_id?
+  before_update :remember_comment_created
   
   def track_changes?
     updating_user and (status_changed? or assigned_id_changed?)
@@ -81,6 +82,10 @@ class Task < RoleRecord
   def assign_to(user)
     self.update_attribute :assigned, user.in_project(project)
   end
+  
+  def comment_created?
+    !!@comment_created
+  end
 
   def overdue
     (Time.now.to_date - due_on).to_i
@@ -98,15 +103,12 @@ class Task < RoleRecord
     due_on == (Time.current + 1.day).to_date
   end
   
+  def due_in?(time_end)
+    due_on >= Time.current.to_date && due_on < (Time.current+time_end).to_date
+  end
+  
   def total_hours
     comments.sum('hours')
-  end
-
-  def after_comment(comment)
-    if comment.status == 0 && self.assigned_id != nil
-      self.status, comment.status = 1,1
-    end
-    self.save!
   end
 
   def to_s
@@ -182,6 +184,11 @@ class Task < RoleRecord
     comments.select(&:new_record?).each do |comment|
       comment.user = updating_user
     end
+    true
+  end
+  
+  def remember_comment_created # before_update
+    @comment_created = comments.any?(&:new_record?)
     true
   end
 
