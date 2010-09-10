@@ -19,6 +19,13 @@ describe Organization do
     end
   end
 
+  it "should not be destroyed if it has any projects" do
+    organization = Factory(:organization)
+    Factory(:project, :organization => organization)
+    organization.reload.projects.count.should == 1
+    lambda { organization.destroy }.should_not change(Organization, :count)
+  end
+
   describe "projects" do
     before do
       @organization = Factory(:organization)

@@ -17,3 +17,9 @@ Then /^I should see an error message: "([^\"]*)"$/ do |text|
     Then %(I should see "#{text}")
   end
 end
+
+Then /^I should see a notice: "([^\"]*)"$/ do |text|
+  with_scope('.flash-notice') do
+    Then %(I should see "#{text}")
+  end
+end

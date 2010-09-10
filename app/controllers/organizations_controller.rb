@@ -1,7 +1,7 @@
 class OrganizationsController < ApplicationController
   skip_before_filter :load_project
-  before_filter :load_organization, :only => [:show, :edit, :update, :projects]
-  before_filter :load_page_title, :only => [:show, :members, :projects, :edit, :update]
+  before_filter :load_organization, :only => [:show, :edit, :update, :projects, :delete, :destroy]
+  before_filter :load_page_title, :only => [:show, :members, :projects, :edit, :update, :delete]
   before_filter :redirect_community, :only => [:index, :new, :create]
 
   def index
@@ -56,6 +56,27 @@ class OrganizationsController < ApplicationController
 
   def external_view
     @organization = Organization.find_by_permalink(params[:id])
+  end
+
+  def delete
+    if !@organization.is_admin? current_user
+      flash[:error] = t('organizations.delete.need_to_be_admin')
+      redirect_to @organization
+    end
+  end
+
+  def destroy
+    if !@organization.is_admin? current_user
+      flash[:error] = t('organizations.delete.need_to_be_admin')
+      redirect_to @organization
+    elsif @organization.projects.any?
+      flash[:error] = t('organizations.delete.not_with_projects')
+      redirect_to @organization
+    else
+      @organization.destroy
+      flash[:notice] = t('organizations.delete.deleted')
+      redirect_to organizations_path
+    end
   end
 
   protected

@@ -470,6 +470,7 @@ en:
       admin_users: Manage users
       admin_projects: Manage projects
       billing: Plans and Billing
+      delete: Delete this organization
     edit:
       there_are: "There are"
       number_of_users: "%{count} users"
@@ -552,6 +553,14 @@ en:
       instructions: "These are the projects for this organization. If you're an admin, you can transfer a project to <a href='%{organizations_link}'>other organizations</a> by opening the project's settings."
       settings: settings
     you_are_not_admin: You are not an admin of this organization. Only admins can edit its settings and manage users.
+    delete:
+      need_to_be_admin: You need to be an administrator to destroy this organization
+      not_with_projects: You can't destroy this organization because it still has projects
+      go_delete_some_projects: "You need to <a href='%{link}'>delete or transfer</a> all the projects from this organization before deleting it."
+      delete: Delete this organization
+      clarification: "If you delete this organization, all the information that's attached to this organization will be lost forever. The users that belong to this organization will still be able to login to Teambox and work with their other organizations."
+      confirm: I understand that deleting this organization is irreversible and I all the content related to this organization will be lost.
+      deleted: You deleted the organization
   memberships:
     index:
       title: "'%{name}' organization"
