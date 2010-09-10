@@ -185,6 +185,7 @@ class Task < RoleRecord
   
   def remember_comment_created # before_update
     @comment_created = comments.any?(&:new_record?)
+    true
   end
 
   def save_changes_to_comment # before_save
