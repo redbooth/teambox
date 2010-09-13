@@ -28,10 +28,6 @@ class ApiV1::ProjectsController < ApiV1::APIController
   end
   
   def update
-    unless @current_project.ensure_organization(current_user, params[:project])
-      return handle_api_error(@current_project)
-    end
-
     if @current_project.update_attributes(params[:project])
       handle_api_success(@current_project)
     else

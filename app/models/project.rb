@@ -40,14 +40,6 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def ensure_organization(current_user, params)
-    unless self.organization.is_admin?(current_user)
-      self.errors.add(:organization_id, "You're not allowed to modify projects in this organization")
-      return nil
-    end
-    self.organization = user.organizations.find_by_id(params[:organization_id]) if params[:organization_id]
-  end
-
   def transfer_to(person)
     self.user = person.user
     saved = self.save
