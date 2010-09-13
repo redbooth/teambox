@@ -48,7 +48,7 @@ module ActivitiesHelper
         render('activities/thread', :activity => activity).to_s
       end
     else
-      Rails.cache.fetch(activity.cache_key) { show_activity(activity).to_s }
+      Rails.cache.fetch("#{activity.cache_key}/#{current_user.locale}") { show_activity(activity).to_s }
     end
   end
 
