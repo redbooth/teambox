@@ -95,7 +95,7 @@ module ApplicationHelper
   end
   
   def datetime_ms(datetime)
-    datetime = datetime.in_time_zone(current_user.time_zone)
+    datetime = datetime.in_time_zone(current_user.time_zone) if current_user
     datetime.to_i * 1000
   end
 
