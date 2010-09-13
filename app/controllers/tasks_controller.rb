@@ -53,7 +53,7 @@ class TasksController < ApplicationController
   def update
     @task.updating_user = current_user
     success = @task.update_attributes params[:task]
- 
+
     respond_to do |f|
       f.html {
         if request.xhr? or iframe?
