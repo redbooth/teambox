@@ -29,7 +29,6 @@ describe ApiV1::UploadsController do
       response.should be_success
       
       content = JSON.parse(response.body)
-      p content
       content.length.should == 1
       content.first['id'].should == @page_upload.id
     end
