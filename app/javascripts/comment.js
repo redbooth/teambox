@@ -121,6 +121,12 @@ document.on('ajax:success', '.comment .actions_menu a[data-method=delete]', func
   e.findElement('.comment').remove()
 })
 
+// when deleting comment, remove the conversation if empty: no comments, no title.
+document.on('ajax:success', '.conversation .comment .actions_menu a[data-method=delete]', function(e, link) {
+	var conversation = e.findElement('.conversation')
+	if (conversation.select('.comment').length == 1 && conversation.select('.title').length == 0) conversation.remove()
+})
+
 // toggle between hidden upload area and a link to show it
 hideBySelector('form .upload_area')
 
