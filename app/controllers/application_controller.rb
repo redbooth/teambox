@@ -54,7 +54,11 @@ class ApplicationController < ActionController::Base
           redirect_to project_invitations_path(@current_project)
         else
           # sorry, no dice
-          render :template => 'projects/not_in_project', :status => :forbidden
+          if [:rss, :ics].include? request.template_format.to_sym
+            render :nothing => true
+          else
+            render 'projects/not_in_project', :status => :forbidden
+          end
         end
       end
     end
