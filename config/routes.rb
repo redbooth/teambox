@@ -132,16 +132,16 @@ ActionController::Routing::Routes.draw do |map|
     api.resources :projects, :except => [:new, :edit], :member => {:transfer => :put} do |project|
       project.resources :activities, :only => [:index, :show]
       project.resources :people, :except => [:create, :new, :edit]
-      project.resources :comments, :except => [:new, :create, :edit, :update, :destroy]
+      project.resources :comments, :except => [:new, :create, :edit]
       project.resources :conversations, :except => [:new, :edit], :member => {:watch => :put, :unwatch => :put} do |conversation|
-        conversation.resources :comments, :except => [:new, :edit, :update, :destroy]
+        conversation.resources :comments, :except => [:new, :edit]
       end
       project.resources :invitations, :except => [:new, :edit, :update], :member => {:resend => :put}
       project.resources :task_lists, :except => [:new, :edit], :member => {:archive => :put, :unarchive => :put} do |task_list|
         task_list.resources :tasks, :except => [:new, :edit]
       end
       project.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}  do |task|
-        task.resources :comments, :except => [:new, :edit, :update, :destroy]
+        task.resources :comments, :except => [:new, :edit]
       end
       project.resources :uploads, :except => [:new, :edit, :update]
       project.resources :pages, :except => [:new, :edit], :member => {:reorder => :put}, :collection => {:resort => :put}
