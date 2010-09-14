@@ -105,7 +105,7 @@ document.on('ajax:success', '.thread form', function(e, form) {
 
 document.on('ajax:failure', 'form.new_conversation, .thread form', function(e, form) {
   var message = e.memo.responseJSON.first()[1]
-  form.down('div.text_area').insert(new Element('p', { 'class': 'error' }).update(message))
+  form.down('div.text_area').insertOrUpdate('p.error', message)
 })
 
 // update edited comment
