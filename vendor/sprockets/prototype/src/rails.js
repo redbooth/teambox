@@ -182,7 +182,7 @@
     }
   });
 
-  document.on("ajax:after", "form", function(event, form) {
+  document.on("ajax:complete", "form", function(event, form) {
     form.select('input[type=submit][data-disable-with]').each(function(input) {
       input.setValue(input.retrieve('rails:original-value')).enable();
     });
