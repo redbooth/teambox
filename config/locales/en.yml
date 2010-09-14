@@ -1059,7 +1059,6 @@ en:
   sites:
     show:
       submit: Login
-      title: Private area
     fields:
       password: Password
       username_or_email: Email or Username

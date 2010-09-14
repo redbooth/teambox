@@ -4,7 +4,6 @@
   %p= @organization.description
 
 - content_for :column do
-  %h2= t('.title')
   - form_tag sites_path, :class => 'new_session', :id => 'new_session' do
     = hidden_field_tag :id, @organization.permalink
     = upgrade_browser
