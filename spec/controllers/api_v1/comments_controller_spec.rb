@@ -4,8 +4,8 @@ describe ApiV1::CommentsController do
   before do
     make_a_typical_project
     
-    @comment = @project.new_comment(@user, @project, {:body => 'Something happened!'})
-    @comment.save!
+    @target = Factory.create(:conversation, :project_id => @project.id, :user_id => @user.id)
+    @comment = @target.comments.first
   end
   
   describe "#index" do
@@ -99,6 +99,57 @@ describe ApiV1::CommentsController do
       response.status.should == '401 Unauthorized'
       
       conversation.reload.comments(true).length.should == 1
+    end
+  end
+  
+  
+  describe "#update" do
+    it "should allow the owner to modify a comment within 15 minutes" do
+      login_as @comment.user
+      
+      put :update, :project_id => @project.permalink, :id => @comment.id, :comment => {:body => 'Updated!'}
+      response.should be_success
+      
+      @comment.update_attribute(:created_at, Time.now - 16.minutes)
+      
+      put :update, :project_id => @project.permalink, :id => @comment.id, :comment => {:body => 'Updated FAIL!'}
+      response.status.should == '401 Unauthorized'
+    end
+    
+    it "should not allow anyone else to modify another comment" do
+      login_as @project.user
+      
+      put :update, :project_id => @project.permalink, :id => @comment.id, :comment => {:body => 'Updated!'}
+      response.status.should == '401 Unauthorized'
+    end
+  end
+  
+  describe "#destroy" do
+    it "should allow an admin to destroy a comment" do
+      login_as @project.user
+      
+      put :destroy, :project_id => @project.permalink, :id => @comment.id
+      response.should be_success
+      
+      @project.comments(true).length.should == 0
+    end
+    
+    it "should allow the owner to destroy a comment" do
+      login_as @comment.user
+      
+      put :destroy, :project_id => @project.permalink, :id => @comment.id
+      response.should be_success
+      
+      @project.comments(true).length.should == 0
+    end
+    
+    it "should not allow a non-admin to destroy another comment" do
+      login_as @observer
+      
+      put :destroy, :project_id => @project.permalink, :id => @comment.id
+      response.status.should == '401 Unauthorized'
+      
+      @project.comments(true).length.should == 1
     end
   end
 end

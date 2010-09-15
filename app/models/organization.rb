@@ -1,6 +1,6 @@
 class Organization < ActiveRecord::Base
   has_many :projects #, :dependent => :destroy
-  has_many :memberships
+  has_many :memberships, :dependent => :destroy
 
   has_many :users, :through => :memberships
   has_many :admins, :through => :memberships, :source => :user, :conditions => {'memberships.role' => Membership::ROLES[:admin]}
@@ -10,7 +10,7 @@ class Organization < ActiveRecord::Base
 
   validates_presence_of   :permalink
   validates_uniqueness_of :permalink, :case_sensitive => false
-  validates_uniqueness_of :domain, :case_sensitive => false, :allow_nil => true
+  validates_uniqueness_of :domain, :case_sensitive => false, :allow_nil => true, :allow_blank => true
   validates_length_of     :permalink, :minimum => 4
   validates_exclusion_of  :permalink, :in => %w(www help support mail pop smtp ftp)
   validates_format_of     :permalink, :with => /^[\w\_\-]+$/

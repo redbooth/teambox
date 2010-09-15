@@ -3,12 +3,13 @@
     = list_pending_invites(@pending_projects)
 
 - if can?(:converse, @current_project) and not @current_project.archived?
-  - form_for [@current_project, @new_conversation], :html => { :multipart => true, :class => 'new_conversation new_comment', :'data-remote' => true } do |form|
+  - form_for [@current_project, @new_conversation], :html => { :multipart => true, :class => 'new_conversation new_comment', :'data-remote' => true, :'data-project-id' => @current_project.id } do |form|
     = form.hidden_field :simple
   
     - form.object.comments.build
     - form.fields_for :comments do |fields|
-      = render 'comments/fields', :f => fields, :placeholder => t('comments.new.project')
+      = render 'comments/fields', :f => fields,
+        :placeholder => t('comments.new.project'), :project => @current_project
   
 #activities
   = list_threads(@threads)

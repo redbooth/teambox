@@ -24,6 +24,23 @@ class ApiV1::CommentsController < ApiV1::APIController
     end
   end
   
+  def update
+    authorize! :update, @comment
+    
+    if @comment.update_attributes params[:comment]
+      handle_api_success(@comment, :is_new => true)
+    else
+      handle_api_error(@comment)
+    end
+  end
+  
+  def destroy
+    authorize! :destroy, @comment
+    @comment.destroy
+    
+    handle_api_success(@comment)
+  end
+  
   protected
 
   def load_comment

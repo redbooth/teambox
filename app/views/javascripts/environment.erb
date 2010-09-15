@@ -12,7 +12,7 @@
 Date.weekdays = <%= weekday_list.to_json %>;
 Date.first_day_of_week = <%= first_day_of_week %>;
 
-Date.months = <%= t('date.month_names').to_json %>;
+Date.months = <%= t('date.month_names').compact.to_json %>;
 
 _translations = <%= Hash[
   %w[OK Now Today Clear].map { |w| [w, t("calendar.#{w.downcase}")] }

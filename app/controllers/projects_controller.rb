@@ -76,8 +76,7 @@ class ProjectsController < ApplicationController
   
   def update
     @sub_action = params[:sub_action] || 'settings'
-    organization = @current_project.ensure_organization(current_user, params[:project])
-    @organization = organization unless organization.nil?
+    @organization = @current_project.organization if @current_project.organization
 
     if @current_project.update_attributes(params[:project])
       flash.now[:success] = t('projects.edit.success')

@@ -1,4 +1,4 @@
-- project = f.object.project || f.object.target.try(:project)
+- project = local_assigns[:project] || f.object.project || f.object.target.try(:project)
 - task_form = nil unless local_assigns[:task_form]
 
 .field.text_area
@@ -37,4 +37,4 @@
   .submit
     %span.help= formatting_documentation_link
     %button.preview{ :data => {:alternate => t('comments.preview.close')} }= t('comments.preview.preview')
-    = f.submit t('comments.new.submit')
+    = f.submit t('comments.new.submit'), :'data-disable-with' => t('comments.new.sending')

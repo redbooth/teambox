@@ -31,8 +31,9 @@ module HtmlFormatting
           text = format_gfm(text)
           text = format_text(text)
           text = format_usernames(text)
+          text = HTML::WhiteListSanitizer.new.sanitize(text)
+          text = format_youtube(text)
           text = format_links(text)
-          HTML::WhiteListSanitizer.new.sanitize(text)
         end
       end
     end
@@ -113,5 +114,13 @@ module HtmlFormatting
 
       text
     end
+
+    YoutubeLink = %r{http://(?:www\.)?youtu(?:be\.com/watch\?v=|\.be/)(\w*)(&(amp;)?[\w\?=]*)?}
+    def format_youtube(text)
+      text.gsub(YoutubeLink) do |link|
+        "<iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/#{$1}\" frameborder=\"0\"></iframe>"
+      end
+    end
+
   end
 end

@@ -8,7 +8,17 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
     comment.body_html.strip
   end
 
-  it "Should allow Youtube videos"
+  it "Did you know trololo? http://youtu.be/iwGFalTRHDA It's awesome." do
+    should == "<p>Did you know trololo? <iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/iwGFalTRHDA\" frameborder=\"0\"></iframe> It's awesome.</p>"
+  end
+
+  it "Did you know trololo? http://youtube.com/watch?v=iwGFalTRHDA It's awesome." do
+    should == "<p>Did you know trololo? <iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/iwGFalTRHDA\" frameborder=\"0\"></iframe> It's awesome.</p>"
+  end
+
+  it "Did you know trololo? http://www.youtube.com/watch?v=iwGFalTRHDA&feature=related It's awesome." do
+    should == "<p>Did you know trololo? <iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/iwGFalTRHDA\" frameborder=\"0\"></iframe> It's awesome.</p>"
+  end
 
   it "some **bold** text" do
     should == "<p>some <strong>bold</strong> text</p>"

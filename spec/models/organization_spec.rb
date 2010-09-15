@@ -9,13 +9,26 @@ describe Organization do
   it { should validate_length_of(:name, :minimum => 4) }
   it { should validate_length_of(:permalink, :minimum => 4) }
 
-  it "should check weird permalinks" do
-    %w(www help mail with.dots with%percent with$dolars with&ampersands with^carets).each do |sym|
-      Factory.build(:organization, :permalink => sym).should_not be_valid
-    end
+  describe "permalink" do
+    it "should check weird permalinks" do
+      %w(www help mail with.dots with%percent with$dolars with&ampersands with^carets).each do |sym|
+        Factory.build(:organization, :permalink => sym).should_not be_valid
+      end
 
-    %w(with_underscores with-dashes fuckingnormaldomain).each do |sym|
-      Factory.build(:organization, :permalink => sym).should be_valid
+      %w(with_underscores with-dashes fuckingnormaldomain).each do |sym|
+        Factory.build(:organization, :permalink => sym).should be_valid
+      end
+    end
+  end
+
+  describe "domain" do
+    it "should allow multiple organizations with nil domain" do
+      Factory(:organization, :domain => nil)
+      Factory.build(:organization, :domain => nil).should be_valid
+    end
+    it "should allow multiple organizations with blank domain" do
+      Factory(:organization, :domain => '')
+      Factory.build(:organization, :domain => '').should be_valid
     end
   end
 

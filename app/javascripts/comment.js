@@ -105,7 +105,7 @@ document.on('ajax:success', '.thread form', function(e, form) {
 
 document.on('ajax:failure', 'form.new_conversation, .thread form', function(e, form) {
   var message = e.memo.responseJSON.first()[1]
-  form.down('div.text_area').insert(new Element('p', { 'class': 'error' }).update(message))
+  form.down('div.text_area').insertOrUpdate('p.error', message)
 })
 
 // update edited comment
@@ -119,6 +119,12 @@ document.on('ajax:success', '#facebox form.edit_comment', function(e, form) {
 // remove deleted comment
 document.on('ajax:success', '.comment .actions_menu a[data-method=delete]', function(e, link) {
   e.findElement('.comment').remove()
+})
+
+// when deleting comment, remove the conversation if empty: no comments, no title.
+document.on('ajax:success', '.conversation .comment .actions_menu a[data-method=delete]', function(e, link) {
+	var conversation = e.findElement('.conversation')
+	if (conversation.select('.comment').length == 1 && conversation.select('.title').length == 0) conversation.remove()
 })
 
 // toggle between hidden upload area and a link to show it

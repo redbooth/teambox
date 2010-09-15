@@ -14,5 +14,11 @@ class Project
   def permalink_length_valid?
     self.permalink.length >= APP_CONFIG['project_permalink_min_length']
   end
+  
+  def ensure_organization
+    unless user.organization_ids.include?(self.organization_id)
+      self.errors.add(:organization_id, "You're not allowed to modify projects in this organization")
+    end
+  end
 
 end

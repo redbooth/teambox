@@ -986,6 +986,7 @@ en:
       assigned_to_nobody: 'Unassigned'
       assigned_to: "Assigned to:"
       submit: Save
+      sending: Sending…
       project: "What are you working on? Share ideas, links, updates."
       conversation: "Send a message to the rest of the group."
       task_list: "Share ideas for this task list. To create and assign tasks, use the sidebar."
@@ -1059,7 +1060,6 @@ en:
   sites:
     show:
       submit: Login
-      title: Private area
     fields:
       password: Password
       username_or_email: Email or Username
