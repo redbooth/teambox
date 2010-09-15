@@ -272,7 +272,7 @@ class ApplicationController < ActionController::Base
 
     def load_community_organization
       if logged_in? and Teambox.config.community
-        @community_organization = Organization.find(:first, :conditions => "permalink <> \"api-corp\"")
+        @community_organization = Organization.first
         @community_role = if @community_organization
           role_id = @community_organization.memberships.find_by_user_id(current_user.id).try(:role)
           Membership::ROLES.index(role_id)
