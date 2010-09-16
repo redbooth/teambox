@@ -1,6 +1,8 @@
 %h2= t('.title')
 
 - form_tag session_path, :class => 'new_session', :id => 'new_session' do
+  - if flash[:error]
+    %p.error= flash[:error]
   = render 'sessions/fields'
   = submit_tag t('.submit')
   
