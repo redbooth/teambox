@@ -1,41 +1,30 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <title>Something went wrong</title>
-  <style type="text/css">
-    body { background: white; font-family: Helvetica, arial, sans-serif; padding-top: 20px; text-align: center; }
-    div.header { margin-bottom: 30px; }
-    h1 { text-align: center; font-family: Georgia; font-size: 24px; color: rgb(50,50,50); line-height: 1.5em; margin-top: 0px; margin-bottom: 30px;}
-    h2 { font-size: 16px; text-align: center; margin: 5px 0px; font-weight: normal; }
-    p { font-size: 15px; margin: 5px 20px; line-height: 1.5em; }
-    div.either p { text-align: center; margin: 0px; }
-    a.bug_ticket { text-transform: uppercase; font-weight: bold; display: block; background: url(/images/bug_ticket.jpg) no-repeat; width: 400px; height: 51px; margin: 10px auto; text-decoration: none; font-size: 26px; text-align: center; color: rgb(0,0,0); padding-top: 24px; }
-    div.first { text-align: center; }
-  </style>
-</head>
+<html><head>
+  <title>Teambox error</title>
 
-<body>
-  <div class="header"><img src="/images/header_logo_black.png"></div>
-  <div class="block_wrap first">
-    <div class="block">
-      <h1>Something went wrong in the server</h1>
-      <p>
-        An error has just occurred.
-        It sometimes happens.
-      </p>
-      <p>
-        If you want to help us out, you can give detailed information on <strong>what
-        you were doing</strong> when the error occurred.
-      </p>
-    </div><!-- block -->
-  </div><!-- block_wrap -->  
-  <br/>
-  <div class="block_wrap either">
-    <div class="block">
-      <a href="http://teambox.com/community" class="bug_ticket">Ask the community</a>
-    </div><!-- block -->
-  </div><!-- block_wrap -->
-  <br />
-</body>
-</html>
+  <style type="text/css">
+    body{font-size: 75%;font-family: Helvetica,Arial,sans-serif;color:#333;background:#FDFDFD;}
+    .container{font-size:1.1em;width:700px;text-align:center;margin:80px auto;}
+    .message{background:#FFF;border:1px solid #EEE;padding:30px;}
+    h1{margin:0 0 0.5em;font-weight:normal;}
+    p{margin:0;line-height:1.75em;}
+    .foot{color:#999;margin-top:30px}
+    .foot a{color:#666;text-decoration:underline}
+  </style>
+</head><body>
+  <div class="container">
+    <div class="message">
+      <h1>An unexpected error ocurred on Teambox</h1>
+      <p>It could be a configuration problem on your deployment, or it could be a server error.</p>
+      <p>Please make sure your application if properly configured.</p>
+      <br/>
+      <p>If you think this is a bug, report it on the Teambox Community.</p>
+    </div>
+    <div class="foot">
+      <p><a href="javascript:history.back()">Go back to the previous page</a></p>
+      <p><a href="http://teambox.com/community">Get support from the Teambox Community</a></p>
+    </div>
+  </div>
+
+
+
+</body></html>
