@@ -1,0 +1,5 @@
+- user = users[user_map[0]]
+%tr{:class => ''}
+  %td= "#{user['first_name']} #{user['last_name']} (@#{user_map[0]})"
+  %td=  select_tag "teambox_data[user_map][#{user_map[0]}]", options_for_select(options_for_user_map, user_map[1])
+  %td=  errors_for @data, "user_map_#{user_map[0]}"

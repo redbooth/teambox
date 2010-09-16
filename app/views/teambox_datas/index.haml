@@ -1,0 +1,18 @@
+%h2= t('.title')
+
+%h3= t('.imports')
+#data_imports
+  - if @data_imports.any?
+    = render :partial => 'data', :collection => @data_imports
+  - else
+    %p= t('.no_imports')
+
+%h3= t('.exports')
+
+#data_exports
+  - if @data_exports.any?
+    = render :partial => 'data', :collection => @data_exports
+  - else
+    %p= t('.no_exports')
+  
+= render :partial => 'column'

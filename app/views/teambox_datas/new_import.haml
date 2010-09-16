@@ -1,0 +1,12 @@
+%h2= t('.title')
+
+- form_for @data, :html => {:multipart => true} do |f|
+  = hidden_field_tag 'teambox_data[type_name]', 'import'
+  
+  .file
+    = f.label :asset, t('.select_file')
+    = f.file_field :import_data, :size => 20
+  .submit
+    = f.submit t('.submit')
+    = t('common.or')
+    = link_to t('common.cancel'), teambox_datas_path

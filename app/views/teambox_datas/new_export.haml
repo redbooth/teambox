@@ -1,0 +1,21 @@
+%h2= t('.title')
+
+- form_for @data do |f|
+  = hidden_field_tag 'teambox_data[type_name]', 'export'
+  %p= t('.description')
+
+  .projects
+    - for organization in current_user.organizations
+      %h3= h(organization.name)
+      - for project in organization.projects
+        %label.project
+          = check_box_tag 'teambox_data[projects_to_export][]', project.id
+          = project.name
+        .clear
+  
+    .clear
+  
+  .submit
+    = f.submit t('.submit')
+    = t('common.or')
+    = link_to t('common.cancel'), teambox_datas_path
