@@ -43,7 +43,7 @@ module ActivitiesHelper
 
   def show_threaded_activity(activity)
     if activity.thread_id.starts_with? "Task_" or activity.thread_id.starts_with? "Conversation_"
-      mode = (controller.controller_name == "projects") ? "short" : "full"
+      mode = %w(projects activities).include?(controller.controller_name) ? "short" : "full"
       Rails.cache.fetch("#{mode}-thread/#{activity.thread_id}/#{current_user.locale}") do
         render('activities/thread', :activity => activity).to_s
       end
