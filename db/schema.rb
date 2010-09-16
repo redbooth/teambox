@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100903152418) do
+ActiveRecord::Schema.define(:version => 20100916140725) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -320,6 +320,20 @@ ActiveRecord::Schema.define(:version => 20100903152418) do
   add_index "tasks", ["deleted_at"], :name => "index_tasks_on_deleted_at"
   add_index "tasks", ["project_id"], :name => "index_tasks_on_project_id"
   add_index "tasks", ["task_list_id"], :name => "index_tasks_on_task_list_id"
+
+  create_table "teambox_datas", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "type_id"
+    t.text     "project_ids"
+    t.text     "map_data"
+    t.string   "processed_data_file_name"
+    t.string   "processed_data_content_type"
+    t.integer  "processed_data_file_size"
+    t.boolean  "is_processing",               :default => false
+    t.datetime "processed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "uploads", :force => true do |t|
     t.integer  "user_id"

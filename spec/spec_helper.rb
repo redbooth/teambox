@@ -114,3 +114,7 @@ def make_a_typical_project
     @project.people(true).last.update_attribute(:role, Person::ROLES[:admin])
     @project
 end
+
+def dump_test_data
+  ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(TeamboxData.new.serialize(Organization.all, Project.all, User.all)))
+end

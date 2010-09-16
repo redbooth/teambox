@@ -24,6 +24,7 @@ class Activity < ActiveRecord::Base
       :action => action,
       :user_id => creator_id,
       :comment_type => comment_type)
+    activity.created_at = target.try(:created_at) || nil
     activity.save
     
     activity
