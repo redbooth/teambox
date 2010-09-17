@@ -1,7 +1,7 @@
 - thread_id = "#{thread.class.to_s}_#{thread.id}"
 
 - case controller.controller_name
-- when "projects"
+- when "projects", "activities"
   - show_comments = 3
   - if comments.size > show_comments
     %span.more_comments

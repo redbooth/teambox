@@ -5,6 +5,8 @@ class Conversation < RoleRecord
   
   include Watchable
   
+  attr_accessor :is_importing
+  
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
   
@@ -15,7 +17,7 @@ class Conversation < RoleRecord
 
   validates_presence_of :name, :message => :no_title, :unless => :simple?
   
-  validate :check_comments_presence, :on => :create
+  validate :check_comments_presence, :on => :create, :unless => :is_importing
 
   named_scope :only_simple, :conditions => { :simple => true }
   named_scope :not_simple, :conditions => { :simple => false }

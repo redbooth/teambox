@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   has_many :uploads
   has_many :app_links
   has_many :memberships
+  has_many :teambox_datas
 
   has_many :organizations, :through => :memberships
   has_many :admin_organizations, :through => :memberships, :source => :organization, :conditions => {'memberships.role' => Membership::ROLES[:admin]}
@@ -203,7 +204,7 @@ class User < ActiveRecord::Base
   end
 
   def to_api_hash(options = {})
-    {
+    base = {
       :id => id,
       :first_name => first_name,
       :last_name => last_name,
@@ -216,6 +217,12 @@ class User < ActiveRecord::Base
       :updated_at => updated_at.to_s(:db),
       :avatar_url => avatar_or_gravatar_url(:thumb)
     }
+    
+    if Array(options[:include]).include? :email
+      base[:email] = email
+    end
+    
+    base
   end
   
   def to_json(options = {})
