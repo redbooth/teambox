@@ -113,17 +113,15 @@ class TaskListsController < ApplicationController
     
     if request.method == :put and !@task_list.archived
       # Prototype for comment
-      comment_attrs = {:comment_body => params[:message]}
-      comment_attrs[:body] ||= "Archived task list"
-      comment_attrs[:status] = params[:status] || 3
+      comment_attrs = {}
+      comment_attrs[:status] = 3
+      comment_attrs[:assigned] = nil
       
       # Resolve all unresolved tasks
       @task_list.tasks.each do |task|
-        if !task.archived?
-          task.previous_status = task.status
-          task.previous_assigned_id = task.assigned_id
-          task.status = comment_attrs[:status]
-          task.assigned_id = nil
+        unless task.archived?
+          task.assigned = nil
+          task.status = 3
           comment = @current_project.new_comment(current_user,task,comment_attrs)
           comment.save!
         end
