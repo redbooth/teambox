@@ -1,22 +1,21 @@
-<%=
-    weekday_list = t('calendar.abbr_weekdays').clone
-    
-    if ( current_user && current_user.first_day_of_week == 'monday' )
-      weekday_list << weekday_list.shift
-      "Date.weekdays = $w('#{weekday_list.join(' ')}'); Date.first_day_of_week = 1;"
-    else
-      "Date.weekdays = $w('#{weekday_list.join(' ')}'); Date.first_day_of_week = 0;"
-    end
+<%
+  weekday_list = t('calendar.abbr_weekdays')
+  first_day_of_week = 0
+
+  if logged_in? and current_user.first_day_of_week == 'monday'
+    weekday_list = weekday_list.clone
+    weekday_list << weekday_list.shift
+    first_day_of_week = 1
+  end
 %>
+Date.weekdays = <%= weekday_list.to_json %>;
+Date.first_day_of_week = <%= first_day_of_week %>;
 
-Date.months = $w('<%= I18n.t('date.month_names').join(" ").strip %>');
+Date.months = <%= t('date.month_names').compact.to_json %>;
 
-_translations = {
-  "OK": "<%= t('calendar.ok') %>",
-  "Now": "<%= t('calendar.now') %>",
-  "Today": "<%= t('calendar.today') %>",
-  "Clear": "<%= t('calendar.clear') %>"
-};
+_translations = <%= Hash[
+  %w[OK Now Today Clear].map { |w| [w, t("calendar.#{w.downcase}")] }
+].to_json %>;
 
 <% 
   less_than_one = I18n.t('datetime.distance_in_words.less_than_x_minutes.one')
@@ -26,7 +25,6 @@ _translations = {
   minutes = I18n.t('datetime.distance_in_words.x_minutes', :count => '" + minutes + "')
   minutes_ago = I18n.t('datetime.time_ago', :time_ago_in_words => minutes)
 %>
-
 function minutesAgoInWords(minutes) {
   if(minutes == 0) { return '<%= less_than_one %>'; }
   if(minutes == 1) { return '<%= one_minute_ago %>'; }
@@ -46,8 +44,11 @@ date_abbr_month_names = $w("<%= I18n.t('date.abbr_month_names').join(" ") %>");
 date_month_names = $w("<%= I18n.t('date.month_names').join(" ") %>");
 date_yesterday = '<%= I18n.t 'date.yesterday' %> ';
 
-/* when ready, start excuter */
-document.observe("dom:loaded", function() {
+document.on("dom:loaded", function() {
   format_posted_date();
   new PeriodicalExecuter(format_posted_date, 30);
+});
+
+document.on("ajax:success", function() {
+  format_posted_date.defer();
 });

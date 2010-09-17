@@ -94,6 +94,21 @@ Element.addMethods({
   swapVisibility: function(element, other) {
     $(other).forceShow()
     return $(element).hide()
+  },
+  insertOrUpdate: function(element, selector, content) {
+    element = $(element)
+    var target = element.down(selector)
+    if (!target) {
+      var classnames = selector.match(/(?:\.\w+)+/)
+      if (classnames) classnames = classnames[0].gsub('.', ' ').strip()
+      var id = selector.match(/#(\w+)/)
+      if (id) id = id[1]
+      var tagName = (classnames || id) ? selector.match(/\w+/)[0] : selector
+      target = new Element(tagName, { 'class': classnames, id: id })
+      element.insert(target)
+    }
+    target.update(content)
+    return target
   }
 })
 
