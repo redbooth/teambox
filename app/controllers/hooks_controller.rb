@@ -32,10 +32,7 @@ class HooksController < ApplicationController
 
       user = @current_project.user
 
-      @current_project.new_comment(user, target, {
-        :body => "<div class='hook_#{@source}'>#{text}</div>",
-        :user => @current_project.user
-      }).save!
+      @current_project.conversations.new_by_user(user, :body => "<div class='hook_#{@source}'>#{text}</div>", :simple => true ).save!
 
       [RDiscount.new(text).to_html, 200]
     end
