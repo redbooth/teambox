@@ -94,21 +94,6 @@ Element.addMethods({
   swapVisibility: function(element, other) {
     $(other).forceShow()
     return $(element).hide()
-  },
-  insertOrUpdate: function(element, selector, content) {
-    element = $(element)
-    var target = element.down(selector)
-    if (!target) {
-      var classnames = selector.match(/(?:\.\w+)+/)
-      if (classnames) classnames = classnames[0].gsub('.', ' ').strip()
-      var id = selector.match(/#(\w+)/)
-      if (id) id = id[1]
-      var tagName = (classnames || id) ? selector.match(/\w+/)[0] : selector
-      target = new Element(tagName, { 'class': classnames, id: id })
-      element.insert(target)
-    }
-    target.update(content)
-    return target
   }
 })
 
@@ -116,8 +101,7 @@ Project = {
   valid_url: function(){
     var title = $F('project_permalink');
     var class_name = '';
-    var _regex = new RegExp("^[a-z0-9_\\\-\\\.]{" + AppConfig.project_permalink_min_length + ",}$");
-    if(title.match(_regex))
+    if(title.match(/^[a-z0-9_\-\.]{5,}$/))
       class_name = 'good'
     else
       class_name = 'bad'
