@@ -86,9 +86,6 @@ class Emailer < ActionMailer::Base
 
     def from_address(recipient = "no-reply", name = "Teambox")
       domain = Teambox.config.smtp_settings[:domain]
-      if recipient == "no-reply" && !Teambox.config.smtp_settings[:use_no_reply_local_part]
-        recipient = Teambox.config.smtp_settings[:no_reply_local_part]
-      end
       address = "#{recipient}@#{domain}"
       
       if Teambox.config.smtp_settings[:safe_from]

@@ -53,8 +53,6 @@ defaults: &defaults
   smtp_settings:
     :domain:         domain.com         # the domain your emails will come from
     :address:        smtp.sendgrid.net  # SMTP server used to send emails
-    :use_no_reply_local_part: true
-    :no_reply_local_part:     'no-reply'
     :port:           25
     :authentication: :plain
     :user_name:      USER
