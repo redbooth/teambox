@@ -110,8 +110,9 @@ class HooksController < ApplicationController
       email.from    = params[:from]
       email.to      = params[:to]
       email.cc      = params[:cc]
-      email.body    = params[:text]
+      email.body    = strip_responses(params[:text])
       email.subject = params[:subject]
+      
       email.body   += "\n\nThis email had #{params[:attachments]} attachments" if params[:attachments].to_i > 0
       begin
         Emailer.receive(email.to_s)
@@ -119,5 +120,10 @@ class HooksController < ApplicationController
         return ["Error processing email\n\n#{$!}", 400]
       end
       ['Email processed!', 200]
+    end
+    
+    def strip_responses(body)
+      # For GMail. Matches "On 19 August 2010 13:48, User <proj+conversation+22245@app.teambox.com<proj%2Bconversation%2B22245@app.teambox.com>> wrote:"
+      body.strip.gsub(/\n.*?\d{2,4}.*?\+.*\d@app.teambox.com.*:.*\z/m, '').strip
     end
 end
