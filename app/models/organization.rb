@@ -1,4 +1,6 @@
 class Organization < ActiveRecord::Base
+  acts_as_paranoid
+
   has_many :projects #, :dependent => :destroy
   has_many :memberships, :dependent => :destroy
 
