@@ -120,4 +120,24 @@ describe UploadsController do
       @project.uploads(true).length.should == 2
     end
   end
-end  
+  describe "#destroy" do
+    it "should allow participants to destroy uploads" do
+      login_as @user
+
+      delete :destroy, :project_id => @project.permalink, :id => @upload.id
+
+      @project.uploads.length.should == 1
+    end
+    it  "should destroy the activty when the upload is destroyed" do
+      login_as @user
+
+      post :create,
+           :project_id => @project.permalink,
+           :upload => {:asset => mock_uploader('lawsuit.txt', 'text/plain', "1 million dollars please")}
+
+      @upload = Upload.find(:first, :order => 'created_at desc')
+      Activity.count(:conditions => {:target_type => @upload.class.name, :target_id => @upload.id}).should == 1
+      lambda { delete :destroy, :project_id => @project.permalink, :id => @upload.id }.should change(Activity, :count)
+    end
+  end
+end

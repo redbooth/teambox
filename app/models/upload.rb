@@ -9,6 +9,7 @@ class Upload < RoleRecord
 
   has_one        :page_slot, :as => :rel_object
   before_destroy :clear_slot
+  after_destroy  :cleanup_activities
 
   before_create :copy_ownership_from_comment
 
@@ -71,6 +72,12 @@ class Upload < RoleRecord
   def after_create
     save_slot if page
     project.log_activity(self, 'create', user_id) if page_id
+  end
+
+  def cleanup_activities
+    unless self.comment
+      Activity.destroy_all :target_type => self.class.name, :target_id => self.id
+    end
   end
   
   def to_s
