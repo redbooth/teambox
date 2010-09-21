@@ -55,6 +55,18 @@ Feature: Daily reminder for tasks email
     Then I should see "Aquaculture"
     Then I should see "Give water to the flowers"
 
+  Scenario: Tasks link to their parent project, for clarity
+    Given the task called "Give water to the flowers" is assigned to me
+    And the task called "Give water to the flowers" is due today
+    When the daily task reminders go out
+    Then I should receive an email
+    When I open the email with subject "Daily task reminder"
+    And I follow "Aquaculture" in the email
+    And I fill in "Email or Username" with "mislav"
+    And I fill in "Password" with "dragons"
+    And I press "Login"
+    Then I should see "Aquaculture"
+
   Scenario Outline: User with a task due doesn't receive reminders on weekends
     Given today is <day>
     And the task called "Give water to the flowers" is assigned to me
