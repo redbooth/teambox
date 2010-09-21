@@ -124,6 +124,6 @@ class HooksController < ApplicationController
     
     def strip_responses(body)
       # For GMail. Matches "On 19 August 2010 13:48, User <proj+conversation+22245@app.teambox.com<proj%2Bconversation%2B22245@app.teambox.com>> wrote:"
-      body.strip.gsub(/\n.*?\d{2,4}.*?\+.*\d@app.teambox.com.*:.*\z/m, '').strip
+      body.strip.gsub(/\n[^\r\n]*\d{2,4}.*\+.*\d@app.teambox.com.*:.*\z/m, '').strip
     end
 end
