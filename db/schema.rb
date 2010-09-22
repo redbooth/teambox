@@ -239,10 +239,10 @@ ActiveRecord::Schema.define(:version => 20100916140725) do
     t.integer  "last_comment_id"
     t.integer  "comments_count",  :default => 0,     :null => false
     t.boolean  "archived",        :default => false
-    t.boolean  "tracks_time",     :default => false
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "tracks_time",     :default => false
     t.boolean  "public"
     t.integer  "organization_id"
   end
@@ -305,11 +305,12 @@ ActiveRecord::Schema.define(:version => 20100916140725) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "position"
-    t.integer  "comments_count",  :default => 0, :null => false
+    t.integer  "comments_count",  :default => 0,     :null => false
     t.integer  "last_comment_id"
     t.text     "watchers_ids"
     t.integer  "assigned_id"
     t.integer  "status",          :default => 0
+    t.boolean  "archived",        :default => false
     t.date     "due_on"
     t.datetime "completed_at"
     t.datetime "deleted_at"
@@ -334,6 +335,34 @@ ActiveRecord::Schema.define(:version => 20100916140725) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "tolk_locales", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tolk_locales", ["name"], :name => "index_tolk_locales_on_name", :unique => true
+
+  create_table "tolk_phrases", :force => true do |t|
+    t.string   "key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tolk_phrases", ["key"], :name => "index_tolk_phrases_on_key", :unique => true
+
+  create_table "tolk_translations", :force => true do |t|
+    t.integer  "phrase_id"
+    t.integer  "locale_id"
+    t.text     "text"
+    t.text     "previous_text"
+    t.boolean  "primary_updated", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tolk_translations", ["phrase_id", "locale_id"], :name => "index_tolk_translations_on_phrase_id_and_locale_id", :unique => true
 
   create_table "uploads", :force => true do |t|
     t.integer  "user_id"
