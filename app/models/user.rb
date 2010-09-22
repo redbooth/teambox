@@ -255,11 +255,7 @@ class User < ActiveRecord::Base
   end
 
   def can_create_project?
-    if APP_CONFIG["internal_mail_domain"]
-      self.email.include? APP_CONFIG["internal_mail_domain"]
-    else
       true
-    end
   end
 
   DELETED_TAG = "deleted"
