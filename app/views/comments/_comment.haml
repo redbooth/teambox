@@ -1,7 +1,9 @@
-- threaded = defined?(threaded) && threaded
-- simpleconv = defined?(simpleconv) && simpleconv
-- cache_editable_comment(comment, threaded, simpleconv) do
-  .comment{:id => "comment_#{comment.id}", :immutable_at => datetime_ms(comment.created_at + 15.minutes) }
+- threaded = false unless local_assigns[:threaded]
+- simpleconv = false unless local_assigns[:simpleconv]
+
+- cache_comment(comment, threaded, simpleconv) do
+  %div[comment]{ :'data-editable-before' => datetime_ms(15.minutes.since(comment.created_at)),
+                  :'data-user' => comment.user.id, :'data-project' => comment.project.id }
     .info
       - if threaded
         = micro_avatar(comment.user)
@@ -11,30 +13,25 @@
       - unless rss?
         .actions_menu
           %span.actiondate= posted_date comment.created_at
-          %span.loading{:style => 'display:none'}= "Loading..."
-          - if comment.can_modify?(current_user, false)
-            = image_tag('triangle.png', :class => 'triangle')
-            .extra
-              - if comment.target.class == Project and comment.project.editable?(current_user)
-                = convert_comment_link(comment)
-              - if comment.can_edit?(current_user)
-                = edit_comment_link(comment)
-              .tactione{:style => (comment.can_edit?(current_user) ? 'display:none' : nil)}
-                = t('.cannot_edit')
-              - if comment.can_destroy?(current_user)
-                = delete_comment_link(comment)
-      .name
-        - if threaded || simpleconv
-          = link_to(comment.user.name, comment.user)
-        -else
-          = activity_title(comment)
-        - if comment.target_type == 'Task'
-          = comment_task_status(comment)
-        - if comment.hours?
-          %span.hours= friendly_hours_value(comment.hours)
-        = activity_project_link(comment.project) unless threaded || comment.target.is_a?(Project)
+          = image_tag('triangle.png', :class => 'triangle')
+          .extra
+            - case comment.target
+            - when Conversation
+              = link_to t('comments.actions.conversation_url'), project_conversation_path(comment.project, comment.target)
+            - unless comment.target.is_a?(Project) or comment.target.is_a?(TaskList) # legacy comments targeting a Project or a TaskList
+              = link_to t('comments.actions.edit'), [:edit, comment.project, comment.target, comment],
+                  :rel => 'facebox', :'data-uneditable-message' => t('.cannot_edit'), :class => :edit
+              = link_to t('common.delete'), [comment.project, comment.target, comment], :'data-method' => 'delete',
+                  :'data-confirm' => t('.confirm_delete'), :'data-remote' => true, :class => :delete
       .body.textilized
+        .before
+          = link_to(comment.user.name, comment.user, :class => :user) + " "
+          - if comment.task_comment?
+            = comment_task_status(comment)
+          - if comment.hours?
+            = content_tag(:span, friendly_hours_value(comment.hours), :class => :hours)
         ~ comment.body_html
+
       - if comment.uploads.any?
         - if comment.uploads.all? { |upload| upload.image? }
           .upload_images

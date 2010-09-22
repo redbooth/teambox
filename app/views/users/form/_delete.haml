@@ -1,0 +1,7 @@
+- if current_user.projects.count > 0
+  %p= t('.steps_before_1')
+  %p= t('.steps_before_2')
+  %p= t('.steps_before_3')
+- else
+  %p= t('.what_will_happen')
+  %p= link_to t('.delete_my_account'), destroy_user_path

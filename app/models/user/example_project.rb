@@ -1,9 +1,9 @@
 class User
   
   def find_or_create_example_project    
-    @dagny = find_or_create_example_user('Dagny Taggart')
-    @hank  = find_or_create_example_user('Hank Rearden')
-    @ellis = find_or_create_example_user('Ellis Wyatt')
+    @dagny = User.find_or_create_example_user('Dagny Taggart')
+    @hank  = User.find_or_create_example_user('Hank Rearden')
+    @ellis = User.find_or_create_example_user('Ellis Wyatt')
 
     remember_notification_settings
     disable_all_notifications
@@ -34,25 +34,41 @@ class User
     @project    
   end
   
+  def self.find_or_create_example_user(name, login=nil)
+    first_name, last_name = name.split
+    login = login || first_name
+    email = "#{login}@teambox.com"
+    if user = User.find_by_login(login)
+      user
+    else
+      pass = ActiveSupport::SecureRandom.hex(10)
+      user = User.new(
+        :login => login,
+        :email => email,
+        :first_name => first_name,
+        :last_name => last_name,
+        :password => pass,
+        :password_confirmation => pass)
+      
+      user.notify_conversations = false
+      user.notify_tasks = false
+      user.activate!
+    end
+  end
+  
   protected
     def remember_notification_settings
-      @remember_notify_mentions      = self.notify_mentions
       @remember_notify_conversations = self.notify_conversations
-      @remember_notify_task_lists    = self.notify_task_lists
-      @remember_notify_tasks         = self.notify_tasks      
+      @remember_notify_tasks         = self.notify_tasks
     end
     
     def restore_notification_settings
-      self.notify_mentions      = @remember_notify_mentions
       self.notify_conversations = @remember_notify_conversations
-      self.notify_task_lists    = @remember_notify_task_lists
-      self.notify_tasks         = @remember_notify_tasks      
+      self.notify_tasks         = @remember_notify_tasks
     end
     
     def disable_all_notifications
-      self.notify_mentions      = false
       self.notify_conversations = false
-      self.notify_task_lists    = false
       self.notify_tasks         = false
       self.save!
     end
@@ -73,29 +89,6 @@ class User
       conversation.user = user
       conversation.created_at = autogen_created_at
       conversation.save!
-    end
-  
-    def find_or_create_example_user(name)
-      first_name, last_name = name.split
-      login = first_name
-      email = "#{login}@teambox.com"
-      if user = User.find_by_login(login)
-        user
-      else
-        pass = ActiveSupport::SecureRandom.hex(10)
-        user = User.new(
-          :login => login,
-          :email => email,
-          :first_name => first_name,
-          :last_name => last_name,
-          :password => pass,
-          :password_confirmation => pass)
-        user.notify_mentions = false
-        user.notify_conversations = false
-        user.notify_task_lists = false
-        user.notify_tasks = false
-        user.activate!
-      end
     end
     
     def autogen_created_at

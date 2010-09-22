@@ -2,28 +2,74 @@
   float: right
   padding-top: 6px
   margin-right: 1.5em
-  form
-    input#search
-      font-size: 14px
-      padding: 2px
-      color: #aaaaaa
-    input[name=commit]
+  form.search
+    margin: 0
+    padding: 0
+    background: transparent
+    border: none
+    input[type=submit]
       display: none
+    .no-inputsearch &
+      input[type=search]
+        border: 1px solid silver
+        padding: 3px 1em 2px 1em
+        +rounded(10px)
+        width: 10em
+        +box-shadow(inset rgba(0,0,0,.2) 0px 1px 2px)
 
-.results_search
-  .comment
-    .block
-      width: 860px
-  .results
-    padding-left: 80px
-    font-size: 12px
-    margin: 20px
-    form
-      input#search
-        font-size: 20px
-        width: 450px
-        margin-right: 20px
+.index_search
+  #report
+    +light-box
+    margin: 10px 0
+    padding: 10px 1.2em
+    h1
+      margin-top: 0
+    form input[type=search]
+      width: 20em
+      font-size: 1.1em
+  
+  h2
+    font-size: 1.1em
+    padding-bottom: 0
+    border-bottom: none
+    margin: 1em 0 .1em 6px
+    color: lighten($text, 30%)
+    
+  #results
+    .comment
+      .block
+        width: 880px
+    .highlight
+      background-color: yellow
 
-#results_set
-  span.highlight
-    background-color: yellow
+.pagination
+  text-align: left
+  margin-top: 1em
+  padding: .3em 0
+  +rounded(10px)
+  font-size: 12px
+  
+  a, span, em
+    padding: .2em .5em
+  span.disabled
+    color: lighten($text, 40%)
+  em, span.current
+    font-weight: bold
+    color: $text
+  a
+    border: 1px solid #DDDDDD
+    +rounded(3px)
+    text-decoration: none
+    &:hover, &:focus
+      border-color: darken($navbar, 30%)
+      background: $navbar
+      color: black
+  .page_info
+    color: #aaa
+    padding-top: .8em
+  .prev_page, .next_page
+    border-width: 2px
+  .prev_page
+    margin-right: 1em
+  .next_page
+    margin-left: 1em

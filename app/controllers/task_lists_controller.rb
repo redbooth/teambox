@@ -1,5 +1,5 @@
 class TaskListsController < ApplicationController
-  before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive]
+  before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive,:reorder]
   before_filter :load_task_lists, :only => [:index]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy,:archive,:unarchive]
   before_filter :set_page_title
@@ -103,21 +103,9 @@ class TaskListsController < ApplicationController
     end
   end
 
-  def sortable
-    @task_lists = @current_project.task_lists
-    respond_to {|f|f.js}
-  end
-
   def reorder
-    params[:task_lists].each_with_index do |task_list_id,idx|
-      task_list = @current_project.task_lists.find(task_list_id)
-      task_list.update_attribute(:position,idx.to_i)
-    end
-    
-    respond_to do |f|
-      f.js{}
-      handle_api_success(f, @task_list)
-    end
+    @task_list.insert_at params[:position].to_i
+    head :ok
   end
   
   def archive
@@ -125,17 +113,15 @@ class TaskListsController < ApplicationController
     
     if request.method == :put and !@task_list.archived
       # Prototype for comment
-      comment_attrs = {:comment_body => params[:message]}
-      comment_attrs[:body] ||= "Archived task list"
-      comment_attrs[:status] = params[:status] || 3
+      comment_attrs = {}
+      comment_attrs[:status] = 3
+      comment_attrs[:assigned] = nil
       
       # Resolve all unresolved tasks
       @task_list.tasks.each do |task|
-        if !task.archived?
-          task.previous_status = task.status
-          task.previous_assigned_id = task.assigned_id
-          task.status = comment_attrs[:status]
-          task.assigned_id = nil
+        unless task.archived?
+          task.assigned = nil
+          task.status = 3
           comment = @current_project.new_comment(current_user,task,comment_attrs)
           comment.save!
         end

@@ -13,18 +13,6 @@ module UsersHelper
       link_to h(user.name), user_path(user)
     end
   end
-  
-  def all_users_checkbox
-    text =  check_box_tag("user_all", "1", true, :name => "user_all")
-    text << ' '
-    text << label_tag("user_all", t('conversations.watcher_fields.people_all'))
-  end
-
-  def user_checkbox(user, checked = true)
-    text =  check_box_tag("user_#{user.id}", "1", checked, :name => "user[#{user.id}]") 
-    text << ' '
-    text << label_tag("user_#{user.id}", user.name)
-  end
 
   def show_user_password_fields
     update_page do |page|
@@ -55,4 +43,36 @@ module UsersHelper
     card = user.card || user.build_card
     card.phone_numbers.build unless card.phone_numbers.any?
   end
+  
+  def load_javascript_user_data
+    javascript_tag %(
+      my_user = #{json_user}
+      my_projects = #{json_people}
+    )
+  end
+  
+  def load_my_avatar_for_new_comments
+    %(<style type='text/css'>
+        a.micro_avatar.my_avatar { background: url(#{avatar_or_gravatar(current_user, :micro)}) no-repeat }
+      </style>)
+  end
+  
+
+  protected
+
+    def json_user
+      current_user.to_json
+    end
+
+    def json_people
+      projects = {}
+      current_user.people.all(:include => :project).collect do |p|
+        projects[p.project.id] = {
+          :permalink => p.project.permalink,
+          :role => p.role,
+          :name => p.project.name }
+      end
+      projects.to_json
+    end
+
 end

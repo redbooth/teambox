@@ -1,0 +1,58 @@
+%h2= @model.capitalize
+
+= render "apidocs/model/#{@model}"
+
+%h2 All the routes
+
+- for route in @consolidated_routes
+  - next unless route[:controller].singularize == @model.underscore
+  - next if ['edit', 'new'].include? route[:action]
+  - doc = @api_docs["#{@model}##{route[:action]}"]
+  - next if doc && doc[:ignore]
+  .route
+    - controller = link_to route[:controller], api_model_path(route[:controller].singularize)
+    %h3= "#{controller}##{route[:action]} #{route[:method]}"
+    .path
+      %span.title= "Paths:"
+      %ul
+        - route[:path].each do |route_path|
+          %li
+            %code=route_path
+    
+    - if doc
+      .status
+        %p
+          %span.title= "Status:"
+          - case doc[:status]
+          - when :created
+            = "<tt>201</tt> on success, <tt>422</tt> on error."
+          - when :updated
+            = "<tt>200</tt> on success, <tt>422</tt> on error."
+          - when :deleted
+            = "<tt>200</tt> on success, <tt>422</tt> on error."
+          - else
+            = "<tt>200</tt> on success"
+      - if doc[:role]
+        - roles = Array(doc[:role])
+        %p
+          %strong= roles.length > 1 ? "Minimum roles:" : "Minimum role:"
+          - roles.each do |role|
+            %span.role= "#{role.to_s.capitalize}"
+      = doc[:description]
+      - if doc[:parameters]
+        %h4= "Parameters you should pass"
+        %pre= "\n" + JSON.pretty_generate(doc[:parameters])
+      - if doc[:example]
+        %h4= "Example response"
+        %pre= "\n" + JSON.pretty_generate(doc[:example])
+
+%h3 Error Codes
+
+%p <tt>200</tt> Success
+%p <tt>201</tt> Resource created
+%p <tt>400</tt> Operation attempted not allowed by XXX.
+%p <tt>402</tt> Not authorized to view this resource.
+%p <tt>404</tt> Model not found.
+%p <tt>422</tt> Invalid model parameters.
+
+= render 'apidocs/column'

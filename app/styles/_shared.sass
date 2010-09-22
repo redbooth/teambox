@@ -2,6 +2,8 @@ $highlight: #fff9da
 $navbar: #78acd7
 $text: #333
 $typeface: "Lucida Grande", Helvetica, "Helvetica Neue", Arial, Verdana, sans-serif
+$link: #259bad
+$link_hover: #df5249
 
 =rounded($n)
   border-radius: $n
@@ -14,7 +16,7 @@ $typeface: "Lucida Grande", Helvetica, "Helvetica Neue", Arial, Verdana, sans-se
   -webkit-border-top-left-radius: $n
   -webkit-border-top-right-radius: $n
 =rounded-bottom($n)
-  border-radius: $n $n 0 0
+  border-radius: 0 0 $n $n
   -moz-border-radius-bottomleft: $n
   -moz-border-radius-bottomright: $n
   -webkit-border-bottom-left-radius: $n
@@ -51,6 +53,37 @@ $typeface: "Lucida Grande", Helvetica, "Helvetica Neue", Arial, Verdana, sans-se
 =small_caps
   font-variant: small-caps
   text-transform: capitalize
+
+// Show the image in *image* at the given *x_pos* and *y_pos*.
+// If the optional *x_size* or *y_size* arguments are passed in, the width and/or height
+// is set to that value.
+// Usage examples: In HAML, just call ".playlists-icon" to render
+// =player_sprite($x_pos, $y_pos, $x_size: 0, $y_size: 0)
+//   +sprite("http://teambox.com/images/header_logo_black.png", $x_pos, $y_pos, $x_size, $y_size)
+// .playlists-icon  
+//   +player_sprite(10px, 10px, 18px, 18px)
+
+=sprite($image, $x_pos, $y_pos, $x_size: 0, $y_size: 0)
+  background-image: url($image)
+  background-position: 0-$x_pos 0-$y_pos
+  background-repeat: no-repeat
+  @if $x_size > 0
+    width: $x_size
+  @if $y_size > 0
+    height: $y_size
+
+=light-box
+  border: 1px rgb(220, 220, 220) solid
+  background-color: rgb(240, 240, 240)
+  +rounded(5px)
+
+.inline
+  display: inline
+
+.errors_for
+  font-size: 12px
+  color: #500
+  font-weight: bold
 
 .fyi
   position: absolute

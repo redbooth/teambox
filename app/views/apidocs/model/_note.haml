@@ -1,0 +1,23 @@
+%p= "A note is a piece of text with a title placed on a #{link_to_doc_model(:page)}."
+%p= "Note belong in slots, which can be reordered using page#reorder."
+
+- doc_for :index, :example => [@note.to_api_hash] do
+  %p= "Returns the 25 most recent notes on a page."
+
+- doc_for :show,  :example => @note.to_api_hash do
+  %p= "Returns the data for a note."
+  
+- doc_for :create, :parameters => {:note => {:name => 'Name', :body => 'Body'} },
+                   :example => @note.to_api_hash,
+                   :status => :created,
+                   :role => :participant do
+  %p= "Creates a new note."
+
+- doc_for :update, :parameters => {:note => {:name => @note.name, :body => @note.body} },
+                   :status => :updated,
+                   :role => :participant do
+  %p= "Updates the name and body of a note."
+
+- doc_for :destroy, :status => :deleted,
+                    :role => :participant do
+  %p= "Destroys a note."

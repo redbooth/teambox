@@ -14,7 +14,6 @@ class TaskList
   def after_create
     self.move_to_top
     self.project.log_activity(self,'create')
-    self.add_watcher(self.user)
   end
 
 end

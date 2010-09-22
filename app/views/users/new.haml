@@ -8,13 +8,14 @@
     = t('.you_already_have_an_account', :email => @user.email, :login_link => login_path, :reset_password_link => forgot_password_path)
 
 - else
-  %p= t('.existing_user', :login_url => login_path, :forgot_url => forgot_password_path)
+  - if !Teambox.config.community or @invitation
+    %p= t('.existing_user', :login_url => login_path, :forgot_url => forgot_password_path)
 
   - secure_url = Teambox.config.secure_logins ? users_url(:protocol => 'https') : nil
 
-  - form_for @user, :url => secure_url do |form|
-    = render form
-    - if RAILS_ENV == "development"
+  - form_for @user, :url => secure_url do |f|
+    = render 'users/form/new', :f => f, :user => f.object
+    - if Rails.env.development?
       %p You are running in development mode. No email confirmation will be required.
       %p When running Teambox in production mode, signup will require an email confirmation.
     %br

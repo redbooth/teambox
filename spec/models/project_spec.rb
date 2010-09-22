@@ -94,7 +94,7 @@ describe Project do
       Activity.last.comment_type.should == nil
       Activity.last.target.should == person
       Activity.last.action.should == 'create'
-      Activity.last.user.should == @owner
+      Activity.last.user.should == @user
       person.reload.source_user.should == @owner
     end
   end

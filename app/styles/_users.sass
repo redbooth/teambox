@@ -29,8 +29,10 @@ $micro_size: 24px
     .info
       display: none
     .block
-      width: 620px
-
+      width: 630px
+  .activity
+    .micro_avatar
+      display: none
 
 .unconfirmed_email_users
   .content
@@ -104,32 +106,6 @@ $micro_size: 24px
       top: 20px
       bottom: 20px
 
-div.upload_avatar
-  .avatar
-    float: left
-    width: $thumb_size
-    height: $thumb_size
-    margin-right: 5px
-    a
-      display: block
-      width: $thumb_size
-      height: $thumb_size
-      margin-right: 5px
-      background: url(/images/avatar_thumb_corners.png)
-    a:hover
-      background: url(/images/avatar_thumb_corners_hover.png)
-  p.actions
-    padding-top: 2px
-    margin: 0px
-    a
-      display: block
-      font-size: 12px
-      color: rgb(120, 120, 120)
-      margin-top: 5px
-      text-decoration: underline
-    a:hover
-      text-decoration: none
-
 .new_user_avatar
   float: left
   width: $thumb_size
@@ -149,8 +125,6 @@ div.upload_avatar
   margin-top: 10px
 
 .show_users
-  .content
-
   .column_wrap
     .profile
       margin-bottom: 20px
@@ -200,11 +174,9 @@ div.upload_avatar
     padding: 5px
     form.new_invitation
       font-size: 12px
-      border: 1px rgb(220, 220, 220) solid
-      background-color: rgb(240, 240, 240)
+      +light-box
       padding: 10px
       margin-bottom: 10px
-      +rounded(5px)
       h2
         font-size: 16px
         margin: 0 0 10px 0
@@ -212,6 +184,8 @@ div.upload_avatar
       .text_field
         label
           width: 600px
+      select
+        max-width: 600px
   .people
     .person
       +clearing
@@ -314,35 +288,18 @@ div.upload_avatar
     &.stopped
       color: rgb(120, 50, 50)
 
-.thumb_avatar
+a.thumb_avatar
   float: left
   width: $thumb_size
   height: $thumb_size
-  margin-right: 10px
-  a
-    display: block
-    width: $thumb_size
-    height: $thumb_size
-    margin-right: 5px
-    &.round_corners
-      background: url(/images/avatar_thumb_corners.png)
-    &.round_corners:hover
-      background: url(/images/avatar_thumb_corners_hover.png)
+  margin-right: 15px
+  +rounded(5px)
 
-.micro_avatar
+a.micro_avatar
   float: left
   width: $micro_size
   height: $micro_size
   margin-right: 10px
-  a
-    display: block
-    width: $micro_size
-    height: $micro_size
-    margin-right: 5px
-    &.round_corners
-      background: url(/images/avatar_thumb_corners.png)
-    &.round_corners:hover
-      background: url(/images/avatar_thumb_corners_hover.png)
 
 .card
   font-size: 12px
@@ -439,3 +396,20 @@ div.upload_avatar
     text-align: right
     padding-top: 8px
     width: 608px
+
+#user_biography
+  width: 490px
+
+.your_avatars
+  margin-top: 20px
+  img
+    background-color: #ddd
+    padding: 2px
+    border: 1px solid #999
+
+.betatester
+  display: block
+  margin: 10px 0
+  padding-left: 110px
+  label
+    float: none

@@ -1,0 +1,32 @@
+%p= "A page is a collection of #{link_to_doc_model(:note)}s, #{link_to_doc_model(:divider)}s, and #{link_to_doc_model(:uploads)}s in a #{link_to_doc_model(:project)}."
+
+- doc_for :index, :example => [@page.to_api_hash] do
+  %p= "Returns the 25 most recent pages in a project."
+
+- doc_for :show,  :example => @page.to_api_hash(:include => [:slots, :objects]) do
+  %p= "Returns the data for a page."
+  
+- doc_for :create, :parameters => {:comment => {:name => 'Name', :description => 'Description'} },
+                   :example => @page.to_api_hash,
+                   :status => :created,
+                   :role => :participant do
+  %p= "Creates a new page."
+
+- doc_for :update, :parameters => {:comment => {:name => @page.name, :description => @page.description} },
+                   :status => :updated,
+                   :role => :participant do
+  %p= "Updates the name and description of a page."
+
+- doc_for :reorder, :status => :updated,
+                    :parameters => { :slots => [1,2,3] },
+                    :role => :participant do
+  %p= "Reorders the slots in a page according to the order each slot id is presented in <tt>slots</tt>."
+
+- doc_for :resort, :status => :updated,
+                    :parameters => { :pages => [1,2,3] },
+                    :role => :participant do
+  %p= "Reorders the pages in a project according to the order each pahe id is presented in <tt>pages</tt>."
+
+- doc_for :destroy, :status => :deleted,
+                    :role => :participant do
+  %p= "Destroys a page."

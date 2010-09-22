@@ -5,4 +5,4 @@
     %p= t('.cant_create')
   = instructions_for_email(project)
   .conversations
-    = list_conversations(project,conversations,conversation)
+    = render conversations, :project => project, :current_target => conversation

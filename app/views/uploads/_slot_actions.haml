@@ -1,8 +1,9 @@
 %div.actionContainer
-  %p.slotActions
+  %p.actions
     %span
-      = link_to trash_image, project_page_upload_url(page.project, page,upload),
-        :'data-remote' => true, :'data-method' => 'delete', :'data-confirm' => t('confirm.delete_upload')
+      = link_to '', project_page_upload_url(page.project, page,upload),
+        :'data-remote' => true, :'data-method' => 'delete', :'data-confirm' => t('confirm.delete_upload', :style => :trash_icon),
+        :class => 'widget_delete trash_icon'
       = loading_action_image("delete_upload_#{upload.id}", true)
   %p.slotActions.handle
     %span

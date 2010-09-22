@@ -6,35 +6,10 @@ Element.addMethods({
   }
 })
 
-Event.addBehavior({
-  ".pageForm a.cancel:click": function(e){
-    e.element().up('.pageForm').remove();
-    return false;
-  },
-  "#pageInsert:click": function(e) {
-    if (InsertionBar.current_form) {
-      InsertionBar.place();
-    } else {
-      InsertionBar.show();
-      InsertionMarker.setEnabled(false);
-      InsertionMarker.hide();
-    }
-
-    return false;
-  },
-  "#pageInsertItemCancel a:click": function(e) {
-    InsertionBar.hide();
-    InsertionMarker.setEnabled(true);
-    
-    return false;
-  }
-});
-
 // Page controller object
 var Page = {
-  MARGIN: 20,
-  SLOT_VERGE: 20,
-  SLOT_GAP: 36,
+  SLOT_VERGE_BEFORE: 3,
+  SLOT_VERGE_AFTER: 6,
   READONLY: false,
 
   init: function(readonly, url) {
@@ -42,11 +17,11 @@ var Page = {
     this.url = url;
     document.currentPage = this;
     if (!readonly) {
-      InsertionMarker.init();
+      InsertHere.init();
       InsertionBar.init();
-      InsertionMarker.set(null, true);
+      InsertHere.set(null, true);
 
-      $($('content').parentNode).observe('mousemove', InsertionMarkerFunc);
+      $($('content').parentNode).observe('mousemove', InsertHereFunc);
     }
   },
 
@@ -90,10 +65,6 @@ var Page = {
 
     el.insert(opts);
     new Effect.Highlight(widget_id, {duration:3});
-  },
-
-  refreshEvents: function() {
-    Event.addBehavior.reload();
   }
 }
 
@@ -111,11 +82,11 @@ var InsertionBar = {
 
   show: function() {
     this.place();
-    this.element_bar.setStyle({'height': '32px'}).blindDown({duration: 0.3});
+    this.element_bar.blindDown({duration: 0.3});
   },
 
   place: function() {
-    InsertionMarker.element.insert({before: this.element});
+    InsertHere.element.insert({before: this.element});
   },
 
   hide: function() {
@@ -127,7 +98,7 @@ var InsertionBar = {
     this.element_bar.hide();
     this.current_form.show();
 
-    InsertionMarker.setEnabled(true);
+    InsertHere.enabled = true;
   },
     
   // Widget form
@@ -159,35 +130,17 @@ var InsertionBar = {
     }
   },
 
-  insertTempForm: function(template) {
-    var el = null;
-    var before = Page.insert_before ? '1' : '0';
-    var slot = Page.insert_element ? Page.insert_element.getSlotId() : '-1';
-    var content = template.replace(/\{POS\}/, 'position[slot]=' + slot + '&position[before]=' + before);
-
-    if (Page.insert_element == null) {
-      el = $('slots').insert({bottom: content}).next();
-    } else if (Page.insert_before) {
-      el = Page.insert_element.insert({before: content}).previous();
-    } else {
-      el = Page.insert_element.insert({after: content}).next();
-    }
-
-    this.hide();
-    return el;
-  },
-
   clearWidgetForm: function() {
-    if (!this.current_form) return;
-
-    this.current_form.reset();
-    this.current_form.hide();
-    this.current_form = null;
+    if (this.current_form) {
+      this.current_form.reset();
+      this.current_form.hide();
+      this.current_form = null;
+    }
   }
 };
 
 // Insertion marker which appears between slots
-var InsertionMarker = {
+var InsertHere = {
   element: null,
   enabled: false,
   visible: false,
@@ -197,10 +150,6 @@ var InsertionMarker = {
     this.enabled = true;
     this.visible = false;
     Page.insert_element = null;
-  },
-
-  setEnabled: function(val) {
-    this.enabled = val;
   },
 
   show: function(el, insert_before) {
@@ -217,7 +166,7 @@ var InsertionMarker = {
       this.updateSlot(false);
       if (this.enabled)
         this.set(null, true);
-      }
+    }
   },
 
   updateSlot: function(active) {
@@ -262,45 +211,37 @@ var InsertionMarker = {
   }
 };
 
-// Hover observer for InsertionMarker
-var InsertionMarkerFunc = function(evt){
-  if (!InsertionMarker.enabled)
+// Hover observer for InsertHere
+var InsertHereFunc = function(evt){
+  if (!InsertHere.enabled)
     return;
 
   var el = $(evt.target);
-  var pt = evt.pointer();
-  var offset = el.cumulativeOffset();
-
-  pt.x -= Page.SLOT_GAP;
-  var delta = pt.x - offset.left;
-
-  if (!(delta < 0 || delta > Page.MARGIN))
-  {
+  if (el.readAttribute('id') == "PIB")
+    return;
+  var slot = el.hasClassName('page_slot') ? el : el.up('div.page_slot');
+  if (!slot)
+    return;
+  
+  var pt = evt.pointer(),
+      offset = slot.cumulativeOffset(),
+      delta = pt.x - offset.left,
+      w = slot.getDimensions().width;
+  
+  if (delta < (w-32)) {
     // Show bar here *if* we are within the slot
-    if (el.hasClassName('page_slot'))
-    {
-      var h = el.getHeight(), thr = Math.min(h / 2, Page.SLOT_VERGE);
-      var t = offset.top, b = t + h;
-
-      // console.log(h + "," + thr + " | " + t + "," + b);
-
-      if (el.hasClassName('pageFooter')) // before footer
-        InsertionMarker.show(el, true);
-      else if (pt.y - t <= thr) // before element
-        InsertionMarker.show(el, true);
-      else if (b - pt.y <= thr) // after element
-        InsertionMarker.show(el, false);
-      else
-        InsertionMarker.hide(); // *poof*           
-      }
-  }
-  else
-  {
-    // Ignore the insertion marker
-    if (el.readAttribute('id') == "PIB") 
-      return;
-
-    InsertionMarker.hide(); // *poof*
+    var h = slot.getHeight(),
+        thr_b = Math.min(h / 2, Page.SLOT_VERGE_BEFORE), thr_a = Math.min(h / 2, Page.SLOT_VERGE_AFTER);
+    if (slot.hasClassName('pageFooter')) // before footer
+      InsertHere.show(slot, true);
+    else if (pt.y - offset.top <= thr_b) // before element
+      InsertHere.show(slot, true);
+    else if ((offset.top + h) - pt.y <= thr_a) // after element
+      InsertHere.show(slot, false);
+    else
+      InsertHere.hide();
+  } else {
+    InsertHere.hide();
   }
 }
 
@@ -313,15 +254,15 @@ document.on('dom:loaded', function() {
 
 // Buttons
 
-document.on('click', 'a.note_button, a.divider_button, a.upload_button', function(e) {
+document.on('click', 'a.note_button, a.divider_button, a.upload_button', function(e, button) {
   e.preventDefault();
   
-  if (!this.up('.pageSlots')) {
-    InsertionMarker.set(null, true);
+  if (!button.up('.pageSlots')) {
+    InsertHere.set(null, true);
     InsertionBar.place();
   }
   
-  var type = this.className.match(/\b(note|divider|upload)_/)[1];
+  var type = button.className.match(/\b(note|divider|upload)_/)[1];
   
   var form = $('new_' + type);
   InsertionBar.setWidgetFormLoading(form, false);
@@ -334,28 +275,92 @@ document.on('click', 'a.cancelPageWidget', function(e) {
   InsertionBar.clearWidgetForm();
 });
 
+document.on('click', '#page_reorder', function(e) {
+  e.stop();
+  $('page_reorder').hide();
+  $('page_reorder_done').show();
+  
+  Sortable.create('column_pages', {handle: 'drag', tag: 'div', only: 'page',
+    onUpdate: function() {
+      var csrf_param = $$('meta[name=csrf-param]').first(),
+          csrf_token = $$('meta[name=csrf-token]').first(),
+          serialized = Sortable.serialize('column_pages', {name: 'pages'});
+      
+      if (csrf_param) {
+        var param = csrf_param.readAttribute('content'),
+            token = csrf_token.readAttribute('content')
+        
+        serialized += '&' + param + '=' + token
+      }
+
+      new Ajax.Request($('column_pages').readAttribute('reorder_url'), { parameters: serialized });
+    } 
+  });
+  
+  $('column_pages').addClassName('reordering');
+});
+
+document.on('click', '#page_reorder_done', function(e) {
+  e.stop();
+  
+  $('column_pages').removeClassName('reordering');
+  $('page_reorder').show();
+  $('page_reorder_done').hide();
+  
+  Sortable.destroy('column_pages');
+});
+
+document.on('click', '.pageForm a.cancel', function(e, el){
+  e.stop();
+  el.up('.pageForm').remove();
+});
+
+document.on('click', '#pageInsert', function(e, el){
+  if (InsertionBar.current_form) {
+    InsertionBar.place();
+  } else {
+    InsertionBar.show();
+    InsertHere.enabled = false;
+    InsertHere.hide();
+  }
+});
+
+document.on('click', 'div.page_slot', function(e, el){
+  if (!InsertHere.visible)
+    return;
+  if (InsertionBar.current_form) {
+    InsertionBar.place();
+  } else {
+    InsertionBar.show();
+    InsertHere.enabled = false;
+    InsertHere.hide();
+  }
+});
+
+document.on('click', '#pageInsertItemCancel', function(e, el) {
+  e.stop();
+  InsertionBar.hide();
+  InsertHere.enabled = true;
+});
+
 // Widget actions, forms
 
 document.on('ajax:before', '.page_slot .actions, .page_slot .slotActions', function(e) {
-  var el = e.findElement();
-  el.hide();
-  el.next('.loading_action').show();
+  e.findElement('a').hide().next('.loading_action').show();
 });
 
 document.on('ajax:complete', '.page_slot .actions, .page_slot .slotActions', function(e) {
-  var el = e.findElement();
-  el.show();
-  el.next('.loading_action').hide();
+  e.findElement('a').show().next('.loading_action').hide();
 });
 
-document.on('ajax:before', '.page_slot .note form, .page_slot .divider form', function(e) {
-  this.down('.submit').hide();
-  this.down('img.loading').show();
+document.on('ajax:before', '.page_slot .note form, .page_slot .divider form', function(e, el) {
+  el.down('.submit').hide();
+  el.down('img.loading').show();
 });
 
-document.on('ajax:complete', '.page_slot .note form, .page_slot .divider form', function(e) {
-  this.down('.submit').show();
-  this.down('img.loading').hide();
+document.on('ajax:complete', '.page_slot .note form, .page_slot .divider form', function(e, el) {
+  el.down('.submit').show();
+  el.down('img.loading').hide();
 });
 
 document.on('ajax:create', 'form.edit_note', function(e, element) {
@@ -363,7 +368,7 @@ document.on('ajax:create', 'form.edit_note', function(e, element) {
 });
 
 document.on('submit', 'body.show_pages form#new_upload', function(e, form) {
-  var iframe = new Element('iframe', { id: 'file_upload_iframe' }).hide()
+  var iframe = new Element('iframe', { id: 'file_upload_iframe', name: 'file_upload_iframe' }).hide()
   $(document.body).insert(iframe)
   form.target = iframe.id
   form.insert(new Element('input', { type: 'hidden', name: 'iframe', value: 'true' }))

@@ -8,7 +8,8 @@
 
 - form_for current_user, :url => secure_url, :html => { :multipart => true } do |form|
   = form.error_messages
-  = render form
+  = render "users/form/#{@sub_action}", :f => form, :sub_action => @sub_action, :user => form.object
+  = hidden_field_tag 'sub_action', @sub_action
   - unless @sub_action == 'delete'
     .submit= submit_tag t('.submit')
 

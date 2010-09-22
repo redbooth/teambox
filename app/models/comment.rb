@@ -1,32 +1,54 @@
 class Comment < ActiveRecord::Base
   
+  extend ActiveSupport::Memoizable
+  
   acts_as_paranoid
   
-  concerned_with :associations,
-                 :callbacks,
-                 :tasks,
-                 :finders
+  concerned_with :tasks, :finders, :conversions
 
-  attr_accessible :body, :user_id, :target_attributes, :status, :previous_status,
-                  :assigned, :previous_assigned, :human_hours
+  belongs_to :user
+  belongs_to :project
+  belongs_to :target, :polymorphic => true, :counter_cache => true
+  belongs_to :assigned, :class_name => 'Person'
+  belongs_to :previous_assigned, :class_name => 'Person'
+  
+  def task_comment?
+    self.target_type == "Task"
+  end
 
+  has_many :uploads
+  accepts_nested_attributes_for :uploads, :allow_destroy => true,
+    :reject_if => lambda { |upload| upload['asset'].blank? }
+
+  attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
+                  :upload_ids, :uploads_attributes
+
+  named_scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
+  named_scope :latest, :order => 'id DESC'
+
+  # TODO: investigate how we can enable this and not break nested attributes
+  # validates_presence_of :target_id, :user_id, :project_id
+  
+  validate_on_create :check_duplicate, :if => lambda { |c| c.target_id? and not c.hours? }
+  validates_presence_of :body, :unless => lambda { |c| c.task_comment? or c.uploads.any? }
+
+  # was before_create, but must happen before format_attributes
+  before_save   :copy_ownership_from_target, :if => lambda { |c| c.new_record? and c.target_id? }
+  after_create  :trigger_target_callbacks
+  after_destroy :cleanup_activities, :cleanup_conversation
+
+  # must happen after copy_ownership_from_target
   formats_attributes :body
 
-  named_scope :with_hours, :conditions => 'hours > 0'
-
-  validate_on_create :check_duplicates
-  validate :check_body
-
-  attr_accessor :mentioned # used by format_usernames to set who's being mentioned
   attr_accessor :activity
 
   def hours?
     hours and hours > 0
   end
 
-  def human_hours
-    self.hours
-  end
+  named_scope :with_hours, :conditions => 'hours > 0'
+
+  alias_attribute :human_hours, :hours
 
   # Instead of using the float 'hours' field in a form, we use 'human_hours'
   # and we can take:
@@ -37,7 +59,9 @@ class Comment < ActiveRecord::Base
   # 2h 30m (hours and minutes => hours with decimals)
   # 2:30 (hours and minutes => hours with decimals)
   def human_hours=(duration)
-    self.hours = if duration =~ /(\d+)h[ ]*(\d+)m/i
+    self.hours = if duration.blank?
+      nil
+    elsif duration =~ /(\d+)h[ ]*(\d+)m/i
       # 2h 15m
       $1.to_f + $2.to_f / 60
     elsif duration =~ /(\d+):(\d+)/
@@ -55,114 +79,67 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  def check_body
-    if body and body.strip.empty?
-      if !target.is_a? Task
-        @errors.add :body, :no_body_generic
-      end
-    end
-  end
-
   define_index do
     indexes body, :sortable => true
-#    indexes user(:name)
+    # indexes user(:name)
     indexes uploads(:asset_file_name), :as => :upload_name
     indexes target.name, :as => :target
 
     has user_id, project_id, created_at
   end
   
-  # We will not allow two comments in a row with the body, target and assigned_to
-  def check_duplicates
-    last = Comment.find(:first, :conditions =>
-                    ["user_id = ? AND target_id = ? AND target_type LIKE ?",
-                      user_id, target_id, target_type], :order => "id DESC")
-
-    if last && last.body == body && last.assigned_id == assigned_id \
-      && last.status == status && last.hours == hours
-      @errors.add :body, "Duplicate comment"
-    end
-  end
-  
+  # FIXME: avoid overriding the actual association
   def user
-    User.find_with_deleted(user_id)
+    user_id and User.find_with_deleted(user_id)
   end
   
-  def can_modify?(current_user, limit=true)
-    can_edit?(current_user, limit) or can_destroy?(current_user, limit)
-  end
-  
-  def can_edit?(current_user, limit=true)
-    # Only the owner can edit their comment
-    if self.user_id != current_user.id
-      return false
-    end
-    
-    return true unless limit
-    
-    # We can only edit / delete up to 15 minutes after creation
-    if Time.now < (self.created_at + 15.minutes)
-      true
-    else
-      false
-    end
-  end
-  
-  def can_destroy?(current_user, limit=true)
-    # admins can remove at any time, users
-    # need to own the comment
-    return true if self.project.admin?(current_user)
-    return false if self.user_id != current_user.id
-    
-    return true unless limit
-    
-    # 15 minutes restriction
-    if Time.now < (self.created_at + 15.minutes)
-      true
-    else
-      false
-    end
-  end
-  
-  def day
-    if self.created_at.mday.to_s.length == 1
-      current_day = "0#{self.created_at.mday.to_s}"
-    else
-      current_day =  self.created_at.mday.to_s
-    end
-  end
-  
-  def to_s
-    body[0,80]
+  def duplicate_of?(another)
+    [:body, :assigned_id, :status, :hours].all? { |prop|
+      self.send(prop) == another.send(prop)
+    }
   end
 
-  def to_xml(options = {})
-    options[:indent] ||= 2
-    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
-    xml.instruct! unless options[:skip_instruct]
-    xml.comment :id => id do
-      xml.tag! 'body', body
-      xml.tag! 'body-html', body_html
-      xml.tag! 'created-at', created_at.to_s(:db)
-      xml.tag! 'user-id', user_id
-      unless Array(options[:include]).include? :comments
-        xml.tag! 'project-id', project_id
-        xml.tag! 'target-id', target.id
-        xml.tag! 'target-type', target.class
-      end
-      if target.is_a? Task
-        xml.tag! 'assigned-id', assigned_id
-        xml.tag! 'previous-assigned-id', previous_assigned_id
-        xml.tag! 'previous-status', previous_status
-        xml.tag! 'status', status
-      end
-      if uploads.any?
-        xml.files :count => uploads.size do
-          for upload in uploads
-            upload.to_xml(options.merge({ :skip_instruct => true }))
-          end
-        end
-      end
+  def thread_id
+    "#{target_type}_#{target_id}"
+  end
+  
+  protected
+
+  # don't allow two identical updates in a row
+  #
+  # FIXME: doesn't work with "simple" conversations because
+  # they hijack `target` in a before_save callback
+  def check_duplicate
+    last_comment = target.comments.by_user(self.user_id).latest.first
+    
+    if last_comment and last_comment.duplicate_of? self
+      errors.add :body, :duplicate
+    end
+  end
+  
+  def copy_ownership_from_target # before_create
+    self.user_id ||= target.user_id
+    self.project_id ||= target.project_id
+  end
+
+  def trigger_target_callbacks # after_create
+    @activity = project.log_activity(self, 'create') if project_id?
+
+    if target.respond_to?(:add_watchers)
+      new_watchers = defined?(@mentioned) ? @mentioned.to_a : []
+      new_watchers << self.user if self.user
+      target.add_watchers new_watchers
+    end
+  end
+  
+  def cleanup_activities # after_destroy
+    Activity.destroy_all :target_type => self.class.name, :target_id => self.id
+  end
+  
+  def cleanup_conversation
+    if self.target.class == Conversation
+      @conversation = self.target
+      @conversation.destroy if @conversation.simple and @conversation.comments.count == 0
     end
   end
 end

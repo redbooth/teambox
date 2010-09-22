@@ -1,0 +1,1819 @@
+--- 
+pl: 
+  activerecord: 
+    attributes: 
+      address: 
+        city: Miasto
+        country: Państwo
+        state: Województwo
+        street: Ulica
+        zip: "Kod pocztowy"
+      card: 
+        city: Miasto
+        country: Państwo
+        state: Województwo
+        street: Ulica
+        zip: "Kod pocztowy"
+      comment: 
+        body: Body
+        hours: Godziny
+        status: Status
+      conversation: 
+        name: Nazwa
+      divider: 
+        name: Nazwa
+      email_address: 
+        account_type: Typ
+        name: Adres
+      im: 
+        account_im_type: Usługa
+        account_type: Typ
+        name: Adres
+      invitation: 
+        email: Email
+      note: 
+        body: Body
+        name: Nazwa
+      pages: 
+        description: Opis
+        name: Strona
+      phone_number: 
+        account_type: Typ
+        name: Telefon
+      project: 
+        name: Nazwa
+        permalink: Permalink
+      social_network: 
+        account_network_type: Sieć
+        account_type: Typ
+        name: Adres
+      task: 
+        due_on: Do
+        name: Nazwa
+        status: Status
+      task_list: 
+        finish_on: "Data zakończenia"
+        name: Nazwa
+        start_on: "Data rozpoczęcia"
+      upload: 
+        description: Opis
+      user: 
+        biography: Biografia
+        email: Email
+        first_day_of_week: "Pierwszy dzień tygodnia"
+        first_name: Imię
+        language: Język
+        last_name: Nazwisko
+        login: "Nazwa użytkownika"
+        time_zone: "Strefa czasowa"
+      website: 
+        name: Strona
+    errors: 
+      full_messages: 
+        format: "%{attribute} %{message}"
+      messages: 
+        accepted: "musi zostać zaakceptowana "
+        blank: "nie może być pusta"
+        confirmation: "nie pasuje do potwierdzenia"
+        empty: "nie może być puste"
+        equal_to: "musi być równe %{count}"
+        even: "musi być parzyste"
+        exclusion: "jest zarezerwowane"
+        greater_than: "musi być większe niż %{count}"
+        greater_than_or_equal_to: "musi być większe lub równe %{count}"
+        inclusion: "nie jest zawarty na liście"
+        invalid: "jest niepoprawny"
+        less_than: "musi być mniejszy niż %{count}"
+        less_than_or_equal_to: "musi być mniejszy lub równy %{count}"
+        not_a_number: "nie jest liczbą"
+        odd: "musi być nieparzysty"
+        record_invalid: "Weryfikacja zakończona niepowodzeniem: %{errors} "
+        taken: "jest już zajęty"
+        too_long: "jest zbyt długi (maksymalny to %{count} znaków)"
+        too_short: "jest za krótkie (minimum to %{count} znaków)"
+        wrong_length: "ma złą długość (powinno mieć %{count} znaków)"
+      models: 
+        comment: 
+          attributes: 
+            body: 
+              no_body_generic: "Proszę napisać co zrobiłeś w box'ie powyżej."
+              no_body_task: "Proszę napisać co zrobiłeś w tym zadaniu w box'ie powyżej."
+        conversation: 
+          attributes: 
+            body: 
+              no_body_generic: "Proszę napisać komentarz aby rozpocząć dyskusję."
+            name: 
+              no_title: "Proszę nadać tytuł tej dyskusji."
+      template: 
+        body: "Były problemy z następującymi polami:"
+        header: 
+          one: "1 problem uniemożliwił %{model} zapisanie"
+          other: "%{count} problemów uniemożliwiło %{model} zapisanie"
+    models: 
+      address: Adres
+      card: Karta
+      comment: Komentarz
+      conversation: Dyskusja
+      divider: Rozdzielacz
+      email_address: Email
+      im: "Komunikator internetowy"
+      invitation: Zaproszenie
+      note: Tekst
+      page: Strona
+      phone_number: Telefon
+      project: Projekt
+      social_network: "Sieć społecznościowa "
+      task: Zadanie
+      task_list: "Lista zadań"
+      upload: Upload
+      website: Sieć
+  activities: 
+    create_comment: 
+      create_comment: "stworzył komentarz"
+      title: "%{user} skomentował %{target}"
+    create_comment_conversation: 
+      title: "%{user} dodał komentarz do dyskusji %{target}"
+    create_comment_project: 
+      title: "%{user} zaktualizował status na %{target}"
+    create_comment_task: 
+      title: "%{user} zaktualizował zadanie  %{target}"
+    create_conversation: 
+      create_conversation: "rozpoczął dyskusję"
+      title: "%{user} rozpoczął dyskusję: %{conversation}"
+    create_note: 
+      create_note: "dodał notatkę"
+      title: "%{user} stworzył notatkę \"%{note}\" na %{page}\n"
+    create_page: 
+      create_page: "stworzył stronę"
+      title: "%{user} stworzył stronę %{page}\n"
+    create_person: 
+      by: przez
+      create_person: "dołączył do projektu"
+      title: "%{person} dołączył do projektu %{project}\n"
+    create_project: 
+      left: "stworzył projekt"
+      title: "%{person} stworzył projekt %{project}"
+    create_task: 
+      create_task: "stwórz zadanie"
+      title: "%{user} stworzył zadanie %{task} w %{task_list}\n"
+    create_task_list: 
+      create_task_list: "stworzył listę zadań"
+      title: "%{user} stworzył listę zadań %{task_list}\n"
+    create_upload: 
+      title: "%{user} wysłał plik %{file}\n"
+    delete_person: 
+      by: przez
+      delete_person: "opuścił projekt"
+      left: "opuścił projekt"
+      title: "%{person} opuścił projekt %{project}\n"
+    edit_note: 
+      edit_note: "edytował notatkę"
+      title: "%{user} edytował notatkę \"%{note}\" na %{page}\n"
+    edit_page: 
+      edit_page: "edytował stronę"
+      title: "%{user} edytował stronę %{page}\n"
+    thread: 
+      created: 
+        conversation: "rozpoczął dyskusję"
+        task: "stworzył zadanie"
+      more_comments: 
+        one: "%{count} poprzednich komentarzy"
+        other: "poprzedni komentarz"
+      on_task_list: na
+  affiliate: 
+    area: "Strefa partnerów"
+    index: 
+      addresses: adresy
+      credits_earned: "Kredyty które zarobiłeś"
+      desc_1: "Z naszymi narzędziami partnerskimi będziesz mógł otrzymać <strong>darmowe miesiące</strong> używając Teambox lub otrzymywać <strong>prawdziwe pieniądze</strong> kierując tu swoich znajomych"
+      desc_2: "Sprowadź nowych użytkowników do Teambox i otrzymuj <strong>%{percent}% przychodu</strong> jaki generują."
+      facebook: Facebook
+      get_in_touch: "skontaktuj się z nami"
+      idea1: "Stwórz stronę o tym jak korzystasz z Teambox'a, ze wskazówkami dla początkujących."
+      idea2: "Opublikuj link do Teambox'a na swoim blogu i napisz jak on Tobie pomógł."
+      idea3: "Poprowadź wydarzenie o współpracy projektowej i skieruj tu swoich uczestników."
+      idea4: "Po prostu wyślij powiadomienie email do nowych użytkowników"
+      ideas: "Niektóre pomysły jak wycisnąć więcej z Teambox'a"
+      learn_more: "Zobacz więcej..."
+      no_referred_users: "Nie masz jeszcze żadnych poleconych użytkowników"
+      option_1: "Opcja 1: Podziel się tym linkiem"
+      option_2: "Opcja 2: Zaproś znajomych podając ich adres email"
+      option_3: "Opcja 2: Zaproś znajomych importując plik CSV"
+      over_200: "Kiedykolwiek będziesz miał ponad $200,"
+      plan_for: "plan dla"
+      premium_plan: "konto premium"
+      refer_info: "Poleć  %{users} nasze %{plan} konta i zbieraj $%{credit} każdego miesiąca."
+      referred_users: "Twoi poleceni użytkownicy"
+      send_invites: "Zaproś do Teamboksa"
+      send_money: "i wyślemy ci pieniądze które zarobiłeś"
+      sent_invites_to: "Zaproszenie email zostanie wysłane na następujące adresy email:"
+      sent_number_of_invites: "Zaproszenie email zostanie wysłane do"
+      tracking1: "Kiedy polecasz nowych użytkowników, muszą zapisać się na stronie ze specjalnym parametrem."
+      tracking2: "Ten parametr jest unikalny dla ciebie, i pozwala śledzić nam twoich użytkowników."
+      tracking3: "Kiedy użytkownik kliknie na ten link, zostaną oznaczeni jako przychodzący od ciebie."
+      tracking4: "Nawet jeśli odejdą z tej strony i wrócą później, trzymamy datę o sesji więc gdy się zarejestrują nadal będziemy pamiętać że przyszli od Ciebie."
+      tracking5: "Twoja specjalna strona do rejestracji"
+      tracking6: "Wrzuć ten link na Facebook, Twitter, na swoją stronę lub prześlij email'em do znajomego. Po tym jak się zapiszą otrzymasz powiadomienie email."
+      twitter: Twitter
+      twitter_link: "Wypróbuj+Teambox+do+współpracy+ze+swoim+zespołem+i+zapisze+się+za+darmo+na+%{link}"
+      use_money: "Możesz wykorzystać te pieniądze by dostać"
+      use_money_cash: "lub zarób prawdziwą gotówkę."
+      use_tracking_code: "Musisz spróbować użyć kodu śledzenia abyśmy mogli zobaczyć którzy użytkownicy przyszli od ciebie."
+      website: "Podziel się tym na swojej stronie,"
+    notification: 
+      accepted_subscription: "%{name} (%{email}) właśnie zapisać się do Teambox używając twojego kodu polecającego."
+      check_your_earnings: "Idź sprawdź swoje zarobki z poleceń Teambox'a"
+      check_your_referrals: "Idź sprawdź polecenia użytkowników na Teambox"
+      new_signup: "Użytkownik zarejestrował się na Teambox używając twojego kodu polecającego!"
+      new_subscription: "Użytkownik uaktualnij swoje konto używając twojego kodu polecającego!"
+      upgraded_subscription: "%{name} (%{email}) właśnie uaktualnił swoje konto na Teambox, a ty zarobiłeś $%{price} w kredytach"
+      wait: "Transakcja została przyjęta, ale może chwilę potrwać zanim się odzwierciedli w Strefie Partnera Teambox."
+  avatars: 
+    edit: 
+      upload: "Wyślij ten avatar"
+      upload_new_image: "Wyślij nowe zdjęcie jako swój avatar"
+    new: 
+      title: "Wyślij avatar"
+      upload: Wyślij
+    show: 
+      save: "Zapisz zmiany"
+  cards: 
+    card: 
+      addresses: Adresy
+      email_addresses: "Adresy email"
+      ims: "Komunikator internetowy"
+      phone_numbers: "Numery telefonów"
+      social_networks: "Strony społecznościowe"
+      vcard: "Pobierz vCard"
+      websites: Strona
+    card_types: 
+      business: Firma
+      fax: Faks
+      home: Telefon
+      mobile: "Telefon komórkowy"
+      other: inne
+      personal: Osobiste
+      work: Praca
+    field: 
+      add_addresses: "Dodaj adres"
+      add_email_addresses: "Dodaj email"
+      add_ims: "Dodaj komunikator internetowy"
+      add_phone_numbers: "Numer telefonu"
+      add_social_networks: "Dodaj serwis społecznościowy"
+      add_websites: "Dodaj stronę"
+  comments: 
+    actions: 
+      confirm_delete: "Jesteś pewien że chcesz usunąć ten komentarz?"
+      convert_task: "Zapisz jako zadanie"
+      edit: "Edytuj komentarz"
+    attach: 
+      tooltip: "Dodaj załączniki"
+    comment: 
+      cannot_edit: "Komentarz nie może zostać edytowany po 15 minutach"
+      commented_on: "-"
+      commented_on_a_task_list: "-\n"
+      confirm_delete: "Jesteś pewien że chcesz usunąć ten komentarz?"
+      hours: "%{hours}h"
+      hours_with_minutes: "%{hours}h %{minutes}m"
+      loading: Wczytywanie
+    convert_form: 
+      destination: "Wybierz docelową listę zadań"
+      name: "Wprowadź nazwe dla tego zadania"
+      submit: Zamień
+    edit: 
+      submit: Zapisz
+    errors: 
+      cannot_update: "Nie masz dostępu do edytowania tego komentarza"
+    hours: 
+      add_hours: Godziny
+      hours: "Ile godziń poświeciłeś temu zadaniu?"
+      time_tracking_docs: "Naucz się jak korzystać ze śledzenia czasu"
+      tooltip: "Dodaj godziny do zadania"
+    new: 
+      assigned_to: "Przypisane do:"
+      assigned_to_nobody: Nieprzypisane
+      comment_on_project: "Skomentuj:"
+      conversation: "Wyślij wiadomość reszcie grupy"
+      project: "Nad czym pracujesz? Podziel się ideami, linkami, aktualizacjami."
+      submit: Zapisz
+      task: "Napisz co trzeba zrobić . Przypisz komuś to zadanie. "
+      task_list: "Dziel się pomysłami dla tego zadania. By stworzyć i przydzielić zadanie użyj sidebar'a."
+    preview: 
+      close: Zamknij
+      preview: Podgląd
+      showing: "..."
+  common: 
+    accept: Akceptuj
+    and: i
+    calendar: Kalendarz
+    cancel: Anuluj
+    close: Zamknij
+    comment: 
+      one: "%{count} komentarz"
+      other: "%{count} komentarzy"
+    decline: Odmów
+    delete: Usuń
+    edit: Edytuj
+    gantt_chart: "Diagram Gantta"
+    in_project: w
+    next: Następny
+    not_allowed: "Nie masz pozwolenia by to zrobić!"
+    or: lub
+    prev: Poprzedni
+    print: "Drukuj tę stronę"
+    rename: "Zmień nazwe"
+    save: Zapisz
+    show_more: "Pokaż więcej"
+    tasks: 
+      one: "1 zadanie"
+      other: "%{count} zadań"
+  confirm: 
+    delete_group: "Jesteś pewien że chcesz usunąć tę grupę?"
+    delete_page: "Jesteś pewien że chcesz usunąć tę stronę?"
+    delete_task: "Jesteś pewien że chcesz usunąć to zadanie?"
+    delete_task_list: "Jesteś pewien że chcesz usunąć tę listę zadań?"
+    delete_upload: "Jesteś pewien że chcesz usunąć ten plik?"
+  conversations: 
+    actions: 
+      confirm_delete: "Jesteś pewien że chcesz usunąć tę dyskusję?"
+    column: 
+      cant_create: "Nie masz pozwolenia na rozpoczynanie nowych dyskusji dla tego projektu"
+      new_conversation: "Nowa dyskusja"
+      subscribe: "Zasubskrybuj ten kanał newsowy"
+    conversation_with_extract: 
+      posted_by: "Opublikowane przez"
+    edit: 
+      submit: "Aktualizuj dyskusję"
+    fields: 
+      body: "Pierwszy komentarz"
+      name: Tytuł
+      tooltips: 
+        body: "Zadaj pytanie, powiedz swojemu zespołowi co nowego, zacznij dyskusje"
+        name: "Najkrócej jak się da, pojawi się to w powiadomieniach email'owych tematów"
+    index: 
+      new_conversation: "Nowa rozmowa"
+      rss: 
+        description: "Dyskusje w projekcie %{name}"
+        title: "%{name} dyskusje"
+    link: 
+      edit: Edytuj
+    new: 
+      submit: Stwórz
+      title: "Nowa dyskusja"
+    primer: 
+      create_first: "Rozpocznij pierwszą dyskusję w tym projekcie!"
+      define: "Używaj dyskusji by <b>omawiać decyzje</b> i <b>powiadamiać swój zespół o zmianach</b>. Każda dyskusja jest zbiorem komentarzy które zastępują masę email'i."
+      empty: "W tym projekcie nie rozpoczęto jeszcze żadnych dyskusji."
+      footer1: "Dyskusje są świetne do <b>omawiania planów</b>, <b>decydowania o datach</b> spotkań czy <b>raportowania</b> o postępach."
+      footer2: "Ponieważ są one publikowane, bez problemu można cofnąć się w czasie i sprawdzić które pliki zostały wysłane oraz przejrzeć komentarze zespołu. W Teambox-ie <b>współpraca to również sprawozdawczość<b>."
+      item1: "<b>Podziel się plikami</b>. Komentarze też mogą mieć pliki."
+      item2: "<b>Subskrybuj</b> dyskusje by dostawać powiadomienia o przyszłych odpowiedziach dzięki email lub RSS."
+      item3: "<b>Wzbudź podziw</b>. Każdy komentarz może być stylizowany."
+      item4: "<b>Lubisz email?</b>. Możesz odpowiadać na dyskusje odpisując na powiadomienia email."
+    short_conversation: 
+      comment: komentarz
+      comments: komentarze
+    show: 
+      edit: "Edytuj tytuł"
+      message: wiadomość
+      messages: wiadomości
+      started_by: "Rozpoczęte przez"
+    watcher_fields: 
+      add_suscribers: "Kto będzie oglądał tę dyskusję?"
+      invite_users: "Jesteś jedyną osobą w tym projekcie!"
+      no_users_yet: "Dyskusje są najbardziej przydatne kiedy są współdzielone. <a href='%{invite_link}'>Zaproś znajomych</a> do tego projektu by mogli uczestniczyć w dyskusji, odpowiadać i otrzymywać powiadomienia."
+      people_all: "Wszyscy uczestnicy projektu"
+      subscribe_note: "Te osoby będą dostawać powiadomienia email o tej wiadomości i każdym kolejnym komentarzu. <br/>Mogą z nich zrezygnować w każdej chwili"
+  countries: 
+    AC: Wniebowstąpienia
+    AD: Andora
+    AE: "Zjednoczone Emiraty Arabskie"
+    AF: Afganistan
+    AG: "Antigua i Barbuda"
+    AI: Anguilla
+    AL: Albania
+    AM: Armenia
+    AN: "Antyle Holenderskie"
+    AO: Angola
+    AQ: Antarktyka
+    AR: Argentyna
+    AS: "Samoa Amerykańskie"
+    AT: Austria
+    AU: Australia
+    AW: Aruba
+    AX: "Wyspy Alandzkie"
+    AZ: Azerbejdżan
+    BA: "Bośnia i Hercegowina"
+    BB: Barbados
+    BD: Bangladesz
+    BE: Belgia
+    BF: "Burkina Faso"
+    BG: Bułgaria
+    BH: Bahrajn
+    BI: Burundi
+    BJ: Benin
+    BL: "święty Bartolomeusz"
+    BM: Bermudy
+    BN: Brunei
+    BO: Boliwia
+    BQ: "Terytorium Antarktyki Brytyjskiej"
+    BR: Brazylia
+    BS: Bahamy
+    BT: Bhutan
+    BV: "Wyspy Buweta"
+    BW: Botswana
+    BY: Białoruś
+    BZ: Belize
+    CA: Kanada
+    CC: "Wyspy Kokosowe"
+    CD: Kongo
+    CF: "Republika Środkowej Afryki"
+    CG: "Republika Konga"
+    CH: Szwajcaria
+    CI: "Wybrzeże Kości Słoniowej"
+    CK: "Wyspy Cook'a"
+    CL: Chile
+    CM: Kamerun
+    CN: Chiny
+    CO: Kolumbia
+    CP: "Wyspa Clipperton"
+    CR: Kostaryka
+    CS: "Serbia i Czarnogóra"
+    CT: "Canton i Wyspy Enderbury"
+    CU: Kuba
+    CV: "Wyspy Zielonego Przylądka"
+    CX: "Wyspa Bożego Narodzenia"
+    CY: Cypr
+    CZ: "Republikan Czech"
+    DD: "Niemiecka Republika Demokratyczna"
+    DE: Niemcy
+    DG: "Diego Garcia"
+    DJ: Dżibuti
+    DK: Dania
+    DM: Dominikana
+    DO: "Republika Dominikany"
+    DZ: Algeria
+    EA: "Ceuta i Melilla "
+    EC: Ekwador
+    EE: Estonia
+    EG: Egipt
+    EH: "Zachodnia Sahara"
+    ER: Erytrea
+    ES: Hiszpania
+    ET: Etiopia
+    EU: "Unia Europejska"
+    FI: Finlandia
+    FJ: Fiji
+    FK: "Wyspy Falklandy"
+    FM: Mikronezja
+    FO: "Wyspy Owcze"
+    FQ: "Francuskie Terytoria Południowe i Antarktyczne"
+    FR: Francja
+    FX: "Francja metropolitarna"
+    GA: Gabon
+    GB: "Zjednoczone Królestwo"
+    GD: Grenada
+    GE: Gruzja
+    GF: "Gujana Francuska"
+    GG: Guernsey
+    GH: Ghana
+    GI: Gibraltar
+    GL: Grenlandia
+    GM: Gambia
+    GN: Gwinea
+    GP: Gwadelupa
+    GQ: "Gwinea Równikowa"
+    GR: Grecja
+    GS: "Georgia Południowa i Sandwich Południowy"
+    GT: Gwatemala
+    GU: Guam
+    GW: "Gwinea Bissau"
+    GY: Gujana
+    HK: "Hong Kong\n"
+    HM: "Wyspy Heard i McDonalda"
+    HN: Honduras
+    HR: Chorwacja
+    HT: Haiti
+    HU: Węgry
+    IC: "Wyspy Kanaryjskie"
+    ID: Indonezja
+    IE: Irlandia
+    IL: Izrael
+    IM: "Wyspa Man"
+    IN: Indie
+    IO: "Brytyjskie Terytorium Oceanu Indyjskiego"
+    IQ: Irak
+    IR: Iran
+    IS: Islandia
+    IT: Włochy
+    JE: Jersey
+    JM: Jamajka
+    JO: Jordan
+    JP: Japonia
+    JT: "Wyspa Johnston"
+    KE: Kenia
+    KG: Kirgistan
+    KH: Kambodża
+    KI: Kiribati
+    KM: "Wyspy Komoros"
+    KN: "Saint Kitts and Nevis "
+    KP: "Korea Północna\n"
+    KR: "Korea Południowa"
+    KW: Kuwejt
+    KY: Kajmany
+    KZ: Kazachstan
+    LA: Laos
+    LB: Liban
+    LC: "Saint Lucia"
+    LI: Liechtenstein
+    LK: "Sri Lanka\n"
+    LR: Liberia
+    LS: Lesotho
+    LT: Litwa
+    LU: Luksemburg
+    LV: Łotwa
+    LY: Libia
+    MA: Maroko
+    MC: Monako
+    MD: Mołdawia
+    ME: Czarnogóra
+    MF: "Saint Martin"
+    MG: Madagaskar
+    MH: "Wyspy Marshall'a"
+    MI: "Wyspy Midway"
+    MK: Macedonia
+    ML: Mali
+    MM: "Myanmar "
+    MN: Mongolia
+    MO: Macau
+    MP: "Wyspy Pólnocne Marianny"
+    MQ: Martynika
+    MR: Mauretania
+    MS: Montserrat
+    MT: Malta
+    MU: Mauritius
+    MV: Malediwy
+    MW: Malawi
+    MX: Meksyk
+    MY: Malezja
+    MZ: Mozambik
+    NA: Namibia
+    NC: "Nowa Kaledonia"
+    NE: Niger
+    NF: "Wyspy Norfolk"
+    NG: Nigeria
+    NI: Nikaragua
+    NL: Holandia
+    ? "NO"
+    : Norwegia
+    NP: Nepal
+    NQ: "Ziemia Królowej Maud"
+    NR: Nauru
+    NT: "Ziemia neutralna"
+    NU: Niue
+    NZ: "Nowa Zelandia"
+    OM: Oman
+    PA: Panama
+    PC: "Zaufane Terytorium Wysp Pacyfiku"
+    PE: Peru
+    PF: "Polinezja Francuska"
+    PG: "Papua Nowa Gwinea"
+    PH: Filipiny
+    PK: Pakistan
+    PL: Polska
+    PM: "Saint Pierre and Miquelon "
+    PN: Pitcairn
+    PR: "Puerto Rico\n"
+    PS: Palestyna
+    PT: Portugalia
+    PU: "Inne Amerykańskie wyspy na pacyfiku"
+    PW: Palau
+    PY: Paragwaj
+    PZ: "Strefa Kanału Panamskiego"
+    QA: Katar
+    QO: "Oceania Peryferyjna"
+    RE: Reunion
+    RO: Rumunia
+    RS: Serbia
+    RU: Rosja
+    RW: Rwanda
+    SA: "Arabia Saudyjska"
+    SB: "Wyspy Salomona"
+    SC: Seszele
+    SD: Sudan
+    SE: Szwecja
+    SG: Singapur
+    SH: "Wyspa Świętej Heleny"
+    SI: Słowenia
+    SJ: "Svalbard and Jan Mayen "
+    SK: Słowacja
+    SL: "Sierra Leone\n"
+    SM: "San Marino\n"
+    SN: Senegal
+    SO: Somalia
+    SR: Surinam
+    ST: "São Tomé and Príncipe "
+    SU: ZSRR
+    SV: "El Salwador"
+    SY: Syria
+    SZ: Suazi
+    TA: "Wyspa Tristana"
+    TC: "Wyspy Turks i Caicos"
+    TD: Czad
+    TF: "Południowe terytorium Francji"
+    TG: Togo
+    TH: Tailandia
+    TJ: Tadżykistan
+    TK: Tokelau
+    TL: "Wschodni Timor"
+    TM: Turkmenistan
+    TN: Tunezja
+    TO: Tonga
+    TR: Turcja
+    TT: "Trynidad i Tobago"
+    TV: Tuvalu
+    TW: Tajwan
+    TZ: Tanzania
+    UA: Ukraina
+    UG: Uganda
+    UM: "Pomniejsze wyspy Amerykańskie"
+    US: "Stany Zjednoczone"
+    UY: Urugwaj
+    UZ: Uzbekistan
+    VA: Watykan
+    VC: "Saint Vincent i Grenadyny"
+    VD: "Północny Wietnam"
+    VE: Wenezuela
+    VG: "Wyspy Dziewicze"
+    VI: "Wyspy Dziewicze (usa)"
+    VN: Wietnam
+    VU: Vanuatu
+    WF: "Wallis i Futuna"
+    WK: "Wyspa Wake"
+    WS: Samoa
+    YD: "Demokratyczna Republika Jemenu"
+    YE: Jemen
+    YT: Majotta
+    ZA: "Południowa Afryka"
+    ZM: Zambia
+    ZW: Zimbabwe
+    ZZ: "Nieznany Regiona"
+  date: 
+    abbr_day_names: 
+      - Nd
+      - Pn
+      - Wt
+      - Śr
+      - Czw
+      - Pt
+      - Sb
+    abbr_month_names: 
+      - ~
+      - Sty
+      - Lut
+      - Mar
+      - Kwi
+      - Maj
+      - Cze
+      - Lip
+      - Sie
+      - Wrz
+      - Paź
+      - Lis
+      - Gru
+    day_names: 
+      - Niedziela
+      - Poniedziałek
+      - Wtorek
+      - Środa
+      - Czwartek
+      - Piątek
+      - Sobota
+    formats: 
+      default: "%Y-%m-%d "
+      long: "%B %d, %Y"
+      short: "%b %d"
+    month_names: 
+      - ~
+      - Styczeń
+      - Luty
+      - Marzec
+      - Kwiecień
+      - Maj
+      - Czerwiec
+      - Lipiec
+      - Sierpień
+      - Wrzesień
+      - Październik
+      - Listopad
+      - Grudzień
+    order: 
+      - !ruby/symbol rok
+      - ":miesiąc"
+      - ":dzień"
+    yesterday: Wczoraj
+  datetime: 
+    distance_in_words: 
+      about_x_hours: 
+        one: "około 1 godziny"
+        other: "około %{count} godzin"
+      about_x_months: 
+        one: "około 1 miesiąca"
+        other: "około %{count} miesięcy"
+      about_x_years: 
+        one: "około 1 roku"
+        other: "około %{count} lat"
+      almost_x_years: 
+        one: "prawie 1 rok"
+        other: "prawie %{count} lata"
+      half_a_minute: "pół minuty"
+      less_than_x_minutes: 
+        one: obecnie
+        other: "mniej niż %{count} minut"
+      less_than_x_seconds: 
+        one: obecnie
+        other: obecnie
+      over_x_years: 
+        one: "ponad 1 rok"
+        other: "ponad %{count} lat"
+      x_days: 
+        one: "1 dzień"
+        other: "%{count} dni"
+      x_minutes: 
+        one: "1 minutę"
+        other: "%{count} minut"
+      x_months: 
+        one: "1 miesiąc"
+        other: "%{count} miesięcy"
+      x_seconds: 
+        one: obecnie
+        other: obecnie
+    prompts: 
+      day: Dzień
+      hour: Godzina
+      minute: Minuta
+      month: Miesiąć
+      second: Sekunda
+      year: Rok
+    time_ago: "%{time_ago_in_words} temu"
+  calendar: 
+    abbr_weekdays: [N, P, W, Ś, C, P, S]
+    ok: OK
+    now: Teraz
+    today: Dziś
+    clear: Oczyścić
+  deleted: 
+    conversation: "Usunięto dyskusję <b>%{name}</b>"
+    left_project: "Nie uczestniczysz już w tym projekcie"
+    page: "Usunięto stronę <b>%{name}</b>"
+    person: "%{name} nie uczestniczy już w tym projekcie"
+    task: "Usunięto zadanie <b>%{name}</b>"
+    task_list: "Usunięto listę zadań <b>%{name}</b>"
+    upload: "Usunięto plik <b>%{name}</b>"
+  dividers: 
+    actions: 
+      delete_confirm: "Jesteś pewien że chcesz usunąć ten rozdzielacz?"
+    edit: 
+      submit: Aktualizacja
+    new: 
+      submit: Dodaj
+  emailer: 
+    common: 
+      answer_above_this_line: "ODPOWIEDZ POWYŻEJ TEJ LINI BY OPUBLIKOWAĆ ODPOWIEDZ"
+      do_not_answer: "Nie odpowiadaj na tego email'a."
+    confirm: 
+      follow_the_link: "W celu <b>ukończenia rejestracji</b> na Teambox, musisz się zalogować klikając na ten link:"
+      hey: "Hej, %{user_name}!"
+      log_in: "Zaloguj się do Teambox teraz!"
+      plaintext_link: "Jeśli to nie działa, skopiuj i wklej następujący link do pasku adresu przeglądarki:"
+      problems: "Jeśli masz jakieś problemy, skontaktuj się z nami na %{support}"
+      report_abuse: "Otrzymałeś tę wiadomość ponieważ zarejestrowałeś się na Teambox pod następującym adresem email: %{email}"
+      subject: "Zacznij z Teambox"
+    forgot_password: 
+      subject: "Przywracanie hasła dla Teambox"
+    invitation: 
+      accept_the_invitation: "Zaakceptuj zaproszenie do rozpoczęcia współpracy"
+      collaborate_with: "%{name} chce współpracować z tobą na Teambox:"
+      current_users: "Obecni użytkownicy w tym projekcie."
+      plaintext_link: "Jeśli powyższy link nie działa, skopiuj i wklej następujący kod do pasku adresu przeglądarki:"
+      plan_share_and_collaborate: "Planuj, dziel się i śledź to co zostało już zrobione. Proste tak jak powinno być."
+      report_abuse: "Ten email został do ciebie wysłany przez twojego znajomego. Proszę zgłosić jakiekolwiek nadużycia."
+      subject: "%{user} udostępnił ci projekt [%{project}]"
+      subject_without_project: "%{name} zaprosił Cię do Teambox"
+      teambox_is_a_pm_platform: "Teambox jest platformą do współpracy w czasie rzeczywistym."
+      you_have_been_invited_to: "Zostałeś zaproszony do projektu <b>%{project}</b>"
+    invitation_group: 
+      subject: "%{user} udostępnił ci grupę [%{group}]"
+      you_have_been_invited_to: "Zostałeś zaproszony do grupy <b>%{group}</b>"
+    notify: 
+      are_watching: "subskrybują tę dyskusję i będą otrzymywać przyszłe komentarze. "
+      assigned_to: "Przypisz do <b>%{user}</b>"
+      comment: "Skomentuj na ścianie projektu:"
+      comments: "%{number} komentarzy"
+      conversation: "Dyskusja:"
+      due_on: "Do %{date}"
+      my_tasks: "Więcej zadań przypisanych do Ciebie w %{project}"
+      notification_settings: "Możesz zmienić <a href='%{url}'>ustawienia powiadomień</a> dla przyszłych email'i"
+      project: "Projekt Teambox:"
+      recent_conversations: "Ostatnie dyskusje dla %{project}"
+      reply: "Możesz również odpisać na ten email w celu odpowiedzi do dyskusji"
+      status: "Status: %{status}"
+      stop_watching: "<a href='%{stop_watching_url}'>Przestań obserwować</a> ten temat by przestać otrzymywać powiadomienia email."
+      task: "Zadanie:"
+      task_commands: "Napisz #resolve, #reject or #hold na początku swojej odpowiedzi by zmienić status zadania. Napisz #%{username} by przypisać je do @%{nazwa użytkownika}, itd."
+      task_list: "Lista zadań:"
+      view_online: "Możesz <a href='%{link}'>zobaczyć tę dyskusję online</a> w celu odpowiedzi lub dołączenia plików."
+    reset_password: 
+      follow_the_link: "W celu <b>ustawienia nowego hasła</b> w Teambox, musisz zalogować się następującym linkiem:"
+      hey: "Cześć, %{user_name}!"
+      log_in: "Zaloguj się do Teambox już teraz!"
+      plaintext_link: "Jeśli to nie działa, skopiuj i wklej następujący link do paska adresu:"
+      problems: "Jeśli wystąpiły jakiekolwiek problemy, proszę się z nami skontaktować %{support}"
+      report_abuse: "Otrzymałeś tę wiadomość ponieważ zapisałeś się do Teambox za pomocą następującego adresu email:  %{email}"
+      subject: "Twoje hasło zostało pomyślnie zmienione"
+      successfully_reset: "Twoje hasło zostało zmienione"
+    upload: 
+      file: "Plik:"
+      uploaded_by: "wysłany przez"
+  example_projects: 
+    new: 
+      create: "Stwórz przykładowy projekt"
+      error: "Nie można stworzyć przykładowego projektu"
+      error_list: "Nie można było stworzyć przykładowego projektu. Następujące projekty są niepoprawne %{list}."
+      learn: "Ucz się na przykładach"
+      line1: "To twój pierwszy raz na Teambox, możesz stworzyć przykładowy projekt z danymi."
+      line2: "Nawigowanie po stronach pozwoli ci się nauczyć jak działają poszczególne elementy Teambox'a."
+      line3: "Upewnij się że <b>przeczytałeś instrukcje</b> i <b>się pobawiłeś</b> tworząc, edytując i usuwając elementy!"
+      line4: "W tym projekcie nie będziesz mógł zapraszać ludzi, ale wszystko inne już tak."
+  form: 
+    cancel: Anuluj
+  groups: 
+    column_group: 
+      projects: Projekty
+      your_groups: "Twoje grupy"
+    edit: 
+      submit: Aktualizuj
+    errors: 
+      already_own: "Już posiadasz grupę!"
+      no_edit: "Nie możesz edytować tej grupy"
+      not_admin: "Nie możesz zarządzać tą grupą"
+      not_enabled: "Grupy są niedozwolone w tym systemie"
+      upgrade: "W celu stworzenia <b>firmowej domeny</b> musisz kliknąć %{link}."
+      upgrade_account: "Uaktualnij swoje konto"
+    fields: 
+      description: "HTML który pokaże się na stronie głównej"
+      name: Nazwa
+      permalink: Permalink
+      permalink_description: "Domena dzięki której możesz wejść na swoją grupę"
+    header: 
+      leave: Opuść
+      remove: Usuń
+    index: 
+      description: "Używaj grup by dzielić się zasobami z innymi, i by łączyć siły przy projektach pod jedną nazwą!"
+      groups_in: "Grupy są w "
+      no_groups: "Nie należysz do tej grupy"
+      remove_project: Usuń
+      submit_project: Dodaj
+      title: Grupy
+      whats_this: "Co to jest?"
+      your_group: "Twoja grupa"
+    logo_fields: 
+      current: "Obecne logo"
+      delete: Usuń
+      description: "Logo pojawi się we wszystkich projektach należących do tej grupy"
+      upload: Upload
+    new: 
+      created: "Twoja grupa może zostać stworzona"
+      explain: "Możesz posiadać tylko jedną grupę"
+      invalid_group: "Niewłaściwa grupa"
+      submit: Stwórz
+      title: "Stwórz grupę"
+    primer: 
+      configure_domain: "Możesz użyć dowolnej subdomeny, np. http://yourcompany.teambox.com, albo możesz użyć odnośnika do własnej domeny, np.http://yourdomain.com. <a href='%{link}' target='_blank'>Sprawdź jak to zrobić</a>. "
+      create_group: "Stwórz grupę"
+      explain: "Grupy są doskonałym narzędziem do dzielenia się doświadczeniem. Możesz mieć ekran logowania z w łąsnym logo i tekstem HTML"
+      no_group_create: "Nie posiadasz grupy. %{link}."
+    search: 
+      invite: Zaproszenie
+      invite_people: "Zaproś ludzi do grupy"
+      username_or_email: "Nazwa użytkownika lub email"
+    show: 
+      add_project: "Dodaj projekt"
+      edit: Edytuj
+  hours: 
+    all_tasks: "Wszystkie zadania"
+    all_users: "Wszyscy użytkownicy"
+    comments: "Wpisy Czasowe"
+    entry_hours: godzin
+    entry_total: "W sumie"
+    filter_assigned: 
+      anybody: Ktokolwiek
+      my_tasks: "Moje zadania"
+    filter_by: "Filtruj wg."
+    filter_project: 
+      all: "Wszystkie projekty"
+    filters: 
+      assigned_to: Ludzi
+      projects: Projekty
+      tasks: Zadania
+    report: Zgłoś
+    reports: 
+      project: Projekty
+      task: Zadania
+      user: Użytkownicy
+    week_num: "Tydzień %{num}"
+    week_total: "W sumie"
+  invitations: 
+    destroy: 
+      discarded: "Zaproszenie %{user} zostało olane"
+    errors: 
+      invalid: "Niewłaściwe zaproszenie"
+      invalid_code: "Niewłaściwy kod"
+    fields: 
+      user_or_email: "Wprowadź nazwy użytkowników swoich pracowników lub ich adresy email:"
+    group_invitation: 
+      invited_email: "%{inviter} zaprosił <b>%{email}</b> do grupy. "
+      invited_user: "%{inviter} zaprosił <b>%{invitee}</b> do grupy."
+    index_user: 
+      no_invitations: "Nie masz żadnych oczekujących zaproszeń do projektów."
+      title: "Zaproszenia czekające na akceptacje"
+    invitation: 
+      discard: "Odrzuć zaproszenie"
+      invited_email: "%{inviter} zaprosił <b>%{email}</b> do projektu"
+      invited_user: "%{inviter} zaprosił <b>%{invitee}</b> do projektu"
+      pending: "Email został wysłany do tego użytkownika, jednak jeszcze go nie potwiedził"
+      resend: "Wyślij ponownie zaproszenie email"
+      time_ago: "(%{time_ago_in_words} temu)"
+    invite_format: 
+      enter_this: 
+        title: Wpisz
+      title: "W polu użytkownika/adresu email wpisz albo listę nazw użytkowników albo ich adresów email, na przykład:"
+      to_invite: 
+        not_example: "(NIE <span class=\"mention\">@fred</span> ani <span class=\"mention\">@lisa</span>) "
+        title: "Aby zaprosić"
+    pending: 
+      invited_to_join: "%{by} zaprosił Cię do projektu %{project}.\n"
+      invited_to_join_group: "%{by} zaprosił Cię do grupy %{group}.\n"
+      to_access_or: "by uzyskać dostęp do projektu lub"
+      to_access_or_group: "by uzyskać dostęp do grupy lub"
+    recent: 
+      invite: "Zaproś  %{username}"
+    resend: 
+      resent: "Zaproszenia zostały ponownie wysłane do %{recipient}"
+      return: Powróć
+    search: 
+      help: Pomoc
+      invite: Zaproś
+      invite_from_project: "Zaproś do Proejktu"
+      invite_people: "Zaproś ludzi do tego projektu"
+      role: "Wybierz rolę"
+      submit: Wyślij
+      username_or_email: "Podaj nazwę współpracownika lub email"
+    sent: 
+      email_sent: "Zaproszenie email zostało wysłane"
+  latest_announcement: "Śledź <a href='http://blog.teambox.com'>nasz blog</a> w celu uzyskania najnowszych informacji o Teambox."
+  locales: 
+    ar: Arabski
+    bs: Bośniacki
+    bt: Bułgarski
+    ca: Kataloński
+    cz: Czeski
+    da: Duński
+    de: Niemiecki
+    dsb: Dolnołużycki
+    el: Grecki
+    en: Angielski
+    es: Hiszpański
+    et: Estoński
+    fa: Perski
+    fi: Fiński
+    fr: Francuski
+    he: Hebrajski
+    hr: Chorwacki
+    hsb: Górnołużycki
+    hu: Węgierski
+    id: Indonezyjski
+    is: Islandzki
+    it: Włoski
+    ja: Japoński
+    ko: Koreański
+    lo: Laotański
+    lt: Litewski
+    lv: Łotewski
+    mk: Macedoński
+    nl: Holenderski
+    ? "no"
+    : Norweski
+    pl: Polski
+    pt-BR: "Portugalski (Brazylia)"
+    pt-PT: "Portugalski (Portugalia)"
+    ro: Rumuński
+    ru: Rosyjski
+    se: Szwedzki
+    sk: Słowacki
+    sl: Słoweński
+    sr: Serbski
+    sw: Suahili
+    th: Tajski
+    tr: Turecki
+    uk: Ukraiński
+    vi: Wietnamski
+    zh: Chiński
+    zh-TW: "Chiński (tradycyjny)"
+  not_found: 
+    conversation: "Dyskusja %{id} nie została znaleziona w tym projekcie."
+    group: "Ta grupa %{id} nie istnieje."
+    page: "Strona %{id} nie została znaleziona w tym projekcie."
+    project: "Projekt %{id} nie istnieje."
+    task: "Zadanie %{id} nie zostało znalezione w tym projekcie."
+    task_list: "Lista zadań %{id} nie została znaleziona w tym projekcie."
+    user: "Użytkownik nie istnieje."
+  notes: 
+    actions: 
+      delete_confirm: "Jesteś pewien że chcesz usunąć tę notatkę?"
+    edit: 
+      submit: "Aktualizuj Notatkę"
+    fields: 
+      body: Body
+      text_styling: "Stylizacja tekstu"
+      title: Tytuł
+    new: 
+      submit: "Dodaj Notatkę"
+  number: 
+    currency: 
+      format: 
+        delimiter: ","
+        format: "%u%n\n"
+        precision: 2
+        separator: "."
+        unit: $
+    format: 
+      delimiter: ","
+      precision: 3
+      separator: "."
+    human: 
+      format: 
+        precision: 1
+      storage_units: 
+        format: "%n %u"
+        units: 
+          byte: 
+            one: bit
+            other: bitów
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+  oauth: 
+    account_linked: "Twoje konto zostało podłączone."
+    already_linked_to_your_account: "Ten serwis jest już połączony z twoim kontem. Możesz się za jego pomocą zalogować."
+    already_taken_by_other_account: "Ten serwis jest już połączony z innym kontem w systemie. Spróbuj się wylogować i zalogować ponownie za jego pomocą. By połączyć go z innym kontem musisz go najpierw odłączyć."
+    app_unlinked: "App odłączony"
+    auth_status: "OAuth Auth"
+    auth_status_link: "Połącz ze swoim kontem"
+    auth_status_linked: "Połączone z dostawcą"
+    link_account: "Połącz z kontem."
+    logged_in: "Logowanie zakończone powodzeniem"
+    not_linked: "Serwis nie jest połączony z Twoim kontem Teambox."
+    this_account_will_be_linked_to: "To konto zostanie połączone z %{provider}"
+    unlink_account: "Odłącz konto"
+    user_already_exists_by_email: "Użytkownik %{email} posiada już konto Teambox. <br/>Zaloguj się ze swojego konta i dodaj link ze swojego panelu ustawień"
+    user_already_exists_by_login: "Użytkownik %{login} ma już konto Teambox. <br/>Zaloguj się z tego konta i dodaj go z panelu ustawień"
+    your_account_is_linked: "Twoje konto %{provider} jest <strong>podłączone</strong> do Teambox'a."
+    your_account_is_not_linked: "Twój %{provider} profil <strong>nie jest</strong> połączony z Teambox'em"
+  page_title: 
+    archived_task_lists: "Archiwizuj zadania"
+    create_uploads: "Wyślij plik"
+    create_users: Rejestracja
+    edit_projects: "Edytuj Projekt"
+    edit_users: Edytuj
+    index_conversations: "Wszystkie dyskusje"
+    index_pages: "Wszystkie Strony"
+    index_people: Uczestnicy
+    index_projects: "Wszystkie projekty"
+    index_task_lists: "Wszystkie Listy Projektów"
+    index_uploads: "Wszystkie wysłane pliki"
+    new_conversations: "Nowa dyskusja"
+    new_example_projects: "Stwórz Przykładowy Projekt"
+    new_pages: "Nowy Projekt"
+    new_projects: "Nowy Projekt"
+    new_users: Rejestracja
+    results_search: Szukaj
+    show_plans: Plany
+    show_projects: Przegląd
+    welcome_users: Witamy!
+  pages: 
+    buttons: 
+      new_divider: Rozdzielacz
+      new_note: Tekst
+      new_task_list: "Lista zadań"
+      new_upload: Plik
+    column: 
+      all_pages: "Wszystkie Strony"
+      cant_create: "Nie masz pozwolenia do tworzenia nowych stron dla tego projektu"
+      new_page: "Nowa strona"
+      reorder: "Zmień kolejność"
+      reorder_done: Gotowe
+    edit: 
+      submit: Aktualizacja
+      title: "Edytuj Stronę"
+    fields: 
+      description: Opis
+      description_description: "Dodatkowe notatki na ten temat. Niemożna używać stylów formatowania tekstu"
+      name: Nazwa
+      name_description: "Wybierz krótką nazwę i opisowy tytuł"
+    index: 
+      pages_in_this_project: "Strony w tym projekcie "
+      rss: 
+        description: "Strony projektu %{name}"
+        title: "%{name} strony"
+    new: 
+      define1: "Tutaj możesz <b>dzielić się przydatnymi informacjami</b> ze swoim zespołem: interesującymi linkami, instrukcjami, wzorami email..."
+      define2: "Edytowanie strony jest proste i przyjemne dzięki użyciu metody \"przeciągnij i upuść\""
+      feature1: "<b>Dziel się</b>. Wszyscy twoi współpracownicy mogą widzieć i edytować strony projektów."
+      feature2: "<b>Publikuj</b>. Natychmiastowe publikowanie za pomocą stron. Pokaż świat."
+      feature3: "<b>Drukuj</b>. Strony które są przyjazne do druku. Spróbuj drukować lub eksportować do PDF!"
+      feature4: "<b>Wiki</b>. Strony zachowują się jak wiki, dają możliwość szybkiego dostępu do informacji o projekcie."
+      footer1: "Korzystaj z Teambox jako swojej <b>tablicy</b> dla często używanych rzeczy."
+      footer2: "Możesz również dołączyć pliki do dowolnej strony notatki"
+      submit: "Stwórz stronę"
+      title: "Nowa strona"
+    primer: 
+      create_first: "Stwórz pierwszą stronę dla tego projektu!"
+      define1: "Tutaj możesz <b>dzielić się przydatnymi informacjami</b> ze swoim zespołem: wskazówkami, interesującymi linkami, instrukcjami, wzorami email..."
+      define2: "Edytowanie strony jest proste i przyjemne dzięki użyciu metody \"przeciągnij i upuść\""
+      empty: "Ten projekt nie posiada jeszcze żadnych stron."
+      footer1: "Użyj Teamboksa jako swojej tablicy do przypinania najczęściej używanych rzeczy"
+      footer2: "Możesz również dołączyć pliki do dowolnej strony swojej notatki"
+      item1: "<b>Dziel się</b>. Wszyscy Twoi współpracownicy mogą widzieć i edytować stronę projektu."
+      item2: "<b>Publikuj</b>. Natychmiastowe publikowanie za pomocą stron. Pokaż świat."
+      item3: "<b>Drukuj</b>. Strony które są przyjazne do druku. Spróbuj drukować lub eksportować do PDF!"
+      item4: "<b>Wiki</b>. Strony zachowują się jak wiki, dają możliwość szybkiego dostępu do informacji o projekcie."
+    slots: 
+      insert_here: "Wprowadź Tutaj"
+  people: 
+    column: 
+      confirm_delete: "Jesteś pewien że chcesz opuścić ten projekt?"
+      contact_admins: "W tym projekcie tylko %{admins} mogą zapraszać nowych członków."
+      inviting: "Zapraszanie innych użytkowników"
+      leave_project: "Opuść ten projekt"
+      leaving: "Opuszczanie projektu"
+      no_contacts: "Nie ma osób dostępnych do zaproszenia."
+      only_admins_can_invite: "Tylko administratorzy mogą zapraszać innych do tego projektu."
+      select_project: "Wybierz projekt"
+      you_can_leave: "Możesz opuścić ten projekt w każdej chwili. Jeśli to zrobisz, nie będziesz już miał dostępu do jego danych i nie będziesz już dostawał dalszych powiadomień. Inni nadal bedą mieli do niego dostęp i żadne dane nie ulegną kasacji."
+    edit: 
+      submit: "Aktualizuj osobę"
+    errors: 
+      user_or_email: "Użytkownik nie znaleziony. Wprowadź jego nazwę użytkownika lub email."
+      users_or_emails: "Niewłaściwy użytkownik lub adres email"
+    fields: 
+      admin: "Administratorzy, mogą zapraszać innych do tego projektu i usuwać komentarze."
+      commenter: "Komentatorzy, mogą komentować ale nie tworzyć nowe elementy."
+      observer: "Obserwator, dostęp read-only."
+      participant: "Uczestnik, może robić wszystko prócz zapraszania innych."
+      role: Rola
+    header: 
+      admin: Administrator
+      commenter: Komentator
+      confirm_delete: "Jesteś pewien że chcesz usunąć tę osobę z projektu?"
+      leave_project: "Opuść Projekt"
+      observer: Obserwator
+      owner: "Właściciel projektu"
+      participant: Uczestnik
+      remove: Usuń
+      transfer: "Transferuj Własność"
+    link: 
+      edit: Edytuj
+    update: 
+      success: "Edytowałeś role  %{name}'a"
+  plans: 
+    copies: 
+      copy1: "Lubisz Teambox? Jesteśmy pełno-etatowymi pracownikami! <a href='%{link}'>Uaktualnij go teraz</a> by wspierać jego rozwój!"
+      copy2: "<a href='%{link}'>Uaktualnij teraz</a> by dostać więcej projektów, przestrzeni i wyszukiwarkę wszystkich projektów."
+      copy3: "<a href='%{link}'>Osiągnij więcej</a> za pomocą konta premium! Dodatkowe miejsce i do 2000 projektów."
+      copy4: "<a href='%{link}'>Pracuj lepiej</a> z kontem premium: Wyszukiwarka obejmująca wszystkie projekty."
+      copy5: "<a href='%{link}'>Uaktualnij swoje konto Teambox teraz</a> i ciesz się profesjonalną współpracą!"
+      copy6: "Wyszukiwarka obejmująca wszystkie projekty może zaoszczędzić godziny. <a href='%{link}'>Uaktualnij teraz</a> by ją mieć!"
+      copy7: "Twój biznes coś znaczy! <a href='%{link}'>Zdobądź najlepszą pomoc</a> dla Teambox z naszym planem premium."
+    show: 
+      branding: 
+        configure: "Twój plan wspiera indywidualny branding i nazwy. <a href='%{link}'>Skonfiguruj swój branding tu</a>."
+        not_available: "Twój program nie wspiera <strong>indywidualnego brandingu</strong>. Uaktualnij do wyższego planu by go zdobyć."
+      current_plan: "Twój obecny plan to <strong>%{name}</strong>."
+      max_projects: "Możesz prowadzić do %{max} projektów."
+      max_storage: "Możesz gromadzić do %{max}."
+      plan: "Twój Teambox Plan"
+  projects: 
+    edit: 
+      change_owner: "Zmień właściciela"
+      invalid_transferred: "Własność projektu nie może zostać przeniesiona, popraw błędy i spróbuj ponownie."
+      submit: "Zachowaj zmiany"
+      title_deletion: "Archiwizuj/Usuń Projekt"
+      title_ownership: Własność
+      title_picture: "Logo Projektu"
+      title_settings: "Ustawienia Główne"
+      transferred: "Własność projektu została przeniesiona."
+    fields: 
+      archived: "Archiwizuj ten Projekt"
+      archiving: "Archiwizuj ten Projekt"
+      confirm_delete: "Jesteś pewien że chcesz usunąć ten projekt na zawsze? NIE MA OD TEGO DROGI POWROTNEJ. Jeśli chcesz go zachować archiwizuj go."
+      forever: "Usuń ten projekt na zawsze"
+      name: "Nazwa <em>Trzymaj ją krótko i opisowo, dla przykładu Taggart Transcontinental.</em>"
+      new: 
+        time_tracking_docs: "Dowiedź się więcej."
+      owner: Właściciel
+      owner_description: "Właściciel jest osobą odpowiedzialną za projekt. Może usuwać z projektu do momentu przekazania władzy innemu użytkownikowi."
+      permalink: "Permalink <em>krótki identyfikator projektu</em>"
+      permalink_description: "To będzie adres projektu. Trzymaj go najkrócej jak się da. Spacje są dopuszczalne."
+      public_project: "Publiczne projekty. <em>Każdy ma do nich dostęp i może dołączyć do nich w <a href='/public'>sekcji publicznych projektów</a>.</em>"
+      settings: 
+        upgrade: "żeby <b>przywrócić projekt z archiwum</b> i móc go edytować musisz <a href='%{link}'>podnieść status swojego konta dostając więcej pojemności i możliwości</a>  albo zarchiwizować inne projekty"
+        you_cant_unarchive: "Masz %{active} aktywnych projektów a Twój aktualny plan pozwala na maksimum %{max}  projektów"
+      tracks_time: "Włącz śledzenie czasu. <em>Pozwoli to użytkownikom zapisywać czas poświęcony na wykonanie poszczególnych zadań.</em>"
+    index: 
+      archived: "Pokaż %{count} Archiwizowanych Zadań..."
+      new_project: "Nowy Projekt"
+      projects: "Moje Projekty"
+      rss: 
+        description: "Przegląd wszystkich projektów w Teambox"
+        title: "Przegląd projektów Teambox'a"
+      subscribe: "Subskrybuj kanał newsowy"
+    new: 
+      active_projects: 
+        one: "Masz 1 aktywny projekt."
+        other: "Masz %{count} aktywnych projektów."
+        zero: "Nie masz aktywnych projektów."
+      create_an_example_project: "Pierwszy raz na Teambox? <a href='%{link}'>Stwórz nowy projekt</b> by się pobawić i pouczyć."
+      created: "Twój projekt został stworzony!"
+      invalid_project: "Niewłaściwy projekt, popraw błędy i spróbuj ponownie."
+      invite_by_email: "Zaproś użytkowników poprzez wprowadzenie ich adresów email"
+      invite_people: "Zaproś innych użytkowników do projektu "
+      new_project: "Nowy Projekt..."
+      not_allowed: "Nie możesz tworzyć nowych projektów na obecnym koncie."
+      submit: "Stwórz konto i zacznij współpracować"
+      title: "Stwórz projekt"
+      upgrade: 
+        to_2: "<a href='%{link}'>Ulepsz swoje konto</a>by móc stworzyć<b>nawet do%{projects} projektów</b>, zgromadzić nawet<b>%{storage} Gb</b>danych i używać paska wyszukiwarki we wszystkich projektach"
+      you_can_create_more: 
+        one: "Możesz stworzyć %{count} projektów w obecnym planie pracy."
+        other: "Możesz stworzyć jeden dodatkowy projekt w obecnym planie racy."
+        zero: "Nie możesz dodać nowego projektu.<br/>Maksymalna liczba projektów które możesz utworzyć to %{max}."
+    new_primer: 
+      define1: "Projekt jest dzielony z twoimi współpracownikami."
+      define2: "W projekcie, każdy użytkownik może:"
+      feature1: "Aktualizować swój status."
+      feature2: "Brać udział w dyskusjach."
+      feature3: "Wysyłać załączniki."
+      feature4: "Przydzielać i przeglądać zadania."
+      feature5: "Komentować zadania."
+      feature6: "Śledzić czas spędzony przy konkretnych zadaniach."
+      feature7: "Tworzyć, edytować i przeglądać strony."
+      footer: "Będziesz właścicielem tego projektu. Możesz przekazać go innemu użytkownikowi w każdej chwili."
+      limited: "W darmowym koncie możesz wrzucać pliki do 50mb jako załączniki do projektu."
+      upgrade: "Uaktualnij swoje konto teraz!"
+    people_list: 
+      invite_people: "Zaproś innych..."
+      pending_invitations: 
+        one: "%{count} oczekujących zaproszeń"
+        other: "Oczekujące zaproszenie"
+      people_in_project: "Uczestnicy projektu"
+    primer: 
+      create_first: "Stwórz swój pierwszy projekt!"
+      define1: "Używaj projektów do <b>współpracy</b> grupowej przy: robieniu strony, organizacji imprezy, pracy dla klienta..."
+      define2: "Możesz tworzyć <b>tyle projektów ile chcesz</b> by dzielić się z różnymi użytkownikami online."
+      empty: "Nie masz ani nie należysz jeszcze do żadnych projektów"
+      footer: "Projekty są scentralizowanym sposobem współpracy, dzięki czemu już nigdy nie będziesz musiał wysyłać wiadomości email do swojego zespołu."
+      item1: "<b>Stwórz projekt</b>, nazwij go i<b>zaproś do niego swoje kontakty</b> by go zrealizować."
+      item2: "<b>Komentuj</b> o tym co robisz w każdym momencie na głównej osi czasu."
+      item3: "<b>Omawiaj</b> ważne decyzje dzięki Dyskusjom.\n"
+      item4: "<b>Planuj</b> co musi być zrobione i publikuj aktualizacje dzięki Zadaniom."
+      item5: "<b>Dziel się informacjami</b> dzięki łatwo edytowalnym stronom projektu"
+    recent_conversations: 
+      first: "+ Stwórz pierwszy wątek"
+      new: "+ Nowa dyskusja"
+      title: "Ostatnie dyskusje"
+      view_all: "Zobacz wszystkie dyskusje"
+    show: 
+      new_task_list_link: "Lista nowych zadań"
+      rss: 
+        description: "Ostatnia aktywność dla tego projektu %{name}"
+        title: "%{name} kanał aktywności"
+      subscribe: "Subskrybuj kanał newsowy"
+      text_styling: "Stylizacja tekstu"
+      tip: "Napisanie czyjejś @'nazwy użytkownika' wyśle mu powiadomienie email o tej wiadomości"
+      update_your_status: "Aktualizuj swój status"
+  reset_passwords: 
+    create: 
+      invalid: "Strona zmiany hasła która włączyłeś jest niepoprawna lub uległa przedawnieniu. Spróbuj użyć Przypomnienia Hasła ponownie ze strony głównej.<br/>Jeśli to nie zadziała, skontaktuj się z nami %{support}"
+      not_found: "Nie możemy znaleźć użytkownika z tym adresem email: %{email}<br/>Proszę sprawdzić ten email jeszcze raz. Jeśli to nie zadziała, skontaktuj się z nami %{support}"
+      password_not_updated: "Nowa hasło nie jest prawidłowe. Spróbuj ponownie."
+      password_updated: "Hasło zostało pomyślnie zmienione"
+    new: 
+      back: "Wróć do strony logowania"
+      email: "Z którym adresem email się zarejestrowałeś?"
+      submit: "Wyślij mi link do resetowania mojego hasła"
+      title: "Więc nie pamiętasz swojego hasła?"
+    reset: 
+      submit: "Zresetuj moje hasło"
+      title: "Teraz możesz zresetować swoje hasło"
+    sent: 
+      change_password_now: "Jesteś zalogowany. <b>Wybierz teraz nowe hasło</b> dzięki czemu go nie zapomnisz!"
+      follow_the_link: "Włącz link z email'a by się zalogować do Teambox! Jeśli nie możesz go znaleźć sprawdź swój folder ze spam'em."
+      login_link_sent: "Wysłaliśmy ci email na %{email} być mógł odzyskać swoje hasło."
+      not_found: "Ten email <b>%{email}</b> nie należy do żadnego użytkownika Teambox. Może źle go napisałeś?"
+      title: "Resetuj hasło"
+  search: 
+    index: 
+      report: "%{count} wyników dla \"%{term}\""
+      search_again: "Szykaj ponownie"
+      title: "Szukaj we wszystkich projektach"
+      title_in_project: "Szukaj w projekcie %{project}"
+    placeholder: "Przeszukaj wszystkie projekty"
+    placeholder_in_project: "Przeszukaj projekt"
+    submit: Szukaj
+  sessions: 
+    fields: 
+      forgot: "Nie pamiętasz hasła?"
+      password: Hasło
+      signup: Zarejestruj
+      username_or_email: "Email lub Nazwa użytkownika"
+    new: 
+      login_failed: "Nie można zalogować jako %{login}"
+      submit: Login
+      title: Login
+      video: "O co chodzi z Teambox?"
+  shared: 
+    archived_projects: 
+      archived_projects: "Archiwizowane Projekty"
+    footer: 
+      help: "Pomoc i Wsparcie"
+      mobile: "Wersja mobilna"
+      support: "Feedback i błędy"
+    gantt_banner_primer: 
+      title: "Nie ma zaległych zadań"
+    global_navigation: 
+      home: Główna
+      login: Login
+      logout: Wyloguj
+      project_invitations: "Zaproszenia (%{count})"
+      settings: "Ustawienia "
+    instructions: 
+      send_email: "Dodaj nowy komentarz poprzez email..."
+      send_email_conversations: "Rozpocznij nową dyskusję poprzez email..."
+      send_email_help_conversation: "By dodać komentarz do tego wątku wyślij email do<a href=\"mailto:%{email}\">%{email}</a>. Tylko członkowie projektu mogą dodawać komentarze"
+      send_email_help_conversations: "By rozpocząć nową dyskusję wyślij email pod adres <a href=\"mailto:%{email}\">%{email}</a> gdzie tytuł maila jest tytułem dyskusji a jego treść tekstem dyskusji. Tylko członkowie projektu mogą rozpoczynać dyskusję."
+      send_email_help_project: "By dodać komentarz do strony głównej projektu wyślij email do <a href=\"mailto:%{email}\">%{email}</a>. Tylko członkowie projektu mogą dodawać komentarze na stronie głównej"
+      send_email_help_task: "By dodać nowy komntarz do tego zadania wyślij email do <a href=\"mailto:%{email}\">%{email}</a>. Tylko członkowie projektu mogą dodawać komentarze do poszczególnych zadań"
+      subscribe_to_calendars: "Subskrybuj kalendarze..."
+      subscribe_to_feeds: "Subskrybuj kanał..."
+    navigation: 
+      all_projects: "Wszystkie projekty"
+      new_project: +
+      welcome: Witamy
+    project_navigation: 
+      all_conversations: "Wszystkie dyskusje"
+      all_pages: "Wszystkie Strony"
+      all_task_lists: "Wszystkie zadania"
+      conversations: Dyskusje
+      files: Pliki
+      gantt: "Kalendarz i wykresy"
+      groups: "Grupy Projektowe "
+      invitations: Zaproszenia
+      login: Login
+      overview: Przegląd
+      pages: Strony
+      people: Uczestnicy
+      project_settings: "Ustawienia projektu"
+      signup: Rejestracja
+      task_lists: "Lista zadań"
+      time_tracking: "Śledzenie czasu"
+    project_settings_navigation: 
+      deletion: "Archiwizacja/Usunięcie Projektu"
+      general: "Ustawienia Główne"
+      ownership: Własność
+      picture: "Obrazek Projektu"
+    projects: 
+      projects: Projekty
+    public_navigation: 
+      community: Społeczność
+      help: "Pomoc i Wsparcie"
+      home: Teambox
+      privacy: Prywatność
+      services: Usługi
+      terms: "Warunki użytkowania"
+      tour: "Jak to Działa"
+      users: "Nasi użytkownicy"
+    strip: 
+      archived: "Ten projekt został archiwizowany. By edytować lub komentować ten projekt, musisz go przywrócić z archiwum na <a href='%{link}'>Stronie Ustawień Projektu</a>"
+    task_navigation: 
+      all_tasks: "Wszystkie zadania"
+      everybodys_tasks: "Zadania wszystkich"
+      hide_archived_tasks: "Ukryj zarchiwizowane zadania"
+      my_assigned_tasks: "tylko zadania przypisane do mnie"
+      my_tasks: 
+        one: "Moje 1 zadanie"
+        other: "Moje %{count} zadania"
+      unarchived_tasks: "Przywrócone z archiwum zadania"
+    upcoming_events_primer: 
+      title: "Nie ma zadań do pokazania "
+    upgrade_browser: 
+      chrome: "Chrome,\n"
+      firefox: Firefox
+      ie: "Zaktualizuj Internet Explorer'a"
+      or_install: "lub zainstaluj"
+      safari: Safari
+      upgrade: "Używasz starej wersji Internet Explorer'a. Teambox może nie działać na niej w 100%."
+    user_navigation: 
+      account_settings: "Ustawienia Konta"
+      delete_account: "Usunięcie konta..."
+      linked_accounts: "Podłączone Konta"
+      notifications: Powiadomienia
+      plans_and_billing: "Plany i Opłaty"
+      profile_information: "Informacje o profilu"
+      profile_picture: "Zdjęcie profilu"
+    watchers: 
+      nobody_watching: "Nikt nie obserwuje"
+      people_watching: "Obserwują:"
+      started_watching: "Od teraz będziesz dostawał powiadomienia email o zmianach."
+      stopped_watching: "Od teraz przestaniesz dostawać powiadomienia dla tego obiektu."
+      unwatch: "Przestań Obserwować"
+      watch: Obserwuj
+  support: 
+    array: 
+      last_word_connector: ", i"
+      two_words_connector: i
+      words_connector: ","
+    select: 
+      prompt: "Proszę wybrać"
+  task_lists: 
+    actions: 
+      archive: "archiwizuj tę listę zadań"
+      confirm_resolve_and_archive: "Czy jesteś pewien że chcesz rozwiązać i zarchiwizować tę listę zadań?"
+      rename: "Zmień nazwę listy zadań"
+      resolve_and_archive: "Rozwiąż wszystkie zadania i archiwizuj"
+      set_dates: "Wprowadź datę początkową i końcową"
+      show_archived: 
+        one: "Pokaż 1 archiwizowane zadanie"
+        other: "Pokaż %{count} archiwizowanych zadań"
+    archive_box: 
+      unarchive_list: "Ta lista zadań jest zarchiwizowana "
+    archived: 
+      description: "Przeglądasz obecnie zarchiwizowane zadania.  To zadania które zostały zamknięte. "
+      title: "Wszystkie archiwizowane zadania"
+    column: 
+      cant_create: "Nie masz pozwolenia do edytowania tego projektu"
+      gantt_view: "Wykres Gantt'a i kalendarz"
+      new_task_list: "Nowa lista zadań"
+      other_views: "Inne widoki"
+      subscribe: "Subskrybuj listę newsów"
+    destroy_message: 
+      deleted: "Lista zadań <b>%{name}</b> została pomyślnie usunięta"
+    edit: 
+      submit: "Aktualizuj Listę zadań"
+    errors: 
+      name: 
+        cant_be_blank: "Nazwa nie może być pusta"
+        too_long: "Nazwa musi być krótsza niż 255 znaków"
+    fields: 
+      finish_on: "Koniec... <i>optionalnie</i>"
+      name: "Wybierz nazwę dla Listy Zadań <i>np. Przygotować Prototyp</i>"
+      optional: "Jeśli zaczynasz i kończysz daty, to zadanie będzie pokazane na diagramie Gantta"
+      start_on: "Rozpoczyna się... <i>opcjonalnie</i>"
+      task_list: "Lista zadań definiuje kamienie milowe dla projektu. Wewnątrz listy możesz tworzyć nowe Zadania i przypisać je do ludzi."
+      title: "Lista nowych zadań"
+    filter: 
+      anybody: Ktokolwiek
+      anytime: Kiedykolwiek
+      assigned_to: "Wyświetl zadania przypisane do..."
+      due_date: "Wyświetl zadania z datą do..."
+      late_tasks: "Późne zadania"
+      my_tasks: "Moje zadania"
+      no_date_assigned: "Bez przypisanej daty"
+      today: Dziś
+      tomorrow: Jutro
+      unassigned: Nieprzypisane
+    gantt_view: 
+      back_to_normal_view: "Wróć do zwykłego widoku"
+      view_for_all_projects: "zobacz kalendarz i wykres Gantt'a dla wszystkich projektów"
+    index: 
+      add_link: "Nowa lista zadań"
+      empty: "Brak zadań w tej kategorii!"
+      ends_on: "Kończy się %{date}"
+      gantt_view: "Wykres Gantt'a i kalendarz"
+      no_dates_assigned: "Brak przypisanej daty"
+      other_views: "Inne widoki"
+      rss: 
+        description: "Aktywność zadań dla projektu %{name}"
+        title: "%{name} aktualizacje zadań"
+      starts_on: "Zaczyna się %{date}"
+      tasks_for_all_projects: "Zadania wśród wszystkich projektów"
+      tasks_for_project: "Lista zadań dla tego projektu"
+    link: 
+      edit: Edytuj
+      new: "Nowa lista zadań"
+      reorder: "Zmień kolejność List zadań"
+      reorder_done: "Koniec zmiany kolejności"
+      unarchive: "Przywróć z archiwum"
+    new: 
+      submit: "Dodaj listę zadań"
+      title: "Nowa lista zadań"
+    overview_box: 
+      ends_on: "Kończy się:"
+      starts_on: "Rozpoczyna się:"
+      this_list: "Ta lista zadań"
+      undefined: Niezdefiniowane
+    primer: 
+      create_first: "Stwórz pierwsze zadanie w tym projekcie"
+      define: "Używaj zadań do <b>planowania prac</b>, <b>śledzenia zmian</b> oraz <b> sprawdzania co zostało już zrobione</b>. <br/><i>Co? Kto? Kiedy?</i> Zadania mogą być oznaczone statusem, wykonawcą oraz terminem realizacji"
+      empty: "Ten projekt nie ma jeszcze żadnych zadań."
+      footer1: "Zadania są prostą i odpowiednią metodą <b>doprowadzenia roboty do końca</b> i pokazywania tego innym."
+      footer2: "Już czas zapomnieć o Excel'u i planowania w arkuszu oraz skomplikowanych diagramach Gantta!"
+      item1: "<b>Plan</b>. Stwórz zadania wewnątrz pojedynczych list i przypisz je swoim współpracownikom."
+      item2: "<b>Raport</b>. Dodawaj komentarze do pojedynczych zadań. Dodawaj pliki. Proś o odpowiedź zwrotną."
+      item3: "<b>Śledź</b>. Otrzymuj powiadomienia dla zadań powiązanych z Tobą."
+      item4: "<b>Oceń</b>. Ukończone zadanie nie zostaje usunięte, więc możesz uzyskać później uzyskać dostęp do wiadomości i plików"
+    show: 
+      title: "Lista zadań: %{name}"
+  tasks: 
+    archive_box: 
+      archive: "Archiwizuj to zadanie"
+      reopen: "Przywróć to zadanie"
+      you_are_done: "Wygląda na to że skończyłeś z tym zadaniem"
+    archive_message: 
+      archived: "Zadanie <b>%{name}</b> zostało pomyślnie zarchiwizowane!"
+    assigned: 
+      assigned_to: "Przypisz do %{user}"
+    create: "Dodaj zadanie"
+    destroy_message: 
+      deleted: "Zadanie <b>%{name}</b> zostało pomyślnie usunięte!"
+    due_on: 
+      due_on: Do
+      today: Dziś
+      tomorrow: Jutro
+    edit: 
+      submit: "Aktualizuj zadanie"
+    errors: 
+      name: 
+        cant_be_blank: "nie może zostać puste"
+        too_long: "musi być krótsze niż 255 znaków"
+    fields: 
+      assigned_to: "Kto jest odpowiedzialny?"
+      assigned_to_nobody: Nikt
+      body: "Co musi zostać zrobione? <i>opcjonalnie</i>"
+      due_on: "Co musi być zrobione przed... <i>opcjonalnie</i>"
+      name: "Wprowadź tytuł zadania <i>np. Wysłanie propozycji loga</i>"
+      optional: "Możesz wprowadzić lepsze instrukcje dla tego zadania poniżej."
+      task: "Wybierz aktywne zadanie. Im dokładnej, tym lepiej"
+      title: "Nowe zadanie"
+    link: 
+      edit: Edytuj
+      hide_archived_tasks: 
+        one: "Ukryj 1 archiwizowane zadanie"
+        other: "Ukryj %{count} archiwizowanych zadań"
+      new: "+ Dodaj Zadanie"
+    my_tasks: 
+      my_tasks: "Moje zadania we wszystkich projektach"
+    new: 
+      submit: "Dodaj zadanie"
+      title: "Nowe zadanie"
+    overdue: "%{days} dni opóźnienia"
+    overview_box: 
+      status: Status
+      title: "Obecne zadanie"
+    show: 
+      title: "Zadanie: %{name}"
+    status: 
+      hold: wstrzymane
+      new: nowe
+      open: przypisane
+      rejected: odrzucone
+      resolved: rozwiązane
+    unarchive_box: 
+      reopen: "Przywróć to zadanie"
+      task_is_closed: "To zadanie jest zamknięte i zarchiwizowane"
+      unarchive: "Przywróć z archiwum"
+  time: 
+    am: am
+    formats: 
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      long: "%B %d, %Y %H:%M"
+      short: "%I:%M %p"
+    pm: pm
+  uploads: 
+    comment_upload_link: Załącznik
+    form: 
+      description: "Tytuł <i>(opcjonalnie)</i>"
+      max_size: "Wielkość pliku nie może przekroczyć %{mb} MB"
+      presence: "Nie możesz wysłać pustego pliku"
+      select_file: "Wybierz plik"
+      upload: "Wyślij plik"
+    index: 
+      cant_create: "Nie masz pozwolenia by wysyłać pliki do tego projektu"
+      max_upload_size: "Maksymalna wielkość pliku to  %{mb} Mb"
+      new_file: "Wyślij plik"
+    new: 
+      select_a_file: "Wybierz plik"
+    primer: 
+      create_first: "Wyślij pierwszy plik do tego projektu!"
+      define1: "Miałeś kiedyś problemy z dzieleniem się plikami ze swoim zespołem? Teambox ułatwia dzielenie się!"
+      define2: "Możesz wysyłać pliki tutaj lub dodać załączniki w postaci dokumentów do dyskusji, zadań lub stron."
+      empty: "Ten projekt nie posiada jeszcze żadnych plików"
+      item1: "<b>Większe pliki</b> Wrzucaj pliki każdego rozmairu i zapomnij o ograniczeniach email."
+      item2: "<b>Wersjonowanie</b>. Wrzucaj nowe wersje plików by śledzić zmiany."
+      item3: "<b>Zawsze dostępne</b>. Pliki pozostają na swoim miejscu w projekcie dla przyszłych użyć."
+    tooltip: "Wyślij plik"
+    upload: 
+      download: Ściągnij
+      on_: na
+      remove: Usuń
+      uploaded_by: "Wysłany przez"
+  users: 
+    activation: 
+      activated: "Twoje konto zostało aktywowane! Witamy na Teamboksie :)"
+      already_done: "Już potwierdziłeś swój adres email!  Możesz teraz używać Teambox."
+      invalid: "<p>Niepoprawny lub przedawniony link dostępu. Zaloguj się ze swoim email'em i hasłem.</p><p>Jeśli nie pamietasz swoich danych do logowania kliknij na link Przypomnienia Hasła</p>"
+      invalid_user: "Niewłaściwy użytkownik"
+      resent: "Wyślemy ponownie email aktywacyjny. Sprawdź swoją pocztę!"
+    calendars: 
+      clients: 
+        body: "Sprawdź <a href='%{link}'>knowledge base</a> by się dowiedzieć jak skonfigurować Kalendarz Google, Apple iCal, Outlook'a, Blackbery i inne aplikacje"
+        title: "Dokładne instrukcje"
+      how_to: 
+        body: "Przede wszystkim, powinieneś dodać poniższe linki do swojego kalendarza. Odwiedź naszą <a href='%{link}'>bazę wiedzy</a> by dowiedzieć się jak ich używać ze swoim kalendarzem."
+        title: "Jak zsynchronizować Twoje kalendarze"
+      possible_clients: "Możesz zsynchronizować swój Kalendarz Google, Apple iCal, Outlook, Blackberry czy inne."
+      subscribe_to_all: "Wszystkie projekty"
+      subscribe_to_project: "Projekt  %{project}:"
+      tasks_can_be_synced: "Zadania w Teamboksie mogą być zsynchronizowane ze standardowymi Kalendarzami, dzięki czemu nie zapomnisz o tym co się zbliża."
+      title: "Synchronizuj swoje kalendarze"
+      your_calendars: "Twoje Kalendarze"
+    create: 
+      error: "Nie mogliśmy stworzyć tego konta, przepraszamy. Proszę spróbować ponownie lub skontaktować się z administratorem (link wyżej)."
+      thanks: "Dziękujemy za rejestracje! "
+    daily_task_reminder_email: 
+      daily_task_reminder: "Codzienne przypominanie o zadaniach"
+      daily_task_reminder_from_teambox: "To twój codzienny przypominacz z Teambox"
+      late_tasks: "opóźnione zadania"
+      settings_page: ustawienia
+      tasks_for_next_two_weeks: "Zadania dla następnych dwóch tygodni"
+      tasks_for_today: "Zadania na dziś"
+      tasks_for_tomorrow: "Zadania na jutro"
+      tasks_without_a_due_date: "Zadania bez daty"
+      you_receive_this_message: "Otrzymałeś tę wiadomość ponieważ się na nią zapisałeś. Możesz ją wyłączyć na %{link}."
+    edit: 
+      submit: "Aktualizuj konto"
+      title_delete: "Usuń konto"
+      title_deletion: "Archiwizacja/Usunięcie Projektu"
+      title_linked_accounts: "Podłączone Konta Aplikacji"
+      title_notifications: "Twoje przypomnienia"
+      title_picture: "Zdjęcie Twojego profilu"
+      title_profile: "Ustawienia Twojego profilu"
+      title_settings: "Ustawienia Twojego konta"
+    feeds: 
+      configure: "Możesz skonfigurować swój czytnik kanałów by zawiadamiał Cię za każdym razem gdy coś się dzieje na Teambox, nawet jeśli nie masz go otwartego."
+      feed_reader: 
+        body: "Odnieś się do a href='%{link}'>bazy danych</a>  w sprawie tego."
+        title: "Który czytnik newsów powinienem użyć?"
+      follow_activities: "Możesz śledzić zmiany na Teambox dzięki Czytnikowi Newsów (Desktop lub Mobilny)."
+      import: 
+        body: "Poniżej masz listę źródeł które możesz śledzić. By importować je do swojego czytnika źródeł musisz <strong>nacisnąć prawym klawiszem myszki</strong> i wybrać <strong>kopiuj adres www</strong>. Następnie przejdź do swojego czytnika źródeł i dodaj nowe źródło wklejając skopiowany adres."
+        title: "Jak importować listę kanałów"
+      more_tips: 
+        body: "Poznaj <a href='%{link}'>więcej sposobów dostępu do Teambox</a>."
+        title: "Więcej wskazówek"
+      receive_notifications: "Dzięki używaniu Czytnika Kanałów na swoim komputerze lub urządzeniu mobilnym, możesz otrzymywać powiadomienia z aktywności ze swoim projektów."
+      subscribe_to_all: "Aktywność dla wszystkich projektów"
+      subscribe_to_project: "Aktywność dla %{project}"
+      title: "Synchronizuj kanał aktywności"
+      your_feeds: "Twój kanał aktywności"
+    form: 
+      delete: 
+        account_deleted: "Twoje Konto zostało usunięte. Będzie nam cię brakowało!"
+        couldnt_delete_account: "Nie możemy usunąć twojego konta ponieważ nadal posiadasz aktywne i archiwizowane projekty."
+        delete_my_account: "Usuń moje konto teraz"
+        steps_before_1: "By usunąć swoje konto Teambox, najpierw musisz zostawić lub usunąć swoje wszystkie projekty"
+        steps_before_2: "To zapewni to że żaden użytkownik nie straci danych ze swoich projektów gdy usuniesz swoje konto."
+        steps_before_3: "Opuść lub usuń swoje obecne projekty i potem wróć do tej strony by usunąć swoje konto."
+        what_will_happen: "Po usunięciu konta, twój profil Teambox przestanie być dostępny."
+      picture: 
+        destroy: "Usuń avatar"
+        field: "Nowy avatar"
+        gravatar_in_use: "Nie mamy twojego zdjęcia, więc używamy  %{gravatar}:"
+        max_size: "Wielkość pliku nie może przekroczyć  %{mb}"
+        presence: "Nie możesz wysłać pustego zdjęcia"
+        upload_here_or_at_gravatar: "Możesz wysłać swoje zdjęcie lub ustawić je na  %{gravatar}."
+        we_have_this_avatar: "To twoje zdjęcie które posiadamy:"
+      biography: Biografia
+      change_password: "Zmień hasło"
+      confirm_password: "Potwierdź hasło"
+      email: Email
+      first_day_of_week: "Początek tygodnia"
+      first_name: Imię
+      invalid_login: "używaj tylko liter, liczb oraz podkreślników"
+      language: Język
+      last_name: Nazwisko
+      login: "Nazwa użytkownika"
+      monday: Poniedziałek
+      notifications:
+        notify_conversations: "Powiadom mnie gdy obserwuję dyskusje"
+        notify_mentions: "Powiadom mnie kiedy zostanę wspomniany np. Cześć @%{login}! Dostałeś email!"
+        notify_tasks: "Powiadom mnie gdy obserwuję zadanie"
+        wants_task_reminder: "Przysyłaj mi codziennie email przypominający o moich zadaniach"
+      password: Hasło
+      password_confirmation: "Potwierdź Hasło"
+      phone: "Numer telefonu"
+      phone_for_integration: "Opcjonalne. Dla przyszłej integracji SMS"
+      sunday: Niedziela
+      time_zone: "Strefa czasowa"
+      tooltips: 
+        email: "Wprowadź swój prawdziwy email by twoi współpracownicy mogli się z Tobą skontaktować."
+        first_name: "Do 20 znaków."
+        last_name: "Do 20 znaków."
+        login: "Potrzebujesz nazwy użytkownika w celu zalogowania. Inni użytkownicy będą Cię mogli znaleźć dzięki nazwie użytkownika. Nazwa musi się składać z małych liter, bez spacji. Możesz używać podkreślnika."
+        password: "Łączenie liter,  cyfr, dużych i małych znaków to dobry pomysł"
+        phone: "Najlepiej numer komórkowy. Wprowadź go poprzedzając kodem kraju, +48 dla Polski."
+      new:
+        use_this_email: "Masz zaproszenia do dzielenia się projektami dla tego adresu email. Jeśli chcesz uzyskać do nich dostęp nie zmieniaj adresu email. Możesz zmienić go dopiero po zakończeniu procesu rejestracji."
+    new: 
+      existing_user: "Jeśli posiadasz już kontot, <a href='%{login_url}'>zaloguj się</a> lub <a href='%{forgot_url}'>odzyskaj swoje hasło</a>."
+      no_public_signup: "Publiczne zapisy są niedostępne w tym systemie."
+      submit: "Stwórz konto"
+      title: "Stwórz konto"
+      you_already_have_an_account: "Już posiadasz konto na Teambox dla adresu %{email}. <a href='%{login_link}'>Zaloguj się tym adresem</a> lub </a> or <a href='%{reset_password_link}'>zresetuj swoje hasło</a> jeśli je zapomniałeś."
+      you_are_logged_in: "Już masz konto. Wyloguj się w celu zalogowania jako inny użytkownik."
+    show: 
+      pending_invite: "%{name} ma w tej chwili oczekujące zaproszenie do jednego z Twoich projektów. Do momentu akceptacji nie będziesz miał dostępu większej ilości informacji."
+      profile: Profil
+      projects: Projekty
+      recent_activity_for: "Ostatnia aktywność dla  %{user_name}"
+    text_styles: 
+      block_of_code: "Wklej kod z wcięciem (4 spacje lub tabulacje) aby wkleić go jako blok kodu."
+      enter_this: 
+        bold_text: "tekst **pogrubiony**"
+        header: |-
+            Nagłówek
+            ======
+        image: "![tekst alternatywny](http://w3.org/img.jpg)"
+        italic_text: "tekst *pochylony*"
+        link: "[tekst odnośnika](http://teambox.com) "
+        ordered_list: |-
+            1. wypunktowana lista
+            2. zostaw puste pola!
+        smaller_header: "Mniejszy nagłówek ---------"
+        title: Wpisz
+        unordered_list: |-
+            * wykropkowana lista
+            * zostaw puste pola dookoła
+      to_see_this: 
+        bold_text: "tekst <strong style=\"font-weight: bold\">pogrubiony</strong>"
+        header: "<h3 style=\"font-size:18px\">Nagłówek</h3>"
+        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text: "tekst <i>pochylony</i>"
+        link: "<a href=\"http://www.teambox.com\">Tekst odnośnika</a>"
+        ordered_list: |-
+            <li>wypunktowana lista</li>
+            <li>zostaw puste pola!</li>
+        smaller_header: "<h4 style=\"font-size:14px\">Mniejszy nagłówek</h4>"
+        title: Zobacz
+        unordered_list: |-
+            <li>wykropkowana lista</li>
+            <li>zostaw puste pola wokoło!</li>
+    unconfirmed_email: 
+      follow_the_link: "Proszę <b> otwórz ten email i kliknij na link </b> w celu aktywowania swojego konta."
+      invitation_sent_to: "Email z zaproszeniem został wysłany na <i>%{email}</i>, w celu potwierdzenia twojego adresu email."
+      problems: "Jeśli nadal masz problemy, skontaktuj się z nami %{support}"
+      problems_title: Problemy?
+      resend: "Nie możesz znaleźć email'a? Naciśnij <a href='%{link}'>tu</a> by wysłać ponownie email aktywujący."
+      spam: "Upewnij się czy email nie został uznany za spam przez twojego klienta poczty email"
+      title: "Potwierdź swój email"
+      wrong_address: "Zły adres? Jeśli źle podałeś swój adres email, <a href='%{link}'>przerwij proces rejestracji</a> i stwórz swoje konto ponownie z poprawnym adresem."
+    update: 
+      error: "Nie można zaktualizować profilu. Proszę poprawić błędy i spróbować ponownie."
+      updated: "Profil zaktualizowany!"
+    user: 
+      formatted_address: "%{street}, %{city} (%{country})"
+      remove_from_project: "Usuń z Projektu"
+    welcome: 
+      get_started: "Startuj z Teambox!"
+      intro1: "Jesteś naszym najmłodszym członkiem! Wkrótce zobaczysz jak Teambox może stać się twoim codziennym punktem startowym."
+      intro2: "Gdzie mogę teraz iść? Stwórz projekt by zacząć <b>współpracować</b>"
+      projects: 
+        create_your_first_project: "Wydarzenie, projekt, produkt... Zacznij i <a href='%{link}'>stwórz swój pierwszy projekt</a> teraz!"
+        share_and_collaborate: "Dziel się i współpracuj ze swoim zespołem! Pomoże ci w tym ściana aktualizacji projektu, dyskusji, zadań, stron oraz plików."
+        title: Projekty
+      spread: 
+        facebook: Facebook
+        help: "Możesz <b>pomóc nam</b> mówiąc swoim znajomym jak bardzo Teambox ci odpowiada na"
+        in_your_site: "na twojej stronie"
+        reasons: "Pracowaliśmy nad Teambox latami, z nadzieją że się ci przyda.<br/> Jesteśmy prawdziwymi ludźmi, zmotywowanymi developerami z misją, tak jak Ty!"
+        tell_us: "Jeśli zadowala cię użytkowanie Teambox'a,  rozważ też <a href='mailto:%{address}'>napisanie nam o tym</a> za pomocą email'a!"
+        title: "Nas też kochasz?"
+        twitter: "Twitter,"
+      stop_welcome: "Nie pokazuj więcej ekranu powitalnego"
+  weakling: 
+    average: średnia
+    default: "Musi mieć conajmniej 5 znaków"
+    error: "zbyt krótkie"
+    strong: mocne
+    weak: słabe

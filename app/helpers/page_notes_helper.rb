@@ -1,7 +1,7 @@
 module PageNotesHelper
 
   def note_fields(f)
-    render :partial => 'notes/fields', :locals => { :f => f }
+    render 'notes/fields', :f => f
   end
   
   def new_page_note_link(project,page)

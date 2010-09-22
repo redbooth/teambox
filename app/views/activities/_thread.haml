@@ -1,35 +1,35 @@
-- thread = activity.thread
+- thread ||= activity.thread # you can pass :thread or :activity into the partial
 - thread_id = "#{thread.class.to_s}_#{thread.id}"
 - thread_link = thread.is_a?(Task) ? [thread.task_list.project, thread.task_list, thread] : [thread.project, thread]
 - comments = thread.comments
-.thread{ :id => "thread_#{thread_id}" }
-  -if thread.is_a?(Conversation) and thread.simple and comments.size > 0
-    = render :partial => 'comments/comment', :locals => { :comment => comments.pop, :simpleconv => true }
+
+.thread[thread]
+  - if thread.is_a?(Conversation) and thread.simple and comments.size > 0
+    = render comments.pop, :simpleconv => true
   - else
     .title
       .info
         = thumb_avatar(thread.user) if thread.user
       %div.date
         = posted_date(thread.created_at)
-      %span.starter
+      %p.starter
         = link_to(thread.user.name, thread.user) if thread.user
-        = t("activities.thread.created.#{thread.class.to_s.downcase}")
-      %strong
-        = link_to thread, thread_link
-      - unless @current_project
-        %span.project
-          = t('common.in_project')
-          = link_to thread.project, thread.project
-  .comments{ :id => "thread_#{thread_id}_comments" }
-    - if comments.size > 2
-      %span.more_comments
-        = link_to_remote t('activities.thread.more_comments', :count => comments.size - 2),
-          :url => show_thread_path(thread, :thread_type => thread.class.to_s),
-          :method => :get,
-          :loading => full_thread_loading(thread_id)
-        = loading_image("#{thread_id}_more_comments")
-    - comments[0..1].reverse.each do |comment|
-      = render :partial => 'comments/comment', :locals => { :comment => comment, :threaded => true }
-  .reply{ :id => "thread_#{thread_id}_reply" }
-    - unless thread.is_a?(Task) && thread.closed?
-      = new_comment_form(thread.project, thread.project.comments.new, :target => thread, :thread => true)
+        = t("activities.thread.created.#{thread.class.to_s.downcase}", :project => thread.project.name)
+        = activity_project_link(thread.project)
+      %p.thread_title
+        = link_to thread, thread_link, :class => thread.class.to_s.downcase
+        - if thread.is_a?(Task)
+          = t('.on_task_list')
+          = link_to thread.task_list, [thread.task_list.project, thread.task_list], :class => :task_list
+
+  .comments
+    = render 'activities/thread_comments', :comments => comments, :thread => thread
+  
+  - if thread.is_a? Task
+    - form_for [thread.project, thread], :html => {:multipart => true, :id => nil, :class => 'new_comment edit_task', :'data-project-id' => thread.project.id, :'data-remote' => true} do |form|
+      - form.fields_for :comments, thread.comments.build do |comment_fields|
+        = render 'comments/fields', :f => comment_fields, :task_form => form, :placeholder => t("comments.new.#{thread.class.name.underscore}")
+      
+  - else
+    - form_for [thread.project, thread, thread.comments.build], :html => {:multipart => true, :id => nil, :'data-project-id' => thread.project.id, :'data-remote' => true} do |form|
+      = render 'comments/fields', :f => form, :placeholder => t("comments.new.#{thread.class.name.underscore}")

@@ -18,7 +18,10 @@ class ActivitiesController < ApplicationController
   end
 
   def show_more
-    @activities = Project.get_activities_for @target, :before => params[:id]
+    opts = {:before => params[:id]}
+    opts[:user_id] = @user.id if @user
+    
+    @activities = Project.get_activities_for @target, opts
     @last_activity = @activities.last
     
     respond_to do |format|
@@ -44,16 +47,21 @@ class ActivitiesController < ApplicationController
   end
 
   def show_thread
-    if params[:thread_type] == "Task"
-      target = Task.find(params[:id])
-    else
-      target = Conversation.find(params[:id])
-    end
-    @comments = target ? target.comments.all : []
-    @comments.pop if target.is_a?(Conversation) and target.simple
+    # FIXME: insecure!
+    target = params[:thread_type].constantize.find params[:id]
+
+    @comments = target.comments
+    # TODO: ask why
+    @comments.pop if target.is_a?(Conversation) and target.simple?
+    
     respond_to do |format|
-      format.html { redirect_to projects_path }
-      format.js
+      format.html {
+        if request.xhr?
+          render :partial => 'comments/comment',
+            :collection => @comments.reverse, # regular chronological order
+            :locals => { :threaded => true }
+        end
+      }
       format.xml  { render :xml     => @comments.to_xml }
       format.json { render :as_json => @comments.to_xml }
       format.yaml { render :as_yaml => @comments.to_xml }
@@ -67,13 +75,13 @@ class ActivitiesController < ApplicationController
     def get_target
       @target = if params[:project_id]
         @current_project = @current_user.projects.find_by_permalink(params[:project_id])
+      elsif params[:user_id]
+        @user = User.find_by_id(params[:user_id])
+        @user.projects_shared_with(@current_user)
       else
         @current_user.projects.find :all
       end
       
-      unless @target
-        redirect_to '/'
-        return false
-      end
+      redirect_to root_path if @target.nil? or (@user and @target.empty?)
     end
 end

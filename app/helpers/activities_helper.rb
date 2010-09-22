@@ -17,7 +17,7 @@ module ActivitiesHelper
     haml_tag 'div', :class => "activity #{activity.action_type}" do
       haml_concat micro_avatar(activity.user)
       yield activity_title(activity)
-      haml_tag 'div', posted_date(activity.created_at), :class => 'date' unless rss?
+      haml_tag 'div', posted_date(activity.created_at), :class => :date unless rss?
     end
   end
 
@@ -30,6 +30,7 @@ module ActivitiesHelper
                       create_note edit_note
                       create_upload
                       create_person delete_person
+                      create_project
                       )
 
   def list_activities(activities)
@@ -41,12 +42,16 @@ module ActivitiesHelper
   end
 
   def show_threaded_activity(activity)
-    if activity.thread.is_a?(Task) || activity.thread.is_a?(Conversation)
-      render :partial => 'activities/thread', :locals => { :activity => activity }
+    if activity.thread_id.starts_with? "Task_" or activity.thread_id.starts_with? "Conversation_"
+      mode = %w(projects activities).include?(controller.controller_name) ? "short" : "full"
+      Rails.cache.fetch("#{mode}-thread/#{activity.thread_id}/#{current_user.locale}") do
+        render('activities/thread', :activity => activity).to_s
+      end
     else
-      show_activity(activity)
+      Rails.cache.fetch("#{activity.cache_key}/#{current_user.locale}") { show_activity(activity).to_s }
     end
   end
+
 
   def show_activity(activity)
     if activity.target && ActivityTypes.include?(activity.action_type)
@@ -91,6 +96,9 @@ module ActivitiesHelper
     when 'create_upload'
       text = object.description.presence || object.file_name
       { :file => link_to_unless(plain, text, project_uploads_path(activity.project, :anchor => dom_id(object))) }
+    when 'create_project'
+      { :person => link_to_unless(plain, activity.user, activity.user),
+        :project => link_to_unless(plain, activity.project, activity.project) }
     when 'create_comment'
       # one of Project, Task or Conversation
       object = object.target
@@ -179,12 +187,16 @@ module ActivitiesHelper
 
     if location_name == 'index_projects'
       url = show_more_path(options[:last_activity].id)
-    elsif location_name == 'show_more_activities' and params[:project_id].nil?
+    elsif location_name == 'show_more_activities' and params[:project_id].nil? and params[:user_id].nil?
       url = show_more_path(options[:last_activity].id)
+    elsif location_name == 'show_users'
+        url = user_show_more_path(@user.id, options[:last_activity].id)
     elsif location_name == 'show_projects'
       url = project_show_more_path(@current_project.permalink, options[:last_activity].id)
     elsif location_name == 'show_more_activities' and params[:project_id]
       url = project_show_more_path(params[:project_id], options[:last_activity].id)
+    elsif location_name == 'show_more_activities' and params[:user_id]
+        url = user_show_more_path(params[:user_id], options[:last_activity].id)
     else
       raise "unexpected location #{location_name}"
     end
@@ -203,12 +215,6 @@ module ActivitiesHelper
     end
   end
 
-  def full_thread_loading(thread_id)
-    update_page do |page|
-      page["#{thread_id}_more_comments"].show
-    end
-  end
-
   def show_more(after)
     update_page do |page|
       page['activities'].insert list_activities(@activities)
@@ -217,7 +223,7 @@ module ActivitiesHelper
   
   def show_more_button(activities)
     if activities.size == APP_CONFIG['activities_per_page']
-      render :partial => 'activities/show_more'
+      render 'activities/show_more'
     end
   end
   

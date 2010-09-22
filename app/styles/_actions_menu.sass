@@ -14,6 +14,8 @@
       opacity: 1
     .extra
       display: block
+  .actiondate
+    cursor: default
   .extra
     display: none
     position: absolute
@@ -26,22 +28,14 @@
     background: white
     border: 1px solid #ccc
     +box-shadow(#EEE 3px 3px 3px)
-    a
+    a, span
       display: block
       padding: 3px 5px
       font-weight: normal
-      &:hover
-        background: $navbar
-        text-decoration: none
-        cursor: pointer
-    .tactione
-      color: #ccc
-      padding: 3px 5px
-
-.actions_menu.loading
-  &:hover
-    color: #000
-    img
-      opacity: 1
-    .extra
+    a:hover
+      background: $navbar
+      text-decoration: none
+    span
+      color: #aaa
+    a.edit, a.delete
       display: none

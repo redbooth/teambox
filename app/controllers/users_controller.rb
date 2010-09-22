@@ -6,12 +6,13 @@ class UsersController < ApplicationController
   skip_before_filter :confirmed_user?, :only => [ :new, :create, :confirm_email, :forgot_password, :reset_password, :login_from_reset_password, :unconfirmed_email ]
   skip_before_filter :load_project
   before_filter :set_page_title
+  before_filter :can_users_signup?, :only => [:new, :create]
 
   def index
     # show current user
     respond_to do |f|
-      f.html { redirect_to '/' }
-      f.m { redirect_to '/' }
+      f.html  { redirect_to root_path }
+      f.m     { redirect_to root_path }
       f.xml   { render :xml     => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
       f.json  { render :as_json => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
       f.yaml  { render :as_yaml => @current_user.users_with_shared_projects.to_xml(:root => 'users')}
@@ -19,7 +20,11 @@ class UsersController < ApplicationController
   end
   
   def new
-    if logged_in?
+    if @invitation and logged_in?
+      @invitation.invited_user = current_user
+      @invitation.save
+      redirect_to projects_url(:invitation => @invitation.token)
+    elsif logged_in?
       flash[:success] = t('users.new.you_are_logged_in')
       redirect_to projects_path
     else
@@ -37,7 +42,8 @@ class UsersController < ApplicationController
     @card = @user.card
     projects_shared = @user.projects_shared_with(@current_user)
     @shares_invited_projects = projects_shared.empty? && @user.shares_invited_projects_with?(@current_user)
-    @activities = @user.activities_visible_to_user(@current_user)
+    @activities = Project.get_activities_for(@user.projects_shared_with(@current_user), :user_id => @user.id) 
+    @last_activity = @activities.last
     
     respond_to do |format|
       if @user != @current_user and (!@shares_invited_projects and projects_shared.empty?)
@@ -62,15 +68,10 @@ class UsersController < ApplicationController
     load_app_link
 
     @user.confirmed_user = ((@invitation && @invitation.email == @user.email) or
-                            RAILS_ENV == "development" or
+                            Rails.env.development? or
                             !!@app_link)
 
-    unless @invitation || signups_enabled?
-      flash[:error] = t('users.new.no_public_signup')
-      return redirect_to root_path
-    end
-
-    if @user && @user.save && @user.errors.empty?
+    if @user && @user.save
       self.current_user = @user
 
       if @app_link
@@ -79,10 +80,9 @@ class UsersController < ApplicationController
       end
 
       if @invitation
+        # Can be an invitation to a project or just to Teambox
         if @invitation.project
           redirect_to(project_path(@invitation.project))
-        else
-          redirect_to(group_path(@invitation.group))
         end
       else
         redirect_back_or_default root_path
@@ -109,11 +109,9 @@ class UsersController < ApplicationController
     
     respond_to do |wants|
       wants.html {
-        I18n.locale = current_user.language
-        
         if success
           back = polymorphic_url [:account, @sub_action]
-          flash[:success] = t('users.update.updated')
+          flash[:success] = t('users.update.updated', :locale => current_user.locale)
           redirect_to back
         else
           flash.now[:error] = t('users.update.error')
@@ -156,16 +154,6 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-  def welcome
-    @pending_projects = current_user.invitations
-
-    if current_user.welcome
-      respond_to do |format|
-        format.html { redirect_to projects_path }
-      end
-    end
-  end
-
   def text_styles
     render :layout => false
   end
@@ -176,13 +164,6 @@ class UsersController < ApplicationController
   def feeds
   end
 
-  def close_welcome
-    @current_user.update_attribute(:welcome,true)
-    respond_to do |format|
-      format.html { redirect_to projects_path }
-    end
-  end
-  
   def destroy
     if current_user.projects.count == 0 && current_user.projects.archived.count == 0
       user = current_user
@@ -236,6 +217,13 @@ class UsersController < ApplicationController
         @user.last_name     = @user.last_name.presence  || @profile[:last_name]
         @user.login       ||= @profile[:login]
         @user.email       ||= @profile[:email]
+      end
+    end
+    
+    def can_users_signup?
+      unless @invitation || signups_enabled?
+        flash[:error] = t('users.new.no_public_signup')
+        return redirect_to root_path
       end
     end
 end

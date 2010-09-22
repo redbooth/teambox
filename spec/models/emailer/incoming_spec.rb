@@ -1,5 +1,4 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
-require_dependency 'emailer/incoming'
+require 'spec_helper'
 
 describe Emailer do 
   describe 'incoming emails' do 
@@ -23,12 +22,10 @@ describe Emailer do
       
       @task.reload
       comment = @task.comments.last
-      @task.assigned_id.should == nil
-      @task.status.should == Task::STATUSES[:new]
-      comment.assigned_id.should == nil
-      comment.status.should == Task::STATUSES[:new]
-      comment.previous_assigned_id.should == nil
-      comment.previous_status.should == Task::STATUSES[:new]
+      @task.assigned?.should be_false
+      @task.status_name.should == :new
+      comment.assigned_id.should be_nil
+      comment.status.should be_nil
     end
     
     it "should assign the task to fred with #fred" do
@@ -63,21 +60,9 @@ describe Emailer do
       
       @task.reload
       comment = @task.comments.last
-      @task.status.should == Task::STATUSES[:resolved]
+      @task.status_name.should == :resolved
       comment.status.should == Task::STATUSES[:resolved]
       comment.previous_status.should == 0
-    end
-    
-    it "should resolve the task with #resolve" do
-      @email_template.to = "#{@project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}"
-      @email_template.body = "#resolve\nWe did some stuff"
-      Emailer.receive(@email_template.to_s)
-      
-      @task.reload
-      comment = @task.comments.last
-      @task.status.should == Task::STATUSES[:resolved]
-      comment.status.should == Task::STATUSES[:resolved]
-      comment.previous_status.should == Task::STATUSES[:new]
     end
     
     it "should hold the task with #hold" do
@@ -116,21 +101,38 @@ describe Emailer do
       comment.previous_status.should == Task::STATUSES[:new]
     end
     
-    it "should post a comment to a project" do
+    it "should post a comment to a project if no subject is given" do
       @email_template.to = "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}"
       @email_template.body = "Yes i agree completely!"
       Emailer.receive(@email_template.to_s)
       
+      @project.conversations(true).first.simple.should == true
       comment = @project.comments(true).first
       comment.body.should == "Yes i agree completely!"
     end
-    
+
+    it "should post a comment to a project if there's a subject" do
+      @email_template.to = "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}"
+      @email_template.subject = "Wat do I do?"
+      @email_template.body = "the problem is solution"
+      Emailer.receive(@email_template.to_s)
+
+      conversation = @project.conversations(true).first
+      conversation.simple.should == false
+      conversation.name.should == "Wat do I do?"
+      comment = @project.comments(true).first
+      comment.body.should == "the problem is solution"
+    end
+
     it "should post a comment to a conversation" do
       @email_template.to = "#{@project.permalink}+conversation+#{@conversation.id}@#{Teambox.config.smtp_settings[:domain]}"
       @email_template.body = "I am outraged!"
-      Emailer.receive(@email_template.to_s)
       
-      comment = @conversation.comments(true).last
+      lambda {
+        Emailer.receive(@email_template.to_s)
+      }.should change(Comment, :count).by(1)
+      
+      comment = @conversation.comments(true).last(:order => 'comments.id')
       comment.body.should == "I am outraged!"
     end
 
@@ -139,11 +141,11 @@ describe Emailer do
       accepted_prefixes = %w(Re: RE: Fwd: FWD:) << ""
       accepted_prefixes.each_with_index do |prefix, i|
         @email_template.subject = "#{prefix} This feature wasn't tested grrrr... #{i}"
-        @email_template.body = "But I'm fixing it right now! And refactoring the Regexp too!\nI'm using #{prefix} on the subject"
+        @email_template.body = "But I'm fixing it right now! And refactoring the Regexp too!\n\nI'm using #{prefix} on the subject"
         Emailer.receive(@email_template.to_s)
         conv = @project.conversations.first
         conv.name.should == "This feature wasn't tested grrrr... #{i}"
-        conv.comments.first.body.should == "But I'm fixing it right now! And refactoring the Regexp too!\nI'm using #{prefix} on the subject"
+        conv.comments.first.body.should == "But I'm fixing it right now! And refactoring the Regexp too!\n\nI'm using #{prefix} on the subject"
         conv.user.should == @owner
       end
     end

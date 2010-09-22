@@ -4,10 +4,15 @@ class Page < RoleRecord
   has_many :uploads
   
   has_many :slots, :class_name => 'PageSlot', :order => 'position ASC'
-  
+
+  has_permalink :name, :scope => :project_id
+
   attr_accessible :name, :description, :note_attributes
+  attr_accessor :suppress_activity
 
   validates_length_of :name, :minimum => 1
+  
+  default_scope :order => 'position ASC, created_at DESC, id DESC'
   
   def self.widgets
      [Note, Divider]
@@ -100,11 +105,15 @@ class Page < RoleRecord
   end
   
   def after_update
-    project.log_activity(self, 'edit')
+    project.log_activity(self, 'edit') unless @suppress_activity
   end
   
   def to_s
     name
+  end
+
+  def to_param
+    permalink || id.to_s
   end
   
   def user
@@ -132,5 +141,28 @@ class Page < RoleRecord
         uploads.to_xml(options.merge({ :skip_instruct => true, :root => 'uploads' }))
       end
     end
+  end
+  
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :project_id => project_id,
+      :user_id => user_id,
+      :name => name,
+      :description => description,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :watchers => Array.wrap(watchers_ids)
+    }
+    
+    if Array(options[:include]).include? :slots
+      base[:slots] = slots.map{|s| s.to_api_hash(options)}
+    end
+    
+    base
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
   end
 end

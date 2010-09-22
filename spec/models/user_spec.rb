@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe User do
   it { should have_many(:projects_owned) }
@@ -21,14 +21,11 @@ describe User do
   it { should validate_length_of(:email, :within => 6..100) }
   it { should validate_uniqueness_of(:email) }
 
-# it { should validate_associated :projects }
-
   describe "invited count" do
     before do
       @project = Factory(:project)
       @user = @project.user
-      invitation = Invitation.new(:user => @user, :project => @project, :user_or_email => "invited@user.com")
-      invitation.save!
+      @project.create_invitation(@user, :user_or_email => "invited@user.com")
       @new_user = Factory(:user, :email => "invited@user.com")
       @user.reload
     end
@@ -74,7 +71,7 @@ describe User do
 
   describe "activation" do
     before do
-      @user = Factory.create(:user)
+      @user = Factory.create(:unconfirmed_user)
     end
 
     it "should not be active on creation" do
@@ -221,7 +218,7 @@ describe User do
     end
 
     it "should send an activation email when signing up without an invitation" do
-      @user = Factory.build(:user)
+      @user = Factory.build(:unconfirmed_user)
       Emailer.should_receive(:deliver_confirm_email).once
       @user.save
     end
@@ -233,7 +230,7 @@ describe User do
     end
 
     it "should not be active when first created" do
-      user = Factory.create(:user)
+      user = Factory.create(:unconfirmed_user)
       user.is_active?.should be_false
     end
   end
@@ -260,26 +257,26 @@ describe User do
       boring_task = Factory(:task, :project => @boring_project)
       interesting_task.assign_to(@user)
       boring_task.assign_to(@user)
-      user_tasks = @user.assigned_tasks(:all)
+      user_tasks = @user.assigned_tasks.all
       user_tasks.should include(interesting_task, boring_task)
     end
 
     it "should not return a held task" do
       held_task = Factory(:held_task, :project => @interesting_project)
       held_task.assign_to(@user)
-      @user.assigned_tasks(:all).should_not include(held_task)
+      @user.assigned_tasks.all.should_not include(held_task)
     end
 
     it "should not return a resolved task" do
       resolved_task = Factory(:resolved_task, :project => @interesting_project)
       resolved_task.assign_to(@user)
-      @user.assigned_tasks(:all).should_not include(resolved_task)
+      @user.assigned_tasks.all.should_not include(resolved_task)
     end
 
     it "should not return a rejected task" do
       rejected_task = Factory(:rejected_task, :project => @interesting_project)
       rejected_task.assign_to(@user)
-      @user.assigned_tasks(:all).should_not include(rejected_task)
+      @user.assigned_tasks.all.should_not include(rejected_task)
     end
   end
 
@@ -371,43 +368,6 @@ describe User do
     end
   end
 
-  describe "when in a project" do
-    before do
-      @user = Factory(:confirmed_user, :login => "balint")
-      @project = Factory(:project)
-      @project.add_user(@user)
-    end
-    describe "and a comment comes in" do
-      before do
-      end
-      it "should be notified of a comment if he is mentioned by login" do
-        comment = Factory(:comment, :project => @project, :body => "@balint Do this!")
-        @user.notify_of_project_comment?(comment).should == true
-      end
-
-      it "should be notified of a comment if it is addressed to all" do
-        comment = Factory(:comment, :project => @project, :body => "@all Check this out!")
-        @user.notify_of_project_comment?(comment).should == true
-      end
-
-      it "should not be notified of a comment if he is not mentioned" do
-        comment = Factory(:comment, :project => @project, :body => "@jamesu This is yours.")
-        @user.notify_of_project_comment?(comment).should == false
-      end
-
-      it "should not be notified of a comment if he is the author" do
-        comment = Factory(:comment, :user => @user, :project => @project, :body => "@balint Note to self.")
-        @user.notify_of_project_comment?(comment).should == false
-      end
-
-      it "should not be notified of a comment if he turned mention notifications off" do
-        @user.update_attribute(:notify_mentions, false)
-        comment = Factory(:comment, :project => @project, :body => "@balint This is urgent!")
-        @user.notify_of_project_comment?(comment).should == false
-      end
-    end
-  end
-
   describe "finding an available username" do
     it "should return the proposed one if it's free" do
       User.find_available_login("donnie").should == "donnie"
@@ -431,15 +391,15 @@ describe User do
     end
   end
   
-  describe "#language" do
-    it "should set a valid language" do
-      user = Factory.create(:user, :language => 'es')
-      user.language.should == 'es'
+  describe "#locale" do
+    it "should set a valid locale" do
+      user = Factory.create(:user, :locale => 'es')
+      user.locale.should == 'es'
     end
     
-    it "should fall back to default language when setting not in list of available languages" do
-      user = Factory.create(:user, :language => 'xy')
-      user.language.should == 'en'
+    it "should fall back to default locale when setting not in list of available locales" do
+      user = Factory.create(:user, :locale => 'xy')
+      user.locale.should == 'en'
     end
   end
 

@@ -8,7 +8,7 @@ class Activity < ActiveRecord::Base
   named_scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_type = 'Conversation'"
   
   named_scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
-      
+
   def self.log(project,target,action,creator_id)
     project_id = project.try(:id)
 
@@ -24,6 +24,7 @@ class Activity < ActiveRecord::Base
       :action => action,
       :user_id => creator_id,
       :comment_type => comment_type)
+    activity.created_at = target.try(:created_at) || nil
     activity.save
     
     activity
@@ -74,11 +75,12 @@ class Activity < ActiveRecord::Base
     when 'Note'         then begin; Note.find_with_deleted(target_id); rescue; nil; end
     when 'Divider'      then begin; Divider.find_with_deleted(target_id); rescue; nil; end
     when 'Upload'       then begin; Upload.find_with_deleted(target_id); rescue; nil; end
+    when 'Project'      then begin; Project.find_with_deleted(target_id); rescue; nil; end
     end
   end
 
   def user
-    User.find_with_deleted(user_id)
+    @user ||= User.find_with_deleted(user_id)
   end
 
   def thread
@@ -86,11 +88,20 @@ class Activity < ActiveRecord::Base
       target.target
     else
       target
-    end
+    end || project
   end
 
   def thread_id
-    "#{thread.class}_#{thread.id}"
+    @thread_id ||= Rails.cache.fetch("#{cache_key}/thread_id") do
+      "#{thread.class}_#{thread.id}"
+    end
+  end
+
+  def self.get_threads(activities)
+    activities.inject([]) do |result, a|
+      result << a unless result.collect(&:thread_id).include?(a.thread_id)
+      result
+    end
   end
 
   def to_xml(options = {})
@@ -121,14 +132,36 @@ class Activity < ActiveRecord::Base
       end if target
     end
   end
-
-  def self.get_threads(activities)
-    activities.inject([]) do |result, a|
-      unless result.collect(&:thread_id).include?(a.thread_id)
-        result << a
-      end
-      result
+  
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :action => action,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :user => {
+        :username => user.login,
+        :first_name => user.first_name,
+        :last_name => user.last_name,
+        :avatar_url => user.avatar_or_gravatar_url(:thumb)
+      }
+    }
+    
+    if Array(options[:include]).include? :project
+      base[:project] = {:id => project.id, :name => project.name, :permalink => project.permalink}
     end
+    
+    if Array(options[:include]).include? :target
+      base[:target] = {:type => target_type}.merge(target.to_api_hash(options))
+    else
+      base[:target] = {:id => target_id, :type => target_type}
+    end
+    
+    base
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
   end
 
 end

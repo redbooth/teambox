@@ -1,7 +1,7 @@
 %h2= t('.title')
-- if @invitations.length == 0
-  .no_content
-    = t('.no_invitations')
-- else
+- if @invitations.any?
   .invitations
     = list_pending_invites(@invitations)
+- else
+  .no_content
+    = t('.no_invitations')

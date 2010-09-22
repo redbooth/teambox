@@ -13,9 +13,7 @@
 
   - when 'show_task_lists'
     = task_list_overview_box(@task_list)
-
-    %h2= @task_list
-    = sidebar_tasks(@task_list.tasks.unarchived)
+    = filter_task_lists(project)
 
   - when 'index_task_lists'
     = filter_task_lists(project)

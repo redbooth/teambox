@@ -35,10 +35,9 @@ Event.onReady = function(fn) {
 
 Event.addBehavior = function(hash) {
   var behaviors = $H(hash)
-  // console.log(behaviors.keys())
   behaviors.each(function(pair) {
-    var selector = pair.key.split(':')
-    document.on(selector[1], selector[0], pair.value)
+    var selector = pair.key.split(':'), fn = pair.value
+    document.on(selector[1], selector[0], function(e, el) { fn.call(el, e) })
   })
 }
 Event.addBehavior.reload = Prototype.emptyFunction
@@ -74,38 +73,6 @@ replace_ids = function(s){
 }
 
 Event.addBehavior({
-  ".remove:mouseover": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/remove.*\.png/,'remove_hover.png')
-  },
-  ".remove:mouseout": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/remove.*\.png/,'remove.png')
-  },
-  ".drag:mouseover": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/drag.*\.png/,'drag_hover.png')
-  },
-  ".drag:mouseout": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/drag.*\.png/,'drag.png')
-  },
-  ".pencil:mouseover": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/pencil.*\.jpg/,'pencil_hover.jpg')
-  },
-  ".pencil:mouseout": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/pencil.*\.jpg/,'pencil.jpg')
-  },
-  ".trash:mouseover": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/trash.*\.jpg/,'trash_hover.jpg')
-  },
-  ".trash:mouseout": function(e){
-    image_source = $(this).src
-    $(this).src = image_source.sub(/trash.*\.jpg/,'trash.jpg')
-  },
   ".add_nested_item:click": function(e){
     link = $(this);
     template = eval(link.href.replace(/.*#/, ''))
@@ -121,103 +88,29 @@ Event.addBehavior({
 });
 
 Element.addMethods({
-  showPreview: function(element) {
-    var form = $(element),
-        block = form.down('.showPreview'),
-        textarea = form.down('textarea'),
-        previewBox = form.down('.previewBox')
-        button = block.down('button'),
-        cancel = block.down('a');
-
-    button.disabled = true;
-    button.down('.default').hide();
-    button.down('.showing').show();
-    
-    var formatter = new Showdown.converter;
-    formatter.makeHtml = formatter.makeHtml.wrap(function(make) {
-      previewBox.update(make(textarea.getValue()))
-    })
-    
-    textarea.updatePreview = textarea.on('keyup', formatter.makeHtml.bind(formatter).throttle(300))
-    
-    formatter.makeHtml()
-    
-    if (!previewBox.visible()) {
-      previewBox.blindDown({duration: 0.3});
-      button.hide();
-      cancel.show();
+  forceShow: function(element) {
+    return $(element).setStyle({ display: 'block' })
+  },
+  swapVisibility: function(element, other) {
+    $(other).forceShow()
+    return $(element).hide()
+  },
+  insertOrUpdate: function(element, selector, content) {
+    element = $(element)
+    var target = element.down(selector)
+    if (!target) {
+      var classnames = selector.match(/(?:\.\w+)+/)
+      if (classnames) classnames = classnames[0].gsub('.', ' ').strip()
+      var id = selector.match(/#(\w+)/)
+      if (id) id = id[1]
+      var tagName = (classnames || id) ? selector.match(/\w+/)[0] : selector
+      target = new Element(tagName, { 'class': classnames, id: id })
+      element.insert(target)
     }
-
-    return element;
-  },
-  closePreview: function(element) {
-    var form = $(element),
-        block = form.down('.showPreview'),
-        textarea = form.down('textarea'),
-        button = block.down('button'),
-        cancel = block.down('a'),
-        previewBox = block.up('form').down('.previewBox');
-
-    textarea.updatePreview.stop()
-    
-    cancel.hide();
-    button.down('.default').show();
-    button.down('.showing').hide();
-    button.show().disabled = false;
-
-    if (previewBox.visible()) previewBox.blindUp({duration: 0.15});
-    return element;
-  },
-  nextText: function(element, texts) {
-    element = $(element);
-    var currentText = element.innerHTML;
-    var nextIndex = (texts.indexOf(currentText) + 1) % texts.length;
-    return texts[nextIndex];
-  },
-  
-  addHighlights: function(element, terms, className) {
-    for (var i=0; i<terms.length; i++)
-      this.addHighlight(element, terms[i], className);
-  },
-  
-  // Courtesy of http://stackoverflow.com/questions/1650389/prototype-js-highlight-words-dom-traversing-correctly-and-efficiently
-  addHighlight: function(element, term, className) {
-    function innerHighlight(element, term, className) {
-      className = className || 'highlight';
-      term = (term || '').toUpperCase();
-
-      var skip = 0;
-      if ($(element).nodeType == 3) {
-        var pos = element.data.toUpperCase().indexOf(term);
-        if (pos >= 0) {
-          var middlebit = element.splitText(pos),
-              endbit = middlebit.splitText(term.length),
-              middleclone = middlebit.cloneNode(true),
-              spannode = document.createElement('span');
-
-          spannode.className = 'highlight';
-          spannode.appendChild(middleclone);
-          middlebit.parentNode.replaceChild(spannode, middlebit);
-          skip = 1;
-        }
-      }
-      else if (element.nodeType == 1 && element.childNodes && !/(script|style)/i.test(element.tagName)) {
-        for (var i = 0; i < element.childNodes.length; ++i)
-          i += innerHighlight(element.childNodes[i], term, className);
-      }
-      return skip;
-    }
-    innerHighlight(element, term, className);
-    return element;
-  },
-  removeHighlight: function(element, term, className) {
-    className = className || 'highlight';
-    $(element).select("span."+className).each(function(e) {
-      e.parentNode.replaceChild(e.firstChild, e);
-    });
-    return element;
+    target.update(content)
+    return target
   }
-});
+})
 
 Project = {
   valid_url: function(){
@@ -233,21 +126,24 @@ Project = {
   }
 }
 
-Group = {
-  valid_url: function(){
-    var title = $F('group_permalink');
-    var class_name = '';
-    if(title.match(/^[a-z0-9_\-\.]{5,}$/))
-      class_name = 'good'
-    else
-      class_name = 'bad'
-
-    $('handle').className = class_name;
-    Element.update('handle',title)
-  }
-}
-
-document.on('click', 'a.closeThis', function(e) {
-    e.preventDefault()
-    this.parentNode.setStyle('display: none')
+document.on('click', 'a.closeThis', function(e, link) {
+  e.preventDefault()
+  $(link.parentNode).hide()
 })
+
+if (Prototype.Browser.Gecko) {
+  document.on('dom:loaded', function() {
+    var searchForm = $$('.search_bar form:has(input[name=search])').first()
+    if (searchForm) {
+      // search opens in another window/tab when Alt+Return is pressed
+      searchForm.on('keydown', function(e) {
+        if (e.keyCode == Event.KEY_RETURN) {
+          if (e.altKey) this.writeAttribute('target', '_blank')
+          else this.removeAttribute('target')
+        }
+      })
+      searchForm.down('input[name=search]').
+        writeAttribute('title', 'Search with Alt + Enter to open up results in a new window')
+    }
+  })
+}

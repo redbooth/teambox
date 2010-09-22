@@ -103,13 +103,13 @@ module JennyHelper
     end
     target.errors.each do |field,message|
     errors = <<BLOCK
-var e = $('#{form_id}').down('.#{field}');
-if (e) {
-if(e.down('.error'))
-  e.down('.error').insert({bottom: "<br /><span>'#{message}'</span>"})
-else
-  e.insert({ bottom: "<p class='error'><span>#{message}</span></p>"})
-}
+      var e = $('#{form_id}').down('.#{field}');
+      if (e) {
+      if(e.down('.error'))
+        e.down('.error').insert({bottom: "<br /><span>'#{message}'</span>"})
+      else
+        e.insert({ bottom: "<p class='error'><span>#{message}</span></p>"})
+      }
 BLOCK
       page << errors
     end

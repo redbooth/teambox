@@ -2,8 +2,7 @@ span.comments_count
   padding: 1px 5px
   text-transform: uppercase
   font-size: 11px
-  -moz-border-radius: 4px
-  -webkit-border-radius: 4px
+  +rounded(4px)
   color: rgb(255, 255, 255)
   background: rgb(170, 170, 170)
 
@@ -14,178 +13,84 @@ span.comments_count
     width: 16px
     text-align: center
 
-form#new_comment
+form.new_comment, form.edit_comment
   padding-bottom: 3px
   margin-bottom: 30px
-  span.attach_label
-    float: left
-    font-size: 13px
-    line-height: 26px
-    color: rgb(80, 80, 80)
-    margin-right: 10px
   .micro_avatar
     +rounded(3px)
     margin-top: 2px
-  .body
-    margin: 5px 0 5px 30px
+  .field
+    margin: 5px 0
+    label
+      font-weight: normal !important
     textarea
       width: 594px
       margin-bottom: 0px
       font-size: 13px
+      height: 1.4em
+      color: rgb(0, 0, 0)
+      #facebox &
+        width: 575px
     .previewBox
       margin: 4px
       padding: 4px
       border: solid 2px rgb(235, 235, 235)
-  .comment_body
-    height: 1.4em
-    color: rgb(0, 0, 0)
-  .add_button
-    float: left
-    margin-bottom: 0
-  .attach_button
-    float: left
-    margin-bottom: 0
-    margin-right: 10px
-    display: block
-    width: 16px
-    height: 26px
-    span
-      display: none
-  .attach_file
-    background: url('/images/icons/attach.png') no-repeat center center
-  .attach_time
-    background: url('/images/icons/time_add.png') no-repeat center center
-  .hours
-    padding-left: 1px
-    padding-right: 10px
-    clear: both
-    font-size: 11px
-    img
-      vertical-align: middle
-    span
-      vertical-align: middle
-  .statuses
-    position: relative
+  .text_field.hours_field
+    font-size: 12px
     label
-      display: none
+      display: inline
+    input
+      width: 5em
+      font-size: 14px
+      padding: 2px 4px
+      margin-right: 1em
+  .actions
+    width: 55%
     float: left
-    .status
-      cursor: pointer
-      float: left
-      +rounded(4px)
-      border: solid 1px rgb(200, 200, 200)
-      background: rgb(240, 240, 240)
-      color: rgb(80, 80, 80)
-      font-size: 11px
-      line-height: 2.3
-      text-align: center
-      text-transform: uppercase
-      padding: 0 5px
-      margin-left: 5px
-      select
-        text-transform: none
-      input
+    .add_hours_icon, .attach_icon
+      text-indent: -9999em
+      margin-right: 5px
+      position: relative
+      top: 2px
+      *:first-child+html &
+        text-indent: 16px
+        overflow: hidden
+        top: -2px
+    *:first-child+html & .attach_icon
+      margin-left: -16px
+    .task_actions
+      display: inline
+      label
         display: none
-    .status:hover
-      color: rgb(255, 255, 255)
-    .active
-      background: rgb(140, 140, 140)
-      border: solid 1px rgb(0, 0, 0)
-      color: rgb(255, 255, 255)
-    .open
-      select
-        max-width: 9em
-        font-size: 1em
-    .new:hover
-      background: #9da3a7
-      border: solid 1px #7d8387
-    .open:hover
-      background: #ffc947
-      border: solid 1px #dfa927
-    .hold:hover
-      background: #be3cff
-      border: solid 1px #9e1cdf
-    .resolved:hover
-      background: #afd142
-      border: solid 1px #8fb122
-    .rejected:hover
-      background: #e97063
-      border: solid 1px #c95043
+      select[name="task[status]"]
+        width: 80px
+      select[name="task[assigned_id]"]
+        width: 150px
   .submit
-    padding-top: 5px
+    width: 45% !important
+    float: right
     text-align: right
-    float: right
-    width: 220px
-  .loading
-    float: right
-  p.error
-    color: red
-    font-weight: bold
-  .hours
-    padding-top: 10px
+  .project_select
+    font-size: 13px
+  .extra
+    +clearing
+  .error
+    color: firebrick
 
-form.edit_comment
-  padding-bottom: 3px
-  .body
-    margin-bottom: 5px
-    textarea
-      width: 626px
-      margin-bottom: 0px
-    .previewBox
-      margin: 4px
-      padding: 4px
-      border: solid 2px rgb(235, 235, 235)
-  .comment_body
-    height: 4em
-    color: rgb(0, 0, 0)
-  .submit
-    padding:
-      top: 3px
-    text-align: right
-    float: right
-    width: 200px
-  .loading
-    float: right
-  p.error
-    color: red
-    font-weight: bold
-    
+form .upload_area
+  padding: .3em 0
+  p
+    margin: 0 0 .5em 0
+    color: $text !important
+  input[type=file]
+    display: block
+    margin-bottom: .7em
+
 div.thread
   form.edit_comment
     .body
       textarea
         width: 538px
-
-form.reopen,form.convert_comment
-  background: rgb(255, 255, 200)
-  border: 1px rgb(220, 220, 150) solid
-  -moz-border-radius: 5px
-  -webkit-border-radius: 5px
-  padding: 10px
-    top: 5px
-  h2
-    margin: 0px
-      bottom: 5px
-    font-size: 13px
-    color: rgb(33, 33, 27)
-    border: none
-  .reopen_body
-    margin-bottom: 5px
-    textarea
-      width: 606px
-      margin-bottom: 0px
-
-form.convert_comment
-  :background rgb(255,255,220)
-  :border 1px solid rgb(200,200,120)
-  padding: 20px
-  :margin-bottom 15px
-  h2
-    margin: 0px
-      bottom: 5px
-    font-size: 13px
-    color: rgb(33, 33, 27)
-    border: none
 
 .comment
   padding: 15px 0 5px
@@ -210,17 +115,12 @@ form.convert_comment
     float: left
     .thumb_avatar
       float: right
-    .unread
-      float: left
-      position: relative
-      margin-top: 20px
-      width: 16px
   span.hours
     font-size: 11px
     font-weight: bold
     color: white
     text-align: center
-    background-color: #668cd9
+    background-color: $navbar
     +rounded(3px)
     padding: 0 3px
     white-space: nowrap
@@ -231,20 +131,18 @@ form.convert_comment
   .block
     width: 560px
     float: right
-    .name
-      font-size: 12px
-      a
-        font-size: 12px
-        font-weight: bold
-      span.arr
-        color: rgb(160, 160, 160)
-        padding: 0px 4px
     .date
       float: right
       font-size: 10px
       color: #9da3a7
     .body
-      margin-top: 5px
+      .before
+        display: inline
+      a.user
+        text-decoration: none
+        font-weight: bold
+      .before:first-child+p
+        display: inline
   .mention
     padding: 0 3px
     background-color: #eee
@@ -254,7 +152,7 @@ form.convert_comment
     color: #000
   a.mention
     &:hover
-      color: #259BAD
-.tooltip.attach
-  margin-top: 30px
-  margin-left: 10px
+      color: $navbar
+
+.youtube-player
+  margin: 20px 0

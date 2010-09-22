@@ -1,7 +1,19 @@
 var TaskList = {
   in_sort: false,
-
-  // Sortable functions
+  
+  sortableChange: function(draggable) {
+    this.currentDraggable = draggable
+  },
+  
+  sortableUpdate: function() {
+    var ids = this.currentDraggable.id.match(/project_(\d+)_task_list_(\d+)/),
+        position = this.currentDraggable.up().select('.task_list_container').indexOf(this.currentDraggable) + 1
+    
+    new Ajax.Request('/projects/' + ids[1] + '/task_lists/' + ids[2] + '/reorder', {
+      method: 'put',
+      parameters: { position: position }
+    })
+  }.debounce(100),
 
   makeSortable: function() {
     TaskList.in_sort = true;
@@ -10,13 +22,8 @@ var TaskList = {
       handle:'img.drag',
       tag:'div',
       only:'task_list_container',
-      onUpdate: function(){
-        new Ajax.Request($('task_lists').readAttribute("reorder_url"), {
-          asynchronous: true,
-          evalScripts: true,
-          parameters: Sortable.serialize('task_lists')
-        });
-      }
+      onChange: TaskList.sortableChange.bind(TaskList),
+      onUpdate: TaskList.sortableUpdate.bind(TaskList)
     });
   },
   destroySortable: function() {
@@ -219,26 +226,16 @@ var TaskList = {
   },
 
   setReorder: function(active) {
-    $$('.task_list_container').each(function(value) { 
-      if(active)
-        value.addClassName('reordering');
-      else
-        value.removeClassName('reordering');
-    });
+    $$('.task_list_container').invoke(active ? 'addClassName' : 'removeClassName', 'reordering')
 
-    if (active)
-    {
-      $('reorder_task_lists_link').hide();
-      $('done_reordering_task_lists_link').show();
-      Filter.showAllTaskLists();
-      TaskList.makeSortable();
-    }
-    else
-    {
-      $('reorder_task_lists_link').show();
-      $('done_reordering_task_lists_link').hide();
-      Filter.updateFilters();
-      TaskList.destroySortable();
+    if (active) {
+      $('reorder_task_lists_link').swapVisibility('done_reordering_task_lists_link')
+      Filter.showAllTaskLists()
+      TaskList.makeSortable()
+    } else {
+      $('done_reordering_task_lists_link').swapVisibility('reorder_task_lists_link')
+      Filter.updateFilters()
+      TaskList.destroySortable()
     }
   },
   
@@ -252,10 +249,12 @@ var TaskList = {
 };
 
 document.on('click', '#reorder_task_lists_link', function(e, element){
+  e.stop()
   TaskList.setReorder(true);
 });
 
 document.on('click', '#done_reordering_task_lists_link', function(e, element){
+  e.stop()
   TaskList.setReorder(false);
 });
 
@@ -335,3 +334,27 @@ document.on('click', 'a.unarchive_task_list_link', function(e, el) {
   TaskList.unarchive(el, el.readAttribute('action_url'));
 });
 
+// creating new tasks
+document.on('click', '.task_list .new_task a[href$="/new"]', function(e, link) {
+  if (!e.isMiddleClick()) {
+    e.stop()
+    link.hide().next('form').forceShow().focusFirstElement()
+  }
+})
+
+var hideTaskFormAndShowLink = function(form) {
+  Form.reset(form).hide().previous('a[href$="/new"]').show()
+}
+
+document.on('click', '.task_list .new_task form a[href="#cancel"]', function(e, link) {
+  e.stop()
+  hideTaskFormAndShowLink(link.up('form'))
+})
+
+document.on('keyup', '.task_list .new_task form:has(a[href="#cancel"])', function(e, form) {
+  if (e.keyCode == Event.KEY_ESC) hideTaskFormAndShowLink(form)
+})
+
+document.on('ajax:success', '.task_list .new_task form', function(e, form) {
+  Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(e.memo.responseText)
+})

@@ -1,5 +1,3 @@
-require_dependency 'grab_name'
-
 class Project
   
   include GrabName

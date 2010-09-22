@@ -1,6 +1,7 @@
 class Emailer < ActionMailer::Base
   include ActionController::UrlWriter # Allows us to generate URLs
   include ActionView::Helpers::TextHelper
+  include Emailer::Incoming
 
   ANSWER_LINE = '-----------------------------==-----------------------------'
 
@@ -33,34 +34,11 @@ class Emailer < ActionMailer::Base
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
   
-  def group_invitation(invitation)
-    defaults
-    recipients    invitation.email
-    from          from_user(nil, invitation.user)
-    subject       I18n.t("emailer.invitation_group.subject", :user => invitation.user.name, :group => invitation.group.name)
-    body          :referral => invitation.user, :group => invitation.group, :invitation => invitation
-  end
-
   def signup_invitation(invitation)
     defaults
     recipients    invitation.email
     subject       I18n.t("emailer.invitation.subject", :user => invitation.user.name, :project => invitation.project.name)
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
-  end
-
-  def signup_group_invitation(invitation)
-    defaults
-    recipients    invitation.email
-    subject       I18n.t("emailer.invitation_group.subject", :user => invitation.user.name, :group => invitation.group.name)
-    body          :referral => invitation.user, :group => invitation.group, :invitation => invitation
-  end
-
-  def notify_comment(user, project, comment)
-    defaults
-    recipients    user.email
-    from          from_user("#{project.permalink}", comment.user)
-    subject       "[#{project.permalink}] #{truncate(comment.body, :length => 20)}"
-    body          :project => project, :comment => comment, :recipient => user
   end
 
   def notify_conversation(user, project, conversation)
@@ -79,15 +57,9 @@ class Emailer < ActionMailer::Base
     body          :project => project, :task => task, :task_list => task.task_list, :recipient => user
   end
 
-  def notify_task_list(user, project, task_list)
-    defaults
-    recipients    user.email
-    from          from_user("#{project.permalink}+task_list+#{task_list.id}", task_list.comments.first.user)
-    subject       "[#{project.permalink}] #{task_list.name}"
-    body          :project => project, :task_list => task_list, :recipient => user
-  end
-
-  def daily_task_reminder(user, tasks)
+  def daily_task_reminder(user)
+    tasks = user.tasks_for_daily_reminder_email
+    
     defaults
     recipients    user.email
     subject       I18n.t("users.daily_task_reminder_email.daily_task_reminder")

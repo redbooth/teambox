@@ -29,5 +29,7 @@ installing Teambox.
 
 [teambox]: http://teambox.com
 [tour]: http://teambox.com/tour
-[preview]: http://img.skitch.com/20100630-8thtcf16qg52w4jjy2my37tpp4.jpg
+[preview]: http://cl.ly/e5216ad42c90923127a8/content#.png
 [license]: http://www.gnu.org/licenses/agpl-3.0.html
+
+Thanks to the many Ruby projects we're using and the Famfamfam icon collection.

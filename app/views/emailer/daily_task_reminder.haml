@@ -1,11 +1,12 @@
-.email{ :style => email_global }
-  %p= I18n.t("users.daily_task_reminder_email.daily_task_reminder_from_teambox")
+- self.with_options(:scope => "users.daily_task_reminder_email") do |i18n|
+  .email{ :style => email_global }
+    %p= i18n.t(:daily_task_reminder_from_teambox)
 
-  = tasks_for_daily_reminder(@tasks[:late], @user, I18n.t('users.daily_task_reminder_email.late_tasks'))
-  = tasks_for_daily_reminder(@tasks[:today], @user, I18n.t('users.daily_task_reminder_email.tasks_for_today'))
-  = tasks_for_daily_reminder(@tasks[:tomorrow], @user, I18n.t('users.daily_task_reminder_email.tasks_for_tomorrow'))
-  = tasks_for_daily_reminder(@tasks[:for_next_two_weeks], @user, I18n.t('users.daily_task_reminder_email.tasks_for_next_two_weeks'))
-  = tasks_for_daily_reminder(@tasks[:no_due_date], @user, I18n.t('users.daily_task_reminder_email.tasks_without_a_due_date'))
+    = tasks_for_daily_reminder(@tasks[:late], @user, i18n.t(:late_tasks))
+    = tasks_for_daily_reminder(@tasks[:today], @user, i18n.t(:tasks_for_today))
+    = tasks_for_daily_reminder(@tasks[:tomorrow], @user, i18n.t(:tasks_for_tomorrow))
+    = tasks_for_daily_reminder(@tasks[:for_next_two_weeks], @user, i18n.t(:tasks_for_next_two_weeks))
+    = tasks_for_daily_reminder(@tasks[:no_due_date], @user, i18n.t(:tasks_without_a_due_date))
 
-.footer{ :style => email_text(:small) }
-  %p= I18n.t("users.daily_task_reminder_email.you_receive_this_message", :link => link_to(I18n.t("users.daily_task_reminder_email.settings_page"), account_notifications_url))
+  .footer{ :style => email_text(:small) }
+    %p= i18n.t(:you_receive_this_message, :link => link_to(i18n.t(:settings_page), account_notifications_url))

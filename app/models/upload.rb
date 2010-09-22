@@ -9,10 +9,17 @@ class Upload < RoleRecord
 
   has_one        :page_slot, :as => :rel_object
   before_destroy :clear_slot
+  after_destroy  :cleanup_activities
 
   before_create :copy_ownership_from_comment
 
   default_scope :order => 'created_at DESC'
+
+  attr_accessible :asset,
+                  :page_id,
+                  :description
+  
+  include PageWidget
 
   has_attached_file :asset,
     :styles => { :thumb => "64x48>" },
@@ -25,6 +32,13 @@ class Upload < RoleRecord
   
   validates_attachment_size :asset, :less_than => Teambox.config.asset_max_file_size.to_i.megabytes
   validates_attachment_presence :asset
+  validate :check_page
+  
+  def check_page
+    if page && (page.project_id != project_id)
+      @errors.add :project, 'is not valid'
+    end
+  end
   
   def image?
     !(asset_content_type =~ /^image.*/).nil?
@@ -50,17 +64,20 @@ class Upload < RoleRecord
   def description
     self[:description] || (comment ? truncate(comment.body, :length => 80) : nil)
   end
-
-  def clear_slot
-    page_slot.destroy if page_slot
-  end
   
   def slot_view
     'uploads/upload_slot'
   end
 
   def after_create
+    save_slot if page
     project.log_activity(self, 'create', user_id) if page_id
+  end
+
+  def cleanup_activities
+    unless self.comment
+      Activity.destroy_all :target_type => self.class.name, :target_id => self.id
+    end
   end
   
   def to_s
@@ -97,6 +114,27 @@ class Upload < RoleRecord
       xml.tag! 'user-id', user_id
       xml.tag! 'comment-id', comment_id
     end
+  end
+  
+  def to_api_hash(options = {})
+    {
+      :id => id,
+      :page_id => page_id,
+      :slot_id => page_slot ? page_slot.id : nil,
+      :filename => asset_file_name,
+      :description => description,
+      :mime_type => asset_content_type,
+      :bytes => asset_file_size,
+      :download => url,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :user_id => user_id,
+      :comment_id => comment_id
+    }
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
   end
   
   protected

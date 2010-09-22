@@ -6,14 +6,13 @@
   = csrf_meta_tag
   = stylesheet_link_tag 'mobile', :media => :all
 
-%body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
+%body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
   #header
-    = render 'shared/header'
+    = header
     = navigation(@current_project,current_user.projects,current_user.recent_projects)
   #content
-    - if @current_project
-      = render 'shared/project_navigation', :project => @current_project
+    = project_navigation(@current_project) if @current_project
     = yield
   #footer
-    =# link_to "Use full Teambox", root_path
+    = link_to "Use full Teambox", change_format_path(:html)
     = link_to t('shared.global_navigation.logout'), logout_path

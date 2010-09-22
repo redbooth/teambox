@@ -13,16 +13,30 @@
     .info
       .thumb_avatar
         margin: 0 20px 0 10px
-    .starter
-      display: block
-      height: 25px
+    p.starter
+      a
+        font-weight: bold
+      margin-top: 0
     .date
       float: right
       font-size: 0.8em
       color: #9da3a7
+    p.thread_title
+      margin-bottom: 0
+      a
+        padding-left: 20px
+        font-weight: bold
+        &.conversation, &.task
+          padding-left: 23px
+        &.conversation
+          background: url(/images/comment.gif) no-repeat left
+        &.task
+          background: url(/images/task_list.png) no-repeat left
+        &.task_list
+          padding-left: 0
   .comments
     border-left: 4px solid #eee
-    margin: 1px 0 0 70px
+    margin: 1px 0 0 20px
     background-color: #fafafa
     .block
       width: 475px
@@ -30,7 +44,7 @@
       .body
         margin-top: 0
     .more_comments
-      padding: 10px 10px 10px 45px
+      padding: 10px 10px 10px 54px
       display: block
       font-size: 12px
     .comment
@@ -41,14 +55,14 @@
         .micro_avatar
           +rounded(3px)
       .block
-        width: 510px
-  form#new_comment
+        width: 552px
+  form.new_comment
     border-left: 4px solid #eee
     background-color: #fafafa
-    margin: 0 0 0 70px
+    margin: 0 0 0 20px
     padding: 2px 0 5px 10px
-    .body
-      textarea
-        width: 500px
+    .field textarea
+      margin-left: 8px
+      width: 540px
     .micro_avatar
-      margin-top: 7px
+      margin-top: 2px

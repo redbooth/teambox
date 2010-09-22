@@ -2,6 +2,7 @@ if @note
   page["note_#{@note.id}"].hide
   page.insert_html :after, "note_#{@note.id}", :partial => 'notes/edit', :locals => { :note => @note }
   page << "$('edit_note_#{@note.id}').focusFirstElement()"
+  page << "$($$('#edit_note_#{@note.id} textarea')[0]).resizeToText(true)"
 else
   page.alert t('common.not_allowed')
 end

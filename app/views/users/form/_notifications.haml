@@ -1,0 +1,11 @@
+.check_boxes.notifications
+  %p= t('.clarification', :login => user.login)
+  .check_box.notify
+    = f.check_box :notify_conversations
+    = f.label :notify_conversations, t('.notify_conversations')
+  .check_box.notify
+    = f.check_box :notify_tasks
+    = f.label :notify_tasks, t('.notify_tasks')
+  .check_box.notify
+    = f.check_box :wants_task_reminder
+    = f.label :wants_task_reminder, t('.wants_task_reminder')

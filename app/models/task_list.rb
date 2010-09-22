@@ -1,8 +1,9 @@
 class TaskList < RoleRecord
+
+  include Watchable
+
   acts_as_list :scope => :project
   attr_accessible :name, :start_on, :finish_on
-
-  serialize :watchers_ids
 
   concerned_with :validation,
                  :initializers,
@@ -11,15 +12,6 @@ class TaskList < RoleRecord
                  :callbacks
 
   before_save :ensure_date_order
-
-  def notify_new_comment(comment)
-    self.watchers.each do |user|
-      if user != comment.user and user.notify_task_lists
-        Emailer.send_with_language(:notify_task_list, user.language, user, self.project, self) # deliver_notify_task_list
-      end
-    end
-    self.sync_watchers
-  end
 
   def to_s
     name
@@ -52,6 +44,38 @@ class TaskList < RoleRecord
         comments.to_xml(options.merge({ :skip_instruct => true }))
       end
     end
+  end
+
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :project_id => project_id,
+      :user_id => user_id,
+      :name => name,
+      :position => position,
+      :archived => archived,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :watchers => Array.wrap(watchers_ids)
+    }
+    
+    base[:start_on] = start_on.to_s(:db) if start_on
+    base[:finish_on] = finish_on.to_s(:db) if finish_on
+    base[:completed_at] = completed_at.to_s(:db) if completed_at
+    
+    if Array(options[:include]).include? :tasks
+      base[:tasks] = tasks.map {|t| t.to_api_hash(options)}
+    end
+    
+    if Array(options[:include]).include? :comments
+      base[:comments] = comments.map {|c| c.to_api_hash(options)}
+    end
+    
+    base
+  end
+
+  def to_json(options = {})
+    to_api_hash(options).to_json
   end
 
   private

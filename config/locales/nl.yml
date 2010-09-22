@@ -588,7 +588,7 @@ nl:
       year: Jaar
     time_ago: "%{time_ago_in_words} geleden"
   deleted: 
-    conversation: "# Conversatie <b>%{name}</b> verwijderd"
+    conversation: "Conversatie <b>%{name}</b> verwijderd"
     left_project: "U heeft dit project verlaten"
     page: "Pagina <b>%{name}</b> verwijderd"
     person: "%{name} is niet langer in het project"
@@ -687,6 +687,8 @@ nl:
     sent: 
       email_sent: "<b>We hebben zojuist een e-mailbericht gestuurd naar deze gebruiker met een link om de projectuitnodiging te accepteren</b>. Als ze de e-mail niet kunnen vinden, zorg dan dat het niet geclassificeerd is als spam of probeer een ander e-mailadres. Als de problemen aanhouden, neem dan alstublieft contact op met onze medewerkers."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  locales: 
+    nl: Nederlands
   notes: 
     actions: 
       delete_confirm: "Weet u zeker dat u deze notitie wilt verwijderen?"
@@ -819,7 +821,6 @@ nl:
       confirm_delete: "Weet u het zeker dat u dit project voor altijd wilt verwijderen? ER IS GEEN MANIER OM HET PROJECT TERUG TE KRIJGEN. Als u het wilt bewaren, gebruik dan Project Archiveren inplaats van verwijderen."
       forever: "Verwijder dit project voor altijd"
       name: Naam
-      name_description: "Kies een korte en beschrijvende titel. Bijvoorbeeld: Taggart Transcontinental"
       owner: Eigenaar
       owner_description: "De eigenaar is de hoofdverantwoordelijke voor een project. Hij kan niet verwijderd worden uit het project tenzij eigendom wordt overgedragen aan een andere gebruiker."
       permalink: URL
@@ -828,12 +829,10 @@ nl:
       archived: "Toon %{count} Gearchiveerde projecten..."
       new_project: "Nieuw Project"
       projects: "Mijn projecten"
-      refreshes: "Vernieuwt elke minuut"
       rss: 
         description: "Overzicht van al uw projecten"
         title: "Projecten Overzicht"
       subscribe: "Inschrijven op de nieuws feed"
-      title: "Nieuws feed voor al uw projecten"
     new: 
       create_an_example_project: "Eerste keer in Teambox? <a href='%{link}'>Maak een voorbeeld project aan</a> om rond te spelen en te leren."
       created: "Uw project is aangemaakt!"
@@ -866,9 +865,7 @@ nl:
       item4: "<b>Plan</b> over wat er moet worden gedaan en post updates met taken."
       item5: "<b>Deel informatie</b> door makkelijke wijzigbare Pagina's voor elk project."
     show: 
-      invite_people: "Nodig mensen uit..."
       new_task_list_link: "Nieuwe Takenlijst"
-      people_in_project: "Mensen in dit project"
       rss: 
         description: "Recente activiteiten voor het project %{name}"
         title: "%{name}"
@@ -1143,7 +1140,7 @@ nl:
       title_profile: "Uw Profiel Instellingen"
       title_settings: "Uw Account Instellingen"
     form: 
-      avatar: 
+      picture: 
         field: "Uw avatar"
         max_size: "Bestandsgrootte mag niet meer zijn dan %{mb}"
         presence: "U kunt geen leeg bestand uploaden"
@@ -1160,10 +1157,11 @@ nl:
       last_name: Achternaam
       login: Gebruikersnaam
       monday: Maandag
-      notify_conversations: "Laat me weten wanneer ik een conversatie volg"
-      notify_mentions: "Laat me weten wanneer ik ben vermeld bijv. Howdy @%{login}! U heeft een nieuwe e-mail!"
-      notify_task_lists: "Laat me weten wanneer ik een takenlijst volg"
-      notify_tasks: "Laat me weten wanneer ik een taak volg"
+      notifications:
+        notify_conversations: "Laat me weten wanneer ik een conversatie volg"
+        notify_mentions: "Laat me weten wanneer ik ben vermeld bijv. Howdy @%{login}! U heeft een nieuwe e-mail!"
+        notify_tasks: "Laat me weten wanneer ik een taak volg"
+        wants_task_reminder: "Stuur me een dagelijkse e-mail van mij taken"
       password: Wachtwoord
       password_confirmation: "Wachtwoord bevestigen"
       sunday: Zondag
@@ -1174,12 +1172,11 @@ nl:
         last_name: "Maximaal 20 tekens."
         login: "U heeft een gebruikersnaam nodig om in te loggen. Leden kunnen u op uw gebruikersnaam vinden. De gebruikersnaam kan alleen bestaan uit kleine letters. Spaties zijn niet toegestaan. U kunt ook de underscore gebruiken."
         password: "De combinatie van letters, cijfers, hoofdletters en kleine letters is een goed idee."
-      use_this_email: "U heeft voor dit e-mailadres uitnodigingen om projecten te delen. Als bij deze projecten deel wilt nemen, verander dan het wachtwoord niet. U kunt uw wachtwoord veranderen na het aanmeldproces."
-      wants_task_reminder: "Stuur me een dagelijkse e-mail van mij taken"
     new: 
       existing_user: "Als u al een account heeft, <a href='%{login_url}'>log in</a> of <a href='%{forgot_url}'>herstel uw wachtwoord</a>."
       submit: "Maak account aan"
       title: "Maak een Account aan"
+      use_this_email: "U heeft voor dit e-mailadres uitnodigingen om projecten te delen. Als bij deze projecten deel wilt nemen, verander dan het wachtwoord niet. U kunt uw wachtwoord veranderen na het aanmeldproces."
       you_already_have_an_account: "U heeft al een Teambox account voor het adres %{email}. <a href='%{login_link}'>Log in met dit adres</a> of <a href='%{reset_password_link}'>reset uw wachtwoord</a> als u het vergeten heeft."
       you_are_logged_in: "U heeft al een account. Log eerst uit om als een andere gebruiker aan te melden."
     show: 

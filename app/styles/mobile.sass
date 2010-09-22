@@ -1,17 +1,24 @@
 @import shared
 
+$background: #edeff4
+$color: #333
+
 body
   margin: 0
   font-family: Helvetica
   overflow-x: hidden
-  color: #333333
+  color: $color
   -webkit-user-select: none
   -webkit-text-size-adjust: none
-  background-color: #edeff4
+  background-color: $background
 
 label, input
   margin: 2px 0
   display: block
+  em
+    font-style: normal
+    font-size: 10px
+    color: #999
 
 .clear
   clear: both
@@ -61,27 +68,26 @@ h2
     color: #999999
   #menubar
     -webkit-box-sizing: border-box
-    background-color: #edeff4
+    background-color: $background
     border-bottom: 1px solid #d8dfea
     height: 34px
     position: relative
     a
       -webkit-box-sizing: border-box
-      background-color: #b0e1ed
-      border: 1px solid #b0e1ed
-      color: #0083a2
+      background-color: $navbar
+      border: 1px solid $navbar
+      color: black
       display: block
       float: left
       font-size: 14px
-      font-weight: bold
       height: 28px
       line-height: 28px
-      margin-left: 2%
+      margin-left: 1%
       margin-top: 6px
       text-align: center
       text-decoration: none
       overflow: hidden
-      width: 31%
+      width: 30%
     a.selected
       background-color: white
       border-bottom: 1px solid white
@@ -107,9 +113,9 @@ h2
         weight: bold
       height: 22px
       line-height: 20px
-      width: 23%
+      width: 22%
       margin:
-        left: 2%
+        left: 1%
         top: 2px
         bottom: 6px
       text:
@@ -123,12 +129,14 @@ h2
       a
         text-decoration: none
         color: black
+        border-bottom: 1px dashed #bbb
       .activity
         display: block
         padding: 10px
         border-bottom: 1px solid #dddddd
         min-height: 50px
         .thumb_avatar
+          border: none
           float: left
           width: 48px
           height: 48px
@@ -314,8 +322,9 @@ div.task_list, div.task_list_closed
 
 .task_list_container
   .new_task
-    padding: 5px 0px
-  border-bottom: 1px solid #dddddd
+    padding: 5px 0px 5px 15px
+    font-size: 12px
+  margin-bottom: 10px
 
 .task_list_container.archived
   .new_task
@@ -332,12 +341,16 @@ div.task_list, div.task_list_closed
     .project, .project_arr
       display: none
 
-.new_sessions
+.new_sessions, .create_sessions
   padding-left: 10px
   background-color: white
   a, a:hover
     color: rgb(150, 150, 150)
     text-decoration: none
+  p.error
+    background: #FF8D98
+    padding: 5px
+    display: inline-block
 
 .new_conversations, .create_conversations
   .watchers

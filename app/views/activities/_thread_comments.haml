@@ -1,0 +1,13 @@
+- thread_id = "#{thread.class.to_s}_#{thread.id}"
+
+- case controller.controller_name
+- when "projects", "activities"
+  - show_comments = 3
+  - if comments.size > show_comments
+    %span.more_comments
+      = link_to t('activities.thread.more_comments', :count => comments.size - show_comments),
+        show_thread_path(thread, :thread_type => thread.class.to_s),
+        :'data-remote' => true
+  = render comments[0..(show_comments-1)].reverse, :threaded => true
+- else
+  = render comments.reverse, :threaded => true

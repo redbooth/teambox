@@ -10,28 +10,10 @@ end
 
 ## FIXME: it's better for 'givens' to set tasks up directly in the db:
 
-Given /^I have a task on open$/ do
-  And 'I select "Mislav Marohnić" from "comment_target_attributes_assigned_id"'
-  And 'I press "Save"'
-  And 'I wait for 0.3 seconds'
-end
-
-Given /^I have a task on hold$/ do
-  And 'I click the element "status_hold"'
-  And 'I press "Save"'
-  And 'I wait for 0.3 seconds'
-end
-
-Given /^I have a task on resolved$/ do
-  And 'I click the element "status_resolved"'
-  And 'I press "Save"'
-  And 'I wait for 0.3 seconds'
-end
-
-Given /^I have a task on rejected$/ do
-  And 'I click the element "status_rejected"'
-  And 'I press "Save"'
-  And 'I wait for 0.3 seconds'
+Given /^I have a task on (open|hold|resolved|rejected)$/ do |status|
+  When %(I select "#{status}" from "Status")
+  When 'I press "Save"'
+  When 'I wait for 0.3 seconds'
 end
 
 Given /^the following tasks? with associations exists?:?$/ do |table|
@@ -41,6 +23,17 @@ Given /^the following tasks? with associations exists?:?$/ do |table|
       :task_list => TaskList.find_by_name(hash[:task_list]),
       :project => Project.find_by_name(hash[:project])
     )
+  end
+end
+
+Given /^the following tasks? with hours exists?:?$/ do |table|
+  table.hashes.each do |hash|
+    Factory(:task,
+      :name => hash[:name],
+      :task_list => TaskList.find_by_name(hash[:task_list]),
+      :project => Project.find_by_name(hash[:project]),
+      :user => @current_user
+      ).comments.create :body => hash[:comment], :human_hours => hash[:hours]
   end
 end
 
@@ -99,7 +92,7 @@ Given /^the task called "([^\"]*)" is assigned to "([^\"]*)"$/ do |task_name, lo
 end
 
 Given /^I have no tasks assigned to me$/ do
-  @current_user.assigned_tasks(:all).each { |task| task.destroy }
+  @current_user.assigned_tasks.destroy_all
 end
 
 Given /^the task called "([^\"]*)" is (new|hold|open|resolved|rejected)$/ do |name, status|
@@ -122,9 +115,4 @@ Then /^I should not see the following tasks:$/ do |table|
   table.hashes.each do |hash|
     Then %(I should not see the task called "#{hash['task_name']}" in the "#{hash['task_list_name']}" task list)
   end
-end
-
-# needed to change the task's status
-When /^I click the element "([^\"]*)"$/ do |id|
-  find(%(##{id})).click
 end

@@ -1,5 +1,7 @@
 module ProjectsHelper
 
+  extend ActiveSupport::Memoizable
+
   def delete_project_link(project)
     link_to content_tag(:span,t('projects.fields.forever')), 
     project_path(project),
@@ -10,18 +12,10 @@ module ProjectsHelper
 
   def archive_project_link(project)
     link_to_function content_tag(:span,t('projects.fields.archiving')), 
-    "$('project_archived').value = 1; $('content').down('.edit_project').submit();",
-    :class => 'button'
+      "$('project_archived').value = 1; $('content').down('.edit_project').submit();",
+      :class => 'button'
   end
   
-  def project_column_navigation
-    render :partial => 'shared/project_column_navigation'
-  end
-
-  def project_new_primer
-    render :partial => 'projects/new_primer'    
-  end
-
   def permalink_example(permalink)
     out = host_with_protocol + projects_path + '/'
     out << content_tag(:span, permalink, :id => 'handle', :class => 'good')
@@ -33,7 +27,7 @@ module ProjectsHelper
   end
 
   def project_settings_navigation
-    render :partial => 'shared/project_settings_navigation'
+    render 'shared/project_settings_navigation'
   end
 
   def list_users_statuses(users)
@@ -42,13 +36,13 @@ module ProjectsHelper
   
   def list_projects(projects)
     if projects.any?
-      render :partial => 'shared/projects', :locals => { :projects => projects }
+      render 'shared/projects', :projects => projects
     end
   end
 
   def list_archived_projects(projects)
     if projects.any?
-      render(:partial => 'shared/archived_projects', :locals => { :projects => projects })
+      render 'shared/archived_projects', :projects => projects
     end
   end
   
@@ -57,74 +51,63 @@ module ProjectsHelper
   end
   
   def new_project_link
-    link_to content_tag(:span, t('.new_project')), new_project_path, :class => 'add_button', :id => 'new_project_link'
+    if !Teambox.config.community || (@community_organization && !@community_role.nil?)
+      link_to content_tag(:span, t('.new_project')), new_project_path,
+        :class => 'add_button', :id => 'new_project_link'
+    end
   end
   
   def projects_tab_list(projects)
-    render :partial => "shared/projects_dropdown", :locals => {:projects => projects}
+    render 'shared/projects_dropdown', :projects => projects
   end
 
   def project_fields(f,project,sub_action='new')
-    render :partial => "projects/fields/#{sub_action}", 
-      :locals => { 
-        :f => f,
-        :project => project }
+    render "projects/fields/#{sub_action}",  :f => f, :project => project
   end
    
-  def project_primer
-    render :partial => 'projects/primer'
-  end
-
   def instructions_for_feeds
-    content_tag(:div,
-      link_to(t('shared.instructions.subscribe_to_feeds'), feeds_path),
-      :class => :subscribe)
+    link_to t('shared.instructions.subscribe_to_feeds'), feeds_path, :class => :subscribe
   end
 
   def subscribe_to_all_projects_link
-    content_tag(:div,
-      link_to(t('.subscribe_to_all'), user_rss_token(projects_path(:format => :rss))),
-      :class => :subscribe)
+    link_to t('.subscribe_to_all'),
+      user_rss_token(projects_path(:format => :rss)),
+      :class => 'subscribe subscribe_all'
   end
 
   def subscribe_to_project_link(project)
-    content_tag(:div,
-      link_to(t('.subscribe_to_project', :project => project),
-        user_rss_token(project_path(project, :format => :rss))),
-      :class => :subscribe)
+    link_to t('.subscribe_to_project', :project => project),
+      user_rss_token(project_path(project, :format => :rss)),
+      :class => :subscribe
   end
 
   def instructions_for_calendars
-    content_tag(:div,
-      link_to(t('shared.instructions.subscribe_to_calendars'), calendars_path),
-      :class => :calendars)
+    link_to t('shared.instructions.subscribe_to_calendars'), calendars_path, :class => :calendars_link
   end
 
   def instructions_for_email(project)
-    sufix = ''
+    suffix = ''
     case location_name
       when 'show_projects' #project@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_project', :email => "#{project.permalink}@#{Teambox.config.app_domain}")
+        email_help = t('shared.instructions.send_email_help_project', :email => "#{project.permalink}@#{Teambox.config.smtp_settings[:domain]}")
       when 'show_tasks' #project+task+12@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_task', :email => "#{project.permalink}+task+#{@task.id}@#{Teambox.config.app_domain}")
+        email_help = t('shared.instructions.send_email_help_task', :email => "#{project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}")
       when 'index_conversations' #project+conversation@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_conversations', :email => "#{project.permalink}+conversation@#{Teambox.config.app_domain}")
-        sufix = '_conversations'
+        email_help = t('shared.instructions.send_email_help_conversations', :email => "#{project.permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}")
+        suffix = '_conversations'
+      when 'new_conversations' #project+conversation@app.teambox.com
+        email_help = t('shared.instructions.send_email_help_conversations', :email => "#{project.permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}")
+        suffix = '_conversations'
       when 'show_conversations' #project+conversation+5@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_conversation', :email => "#{project.permalink}+conversation+#{@conversation.id}@#{Teambox.config.app_domain}")
+        email_help = t('shared.instructions.send_email_help_conversation', :email => "#{project.permalink}+conversation+#{@conversation.id}@#{Teambox.config.smtp_settings[:domain]}")
     end
 
     if email_help
-      content_tag(:div,
-        link_to_function(t('shared.instructions.send_email' + sufix), "$('email_help').setStyle({ display: 'block'})") +
-        content_tag(:span, {:id => 'email_help'}) do
-          #link_to_function(t('common.close'), "$('email_help').setStyle({ display: 'none'})", :class => "closeThis") +
-          '<a href="#" class="closeThis">' + t('common.close') + "</a>" +
-          email_help
-        end,
-        {:class => :email})
-    else
-      content_tag(:div, '****: ' + location_name)
+      span = content_tag(:span, :id => 'email_help', :style => 'display:none') do
+        %(<p>#{email_help}</p><a href='#' class='closeThis'>#{t('common.close')}</a>)
+      end
+      link_to_function(t('shared.instructions.send_email' + suffix),
+        ("$('email_help').toggle()"), :class => :email_link) + span
     end
   end
 
@@ -134,7 +117,7 @@ module ProjectsHelper
       link_to(t('shared.task_navigation.all_tasks'), user_rss_token(projects_path(:format => :ics))) +
       ' ' + t('common.or') + ' ' +
       link_to(t('shared.task_navigation.my_assigned_tasks'), user_rss_token(projects_path(:format => :ics), 'mine')),
-      :class => :calendar_links)
+      :class => 'calendar_links_all')
   end
 
   def subscribe_to_calendar_link(project)
@@ -145,41 +128,25 @@ module ProjectsHelper
       link_to(t('shared.task_navigation.my_assigned_tasks'), user_rss_token(project_path(project, :format => :ics), 'mine')),
       :class => :calendar_links)
   end
-  
-  def print_projects_link
-    content_tag(:div,
-      link_to(t('common.print'), projects_path(:format => :print)),
-      :class => :print)
+
+  def leave_project_link(project)
+    unless project.user == current_user
+      link_to t('people.column.leave_project'),
+        project_person_path(project, current_user.people.detect { |p| p.project_id == project.id }),
+        :method => :delete, :confirm => t('people.column.confirm_delete'), :class => :leave_link
+    end
   end
 
-  def print_project_link(project)
-    content_tag(:div,
-      link_to(t('common.print'), project_path(project,:format => :print)),
-      :class => :print)
-  end
-  
   def quicklink_conversations(project)
-    desc = t('shared.project_navigation.conversations')
-    link_to image_tag('drop_conv.png',
-                      :alt => desc,
-                      :title => desc), 
-                      project_conversations_path(project)
+    link_to '', project_conversations_path(project), :class => :comment_icon
   end
   
   def quicklink_tasks(project)
-    desc = t('shared.project_navigation.task_lists')
-    link_to image_tag('drop_tasklist.png', 
-                      :alt => desc,
-                      :title => desc), 
-                      project_task_lists_path(project)
+    link_to '', project_task_lists_path(project), :class => :task_icon
   end
 
   def quicklink_pages(project)
-    desc = t('shared.project_navigation.pages')
-    link_to image_tag('drop_page.png',
-                      :alt => desc,
-                      :title => desc), 
-                      project_pages_path(project)
+    link_to '', project_pages_path(project), :class => :page_icon
   end
 
   def reset_autorefresh
@@ -211,4 +178,32 @@ module ProjectsHelper
   def options_for_owned_projects(user, projects)
     projects.reject{|p| p.user_id != user.id}.map {|p| [ p.name, p.id ]}
   end
+  
+  def autocomplete_from_project(project)
+    (@autocomplete_from_projects ||= []) << project if project
+  end
+
+  def autocomplete_projects_people_data
+    if @autocomplete_from_projects.present?
+      projects = @autocomplete_from_projects.uniq
+      
+      format = '@%s <span class="informal">%s</span>'
+      special_all = format % ['all', t('conversations.watcher_fields.people_all')]
+      data_by_permalink = Hash.new { |h, k| h[k] = [special_all] }
+      
+      rows = Person.user_names_from_projects(projects)
+      
+      names = rows.each_with_object(data_by_permalink) do |(project_id, login, first_name, last_name), data|
+        data[project_id] << (format % [login, "#{first_name} #{last_name}"])
+      end
+      
+      javascript_tag "_people_autocomplete = #{names.to_json}"
+    end
+  end
+  
+  def commentable_projects
+    @projects.select { |p| p.commentable?(current_user) and not p.archived? }
+  end
+  memoize :commentable_projects
+
 end

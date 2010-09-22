@@ -12,7 +12,6 @@ class OauthController < ApplicationController
 
     oauth = Oauth.new(config)
     redirect_to oauth.get_authorize_url(session, oauth_callback_url)
-    return
   end
 
   def callback
@@ -27,6 +26,8 @@ class OauthController < ApplicationController
 
       load_profile(user)
 
+      # Cleanup if there's an app link not assigned to a user yet
+      AppLink.find_by_provider_and_app_user_id_and_user_id(@provider, @profile[:id],nil).try(:destroy)
 
       if logged_in?
         if current_user.app_links.find_by_provider(@provider)
@@ -49,7 +50,6 @@ class OauthController < ApplicationController
         elsif User.find_by_login(@profile[:login])
           flash[:notice] = t(:'oauth.user_already_exists_by_login', :login => @profile[:login])
           return redirect_to login_path
-          redirect_to login_path
         else
           if signups_enabled?
             profile_for_session = @profile
@@ -67,7 +67,7 @@ class OauthController < ApplicationController
         end
       end
     rescue OAuth2::HTTPError
-      render :text => %(<p>OAuth Error ?code=#{params[:code]}:</p><p>#{$!}</p><p><a href="/auth/#{@provider}">Retry</a></p>)
+      render :text => %(<p>OAuth Error ?code=#{params[:code]}:</p><p>#{$!}</p><p><a href="/oauth/#{@provider}">Retry</a></p>)
     end
   end
 
@@ -114,8 +114,6 @@ class OauthController < ApplicationController
         @profile[:company]    = user['company']
         @profile[:location]   = user['location']
         @profile[:original]   = user
-        # We search for an available login name
-        @profile[:login] = User.find_available_login(@profile[:login])
       when "facebook"
         @profile[:id]         = user['id']
         @profile[:email]      = user['email']
@@ -138,6 +136,10 @@ class OauthController < ApplicationController
         @profile[:original]   = user
       else
         raise "Unsupported provider: '#{@provider}'"
+      end
+      # We search for an available login name
+      if @profile[:login]
+        @profile[:login] = User.find_available_login(@profile[:login])
       end
     end
 end
@@ -193,8 +195,6 @@ class Oauthv2 < Oauth
     url = client.web_server.authorize_url(
       :redirect_uri => callback,
       :scope => 'email,offline_access')
-
-    return url
   end  
 
   def self.get_access_token(session, params, callback = nil)
@@ -207,13 +207,13 @@ class Oauthv2 < Oauth
   end
 
   private
-  # Prepares an OAuth v2.0 client
-  def self.client
+    # Prepares an OAuth v2.0 client
+    def self.client
       @client ||= OAuth2::Client.new(
         @config['client_id'],
         @config['secret_key'],
         :site => @config['site'],
         :authorize_path => @config['authorize_path'],
         :access_token_path => @config['access_token_path'])
-  end
+    end
 end
