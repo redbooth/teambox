@@ -7,6 +7,7 @@ Teambox::Initializer.run do |config|
   config.action_view.sanitized_allowed_tags = 'table', 'th', 'tr', 'td'
 
   config.after_initialize do
+    ActionView::Base.sanitized_allowed_tags.delete 'div'
     SprocketsApplication.use_page_caching = !config.heroku?
     ActiveSupport::XmlMini.backend = 'LibXML'
   end

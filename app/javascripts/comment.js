@@ -45,7 +45,8 @@ document.on('ajax:before', 'form.new_conversation, .thread form, #facebox form.e
       } else {
         form.fire('ajax:success', {responseText: iframeBody.innerHTML})
       }
-      
+
+      form.fire('ajax:complete')
       iframe.remove()
       form.target = null
       var extraInput = form.down('input[name=iframe]')
