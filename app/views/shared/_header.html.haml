@@ -1,5 +1,20 @@
 .header
   %h1= link_to logo_image, projects_path
+  #stopwatch{:style => 'display: none'}
+    %span.stop-timer
+      = image_tag "control_pause_blue.png", :alt => 'stop the timer'
+    %span.timer
+      00:00:00
+    [
+    %a#finish_task{:href=> '#'}
+      finish task
+    ]
+    %p
+      %span
+        Time spent on task:
+      %label
+        bla bla
+
   = render 'shared/global_navigation'
 
   = search_bar
