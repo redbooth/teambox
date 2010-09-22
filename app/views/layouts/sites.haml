@@ -1,0 +1,23 @@
+!!! Strict
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang'=>"en", :lang=>"en" }
+  %head
+    %meta{ 'http-equiv' => "content-type", :content => "text/html;charset=utf-8" }
+    %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
+    %title= @organization
+    = stylesheet_link_tag 'sessions', 'sites'
+    = sprockets_include_tag
+
+  %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
+    .container
+      .wrapper
+        .content
+          - show_flash
+          = yield
+        .column
+          #sidebar
+            = yield :column
+      .footer
+        %p.copyright
+          Powered by
+          = link_to "Teambox Project Collaboration", "http://www.teambox.com"
+      = javascripts

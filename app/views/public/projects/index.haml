@@ -1,0 +1,19 @@
+%p You can create or join open communities on Teambox.
+%p
+  Below you will find some examples. To create your own community (public or private),
+  create a Teambox account and start a project.
+
+%h3 Your public projects
+
+- if @projects.any?
+  .projects
+    - for project in @projects
+      %p.project
+        = link_to project, public_project_path(project)
+
+- if @public_projects.any?
+  %h3 Public projects on Teambox
+  .projects
+    - for project in @public_projects
+      %p.project
+        = link_to project, public_project_path(project)

@@ -1,6 +1,0 @@
-= loading_image(conversation_id('delete_loading',project,conversation))
-- if conversation.editable?(current_user)
-  .text_actions{ :id => conversation_id('edit_actions',project,conversation) }
-    = conversation_link(project,conversation)
-    = t('common.or')
-    = delete_conversation_link(project,conversation)

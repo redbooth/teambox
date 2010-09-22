@@ -1,5 +1,4 @@
 require 'digest/sha1'
-require 'time_zone'
 
 # A User model describes an actual user, with his password and personal info.
 # A Person model describes the relationship of a User that follows a Project.
@@ -7,7 +6,6 @@ require 'time_zone'
 class User < ActiveRecord::Base
 
   include ActionController::UrlWriter
-  extend TimeZone
 
   acts_as_paranoid
   concerned_with  :activation,
@@ -18,24 +16,10 @@ class User < ActiveRecord::Base
                   :roles,
                   :rss,
                   :scopes,
-                  :validation
+                  :validation,
+                  :task_reminders
 
-  # After adding a new locale, run "rake import:country_select 'de'" where de is your locale.
-  LANGUAGES = [['English',     'en'],
-               ['Español',     'es'],
-               ['Português',   'pt'],
-               ['Français',    'fr'],
-               ['Deutsch',     'de'],
-               ['Català',      'ca'],
-               ['Italiano',    'it'],
-               ['Русский',     'ru'],
-               ['Chinese',     'zh'],
-               ['Japanese',    'ja'],
-               ['Nederlands',  'nl'],
-               ['Slovenščina', 'si']
-               ]
-
-  LANGUAGE_CODES = LANGUAGES.map { |lang| lang[1] }
+  LOCALE_CODES = I18n.available_locales.map(&:to_s)
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
@@ -45,8 +29,11 @@ class User < ActiveRecord::Base
   has_many :activities
   has_many :uploads
   has_many :app_links
-  has_one :group
-  has_and_belongs_to_many :groups
+  has_many :memberships
+  has_many :teambox_datas
+
+  has_many :organizations, :through => :memberships
+  has_many :admin_organizations, :through => :memberships, :source => :organization, :conditions => {'memberships.role' => Membership::ROLES[:admin]}
 
   belongs_to :invited_by, :class_name => 'User'
 
@@ -61,12 +48,11 @@ class User < ActiveRecord::Base
                   :password,
                   :password_confirmation,
                   :time_zone,
-                  :language,
+                  :locale,
                   :first_day_of_week,
+                  :betatester,
                   :card_attributes,
-                  :notify_mentions,
                   :notify_conversations,
-                  :notify_task_lists,
                   :notify_tasks,
                   :wants_task_reminder
 
@@ -120,11 +106,11 @@ class User < ActiveRecord::Base
     read_attribute(:visited_at) || updated_at
   end
   
-  def language
-    if LANGUAGE_CODES.include? self[:language]
-      self[:language]
+  def locale
+    if LOCALE_CODES.include? self[:locale]
+      self[:locale]
     else
-      LANGUAGES.first[1]
+      I18n.default_locale.to_s
     end
   end
 
@@ -143,14 +129,6 @@ class User < ActiveRecord::Base
     User.find(:all, :conditions => {:id => ids.uniq})
   end
 
-  def activities_visible_to_user(user)
-    ids = projects_shared_with(user).collect { |project| project.id }
-
-    self.activities.all(:limit => 40, :order => 'created_at DESC').select do |activity|
-      ids.include?(activity.project_id) || activity.comment_type == 'User'
-    end
-  end
-
   def new_comment(user,target,comment)
     self.comments.new(comment) do |comment|
       comment.user_id = user.id
@@ -167,6 +145,18 @@ class User < ActiveRecord::Base
     if visited_at.nil? or (Time.now - visited_at) >= 12.hours
       update_attribute(:visited_at, Time.now)
     end
+  end
+  
+  def person_for(project)
+    self.people.find_by_project_id(project.id)
+  end
+  
+  def member_for(organization)
+    self.memberships.find_by_organization_id(organization.id)
+  end
+  
+  def watching?(object)
+    object.has_watcher? self
   end
 
   def contacts_not_in_project(project)
@@ -199,7 +189,7 @@ class User < ActiveRecord::Base
       xml.tag! 'first-name', first_name
       xml.tag! 'last-name', last_name
       # xml.tag! 'email', email
-      xml.tag! 'language', language
+      xml.tag! 'locale', locale
       xml.tag! 'username', login
       xml.tag! 'time_zone', time_zone
       xml.tag! 'biography', biography
@@ -209,63 +199,42 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.send_daily_task_reminders
-    tzs = time_zones_to_send_daily_task_reminders_to
-    in_time_zone(tzs.map(&:name)).wants_task_reminder_email.each do |user|
-      tasks = user.tasks_for_daily_reminder_email
-      Emailer.deliver_daily_task_reminder(user, tasks) unless tasks.values.flatten.empty?
-    end
-  end
-
-  def self.time_zones_to_send_daily_task_reminders_to
-    sending_hour = Time.parse(Teambox.config.daily_task_reminder_email_time).hour
-    time_zones_with_time(sending_hour)
-  end
-
-  def assigned_tasks(project_filter)
-    people.reject{ |r| r.project.archived? }.map { |person| person.project.tasks }.flatten.
-      select { |task| task.active? }.
-      select { |task| task.assigned_to?(self) }.
-      sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
+  def utc_offset
+    @utc_offset ||= ActiveSupport::TimeZone[time_zone].utc_offset
   end
 
   def tasks(from_date = Time.now.midnight, to_date = Time.now)
     Task.all(:joins => 'JOIN comments ON comments.target_id = tasks.id JOIN activities ON activities.target_id = comments.id', :conditions => ['activities.user_id = ? AND activities.created_at >= ? AND activities.created_at <= ? AND comment_type = ?', self.id, from_date, to_date, 'Task'], :select => "DISTINCT(name)", :order => "activities.created_at DESC")
   end
 
-  def assigned_tasks_count
-    people.reject{ |r| r.project.archived? }.map { |person| person.project.tasks }.flatten.
-      select { |task| task.active? && task.assigned_to?(self) }.size
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :first_name => first_name,
+      :last_name => last_name,
+      :locale => locale,
+      :username => login,
+      :time_zone => time_zone,
+      :utc_offset => utc_offset,
+      :biography => biography,
+      :created_at => created_at.to_s(:db),
+      :updated_at => updated_at.to_s(:db),
+      :avatar_url => avatar_or_gravatar_url(:thumb)
+    }
+    
+    if Array(options[:include]).include? :email
+      base[:email] = email
+    end
+    
+    base
   end
-
-  def tasks_for_daily_reminder_email
-    return {} if [0, 6].include?(Date.today.wday)
-    assigned_tasks = assigned_tasks(:all)
-    tasks_without_due_date, tasks_with_due_date  = assigned_tasks.partition { |task| task.due_on.nil? }
-    tasks_by_dueness = tasks_with_due_date.inject({}) do |tasks, task|
-      if Date.today == task.due_on
-        tasks[:today] ||= []
-        tasks[:today].push(task)
-      elsif Date.today + 1 == task.due_on
-        tasks[:tomorrow] ||= []
-        tasks[:tomorrow].push(task)
-      elsif task.due_on > Date.today and task.due_on < Date.today + 15
-        tasks[:for_next_two_weeks] ||= []
-        tasks[:for_next_two_weeks].push(task)
-      elsif Date.today > task.due_on
-        tasks[:late] ||= []
-        tasks[:late].push(task)
-      end
-      tasks
-    end
-    if !tasks_by_dueness.values.flatten.empty? || [1, 4].include?(Date.today.wday)
-      tasks_by_dueness[:no_due_date] = tasks_without_due_date
-    end
-    tasks_by_dueness
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
   end
 
   def in_project(project)
-    project.people.select { |person| person.user_id == self.id }.first
+    project.people.find_by_user_id(self)
   end
 
   def contacts
@@ -291,12 +260,6 @@ class User < ActiveRecord::Base
     else
       true
     end
-  end
-
-  def notify_of_project_comment?(comment)
-    self.notify_mentions &&
-      comment.user != self &&
-      !!( comment.body =~ /@all/i || comment.body =~ /@#{self.login}[^a-z0-9_]/i )
   end
 
   DELETED_TAG = "deleted"

@@ -2,10 +2,10 @@
 
 - form_tag session_path, :class => 'new_session', :id => 'new_session' do
   = upgrade_browser
-  = session_fields
+  = render 'sessions/fields'
   = submit_tag t('.submit')
 
-= render :partial => 'sessions/oauth_login'
+= render 'sessions/oauth_login'
 
 - content_for :column do
   = latest_announcement

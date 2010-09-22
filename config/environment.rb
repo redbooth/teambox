@@ -4,12 +4,13 @@ require 'teambox'
 Bundler.require(:default, RAILS_ENV)
 
 Teambox::Initializer.run do |config|
-  config.action_controller.session_store = :active_record_store
-
   config.action_view.sanitized_allowed_tags = 'table', 'th', 'tr', 'td'
 
   config.after_initialize do
+    ActionView::Base.sanitized_allowed_tags.delete 'div'
     SprocketsApplication.use_page_caching = !config.heroku?
     ActiveSupport::XmlMini.backend = 'LibXML'
   end
+  
+  config.active_record.observers = :notifications_observer, :threads_observer
 end

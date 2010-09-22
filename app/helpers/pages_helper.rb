@@ -1,24 +1,24 @@
 module PagesHelper
 
   def page_primer(project)
-    return unless project.editable?(current_user)
-    render :partial => 'pages/primer', :locals => { :project => project }
+    render 'pages/primer', :project => project if project.editable?(current_user)
   end
 
   def page_column(project,pages,current_target = nil)
-    render :partial => 'pages/column', :locals => {
+    render 'pages/column',
       :project => project,
       :pages => pages,
-      :current_target => current_target }
+      :current_target => current_target
   end
   
   def new_page_link(project)
-    return unless project.editable?(current_user)
-    link_to content_tag(:span,t('.new_page')), new_project_page_path(project), :class => 'add_button'
+    if project.editable?(current_user)
+      link_to content_tag(:span,t('.new_page')), new_project_page_path(project), :class => 'add_button'
+    end
   end
   
   def page_fields(f)
-    render :partial => 'pages/fields', :locals => { :f => f }
+    render 'pages/fields', :f => f
   end
   
   def list_pages(pages,current_target)
@@ -30,7 +30,7 @@ module PagesHelper
   end
 
   def list_pages_with_toc(pages)
-    render :partial => 'pages/page', :collection => pages
+    render pages
   end
 
   def page_link(page)
@@ -73,15 +73,13 @@ module PagesHelper
   end
   
   def page_action_links(project,page)
-    return unless project.editable?(current_user)
-    render :partial => 'pages/actions',
-    :locals => { 
-      :project => project,
-      :page => page }
+    if project.editable?(current_user)
+      render 'pages/actions', :project => project, :page => page
+    end
   end
   
   def pages_tab_list(project,pages)
-    render :partial => "shared/pages_dropdown", :locals => {:project => project, :pages => pages}
+    render 'shared/pages_dropdown', :project => project, :pages => pages
   end
   
   def page_slot_fields(slot = 0, before = 0)
@@ -93,8 +91,9 @@ module PagesHelper
   end
   
   def page_buttons(project,page)
-    return unless project.editable?(current_user)
-    render :partial => 'pages/buttons', :locals => { :project => project, :page => page }
+    if project.editable?(current_user)
+      render 'pages/buttons', :project => project, :page => page
+    end
   end
   
   def insert_widget(widget_id, position, location, view_options={})

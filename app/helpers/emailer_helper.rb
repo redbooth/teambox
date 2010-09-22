@@ -1,6 +1,3 @@
-require_dependency 'uploads_helper'
-require_dependency 'tasks_helper'
-
 module EmailerHelper
 
   include UploadsHelper
@@ -43,7 +40,7 @@ module EmailerHelper
   end
 
   def answer_instructions
-    render :partial => 'emailer/answer'
+    render 'emailer/answer'
   end
 
   def emailer_list_comments(comments)
@@ -51,14 +48,14 @@ module EmailerHelper
   end
 
   def emailer_recent_conversations(project)
-    render :partial => 'emailer/recent_conversations', :locals => { :project => project }
+    render 'emailer/recent_conversations', :project => project
   end
 
   def emailer_recent_tasks(project, user)
     recent_tasks = project.tasks.unarchived.
                     assigned_to(user).
                     sort { |a,b| (a.due_on || 1.year.ago) <=> (a.due_on || 1.year.ago)}
-    render :partial => 'emailer/recent_tasks', :locals => { :project => project, :recent_tasks => recent_tasks }
+    render 'emailer/recent_tasks', :project => project, :recent_tasks => recent_tasks
   end
 
   def emailer_answer_to_this_email
@@ -73,7 +70,7 @@ module EmailerHelper
 
   def tasks_for_daily_reminder(tasks, user, header)
     if tasks && tasks.any?
-      render :partial => 'emailer/tasks_for_daily_reminder', :locals => { :tasks => tasks, :user => user, :header_text => header }
+      render 'emailer/tasks_for_daily_reminder', :tasks => tasks, :user => user, :header_text => header
     end
   end
 
@@ -86,17 +83,17 @@ module EmailerHelper
     styles << "width: 23px"
     styles << "text-align: center"
     bg_color = case task.status_name
-    when "new"
-      "rgb(170,170,170)"
-    when "open"
-      "rgb(50,50,250)"
-    when "hold"
-      "rgb(130,0,193)"
-    when "resolved"
-      "rgb(0,200,0)"
-    when "rejected"
-      "rgb(200,0,0)"
-    end
+      when "new"
+        "rgb(170,170,170)"
+      when "open"
+        "rgb(50,50,250)"
+      when "hold"
+        "rgb(130,0,193)"
+      when "resolved"
+        "rgb(0,200,0)"
+      when "rejected"
+        "rgb(200,0,0)"
+      end
     styles << "background-color:#{bg_color}"
     styles.join(";")
   end

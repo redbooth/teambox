@@ -10,6 +10,7 @@ class Person < ActiveRecord::Base
   
 #  validates_uniqueness_of :user, :scope => :project
   validates_presence_of :user, :project   # Make sure they both exist and are set
+  validates_inclusion_of :role, :in => 0..3
 
   serialize :permissions
 
@@ -17,15 +18,20 @@ class Person < ActiveRecord::Base
   PERMISSIONS = [:view,:edit,:delete,:all]
   
   named_scope :admins, :conditions => "role = #{ROLES[:admin]}"
+  
+  named_scope :from_unarchived, :joins => :project,
+    :conditions => ['projects.archived = ?', false]
+  
+  named_scope :by_login, lambda { |login|
+    {:include => :user, :conditions => {'users.login' => login}}
+  }
 
   def owner?
     project.owner?(user)
   end
 
   def role_name
-    key = nil
-    ROLES.each{|k,v| key = k if role == v } 
-    key
+    ROLES.index(role)
   end
 
   def to_s
@@ -45,10 +51,10 @@ class Person < ActiveRecord::Base
   end
   
   def after_create
-    project.log_activity(self, 'create', source_user.try(:id) || self.user_id)
-    if project.user == user
-      update_attribute :role, ROLES[:admin]
-    end
+    # for a new project, we log create_project, not create_person
+    project.log_activity(self, 'create', user_id) unless project.user == user
+    # promote the project owner to admin
+    update_attribute :role, ROLES[:admin] if project.user == user
   end
   
   def after_destroy
@@ -59,6 +65,19 @@ class Person < ActiveRecord::Base
   def self.users_from_projects(projects)
     user_ids = Person.find(:all, :conditions => {:project_id => projects.map(&:id)}).map(&:user_id).uniq
     User.find(:all, :conditions => {:id => user_ids}, :select => 'id, login, first_name, last_name').sort_by(&:name)
+  end
+  
+  def self.user_names_from_projects(projects)
+    project_ids = Array.wrap(projects).map(&:id)
+    connection.select_rows(<<-SQL)
+      SELECT people.project_id, users.login, users.first_name, users.last_name
+      FROM people
+      INNER JOIN projects ON projects.id = people.project_id
+      INNER JOIN users ON users.id = people.user_id
+      WHERE people.project_id IN (#{project_ids.join(',')})
+        AND people.deleted_at IS NULL
+      ORDER BY users.login
+    SQL
   end
   
   def user
@@ -74,5 +93,19 @@ class Person < ActiveRecord::Base
       xml.tag! 'username', user.login
       xml.tag! 'role', role
     end
+  end
+  
+  def to_api_hash(options = {})
+    {
+      :id => id,
+      :user_id => user.id,
+      :username => user.login,
+      :role => role,
+      :user => user.to_api_hash
+    }
+  end
+  
+  def to_json(options = {})
+    to_api_hash(options).to_json
   end
 end

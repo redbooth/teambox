@@ -1,13 +1,17 @@
 class Comment
     
   def previously_closed?
-    [Task::STATUSES[:rejected],Task::STATUSES[:resolved]].include?(previous_status)
+    [:rejected, :resolved].include? previous_status_name
   end
   
   def transition?
     status_transition? || assigned_transition?
   end
-    
+
+  def initial_status?
+    status && previous_status.nil?
+  end
+
   def assigned_transition?
     assigned != previous_assigned
   end
@@ -17,7 +21,7 @@ class Comment
   end
 
   def assigned?
-    !assigned.nil?    
+    !assigned.nil?
   end
 
   def previous_assigned?
@@ -33,15 +37,11 @@ class Comment
   end
   
   def status_name
-    key = nil
-    Task::STATUSES.each{|k,v| key = k.to_s if status.to_i == v.to_i } 
-    key
+    Task::STATUS_NAMES[status]
   end
-
+  
   def previous_status_name
-    key = nil
-    Task::STATUSES.each{|k,v| key = k.to_s if previous_status.to_i == v.to_i } 
-    key
+    Task::STATUS_NAMES[previous_status]
   end
   
 end

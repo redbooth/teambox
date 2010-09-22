@@ -16,7 +16,7 @@ div.column
   p
     color: #666
 
-.task_form, .task_list_form
+form.new_task, form.edit_task, .task_list_form
   margin-bottom: 10px
   label
     font-weight: bold
@@ -127,26 +127,32 @@ div.column
   .archive
     display: none
   .task
-    img.task_drag
+    .task_drag
       display: none
-      margin-left: -18px
       cursor: move
+    &:hover .task_drag
+      display: inline-block
     .inner
-      padding:	
+      min-height: 18px
+      padding:
         top: 4px
-        bottom: 4px
+        bottom: 2px
     .taskStatus
       text-align: right
       float: left
-      width: 30px
-      padding:
-        left: 20px
-        top: 2px
+      width: 23px
+      padding-left: 22px
+      padding-right: 5px
+      line-height: 16px
       span
-        display: block
+        display: inline-block
+        vertical-align: top
         width: 23px
         padding: 0
         text-align: center
+    &:hover .taskStatus
+      width: 45px
+      padding-left: 0
     .taskName
       font-size: 12px
       padding-left: 4px
@@ -187,10 +193,6 @@ div.column
         a
           color: #555
           font-weight: normal
-  .task.overdue.mine
-    .taskName
-      span
-        color: rgb(200,0,0)
 
 .task_list_container.archived
   .new_task
@@ -286,6 +288,7 @@ span.task_status, span.current_task_status
   -moz-border-radius: 4px
   -webkit-border-radius: 4px
   display: inline-block
+  line-height: 14px
 .task_status_new
   background: #9da3a7
   +gradient(#9da3a7,#9da3a7-#333)

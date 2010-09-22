@@ -5,7 +5,7 @@ class User
   end
   
   def can_search?
-    APP_CONFIG['allow_search']
+    Teambox.config.allow_search
   end
   
 end

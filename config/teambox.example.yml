@@ -5,13 +5,14 @@
 # Configuration shared between all environments:
 defaults: &defaults
   # The domain from where your app is served
-  app_domain: app.teambox.com
+  app_domain: localhost
 
   # How many activities should activity feeds display?
   activities_per_page: 25
   autorefresh_interval: 60 # in seconds
 
-  daily_task_reminder_email_time: "06:00"
+  # Hour of the day at which daily reminders will be sent
+  daily_task_reminder_email_time: 6
   
   # Gravatar fallback type in case a user doesn't have an avatar
   # One of: wavatar, monsterid, identicon
@@ -23,11 +24,6 @@ defaults: &defaults
   amazon_s3: false
 
   asset_max_file_size: 50 # in megabytes
-
-  # If signups are disabled, the only way to create an account will be being invited
-  # by another user. If there are no users in the system, you will be asked to
-  # create the first one.
-  allow_signups: true
 
   # Enable secure signup and logins over HTTPS.
   # Make sure your domain has a valid SSL certificate
@@ -55,7 +51,7 @@ defaults: &defaults
   # With Heroku and the Sendgrid add-on, no configuration is needed here.
   #   $ heroku addons:add sendgrid:free
   smtp_settings:
-    :domain:         teambox.com        # the domain your emails will come from
+    :domain:         domain.com         # the domain your emails will come from
     :address:        smtp.sendgrid.net  # SMTP server used to send emails
     :port:           25
     :authentication: :plain
@@ -86,28 +82,25 @@ defaults: &defaults
     :user_name: USER
     :password:  PASSWORD
 
+  # Allow teambox.com to gather statistics about this installation
+  tracking_enabled: true
+
   # Destination where your users could write to ask for help. Accepts an email or website.
   support: http://help.teambox.com
 
-  # These links are used for the login page. Delete a line to remove the link from the interface.
-  home_url: http://www.teambox.com
-  tour_url: http://www.teambox.com/tour
-  users_url: http://www.teambox.com/testimonials
-  services_url: http://www.teambox.com/services
-  community_url: http://www.teambox.com/community
-  blog_url: http://blog.teambox.com
   help_url: http://help.teambox.com/faqs/using-teambox
-  support_url: http://teambox.com/group
-  privacy_url: http://www.teambox.com/privacy
-  terms_url: http://www.teambox.com/terms
+  support_url: http://teambox.com/community
 
   # OAuth single-click login. You can configure Teambox to log in with Github, Facebook and others.
   #
   # To enable this, you'll need to create developer accounts for each provider.
+  # The return URL you should use is http://your-domain.com/oauth/:provider/callback
+  #
   # We are providing defaults that work for http://localhost:3000, for testing purposes.
   #
   # If signups are enabled, this will allow users to create an account at Teambox.
   # If not, it will still allow them to link their services to existing Teambox accounts.
+
   oauth_providers:
     # This example is configured for http://localhost:3000. Uncomment it to test it.
     # Register for your own domain at http://github.com/account/applications
@@ -151,6 +144,7 @@ development:
   <<: *defaults
   app_domain: localhost:3000
   allow_outgoing_email: false
+  autorefresh_interval: 20 # in seconds
 
 production:
   <<: *defaults

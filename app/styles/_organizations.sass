@@ -1,0 +1,115 @@
+.index_organizations
+  .organizations
+    .organization, .new_organization
+      display: block
+      border: 1px solid #ddd
+      padding: 0 20px 5px
+      font-size: 12px
+      margin: 20px 0
+      +rounded(6px)
+      +box-shadow(#ddd 2px 3px 4px)
+      &:hover
+        +box-shadow(#aaa 2px 3px 4px)
+      h3
+        font-size: 18px
+        span
+          float: right
+          font-weight: normal
+          color: #555
+          font-size: 12px
+    .organization
+      .logo
+        float: left
+        margin: 0 20px 15px 0
+        border: 1px solid #F3F3F3
+      .details
+        float: left
+        display: block
+        width: 480px
+        p
+          margin-top: 0
+      .micro_avatar
+        display: inline-block
+        margin-bottom: 10px
+      span.more_users
+        display: inline-block
+        padding-top: 3px
+        color: #999
+
+.new_organizations, .create_organizations, .edit_organizations, .update_organizations
+  form.edit_organization, form.new_organization
+    margin: 20px 0
+    border: 1px solid #ddd
+    background-color: #fafafa
+    padding: 20px
+    .text_field
+      margin: 20px 0
+    .option_fields
+      margin: 20px 0
+      label
+        font-size: 12px
+        font-weight: bold
+      .option
+        margin: 5px 0 5px 5px
+        label
+          display: inline
+          font-weight: normal
+        input
+          background: transparent
+          padding: 10px
+    textarea
+      height: 120px
+      width: 580px
+      font-size: 12px
+  .logo_square, .logo_top
+    border: 1px solid #999
+
+.new_organizations
+  form.new_organization
+    margin: 20px 0
+
+.projects_organizations
+  h3
+    font-weight: normal
+    font-size: 16px
+    margin-bottom: 5px
+  .projects
+    p.project, p.new_project
+      padding: 5px 20px 5px 20px
+      margin: 0
+      &:hover
+        background-color: rgb(255, 255, 240)
+      span.status
+        float: right
+        color: #999
+
+.index_memberships, .external_view_organizations
+  h3
+    margin: 10px 0px 5px
+    font-weight: normal
+    font-size: 16px
+  form
+    border: 1px solid #ddd
+    background-color: #f5f5f5
+    padding: 10px
+  p.empty
+    color: #999
+  .users
+    margin-bottom: 30px
+    p.user
+      padding: 5px 20px 5px 20px
+      margin: 0
+      font-weight: bold
+      span.role
+        color: #999
+        font-weight: normal
+
+.organizations_nav
+  ul
+    padding-left: 0
+    li
+      list-style-type: none
+      padding: 5px 0
+      a.active
+        font-weight: bold
+        color: black

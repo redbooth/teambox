@@ -1,348 +1,183 @@
---- 
-dependencies: 
-  ruby-debug: 
-    group: 
-    - :development
-    version: ~> 0.10.3
-    require: []
+GEM
+  remote: http://rubygems.org/
+  specs:
+    SystemTimer (1.2)
+    actionmailer (2.3.9)
+      actionpack (= 2.3.9)
+    actionpack (2.3.9)
+      activesupport (= 2.3.9)
+      rack (~> 1.1.0)
+    activerecord (2.3.9)
+      activesupport (= 2.3.9)
+    activeresource (2.3.9)
+      activesupport (= 2.3.9)
+    activesupport (2.3.9)
+    acts-as-list (0.1.2)
+    addressable (2.2.0)
+    after_commit (1.0.8)
+      activerecord (< 3.0.0)
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
+    builder (2.1.2)
+    calendar_date_select (1.16.1)
+    cancan (1.2.0)
+    capybara (0.3.9)
+      culerity (>= 0.2.4)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (>= 0.0.3)
+    cgi_multipart_eof_fix (2.5.0)
+    chronic (0.2.3)
+      hoe (>= 1.2.1)
+    columnize (0.3.1)
+    configuration (1.1.0)
+    cucumber (0.8.5)
+      builder (~> 2.1.2)
+      diff-lcs (~> 1.1.2)
+      gherkin (~> 2.1.4)
+      json_pure (~> 1.4.3)
+      term-ansicolor (~> 1.0.4)
+    cucumber-rails (0.3.2)
+      cucumber (>= 0.8.0)
+    culerity (0.2.12)
+    daemons (1.1.0)
+    database_cleaner (0.5.2)
+    diff-lcs (1.1.2)
+    factory_girl (1.2.4)
+    faraday (0.4.6)
+      addressable (>= 2.1.1)
+      rack (>= 1.0.1)
+    fastthread (1.0.7)
+    ffi (0.6.3)
+      rake (>= 0.8.7)
+    gem_plugin (0.2.3)
+    gherkin (2.1.5)
+      trollop (~> 1.16.2)
+    haml (3.0.18)
+    hoe (2.6.2)
+      rake (>= 0.8.7)
+      rubyforge (>= 2.0.4)
+    hpricot (0.8.2)
+    i18n (0.4.1)
+    icalendar (1.1.5)
+    json (1.4.6)
+    json_pure (1.4.6)
+    launchy (0.3.7)
+      configuration (>= 0.0.5)
+      rake (>= 0.8.1)
+    libxml-ruby (1.1.3)
+    linecache (0.43)
+    memcache-client (1.8.5)
+    mime-types (1.16)
+    mongrel (1.1.5)
+      cgi_multipart_eof_fix (>= 2.4)
+      daemons (>= 1.0.3)
+      fastthread (>= 1.0.1)
+      gem_plugin (>= 0.2.3)
+    multi_json (0.0.4)
+    mysql (2.8.1)
+    nokogiri (1.4.3.1)
+    oauth (0.4.3)
+    oauth2 (0.0.13)
+      faraday (~> 0.4.1)
+      multi_json (>= 0.0.4)
+    paperclip (2.3.1.1)
+    pg (0.9.0)
+    pickle (0.2.12)
+    rack (1.1.0)
+    rack-test (0.5.4)
+      rack (>= 1.0)
+    rails (2.3.9)
+      actionmailer (= 2.3.9)
+      actionpack (= 2.3.9)
+      activerecord (= 2.3.9)
+      activeresource (= 2.3.9)
+      activesupport (= 2.3.9)
+      rake (>= 0.8.3)
+    rake (0.8.7)
+    rdiscount (1.6.5)
+    riddle (1.1.0)
+    rspec (1.3.0)
+    rspec-rails (1.3.2)
+      rack (>= 1.0.0)
+      rspec (>= 1.3.0)
+    ruby-debug (0.10.3)
+      columnize (>= 0.1)
+      ruby-debug-base (~> 0.10.3.0)
+    ruby-debug-base (0.10.3)
+      linecache (>= 0.3)
+    rubyforge (2.0.4)
+      json_pure (>= 1.1.7)
+    rubyzip (0.9.4)
+    selenium-webdriver (0.0.28)
+      ffi (>= 0.6.1)
+      json_pure
+      rubyzip
+    sprockets (1.0.2)
+    sprockets-rails (0.0.1)
+      sprockets (>= 1.0.2)
+    sqlite3-ruby (1.2.5)
+    term-ansicolor (1.0.5)
+    text-format (1.0.0)
+      text-hyphen (~> 1.0.0)
+    text-hyphen (1.0.0)
+    thinking-sphinx (1.3.20)
+      activerecord (>= 1.15.6, < 3.0.0)
+      after_commit (>= 1.0.6)
+      riddle (>= 1.0.10)
+    tmail (1.2.7.1)
+    trollop (1.16.2)
+    tzinfo (0.3.23)
+    vestal_versions (1.0.2)
+      activerecord (>= 2.1.0)
+    whenever (0.4.2)
+      chronic (>= 0.2.3)
+    will_paginate (2.3.14)
+    xml-simple (1.0.12)
 
-  tzinfo: 
-    group: 
-    - :rails
-    version: ~> 0.3.12
-  vestal_versions: 
-    group: 
-    - :plugins
-    version: ~> 1.0.2
-  pg: 
-    group: 
-    - :pg
-    version: ~> 0.9.0
-    require: []
+PLATFORMS
+  ruby
 
-  libxml-ruby: 
-    group: 
-    - :default
-    version: ~> 1.1.3
-    require: 
-    - libxml
-  text-format: 
-    group: 
-    - :rails
-    version: ">= 0.6.3"
-    require: 
-    - text/format
-  rails: 
-    group: 
-    - :rails
-    version: ~> 2.3.5
-    require: []
-
-  mongrel: 
-    group: 
-    - :development
-    version: ~> 1.1.5
-    require: []
-
-  sprockets-rails: 
-    group: 
-    - :plugins
-    version: ~> 0.0.1
-  haml: 
-    group: 
-    - :default
-    version: ~> 3.0.0.beta1
-  memcache-client: 
-    group: 
-    - :rails
-    version: ">= 1.7.4"
-    require: []
-
-  SystemTimer: 
-    group: 
-    - :default
-    version: ~> 1.2.0
-    require: 
-    - system_timer
-  mysql: 
-    group: 
-    - :mysql
-    version: ~> 2.8.1
-    require: []
-
-  sqlite3-ruby: 
-    group: 
-    - :development
-    version: ~> 1.2.5
-    require: []
-
-  oauth: 
-    group: 
-    - :default
-    version: ">= 0"
-  calendar_date_select: 
-    group: 
-    - :plugins
-    version: ~> 1.15
-  acts-as-list: 
-    group: 
-    - :plugins
-    version: ~> 0.1.2
-    require: 
-    - acts_as_list
-  whenever: 
-    group: 
-    - :default
-    version: ~> 0.4.1
-    require: []
-
-  tmail: 
-    group: 
-    - :rails
-    version: ~> 1.2.3
-  database_cleaner: 
-    group: 
-    - :testing
-    version: ~> 0.5.0
-  thinking-sphinx: 
-    group: 
-    - :plugins
-    version: ~> 1.3.15
-    require: 
-    - thinking_sphinx
-  rspec-rails: 
-    group: 
-    - :testing
-    version: ~> 1.3.2
-    require: 
-    - spec/rails
-  cucumber-rails: 
-    group: 
-    - :testing
-    version: ~> 0.3.0
-    require: []
-
-  factory_girl: 
-    group: 
-    - :testing
-    version: ~> 1.2.3
-  tolk: 
-    group: 
-    - :plugins
-    version: ">= 0"
-  paperclip: 
-    group: 
-    - :plugins
-    version: ~> 2.3.1.1
-  json: 
-    group: 
-    - :default
-    version: ">= 0"
-  icalendar: 
-    group: 
-    - :default
-    version: ~> 1.1.3
-  i18n: 
-    group: 
-    - :rails
-    version: ">= 0.1.3"
-  rdiscount: 
-    group: 
-    - :default
-    version: ~> 1.6.3
-  pickle: 
-    group: 
-    - :testing
-    version: ~> 0.2.1
-  oauth2: 
-    group: 
-    - :default
-    version: ">= 0"
-  hpricot: 
-    group: 
-    - :default
-    version: ~> 0.8.2
-  builder: 
-    group: 
-    - :rails
-    version: ~> 2.1.2
-  aws-s3: 
-    group: 
-    - :default
-    version: ~> 0.6.2
-    require: 
-    - aws/s3
-  launchy: 
-    group: 
-    - :testing
-    version: ~> 0.3.5
-  capybara: 
-    group: 
-    - :testing
-    version: ~> 0.3.5
-specs: 
-- rake: 
-    version: 0.8.7
-- SystemTimer: 
-    version: "1.2"
-- activesupport: 
-    version: 2.3.8
-- rack: 
-    version: 1.1.0
-- actionpack: 
-    version: 2.3.8
-- actionmailer: 
-    version: 2.3.8
-- activerecord: 
-    version: 2.3.8
-- activeresource: 
-    version: 2.3.8
-- acts-as-list: 
-    version: 0.1.2
-- addressable: 
-    version: 2.1.2
-- after_commit: 
-    version: 1.0.7
-- builder: 
-    version: 2.1.2
-- mime-types: 
-    version: "1.16"
-- xml-simple: 
-    version: 1.0.12
-- aws-s3: 
-    version: 0.6.2
-- calendar_date_select: 
-    version: 1.16.1
-- culerity: 
-    version: 0.2.10
-- nokogiri: 
-    version: 1.4.2
-- rack-test: 
-    version: 0.5.4
-- ffi: 
-    version: 0.6.3
-- json_pure: 
-    version: 1.4.3
-- selenium-webdriver: 
-    version: 0.0.24
-- capybara: 
-    version: 0.3.9
-- cgi_multipart_eof_fix: 
-    version: 2.5.0
-- rubyforge: 
-    version: 2.0.4
-- hoe: 
-    version: 2.6.1
-- chronic: 
-    version: 0.2.3
-- columnize: 
-    version: 0.3.1
-- configuration: 
-    version: 1.1.0
-- diff-lcs: 
-    version: 1.1.2
-- trollop: 
-    version: 1.16.2
-- gherkin: 
-    version: 2.1.4
-- term-ansicolor: 
-    version: 1.0.5
-- cucumber: 
-    version: 0.8.5
-- cucumber-rails: 
-    version: 0.3.2
-- daemons: 
-    version: 1.1.0
-- database_cleaner: 
-    version: 0.5.2
-- factory_girl: 
-    version: 1.2.4
-- faraday: 
-    version: 0.4.6
-- fastthread: 
-    version: 1.0.7
-- gem_plugin: 
-    version: 0.2.3
-- haml: 
-    version: 3.0.13
-- hpricot: 
-    version: 0.8.2
-- i18n: 
-    version: 0.4.1
-- icalendar: 
-    version: 1.1.5
-- json: 
-    version: 1.4.3
-- launchy: 
-    version: 0.3.5
-- libxml-ruby: 
-    version: 1.1.4
-- linecache: 
-    version: "0.43"
-- memcache-client: 
-    version: 1.8.5
-- mongrel: 
-    version: 1.1.5
-- multi_json: 
-    version: 0.0.4
-- mysql: 
-    version: 2.8.1
-- oauth: 
-    version: 0.4.1
-- oauth2: 
-    version: 0.0.10
-- paperclip: 
-    version: 2.3.1.1
-- pg: 
-    version: 0.9.0
-- pickle: 
-    version: 0.2.12
-- rails: 
-    version: 2.3.8
-- rdiscount: 
-    version: 1.6.5
-- riddle: 
-    version: 1.0.11
-- rspec: 
-    version: 1.3.0
-- rspec-rails: 
-    version: 1.3.2
-- ruby-debug-base: 
-    version: 0.10.3
-- ruby-debug: 
-    version: 0.10.3
-- sprockets: 
-    version: 1.0.2
-- sprockets-rails: 
-    version: 0.0.1
-- sqlite3-ruby: 
-    version: 1.2.5
-- text-hyphen: 
-    version: 1.0.0
-- text-format: 
-    version: 1.0.0
-- thinking-sphinx: 
-    version: 1.3.18
-- tmail: 
-    version: 1.2.7.1
-- will_paginate: 
-    version: 2.3.14
-- ya2yaml: 
-    version: 0.29.2
-- tolk: 
-    version: 0.2.2
-    source: 0
-- tzinfo: 
-    version: 0.3.22
-- vestal_versions: 
-    version: 1.0.2
-- whenever: 
-    version: 0.4.2
-hash: 60416abac64f26de1de8a256ab20e8eb560b5bba
-sources: 
-- Git: 
-    uri: git://github.com/mislav/tolk.git
-    git: git://github.com/mislav/tolk.git
-    ref: 1b0a16d1dcd1eb34564009d06f08e57d9e114967
-- Rubygems: 
-    uri: http://gemcutter.org
+DEPENDENCIES
+  SystemTimer (~> 1.2.0)
+  acts-as-list (~> 0.1.2)
+  aws-s3 (~> 0.6.2)
+  builder (~> 2.1.2)
+  calendar_date_select (~> 1.15)
+  cancan (~> 1.2.0)
+  capybara (~> 0.3.5)
+  cucumber-rails (~> 0.3.0)
+  database_cleaner (~> 0.5.0)
+  factory_girl (~> 1.2.3)
+  haml (~> 3.0.0.beta1)
+  hpricot (~> 0.8.2)
+  i18n (>= 0.1.3)
+  icalendar (~> 1.1.3)
+  json
+  launchy (~> 0.3.5)
+  libxml-ruby (= 1.1.3)
+  memcache-client (>= 1.7.4)
+  mongrel (~> 1.1.5)
+  mysql (~> 2.8.1)
+  oauth
+  oauth2
+  paperclip (~> 2.3.1.1)
+  pg (~> 0.9.0)
+  pickle (~> 0.2.1)
+  rails (~> 2.3.5)
+  rdiscount (~> 1.6.3)
+  rspec-rails (~> 1.3.2)
+  ruby-debug (~> 0.10.3)
+  sprockets-rails (~> 0.0.1)
+  sqlite3-ruby (~> 1.2.5)
+  text-format (>= 0.6.3)
+  thinking-sphinx (~> 1.3.15)
+  tmail (~> 1.2.3)
+  tzinfo (~> 0.3.12)
+  vestal_versions (~> 1.0.2)
+  whenever (~> 0.4.1)
+  will_paginate (~> 2.3.14)

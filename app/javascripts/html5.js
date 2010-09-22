@@ -4,18 +4,20 @@ document.on('dom:loaded', function() {
   if (!Modernizr.input.placeholder) {
     var selector = 'input[placeholder], textarea[placeholder]'
     
-    function emulatePlaceholder(field) {
-      var title = field.readAttribute('placeholder'),
-          init = function() {
-            if (field.getValue().empty()) field.setValue(title).addClassName('placeholder')
-          }
-
-      init()
-
-      field.observe('blur', init).observe('focus', function() {
-        if (this.getValue() === title) this.setValue('').removeClassName('placeholder')
-      })
+    function emulatePlaceholder(input) {
+      var val = input.getValue(), text = input.readAttribute('placeholder')
+      if (val.empty() || val === text)
+        input.setValue(text).addClassName('placeholder')
     }
+    
+    document.on('focusin', selector, function(e, input) {
+      if (input.getValue() === input.readAttribute('placeholder'))
+        input.setValue('').removeClassName('placeholder')
+    })
+    
+    document.on('focusout', selector, function(e, input) {
+      emulatePlaceholder(input)
+    })
     
     // setup existing fields
     $$(selector).each(emulatePlaceholder)
@@ -37,4 +39,8 @@ document.on('dom:loaded', function() {
     var input = $(document.body).down('input[autofocus]')
     if (input) input.activate()
   }
+  
+  Modernizr.addTest('inputsearch', function() {
+    return Modernizr.inputtypes.search
+  })
 })

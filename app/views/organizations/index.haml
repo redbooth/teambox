@@ -1,0 +1,13 @@
+%h2= t('.title')
+
+.organizations
+  .new_organization
+    %h3= link_to t('.new.create'), new_organization_path
+    %p= t('.new.explain')
+  - @organizations.each do |organization|
+    = render 'organizations/organization', :organization => organization
+
+- content_for :column do
+  %h2= t('.about.title')
+  %p= t('.about.explain1')
+  %p= t('.about.explain2')

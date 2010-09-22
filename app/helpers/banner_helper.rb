@@ -8,20 +8,20 @@ module BannerHelper
         :id => 'gantt_banner',
         :style => "#{'display: none' unless current_gantt_view?(:gantt)}"
     else
-      render :partial => 'shared/gantt_banner_primer'
+      render 'shared/gantt_banner_primer'
     end
   end
 
   def upcoming_events(events)
     if events.any?
-      render :partial => 'shared/upcoming_events', :locals => { :events => events }
+      render 'shared/upcoming_events', :events => events
     else
-      render :partial => 'shared/upcoming_events_primer'
+      render 'shared/upcoming_events_primer'
     end
   end
 
   def event_css(i)
-    event_css = Date.today == (Date.today.monday + i.day) ? 'today' : ''
+    Date.today == (Date.today.monday + i.day) ? 'today' : ''
   end
 
   def event_task_link(task)
@@ -43,8 +43,8 @@ module BannerHelper
   end
 
   def banner(events,chart)
-    render :partial => 'shared/banner', :locals => {
+    render 'shared/banner',
       :events => events,
-      :chart => chart }
+      :chart => chart
   end
 end

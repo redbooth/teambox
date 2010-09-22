@@ -1,0 +1,42 @@
+.login.text_field
+  = f.label :login, t('users.form.login')
+  = f.text_field :login
+  = errors_for user, :login
+  - tooltip t('users.form.tooltips.login')
+.email.text_field
+  = f.label :email, t('users.form.email')
+  - if (@invitation || @app_link)
+    = f.text_field :email, :readonly => 'readonly', :style => 'color: #999'
+  - else
+    = f.text_field :email
+    - tooltip t('.tooltips.email')
+  = errors_for user, :email
+      
+#password_fields{ :style => 'display: none' }
+  .password.text_field
+    = f.label :password, t('users.form.password')
+    = f.password_field :password, :autocomplete => 'off'
+    = errors_for user, :password
+  .password.text_field
+    = f.label :password_confirmation, t('users.form.confirm_password')
+    = f.password_field :password_confirmation, :autocomplete => 'off'
+    = errors_for user, :password_confirmation
+
+#change_password_link
+  = link_to_function t('users.form.change_password'), show_user_password_fields
+
+.first_day_of_week.select
+  = f.label :first_day_of_week, t('users.form.first_day_of_week')
+  = f.select :first_day_of_week, [[t('users.form.sunday'), 'sunday'],[t('users.form.monday'), 'monday']]
+    
+.language.select
+  = f.label :locale, t('users.form.language')
+  = f.select :locale, locale_select_values
+  
+.time_zone.select
+  = f.label :time_zone, t('users.form.time_zone')
+  = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"    
+
+.betatester.check_box
+  = f.check_box :betatester
+  = f.label :betatester, t('users.form.betatester'), :style => 'float: none'

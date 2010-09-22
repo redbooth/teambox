@@ -1,1 +1,0 @@
-page.replace "comment_#{@comment.id}", :partial => 'comments/comment', :locals => { :comment => @comment, :threaded => @threaded }

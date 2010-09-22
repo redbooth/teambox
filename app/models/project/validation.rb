@@ -9,9 +9,16 @@ class Project
 
   # needs an owner
   validates_presence_of :user         # A project _needs_ an owner
+  validates_presence_of :organization
   
   def permalink_length_valid?
-    self.permalink.length >= 5
+    permalink.length >= 5
+  end
+  
+  def ensure_organization
+    unless user.organization_ids.include?(self.organization_id)
+      self.errors.add(:organization_id, "You're not allowed to modify projects in this organization")
+    end
   end
 
 end

@@ -1,9 +1,0 @@
-if !@saved
-  page.show_form_errors(@comment,"edit_comment_#{@comment.id}")
-else
-  page.replace "comment_#{@comment.id}", :partial => 'comments/comment', :locals => { :comment => @comment, :threaded => @threaded }
-  if !@has_permission
-    error_msg = t('comments.errors.cannot_update')
-    page << "alert(\"#{error_msg}\");"
-  end
-end

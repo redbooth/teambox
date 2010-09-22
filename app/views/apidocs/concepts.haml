@@ -1,0 +1,91 @@
+%h2 API structure
+
+%p
+  Every part of Teambox can be accessed by the API with simple requests.
+  Usual actions include listing objects, adding a new one, editing,
+  showing one and destroying a record (index, new, edit, show, delete).
+
+%h2 Understanding Teambox models
+
+%p In Teambox, your account is a User model. A User can belong to many Projects.
+%p
+  The membership of a User in a Project is represented by a Person model.
+  Person stores information like the role and the date when User joined the Project.
+%p
+  Projects are owned by one User, and have many other Users in it. Projects
+  contain Comments, Conversations, Task Lists, Tasks, Pages and Files.
+%p
+  Comments are the most important concept in Teambox.
+  A Comment belongs to a Conversation or a Task, allowing them to be threaded.
+  Comments store important information, like the number of hours you spent on
+  a Task or status changes for it.
+%p Similarly, Task Lists have Tasks. Task Lists provide information like start and end dates.
+%p Pages contain different elements: Notes (text with a title), Dividers and Files.
+%p Files can belong to a project independently, or they can be attached to a Comment or Page.
+%p Invitations are sent before you join a project, to request you to join it.
+
+%p 
+
+%h2 HTTP Status Codes
+
+%p
+  For each request you make to the Teambox API, we will return an <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status code</a>.
+  Following convention, the following status codes will be returned for each request:
+
+%ul
+  %li 200: Success. The object was found, created, updated or deleted successfully
+  %li 404: The object you're looking for doesn't exist.
+  %li 406: Not Acceptable (invalid format). You're probably sending wrong JSON or you need to specify the HTTP headers.
+  %li 409: Conflict (item already exists).
+  %li 422: Unprocessable Entry.
+  %li 500: Server Error (hopefully not!). This means our server has some sort of problem.
+
+%h2 Request headers
+
+%p For each request, please specify the following headers:
+
+%pre= "Accept: application/json"
+
+%p You can also use XML and YAML, but they're not officially supported.
+
+%h2 Authentication
+
+%p Teambox currently uses HTTP basic authentication to authenticate requests.
+%p Soon we will offer OAuth 2 authentication support, which is more secure and reliable. <a href="http://www.slideshare.net/mbleigh/the-present-future-of-oauth">Learn more about it here</a>.
+  
+
+%h2 General usage 
+
+%p
+  The following project objects have APIs: Projects, Activities, Users, Comments,
+  Conversations, Task Lists, Tasks, Pages, Invitations and Files. You can access them
+  through RESTful interfaces, described below.
+
+%p
+  You can also access certain project objects outside projects.
+  In this case a list will be returned of objects from all of your projects:
+
+%ul
+  %li Task lists <code>/task_lists</code>
+  %li Activities <code>/activities</code>
+
+%p You can also access user data shared amongst projects, such as:
+
+%ul
+  %li Users <code>/users</code>
+
+%h2 A note about RESTful routes
+
+%p Unless otherwise stated, most objects on the API conform to the following routes:
+
+%ul
+  %li GET <code>/collection</code> to list objects
+  %li GET <code>/collection/id</code> to show an object
+  %li POST <code>/collection</code> to create objects
+  %li PUT <code>/collection/id</code> to update an object
+  %li DELETE <code>/collection/id</code> to delete an object
+
+%p All API methods accept JSON as input, and will return JSON.
+%p XML and YAML might be present on some parts, but are not officially supported.
+
+= render 'apidocs/column'

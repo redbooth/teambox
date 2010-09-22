@@ -1,2 +1,1 @@
-.thumb_avatar{ :style => "background: url(#{avatar_or_gravatar(user, :thumb)}) no-repeat;" }
-  %a{ :href => "#{user_path(user)}", :class => (round_corners ? 'round_corners' : '') }
+%a.thumb_avatar{ :href => "#{user_path(user)}", :style => "background: url(#{avatar_or_gravatar(user, :thumb)}) no-repeat" }

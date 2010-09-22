@@ -1,5 +1,4 @@
-%h2
-  You can now reset your password!
+%h2= t('.title')
 
 - form_for(:user, :url => update_after_forgetting_path) do |f|
   %p.message
@@ -10,18 +9,18 @@
   .password.text_field
     = f.label :password
     = f.password_field :password
-    - unless @password.nil?
+    - if @password
       - if @password.user.errors.invalid?(:password)
         %p.error
           = @password.user.errors.on(:password)
   .password.text_field
-    = f.label :password_confirmation, 'Confirm Password'
+    = f.label :password_confirmation
     = f.password_field :password_confirmation
-    - unless @password.nil?
+    - if @password
       - if @password.user.errors.invalid?(:password_confirmation)
         %p.error
           = @password.user.errors.on(:password_confirmation)
   .submit
     = hidden_field_tag :reset_code, params[:reset_code]
-    = f.submit "Reset password!"
+    = f.submit t('.submit')
 

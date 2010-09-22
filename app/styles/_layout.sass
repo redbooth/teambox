@@ -1,13 +1,11 @@
 html, body
   margin: 0px
   padding: 0px
-body
-  background: white
+  background-color: white
 
 div.wrapper
   clear: both
   background: white
-  +rounded(5px)
   +clearing
 
 div.content_wrap
@@ -24,11 +22,11 @@ div.column_wrap
     padding: 10px
     div.active
       +rounded(5px)
-      background: #259bad
+      background: $navbar
       color: white
       padding: 3px
       span
-        background: #259bad
+        background: $navbar
         padding-right: 0px
       a
         color: rgb(255, 255, 255)

@@ -1,5 +1,3 @@
-require 'user'
-
 class RenameDeletedUsers < ActiveRecord::Migration
   def self.up
     User.find_only_deleted(:all).each do |user|

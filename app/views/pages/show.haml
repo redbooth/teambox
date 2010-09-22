@@ -22,7 +22,7 @@
     #pageForms
       = render 'notes/new', :project => @current_project, :page => @page, :note => Note.new
       = render 'dividers/new', :project => @current_project, :page => @page, :divider => Divider.new
-      = render 'uploads/form', :project => @current_project, :page => @page, :upload => Upload.new(:page => @page)
+      = render 'uploads/form', :project => @current_project, :page => @page, :upload => Upload.new(:page_id => @page.id)
   
   #slots
     = render :partial => 'slot', :collection => @page.slots.with_widgets, :locals => {:page => @page, :project => @current_project}

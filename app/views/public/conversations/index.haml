@@ -1,0 +1,12 @@
+.conversations
+  %h2 Conversations in this community
+  .conversation= link_to "+ Log into Teambox to create a new conversation", new_project_conversation_path(@project), :class => :new_conversation
+  %br
+  - for conversation in @conversations
+    .conversation
+      = link_to conversation, seo_public_project_conversation_path(@project, conversation), :class => :conversation
+      %span
+        == #{pluralize(conversation.comments_count, "message", "message")},
+        == last one #{time_ago_in_words(conversation.updated_at)} ago
+
+= render 'public/projects/column'

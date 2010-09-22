@@ -1,5 +1,21 @@
-.conversation
-  %h2
-    = comments_count(conversation,:content)
-    = the_conversation_link(conversation)
-  = conversation_comment(conversation)
+- if comment = conversation.comments.first(:order => 'id asc')
+  .conversation
+    .comment
+      .info= thumb_avatar(comment.user)
+      .block
+        .body
+          %h2.title
+            = link_to conversation, [@current_project, conversation]
+            %span= t('common.comment', :count => conversation.comments_count)
+          .textilized
+            ~ comment.body_html
+        - if comment.uploads.any?
+          - if comment.uploads.all? { |upload| upload.image? }
+            .upload_images
+              = list_uploads_inline_with_thumbnails(comment.uploads)
+          - else
+            .upload_list
+              = list_uploads_inline(comment.uploads)
+        %p.go_to_thread
+          = link_to t('conversations.index.view_single'), [@current_project, conversation]
+      .clear

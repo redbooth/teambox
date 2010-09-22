@@ -107,6 +107,20 @@ class PagesController < ApplicationController
       handle_api_success(f, @page)
     end
   end
+  
+  def resort
+    order = params[:pages].map(&:to_i)
+    
+    @current_project.pages.each do |page|
+      page.suppress_activity = true
+      page.position = order.index(page.id)
+      page.save
+    end
+    
+    respond_to do |f|
+      f.js { render :reorder }
+    end
+  end
 
   def destroy
     if @page.editable?(current_user)
@@ -130,13 +144,11 @@ class PagesController < ApplicationController
 
   private
     def load_page
-      begin
-        @page = @current_project.pages.find(params[:id])
-      rescue
-        flash[:error] = t('not_found.page', :id => params[:id])
-      end
+      page_id = params[:id]
+      @page = @current_project.pages.find_by_permalink(page_id) || @current_project.pages.find_by_id(page_id)
       
       unless @page
+        flash[:error] = t('not_found.page', :id => page_id)
         redirect_to project_path(@current_project)
       end
     end

@@ -1,38 +1,33 @@
-#TODO: I think this should go once we have the CI server is set up,
-# it is more straightforward to pass the login
-# when creating users (see Given I am "..." step) than to create a factory
-# for each username, in my opinion.
 Given /^I am currently "([^\"]*)"$/ do |login|
-  @current_user ||= User.find_by_login(login) || Factory(login.to_sym)
+  @current_user = User.find_by_login(login) ||
+                    (login == "mislav" ?
+                      Factory(:mislav) : # Mislav has a first and last name, is not a generic user
+                      Factory(:confirmed_user, :login => login, :email => "#{login}@example.com"))
   @user = @current_user
 end
 
-#TODO: I think this should go once we have the CI server is set up,
-# it is more straightforward to pass the login
-# when creating users (see Given I am "..." step) than to create a factory
-# for each username, in my opinion.
-Given /^I am logged in as ([^\"]*)$/ do |login|
+Given /^(?:I am|I'm) logged in as @(\w+)$/ do |username|
+  visit "/login/#{username}"
+  @current_user = User.find_by_login(username)
+end
+
+Given /^(@\w+) exists?$/ do |username|
+  each_user(username, true) {}
+end
+
+Given /^@(\w+) exists and is logged in$/ do |username|
+  Given %(@#{username} exists)
+    And %(I'm logged in as @#{username})
+end
+
+Given /^I am logged in as ([^@][^\"]*)$/ do |login|
   Given %(I am currently "#{login}")
-    And "I go to the login page"
-    And "I fill in \"Email or Username\" with \"#{@current_user.email}\""
-    And "I fill in \"Password\" with \"#{@current_user.password}\""
-    And "I press \"Login\""
-end
-
-Given /^I am "([^\"]*)"$/ do |login|
-  @current_user = User.find_by_login(login) || Factory(:user, :login => login, :email => "#{login}@example.com")
-  @user = @current_user
-end
-
-Given /^I am logged in as "([^\"]*)"$/ do |login|
-  Given %(I am "#{login}")
-  Given %(I have confirmed my email)
+    And %(I have confirmed my email)
     And "I go to the login page"
     And "I fill in \"Email or Username\" with \"#{login}\""
     And "I fill in \"Password\" with \"dragons\""
     And "I press \"Login\""
 end
-
 
 Given /^I log out$/ do
   visit(logout_path)
@@ -48,55 +43,6 @@ end
 
 Given /It is my first time logging in/ do
   @current_user.update_attribute(:welcome,false)
-end
-
-Given /I am currently in the project (.*)$/ do |project_type|
-  @current_project ||= Factory(project_type.to_sym)
-  visit(projects_path(@current_project))
-end
-
-Given /I am in the project called "([^\"]*)"$/ do |name|
-  Given %(there is a project called "#{name}")
-  project = Project.find_by_name(name)
-  project.add_user(@current_user)
-end
-
-Given /^"([^\"]*)" is in the project called "([^\"]*)"$/ do |username,name|
-  Given %(there is a project called "#{name}")
-  project = Project.find_by_name(name)
-  project.add_user User.find_by_login(username)
-end
-
-Given /^"([^\"]*)" is not in the project called "([^\"]*)"$/ do |username,name|
-  Given %(there is a project called "#{name}")
-  project = Project.find_by_name(name)
-  project.remove_user User.find_by_login(username)
-end
-
-Given /^"([^\"]*)" is watching the conversation "([^\"]*)"$/ do |username,name|
-  conversation = Conversation.find_by_name(name)
-  conversation.add_watcher User.find_by_login(username)
-end
-
-Then /^"([^\"]*)" should be watching the conversation "([^\"]*)"$/ do |username,name|
-  conversation = Conversation.find_by_name(name)
-  conversation.watching?(User.find_by_login(username))
-end
-
-Given /^"([^\"]*)" stops watching the conversation "([^\"]*)"$/ do |username,name|
-  conversation = Conversation.find_by_name(name)
-  conversation.remove_watcher User.find_by_login(username)
-end
-
-Then /^"([^\"]*)" should not be watching the conversation "([^\"]*)"$/ do |username,name|
-  conversation = Conversation.find_by_name(name)
-  !conversation.watching?(User.find_by_login(username))
-end
-
-Given /^all the users are in the project with name: "([^\"]*)"$/ do |name|
-  Given %(there is a project called "#{name}")
-  project = Project.find_by_name(name)
-  User.all.each { |user| project.add_user(user) }
 end
 
 Given /^there is a user called "([^\"]*)"$/ do |login|
@@ -122,6 +68,20 @@ end
 Given /^the user with login: "([^\"]*)" is deleted$/ do |login|
   user = User.find_by_login(login)
   user.destroy unless user.nil?
+end
+
+Given /^(@.+) (?:has|have) (?:his|her|their) locale set to (.+)$/ do |users, name|
+  locale = case name.downcase
+  when "english" then "en"
+  when "spanish" then "es"
+  when "italian" then "it"
+  else
+    raise ArgumentError, "don't know locale #{name}"
+  end
+  
+  each_user(users) do |user|
+    user.update_attribute :locale, locale
+  end
 end
 
 Given /I am the user (.*)$/ do |login|

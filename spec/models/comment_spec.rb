@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe Comment do
 
@@ -9,67 +9,43 @@ describe Comment do
       comment = Factory.build(:comment, :project => @project, :user => @user, :target => @project)
       comment.save.should be_true
       comment.user.should == @user
-      comment.target.should == @project
       @project.comments.last.should == comment
       @user.comments.last.should == comment
     end
   end
-
-  describe "posting to a project" do
+  
+  describe "copying ownership" do
     before do
-      @project = Factory(:project)
-      @user = @project.user
+      @target = Factory.build(:simple_conversation, :body => nil)
+      @target.save(false)
+      @comment = Factory.build(:comment, :target => @target, :user => nil, :project => nil)
     end
-
-    it "should add it as an activity" do
-      comment = Factory(:comment, :project => @project, :user => @user, :target => @project)
-      @project.reload.activities.first.target.should == comment
+    
+    it "inherits project and user from target" do
+      @comment.save.should be_true
+      @comment.user.should == @target.user
+      @comment.project.should == @target.project
     end
-
-    it "should notify mentioned @user in the project" do
-      @mentioned = Factory(:user)
-      @project.add_user(@mentioned)
-      @mentioned.notify_mentions = true
-      @mentioned.save!
-      comment = Factory.build(:comment, :project => @project, :user => @user, :target => @project,
-        :body => "Hey @#{@mentioned.login}, how are you?")
-      Emailer.should_receive(:deliver_notify_comment).with(@mentioned, @project, comment).once
-      comment.save!
+    
+    it "works even when mentioning user" do
+      @comment.body = "Hello @kitty"
+      lambda { @comment.save }.should_not raise_error
     end
-
-    it "should not notify mentions to @user if he doesn't allow notifications" do
-      @mentioned = Factory(:user)
-      @project.add_user(@mentioned)
-      @mentioned.notify_mentions = false
-      @mentioned.save!
-      comment = Factory.build(:comment, :project => @project, :user => @user, :target => @project,
-        :body => "Hey @#{@mentioned.login}")
-      Emailer.should_not_receive(:deliver_notify_comment)
-      comment.save!
-    end
-
-    it "should not notify mentions to @user if he doesn't belong to the project" do
-      @mentioned = Factory(:user)
-      @mentioned.notify_mentions = true
-      @mentioned.save!
-      comment = Factory.build(:comment, :project => @project, :user => @user, :target => @project,
-        :body => "Hey @#{@mentioned.login}")
-      Emailer.should_not_receive(:deliver_notify_comment)
-      comment.save!
-    end
-
-    it "should not notify mentions to the users who posts them" do
-      @mentioned = @user
-      @mentioned.notify_mentions = true
-      @mentioned.save!
-      comment = Factory.build(:comment, :project => @project, :user => @user, :target => @project,
-        :body => "Hey @#{@mentioned.login}")
-      Emailer.should_not_receive(:deliver_notify_comment)
-      comment.save!
+    
+    it "doesn't happen when updating" do
+      @comment.save
+      @comment.should_not be_new_record
+      @comment.user = @comment.project = nil
+      @comment.save!
+      @comment.reload
+      @comment.user_id.should be_nil
+      @comment.project_id.should be_nil
+      @comment.body = "I am anonymous"
+      @comment.save
+      @comment.reload.user.should be_nil
+      @comment.project.should be_nil
     end
   end
-
-  #describe "posting to a conversation"
   
   describe "posting to a task" do
     before do
@@ -78,71 +54,10 @@ describe Comment do
     
     it "should update counter cache" do
       lambda {
-        @task.comments.create(:project => @task.project, :user_id => @task.user.id)
+        Factory(:comment, :project => @task.project, :user => @task.user, :target => @task)
         @task.reload
       }.should change(@task, :comments_count).by(1)
     end
-  end
-
-  #describe "marking as read"
-
-  describe "formatting" do
-    before do
-      @project = Factory(:project)
-      @user = @project.user
-    end
-
-    it "should format text" do
-      body = "She **used** to _mean_ so much to ME!"
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>She <strong>used</strong> to <em>mean</em> so much to ME!</p>\n"
-    end
-
-    it "should format lists" do
-      body = "She used to mean:\n\n* So\n* much\n* to\n * me!"
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>She used to mean:</p>\n\n<ul>\n<li>So</li>\n<li>much</li>\n<li>to</li>\n<li>me!</li>\n</ul>\n\n"
-    end
-
-    it "should format emails and links" do
-      body = 'she@couchsurfing.org used to mean so much to www.teambox.com'
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p><a href=\"mailto:she@couchsurfing.org\">she@couchsurfing.org</a> used to mean so much to <a href=\"http://www.teambox.com\">www.teambox.com</a></p>\n"
-    end
-
-    it "should convert markdown links" do
-      body = 'I loved that quote: ["I like the Divers, but they want me want to go to a war."](http://www.shmoop.com/tender-is-the-night/tommy-barban.html) Great page, too.'
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == %Q{<p>I loved that quote: <a href="http://www.shmoop.com/tender-is-the-night/tommy-barban.html">"I like the Divers, but they want me want to go to a war."</a> Great page, too.</p>\n}
-    end
-
-    it "should add http:// in front of links to www.site.com" do
-      body = "I'd link my competitors' mistakes (www.failblog.org) but that'd give them free traffic. So instead I link www.google.com."
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == %Q{<p>I'd link my competitors' mistakes (<a href="http://www.failblog.org">www.failblog.org</a>) but that'd give them free traffic. So instead I link <a href="http://www.google.com">www.google.com</a>.</p>\n}
-    end
-
-    it "should preserve html links and images" do
-      body = 'Did you know the logo from Teambox has <a href="http://en.wikipedia.org/wiki/Color_theory">carefully selected colors</a>? <img src="http://app.teambox.com/images/header_logo_large.jpg"/>'
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == %Q{<p>Did you know the logo from Teambox has <a href="http://en.wikipedia.org/wiki/Color_theory">carefully selected colors</a>? <img src="http://app.teambox.com/images/header_logo_large.jpg" /></p>\n}
-    end
-
-    it "should truncate links longer than 80 chars" do
-      body = 'This commit needs a spec: http://github.com/teambox/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/lib/html_formatting.rb'
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>This commit needs a spec: <a href=\"http://github.com/teambox/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/lib/html_formatting.rb\">http://github.com/teambox/teambox/blob/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80...</a></p>\n"
-    end
-
-    it "should not truncate links shorter or equal than 80 chars" do
-      body = 'This commit needs a spec: http://github.com/teambox/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/'
-      comment = Factory.create(:comment, :body => body, :project => @project, :user => @user, :target => @project)
-      comment.body_html.should == "<p>This commit needs a spec: <a href=\"http://github.com/teambox/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/\">http://github.com/teambox/teambox/commit/4b54c555d118cd3bc4d4d80fbc59b1eed79b4e80/</a></p>\n"
-    end
-
-    it "should preserve blocks of code and pre"
-
-    it "should allow youtube videos"
   end
 
   describe "mentioning @user" do
@@ -156,7 +71,15 @@ describe Comment do
       body = "@existing, hey, @existing"
       comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
       comment.body_html.should == %Q{<p><a href="/users/existing" class="mention">@existing</a>, hey, <a href="/users/existing" class="mention">@existing</a></p>\n}
-      comment.mentioned.should == [@user]
+      comment.mentioned.to_a.should == [@user]
+    end
+
+    it "should not link a user if his username is part of an email address" do
+      @project.add_user(@user)
+      body = "@existing links, but not an@existing.com email"
+      comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @project)
+      comment.body_html.should == %Q{<p><a href=\"/users/existing\" class=\"mention\">@existing</a> links, but not <a href=\"mailto:an@existing.com\">an@existing.com</a> email</p>\n}
+      comment.mentioned.to_a.should == [@user]
     end
 
     it "should link to all the mentioned users if they are in the project" do
@@ -218,7 +141,7 @@ describe Comment do
         body = "I would like to add @existing to this, but not @unexisting."
         comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @conversation)
         
-        comment.mentioned.should == [@user]
+        comment.mentioned.to_a.should == [@user]
         @conversation.reload.watchers.should include(@user)
       end
 
@@ -229,7 +152,7 @@ describe Comment do
         body = "I would like to add @existing to this, but not @unexisting."
         comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @task)
         
-        comment.mentioned.should == [@user]
+        comment.mentioned.to_a.should == [@user]
         @task.reload.watchers.should include(@user)
       end
 
@@ -240,7 +163,7 @@ describe Comment do
         body = "I would like to add @existing to this, but not @unexisting."
         comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @task_list)
         
-        comment.mentioned.should == [@user]
+        comment.mentioned.to_a.should == [@user]
         @task_list.reload.watchers.should include(@user)
       end
     end
@@ -291,38 +214,40 @@ describe Comment do
       @project.add_user(@other_user)
       @project.add_user(@another_user)
       @project.people.find_by_user_id(@user.id).update_attribute(:role, 3) # -> admin
+      
+      @owner_ability = Ability.new(@comment.user)
+      @admin_ability = Ability.new(@user)
+      @another_ability = Ability.new(@another_user)
     end
     
     it "should be editable and deletable by the creator for only 15 minutes" do
-      @comment.can_edit?(@comment.user).should == true
-      @comment.can_destroy?(@comment.user).should == true
+      @owner_ability.should be_able_to(:edit, @comment)
+      @owner_ability.should be_able_to(:destroy, @comment)
       
       # backdate to simulate elapsed time
-      @comment.created_at -= 16.minutes
-      @comment.save!
+      @comment.update_attribute :created_at, 16.minutes.ago
       
-      @comment.can_edit?(@comment.user).should == false
-      @comment.can_destroy?(@comment.user).should == false
+      @owner_ability.should_not be_able_to(:edit, @comment)
+      @owner_ability.should_not be_able_to(:destroy, @comment)
     end
     
     it "should not be editable by an admin" do
-      @comment.can_edit?(@comment.user).should == true
-      @comment.can_edit?(@user).should == false
+      @owner_ability.should be_able_to(:edit, @comment)
+      @admin_ability.should_not be_able_to(:edit, @comment)
     end
     
     it "should be deletable by an admin forever" do
-      @comment.can_destroy?(@user).should == true
+      @admin_ability.should be_able_to(:destroy, @comment)
       
       # backdate to simulate elapsed time
-      @comment.created_at -= 16.minutes
-      @comment.save!
+      @comment.update_attribute :created_at, 16.minutes.ago
       
-      @comment.can_destroy?(@user).should == true
+      @admin_ability.should be_able_to(:destroy, @comment)
     end
     
     it "should not be editable or deletable by another non-admin" do
-      @comment.can_edit?(@another_user).should == false
-      @comment.can_destroy?(@another_user).should == false
+      @another_ability.should_not be_able_to(:edit, @comment)
+      @another_ability.should_not be_able_to(:destroy, @comment)
     end
   end
 
@@ -349,6 +274,15 @@ describe Comment do
       upload.description.should == 'Here is that dog video I promised'
       upload.user_id.should == comment.user_id
       upload.project_id.should == comment.project_id
+    end
+  end
+  
+  context "hours" do
+    it "assigns human hours" do
+      comment = Factory.build :comment, :human_hours => "2:30"
+      comment.hours.should be_close(2.5, 0.001)
+      comment.human_hours = " "
+      comment.hours.should be_nil
     end
   end
 end

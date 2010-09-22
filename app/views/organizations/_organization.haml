@@ -1,0 +1,15 @@
+.organization
+  %h3
+    = link_to organization.name, organization
+    - role = current_user.memberships.find_by_organization_id(organization.id).role_name
+    %span= t('.you_are', :role => t(".#{role}"))
+  %img.logo{ :src => organization.logo.url(:square) }
+  .details
+    %p= t('.number_of_projects', :count => organization.projects.count)
+    .users
+      - organization.users.each do |user|
+        = micro_avatar(user)
+      - if organization.users.size > 28
+        %span.more_users= t(".more_users", :count => organization.users.size-28)
+      .clear
+  .clear

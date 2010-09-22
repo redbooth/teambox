@@ -1,5 +1,5 @@
 ;(function(){
-  var element, imageMaxWidth = 700, imageMaxHeight = 300
+  var element, imageMaxWidth = 700, imageMaxHeight = 300, screenMinWidth = 75
   
   var Facebox = {
     open: function(html, classname, extra) {
@@ -18,7 +18,7 @@
       image.onload = function() {
         this.open('<a href="' + src + '"><img src="' + src + '"></a>', 'image', alt)
         var img = element.down('.facebox-content img'),
-            screenWidth = Math.min(image.width, imageMaxWidth)
+            screenWidth = Math.max(Math.min(image.width, imageMaxWidth), screenMinWidth)
 
         img.setStyle({ maxWidth:imageMaxWidth+'px', maxHeight:imageMaxHeight+'px' })
         element.down('.facebox-wrapper').setStyle({ width: screenWidth+'px' })
@@ -36,14 +36,14 @@
           this.open('There has been an error.', 'error')
         }.bind(this)
       })
+    },
+    close: function() {
+      if (element.getStyle('display') == 'block') {
+        element.hide().fire('facebox:closed')
+      }
     }
   }
   
-  var close = function() {
-    if (element.getStyle('display') == 'block') {
-      element.hide().fire('facebox:closed')
-    }
-  }
   var setElement = function(fn) {
     $(document.body).insert({ bottom: "<div id='facebox' style='display: none'>\
       <div class='facebox-wrapper html'>\
@@ -61,11 +61,11 @@
       box.on('click', function(e) {
         if (e.findElement('.facebox-extra .close') || !e.findElement('.facebox-wrapper')) {
           e.preventDefault()
-          close()
+          Facebox.close()
         }
       })
       document.on('keyup', function(e) {
-        if (e.keyCode == Event.KEY_ESC) close()
+        if (e.keyCode == Event.KEY_ESC) Facebox.close()
       })
       document.on('click', 'a[href][rel=facebox]', function(e) {
         if (e.isMiddleClick()) return
@@ -80,7 +80,7 @@
           var source = $(RegExp.$1)
           if (source) Facebox.open(source.innerHTML, 'html', extra)
         }
-        else if (/\.(png|jpe?g|gif)$/i.test(href)) {
+        else if (/\.(png|jpe?g|gif|bmp|tga)$/i.test(href)) {
           Facebox.openImage(href, extra)
         }
         else {

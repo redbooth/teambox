@@ -1,0 +1,17 @@
+#report
+  %h1
+    - if @current_project
+      = t('.title_in_project', :project => @current_project.name)
+    - else
+      = t('.title')
+
+  - form_tag search_path, :method => 'get' do
+    = text_field_tag :q, @search_terms, :type => 'search', :id => nil
+    = submit_tag(@comments ? t('.search_again') : t('search.submit'), :name => nil)
+
+- if @comments
+  %h2= t('.report', :count => @comments.total_entries, :term => @search_terms)
+  
+  #results= render @comments
+
+  = will_paginate @comments

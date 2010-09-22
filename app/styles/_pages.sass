@@ -16,12 +16,24 @@
     img
       cursor: move
 
-.pages
+#column_pages
   clear: both
   margin-top: 10px
+  h2 a
+    float: right
   div.page
     padding: 3px
     font-size: 12px
+    img.drag
+      display: none
+      padding-right: 3px
+
+#column_pages.reordering
+  div.page
+    img.drag
+      display: block
+      float: left
+      cursor: move
 
 #pages
   div.page
@@ -34,11 +46,9 @@
   .content
     h2, form
       margin-left: 20px
-    input#page_name
+    input#page_name, input#page_description
       width: 580px
-    textarea#page_description
-      width: 580px
-      height: 50px
+    input#page_description
       font-size: 12px
     .watchers
       width: 570px
@@ -100,10 +110,14 @@
       font-size: 12px
       color: rgb(180, 180, 180)
   h3
-    font-size: 16px
+    font-size: 18px
     font-weight: normal
     margin: 0px
       bottom: 5px
+  .note
+    h3
+      border-bottom: 2px solid #eee
+      margin-bottom: 10px
   p
     font-size: 12px
     line-height: 1.4em
@@ -114,6 +128,7 @@
 
 #pageInsert
   position: relative
+  margin: 0px
   p
     background: black
     color: #e1e1e1
@@ -124,6 +139,7 @@
     height: 25px
     z-index: 100
     cursor: pointer
+    margin: 0px
 
 #pageInsertItems
   position: relative
@@ -134,10 +150,17 @@
   padding-top: 0px
   top: 0px
   position: relative
-  height: 32px
   z-index: 100
   width: 100%
   background-color: white
+  border-top: 1px dashed #ccc
+  border-bottom: 1px dashed #ccc
+  a
+    margin: 0px
+  .add_button
+    margin: 2px 3px
+  .buttons
+    padding: 0px
 
 #pageFormContainer
   margin-left: 16px
@@ -145,6 +168,7 @@
 #pageInsertItemCancel
   position: absolute
   left: 15px
+  line-height: 28px
 
 #pageInsertItemCancel
   a
@@ -166,10 +190,16 @@
     height: 0px
     float: left
     width: 100%
-  .actions
+  .actions.handle
     display: none
+  .actions
+    a
+      opacity: 0.4
   &:hover .actions
-    display: block
+    a
+      opacity: 1
+    &.handle
+      display: block
   .slotActions
     display: none
   &:hover .slotActions
@@ -203,7 +233,7 @@ form.new_divider, form.edit_divider
   .area
     border: solid 1px rgb(230, 230, 230)
     background: rgb(245, 245, 245)
-    width: 340px
+    width: 450px
     +rounded(8px)
     padding: 0px 10px
       top: 5px
@@ -216,7 +246,7 @@ form.new_divider, form.edit_divider
     float: left
     font-size: 12px
     padding-top: 5px
-    width: 130px
+    width: 240px
 
 form.new_note, form.edit_note
   margin-top: 5px
@@ -256,7 +286,7 @@ form.new_note, form.edit_note
 .show_pages
   .upload
     padding-left: 0px
-    p.slotActions
+    p.actions
       float: right
       margin: 0px
       position: relative

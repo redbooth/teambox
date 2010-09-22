@@ -13,12 +13,13 @@ class ApplicationController < ActionController::Base
   before_filter :rss_token, 
                 :confirmed_user?, 
                 :load_project, 
+                :load_organizations,
                 :login_required, 
                 :set_locale, 
                 :touch_user, 
                 :belongs_to_project?,
-                :set_client,
-                :set_user
+                :load_community_organization,
+                :set_client
   
   private
 
@@ -42,63 +43,60 @@ class ApplicationController < ActionController::Base
     end
 
     def belongs_to_project?
-      if @current_project && current_user
-        unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-          if Invitation.exists?(:project_id => @current_project.id, :invited_user_id => current_user.id)
-            redirect_to project_invitations_path(@current_project)
-          else 
-            current_user.remove_recent_project(@current_project)
-            render :text => "You don't have permission to view this project", :status => :forbidden
-          end
-        end
-      end
-    end
-    
-    def load_group
-      group_id ||= params[:group_id]
-      
-      if group_id
-        @current_group = Group.find_by_permalink(group_id)
-        
-        if @current_group
-          # ...
-        else
-          flash[:error] = t('not_found.group', :id => group_id)
-          redirect_to groups_path, :status => 301
-        end
-      end
-    end
-    
-    def load_project
-      project_id ||= params[:project_id]
-      project_id ||= params[:id]
-      
-      if project_id
-        @current_project = Project.find_by_permalink(project_id)
-        
-        if @current_project
-          if current_user && !@current_project.archived?
+      if @current_project and logged_in?
+        if current_user.projects.exists? @current_project
+          # user is a project member
+          unless @current_project.archived?
             current_user.add_recent_project(@current_project)
           end
+        elsif @current_project.invitations.exists?(:invited_user_id => current_user)
+          # there is an invitation pending for accept
+          redirect_to project_invitations_path(@current_project)
         else
-          flash[:error] = t('not_found.project', :id => project_id)
-          redirect_to projects_path, :status => 301
+          # sorry, no dice
+          if [:rss, :ics].include? request.template_format.to_sym
+            render :nothing => true
+          else
+            render 'projects/not_in_project', :status => :forbidden
+          end
         end
       end
     end
-    
+
+    def load_project
+      if project_id = params[:project_id] || params[:id]
+        unless @current_project = Project.find_by_id_or_permalink(project_id)
+          flash[:error] = t('not_found.project', :id => project_id)
+          redirect_to projects_path
+        end
+      end
+    end
+
+    # When you only belong to one organization, every page will be branded with its logo and colors.
+    # If you belong to 2+ organizations, common pages will not be branded and others will be organization branded
+    def load_organizations
+      if logged_in? 
+        @organizations = current_user.organizations
+        @organization = case @organizations.size
+        when 0
+          current_user.projects.try(:first).try(:organization)
+        when 1
+          @organizations.first
+        else
+          @current_project.try(:organization)
+        end
+      end
+    end
+
     def set_locale
-      # if this is nil then I18n.default_locale will be used
-      I18n.locale = logged_in? ? current_user.language : get_browser_locale
+      I18n.locale = logged_in? ? current_user.locale : user_agent_locale
     end
     
-    LOCALES_REGEX = /\b(#{ I18n.available_locales.map(&:to_s).join('|') })\b/
+    LOCALES_REGEX = /\b(#{ I18n.available_locales.join('|') })\b/
     
-    def get_browser_locale
-      if request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX
-        $&
-      else
-        I18n.default_locale
+    def user_agent_locale
+      unless RAILS_ENV == 'test'
+        request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX && $&
       end
     end
     
@@ -143,7 +141,7 @@ class ApplicationController < ActionController::Base
           when 'edit_users'
             user_name = current_user.name
           when 'show_users'
-            user_name = current_user.name            
+            user_name = @user.name
         end    
         @page_title = "#{user_name ? user_name + ' — ' : ''}#{translate_location_name}"
       end    
@@ -152,10 +150,34 @@ class ApplicationController < ActionController::Base
     MobileClients = /(iPhone|iPod|Android|Opera mini|Blackberry|Palm|Windows CE|Opera mobi|iemobile|webOS)/i
 
     def set_client
-      mobile =   request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][MobileClients]
-      mobile ||= request.env["HTTP_PROFILE"] || request.env["HTTP_X_WAP_PROFILE"]
-      if mobile and request.format == :html
-        request.format = :m
+      if [:html, :m].include?(request.format.to_sym) and session[:format]
+        # Format has been forced by Sessions#change_format
+        request.format = session[:format].to_sym
+      else
+        # We should autodetect mobile clients and redirect if they ask for html
+        mobile =   request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][MobileClients]
+        mobile ||= request.env["HTTP_PROFILE"] || request.env["HTTP_X_WAP_PROFILE"]
+        if mobile and request.format == :html
+          request.format = :m
+        end
+      end
+    end
+    
+    def mobile?
+      request.format == :m
+    end
+    helper_method :mobile?
+    
+    def iframe?
+      params[:iframe] == 'true'
+    end
+    
+    def output_errors_json(record)
+      if request.xhr?
+        response.content_type = Mime::JSON
+        render :json => record.errors, :status => 400
+      elsif iframe?
+        render :template => 'shared/iframe_error', :layout => false, :locals => { :data => record.errors }
       end
     end
     
@@ -182,7 +204,7 @@ class ApplicationController < ActionController::Base
           else
             text = Hash.from_xml(render_to_string(:template => opts[:to_yaml], :layout => false)).to_yaml
           end
-          super :text => text, :layout => false
+          super opts.merge(:text => content, :layout => false)
         elsif opts[:to_json] or opts[:as_json] then
           content = nil
           if opts[:to_json] then
@@ -192,7 +214,7 @@ class ApplicationController < ActionController::Base
           end
           cbparam = params[:callback] || params[:jsonp]
           content = "#{cbparam}(#{content})" unless cbparam.blank?
-          super :json => content, :layout => false
+          super opts.merge(:json => content, :layout => false)
         else
           super(opts, extra_options, &block)
         end
@@ -220,50 +242,42 @@ class ApplicationController < ActionController::Base
       end
     end
     
-    def set_user
-      @current_user = current_user || nil
-    end
-    
-    def calculate_position
+    def calculate_position(obj)
+      options = {}
       if pos = params[:position].presence
-        @insert_id = pos[:slot].to_i
-        if @insert_id < 0
-          @insert_id = 0
-          @insert_before = false
-          @insert_footer = true
+        options[:id] = pos[:slot].to_i
+        if options[:id] < 0
+          options[:id] = 0
+          options[:before] = false
+          options[:footer] = true
         else
-          @insert_before = @insert_id == 0 ? true : (pos[:before].to_i == 1)
-          @insert_footer = false
+          options[:before] = options[:id] == 0 ? true : (pos[:before].to_i == 1)
+          options[:footer] = false
         end
       else
-        @insert_id = nil
-        @insert_before = true
-        @insert_footer = false
+        options[:id] = nil
+        options[:before] = true
+        options[:footer] = false
       end
+      obj.slot_insert = options
     end
-    
-    def save_slot(obj)
-      @slot = obj.page.new_slot(@insert_id, @insert_before, obj)
 
-      if @insert_footer
-        @insert_element = nil
-        @insert_before = true
-      else
-        @insert_element = @insert_id == 0 ? nil : "page_slot_#{@insert_id}"
-      end
-    end
-    
     def signups_enabled?
-      APP_CONFIG['allow_signups'] || User.count == 0
+      !Teambox.config.community || User.count == 0
     end
-    
-    def groups_enabled?
-      !!Teambox.config.allow_groups
-    end
-    helper_method :groups_enabled?
-    
+
     def time_tracking_enabled?
       APP_CONFIG['allow_time_tracking'] || false
+    end
+
+    def load_community_organization
+      if logged_in? and Teambox.config.community
+        @community_organization = Organization.first
+        @community_role = if @community_organization
+          role_id = @community_organization.memberships.find_by_user_id(current_user.id).try(:role)
+          Membership::ROLES.index(role_id)
+        end
+      end
     end
 
 end

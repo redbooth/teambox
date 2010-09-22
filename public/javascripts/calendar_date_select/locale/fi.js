@@ -1,10 +1,14 @@
-Date.weekdays = $w("Ma Ti Ke To Pe La Su");
-Date.months = $w("Tammikuu Helmikuu Maaliskuu Huhtikuu Toukokuu Kesäkuu Heinäkuu Elokuu Syyskuu Lokakuu Marraskuu Joulukuu" );
+if (Date.first_day_of_week == 1) {
+    Date.weekdays = $w("Ma Ti Ke To Pe La Su");
+} else {
+    Date.weekdays = $w("Su Ma Ti Ke To Pe La");
+}
 
-Date.first_day_of_week = 1
+Date.months = $w("Tammikuu Helmikuu Maaliskuu Huhtikuu Toukokuu Kesï¿½kuu Heinï¿½kuu Elokuu Syyskuu Lokakuu Marraskuu Joulukuu" );
 
 _translations = {
   "OK": "OK",
   "Now": "Nyt",
-  "Today": "Tänään"
-}
+  "Today": "Tï¿½nï¿½ï¿½n",
+  "Clear": "SelvÃ¤sti"
+};

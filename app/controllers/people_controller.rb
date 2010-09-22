@@ -21,7 +21,7 @@ class PeopleController < ApplicationController
     respond_to do |wants|
       wants.html {
         if request.xhr?
-          render :partial => 'people/person', :locals => {:project => @current_project, :person => @person}
+          render :partial => 'people/person', :locals => {:project => @current_project, :person => @person }
         else
           flash[:success] = t('people.update.success', :name => @person.user.name)
           redirect_to project_people_url(@current_project)

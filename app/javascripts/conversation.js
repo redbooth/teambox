@@ -1,34 +1,18 @@
-var Conversation = {
-  // Destruction handler
-  destroy: function(element, url) {
-    new Ajax.Request(url, {
-      method: 'delete',
-      asynchronous: true,
-      evalScripts: true,
-      onLoading: function() {
-        Actions.setLoading(element, true);
-      },
-      onSuccess: function(response){
-        // ...
-        setTimeout(function(){TaskList.updatePrimer();}, 0);
-      },
-      onFailure: function(response){
-        Actions.setLoading(element, false);
-      }
-    });
-  }	
-};
+document.on('click', '.conversation_header .text_actions a[href$="/edit"]', function(e, link) {
+  e.stop()
+  link.up('.conversation_header').hide().next('form.edit_conversation').forceShow()
+})
 
-document.on('click', 'a.edit_conversation_link', function(e, el) {
-  e.stop();
-  Jenny.toggleElement(el); // edit form on task list show
-});
+document.on('click', '.edit_conversation a[href="#cancel"]', function(e, link) {
+  e.stop()
+  link.up('.edit_conversation').hide().previous('.conversation_header').show()
+})
 
-document.on('click', 'a.delete_conversation_link', function(e, el) {
-  e.stop();
-  if (confirm(el.readAttribute('aconfirm')))
-    Conversation.destroy(el, el.readAttribute('action_url'));
-});
+document.on('ajax:success', 'form.edit_conversation', function(e, form) {
+  var name = form.down('input[name="conversation[name]"]').getValue()
+  form.up('.content').select('.conversation_header h2, .conversation .thread_title a').invoke('update', name)
+  form.hide().previous('.conversation_header').show()
+})
 
 document.on('click', '#user_all', function(e, el) {
   var target = e.element();

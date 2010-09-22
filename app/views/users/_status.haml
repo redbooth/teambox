@@ -1,7 +1,7 @@
 .person{:id => "person_#{user.id}"}
   = micro_avatar(user)
-  = user_link(user)
-  .status
-    = "@#{user.login}"
-  .last_login
-    = time_ago_in_words(user.visited_at)
+  .more
+    %span.name
+      = user_link(user)
+    %span.login
+      = "@#{user.login}"

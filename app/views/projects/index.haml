@@ -5,24 +5,30 @@
     .invitations
       = list_pending_invites(@pending_projects)
 
-  - if @activities.any? or @projects.any?
-    %h2
-      = t('.title')
-      %span= t('.refreshes')
+  - if commentable_projects.any?
+    - form_for @new_conversation, :html => { :multipart => true, :class => 'new_conversation new_comment', :'data-remote' => true } do |form|
+      .project_select
+        = label_tag :project_id, t('comments.new.comment_on_project')
+        = select_tag :project_id, options_from_collection_for_select(commentable_projects, :id, :name)
+      
+      = form.hidden_field :simple
+      
+      - form.object.comments.build
+      - form.fields_for :comments do |fields|
+        = render 'comments/fields', :f => fields, :placeholder => t('comments.new.project')
+    
     #activities
       = list_threads(@threads)
       = show_more_button(@activities)
-    = javascript_tag autorefresh(@activities)
+    = #javascript_tag autorefresh(@activities)
   - else
-    = project_primer
+    = render 'projects/primer'
 
 - content_for :column do
   = new_project_link
-  = #my_tasks(current_user.assigned_tasks(:all))
   - unless @sub_action == 'archived'
     = list_projects(@projects)
     - if @archived_projects.any?
       = link_to t('.archived', :count => @archived_projects.size), project_archived_path, :id => 'project_archived_link'
     = instructions_for_feeds
     = instructions_for_calendars
-    = #print_projects_link

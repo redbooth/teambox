@@ -13,50 +13,6 @@
       color: rgb(90, 158, 167)
 
 div.navigation
-  clear: both
-  width: 960px
-  ul
-    margin: 0px
-    padding: 0px
-    list-style-type: none
-    margin-left: 15px
-  li
-    float: left
-    display: block
-    margin-right: 2px
-    max-width: 170px
-    white-space: nowrap
-    overflow: hidden
-    a
-      float: left
-      display: block
-      color: #49759d
-      text-decoration: none
-      padding: 5px 8px
-      margin-right: 1px
-      font-size: 12px
-      +rounded-top(5px)
-    a:hover
-      color: rgb(20, 20, 20)
-      text-decoration: underline
-    a.active
-      color: white
-      background: $navbar
-    img.triangle
-      padding-bottom: 2px
-  li.welcome, li.new
-    a.active
-      background: $navbar
-  li.button
-    a
-      font-size: 14px
-      background: rgb(43, 43, 43)
-      padding: 4px 8px
-    a:hover
-      color: rgb(43, 43, 43)
-      background: rgb(211, 209, 209)
-
-div.project_navigation
   background: $navbar
   +rounded(5px)
   padding: 4px 10px
@@ -76,7 +32,6 @@ div.project_navigation
       padding: 4px 10px 6px 8px
       margin-bottom: 0px
       font-size: 12px
-      text-shadow: #afd0ec 0px 1px 0px
       +rounded-top(5px)
     a:hover
       color: rgb(0, 0, 0)
@@ -155,6 +110,9 @@ div.project_settings_navigation
 
 ul.nav_tab_list
   z-index: 250
+  max-height: 350px
+  width: 320px
+  overflow-y: auto
   li
     float: none
     max-width: 300px
@@ -165,6 +123,13 @@ ul.nav_tab_list
       padding: 0px
     a.tab_item
       padding: 5px 5px
+      width: 220px
+    p.div
+      display: block
+      color: black
+      font-weight: bold
+      padding: 0 5px
+      margin-top: 10px
       width: 220px
     a.tab_action
       padding: 5px 5px
