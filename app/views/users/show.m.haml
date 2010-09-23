@@ -4,7 +4,7 @@
 - if @shares_invited_projects
   #primer
     .box
-      %p= t('.pending_invite', :name => @user.name)
+      %p= t('.pending_invite', :name => h(@user.name))
 
 #page
   #people
@@ -16,8 +16,8 @@
             = user_link(@user)
             = "@#{@user.login}"
       .clear
-      %p.biography= @user.biography
+      %p.biography=h @user.biography
       = render_card(@card)
-  %h2= t('.recent_activity_for', :user_name => @user.name)
+  %h2= t('.recent_activity_for', :user_name => h(@user.name))
   #activities
     = list_activities(@activities)

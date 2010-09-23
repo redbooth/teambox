@@ -1,4 +1,4 @@
-%h2= h(@task.name)
+%h2=h @task.name
 
 - form_for [@current_project,@task_list,@task], :html => {:class => 'app_form'} do |f|
   = task_fields(f,@current_project,@task_list,@task)

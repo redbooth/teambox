@@ -4,8 +4,8 @@
       = rename_page_link(@current_project, @page)
       = t('common.or')
       = edit_mobile_page_link(@current_project, @page)
-  %h2= @page
-  .description= @page.description
+  %h2=h @page
+  .description=h @page.description
   
 
 - unless @edit_part.nil?

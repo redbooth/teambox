@@ -3,7 +3,7 @@
     %li.has_panel
       = event_task_link(task)
       .panel
-        %h2= task
+        %h2=h task
         %h3
           Project:
-          = link_to task.project, project_path(task.task_list.project)
+          = link_to h(task.project), project_path(task.task_list.project)

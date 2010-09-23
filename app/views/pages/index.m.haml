@@ -2,7 +2,7 @@
   #pages
     - for page in @pages
       .project_page
-        = link_to page, project_page_path(@current_project, page)
+        = link_to h(page), project_page_path(@current_project, page)
     .project_page
       .new
         = link_to t('pages.column.new_page'), new_project_page_path(@current_project), :class => 'new'

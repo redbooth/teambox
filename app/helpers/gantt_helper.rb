@@ -15,7 +15,7 @@ module GanttChart
     def initialize(start, final, description = nil, link = nil)
       @start = set_destination(start)
       @final = set_destination(final)
-      @description = description || [@start,@final].join('-')
+      @description = h(description) || [@start,@final].join('-')
       @link = link
     end
 

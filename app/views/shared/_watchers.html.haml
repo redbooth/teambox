@@ -4,7 +4,7 @@
     = t('.nobody_watching')
   - else
     = t('.people_watching')
-    = target.watchers.to_sentence
+    = target.watchers.collect {|u| h(u) }.to_sentence
   - case state
     - when :started_watching
       %span.state.started#updated_watch_state= t('.started_watching')

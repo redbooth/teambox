@@ -14,7 +14,6 @@ class OrganizationsController < ApplicationController
   end
 
   def members
-    @page_title = @organization
     @users_not_belonging_to_org = @organization.external_users
   end
 
@@ -93,7 +92,7 @@ class OrganizationsController < ApplicationController
     end
 
     def load_page_title
-      @page_title = @organization
+      @page_title = h(@organization)
     end
 
     def redirect_community

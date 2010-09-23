@@ -2,8 +2,8 @@
 
 .page_header
   = page_action_links(@current_project,@task_list)
-  %h2= @page
-  .description= @page.description
+  %h2=h @page
+  .description=h @page.description
 
 = page_buttons(@current_project,@page)
 

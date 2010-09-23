@@ -1,7 +1,7 @@
 %h2= t('.title')
 
 
-%p= @task_list
+%p=h @task_list
 
 - form_for [@current_project,@task_list,@task], :html => {:class => 'app_form'} do |f|
   = task_fields(f,@current_project,@task_list,@task)

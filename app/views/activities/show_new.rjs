@@ -24,7 +24,7 @@ if @activities.any?
     for activity in @activities[0..4]
       next unless activity.target.respond_to? :body
       body = truncate(activity.target.body, :length => 200)
-      page << fluid_growl(activity.project.name, activity.user.name, escape_javascript(body))
+      page << fluid_growl(h(activity.project.name), h(activity.user.name), escape_javascript(body))
     end
   end
 

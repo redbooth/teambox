@@ -111,7 +111,7 @@ module TasksHelper
   def short_status_name(comment, previous = false)
     prev = previous ? 'previous_' : ''
     if comment.try("#{prev}status_open?") && comment.try("#{prev}assigned?")
-      comment.try("#{prev}assigned").user.short_name
+      h(comment.try("#{prev}assigned").user.short_name)
     else
       localized_status_name(comment.try("#{prev}status_name"))
     end

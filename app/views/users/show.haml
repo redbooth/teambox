@@ -4,17 +4,17 @@
 - if @shares_invited_projects
   #primer
     .box
-      %p= t('.pending_invite', :name => @user.name)
+      %p= t('.pending_invite', :name => h(@user.name))
 
 - content_for :column do
   = image_tag avatar_or_gravatar(@user, :profile), :class => 'avatar'
   - if current_user.observable?(@user)
     - unless @user.biography.blank?
-      %p.biography= @user.biography
+      %p.biography=h @user.biography
     = render_card(@card) if @card
 
 - if current_user.observable?(@user)
-  %h2= t('.recent_activity_for', :user_name => @user.name)
+  %h2= t('.recent_activity_for', :user_name => h(@user.name))
   #activities
     = list_activities(@activities)
     = show_more_button(@activities)
