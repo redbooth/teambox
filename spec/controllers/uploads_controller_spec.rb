@@ -136,6 +136,7 @@ describe UploadsController do
            :upload => {:asset => mock_uploader('lawsuit.txt', 'text/plain', "1 million dollars please")}
 
       @upload = Upload.find(:first, :order => 'created_at desc')
+      Activity.count(:conditions => {:target_type => @upload.class.name, :target_id => @upload.id}).should == 1
       lambda { delete :destroy, :project_id => @project.permalink, :id => @upload.id }.should change(Activity, :count)
     end
   end
