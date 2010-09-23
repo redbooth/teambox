@@ -39,7 +39,7 @@ module SslHelper
     ]
     
     def rewrite(options = {})
-      if options[:protocol].nil? and Teambox.config.secure_logins
+      if self.class.requires_ssl?(options) and options[:protocol].nil? and Teambox.config.secure_logins
         options = options.merge(:protocol => default_protocol(options))
         options[:only_path] = false if options[:protocol] != @request.protocol
       end
