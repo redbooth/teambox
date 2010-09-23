@@ -225,10 +225,6 @@ class User < ActiveRecord::Base
     base
   end
   
-  def to_json(options = {})
-    to_api_hash(options).to_json
-  end
-
   def in_project(project)
     project.people.find_by_user_id(self)
   end

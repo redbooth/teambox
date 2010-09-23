@@ -154,10 +154,6 @@ class Project < ActiveRecord::Base
     
     base
   end
-  
-  def to_json(options = {})
-    to_api_hash(options).to_json
-  end
 
   def to_ical(filter_user = nil)
     Project.calendar_for_tasks(tasks, self, filter_user)
