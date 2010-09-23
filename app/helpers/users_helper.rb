@@ -61,7 +61,7 @@ module UsersHelper
   protected
 
     def json_user
-      current_user.to_json
+      { :id => current_user.id, :username => current_user.login }.to_json
     end
 
     def json_people
@@ -70,7 +70,7 @@ module UsersHelper
         projects[p.project.id] = {
           :permalink => p.project.permalink,
           :role => p.role,
-          :name => p.project.name }
+          :name => h(p.project.name) }
       end
       projects.to_json
     end
