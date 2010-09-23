@@ -53,6 +53,7 @@ class Note < RoleRecord
       :slot_id => page_slot.id,
       :name => name,
       :body => body,
+      :body_html => body_html,
       :created_at => created_at.to_s(:db),
       :updated_at => updated_at.to_s(:db)
     }
