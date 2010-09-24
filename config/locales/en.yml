@@ -710,6 +710,8 @@ en:
       all: "All organizations"
 
   tasks:
+    my_tasks_listing:
+      tasks: My Tasks
     errors:
       name:
         cant_be_blank: 'must not be blank'

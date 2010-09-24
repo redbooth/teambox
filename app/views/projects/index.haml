@@ -26,9 +26,13 @@
 
 - content_for :column do
   = new_project_link
-  - unless @sub_action == 'archived'
+
+  - if @sub_action == 'archived'
     = list_projects(@projects)
     - if @archived_projects.any?
       = link_to t('.archived', :count => @archived_projects.size), project_archived_path, :id => 'project_archived_link'
+
+  - else
+    = render 'tasks/my_tasks_listing'
     = instructions_for_feeds
     = instructions_for_calendars
