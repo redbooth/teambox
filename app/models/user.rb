@@ -285,15 +285,19 @@ class User < ActiveRecord::Base
   end
 
   def pending_tasks
-    active_project_ids = projects.unarchived.collect(&:id)
-    people_ids = people.select do |person|
-      active_project_ids.include?(person.project_id)
-    end.collect(&:id)
-    conditions  = "assigned_id IN (#{people.collect(&:id).join(',')}) "
-    conditions += "AND status IN (#{Task::ACTIVE_STATUS_CODES.join(',')})"
+    if people.any?
+      active_project_ids = projects.unarchived.collect(&:id)
+      people_ids = people.select do |person|
+        active_project_ids.include?(person.project_id)
+      end.collect(&:id)
+      conditions  = "assigned_id IN (#{people.collect(&:id).join(',')}) "
+      conditions += "AND status IN (#{Task::ACTIVE_STATUS_CODES.join(',')})"
 
-    Task.all(:conditions => conditions, :order => 'ID desc').
-         sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
+      Task.all(:conditions => conditions, :order => 'ID desc').
+           sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
+    else
+      []
+    end
   end
 
   protected
