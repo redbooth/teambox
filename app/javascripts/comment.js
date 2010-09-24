@@ -137,17 +137,17 @@ document.on('click', 'form .add_hours_icon', function(e, link) {
   e.stop()
 });
 
-function startStopwatch(elapsedTime, task_id) {
+function startStopwatch(elapsedTime, task_id, project_id) {
   var stopwatch = $('stopwatch');
   stopwatch.show();
 
   var timerDisplay = stopwatch.down('.timer');
-  document.cookies().unset('_teambox.task.timer');
+  Cookie.dispose('_teambox.task.timer');
   var timer = stopwatch.retrieve('task.timer', new Stopwatch(function(watch){
      timerDisplay.update(watch.toString());
      var elapsedTime = watch.getElapsed();
      var elapsedSeconds = elapsedTime.hours * 60 * 60  + elapsedTime.minutes * 60 + elapsedTime.seconds;
-     document.cookies().set('_teambox.task.timer', task_id + '-' + elapsedSeconds, {path: '/'});
+     Cookie.write('_teambox.task.timer', project_id + '-' + task_id + '-' + elapsedSeconds, {path: '/', duration: 0});
   }, 1000));
 
   if (elapsedTime) {
@@ -157,20 +157,106 @@ function startStopwatch(elapsedTime, task_id) {
 };
 
 document.observe("dom:loaded", function() {
-  console.log("dom:loaded...should enter debugger");
-  var taskElapsedTime = document.cookies().get('_teambox.task.timer');
+  var taskElapsedTime = Cookie.read('_teambox.task.timer');
   if (taskElapsedTime) {
     var values = taskElapsedTime.split(/-/);
-    console.log("values: id: " + values[0] + ' s: ' + values[1]);
-    var elapsedTime = parseInt(values[1],10);
-    var task_id = values[0];
-    startStopwatch(elapsedTime, task_id);
+    var elapsedTime = parseInt(values[2],10);
+    var task_id = values[1];
+    var project_id = values[0];
+    startStopwatch(elapsedTime, task_id, project_id);
   }
 });
 
 document.on('click', '.start-timer', function(e, element) {
   var task_id = $$('.task')[0].id;
-  startStopwatch(null,task_id);
+  var project_id = element.up('form').readAttribute('data-project-id');
+
+  startStopwatch(null,task_id, project_id);
+  e.stop();
+});
+
+function update_timer_task(element) {
+  var stopwatch = $('stopwatch');
+  var timerDisplay = stopwatch.down('.timer');
+
+  var values = Cookie.read('_teambox.task.timer').split(/-/);
+  var project_id = values[0];
+  var task_id = values[1];
+
+  var timer = stopwatch.retrieve('task.timer');
+  var elapsedTime = timer.getElapsed();
+  var elapsedSeconds = elapsedTime.hours * 60 * 60  + elapsedTime.minutes * 60 + elapsedTime.seconds;
+  var elapsedHours = elapsedSeconds / (60*60);
+
+  timer.reset();
+  timerDisplay.update(timer.toString());
+
+  var form = element.up('form');
+  var human_hours_field = form.down('.human_hours');
+  human_hours_field.value = elapsedHours;
+
+}
+
+function finish_timer_task(element) {
+  var form = element.up('form');
+  var task_status_field = form.down('.task_status');
+  task_status_field.value = 3; //resolved
+}
+
+function submit_timer_form(element) {
+  //submit form via ajax
+  var form = element.up('form');
+  var values = Cookie.read('_teambox.task.timer').split(/-/);
+  var project_id = values[0];
+  var task_id = values[1];
+  var url = '/projects/' + project_id + '/tasks/' + task_id.split('_')[1];
+
+  new Ajax.Request(url, {
+    asynchronous: true,
+    requestHeaders: {'Accept': 'text/html'},
+    evalScripts: true,
+    method: 'put',
+    parameters: form.serialize(),
+    onLoading: function() {
+      form.down('.submit').hide();
+      // form.down('.text_area').hide();
+      form.down('img.loading').show();
+    },
+    onFailure: function(response) {	
+      form.down('.submit').show();
+      form.down('img.loading').hide();
+    },
+    onSuccess: function(response){
+      $('timer_comment').hide();
+      form.down('.submit').show();
+      form.down('img.loading').hide();
+
+      var thread = $(task_id);
+      if (thread) {
+        form = thread.down('form');
+        resetCommentsForm(form);
+        form.up('.thread').down('.comments').insert(response.responseText).
+        down('.comment:last-child').highlight({ duration: 1 });
+      }
+
+      Cookie.dispose('_teambox.task.timer');
+      var stopwatch = $('stopwatch');
+      stopwatch.hide();
+    }
+ });
+
+}
+
+document.on('click', '.update_timer_task', function(e, element) {
+  update_timer_task(element);
+  submit_timer_form(element);
+  e.stop();
+});
+
+document.on('click', '.finish_timer_task', function(e, element) {
+  update_timer_task(element);
+  finish_timer_task(element);
+  submit_timer_form(element);
   e.stop();
 });
 
@@ -181,20 +267,12 @@ document.on('click', '.stop-timer', function(e, element) {
 
   if (timer.started) {
     timer.stop();
-    //ajax post of hours added
 
-    var task_id = document.cookies().get('_teambox.task.timer').split(/-/)[0];
-    var elapsedTime = timer.getElapsed();
-    var elapsedSeconds = elapsedTime.hours * 60 * 60  + elapsedTime.minutes * 60 + elapsedTime.seconds;
-
-    alert(elapsedSeconds + ' elapsed for ' + task_id);
-    document.cookies().unset('_teambox.task.timer');
-    timer.reset();
-    timerDisplay.update(timer.toString());
+    $('timer_comment').show();
   }
 
   e.stop();
-})
+});
 
 // Open links inside Comments and Notes textilized areas in new windows
 document.on('mouseover', '.textilized a', function(e, link) {

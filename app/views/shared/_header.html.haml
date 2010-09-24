@@ -3,17 +3,34 @@
   #stopwatch{:style => 'display: none'}
     %span.stop-timer
       = image_tag "control_pause_blue.png", :alt => 'stop the timer'
+    %span
+      Time spent on task:
     %span.timer
       00:00:00
-    [
-    %a#finish_task{:href=> '#'}
-      finish task
-    ]
-    %p
-      %span
-        Time spent on task:
-      %label
-        bla bla
+
+    #timer_comment{:style => 'display: none'}
+      - #/projects/earthworks/tasks/5
+      - @task ||= Task.new
+      - @project ||= @current_project
+      - @project = @task.project unless @project
+      - @task_list ||= TaskList.new
+      - @project ||= Project.new
+      - @task.project = @project unless @task.project
+      - @project.user = current_user unless @project.user
+      - form_objects = @task.new_record? ? :task : [@project, @task]
+
+      - form_for form_objects, :html => {:multipart => true, :id => nil, :class => 'new_comment edit_task', :'data-project-id' => @project.id, :'data-remote' => true} do |form|
+        = loading_image('task_timer_loading');
+        = form.hidden_field :status, :class => 'task_status'
+        - form.fields_for :comments, @task.comments.build do |f|
+          = f.hidden_field :human_hours, :class => 'human_hours'
+          .field.text_area
+            = micro_avatar current_user
+            = f.text_area :body, :placeholder => local_assigns[:placeholder], :id => nil, :class => 'comment'
+
+            .submit
+              = f.submit t('tasks.edit.submit'), :class => 'update_timer_task'
+              = f.submit t('tasks.edit.finish'), :class => 'finish_timer_task'
 
   = render 'shared/global_navigation'
 
