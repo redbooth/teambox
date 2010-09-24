@@ -152,7 +152,7 @@ module ApplicationHelper
   end
 
   def formatting_documentation_link
-    link_to t('projects.show.text_styling'), text_styles_path, :rel => :facebox
+    link_to '', text_styles_path, :rel => :facebox, :class => :style_icon, :title => t('projects.show.text_styling')
   end
   
   def formatting_invitations_link
