@@ -27,14 +27,14 @@ class ApiV1::APIController < ApplicationController
   def belongs_to_project?
     if @current_project
       unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-        api_error(t('common.not_allowed'), :unauthorized)
+        api_error t('common.not_allowed'), :unauthorized
       end
     end
   end
   
   def check_permissions
     unless @current_project.editable?(current_user)
-      api_error("You don't have permission to edit/update/delete within \"#{@current_project}\" project", :unauthorized)
+      api_error "You don't have permission to edit/update/delete within \"#{@current_project}\" project", :unauthorized
     end
   end
   
@@ -51,15 +51,23 @@ class ApiV1::APIController < ApplicationController
 
   # Common api helpers
   
-  def api_respond(json)
+  def api_respond(object, options={})
     respond_to do |f|
-      f.json { render :json => json }
+      f.json { render :json => api_wrap(object, options).to_json }
     end
   end
   
   def api_status(status)
     respond_to do |f|
       f.json { head status }
+    end
+  end
+  
+  def api_wrap(object, options={})
+    if object.is_a? Enumerable
+      object.map{|o| o.to_api_hash(options) }
+    else
+      object.to_api_hash(options)
     end
   end
   
@@ -80,7 +88,7 @@ class ApiV1::APIController < ApplicationController
   def handle_api_success(object,options={})
     respond_to do |f|
       if options.delete(:is_new) || false
-        f.json { render :json => object.to_json, :status => options.delete(:status) || :created }
+        f.json { render :json => api_wrap(object).to_json, :status => options.delete(:status) || :created }
       else
         f.json { head(options.delete(:status) || :ok) }
       end

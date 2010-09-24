@@ -5,11 +5,11 @@ class ApiV1::ConversationsController < ApiV1::APIController
   def index
     @conversations = @current_project.conversations.scoped(api_scope).all(:conditions => api_range, :limit => api_limit)
     
-    api_respond @conversations.to_json
+    api_respond @conversations
   end
 
   def show
-    api_respond @conversation.to_json(:include => [:comments, :users])
+    api_respond @conversation, :include => [:comments, :users]
   end
   
   def create

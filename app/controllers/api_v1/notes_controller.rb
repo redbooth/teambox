@@ -6,11 +6,11 @@ class ApiV1::NotesController < ApiV1::APIController
   def index
     @notes = @page.notes
     
-    api_respond @notes.to_json
+    api_respond @notes
   end
 
   def show
-    api_respond @note.to_json
+    api_respond @note
   end
   
   def create

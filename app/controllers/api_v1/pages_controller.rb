@@ -9,7 +9,7 @@ class ApiV1::PagesController < ApiV1::APIController
       Page.find_all_by_project_id(current_user.project_ids, :conditions => api_range, :limit => api_limit)
     end
     
-    api_respond @pages.to_json(:include => :slots)
+    api_respond @pages, :include => :slots
   end
   
   def create
@@ -22,7 +22,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
     
   def show
-    api_respond @page.to_json(:include => [:slots, :objects])
+    api_respond @page, :include => [:slots, :objects]
   end
   
   def update

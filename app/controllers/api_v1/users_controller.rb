@@ -3,7 +3,7 @@ class ApiV1::UsersController < ApiV1::APIController
   skip_before_filter :load_project
   
   def index
-    api_respond current_user.users_with_shared_projects.map{|u| u.to_api_hash}.to_json
+    api_respond current_user.users_with_shared_projects
   end
 
   def show
@@ -13,7 +13,7 @@ class ApiV1::UsersController < ApiV1::APIController
     if @user != @current_user and (!shares_invited_projects and projects_shared.empty?)
       api_error(t('users.activation.invalid_user'), :unauthorized)
     else
-      api_respond @user.to_json
+      api_respond @user
     end
   end
   

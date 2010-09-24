@@ -5,11 +5,11 @@ class ApiV1::ProjectsController < ApiV1::APIController
   def index
     @projects = current_user.projects
     
-    api_respond @projects.to_json
+    api_respond @projects
   end
 
   def show
-    api_respond @current_project.to_json(:include => :people)
+    api_respond @current_project, :include => :people
   end
   
   def create

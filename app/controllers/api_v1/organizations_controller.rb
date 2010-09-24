@@ -4,11 +4,11 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   before_filter :can_modify?, :only => [:edit, :update, :destroy]
   
   def index
-    api_respond current_user.organizations.to_json
+    api_respond current_user.organizations
   end
 
   def show
-    api_respond @organization.to_json(:include => [:projects, :members, :people])
+    api_respond @organization, :include => [:projects, :members, :people]
   end
   
   def create

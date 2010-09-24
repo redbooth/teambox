@@ -6,11 +6,11 @@ class ApiV1::UploadsController < ApiV1::APIController
   def index
     @uploads = (@page || @current_project).uploads.all(:conditions => api_range, :limit => api_limit)
     
-    api_respond @uploads.to_json
+    api_respond @uploads
   end
 
   def show
-    api_respond @upload.to_json
+    api_respond @upload
   end
   
   def create

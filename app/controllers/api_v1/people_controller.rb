@@ -5,11 +5,11 @@ class ApiV1::PeopleController < ApiV1::APIController
   def index
     @people = @current_project.people
     
-    api_respond @people.to_json
+    api_respond @people
   end
 
   def show
-    api_respond @person.to_json
+    api_respond @person
   end
   
   def update
