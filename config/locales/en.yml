@@ -966,6 +966,8 @@ en:
       confirm_delete: Are you sure you want to leave this project?
       leave_project: Leave project
   comments:
+    fields:
+      attach: Attach
     attach:
       tooltip: Attach
     comment:
@@ -1008,6 +1010,7 @@ en:
       close: Hide preview
       preview: Preview
       showing: "..."
+      
   example_projects:
     new:
       learn: Learn by example!
