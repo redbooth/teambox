@@ -290,10 +290,9 @@ class User < ActiveRecord::Base
       people_ids = people.select do |person|
         active_project_ids.include?(person.project_id)
       end.collect(&:id)
-      conditions  = "assigned_id IN (#{people_ids.join(',')}) "
-      conditions += "AND status IN (#{Task::ACTIVE_STATUS_CODES.join(',')})"
 
-      Task.all(:conditions => conditions, :order => 'ID desc').
+      Task.all(:conditions => { :assigned_id => people_ids,
+                                :status => Task::ACTIVE_STATUS_CODES}, :order => 'ID desc').
            sort { |a,b| (a.due_on || 1.week.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
     else
       []
