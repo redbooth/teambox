@@ -93,7 +93,7 @@ en:
     create_project:
       left: created the project
       title: "%{person} created the project %{project}"
-      
+
     thread:
       on_task_list: "on"
       more_comments:
@@ -673,6 +673,7 @@ en:
     create: Add Task
     edit:
       submit: Update Task
+      finish: Finish Task
     new:
       title: New Task
       submit: Add Task
@@ -1136,7 +1137,7 @@ en:
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
       problems: "If you have any problems, please contact us at %{support}"
-      successfully_reset: "Your password has been successfully reset." 
+      successfully_reset: "Your password has been successfully reset."
     forgot_password:
       subject: "Password retrieval for Teambox"
     notify:
