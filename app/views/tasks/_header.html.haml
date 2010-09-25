@@ -9,7 +9,7 @@
         = link_to t('common.delete'), [project, task_list, task], :'data-method' => 'delete',
           :'data-confirm' => t('confirm.delete_task')
   
-  %h2= task.name
+  %h2=h task.name
 
 - if can_update
   = render 'form', :project => project, :task_list => task_list, :task => task

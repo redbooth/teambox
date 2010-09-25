@@ -10,16 +10,16 @@
       = task_status(task,:content)
     .taskName{ :class => "task_item_#{task.status_name}"}
       %span.status= localized_status_name(task)
-      = link_to task, [project, task_list, task], :class => 'name'
+      = link_to h(task), [project, task_list, task], :class => 'name'
       - unless (task.due_on.nil? && task.unassigned?) || task.closed?
         %span.assigned
           = due_on(task) if task.due_on
           = "-" unless task.assigned.nil? || task.due_on.nil?
-          = link_to task.assigned.short_name, user_path(task.assigned.user) if task.assigned
+          = link_to h(task.assigned.short_name), user_path(task.assigned.user) if task.assigned
       .task_extended
         %span.project
-          = link_to project, project
+          = link_to h(project), project
           &rarr;
         %span.task_list
-          = link_to task_list, [project, task_list]
+          = link_to h(task_list), [project, task_list]
     .clear

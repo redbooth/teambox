@@ -17,12 +17,13 @@
 
   .upload_area
     %p= t('uploads.new.select_a_file')
-  
+
     - f.object.uploads.build
     - f.fields_for :uploads do |fields|
       = fields.file_field :asset, :id => 'upload_file'
 
   .actions
+    %span= t('.attach') + ": "
     = link_to t('uploads.comment_upload_link'), project ? [:new, project, :upload] : '#uploads', :class => 'attach_icon'
   
     - if task_form

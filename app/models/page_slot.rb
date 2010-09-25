@@ -31,8 +31,4 @@ class PageSlot < ActiveRecord::Base
     
     base
   end
-  
-  def to_json(options = {})
-    to_api_hash(options).to_json
-  end
 end

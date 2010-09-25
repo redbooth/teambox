@@ -74,12 +74,7 @@ class TaskList < RoleRecord
     base
   end
 
-  def to_json(options = {})
-    to_api_hash(options).to_json
-  end
-
   private
-  
     def ensure_date_order
       if start_on && finish_on && start_on > finish_on
         self.start_on, self.finish_on = finish_on, start_on

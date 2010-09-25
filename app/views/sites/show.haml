@@ -1,4 +1,4 @@
-%h1= image_tag @organization.logo.url(:top), :alt => @organization.name
+%h1= image_tag @organization.logo.url(:top), :alt => h(@organization.name)
 
 .custom_html
   %p= @organization.description

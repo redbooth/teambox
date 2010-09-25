@@ -58,19 +58,30 @@ class HooksController < ApplicationController
                t.save!
              end
 
-      body = case activity[:event_type]
+      attrs = {}
+      attrs[:body] = case activity[:event_type]
       when 'story_create'
         "#{story[:description]}\n\n<a href='#{story[:url]}'>View on #PT</a>"
       when 'story_update'
-        # this is called when description is updated or status changes (start, finish, etc)
+        # this is called when description is updated or status changes (started, finished, delivered, accepted, rejected)
         if story[:current_state]
+          attrs[:assigned] = author.in_project(@current_project) if author
+          attrs[:status] = case story[:current_state]
+          when "started" then Task::STATUSES[:open]
+          when "delivered" then Task::STATUSES[:hold]
+          when "accepted" then Task::STATUSES[:resolved]
+          when "rejected" then Task::STATUSES[:rejected]
+          else nil
+          end
           if author
             "I marked the task as #{story[:current_state]} on #PT"
           else
             "#{activity[:author]} marked the task as #{story[:current_state]} on #PT"
           end
+        # Changing description
         elsif story[:description]
           "Task description is now: #{story[:description]} #PT"
+        # Other activity types
         else
           "#{activity[:description]} #PT"
         end
@@ -91,7 +102,7 @@ class HooksController < ApplicationController
         "#{activity[:description]} #PT"
       end
 
-      @current_project.new_comment(author || @current_project.user, task, {:body => body}).save!
+      @current_project.new_comment(author || @current_project.user, task, attrs).save!
       [RDiscount.new(body).to_html, 200]
     end
 

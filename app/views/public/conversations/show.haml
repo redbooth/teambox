@@ -1,6 +1,6 @@
-- @title = "#{@conversation} - #{@project}"
+- @title = "#{h @conversation} - #{h @project}"
 
-%h2= @conversation
+%h2=h @conversation
 
 .comments
   = render :partial => 'public/comments/comment', :collection => @conversation.comments.reverse

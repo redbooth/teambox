@@ -5,7 +5,7 @@
                        :li_class => 'nav_tab_container',
                        :li_end => projects_tab_list(current_user.projects.unarchived)}
             }) do |t|
-      name = project ? truncate(project.name, :length => 30) : t('shared.navigation.all_projects')
+      name = project ? truncate(h(project.name), :length => 30) : t('shared.navigation.all_projects')
       t.named "#{name} #{image_tag('triangle.png', :class => 'triangle')}"
       t.links_to(project ? project_path(project) : projects_path)
       t.highlights_on :controller => :projects, :action => :index

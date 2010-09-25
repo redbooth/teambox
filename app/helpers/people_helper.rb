@@ -13,4 +13,12 @@ module PeopleHelper
       options_from_collection_for_select(projects, :id, :name)
   end
 
+  def options_for_projects_by_organization(commentable_projects)
+    commentable_projects.group_by(&:organization).collect do |org,projects|
+      "<optgroup label='#{h(org)}'>" +
+        options_from_collection_for_select(projects, :id, :name) +
+      "</optgroup>"
+    end.join
+  end
+
 end

@@ -5,7 +5,7 @@
       .block
         .body
           %h2.title
-            = link_to conversation, [@current_project, conversation]
+            = link_to h(conversation), [@current_project, conversation]
             %span= t('common.comment', :count => conversation.comments_count)
           .textilized
             ~ comment.body_html

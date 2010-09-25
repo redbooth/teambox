@@ -132,13 +132,8 @@ class Upload < RoleRecord
       :comment_id => comment_id
     }
   end
-  
-  def to_json(options = {})
-    to_api_hash(options).to_json
-  end
-  
+
   protected
-  
   def copy_ownership_from_comment
     if comment_id
       self.user_id = comment.user_id

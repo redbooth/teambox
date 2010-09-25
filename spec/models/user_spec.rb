@@ -417,4 +417,32 @@ describe User do
     end
   end
 
+  describe "#pending_tasks" do
+    before do
+      @user = Factory.create(:user)
+      @task = Factory.create(:task)
+      @task.project.add_user @user
+    end
+    it "should return empty for a user without tasks" do
+      @user.pending_tasks.should be_empty
+    end
+    it "should list active tasks for the user" do
+      @task.assign_to @user
+      @user.pending_tasks.should == [@task]
+    end
+    it "should not list tasks that are not active" do
+      [:resolved, :hold, :rejected].each do |status|
+        @task.assign_to @user
+        @task.status_name = status
+        @task.save(false)
+        @user.pending_tasks.should be_empty
+      end
+    end
+    it "should not list tasks from archived projects" do
+      @task.assign_to @user
+      @task.project.update_attribute :archived, true
+      @user.pending_tasks.should be_empty
+    end
+  end
+
 end

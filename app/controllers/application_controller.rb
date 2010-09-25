@@ -119,7 +119,7 @@ class ApplicationController < ActionController::Base
 
       if params.has_key?(:id) && ['show_projects','edit_projects'].include?(location_name)
         project_name = @current_project.name
-        @page_title = "#{project_name} — #{translate_location_name}"
+        @page_title = h("#{project_name} — #{translate_location_name}")
       elsif params.has_key?(:project_id)
         project_name = @current_project.name
         name = nil
@@ -133,7 +133,7 @@ class ApplicationController < ActionController::Base
           when 'show_pages'
             name = @page ? @page.name : nil
         end
-        @page_title = "#{project_name} — #{name || translate_location_name}"
+        @page_title = h("#{project_name} — #{name || translate_location_name}")
       else
         name = nil
         user_name = nil
@@ -143,7 +143,7 @@ class ApplicationController < ActionController::Base
           when 'show_users'
             user_name = @user.name
         end    
-        @page_title = "#{user_name ? user_name + ' — ' : ''}#{translate_location_name}"
+        @page_title = h("#{user_name ? user_name + ' — ' : ''}#{translate_location_name}")
       end    
     end
 
@@ -280,4 +280,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def h(text)
+      ERB::Util.h(text)
+    end
 end

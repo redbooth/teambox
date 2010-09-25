@@ -53,12 +53,9 @@ class Note < RoleRecord
       :slot_id => page_slot.id,
       :name => name,
       :body => body,
+      :body_html => body_html,
       :created_at => created_at.to_s(:db),
       :updated_at => updated_at.to_s(:db)
     }
-  end
-  
-  def to_json(options = {})
-    to_api_hash(options).to_json
   end
 end

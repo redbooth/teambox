@@ -225,10 +225,6 @@ class User < ActiveRecord::Base
     base
   end
   
-  def to_json(options = {})
-    to_api_hash(options).to_json
-  end
-
   def in_project(project)
     project.people.find_by_user_id(self)
   end
@@ -286,6 +282,21 @@ class User < ActiveRecord::Base
       login = "#{proposed_login}#{counter == 1 ? nil : counter}"
     end while User.find_with_deleted(:first, :conditions => ["login LIKE ?", login])
     login
+  end
+
+  def pending_tasks
+    if people.any?
+      active_project_ids = projects.unarchived.collect(&:id)
+      people_ids = people.select do |person|
+        active_project_ids.include?(person.project_id)
+      end.collect(&:id)
+
+      Task.all(:conditions => { :assigned_id => people_ids,
+                                :status => Task::ACTIVE_STATUS_CODES}, :order => 'ID desc').
+           sort { |a,b| (a.due_on || 1.week.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
+    else
+      []
+    end
   end
 
   protected

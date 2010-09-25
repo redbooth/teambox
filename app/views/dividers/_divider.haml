@@ -3,4 +3,4 @@
     = render 'dividers/actions', :divider => divider
   %h3
     %span
-      = divider.name.empty?? '&nbsp;' : divider.name
+      = divider.name.empty?? '&nbsp;' : h(divider.name)

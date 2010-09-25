@@ -9,11 +9,11 @@
   .projects
     - for project in @projects
       %p.project
-        = link_to project, public_project_path(project)
+        = link_to h(project), public_project_path(project)
 
 - if @public_projects.any?
   %h3 Public projects on Teambox
   .projects
     - for project in @public_projects
       %p.project
-        = link_to project, public_project_path(project)
+        = link_to h(project), public_project_path(project)

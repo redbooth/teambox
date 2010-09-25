@@ -1,0 +1,10 @@
+- tasks = current_user.pending_tasks
+- if tasks.any?
+  .my_tasks_listing
+    %h2= t('.tasks')
+    - for task in tasks
+      .task
+        = image_tag('loading.gif', :id => "loading_task_#{task.id}", :class => 'loading', :style => 'display: none')
+        = task_status(task,:content)
+        = render_due_on(task,current_user)
+        = link_to task, project_task_list_task_path(task.project_id, task.task_list_id, task)

@@ -6,7 +6,7 @@
       .clear
     - current_user.recent_projects.each do |project|
       %li
-        = link_to(truncate(project.name, :length => 30), project_path(project), :class => 'tab_item')
+        = link_to(truncate(h(project.name), :length => 30), project_path(project), :class => 'tab_item')
         .quicklinks
           = quicklink_conversations(project)
           = quicklink_tasks(project)
@@ -15,11 +15,11 @@
 
   - projects.group_by(&:organization).each do |org,org_projects|
     %li
-      %p.div{ :style => 'padding-top: 10px' }= link_to org, org
+      %p.div{ :style => 'padding-top: 10px' }= link_to h(org), org
       .clear
     - org_projects.each do |project|
       %li
-        = link_to(truncate(project.name, :length => 30), project_path(project), :class => 'tab_item')
+        = link_to(truncate(h(project.name), :length => 30), project_path(project), :class => 'tab_item')
         .quicklinks
           = quicklink_conversations(project)
           = quicklink_tasks(project)

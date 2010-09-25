@@ -1,7 +1,7 @@
 .upload{ :id => "upload_#{upload_slot.id}" }
   = page_upload_actions_link(page,upload_slot)
   .info
-    = link_to upload_slot.file_type, upload_slot.url, :class => upload_slot.file_type, :rel => (upload_slot.image? ? 'facebox' : '')
+    = link_to h(upload_slot.file_type), upload_slot.url, :class => upload_slot.file_type, :rel => (upload_slot.image? ? 'facebox' : '')
   .block
     .filename.show_details
       .body
@@ -10,7 +10,7 @@
           == (#{number_to_human_size(upload_slot.size)})
         - if upload_slot.description
           .description
-            = upload_slot.description
+            =h upload_slot.description
         .reference
           = t('uploads.upload.uploaded_by')
           = user_link(upload_slot.user)

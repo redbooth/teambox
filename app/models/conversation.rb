@@ -45,7 +45,7 @@ class Conversation < RoleRecord
   end
 
   def to_s
-    name
+    name || ""
   end
   
   def to_xml(options = {})
@@ -83,11 +83,7 @@ class Conversation < RoleRecord
     
     base
   end
-  
-  def to_json(options = {})
-    to_api_hash(options).to_json
-  end
-  
+
   protected
   
   def check_comments_presence

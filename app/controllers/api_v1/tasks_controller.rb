@@ -10,11 +10,11 @@ class ApiV1::TasksController < ApiV1::APIController
       @tasks = Task.scoped(api_scope).find_all_by_project_id(current_user.project_ids, :conditions => api_range, :limit => api_limit)
     end
     
-    api_respond @tasks.to_json
+    api_respond @tasks
   end
 
   def show
-    api_respond @task.to_json(:include => [:comments, :users])
+    api_respond @task, :include => [:comments, :users]
   end
   
   def create

@@ -17,7 +17,7 @@ class Task < RoleRecord
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
   accepts_nested_attributes_for :comments, :allow_destroy => false,
-    :reject_if => lambda { |comment| %w[body hours human_hours].all? { |k| comment[k].blank? } }
+    :reject_if => lambda { |comment| %w[body hours human_hours uploads_attributes].all? { |k| comment[k].blank? } }
 
   acts_as_list :scope => :task_list
 
@@ -167,13 +167,8 @@ class Task < RoleRecord
     
     base
   end
-  
-  def to_json(options = {})
-    to_api_hash(options).to_json
-  end
-  
+
   protected
-  
   def check_asignee_membership
     unless project.people.include?(assigned)
       errors.add :assigned, :doesnt_belong
