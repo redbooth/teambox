@@ -178,27 +178,22 @@ module ProjectsHelper
   def options_for_owned_projects(user, projects)
     projects.reject{|p| p.user_id != user.id}.map {|p| [ p.name, p.id ]}
   end
-  
-  def autocomplete_from_project(project)
-    (@autocomplete_from_projects ||= []) << project if project
-  end
 
   def autocomplete_projects_people_data
-    if @autocomplete_from_projects.present?
-      projects = @autocomplete_from_projects.uniq
-      
-      format = '@%s <span class="informal">%s</span>'
-      special_all = format % ['all', t('conversations.watcher_fields.people_all')]
-      data_by_permalink = Hash.new { |h, k| h[k] = [special_all] }
-      
-      rows = Person.user_names_from_projects(projects)
-      
-      names = rows.each_with_object(data_by_permalink) do |(project_id, login, first_name, last_name), data|
-        data[project_id] << (format % [login, "#{h first_name} #{h last_name}"])
-      end
-      
-      javascript_tag "_people_autocomplete = #{names.to_json}"
+    projects = @current_project ? [@current_project] : current_user.projects
+    return nil if projects.empty?
+    
+    format = '@%s <span class="informal">%s</span>'
+    special_all = format % ['all', t('conversations.watcher_fields.people_all')]
+    data_by_permalink = Hash.new { |h, k| h[k] = [special_all] }
+    
+    rows = Person.user_names_from_projects(projects)
+    
+    names = rows.each_with_object(data_by_permalink) do |(project_id, login, first_name, last_name), data|
+      data[project_id] << (format % [login, "#{h first_name} #{h last_name}"])
     end
+    
+    javascript_tag "_people_autocomplete = #{names.to_json}"
   end
   
   def commentable_projects

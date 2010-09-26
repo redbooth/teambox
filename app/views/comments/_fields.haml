@@ -5,8 +5,6 @@
   %a.micro_avatar.my_avatar{ :href => '#' }
   = f.text_area :body, :placeholder => local_assigns[:placeholder], :id => nil, :style => request.xhr? ? 'max-height: 300px' : nil
 
-- autocomplete_from_project(project)
-
 .extra
   - if task_form
     .field.text_field.hours_field
