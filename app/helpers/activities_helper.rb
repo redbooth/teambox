@@ -141,7 +141,7 @@ module ActivitiesHelper
   def rss_activity_feed(options, &block)
     i18n_values = {}
     project = options.delete(:project)
-    i18n_values[:name] = h(project.name) if project
+    i18n_values[:name] = project.name if project
     
     options[:xml] ||= eval("xml", block.binding)
     options[:builder] = ActivityFeedBuilder
@@ -162,9 +162,9 @@ module ActivitiesHelper
       block ||= Proc.new do |item|
         item.title @view.activity_title(activity, true)
         body = @view.show_activity(activity)
-        item.description h(body)
+        item.description body
         item.tag! 'content:encoded', body
-        item.author h(activity.user.name)
+        item.author activity.user.name
       end
       super(activity, options, &block)
     end
