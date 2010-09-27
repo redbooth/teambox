@@ -68,7 +68,6 @@ Feature: When I use Teambox community version, there is only one organization
     Given I am logged in as mislav
     And I am currently in the project ruby_rockstars
     When I log out
-    Then I should see "Private area"
     When I fill in "login" with "mislav"
     And I fill in "password" with "wrong"
     And I press "Login"
