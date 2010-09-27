@@ -180,7 +180,7 @@ module ProjectsHelper
   end
 
   def autocomplete_projects_people_data
-    projects = @current_project ? [@current_project] : current_user.projects
+    projects = @current_project ? [@current_project] : current_user.projects.reject{ |p| p.new_record? }
     return nil if projects.empty?
     
     format = '@%s <span class="informal">%s</span>'
