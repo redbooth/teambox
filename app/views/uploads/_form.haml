@@ -17,7 +17,7 @@
     - if page
       = page_slot_fields
       = f.hidden_field :page_id
-    = submit_tag t('.upload')
+    = submit_tag t('.upload'), :'data-disable-with' => t('uploads.new.uploading')
     - if page
       = t('common.or')
       = link_to t('common.cancel'), '#', :class => 'cancelPageWidget'

@@ -103,7 +103,7 @@ class HooksController < ApplicationController
       end
 
       @current_project.new_comment(author || @current_project.user, task, attrs).save!
-      [RDiscount.new(body).to_html, 200]
+      [RDiscount.new(attrs[:body]).to_html, 200]
     end
 
     # This code is optimized for Sendgrid's processing email: http://wiki.sendgrid.com/doku.php?id=parse_api

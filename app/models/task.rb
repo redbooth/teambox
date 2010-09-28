@@ -59,7 +59,7 @@ class Task < RoleRecord
   end
 
   def status_name
-    STATUS_NAMES[status] || :new
+    status ? STATUS_NAMES[status] : :new
   end
   
   def status_name=(value)

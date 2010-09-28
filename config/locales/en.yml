@@ -821,6 +821,7 @@ en:
       footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
       footer2: "You can also attach files to any page inside each note. Enjoy!"
       submit: Create page
+      sending: Sending...
     edit:
       title: Edit Page
       submit: Update
@@ -1028,6 +1029,7 @@ en:
     comment_upload_link: Attachment
     new:
       select_a_file: Select a file
+      uploading: Uploading...
     index:
       new_file: Upload a File
       cant_create: You don't have permission to upload files to this project

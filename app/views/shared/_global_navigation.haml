@@ -8,7 +8,7 @@
   %li
     = link_to_unless_current t('.settings'), account_settings_path
     
-  - if current_user.invitations.count > 0
+  - if current_user.invitations.pending_projects.count > 0
     %li= link_to_unless_current t('.project_invitations', :count => current_user.invitations.count),
       user_invitations_path(:user_id => current_user.id)
 
