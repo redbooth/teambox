@@ -136,7 +136,7 @@ GEM
       activerecord (>= 2.1.0)
     whenever (0.4.2)
       chronic (>= 0.2.3)
-    will_paginate (2.3.14)
+    will_paginate (2.3.15)
     xml-simple (1.0.12)
 
 PLATFORMS
