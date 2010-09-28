@@ -3,7 +3,7 @@
   .area
     = divider_fields(f)
     .submit{ :id => "divider_submit" }
-      = f.submit t('.submit')
+      = f.submit t('.submit'), :'data-disable-with' => t('pages.new.sending')
       = t('common.or')
       = link_to t('common.cancel'), '#', :class => 'cancelPageWidget'
     =loading('divider_form')
