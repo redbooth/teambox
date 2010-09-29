@@ -34,13 +34,15 @@ class Comment
       :id => id,
       :body => body,
       :body_html => body_html,
-      :created_at => created_at.to_s(:db),
-      :updated_at => updated_at.to_s(:db),
+      :created_at => created_at.to_s(:api_time),
+      :updated_at => updated_at.to_s(:api_time),
       :user_id => user_id,
       :project_id => project_id,
       :target_id => target_id,
       :target_type => target_type
     }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
     
     if target.is_a? Task
       base[:assigned_id] = assigned_id

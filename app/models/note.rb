@@ -46,7 +46,7 @@ class Note < RoleRecord
   end
   
   def to_api_hash(options = {})
-    {
+    base = {
       :id => id,
       :project_id => project_id,
       :page_id => page_id,
@@ -54,8 +54,12 @@ class Note < RoleRecord
       :name => name,
       :body => body,
       :body_html => body_html,
-      :created_at => created_at.to_s(:db),
+      :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:db)
     }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
+    
+    base
   end
 end

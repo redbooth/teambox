@@ -97,9 +97,11 @@ class Organization < ActiveRecord::Base
       :domain => domain,
       :description => description,
       :logo_url => logo.url,
-      :created_at => created_at.to_s(:db),
+      :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:db)
     }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
     
     if Array(options[:include]).include? :members
       base[:members] = memberships.map {|p| p.to_api_hash(options)}

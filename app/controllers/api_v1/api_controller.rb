@@ -64,10 +64,17 @@ class ApiV1::APIController < ApplicationController
   end
   
   def api_wrap(object, options={})
-    if object.is_a? Enumerable
+    objects = if object.is_a? Enumerable
       object.map{|o| o.to_api_hash(options) }
     else
       object.to_api_hash(options)
+    end
+    
+    if options[:references]
+      { :references => options[:references].map{|o| o.to_api_hash(options.merge(:emit_type => true)) },
+        :objects => objects }
+    else
+      objects
     end
   end
   

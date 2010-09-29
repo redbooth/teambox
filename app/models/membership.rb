@@ -34,9 +34,11 @@ class Membership < ActiveRecord::Base
       :user => user.to_api_hash,
       :organization_id => organization_id,
       :role => role,
-      :created_at => created_at.to_s(:db),
+      :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:db)
     }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
     
     base
   end

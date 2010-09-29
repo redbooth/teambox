@@ -7,9 +7,9 @@ class ApiV1::ActivitiesController < ApiV1::APIController
 
     @activities = Activity.find_all_by_project_id(projects, :conditions => api_range,
                         :order => 'id DESC',
-                        :limit => api_limit)
-
-    api_respond @activities, :include => [:project, :target, :users]
+                        :limit => api_limit,
+                        :include => [:target, :project, :user])
+    api_respond @activities, :references => (@activities.map(&:target) +  @activities.map(&:project) + @activities.map(&:user)).uniq.compact
   end
 
   def show

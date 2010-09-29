@@ -153,11 +153,12 @@ class Task < RoleRecord
       :comments_count => comments_count,
       :assigned_id => assigned_id,
       :status => status,
-      :created_at => created_at.to_s(:db),
-      :updated_at => updated_at.to_s(:db),
+      :created_at => created_at.to_s(:api_time),
+      :updated_at => updated_at.to_s(:api_time),
       :watchers => Array.wrap(watchers_ids)
     }
     
+    base[:type] = self.class.to_s if options[:emit_type]
     base[:due_on] = due_on.to_s(:db) if due_on
     base[:completed_at] = completed_at.to_s(:db) if completed_at
     

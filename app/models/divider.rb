@@ -38,14 +38,18 @@ class Divider < RoleRecord
   end
   
   def to_api_hash(options = {})
-    {
+    base = {
       :id => id,
       :project_id => project_id,
       :page_id => page_id,
       :slot_id => page_slot.id,
       :name => name,
-      :created_at => created_at.to_s(:db),
+      :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:db)
     }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
+    
+    base
   end
 end

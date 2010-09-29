@@ -5,12 +5,18 @@ class ApiV1::TasksController < ApiV1::APIController
   
   def index
     if @current_project
-      @tasks = (@task_list || @current_project).tasks.scoped(api_scope).all(:conditions => api_range, :limit => api_limit)
+      @tasks = (@task_list || @current_project).tasks.scoped(api_scope).all(
+        :conditions => api_range,
+        :limit => api_limit,
+        :include => [:task_list, :project, :user, :assigned])
     else
-      @tasks = Task.scoped(api_scope).find_all_by_project_id(current_user.project_ids, :conditions => api_range, :limit => api_limit)
+      @tasks = Task.scoped(api_scope).find_all_by_project_id(current_user.project_ids, 
+        :conditions => api_range,
+        :limit => api_limit,
+        :include => [:task_list, :project, :user, :assigned])
     end
     
-    api_respond @tasks
+    api_respond @tasks, :references => (@tasks.map(&:task_list) + @tasks.map(&:project) + @tasks.map(&:user) + @tasks.map(&:assigned)).uniq.compact
   end
 
   def show

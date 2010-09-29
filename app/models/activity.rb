@@ -137,24 +137,31 @@ class Activity < ActiveRecord::Base
     base = {
       :id => id,
       :action => action,
-      :created_at => created_at.to_s(:db),
-      :updated_at => updated_at.to_s(:db),
-      :user => {
+      :created_at => created_at.to_s(:api_time),
+      :updated_at => updated_at.to_s(:api_time),
+      :user_id => user_id,
+      :project_id => project_id,
+      :target_id => target_id,
+      :target_type => target_type
+    }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
+    
+    if Array(options[:include]).include? :project
+      base[:project] = {:name => project.name, :permalink => project.permalink}
+    end
+    
+    if Array(options[:include]).include? :target
+      base[:target] = target.to_api_hash
+    end
+    
+    if Array(options[:include]).include? :users
+      base[:user] = {
         :username => user.login,
         :first_name => user.first_name,
         :last_name => user.last_name,
         :avatar_url => user.avatar_or_gravatar_url(:thumb)
       }
-    }
-    
-    if Array(options[:include]).include? :project
-      base[:project] = {:id => project.id, :name => project.name, :permalink => project.permalink}
-    end
-    
-    if Array(options[:include]).include? :target
-      base[:target] = {:type => target_type}.merge(target.to_api_hash(options))
-    else
-      base[:target] = {:id => target_id, :type => target_type}
     end
     
     base
