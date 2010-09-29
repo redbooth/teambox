@@ -21,7 +21,6 @@ GEM
       mime-types
       xml-simple
     builder (2.1.2)
-    calendar_date_select (1.16.1)
     cancan (1.2.0)
     capybara (0.3.9)
       culerity (>= 0.2.4)
@@ -147,7 +146,6 @@ DEPENDENCIES
   acts-as-list (~> 0.1.2)
   aws-s3 (~> 0.6.2)
   builder (~> 2.1.2)
-  calendar_date_select (~> 1.15)
   cancan (~> 1.2.0)
   capybara (~> 0.3.5)
   cucumber-rails (~> 0.3.0)

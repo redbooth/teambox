@@ -30,7 +30,6 @@ group :plugins do
   gem 'will_paginate', '~> 2.3.14'
   gem 'acts-as-list', '~> 0.1.2', :require => 'acts_as_list'
   # gem 'acts_as_paranoid', '~> 0.3.1' # => too old!
-  gem 'calendar_date_select', '~> 1.15'
   gem 'paperclip', '~> 2.3.1.1'
   gem 'vestal_versions', '~> 1.0.2'
   gem 'cancan', '~> 1.2.0'
