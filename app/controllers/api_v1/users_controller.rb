@@ -18,8 +18,7 @@ class ApiV1::UsersController < ApiV1::APIController
   end
   
   def current
-    @user = current_user
-    show
+    api_respond current_user, :include => api_include
   end
 
   protected
@@ -28,6 +27,10 @@ class ApiV1::UsersController < ApiV1::APIController
     unless @user = (User.find_by_login(params[:id]) || User.find_by_id(params[:id]))
       api_error(t('not_found.user'), :not_found)
     end
+  end
+  
+  def api_include
+    [:projects, :organizations] & (params[:include]||{}).map(&:to_sym)
   end
   
 end
