@@ -1,8 +1,0 @@
-%h3{ :style => email_text(:normal) }
-  = t('emailer.notify.recent_conversations', :project => h(project.name))
-  - for conversation in project.conversations.not_simple.recent(4)
-    %p{ :style => email_text(:small) }
-      = link_to h(conversation.name), project_conversation_url(project, conversation), :style => 'color: rgb(50,50,50);padding-left:15px'
-      %span
-        = t('emailer.notify.comments', :number => conversation.comments.count) + ', '
-        = time_ago_in_words(conversation.updated_at)
