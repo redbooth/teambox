@@ -1294,7 +1294,6 @@ en:
       conversation: "Conversation:"
       task: "Task:"
       task_list: "Task List:"
-      recent_conversations: "Recent conversations for %{project}"
       comments: "%{number} comments"
       assigned_to: "Assigned to <b>%{user}</b>"
       due_on: "Due on %{date}"

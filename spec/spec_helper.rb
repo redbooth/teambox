@@ -12,8 +12,10 @@ require 'email_spec/helpers'
 require 'email_spec/matchers'
 require 'cancan/matchers'
 
+require 'rack/test'
+
 Spec::Runner.configure do |config|
-  config.include AuthenticatedTestHelper, EmailSpec::Helpers, EmailSpec::Matchers
+  config.include AuthenticatedTestHelper, EmailSpec::Helpers, EmailSpec::Matchers, Rack::Test::Methods
 
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record
@@ -95,6 +97,10 @@ end
 
 def mock_file_params
   {:asset => mock_uploader("#{rand}.js", 'application/javascript', "1/0")}
+end
+
+def upload_file(name, type)
+  Rack::Test::UploadedFile.new(name, type)
 end
 
 def make_a_typical_project

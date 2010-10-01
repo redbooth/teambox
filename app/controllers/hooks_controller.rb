@@ -121,10 +121,27 @@ class HooksController < ApplicationController
       email.from    = params[:from]
       email.to      = params[:to]
       email.cc      = params[:cc]
-      email.body    = strip_responses(params[:text])
       email.subject = params[:subject]
-      
-      email.body   += "\n\nThis email had #{params[:attachments]} attachments" if params[:attachments].to_i > 0
+
+      if params[:attachments].to_i > 0
+        email.set_content_type 'multipart', 'mixed'
+        mailpart=TMail::Mail.new
+        mailpart.body = strip_responses(params[:text])
+        mailpart.set_content_type 'text', 'plain'
+        email.parts << mailpart
+      else
+        email.body  = strip_responses(params[:text])
+      end
+
+      params[:attachments].to_i.times do |i|
+        file = params[:"attachment#{i+1}"]
+        mailpart = TMail::Mail.new
+        mailpart.body = Base64.encode64(file.read.to_s)
+        mailpart.transfer_encoding = "Base64"
+        mailpart['Content-Disposition'] = "attachment; filename=#{file.original_filename}"
+        email.parts << mailpart
+      end
+
       begin
         Emailer.receive(email.to_s)
       rescue

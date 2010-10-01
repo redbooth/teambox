@@ -47,10 +47,6 @@ module EmailerHelper
     render :partial => 'emailer/comment', :collection => comments, :locals => { :unread => comments.first }
   end
 
-  def emailer_recent_conversations(project)
-    render 'emailer/recent_conversations', :project => project
-  end
-
   def emailer_recent_tasks(project, user)
     recent_tasks = project.tasks.unarchived.
                     assigned_to(user).

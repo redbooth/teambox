@@ -148,26 +148,21 @@ module TasksHelper
     link_to(t('projects.fields.new.time_tracking_docs'), "http://help.teambox.com/faqs/advanced-features/time-tracking", :target => '_blank')
   end
 
-  def date_picker(f, field)
-    content_tag(:div,
-      f.calendar_date_select(field, {
-        :popup => :force,
-        :footer => false,
-        :year_range => 2.years.ago..10.years.from_now,
-        :time => false,
-        :buttons => true }),
-      :class => 'date_picker')
+  def date_picker(f, field, embedded = false)
+    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : nil
+    content_tag :div, :class => "date_picker #{'embedded' if embedded}" do
+      image_tag('/images/calendar_date_select/calendar.gif', :class => 'calendar_date_select_popup_icon') <<
+      f.hidden_field(field) << content_tag(:span, date_field, :class => 'localized_date')
+    end
   end
   
   def embedded_date_picker(f, field)
-    content_tag(:div,
-      f.calendar_date_select(field, {
-        :embedded => true,
-        :footer => false,
-        :year_range => 2.years.ago..10.years.from_now,
-        :time => false,
-        :buttons => true }),
-      :class => 'date_picker')
+    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : nil
+    div_id = "#{f.object.class}_#{f.object.id}_#{field}"
+    content_tag :div, :class => "date_picker_embedded", :id => div_id do
+      f.hidden_field(field) << content_tag(:span, date_field, :class => 'localized_date', :style => 'display: none') <<
+      javascript_tag("new CalendarDateSelect( $('#{div_id}').down('input'), $('#{div_id}').down('span'), {buttons:true, embedded:true, time:false, year_range:[2008, 2020]} )")
+    end
   end
   
   def value_for_assigned_to_select

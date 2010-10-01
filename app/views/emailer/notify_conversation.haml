@@ -14,7 +14,6 @@
       = link_to h(@conversation.name), project_conversation_url(@project, @conversation)
 
   = emailer_list_comments(@conversation.comments)
-  = emailer_recent_conversations(@project)
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
     %p= t('emailer.notify.view_online', :link => project_conversation_url(@project, @conversation))
