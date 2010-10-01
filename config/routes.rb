@@ -153,7 +153,6 @@ ActionController::Routing::Routes.draw do |map|
     api.resources :invitations, :except => [:new, :edit, :update, :create], :member => {:accept => :put}
     api.resources :users, :only => [:index, :show]
     api.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}
-    api.resources :pages, :except => [:new, :edit]
     
     
     api.resources :organizations, :except => [:new, :edit, :destroy] do |organization|
