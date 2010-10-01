@@ -73,6 +73,12 @@ When /^(?:|I )select "([^\"]*)" from "([^\"]*)"(?: within "([^\"]*)")?$/ do |val
   end
 end
 
+When /^(?:|I )click the element that contain "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
+  with_scope(selector) do
+    find(:xpath,"//*[.='#{text}']").click
+  end
+end
+
 When /^(?:|I )check "([^\"]*)"(?: within "([^\"]*)")?$/ do |field, selector|
   with_scope(selector) do
     check(field)
