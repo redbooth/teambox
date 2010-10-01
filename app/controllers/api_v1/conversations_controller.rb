@@ -9,7 +9,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
   end
 
   def show
-    api_respond @conversation, :include => [:comments, :users]
+    api_respond @conversation, :include => api_include
   end
   
   def create
@@ -90,6 +90,10 @@ class ApiV1::ConversationsController < ApiV1::APIController
         @conversation.add_watcher user# if user
       end
     end
+  end
+    
+  def api_include
+    [:comments, :user] & (params[:include]||{}).map(&:to_sym)
   end
   
 end

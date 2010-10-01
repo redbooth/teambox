@@ -55,7 +55,7 @@ class Comment
       base[:uploads] = uploads.map {|u| u.to_api_hash(options)}
     end
     
-    if Array(options[:include]).include? :users
+    if Array(options[:include]).include? :user
       base[:user] = {
         :username => user.login,
         :first_name => user.first_name,

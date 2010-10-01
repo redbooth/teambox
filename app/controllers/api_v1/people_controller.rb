@@ -5,11 +5,11 @@ class ApiV1::PeopleController < ApiV1::APIController
   def index
     @people = @current_project.people(:include => [:project, :user])
     
-    api_respond @people, :include => [:project, :user], :references => [:project, :user]
+    api_respond @people, :references => [:user]
   end
 
   def show
-    api_respond @person
+    api_respond @person, :include => [:user]
   end
   
   def update

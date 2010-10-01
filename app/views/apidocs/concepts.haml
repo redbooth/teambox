@@ -93,6 +93,13 @@
 
 %p For a collection of objects, the actual objects will be returned in the "objects" list, while any object referenced by the collection will be returned in the "references" list. This reduces the amount of redundant data in a request.
 
+%p The maximum number of returned objects is defined by the API_LIMIT, which is currently set at 50 items per request. To get more items, you will need to use the following parameters:
+
+%ul
+  %li <tt>since_id</tt> to get items created <strong>AFTER</strong> the specified id.
+  %li <tt>max_id</tt> to get items created <strong>BEFORE</strong> the specified id.
+  %li a combination of <tt>since_id</tt> and <tt>max_id</tt> to get items in a range.
+
 %h3 Single object
 
 %pre
@@ -102,7 +109,7 @@
   \  ...
   }
 
-%p For a single object, you will get a single JSON object containing the properties of the said object. In addition if you pass in one or more <tt>include[]</tt> parameters, additional referenced elements will be returned in the object, e.g. comments.
+%p For a single object, you will get a single JSON object containing the properties of the said object. In addition if you pass in one or more <tt>include[]</tt> parameters, additional referenced elements will be returned in the object, e.g. comments. Refer to the "Includes" section on a route for available includes.
 
 %h2 A note about RESTful routes
 

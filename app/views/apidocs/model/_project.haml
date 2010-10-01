@@ -1,12 +1,13 @@
 %p= "Projects contain most of the objects present in Teambox."
 
-- doc_for :index, :example => [@project.to_api_hash] do
+- doc_for :index, :example => example_api_wrap(@project, :references => [:organization, :user]) do
   %p= "Returns the most recent projects you own or belong to. You can also filter by organization by passing in <tt>organization_id</tt>."
 
-- doc_for :show, :example => @project.to_api_hash(:include => :people) do
+- doc_for :show, :example => @project.to_api_hash,
+                 :includes => [:organization, :people, :user] do
   %p= "Returns the data for a given project"
   
-- doc_for :create, :parameters => {:project => {:name => 'Name', :permalink => 'project'} },
+- doc_for :create, :parameters => {:project => {:organization_id => @project.organization_id, :name => 'Name', :permalink => 'project'} },
                    :example => @project.to_api_hash,
                    :status => :created do
   %p= "Creates a new project"

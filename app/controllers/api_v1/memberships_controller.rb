@@ -9,7 +9,7 @@ class ApiV1::MembershipsController < ApiV1::APIController
   end
 
   def show
-    api_respond @membership, :include => [:projects, :members, :people]
+    api_respond @membership, :include => [:user]
   end
   
   def update

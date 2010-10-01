@@ -10,7 +10,7 @@ class ApiV1::NotesController < ApiV1::APIController
   end
 
   def show
-    api_respond @note
+    api_respond @note, :include => [:page_slot]
   end
   
   def create

@@ -20,7 +20,7 @@ class ApiV1::TasksController < ApiV1::APIController
   end
 
   def show
-    api_respond @task, :include => [:comments, :users]
+    api_respond @task, :include => api_include
   end
   
   def create
@@ -94,6 +94,10 @@ class ApiV1::TasksController < ApiV1::APIController
       conditions[:status] = Array(params[:status]).map(&:to_i).uniq[0..4]
     end
     {:conditions => conditions}
+  end
+    
+  def api_include
+    [:comments, :user] & (params[:include]||{}).map(&:to_sym)
   end
   
   def check_permissions

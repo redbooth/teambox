@@ -7,13 +7,13 @@ class ApiV1::UploadsController < ApiV1::APIController
     @uploads = (@page || @current_project).uploads.all(
       :conditions => api_range, 
       :limit => api_limit,
-      :include => [:project, :user])
+      :include => [:page, :user])
     
-    api_respond @uploads, :references => [:project, :user]
+    api_respond @uploads, :references => [:page, :user]
   end
 
   def show
-    api_respond @upload
+    api_respond @upload, :include => [:page_slot]
   end
   
   def create

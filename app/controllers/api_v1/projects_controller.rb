@@ -9,7 +9,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
   end
 
   def show
-    api_respond @current_project, :include => :people
+    api_respond @current_project, :include => api_include
   end
   
   def create
@@ -80,6 +80,10 @@ class ApiV1::ProjectsController < ApiV1::APIController
     else
       true
     end
+  end
+  
+  def api_include
+    [:organization, :people, :user] & (params[:include]||{}).map(&:to_sym)
   end
   
 end

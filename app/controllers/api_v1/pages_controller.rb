@@ -3,13 +3,9 @@ class ApiV1::PagesController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:reorder,:resort,:destroy]
   
   def index
-    @pages = if @current_project
-      @current_project.pages.all(:conditions => api_range, :limit => api_limit, :order => 'id ASC', :include => [:project, :user])
-    else
-      Page.find_all_by_project_id(current_user.project_ids, :conditions => api_range, :limit => api_limit, :include => [:project, :user])
-    end
+    @pages = @current_project.pages.all(:conditions => api_range, :limit => api_limit, :order => 'id ASC', :include => [:project, :user])
     
-    api_respond @pages, :include => :slots, :references => [:project, :user]
+    api_respond @pages, :include => :slots, :references => [:user]
   end
   
   def create

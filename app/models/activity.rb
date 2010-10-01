@@ -155,7 +155,7 @@ class Activity < ActiveRecord::Base
       base[:target] = target.to_api_hash
     end
     
-    if Array(options[:include]).include? :users
+    if Array(options[:include]).include? :user
       base[:user] = {
         :username => user.login,
         :first_name => user.first_name,

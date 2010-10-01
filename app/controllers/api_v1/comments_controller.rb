@@ -8,7 +8,7 @@ class ApiV1::CommentsController < ApiV1::APIController
   end
 
   def show
-    api_respond @comment
+    api_respond @comment, :include => [:user]
   end
   
   def create

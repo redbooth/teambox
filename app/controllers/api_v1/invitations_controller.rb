@@ -11,7 +11,7 @@ class ApiV1::InvitationsController < ApiV1::APIController
   end
 
   def show
-    api_respond @invitation
+    api_respond @invitation, :include => [:project, :user]
   end
   
   def create

@@ -20,7 +20,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     end
     
     if current_user.project_ids.include? @activity.project_id
-      api_respond @activity, :include => [:project, :target, :users]
+      api_respond @activity, :include => [:project, :target, :user]
     else
       api_status :unauthorized
     end

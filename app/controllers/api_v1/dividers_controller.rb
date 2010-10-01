@@ -10,7 +10,7 @@ class ApiV1::DividersController < ApiV1::APIController
   end
 
   def show
-    api_respond @divider
+    api_respond @divider, :include => [:page_slot]
   end
   
   def create

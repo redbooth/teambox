@@ -5,11 +5,11 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   
   def index
     @organizations = current_user.organizations
-    api_respond current_user.organizations, :include => [:projects, :members], :references => []
+    api_respond current_user.organizations, :references => []
   end
 
   def show
-    api_respond @organization, :include => [:projects, :members, :people]
+    api_respond @organization, :include => api_include
   end
   
   def create
@@ -49,6 +49,10 @@ class ApiV1::OrganizationsController < ApiV1::APIController
     else
       true
     end
+  end
+  
+  def api_include
+    [:projects, :members] & (params[:include]||{}).map(&:to_sym)
   end
   
 end

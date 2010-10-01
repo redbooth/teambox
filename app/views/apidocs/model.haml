@@ -20,24 +20,26 @@
             %code=route_path
     
     - if doc
-      .status
-        %p
-          %span.title= "Status:"
-          - case doc[:status]
-          - when :created
-            = "<tt>201</tt> on success, <tt>422</tt> on error."
-          - when :updated
-            = "<tt>200</tt> on success, <tt>422</tt> on error."
-          - when :deleted
-            = "<tt>200</tt> on success, <tt>422</tt> on error."
-          - else
-            = "<tt>200</tt> on success"
+      .docfield
+        %span.title= "Status:"
+        - case doc[:status]
+        - when :created
+          = "<tt>201</tt> on success, <tt>422</tt> on error."
+        - when :updated
+          = "<tt>200</tt> on success, <tt>422</tt> on error."
+        - when :deleted
+          = "<tt>200</tt> on success, <tt>422</tt> on error."
+        - else
+          = "<tt>200</tt> on success"
       - if doc[:role]
         - roles = Array(doc[:role])
-        %p
-          %strong= roles.length > 1 ? "Minimum roles:" : "Minimum role:"
-          - roles.each do |role|
-            %span.role= "#{role.to_s.capitalize}"
+        %strong= roles.length > 1 ? "Minimum roles:" : "Minimum role:"
+        - roles.each do |role|
+          %span.role= "#{role.to_s.capitalize}"
+      - if doc[:includes]
+        .docfield
+          %span.title= "Includes:"
+          = doc[:includes].map{|i|"<tt>#{i}</tt>"}.join(',')
       = doc[:description]
       - if doc[:parameters]
         %h4= "Parameters you should pass"
