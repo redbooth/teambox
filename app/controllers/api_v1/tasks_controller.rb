@@ -16,7 +16,7 @@ class ApiV1::TasksController < ApiV1::APIController
         :include => [:task_list, :project, :user, :assigned])
     end
     
-    api_respond @tasks, :references => (@tasks.map(&:task_list) + @tasks.map(&:project) + @tasks.map(&:user) + @tasks.map(&:assigned)).uniq.compact
+    api_respond @tasks, :references => [:task_list, :project, :user, :assigned]
   end
 
   def show

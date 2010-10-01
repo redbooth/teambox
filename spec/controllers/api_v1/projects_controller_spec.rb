@@ -11,7 +11,7 @@ describe ApiV1::ProjectsController do
       
       get :index
       response.should be_success
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "does not show projects the user doesn't belong to" do
@@ -19,7 +19,7 @@ describe ApiV1::ProjectsController do
       
       get :index
       response.should be_success
-      JSON.parse(response.body).length.should == 0
+      JSON.parse(response.body)['objects'].length.should == 0
     end
   end
   

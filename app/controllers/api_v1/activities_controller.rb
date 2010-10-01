@@ -9,7 +9,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
                         :order => 'id DESC',
                         :limit => api_limit,
                         :include => [:target, :project, :user])
-    api_respond @activities, :references => (@activities.map(&:target) +  @activities.map(&:project) + @activities.map(&:user)).uniq.compact
+    api_respond @activities, :references => [:target, :project, :user]
   end
 
   def show

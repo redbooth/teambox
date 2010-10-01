@@ -3,7 +3,7 @@ class ApiV1::UsersController < ApiV1::APIController
   skip_before_filter :load_project
   
   def index
-    api_respond current_user.users_with_shared_projects
+    api_respond current_user.users_with_shared_projects, :references => []
   end
 
   def show

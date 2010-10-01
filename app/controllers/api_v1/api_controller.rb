@@ -71,7 +71,9 @@ class ApiV1::APIController < ApplicationController
     end
     
     if options[:references]
-      { :references => options[:references].map{|o| o.to_api_hash(options.merge(:emit_type => true)) },
+      { :references => Array(object).map{ |obj|  
+          options[:references].map{|ref| obj.send(ref)}
+        }.flatten.compact.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))},
         :objects => objects }
     else
       objects

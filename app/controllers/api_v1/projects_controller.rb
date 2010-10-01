@@ -3,9 +3,9 @@ class ApiV1::ProjectsController < ApiV1::APIController
   before_filter :can_modify?, :only => [:edit, :update, :transfer, :destroy]
   
   def index
-    @projects = current_user.projects
+    @projects = current_user.projects(:include => [:organization, :user])
     
-    api_respond @projects
+    api_respond @projects, :references => [:organization, :user]
   end
 
   def show

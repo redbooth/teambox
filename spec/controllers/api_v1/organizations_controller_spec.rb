@@ -11,7 +11,7 @@ describe ApiV1::OrganizationsController do
       
       get :index
       response.should be_success
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "does not show organizations the user doesn't belong to" do
@@ -19,7 +19,17 @@ describe ApiV1::OrganizationsController do
       
       get :index
       response.should be_success
-      JSON.parse(response.body).length.should == 0
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
+    
+    it "returns references for linked objects" do
+      login_as @user
+      
+      get :index
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      data['references'].should_not == nil
     end
   end
   

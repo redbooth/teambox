@@ -4,7 +4,7 @@ class ApiV1::CommentsController < ApiV1::APIController
   def index
     @comments = target.comments.all(:conditions => api_range, :limit => api_limit, :include => [:target, :user])
     
-    api_respond @comments, :references => (@comments.map(&:target) + @comments.map(&:user)).uniq.compact
+    api_respond @comments, :references => [:target, :user, :project]
   end
 
   def show

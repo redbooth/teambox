@@ -12,7 +12,21 @@ describe ApiV1::MembershipsController do
       get :index, :organization_id => @organization.permalink
       response.should be_success
       
-      JSON.parse(response.body).length.should == @organization.memberships.length
+      JSON.parse(response.body)['objects'].length.should == @organization.memberships.length
+    end
+    
+    it "returns references for linked objects" do
+      login_as @admin
+      
+      get :index, :organization_id => @organization.permalink
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      activities = data['objects']
+      
+      references.include?("#{@organization.id}_Organization").should == true
+      references.include?("#{@organization.memberships.first.user_id}_User").should == true
     end
   end
   

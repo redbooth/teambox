@@ -3,9 +3,9 @@ class ApiV1::PeopleController < ApiV1::APIController
   before_filter :check_permissions, :only => [:update]
   
   def index
-    @people = @current_project.people
+    @people = @current_project.people(:include => [:project, :user])
     
-    api_respond @people
+    api_respond @people, :include => [:project, :user], :references => [:project, :user]
   end
 
   def show

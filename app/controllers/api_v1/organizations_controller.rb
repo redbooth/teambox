@@ -4,7 +4,8 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   before_filter :can_modify?, :only => [:edit, :update, :destroy]
   
   def index
-    api_respond current_user.organizations
+    @organizations = current_user.organizations
+    api_respond current_user.organizations, :include => [:projects, :members], :references => []
   end
 
   def show

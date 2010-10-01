@@ -3,9 +3,9 @@ class ApiV1::ConversationsController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy,:watch,:unwatch]
   
   def index
-    @conversations = @current_project.conversations.scoped(api_scope).all(:conditions => api_range, :limit => api_limit)
+    @conversations = @current_project.conversations.scoped(api_scope).all(:conditions => api_range, :limit => api_limit, :include => [:user, :project])
     
-    api_respond @conversations
+    api_respond @conversations, :references => [:user, :project]
   end
 
   def show

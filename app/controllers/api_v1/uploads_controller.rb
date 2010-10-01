@@ -4,9 +4,12 @@ class ApiV1::UploadsController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
-    @uploads = (@page || @current_project).uploads.all(:conditions => api_range, :limit => api_limit)
+    @uploads = (@page || @current_project).uploads.all(
+      :conditions => api_range, 
+      :limit => api_limit,
+      :include => [:project, :user])
     
-    api_respond @uploads
+    api_respond @uploads, :references => [:project, :user]
   end
 
   def show

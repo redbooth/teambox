@@ -4,7 +4,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   
   def index
     @task_lists = @current_project.task_lists.scoped(api_scope).all(:conditions => api_range, :limit => api_limit)
-    api_respond @task_lists, :include => :tasks
+    api_respond @task_lists, :include => [:tasks, :user, :project], :references => [:project, :user]
   end
 
   def show

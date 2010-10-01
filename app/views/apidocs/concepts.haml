@@ -74,6 +74,36 @@
 %ul
   %li Users <code>/users</code>
 
+%h2 Responses
+
+%p
+  There are two possible types of response in the API, depending on whether you are retrieving a collection of objects or just a single object:
+
+%h3 Collection of objects
+
+%pre
+  \
+  {
+  \  "references": [{
+  \    "id": "123",
+  \    "type: "User"
+  \  }, ...],
+  \  "objects": [...]
+  }
+
+%p For a collection of objects, the actual objects will be returned in the "objects" list, while any object referenced by the collection will be returned in the "references" list. This reduces the amount of redundant data in a request.
+
+%h3 Single object
+
+%pre
+  \
+  {
+  \  "id": "123",
+  \  ...
+  }
+
+%p For a single object, you will get a single JSON object containing the properties of the said object. In addition if you pass in one or more <tt>include[]</tt> parameters, additional referenced elements will be returned in the object, e.g. comments.
+
 %h2 A note about RESTful routes
 
 %p Unless otherwise stated, most objects on the API conform to the following routes:
