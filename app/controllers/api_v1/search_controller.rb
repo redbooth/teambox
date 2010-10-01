@@ -11,7 +11,7 @@ class ApiV1::SearchController < ApiV1::APIController
         :page => params[:page]
     end
     
-    api_respond @comments.to_json
+    api_respond @comments, :references => []
   end
   
   protected

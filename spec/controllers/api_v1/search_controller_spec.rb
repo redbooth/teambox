@@ -4,13 +4,15 @@ describe ApiV1::SearchController do
   describe "#results" do
     before do
       @user = login_as(:confirmed_user)
-      @results = mock('results')
+      @project = Factory.create :project, :user => @user, :permalink => 'important-project'
+      @comment = Factory.create :comment, :project => @project
+      @results = mock('results', {:to_api_hash => [@comment.to_api_hash]})
     end
     
     it "searches across all user's projects" do
       controller.stub!(:user_can_search?).and_return(true)
       
-      p1 = Factory.create :project, :user => @user
+      p1 = @project
       p2 = Factory.create :project, :user => @user
       
       Comment.should_receive(:search).
@@ -33,16 +35,15 @@ describe ApiV1::SearchController do
     it "searches in a single project" do
       controller.stub!(:user_can_search?).and_return(false)
       
-      project = Factory.create :project, :permalink => 'important-project'
-      Factory.create :person, :user => @user, :project => project
-      owner = project.user
+      Factory.create :person, :user => @user, :project => @project
+      owner = @project.user
       owner.stub!(:can_search?).and_return(true)
       controller.stub!(:project_owner).and_return(owner)
       
       Comment.should_receive(:search).
-        with(*search_params(project.id)).and_return(@results)
+        with(*search_params(@project.id)).and_return(@results)
       
-      get :index, :q => 'important', :project_id => project.permalink
+      get :index, :q => 'important', :project_id => @project.permalink
       response.should be_success
       
       assigns[:comments].should == @results
@@ -51,10 +52,8 @@ describe ApiV1::SearchController do
     it "reject searching in unauthorized project" do
       controller.stub!(:user_can_search?).and_return(false)
       
-      project = Factory.create :project, :permalink => 'important-project'
-      
-      get :index, :q => 'important', :project_id => project.permalink
-      response.status.should == '401 Unauthorized'
+      get :index, :q => 'important', :project_id => @project.permalink
+      response.status.should == '501 Not Implemented'
     end
     
     def search_params(project_ids)
