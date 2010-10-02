@@ -1,0 +1,6 @@
+---------------------------------------
+<%= h(comment.user.name) + ', ' %> <%= I18n.l(comment.created_at.in_time_zone(@recipient.time_zone), :format => "%b %d - %I:%M %p") %>:
+
+<%= comment.body %>
+
+<%= render :partial => 'emailer/upload', :collection => comment.uploads %>
