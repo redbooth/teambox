@@ -42,10 +42,13 @@ class Emailer < ActionMailer::Base
   end
 
   def notify_conversation(user, project, conversation)
+    title = conversation.name.blank? ? 
+              truncate(conversation.comments.first(:order => 'id ASC').body.strip) :
+              conversation.name
     defaults
     recipients    user.email
     from          from_user("#{project.permalink}+conversation+#{conversation.id}", conversation.comments.first.user)
-    subject       "[#{project.permalink}] #{conversation.name}"
+    subject       "[#{project.permalink}] #{title}"
     body          :project => project, :conversation => conversation, :recipient => user
   end
 
