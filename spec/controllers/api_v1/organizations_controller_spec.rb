@@ -77,6 +77,14 @@ describe ApiV1::OrganizationsController do
       JSON.parse(response.body)['id'].to_i.should == @organization.id
     end
     
+    it "shows an organization by id" do
+      login_as @user
+      
+      get :show, :id => @organization.id
+      response.should be_success
+      JSON.parse(response.body)['id'].to_i.should == @organization.id
+    end
+    
     it "should not show an organization the user doesn't belong to" do
       @user2 = Factory.create(:confirmed_user)
       login_as @user2

@@ -97,6 +97,14 @@ describe ApiV1::ProjectsController do
       JSON.parse(response.body)['id'].to_i.should == @project.id
     end
     
+    it "shows a project by id" do
+      login_as @user
+      
+      get :show, :id => @project.id
+      response.should be_success
+      JSON.parse(response.body)['id'].to_i.should == @project.id
+    end
+    
     it "should not show a project the user doesn't belong to" do
       @user2 = Factory.create(:confirmed_user)
       login_as @user2

@@ -15,6 +15,15 @@ describe ApiV1::MembershipsController do
       JSON.parse(response.body)['objects'].length.should == @organization.memberships.length
     end
     
+    it "shows members in the organization referenced by id" do
+      login_as @admin
+      
+      get :index, :organization_id => @organization.id
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == @organization.memberships.length
+    end
+    
     it "returns references for linked objects" do
       login_as @admin
       
