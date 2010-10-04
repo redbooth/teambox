@@ -94,6 +94,7 @@ CalendarDateSelect.prototype = {
   initialize: function(target_element, target_label, options) {
     this.target_element = $(target_element); // make sure it's an element, not a string
 		this.target_label = $(target_label);
+		this.target_scope = target_element.id;
     if (!this.target_element) { alert("Target element " + target_element + " not found!"); return false;}
     if (this.target_element.tagName != "INPUT") this.target_element = this.target_element.down("INPUT")
     
@@ -173,8 +174,8 @@ CalendarDateSelect.prototype = {
     this.prev_month_button = header_div.build("a", { innerHTML: "&lt;", href:"#", onclick:function () { this.navMonth(this.date.getMonth() - 1 ); return false; }.bindAsEventListener(this), className: "prev" });
     
     if (this.options.get("month_year")=="dropdowns") {
-      this.month_select = new SelectBox(header_div, $R(0,11).map(function(m){return [Date.months[m], m]}), {className: "month", onchange: function () { this.navMonth(this.month_select.getValue()) }.bindAsEventListener(this)}); 
-      this.year_select = new SelectBox(header_div, [], {className: "year", onchange: function () { this.navYear(this.year_select.getValue()) }.bindAsEventListener(this)}); 
+      this.month_select = new SelectBox(header_div, $R(0,11).map(function(m){return [Date.months[m], m]}), {className: "month", id: this.target_scope + '_month', onchange: function () { this.navMonth(this.month_select.getValue()) }.bindAsEventListener(this)}); 
+      this.year_select = new SelectBox(header_div, [], {className: "year", id: this.target_scope + '_year', onchange: function () { this.navYear(this.year_select.getValue()) }.bindAsEventListener(this)}); 
       this.populateYearRange();
     } else {
       this.month_year_label = header_div.build("span")

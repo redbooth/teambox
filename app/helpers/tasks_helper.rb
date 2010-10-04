@@ -150,6 +150,7 @@ module TasksHelper
 
   def date_picker(f, field, embedded = false)
     date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : nil
+    div_id = "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}"
     content_tag :div, :class => "date_picker #{'embedded' if embedded}" do
       image_tag('/images/calendar_date_select/calendar.gif', :class => 'calendar_date_select_popup_icon') <<
       f.hidden_field(field) << content_tag(:span, date_field, :class => 'localized_date')
@@ -158,7 +159,7 @@ module TasksHelper
   
   def embedded_date_picker(f, field)
     date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : nil
-    div_id = "#{f.object.class}_#{f.object.id}_#{field}"
+    div_id = "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}"
     content_tag :div, :class => "date_picker_embedded", :id => div_id do
       f.hidden_field(field) << content_tag(:span, date_field, :class => 'localized_date', :style => 'display: none') <<
       javascript_tag("new CalendarDateSelect( $('#{div_id}').down('input'), $('#{div_id}').down('span'), {buttons:true, embedded:true, time:false, year_range:[2008, 2020]} )")

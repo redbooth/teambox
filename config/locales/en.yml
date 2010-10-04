@@ -1301,7 +1301,6 @@ en:
       my_tasks: "More tasks assigned to you in %{project}"
     upload:
       file: "File:"
-      uploaded_by: uploaded by
 
   weakling:
     default: Must be at least 5 characters
