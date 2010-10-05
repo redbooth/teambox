@@ -1,4 +1,4 @@
-%h2= t('.title', :name => @organization)
+%h2= t('.title', :name => h(@organization))
 
 - unless @organization.is_admin? current_user
   %p= t('organizations.you_are_not_admin')
@@ -10,7 +10,7 @@
     - @organization.admins.each do |user|
       %p.user
         = micro_avatar(user)
-        = user.name
+        =h user.name
         - if @organization.is_admin?(current_user) and user != current_user
           %span.role
             = link_to t('.remove_admin'), change_role_organization_membership_path(@organization, user.id, :role => Membership::ROLES[:participant])
@@ -27,7 +27,7 @@
     - @organization.participants.each do |user|
       %p.user
         = micro_avatar(user)
-        = user.name
+        =h user.name
         - if @organization.is_admin?(current_user)
           %span.role
             = link_to t('.make_admin'), change_role_organization_membership_path(@organization, user.id, :role => Membership::ROLES[:admin])
@@ -44,7 +44,7 @@
     - @organization.external_users.each do |user|
       %p.user
         = micro_avatar(user)
-        = user.name
+        =h user.name
         - if @organization.is_admin?(current_user)
           %span.role
             = link_to t('.add_to_the_org'), add_organization_membership_path(@organization, user.id, :role => 20)

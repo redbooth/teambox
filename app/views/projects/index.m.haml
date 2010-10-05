@@ -2,7 +2,7 @@
   #projects
     - for project in @projects
       .project
-        = link_to project, project_path(project)
+        = link_to h(project), project_path(project)
     - if @sub_action == 'archived'
       .project
         = link_to "Show Active Projects", projects_path, :style => 'color: #999'

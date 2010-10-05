@@ -24,7 +24,7 @@ describe ApiV1::TasksController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body).length.should == 2
+      JSON.parse(response.body)['objects'].length.should == 2
     end
     
     it "shows tasks in a task list" do
@@ -33,7 +33,7 @@ describe ApiV1::TasksController do
       get :index, :project_id => @project.permalink, :task_list_id => @task_list.id
       response.should be_success
       
-      JSON.parse(response.body).map{|t| t['id'].to_i}.sort.should == @task_list.task_ids.sort
+      JSON.parse(response.body)['objects'].map{|t| t['id'].to_i}.sort.should == @task_list.task_ids.sort
     end
     
     it "shows tasks in all the users projects" do
@@ -46,7 +46,7 @@ describe ApiV1::TasksController do
       get :index
       response.should be_success
       
-      JSON.parse(response.body).length.should == 3
+      JSON.parse(response.body)['objects'].length.should == 3
     end
     
     it "restricts by status" do
@@ -55,7 +55,7 @@ describe ApiV1::TasksController do
       get :index, :project_id => @project.permalink, :status => [3]
       response.should be_success
       
-      JSON.parse(response.body).map{|t| t['id'].to_i}.sort.should == [@other_task.id]
+      JSON.parse(response.body)['objects'].map{|t| t['id'].to_i}.sort.should == [@other_task.id]
     end
     
     it "limits tasks" do
@@ -64,7 +64,7 @@ describe ApiV1::TasksController do
       get :index, :count => 1
       response.should be_success
       
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "limits and offsets tasks" do
@@ -73,7 +73,7 @@ describe ApiV1::TasksController do
       get :index, :since_id => @task.id, :count => 1
       response.should be_success
       
-      JSON.parse(response.body).map{|a| a['id'].to_i}.should == [@other_task.id]
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@other_task.id]
     end
   end
   

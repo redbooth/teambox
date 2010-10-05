@@ -5,16 +5,22 @@ class ApiV1::TasksController < ApiV1::APIController
   
   def index
     if @current_project
-      @tasks = (@task_list || @current_project).tasks.scoped(api_scope).all(:conditions => api_range, :limit => api_limit)
+      @tasks = (@task_list || @current_project).tasks.scoped(api_scope).all(
+        :conditions => api_range,
+        :limit => api_limit,
+        :include => [:task_list, :project, :user, :assigned])
     else
-      @tasks = Task.scoped(api_scope).find_all_by_project_id(current_user.project_ids, :conditions => api_range, :limit => api_limit)
+      @tasks = Task.scoped(api_scope).find_all_by_project_id(current_user.project_ids, 
+        :conditions => api_range,
+        :limit => api_limit,
+        :include => [:task_list, :project, :user, :assigned])
     end
     
-    api_respond @tasks.to_json
+    api_respond @tasks, :references => [:task_list, :project, :user, :assigned]
   end
 
   def show
-    api_respond @task.to_json(:include => [:comments, :users])
+    api_respond @task, :include => api_include
   end
   
   def create
@@ -88,6 +94,10 @@ class ApiV1::TasksController < ApiV1::APIController
       conditions[:status] = Array(params[:status]).map(&:to_i).uniq[0..4]
     end
     {:conditions => conditions}
+  end
+    
+  def api_include
+    [:comments, :user] & (params[:include]||{}).map(&:to_sym)
   end
   
   def check_permissions

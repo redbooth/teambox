@@ -43,12 +43,12 @@ module EmailerHelper
     render 'emailer/answer'
   end
 
-  def emailer_list_comments(comments)
-    render :partial => 'emailer/comment', :collection => comments, :locals => { :unread => comments.first }
+  def dont_answer
+    render 'emailer/dont_answer'
   end
 
-  def emailer_recent_conversations(project)
-    render 'emailer/recent_conversations', :project => project
+  def emailer_list_comments(comments)
+    render :partial => 'emailer/comment', :collection => comments, :locals => { :unread => comments.first }
   end
 
   def emailer_recent_tasks(project, user)
@@ -76,7 +76,7 @@ module EmailerHelper
 
   def task_status_style(task)
     styles = []
-    styles << "display: table-cell"
+    styles << "display: inline"
     styles << "border-radius: 4px"
     styles << "font-size: 11px"
     styles << "color: white"

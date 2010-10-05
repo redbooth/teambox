@@ -2,13 +2,13 @@ module UsersHelper
 
   def user_page_name(user)
     content_tag :h2,
-      [user.name,
+      [h(user.name),
       content_tag(:span,"@#{user.login}", :class => 'login')].join('')
   end
 
   def user_link(user)
     if user.name.blank?
-      link_to h(user.login), user_path(user)
+      link_to user.login, user_path(user)
     else
       link_to h(user.name), user_path(user)
     end
@@ -61,7 +61,7 @@ module UsersHelper
   protected
 
     def json_user
-      current_user.to_json
+      { :id => current_user.id, :username => current_user.login }.to_json
     end
 
     def json_people
@@ -70,7 +70,7 @@ module UsersHelper
         projects[p.project.id] = {
           :permalink => p.project.permalink,
           :role => p.role,
-          :name => p.project.name }
+          :name => h(p.project.name) }
       end
       projects.to_json
     end

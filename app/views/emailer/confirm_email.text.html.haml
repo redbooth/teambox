@@ -1,8 +1,8 @@
 .email{ :style => email_global }
-  %p{ :style => email_text(:small) }
-    = t('emailer.common.do_not_answer')
 
-  %p= t('emailer.confirm.hey', :user_name => @user.name)
+  = dont_answer
+
+  %p= t('emailer.confirm.hey', :user_name => h(@user.name))
 
   .box{ :style => email_box }  
     %p= t('emailer.confirm.follow_the_link')

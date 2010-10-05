@@ -1,10 +1,10 @@
 %p= "A divider is a heading placed on a #{link_to_doc_model(:page)}."
 %p= "Dividers belong in slots, which can be reordered using page#reorder."
 
-- doc_for :index, :example => [@divider.to_api_hash] do
-  %p= "Returns the 25 most recent dividers on a page."
+- doc_for :index, :example => example_api_wrap(@divider, :references => [:page]) do
+  %p= "Returns the most recent dividers on a page."
 
-- doc_for :show,  :example => @divider.to_api_hash do
+- doc_for :show,  :example => @divider.to_api_hash(:include => [:page_slot]) do
   %p= "Returns the data for a divider."
   
 - doc_for :create, :parameters => {:note => {:name => 'Name'} },

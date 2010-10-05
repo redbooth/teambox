@@ -23,3 +23,18 @@ Feature: Creating a task list
     And I press "Update Task List"
     Then I should see "Really Awesome Ruby Yahh" within ".head a"
 
+  Scenario: Mislav edits a task list due date
+    Given I have a task list called "Awesome Ruby Yahh"
+    And I am on its task list page
+    When I reveal all action menus
+    And I follow "Set the start & end date"
+    And I wait for 2 second
+    And I select "January" from "task_list_finish_on_month" within "div[id$='_finish_on']"
+    And I select "2010" from "task_list_finish_on_year" within "div[id$='_finish_on']"
+    And I click the element that contain "15" within "div[id$='_finish_on']"
+    And I select "January" from "task_list_start_on_month" within "div[id$='_start_on']"
+    And I select "2010" from "task_list_start_on_year" within "div[id$='_start_on']"
+    And I click the element that contain "25" within "div[id$='_start_on']"
+    And I press "Update Task List"
+    And I wait for 2 second
+    Then I should see "Jan 15 - Jan 25"

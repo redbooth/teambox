@@ -24,3 +24,11 @@ ActsAsList::InstanceMethods.module_eval do
     end
   end
 end
+
+class ActiveRecord::Base
+  def to_json(options = {})
+    if self.methods.include? 'to_api_hash'
+      to_api_hash(options).to_json
+    end
+  end
+end

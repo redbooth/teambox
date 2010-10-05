@@ -29,14 +29,38 @@ Date.prototype.getAMPMHour = function() { var hour = this.getHours(); return (ho
 Date.prototype.getAMPM = function() { return (this.getHours() < 12) ? "AM" : "PM"; }
 Date.prototype.stripTime = function() { return new Date(this.getFullYear(), this.getMonth(), this.getDate());};
 Date.prototype.daysDistance = function(compare_date) { return Math.round((compare_date - this) / Date.one_day); };
-Date.prototype.toFormattedString = function(include_time){
+Date.prototype.toLocalizedString = function(include_time){
   var hour, str;
   str = Date.months[this.getMonth()] + " " + this.getDate() + ", " + this.getFullYear();
   
   if (include_time) { hour = this.getHours(); str += " " + this.getAMPMHour() + ":" + this.getPaddedMinutes() + " " + this.getAMPM() }
   return str;
 }
-Date.parseFormattedString = function(string) { return new Date(string);}
+Date.prototype.toFormattedString = function(include_time) {
+        var hour;
+    var str = this.getFullYear() + "-" + Date.padded2(this.getMonth() + 1) + "-" +Date.padded2(this.getDate());
+    if (include_time) {
+        hour = Date.padded2(this.getHours());
+        str += " " + hour + ":" + this.getPaddedMinutes();
+    }
+    return str;
+};
+
+Date.parseFormattedString = function (string) {
+   var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
+                "([T| ]([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
+                "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
+   var d = string.match(new RegExp(regexp));
+
+   var date = new Date(d[1], 0, 1);
+
+   if (d[3]) { date.setMonth(d[3] - 1); }
+   if (d[5]) { date.setDate(d[5]); }
+   if (d[7]) { date.setHours(d[7]); }
+   if (d[8]) { date.setMinutes(d[8]); }
+   return date;
+};
+
 Math.floor_to_interval = function(n, i) { return Math.floor(n/i) * i;}
 window.f_height = function() { return( [window.innerHeight ? window.innerHeight : null, document.documentElement ? document.documentElement.clientHeight : null, document.body ? document.body.clientHeight : null].select(function(x){return x>0}).first()||0); }
 window.f_scrollTop = function() { return ([window.pageYOffset ? window.pageYOffset : null, document.documentElement ? document.documentElement.scrollTop : null, document.body ? document.body.scrollTop : null].select(function(x){return x>0}).first()||0 ); }
@@ -67,8 +91,10 @@ SelectBox.prototype = {
 }
 CalendarDateSelect = Class.create();
 CalendarDateSelect.prototype = {
-  initialize: function(target_element, options) {
+  initialize: function(target_element, target_label, options) {
     this.target_element = $(target_element); // make sure it's an element, not a string
+		this.target_label = $(target_label);
+		this.target_scope = target_element.id;
     if (!this.target_element) { alert("Target element " + target_element + " not found!"); return false;}
     if (this.target_element.tagName != "INPUT") this.target_element = this.target_element.down("INPUT")
     
@@ -84,7 +110,7 @@ CalendarDateSelect.prototype = {
       year_range: 10,
       close_on_click: nil,
       minute_interval: 5,
-      popup_by: this.target_element,
+      popup_by: this.target_label,
       month_year: "dropdowns",
       onchange: this.target_element.onchange,
       valid_date_check: nil
@@ -148,8 +174,8 @@ CalendarDateSelect.prototype = {
     this.prev_month_button = header_div.build("a", { innerHTML: "&lt;", href:"#", onclick:function () { this.navMonth(this.date.getMonth() - 1 ); return false; }.bindAsEventListener(this), className: "prev" });
     
     if (this.options.get("month_year")=="dropdowns") {
-      this.month_select = new SelectBox(header_div, $R(0,11).map(function(m){return [Date.months[m], m]}), {className: "month", onchange: function () { this.navMonth(this.month_select.getValue()) }.bindAsEventListener(this)}); 
-      this.year_select = new SelectBox(header_div, [], {className: "year", onchange: function () { this.navYear(this.year_select.getValue()) }.bindAsEventListener(this)}); 
+      this.month_select = new SelectBox(header_div, $R(0,11).map(function(m){return [Date.months[m], m]}), {className: "month", id: this.target_scope + '_month', onchange: function () { this.navMonth(this.month_select.getValue()) }.bindAsEventListener(this)}); 
+      this.year_select = new SelectBox(header_div, [], {className: "year", id: this.target_scope + '_year', onchange: function () { this.navYear(this.year_select.getValue()) }.bindAsEventListener(this)}); 
       this.populateYearRange();
     } else {
       this.month_year_label = header_div.build("span")
@@ -328,6 +354,9 @@ CalendarDateSelect.prototype = {
   dateString: function() {
     return (this.selection_made) ? this.selected_date.toFormattedString(this.use_time) : "&#160;";
   },
+  dateLocalizedString: function() {
+    return (this.selection_made) ? this.selected_date.toLocalizedString(this.use_time) : "&#160;";
+  },
   parseDate: function()
   {
     var value = $F(this.target_element).strip()
@@ -344,6 +373,7 @@ CalendarDateSelect.prototype = {
     if ((this.target_element.disabled || this.target_element.readOnly) && this.options.get("popup") != "force") return false;
     var last_value = this.target_element.value;
     this.target_element.value = "";
+		this.target_label.innerHTML = "";
     this.clearSelectedClass();
     this.updateFooter('&#160;');
     if (last_value!=this.target_element.value) this.callback("onchange");
@@ -411,6 +441,7 @@ CalendarDateSelect.prototype = {
   updateValue: function() {
     var last_value = this.target_element.value;
     this.target_element.value = this.dateString();
+		this.target_label.innerHTML = this.dateLocalizedString();
     if (last_value!=this.target_element.value) this.callback("onchange");
   },
   today: function(now) {

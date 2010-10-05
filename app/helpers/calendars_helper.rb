@@ -248,9 +248,9 @@ module CalendarsHelper
     args = @comments.map do |comment|
       date = comment.created_at.in_time_zone(current_user.time_zone)
       task = (comment.target && comment.target.class == Task) ? comment.target : nil
-      organizationmap[comment.project.organization_id] ||= comment.project.organization.name
+      organizationmap[comment.project.organization_id] ||= h(comment.project.organization.name)
       projectmap[comment.project_id] ||= comment.project.name
-      taskmap[task.id] ||= task.name unless task.nil?
+      taskmap[task.id] ||= h(task.name) unless task.nil?
       { :id => comment.id,
         :date => [date.year, date.month-1, date.day],
         :project_id => comment.project_id,
@@ -265,9 +265,9 @@ module CalendarsHelper
     usernamemap = {}
 
     if @current_project
-      @current_project.users.each {|u| usermap[u.id] = u.login; usernamemap[u.id] = u.name}
+      @current_project.users.each {|u| usermap[u.id] = u.login; usernamemap[u.id] = h(u.name)}
     else
-      @current_user.users_with_shared_projects.each {|u| usermap[u.id] = u.login; usernamemap[u.id] = u.name}
+      @current_user.users_with_shared_projects.each {|u| usermap[u.id] = u.login; usernamemap[u.id] = h(u.name)}
     end
  
     start_date = start_of_calendar(year, month)

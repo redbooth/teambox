@@ -1,4 +1,4 @@
-%h2= t('.title', :name => @organization)
+%h2= t('.title', :name => h(@organization))
 
 - unless Teambox.config.community
   %p= t('.instructions', :organizations_link => organizations_path)
@@ -11,14 +11,14 @@
     - role = @people.detect { |p| p.project_id == project.id }.try(:role)
     - if role
       %p.project
-        = link_to project, project
+        = link_to h(project), project
         %span.status
           = t('.role', :role => @roles[role])
           - if @roles[role] == 'admin'
             = "(" + link_to(t('.settings'), edit_project_path(project)) + ")"
     - elsif @organization.is_admin? current_user
       %p.project
-        = link_to project, project
+        = link_to h(project), project
         %span.status
           You're not part of this project
 
@@ -27,7 +27,7 @@
   .projects
     - @organization.projects.archived.each do |project|
       %p.project
-        = link_to project, project
+        = link_to h(project), project
         %span.status
           = t('.last_activity', :date => project.updated_at.to_date)
 

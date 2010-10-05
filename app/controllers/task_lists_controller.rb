@@ -114,7 +114,7 @@ class TaskListsController < ApplicationController
     if request.method == :put and !@task_list.archived
       # Prototype for comment
       comment_attrs = {}
-      comment_attrs[:status] = 3
+      comment_attrs[:status] = Task::STATUSES[:resolved]
       comment_attrs[:assigned] = nil
       
       # Resolve all unresolved tasks
@@ -134,7 +134,7 @@ class TaskListsController < ApplicationController
       respond_to do |f|
         f.html { non_js_list_redirect }
         f.m    { non_js_list_redirect }
-        f.js   {}
+        f.js
         handle_api_success(f, @task_list)
       end
     else
@@ -147,7 +147,7 @@ class TaskListsController < ApplicationController
     end
     
     respond_to do |f|
-      f.js{}
+      f.js
     end
   end
   

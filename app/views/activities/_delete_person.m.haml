@@ -2,9 +2,9 @@
   = thumb_avatar(person.user)
   .container
     .date= posted_date activity.deleted_date
-    %span.user= person.user.name
+    %span.user=h person.user.name
     = t(".#{activity.action_type}") # was removed from the project
-    = link_to activity.project, activity.project
+    = link_to h(activity.project), activity.project
     = t(".by")
-    = activity.user
+    =h activity.user
   .clear

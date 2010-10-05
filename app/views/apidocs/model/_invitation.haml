@@ -1,13 +1,13 @@
 %p= "An Invitation invites a #{link_to_doc_model(:user)} to a #{link_to_doc_model(:project)}, via email."
 
-- doc_for :index, :example => [@invitation.to_api_hash] do
+- doc_for :index, :example => example_api_wrap(@invitation, :references => [:project, :user]) do
   %p= "Returns the 25 most recent invitations which belong to you, or in the case of a project, the project."
 
-- doc_for :show,  :example => @invitation.to_api_hash do
+- doc_for :show,  :example => @invitation.to_api_hash(:include => [:project, :user]) do
   %p= "Returns the data for a given invitation."
   
 - doc_for :create, :parameters => {:invitation => {:user_or_email => 'billg@microsoft.com'} },
-                   :example => @invitation.to_api_hash,
+                   :example => @invitation.to_api_hash(:include => [:project, :user]),
                    :status => :created,
                    :role => :admin do
   %p= "Creates one or more new invitations, based on the email addresses specified in <tt>user_or_email</tt>."

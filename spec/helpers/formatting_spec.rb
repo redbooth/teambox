@@ -16,6 +16,10 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
     should == "<p>Did you know trololo? <iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/iwGFalTRHDA\" frameborder=\"0\"></iframe> It's awesome.</p>"
   end
 
+  it "Random video http://www.youtube.com/watch?v=JDRabp-iGtg&feature=rec-LGOUT-exp_fresh+div-1r-5-HM" do
+    should == "<p>Random video <iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/JDRabp-iGtg\" frameborder=\"0\"></iframe></p>"
+  end
+
   it "Did you know trololo? http://www.youtube.com/watch?v=iwGFalTRHDA&feature=related It's awesome." do
     should == "<p>Did you know trololo? <iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/iwGFalTRHDA\" frameborder=\"0\"></iframe> It's awesome.</p>"
   end

@@ -1,4 +1,4 @@
-%h2= @organization
+%h2=h @organization
 
 - if @organization.projects.any?
   = t'organizations.delete.go_delete_some_projects', :link => projects_organization_path(@organization)

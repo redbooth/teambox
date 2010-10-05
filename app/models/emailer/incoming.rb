@@ -73,7 +73,6 @@ module Emailer::Incoming
     process email
     get_target
     get_action if @target.is_a?(Task)
-
     case @type
     when :project then create_conversation
     when :conversation then @target ? post_to(@target) : create_conversation
@@ -97,7 +96,8 @@ module Emailer::Incoming
     @user     = User.find_by_email email.from.first
     @subject  = email.subject.gsub(REPLY_REGEX, "").strip
     @project  = Project.find_by_permalink @to.split('+').first
-    
+    @files    = email.attachments ? email.attachments : []
+
     raise "Invalid project '#{@to}'" unless @project
     raise "Invalid user '#{email.from.first}'" unless @user
     raise "Invalid body" unless @body
@@ -168,9 +168,10 @@ module Emailer::Incoming
   def post_to(target)
     Rails.logger.info "Posting to #{target.class.to_s} #{target.id} '#{@subject}'"
 
+    attributes = @files.collect {|f| { :asset => f }}
     if target.is_a? Task
       target.updating_user = @user
-      target.comments_attributes = [{:body => @body}]
+      target.comments_attributes = [{:body => @body, :uploads_attributes => attributes}]
       
       case @target_action
       when :assign
@@ -182,16 +183,18 @@ module Emailer::Incoming
       
       target.save!
     else
-      comment = target.comments.new_by_user(@user, :body => @body)
+      comment = target.comments.new_by_user(@user, :body => @body, :uploads_attributes => attributes)
       comment.save!
     end
   end
   
   def create_conversation
     Rails.logger.info "Creating conversation '#{@subject}'"
-    
-    conversation = @project.conversations.new_by_user(@user, :body => @body)
-    
+
+    attributes = @files.collect {|f| { :asset => f }}
+
+    conversation = @project.conversations.new_by_user(@user, :comments_attributes => [{:body => @body, :uploads_attributes => attributes}])
+
     if @subject.blank?
       conversation.simple = true
     else

@@ -12,7 +12,16 @@ describe ApiV1::PeopleController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body).length.should == 4
+      JSON.parse(response.body)['objects'].length.should == 4
+    end
+    
+    it "shows people in the project referenced by id" do
+      login_as @admin
+      
+      get :index, :project_id => @project.id
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 4
     end
   end
   

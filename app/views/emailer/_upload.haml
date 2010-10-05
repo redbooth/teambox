@@ -1,7 +1,0 @@
-%li
-  = t('.file')
-  = link_to_upload(upload, upload.file_name)
-  = t('.uploaded_by')
-  = link_to upload.user.name, user_url(upload.user)
-  - if upload.description
-    = '(' + h(upload.description) + ')'

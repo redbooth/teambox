@@ -3,13 +3,13 @@ class ApiV1::ProjectsController < ApiV1::APIController
   before_filter :can_modify?, :only => [:edit, :update, :transfer, :destroy]
   
   def index
-    @projects = current_user.projects
+    @projects = current_user.projects(:include => [:organization, :user])
     
-    api_respond @projects.to_json
+    api_respond @projects, :references => [:organization, :user]
   end
 
   def show
-    api_respond @current_project.to_json(:include => :people)
+    api_respond @current_project, :include => api_include
   end
   
   def create
@@ -65,7 +65,11 @@ class ApiV1::ProjectsController < ApiV1::APIController
   
   def load_project
     if project_id ||= params[:id]
-      @current_project = Project.find_by_permalink(project_id)
+      @current_project = if project_id.match(API_NONNUMERIC)
+        Project.find_by_permalink(project_id)
+      else
+        Project.find_by_id(project_id)
+      end
       api_status(:not_found) unless @current_project
     end
   end
@@ -80,6 +84,10 @@ class ApiV1::ProjectsController < ApiV1::APIController
     else
       true
     end
+  end
+  
+  def api_include
+    [:organization, :people, :user] & (params[:include]||{}).map(&:to_sym)
   end
   
 end

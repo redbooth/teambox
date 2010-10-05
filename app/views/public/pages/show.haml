@@ -1,6 +1,6 @@
-- @title = "#{@page} - #{@project}"
+- @title = "#{h @page} - #{h @project}"
 
-%h2= @page
+%h2=h @page
 
 #slots
   = render :partial => 'pages/slot', :collection => @page.slots, :locals => {:page => @page, :project => @project}

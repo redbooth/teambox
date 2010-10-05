@@ -4,7 +4,7 @@
   
   - unless person.user == current_user
     - form_for person, :url => [project, person], :html => { 'data-remote' => true } do |f|
-      %h2= person.user.name
+      %h2=h person.user.name
       %ol.roles
         %li
           %label

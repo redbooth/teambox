@@ -155,10 +155,8 @@ earthworks = frank.projects.new(:name => "Earthworks Yoga",
   p.save!
 end
 
-earthworks.make_comment(frank, "Getting started. Sending invites for project.")
 earthworks.add_users [corrina, tomas, maya, marco]
 
-earthworks.make_comment(marco, "Thanks for inviting me to the process, guys. This is pretty cool.")
 earthworks.reply(corrina, "Hey guys. Glad to be helping out on this site. I LOVE Earthworks! Working on color palettes and font ideas now.")
 
 earthworks.make_conversation(frank, "Project Welcome", "Hey guys. I’m looking forward to working with you all again. I’m also please to be working with my friend and yoga instructor Marco Fizzulo. This should be straightforward project and I can’t wait to see what we put together.")

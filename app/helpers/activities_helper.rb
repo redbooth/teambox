@@ -7,7 +7,7 @@ module ActivitiesHelper
       out = " "
       out << "<span class='project'>"
       out << "#{t('common.in_project')} "
-      out <<   link_to(project, project_path(project))
+      out <<   link_to(h(project), project_path(project))
       out << "</span>"
       out
     end  
@@ -61,8 +61,8 @@ module ActivitiesHelper
   end
   
   def activity_title(activity, plain = false, mobile = false)
-    values = mobile ? { :user => (plain ? activity.user.short_name : "<span class='user'>#{activity.user.short_name}</span>") } :
-                      { :user => link_to_unless(plain, activity.user.name, activity.user) }
+    values = mobile ? { :user => (plain ? h(activity.user.short_name) : "<span class='user'>#{h activity.user.short_name}</span>") } :
+                      { :user => link_to_unless(plain, h(activity.user.name), activity.user) }
     
     case activity
     when Comment
@@ -80,34 +80,34 @@ module ActivitiesHelper
     when 'create_note', 'edit_note'
       page = Page.find_with_deleted(object.page_id)
       { :note => object,
-        :page => link_to_unless(plain || page.deleted?, page, [activity.project, page]) }
+        :page => link_to_unless(plain || page.deleted?, h(page), [activity.project, page]) }
     when 'create_conversation'
-      { :conversation => link_to_unless(plain, object, [activity.project, object]) }
+      { :conversation => link_to_unless(plain, h(object), [activity.project, object]) }
     when 'create_page', 'edit_page'
-      { :page => link_to_unless(plain || object.deleted?, object, [activity.project, object]) }
+      { :page => link_to_unless(plain || object.deleted?, h(object), [activity.project, object]) }
     when 'create_person', 'delete_person'
-      { :person => link_to_unless(plain, object.user.name, object.user),
-        :project => link_to_unless(plain, activity.project, activity.project) }
+      { :person => link_to_unless(plain, h(object.user.name), object.user),
+        :project => link_to_unless(plain, h(activity.project), activity.project) }
     when 'create_task'
-      { :task => link_to_unless(plain, object, [activity.project, object.task_list, object]),
-        :task_list => link_to_unless(plain, object.task_list, [activity.project, object.task_list]) }
+      { :task => link_to_unless(plain, h(object), [activity.project, object.task_list, object]),
+        :task_list => link_to_unless(plain, h(object.task_list), [activity.project, object.task_list]) }
     when 'create_task_list'
-      { :task_list => link_to_unless(plain, object, [activity.project, object]) }
+      { :task_list => link_to_unless(plain, h(object), [activity.project, object]) }
     when 'create_upload'
       text = object.description.presence || object.file_name
-      { :file => link_to_unless(plain, text, project_uploads_path(activity.project, :anchor => dom_id(object))) }
+      { :file => link_to_unless(plain, h(text), project_uploads_path(activity.project, :anchor => dom_id(object))) }
     when 'create_project'
-      { :person => link_to_unless(plain, activity.user, activity.user),
-        :project => link_to_unless(plain, activity.project, activity.project) }
+      { :person => link_to_unless(plain, h(activity.user), activity.user),
+        :project => link_to_unless(plain, h(activity.project), activity.project) }
     when 'create_comment'
       # one of Project, Task or Conversation
       object = object.target
       type << "_#{object.class.name.underscore}"
       
       target = case object
-      when Task then link_to_unless(plain, object.name, [object.project, object.task_list, object])
-      when Project then link_to_unless(plain, object.name, object)
-      when Conversation then link_to_unless(plain, object.name, [object.project, object])
+      when Task then link_to_unless(plain, h(object.name), [object.project, object.task_list, object])
+      when Project then link_to_unless(plain, h(object.name), object)
+      when Conversation then link_to_unless(plain, h(object.name), [object.project, object])
       end
       { :target => target }
     else
@@ -171,15 +171,15 @@ module ActivitiesHelper
   end
   
   def link_to_conversation(conversation)
-    link_to conversation, project_conversation_path(conversation.project, conversation)
+    link_to h(conversation), project_conversation_path(conversation.project, conversation)
   end
   
   def link_to_task_list(task_list)
-    link_to task_list, project_task_list_path(task_list.project, task_list)
+    link_to h(task_list), project_task_list_path(task_list.project, task_list)
   end
 
   def link_to_task(task)
-    link_to task, project_task_list_task_path(task.project, task.task_list,task)
+    link_to h(task), project_task_list_task_path(task.project, task.task_list,task)
   end
 
   def activities_paginate_link(*args)
