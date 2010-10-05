@@ -4,11 +4,12 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   before_filter :can_modify?, :only => [:edit, :update, :destroy]
   
   def index
-    api_respond current_user.organizations
+    @organizations = current_user.organizations
+    api_respond current_user.organizations, :references => []
   end
 
   def show
-    api_respond @organization, :include => [:projects, :members, :people]
+    api_respond @organization, :include => api_include
   end
   
   def create
@@ -37,7 +38,11 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   protected
   
   def load_organization
-    @organization = current_user.organizations.find_by_permalink(params[:id])
+    @organization = if params[:id].match(API_NONNUMERIC)
+      current_user.organizations.find_by_permalink(params[:id])
+    else
+      current_user.organizations.find_by_id(params[:id])
+    end
     api_status(:not_found) unless @organization
   end
   
@@ -48,6 +53,10 @@ class ApiV1::OrganizationsController < ApiV1::APIController
     else
       true
     end
+  end
+  
+  def api_include
+    [:projects, :members] & (params[:include]||{}).map(&:to_sym)
   end
   
 end

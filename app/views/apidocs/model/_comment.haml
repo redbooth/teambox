@@ -1,10 +1,10 @@
 %p= "A comment is the core model for communication in Teambox. "
 %p= "Comments can belong to a #{link_to_doc_model(:project)}, a #{link_to_doc_model(:conversation)}, or #{link_to_doc_model(:task)}."
 
-- doc_for :index, :example => [@comment.to_api_hash] do
-  %p= "Returns the 25 most recent comments in a the target."
+- doc_for :index, :example => example_api_wrap(@comment, :references => [:target, :user, :project]) do
+  %p= "Returns the most recent comments in a the target."
 
-- doc_for :show,  :example => @comment.to_api_hash do
+- doc_for :show,  :example => @comment.to_api_hash(:include => [:user]) do
   %p= "Returns the data for an comment."
   
 - doc_for :create, :parameters => {:comment => {:body => 'Comment', :hours => 1} },

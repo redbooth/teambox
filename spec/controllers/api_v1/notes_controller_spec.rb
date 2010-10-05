@@ -20,7 +20,20 @@ describe ApiV1::NotesController do
       get :index, :project_id => @project.permalink, :page_id => @page.id
       response.should be_success
       
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
+    end
+    
+    it "returns references for linked objects" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :page_id => @page.id
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      activities = data['objects']
+      
+      references.include?("#{@page.id}_Page").should == true
     end
   end
   

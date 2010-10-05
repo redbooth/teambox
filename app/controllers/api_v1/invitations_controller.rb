@@ -7,11 +7,11 @@ class ApiV1::InvitationsController < ApiV1::APIController
   def index
     @invitations = @target.invitations.all(:conditions => api_range, :limit => api_limit)
     
-    api_respond @invitations
+    api_respond @invitations, :include => [:project, :user], :references => [:project, :user]
   end
 
   def show
-    api_respond @invitation
+    api_respond @invitation, :include => [:project, :user]
   end
   
   def create

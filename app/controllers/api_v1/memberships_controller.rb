@@ -5,11 +5,11 @@ class ApiV1::MembershipsController < ApiV1::APIController
   before_filter :can_modify?, :only => [:update, :destroy]
   
   def index
-    api_respond @organization.memberships
+    api_respond @organization.memberships, :include => [:organization, :user], :references => [:organization, :user]
   end
 
   def show
-    api_respond @membership, :include => [:projects, :members, :people]
+    api_respond @membership, :include => [:user]
   end
   
   def update

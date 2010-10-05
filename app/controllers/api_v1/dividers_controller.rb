@@ -4,13 +4,13 @@ class ApiV1::DividersController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
-    @dividers = @page.dividers
+    @dividers = @page.dividers(:include => :page)
     
-    api_respond @dividers
+    api_respond @dividers, :references => [:page]
   end
 
   def show
-    api_respond @divider
+    api_respond @divider, :include => [:page_slot]
   end
   
   def create

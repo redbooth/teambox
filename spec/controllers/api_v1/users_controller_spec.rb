@@ -18,7 +18,7 @@ describe ApiV1::UsersController do
       response.should be_success
 
       users_expected = @user.users_with_shared_projects.map(&:id).sort
-      users_found = JSON.parse(response.body).map{|u|u['id'].to_i}.sort
+      users_found = JSON.parse(response.body)['objects'].map{|u|u['id'].to_i}.sort
 
       users_found.should == users_expected
       users_found.include?(@owner.id).should == true

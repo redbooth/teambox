@@ -21,7 +21,7 @@ describe ApiV1::ConversationsController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body).length.should == 2
+      JSON.parse(response.body)['objects'].length.should == 2
     end
     
     it "shows threads if specified" do
@@ -30,9 +30,9 @@ describe ApiV1::ConversationsController do
       get :index, :project_id => @project.permalink, :type => 'thread'
       response.should be_success
       
-      content = JSON.parse(response.body)
-      content.length.should == 1
+      content = JSON.parse(response.body)['objects']
       content.each {|c| c['simple'].should == true}
+      content.length.should == 1
     end
     
     it "shows conversations only if specified" do
@@ -41,7 +41,7 @@ describe ApiV1::ConversationsController do
       get :index, :project_id => @project.permalink, :type => 'conversation'
       response.should be_success
       
-      content = JSON.parse(response.body)
+      content = JSON.parse(response.body)['objects']
       content.length.should == 1
       content.each {|c| c['simple'].should == false}
     end
@@ -52,7 +52,7 @@ describe ApiV1::ConversationsController do
       get :index, :project_id => @project.permalink, :count => 1
       response.should be_success
       
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "limits and offsets conversations" do
@@ -65,7 +65,21 @@ describe ApiV1::ConversationsController do
       get :index, :project_id => @project.permalink, :since_id => @project.reload.conversation_ids[-1], :count => 1
       response.should be_success
       
-      JSON.parse(response.body).map{|a| a['id'].to_i}.should == [@project.reload.conversation_ids[0]]
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.reload.conversation_ids[0]]
+    end
+    
+    it "returns references for linked objects" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      activities = data['objects']
+      
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{@conversation.user_id}_User").should == true
     end
   end
   

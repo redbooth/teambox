@@ -1,11 +1,11 @@
-%p= "A page is a collection of #{link_to_doc_model(:note)}s, #{link_to_doc_model(:divider)}s, and #{link_to_doc_model(:uploads)}s in a #{link_to_doc_model(:project)}."
+%p= "A page is a collection of #{link_to_doc_model(:note)}s, #{link_to_doc_model(:divider)}s, and #{link_to_doc_model(:upload)}s in a #{link_to_doc_model(:project)}."
 
-- doc_for :index, :example => [@page.to_api_hash] do
-  %p= "Returns the 25 most recent pages in a project."
+- doc_for :index, :example => example_api_wrap(@page, :references => [:user]) do
+  %p= "Returns the most recent pages in a project."
 
 - doc_for :show,  :example => @page.to_api_hash(:include => [:slots, :objects]) do
   %p= "Returns the data for a page."
-  
+
 - doc_for :create, :parameters => {:comment => {:name => 'Name', :description => 'Description'} },
                    :example => @page.to_api_hash,
                    :status => :created,

@@ -1,12 +1,12 @@
 %p= "A membership links a #{link_to_doc_model(:user)} to an #{link_to_doc_model(:organization)}."
 %p= "To add people to an organization, make an #{link_to_doc_model(:invitation)}."
 
-- doc_for :index, :example => [@membership.to_api_hash] do
-  %p= "Returns the 25 most recent people in the project."
+- doc_for :index, :example => example_api_wrap(@membership, ) do
+  %p= "Returns the most recent people in the project."
 
 - ignore_doc_for :create
 
-- doc_for :show, :example => @membership.to_api_hash do
+- doc_for :show, :example => @membership.to_api_hash(:include => [:user]) do
   %p= "Returns the data for a person in the project"
 
 - doc_for :update, :parameters => {:membership => {:role => 30} },

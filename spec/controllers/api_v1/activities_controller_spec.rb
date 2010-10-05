@@ -15,7 +15,7 @@ describe ApiV1::ActivitiesController do
       get :index
       response.should be_success
       
-      JSON.parse(response.body).map{|a| a['id'].to_i}.sort.should == (@project.activity_ids+@other_project.activity_ids).sort
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.sort.should == (@project.activity_ids+@other_project.activity_ids).sort
     end
     
     it "shows activities in a project" do
@@ -24,7 +24,7 @@ describe ApiV1::ActivitiesController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body).map{|a| a['id'].to_i}.sort.should == @project.activity_ids.sort
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.sort.should == @project.activity_ids.sort
     end
     
     it "limits activities" do
@@ -33,7 +33,7 @@ describe ApiV1::ActivitiesController do
       get :index, :project_id => @project.permalink, :count => 1
       response.should be_success
       
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "limits and offsets activities" do
@@ -42,7 +42,21 @@ describe ApiV1::ActivitiesController do
       get :index, :project_id => @project.permalink, :since_id => @project.activity_ids[1], :count => 1
       response.should be_success
       
-      JSON.parse(response.body).map{|a| a['id'].to_i}.should == [@project.activity_ids[0]]
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.activity_ids[0]]
+    end
+    
+    it "returns references for linked objects" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :since_id => @project.activity_ids[1], :count => 1
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      data['objects'].should_not == nil
+      
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{@project.people.last.id}_Person").should == true
     end
   end
   

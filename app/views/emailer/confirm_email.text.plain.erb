@@ -1,0 +1,12 @@
+<%= dont_answer %>
+
+<%= t('emailer.confirm.hey', :user_name => h(@user.name)) %>
+
+
+<%= t('emailer.confirm.follow_the_link') %>
+
+<%= @login_link %>
+
+
+<%= t('emailer.confirm.report_abuse', :email => @user.email) %>
+<%= t('emailer.confirm.problems', :support => APP_CONFIG['support']) %>

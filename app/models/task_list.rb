@@ -54,11 +54,13 @@ class TaskList < RoleRecord
       :name => name,
       :position => position,
       :archived => archived,
-      :created_at => created_at.to_s(:db),
-      :updated_at => updated_at.to_s(:db),
-      :watchers => Array.wrap(watchers_ids)
+      :created_at => created_at.to_s(:api_time),
+      :updated_at => updated_at.to_s(:api_time),
+      :watchers => Array.wrap(watchers_ids),
+      :comments_count => comments_count,
     }
     
+    base[:type] = self.class.to_s if options[:emit_type]
     base[:start_on] = start_on.to_s(:db) if start_on
     base[:finish_on] = finish_on.to_s(:db) if finish_on
     base[:completed_at] = completed_at.to_s(:db) if completed_at

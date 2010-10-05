@@ -4,11 +4,11 @@ class ApiV1::TaskListsController < ApiV1::APIController
   
   def index
     @task_lists = @current_project.task_lists.scoped(api_scope).all(:conditions => api_range, :limit => api_limit)
-    api_respond @task_lists, :include => :tasks
+    api_respond @task_lists, :include => [:tasks, :user, :project], :references => [:user]
   end
 
   def show
-    api_respond @task_list, :include => [:tasks, :comments, :users]
+    api_respond @task_list, :include => api_include
   end
 
   def create
@@ -108,5 +108,8 @@ class ApiV1::TaskListsController < ApiV1::APIController
         api_error(t('common.not_allowed'), :unauthorized)
       end
     end
-  
+    
+    def api_include
+      [:tasks, :comments] & (params[:include]||{}).map(&:to_sym)
+    end
 end

@@ -117,7 +117,7 @@ class Upload < RoleRecord
   end
   
   def to_api_hash(options = {})
-    {
+    base = {
       :id => id,
       :page_id => page_id,
       :slot_id => page_slot ? page_slot.id : nil,
@@ -126,11 +126,15 @@ class Upload < RoleRecord
       :mime_type => asset_content_type,
       :bytes => asset_file_size,
       :download => url,
-      :created_at => created_at.to_s(:db),
-      :updated_at => updated_at.to_s(:db),
+      :created_at => created_at.to_s(:api_time),
+      :updated_at => updated_at.to_s(:api_time),
       :user_id => user_id,
       :comment_id => comment_id
     }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
+    
+    base
   end
 
   protected

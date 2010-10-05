@@ -1,0 +1,12 @@
+<%= dont_answer %>
+
+<%= t('emailer.invitation.collaborate_with', :name => h(@referral.name)) %>
+
+<%= t('emailer.invitation.you_have_been_invited_to', :project => h(@project.name)) %>
+
+<%= t('emailer.invitation.accept_the_invitation') %>:
+<%= projects_url(:invitation => @invitation.token) %>
+
+<%= t('emailer.invitation.current_users') %> <%= @project.people.collect { |p| h(p.name) }.to_sentence %>
+
+<%= t('emailer.invitation.report_abuse') %>

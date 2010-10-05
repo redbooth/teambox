@@ -7,9 +7,9 @@ class ApiV1::ActivitiesController < ApiV1::APIController
 
     @activities = Activity.find_all_by_project_id(projects, :conditions => api_range,
                         :order => 'id DESC',
-                        :limit => api_limit)
-
-    api_respond @activities, :include => [:project, :target, :users]
+                        :limit => api_limit,
+                        :include => [:target, :project, :user])
+    api_respond @activities, :references => [:target, :project, :user]
   end
 
   def show
@@ -20,7 +20,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     end
     
     if current_user.project_ids.include? @activity.project_id
-      api_respond @activity, :include => [:project, :target, :users]
+      api_respond @activity, :include => [:project, :target, :user]
     else
       api_status :unauthorized
     end

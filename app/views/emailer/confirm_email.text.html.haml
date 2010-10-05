@@ -1,6 +1,6 @@
 .email{ :style => email_global }
-  %p{ :style => email_text(:small) }
-    = t('emailer.common.do_not_answer')
+
+  = dont_answer
 
   %p= t('emailer.confirm.hey', :user_name => h(@user.name))
 

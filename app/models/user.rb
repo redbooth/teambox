@@ -213,13 +213,23 @@ class User < ActiveRecord::Base
       :time_zone => time_zone,
       :utc_offset => utc_offset,
       :biography => biography,
-      :created_at => created_at.to_s(:db),
-      :updated_at => updated_at.to_s(:db),
+      :created_at => created_at.to_s(:api_time),
+      :updated_at => updated_at.to_s(:api_time),
       :avatar_url => avatar_or_gravatar_url(:thumb)
     }
     
+    base[:type] = self.class.to_s if options[:emit_type]
+    
     if Array(options[:include]).include? :email
       base[:email] = email
+    end
+    
+    if Array(options[:include]).include? :projects
+      base[:projects] = projects.map{|p| p.to_api_hash }
+    end
+    
+    if Array(options[:include]).include? :organizations
+      base[:organizations] = organizations.map{|o| o.to_api_hash }
     end
     
     base

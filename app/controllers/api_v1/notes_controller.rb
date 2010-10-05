@@ -4,13 +4,13 @@ class ApiV1::NotesController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
-    @notes = @page.notes
+    @notes = @page.notes(:include => :page)
     
-    api_respond @notes
+    api_respond @notes, :references => [:page]
   end
 
   def show
-    api_respond @note
+    api_respond @note, :include => [:page_slot]
   end
   
   def create

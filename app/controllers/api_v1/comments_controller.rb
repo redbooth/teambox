@@ -2,13 +2,13 @@ class ApiV1::CommentsController < ApiV1::APIController
   before_filter :load_comment, :only => [:update, :convert, :show, :destroy]
   
   def index
-    @comments = target.comments.all(:conditions => api_range, :limit => api_limit)
+    @comments = target.comments.all(:conditions => api_range, :limit => api_limit, :include => [:target, :user])
     
-    api_respond @comments
+    api_respond @comments, :references => [:target, :user, :project]
   end
 
   def show
-    api_respond @comment
+    api_respond @comment, :include => [:user]
   end
   
   def create
