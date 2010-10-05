@@ -15,7 +15,7 @@ describe ApiV1::CommentsController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "shows comments on a task" do
@@ -28,7 +28,7 @@ describe ApiV1::CommentsController do
       get :index, :project_id => @project.permalink, :task_id => task.id
       response.should be_success
       
-      JSON.parse(response.body).map{|a| a['id'].to_i}.should == task.comment_ids.sort
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == task.comment_ids.sort
     end
     
     it "limits comments" do
@@ -37,7 +37,7 @@ describe ApiV1::CommentsController do
       get :index, :project_id => @project.permalink, :count => 1
       response.should be_success
       
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "limits and offsets comments" do
@@ -49,7 +49,21 @@ describe ApiV1::CommentsController do
       get :index, :project_id => @project.permalink, :since_id => @project.comment_ids[1], :count => 1
       response.should be_success
       
-      JSON.parse(response.body).map{|a| a['id'].to_i}.should == [@project.reload.comment_ids[0]]
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.reload.comment_ids[0]]
+    end
+    
+    it "returns references for linked objects" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      activities = data['objects']
+      
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{@comment.user_id}_User").should == true
     end
   end
   

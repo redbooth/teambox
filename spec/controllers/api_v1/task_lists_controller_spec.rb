@@ -19,7 +19,7 @@ describe ApiV1::TaskListsController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body).length.should == 2
+      JSON.parse(response.body)['objects'].length.should == 2
     end
     
     it "restricts by archived lists" do
@@ -28,7 +28,7 @@ describe ApiV1::TaskListsController do
       get :index, :project_id => @project.permalink, :archived => true
       response.should be_success
       
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "restricts by unarchived lists" do
@@ -37,7 +37,7 @@ describe ApiV1::TaskListsController do
       get :index, :project_id => @project.permalink, :archived => false
       response.should be_success
       
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "limits task lists" do
@@ -46,7 +46,7 @@ describe ApiV1::TaskListsController do
       get :index, :project_id => @project.permalink, :count => 1
       response.should be_success
       
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "limits and offsets task lists" do
@@ -58,7 +58,7 @@ describe ApiV1::TaskListsController do
       get :index, :project_id => @project.permalink, :since_id => @project.task_list_ids[1], :count => 1
       response.should be_success
       
-      JSON.parse(response.body).map{|a| a['id'].to_i}.should == [@project.reload.task_list_ids[0]]
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.reload.task_list_ids[0]]
     end
   end
   

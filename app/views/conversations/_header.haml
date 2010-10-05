@@ -10,7 +10,7 @@
           :'data-method' => 'delete', :'data-confirm' => t('conversations.actions.confirm_delete'),
           :class => 'delete_conversation_link'
   
-  %h2&= conversation.name
+  %h2=h conversation.name
 
 - if can? :update, conversation
   - form_for [project, conversation], :html => { :'data-remote' => true, :style => 'display: none', :class => 'edit_conversation app_form' } do |f|

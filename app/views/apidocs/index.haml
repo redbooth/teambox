@@ -39,7 +39,7 @@
 %p It should return something like this:
 %pre
   %code
-    = JSON.pretty_generate([@project.to_api_hash])
+    = JSON.pretty_generate(example_api_wrap(@project, :references => [:organization, :user]))
 %p This is the way we will be handling API requests and data exchange with Teambox.
 %p With this simple command, you can get recent activities from Teambox:
 

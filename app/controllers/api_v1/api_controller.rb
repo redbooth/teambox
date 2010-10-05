@@ -3,6 +3,7 @@ class ApiV1::APIController < ApplicationController
   skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token
 
   API_LIMIT = 50
+  API_NONNUMERIC = /[^0-9]+/
 
   protected
   
@@ -14,27 +15,37 @@ class ApiV1::APIController < ApplicationController
     project_id ||= params[:project_id]
     
     if project_id
-      @current_project = Project.find_by_permalink(project_id)
+      @current_project = if project_id.match(API_NONNUMERIC)
+        Project.find_by_permalink(project_id)
+      else
+        Project.find_by_id(project_id)
+      end
       api_status(:not_found) unless @current_project
     end
   end
   
   def load_organization
-    @organization = current_user.organizations.find_by_permalink(params[:organization_id])
+    if params[:organization_id]
+      @organization = if params[:organization_id].match(API_NONNUMERIC)
+        current_user.organizations.find_by_permalink(params[:organization_id])
+      else
+        current_user.organizations.find_by_id(params[:organization_id])
+      end
+    end
     api_status(:not_found) if params[:organization_id] and @organization.nil?
   end
   
   def belongs_to_project?
     if @current_project
       unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-        api_error(t('common.not_allowed'), :unauthorized)
+        api_error t('common.not_allowed'), :unauthorized
       end
     end
   end
   
   def check_permissions
     unless @current_project.editable?(current_user)
-      api_error("You don't have permission to edit/update/delete within \"#{@current_project}\" project", :unauthorized)
+      api_error "You don't have permission to edit/update/delete within \"#{@current_project}\" project", :unauthorized
     end
   end
   
@@ -51,15 +62,32 @@ class ApiV1::APIController < ApplicationController
 
   # Common api helpers
   
-  def api_respond(json)
+  def api_respond(object, options={})
     respond_to do |f|
-      f.json { render :json => json }
+      f.json { render :json => api_wrap(object, options).to_json }
     end
   end
   
   def api_status(status)
     respond_to do |f|
       f.json { head status }
+    end
+  end
+  
+  def api_wrap(object, options={})
+    objects = if object.is_a? Enumerable
+      object.map{|o| o.to_api_hash(options) }
+    else
+      object.to_api_hash(options)
+    end
+    
+    if options[:references]
+      { :references => Array(object).map{ |obj|  
+          options[:references].map{|ref| obj.send(ref)}
+        }.flatten.compact.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))},
+        :objects => objects }
+    else
+      objects
     end
   end
   
@@ -80,7 +108,7 @@ class ApiV1::APIController < ApplicationController
   def handle_api_success(object,options={})
     respond_to do |f|
       if options.delete(:is_new) || false
-        f.json { render :json => object.to_json, :status => options.delete(:status) || :created }
+        f.json { render :json => api_wrap(object).to_json, :status => options.delete(:status) || :created }
       else
         f.json { head(options.delete(:status) || :ok) }
       end

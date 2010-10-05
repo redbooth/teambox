@@ -13,14 +13,14 @@
       %div.date
         = posted_date(thread.created_at)
       %p.starter
-        = link_to(thread.user.name, thread.user) if thread.user
-        = t("activities.thread.created.#{thread.class.to_s.downcase}", :project => thread.project.name)
+        = link_to(h(thread.user.name), thread.user) if thread.user
+        = t("activities.thread.created.#{thread.class.to_s.downcase}", :project => h(thread.project.name))
         = activity_project_link(thread.project)
       %p.thread_title
-        = link_to thread, thread_link, :class => thread.class.to_s.downcase
+        = link_to h(thread), thread_link, :class => thread.class.to_s.downcase
         - if thread.is_a?(Task)
           = t('.on_task_list')
-          = link_to thread.task_list, [thread.task_list.project, thread.task_list], :class => :task_list
+          = link_to h(thread.task_list), [thread.task_list.project, thread.task_list], :class => :task_list
 
   .comments
     = render 'activities/thread_comments', :comments => comments, :thread => thread

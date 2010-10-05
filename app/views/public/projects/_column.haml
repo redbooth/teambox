@@ -6,7 +6,7 @@
     .section
       %h3 Pages
       - for page in @project.pages
-        = link_to page, public_project_page_path(@project, page)
+        = link_to h(page), public_project_page_path(@project, page)
   - else
     %p No pages on this project
   .section

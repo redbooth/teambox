@@ -4,6 +4,6 @@
     .date= posted_date activity.posted_date
     %span.user= activity.user.short_name
     = t(".#{activity.action_type}")
-    = link_to page, (page.deleted? ? '#' : project_page_path(page.project, page))
+    = link_to h(page), (page.deleted? ? '#' : project_page_path(page.project, page))
     = activity_project_link(activity.project)
   .clear

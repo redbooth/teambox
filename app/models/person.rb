@@ -96,13 +96,26 @@ class Person < ActiveRecord::Base
   end
   
   def to_api_hash(options = {})
-    {
+    base = {
       :id => id,
       :user_id => user.id,
       :username => user.login,
       :role => role,
       :user => user.to_api_hash
     }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
+    
+    if Array(options[:include]).include? :user
+      base[:user] = {
+        :username => user.login,
+        :first_name => user.first_name,
+        :last_name => user.last_name,
+        :avatar_url => user.avatar_or_gravatar_url(:thumb)
+      }
+    end
+    
+    base
   end
   
   def to_json(options = {})

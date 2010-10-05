@@ -2,8 +2,8 @@
   = thumb_avatar(activity.user)
   .container
     .date= posted_date activity.posted_date
-    %span.user= activity.user.short_name
+    %span.user=h activity.user.short_name
     = t(".#{activity.action_type}")
-    = link_to conversation, project_conversation_path(conversation.project, conversation)
+    = link_to h(conversation), project_conversation_path(conversation.project, conversation)
     = activity_project_link(activity.project)
   .clear

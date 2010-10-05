@@ -1,9 +1,9 @@
 %p= "An activity is a record of what happened in a #{link_to_doc_model(:project)}."
 
-- doc_for :index, :example => [@activity.to_api_hash] do
-  %p= "Returns the 25 most recent activities in the project."
+- doc_for :index, :example => example_api_wrap([@activity], :references => [:target, :project, :user]) do
+  %p= "Returns the most recent activities in the project."
 
-- doc_for :show, :example => @activity.to_api_hash(:include => [:project, :target]) do
+- doc_for :show, :example => @activity.to_api_hash(:include => [:project, :target, :user]) do
   %p= "Returns the data for a an activity in the project"
 
 - ignore_doc_for :create

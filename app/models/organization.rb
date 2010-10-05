@@ -1,6 +1,7 @@
 class Organization < ActiveRecord::Base
   acts_as_paranoid
 
+  has_permalink :name
   has_many :projects #, :dependent => :destroy
   has_many :memberships, :dependent => :destroy
 
@@ -19,7 +20,6 @@ class Organization < ActiveRecord::Base
 
   validate :ensure_unicity_for_community_version, :on => :create, :unless => :is_example
 
-  before_validation_on_create :check_permalink
   before_destroy :prevent_if_projects
   
   attr_accessor :is_example
@@ -97,9 +97,11 @@ class Organization < ActiveRecord::Base
       :domain => domain,
       :description => description,
       :logo_url => logo.url,
-      :created_at => created_at.to_s(:db),
+      :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:db)
     }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
     
     if Array(options[:include]).include? :members
       base[:members] = memberships.map {|p| p.to_api_hash(options)}
@@ -111,18 +113,8 @@ class Organization < ActiveRecord::Base
     
     base
   end
-  
-  def to_json(options = {})
-    to_api_hash(options).to_json
-  end
 
   protected
-
-    def check_permalink
-      if permalink.blank?
-        self.permalink = name.parameterize.to_s
-      end
-    end
 
     def ensure_unicity_for_community_version
       if Teambox.config.community && new_record?

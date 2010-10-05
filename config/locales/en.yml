@@ -710,6 +710,8 @@ en:
       all: "All organizations"
 
   tasks:
+    my_tasks_listing:
+      tasks: My Tasks
     errors:
       name:
         cant_be_blank: 'must not be blank'
@@ -819,6 +821,7 @@ en:
       footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
       footer2: "You can also attach files to any page inside each note. Enjoy!"
       submit: Create page
+      sending: Sending...
     edit:
       title: Edit Page
       submit: Update
@@ -966,6 +969,8 @@ en:
       confirm_delete: Are you sure you want to leave this project?
       leave_project: Leave project
   comments:
+    fields:
+      attach: Attach
     attach:
       tooltip: Attach
     comment:
@@ -1008,6 +1013,7 @@ en:
       close: Hide preview
       preview: Preview
       showing: "..."
+      
   example_projects:
     new:
       learn: Learn by example!
@@ -1023,6 +1029,7 @@ en:
     comment_upload_link: Attachment
     new:
       select_a_file: Select a file
+      uploading: Uploading...
     index:
       new_file: Upload a File
       cant_create: You don't have permission to upload files to this project
@@ -1287,7 +1294,6 @@ en:
       conversation: "Conversation:"
       task: "Task:"
       task_list: "Task List:"
-      recent_conversations: "Recent conversations for %{project}"
       comments: "%{number} comments"
       assigned_to: "Assigned to <b>%{user}</b>"
       due_on: "Due on %{date}"
@@ -1295,7 +1301,6 @@ en:
       my_tasks: "More tasks assigned to you in %{project}"
     upload:
       file: "File:"
-      uploaded_by: uploaded by
 
   weakling:
     default: Must be at least 5 characters

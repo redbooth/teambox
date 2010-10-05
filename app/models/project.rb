@@ -122,11 +122,13 @@ class Project < ActiveRecord::Base
       :name => name,
       :permalink => permalink,
       :archived => archived,
-      :created_at => created_at.to_s(:db),
-      :updated_at => updated_at.to_s(:db),
+      :created_at => created_at.to_s(:api_time),
+      :updated_at => updated_at.to_s(:api_time),
       :archived => archived,
       :owner_user_id => user_id
     }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
     
     if Array(options[:include]).include? :people
       base[:people] = people.map {|p| p.to_api_hash(options)}
@@ -153,10 +155,6 @@ class Project < ActiveRecord::Base
     end
     
     base
-  end
-  
-  def to_json(options = {})
-    to_api_hash(options).to_json
   end
 
   def to_ical(filter_user = nil)

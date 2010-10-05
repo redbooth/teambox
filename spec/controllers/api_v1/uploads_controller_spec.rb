@@ -19,7 +19,7 @@ describe ApiV1::UploadsController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body).length.should == 2
+      JSON.parse(response.body)['objects'].length.should == 2
     end
     
     it "shows uploads on a page" do
@@ -28,7 +28,7 @@ describe ApiV1::UploadsController do
       get :index, :project_id => @project.permalink, :page_id => @page.id
       response.should be_success
       
-      content = JSON.parse(response.body)
+      content = JSON.parse(response.body)['objects']
       content.length.should == 1
       content.first['id'].should == @page_upload.id
     end
@@ -39,7 +39,7 @@ describe ApiV1::UploadsController do
       get :index, :project_id => @project.permalink, :count => 1
       response.should be_success
       
-      JSON.parse(response.body).length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "limits and offsets uploads" do
@@ -47,10 +47,10 @@ describe ApiV1::UploadsController do
       
       other_upload = mock_file(@user, @page)
       
-      get :index, :project_id => @project.permalink, :since_id => @project.reload.upload_ids[0], :count => 1
+      get :index, :project_id => @project.permalink, :since_id => @project.reload.upload_ids[1], :count => 1
       response.should be_success
       
-      JSON.parse(response.body).map{|a| a['id'].to_i}.should == [@project.reload.upload_ids[1]]
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.reload.upload_ids[2]]
     end
   end
   

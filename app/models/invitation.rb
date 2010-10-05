@@ -16,6 +16,8 @@ class Invitation < RoleRecord
   before_save :copy_user_email, :if => :invited_user
   after_create :send_email
 
+  named_scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
+
   # Reserved so invitations can be sent for other targets, in addition to Project
   def target
     project
@@ -45,7 +47,7 @@ class Invitation < RoleRecord
   end
 
   def to_api_hash(options = {})
-    {
+    base = {
       :id => id,
       :user_id => user_id,
       :invited_user_id => invited_user_id,
@@ -55,6 +57,10 @@ class Invitation < RoleRecord
         :name => project.name
       }
     }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
+    
+    base
   end
   
   def to_json(options = {})

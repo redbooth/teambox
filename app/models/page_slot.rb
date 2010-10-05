@@ -25,14 +25,12 @@ class PageSlot < ActiveRecord::Base
       :position => position
     }
     
+    base[:type] = self.class.to_s if options[:emit_type]
+    
     if Array(options[:include]).include? :rel_object
       base[:rel_object] = rel_object.to_api_hash(options)
     end
     
     base
-  end
-  
-  def to_json(options = {})
-    to_api_hash(options).to_json
   end
 end

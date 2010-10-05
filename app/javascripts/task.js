@@ -20,12 +20,16 @@ document.on('keyup', '.task_header + .edit_task:has(a[href="#cancel"])', functio
 
 document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
   var name = form.down('input[name="task[name]"]').getValue(),
-      dueDate = form.down('input[name="task[due_on]"]').getValue()
+      dueDate = form.down('span.localized_date').innerHTML
 
   form.up('.content').select('.task_header h2, .task .thread_title a.task').invoke('update', name)
   $('column').down('.due_on').update(dueDate)
   
   hideEditTaskFormAndShowHeader(form)
+})
+
+document.on('click', '.date_picker img', function(e, element) {
+	new CalendarDateSelect(element.next('input'), element.next('span'), {buttons:true, popup:'force', time:false, year_range:[2008, 2020]} );
 })
 
 Task = {

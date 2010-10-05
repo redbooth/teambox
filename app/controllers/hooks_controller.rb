@@ -58,19 +58,30 @@ class HooksController < ApplicationController
                t.save!
              end
 
-      body = case activity[:event_type]
+      attrs = {}
+      attrs[:body] = case activity[:event_type]
       when 'story_create'
         "#{story[:description]}\n\n<a href='#{story[:url]}'>View on #PT</a>"
       when 'story_update'
-        # this is called when description is updated or status changes (start, finish, etc)
+        # this is called when description is updated or status changes (started, finished, delivered, accepted, rejected)
         if story[:current_state]
+          attrs[:assigned] = author.in_project(@current_project) if author
+          attrs[:status] = case story[:current_state]
+          when "started" then Task::STATUSES[:open]
+          when "delivered" then Task::STATUSES[:hold]
+          when "accepted" then Task::STATUSES[:resolved]
+          when "rejected" then Task::STATUSES[:rejected]
+          else nil
+          end
           if author
             "I marked the task as #{story[:current_state]} on #PT"
           else
             "#{activity[:author]} marked the task as #{story[:current_state]} on #PT"
           end
+        # Changing description
         elsif story[:description]
           "Task description is now: #{story[:description]} #PT"
+        # Other activity types
         else
           "#{activity[:description]} #PT"
         end
@@ -91,8 +102,8 @@ class HooksController < ApplicationController
         "#{activity[:description]} #PT"
       end
 
-      @current_project.new_comment(author || @current_project.user, task, {:body => body}).save!
-      [RDiscount.new(body).to_html, 200]
+      @current_project.new_comment(author || @current_project.user, task, attrs).save!
+      [RDiscount.new(attrs[:body]).to_html, 200]
     end
 
     # This code is optimized for Sendgrid's processing email: http://wiki.sendgrid.com/doku.php?id=parse_api
@@ -110,10 +121,27 @@ class HooksController < ApplicationController
       email.from    = params[:from]
       email.to      = params[:to]
       email.cc      = params[:cc]
-      email.body    = strip_responses(params[:text])
       email.subject = params[:subject]
-      
-      email.body   += "\n\nThis email had #{params[:attachments]} attachments" if params[:attachments].to_i > 0
+
+      if params[:attachments].to_i > 0
+        email.set_content_type 'multipart', 'mixed'
+        mailpart=TMail::Mail.new
+        mailpart.body = strip_responses(params[:text])
+        mailpart.set_content_type 'text', 'plain'
+        email.parts << mailpart
+      else
+        email.body  = strip_responses(params[:text])
+      end
+
+      params[:attachments].to_i.times do |i|
+        file = params[:"attachment#{i+1}"]
+        mailpart = TMail::Mail.new
+        mailpart.body = Base64.encode64(file.read.to_s)
+        mailpart.transfer_encoding = "Base64"
+        mailpart['Content-Disposition'] = "attachment; filename=#{file.original_filename}"
+        email.parts << mailpart
+      end
+
       begin
         Emailer.receive(email.to_s)
       rescue

@@ -21,7 +21,7 @@
     %h2= t('people.column.inviting')
     %p= t('people.column.only_admins_can_invite') 
     %p= t('people.column.contact_admins',
-          :admins => @admins.collect { |user| link_to(user, user) }.to_sentence,
+          :admins => @admins.collect { |user| link_to(h(user), user) }.to_sentence,
           :count => @admins.size)
 
   - unless @current_project.owner?(current_user)

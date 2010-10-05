@@ -1,7 +1,7 @@
 class << ActiveRecord::Base
   def belongs_to_with_deleted(association_id, options = {})
     with_deleted = options.delete :with_deleted
-    returning belongs_to_without_deleted(association_id, options) do
+    belongs_to_without_deleted(association_id, options).tap do
       if with_deleted
         reflection = reflect_on_association(association_id)
         association_accessor_methods(reflection,            Caboose::Acts::BelongsToWithDeletedAssociation)
@@ -13,7 +13,7 @@ class << ActiveRecord::Base
   
   def has_many_without_deleted(association_id, options = {}, &extension)
     with_deleted = options.delete :with_deleted
-    returning has_many_with_deleted(association_id, options, &extension) do
+    has_many_with_deleted(association_id, options, &extension).tap do
       if options[:through] && !with_deleted
         reflection = reflect_on_association(association_id)
         collection_reader_method(reflection, Caboose::Acts::HasManyThroughWithoutDeletedAssociation)

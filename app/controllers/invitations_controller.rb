@@ -26,7 +26,7 @@ class InvitationsController < ApplicationController
           end }
       end
     else
-      @invitations = current_user.invitations
+      @invitations = current_user.invitations.pending_projects
       respond_to do |f|
         f.html { render :action => 'index_user' }
       end

@@ -4,6 +4,7 @@ class TasksController < ApplicationController
   before_filter :set_page_title
 
   def show
+    return redirect_to [@current_project, @task.task_list, @task] unless @task.task_list.id == params[:task_list_id].to_i
     respond_to do |f|
       f.html
       f.js {
@@ -124,7 +125,11 @@ class TasksController < ApplicationController
   private
 
     def load_task_list
-      @task_list = @current_project.task_lists.find params[:task_list_id] if params[:task_list_id]
+      @task_list = if params[:id]
+        @current_project.tasks.find(params[:id]).task_list
+      elsif params[:task_list_id]
+        @current_project.task_lists.find params[:task_list_id]
+      end
     end
 
     def load_task

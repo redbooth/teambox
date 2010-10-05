@@ -45,7 +45,7 @@ class Conversation < RoleRecord
   end
 
   def to_s
-    name
+    name || ""
   end
   
   def to_xml(options = {})
@@ -72,10 +72,13 @@ class Conversation < RoleRecord
       :user_id => user_id,
       :name => name,
       :simple => simple,
-      :created_at => created_at.to_s(:db),
-      :updated_at => updated_at.to_s(:db),
-      :watchers => Array.wrap(watchers_ids)
+      :created_at => created_at.to_s(:api_time),
+      :updated_at => updated_at.to_s(:api_time),
+      :watchers => Array.wrap(watchers_ids),
+      :comments_count => comments_count,
     }
+    
+    base[:type] = self.class.to_s if options[:emit_type]
     
     if Array(options[:include]).include? :comments
       base[:comments] = comments.map{|c| c.to_api_hash(options)}
@@ -83,11 +86,7 @@ class Conversation < RoleRecord
     
     base
   end
-  
-  def to_json(options = {})
-    to_api_hash(options).to_json
-  end
-  
+
   protected
   
   def check_comments_presence

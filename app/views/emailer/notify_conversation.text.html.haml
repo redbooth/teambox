@@ -4,17 +4,16 @@
 
   %p{ :style => email_text(:normal) }
     = t('emailer.notify.project')
-    = link_to @project.name, project_url(@project)
+    = link_to h(@project.name), project_url(@project)
 
   %h2{ :style => email_text(:big) }
     - if @conversation.name.blank?
       = link_to t('emailer.notify.conversation'), project_conversation_url(@project, @conversation)
     - else
       = t('emailer.notify.conversation')
-      = link_to @conversation.name, project_conversation_url(@project, @conversation)
+      = link_to h(@conversation.name), project_conversation_url(@project, @conversation)
 
   = emailer_list_comments(@conversation.comments)
-  = emailer_recent_conversations(@project)
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
     %p= t('emailer.notify.view_online', :link => project_conversation_url(@project, @conversation))
@@ -22,7 +21,7 @@
 
   .footer{ :style => email_text(:small) }
     %p
-      = @conversation.watchers.to_sentence
+      = @conversation.watchers.collect {|u| h(u) }.to_sentence
       = t('emailer.notify.are_watching')
 
     %p

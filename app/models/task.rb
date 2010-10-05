@@ -17,7 +17,7 @@ class Task < RoleRecord
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
   accepts_nested_attributes_for :comments, :allow_destroy => false,
-    :reject_if => lambda { |comment| %w[body hours human_hours].all? { |k| comment[k].blank? } }
+    :reject_if => lambda { |comment| %w[body hours human_hours uploads_attributes].all? { |k| comment[k].blank? } }
 
   acts_as_list :scope => :task_list
 
@@ -59,7 +59,7 @@ class Task < RoleRecord
   end
 
   def status_name
-    STATUS_NAMES[status] || :new
+    status ? STATUS_NAMES[status] : :new
   end
   
   def status_name=(value)
@@ -153,11 +153,12 @@ class Task < RoleRecord
       :comments_count => comments_count,
       :assigned_id => assigned_id,
       :status => status,
-      :created_at => created_at.to_s(:db),
-      :updated_at => updated_at.to_s(:db),
+      :created_at => created_at.to_s(:api_time),
+      :updated_at => updated_at.to_s(:api_time),
       :watchers => Array.wrap(watchers_ids)
     }
     
+    base[:type] = self.class.to_s if options[:emit_type]
     base[:due_on] = due_on.to_s(:db) if due_on
     base[:completed_at] = completed_at.to_s(:db) if completed_at
     
@@ -167,13 +168,8 @@ class Task < RoleRecord
     
     base
   end
-  
-  def to_json(options = {})
-    to_api_hash(options).to_json
-  end
-  
+
   protected
-  
   def check_asignee_membership
     unless project.people.include?(assigned)
       errors.add :assigned, :doesnt_belong

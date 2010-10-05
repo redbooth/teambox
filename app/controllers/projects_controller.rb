@@ -3,9 +3,9 @@ class ProjectsController < ApplicationController
   before_filter :load_projects, :only => [:index]
   before_filter :set_page_title
   before_filter :disallow_for_community, :only => [:new, :create]
+  before_filter :load_pending_projects, :only => [:index, :show]
   
   def index
-    @pending_projects = @current_user.invitations.reload # adding reload to avoid a strange bug
     @new_conversation = Conversation.new(:simple => true)
     @activities = Project.get_activities_for(@projects)
     @last_activity = @activities.last
@@ -26,7 +26,6 @@ class ProjectsController < ApplicationController
   def show
     @activities = Project.get_activities_for @current_project
     @last_activity = @activities.last
-    @pending_projects = @current_user.invitations.reload
     @recent_conversations = @current_project.conversations.not_simple.recent(4)
 
     @new_conversation = @current_project.conversations.new(:simple => true)
@@ -178,6 +177,10 @@ class ProjectsController < ApplicationController
         @sub_action = 'all'
         @projects = current_user.projects.unarchived
       end
+    end
+
+    def load_pending_projects
+      @pending_projects = @current_user.invitations.pending_projects
     end
 
     # For community (single organization) version, disallow creating more than one organization
