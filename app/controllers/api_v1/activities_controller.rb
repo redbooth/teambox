@@ -1,6 +1,6 @@
 class ApiV1::ActivitiesController < ApiV1::APIController
   skip_before_filter :touch_user
-  before_filter :get_target
+  before_filter :get_target, :only => [:index]
 
   def index
     projects = @current_project.try(:id) || current_user.project_ids
@@ -13,16 +13,12 @@ class ApiV1::ActivitiesController < ApiV1::APIController
   end
 
   def show
-    begin
-      @activity = Activity.find params[:id]
-    rescue ActiveRecord::RecordNotFound
-      return api_status :not_found
-    end
+    @activity = Activity.find_by_id params[:id], :conditions => {:project_id => current_user.project_ids}
     
-    if current_user.project_ids.include? @activity.project_id
+    if @activity
       api_respond @activity, :include => [:project, :target, :user]
     else
-      api_status :unauthorized
+      api_status :not_found
     end
   end
 

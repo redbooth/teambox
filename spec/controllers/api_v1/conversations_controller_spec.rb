@@ -24,6 +24,18 @@ describe ApiV1::ConversationsController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
     
+    it "shows conversations in all projects" do
+      login_as @user
+      
+      conversation = Factory.create(:conversation, :project => Factory.create(:project))
+      conversation.project.add_user(@user)
+      
+      get :index
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 3
+    end
+    
     it "shows threads if specified" do
       login_as @user
       

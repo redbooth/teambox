@@ -22,6 +22,22 @@ describe ApiV1::UploadsController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
     
+    it "shows uploads in all projects" do
+      login_as @user
+      
+      project = Factory.create(:project)
+      project.add_user(@user)
+      project.uploads.new({:asset => mock_uploader('semicolons.js', 'application/javascript', "alert('what?!')")}).tap do |u|
+        u.user = @user
+        u.save!
+      end
+      
+      get :index
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 3
+    end
+    
     it "shows uploads on a page" do
       login_as @user
       

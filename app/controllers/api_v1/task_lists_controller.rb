@@ -3,8 +3,15 @@ class ApiV1::TaskListsController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy,:archive,:unarchive]
   
   def index
-    @task_lists = @current_project.task_lists.scoped(api_scope).all(:conditions => api_range, :limit => api_limit)
-    api_respond @task_lists, :include => [:tasks, :user, :project], :references => [:user]
+    params = {:conditions => api_range, :limit => api_limit, :include => [:user, :project]}
+    
+    @task_lists = if @current_project
+      @current_project.task_lists.scoped(api_scope).all(params)
+    else
+      TaskList.scoped(api_scope).find_all_by_project_id(current_user.project_ids, params)
+    end
+    
+    api_respond @task_lists, :include => [:user, :project], :references => [:user, :project]
   end
 
   def show
@@ -90,7 +97,11 @@ class ApiV1::TaskListsController < ApiV1::APIController
   protected
 
     def load_task_list
-      @task_list = @current_project.task_lists.find(params[:id])
+      @task_list = if @current_project
+        @current_project.task_lists.find(params[:id])
+      else
+        TaskList.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+      end
       api_status(:not_found) unless @task_list
     end
     

@@ -2,7 +2,13 @@ class ApiV1::CommentsController < ApiV1::APIController
   before_filter :load_comment, :only => [:update, :convert, :show, :destroy]
   
   def index
-    @comments = target.comments.all(:conditions => api_range, :limit => api_limit, :include => [:target, :user])
+    params = {:conditions => api_range, :limit => api_limit, :include => [:target, :user]}
+    
+    @comments = if target
+      target.comments.all(params)
+    else
+      Comment.find_all_by_project_id(current_user.project_ids, params)
+    end
     
     api_respond @comments, :references => [:target, :user, :project]
   end
@@ -44,7 +50,11 @@ class ApiV1::CommentsController < ApiV1::APIController
   protected
 
   def load_comment
-    @comment = @current_project.comments.find params[:id]
+    @comment = if target
+      target.comments.find params[:id]
+    else
+      Comment.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+    end
     api_status(:not_found) unless @comment
   end
 

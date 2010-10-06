@@ -18,6 +18,19 @@ describe ApiV1::PagesController do
       JSON.parse(response.body)['objects'].length.should == 1
     end
     
+    it "shows pages in all projects" do
+      login_as @user
+      
+      project = Factory.create(:project)
+      project.new_page(@user, {:name => 'Important plans!'}).save!
+      project.add_user(@user)
+      
+      get :index
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 2
+    end
+    
     it "limits pages" do
       login_as @user
       

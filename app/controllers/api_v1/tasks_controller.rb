@@ -83,7 +83,7 @@ class ApiV1::TasksController < ApiV1::APIController
     @task = if @current_project
       (@task_list || @current_project).tasks.find(params[:id]) rescue nil
     else
-      Task.find(params[:id], :conditions => {:project_id => current_user.project_ids})
+      Task.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
     api_status(:not_found) unless @task
   end

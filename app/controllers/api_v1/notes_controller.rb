@@ -4,7 +4,12 @@ class ApiV1::NotesController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
-    @notes = @page.notes(:include => :page)
+    params = {:include => :page}
+    @notes = if target
+      target.notes(params)
+    else
+      Note.find_all_by_project_id(current_user.project_ids, params)
+    end
     
     api_respond @notes, :references => [:page]
   end
@@ -41,6 +46,10 @@ class ApiV1::NotesController < ApiV1::APIController
   end
 
   protected
+  
+  def target
+    @target ||= (@page || @current_project)
+  end
   
   def load_note
     @note = @page.notes.find params[:id]

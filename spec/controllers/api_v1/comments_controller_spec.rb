@@ -18,6 +18,18 @@ describe ApiV1::CommentsController do
       JSON.parse(response.body)['objects'].length.should == 1
     end
     
+    it "shows comments in all projects" do
+      login_as @user
+      
+      comment = Factory.create(:comment, :project => Factory.create(:project))
+      comment.project.add_user(@user)
+      
+      get :index
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 2
+    end
+    
     it "shows comments on a task" do
       login_as @user
       
@@ -75,6 +87,24 @@ describe ApiV1::CommentsController do
       response.should be_success
       
       JSON.parse(response.body)['id'].to_i.should == @comment.id
+    end
+    
+    it "shows a comment in any project" do
+      login_as @user
+      
+      get :show, :id => @comment.id
+      response.should be_success
+      
+      JSON.parse(response.body)['id'].to_i.should == @comment.id
+    end
+    
+    it "does not show a comment in another project" do
+      login_as @user
+      
+      other_comment = Factory.create(:comment)
+      
+      get :show, :id => other_comment.id
+      response.should_not be_success
     end
   end
   

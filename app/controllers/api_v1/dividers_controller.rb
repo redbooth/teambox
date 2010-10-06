@@ -4,7 +4,13 @@ class ApiV1::DividersController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
-    @dividers = @page.dividers(:include => :page)
+    params = {:include => :page}
+    
+    @dividers = if target
+      target.dividers(params)
+    else
+      Divider.find_all_by_project_id(current_user.project_ids, params)
+    end
     
     api_respond @dividers, :references => [:page]
   end
@@ -41,6 +47,10 @@ class ApiV1::DividersController < ApiV1::APIController
   end
 
   protected
+  
+  def target
+    @target ||= (@page || @current_project)
+  end
   
   def load_divider
     @divider = @page.dividers.find params[:id]

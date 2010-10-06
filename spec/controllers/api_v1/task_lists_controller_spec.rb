@@ -22,6 +22,18 @@ describe ApiV1::TaskListsController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
     
+    it "shows task lists in all projects" do
+      login_as @user
+      
+      task_list = Factory.create(:task_list, :project => Factory.create(:project))
+      task_list.project.add_user(@user)
+      
+      get :index
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 3
+    end
+    
     it "restricts by archived lists" do
       login_as @user
       
