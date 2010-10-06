@@ -51,8 +51,6 @@ Task = {
   }.debounce(100),
 
   makeSortable: function(task_id, all_task_ids) {
-    console.log(task_id)
-    
     Sortable.create(task_id, {
       constraint:'vertical',
       containment: all_task_ids,
