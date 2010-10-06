@@ -15,6 +15,9 @@ class ApidocsController < ApplicationController
 
   def concepts
   end
+  
+  def changes
+  end
 
   def routes
   end
