@@ -14,7 +14,7 @@ class Project
 
     # We'll add automagically an administration membership to the creator of the first project
     if organization.memberships.count == 0 and organization.projects.count == 1
-      organization.memberships.create! :user => user, :role => Membership::ROLES[:admin]
+      organization.add_member(user, Membership::ROLES[:admin])
     end
   end
 

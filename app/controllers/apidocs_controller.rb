@@ -134,7 +134,9 @@ class ApidocsController < ApplicationController
           @organization = Organization.new(:name => 'API Corp')
           @organization.is_example = true
           @organization.save!
-          @organization.memberships.create!(:user_id => @apiman.id, :role => Membership::ROLES[:admin])
+          membership = @organization.memberships.build(:role => Membership::ROLES[:admin])
+          membership.user_id = @apiman.id
+          membership.save!
         end
         
         @project = @apiman.projects.new(:name => 'Teambox Api Example Project', :user_id => @apiman.id)

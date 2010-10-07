@@ -25,6 +25,8 @@ class Person < ActiveRecord::Base
   named_scope :by_login, lambda { |login|
     {:include => :user, :conditions => {'users.login' => login}}
   }
+  
+  attr_accessible :role, :permissions
 
   def owner?
     project.owner?(user)
@@ -98,10 +100,9 @@ class Person < ActiveRecord::Base
   def to_api_hash(options = {})
     base = {
       :id => id,
-      :user_id => user.id,
-      :username => user.login,
-      :role => role,
-      :user => user.to_api_hash
+      :user_id => user_id,
+      :source_user_id => source_user_id,
+      :role => role
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
