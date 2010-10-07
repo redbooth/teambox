@@ -3,7 +3,7 @@
   .my_tasks_listing
     %h2= t('.tasks')
     - for task in tasks
-      .task{ :"data-id" => task.id, :id => "my_tasks_task_#{task.id}" }
+      .task{ :"data-id" => task.id, :id => "my_tasks_#{task.id}" }
         .loading_icon{ :style => 'display: none' }
         .left_arrow_icon
         = render_due_on(task,current_user)
