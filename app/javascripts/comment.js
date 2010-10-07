@@ -137,12 +137,13 @@ document.on('click', 'form .add_hours_icon', function(e, link) {
   e.stop()
 });
 
-function startStopwatch(elapsedTime, task_id, project_id) {
+function startStopwatch(elapsedTime, task_id, project_id, taskTitle) {
   var stopwatch = $('stopwatch');
-  stopwatch.show();
 
   var timerDisplay = stopwatch.down('.timer');
   Cookie.dispose('_teambox.task.timer');
+  Cookie.dispose('_teambox.task.title');
+
   var timer = stopwatch.retrieve('task.timer', new Stopwatch(function(watch){
      timerDisplay.update(watch.toString());
      var elapsedTime = watch.getElapsed();
@@ -150,20 +151,35 @@ function startStopwatch(elapsedTime, task_id, project_id) {
      Cookie.write('_teambox.task.timer', project_id + '-' + task_id + '-' + elapsedSeconds, {path: '/', duration: 365});
   }, 1000));
 
+  if (!taskTitle) {
+    var taskHeader = $$('.task_header h2');
+    taskTitle = taskHeader.length > 0 ? taskHeader[0].textContent : false;
+    taskTitle = taskTitle && taskTitle.trim().empty() ? false : taskTitle.trim();
+  }
+
+  if (taskTitle) {
+    var timerTitle = stopwatch.down('.timer-title');
+    timerTitle.update(taskTitle);
+    Cookie.write('_teambox.task.title', taskTitle, {path: '/', duration: 365});
+  }
+
   if (elapsedTime) {
     timer.setElapsed(0,0,elapsedTime);
   }
+
+  stopwatch.show();
   timer.start();
 };
 
 document.observe("dom:loaded", function() {
   var taskElapsedTime = Cookie.read('_teambox.task.timer');
   if (taskElapsedTime) {
+    var taskTitle = Cookie.read('_teambox.task.title');
     var values = taskElapsedTime.split(/-/);
     var elapsedTime = parseInt(values[2],10);
     var task_id = values[1];
     var project_id = values[0];
-    startStopwatch(elapsedTime, task_id, project_id);
+    startStopwatch(elapsedTime, task_id, project_id, taskTitle);
   }
 });
 
@@ -174,6 +190,23 @@ document.on('click', '.start-timer', function(e, element) {
   startStopwatch(null,task_id, project_id);
   e.stop();
 });
+
+function cancel_timer_task(element) {
+  var stopwatch = $('stopwatch');
+  var form = element.up('form');
+  var timer = stopwatch.retrieve('task.timer');
+  var timerPauseIcon = stopwatch.down('.timer-pause');
+  var timerPlayIcon = stopwatch.down('.timer-play');
+
+  timer.reset();
+  stopwatch.hide();
+  timerPauseIcon.show();
+  timerPlayIcon.hide();
+  $('timer_comment').hide();
+
+  Cookie.dispose('_teambox.task.timer');
+  Cookie.dispose('_teambox.task.title');
+}
 
 function update_timer_task(element) {
   var stopwatch = $('stopwatch');
@@ -240,6 +273,7 @@ function submit_timer_form(element) {
       }
 
       Cookie.dispose('_teambox.task.timer');
+      Cookie.dispose('_teambox.task.title');
       var stopwatch = $('stopwatch');
       stopwatch.hide();
     }
@@ -260,15 +294,30 @@ document.on('click', '.finish_timer_task', function(e, element) {
   e.stop();
 });
 
+document.on('click', '.cancel_timer_task', function(e, element) {
+  cancel_timer_task(element);
+  e.stop();
+});
+
 document.on('click', '.stop-timer', function(e, element) {
   var stopwatch = $('stopwatch');
   var timerDisplay = stopwatch.down('.timer');
   var timer = stopwatch.retrieve('task.timer');
+  var timerPauseIcon = stopwatch.down('.timer-pause');
+  var timerPlayIcon = stopwatch.down('.timer-play');
 
   if (timer.started) {
     timer.stop();
+    timerPauseIcon.hide();
+    timerPlayIcon.show();
 
     $('timer_comment').show();
+  } else {
+    timer.start();
+    timerPauseIcon.show();
+    timerPlayIcon.hide();
+
+    $('timer_comment').hide();
   }
 
   e.stop();

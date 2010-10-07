@@ -2,9 +2,11 @@
   %h1= link_to logo_image, projects_path
   #stopwatch{:style => 'display: none'}
     %span.stop-timer
-      = image_tag "control_pause_blue.png", :alt => 'stop the timer'
+      = image_tag "control_pause_blue.png", :alt => 'stop the timer', :class => 'timer-pause'
+      = image_tag "control_play_blue.png", :alt => 'start the timer', :class => 'timer-play', :style => 'display:none'
     %span
       Time spent on task:
+    %span.timer-title
     %span.timer
       00:00:00
 
@@ -31,6 +33,7 @@
             .submit
               = f.submit t('tasks.edit.submit'), :class => 'update_timer_task'
               = f.submit t('tasks.edit.finish'), :class => 'finish_timer_task'
+              = f.submit t('common.cancel'),     :class => 'cancel_timer_task'
 
   = render 'shared/global_navigation'
 
