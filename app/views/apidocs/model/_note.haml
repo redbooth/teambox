@@ -7,13 +7,13 @@
 - doc_for :show,  :example => @note.to_api_hash(:include => [:page_slot]) do
   %p= "Returns the data for a note."
   
-- doc_for :create, :parameters => {:note => {:name => 'Name', :body => 'Body'} },
+- doc_for :create, :parameters => {:name => 'Name', :body => 'Body', :project_id => 123, :page_id => 123 },
                    :example => @note.to_api_hash,
                    :status => :created,
                    :role => :participant do
   %p= "Creates a new note."
 
-- doc_for :update, :parameters => {:note => {:name => @note.name, :body => @note.body} },
+- doc_for :update, :parameters => {:name => @note.name, :body => @note.body },
                    :status => :updated,
                    :role => :participant do
   %p= "Updates the name and body of a note."

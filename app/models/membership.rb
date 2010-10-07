@@ -13,6 +13,8 @@ class Membership < ActiveRecord::Base
 
 
   attr_accessor :user_or_email
+  
+  attr_accessible :role
 
   # Roles are..
   #   30 for an admin. Can modify the organization, manage users and access any project.

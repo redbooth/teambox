@@ -33,7 +33,9 @@ class OrganizationsController < ApplicationController
     @organization = Organization.new(params[:organization])
 
     if @organization.save
-      @organization.memberships.create!(:user_id => current_user.id, :role => Membership::ROLES[:admin])
+      membership = @organization.memberships.build(:role => Membership::ROLES[:admin])
+      membership.user_id = current_user.id
+      membership.save!
       flash[:notice] = t('organizations.new.created')
       redirect_to organization_path(@organization)
     else

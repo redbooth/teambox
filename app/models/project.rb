@@ -28,9 +28,14 @@ class Project < ActiveRecord::Base
     Activity.log(self, target, action, creator_id)
   end
 
-  def add_user(user, source_user=nil)
+  def add_user(user, params={})
     unless Person.exists? :user_id => user.id, :project_id => id
-      people.create(:user_id => user.id, :source_user_id => source_user.try(:id))
+      people.build.tap do |person|
+        person.user_id = user.id
+        person.role = params[:role] if params[:role]
+        person.source_user_id = params[:source_user].try(:id)
+        person.save
+      end
     end
   end
 

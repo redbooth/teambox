@@ -113,7 +113,9 @@ class TeamboxData
         import_log(@project)
       
         Array(project_data['people']).each do |person_data|
-          @project.add_user(resolve_user(person_data['user_id']), person_data['role'])
+          @project.add_user(resolve_user(person_data['user_id']), 
+                            :role => person_data['role'],
+                            :source_user => resolve_user(person_data['source_user_id']))
         end
         
         # Note on commentable objects: callbacks may be invoked which may change their state. 
@@ -195,6 +197,7 @@ class TeamboxData
   end
   
   def resolve_user(id)
+    return nil if id.nil?
     user = @imported_users[id]
     if !user
       need_user = ids_to_users[id] || {'username' => id}

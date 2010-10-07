@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
     @signups_enabled = signups_enabled?
     respond_to do |format|
       format.html { redirect_to root_path if logged_in? }
-      format.m
+      format.m { redirect_to activities_path if logged_in? }
     end
   end
 
@@ -34,7 +34,10 @@ class SessionsController < ApplicationController
       self.current_user = user
       handle_remember_cookie! true
       flash[:error] = nil
-      redirect_back_or_default root_url
+      respond_to do |format|
+        format.html { redirect_back_or_default root_url }
+        format.m { redirect_back_or_default activities_url }
+      end
     else
       note_failed_signin
       @login       = params[:login]

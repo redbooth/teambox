@@ -3,13 +3,19 @@ class ApiV1::PagesController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:reorder,:resort,:destroy]
   
   def index
-    @pages = @current_project.pages.all(:conditions => api_range, :limit => api_limit, :order => 'id ASC', :include => [:project, :user])
+    query = {:conditions => api_range, :limit => api_limit, :order => 'id ASC', :include => [:project, :user]}
+    
+    @pages = if @current_project
+      @current_project.pages.all(query)
+    else
+      Page.find_all_by_project_id(current_user.project_ids, query)
+    end
     
     api_respond @pages, :include => :slots, :references => [:user]
   end
   
   def create
-    @page = @current_project.new_page(current_user,params[:page])
+    @page = @current_project.new_page(current_user,params)
     if @page.save
       handle_api_success(@page, true)
     else
@@ -22,7 +28,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
   
   def update
-    if @page.update_attributes(params[:page])
+    if @page.update_attributes(params)
       handle_api_success(@page)
     else
       handle_api_error(@page)
@@ -71,7 +77,11 @@ class ApiV1::PagesController < ApiV1::APIController
 
   protected
     def load_page
-      @page = @current_project.pages.find params[:id]
+      @page = if @current_project
+        @current_project.pages.find params[:id]
+      else
+        Page.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+      end
       api_status(:not_found) unless @page
     end
     

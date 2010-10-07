@@ -24,6 +24,18 @@ describe ApiV1::ConversationsController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
     
+    it "shows conversations in all projects" do
+      login_as @user
+      
+      conversation = Factory.create(:conversation, :project => Factory.create(:project))
+      conversation.project.add_user(@user)
+      
+      get :index
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 3
+    end
+    
     it "shows threads if specified" do
       login_as @user
       
@@ -98,7 +110,7 @@ describe ApiV1::ConversationsController do
     it "should allow participants to create conversations" do
       login_as @user
       
-      post :create, :project_id => @project.permalink, :id => @conversation.id, :conversation => {:name => 'Created!', :body => 'Discuss...'}
+      post :create, :project_id => @project.permalink, :id => @conversation.id, :name => 'Created!', :body => 'Discuss...'
       response.should be_success
       
       @project.conversations(true).length.should == 3
@@ -108,7 +120,7 @@ describe ApiV1::ConversationsController do
     it "should not allow observers to create conversations" do
       login_as @observer
       
-      post :create, :project_id => @project.permalink, :id => @conversation.id, :conversation => {:name => 'Created!', :body => 'Discuss...'}
+      post :create, :project_id => @project.permalink, :id => @conversation.id, :name => 'Created!', :body => 'Discuss...'
       response.status.should == '401 Unauthorized'
       
       @project.conversations(true).length.should == 2
@@ -119,7 +131,7 @@ describe ApiV1::ConversationsController do
     it "should allow participants to modify a conversation" do
       login_as @user
       
-      put :update, :project_id => @project.permalink, :id => @conversation.id, :conversation => {:name => 'Modified'}
+      put :update, :project_id => @project.permalink, :id => @conversation.id, :name => 'Modified'
       response.should be_success
       
       @conversation.reload.name.should == 'Modified'
@@ -128,7 +140,7 @@ describe ApiV1::ConversationsController do
     it "should not allow observers to modify a conversation" do
       login_as @observer
       
-      put :update, :project_id => @project.permalink, :id => @conversation.id, :conversation => {:name => 'Modified'}
+      put :update, :project_id => @project.permalink, :id => @conversation.id, :name => 'Modified'
       response.status.should == '401 Unauthorized'
       
       @conversation.reload.name.should_not == 'Modified'

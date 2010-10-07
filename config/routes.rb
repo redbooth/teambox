@@ -125,6 +125,7 @@ ActionController::Routing::Routes.draw do |map|
     doc.api           'api',          :action => 'index'
     doc.api_concepts  'api/concepts', :action => 'concepts'
     doc.api_routes    'api/routes',   :action => 'routes'
+    doc.api_changes   'api/changes',   :action => 'changes'
     doc.api_model     'api/:model',   :action => 'model'
   end
   
@@ -152,8 +153,23 @@ ActionController::Routing::Routes.draw do |map|
     api.resources :activities, :only => [:index, :show]
     api.resources :invitations, :except => [:new, :edit, :update, :create], :member => {:accept => :put}
     api.resources :users, :only => [:index, :show]
-    api.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}
     
+    
+    api.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}
+    api.resources :comments, :except => [:new, :create, :edit]
+    api.resources :conversations, :except => [:new, :edit], :member => {:watch => :put, :unwatch => :put} do |conversation|
+      conversation.resources :comments, :except => [:new, :edit]
+    end
+    api.resources :task_lists, :except => [:new, :edit], :member => {:archive => :put, :unarchive => :put} do |task_list|
+      task_list.resources :tasks, :except => [:new, :edit]
+    end
+    api.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}  do |task|
+      task.resources :comments, :except => [:new, :edit]
+    end
+    api.resources :uploads, :except => [:new, :edit, :update]
+    api.resources :pages, :except => [:new, :edit], :member => {:reorder => :put}, :collection => {:resort => :put}
+    api.resources :notes, :except => [:new, :edit]
+    api.resources :dividers, :except => [:new, :edit]
     
     api.resources :organizations, :except => [:new, :edit, :destroy] do |organization|
       organization.resources :projects, :except => [:new, :edit], :member => {:transfer => :put}

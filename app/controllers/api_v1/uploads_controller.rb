@@ -4,10 +4,17 @@ class ApiV1::UploadsController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
-    @uploads = (@page || @current_project).uploads.all(
-      :conditions => api_range, 
-      :limit => api_limit,
-      :include => [:page, :user])
+    @uploads = if target
+      target.uploads.all(
+        :conditions => api_range, 
+        :limit => api_limit,
+        :include => [:page, :user])
+    else
+      Upload.find_all_by_project_id(current_user.project_ids,
+        :conditions => api_range, 
+        :limit => api_limit,
+        :include => [:page, :user])
+    end
     
     api_respond @uploads, :references => [:page, :user]
   end
@@ -17,7 +24,7 @@ class ApiV1::UploadsController < ApiV1::APIController
   end
   
   def create
-    @upload = @current_project.uploads.new params[:upload]
+    @upload = @current_project.uploads.new params
     @upload.page = @page if @page
     @upload.user = current_user
     calculate_position(@upload) if @upload.page
@@ -40,12 +47,20 @@ class ApiV1::UploadsController < ApiV1::APIController
 
   protected
   
+  def target
+    @target ||= (@page || @current_project)
+  end
+  
   def load_page
     @page = @current_project.pages.find params[:page_id] if params[:page_id]
   end
   
   def load_upload
-    @upload = @current_project.uploads.find(params[:id])
+    @upload = if target
+      target.uploads.find(params[:id])
+    else
+      Upload.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+    end
     api_status(:not_found) unless @upload
   end
   

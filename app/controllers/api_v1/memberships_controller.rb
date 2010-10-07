@@ -5,7 +5,7 @@ class ApiV1::MembershipsController < ApiV1::APIController
   before_filter :can_modify?, :only => [:update, :destroy]
   
   def index
-    api_respond @organization.memberships, :include => [:organization, :user], :references => [:organization, :user]
+    api_respond @organization.memberships(:include => [:organization, :user]), :references => [:organization, :user]
   end
 
   def show
@@ -13,7 +13,7 @@ class ApiV1::MembershipsController < ApiV1::APIController
   end
   
   def update
-    if @membership.update_attributes(params[:membership])
+    if @membership.update_attributes(params)
       handle_api_success(@membership)
     else
       handle_api_error(@membership)

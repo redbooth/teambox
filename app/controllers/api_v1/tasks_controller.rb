@@ -24,7 +24,7 @@ class ApiV1::TasksController < ApiV1::APIController
   end
   
   def create
-    if @task = @current_project.create_task(current_user,@task_list,params[:task])
+    if @task = @current_project.create_task(current_user,@task_list,params)
       unless @task.new_record?
         @comment = @current_project.new_task_comment(@task)
         @task.reload
@@ -39,7 +39,7 @@ class ApiV1::TasksController < ApiV1::APIController
   end
   
   def update
-    @saved = @task.update_attributes(params[:task])
+    @saved = @task.update_attributes(params)
     
     if @saved
       handle_api_success(@task)
@@ -83,7 +83,7 @@ class ApiV1::TasksController < ApiV1::APIController
     @task = if @current_project
       (@task_list || @current_project).tasks.find(params[:id]) rescue nil
     else
-      Task.find(params[:id], :conditions => {:project_id => current_user.project_ids})
+      Task.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
     api_status(:not_found) unless @task
   end

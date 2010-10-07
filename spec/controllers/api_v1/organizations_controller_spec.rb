@@ -40,11 +40,12 @@ describe ApiV1::OrganizationsController do
       organization_attributes = Factory.attributes_for(:organization)
 
       lambda {
-        post :create, :organization => organization_attributes
+        post :create, organization_attributes
         response.status.should == '201 Created'
       }.should change(Organization, :count)
       
       JSON.parse(response.body)['name'].should == organization_attributes[:name]
+      Organization.last.memberships.first.user.should == @user
     end
   end
   
@@ -52,7 +53,7 @@ describe ApiV1::OrganizationsController do
     it "should allow an admin to update the organization" do
       login_as @admin
       
-      put :update, :id => @organization.permalink, :organization => {:permalink => 'ffffuuuuuu'}
+      put :update, :id => @organization.permalink, :permalink => 'ffffuuuuuu'
       response.should be_success
       
       @organization.reload.permalink.should == 'ffffuuuuuu'
@@ -61,7 +62,7 @@ describe ApiV1::OrganizationsController do
     it "should not allow a non-admin to update the organization" do
       login_as @user
       
-      put :update, :id => @organization.permalink, :organization => {:permalink => 'ffffuuuuuu'}
+      put :update, :id => @organization.permalink, :permalink => 'ffffuuuuuu'
       response.status.should == '401 Unauthorized'
       
       @organization.reload.permalink.should_not == 'ffffuuuuuu'

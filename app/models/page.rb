@@ -1,9 +1,9 @@
 class Page < RoleRecord
-  has_many :notes
-  has_many :dividers
-  has_many :uploads
+  has_many :notes, :dependent => :delete_all
+  has_many :dividers, :dependent => :delete_all
+  has_many :uploads, :dependent => :delete_all
   
-  has_many :slots, :class_name => 'PageSlot', :order => 'position ASC'
+  has_many :slots, :class_name => 'PageSlot', :order => 'position ASC', :dependent => :delete_all
 
   has_permalink :name, :scope => :project_id
 
@@ -13,10 +13,6 @@ class Page < RoleRecord
   validates_length_of :name, :minimum => 1
   
   default_scope :order => 'position ASC, created_at DESC, id DESC'
-  
-  def self.widgets
-     [Note, Divider]
-  end
   
   def build_note(note = {})
     self.notes.build(note) do |note|

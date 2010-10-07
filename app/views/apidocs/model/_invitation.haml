@@ -6,7 +6,7 @@
 - doc_for :show,  :example => @invitation.to_api_hash(:include => [:project, :user]) do
   %p= "Returns the data for a given invitation."
   
-- doc_for :create, :parameters => {:invitation => {:user_or_email => 'billg@microsoft.com'} },
+- doc_for :create, :parameters => {:user_or_email => 'billg@microsoft.com' },
                    :example => @invitation.to_api_hash(:include => [:project, :user]),
                    :status => :created,
                    :role => :admin do

@@ -54,7 +54,7 @@ describe ApiV1::MembershipsController do
     it "should allow an admin to modify a member" do
       login_as @admin
       
-      put :update, :organization_id => @organization.permalink, :id => @user.member_for(@organization).id, :membership => {:role => Membership::ROLES[:admin]}
+      put :update, :organization_id => @organization.permalink, :id => @user.member_for(@organization).id, :role => Membership::ROLES[:admin]
       response.should be_success
       
       @organization.reload.is_admin?(@user).should == true
@@ -63,7 +63,7 @@ describe ApiV1::MembershipsController do
     it "should not allow a non-admin to modify a member" do
       login_as @user
       
-      put :update, :organization_id => @organization.permalink, :id => @observer.member_for(@organization).id, :membership => {:role => Membership::ROLES[:admin]}
+      put :update, :organization_id => @organization.permalink, :id => @observer.member_for(@organization).id, :role => Membership::ROLES[:admin]
       response.status.should == '401 Unauthorized'
       
       @organization.reload.is_admin?(@user).should == false
