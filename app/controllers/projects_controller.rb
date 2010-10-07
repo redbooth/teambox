@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       f.html  { @threads = Activity.get_threads(@activities) }
-      f.m
+      f.m     { redirect_to activities_path if request.path == '/' }
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @projects.to_xml }
       f.json  { render :as_json => @projects.to_xml }
