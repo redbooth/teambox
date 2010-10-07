@@ -129,3 +129,25 @@ document.observe('dom:loaded', function(e) {
 	if ($$('.tasks').length > 0)
 	  Task.make_all_sortable();
 });
+
+// For Projects#index: Load task in main view with AJAX
+document.on('click', '.my_tasks_listing .task a', function(e, el) {
+  if (e.isMiddleClick()) return
+  e.stop();
+  
+  el.up('.task').down('.left_arrow_icon').hide()
+  el.up('.task').down('.loading_icon').show()
+  
+  new Ajax.Request(el.readAttribute('href')+".frag", {
+    method: "get",
+    onSuccess: function(r) {
+      $('content').update(r.responseText)
+      format_posted_date()
+    },
+    onComplete: function() {
+      el.up('.task').down('.left_arrow_icon').show()
+      el.up('.task').down('.loading_icon').hide()
+    }
+  })
+
+})

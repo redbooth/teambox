@@ -7,6 +7,7 @@ class TasksController < ApplicationController
     return redirect_to [@current_project, @task.task_list, @task] unless @task.task_list.id == params[:task_list_id].to_i
     respond_to do |f|
       f.html
+      f.frag { render :layout => false }
       f.js {
         @show_part = params[:part]
         render :template => 'tasks/reload'

@@ -3,8 +3,8 @@
   .my_tasks_listing
     %h2= t('.tasks')
     - for task in tasks
-      .task
-        = image_tag('loading.gif', :id => "loading_task_#{task.id}", :class => 'loading', :style => 'display: none')
-        = task_status(task,:content)
+      .task{ :"data-id" => task.id, :id => "my_tasks_task_#{task.id}" }
+        .loading_icon{ :style => 'display: none' }
+        .left_arrow_icon
         = render_due_on(task,current_user)
         = link_to task, project_task_list_task_path(task.project_id, task.task_list_id, task)
