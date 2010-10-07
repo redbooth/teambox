@@ -1,5 +1,5 @@
 class Task < RoleRecord
-  
+
   include Watchable
 
   STATUS_NAMES = [:new, :open, :hold, :resolved, :rejected]
@@ -25,16 +25,16 @@ class Task < RoleRecord
 
   validates_presence_of :name, :message => I18n.t('tasks.errors.name.cant_be_blank')
   validates_length_of   :name, :maximum => 255, :message => I18n.t('tasks.errors.name.too_long')
-  
+
   validate :check_asignee_membership, :if => :assigned_id?
-  
+
   # set by controller to indicate user that's doing task updating
   attr_accessor :updating_user
-  
+
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_save :set_comments_author, :if => :updating_user
   before_save :save_changes_to_comment, :if => :track_changes?
-  
+
   def track_changes?
     updating_user and (status_changed? or assigned_id_changed?)
   end
@@ -59,7 +59,7 @@ class Task < RoleRecord
   def status_name
     STATUS_NAMES[status]
   end
-  
+
   def status_name=(value)
     self.status = STATUS_NAMES.index(value)
   end
@@ -68,7 +68,7 @@ class Task < RoleRecord
   def assigned?
     !assigned.nil?
   end
-  
+
   def unassigned?
     !assigned
   end
@@ -96,7 +96,7 @@ class Task < RoleRecord
   def due_tomorrow?
     due_on == (Time.current + 1.day).to_date
   end
-  
+
   def total_hours
     comments.sum('hours')
   end
@@ -138,7 +138,7 @@ class Task < RoleRecord
       end
     end
   end
-  
+
   def to_api_hash(options = {})
     base = {
       :id => id,
@@ -154,29 +154,29 @@ class Task < RoleRecord
       :updated_at => updated_at.to_s(:db),
       :watchers => Array.wrap(watchers_ids)
     }
-    
+
     base[:due_on] = due_on.to_s(:db) if due_on
     base[:completed_at] = completed_at.to_s(:db) if completed_at
-    
+
     if Array(options[:include]).include? :task_list
       base[:task_list] = task_list.to_api_hash(options)
     end
-    
+
     base
   end
-  
+
   def to_json(options = {})
     to_api_hash(options).to_json
   end
-  
+
   protected
-  
+
   def check_asignee_membership
     unless project.people.include?(assigned)
       errors.add :assigned, :doesnt_belong
     end
   end
-  
+
   def set_comments_author # before_save
     comments.select(&:new_record?).each do |comment|
       comment.user = updating_user
@@ -186,19 +186,19 @@ class Task < RoleRecord
 
   def save_changes_to_comment # before_save
     comment = comments.detect(&:new_record?) || comments.build_by_user(updating_user)
-    
+
     if status_changed?
       comment.status = self.status
       comment.previous_status = self.status_was
     end
-    
+
     if assigned_id_changed?
       comment.assigned_id = self.assigned_id
       comment.previous_assigned_id = self.assigned_id_was
     end
     true
   end
-  
+
   def copy_project_from_task_list
     self.project_id = task_list.project_id
   end

@@ -1,57 +1,57 @@
---- 
-ru: 
-  activerecord: 
-    attributes: 
-      card: 
+---
+ru:
+  activerecord:
+    attributes:
+      card:
         city: Город
         country: Страна
         state: Регион
         street: Улица
         zip: "Почтовый индекс"
-      comment: 
+      comment:
         body: Сообщение
         hours: Время
         status: Статус
-      conversation: 
+      conversation:
         name: Название
-      divider: 
+      divider:
         name: Название
-      email_address: 
+      email_address:
         account_type: Тип
         name: Адрес
-      im: 
+      im:
         account_im_type: Вид
         account_type: Тип
         name: Адрес
-      invitation: 
+      invitation:
         email: "Электронная почта"
-      note: 
+      note:
         body: Сообщение
         name: Название
-      pages: 
+      pages:
         description: Описание
         name: Страница
-      phone_number: 
+      phone_number:
         account_type: Тип
         name: Номер
-      project: 
+      project:
         name: Название
         permalink: Ссылка
-      social_network: 
+      social_network:
         account_network_type: Вид
         account_type: Тип
         name: Адрес
-      task: 
+      task:
         due_on: Срок
         name: Название
         status: Статус
-      task_list: 
+      task_list:
         finish_on: "Дата завершения"
         name: Название
         start_on: "Дата начала"
-      upload: 
+      upload:
         description: Описание
-      user: 
+      user:
         biography: Должность
         email: "Электронная почта"
         first_day_of_week: "Первый день недели"
@@ -60,12 +60,12 @@ ru:
         last_name: Фамилия
         login: Логин
         time_zone: "Часовой пояс"
-      website: 
+      website:
         name: Веб-сайт
-    errors: 
-      full_messages: 
+    errors:
+      full_messages:
         format: "%{attribute} %{message}"
-      messages: 
+      messages:
         accepted: "должен быть принят"
         blank: "не может быть пустым"
         confirmation: "не совпадает с подтвержением"
@@ -86,26 +86,26 @@ ru:
         too_long: "слишком длинной (не больше %{count} символов)"
         too_short: "слишком короткое (не меньше %{count} символов)"
         wrong_length: "неверная длина (должно быть %{count} символов)"
-      models: 
-        comment: 
-          attributes: 
-            body: 
+      models:
+        comment:
+          attributes:
+            body:
               no_body_generic: "Пожалуйста, напишите в это поле, что вы сделали."
               no_body_task: "Пожалуйста, напишите в это поле, что вы сделали по данной задаче."
-        conversation: 
-          attributes: 
-            body: 
+        conversation:
+          attributes:
+            body:
               no_body_generic: "Чтобы начать обсуждение, напишите, пожалуйста, комментарий."
-            name: 
+            name:
               no_title: "Пожалуйста, дайте название этому обсуждению."
-      template: 
+      template:
         body: "Проблемы возникли со следующими полями:"
-        header: 
+        header:
           few: "%{model}: сохранение не удалось из-за %{count} ошибок"
           many: "%{model}: сохранение не удалось из-за %{count} ошибок"
           one: "%{model}: сохранение не удалось из-за %{count} ошибки"
           other: "%{model}: сохранение не удалось из-за %{count} ошибки"
-    models: 
+    models:
       address: Адрес
       card: Карточка
       comment: Комментарий
@@ -123,33 +123,33 @@ ru:
       task_list: "Список задач"
       upload: Файл
       website: Веб-сайт
-  activities: 
-    create_conversation: 
+  activities:
+    create_conversation:
       create_conversation: "начинает обсуждение"
-    create_page: 
+    create_page:
       create_page: "создаёт страницу"
-    create_person: 
+    create_person:
       by: "от имени"
       create_person: "приглашается в проект"
-    create_task: 
+    create_task:
       create_task: "создаёт задачу"
-    create_task_list: 
+    create_task_list:
       create_task_list: "создаёт список задач"
-    delete_person: 
+    delete_person:
       by: "от имени"
       delete_person: "отстраняется от проекта"
       left: "покидает проект"
-  avatars: 
-    edit: 
+  avatars:
+    edit:
       upload: "Загрузить этот аватар"
       upload_new_image: "Загрузить новую картинку для аватара"
-    new: 
+    new:
       title: "Загрузить аватар"
       upload: Загрузить
-    show: 
+    show:
       save: "Сохранить изменения"
-  cards: 
-    card: 
+  cards:
+    card:
       addresses: Адреса
       email_addresses: "Электронные адреса"
       ims: "Обмен сообщениями"
@@ -157,31 +157,31 @@ ru:
       social_networks: "Социальные сети"
       vcard: "Скачать vCard"
       websites: Веб-сайты
-    field: 
+    field:
       add_addresses: "Добавить адрес"
       add_email_addresses: "Добавить электронную почту"
       add_ims: "Добавить адрес мгновенных сообщений"
       add_phone_numbers: "Добавить номер телефона"
       add_social_networks: "Добавить социальную сеть"
       add_websites: "Добавить веб-сайт"
-  comments: 
-    actions: 
+  comments:
+    actions:
       confirm_delete: "Вы действительно хотите удалить этот комментарий?"
       convert_task: "Конвертировать в задачу"
       edit: "Редактировать комментарий"
-    comment: 
+    comment:
       cannot_edit: "Комментарий не может быть отредактирован через 15 минут после создания"
       commented_on: "-"
       commented_on_a_task_list: "-"
       confirm_delete: "Вы действительно хотите удалить этот комментарий?"
-    edit: 
+    edit:
       submit: Сохранить
-    errors: 
+    errors:
       cannot_update: "У вас нет прав обновлять этот комментарий"
-    hours: 
+    hours:
       add_hours: Часы
       hours: "Сколько часов вы затратили на эту задачу?"
-    new: 
+    new:
       assigned_to: "Назначен:"
       assigned_to_nobody: "Не назначен"
       conversation: "Отправьте сообщение всем в группе."
@@ -189,12 +189,12 @@ ru:
       submit: Отправить
       task: "Что нужно сделать"
       task_list: "Поделитесь идеями насчёт списка задач. Чтобы создать список задач, воспользуйтесь управлением справа."
-  common: 
+  common:
     accept: Принять
     and: и
     cancel: Отменить
     close: Закрыть
-    comment: 
+    comment:
       one: "%{count} комментарий"
       other: "%{count} комментариев"
     decline: Отклонить
@@ -205,37 +205,37 @@ ru:
     print: "Распечатать страницу"
     save: Сохранить
     show_more: "Показать ещё"
-  confirm: 
+  confirm:
     delete_page: "Вы действительно хотите удалить эту страницу?"
     delete_task: "Вы действительно хотите удалить эту задачу?"
     delete_task_list: "Вы действительно хотите удалить этот список задач?"
     delete_upload: "Вы действительно хотите удалить этот файл?"
-  conversations: 
-    actions: 
+  conversations:
+    actions:
       confirm_delete: "Вы действительно хотите удалить это обсуждение?"
-    column: 
+    column:
       cant_create: "Вы не можете создавать обсуждения в этом проекте"
       new_conversation: "Новое обсуждение"
       subscribe: "Подписаться на новости"
-    conversation_with_extract: 
+    conversation_with_extract:
       posted_by: "Написан участником"
-    edit: 
+    edit:
       submit: "Обновить обсуждение"
-    fields: 
+    fields:
       body: "Первый комментарий"
       name: Тема
-      tooltips: 
+      tooltips:
         body: "Задайте вопрос, расскажите команде, что нового, начните обсуждение"
         name: "Как можно короче, это будет написано в теме письма с уведомлением"
-    index: 
-      rss: 
+    index:
+      rss:
         description: "Обсуждения проекта %{name}"
-    link: 
+    link:
       edit: Редактировать
-    new: 
+    new:
       submit: Создать
       title: "Новое обсуждение"
-    primer: 
+    primer:
       create_first: "Создайте первое обсуждение!"
       define: "Обсуждения нужны, чтобы <b>обсуждать решения</b> и <b>держать в курсе команду</b> централизованно.<br/>Каждое обсуждение — это поток комментариев, которые заменяют неудобные электронные письма."
       empty: "В этом проекте ещё нет обсуждений."
@@ -245,21 +245,21 @@ ru:
       item2: "<b>Подпишитесь</b> на обсуждение и вам будут присылаться уведомления на электронную почту или RSS."
       item3: "<b>Стилизуйте</b>. Любой комментарий можно отформатировать с помощью стилей оформления текста."
       item4: "<b>Любите электронную почту?</b> Можете участвовать обсуждении прямо из электронного ящика."
-    short_conversation: 
+    short_conversation:
       comment: комментарий
       comments: комментариев
-    show: 
+    show:
       edit: "Изменить тему"
       message: сообщение
       messages: сообщений
       started_by: "Начат участником"
-    watcher_fields: 
+    watcher_fields:
       add_suscribers: "Кто будет следить за этим обсуждением?"
       invite_users: "Вы единственный участник этого проекта!"
       no_users_yet: "Обсуждения более полезны, если ими делиться. <a href='%{invite_link}'>Пригласите участников</a> в этот проект, чтобы они могли участвовать в обсуждении и следить за обновлениями."
       people_all: "Все участники проекта"
       subscribe_note: "Эти люди будут уведомлены по электронной почте о комментариях.<br/>Они могут отменить подписку в любой момент."
-  countries: 
+  countries:
     AC: "Остров Вознесения"
     AD: Андорра
     AE: "Объединенные Арабские Эмираты"
@@ -518,8 +518,8 @@ ru:
     ZM: Замбия
     ZW: Зимбабве
     ZZ: "Неизвестный или недействительный регион"
-  date: 
-    abbr_day_names: 
+  date:
+    abbr_day_names:
       - Вс
       - Пн
       - Вт
@@ -527,7 +527,7 @@ ru:
       - Чт
       - Пт
       - Сб
-    abbr_month_names: 
+    abbr_month_names:
       - ~
       - Янв
       - Фев
@@ -541,7 +541,7 @@ ru:
       - Окт
       - Ноя
       - Дек
-    day_names: 
+    day_names:
       - Воскресенье
       - Понедельник
       - Вторник
@@ -549,11 +549,11 @@ ru:
       - Четверг
       - Пятница
       - Суббота
-    formats: 
+    formats:
       default: "%Y-%m-%d"
       long: "%d %b %Y"
       short: "%d %b"
-    month_names: 
+    month_names:
       - ~
       - Январь
       - Февраль
@@ -567,65 +567,65 @@ ru:
       - Октябрь
       - Ноябрь
       - Декабрь
-    order: 
+    order:
       - !ruby/symbol year
       - !ruby/symbol month
       - !ruby/symbol day
     yesterday: Вчера
-  datetime: 
-    distance_in_words: 
-      about_x_hours: 
+  datetime:
+    distance_in_words:
+      about_x_hours:
         few: "около %{count} часов"
         many: "около %{count} часов"
         one: "около часа"
         other: "около %{count} часов"
-      about_x_months: 
+      about_x_months:
         few: "около %{count} месяцев"
         many: "около %{count} месяцев"
         one: "около месяца"
         other: "около %{count} месяцев"
-      about_x_years: 
+      about_x_years:
         few: "около %{count} лет"
         many: "около %{count} лет"
         one: "около года"
         other: "около %{count} лет"
       half_a_minute: полминуты
-      less_than_x_minutes: 
+      less_than_x_minutes:
         few: "меньше %{count} минут"
         many: "меньше %{count} минут"
         one: "меньше минуты"
         other: "меньше %{count} минут"
-      less_than_x_seconds: 
+      less_than_x_seconds:
         few: "меньше %{count} секунд"
         many: "меньше %{count} секунд"
         one: "меньше секунды"
         other: "меньше %{count} секунд"
-      over_x_years: 
+      over_x_years:
         few: "больше %{count} лет"
         many: "больше %{count} лет"
         one: "больше года"
         other: "больше %{count} лет"
-      x_days: 
+      x_days:
         few: "%{count} дня"
         many: "%{count} дней"
         one: день
         other: "%{count} дней"
-      x_minutes: 
+      x_minutes:
         few: "%{count} минуты"
         many: "%{count} минут"
         one: минуту
         other: "%{count} минут"
-      x_months: 
+      x_months:
         few: "%{count} месяца"
         many: "%{count} месяцев"
         one: месяц
         other: "%{count} месяцев"
-      x_seconds: 
+      x_seconds:
         few: "%{count} секунды"
         many: "%{count} секунд"
         one: секунду
         other: "%{count} секунд"
-    prompts: 
+    prompts:
       day: День
       hour: Час
       minute: Минута
@@ -639,32 +639,32 @@ ru:
     now: Сейчас
     today: Сегодня
     clear: Очистить
-  deleted: 
+  deleted:
     conversation: "Обсуждение <b>%{name}</b> удалено"
     left_project: "Вы больше не участвуете в этом проекте"
     page: "Страница <b>%{name}</b> удалена"
     person: "%{name} больше не участвует в этом проекте"
     task: "Задача <b>%{name}</b> удалена"
     upload: "Файл <b>%{name}</b> удалён"
-  dividers: 
-    actions: 
+  dividers:
+    actions:
       delete_confirm: "Вы действительно хотите удалить этот разделитель?"
-    edit: 
+    edit:
       submit: Обновить
-    new: 
+    new:
       submit: Добавить
-  emailer: 
-    common: 
+  emailer:
+    common:
       answer_above_this_line: "ЧТОБЫ ОТВЕТИТЬ, ПИШИТЕ ВЫШЕ ЭТОЙ ЛИНИИ"
       do_not_answer: "Не отвечайте на это письмо."
-    confirm: 
+    confirm:
       follow_the_link: "Чтобы <b>завершить регистрацию</b> для Teambox, нужно войти, кликнув сюда:"
       hey: "Эй, %{user_name}!"
       log_in: "Войдите в Teambox сейчас!"
       plaintext_link: "Если ссылка сверху не работает, скопируйте и вставьте следующий код в адресную строку браузера: "
       problems: "Если у вас проблемы, свяжитесь с нами по адресу %{support}"
       report_abuse: "Вы получили это письмо, потому что зарегистрировались в Teambox с адресом %{email}"
-    invitation: 
+    invitation:
       accept_the_invitation: "Принять приглашение и начать сотрудничать"
       collaborate_with: "%{name} хочет сотрудничать с вами в Teambox:"
       current_users: "Текущие участники проекта:"
@@ -673,9 +673,9 @@ ru:
       report_abuse: "Это письмо было послано вам по запросу вашего знакомого. Пожалуйста, доложите, если вас замучали."
       teambox_is_a_pm_platform: "Teambox — это платформа для управления проектами, нацеленная на сотрудничество в реальнов мире."
       you_have_been_invited_to: "Вас пригласили в проект <b>%{project}</b>"
-    invitation_group: 
+    invitation_group:
       you_have_been_invited_to: "Вас пригласили в группу <b>%{group}</b>"
-    notify: 
+    notify:
       are_watching: " подписаны на это обсуждение, и будут уведомлены об ответах в будущем."
       assigned_to: "Назначен <b>%{user}</b>"
       comment: "Комментарий в обзоре проекта: "
@@ -692,18 +692,18 @@ ru:
       task: "Задача:"
       task_list: "Список задач:"
       view_online: "Вы можете <a href='%{link}'>просмотреть обсуждение на сайте</a>, ответить и приложить файлы."
-    reset_password: 
+    reset_password:
       follow_the_link: "Чтобы <b>установить новый пароль</b> для Teambox, нужно войти, кликнув сюда:"
       hey: "Эй, %{user_name}!"
       log_in: "Войдите в Teambox сейчас!"
       plaintext_link: "Если ссылка сверху не работает, скопируйте и вставьте следующий код в адресную строку браузера: "
       problems: "Если у вас проблемы, свяжитесь с нами по адресу %{support}"
       report_abuse: "Вы получили это письмо, потому что зарегистрировались в Teambox с адресом %{email}"
-    upload: 
+    upload:
       file: "Файл:"
       uploaded_by: загружен
-  example_projects: 
-    new: 
+  example_projects:
+    new:
       create: "Создать пробный проект"
       error: "Нельзя создать пробный проект."
       error_list: "Нельзя создать пробный проект. Следующие проекты не верны: %{list}."
@@ -712,25 +712,25 @@ ru:
       line2: "Переходя по страницам вы научитесь использовать каждую функцию Teambox."
       line3: "Внимательно <b>прочитайте инструкции</b> и <b>попробуйте</b> создавать, редактировать, удалять элементы!"
       line4: "В этом проекте вы не сможете приглашать других пользователей, но сможете делать всё остальное."
-  form: 
+  form:
     cancel: Отменить
-  groups: 
-    edit: 
+  groups:
+    edit:
       submit: Обновить
-    errors: 
+    errors:
       already_own: "Вы уже владеете группой!"
       no_edit: "Вы не можете изменить эту группу"
       not_admin: "Вы не можете администрировать эту группу"
       not_enabled: "В этой системе группы выключены "
-    fields: 
+    fields:
       description: Описание
       name: Название
       permalink: Адрес
       permalink_description: "Адрес, по которому группа будет доступна"
-    header: 
+    header:
       leave: Покинуть
       remove: Убрать
-    index: 
+    index:
       description: "Группы нужны, чтобы делиться материалами с другими и объединяться под общим именем!"
       groups_in: "Ваши группы"
       no_groups: "Вы не состоите ни в одной греппе."
@@ -738,27 +738,27 @@ ru:
       submit_project: Добавить
       title: Группы
       your_group: "Ваша группа"
-    logo_fields: 
+    logo_fields:
       current: "Текущий логотип"
       delete: Убрать
       description: "Этот логотип появится на всех проектах данной группы"
       upload: Загрузить
-    new: 
+    new:
       created: "Ваша группа создана"
       explain: "Вы можете создать только одну группу."
       submit: Создать
       title: "Создание группы"
-    primer: 
+    primer:
       create_group: "Создать группу"
       no_group_create: "Вы не владеете группой. %{link}."
-    search: 
+    search:
       invite: Пригласить
       invite_people: "Пригласить людей в эту группу"
       username_or_email: "Логин или электронный адрес"
-    show: 
+    show:
       add_project: "Добавить проект"
       edit: Изменить
-  hours: 
+  hours:
     all_tasks: "Все задачи"
     all_users: "Все пользователи"
     comments: "Записи времени"
@@ -766,54 +766,54 @@ ru:
     entry_total: Всего
     filter_by: "Фильтровать по"
     report: Отчёт
-    reports: 
+    reports:
       project: Проекты
       task: Задачи
       user: Пользователи
     week_num: "Неделя %{num}"
     week_total: Всего
-  invitations: 
-    errors: 
+  invitations:
+    errors:
       invalid: "Неверное приглашение"
       invalid_code: "Неверный код приглашение"
-    fields: 
+    fields:
       user_or_email: "Введите логин или электронную почту участника:"
-    group_invitation: 
+    group_invitation:
       invited_email: "%{inviter} приглашает <b>%{email}</b> присоединиться к группе."
       invited_user: "%{inviter} приглашает <b>%{invitee}</b> присоединиться к группе."
-    index_user: 
+    index_user:
       no_invitations: "Нет приглашений в очереди."
       title: "Приглашения в очереди"
-    invitation: 
+    invitation:
       discard: "Отменить приглашение"
       invited_email: "%{inviter} приглашает <b>%{email}</b> участвовать в проекте."
       invited_user: "%{inviter} приглашает <b>%{invitee}</b> участвовать в проекте."
       pending: "Письмо послано этому пользователю, но он ещё не подтвердил его."
       resend: "Послать приглашение заново"
       time_ago: "(%{time_ago_in_words} назад)"
-    pending: 
+    pending:
       invited_to_join: "%{by} приглашает вас участвовать в проекте %{project}."
       invited_to_join_group: "%{by} приглашает вас присоединиться к группе %{group}."
       to_access_or: "участвовать в проекте или"
       to_access_or_group: "присоединиться к группе или"
-    recent: 
+    recent:
       invite: "Пригласить %{username}"
-    resend: 
+    resend:
       resent: "Приглашение отправлено получателю %{recipient}. Если письмо не дошло, пригласите его ещё раз."
       return: Назад
-    search: 
+    search:
       invite: Пригласить
       invite_from_project: "Пригласить из проекта"
       invite_people: "Пригласить участников в проект"
       role: "Выбрать роль"
       submit: Послать
       username_or_email: "Введите логин или электронную почту участника"
-    sent: 
+    sent:
       email_sent: "<b>Мы только что послали уведомление со ссылкой подтверждения этому пользователю with</b>. Если они не нашли письмо, проверьте, не упало ли оно в спам или попробуйте другой адрес электронной почты. Если проблема не исчезнет, свяжитесь с администрацией."
   latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
-  locales: 
+  locales:
     ru: Русский
-  not_found: 
+  not_found:
     conversation: "Обсуждение %{id} не найдено в этом проекте."
     group: "Группа %{id} не существует."
     page: "Страница %{id} не найдена в этом проекте."
@@ -821,32 +821,32 @@ ru:
     task: "Задача %{id} не найдена в этом проекте."
     task_list: "Список задач %{id} не найден в этом проекте."
     user: "Пользователь не существует."
-  notes: 
-    actions: 
+  notes:
+    actions:
       delete_confirm: "Вы действительно хотите удалить этот текст?"
-    edit: 
+    edit:
       submit: "Обновить текст"
-    fields: 
+    fields:
       body: Сообщение
       text_styling: "Оформление текста"
       title: Заголовок
-    new: 
+    new:
       submit: "Добавить текст"
-  number: 
-    currency: 
-      format: 
+  number:
+    currency:
+      format:
         delimiter: ","
         format: "%u%n"
         separator: "."
         unit: р
-    format: 
+    format:
       delimiter: ","
       separator: "."
-    human: 
-      storage_units: 
+    human:
+      storage_units:
         format: "%n %u"
-        units: 
-          byte: 
+        units:
+          byte:
             few: байта
             many: байт
             one: байт
@@ -855,7 +855,7 @@ ru:
           kb: КБ
           mb: МБ
           tb: ТБ
-  page_title: 
+  page_title:
     archived_task_lists: "Заархивированные списки задач"
     create_uploads: "Загрузить файл"
     create_users: Зарегистрироваться
@@ -874,28 +874,28 @@ ru:
     new_users: Войти
     show_projects: Обзор
     welcome_users: "Добро пожаловать!"
-  pages: 
-    buttons: 
+  pages:
+    buttons:
       new_divider: Разделитель
       new_note: Текст
       new_task_list: "Список задач"
       new_upload: Файл
-    column: 
+    column:
       cant_create: "Вы не можете создавать страницы в этом проекте"
       new_page: "Новая страница"
-    edit: 
+    edit:
       submit: Обновить
       title: "Редактировать страницу"
-    fields: 
+    fields:
       description: Описание
       description_description: "не обязательно. Дайте информацию, которую должны знать люди, вносящие изменения в страницу."
       name: Название
       name_description: "Дайте краткое описательное название"
-    index: 
+    index:
       pages_in_this_project: "Страницы этого проекта"
-      rss: 
+      rss:
         description: "Страницы проекта %{name}"
-    new: 
+    new:
       define1: "Здесь вы можете <b>делиться с командой полезной информацией</b>: план, интересные ссылки, инструкции, шаблоны электронных писем..."
       define2: "Заполнение страницы — это легко и весело, вы можете перетаскивать элементы страницы и редактировать их."
       feature1: "<b>Делитесь</b>. Все ваши коллеги могут просматривать и изменять страницы проекта."
@@ -906,7 +906,7 @@ ru:
       footer2: "Вы также можете прикладывать файлы к любым страницам. Наслаждайтесь!"
       submit: Создать
       title: "Новая страница"
-    primer: 
+    primer:
       create_first: "Создать первую страницу проекта!"
       define1: "Здесь вы можете <b>делиться с командой полезной информацией</b>: план, интересные ссылки, инструкции, шаблоны электронных писем..."
       define2: "Заполнение страницы — это легко и весело, вы можете перетаскивать элементы страницы и редактировать их."
@@ -917,27 +917,27 @@ ru:
       item2: "<b>Публиковать</b>. Опубликуйте страницы проекта, покажите их миру."
       item3: "<b>Распечатать</b>. Страницы подходят для печати. Попробуйте распечатать или сохранить в PDF!"
       item4: "<b>Wiki</b>. Страницы работают, как справочник, предоставляя информацию по проекту."
-    slots: 
+    slots:
       insert_here: "Добавить сюда"
-  people: 
-    column: 
+  people:
+    column:
       confirm_delete: "Вы действительно хотите покинуть этот проект?"
       inviting: "Приглашение других пользователей"
       leave_project: "Покинуть проект"
       leaving: "Выход из проекта"
       only_admins_can_invite: "Только администраторы могут приглашать новых пользователей в проект."
       you_can_leave: "Вы можете покинуть проект в любой момент. Если покинете, вы больше не будете иметь доступ к данным проекта и не будете получать уведомлений. Другие участники по-прежнему смогут участвовать в проекте, данные не будут потеряны."
-    edit: 
+    edit:
       submit: "Обновить данные"
-    errors: 
+    errors:
       user_or_email: "Пользователь не найден. Введине его логин или электронный адрес."
-    fields: 
+    fields:
       admin: "Администратор. Может приглашать пользователей в проект."
       commenter: "Комментатор. Может комментировать, но не создавать новые элементы."
       observer: "Наблюдатель. Доступ к проекту только для чтения."
       participant: "Участник. Может делать всё, кроме приглашения новых пользователей."
       role: Роль
-    header: 
+    header:
       admin: Администратор
       commenter: Комментатор
       confirm_delete: "Вы действительно хотите выгнать этого милого человека из проекта?"
@@ -947,10 +947,10 @@ ru:
       participant: Участник
       remove: Убрать
       transfer: "Передать владение"
-    link: 
+    link:
       edit: Редактировать
-  projects: 
-    edit: 
+  projects:
+    edit:
       change_owner: "Сменить владельца"
       invalid_transferred: "Владение проектом не может быть передано, исправьте ошибки и попробуйте ещё раз."
       submit: "Сохранить изменения"
@@ -959,7 +959,7 @@ ru:
       title_picture: "Лого проекта"
       title_settings: "Основные настройки"
       transferred: "Владение проектом передано."
-    fields: 
+    fields:
       archived: "Архивировать этот проект"
       archiving: "Архивировать этот проект"
       confirm_delete: "Вы действительно хотите навсегда удалить этот проект? ВОССТАНОВИТЬ ЕГО БУДЕТ НЕЛЬЗЯ. Если вы хотите просто скрыть или отложить его, используйте архивирование."
@@ -970,15 +970,15 @@ ru:
       permalink: Адрес
       permalink_description: "Это будет в адресе вашего проекта. Как можно короче и без пробелов."
       tracks_time: "Включить учет времени"
-    index: 
+    index:
       archived: "Показать %{count} заархивированные проекты..."
       new_project: "Новый проект"
       projects: "Мои проекты"
-      rss: 
+      rss:
         description: "Обзор всех ваших проектов"
         title: "Обзор проектов"
       subscribe: "Подписаться на новости"
-    new: 
+    new:
       create_an_example_project: "Первый раз в Teambox? <a href='%{link}'>Создайте пробный проект</a> и поиграйте с ним."
       created: "Ваш проект создан!"
       invalid_project: "Неверный проект, исправьте ошибки и попробуйте ещё раз."
@@ -986,7 +986,7 @@ ru:
       not_allowed: "Вам нельзя создавать проекты с вашего текущего аккаунта."
       submit: "Создать проект и пригласить участников"
       title: "Создать проект"
-    new_primer: 
+    new_primer:
       define1: "Проект — это группа, разделённая с вашими колегами."
       define2: "Внутри проекта каждый участник может:"
       feature1: "Посылать обновления статуса."
@@ -999,7 +999,7 @@ ru:
       footer: "Этот проект будет принадлежать вам. Вы можете передать этот проект другим участникам в любое время."
       limited: "У вас бесплатный аккаунт, вы можете загрузить только до 50 МБ файлов в этот проект."
       upgrade: "Улучшите свой аккаунт прямо сейчас!"
-    primer: 
+    primer:
       create_first: "Создайте свой новый проект!"
       define1: "Проекты используются для <b>сотрудничества</b> с людьми: Веб-сайт, организация праздника, работа с клиентами..."
       define2: "Вы можете создать <b>сколько угодно</b> проектов и работать с разными людьми."
@@ -1010,63 +1010,63 @@ ru:
       item3: "<b>Обсуждайте</b> важные решения в ветке обсуждений."
       item4: "<b>Планируйте</b> дальнейшую работу и в ветке задач."
       item5: "<b>Делитесь информацией</b> в легко редактируемых страницах для каждого проекта."
-    show: 
+    show:
       new_task_list_link: "Новый список задач"
-      rss: 
+      rss:
         description: "Последние действия по проекту %{name}"
         title: "%{name}"
       subscribe: "Подписаться на новости"
       text_styling: "Оформление текста"
       tip: "Упоминание чьего-либо имени автоматически уведомит этого пользователя по электронной почте"
       update_your_status: "Обновить ваш статус..."
-  reset_passwords: 
-    create: 
+  reset_passwords:
+    create:
       invalid: "Ссылка для сброса пароля устарела. Попробуйте запросить ссылку заново.<br/>Если ничего не получится, свяжитесь с нами по адресу %{support}"
       not_found: "Пользователь с адресом %{email} не найден<br/>Пожалуйста, проверьте написание адреса и попробуйте ещё раз. Если ничего не получится, свяжитесь с нами по адресу %{support}"
       password_not_updated: "Новый пароль не подходит. Попробуйте ещё раз."
       password_updated: "Пароль успешно изменён. Войдите."
-    new: 
+    new:
       back: "Назад на страницу входа"
       email: "С каким электронным адресом регистрировались?"
       submit: "Пошлите мне ссылку, чтобы сбросить пароль"
       title: "Забыли пароль?"
-    sent: 
+    sent:
       change_password_now: "Вы вошли. <b>Введите новый пароль,</b> да такой, чтобы не забыть!"
       follow_the_link: "Пройдите по ссылке в письме, чтобы войти в Teambox. Если не нашли, посмотрите в спаме."
       login_link_sent: "Мы отправили письмо на %{email}, чтобы вы смогли восстановить пароль."
       not_found: "Электронная почта <b>%{email}</b> не принадлежит ни одному пользователю Teambox. Неправильно ввели?"
       title: "Сбросить пароль"
-  sessions: 
-    fields: 
+  sessions:
+    fields:
       forgot: "Забыли пароль?"
       password: Пароль
       signup: Зарегистрироваться
       username_or_email: "Адрес или логин"
-    new: 
+    new:
       login_failed: "Не получается войти как %{login}"
       submit: Вход
       title: Вход
       video: "Что такое Teambox?"
-  shared: 
-    archived_projects: 
+  shared:
+    archived_projects:
       archived_projects: "Заархивированные проекты"
-    footer: 
+    footer:
       help: Помощь
       mobile: "Мобильная версия"
       support: "Обратная связь"
-    gantt_banner_primer: 
+    gantt_banner_primer:
       title: "Нет списков задач для отображения на графике Гантта"
-    global_navigation: 
+    global_navigation:
       home: Главная
       login: Войти
       logout: Выйти
       project_invitations: "Приглашения (%{count})"
       settings: Настройки
-    navigation: 
+    navigation:
       all_projects: "Все проекты"
       new_project: +
       welcome: Приветствие
-    project_navigation: 
+    project_navigation:
       all_conversations: "Все обсуждения"
       all_pages: "Все страницы"
       all_task_lists: "Все задачи"
@@ -1082,14 +1082,14 @@ ru:
       signup: Регистрация
       task_lists: "Списки задач"
       time_tracking: Сроки
-    project_settings_navigation: 
+    project_settings_navigation:
       deletion: "Удаление/архивирование проектов"
       general: "Основные настройки"
       ownership: Владение
       picture: "Картинка проекта"
-    projects: 
+    projects:
       projects: Проекты
-    public_navigation: 
+    public_navigation:
       community: Сообщество
       help: "Помощь и поддержка"
       home: Teambox
@@ -1098,101 +1098,101 @@ ru:
       terms: "Правила использования"
       tour: Вступление
       users: "Наши пользователи"
-    strip: 
+    strip:
       archived: "Этот проект заархивирован. Чтобы редактировать или комментировать проект, вы должны разархивировать его на <a href='%{link}'>странице настроек проекта</a>"
-    task_navigation: 
+    task_navigation:
       all_tasks: "Все задачи"
       everybodys_tasks: "Общие задачи"
       hide_archived_tasks: "Скрыть архивные задачи"
-      my_tasks: 
+      my_tasks:
         one: "Моя задача"
         other: "%{count} моих задач"
       unarchived_tasks: "Разархивированные задачи"
-    upcoming_events_primer: 
+    upcoming_events_primer:
       title: "Нет задач для отображения в календаре"
-    upgrade_browser: 
+    upgrade_browser:
       chrome: "Chrome,"
       firefox: Firefox
       ie: "Обновите Internet Explorer"
       or_install: "или установите"
       safari: Safari
       upgrade: "Вы используете сильно устаревшую версию Internet Explorer. Teambox может работать неверно."
-    user_navigation: 
+    user_navigation:
       account_settings: "Настройки аккаунта"
       notifications: Уведомления
       profile_information: "Информация профиля"
       profile_picture: "Картинка профиля"
-    watchers: 
+    watchers:
       nobody_watching: "Никто не следит"
       people_watching: "Следят: "
       started_watching: "Теперь вы будете получать уведомления."
       stopped_watching: "Больше вы не будете получать уведомления."
       unwatch: "Не следить"
       watch: Следить
-  support: 
-    array: 
+  support:
+    array:
       last_word_connector: " и "
       two_words_connector: " и "
       words_connector: ", "
-    select: 
+    select:
       prompt: "Пожалуйста, выберите"
-  task_lists: 
-    actions: 
+  task_lists:
+    actions:
       archive: "Поместить этот список задач в архив"
       confirm_resolve_and_archive: "Вы уверены, что хотите завершить все задачи и поместить этот список задач в архив?"
       rename: "Переименовать список задач"
       resolve_and_archive: "Завершить все задачи и архивировать"
       set_dates: "Установить даты начала и завершения"
-      show_archived: 
+      show_archived:
         one: "Показать 1 архивную задачу"
         other: "Показать %{count} архивных задач"
-    archive_box: 
+    archive_box:
       unarchive_list: "Этот список задач заархивирован."
-    archived: 
+    archived:
       description: "Вы просматриваете архивные задачи."
       title: "Все архивные задачи"
-    column: 
+    column:
       cant_create: "Вы не можете создавать списки задач в этом проекте"
       new_task_list: "Новый список задач"
       other_views: "Другие представления"
       subscribe: "Подписаться на новости"
-    destroy_message: 
+    destroy_message:
       deleted: "Список задач <b>%{name}</b> удалён!"
-    edit: 
+    edit:
       submit: "Обновить список задач"
-    errors: 
-      name: 
+    errors:
+      name:
         cant_be_blank: "Название не может быть пустым"
         too_long: "Название должно быть короче 255 символов"
-    fields: 
+    fields:
       finish_on: "Конец... <i>не обяз.</i>"
       name: "Название списка задач"
       start_on: "Начало... <i>не обяз.</i>"
       task_list: "Списки задач определяют этапы проекта. Внутри списка задач вы можете создавать задачи и распределять их между участниками."
-    filter: 
+    filter:
       assigned_to: "Показать задачи, назначенные на..."
       due_date: "Показать задачи, завершающиеся до..."
-    index: 
+    index:
       add_link: "Новый список задач"
       empty: "Нет задач в этой категории!"
       other_views: "Другие представления"
       tasks_for_all_projects: "Задачи во всех проектах"
       tasks_for_project: "Списки задач этого проекта"
-    link: 
+    link:
       edit: Редактировать
       new: "Новый список задач"
       reorder: Сортировать
       reorder_done: "Сортировка выполнена"
       unarchive: "Вернуть из архива"
-    new: 
+    new:
       submit: "Добавить список задач"
       title: "Новый список задач"
-    overview_box: 
+    overview_box:
       ends_on: "Дата завершения:"
       starts_on: "Начальная дата:"
       this_list: "Этот список задач"
       undefined: "Не определено"
-    primer: 
+    primer:
       create_first: "Создайте первый список задач в этом проекте!"
       define: "Задачи нужны, чтобы <b>планировать</b>, <b>следить за выполнением</b> и <b>проверять, что было сделано</b>.<br/><i>Что? Кто? Когда?</i> У задачи есть статус, ответственный участник и срок."
       empty: "В этом проекте пока нет списков задач."
@@ -1202,31 +1202,32 @@ ru:
       item2: "<b>Отчёты</b>. Пишите комментарии для каждой задачи, прикладывайте файлы, просите помощи."
       item3: "<b>Следите</b>. Получайте уведомления по задачам, связанным с вами."
       item4: "<b>Проверяйте</b>. Законченная задача не удаляется, вы можете просматривать сообщения и файлы задачи позднее."
-    show: 
+    show:
       title: "Список задач: %{name}"
-  tasks: 
-    archive_box: 
+  tasks:
+    archive_box:
       archive: "Архивировать эту задачу"
       reopen: "Открыть эту задачу заново"
       you_are_done: "Кажется, будто мы покончили с этой задачей!"
-    archive_message: 
+    archive_message:
       archived: "Задача <b>%{name}</b> заархивирована!"
-    assigned: 
+    assigned:
       assigned_to: "Назначена %{user}"
     create: "Добавить задачу"
-    destroy_message: 
+    destroy_message:
       deleted: "Задача <b>%{name}</b> удалена!"
-    due_on: 
+    due_on:
       due_on: до
       today: Сегодня
       tomorrow: Завтра
-    edit: 
+    edit:
       submit: "Обновить задачу"
-    errors: 
-      name: 
+      finish: "завершить задачу"
+    errors:
+      name:
         cant_be_blank: "не должно быть пустым"
         too_long: "должно быть короче 255 символов"
-    fields: 
+    fields:
       assigned_to: "Кто ответственный?"
       body: Описание
       due_on: "Нужно сделать до... <i>(не обяз.)</i>"
@@ -1234,52 +1235,52 @@ ru:
       optional: Необязательно
       task: Задача
       title: "Название задачи"
-    link: 
+    link:
       edit: Редактировать
-      hide_archived_tasks: 
+      hide_archived_tasks:
         one: "Скрыть 1 архивную задачу"
         other: "Показать %{count} архивных задач"
       new: "+ Добавить задачу"
-    my_tasks: 
+    my_tasks:
       my_tasks: "Мои задачи"
-    new: 
+    new:
       submit: "Добавить задачу"
       title: "Новая задача"
     overdue: "опоздание %{days} дней"
-    show: 
+    show:
       title: "Задача: %{name}"
-    status: 
+    status:
       hold: отложен
       new: новый
       open: открыт
       rejected: отклонён
       resolved: разрешён
-    unarchive_box: 
+    unarchive_box:
       reopen: "Открыть эту задачу заново"
       task_is_closed: "Задача закрыта и заархивирована"
       unarchive: Разархивировать
-  time: 
+  time:
     am: утра
-    formats: 
+    formats:
       default: "%Y-%b-%d, %a %H:%M:%S"
       long: "%d %b %Y, %H:%M"
       short: "%H:%M"
     pm: вечера
-  uploads: 
+  uploads:
     comment_upload_link: Вложение
-    form: 
+    form:
       description: "Название <i>(не обяз.)</i>"
       max_size: "Размер файла не может превышать %{mb}"
       presence: "Нельзя загружать пустые файлы"
       select_file: "Выбрать файл"
       upload: "Загрузить файл"
-    index: 
+    index:
       cant_create: "Вы не можете загружать файлы в этот проект"
       max_upload_size: "Максимальный размер %{mb} МБ"
       new_file: "Загрузить файл"
-    new: 
+    new:
       select_a_file: "Выбрать файл"
-    primer: 
+    primer:
       create_first: "Загрузите первый файл в проект!"
       define1: "Когда-нибудь натыкались на проблему передачи файлов коллегам? Teambox опять всё упрощает."
       define2: "Здесь вы можете загружать файлы или прикладывать документы к обсуждениям, задачам или страницам."
@@ -1287,22 +1288,22 @@ ru:
       item1: "<b>Большие файлы</b>. Загружайте файлы любого размера и забудьте об ограничениях электронной почты."
       item2: "<b>Версии</b>. Загружайте новые версии файла и следите за изменениями."
       item3: "<b>Всегда доступны</b>. Файлы всегда остаются в проекте, на них можно ссылаться в будущем."
-    upload: 
+    upload:
       download: Скачать
       on_: в
       remove: Удалить
       uploaded_by: Загружен
-  users: 
-    activation: 
+  users:
+    activation:
       activated: "Ваш аккаунт активирован! Добро пожаловать в Teambox!"
       already_done: "Вы уже активировали аккаунт! Пожалуйста, пользуйтесь Teambox."
       invalid: "<p>Неверная или просроченная ссылка активации. Войдите с помощью электронного адреса и пароля.</p><p>Если вы всё забыли, пройтите по ссылке восстановления пароля.</p>"
       invalid_user: "Неверный пользователь"
       resent: "Мы послали вам письмо со ссылкой активации. Проверьте почтовый ящик!"
-    create: 
+    create:
       error: "Мы не смогли зарегистрировать этот аккаунт, простите. Пожалуйста, попробуйте ещё раз, или свяжитесь с администрацией."
       thanks: "Спасибо за регистрацию!"
-    daily_task_reminder_email: 
+    daily_task_reminder_email:
       daily_task_reminder: "Ежедневное напоминание"
       daily_task_reminder_from_teambox: "Это ежедневное напоминание о задачах"
       late_tasks: "Просроченные задачи"
@@ -1312,15 +1313,15 @@ ru:
       tasks_for_tomorrow: "Задачи на завтра"
       tasks_without_a_due_date: "Задачи без срока"
       you_receive_this_message: "Вы получили это сообщение, потому что подписались на него. Можете отключить его тут %{link}"
-    edit: 
+    edit:
       submit: Сохранить
       title_deletion: "Архивация и удаление проектов"
       title_notifications: "Ваши уведомления"
       title_picture: "Настройки картинки профиля"
       title_profile: "Настройки профиля"
       title_settings: "Настройки аккаунта"
-    form: 
-      picture: 
+    form:
+      picture:
         field: "Ваш аватар"
         max_size: "Нельзя загружать файл больше %{mb}"
         presence: "Нельзя загружать пустой файл"
@@ -1346,13 +1347,13 @@ ru:
       password_confirmation: "Подтверждение пароля"
       sunday: Воскресенье
       time_zone: "Часовой пояс"
-      tooltips: 
+      tooltips:
         email: "Введите действующую электронную почту, по которой мы можем связаться с вами."
         first_name: "До 20 символов."
         last_name: "До 20 символов."
         login: "Вам нужен логин, чтобы войти. Люди смогут найти вас по логину. Должен быть только маленькими латинскими буквами, без пробелов."
         password: "Сочетания латинских букв или цифр"
-    new: 
+    new:
       existing_user: "Если у вас уже есть аккаунт, <a href='%{login_url}'>войдите</a> или <a href='%{forgot_url}'>восстановите пароль</a>."
       no_public_signup: "Публичный вход не разрешён в этой системе."
       submit: "Создать запись"
@@ -1360,12 +1361,12 @@ ru:
       title: "Создание аккаунта"
       you_already_have_an_account: "Вы уже зарегистрировали электронную почту %{email}. <a href='%{login_link}'>Войдите</a> или <a href='%{reset_password_link}'>сбросьте пароль</a>, если забыли его."
       you_are_logged_in: "У вас уже есть аккаунт. Чтобы войти другим пользователем, сначала выйдите."
-    show: 
+    show:
       pending_invite: "%{name} приглашён в один из ваших проектов. Вы не сможете увидеть больше информации, пока пользователь не примет приглашение."
       profile: Профиль
       projects: Проекты
       recent_activity_for: "Последние действия %{user_name}"
-    unconfirmed_email: 
+    unconfirmed_email:
       follow_the_link: "Пожалуйста, <b>откройте письмо и пройдите по ссылке внутри него</b>, чтобы активировать аккаунт."
       invitation_sent_to: "Приглашение отправлено на <i>%{email}</i>, чтобы подтвердить вашу электронную почту."
       problems: "Если у вас всё равно проблемы, свяжитесь с нами по адресу %{support}"
@@ -1374,21 +1375,21 @@ ru:
       spam: "Убедитесь, что письмо не было помечено, как спам."
       title: "Подтвердить электронную почту"
       wrong_address: "Неверный адрес? Если вы опечатались в адресе, <a href='%{link}'>отмените регистрацию</a> и зарегистрируйтесь заново с правильным адресом."
-    update: 
+    update:
       error: "Не получилось обновить профиль. Пожалуйста, исправьте ошибки и попробуйте ещё раз."
       updated: "Профиль обновлён!"
-    user: 
+    user:
       formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: "Выгнать из проекта"
-    welcome: 
+    welcome:
       get_started: "Начни пользоваться Teambox!"
       intro1: "Вы наш новый польователь! Скоро вы поймёте, как Teambox помогает начать рабочий день."
       intro2: "Что теперь? Создайте проект, чтобы <b>сотрудничать</b> с коллегами:"
-      projects: 
+      projects:
         create_your_first_project: "Событие, дизайн, продукт? Попробуйте <a href='%{link}'>создать новый проект</a> прямо сейчас!"
         share_and_collaborate: "Делитесь и сотрудничайте с командой! Обновления, обсуждения, задачи, страницы, файлы проекта."
         title: Проекты
-      spread: 
+      spread:
         facebook: Facebook
         help: "Вы можете <b>помочь нам</b>, рассказав друзьям, как хорош Teambox"
         in_your_site: "на своём сайте!"
@@ -1397,7 +1398,7 @@ ru:
         title: "Вы нас тоже любите?"
         twitter: "Twitter,"
       stop_welcome: "Не показывать больше это вступительное приветствие"
-  weakling: 
+  weakling:
     average: средний
     default: "Должно быть не меньше 5 символов"
     error: "слишком короткое"

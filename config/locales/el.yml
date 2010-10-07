@@ -1,266 +1,266 @@
 # Original translation
 # Mark missing translations by adding ##### at the end of the line
-en:
+el:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  latest_announcement: "Διαβάστε <a href='http://blog.teambox.com'>το blog μας</a> για τα τελευταία νέα σχετικά με το Teambox."
   common:
-    and: and
-    or: or
-    in_project: in
-    delete: Delete
-    edit: Edit
-    rename: Rename
-    accept: Accept
-    decline: Decline
-    cancel: Cancel
-    close: Close
-    save: Save
-    show_more: Show more
-    print: Print this page
-    prev: Previous
-    next: Next
+    and: και
+    or: η
+    in_project: μέσα
+    delete: Διαγραφή
+    edit: Επεξεργασία
+    rename: Μετονομασία
+    accept: Αποδοχή
+    decline: Άρνηση
+    cancel: Ακύρωση
+    close: Κλείσε
+    save: Αποθήκευση
+    show_more: Δείτε περισσότερα
+    print: Εκτυπώστε αυτή τη σελίδα
+    prev: Προηγούμενο
+    next: Επόμενο
     tasks:
-      one: 1 task
-      other: "%{count} tasks"
+      one: 1 εργασία
+      other: "%{count} εργασίες"
     comment:
-      one: "%{count} comment"
-      other: "%{count} comments"
-    not_allowed: You are not allowed to do that!
-    calendar: Calendar
-    gantt_chart: Gantt Chart
+      one: "%{count} σχόλιο"
+      other: "%{count} σχόλια"
+    not_allowed: Απαγορευμένη δράση
+    calendar: Ημερολόγιο
+    gantt_chart: Γράφημα Gantt
   confirm:
-    delete_task_list: Are you sure you want to delete this task list?
-    delete_task: Are you sure you want to delete this task?
-    delete_page: Are you sure you want to delete this page?
-    delete_upload: Are you sure you want to delete this file?
+    delete_task_list: Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή τη λίστα εργασιών;
+    delete_task: Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή τη εργασία;
+    delete_page: Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή τη σελίδα;
+    delete_upload: Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το αρχείο;
   not_found:
-    user: "User does not exist."
-    conversation: "Conversation %{id} not found in this project."
-    project: "The project %{id} doesn't exist."
-    page: "Page %{id} not found in this project."
-    task_list: "Task list %{id} not found in this project."
-    task: "Task %{id} not found in this project."
+    user: "Ο χρήστης δεν υπάρχει."
+    conversation: "Η συνομιλία %{id} δεν υπάρχει σε αυτό το έργο."
+    project: "Το έργο %{id} δεν υπάρχει."
+    page: "Η σελίδα %{id} δεν υπάρχει σε αυτό το έργο."
+    task_list: "Η λίστα εργασιών %{id} δεν υπάρχει σε αυτό το έργο."
+    task: "Η εργασία %{id} δεν υπάρχει σε αυτό το έργο."
   deleted:
-    conversation: "Deleted <b>%{name}</b> conversation"
-    task: "Deleted <b>%{name}</b> task"
-    task_list: "Deleted <b>%{name}</b> task list"
-    page: "Deleted <b>%{name}</b> page"
-    upload: "Deleted <b>%{name}</b> file"
-    person: "%{name} is no longer in the project"
-    left_project: "You are no longer in this project"
+    conversation: "Έχει διαγραφτή η συνομιλία <b>%{name}</b>"
+    task: "Έχει διαγραφτή η εργασία <b>%{name}</b>"
+    task_list: "Έχει διαγραφτή η λίστα εργασιών <b>%{name}</b>"
+    page: "Έχει διαγραφτή η σελίδα <b>%{name}</b>"
+    upload: "Έχει διαγραφτή το αρχείο <b>%{name}</b>"
+    person: "%{name} δεν είναι πλέον σ'αυτό το έργο"
+    left_project: "Δεν είστε πλέον σ'αυτό το έργο"
   activities:
     create_upload:
-      title: "%{user} uploaded file %{file}"
+      title: "Ο/Η %{user} έχει φορτώση το αρχείο %{file}"
     create_conversation:
-      create_conversation: started the conversation
-      title: "%{user} started a conversation: %{conversation}"
+      create_conversation: ξεκίνησε τη συνομιλία
+      title: "%{user} ξεκίνησε μια συνομιλία: %{conversation}"
     create_comment:
-      create_comment: created the comment
-      title: "%{user} commented on %{target}"
+      create_comment: έκανε το σχόλιο
+      title: "Ο/Η %{user} σχολίασε το θεμα %{target}"
     create_comment_task:
-      title: "%{user} updated task %{target}"
+      title: "Ο/Η %{user} ενημέρωσε την εργασία %{target}"
     create_comment_project:
-      title: "%{user} updated status on %{target}"
+      title: "Ο/Η %{user} ενημέρωσε την ένδειξη κατάστασης %{target}"
     create_comment_conversation:
-      title: "%{user} followed up on conversation %{target}"
+      title: "Ο/Η %{user} έδωσε συνέχεια στην συνομιλία %{target}"
     create_task_list:
       create_task_list: created the task list
-      title: "%{user} created task list %{task_list}"
+      title: "Ο/Η %{user} δημιούργησε την λίστα εργασιών %{task_list}"
     create_task:
       create_task: created the task
-      title: "%{user} created task %{task} in %{task_list}"
+      title: "Ο/Η %{user} δημιούργησε την εργασία %{task} μέσα στο %{task_list}"
     create_page:
       create_page: created the page
-      title: "%{user} created page %{page}"
+      title: "Ο/Η %{user} δημιούργησε την σελίδα %{page}"
     edit_page:
       edit_page: edited the page
-      title: "%{user} edited the page %{page}"
+      title: "Ο/Η %{user} ενημέρωσε την σελίδα %{page}"
     create_note:
       create_note: added note
-      title: '%{user} created note <strong>%{note}</strong> in %{page}'
+      title: 'Ο/Η %{user} δημιούργησε τη σημείωση <strong>%{note}</strong> στην %{page}'
     edit_note:
       edit_note: edited note
-      title: '%{user} edited the note "%{note}" in %{page}'
+      title: 'Ο/Η %{user} ενημέρωσε την σημείωση "%{note}" στην %{page}'
     create_person:
-      create_person: joined the project
-      by: by
-      title: "%{person} joined the project %{project}"
+      create_person: προστέθηκε στο έργο
+      by: από
+      title: "Ο/Η %{person} προστέθηκε στο έργο %{project}"
     delete_person:
-      delete_person: left the project
-      by: by
-      left: left the project
-      title: "%{person} left the project %{project}"
+      delete_person: εγκατέλειψε το έργο
+      by: απο
+      left: εγκατέλειψε το έργο
+      title: "Ο/Η %{person} εγκατέλειψε το έργο %{project}"
     create_project:
-      left: created the project
-      title: "%{person} created the project %{project}"
+      left: δημιούργησε το έργο
+      title: "Ο/Η %{person} δημιούργησε το έργο %{project}"
 
     thread:
-      on_task_list: "on"
+      on_task_list: "στο"
       more_comments:
-        one: "Show one previous comment"
-        other: "Show %{count} previous comments"
+        one: "Παρουσιάσε ένα προηγούμενο σχόλιο"
+        other: "Παρουσιάσε %{count} προηγούμενα σχόλια"
       created:
-        task: "created a task"
-        conversation: "created the conversation"
+        task: "δημιούργησε μια εργασία"
+        conversation: "δημιούργησε την συνομιλία"
   avatars:
     new:
-      title: Upload an avatar
-      upload: Upload
+      title: Φορτώστε ένα είδωλο
+      upload: Φόρτωση
     edit:
-      upload_new_image: Upload a new image for your avatar
-      upload: Upload this avatar
+      upload_new_image: Φορτώστε μια άλλη εικόνα για το είδολο σας
+      upload: Φορτώστε αυτό το είδωλο
     show:
-      save: Save Changes
+      save: Αποθήκευστε τις αλλαγές
   reset_passwords:
     new:
-      title: So you forgot your password?
-      email: Which email did you sign up with?
-      back: Back to Login screen
-      submit: Send me a link to reset my password
+      title: Έτσι έχετε ξεχάσει τον κωδικό σας;
+      email: Με ποιο email κάνετε την εγγραφή σας?
+      back: Επιστροφή στην σελίδα Εισόδου
+      submit: Στείλε μου ένα σύνδεσμο για να επαναφέρετε τον κωδικό μου
     create:
-      not_found: "We can't find a user with that email: %{email}<br/>Please check the email address and try again. If that doesn't work, contact us at %{support}"
-      invalid: "The change password URL you visited is either invalid or expired. Try using I Forgot my Password again from the home page.<br/>If that doesn't work, contact us at %{support}"
-      password_not_updated: "New password is not valid. Try again."
-      password_updated: "Password was successfully updated."
+      not_found: "Δεν μπορούμε να βρούμε έναν χρήστη με το e-mail: %{email}<br/>Σας παρακαλούμε, ελέγξτε το e-mail και προσπαθήστε ξανά. Αν αυτό δεν δουλέψει, επικοινωνήστε μαζί μας στο %{support}"
+      invalid: "Η αλλαγή κωδικού πρόσβασης URL που επισκεφτήκατε είτε είναι άκυρο ή έχει λήξη. Δοκιμάστε να χρησιμοποιήσετε Ξέχασα τον κωδικό μου και πάλι από την αρχική σελίδα.<br/>Αν αυτό δεν δουλέψει, επικοινωνήστε μαζί μας στο %{support}"
+      password_not_updated: "Νέος κωδικός πρόσβασης δεν είναι έγκυρη. Προσπαθήστε ξανά."
+      password_updated: "Κωδικός πρόσβασης ενημερώθηκε επιτυχώς."
     sent:
       title: Reset Password
-      login_link_sent: "We just sent you an email to %{email} so you can retrieve your password."
-      follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
-      not_found: "The email <b>%{email}</b> doesn't belong to any Teambox user. Maybe you misspelt it?"
-      change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"
+      login_link_sent: "Σας έχουμε στείλει ένα email στο %{email} ώστε να μπορείτε να ανακτήσετε τον κωδικό πρόσβασής σας."
+      follow_the_link: "Ακολουθήστε το link μέσα σε αυτό το email για να συνδεθείτε στο Teambox! Εάν δεν μπορείτε να το βρείτε, αναζητήστε τον στο φάκελο spam."
+      not_found: "Το ηλεκτρονικό ταχυδρομείο <b>%{email}</ b> δεν ανήκει σε κανένα χρήστη Teambox. Ίσως να έχει ορθογραφικά λάθη."
+      change_password_now: "Είστε πλέον συνδεδεμένος. <b>Επιλέξτε έναν νέο κωδικό πρόσβασης τώρα</b> για να μην το ξεχάσετε!"
     reset:
-      title: You can now reset your password
-      submit: Reset my password
+      title: Μπορείτε να επαναφέρετε τον κωδικό πρόσβασής σας τώρα
+      submit: Επαναφέρετε τον κωδικό μου
   cards:
     card:
-      phone_numbers: Phone Numbers
-      email_addresses: Email Addresses
-      websites: Websites
-      addresses: Addresses
+      phone_numbers: Αριθμοί Τηλεφώνων
+      email_addresses: Διευθύνσεις Email
+      websites: Δικτυακοί τόποι
+      addresses: Διευθύνσεις
       ims: IM
-      social_networks: Social Networks
-      vcard: Download vCard
+      social_networks: Κοινωνικά Δίκτυα
+      vcard: Λήψη vCard
     card_types:
-      business: Business
-      fax: Fax
-      home: Home
-      mobile: Mobile
-      other: Other
-      personal: Personal
-      work: Work
+      business: Επιχείρηση
+      fax: Φαξ
+      home: Κατοικία
+      mobile: Κινητός
+      other: Άλλο
+      personal: Ιδιωτικό
+      work: Δουλειά
     field:
-      add_phone_numbers: Phone Number
-      add_email_addresses: Add Email
-      add_websites: Add Website
-      add_addresses: Add Address
-      add_ims: Add IM
-      add_social_networks: Add Social Network
+      add_phone_numbers: Αριθμός Τηλεφώνου
+      add_email_addresses: Προσθήκη Email
+      add_websites: Προσθήκη Δικτυακού Τόπου
+      add_addresses: Προσθήκη Διεύθυνση
+      add_ims: Προσθήκη IM
+      add_social_networks: Προσθήκη Κοινωνικού Δικτύου
   users:
     form:
-      login: Username
-      first_name: First name
-      last_name: Last name
-      biography: Biography
-      time_zone: Time Zone
-      language: Language
+      login: Όνομα Χρήστη
+      first_name: Μικρό όνομα
+      last_name: Επίθετο
+      biography: Βιογραφία
+      time_zone: Ζώνη Ώρας
+      language: Γλώσσα
       email: Email
-      phone: Phone Number
-      phone_for_integration: Optional. For future SMS integration
-      password: Password
-      password_confirmation: Confirm Password
-      sunday: Sunday
-      monday: Monday
-      betatester: Use beta features (less stable) before they're released.
-      first_day_of_week: Week starts on
-      change_password: Change password
-      confirm_password: Confirm password
+      phone: Αριθμός Τηλεφώνου
+      phone_for_integration: Προαιρετική. Για τη μελλοντική ένταξη SMS
+      password: Κωδικός πρόσβασης
+      password_confirmation: Επιβεβαίωση κωδικού πρόσβασης
+      sunday: Κυριακή
+      monday: Δευτέρα
+      betatester: Χρήση χαρακτηριστικά beta (λιγότερο σταθερό) πριν την επίσημη ανακοίνωση.
+      first_day_of_week: Αρχή εβδομάδας την 
+      change_password: Αλλαγή κωδικού πρόσβασης
+      confirm_password: Επιβεβαίωσε των κωδικό πρόσβασης
       notifications:
-        notify_mentions: "Notify me when I'm mentioned e.g. Howdy @%{login}! You'll receive an email!"
-        notify_conversations: Notify me when I'm watching a conversation
-        notify_tasks: Notify me when I'm watching a task
-        wants_task_reminder: "Send me a daily email reminder of my tasks"
-      invalid_login: "use only letters, numbers and underscores"
+        notify_mentions: "Ειδοποίηστε με όταν με εχουνε αναφέρει π.χ. Γειά σας @%{login}! Θα παραλάβετε ενα email"
+        notify_conversations: Ειδοποίηστε με όταν παρακολουθώ την συνομιλία
+        notify_tasks: Ειδοποίηστε με όταν παρακολουθώ μια εργασία
+        wants_task_reminder: "Στείλε μου ένα email καθημερινή υπενθύμιση των εργασιών μου"
+      invalid_login: "χρησιμοποιείτε μόνο γράμματα, αριθμούς και υπογραμμίσεις"
       delete:
-        steps_before_1: "To delete your Teambox account, you first need to leave or delete all your current projects."
-        steps_before_2: "This will ensure that no other users will lose data on their projects when you delete your account."
-        steps_before_3: "Leave or delete your current projects and then come back to this page to delete your account."
-        what_will_happen: "After deleting your account, your Teambox profile will not be accessible anymore."
-        delete_my_account: "Delete my account now"
-        account_deleted: "Your account has been deleted. We will miss you!"
-        couldnt_delete_account: "We can't delete your account because you still have active or archived projects."
+        steps_before_1: "Για να διαγράψετε το λογαριασμό Teambox σας, πρέπει πρώτα να φύγετε ή να διαγράψετε όλα τα τρέχοντα έργα σας."
+        steps_before_2: "Αυτό θα εξασφαλίσει ότι άλλοι χρήστες δεν θα χάσουν τα δεδομένα σχετικά με τα έργα τους, όταν διαγράψετε τον λογαριασμό σας."
+        steps_before_3: "Αφήστε ή διαγράψτε τα τρέχοντα έργα σας και στη συνέχεια επανέλθετε σε αυτή τη σελίδα για να διαγράψετε τον λογαριασμό σας."
+        what_will_happen: "Μετά τη διαγραφή του λογαριασμού Teambox σας, το προφίλ σας δεν θα είναι πλέον προσβάσιμη."
+        delete_my_account: "Διαγράψετε το λογαριασμό μου τώρα"
+        account_deleted: "Ο λογαριασμός σας έχει διαγραφεί. Θα μας λείψετε!"
+        couldnt_delete_account: "Δεν μπορούμε να διαγράψουμε τον λογαριασμό σας γιατί έχετε ακόμη ενεργά ή αρχειοθετούνται έργα."
       picture:
-        field: New avatar
-        presence: "You can't upload a blank file"
-        max_size: "File size can't exceed %{mb}"
-        we_have_this_avatar: "This is the picture we currently have of you:"
-        gravatar_in_use: "We don't have a picture of you, so we're using %{gravatar}."
-        upload_here_or_at_gravatar: "You can either upload a picture here or set one on %{gravatar}."
-        destroy: Delete avatar
+        field: Νέο είδωλο
+        presence: "Δεν μπορείτε να ανεβάσετε ένα κενό αρχείο"
+        max_size: "Το μέγεθος του αρχείου δεν μπορεί να υπερβεί %{mb}"
+        we_have_this_avatar: "Αυτή είναι η εικόνα που έχουμε σήμερα από εσάς:"
+        gravatar_in_use: "Δεν έχουμε μια εικόνα από εσάς, έτσι χρησιμοποιούμαι %{gravatar}."
+        upload_here_or_at_gravatar: "Μπορείτε είτε να φορτώσετε μια εικόνα εδώ ή διαλέξετε ενα στο %{gravatar}."
+        destroy: Διαγραφή ειδώλου
       tooltips:
-        login: "You need a username to login. People will be able to find you by username. Must be all lowercase, no spaces. You can use undescores."
-        first_name: Up to 20 characters.
-        last_name: Up to 20 characters.
-        email: Enter your real email so your teammates can contact you.
-        password: "Combining uppercase and lowercase letters and numbers is a good idea."
-        phone: "Preferrably cell phone. Enter it including the country code, e.g. +1 (415) 1234-567"
+        login: "Χρειάζεστε ένα όνομα χρήστη για να συνδεθείτε. Άλλοι θα μπορούνε να σε βρούνε με το όνομα χρήστη. Πρέπει να είναι όλα πεζά, όχι κενά διαστήματα. Μπορείτε να χρησιμοποιήσετε υπογραμμήσεις."
+        first_name: Έως 20 χαρακτήρες.
+        last_name: Έως 20 χαρακτήρες.
+        email: Πληκτρολογήστε το πραγματικό email σας έτσι ωστε οι συναδέλφοι σας μπορούν να επικοινωνήσουν μαζί σας.
+        password: "Συνδυάζοντας κεφαλαία και πεζά γράμματα και οι αριθμοί είναι μια καλή ιδέα."
+        phone: "Κατά προτίμηση κινητό τηλέφωνο. Πληκτρολογήστε τον μαζί με τον κωδικό της χώρας, π.χ. +1 (415) 1234-567"
       new:
-        use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
+        use_this_email: "Έχετε προσκλήσεις για την κατανομή των έργων για αυτή τη διεύθυνση ηλεκτρονικού ταχυδρομείου. Αν θέλετε να αποκτήσετε πρόσβαση σε αυτά τα έργα, μην αλλάξετε αυτή τη διεύθυνση ηλεκτρονικού ταχυδρομείου. Μπορείτε να αλλάξετε τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας όταν έχετε ολοκληρώσει τη διαδικασία εγγραφής."
     new:
-      title: Create an Account
-      submit: Create account
-      no_public_signup: "Public signups are not allowed on this system."
-      you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
-      existing_user: "If you already have an account, <a href='%{login_url}'>log in</a> or <a href='%{forgot_url}'>retrieve your password</a>."
-      you_already_have_an_account: "You already have a Teambox account for the address %{email}. <a href='%{login_link}'>Log in with this email</a> or <a href='%{reset_password_link}'>reset your password</a> if you forgot it."
+      title: Δημιουργία ένα λογαριασμό
+      submit: Δημιουργία Λογαριασμού
+      no_public_signup: "Δημόσιες εγγραφές δεν επιτρέπονται σε αυτό το σύστημα."
+      you_are_logged_in: "Έχετε ήδη ένα λογαριασμό. Αποσυνδεθείτε πρώτα για να εγγραφείτε ως διαφορετικός χρήστης."
+      existing_user: "Αν έχετε ήδη ένα λογαριασμό, <a href='%{login_url}'>συνδεθείτε τώρα</a> ή <a href='%{forgot_url}'>ανακτήσετε τον κωδικό πρόσβασής σας</a>."
+      you_already_have_an_account: "Έχετε ήδη ένα λογαριασμό Teambox για τη διεύθυνση %{email}. <a href='%{login_link}'>Συνδεθείτε με αυτό το email</a> ή <a href='%{reset_password_link}'>ανακτήσετε τον κωδικό πρόσβασής σας</a> εάν το έχετε ξεχάσει."
     create:
-      thanks: Thanks for signing up!
-      error: "We couldn't set up that account, sorry. Please try again, or contact an admin (link is above)."
+      thanks: Ευχαριστούμε για την εγγραφή!
+      error: "Συγνώμη αλλα δεν μπορέσαμε να δημιουργήσουμε αυτό το λογαριασμό. Παρακαλώ προσπαθήστε ξανά, ή επικοινωνήστε με έναν διαχειριστή (το link είναι παραπάνω)."
     edit:
-      title_settings: Your Account Settings
-      title_profile: Your Profile Settings
-      title_picture: Your Profile Picture
-      title_notifications: Your Notifications
-      title_linked_accounts: Linked Application Accounts
-      title_deletion: Project Archiving/Deletion
-      title_delete: Delete Account
-      submit: Update account
+      title_settings: Οι ρυθμίσεις του λογαριασμού σας
+      title_profile: Οι ρυθμίσεις του πρόφιλ σας
+      title_picture: Η εικόνα του προφίλ σας
+      title_notifications: Οι ενημερώσεις σας
+      title_linked_accounts: Λογαραισμοί Συνδετών Εφαρμογών
+      title_deletion: Αρχειοθέτηση/Διαγραφή Έργων
+      title_delete: Διαγραφή λογαριασμού
+      submit: Ενημέρωση λογαριασμού
     update:
-      updated: User profile updated!
-      error: "Couldn't save the updated profile. Please correct the mistakes and retry."
+      updated: Ενημέρωση προφίλ χρήστη!
+      error: "Δεν μπορέσαμε να αποθηκεύσουμε το ενημερωμένο προφίλ. Διορθώστε τα λάθη και δοκιμάστε ξανά."
     activation:
-      resent: "We've re-sent the activation email. Take a look at your inbox!"
-      already_done: "You have already confirmed your email! You can now use Teambox."
-      activated: "Your account has been activated! Welcome to Teambox :)"
-      invalid: "<p>Invalid or expired access link. Login with your email and password.</p><p>If you don't remember your login data, follow the Forgot your Password link.</p>"
-      invalid_user: Invalid user
+      resent: "Έχουμε ξαναστείλουμε το email ενεργοποίησης. Κοιτάξετε στο inbox σας!"
+      already_done: "Έχετε ήδη επιβεβαιώσει το email σας! Μπορείτε τώρα να χρησιμοποιήσετε Teambox."
+      activated: "Ο λογαριασμός σας έχει ενεργοποιηθεί! Καλώς ήλθατε στο Teambox :)"
+      invalid: "<p>Άκυρη ή λήγμένη συνδέσμος πρόσβασης. Σύνδεθείτε με το email και τον κωδικό πρόσβασής σας.</p><p>Αν δεν θυμάστε τα στοιχεία σύνδεσής σας, ακολουθήστε το σύνδεσμο Ξεχάσατε τον κωδικό σας.</p>"
+      invalid_user: Άκυρο χρήστη
     show:
-      profile: Profile
-      projects: Projects
-      recent_activity_for: "Recent activity for %{user_name}"
-      pending_invite: "%{name} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
+      profile: Προφίλ
+      projects: Έργα
+      recent_activity_for: "Πρόσφατη δραστηριότητα για %{user_name}"
+      pending_invite: "Ο/Η %{name} διαθέτει εκκρεμεί πρόσκληση για ένα από τα έργα σας. Δεν θα έχετε πρόσβαση σε άλλες πληροφορίες, έως ότου αυτή η πρόσκληση έχει γίνει αποδεκτή."
     user:
       formatted_address: "%{street}, %{city} (%{country})"
-      remove_from_project: Remove from Project
+      remove_from_project: Αφαίρεση από το Έργο
     welcome:
-      get_started: Get started with Teambox!
-      intro1: "You're our newest member! You'll soon see how Teambox can become your day's starting point."
-      intro2: "Where can you go now? Create a project to <b>collaborate</b>:" # or an agenda to <b>keep track of contacts</b>:"
+      get_started: Ξεκινήστε με το Teambox!
+      intro1: "Είσαι ο νεότερος μέλος μας! Πολύ σύντομα θα δείτε πως το Teambox μπορεί να γίνει αφετηρία της ημέρας σας."
+      intro2: "Που μπορείτε να πάτε τώρα; Δημιουργήστε ένα έργο για να <b> συνεργαστείτε </ b>:" # or an agenda to <b>keep track of contacts</b>:"
       projects:
-        title: Projects
-        share_and_collaborate: "Share and collaborate with your team! Project wall updates, conversations, tasks, pages and files."
-        create_your_first_project: "An event, a design, a product... Go ahead and <a href='%{link}'>create your first project</a> now!"
+        title: Έργα
+        share_and_collaborate: "Μοιραστείτε και συνεργαστείτε με την ομάδα σας! Τοίχο ενημερώσεις έργων, συζητήσεις, εργασίες, σελίδες και αρχεία."
+        create_your_first_project: "Μια εκδήλωση, ένα σχέδιο, ένα προϊόν ... Προχωρήστε και <a href='%{link}'> δημιουργήσετε το πρώτο έργο σας </a> τώρα!"
       spread:
-        title: Do you love us too?
-        reasons: "We've been working on Teambox for years, hoping it will be useful for you.<br/>We're real people, motivated developers with a mission, just like you!"
-        help: You can <b>help us</b> by telling your friends how you enjoy Teambox on
+        title: Και σεις μας αγαπάτε;
+        reasons: "Έχουμε εργαστεί στο Teambox για χρόνια, ελπίζοντας ότι θα είναι χρήσιμο για σας.<br/>Είμαστε αληθινοί άνθρωποι, παρακινημένοι προγραμματιστές με μια αποστολή, όπως και εσείς!"
+        help: Μπορείτε να <b> μας βοηθήσετε </b> λέγωντας τους φίλους σας το πώσο απολαμβάνετε το Teambox
         twitter: 'Twitter,'
         facebook: Facebook
-        in_your_site: in your site!
-        tell_us: "If you enjoy using Teambox, consider also <a href='mailto:%{address}'>telling us about it</a> in an email!"
-      stop_welcome: Stop showing this Welcome tab
+        in_your_site: στην ιστοσελίδα σας!
+        tell_us: "Αν σας αρέσει να χρησιμοποιείτε Teambox, <a href='mailto:%{address}'> πείτε μας γι 'αυτό </a> σε ένα email!"
+      stop_welcome: Διακόψετε την προβολή του εν λόγω Καλώς Ήλθατε καρτέλα
     feeds:
-      title: Sync your activity feeds
-      follow_activities: "You can follow Teambox activities from News Readers (Desktop or Mobile)."
+      title: Συγχρονίστε τα feeds δραστηριότητών σας 
+      follow_activities: "Μπορείτε να ακολουθήσετε τις δραστηριότητες Teambox από τους αναγνώστες ειδήσεων (Desktop ή κινητό)."
       receive_notifications: "By using a Feed Reader on your computer or mobile device, you will receive notifications from activities in your projects."
       configure: "You can configure your feed reader to alert you every time something new happens in Teambox, even if you don't have it open in a window."
       import:

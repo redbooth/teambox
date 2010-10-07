@@ -1,4 +1,5 @@
 //= require <prototype>
+//= require <cookie>
 //= require <rails>
 //= require <html5>
 //= require <builder>
@@ -50,9 +51,9 @@ function hideBySelector(selector) {
 function insertCss(css) {
   var head = document.getElementsByTagName('head')[0],
       style = document.createElement('style')
-  
+
   style.setAttribute("type", "text/css")
-  
+
   if (style.styleSheet) { // IE
     style.styleSheet.cssText = css;
   } else { // w3c

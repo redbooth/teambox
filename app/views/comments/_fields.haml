@@ -13,29 +13,24 @@
       %label
         = t('comments.hours.hours')
         = f.text_field :human_hours
-        (
         %span.start-timer
           = image_tag "control_play_blue.png", :alt => 'start the timer'
-        %span.stop-timer
-          = image_tag "control_pause_blue.png", :alt => 'stop the timer'
-        %span.timer
-          00:00        
-        )
+
       = time_tracking_doc
 
   .upload_area
     %p= t('uploads.new.select_a_file')
-  
+
     - f.object.uploads.build
     - f.fields_for :uploads do |fields|
       = fields.file_field :asset, :id => 'upload_file'
 
   .actions
     = link_to t('uploads.comment_upload_link'), project ? [:new, project, :upload] : '#uploads', :class => 'attach_icon'
-  
+
     - if task_form
       = link_to t('comments.hours.tooltip'), '#hours', :class => 'add_hours_icon'
-    
+
       .task_actions
         = task_form.label :status
         = task_form.select :status, task_statuses_for_select

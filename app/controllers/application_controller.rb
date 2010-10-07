@@ -4,23 +4,25 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  
+
   include AuthenticatedSystem
   include SslHelper
 
   filter_parameter_logging :password
 
-  before_filter :rss_token, 
-                :confirmed_user?, 
-                :load_project, 
+  before_filter :rss_token,
+                :confirmed_user?,
+                :load_timer_params,
+                :load_project,
+                :load_timer_task,
                 :load_organizations,
-                :login_required, 
-                :set_locale, 
-                :touch_user, 
+                :login_required,
+                :set_locale,
+                :touch_user,
                 :belongs_to_project?,
                 :load_community_organization,
                 :set_client
-  
+
   private
 
     def check_permissions
@@ -28,13 +30,13 @@ class ApplicationController < ActionController::Base
         render :text => "You don't have permission to edit/update/delete within \"#{@current_project.name}\" project", :status => :forbidden
       end
     end
-    
+
     def confirmed_user?
       if current_user and not current_user.is_active?
         redirect_to unconfirmed_email_user_path(current_user)
       end
     end
-    
+
     def rss_token
       unless params[:rss_token].nil? or !%w(rss ics).include?(params[:format])
         user = User.find_by_rss_token(params[:rss_token])
@@ -71,7 +73,7 @@ class ApplicationController < ActionController::Base
     # When you only belong to one organization, every page will be branded with its logo and colors.
     # If you belong to 2+ organizations, common pages will not be branded and others will be organization branded
     def load_organizations
-      if logged_in? 
+      if logged_in?
         @organizations = current_user.organizations
         @organization = case @organizations.size
         when 0
@@ -87,15 +89,15 @@ class ApplicationController < ActionController::Base
     def set_locale
       I18n.locale = logged_in? ? current_user.locale : user_agent_locale
     end
-    
+
     LOCALES_REGEX = /\b(#{ I18n.available_locales.join('|') })\b/
-    
+
     def user_agent_locale
       unless RAILS_ENV == 'test'
         request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX && $&
       end
     end
-    
+
     def fragment_cache_key(key)
       super(key).tap { |str|
         str << "_#{I18n.locale}"
@@ -104,7 +106,7 @@ class ApplicationController < ActionController::Base
         end
       }
     end
-    
+
     def touch_user
       current_user.update_visited_at if logged_in?
     end
@@ -138,9 +140,9 @@ class ApplicationController < ActionController::Base
             user_name = current_user.name
           when 'show_users'
             user_name = @user.name
-        end    
+        end
         @page_title = "#{user_name ? user_name + ' — ' : ''}#{translate_location_name}"
-      end    
+      end
     end
 
     MobileClients = /(iPhone|iPod|Android|Opera mini|Blackberry|Palm|Windows CE|Opera mobi|iemobile|webOS)/i
@@ -158,16 +160,16 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    
+
     def mobile?
       request.format == :m
     end
     helper_method :mobile?
-    
+
     def iframe?
       params[:iframe] == 'true'
     end
-    
+
     def output_errors_json(record)
       if request.xhr?
         response.content_type = Mime::JSON
@@ -176,7 +178,7 @@ class ApplicationController < ActionController::Base
         render :template => 'shared/iframe_error', :layout => false, :locals => { :data => record.errors }
       end
     end
-    
+
     def split_events_by_date(events, start_date=nil)
       start_date ||= Date.today.monday.to_date
       split_events = Array.new
@@ -188,7 +190,7 @@ class ApplicationController < ActionController::Base
       end
       split_events
     end
-    
+
     # http://www.coffeepowered.net/2009/02/16/powerful-easy-dry-multi-format-rest-apis-part-2/
     def render(opts = nil, extra_options = {}, &block)
       if opts && opts.is_a?(Hash) then
@@ -218,14 +220,14 @@ class ApplicationController < ActionController::Base
         super(opts, extra_options, &block)
       end
     end
-    
+
     def handle_api_error(f,object)
       error_list = object.nil? ? [] : object.errors
       f.xml  { render :xml => error_list.to_xml,     :status => :unprocessable_entity }
       f.json { render :as_json => error_list.to_xml, :status => :unprocessable_entity }
       f.yaml { render :as_yaml => error_list.to_xml, :status => :unprocessable_entity }
     end
-    
+
     def handle_api_success(f,object,is_new=false)
       if is_new
         f.xml  { render :xml => object.to_xml, :status => :created }
@@ -237,7 +239,7 @@ class ApplicationController < ActionController::Base
         f.yaml { head :ok }
       end
     end
-    
+
     def calculate_position(obj)
       options = {}
       if pos = params[:position].presence
@@ -274,6 +276,19 @@ class ApplicationController < ActionController::Base
           Membership::ROLES.index(role_id)
         end
       end
+    end
+
+    def load_timer_params
+      timer_cookie = cookies['_teambox.task.timer']
+      if timer_cookie
+        values = timer_cookie.split(/-/)
+        params[:project_id] = values[0] unless values[0].blank?
+        params[:task_id] = values[1].split(/_/)[1] unless values[1].blank?
+      end
+    end
+
+    def load_timer_task
+      @task = @current_project.tasks.find(params[:task_id]) if params[:task_id] && @current_project
     end
 
 end

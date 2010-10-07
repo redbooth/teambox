@@ -28,30 +28,30 @@ document.on('ajax:create', 'form.new_conversation, .thread form', function(e) {
 document.on('ajax:before', 'form.new_conversation, .thread form, #facebox form.edit_comment', function(e, form) {
   if (form.hasFileUploads()) {
     e.stop()
-    
+
     var iframeID = 'file_upload_iframe' + (iframeCounter++)
     var iframe = new Element('iframe', { id: iframeID, name: iframeID }).hide()
     $(document.body).insert(iframe)
     form.target = iframeID
     form.insert(new Element('input', { type: 'hidden', name: 'iframe', value: 'true' }))
-    
+
     var callback = function() {
       // contentDocument doesn't work in IE (7)
       var iframeBody = (iframe.contentDocument || iframe.contentWindow.document).body
-      
+
       if (iframeBody.className == "error") {
         var json = iframeBody.firstChild.innerHTML.evalJSON()
         form.fire('ajax:failure', {responseJSON: json})
       } else {
         form.fire('ajax:success', {responseText: iframeBody.innerHTML})
       }
-      
+
       iframe.remove()
       form.target = null
       var extraInput = form.down('input[name=iframe]')
       if (extraInput) extraInput.remove()
     }
-    
+
     // for IE (7)
     iframe.onreadystatechange = function() {
       if (this.readyState == 'complete') callback()
@@ -135,32 +135,144 @@ hideBySelector('form .hours_field')
 document.on('click', 'form .add_hours_icon', function(e, link) {
   link.up('form').down('.hours_field').forceShow().down('input').focus()
   e.stop()
-})
+});
+
+function startStopwatch(elapsedTime, task_id, project_id) {
+  var stopwatch = $('stopwatch');
+  stopwatch.show();
+
+  var timerDisplay = stopwatch.down('.timer');
+  Cookie.dispose('_teambox.task.timer');
+  var timer = stopwatch.retrieve('task.timer', new Stopwatch(function(watch){
+     timerDisplay.update(watch.toString());
+     var elapsedTime = watch.getElapsed();
+     var elapsedSeconds = elapsedTime.hours * 60 * 60  + elapsedTime.minutes * 60 + elapsedTime.seconds;
+     Cookie.write('_teambox.task.timer', project_id + '-' + task_id + '-' + elapsedSeconds, {path: '/', duration: 365});
+  }, 1000));
+
+  if (elapsedTime) {
+    timer.setElapsed(0,0,elapsedTime);
+  }
+  timer.start();
+};
+
+document.observe("dom:loaded", function() {
+  var taskElapsedTime = Cookie.read('_teambox.task.timer');
+  if (taskElapsedTime) {
+    var values = taskElapsedTime.split(/-/);
+    var elapsedTime = parseInt(values[2],10);
+    var task_id = values[1];
+    var project_id = values[0];
+    startStopwatch(elapsedTime, task_id, project_id);
+  }
+});
 
 document.on('click', '.start-timer', function(e, element) {
-	var timerDisplay = element.next('.timer');
-	var timer = timerDisplay.retrieve('task.timer', new Stopwatch(function(watch){
-	  timerDisplay.update(watch.toString());
-	}, 1000));
-	timer.start();
+  var task_id = $$('.task')[0].id;
+  var project_id = element.up('form').readAttribute('data-project-id');
+
+  startStopwatch(null,task_id, project_id);
+  e.stop();
+});
+
+function update_timer_task(element) {
+  var stopwatch = $('stopwatch');
+  var timerDisplay = stopwatch.down('.timer');
+
+  var values = Cookie.read('_teambox.task.timer').split(/-/);
+  var project_id = values[0];
+  var task_id = values[1];
+
+  var timer = stopwatch.retrieve('task.timer');
+  var elapsedTime = timer.getElapsed();
+  var elapsedSeconds = elapsedTime.hours * 60 * 60  + elapsedTime.minutes * 60 + elapsedTime.seconds;
+  var elapsedHours = elapsedSeconds / (60*60);
+
+  timer.reset();
+  timerDisplay.update(timer.toString());
+
+  var form = element.up('form');
+  var human_hours_field = form.down('.human_hours');
+  human_hours_field.value = elapsedHours;
+
+}
+
+function finish_timer_task(element) {
+  var form = element.up('form');
+  var task_status_field = form.down('.task_status');
+  task_status_field.value = 3; //resolved
+}
+
+function submit_timer_form(element) {
+  //submit form via ajax
+  var form = element.up('form');
+  var values = Cookie.read('_teambox.task.timer').split(/-/);
+  var project_id = values[0];
+  var task_id = values[1];
+  var url = '/projects/' + project_id + '/tasks/' + task_id.split('_')[1];
+
+  new Ajax.Request(url, {
+    asynchronous: true,
+    requestHeaders: {'Accept': 'text/html'},
+    evalScripts: true,
+    method: 'put',
+    parameters: form.serialize(),
+    onLoading: function() {
+      form.down('.submit').hide();
+      // form.down('.text_area').hide();
+      form.down('img.loading').show();
+    },
+    onFailure: function(response) {	
+      form.down('.submit').show();
+      form.down('img.loading').hide();
+    },
+    onSuccess: function(response){
+      $('timer_comment').hide();
+      form.down('.submit').show();
+      form.down('img.loading').hide();
+
+      var thread = $(task_id);
+      if (thread) {
+        form = thread.down('form');
+        resetCommentsForm(form);
+        form.up('.thread').down('.comments').insert(response.responseText).
+        down('.comment:last-child').highlight({ duration: 1 });
+      }
+
+      Cookie.dispose('_teambox.task.timer');
+      var stopwatch = $('stopwatch');
+      stopwatch.hide();
+    }
+ });
+
+}
+
+document.on('click', '.update_timer_task', function(e, element) {
+  update_timer_task(element);
+  submit_timer_form(element);
+  e.stop();
+});
+
+document.on('click', '.finish_timer_task', function(e, element) {
+  update_timer_task(element);
+  finish_timer_task(element);
+  submit_timer_form(element);
   e.stop();
 });
 
 document.on('click', '.stop-timer', function(e, element) {
-	var timerDisplay = element.next('.timer');
-	var timer = timerDisplay.retrieve('task.timer');
-	if (timer.started) {
-		timer.stop();
-	}
-	else {
-		timer.reset();
-		var timerDisplay = element.next('.timer');		
-		timerDisplay.update(timer.toString());
-	}
-	
-	element.previous('input').setValue(timer.getElapsed().hours);
+  var stopwatch = $('stopwatch');
+  var timerDisplay = stopwatch.down('.timer');
+  var timer = stopwatch.retrieve('task.timer');
+
+  if (timer.started) {
+    timer.stop();
+
+    $('timer_comment').show();
+  }
+
   e.stop();
-})
+});
 
 // Open links inside Comments and Notes textilized areas in new windows
 document.on('mouseover', '.textilized a', function(e, link) {
@@ -183,17 +295,17 @@ document.on('focusin', '#activities .thread form.new_comment textarea', function
 document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
   var form = e.findElement('form'),
       project = form.readAttribute('data-project-id')
-  
+
   // projects index page has a global comment box with projects selector
   if (!project) {
     var projectSelect = form.down('select[name=project_id]')
     if (projectSelect) project = projectSelect.getValue()
   }
-  
+
   if (project) {
     var people = _people_autocomplete[project],
         autocompleter = input.retrieve('autocompleter')
-        
+
     if (autocompleter) {
       // update options array in case the projects selector changed value
       autocompleter.options.array = people
@@ -209,36 +321,36 @@ document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
 function togglePreviewBox(previewBox, enabled, button) {
   if (enabled == undefined) enabled = previewBox.visible()
   if (button == undefined) button = previewBox.up('form').down('button.preview')
-  
+
   if (enabled) previewBox.hide()
   else previewBox.show()
-  
+
   var text = button.innerHTML
   button.update(button.readAttribute('data-alternate')).writeAttribute('data-alternate', text)
 }
 
 document.on('click', 'form button.preview', function(e, button) {
   e.stop()
-  
+
   var enabled = false,
       textarea = e.findElement('form').down('textarea'),
       previewBox = textarea.next('.previewBox')
-  
+
   if (!previewBox) {
     previewBox = new Element('div', { 'class': 'previewBox' })
     textarea.insert({ after: previewBox })
-    
+
     var formatter = new Showdown.converter;
     formatter.makeHtml = formatter.makeHtml.wrap(function(make) {
       previewBox.update(make(textarea.getValue()))
     })
-    
+
     textarea.on('keyup', formatter.makeHtml.bind(formatter).throttle(300))
     formatter.makeHtml()
   } else {
     enabled = previewBox.visible()
   }
-  
+
   togglePreviewBox(previewBox, enabled, button)
 })
 
@@ -248,10 +360,10 @@ new PeriodicalExecuter(function() {
   $$('.comment[data-editable-before] a[data-uneditable-message]').each(function(link) {
     var timestamp = link.up('.comment').readAttribute('data-editable-before'),
         editableBefore = new Date(parseInt(timestamp))
-    
+
     if (now >= editableBefore) {
       var message = link.readAttribute('data-uneditable-message')
       link.replace(new Element('span').update(message))
     }
-  })  
+  })
 }, 30)
