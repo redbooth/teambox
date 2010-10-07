@@ -39,5 +39,12 @@ describe ApidocsController do
     Project.count.should == 1
     Person.count.should == 1
   end
+  
+  it 'should show documentation for all documented models' do
+    ApidocsController::DOCUMENTED_MODELS.each do |model|
+      get :model, :model => model
+      response.should be_success
+    end
+  end
     
 end  
