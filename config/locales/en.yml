@@ -712,6 +712,7 @@ en:
   tasks:
     my_tasks_listing:
       tasks: My Tasks
+      back: "Back to the Overview"
     errors:
       name:
         cant_be_blank: 'must not be blank'

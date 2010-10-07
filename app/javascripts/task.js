@@ -143,6 +143,7 @@ document.on('click', '.my_tasks_listing .task a', function(e, el) {
     onSuccess: function(r) {
       $('content').update(r.responseText)
       format_posted_date()
+      $('back_to_overview').show()
     },
     onComplete: function() {
       el.up('.task').down('.left_arrow_icon').show()
