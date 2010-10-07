@@ -5,7 +5,7 @@ class ApiV1::PeopleController < ApiV1::APIController
   def index
     @people = @current_project.people(:include => [:project, :user])
     
-    api_respond @people, :references => [:user]
+    api_respond @people, :references => [:project, :user]
   end
 
   def show
@@ -13,7 +13,7 @@ class ApiV1::PeopleController < ApiV1::APIController
   end
   
   def update
-    if !@current_project.owner?(@person.user) && @person.update_attributes(params[:person])
+    if !@current_project.owner?(@person.user) && @person.update_attributes(params)
       handle_api_success(@person)
     else
       handle_api_error(@person)

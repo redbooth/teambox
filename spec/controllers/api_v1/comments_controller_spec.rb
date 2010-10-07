@@ -115,7 +115,7 @@ describe ApiV1::CommentsController do
       task = Factory.create(:task, :project => @project)
       task.comments.length.should == 0
       
-      post :create, :project_id => @project.permalink, :task_id => task.id, :comment => {:body => 'Created!'}
+      post :create, :project_id => @project.permalink, :task_id => task.id, :body => 'Created!'
       response.should be_success
       
       task.reload.comments.length.should == 1
@@ -127,7 +127,7 @@ describe ApiV1::CommentsController do
       conversation = Factory.create(:conversation, :project => @project)
       conversation.comments.length.should == 1
       
-      post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :comment => {:body => 'Created!'}
+      post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :body => 'Created!'
       response.should be_success
       
       conversation.reload.comments.length.should == 2
@@ -139,7 +139,7 @@ describe ApiV1::CommentsController do
       conversation = Factory.create(:conversation, :project => @project)
       conversation.comments.length.should == 1
       
-      post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :comment => {:body => 'Created!'}
+      post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :body => 'Created!'
       response.status.should == '401 Unauthorized'
       
       conversation.reload.comments(true).length.should == 1
@@ -151,19 +151,19 @@ describe ApiV1::CommentsController do
     it "should allow the owner to modify a comment within 15 minutes" do
       login_as @comment.user
       
-      put :update, :project_id => @project.permalink, :id => @comment.id, :comment => {:body => 'Updated!'}
+      put :update, :project_id => @project.permalink, :id => @comment.id, :body => 'Updated!'
       response.should be_success
       
       @comment.update_attribute(:created_at, Time.now - 16.minutes)
       
-      put :update, :project_id => @project.permalink, :id => @comment.id, :comment => {:body => 'Updated FAIL!'}
+      put :update, :project_id => @project.permalink, :id => @comment.id, :body => 'Updated FAIL!'
       response.status.should == '401 Unauthorized'
     end
     
     it "should not allow anyone else to modify another comment" do
       login_as @project.user
       
-      put :update, :project_id => @project.permalink, :id => @comment.id, :comment => {:body => 'Updated!'}
+      put :update, :project_id => @project.permalink, :id => @comment.id, :body => 'Updated!'
       response.status.should == '401 Unauthorized'
     end
   end

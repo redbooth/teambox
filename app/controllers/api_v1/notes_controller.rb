@@ -4,11 +4,11 @@ class ApiV1::NotesController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
-    params = {:include => :page}
+    query = {:include => :page}
     @notes = if target
-      target.notes(params)
+      target.notes(query)
     else
-      Note.find_all_by_project_id(current_user.project_ids, params)
+      Note.find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @notes, :references => [:page]
@@ -19,7 +19,7 @@ class ApiV1::NotesController < ApiV1::APIController
   end
   
   def create
-    @note = @page.build_note(params[:note])
+    @note = @page.build_note(params)
     @note.updated_by = current_user
     calculate_position(@note)
     @note.save
@@ -33,7 +33,7 @@ class ApiV1::NotesController < ApiV1::APIController
   
   def update
     @note.updated_by = current_user
-    if @note.update_attributes(params[:note])
+    if @note.update_attributes(params)
       handle_api_success(@note)
     else
       handle_api_error(@note)

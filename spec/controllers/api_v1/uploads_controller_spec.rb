@@ -86,8 +86,7 @@ describe ApiV1::UploadsController do
       login_as @user
       
       post :create,
-           :project_id => @project.permalink,
-           :upload => mock_file_params
+           mock_file_params.merge(:project_id => @project.permalink)
       response.should be_success
       
       @project.uploads(true).length.should == 3
@@ -97,10 +96,9 @@ describe ApiV1::UploadsController do
       login_as @user
       
       post :create,
-           :project_id => @project.permalink,
-           :page_id => @page.id,
-           :upload => mock_file_params,
-           :position => {:slot => 0, :before => true}
+           mock_file_params.merge(:project_id => @project.permalink,
+             :page_id => @page.id,
+             :position => {:slot => 0, :before => true})
       response.should be_success
       
       uid = JSON.parse(response.body)['id']
@@ -111,10 +109,9 @@ describe ApiV1::UploadsController do
       login_as @user
       
       post :create,
-           :project_id => @project.permalink,
-           :page_id => @page.id,
-           :upload => mock_file_params,
-           :position => {:slot => -1}
+           mock_file_params.merge(:project_id => @project.permalink,
+             :page_id => @page.id,
+             :position => {:slot => -1})
       response.should be_success
       
       uid = JSON.parse(response.body)['id']
@@ -125,10 +122,9 @@ describe ApiV1::UploadsController do
       login_as @user
       
       post :create,
-           :project_id => @project.permalink,
-           :page_id => @page.id,
-           :upload => mock_file_params,
-           :position => {:slot => @page_upload.page_slot.id, :before => 1}
+           mock_file_params.merge(:project_id => @project.permalink,
+             :page_id => @page.id,
+             :position => {:slot => @page_upload.page_slot.id, :before => 1})
       response.should be_success
       
       uid = JSON.parse(response.body)['id']
@@ -139,10 +135,9 @@ describe ApiV1::UploadsController do
       login_as @user
       
       post :create,
-           :project_id => @project.permalink,
-           :page_id => @page.id,
-           :upload => mock_file_params,
-           :position => {:slot => @page_upload.page_slot.id, :before => 0}
+           mock_file_params.merge(:project_id => @project.permalink,
+             :page_id => @page.id,
+             :position => {:slot => @page_upload.page_slot.id, :before => 0})
       response.should be_success
       
       uid = JSON.parse(response.body)['id']
@@ -153,8 +148,7 @@ describe ApiV1::UploadsController do
       login_as @observer
       
       post :create,
-           :project_id => @project.permalink,
-           :upload => mock_file_params
+           mock_file_params.merge(:project_id => @project.permalink)
       response.status.should == '401 Unauthorized'
       
       @project.uploads(true).length.should == 2

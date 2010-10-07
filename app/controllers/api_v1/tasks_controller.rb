@@ -24,7 +24,7 @@ class ApiV1::TasksController < ApiV1::APIController
   end
   
   def create
-    if @task = @current_project.create_task(current_user,@task_list,params[:task])
+    if @task = @current_project.create_task(current_user,@task_list,params)
       unless @task.new_record?
         @comment = @current_project.new_task_comment(@task)
         @task.reload
@@ -39,7 +39,7 @@ class ApiV1::TasksController < ApiV1::APIController
   end
   
   def update
-    @saved = @task.update_attributes(params[:task])
+    @saved = @task.update_attributes(params)
     
     if @saved
       handle_api_success(@task)

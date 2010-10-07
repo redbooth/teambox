@@ -3,12 +3,12 @@ class ApiV1::ConversationsController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy,:watch,:unwatch]
   
   def index
-    params = {:conditions => api_range, :limit => api_limit, :include => [:user, :project]}
+    query = {:conditions => api_range, :limit => api_limit, :include => [:user, :project]}
     
     @conversations = if @current_project
-      @current_project.conversations.scoped(api_scope).all(params)
+      @current_project.conversations.scoped(api_scope).all(query)
     else
-      Conversation.scoped(api_scope).find_all_by_project_id(current_user.project_ids, params)
+      Conversation.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @conversations, :references => [:user, :project]
@@ -19,8 +19,8 @@ class ApiV1::ConversationsController < ApiV1::APIController
   end
   
   def create
-    @conversation = @current_project.new_conversation(current_user,params[:conversation])
-    @conversation.body = params[:conversation][:body] if params[:conversation]
+    @conversation = @current_project.new_conversation(current_user,params)
+    @conversation.body = params[:body]
     @saved = @conversation.save
     
     if @saved
@@ -39,7 +39,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
   end
   
   def update
-    @saved = @conversation.update_attributes(params[:conversation])
+    @saved = @conversation.update_attributes params
     
     if @saved
       handle_api_success(@conversation)

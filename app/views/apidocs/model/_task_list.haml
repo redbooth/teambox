@@ -10,13 +10,13 @@
           :includes => [:tasks] do
   %p= "Returns the data for a task list."
   
-- doc_for :create, :parameters => {:comment => {:name => 'Task list', :start_on => '2010-01-01', :finish_on => '2010-02-01'} },
+- doc_for :create, :parameters => {:name => 'Task list', :start_on => '2010-01-01', :finish_on => '2010-02-01', :project_id => 123},
                    :example => @task_list.to_api_hash,
                    :status => :created,
                    :role => :participant do
   %p= "Creates a new task list."
 
-- doc_for :update, :parameters => {:comment => {:name => @task_list.name, :start_on => @task_list.start_on, :finish_on => @task_list.finish_on} },
+- doc_for :update, :parameters => {:name => @task_list.name, :start_on => @task_list.start_on, :finish_on => @task_list.finish_on },
                    :status => :updated,
                    :role => :participant do
   %p= "Updates the name, start date and end date of a task list."

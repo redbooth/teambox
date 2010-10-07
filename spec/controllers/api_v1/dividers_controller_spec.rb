@@ -52,7 +52,7 @@ describe ApiV1::DividersController do
     it "should allow participants to create dividers" do
       login_as @user
       
-      post :create, :project_id => @project.permalink, :page_id => @page.id, :divider => {:name => 'Divisions'}
+      post :create, :project_id => @project.permalink, :page_id => @page.id, :name => 'Divisions'
       response.should be_success
       
       @page.dividers(true).length.should == 2
@@ -65,7 +65,7 @@ describe ApiV1::DividersController do
       post :create,
            :project_id => @project.permalink,
            :page_id => @page.id,
-           :divider => {:name => 'AT_TOP'},
+           :name => 'AT_TOP',
            :position => {:slot => 0, :before => true}
       response.should be_success
       
@@ -78,7 +78,7 @@ describe ApiV1::DividersController do
       post :create,
            :project_id => @project.permalink,
            :page_id => @page.id,
-           :divider => {:name => 'AT_BOTTOM'},
+           :name => 'AT_BOTTOM',
            :position => {:slot => -1}
       response.should be_success
       
@@ -91,7 +91,7 @@ describe ApiV1::DividersController do
       post :create,
            :project_id => @project.permalink,
            :page_id => @page.id,
-           :divider => {:name => 'BEFORE'},
+           :name => 'BEFORE',
            :position => {:slot => @divider.page_slot.id, :before => 1}
       response.should be_success
       
@@ -104,7 +104,7 @@ describe ApiV1::DividersController do
       post :create,
            :project_id => @project.permalink,
            :page_id => @page.id,
-           :divider => {:name => 'AFTER'},
+           :name => 'AFTER',
            :position => {:slot => @divider.page_slot.id, :before => 0}
       response.should be_success
       
@@ -114,7 +114,7 @@ describe ApiV1::DividersController do
     it "should not allow observers to create dividers" do
       login_as @observer
       
-      post :create, :project_id => @project.permalink, :page_id => @page.id, :divider => {:name => 'Divisions'}
+      post :create, :project_id => @project.permalink, :page_id => @page.id, :name => 'Divisions'
       response.status.should == '401 Unauthorized'
       
       @page.dividers(true).length.should == 1
@@ -125,7 +125,7 @@ describe ApiV1::DividersController do
     it "should allow participants to modify a divider" do
       login_as @user
       
-      put :update, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id, :divider => {:name => 'Modified'}
+      put :update, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id, :name => 'Modified'
       response.should be_success
       
       @divider.reload.name.should == 'Modified'
@@ -134,7 +134,7 @@ describe ApiV1::DividersController do
     it "should not allow observers to modify a divider" do
       login_as @observer
       
-      put :update, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id, :divider => {:name => 'Modified'}
+      put :update, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id, :name => 'Modified'
       response.status.should == '401 Unauthorized'
       
       @divider.reload.name.should_not == 'Modified'

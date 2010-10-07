@@ -40,7 +40,7 @@ describe ApiV1::PeopleController do
     it "should allow an admin to modify a person" do
       login_as @admin
       
-      put :update, :project_id => @project.permalink, :id => @user.person_for(@project).id, :person => {:role => Person::ROLES[:admin]}
+      put :update, :project_id => @project.permalink, :id => @user.person_for(@project).id, :role => Person::ROLES[:admin]
       response.should be_success
       
       @project.reload.admin?(@user).should == true
@@ -49,7 +49,7 @@ describe ApiV1::PeopleController do
     it "should not allow the owner to be modified" do
       login_as @admin
       
-      put :update, :project_id => @project.permalink, :id => @owner.person_for(@project).id, :person => {:role => Person::ROLES[:participant]}
+      put :update, :project_id => @project.permalink, :id => @owner.person_for(@project).id, :role => Person::ROLES[:participant]
       response.status.should == '422 Unprocessable Entity'
       
       @project.reload.admin?(@owner).should == true
@@ -58,7 +58,7 @@ describe ApiV1::PeopleController do
     it "should not allow a non-admin to modify a person" do
       login_as @user
       
-      put :update, :project_id => @project.permalink, :id => @observer.person_for(@project).id, :person => {:role => Person::ROLES[:admin]}
+      put :update, :project_id => @project.permalink, :id => @observer.person_for(@project).id, :role => Person::ROLES[:admin]
       response.status.should == '401 Unauthorized'
       
       @project.reload.admin?(@user).should == false

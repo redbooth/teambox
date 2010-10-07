@@ -2,12 +2,12 @@ class ApiV1::CommentsController < ApiV1::APIController
   before_filter :load_comment, :only => [:update, :convert, :show, :destroy]
   
   def index
-    params = {:conditions => api_range, :limit => api_limit, :include => [:target, :user]}
+    query = {:conditions => api_range, :limit => api_limit, :include => [:target, :user]}
     
     @comments = if target
-      target.comments.all(params)
+      target.comments.all(query)
     else
-      Comment.find_all_by_project_id(current_user.project_ids, params)
+      Comment.find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @comments, :references => [:target, :user, :project]
@@ -21,7 +21,7 @@ class ApiV1::CommentsController < ApiV1::APIController
     # pass the project as extra parameter so target.project doesn't reload it
     authorize! :comment, target, @current_project
     
-    @comment = target.comments.create_by_user current_user, params[:comment]
+    @comment = target.comments.create_by_user current_user, params
     
     if @comment.save
       handle_api_success(@comment, :is_new => true)
@@ -33,7 +33,7 @@ class ApiV1::CommentsController < ApiV1::APIController
   def update
     authorize! :update, @comment
     
-    if @comment.update_attributes params[:comment]
+    if @comment.update_attributes params
       handle_api_success(@comment, :is_new => true)
     else
       handle_api_error(@comment)

@@ -24,7 +24,7 @@ class ApiV1::UploadsController < ApiV1::APIController
   end
   
   def create
-    @upload = @current_project.uploads.new params[:upload]
+    @upload = @current_project.uploads.new params
     @upload.page = @page if @page
     @upload.user = current_user
     calculate_position(@upload) if @upload.page

@@ -13,9 +13,12 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   end
   
   def create
-    @organization = current_user.organizations.new(params[:organization])
+    @organization = current_user.organizations.new(params)
     
     if !Teambox.config.community and @organization.save
+      membership = @organization.memberships.build(:role => Membership::ROLES[:admin])
+      membership.user_id = current_user.id
+      membership.save!
       handle_api_success(@organization, :is_new => true)
     else
       handle_api_error(@organization)
@@ -23,7 +26,7 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   end
   
   def update
-    if @organization.update_attributes(params[:organization])
+    if @organization.update_attributes(params)
       handle_api_success(@organization)
     else
       handle_api_error(@organization)

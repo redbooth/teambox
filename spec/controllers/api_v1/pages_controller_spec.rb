@@ -81,7 +81,7 @@ describe ApiV1::PagesController do
     it "should allow participants to modify the page" do
       login_as @user
       
-      put :update, :project_id => @project.permalink, :id => @page.id, :page => {:name => 'Unimportant Plans'}
+      put :update, :project_id => @project.permalink, :id => @page.id, :name => 'Unimportant Plans'
       response.should be_success
       
       @page.reload.name.should == 'Unimportant Plans'
@@ -90,7 +90,7 @@ describe ApiV1::PagesController do
     it "should not allow non-participants to modify the page" do
       login_as @observer
       
-      put :update, :project_id => @project.permalink, :id => @page.id, :page => {:name => 'Unimportant Plans'}
+      put :update, :project_id => @project.permalink, :id => @page.id, :name => 'Unimportant Plans'
       response.status.should == '401 Unauthorized'
       
       @page.reload.name.should == 'Important plans!'

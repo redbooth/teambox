@@ -4,12 +4,12 @@ class ApiV1::DividersController < ApiV1::APIController
   before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
-    params = {:include => :page}
+    query = {:include => :page}
     
     @dividers = if target
-      target.dividers(params)
+      target.dividers(query)
     else
-      Divider.find_all_by_project_id(current_user.project_ids, params)
+      Divider.find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @dividers, :references => [:page]
@@ -20,7 +20,7 @@ class ApiV1::DividersController < ApiV1::APIController
   end
   
   def create
-    @divider = @page.build_divider(params[:divider])
+    @divider = @page.build_divider(params)
     @divider.updated_by = current_user
     calculate_position(@divider)
     @divider.save
@@ -34,7 +34,7 @@ class ApiV1::DividersController < ApiV1::APIController
   
   def update
     @divider.updated_by = current_user
-    if @divider.update_attributes(params[:divider])
+    if @divider.update_attributes(params)
       handle_api_success(@divider)
     else
       handle_api_error(@divider)
