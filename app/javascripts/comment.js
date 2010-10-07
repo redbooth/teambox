@@ -147,7 +147,7 @@ function startStopwatch(elapsedTime, task_id, project_id) {
      timerDisplay.update(watch.toString());
      var elapsedTime = watch.getElapsed();
      var elapsedSeconds = elapsedTime.hours * 60 * 60  + elapsedTime.minutes * 60 + elapsedTime.seconds;
-     Cookie.write('_teambox.task.timer', project_id + '-' + task_id + '-' + elapsedSeconds, {path: '/', duration: 0});
+     Cookie.write('_teambox.task.timer', project_id + '-' + task_id + '-' + elapsedSeconds, {path: '/', duration: 365});
   }, 1000));
 
   if (elapsedTime) {
