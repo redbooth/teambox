@@ -6,7 +6,7 @@ if @activities.any?
     page.insert_html :bottom, :activities, list_activities(@activities)
   else
     @threads.each do |thread|
-      page << "if ($('thread_#{thread.thread_id}') == nil) {"
+      page << "if (!$$('.thread##{thread.thread_id.downcase}').any()) {"
       page.insert_html :bottom, :activities, show_threaded_activity(thread)
       page << "}"
     end
