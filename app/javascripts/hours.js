@@ -13,7 +13,7 @@ var Hours = {
     this.filters = {
       'user': null,
       'project': null,
-      'organization': null,
+      'organization': null
     };
     
     this.currentReport = 'user';
