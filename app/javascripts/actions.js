@@ -28,9 +28,9 @@ var Actions = {
   }
 };
 
-document.on('mouseover', '.actions_menu', function(e, actions_menu) {
+document.on('mouseover', '.comment .actions_menu', function(e, actions_menu) {
   var comment = actions_menu.up('.comment')
-
+  
   // My own comments: I can modify them, a later filter will ensure that only for 15 minutes
   if(comment.readAttribute('data-user') == my_user.id) {
     actions_menu.down('.edit').forceShow()
