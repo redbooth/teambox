@@ -9,13 +9,13 @@ module TaskListsHelper
               [t('task_lists.filter.my_tasks'),    'mine'],
               [t('task_lists.filter.unassigned'),  'unassigned']
     user_list = project ? project.users.sort_by(&:name) : Person.users_from_projects(current_user.projects)
-    if !user_list.nil?
+    if user_list
       options += [['--------', 'divider']]
       options += user_list.
                   reject { |u| u == current_user }.
                   collect { |u| [u.name, "user_#{u.id}"] }
     end
-    select(:filter, :assigned, options, :disabled => 'divider')
+    select(:filter, :assigned, options, :disabled => 'divider', :selected => 'all')
   end
   
   def filter_due_date_dropdown(project=nil)
