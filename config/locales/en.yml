@@ -1182,7 +1182,7 @@ en:
       stopped_watching: "You will no longer receive notifications for this item."
     upgrade_browser:
       upgrade: You're using an outdated version of Internet Explorer. Teambox may not work properly under this version.
-      ie: Upgrade Internet Explorer
+      ie: Upgrade to Internet Explorer 8
       or_install: or install
       chrome: "Chrome,"
       firefox: "Firefox"
