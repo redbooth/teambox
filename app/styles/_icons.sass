@@ -2,7 +2,6 @@
   +sprite("/images/_sprites_16px.png", $x_pos, $y_pos, $x_size, $y_size)
 
 =hoverable_sprite_16px($x_pos, $y_pos, $x_size: 0, $y_size: 0)
-  display: inline-block
   +sprite("/images/_sprites_16px.png", $x_pos, $y_pos, $x_size, $y_size)
   &:hover
     +sprite("/images/_sprites_16px.png", $x_pos, $y_pos+16px, $x_size, $y_size)
@@ -41,6 +40,5 @@
 .left_arrow_icon
   +hoverable_sprite_16px(16px*11, -3px, 16px, 16px)
 .loading_icon
-  display: inline-block
   +sprite("/images/loading.gif", 0, 0, 16px, 16px)
   
