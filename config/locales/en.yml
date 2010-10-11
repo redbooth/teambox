@@ -320,7 +320,7 @@ en:
           ======
         image: "![alt text](http://w3.org/img.jpg)"
         italic_text: "*italics* text"
-        link: "[A link](http://teambox.com)"
+        link: "[Link something](http://teambox.com)"
         ordered_list: |
           1. ordered list
           2. leave empty lines!
