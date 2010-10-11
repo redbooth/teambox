@@ -63,7 +63,9 @@ class Task < RoleRecord
   end
   
   def status_name=(value)
-    self.status = STATUS_NAMES.index(value)
+    status_code = STATUS_NAMES.index(value.to_sym)
+    raise ArgumentError, "invalid status: #{value.inspect}" if status_code.nil?
+    self.status = status_code
   end
 
   # TODO: investigate if we can trash these two
@@ -119,6 +121,10 @@ class Task < RoleRecord
     user_id && User.find_with_deleted(user_id)
   end
   
+  TRACKER_STATUS_MAP = {
+    'started' => :open, 'delivered' => :hold, 'accepted' => :resolved, 'rejected' => :rejected
+  }
+  
   def update_from_pivotal_tracker(author, activity)
     story = activity[:stories][:story]
     author_name = activity[:author]
@@ -132,9 +138,11 @@ class Task < RoleRecord
         # TODO: setting assigned person all the time might not be what we want
         self.assigned = author.in_project(self.project) if author
         # status changes
-        self.status_name = { 'started' => :open, 'delivered' => :hold,
-                             'accepted' => :resolved, 'rejected' => :rejected
-                           }[story[:current_state]]
+        if new_status = TRACKER_STATUS_MAP[story[:current_state]]
+          self.status_name = new_status
+        else
+          Rails.logger.warn "[Pivotal Tracker] unknown state: #{story[:current_state].inspect}"
+        end
 
         if author
           "I marked the task as #{story[:current_state]} on #PT"

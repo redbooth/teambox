@@ -108,8 +108,8 @@ describe HooksController do
     end
     
     describe "Pivotal Tracker" do
-      it "creates a new task list" do
-        payload = {"activity"=>
+      before do
+        @payload = {"activity"=>
           {"author"=>"James Kirk",
             "project_id"=>26,
             "occurred_at"=>Time.parse("Mon Dec 14 22:12:09 UTC 2009"),
@@ -124,8 +124,14 @@ describe HooksController do
                 "accepted_at"=>Time.parse("Mon Dec 14 22:12:09 UTC 2009"),
                 "url"=>"https:///projects/26/stories/109",
                 "id"=>109}}}}
-        
-        post :create, payload.merge(:hook_name => 'pivotal', :project_id => @project.id)
+      end
+      
+      def post
+        super :create, @payload.merge(:hook_name => 'pivotal', :project_id => @project.id)
+      end
+      
+      it "creates a new task list" do
+        post
         response.should be_success
         
         task_list = @project.task_lists.first
@@ -135,6 +141,13 @@ describe HooksController do
         task.name.should == "More power to shields [PT109]"
         task.status_name.should == :resolved
         task.comments.first.body.should == "James Kirk marked the task as accepted on #PT"
+      end
+      
+      it "ignores unknown task status" do
+        @payload['activity']['stories']['story']['current_state'] = "smokin'!"
+        post
+        task = Task.first
+        task.status_name.should == :new
       end
     end
     
