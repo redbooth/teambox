@@ -103,6 +103,22 @@ When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"(?: within "([^\"]*)")?$/ 
   end
 end
 
+When /^(.*) confirming with OK$/ do |main_task|
+  if Capybara.current_driver == Capybara.javascript_driver
+    page.evaluate_script("window.old_alert = window.alert")
+    page.evaluate_script("window.old_confirm = window.confirm")
+    page.evaluate_script("window.alert = function(msg) { return true; }")
+    page.evaluate_script("window.confirm = function(msg) { return true; }")
+  end
+  
+  When main_task
+  
+  if Capybara.current_driver == Capybara.javascript_driver
+    page.evaluate_script("window.alert = window.old_alert")
+    page.evaluate_script("window.confirm = window.old_confirm")
+  end
+end
+
 Then /^(?:|I )should see JSON:$/ do |expected_json|
   require 'json'
   expected = JSON.pretty_generate(JSON.parse(expected_json))
