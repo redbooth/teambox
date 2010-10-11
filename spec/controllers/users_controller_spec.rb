@@ -72,6 +72,13 @@ describe UsersController do
       response.should have_tag 'title', /#{@another_first_user.name}/
       response.should_not have_tag 'title', /#{@first_user.name}/
     end
+    
+    it "should show projects that you share with this user and not projects that you don't" do
+      login_as @first_user
+      get :show, :id => @another_first_user.id
+      response.should have_tag '.project_link a', @first_project.name
+      response.should_not have_tag '.project_link a', @second_project.name
+    end
   end
 
     
