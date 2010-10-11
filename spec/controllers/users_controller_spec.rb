@@ -41,9 +41,13 @@ describe UsersController do
   end
   
   describe "#show" do
+    integrate_views
+    
     before do
       @first_project = make_a_typical_project
       @first_user = @user
+      @another_first_user = Factory(:confirmed_user, :first_name => 'Frank', :last_name => 'Sinatra')
+      @first_project.add_user(@another_first_user)
 
       @second_project = make_a_typical_project
       @second_user = @user
@@ -60,6 +64,13 @@ describe UsersController do
       login_as @first_user
       get :show, :id => @first_project.user.id
       response.should render_template('users/show')
+    end
+    
+    it "should show the selected user in the title and not the logged in user" do
+      login_as @first_user
+      get :show, :id => @another_first_user.id
+      response.should have_tag 'title', /#{@another_first_user.name}/
+      response.should_not have_tag 'title', /#{@first_user.name}/
     end
   end
 
