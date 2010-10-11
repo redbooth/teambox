@@ -241,6 +241,7 @@ en:
       projects: Projects
       recent_activity_for: "Recent activity for %{user_name}"
       pending_invite: "%{name} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
+      projects_in_common_with: "Projects you share with %{user_name}"
     user:
       formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: Remove from Project
