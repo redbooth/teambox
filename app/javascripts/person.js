@@ -39,3 +39,8 @@ document.on('click', '#sidebar_people a[href]', function(e, link) {
   var login = link.readAttribute('href').split('/').last()
   $('invitation_user_or_email').setValue(login).focus()
 })
+
+document.on('ajax:success', '.person a[data-method="delete"]', function(e, link) {
+  var parent = link.up('.person')
+  parent.remove()
+})

@@ -12,6 +12,13 @@
     - unless @user.biography.blank?
       %p.biography=h @user.biography
     = render_card(@card) if @card
+  
+  - if current_user.observable?(@user) && current_user != @user
+    %h3= t('.projects_in_common_with', :user_name => h(@user.name))
+    #common_projects
+      - @projects_shared.each do |project|
+        .project_link
+          = project_link(project)
 
 - if current_user.observable?(@user)
   %h2= t('.recent_activity_for', :user_name => h(@user.name))

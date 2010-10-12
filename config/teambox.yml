@@ -14,6 +14,9 @@ defaults: &defaults
   # Hour of the day at which daily reminders will be sent
   daily_task_reminder_email_time: 6
   
+  # Email confirmaiton is require to login
+  email_confirmation_require: true
+
   # Gravatar fallback type in case a user doesn't have an avatar
   # One of: wavatar, monsterid, identicon
   gravatar_default: identicon

@@ -95,8 +95,6 @@ Filter = {
     var assigned = el.value == 'all' ? 'task' : el.value;
     var filter = el_filter.value == 'all' ? null : el_filter.value;
 
-    //console.log("FILTER:" + assigned + "," + filter);
-    
     Filter.showAllTaskLists();
     Filter.hideAllTasks();
 

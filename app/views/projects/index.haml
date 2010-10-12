@@ -25,7 +25,7 @@
     = render 'projects/primer'
 
 - content_for :column do
-  = new_project_link
+  %p= new_project_link
 
   - if @sub_action == 'archived'
     = list_projects(@projects)

@@ -145,10 +145,6 @@ class TaskListsController < ApplicationController
         handle_api_error(f, @task_list)
       end
     end
-    
-    respond_to do |f|
-      f.js
-    end
   end
   
   def unarchive

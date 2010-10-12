@@ -1,6 +1,5 @@
 class ApiV1::ConversationsController < ApiV1::APIController
   before_filter :load_conversation, :only => [:show,:update,:destroy,:watch,:unwatch]
-  before_filter :check_permissions, :only => [:create,:update,:destroy,:watch,:unwatch]
   
   def index
     query = {:conditions => api_range, :limit => api_limit, :include => [:user, :project]}
@@ -19,19 +18,10 @@ class ApiV1::ConversationsController < ApiV1::APIController
   end
   
   def create
-    @conversation = @current_project.new_conversation(current_user,params)
-    @conversation.body = params[:body]
-    @saved = @conversation.save
+    authorize! :converse, @current_project
+    @conversation = @current_project.conversations.new_by_user(current_user, params)
     
-    if @saved
-      if (params[:user_all] || 0).to_i == 1
-        @conversation.add_watchers @current_project.users
-      else
-        add_watchers params[:user]
-      end
-    end
-    
-    if @saved
+    if @conversation.save
       handle_api_success(@conversation, :is_new => true)
     else
       handle_api_error(@conversation)
@@ -39,9 +29,9 @@ class ApiV1::ConversationsController < ApiV1::APIController
   end
   
   def update
-    @saved = @conversation.update_attributes params
+    authorize! :update, @conversation
     
-    if @saved
+    if @conversation.update_attributes params
       handle_api_success(@conversation)
     else
       handle_api_error(@conversation)
@@ -49,16 +39,19 @@ class ApiV1::ConversationsController < ApiV1::APIController
   end
 
   def destroy
+    authorize! :destroy, @conversation
     @conversation.destroy
     handle_api_success(@conversation)
   end
   
   def watch
+    authorize! :update, @conversation
     @conversation.add_watcher(current_user)
     handle_api_success(@conversation)
   end
 
   def unwatch
+    authorize! :update, @conversation
     @conversation.remove_watcher(current_user)
     handle_api_success(@conversation)
   end
@@ -85,12 +78,6 @@ class ApiV1::ConversationsController < ApiV1::APIController
       end
     end
     {:conditions => conditions}
-  end
-  
-  def check_permissions
-    unless (@conversation || @current_project).editable?(current_user)
-      api_error(t('common.not_allowed'), :unauthorized)
-    end
   end
   
   def add_watchers(hash)

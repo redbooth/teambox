@@ -3,7 +3,7 @@
 - thread_link = thread.is_a?(Task) ? [thread.task_list.project, thread.task_list, thread] : [thread.project, thread]
 - comments = thread.comments
 
-.thread[thread]
+.thread[thread]{ :'data-id' => thread.id }
   - if thread.is_a?(Conversation) and thread.simple and comments.size > 0
     = render comments.pop, :simpleconv => true
   - else
