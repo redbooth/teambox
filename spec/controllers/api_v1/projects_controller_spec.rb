@@ -38,7 +38,7 @@ describe ApiV1::ProjectsController do
       )
 
       lambda {
-        post :create, :project => project_attributes
+        post :create, project_attributes
         response.status.should == '201 Created'
       }.should change(Project, :count)
       
@@ -52,7 +52,7 @@ describe ApiV1::ProjectsController do
     it "should allow an admin to update the project" do
       login_as @admin
       
-      put :update, :id => @project.permalink, :project => {:permalink => 'ffffuuuuuu'}
+      put :update, :id => @project.permalink, :permalink => 'ffffuuuuuu'
       response.should be_success
       
       @project.reload.permalink.should == 'ffffuuuuuu'
@@ -61,7 +61,7 @@ describe ApiV1::ProjectsController do
     it "should not allow a non-admin to update the project" do
       login_as @user
       
-      put :update, :id => @project.permalink, :project => {:permalink => 'ffffuuuuuu'}
+      put :update, :id => @project.permalink, :permalink => 'ffffuuuuuu'
       response.status.should == '401 Unauthorized'
       
       @project.reload.permalink.should_not == 'ffffuuuuuu'
@@ -72,7 +72,7 @@ describe ApiV1::ProjectsController do
     it "should allow the owner to transfer the project" do
       login_as @owner
       
-      put :transfer, :id => @project.permalink, :project => {:user_id => @user.id}
+      put :transfer, :id => @project.permalink, :user_id => @user.id
       response.should be_success
       
       @project.reload.user.should == @user
@@ -81,7 +81,7 @@ describe ApiV1::ProjectsController do
     it "should not allow non-owners to transfer the project" do
       login_as @user
       
-      put :transfer, :id => @project.permalink, :project => {:user_id => @user.id}
+      put :transfer, :id => @project.permalink, :user_id => @user.id
       response.status.should == '401 Unauthorized'
       
       @project.reload.user.should == @owner

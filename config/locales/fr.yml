@@ -763,7 +763,7 @@ fr:
     ok: OK
     now: Maintenant
     today: Aujourd'hui
-    clear: Claire
+    clear: Effacer
   deleted: 
     conversation: "La conversation <b>%{name}</b> a été effacée"
     left_project: "Vous avez quitté le project"

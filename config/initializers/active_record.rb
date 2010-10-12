@@ -27,8 +27,6 @@ end
 
 class ActiveRecord::Base
   def to_json(options = {})
-    if self.methods.include? 'to_api_hash'
-      to_api_hash(options).to_json
-    end
+    respond_to?(:to_api_hash) ? to_api_hash(options).to_json : super(options)
   end
 end

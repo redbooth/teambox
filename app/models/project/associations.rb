@@ -9,7 +9,8 @@ class Project
     delete.has_many :tasks
     delete.has_many :invitations
     delete.has_many :uploads
-    delete.has_many :pages
+    delete.has_many :notes
+    delete.has_many :dividers
     
     delete.with_options :order => 'id DESC' do |ordered|
       ordered.has_many :conversations
@@ -17,6 +18,8 @@ class Project
       ordered.has_many :comments
     end
   end
+  
+  has_many :pages, :dependent => :destroy
 
   has_many :users, :through => :people, :order => 'users.updated_at DESC'
 end

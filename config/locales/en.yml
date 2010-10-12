@@ -241,6 +241,7 @@ en:
       projects: Projects
       recent_activity_for: "Recent activity for %{user_name}"
       pending_invite: "%{name} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
+      projects_in_common_with: "Projects you share with %{user_name}"
     user:
       formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: Remove from Project
@@ -319,7 +320,7 @@ en:
           ======
         image: "![alt text](http://w3.org/img.jpg)"
         italic_text: "*italics* text"
-        link: "[A link](http://teambox.com)"
+        link: "[Link something](http://teambox.com)"
         ordered_list: |
           1. ordered list
           2. leave empty lines!
@@ -712,6 +713,7 @@ en:
   tasks:
     my_tasks_listing:
       tasks: My Tasks
+      back: "Back to the Overview"
     errors:
       name:
         cant_be_blank: 'must not be blank'
@@ -1181,7 +1183,7 @@ en:
       stopped_watching: "You will no longer receive notifications for this item."
     upgrade_browser:
       upgrade: You're using an outdated version of Internet Explorer. Teambox may not work properly under this version.
-      ie: Upgrade Internet Explorer
+      ie: Upgrade to Internet Explorer 8
       or_install: or install
       chrome: "Chrome,"
       firefox: "Firefox"

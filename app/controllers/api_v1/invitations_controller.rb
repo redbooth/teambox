@@ -15,9 +15,9 @@ class ApiV1::InvitationsController < ApiV1::APIController
   end
   
   def create
-    if params[:invitation] and @target != current_user
-      user_or_email = params[:invitation][:user_or_email]
-      role = params[:invitation][:role] || Person::ROLES[:participant]
+    if @target != current_user
+      user_or_email = params[:user_or_email]
+      role = params || Person::ROLES[:participant]
       
       @targets = user_or_email.extract_emails
       @targets = user_or_email.split if @targets.empty?

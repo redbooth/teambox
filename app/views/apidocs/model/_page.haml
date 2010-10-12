@@ -6,13 +6,13 @@
 - doc_for :show,  :example => @page.to_api_hash(:include => [:slots, :objects]) do
   %p= "Returns the data for a page."
 
-- doc_for :create, :parameters => {:comment => {:name => 'Name', :description => 'Description'} },
+- doc_for :create, :parameters => {:name => 'Name', :description => 'Description', :project_id => 123 },
                    :example => @page.to_api_hash,
                    :status => :created,
                    :role => :participant do
   %p= "Creates a new page."
 
-- doc_for :update, :parameters => {:comment => {:name => @page.name, :description => @page.description} },
+- doc_for :update, :parameters => {:name => @page.name, :description => @page.description },
                    :status => :updated,
                    :role => :participant do
   %p= "Updates the name and description of a page."

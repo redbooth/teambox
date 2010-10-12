@@ -13,7 +13,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
   end
   
   def create
-    @project = current_user.projects.new(params[:project])
+    @project = current_user.projects.new(params)
 
     unless current_user.can_create_project?
       api_error(t('projects.new.not_allowed'), :unauthorized)
@@ -28,7 +28,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
   end
   
   def update
-    if @current_project.update_attributes(params[:project])
+    if @current_project.update_attributes(params)
       handle_api_success(@current_project)
     else
       handle_api_error(@current_project)
@@ -42,7 +42,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
     end
     
     # Grab new owner
-    user_id = params[:project][:user_id] rescue nil
+    user_id = params[:user_id] rescue nil
     person = @current_project.people.find_by_user_id(user_id)
     saved = false
     

@@ -13,7 +13,7 @@ class User
   end
   
   def is_active?
-    self.confirmed_user
+    Teambox.config.email_confirmation_require ? self.confirmed_user : true
   end
 
   def activate!

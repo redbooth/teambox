@@ -7,13 +7,13 @@
 - doc_for :show,  :example => @divider.to_api_hash(:include => [:page_slot]) do
   %p= "Returns the data for a divider."
   
-- doc_for :create, :parameters => {:note => {:name => 'Name'} },
+- doc_for :create, :parameters => {:name => 'Name', :project_id => 123, :page_id => 123 },
                    :example => @divider.to_api_hash,
                    :status => :created,
                    :role => :participant do
   %p= "Creates a new divider."
 
-- doc_for :update, :parameters => {:note => {:name => @divider.name} },
+- doc_for :update, :parameters => {:name => @divider.name },
                    :status => :updated,
                    :role => :participant do
   %p= "Updates the name of a divider."
