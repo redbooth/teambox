@@ -112,12 +112,10 @@ def make_a_typical_project
     @project.add_user(@user)
     @observer = Factory.create(:confirmed_user)
     @organization.add_member(@observer, Membership::ROLES[:participant])
-    @project.add_user(@observer)
-    @project.people(true).last.update_attribute(:role, Person::ROLES[:observer])
+    @project.add_user(@observer, :role => Person::ROLES[:observer])
     @admin = Factory.create(:confirmed_user)
     @organization.add_member(@admin, Membership::ROLES[:admin])
-    @project.add_user(@admin)
-    @project.people(true).last.update_attribute(:role, Person::ROLES[:admin])
+    @project.add_user(@admin, :role => Person::ROLES[:admin])
     @project
 end
 
