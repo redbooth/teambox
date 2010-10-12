@@ -19,7 +19,8 @@ class ApplicationController < ActionController::Base
                 :touch_user, 
                 :belongs_to_project?,
                 :load_community_organization,
-                :set_client
+                :set_client,
+                :add_chrome_frame_header
   
   private
 
@@ -283,4 +284,13 @@ class ApplicationController < ActionController::Base
     def h(text)
       ERB::Util.h(text)
     end
+    
+    def add_chrome_frame_header
+      headers['X-UA-Compatible'] = 'chrome=1' if chrome_frame? && request.format == :html
+    end
+    
+    def chrome_frame?
+      request.user_agent =~ /chromeframe/
+    end
+    helper_method :chrome_frame?
 end
