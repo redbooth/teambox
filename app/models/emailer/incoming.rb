@@ -142,11 +142,12 @@ module Emailer::Incoming
     from = Array(email.from).first
     raise MissingInfo, "Invalid From field" if from.nil?
     
-    destinations = Array(email.to) + Array(email.cc)
-    raise MissingInfo, "Invalid To fields" if destinations.empty?
-
     configured_domain = Teambox.config.smtp_settings[:domain]
-    @to = destinations.detect { |a| a.include? configured_domain }.split('@').first.downcase
+    destinations = Array(email.to) + Array(email.cc)
+    target = destinations.detect { |a| a.include? configured_domain }
+    raise MissingInfo, "Invalid To fields" if target.nil?
+
+    @to = target.split('@').first.downcase
     @project = Project.find_by_permalink @to.split('+').first
     raise MissingInfo, "Invalid project '#{@to}'" unless @project
     

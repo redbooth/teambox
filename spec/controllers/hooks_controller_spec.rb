@@ -69,6 +69,30 @@ describe HooksController do
         response.should be_success
         response.body.should == "Invalid From field"
       end
+      
+      it "ignores email without plaintext part" do
+        post :create,
+             :hook_name => 'email',
+             :from => @project.user.email,
+             :to => "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}",
+             :html => "<p>Hello there</p>",
+             :subject => "Just testing"
+        
+        response.should be_success
+        response.body.should == "Invalid mail body"
+      end
+      
+      it "ignores email with invalid 'to' address" do
+        post :create,
+             :hook_name => 'email',
+             :from => @project.user.email,
+             :to => "me@moo.com",
+             :text => "Hello there",
+             :subject => "Just testing"
+        
+        response.should be_success
+        response.body.should == "Invalid To fields"
+      end
 
       it "should parse incoming emails with attachments to conversation answers" do
         @task = Factory(:task, :project => @project)
