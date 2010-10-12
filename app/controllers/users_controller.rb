@@ -68,7 +68,7 @@ class UsersController < ApplicationController
     load_app_link
 
     @user.confirmed_user = ((@invitation && @invitation.email == @user.email) or
-                            Rails.env.development? or
+                            Rails.env.development? or !Teambox.config.email_confirmation_require or
                             !!@app_link)
 
     if @user && @user.save
