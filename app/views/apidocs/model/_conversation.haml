@@ -9,13 +9,13 @@
                   :includes => [:comments, :user] do
   %p= "Returns the data for a conversation."
   
-- doc_for :create, :parameters => {:conversation => {:name => 'Conversation', :body => 'Well...'} },
+- doc_for :create, :parameters => {:name => 'Conversation', :body => 'Well...', :project_id => 123 },
                    :example => @conversation.to_api_hash,
                    :status => :created,
                    :role => :participant do
   %p= "Creates a new conversation."
 
-- doc_for :update, :parameters => {:conversation => {:name => @conversation.name} },
+- doc_for :update, :parameters => {:name => @conversation.name },
                    :status => :updated,
                    :role => :participant do
   %p= "Updates the title of a conversation."

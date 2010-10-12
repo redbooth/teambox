@@ -47,7 +47,8 @@ class Organization < ActiveRecord::Base
     return true if role == Membership::ROLES[:external]
     member = memberships.find_by_user_id(user_id)
     if member.nil?
-      member = memberships.new(:user_id => user_id.to_i, :role => role.to_i)
+      member = memberships.new(:role => role.to_i)
+      member.user_id = user_id.to_i
       member.save
     else
       member.update_attribute(:role, role)

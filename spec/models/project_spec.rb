@@ -89,7 +89,7 @@ describe Project do
     end
 
     it "should log when a user is added being invited" do
-      person = @project.add_user(@user,@owner)
+      person = @project.add_user(@user, :source_user => @owner)
       Activity.last.project.should == @project
       Activity.last.comment_type.should == nil
       Activity.last.target.should == person

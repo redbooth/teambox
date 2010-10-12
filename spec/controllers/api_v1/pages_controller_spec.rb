@@ -18,6 +18,19 @@ describe ApiV1::PagesController do
       JSON.parse(response.body)['objects'].length.should == 1
     end
     
+    it "shows pages in all projects" do
+      login_as @user
+      
+      project = Factory.create(:project)
+      project.new_page(@user, {:name => 'Important plans!'}).save!
+      project.add_user(@user)
+      
+      get :index
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 2
+    end
+    
     it "limits pages" do
       login_as @user
       
@@ -68,7 +81,7 @@ describe ApiV1::PagesController do
     it "should allow participants to modify the page" do
       login_as @user
       
-      put :update, :project_id => @project.permalink, :id => @page.id, :page => {:name => 'Unimportant Plans'}
+      put :update, :project_id => @project.permalink, :id => @page.id, :name => 'Unimportant Plans'
       response.should be_success
       
       @page.reload.name.should == 'Unimportant Plans'
@@ -77,7 +90,7 @@ describe ApiV1::PagesController do
     it "should not allow non-participants to modify the page" do
       login_as @observer
       
-      put :update, :project_id => @project.permalink, :id => @page.id, :page => {:name => 'Unimportant Plans'}
+      put :update, :project_id => @project.permalink, :id => @page.id, :name => 'Unimportant Plans'
       response.status.should == '401 Unauthorized'
       
       @page.reload.name.should == 'Important plans!'

@@ -1,0 +1,28 @@
+%h2 Changes
+
+%p As the API is still in development, the format and queries for responses may be subject to change. Notable changes will be listed here for developers using the API.
+
+%h2 API V0
+
+%p The first iteration of the API consists of a set of undocumented "JSON", "XML", and "YAML" routes which directly tie into the main Teambox controllers. e.g.
+
+%ul
+  %li <code>/activities.{json,yaml,xml}</code>
+  %li <code>/projects.{json,yaml,xml}</code>
+  %li <code>/users.{json,yaml,xml}</code>
+
+%p It is strongly recommend that client apps cease using this API as it is deprecated. Any future release of Teambox may remove this API entirely.
+
+%h2 API V1
+
+%p This is the new API. All methods are implemented in a separate set of controllers under the <code>/api/1</code> namespace. You may either use JSON or regular form encoding in requests. Refer to the #{link_to('API V1 routes', api_routes_path)} for more information.
+
+%h3 Changes in the V1 API
+
+%p As this version of the API is still in development, important changes are listed below.
+
+%p <strong>2010-10-07</strong>: Object parameters for POST and PUT no longer need to be placed under the objects key. i.e. instead of <code>{'comment':{'body':'Test'}}</code>, use <code>{'body':'Test'}</code>.
+%p <strong>2010-10-06</strong>: To simplify routing, object paths no longer need to be prefixed by <code>/project/:permalink</code>. i.e. <code>/comments/123</code> now works instead of <code>/project/earthworks/comments/123</code>. Note that old routes will still work.
+%p <strong>2010-10-04</strong>: In order to simplify developing API apps, all queries to index methods now return objects in two keys, "objects" and "references". References are simple representations of objects referenced by the main list of objects, e.g. Projects and Users.
+
+= render 'apidocs/column'

@@ -5,6 +5,13 @@ $typeface: "Lucida Grande", Helvetica, "Helvetica Neue", Arial, Verdana, sans-se
 $link: #259bad
 $link_hover: #df5249
 
+// fix for IE7, http://flipc.blogspot.com/2009/02/damn-ie7-and-inline-block.html
+=inline-block($height)
+  display: inline-block
+  zoom: 1
+  *display: inline
+  _height: $height
+
 =rounded($n)
   border-radius: $n
   -moz-border-radius: $n
@@ -67,6 +74,7 @@ $link_hover: #df5249
   background-image: url($image)
   background-position: 0-$x_pos 0-$y_pos
   background-repeat: no-repeat
+  +inline-block(16px)
   @if $x_size > 0
     width: $x_size
   @if $y_size > 0

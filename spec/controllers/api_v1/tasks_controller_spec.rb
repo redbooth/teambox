@@ -108,7 +108,7 @@ describe ApiV1::TasksController do
     it "should allow participants to create tasks" do
       login_as @user
       
-      post :create, :project_id => @project.permalink, :id => @task_list.id, :task_list_id => @task_list.id, :task => {:name => 'Another TODO!'}
+      post :create, :project_id => @project.permalink, :id => @task_list.id, :task_list_id => @task_list.id, :name => 'Another TODO!'
       response.should be_success
       
       @task_list.tasks(true).length.should == 2
@@ -118,7 +118,7 @@ describe ApiV1::TasksController do
     it "should not allow observers to create tasks" do
       login_as @observer
       
-      post :create, :project_id => @project.permalink, :id => @task.id, :task_list_id => @task_list.id, :task => {:name => 'Another TODO!'}
+      post :create, :project_id => @project.permalink, :id => @task.id, :task_list_id => @task_list.id, :name => 'Another TODO!'
       response.status.should == '401 Unauthorized'
       
       @task_list.tasks(true).length.should == 1
@@ -129,7 +129,7 @@ describe ApiV1::TasksController do
     it "should allow participants to modify a task" do
       login_as @user
       
-      put :update, :project_id => @project.permalink, :id => @task.id, :task => {:name => 'Modified'}
+      put :update, :project_id => @project.permalink, :id => @task.id, :name => 'Modified'
       response.should be_success
       
       @task.reload.name.should == 'Modified'
@@ -138,7 +138,7 @@ describe ApiV1::TasksController do
     it "should not allow observers to modify a task" do
       login_as @observer
       
-      put :update, :project_id => @project.permalink, :id => @task.id, :task => {:name => 'Modified'}
+      put :update, :project_id => @project.permalink, :id => @task.id, :name => 'Modified'
       response.status.should == '401 Unauthorized'
       
       @task.reload.name.should_not == 'Modified'

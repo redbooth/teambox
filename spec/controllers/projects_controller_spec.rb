@@ -49,4 +49,44 @@ describe ProjectsController do
     end
   end
   
+  describe "#join" do
+    it "should let admins from the projects organization add themselves" do
+      @project = Factory.create(:project)
+      @user = Factory.create(:confirmed_user)
+      @project.organization.add_member(@user, Membership::ROLES[:admin])
+      login_as @user
+      
+      lambda {
+        get :join, :id => @project.permalink
+      }.should change(Person, :count)
+      
+      @project.people(true).map(&:user_id).include?(@project.user_id).should == true
+    end
+    
+    it "should let people add themselves to public projects as commenters" do
+      @project = Factory.create(:project)
+      @project.update_attribute(:public, true)
+      @user = Factory.create(:confirmed_user)
+      login_as @user
+      
+      lambda {
+        get :join, :id => @project.permalink
+      }.should change(Person, :count)
+      
+      @project.people(true).map(&:user_id).include?(@user.id).should == true
+    end
+    
+    it "should not allow people to add themselves to non-public projects" do
+      @project = Factory.create(:project)
+      @user = Factory.create(:confirmed_user)
+      
+      login_as @user
+      
+      lambda {
+        get :join, :id => @project.permalink
+      }.should_not change(Person, :count)
+      
+      @project.people(true).map(&:user_id).include?(@user.id).should == false
+    end
+  end
 end

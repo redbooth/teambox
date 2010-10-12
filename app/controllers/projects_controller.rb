@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       f.html  { @threads = Activity.get_threads(@activities) }
-      f.m
+      f.m     { redirect_to activities_path if request.path == '/' }
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @projects.to_xml }
       f.json  { render :as_json => @projects.to_xml }
@@ -129,15 +129,11 @@ class ProjectsController < ApplicationController
 
   def join
     if @current_project.organization.is_admin?(current_user)
-      @current_project.people.create!(
-        :user => current_user,
-        :role => Person::ROLES[:admin])
+      @current_project.add_user(current_user, :role => Person::ROLES[:admin])
       flash[:success] = t('projects.join.welcome')
       redirect_to project_path(@current_project)
     elsif @current_project.public
-      @current_project.people.create!(
-        :user => current_user,
-        :role => Person::ROLES[:commenter])
+      @current_project.add_user(current_user, :role => Person::ROLES[:commenter])
       flash[:success] = t('projects.join.welcome')
       redirect_to project_path(@current_project)
     else

@@ -37,7 +37,7 @@ class Comment
   end
   
   def status_name
-    Task::STATUS_NAMES[status]
+    Task::STATUS_NAMES[status || 0]
   end
   
   def previous_status_name

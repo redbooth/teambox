@@ -7,17 +7,17 @@
                  :includes => [:organization, :people, :user] do
   %p= "Returns the data for a given project"
   
-- doc_for :create, :parameters => {:project => {:organization_id => @project.organization_id, :name => 'Name', :permalink => 'project'} },
+- doc_for :create, :parameters => {:organization_id => @project.organization_id, :name => 'Name', :permalink => 'project' },
                    :example => @project.to_api_hash,
                    :status => :created do
   %p= "Creates a new project"
 
-- doc_for :update, :parameters => {:project => {:name => @project.name, :permalink => @project.permalink} },
+- doc_for :update, :parameters => {:name => @project.name, :permalink => @project.permalink },
                    :status => :updated,
                    :role => [:admin, :owner] do
   %p= "Updates a project"
 
-- doc_for :transfer, :parameters => {:project => {:user_id => 'id' } },
+- doc_for :transfer, :parameters => {:user_id => 'id'  },
                      :status => :updated,
                      :role => [:owner] do
   %p= "Transfers a project to the new owner"

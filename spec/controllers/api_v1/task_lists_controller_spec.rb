@@ -22,6 +22,18 @@ describe ApiV1::TaskListsController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
     
+    it "shows task lists in all projects" do
+      login_as @user
+      
+      task_list = Factory.create(:task_list, :project => Factory.create(:project))
+      task_list.project.add_user(@user)
+      
+      get :index
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 3
+    end
+    
     it "restricts by archived lists" do
       login_as @user
       
@@ -77,7 +89,7 @@ describe ApiV1::TaskListsController do
     it "should allow participants to create task lists" do
       login_as @user
       
-      post :create, :project_id => @project.permalink, :id => @task_list.id, :task_list => {:name => 'Another list!'}
+      post :create, :project_id => @project.permalink, :id => @task_list.id, :name => 'Another list!'
       response.should be_success
       
       @project.task_lists(true).length.should == 3
@@ -87,7 +99,7 @@ describe ApiV1::TaskListsController do
     it "should not allow observers to create task lists" do
       login_as @observer
       
-      post :create, :project_id => @project.permalink, :id => @task_list.id, :task_list => {:name => 'Another list!'}
+      post :create, :project_id => @project.permalink, :id => @task_list.id, :name => 'Another list!'
       response.status.should == '401 Unauthorized'
       
       @project.task_lists(true).length.should == 2
@@ -98,7 +110,7 @@ describe ApiV1::TaskListsController do
     it "should allow participants to modify a task list" do
       login_as @user
       
-      put :update, :project_id => @project.permalink, :id => @task_list.id, :task_list => {:name => 'Modified'}
+      put :update, :project_id => @project.permalink, :id => @task_list.id, :name => 'Modified'
       response.should be_success
       
       @task_list.reload.name.should == 'Modified'
@@ -107,7 +119,7 @@ describe ApiV1::TaskListsController do
     it "should not allow observers to modify a task list" do
       login_as @observer
       
-      put :update, :project_id => @project.permalink, :id => @task_list.id, :task_list => {:name => 'Modified'}
+      put :update, :project_id => @project.permalink, :id => @task_list.id, :name => 'Modified'
       response.status.should == '401 Unauthorized'
       
       @task_list.reload.name.should_not == 'Modified'
