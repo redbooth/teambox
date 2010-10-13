@@ -85,29 +85,75 @@ module Emailer::Incoming
   end
 
   private
+  
+  # Sendgrid params to act as TMail::Mail
+  class ParamsMail
+    def initialize(params)
+      @params = params
+      @from = @to = @cc = nil
+      @attachments = nil
+    end
+    
+    %w[from to cc].each do |field|
+      class_eval <<-CODE
+        def #{field}
+          @#{field} ||= @params[:#{field}].presence && Array(@params[:#{field}])
+        end
+      CODE
+    end
+    
+    def body
+      @params[:text]
+    end
+    
+    def subject
+      @params[:subject]
+    end
+    
+    def attachments
+      @attachments ||= begin
+        files = []
+        @params[:attachments].to_i.times { |i|
+          files << @params[:"attachment#{i+1}"]
+        }
+        files
+      end
+    end
+  end
 
+  # accepts params in Sendgrid's format: http://wiki.sendgrid.com/doku.php?id=parse_api
   def process(email)
+    email = ParamsMail.new(email) if Hash === email
+    
+    from = Array(email.from).first
     destinations = Array(email.to) + Array(email.cc)
-    raise "Invalid To fields"  unless destinations and destinations.first
-    raise "Invalid From field" unless email.from   and email.from.first
+    raise "Invalid From field" if from.nil?
+    raise "Invalid To fields"  if destinations.empty?
 
-    @to       = destinations.
-                  select { |a| a.include? Teambox.config.smtp_settings[:domain] }.
-                  first.split('@').first.downcase
-    @body     = email.multipart? ? email.parts.first.body : email.body
-    @body     = @body.split(Emailer::ANSWER_LINE).first.split("<div class='email'").first.strip
-    @user     = User.find_by_email email.from.first
-    @subject  = email.subject.gsub(REPLY_REGEX, "").strip
-    @project  = Project.find_by_permalink @to.split('+').first
-    @files    = email.attachments ? email.attachments : []
+    configured_domain = Teambox.config.smtp_settings[:domain]
+
+    @to      = destinations.detect { |a| a.include? configured_domain }.split('@').first.downcase
+    @body    = strip_responses(email.body)
+    @user    = User.find_by_email! from
+    @subject = email.subject.gsub(REPLY_REGEX, "").strip
+    @project = Project.find_by_permalink @to.split('+').first
+    @files   = email.attachments || []
 
     raise "Invalid project '#{@to}'" unless @project
-    raise "Invalid user '#{email.from.first}'" unless @user
     raise "Invalid body" unless @body
     
     raise "User does not belong to project" unless @user.projects.include? @project
     
     Rails.logger.info "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
+  end
+  
+  def strip_responses(body)
+    # For GMail. Matches "On 19 August 2010 13:48, User <proj+conversation+22245@app.teambox.com<proj%2Bconversation%2B22245@app.teambox.com>> wrote:"
+    body.strip.
+      gsub(/\n[^\r\n]*\d{2,4}.*\+.*\d@app.teambox.com.*:.*\z/m, '').
+      split(Emailer::ANSWER_LINE).first.
+      split("<div class='email'").first.
+      strip
   end
   
   # Decides which kind of object we'll be posting to (Conversation, Task, Task List..)

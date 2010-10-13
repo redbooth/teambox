@@ -27,4 +27,8 @@ class Task
     :conditions => ["tasks.due_on >= ? AND tasks.due_on <= ? AND task_lists.project_id = ? AND tasks.completed_at is null", 
                     Date.today.monday, Date.today.monday + 2.weeks, project_id], 
                     :include => :task_list }}
+  
+  named_scope :from_pivotal_tracker, lambda { |story_id|
+    { :conditions => ['name LIKE ?', "%[PT#{story_id}]%"] }
+  }
 end

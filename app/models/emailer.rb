@@ -2,6 +2,11 @@ class Emailer < ActionMailer::Base
   include ActionController::UrlWriter # Allows us to generate URLs
   include ActionView::Helpers::TextHelper
   include Emailer::Incoming
+  
+  # can't use regular `receive` class method since it deals with Mail objects
+  def self.receive_params(params)
+    new.receive(params)
+  end
 
   ANSWER_LINE = '-----------------------------==-----------------------------'
 
