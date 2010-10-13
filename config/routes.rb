@@ -73,7 +73,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.project_archived 'projects/archived.:format',  :controller => 'projects', :action => 'index', :sub_action => 'archived'
 
-  map.hooks             'hooks/:hook_name',     :controller => 'hooks',       :action => 'create',    :method => :post
+  map.hooks 'hooks/:hook_name', :controller => 'hooks', :action => 'create', :conditions => { :method => :post }
 
   map.resources :projects,
       :has_many => [:pages, :people],
@@ -94,7 +94,7 @@ ActionController::Routing::Routes.draw do |map|
 
     project.resources :uploads
 
-    project.hooks      'hooks/:hook_name',                 :controller => 'hooks',      :action => 'create',    :method => :post
+    project.hooks 'hooks/:hook_name', :controller => 'hooks', :action => 'create', :conditions => { :method => :post }
 
     project.resources :task_lists,
       :collection => { :gantt_view => :get, :archived => :get  },

@@ -138,6 +138,10 @@ module ApplicationHelper
   def upgrade_browser
     render 'shared/upgrade_browser'
   end
+  
+  def chrome_frame
+    render 'shared/chrome_frame'
+  end
 
   def latest_announcement
     render 'shared/latest_announcement'

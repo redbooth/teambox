@@ -35,6 +35,13 @@ describe Task do
     task = Factory.build(:task, :task_list => task_list, :project => nil, :assigned => person)
     lambda { task.save }.should_not raise_error
   end
+  
+  it "errors out on unknown status name" do
+    task = Factory.build(:task)
+    lambda {
+      task.status_name = 'silly'
+    }.should raise_error(ArgumentError)
+  end
 
   describe "assigning tasks" do
     before do

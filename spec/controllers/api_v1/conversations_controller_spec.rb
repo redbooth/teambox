@@ -110,17 +110,18 @@ describe ApiV1::ConversationsController do
     it "should allow participants to create conversations" do
       login_as @user
       
-      post :create, :project_id => @project.permalink, :id => @conversation.id, :name => 'Created!', :body => 'Discuss...'
+      post :create, :project_id => @project.permalink, :name => 'Created!', :body => 'Discuss...'
       response.should be_success
       
       @project.conversations(true).length.should == 3
       @project.conversations.first.name.should == 'Created!'
+      @project.conversations.first.comments.length.should == 1
     end
     
     it "should not allow observers to create conversations" do
       login_as @observer
       
-      post :create, :project_id => @project.permalink, :id => @conversation.id, :name => 'Created!', :body => 'Discuss...'
+      post :create, :project_id => @project.permalink, :name => 'Created!', :body => 'Discuss...'
       response.status.should == '401 Unauthorized'
       
       @project.conversations(true).length.should == 2
@@ -148,8 +149,8 @@ describe ApiV1::ConversationsController do
   end
   
   describe "#destroy" do
-    it "should allow participants to destroy a conversation" do
-      login_as @user
+    it "should allow admins to destroy a conversation" do
+      login_as @admin
       
       put :destroy, :project_id => @project.permalink, :id => @conversation.id
       response.should be_success
@@ -157,8 +158,8 @@ describe ApiV1::ConversationsController do
       @project.conversations(true).length.should == 1
     end
     
-    it "should not allow observers to destroy a conversation" do
-      login_as @observer
+    it "should not allow participants to destroy a conversation" do
+      login_as @user
       
       put :destroy, :project_id => @project.permalink, :id => @conversation.id
       response.status.should == '401 Unauthorized'
