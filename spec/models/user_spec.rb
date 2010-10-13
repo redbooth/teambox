@@ -445,4 +445,13 @@ describe User do
     end
   end
 
+  describe "last visit tracking" do
+    before do
+      @user = Factory(:user)
+    end
+
+    it "should not change when updating the user" do
+      lambda { @user.touch }.should_not change(@user, :visited_at)
+    end
+  end
 end
