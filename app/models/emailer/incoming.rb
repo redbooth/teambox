@@ -274,9 +274,11 @@ module Emailer::Incoming
     raise "Subject and body cannot be blank when creating task from email" if @subject.blank? && @body.blank?
     Rails.logger.info "Creating task '#{@subject}'"
     
-    task_list = @project.task_lists.find_by_name("Uncategorized") || @project.task_lists.create! do |task_list|
+    task_list_name = Teambox.config.incoming_email_settings[:inbox_task_list] || "Uncategorized"
+    
+    task_list = @project.task_lists.find_by_name(task_list_name) || @project.task_lists.create! do |task_list|
       task_list.user = @user
-      task_list.name = "Uncategorized"
+      task_list.name = task_list_name
     end
     
     task = task_list.tasks.create! do |task|
