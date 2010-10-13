@@ -11,13 +11,14 @@ module PermalinkFu
     attr_accessor :translation_from
 
     # This method does the actual permalink escaping.
-    def escape(string)
+    def escape(string, klass)
       result = ((translation_to && translation_from) ? Iconv.iconv(translation_to, translation_from, string) : string).to_s
       result.gsub!(/[^\x00-\x7F]+/, '') # Remove anything non-ASCII entirely (e.g. diacritics).
       result.gsub!(/[^\w_ \-]+/i,   '') # Remove unwanted chars.
       result.gsub!(/[ \-]+/i,      '-') # No more than one of the separator in a row.
       result.gsub!(/^\-|\-$/i,      '') # Remove leading/trailing separator.
       result.downcase!
+      result = "#{klass}-#{result}" if Integer(result) rescue result
       result.size.zero? ? random_permalink(string) : result
     rescue
       random_permalink(string)
@@ -98,7 +99,7 @@ module PermalinkFu
 
     def define_attribute_methods_with_permalinks
       if value = define_attribute_methods_without_permalinks
-        evaluate_attribute_method permalink_field, "def #{self.permalink_field}=(new_value);write_attribute(:#{self.permalink_field}, new_value.blank? ? '' : PermalinkFu.escape(new_value));end", "#{self.permalink_field}="
+        evaluate_attribute_method permalink_field, "def #{self.permalink_field}=(new_value);write_attribute(:#{self.permalink_field}, new_value.blank? ? '' : PermalinkFu.escape(new_value,self.class.to_s.downcase));end", "#{self.permalink_field}="
       end
       value
     end
