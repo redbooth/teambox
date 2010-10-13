@@ -117,17 +117,79 @@ describe HooksController do
         comment.body.should == 'I would say something about this conversation'
         comment.uploads.count.should == 2
       end
-
+      
+      context "the bounce system" do
+        before do
+          @options = post_options("#{@project.permalink}+task", 'Some subject', 'I would say something about this task')
+        end
+        
+        it "should raise (200 for sendgrid) and create a bounce message if an unknown user posts to a project" do
+          options =  @options.merge!(:from => 'random_person@teambox.com')
+          check_bounce_message(options) do
+            post :create, options
+          end
+          response.response_code.should == 200
+        end
+        
+        it "should raise (200 for sendgrid) and create a bounce message if a user does not belong to a project" do
+          options =  @options.merge!(:from => Factory(:user).email)
+          check_bounce_message(options) do
+            post :create, options
+          end
+          response.response_code.should == 200
+        end
+      
+        it "should raise (200 for sendgrid) and create a bounce message if a project is not found" do |variable|
+          options = @options.merge!(:to => "#{@project.permalink}+task+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}")
+          check_bounce_message(options) do
+            post :create, options
+          end
+          response.response_code.should == 200
+        end
+        
+        it "should raise (200 for sendgrid) and create a bounce message if a conversation is not found" do |variable|
+          options = @options.merge(:to => "#{@project.permalink}+conversation+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}")
+          check_bounce_message(options) do
+            post :create, options
+          end
+          response.response_code.should == 200
+        end
+      
+        it "should only create one bounce message every day if an exception is raised" do
+          options =  @options.merge!(:from => Factory.build(:user).email) # Do not save just build for email
+          Emailer.should_receive(:deliver_bounce_message).once
+          
+          post :create, options
+          post :create, options
+        end
+      end
+      
+      def check_bounce_message(options, &block)
+        Emailer.should_receive(:deliver_bounce_message).with(
+          kind_of(Emailer::Incoming::Error)
+        ).once
+        
+        lambda do
+          yield
+        end.should change(EmailBounce, :count).by(1)
+      end
+      
       def post_email_hook(to, subject, body, attachments = true)
-        post :create,
-             :hook_name => 'email',
-             :from => @project.user.email,
-             :to => "#{to}@#{Teambox.config.smtp_settings[:domain]}",
-             :text => body,
-             :subject => subject,
-             :attachments => attachments ? '2' : nil,
-             :attachment1 => upload_file("#{Rails.root}/spec/fixtures/tb-space.jpg", 'image/jpg'),
-             :attachment2 => upload_file("#{Rails.root}/spec/fixtures/users.yml", 'text/plain')
+        post :create, post_options(to, subject, body, attachments)
+      end
+      
+      def post_options(to, subject, body, attachments = true)
+         {
+           :hook_name => 'email',
+           :method => :post,
+           :from => @project.user.email,
+           :to => "#{to}@#{Teambox.config.smtp_settings[:domain]}",
+           :text => body,
+           :subject => subject,
+           :attachments => attachments ? '2' : nil,
+           :attachment1 => upload_file("#{Rails.root}/spec/fixtures/tb-space.jpg", 'image/jpg'),
+           :attachment2 => upload_file("#{Rails.root}/spec/fixtures/users.yml", 'text/plain')
+         }
       end
     end
     

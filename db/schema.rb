@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100916140725) do
+ActiveRecord::Schema.define(:version => 20101014112847) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -119,6 +119,17 @@ ActiveRecord::Schema.define(:version => 20100916140725) do
     t.string  "name"
     t.integer "account_type", :default => 0
   end
+
+  create_table "email_bounces", :force => true do |t|
+    t.string   "email"
+    t.string   "exception_type"
+    t.string   "exception_message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "email_bounces", ["created_at"], :name => "index_email_bounces_on_created_at"
+  add_index "email_bounces", ["email"], :name => "index_email_bounces_on_email"
 
   create_table "emails", :force => true do |t|
     t.string   "from"

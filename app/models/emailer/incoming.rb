@@ -17,7 +17,7 @@ require 'net/http'
 #
 
 module Emailer::Incoming
-
+  
   def self.fetch(settings)
     type = settings[:type].to_s.downcase
     send("fetch_#{type}", settings)
@@ -68,8 +68,10 @@ module Emailer::Incoming
   # Instance method invoked by class method of the same name.
   # Receives a parsed and decoded TMail::Mail object.
   def receive(email)
+    email = ParamsMail.new(email) if Hash === email
+    
     process email
-    get_target
+    get_target email
     get_action if @target.is_a?(Task)
     case @type
     when :project then create_conversation
@@ -131,12 +133,27 @@ module Emailer::Incoming
   end
   
   class MissingInfo < ArgumentError; end
-  class IllegalMail < RuntimeError; end
+  class Error < StandardError
+    attr_accessor :mail
+    
+    def initialize(mail, message)
+      raise "mail must be passed to error" if mail.nil?
+      super(message)
+      @mail = mail
+    end
+    
+    def from
+      @mail.from.kind_of?(Array) ? @mail.from.first : @mail.from
+    end
+  end
+  
+  class UserNotFoundError < Error; end
+  class NotProjectMemberError < Error; end
+  class ProjectNotFoundError < Error; end
+  class TargetNotFoundError < Error; end
 
   # accepts params in Sendgrid's format: http://wiki.sendgrid.com/doku.php?id=parse_api
   def process(email)
-    email = ParamsMail.new(email) if Hash === email
-    
     raise MissingInfo, "Invalid mail body" if email.body.blank?
     
     from = Array(email.from).first
@@ -149,12 +166,11 @@ module Emailer::Incoming
 
     @to = target.split('@').first.downcase
     @project = Project.find_by_permalink @to.split('+').first
-    raise MissingInfo, "Invalid project '#{@to}'" unless @project
+    raise ProjectNotFoundError.new(email, "Invalid project '#{@to}'") unless @project
     
-    @user = User.find_by_email! from
-    if @user.nil? or not @user.projects.include? @project
-      raise IllegalMail, "User does not belong to project"
-    end
+    @user = User.find_by_email from
+    raise UserNotFoundError.new(email, "Invalid user '#{email.from.first}'") unless @user
+    raise NotProjectMemberError.new(email, "User does not belong to project") unless @user.projects.include? @project
     
     @body    = strip_responses(email.body)
     @subject = email.subject.gsub(REPLY_REGEX, "").strip
@@ -174,7 +190,7 @@ module Emailer::Incoming
   
   # Decides which kind of object we'll be posting to (Conversation, Task, Task List..)
   # and finds it if appliable.
-  def get_target
+  def get_target(email)
     extra_params = @to.split('+')
 
     case extra_params.size
@@ -206,6 +222,7 @@ module Emailer::Incoming
         else
           raise "Invalid target class"
         end
+        raise TargetNotFoundError.new(email, "#{extra_params.second} #{extra_params.third} not found for #{@project.name}") if @target.nil?
       else
         raise "Invalid recipient: '#{@to}'"
     end

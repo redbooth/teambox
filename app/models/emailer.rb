@@ -73,6 +73,15 @@ class Emailer < ActionMailer::Base
     subject       I18n.t("users.daily_task_reminder_email.daily_task_reminder")
     body          :user => user, :tasks => tasks
   end
+  
+  def bounce_message(exception)
+    defaults
+    pretty_exception = exception.class.name.underscore.split('/').last
+    
+    recipients    exception.from
+    subject       I18n.t("emailer.bounce.subject")
+    body          I18n.t("emailer.bounce.#{pretty_exception}")
+  end
 
   def self.send_with_language(template, language, *args)
     meth = "deliver_#{template.to_s}"

@@ -1305,6 +1305,12 @@ en:
       my_tasks: "More tasks assigned to you in %{project}"
     upload:
       file: "File:"
+    bounce:
+      subject: "Your email was not properly formed"
+      user_not_found_error: "The sender of this message does not appear to have a teambox account"
+      not_project_member_error: "The sender of this message is not a member of the project specified"
+      project_not_found_error: "The specified project cannot be found"
+      target_not_found_error: "The specified item cannot be found to add to"
 
   weakling:
     default: Must be at least 5 characters

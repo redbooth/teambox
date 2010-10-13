@@ -244,5 +244,53 @@ describe Emailer do
         conv.user.should == @owner
       end
     end
+    
+    context "should raise an error when" do
+      before do
+        @email_template.to = "#{@project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}"
+        @email_template.body = "#\nWe did some stuff"
+      end
+      
+      it "the email sender is not recognised" do
+        @email_template.from = "random.sender@example.com"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error(Emailer::Incoming::UserNotFoundError) {|e| e.from.should == @email_template.from.first}
+      end
+      
+      it "the specified project does not exist" do
+        @email_template.to = "random_project+tasks@#{Teambox.config.smtp_settings[:domain]}"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::ProjectNotFoundError
+      end
+      
+      it "is not part of the specified project" do
+        @email_template.from = @janet.email
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::NotProjectMemberError
+      end
+      
+      it "the specified conversation does not exist" do
+        @email_template.to = "#{@project.permalink}+conversation+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::TargetNotFoundError
+      end
+      
+      it "the specified task does not exist" do
+        @email_template.to = "#{@project.permalink}+task+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::TargetNotFoundError
+      end
+      
+    end
   end
 end
