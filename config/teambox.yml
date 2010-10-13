@@ -84,7 +84,6 @@ defaults: &defaults
     :address:   mail.example.com
     :user_name: USER
     :password:  PASSWORD
-    :inbox_task_list: INBOX
 
   # Allow teambox.com to gather statistics about this installation
   tracking_enabled: true
