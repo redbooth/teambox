@@ -11,7 +11,7 @@ describe Organization do
 
   describe "permalink" do
     it "should check weird permalinks" do
-      %w(www help mail with.dots with%percent with$dolars with&ampersands with^carets).each do |sym|
+      %w(www help mail).each do |sym|
         Factory.build(:organization, :permalink => sym).should_not be_valid
       end
 
