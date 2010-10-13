@@ -9,6 +9,7 @@ require 'net/http'
 #
 # keiretsu@app.server.com                  Will find or start a conversation with Subject as a title and Body as a comment
 # keiretsu+conversation@app.server.com     Will find or start a conversation with Subject as a title and Body as a comment
+# keiretsu+task@app.server.com             Will start a conversation with Subject (or the Body if not present) as title
 # keiretsu+conversation+5@app.server.com   Will post a new comment in the conversation whose id is 5
 # keiretsu+task+12@app.server.com          Will post a new comment in the task whose id is 12
 #
@@ -73,7 +74,12 @@ module Emailer::Incoming
     case @type
     when :project then create_conversation
     when :conversation then @target ? post_to(@target) : create_conversation
-    when :task then post_to(@target) if @target
+    when :task
+      unless @target
+        @target = create_task
+        get_action
+      end
+      post_to(@target)
     else raise "Invalid target type"
     end
   end
@@ -115,9 +121,12 @@ module Emailer::Incoming
         @target = @project
       when 2 # projectname+targetclass@mailserver.com
         case extra_params.second
-        when 'conversation'
+        when 'conversation', 'conversations'
           @type = :conversation
           @target = Conversation.find_by_name_and_project_id(@subject, @project.id)
+        when 'task', 'tasks'
+          @type = :task
+          @target = nil
         else
           raise "Invalid target class"
         end
@@ -197,6 +206,22 @@ module Emailer::Incoming
     end
     
     conversation.save!
+  end
+  
+  def create_task
+    raise "Subject and body cannot be blank when creating task from email" if @subject.blank? && @body.blank?
+    Rails.logger.info "Creating task '#{@subject}'"
+    
+    task_list = @project.task_lists.find_by_name("Uncategorized") || @project.task_lists.create! do |task_list|
+      task_list.user = @user
+      task_list.name = "Uncategorized"
+    end
+    
+    task = task_list.tasks.create! do |task|
+      task.name = @subject.blank? ? @body : @subject
+      task.project = @project
+      task.user = @user
+    end
   end
 
 end
