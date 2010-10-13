@@ -24,12 +24,7 @@ class ApiV1::TasksController < ApiV1::APIController
   end
   
   def create
-    if @task = @current_project.create_task(current_user,@task_list,params)
-      unless @task.new_record?
-        @comment = @current_project.new_task_comment(@task)
-        @task.reload
-      end
-    end
+    @task = @task_list.tasks.create_by_user(current_user, params)
     
     if @task.new_record?
       handle_api_error(@task)
@@ -39,9 +34,7 @@ class ApiV1::TasksController < ApiV1::APIController
   end
   
   def update
-    @saved = @task.update_attributes(params)
-    
-    if @saved
+    if @task.update_attributes(params)
       handle_api_success(@task)
     else
       handle_api_error(@task)
