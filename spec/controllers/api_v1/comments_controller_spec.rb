@@ -30,17 +30,52 @@ describe ApiV1::CommentsController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
     
-    it "shows comments on a task" do
+    it "shows comments on conversations" do
       login_as @user
+      conversation = Factory.create(:conversation, :project => @project)
       
+      get :index, :project_id => @project.permalink, :conversation_id => conversation.id
+      response.should be_success
+      conversation_comments = JSON.parse(response.body)['objects']
+      
+      conversation_comments.map{|a| a['id'].to_i}.should == conversation.comment_ids.sort
+    end
+    
+    it "shows comments on tasks" do
+      login_as @user
       task = Factory.create(:task, :project => @project)
       comment = @project.new_comment(@user, task, {:body => 'Something happened!'})
       comment.save!
       
       get :index, :project_id => @project.permalink, :task_id => task.id
       response.should be_success
+      task_comments = JSON.parse(response.body)['objects']
       
-      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == task.comment_ids.sort
+      task_comments.map{|a| a['id'].to_i}.should == task.comment_ids.sort
+    end
+    
+    it "shows comments on conversations with the basic routes" do
+      login_as @user
+      conversation = Factory.create(:conversation, :project => @project)
+      
+      get :index, :conversation_id => conversation.id
+      response.should be_success
+      conversation_comments = JSON.parse(response.body)['objects']
+      
+      conversation_comments.map{|a| a['id'].to_i}.should == conversation.comment_ids.sort
+    end
+    
+    it "shows comments on tasks with the basic routes" do
+      login_as @user
+      task = Factory.create(:task, :project => @project)
+      comment = @project.new_comment(@user, task, {:body => 'Something happened!'})
+      comment.save!
+      
+      get :index, :task_id => task.id
+      response.should be_success
+      task_comments = JSON.parse(response.body)['objects']
+      
+      task_comments.map{|a| a['id'].to_i}.should == task.comment_ids.sort
     end
     
     it "limits comments" do

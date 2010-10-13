@@ -22,7 +22,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     @conversation = @current_project.conversations.new_by_user(current_user, params)
     
     if @conversation.save
-      handle_api_success(@conversation, :is_new => true)
+      handle_api_success(@conversation, :is_new => true, :include => [:comments])
     else
       handle_api_error(@conversation)
     end

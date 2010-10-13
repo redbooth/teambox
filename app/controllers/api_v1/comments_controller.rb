@@ -61,9 +61,11 @@ class ApiV1::CommentsController < ApiV1::APIController
   def target
     # can't use `memoize` because it freezes the object
     @target ||= if params[:conversation_id]
-      @current_project.conversations.find params[:conversation_id]
+      Conversation.find_by_id params[:conversation_id],
+                              :conditions => {:project_id => @current_project.try(:id)||current_user.project_ids}
     elsif params[:task_id]
-      @current_project.tasks.find params[:task_id]
+      Task.find_by_id params[:task_id],
+                      :conditions => {:project_id => @current_project.try(:id)||current_user.project_ids}
     else
       @current_project
     end

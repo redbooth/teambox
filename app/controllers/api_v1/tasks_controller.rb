@@ -34,7 +34,7 @@ class ApiV1::TasksController < ApiV1::APIController
     if @task.new_record?
       handle_api_error(@task)
     else
-      handle_api_success(@task, :is_new => true)
+      handle_api_success(@task, :is_new => true, :include => [:comments])
     end
   end
   
