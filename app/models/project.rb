@@ -64,29 +64,6 @@ class Project < ActiveRecord::Base
     end
   end
 
-  # Optimized way of getting activities for one or more project.
-  # Can limit the number of records and page.
-  def self.get_activities_for(projects, *args)
-    options = args.extract_options!
-
-    if options[:before]
-      conditions = ["project_id IN (?) AND id < ?", Array(projects).collect{ |p| p.id }, options[:before] ]
-    elsif options[:after]
-      conditions = ["project_id IN (?) AND id > ?", Array(projects).collect{ |p| p.id }, options[:after] ]
-    else
-      conditions = ["project_id IN (?)", Array(projects).collect{ |p| p.id } ]
-    end
-    
-    if options[:user_id]
-      conditions[0] += ' AND user_id = ?'
-      conditions << options[:user_id]
-    end
-    
-    Activity.find(:all, :conditions => conditions,
-                        :order => 'id DESC',
-                        :limit => options[:limit] || APP_CONFIG['activities_per_page'])
-  end
-
   def get_recent(model_class, limit = 5)
     model_class.find(:all, :conditions => ["project_id = ?", id],
                            :order => 'id DESC',

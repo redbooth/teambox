@@ -4,18 +4,25 @@ class Activity < ActiveRecord::Base
   belongs_to :project
   acts_as_paranoid
 
-  named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_type = 'TaskList' || comment_type = 'Task'"
-  named_scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_type = 'Conversation'"
+  named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_target_type = 'TaskList' || comment_target_type = 'Task'"
+  named_scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_target_type = 'Conversation'"
   
   named_scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
+
+  named_scope :in_projects, lambda { |projects| { :conditions => ["project_id IN (?)", Array(projects).collect(&:id) ] } }
+  named_scope :limit_per_page, :limit => APP_CONFIG['activities_per_page']
+  named_scope :by_id, :order => 'id DESC'
+  named_scope :threads, :conditions => "target_type != 'Comment'"
+  named_scope :before, lambda { |activity_id| { :conditions => ["id < ?", activity_id ] } }
+  named_scope :after, lambda { |activity_id| { :conditions => ["id > ?", activity_id ] } }
+  named_scope :from_user, lambda { |user| { :conditions => { :user_id => user.id } } }
 
   def self.log(project,target,action,creator_id)
     project_id = project.try(:id)
 
     if target.is_a? Comment
-      comment_type = target.target_type
-    else
-      comment_type = nil
+      comment_target_type = target.target_type
+      comment_target_id = target.target_id
     end
         
     activity = Activity.new(
@@ -23,7 +30,8 @@ class Activity < ActiveRecord::Base
       :target => target,
       :action => action,
       :user_id => creator_id,
-      :comment_type => comment_type)
+      :comment_target_type => comment_target_type,
+      :comment_target_id => comment_target_id)
     activity.created_at = target.try(:created_at) || nil
     activity.save
     
@@ -32,7 +40,7 @@ class Activity < ActiveRecord::Base
 
   def action_comment_type
     i = "#{action}#{target_type}"
-    i +="#{comment_type}" if comment_type
+    i +="#{comment_target_type}" if comment_target_type
     i.underscore
   end
 
@@ -84,7 +92,7 @@ class Activity < ActiveRecord::Base
   end
 
   def thread
-    @thread ||= if target.is_a?(Comment) && !target.target.is_a?(Project)
+    @thread ||= if target.is_a?(Comment)
       target.target
     else
       target
@@ -92,16 +100,11 @@ class Activity < ActiveRecord::Base
   end
 
   def thread_id
-    @thread_id ||= Rails.cache.fetch("#{cache_key}/thread_id") do
-      "#{thread.class}_#{thread.id}"
-    end
+    target_type == 'Comment' ? "#{comment_target_type}_#{comment_target_id}" : "#{target_type}_#{target_id}"
   end
 
-  def self.get_threads(activities)
-    activities.inject([]) do |result, a|
-      result << a unless result.collect(&:thread_id).include?(a.thread_id)
-      result
-    end
+  def self.for_projects(projects)
+    in_projects(projects).limit_per_page.by_id
   end
 
   def to_xml(options = {})

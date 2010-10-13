@@ -17,10 +17,11 @@ ActiveRecord::Schema.define(:version => 20101014112847) do
     t.integer  "target_id"
     t.string   "target_type"
     t.string   "action"
-    t.string   "comment_type"
+    t.string   "comment_target_type"
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "comment_target_id"
   end
 
   add_index "activities", ["created_at"], :name => "index_activities_on_created_at"

@@ -20,7 +20,7 @@
   - if current_user.projects.any?
     #activities
       = list_threads(@threads)
-      = show_more_button(@activities)
+      = show_more_button
     = #javascript_tag autorefresh(@activities)
   - else
     = render 'projects/primer'
