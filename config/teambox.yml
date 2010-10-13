@@ -62,6 +62,7 @@ defaults: &defaults
     :authentication: :plain
     :user_name:      USER
     :password:       PASSWORD
+    :inbox_task_list: Inbox
 
     # Set to true when using Gmail
     :enable_starttls_auto: false
