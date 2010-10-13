@@ -63,7 +63,9 @@ class Task < RoleRecord
   end
   
   def status_name=(value)
-    self.status = STATUS_NAMES.index(value)
+    status_code = STATUS_NAMES.index(value.to_sym)
+    raise ArgumentError, "invalid status: #{value.inspect}" if status_code.nil?
+    self.status = status_code
   end
 
   # TODO: investigate if we can trash these two
@@ -117,6 +119,59 @@ class Task < RoleRecord
 
   def user
     user_id && User.find_with_deleted(user_id)
+  end
+  
+  TRACKER_STATUS_MAP = {
+    'started' => :open, 'delivered' => :hold, 'accepted' => :resolved, 'rejected' => :rejected
+  }
+  
+  def update_from_pivotal_tracker(author, activity)
+    story = activity[:stories][:story]
+    author_name = activity[:author]
+    self.updating_user = author || self.user
+
+    comment = case activity[:event_type]
+    when 'story_create'
+      "#{story[:description]}\n\n<a href='#{story[:url]}'>View on #PT</a>"
+    when 'story_update'
+      if story[:current_state]
+        # TODO: setting assigned person all the time might not be what we want
+        self.assigned = author.in_project(self.project) if author
+        # status changes
+        if new_status = TRACKER_STATUS_MAP[story[:current_state]]
+          self.status_name = new_status
+        else
+          Rails.logger.warn "[Pivotal Tracker] unknown state: #{story[:current_state].inspect}"
+        end
+
+        if author
+          "I marked the task as #{story[:current_state]} on #PT"
+        else
+          "#{author_name} marked the task as #{story[:current_state]} on #PT"
+        end
+      elsif story[:description]
+        # Changing description
+        "Task description is now: #{story[:description]} #PT"
+      else
+        # Other activity types
+        "#{activity[:description]} #PT"
+      end
+    when 'story_delete'
+      self.status_name = :rejected
+      "#{author ? 'I' : author_name} deleted this story on #PT"
+    when 'note_create'
+      text = story[:notes][:note][:text]
+      if author
+        "#{text} #PT"
+      else
+        "#{author_name} commented on #PT: '#{text}'"
+      end
+    else
+      "#{activity[:description]} #PT"
+    end
+    
+    self.comments_attributes = [{ :body => comment }]
+    save!
   end
 
   def to_xml(options = {})

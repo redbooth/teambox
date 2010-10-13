@@ -118,7 +118,7 @@ document.on('ajax:success', '#facebox form.edit_comment', function(e, form) {
 })
 
 // remove deleted comment
-document.on('ajax:success', '.comment .actions_menu a[data-method=delete]', function(e, link) {
+document.on('ajax:success', '.comment:not(.conversation .comment) .actions_menu a[data-method=delete]', function(e, link) {
   e.findElement('.comment').remove()
 })
 
@@ -126,6 +126,7 @@ document.on('ajax:success', '.comment .actions_menu a[data-method=delete]', func
 document.on('ajax:success', '.conversation .comment .actions_menu a[data-method=delete]', function(e, link) {
 	var conversation = e.findElement('.conversation')
 	if (conversation.select('.comment').length == 1 && conversation.select('.title').length == 0) conversation.remove()
+	else e.findElement('.comment').remove()
 })
 
 // toggle between hidden upload area and a link to show it

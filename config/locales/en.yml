@@ -1188,6 +1188,8 @@ en:
       chrome: "Chrome,"
       firefox: "Firefox"
       safari: "Safari"
+    chrome_frame:
+      enhance: Enhance your Teambox experience with Google Chrome Frame. Click <a href="%{link}" target=\"_blank\">here</a> to set it up.
     instructions:
       subscribe_to_feeds: Subscribe to feeds...
       subscribe_to_calendars: Subscribe to calendars...

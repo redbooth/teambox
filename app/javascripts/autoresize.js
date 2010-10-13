@@ -2,6 +2,12 @@ document.on('keyup', 'textarea', function(e, area) {
   area.resizeToText(false)
 });
 
+document.on('facebox:opened', function() {
+  $$('.facebox-content textarea').each(function(element){
+    element.resizeToText(false)
+  })
+})
+
 Element.addMethods({
   resizeToText: function(area, force) {
     if (area.scrollHeight > area.clientHeight) {
