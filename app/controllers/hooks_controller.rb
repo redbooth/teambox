@@ -6,6 +6,12 @@ class HooksController < ApplicationController
   rescue_from ArgumentError do |exception|
     render :text => exception.message, :status => 400
   end
+  
+  rescue_from 'Emailer::Incoming::MissingInfo', 'Emailer::Incoming::IllegalMail' do |exception|
+    logger.warn "[Emailer::Incoming] #{exception.message}"
+    response.content_type = Mime::TEXT
+    render :text => exception.message, :status => 200
+  end
 
   def create
     case params[:hook_name]

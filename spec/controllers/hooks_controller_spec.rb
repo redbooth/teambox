@@ -44,6 +44,31 @@ describe HooksController do
         conversation.comments.last.uploads.count.should == 2
         conversation.comments.last.uploads.first(:order => 'id asc').asset_file_name.should == 'tb-space.jpg'
       end
+      
+      it "handles encoded headers" do
+        post :create,
+             :hook_name => 'email',
+             :from => @project.user.email,
+             :to => "=?ISO-8859-1?Q?Moo?= <#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}>\n",
+             :text => "Hello there",
+             :subject => "Just testing"
+        
+        response.should be_success
+        comment = @project.conversations.last(:order => 'id asc').comments.first
+        comment.body.should == "Hello there"
+      end
+      
+      it "ignores email with missing info" do
+        post :create,
+             :hook_name => 'email',
+             :from => '',
+             :to => "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}",
+             :text => "Hello there",
+             :subject => "Just testing"
+        
+        response.should be_success
+        response.body.should == "Invalid From field"
+      end
 
       it "should parse incoming emails with attachments to conversation answers" do
         @task = Factory(:task, :project => @project)

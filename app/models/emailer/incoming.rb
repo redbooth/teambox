@@ -120,29 +120,35 @@ module Emailer::Incoming
       end
     end
   end
+  
+  class MissingInfo < ArgumentError; end
+  class IllegalMail < RuntimeError; end
 
   # accepts params in Sendgrid's format: http://wiki.sendgrid.com/doku.php?id=parse_api
   def process(email)
     email = ParamsMail.new(email) if Hash === email
     
+    raise MissingInfo, "Invalid mail body" if email.body.blank?
+    
     from = Array(email.from).first
+    raise MissingInfo, "Invalid From field" if from.nil?
+    
     destinations = Array(email.to) + Array(email.cc)
-    raise "Invalid From field" if from.nil?
-    raise "Invalid To fields"  if destinations.empty?
+    raise MissingInfo, "Invalid To fields" if destinations.empty?
 
     configured_domain = Teambox.config.smtp_settings[:domain]
-
-    @to      = destinations.detect { |a| a.include? configured_domain }.split('@').first.downcase
-    @body    = strip_responses(email.body)
-    @user    = User.find_by_email! from
-    @subject = email.subject.gsub(REPLY_REGEX, "").strip
+    @to = destinations.detect { |a| a.include? configured_domain }.split('@').first.downcase
     @project = Project.find_by_permalink @to.split('+').first
-    @files   = email.attachments || []
-
-    raise "Invalid project '#{@to}'" unless @project
-    raise "Invalid body" unless @body
+    raise MissingInfo, "Invalid project '#{@to}'" unless @project
     
-    raise "User does not belong to project" unless @user.projects.include? @project
+    @user = User.find_by_email! from
+    if @user.nil? or not @user.projects.include? @project
+      raise IllegalMail, "User does not belong to project"
+    end
+    
+    @body    = strip_responses(email.body)
+    @subject = email.subject.gsub(REPLY_REGEX, "").strip
+    @files   = email.attachments || []
     
     Rails.logger.info "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
   end
