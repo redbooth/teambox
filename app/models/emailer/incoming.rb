@@ -97,7 +97,7 @@ module Emailer::Incoming
     %w[from to cc].each do |field|
       class_eval <<-CODE
         def #{field}
-          @#{field} ||= @params[:#{field}].presence && Array(@params[:#{field}])
+          @#{field} ||= field_to_addr(:#{field})
         end
       CODE
     end
@@ -118,6 +118,15 @@ module Emailer::Incoming
         }
         files
       end
+    end
+    
+    private
+    
+    def field_to_addr(field)
+      value = @params[field.to_sym]
+      return if value.blank?
+      header = TMail::AddressHeader.new(field.to_s, value)
+      header.addrs.map &:spec
     end
   end
   
