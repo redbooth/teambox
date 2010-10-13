@@ -157,9 +157,9 @@ end
 
 earthworks.add_users [corrina, tomas, maya, marco]
 
-earthworks.reply(corrina, "Hey guys. Glad to be helping out on this site. I LOVE Earthworks! Working on color palettes and font ideas now.")
 
 earthworks.make_conversation(frank, "Project Welcome", "Hey guys. I’m looking forward to working with you all again. I’m also please to be working with my friend and yoga instructor Marco Fizzulo. This should be straightforward project and I can’t wait to see what we put together.")
+earthworks.reply(corrina, "Hey guys. Glad to be helping out on this site. I LOVE Earthworks! Working on color palettes and font ideas now.")
 earthworks.reply(marco, "Glad we have the ball rolling, @frank! Looking forward to seeing the site.")
 
 earthworks.make_conversation(corrina, "Design websites you like", "I know you guys specialize in your own things, but also know that you all have great design eyes! So I thought i’d ask—are there any sites that you’d recommend for design inspiration? Thanks.")
