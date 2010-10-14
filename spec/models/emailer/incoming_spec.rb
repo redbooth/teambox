@@ -60,8 +60,8 @@ describe Emailer do
         task.status_name.should == :new
       end
     
-      it "should add the uncategorized list if it exists" do
-        list = @project.task_lists.create(:user => @owner, :name => 'Uncategorized')
+      it "should add the Inbox list if it exists" do
+        list = @project.task_lists.create(:user => @owner, :name => 'Inbox')
         
         lambda do
           Emailer.receive(@email_template.to_s)
@@ -71,14 +71,14 @@ describe Emailer do
         task.task_list.should == list
       end
     
-      it "should create the uncategorized list if it does not exist" do
+      it "should create the Inbox list if it does not exist" do
         lambda do
           lambda do
             Emailer.receive(@email_template.to_s)
           end.should change(Task, :count).by(1)
         end.should change(TaskList, :count).by(1)
         
-        task_list = TaskList.find_by_name('Uncategorized')
+        task_list = TaskList.find_by_name('Inbox')
         task = Task.last(:order => 'tasks.id')
         task.task_list.should == task_list
       end
