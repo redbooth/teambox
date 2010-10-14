@@ -168,11 +168,11 @@ class UsersController < ApplicationController
     if current_user.projects.count == 0 && current_user.projects.archived.count == 0
       user = current_user
       logout_killing_session!
-      flash[:success] = t('users.form.account_deletion.account_deleted')
+      flash[:success] = t('users.form.delete.account_deleted')
       user.destroy
       redirect_to login_path
     else
-      flash[:error] = t('users.form.account_deletion.couldnt_delete_account')
+      flash[:error] = t('users.form.delete.couldnt_delete_account')
       redirect_to account_delete_path
     end
   end
