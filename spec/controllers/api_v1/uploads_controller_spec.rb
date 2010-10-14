@@ -38,6 +38,24 @@ describe ApiV1::UploadsController do
       JSON.parse(response.body)['objects'].length.should == 3
     end
     
+    it "shows uploads created by a user" do
+      login_as @user
+      
+      get :index, :user_id => @user.id
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 2
+    end
+    
+    it "shows no uploads created by a ficticious user" do
+      login_as @user
+      
+      get :index, :user_id => -1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
+    
     it "shows uploads on a page" do
       login_as @user
       

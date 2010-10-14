@@ -77,6 +77,9 @@ class ApiV1::ConversationsController < ApiV1::APIController
         conditions[:simple] = false
       end
     end
+    unless params[:user_id].nil?
+      conditions[:user_id] = params[:user_id].to_i
+    end
     {:conditions => conditions}
   end
   

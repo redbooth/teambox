@@ -86,6 +86,9 @@ class ApiV1::TasksController < ApiV1::APIController
     unless params[:status].nil?
       conditions[:status] = Array(params[:status]).map(&:to_i).uniq[0..4]
     end
+    unless params[:user_id].nil?
+      conditions[:user_id] = params[:user_id].to_i
+    end
     {:conditions => conditions}
   end
     

@@ -27,6 +27,24 @@ describe ApiV1::ActivitiesController do
       JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.sort.should == @project.activity_ids.sort
     end
     
+    it "shows activities by a user" do
+      login_as @user
+      
+      get :index, :user_id => @user.id
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.sort.should == (Activity.find_all_by_user_id(@user.id).map(&:id)).sort
+    end
+    
+    it "shows no activities for a ficticious user" do
+      login_as @user
+      
+      get :index, :user_id => -1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
+    
     it "limits activities" do
       login_as @user
       

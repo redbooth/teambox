@@ -3,9 +3,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
   before_filter :get_target, :only => [:index]
 
   def index
-    projects = @current_project.try(:id) || current_user.project_ids
-
-    @activities = Activity.find_all_by_project_id(projects, :conditions => api_range,
+    @activities = Activity.scoped(api_scope).all(:conditions => api_range,
                         :order => 'id DESC',
                         :limit => api_limit,
                         :include => [:target, :project, :user])
@@ -23,15 +21,27 @@ class ApiV1::ActivitiesController < ApiV1::APIController
   end
 
   protected
-    def get_target
-      @target = if params[:project_id]
-        @current_project = @current_user.projects.find_by_permalink(params[:project_id])
-      else
-        @current_user.projects.all
-      end
-      
-      unless @target
-        api_status :not_found
-      end
+  
+  def api_scope
+    projects = @current_project.try(:id) || current_user.project_ids
+    
+    conditions = {:project_id => projects}
+    unless params[:user_id].nil?
+      conditions[:user_id] = params[:user_id].to_i
     end
+    
+    {:conditions => conditions}
+  end
+  
+  def get_target
+    @target = if params[:project_id]
+      @current_project = @current_user.projects.find_by_permalink(params[:project_id])
+    else
+      @current_user.projects.all
+    end
+    
+    unless @target
+      api_status :not_found
+    end
+  end
 end

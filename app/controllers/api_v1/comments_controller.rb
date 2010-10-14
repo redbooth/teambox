@@ -5,9 +5,9 @@ class ApiV1::CommentsController < ApiV1::APIController
     query = {:conditions => api_range, :limit => api_limit, :include => [:target, :user]}
     
     @comments = if target
-      target.comments.all(query)
+      target.comments.scoped(api_scope).all(query)
     else
-      Comment.find_all_by_project_id(current_user.project_ids, query)
+      Comment.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @comments, :references => [:target, :user, :project]
@@ -56,6 +56,14 @@ class ApiV1::CommentsController < ApiV1::APIController
       Comment.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
     api_status(:not_found) unless @comment
+  end
+  
+  def api_scope
+    conditions = {}
+    unless params[:user_id].nil?
+      conditions[:user_id] = params[:user_id].to_i
+    end
+    {:conditions => conditions}
   end
 
   def target

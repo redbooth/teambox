@@ -30,6 +30,30 @@ describe ApiV1::CommentsController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
     
+    it "shows comments created by a user" do
+      login_as @user
+      
+      comment = Factory.create(:comment, :project => Factory.create(:project))
+      comment.project.add_user(@user)
+      
+      get :index, :user_id => @user.id
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 1
+    end
+    
+    it "shows no comments created by a ficticious user" do
+      login_as @user
+      
+      comment = Factory.create(:comment, :project => Factory.create(:project))
+      comment.project.add_user(@user)
+      
+      get :index, :user_id => -1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
+    
     it "shows comments on conversations" do
       login_as @user
       conversation = Factory.create(:conversation, :project => @project)
