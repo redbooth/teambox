@@ -9,6 +9,7 @@ require 'net/http'
 #
 # keiretsu@app.server.com                  Will find or start a conversation with Subject as a title and Body as a comment
 # keiretsu+conversation@app.server.com     Will find or start a conversation with Subject as a title and Body as a comment
+# keiretsu+task@app.server.com             Will start a conversation with Subject (or the Body if not present) as title
 # keiretsu+conversation+5@app.server.com   Will post a new comment in the conversation whose id is 5
 # keiretsu+task+12@app.server.com          Will post a new comment in the task whose id is 12
 #
@@ -16,7 +17,7 @@ require 'net/http'
 #
 
 module Emailer::Incoming
-
+  
   def self.fetch(settings)
     type = settings[:type].to_s.downcase
     send("fetch_#{type}", settings)
@@ -67,46 +68,129 @@ module Emailer::Incoming
   # Instance method invoked by class method of the same name.
   # Receives a parsed and decoded TMail::Mail object.
   def receive(email)
+    email = ParamsMail.new(email) if Hash === email
+    
     process email
-    get_target
+    get_target email
     get_action if @target.is_a?(Task)
     case @type
     when :project then create_conversation
     when :conversation then @target ? post_to(@target) : create_conversation
-    when :task then post_to(@target) if @target
+    when :task
+      unless @target
+        @target = create_task
+        get_action
+      end
+      post_to(@target)
     else raise "Invalid target type"
     end
   end
 
   private
-
-  def process(email)
-    destinations = Array(email.to) + Array(email.cc)
-    raise "Invalid To fields"  unless destinations and destinations.first
-    raise "Invalid From field" unless email.from   and email.from.first
-
-    @to       = destinations.
-                  select { |a| a.include? Teambox.config.smtp_settings[:domain] }.
-                  first.split('@').first.downcase
-    @body     = email.multipart? ? email.parts.first.body : email.body
-    @body     = @body.split(Emailer::ANSWER_LINE).first.split("<div class='email'").first.strip
-    @user     = User.find_by_email email.from.first
-    @subject  = email.subject.gsub(REPLY_REGEX, "").strip
-    @project  = Project.find_by_permalink @to.split('+').first
-    @files    = email.attachments ? email.attachments : []
-
-    raise "Invalid project '#{@to}'" unless @project
-    raise "Invalid user '#{email.from.first}'" unless @user
-    raise "Invalid body" unless @body
+  
+  # Sendgrid params to act as TMail::Mail
+  class ParamsMail
+    def initialize(params)
+      @params = params
+      @from = @to = @cc = nil
+      @attachments = nil
+    end
     
-    raise "User does not belong to project" unless @user.projects.include? @project
+    %w[from to cc].each do |field|
+      class_eval <<-CODE
+        def #{field}
+          @#{field} ||= field_to_addr(:#{field})
+        end
+      CODE
+    end
+    
+    def body
+      @params[:text]
+    end
+    
+    def subject
+      @params[:subject]
+    end
+    
+    def attachments
+      @attachments ||= begin
+        files = []
+        @params[:attachments].to_i.times { |i|
+          files << @params[:"attachment#{i+1}"]
+        }
+        files
+      end
+    end
+    
+    private
+    
+    def field_to_addr(field)
+      value = @params[field.to_sym]
+      return if value.blank?
+      header = TMail::AddressHeader.new(field.to_s, value)
+      header.addrs.map &:spec
+    end
+  end
+  
+  class MissingInfo < ArgumentError; end
+  class Error < StandardError
+    attr_accessor :mail
+    
+    def initialize(mail, message)
+      raise "mail must be passed to error" if mail.nil?
+      super(message)
+      @mail = mail
+    end
+    
+    def from
+      @mail.from.kind_of?(Array) ? @mail.from.first : @mail.from
+    end
+  end
+  
+  class UserNotFoundError < Error; end
+  class NotProjectMemberError < Error; end
+  class ProjectNotFoundError < Error; end
+  class TargetNotFoundError < Error; end
+
+  # accepts params in Sendgrid's format: http://wiki.sendgrid.com/doku.php?id=parse_api
+  def process(email)
+    raise MissingInfo, "Invalid mail body" if email.body.blank?
+    
+    from = Array(email.from).first
+    raise MissingInfo, "Invalid From field" if from.nil?
+    
+    configured_domain = Teambox.config.smtp_settings[:domain]
+    destinations = Array(email.to) + Array(email.cc)
+    target = destinations.detect { |a| a.include? configured_domain }
+    raise MissingInfo, "Invalid To fields" if target.nil?
+
+    @to = target.split('@').first.downcase
+    @project = Project.find_by_permalink @to.split('+').first
+    raise ProjectNotFoundError.new(email, "Invalid project '#{@to}'") unless @project
+    
+    @user = User.find_by_email from
+    raise UserNotFoundError.new(email, "Invalid user '#{email.from.first}'") unless @user
+    raise NotProjectMemberError.new(email, "User does not belong to project") unless @user.projects.include? @project
+    
+    @body    = strip_responses(email.body)
+    @subject = email.subject.gsub(REPLY_REGEX, "").strip
+    @files   = email.attachments || []
     
     Rails.logger.info "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
   end
   
+  def strip_responses(body)
+    # For GMail. Matches "On 19 August 2010 13:48, User <proj+conversation+22245@app.teambox.com<proj%2Bconversation%2B22245@app.teambox.com>> wrote:"
+    body.strip.
+      gsub(/\n[^\r\n]*\d{2,4}.*\+.*\d@app.teambox.com.*:.*\z/m, '').
+      split(Emailer::ANSWER_LINE).first.
+      split("<div class='email'").first.
+      strip
+  end
+  
   # Decides which kind of object we'll be posting to (Conversation, Task, Task List..)
   # and finds it if appliable.
-  def get_target
+  def get_target(email)
     extra_params = @to.split('+')
 
     case extra_params.size
@@ -115,9 +199,12 @@ module Emailer::Incoming
         @target = @project
       when 2 # projectname+targetclass@mailserver.com
         case extra_params.second
-        when 'conversation'
+        when 'conversation', 'conversations'
           @type = :conversation
           @target = Conversation.find_by_name_and_project_id(@subject, @project.id)
+        when 'task', 'tasks'
+          @type = :task
+          @target = nil
         else
           raise "Invalid target class"
         end
@@ -135,6 +222,7 @@ module Emailer::Incoming
         else
           raise "Invalid target class"
         end
+        raise TargetNotFoundError.new(email, "#{extra_params.second} #{extra_params.third} not found for #{@project.name}") if @target.nil?
       else
         raise "Invalid recipient: '#{@to}'"
     end
@@ -197,6 +285,23 @@ module Emailer::Incoming
     end
     
     conversation.save!
+  end
+  
+  def create_task
+    raise "Subject and body cannot be blank when creating task from email" if @subject.blank? && @body.blank?
+    Rails.logger.info "Creating task '#{@subject}'"
+    
+    task_list_name = "Inbox"
+    task_list = @project.task_lists.find_by_name(task_list_name) || @project.task_lists.create! do |task_list|
+      task_list.user = @user
+      task_list.name = task_list_name
+    end
+    
+    task = task_list.tasks.create! do |task|
+      task.name = @subject.blank? ? @body : @subject
+      task.project = @project
+      task.user = @user
+    end
   end
 
 end

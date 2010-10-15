@@ -110,6 +110,9 @@ class ApiV1::TaskListsController < ApiV1::APIController
       unless params[:archived].nil?
         conditions[:archived] = api_truth(params[:archived])
       end
+      unless params[:user_id].nil?
+        conditions[:user_id] = params[:user_id].to_i
+      end
       {:conditions => conditions}
     end
     

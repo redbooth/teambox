@@ -22,6 +22,32 @@ class Conversation < RoleRecord
   named_scope :only_simple, :conditions => { :simple => true }
   named_scope :not_simple, :conditions => { :simple => false }
   named_scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
+  
+  def self.from_github(payload)
+    text = description_for_github_push(payload)
+    
+    self.create!(:body => "<div class='hook_github'>#{text}</div>", :simple => true) do |conversation|
+      conversation.user = conversation.project.user if conversation.project
+      yield conversation if block_given?
+    end
+  end
+  
+  def self.description_for_github_push(payload)
+    text = "<h3>New code on <a href='%s'>%s</a> %s</h3>\n\n" % [
+      payload['repository']['url'], payload['repository']['name'], payload['ref']
+    ]
+    
+    commits = payload["commits"]
+    
+    commits[0, 10].each do |commit|
+      author = commit['author']['name']
+      message = commit['message'].strip.split("\n").first
+      text << "#{author} - <a href='#{commit['url']}'>#{message}</a><br>\n"
+    end
+    
+    text << "And #{commits.size - 10} more commits" if commits.size > 10
+    return text
+  end
 
   def after_create
     project.log_activity(self,'create')

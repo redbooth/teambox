@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   def before_save
     self.recent_projects_ids ||= []
     self.rss_token ||= generate_rss_token
-    self.visited_at = Time.now
+    self.visited_at ||= Time.now
   end
 
   def before_create

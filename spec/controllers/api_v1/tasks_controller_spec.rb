@@ -36,6 +36,24 @@ describe ApiV1::TasksController do
       JSON.parse(response.body)['objects'].map{|t| t['id'].to_i}.sort.should == @task_list.task_ids.sort
     end
     
+    it "shows tasks created by a user" do
+      login_as @user
+      
+      get :index, :user_id => @owner.id
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 2
+    end
+    
+    it "shows no tasks created by a ficticious user" do
+      login_as @user
+      
+      get :index, :user_id => -1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
+    
     it "shows tasks in all the users projects" do
       login_as @user
       

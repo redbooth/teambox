@@ -158,3 +158,7 @@ Factory.define :invitation do |i|
   i.user  { |i| i.project.user }
   i.email { Factory.next(:email) }
 end
+
+Factory.define :email_bounce do |f|
+  f.email { Factory.next(:email) }
+end

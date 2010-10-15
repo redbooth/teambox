@@ -34,6 +34,27 @@ describe ApiV1::TaskListsController do
       JSON.parse(response.body)['objects'].length.should == 3
     end
     
+    it "shows task lists created by a user" do
+      login_as @user
+      
+      task_list = Factory.create(:task_list, :project => Factory.create(:project))
+      task_list.project.add_user(@user)
+      
+      get :index, :user_id => @owner.id
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 2
+    end
+    
+    it "shows no task lists created by a ficticious user" do
+      login_as @user
+      
+      get :index, :user_id => -1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
+    
     it "restricts by archived lists" do
       login_as @user
       

@@ -14,6 +14,101 @@ describe Emailer do
       @email_template = TMail::Mail.new
       @email_template.from = @owner.email
     end
+    
+    context 'an email to create a new task' do
+      before do
+        @email_template.to = "#{@project.permalink}+task@#{Teambox.config.smtp_settings[:domain]}"
+        @email_template.subject = "Our new task subject"
+        @email_template.body = "Some body stuff"
+      end
+      
+      it "should create a new task from the subject and assign to the sender then add a comment with the body" do
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should change(Task, :count).by(1)
+      
+        task = Task.last(:order => 'tasks.id')
+        task.user.should == @owner
+        task.name.should == @email_template.subject
+        task.status_name.should == :new
+        task.comments.count.should == 1
+        comment = task.comments.first
+        comment.assigned_id.should be_nil
+        comment.status_name.should == :new
+      end
+      
+      it "should not create a new task if the subject is blank and the body is blank" do
+        @email_template.subject = ""
+        @email_template.body = ""
+        
+        lambda do
+          lambda do
+            Emailer.receive(@email_template.to_s)
+          end.should raise_error
+        end.should change(Task, :count).by(0)
+      end
+      
+      it "should set the body as the task name if there is no subject" do
+        @email_template.subject = ""
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should change(Task, :count).by(1)
+        
+        task = Task.last(:order => 'tasks.id')
+        task.name.should == @email_template.body
+        task.status_name.should == :new
+      end
+    
+      it "should add the Inbox list if it exists" do
+        list = @project.task_lists.create(:user => @owner, :name => 'Inbox')
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should change(Task, :count).by(1)
+      
+        task = Task.last(:order => 'tasks.id')
+        task.task_list.should == list
+      end
+    
+      it "should create the Inbox list if it does not exist" do
+        lambda do
+          lambda do
+            Emailer.receive(@email_template.to_s)
+          end.should change(Task, :count).by(1)
+        end.should change(TaskList, :count).by(1)
+        
+        task_list = TaskList.find_by_name('Inbox')
+        task = Task.last(:order => 'tasks.id')
+        task.task_list.should == task_list
+      end
+      
+      it "should assign the task to fred with #fred" do |variable|
+        @email_template.body = "##{@fred.login}\nWe did some stuff"
+        Emailer.receive(@email_template.to_s)
+        
+        task = Task.last(:order => 'tasks.id')
+        task.assigned.user.id.should == @fred.id
+        comment = task.comments.last
+        comment.assigned.user.id.should == @fred.id
+        comment.status.should == Task::STATUSES[:open]
+        comment.previous_assigned_id.should == nil
+        comment.previous_status.should == Task::STATUSES[:new]
+      end
+      
+      it "should assign the given task status when given a status" do
+        @email_template.body = "#hold\nWe did some stuff"
+        Emailer.receive(@email_template.to_s)
+        
+        task = Task.last(:order => 'tasks.id')
+        task.assigned.should be_nil
+        comment = task.comments.last
+        comment.assigned.should be_nil
+        comment.status_name.should == :hold
+        comment.previous_assigned_id.should == nil
+        comment.previous_status.should == Task::STATUSES[:new]
+      end
+    end
 
     it "should not assign or change the status of the task with no action" do
       @email_template.to = "#{@project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}"
@@ -148,6 +243,54 @@ describe Emailer do
         conv.comments.first.body.should == "But I'm fixing it right now! And refactoring the Regexp too!\n\nI'm using #{prefix} on the subject"
         conv.user.should == @owner
       end
+    end
+    
+    context "should raise an error when" do
+      before do
+        @email_template.to = "#{@project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}"
+        @email_template.body = "#\nWe did some stuff"
+      end
+      
+      it "the email sender is not recognised" do
+        @email_template.from = "random.sender@example.com"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error(Emailer::Incoming::UserNotFoundError) {|e| e.from.should == @email_template.from.first}
+      end
+      
+      it "the specified project does not exist" do
+        @email_template.to = "random_project+tasks@#{Teambox.config.smtp_settings[:domain]}"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::ProjectNotFoundError
+      end
+      
+      it "is not part of the specified project" do
+        @email_template.from = @janet.email
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::NotProjectMemberError
+      end
+      
+      it "the specified conversation does not exist" do
+        @email_template.to = "#{@project.permalink}+conversation+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::TargetNotFoundError
+      end
+      
+      it "the specified task does not exist" do
+        @email_template.to = "#{@project.permalink}+task+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::TargetNotFoundError
+      end
+      
     end
   end
 end

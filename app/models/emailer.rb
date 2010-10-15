@@ -2,6 +2,11 @@ class Emailer < ActionMailer::Base
   include ActionController::UrlWriter # Allows us to generate URLs
   include ActionView::Helpers::TextHelper
   include Emailer::Incoming
+  
+  # can't use regular `receive` class method since it deals with Mail objects
+  def self.receive_params(params)
+    new.receive(params)
+  end
 
   ANSWER_LINE = '-----------------------------==-----------------------------'
 
@@ -67,6 +72,15 @@ class Emailer < ActionMailer::Base
     recipients    user.email
     subject       I18n.t("users.daily_task_reminder_email.daily_task_reminder")
     body          :user => user, :tasks => tasks
+  end
+  
+  def bounce_message(exception)
+    defaults
+    pretty_exception = exception.class.name.underscore.split('/').last
+    
+    recipients    exception.from
+    subject       I18n.t("emailer.bounce.subject")
+    body          I18n.t("emailer.bounce.#{pretty_exception}")
   end
 
   def self.send_with_language(template, language, *args)

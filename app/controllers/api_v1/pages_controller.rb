@@ -6,9 +6,9 @@ class ApiV1::PagesController < ApiV1::APIController
     query = {:conditions => api_range, :limit => api_limit, :order => 'id ASC', :include => [:project, :user]}
     
     @pages = if @current_project
-      @current_project.pages.all(query)
+      @current_project.pages.scoped(api_scope).all(query)
     else
-      Page.find_all_by_project_id(current_user.project_ids, query)
+      Page.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @pages, :include => :slots, :references => [:user]
@@ -76,13 +76,21 @@ class ApiV1::PagesController < ApiV1::APIController
   end
 
   protected
-    def load_page
-      @page = if @current_project
-        @current_project.pages.find params[:id]
-      else
-        Page.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
-      end
-      api_status(:not_found) unless @page
+  
+  def api_scope
+    conditions = {}
+    unless params[:user_id].nil?
+      conditions[:user_id] = params[:user_id].to_i
     end
-    
+    {:conditions => conditions}
+  end
+  
+  def load_page
+    @page = if @current_project
+      @current_project.pages.find params[:id]
+    else
+      Page.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+    end
+    api_status(:not_found) unless @page
+  end  
 end
