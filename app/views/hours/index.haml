@@ -16,5 +16,10 @@
     = list_hour_filters(@current_project)
   = observe_hour_filter
 
+  - pathname = @current_project ? project_hours_by_month_path(@current_project, :month => @month, :year => @year, :format => 'csv') : hours_by_month_path(:month => @month, :year => @year, :format => 'csv')
+  
+  %h2= "Download"
+  = link_to "Download as CSV", pathname, :class => 'csv_link'
+
 %h2= t('hours.comments')
 = list_comments(@comments,nil)

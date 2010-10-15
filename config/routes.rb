@@ -79,6 +79,7 @@ ActionController::Routing::Routes.draw do |map|
       :has_many => [:pages, :people],
       :member => {:accept => :post, :decline => :post, :transfer => :put, :join => :get} do |project|
     project.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
+    project.hours_by_period 'time/by_period', :controller => 'hours', :action => 'by_period', :conditions => { :method => :get }
     project.time 'time', :controller => 'hours', :action => 'index'
 
     project.settings 'settings',  :controller => 'projects', :action => 'edit', :sub_action => 'settings'
@@ -185,6 +186,7 @@ ActionController::Routing::Routes.draw do |map|
   # map.resources :pages, :only => [ :index ]
 
   map.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
+  map.hours_by_period 'time/by_period', :controller => 'hours', :action => 'by_period', :conditions => { :method => :get }
   map.time 'time', :controller => 'hours', :action => 'index'
 
   map.root :controller => 'projects', :action => 'index'
