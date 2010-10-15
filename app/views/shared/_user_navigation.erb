@@ -18,7 +18,7 @@ render_tabnav :user do
       t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'picture'
     end
 
-    unless Teambox.config.providers.empty?
+    if Teambox.config.providers and !Teambox.config.providers.empty?
       add_tab do |t|
         t.named t('.linked_accounts')
         t.links_to account_linked_accounts_path
