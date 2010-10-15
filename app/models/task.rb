@@ -25,6 +25,7 @@ class Task < RoleRecord
 
   validates_presence_of :name, :message => I18n.t('tasks.errors.name.cant_be_blank')
   validates_length_of   :name, :maximum => 255, :message => I18n.t('tasks.errors.name.too_long')
+  validates_inclusion_of :status, :in => STATUSES.values, :message => "is not a valid status"
   
   validate :check_asignee_membership, :if => :assigned_id?
   

@@ -29,6 +29,19 @@ describe Task do
     end
   end
   
+  it "should allow creation with given statuses" do
+    Task::STATUS_NAMES.each do |status_name|
+      task = Factory(:task, :status => Task::STATUSES[status_name])
+      task.valid?.should == true
+    end
+  end
+  
+  it "should not allow a user to set an arbitrary status" do
+    task = Factory.build(:task, :status => 102203)
+    task.valid?.should == false
+    task.errors_on(:status).length.should == 1
+  end
+  
   it "doesn't break when assigning user on create" do
     task_list = Factory(:task_list)
     person = Factory(:person, :project => task_list.project)
