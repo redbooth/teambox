@@ -21,8 +21,7 @@ gem 'pg', '~> 0.9.0', :require => nil, :group => 'pg'
 gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
 gem 'hpricot', '~> 0.8.2'
 gem 'json'
-gem 'oauth2'
-gem 'oauth'
+gem 'oa-oauth', :require => 'omniauth/oauth'
 
 group :plugins do
   gem 'sprockets-rails', '~> 0.0.1'
