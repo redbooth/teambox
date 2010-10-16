@@ -13,7 +13,7 @@ GEM
       activesupport (= 2.3.10)
     activesupport (2.3.10)
     acts-as-list (0.1.2)
-    addressable (2.2.0)
+    addressable (2.2.2)
     after_commit (1.0.8)
       activerecord (< 3.0.0)
     aws-s3 (0.6.2)
@@ -80,7 +80,16 @@ GEM
     multi_json (0.0.4)
     mysql (2.8.1)
     nokogiri (1.4.3.1)
-    oauth (0.4.3)
+    oa-core (0.0.5)
+      rack (~> 1.1)
+    oa-oauth (0.0.1)
+      json
+      nokogiri
+      oa-core (~> 0.0.0)
+      oauth
+      oauth2
+    oauth (0.3.6)
+      ruby-hmac (>= 0.3.1)
     oauth2 (0.0.13)
       faraday (~> 0.4.1)
       multi_json (>= 0.0.4)
@@ -109,6 +118,7 @@ GEM
       ruby-debug-base (~> 0.10.3.0)
     ruby-debug-base (0.10.3)
       linecache (>= 0.3)
+    ruby-hmac (0.4.0)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
     rubyzip (0.9.4)
@@ -161,8 +171,7 @@ DEPENDENCIES
   memcache-client (>= 1.7.4)
   mongrel (~> 1.1.5)
   mysql (~> 2.8.1)
-  oauth
-  oauth2
+  oa-oauth
   paperclip (~> 2.3.1.1)
   pg (~> 0.9.0)
   pickle (~> 0.2.1)

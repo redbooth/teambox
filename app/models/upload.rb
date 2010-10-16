@@ -9,6 +9,7 @@ class Upload < RoleRecord
 
   has_one        :page_slot, :as => :rel_object
   before_destroy :clear_slot
+  before_destroy :update_comment_to_show_delete
   after_destroy  :cleanup_activities
 
   before_create :copy_ownership_from_comment
@@ -145,4 +146,9 @@ class Upload < RoleRecord
     end
   end
   
+  def update_comment_to_show_delete
+    if self.comment && self.comment.body.blank? && self.comment.uploads.size == 1
+      self.comment.update_attributes(:body => "File deleted")
+    end
+  end
 end
