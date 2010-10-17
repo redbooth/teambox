@@ -4,7 +4,7 @@ class ActivitiesController < ApplicationController
 
   before_filter :get_target
 
-  def show
+  def show # also handles #index, see routes.rb
     @activities = Project.get_activities_for @target
     @last_activity = @activities.last
 
@@ -14,6 +14,12 @@ class ActivitiesController < ApplicationController
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }
+      format.frag do
+        @new_conversation = Conversation.new(:simple => true)
+        @projects = current_user.projects.unarchived
+        @threads = Activity.get_threads(@activities)
+        render :layout => false
+      end
     end
   end
 
