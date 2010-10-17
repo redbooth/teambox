@@ -45,7 +45,7 @@ en:
     conversation: "Deleted %{name} conversation"
     task: "Deleted %{name} task"
     task_list: "Deleted %{name} task list"
-    page: "Deleted %{name}</b> page"
+    page: "Deleted %{name} page"
     upload: "Deleted %{name} file"
     person: "%{name} is no longer in the project"
     left_project: "You are no longer in this project"
