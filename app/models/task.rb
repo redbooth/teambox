@@ -225,6 +225,17 @@ class Task < RoleRecord
     base
   end
 
+  define_index do
+    indexes name, :sortable => true
+
+    indexes comments.body, :as => :body
+    indexes comments.user.first_name, :as => :user_first_name
+    indexes comments.user.last_name, :as => :user_last_name
+    indexes comments.uploads(:asset_file_name), :as => :upload_name
+    
+    has project_id, created_at, updated_at
+  end
+
   protected
   def check_asignee_membership
     unless project.people.include?(assigned)

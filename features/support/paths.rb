@@ -77,6 +77,8 @@ module NavigationHelpers
       '/api'
     when /time tracking/
       time_path
+    when /the results page for "(.+)"/
+      search_path :q => $1
     else
       begin
         page_name =~ /the (.*) page/
