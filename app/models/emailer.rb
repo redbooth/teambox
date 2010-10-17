@@ -53,6 +53,7 @@ class Emailer < ActionMailer::Base
     defaults
     recipients    user.email
     from          from_user("#{project.permalink}+conversation+#{conversation.id}", conversation.comments.first.user)
+    reply_to      from_user("#{project.permalink}+conversation+#{conversation.id}", conversation.comments.first.user)
     subject       "[#{project.permalink}] #{title}"
     body          :project => project, :conversation => conversation, :recipient => user
   end
@@ -61,6 +62,7 @@ class Emailer < ActionMailer::Base
     defaults
     recipients    user.email
     from          from_user("#{project.permalink}+task+#{task.id}", task.comments.first.user)
+    reply_to      from_user("#{project.permalink}+task+#{task.id}", task.comments.first.user)
     subject       "[#{project.permalink}] #{task.name}"
     body          :project => project, :task => task, :task_list => task.task_list, :recipient => user
   end
