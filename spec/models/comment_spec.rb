@@ -14,6 +14,11 @@ describe Comment do
     end
   end
   
+  it "should not allow comment creation with a blank title" do
+    comment = Factory.build(:comment, :body => nil)
+    comment.should_not be_valid
+  end
+  
   describe "copying ownership" do
     before do
       @target = Factory.build(:simple_conversation, :body => nil)
@@ -274,6 +279,53 @@ describe Comment do
       upload.description.should == 'Here is that dog video I promised'
       upload.user_id.should == comment.user_id
       upload.project_id.should == comment.project_id
+    end
+    
+    it "should allow the creation of a comment with a file but no body" do
+      upload = Factory.create :upload
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => nil
+      
+      comment.should have(1).upload
+      upload = comment.uploads.first
+      upload.comment.should == comment
+    end
+    
+    it "should allow you to delete the upload and keep the comment if there is a body" do
+      upload = Factory.create :upload
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => 'test'
+      
+      comment.should have(1).upload
+      comment.uploads.first.destroy
+      comment.reload
+      comment.body.should == 'test' # Still has the right body
+      comment.should have(0).uploads
+    end
+    
+    it "should not set a deleted message on the comment if there is still a file remaining" do
+      upload1, upload2 = Factory.create(:upload), Factory.create(:upload)
+      comment = Factory.create :comment, :upload_ids => [upload1.id.to_s, upload2.id.to_s], :body => nil
+      
+      comment.should have(2).uploads
+      
+      lambda do
+        comment.uploads.first.destroy
+      end.should_not raise_error
+      
+      comment.reload.should have(1).uploads
+    end
+    
+    it "should allow you to delete the upload and keep the comment if there is no body" do
+      upload = Factory.create :upload
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => nil
+      
+      comment.should have(1).upload
+      
+      lambda do
+        comment.uploads.first.destroy
+      end.should_not raise_error
+      
+      comment.reload.should have(0).uploads
+      comment.body.should == "File deleted"
     end
   end
   

@@ -275,12 +275,11 @@ class User < ActiveRecord::Base
     update_attribute :email, Regexp.last_match(1).to_s if email =~ DELETED_REGEX
   end
 
-  def link_to_app(provider, profile)
+  def link_to_app(provider, uid)
     link = AppLink.new
     link.user              = self
     link.provider          = provider
-    link.app_user_id       = profile[:id]
-    link.custom_attributes = profile[:original]
+    link.app_user_id       = uid
     link.save!
   end
 

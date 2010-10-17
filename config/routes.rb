@@ -27,10 +27,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.create_project_invitation '/projects/:project_id/invite/:login', :controller => 'invitations', :action => 'create', :method => :posts
 
-  map.oauth_request   '/oauth/:provider',          :controller => 'oauth', :action => 'start' 
-  map.oauth_callback  '/oauth/:provider/callback', :controller => 'oauth', :action => 'callback'
+  map.auth_callback  '/auth/:provider/callback', :controller => 'auth', :action => 'callback'
+  map.auth_failure   '/auth/failure', :controller => 'auth', :action => 'failure'
   map.complete_signup '/complete_signup',          :controller => 'users', :action => 'complete_signup'
-  map.unlink_app      '/oauth/:provider/unlink',   :controller => 'users', :action => 'unlink_app'
+  map.unlink_app      '/auth/:provider/unlink',   :controller => 'users', :action => 'unlink_app'
 
   map.javascript_environment '/i18n/environment.js', :controller => 'javascripts', :action => 'environment'
 
