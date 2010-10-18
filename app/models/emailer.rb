@@ -91,6 +91,19 @@ class Emailer < ActionMailer::Base
     I18n.locale = old_locale
   end
 
+  # requires data from rake db:seed
+  class Preview < MailView
+    def notify_task
+      task = Task.find_by_name "Contact area businesses for banner exchange"
+      Emailer.create_notify_task(task.user, task.project, task)
+    end
+    
+    def notify_conversation
+      conversation = Conversation.find_by_name "Seth Godin's 'What matters now'"
+      Emailer.create_notify_conversation(conversation.user, conversation.project, conversation)
+    end
+  end
+
   private
 
     def from_reply_to(reply_identifier, user)
