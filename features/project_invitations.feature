@@ -23,6 +23,16 @@ Feature: Invite a user to a project
     And I should see "An email was sent to this user, but they still haven't confirmed"
     And "ed_bloom@spectre.com" should receive an email
 
+  Scenario: Mislav sends an invitation and tries to accept it while logged in
+    Given I am logged in as mislav
+    When I go to the people page of the "Ruby Rockstars" project
+    When I fill in "invitation_user_or_email" with "ed_bloom@spectre.com"
+    And I press "Invite"
+    Then "ed_bloom@spectre.com" should receive an email
+    When "ed_bloom@spectre.com" opens the email with subject "Ruby Rockstars"
+    And I follow "Accept the invitation to start collaborating" in the email
+    Then I should see "You already have an account. Log out first to sign up as a different user."
+
   Scenario: User creates account and joins project from invitation
     Given "mislav" sent an invitation to "ed_bloom@spectre.com" for the project "Ruby Rockstars"
     When "ed_bloom@spectre.com" opens the email with subject "Ruby Rockstars"

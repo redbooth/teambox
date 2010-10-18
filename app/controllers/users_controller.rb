@@ -20,24 +20,26 @@ class UsersController < ApplicationController
   end
   
   def new
+    # Trying to accept a new account invitation, but you're already logged in
     if @invitation and logged_in?
       @invitation.invited_user = current_user
       @invitation.save
-      redirect_to projects_url(:invitation => @invitation.token)
+      flash[:success] = t('users.new.you_are_logged_in')
+      return redirect_to projects_url(:invitation => @invitation.token)
+    # Trying to create a user, but you're already logged in
     elsif logged_in?
       flash[:success] = t('users.new.you_are_logged_in')
-      redirect_to projects_path
+      return redirect_to projects_path
     else
+      # Create an account from OAuth
       if session[:profile] and session[:app_link]
         signup_from_oauth(session[:profile], session[:app_link])
+      # Regular invitation
       else
         @user = User.new
         @user.email = @invitation.email if @invitation
       end
     end
-
-    @user ||= User.new
-    @user.email = @invitation.email if @invitation
 
     render :layout => 'sessions'
   end
