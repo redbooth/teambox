@@ -113,9 +113,8 @@ users = [%w(Frank Kramer frank),
           %w(Tomas Santiago webdevtom),
           %w(Maya Bhaskaran maya),
           %w(Marco Fizzulo marco)].collect do |a,b,u|
-  user = User.create!(:login => u,
+  user = User.find_by_login(u) || User.create!(:login => u,
                       :password => "papapa",
-                      :password_confirmation => "papapa",
                       :first_name => a, :last_name => b,
                       :betatester => true,
                       :notify_conversations => false,
@@ -140,7 +139,8 @@ User.all.each do |user|
       )
 end
 
-organization = Organization.create!(:name => "Design projects", :description => home_page)
+organization = Organization.first
+organization ||= Organization.create!(:name => "Design projects", :description => home_page)
 
 organization.add_member(frank,   :admin)
 organization.add_member(corrina, :admin)
