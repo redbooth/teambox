@@ -54,7 +54,7 @@ class InvitationsController < ApplicationController
     end
     
     respond_to do |f|
-      if @invitations and @saved_count > 0
+      if @invitations and @saved_count.to_i > 0
         f.html { redirect_to target_people_path }
         f.m    { redirect_to target_people_path }
       else
