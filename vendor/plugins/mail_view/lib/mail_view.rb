@@ -67,7 +67,7 @@ class MailView
 
   private
     def ok(body)
-      [200, {"Content-Type" => "text/html"}, [body]]
+      [200, {"Content-Type" => "text/html; charset=utf-8"}, [body]]
     end
 
     def not_found(pass = false)
