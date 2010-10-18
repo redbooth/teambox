@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
             render :partial => 'comment', :locals => { :comment => comment, :threaded => true }
           end
         else
-          redirect_to :back
+          redirect_back_or_to root_path
         end
       }
     end

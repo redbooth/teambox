@@ -49,7 +49,7 @@ class AuthController < ApplicationController
 
   def failure
     flash[:error] = "Authentification Error: #{params[:message]}"
-    redirect_to :back rescue redirect_to login_path
+    redirect_back_or_to login_path
   end
 
   private

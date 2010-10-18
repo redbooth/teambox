@@ -74,11 +74,7 @@ class SessionsController < ApplicationController
       flash[:error] = "Invalid format"
     end
     
-    begin
-      redirect_to :back
-    rescue ActionController::RedirectBackError
-      redirect_to root_path
-    end
+    redirect_back_or_to root_path
   end
 
 protected
