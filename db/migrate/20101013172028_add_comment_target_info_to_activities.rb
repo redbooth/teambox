@@ -4,7 +4,7 @@ class AddCommentTargetInfoToActivities < ActiveRecord::Migration
     rename_column :activities, :comment_type, :comment_target_type
 
     # This can be slow, act cautiously
-    Activity.all(:conditions => { :target_type => 'Comment' }).each do |activity|
+    Activity.find_each(:conditions => { :target_type => 'Comment' }) do |activity|
       activity.update_attribute :comment_target_id, activity.target.target.id
     end
   end
