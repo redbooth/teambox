@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 
   force_ssl :only => :new
   no_login_required :except => :destroy
-  
+
   skip_before_filter :confirmed_user?
   skip_before_filter :load_project
   skip_before_filter :verify_authenticity_token, :only => :create
@@ -11,9 +11,8 @@ class SessionsController < ApplicationController
   before_filter :community_version_check, :except => [:create, :backdoor]
 
   def new
-    # Cleanup OAuth login parameters if present
-    session.delete :profile
-    session.delete :app_link
+    clear_auth_session! unless @conflict = session[:conflict] and @profile = session[:profile]
+
     @signups_enabled = signups_enabled?
     respond_to do |format|
       format.html { redirect_to root_path if logged_in? }
@@ -34,6 +33,14 @@ class SessionsController < ApplicationController
       self.current_user = user
       handle_remember_cookie! true
       flash[:error] = nil
+
+      if session[:app_link]
+        app_link = AppLink.find_by_id(session[:app_link])
+        app_link.user = user
+        app_link.save
+        clear_auth_session!
+      end
+
       respond_to do |format|
         format.html { redirect_back_or_default root_url }
         format.m { redirect_back_or_default activities_url }
@@ -48,6 +55,7 @@ class SessionsController < ApplicationController
 
   def destroy
     logout_killing_session!
+    clear_auth_session!
     redirect_back_or_default root_path
   end
   
@@ -79,7 +87,13 @@ protected
     flash[:error] = t('sessions.new.login_failed', :login => params[:login])
     logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
   end
-  
+
+  def clear_auth_session!
+    session.delete :profile
+    session.delete :app_link
+    session.delete :conflict
+  end
+
   def community_version_check
     return if logged_in?
     if Teambox.config.community

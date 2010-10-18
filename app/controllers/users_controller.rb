@@ -210,8 +210,13 @@ class UsersController < ApplicationController
       @user ||= User.new
       @user.first_name    = @user.first_name.presence || profile[:first_name]
       @user.last_name     = @user.last_name.presence  || profile[:last_name]
-      @user.login       ||= profile[:login]
-      @user.email       ||= profile[:email]
+      if profile[:login]
+        @user.login     ||= User.find_available_login(profile[:login])
+      end
+
+      @user.email       ||= profile[:email] unless User.find_by_email(profile[:email])
+
+      @provider = profile[:provider]
     end
 
     def can_users_signup?

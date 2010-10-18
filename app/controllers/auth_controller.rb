@@ -24,13 +24,6 @@ class AuthController < ApplicationController
         if oauth_login(provider, auth_hash[:uid])
           flash[:success] = t(:'oauth.logged_in')
           return redirect_to projects_path
-        elsif User.find_by_email(auth_hash[:email])
-          # TODO: locate existing user by email and ask to log in to link him
-          flash[:notice] = t(:'oauth.user_already_exists_by_email', :email => auth_hash[:email])
-          return redirect_to login_path
-        elsif User.find_by_login(auth_hash[:login])
-          flash[:notice] = t(:'oauth.user_already_exists_by_login', :login => auth_hash[:login])
-          return redirect_to login_path
         else
           if signups_enabled?
             session[:profile] = @profile
@@ -38,7 +31,11 @@ class AuthController < ApplicationController
                                        :app_user_id => auth_hash[:uid],
                                        :custom_attributes => auth_hash)
             session[:app_link] = app_link.id
-            return redirect_to signup_path
+            if conflict?
+              return redirect_to login_path
+            else
+              return redirect_to signup_path
+            end
           else
             flash[:error] = t(:'users.new.no_public_signup')
             return redirect_to login_path
@@ -67,6 +64,7 @@ class AuthController < ApplicationController
     def load_profile(user, provider)
       @profile = {}
       
+      @profile[:provider]     = provider
       @profile[:login]        = user[:user_info][:nickname]      if user[:user_info][:nickname]
       @profile[:phone]        = user[:user_info][:phone]         if user[:user_info][:phone]
       
@@ -80,9 +78,17 @@ class AuthController < ApplicationController
 
       # Extra
       @profile[:email]        = user[:extra][:user_hash][:email] if user[:extra][:user_hash][:email]
+    end
 
-      if @profile[:login]
-        @profile[:login] = User.find_available_login(@profile[:login])
+    def conflict?
+      email = User.find_by_email(@profile[:email])
+      login = User.find_by_login(@profile[:login])
+
+      if email or login
+        session[:conflict] = {:email => (@profile[:email] if email), :login => (@profile[:login] if login)}
+        true
+      else
+        false
       end
     end
 end

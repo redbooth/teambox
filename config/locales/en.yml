@@ -1638,5 +1638,9 @@ en:
     your_account_is_not_linked: "Your %{provider} profile is <strong>not linked</strong> to Teambox."
     link_account: Link account.
     unlink_account: Unlink account.
-    user_already_exists_by_email: The user %{email} has already a Teambox account.<br/>Log in with that account and link it from your Settings panel.
-    user_already_exists_by_login: The user %{login} has already a Teambox account.<br/>Log in with that account and link it from your Settings panel.
+    user_exists: This %{provider} profile is not linked with any account yet.
+    user_already_exists_by_email: "Link '%{email}' to your Teambox account"
+    user_already_exists_by_login: "The username '%{login}' is already taken"
+    user_exists_instruction: If you already have a Teambox account, log in to link it automatically to your %{provider} profile.
+    user_exists_is_not_yours: If you don't own the account '%{account}', %{signup_for_a_new_account}.
+    signup_for_a_new_account: click here to sign up for a new account
