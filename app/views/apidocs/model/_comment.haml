@@ -7,11 +7,12 @@
 - doc_for :show,  :example => @comment.to_api_hash(:include => [:user]) do
   %p= "Returns the data for an comment."
   
-- doc_for :create, :parameters => {:body => 'Comment', :hours => 1, :project_id => 123 },
+- doc_for :create, :parameters => {:body => 'Comment', :hours => 1, :project_id => 123},
                    :example => @comment.to_api_hash,
                    :status => :created,
                    :role => :commenter do
   %p= "Creates a new comment. You can specify the target of the comment using one of the appropriate routes."
+  %p= "For time tracking, simply pass in time taken using the <tt>hours</tt> parameter. Acceptable values are the same as on the web frontend - e.g. 12h, 1.4, 13m, 2:15."
 
 - doc_for :update, :parameters => {:body => @comment.body, :name => @comment.hours },
                    :status => :updated,

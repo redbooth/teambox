@@ -130,6 +130,10 @@ class Comment < ActiveRecord::Base
       new_watchers << self.user if self.user
       target.add_watchers new_watchers
     end
+    
+    if target.respond_to?(:updated_at)
+      target.update_attribute :updated_at, Time.now
+    end
   end
   
   def cleanup_activities # after_destroy

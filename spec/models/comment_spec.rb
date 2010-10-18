@@ -112,28 +112,28 @@ describe Comment do
       comment.mentioned.should_not include(@user)
     end
 
-    describe "commenting" do
+    describe "commenting adds you as a watcher" do
       before do
         @project = Factory(:project)
         @pablo = Factory(:confirmed_user)
         @project.add_user(@pablo)
       end
 
-      it "on a conversation should add you as a watcher" do
-        @conversation = Factory(:conversation, :project => @project, :user => @project.user)
-        @conversation.watchers_ids.should_not include(@pablo.id)
-        comment = Factory(:comment, :project => @project, :user => @pablo, :target => @conversation)
-        @conversation.reload.watchers_ids.should include(@pablo.id)
+      it "on a conversation" do
+        conversation = Factory(:conversation, :project => @project, :user => @project.user)
+        conversation.watchers_ids.should_not include(@pablo.id)
+        comment = Factory(:comment, :project => @project, :user => @pablo, :target => conversation)
+        conversation.reload.watchers_ids.should include(@pablo.id)
       end
 
-      it "on a task should add you as a watcher" do
+      it "on a task" do
         @task = Factory(:task, :project => @project, :user => @project.user)
         @task.watchers_ids.should_not include(@pablo.id)
         comment = Factory(:comment, :project => @project, :user => @pablo, :target => @task)
         @task.reload.watchers_ids.should include(@pablo.id)
       end
     end
-
+    
     describe "mentioning @user" do
       before do
         @project.add_user(@user)
@@ -205,6 +205,31 @@ describe Comment do
       lambda {
         Factory(:comment, :project => @project, :user => @user, :target => @task, :body => @comment.body)
       }.should change(Comment, :count).by(1)
+    end
+  end
+  
+  describe "commenting updates the updated_at field" do
+    before do
+      @project = Factory(:project)
+      @user = @project.user
+    end
+    
+    it "on a conversation" do
+      conversation = Factory(:conversation, :project => @project, :user => @project.user)
+      conversation.update_attribute :updated_at, 1.day.ago
+      lambda {
+        Factory(:comment, :project => @project, :user => @user, :target => conversation)
+        conversation.reload
+      }.should change(conversation, :updated_at)
+    end
+    
+    it "on a task" do
+      task = Factory(:task, :project => @project, :user => @project.user)
+      task.update_attribute :updated_at, 1.day.ago
+      lambda {
+        Factory(:comment, :project => @project, :user => @user, :target => task)
+        task.reload
+      }.should change(task, :updated_at)
     end
   end
   
@@ -326,6 +351,17 @@ describe Comment do
       
       comment.reload.should have(0).uploads
       comment.body.should == "File deleted"
+    end
+    
+    it "touches comment on upload destroy" do
+      upload = Factory.create :upload
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
+        :body => "Can't touch this"
+      Comment.update_all({:updated_at => 15.minutes.ago}, :id => comment.id)
+
+      comment.reload.updated_at.should be_close(15.minutes.ago, 1)
+      upload.reload.destroy
+      comment.reload.updated_at.should be_close(Time.now, 1)
     end
   end
   

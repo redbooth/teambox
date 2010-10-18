@@ -18,7 +18,8 @@
             - case comment.target
             - when Conversation
               = link_to t('comments.actions.conversation_url'), project_conversation_path(comment.project, comment.target)
-            - unless comment.target.is_a?(Project) or comment.target.is_a?(TaskList) # legacy comments targeting a Project or a TaskList
+            - # There are legacy comments targeting projects and task lists, so we need an if here:
+            - if comment.target.is_a?(Conversation) or comment.target.is_a?(Task)
               = link_to t('comments.actions.edit'), [:edit, comment.project, comment.target, comment],
                   :rel => 'facebox', :'data-uneditable-message' => t('.cannot_edit'), :class => :edit
               = link_to t('common.delete'), [comment.project, comment.target, comment], :'data-method' => 'delete',

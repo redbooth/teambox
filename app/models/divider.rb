@@ -15,6 +15,10 @@ class Divider < RoleRecord
   def after_create
     save_slot
   end
+  
+  def after_update
+    page.update_attribute(:updated_at, Time.now)
+  end
 
   def slot_view
     'dividers/divider'

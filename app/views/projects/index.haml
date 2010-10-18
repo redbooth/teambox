@@ -16,7 +16,8 @@
       - form.object.comments.build
       - form.fields_for :comments do |fields|
         = render 'comments/fields', :f => fields, :placeholder => t('comments.new.project')
-    
+
+  - if current_user.projects.any?
     #activities
       = list_threads(@threads)
       = show_more_button(@activities)

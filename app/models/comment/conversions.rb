@@ -39,7 +39,8 @@ class Comment
       :user_id => user_id,
       :project_id => project_id,
       :target_id => target_id,
-      :target_type => target_type
+      :target_type => target_type,
+      :hours => hours
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
