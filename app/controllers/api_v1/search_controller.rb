@@ -13,7 +13,7 @@ class ApiV1::SearchController < ApiV1::APIController
           :classes => [Conversation, Task, Page]
     end
     
-    api_respond @results, :references => []
+    api_respond @results, :emit_type => true, :references => []
   end
   
   protected
