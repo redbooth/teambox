@@ -72,7 +72,7 @@ class InvitationsController < ApplicationController
     respond_to do |wants|
       wants.html {
         flash[:notice] = t('invitations.resend.resent', :recipient => @invitation.email)
-        redirect_to :back
+        redirect_back_or_default root_path
       }
       wants.js
     end
@@ -88,7 +88,7 @@ class InvitationsController < ApplicationController
     respond_to do |wants|
       wants.html {
         flash[:notice] = t('invitations.destroy.discarded', :user => @invitation.email)
-        redirect_to :back
+        redirect_back_or_default root_path
       }
       wants.js
     end

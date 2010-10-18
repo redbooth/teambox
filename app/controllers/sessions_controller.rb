@@ -75,7 +75,7 @@ class SessionsController < ApplicationController
     end
     
     begin
-      redirect_to :back
+      redirect_back_or_default root_path
     rescue ActionController::RedirectBackError
       redirect_to root_path
     end
