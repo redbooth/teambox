@@ -5,8 +5,9 @@ class ActivitiesController < ApplicationController
   before_filter :get_target
 
   def show # also handles #index, see routes.rb
-    @activities = Project.get_activities_for @target
-    @last_activity = @activities.last
+    @activities = Activity.for_projects(@target)
+    @threads = @activities.threads
+    @last_activity = @threads.all.last
 
     respond_to do |format|
       format.html { redirect_to projects_path }
@@ -17,22 +18,20 @@ class ActivitiesController < ApplicationController
       format.frag do
         @new_conversation = Conversation.new(:simple => true)
         @projects = current_user.projects.unarchived
-        @threads = Activity.get_threads(@activities)
         render :layout => false
       end
     end
   end
 
   def show_more
-    opts = {:before => params[:id]}
-    opts[:user_id] = @user.id if @user
-    
-    @activities = Project.get_activities_for @target, opts
-    @last_activity = @activities.last
-    
+    @activities = Activity.for_projects(@target).before(params[:id])
+    @activities = @activities.from_user(@user) if @user
+    @threads = @activities.threads
+    @last_activity = @threads.all.last
+
     respond_to do |format|
       format.html { redirect_to projects_path }
-      format.js { @threads = Activity.get_threads(@activities) }
+      format.js
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }
@@ -40,12 +39,13 @@ class ActivitiesController < ApplicationController
   end
 
   def show_new
-    @activities = Project.get_activities_for @target, :after => params[:id]
-    @last_activity = @activities.last
-    
+    @activities = Activity.for_projects(@target).after(params[:id])
+    @threads = @activities.threads
+    @last_activity = @threads.all.last
+
     respond_to do |format|
       format.html { redirect_to projects_path }
-      format.js { @threads = Activity.get_threads(@activities) }
+      format.js
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }

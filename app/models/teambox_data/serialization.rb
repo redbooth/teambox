@@ -207,7 +207,7 @@ class TeamboxData
   end
   
   def import_log(object, remark="")
-    puts "Imported #{object} (#{remark})"
+    Rails.logger.warn "Imported #{object} (#{remark})"
   end
   
   def self.import_from_file(name, user_map, opts={})

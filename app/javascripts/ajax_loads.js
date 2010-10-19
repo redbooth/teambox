@@ -1,3 +1,13 @@
+// When the URL is like /something#!/route/to/something, then we redirect to /route/to/something
+var route = window.location.hash.split("#!")[1]
+if(route) {
+  window.location = route
+}
+
+addHashForAjaxLink = function(route) {
+  window.location.hash = "!" + route
+}
+
 // For Projects#index: Load task in main view with AJAX
 document.on('click', '.my_tasks_listing .task a', function(e, el) {
   if (e.isMiddleClick()) return
@@ -11,6 +21,7 @@ document.on('click', '.my_tasks_listing .task a', function(e, el) {
     onSuccess: function(r) {
       $('content').update(r.responseText)
       format_posted_date()
+      addHashForAjaxLink(el.readAttribute('href'))
       $('back_to_overview').show()
     },
     onComplete: function() {
@@ -49,6 +60,7 @@ document.on('click', '#back_to_overview', function(e, el) {
     onSuccess: function(r) {
       $('content').update(r.responseText)
       format_posted_date()
+      addHashForAjaxLink(el.readAttribute('href'))
       $('back_to_overview').hide()
     }
   })

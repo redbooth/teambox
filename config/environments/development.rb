@@ -15,3 +15,7 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+
+# Preview email rendering by visiting the "/mail_view" path
+# http://github.com/37signals/mail_view
+config.middleware.use MailView::Mapper, 'Emailer::Preview'

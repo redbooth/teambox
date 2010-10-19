@@ -37,3 +37,8 @@ Feature: Signing up
       | all      |
       | ALL      |
 
+  Scenario: I try to sign up when I'm already logged in
+    Given I am logged in as mislav
+    When I go to the signup page
+    Then I should see "You already have an account. Log out first to sign up as a different user."
+

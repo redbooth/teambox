@@ -54,7 +54,7 @@ class InvitationsController < ApplicationController
     end
     
     respond_to do |f|
-      if @invitations and @saved_count > 0
+      if @invitations and @saved_count.to_i > 0
         f.html { redirect_to target_people_path }
         f.m    { redirect_to target_people_path }
       else
@@ -72,7 +72,7 @@ class InvitationsController < ApplicationController
     respond_to do |wants|
       wants.html {
         flash[:notice] = t('invitations.resend.resent', :recipient => @invitation.email)
-        redirect_to :back
+        redirect_back_or_to root_path
       }
       wants.js
     end
@@ -88,7 +88,7 @@ class InvitationsController < ApplicationController
     respond_to do |wants|
       wants.html {
         flash[:notice] = t('invitations.destroy.discarded', :user => @invitation.email)
-        redirect_to :back
+        redirect_back_or_to root_path
       }
       wants.js
     end

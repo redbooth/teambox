@@ -14,6 +14,14 @@ class HooksController < ApplicationController
     response.content_type = Mime::TEXT
     render :text => exception.message, :status => 200
   end
+  
+  rescue_from 'ActiveRecord::RecordInvalid' do |exception|
+    if exception.message == "Validation failed: Body Duplicate comment"
+      head :ok
+    else
+      raise exception
+    end
+  end
 
   def create
     case params[:hook_name]

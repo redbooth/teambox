@@ -5,11 +5,10 @@ class Public::ProjectsController < Public::PublicController
   end
 
   def show
-    @activities = Project.get_activities_for @project
-    @last_activity = @activities.last
+    @activities = Activity.for_projects(@current_project)
+    @threads = @activities.threads
+    @last_activity = @threads.all.last
     @recent_conversations = Conversation.not_simple.recent(11).find_all_by_project_id(@project.id)
-
-    @threads = Activity.get_threads(@activities)
   end
 
 end

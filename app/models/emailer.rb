@@ -52,7 +52,7 @@ class Emailer < ActionMailer::Base
               conversation.name
     defaults
     recipients    user.email
-    from          from_user("#{project.permalink}+conversation+#{conversation.id}", conversation.comments.first.user)
+    from_reply_to "#{project.permalink}+conversation+#{conversation.id}", conversation.comments.first.user
     subject       "[#{project.permalink}] #{title}"
     body          :project => project, :conversation => conversation, :recipient => user
   end
@@ -60,7 +60,7 @@ class Emailer < ActionMailer::Base
   def notify_task(user, project, task)
     defaults
     recipients    user.email
-    from          from_user("#{project.permalink}+task+#{task.id}", task.comments.first.user)
+    from_reply_to "#{project.permalink}+task+#{task.id}", task.comments.first.user
     subject       "[#{project.permalink}] #{task.name}"
     body          :project => project, :task => task, :task_list => task.task_list, :recipient => user
   end
@@ -80,7 +80,7 @@ class Emailer < ActionMailer::Base
     
     recipients    exception.from
     subject       I18n.t("emailer.bounce.subject")
-    body          I18n.t("emailer.bounce.#{pretty_exception}")
+    body          I18n.t("emailer.bounce.#{pretty_exception}") + "\n\n" + I18n.t("emailer.bounce.not_delivered")
   end
 
   def self.send_with_language(template, language, *args)
@@ -91,24 +91,43 @@ class Emailer < ActionMailer::Base
     I18n.locale = old_locale
   end
 
+  # requires data from rake db:seed
+  class Preview < MailView
+    def notify_task
+      task = Task.find_by_name "Contact area businesses for banner exchange"
+      Emailer.create_notify_task(task.user, task.project, task)
+    end
+    
+    def notify_conversation
+      conversation = Conversation.find_by_name "Seth Godin's 'What matters now'"
+      Emailer.create_notify_conversation(conversation.user, conversation.project, conversation)
+    end
+  end
+
   private
 
-    def from_user(command, user)
-      if APP_CONFIG['allow_incoming_email'] && command
-        from_address(command, "#{user.first_name} #{user.last_name}")
-      else
-        from_address("no-reply", "#{user.first_name} #{user.last_name}")
+    def from_reply_to(reply_identifier, user)
+      from from_user(reply_identifier, user)
+      reply_address = from_user(reply_identifier, nil)
+      reply_to reply_address unless reply_address.starts_with?("no-reply")
+    end
+    
+    def from_user(reply_identifier, user)
+      unless Teambox.config.allow_incoming_email and reply_identifier
+        reply_identifier = "no-reply"
       end
+      
+      from_address(reply_identifier, user.try(:name))
     end
 
     def from_address(recipient = "no-reply", name = "Teambox")
       domain = Teambox.config.smtp_settings[:domain]
       address = "#{recipient}@#{domain}"
       
-      if Teambox.config.smtp_settings[:safe_from]
+      if name.blank? or Teambox.config.smtp_settings[:safe_from]
         address
       else
-        "#{name} <#{address}>"
+        %("#{name}" <#{address}>)
       end
     end
 

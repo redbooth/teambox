@@ -7,12 +7,13 @@ class ProjectsController < ApplicationController
   
   def index
     @new_conversation = Conversation.new(:simple => true)
-    @activities = Project.get_activities_for(@projects)
-    @last_activity = @activities.last
+    @activities = Activity.for_projects(@projects)
+    @threads = @activities.threads
+    @last_activity = @threads.all.last
     @archived_projects = @current_user.projects.archived
 
     respond_to do |f|
-      f.html  { @threads = Activity.get_threads(@activities) }
+      f.html
       f.m     { redirect_to activities_path if request.path == '/' }
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @projects.to_xml }
@@ -24,14 +25,14 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @activities = Project.get_activities_for @current_project
-    @last_activity = @activities.last
+    @activities = Activity.for_projects(@current_project)
+    @threads = @activities.threads
+    @last_activity = @threads.all.last
     @recent_conversations = @current_project.conversations.not_simple.recent(4)
-
     @new_conversation = @current_project.conversations.new(:simple => true)
 
     respond_to do |f|
-      f.html  { @threads = Activity.get_threads(@activities) }
+      f.html
       f.m
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @current_project.to_xml }

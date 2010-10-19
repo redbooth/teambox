@@ -113,9 +113,8 @@ users = [%w(Frank Kramer frank),
           %w(Tomas Santiago webdevtom),
           %w(Maya Bhaskaran maya),
           %w(Marco Fizzulo marco)].collect do |a,b,u|
-  user = User.create!(:login => u,
+  user = User.find_by_login(u) || User.create!(:login => u,
                       :password => "papapa",
-                      :password_confirmation => "papapa",
                       :first_name => a, :last_name => b,
                       :betatester => true,
                       :notify_conversations => false,
@@ -140,7 +139,8 @@ User.all.each do |user|
       )
 end
 
-organization = Organization.create!(:name => "Design projects", :description => home_page)
+organization = Organization.first
+organization ||= Organization.create!(:name => "Design projects", :description => home_page)
 
 organization.add_member(frank,   :admin)
 organization.add_member(corrina, :admin)
@@ -158,11 +158,11 @@ end
 earthworks.add_users [corrina, tomas, maya, marco]
 
 
-earthworks.make_conversation(frank, "Project Welcome", "Hey guys. I’m looking forward to working with you all again. I’m also please to be working with my friend and yoga instructor Marco Fizzulo. This should be straightforward project and I can’t wait to see what we put together.")
+earthworks.make_conversation(frank, "Project Welcome", "Hey guys. I’m looking forward to working with you all again. I’m also pleased to be working with my friend and yoga instructor Marco Fizzulo. This should be straightforward project and I can’t wait to see what we put together.")
 earthworks.reply(corrina, "Hey guys. Glad to be helping out on this site. I LOVE Earthworks! Working on color palettes and font ideas now.")
 earthworks.reply(marco, "Glad we have the ball rolling, @frank! Looking forward to seeing the site.")
 
-earthworks.make_conversation(corrina, "Design websites you like", "I know you guys specialize in your own things, but also know that you all have great design eyes! So I thought i’d ask—are there any sites that you’d recommend for design inspiration? Thanks.")
+earthworks.make_conversation(corrina, "Design websites you like", "I know you guys specialize in your own things, but also know that you all have great design eyes! So I thought I’d ask—are there any sites that you’d recommend for design inspiration? Thanks.")
 earthworks.reply(marco,   "Is the client allowed to answer?")
 earthworks.reply(corrina, "Of course, Marco! You’re part of the team!!")
 earthworks.reply(marco,   "I like [Design Observer](http://www.designobserver.com/) and [Dexigner](http://www.dexigner.com/).")
@@ -171,14 +171,14 @@ earthworks.reply(frank,   "Those are good ones, @marco. I look at [Smashing Maga
 earthworks.make_conversation(tomas, "Links to other nice yoga websites", "I was checking out some other yoga websites and found some nice ones. Here’s a couple:\nOaklandish Yoga: http://bit.ly/8ITnDi\nBikram SF: http://bit.ly/7WAhJj")
 earthworks.reply(corrina, "I found a yoga website that I really love. It’s a dumb name for a studio, but the website design is flawless: Let’s Get Bent: http://bit.ly/8p0gmf")
 
-earthworks.make_conversation(frank, "How about a team lunch?", "I think it would be fun AND productive if we could all meet for lunch one day a week. Can we all throw out a couple days/times that might work best? I know you’re all really busy and chances are we won’t all make if every week, but it would be great to at least have a slot on the calendar. Sure, we’re all busy, but we GOTTA EAT, right? Hope we can figure something out. As far as my schedule goes, i’m really flexible. Any day/time works for me.")
+earthworks.make_conversation(frank, "How about a team lunch?", "I think it would be fun AND productive if we could all meet for lunch one day a week. Can we all throw out a couple days/times that might work best? I know you’re all really busy and chances are we won’t all make if every week, but it would be great to at least have a slot on the calendar. Sure, we’re all busy, but we GOTTA EAT, right? Hope we can figure something out. As far as my schedule goes, I’m really flexible. Any day/time works for me.")
 earthworks.reply(maya,    "I can do Tuesday, Thursday, and Friday. Any time works. Thanks.")
 earthworks.reply(corrina, "Thursdays are good for me!")
 earthworks.reply(maya,    "If Thursday works for Tomas, I think that will work. Tomas?")
 
 earthworks.make_conversation(tomas, "Seth Godin's 'What matters now'", "Have you guys read this:\nhttp://sethgodin.typepad.com/seths_blog/2009/12/what-matters-now-get-the-free-ebook.html\nI highly recommend. Please let me know what you think.")
 earthworks.reply(corrina, "Thanks for sending, Frank. That’s an impressive roster Godin put together! I especially liked the graphical stuff like cartoonist Hugh MacLeod’s *Ignore Everybody*. If you guys don’t know MacLeod’s blog, it’s worth checking out:\nGaping Void: http://gapingvoid.com")
-earthworks.reply(tomas,   "I loved What Matters Now. Thanks for the link. I appreciate how the “chapters” were bite-size morsels. Perfect for my A.D.D. ass! lol. I’m a big proponent of the “less-is-more” maxim, which is why I particularly enjoyed Merlin Mann’s essay about over-doing it.")
+earthworks.reply(tomas,   "I loved What Matters Now. Thanks for the link. I appreciate how the “chapters” were bite-size morsels. Perfect for my A.D.D. ass! LOL. I’m a big proponent of the “less-is-more” maxim, which is why I particularly enjoyed Merlin Mann’s essay about over-doing it.")
 earthworks.reply(maya,    "I was happy to see that Karen Armstrong was invited to contribute to Godin’s collection. After I saw Armstrong on a http://ted.com video recently talking about her work, I read A History of God, her 1993 book. Broad subject, but a great read that I’d recommend:\nhttp://en.wikipedia.org/wiki/A_History_of_God")
 earthworks.reply(frank,   "Glad you all enjoyed What Matters Now! Godin is awesome. Please consider reading “The Big Red Fez: How To Make Any Web Site Better”. I’d be happy to buy you all a copy; just send me your receipt and I’ll reimburse you. Here’s the Amazon link: http://bit.ly/7tVT1x")
 earthworks.reply(tomas,   "Thanks, Frank. I’ve read a couple of Godin’s other books, but I guess I missed The Big Red Fez. Looking forward to checking it out asap. And thanks for the MacLeod link, Corrina. Funny guy!")
@@ -189,7 +189,7 @@ earthworks.status_update(tomas, "@maya Please register all top level domains sur
 earthworks.status_update(maya, "I registered EarthworksYoga.com, EarthworksYoga.net, EarthworksYoga.info and EarthworksYoga.us. You can re-open the task if you’d like me to register the .org.", :resolved)
 
 earthworks.make_task(frank, "Set up AdWords campaign")
-earthworks.status_update(frank, "Go to http://adwords.google.com to set up AdWords for Earthworks. Contact @marco for any financial info you may need.", maya)
+earthworks.status_update(frank, "Go to http://adwords.google.com and set up AdWords for Earthworks. Contact @marco for any financial info you may need.", maya)
 earthworks.status_update(frank, "Let me know if you need anything from me, Maya.")
 
 earthworks.make_task_list(frank, "Design")

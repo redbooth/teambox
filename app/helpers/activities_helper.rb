@@ -120,7 +120,7 @@ module ActivitiesHelper
     if activity.target_type == 'Task'
       task = activity.target
       project_task_list_task_url(activity.project, task.task_list_id, task)
-    elsif activity.comment_type == 'Task'
+    elsif activity.comment_target_type == 'Task'
       task = activity.target.target
       project_task_list_task_url(activity.project, task.task_list_id, task)
     elsif activity.target_type == 'TaskList'
@@ -131,7 +131,7 @@ module ActivitiesHelper
       project_uploads_url(activity.project)
     elsif activity.target_type == 'Conversation'
       project_conversation_url(activity.project, activity.target)
-    elsif activity.comment_type == 'Conversation'
+    elsif activity.comment_target_type == 'Conversation'
       project_conversation_url(activity.project, activity.target.target)
     else
       project_url(activity.project, :anchor => "activity_#{activity.id}")
@@ -221,10 +221,8 @@ module ActivitiesHelper
     end
   end
   
-  def show_more_button(activities)
-    if activities.size == APP_CONFIG['activities_per_page']
-      render 'activities/show_more'
-    end
+  def show_more_button
+    render 'activities/show_more' if @last_activity
   end
   
   def fluid_badge(count)

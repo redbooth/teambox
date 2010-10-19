@@ -123,5 +123,7 @@ test: &test
   allow_outgoing_email: false
   asset_max_file_size: 1
   amazon_s3: false
+  smtp_settings:
+    :domain: domain.com
 cucumber:
   <<: *test

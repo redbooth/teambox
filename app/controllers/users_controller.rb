@@ -20,24 +20,26 @@ class UsersController < ApplicationController
   end
   
   def new
+    # Trying to accept a new account invitation, but you're already logged in
     if @invitation and logged_in?
       @invitation.invited_user = current_user
       @invitation.save
-      redirect_to projects_url(:invitation => @invitation.token)
+      flash[:success] = t('users.new.you_are_logged_in')
+      return redirect_to projects_url(:invitation => @invitation.token)
+    # Trying to create a user, but you're already logged in
     elsif logged_in?
       flash[:success] = t('users.new.you_are_logged_in')
-      redirect_to projects_path
+      return redirect_to projects_path
     else
+      # Create an account from OAuth
       if session[:profile] and session[:app_link]
         signup_from_oauth(session[:profile], session[:app_link])
+      # Regular invitation
       else
         @user = User.new
         @user.email = @invitation.email if @invitation
       end
     end
-
-    @user ||= User.new
-    @user.email = @invitation.email if @invitation
 
     render :layout => 'sessions'
   end
@@ -46,9 +48,9 @@ class UsersController < ApplicationController
     @card = @user.card
     @projects_shared = @user.projects_shared_with(@current_user)
     @shares_invited_projects = @projects_shared.empty? && @user.shares_invited_projects_with?(@current_user)
-    @activities = Project.get_activities_for(@user.projects_shared_with(@current_user), :user_id => @user.id) 
-    @last_activity = @activities.last
-    
+    @activities = Activity.for_projects(@user.projects_shared_with(@current_user)).from_user(@user)
+    @last_activity = @activities.all.last
+
     respond_to do |format|
       if @user != @current_user and (!@shares_invited_projects and @projects_shared.empty?)
         format.html {
@@ -84,7 +86,9 @@ class UsersController < ApplicationController
       if @invitation
         # Can be an invitation to a project or just to Teambox
         if @invitation.project
-          redirect_to(project_path(@invitation.project))
+          redirect_to project_path(@invitation.project)
+        else
+          redirect_to projects_path
         end
       else
         redirect_back_or_default root_path
@@ -208,8 +212,13 @@ class UsersController < ApplicationController
       @user ||= User.new
       @user.first_name    = @user.first_name.presence || profile[:first_name]
       @user.last_name     = @user.last_name.presence  || profile[:last_name]
-      @user.login       ||= profile[:login]
-      @user.email       ||= profile[:email]
+      if profile[:login]
+        @user.login     ||= User.find_available_login(profile[:login])
+      end
+
+      @user.email       ||= profile[:email] unless User.find_by_email(profile[:email])
+
+      @provider = profile[:provider]
     end
 
     def can_users_signup?

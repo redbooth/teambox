@@ -81,7 +81,7 @@ describe Project do
     it "should log when a user is added without being invited" do
       person = @project.add_user(@user)
       Activity.last.project.should == @project
-      Activity.last.comment_type.should == nil
+      Activity.last.comment_target_type.should == nil
       Activity.last.target.should == person
       Activity.last.action.should == 'create'
       Activity.last.user.should == @user
@@ -91,7 +91,7 @@ describe Project do
     it "should log when a user is added being invited" do
       person = @project.add_user(@user, :source_user => @owner)
       Activity.last.project.should == @project
-      Activity.last.comment_type.should == nil
+      Activity.last.comment_target_type.should == nil
       Activity.last.target.should == person
       Activity.last.action.should == 'create'
       Activity.last.user.should == @user
@@ -145,7 +145,7 @@ describe Project do
     it "should log he's leaving the project" do
       @project.reload.remove_user(@user)
       Activity.last.project.should == @project
-      Activity.last.comment_type.should == nil
+      Activity.last.comment_target_type.should == nil
       Activity.last.target.should == @person
       Activity.last.action.should == 'delete'
       Activity.last.user.should == @user

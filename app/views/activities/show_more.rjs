@@ -11,7 +11,5 @@ if @activities.any?
       page << "}"
     end
   end
-  if @activities.size == APP_CONFIG['activities_per_page']
-    page.insert_html :after, :activities, show_more_button(@activities)
-  end
+  page.insert_html :after, :activities, show_more_button
 end
