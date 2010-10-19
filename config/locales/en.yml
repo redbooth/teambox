@@ -1306,11 +1306,12 @@ en:
     upload:
       file: "File:"
     bounce:
-      subject: "Your email was not properly formed"
-      user_not_found_error: "The sender of this message does not appear to have a teambox account"
-      not_project_member_error: "The sender of this message is not a member of the project specified"
-      project_not_found_error: "The specified project cannot be found"
-      target_not_found_error: "The specified item cannot be found to add to"
+      subject: "Error sending email to Teambox"
+      user_not_found_error: "This email address is not associated with any Teambox account."
+      not_project_member_error: "You are not a member of the specified Teambox project."
+      project_not_found_error: "There is no project on Teambox corresponding to this email address."
+      target_not_found_error: "We couldn't find the item where you are trying to post your comment."
+      not_delivered: "Your email was not processed by Teambox. View our documentation to learn how to use email: http://help.teambox.com/faqs/advanced-features/email"
 
   weakling:
     default: Must be at least 5 characters

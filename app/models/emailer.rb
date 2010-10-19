@@ -80,7 +80,7 @@ class Emailer < ActionMailer::Base
     
     recipients    exception.from
     subject       I18n.t("emailer.bounce.subject")
-    body          I18n.t("emailer.bounce.#{pretty_exception}")
+    body          I18n.t("emailer.bounce.#{pretty_exception}") + "\n\n" + I18n.t("emailer.bounce.not_delivered")
   end
 
   def self.send_with_language(template, language, *args)
