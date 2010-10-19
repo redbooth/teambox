@@ -4,6 +4,7 @@ en:
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement_html: "<strong>New</strong>: Earn money by referring new users into Teambox. Log in and go into your affiliate area to make up a 15% of the income you generate!<br/><br/>Read <a href='http://blog.teambox.com'>our blog</a> for more news about Teambox."
   common:
+    format_name: "%{first_name} %{last_name}"
     and: and
     or: or
     in_project: in

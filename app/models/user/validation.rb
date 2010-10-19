@@ -34,7 +34,7 @@ class User
   end
 
   def name
-    "#{first_name} #{last_name}"
+    I18n.t 'common.format_name', :first_name => first_name, :last_name => last_name
   end
 
   def short_name

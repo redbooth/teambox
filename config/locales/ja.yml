@@ -303,6 +303,7 @@ ja:
       preview: 概観
       showing: "..."
   common: 
+    format_name: "%{last_name} %{first_name} さん"
     accept: 了承
     and: と
     calendar: カレンダー
