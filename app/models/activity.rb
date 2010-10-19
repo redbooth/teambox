@@ -12,6 +12,7 @@ class Activity < ActiveRecord::Base
   named_scope :in_projects, lambda { |projects| { :conditions => ["project_id IN (?)", Array(projects).collect(&:id) ] } }
   named_scope :limit_per_page, :limit => APP_CONFIG['activities_per_page']
   named_scope :by_id, :order => 'id DESC'
+  named_scope :by_updated, :order => 'updated_at desc'
   named_scope :threads, :conditions => "target_type != 'Comment'"
   named_scope :before, lambda { |activity_id| { :conditions => ["id < ?", activity_id ] } }
   named_scope :after, lambda { |activity_id| { :conditions => ["id > ?", activity_id ] } }
@@ -23,6 +24,8 @@ class Activity < ActiveRecord::Base
     if target.is_a? Comment
       comment_target_type = target.target_type
       comment_target_id = target.target_id
+      # touch activity related to that comment's thread
+      Activity.last(:conditions => ["target_type = ? AND target_id = ?", comment_target_type, comment_target_id]).try(:touch)
     end
         
     activity = Activity.new(
@@ -104,7 +107,7 @@ class Activity < ActiveRecord::Base
   end
 
   def self.for_projects(projects)
-    in_projects(projects).limit_per_page.by_id
+    in_projects(projects).limit_per_page.by_updated
   end
 
   def to_xml(options = {})
