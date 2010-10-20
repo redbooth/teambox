@@ -65,3 +65,36 @@ document.on('click', '#back_to_overview', function(e, el) {
     }
   })
 })
+
+// Expand task threads inline in TaskLists#index
+document.on('click', '.task_list_container a.name', function(e, el) {
+  if (e.isMiddleClick()) return
+  e.stop()
+
+  var task = el.up('.task')
+  var block_id = "inline_"+task.readAttribute("id")
+
+  if (task.hasClassName('expanded')) {
+    task.removeClassName('expanded')
+    new Effect.BlindUp(block_id, {duration: 0.5});
+    setTimeout(function() { $(block_id).remove() }, 500 )
+  } else {
+    if (!task.down('.loading_icon')) {
+      task.down('span.task_status').insert({ before: "<div class='loading_icon'> </div>" })
+      task.down('span.task_status').hide()
+    }
+    new Ajax.Request(el.readAttribute('href')+".frag", {
+      method: "get",
+      onSuccess: function(r) {
+        task.down('.loading_icon').remove()
+        task.down('span.task_status').show()
+        var block = "<div class='task_inline' style='display:none' id='"+block_id+"'>"+r.responseText+"</div>"
+        task.insert({ bottom: block })
+        new Effect.BlindDown(block_id, {duration: 0.5});
+        task.addClassName('expanded')
+        format_posted_date()
+      }
+    })
+  }
+})
+
