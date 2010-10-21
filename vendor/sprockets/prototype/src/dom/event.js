@@ -85,10 +85,11 @@
   var docEl = document.documentElement;
   var MOUSEENTER_MOUSELEAVE_EVENTS_SUPPORTED = 'onmouseenter' in docEl
     && 'onmouseleave' in docEl;
+  var IE_LEGACY_EVENT_SYSTEM = (window.attachEvent && !window.addEventListener);
 
   var _isButton;
-  if (Prototype.Browser.IE) {
-    // IE doesn't map left/right/middle the same way.
+  if (IE_LEGACY_EVENT_SYSTEM) {
+    // IE's event system doesn't map left/right/middle the same way.
     var buttonMap = { 0: 1, 1: 4, 2: 2 };
     _isButton = function(event, code) {
       return event.button === buttonMap[code];
@@ -99,7 +100,8 @@
     _isButton = function(event, code) {
       switch (code) {
         case 0: return event.which == 1 && !event.metaKey;
-        case 1: return event.which == 1 && event.metaKey;
+        case 1: return event.which == 2 || (event.which == 1 && event.metaKey);
+        case 2: return event.which == 3;
         default: return false;
       }
     };
@@ -226,6 +228,7 @@
   **/
   function findElement(event, expression) {
     var element = Event.element(event);
+    
     if (!expression) return element;
     while (element) {
       if (Object.isElement(element) && Prototype.Selector.match(element, expression)) {
@@ -363,13 +366,20 @@
     return m;
   });
 
-  if (Prototype.Browser.IE) {
+  if (IE_LEGACY_EVENT_SYSTEM) {
     function _relatedTarget(event) {
       var element;
       switch (event.type) {
-        case 'mouseover': element = event.fromElement; break;
-        case 'mouseout':  element = event.toElement;   break;
-        default: return null;
+        case 'mouseover':
+        case 'mouseenter':
+          element = event.fromElement;
+          break;
+        case 'mouseout':
+        case 'mouseleave':
+          element = event.toElement;
+          break;
+        default:
+          return null;
       }
       return Element.extend(element);
     }
@@ -684,7 +694,7 @@
         // We observe two IE-proprietarty events: one for custom events that
         // bubble and one for custom events that do not bubble.
         element.attachEvent("ondataavailable", responder);
-        element.attachEvent("onfilterchange", responder);
+        element.attachEvent("onlosecapture", responder);
       }
     } else {
       var actualEventName = _getDOMEventName(eventName);
@@ -798,7 +808,7 @@
         element.removeEventListener("dataavailable", responder, false);
       else {
         element.detachEvent("ondataavailable", responder);
-        element.detachEvent("onfilterchange",  responder);
+        element.detachEvent("onlosecapture", responder);
       }
     } else {
       // Ordinary event.
@@ -816,13 +826,13 @@
 
   /**
    *  Event.fire(element, eventName[, memo[, bubble = true]]) -> Event
-   *  - memo (?): Metadata for the event. Will be accessible through the
-   *    event's `memo` property.
-   *  - bubble (Boolean): Whether the event will bubble.
+   *  - memo (?): Metadata for the event. Will be accessible to event
+   *    handlers through the event's `memo` property.
+   *  - bubble (Boolean): Whether the event should bubble.
    *
    *  Fires a custom event of name `eventName` with `element` as its target.
    *
-   *  Custom events must include a colon (`:`) in their names.
+   *  Custom events **must** include a colon (`:`) in their names.
   **/
   function fire(element, eventName, memo, bubble) {
     element = $(element);
@@ -836,10 +846,10 @@
     var event;
     if (document.createEvent) {
       event = document.createEvent('HTMLEvents');
-      event.initEvent('dataavailable', true, true);
+      event.initEvent('dataavailable', bubble, true);
     } else {
       event = document.createEventObject();
-      event.eventType = bubble ? 'ondataavailable' : 'onfilterchange';
+      event.eventType = bubble ? 'ondataavailable' : 'onlosecapture';
     }
 
     event.eventName = eventName;
@@ -912,9 +922,8 @@
     },
 
     handleEvent: function(event) {
-      var element = this.selector ? event.findElement(this.selector) :
-       this.element;
-      if (element) this.callback.call(element, event, element);
+      var element = event.findElement(this.selector);
+      if (element) this.callback.call(this.element, event, element);
     }
   });
   

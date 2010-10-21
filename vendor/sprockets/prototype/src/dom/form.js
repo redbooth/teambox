@@ -67,12 +67,14 @@ var Form = {
    *  `{ hash: false }` are used.
    *
    *  If you supply an `options` object, it may have the following options:
-   *  - `hash` ([[Boolean]]): `true` to return a plain object with keys and
+   *  
+   *  * `hash` ([[Boolean]]): `true` to return a plain object with keys and
    *    values (not a [[Hash]]; see below), `false` to return a String in query
    *    string format. If you supply an `options` object with no `hash` member,
    *    `hash` defaults to `true`. Note that this is __not__ the same as leaving
    *    off the `options` object entirely (see above).
-   *  - `submit` ([[Boolean]] | [[String]]): In essence: If you omit this option
+   *  
+   *  * `submit` ([[Boolean]] | [[String]]): In essence: If you omit this option
    *    the first submit button in the form is included; if you supply `false`,
    *    no submit buttons are included; if you supply the name of a submit
    *    button, the first button with that name is included. Note that the
@@ -104,25 +106,34 @@ var Form = {
     // default true, as that's the new preferred approach.
     if (typeof options != 'object') options = { hash: !!options };
     else if (Object.isUndefined(options.hash)) options.hash = true;
-    var key, value, submitted = false, submit = options.submit;
-
-    var data = elements.inject({ }, function(result, element) {
+    var key, value, submitted = false, submit = options.submit, accumulator, initial;
+    
+    if (options.hash) {
+      initial = {};
+      accumulator = function(result, key, value) {
+        if (key in result) {
+          if (!Object.isArray(result[key])) result[key] = [result[key]];
+          result[key].push(value);
+        } else result[key] = value;
+        return result;
+      };
+    } else {
+      initial = '';
+      accumulator = function(result, key, value) {
+        return result + (result ? '&' : '') + encodeURIComponent(key) + '=' + encodeURIComponent(value);
+      }
+    }
+    
+    return elements.inject(initial, function(result, element) {
       if (!element.disabled && element.name) {
         key = element.name; value = $(element).getValue();
         if (value != null && element.type != 'file' && (element.type != 'submit' || (!submitted &&
             submit !== false && (!submit || key == submit) && (submitted = true)))) {
-          if (key in result) {
-            // a key is already present; construct an array of values
-            if (!Object.isArray(result[key])) result[key] = [result[key]];
-            result[key].push(value);
-          }
-          else result[key] = value;
+          result = accumulator(result, key, value);
         }
       }
       return result;
     });
-
-    return options.hash ? data : Object.toQueryString(data);
   }
 };
 
@@ -312,7 +323,8 @@ Form.Methods = {
   **/
   focusFirstElement: function(form) {
     form = $(form);
-    form.findFirstElement().activate();
+    var element = form.findFirstElement();
+    if (element) element.activate();
     return form;
   },
 
@@ -715,68 +727,77 @@ var $F = Form.Element.Methods.getValue;
 
 /*--------------------------------------------------------------------------*/
 
-Form.Element.Serializers = {
-  input: function(element, value) {
+Form.Element.Serializers = (function() {
+  function input(element, value) {
     switch (element.type.toLowerCase()) {
       case 'checkbox':
       case 'radio':
-        return Form.Element.Serializers.inputSelector(element, value);
+        return inputSelector(element, value);
       default:
-        return Form.Element.Serializers.textarea(element, value);
+        return valueSelector(element, value);
     }
-  },
-
-  inputSelector: function(element, value) {
-    if (Object.isUndefined(value)) return element.checked ? element.value : null;
-    else element.checked = !!value;
-  },
-
-  textarea: function(element, value) {
+  }
+  
+  function inputSelector(element, value) {
+    if (Object.isUndefined(value))
+      return element.checked ? element.value : null;
+    else element.checked = !!value;    
+  }
+  
+  function valueSelector(element, value) {
     if (Object.isUndefined(value)) return element.value;
     else element.value = value;
-  },
-
-  select: function(element, value) {
+  }
+  
+  function select(element, value) {
     if (Object.isUndefined(value))
-      return this[element.type == 'select-one' ?
-        'selectOne' : 'selectMany'](element);
-    else {
-      var opt, currentValue, single = !Object.isArray(value);
-      for (var i = 0, length = element.length; i < length; i++) {
-        opt = element.options[i];
-        currentValue = this.optionValue(opt);
-        if (single) {
-          if (currentValue == value) {
-            opt.selected = true;
-            return;
-          }
+      return (element.type === 'select-one' ? selectOne : selectMany)(element);
+       
+    var opt, currentValue, single = !Object.isArray(value);
+    for (var i = 0, length = element.length; i < length; i++) {
+      opt = element.options[i];
+      currentValue = this.optionValue(opt);
+      if (single) {
+        if (currentValue == value) {
+          opt.selected = true;
+          return;
         }
-        else opt.selected = value.include(currentValue);
       }
+      else opt.selected = value.include(currentValue);
     }
-  },
-
-  selectOne: function(element) {
+  }
+  
+  function selectOne(element) {
     var index = element.selectedIndex;
-    return index >= 0 ? this.optionValue(element.options[index]) : null;
-  },
-
-  selectMany: function(element) {
+    return index >= 0 ? optionValue(element.options[index]) : null;
+  }
+  
+  function selectMany(element) {
     var values, length = element.length;
     if (!length) return null;
 
     for (var i = 0, values = []; i < length; i++) {
       var opt = element.options[i];
-      if (opt.selected) values.push(this.optionValue(opt));
+      if (opt.selected) values.push(optionValue(opt));
     }
     return values;
-  },
-
-  optionValue: function(opt) {
-    // extend element because hasAttribute may not be native
-    return Element.extend(opt).hasAttribute('value') ? opt.value : opt.text;
   }
-};
+  
+  function optionValue(opt) {
+    return Element.hasAttribute(opt, 'value') ? opt.value : opt.text;
+  }
+  
+  return {
+    input:         input,
+    inputSelector: inputSelector,
+    textarea:      valueSelector,
+    select:        select,
+    selectOne:     selectOne,
+    selectMany:    selectMany,
+    optionValue:   optionValue,
+    button:        valueSelector
+  };
+})();
 
 /*--------------------------------------------------------------------------*/
 
