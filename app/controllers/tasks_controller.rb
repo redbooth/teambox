@@ -61,6 +61,9 @@ class TasksController < ApplicationController
         if request.xhr? or iframe?
           if @task.comment_created?
             comment = @task.comments.last(:order => 'id')
+
+            response.headers['X-JSON'] = @task.to_json(:include => :assigned)
+
             render :partial => 'comments/comment',
               :locals => { :comment => comment, :threaded => true }
           else

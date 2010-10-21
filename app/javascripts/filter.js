@@ -5,10 +5,8 @@ Filter = {
   init: function() {
     var filter_assigned = $("filter_assigned");
     var filter_due_date = $("filter_due_date");
-    if (filter_assigned)
-      Filter.assigned_options = Filter.initOptions(filter_assigned.options);
-    if (filter_due_date)
-      Filter.count_due_date = Filter.mapOptions(filter_due_date.options);
+    if (filter_assigned) Filter.assigned_options = Filter.initOptions(filter_assigned.options);
+    if (filter_due_date) Filter.count_due_date = Filter.mapOptions(filter_due_date.options);
   },
   
   showAllTaskLists: function() {
@@ -23,20 +21,17 @@ Filter = {
     $$(".tasks.closed div.task").each(function(e){ e.hide() });
   },
   showTasks: function(by, filter) {
-    $$(".tasks.open div." + by).each(function(e){
+    $$("div.task."+by).each(function(e){
       if (filter == null || e.hasClassName(filter))
         e.show();
       else
         e.hide();
     });
   },
-  countTasks: function(by, filter) {
-    var count = 0;
-    $$(".tasks.open div." + by).each(function(e){
-      if (filter == null || e.hasClassName(filter))
-        count += 1;
-    });
-    return count;
+  countTasks: function(by, date_filter) {
+    return $$("div.task." + by).select(function(e){
+      return (date_filter == null || e.hasClassName(date_filter))
+    }).length
   },
   hideTasks: function(by, filter) {
     $$("table.task_list div.task" + by).each(function(e){
@@ -180,8 +175,4 @@ document.on("change", "#filter_assigned", function(evt, el){
 
 document.on("change", "#filter_due_date", function(evt, el){
   Filter.updateFilters();
-});
-
-document.on('dom:loaded', function() {
-  Filter.updateCounts(false);
 });
