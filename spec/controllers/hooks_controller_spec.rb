@@ -46,49 +46,47 @@ describe HooksController do
       end
       
       it "handles encoded headers" do
-        post :create,
-             :hook_name => 'email',
-             :from => @project.user.email,
-             :to => "=?ISO-8859-1?Q?Moo?= <#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}>\n",
-             :text => "Hello there",
-             :subject => "Just testing"
+        post :create, default_params(
+          :to => "=?ISO-8859-1?Q?Moo?= <#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}>\n",
+          :text => "Hello there"
+        )
         
         response.should be_success
         comment = @project.conversations.last(:order => 'id asc').comments.first
         comment.body.should == "Hello there"
       end
       
+      it "handles encoded body" do
+        post :create, default_params(
+          :text => "\350\346\276\271\360",
+          :charsets => '{"text":"iso-8859-2"}'
+        )
+        post :create, default_params(
+          :text => "\351\361 \370\374\347 \337\360",
+          :charsets => '{"text":"iso-8859-1"}'
+        )
+        
+        comments = Comment.all(:limit => 2, :order => 'id desc')
+        comments.first.body.should == "éñ øüç ßð"
+        comments.second.body.should == "čćžšđ"
+      end
+      
       it "ignores email with missing info" do
-        post :create,
-             :hook_name => 'email',
-             :from => '',
-             :to => "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}",
-             :text => "Hello there",
-             :subject => "Just testing"
+        post :create, default_params(:from => '')
         
         response.should be_success
         response.body.should == "Invalid From field"
       end
       
       it "ignores email without plaintext part" do
-        post :create,
-             :hook_name => 'email',
-             :from => @project.user.email,
-             :to => "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}",
-             :html => "<p>Hello there</p>",
-             :subject => "Just testing"
+        post :create, default_params(:text => nil)
         
         response.should be_success
         response.body.should == "Invalid mail body"
       end
       
       it "ignores email with invalid 'to' address" do
-        post :create,
-             :hook_name => 'email',
-             :from => @project.user.email,
-             :to => "me@moo.com",
-             :text => "Hello there",
-             :subject => "Just testing"
+        post :create, default_params(:to => 'me@moo.com')
         
         response.should be_success
         response.body.should == "Invalid To fields"
@@ -190,6 +188,15 @@ describe HooksController do
            :attachment1 => upload_file("#{Rails.root}/spec/fixtures/tb-space.jpg", 'image/jpg'),
            :attachment2 => upload_file("#{Rails.root}/spec/fixtures/users.yml", 'text/plain')
          }
+      end
+      
+      def default_params(more = {})
+        { :hook_name => 'email',
+          :from => @project.user.email,
+          :to => "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}",
+          :text => "Nothing to say",
+          :subject => "Just testing"
+        }.update(more)
       end
     end
     
