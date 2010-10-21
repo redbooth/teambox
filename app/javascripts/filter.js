@@ -87,28 +87,36 @@ Filter = {
     if (Filter.assigned_options == null && Filter.count_due_date == null)
       Filter.init();
     
+    var el_name = $("filter_tasks_by_name")
     var el = $("filter_assigned");
     var el_filter = $("filter_due_date");
-    if (el == null)
-      return;
+    if (el == null && el_filter == null) return;
 
+    var name_match = el_name.value
     var assigned = el.value == 'all' ? 'task' : el.value;
     var filter = el_filter.value == 'all' ? null : el_filter.value;
 
     Filter.showAllTaskLists();
     Filter.hideAllTasks();
 
-    if (assigned == 'task' && filter == null) 
+    if (name_match == "" && assigned == 'task' && filter == null)
     {
       Filter.showAllTasks();
-    }
-    else
-    {
+    } else {
       Filter.showTasks(assigned, filter);
+      Filter.hideBySearchBox(name_match);
       Filter.foldEmptyTaskLists();
     }
 
     Filter.updateCounts(true);
+  },
+  
+  hideBySearchBox: function(matchText) {
+    matchText = matchText.toLowerCase()
+    $$(".tasks div.task").each(function(t){
+      if(!t.down('a.name').innerHTML.toLowerCase().match(matchText))
+        t.hide()
+    });
   },
 
   updateCounts: function(due_only) {
@@ -161,6 +169,10 @@ Filter = {
     }
   }
 };
+
+document.on('keyup', '#filter_tasks_by_name', function(evt,el) {
+  Filter.updateFilters();
+}.throttle(200)) // throttling the function improves performance
 
 document.on("change", "#filter_assigned", function(evt, el){
   Filter.updateFilters();
