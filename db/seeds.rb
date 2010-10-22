@@ -115,6 +115,7 @@ users = [%w(Frank Kramer frank),
           %w(Marco Fizzulo marco)].collect do |a,b,u|
   user = User.find_by_login(u) || User.create!(:login => u,
                       :password => "papapa",
+                      :password_confirmation => "papapa",
                       :first_name => a, :last_name => b,
                       :betatester => true,
                       :notify_conversations => false,
