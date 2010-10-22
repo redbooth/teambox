@@ -2,8 +2,7 @@
 - simpleconv = false unless local_assigns[:simpleconv]
 
 - cache_comment(comment, threaded, simpleconv) do
-  %div[comment]{ :'data-editable-before' => datetime_ms(15.minutes.since(comment.created_at)),
-                  :'data-user' => comment.user.id, :'data-project' => comment.project.id }
+  %div[comment]{ comment_data(comment) }
     .info
       - if threaded
         = micro_avatar(comment.user)

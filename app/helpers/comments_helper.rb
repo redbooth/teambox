@@ -36,4 +36,11 @@ module CommentsHelper
     content_tag :div, render(comments), :class => 'comments', :id => 'comments'
   end
 
+  def comment_data(comment)
+    {}.tap do |data|
+      data[:'data-editable-before'] = datetime_ms(15.minutes.since(comment.created_at))
+      data[:'data-user'] = comment.user.id
+      data[:'data-project'] = comment.project.id
+    end
+  end
 end
