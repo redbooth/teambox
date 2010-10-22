@@ -94,6 +94,7 @@ module Emailer::Incoming
       @params = params
       @from = @to = @cc = nil
       @attachments = nil
+      @charsets = JSON.parse(@params[:charsets] || '{}')
     end
     
     %w[from to cc].each do |field|
@@ -105,7 +106,7 @@ module Emailer::Incoming
     end
     
     def body
-      @params[:text]
+      @body ||= field_to_utf8(:text)
     end
     
     def subject
@@ -129,6 +130,21 @@ module Emailer::Incoming
       return if value.blank?
       header = TMail::AddressHeader.new(field.to_s, value)
       header.addrs.map &:spec
+    end
+    
+    def field_to_utf8(field)
+      value = @params[field.to_sym]
+      return value if value.blank?
+      
+      charset = @charsets[field.to_s]
+      if charset and charset.downcase != 'utf-8'
+        begin
+          value = Iconv.iconv('utf-8', charset, value).first
+        rescue Iconv::IllegalSequence, Iconv::InvalidEncoding, Errno::EINVAL
+          # do nothing
+        end
+      end
+      return value
     end
   end
   
