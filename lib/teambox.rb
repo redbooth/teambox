@@ -43,9 +43,16 @@ module Teambox
       end
     end
   end
+  
+  class GemLocator < Rails::Plugin::GemLocator
+    def plugins
+      blocked_names = initializer.configuration.skip_gem_plugins
+      super.reject { |plugin| blocked_names.include? plugin.name }
+    end
+  end
 
   class Configuration < Rails::Configuration
-    attr_reader :teambox, :tender
+    attr_reader :teambox, :tender, :skip_gem_plugins
     attr_writer :heroku
 
     def initialize
@@ -53,6 +60,7 @@ module Teambox
       @teambox = Rails::OrderedOptions.new
       @tender = Rails::OrderedOptions.new
       @heroku = !!ENV['HEROKU_TYPE']
+      @skip_gem_plugins = []
 
       YAML.load_file(Rails.root + 'config/teambox.yml')[RAILS_ENV].each do |key, value|
         @teambox[key] = value
@@ -97,6 +105,12 @@ module Teambox
     
     def amazon_s3_config_file
       "#{Rails.root}/config/amazon_s3.yml"
+    end
+    
+    def default_plugin_locators
+      locators = []
+      locators << GemLocator if defined? Gem
+      locators << Rails::Plugin::FileSystemLocator
     end
   end
 
