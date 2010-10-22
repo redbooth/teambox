@@ -10,13 +10,15 @@ config/database.yml
 db/*.sqlite3
 db/sphinx
 config/*.sphinx.conf
-log/*.log
-log/*.pid
+log/*.log*
+log/*.pid*
 tmp
 public/avatars
 public/logos
 public/stylesheets
 /uploads
+/vendor/bundle
+/vendor/cache
 webrat-*
 capybara-*
 rerun.txt
