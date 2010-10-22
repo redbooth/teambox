@@ -222,6 +222,19 @@ class Task < RoleRecord
       base[:task_list] = task_list.to_api_hash(options)
     end
     
+    if Array(options[:include]).include? :assigned
+      base[:assigned] = assigned.to_api_hash(:include => :user) if assigned
+    end
+    
+    if Array(options[:include]).include? :user
+      base[:user] = {
+        :username => user.login,
+        :first_name => user.first_name,
+        :last_name => user.last_name,
+        :avatar_url => user.avatar_or_gravatar_url(:thumb)
+      }
+    end
+    
     base
   end
 

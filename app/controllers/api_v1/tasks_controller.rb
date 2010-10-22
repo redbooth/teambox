@@ -93,7 +93,7 @@ class ApiV1::TasksController < ApiV1::APIController
   end
     
   def api_include
-    [:comments, :user] & (params[:include]||{}).map(&:to_sym)
+    [:comments, :user, :assigned] & (params[:include]||{}).map(&:to_sym)
   end
   
   def check_permissions
