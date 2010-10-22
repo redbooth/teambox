@@ -77,10 +77,12 @@ class Emailer < ActionMailer::Base
   def bounce_message(exception)
     defaults
     pretty_exception = exception.class.name.underscore.split('/').last
+    info_url = 'http://help.teambox.com/faqs/advanced-features/email'
     
-    recipients    exception.from
+    recipients    exception.mail.from
     subject       I18n.t("emailer.bounce.subject")
-    body          I18n.t("emailer.bounce.#{pretty_exception}") + "\n\n" + I18n.t("emailer.bounce.not_delivered")
+    body          I18n.t("emailer.bounce.#{pretty_exception}") + "\n\n---\n" +
+                  I18n.t("emailer.bounce.not_delivered", :link => info_url)
   end
 
   def self.send_with_language(template, language, *args)

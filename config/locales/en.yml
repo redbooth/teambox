@@ -1312,7 +1312,7 @@ en:
       not_project_member_error: "You are not a member of the specified Teambox project."
       project_not_found_error: "There is no project on Teambox corresponding to this email address."
       target_not_found_error: "We couldn't find the item where you are trying to post your comment."
-      not_delivered: "Your email was not processed by Teambox. View our documentation to learn how to use email: http://help.teambox.com/faqs/advanced-features/email"
+      not_delivered: "Your email couldn't be processed by Teambox. View our documentation to learn which types of email we accept: %{link}"
 
   weakling:
     default: Must be at least 5 characters

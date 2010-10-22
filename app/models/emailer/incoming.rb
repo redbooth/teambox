@@ -2,19 +2,24 @@ require 'net/pop'
 require 'net/imap'
 require 'net/http'
 
-# Receives an email and performs the adequate action
+# Receives email
 #
-# Emails can be sent to project@app.server.com or project+model+id@app.server.com
-# Cases:
+# proj-permalink@app.server.com
+#   → new conversation with Subject as a title and Body as a comment
 #
-# keiretsu@app.server.com                  Will find or start a conversation with Subject as a title and Body as a comment
-# keiretsu+conversation@app.server.com     Will find or start a conversation with Subject as a title and Body as a comment
-# keiretsu+task@app.server.com             Will start a conversation with Subject (or the Body if not present) as title
-# keiretsu+conversation+5@app.server.com   Will post a new comment in the conversation whose id is 5
-# keiretsu+task+12@app.server.com          Will post a new comment in the task whose id is 12
+# proj-permalink+conversation@app.server.com
+#   → find or create conversation with Subject as a title and Body as a comment
 #
-# Invalid or malformed emails will be ignored
+# proj-permalink+task@app.server.com
+#   → new task with Subject (or the Body if not present) as title
 #
+# proj-permalink+conversation+5@app.server.com
+#   → new comment for the conversation #5
+#
+# proj-permalink+task+12@app.server.com
+#   → new comment for the task #12
+#
+# Invalid or malformed emails will be ignored and sometimes bounced to the receiver.
 
 module Emailer::Incoming
   
@@ -70,19 +75,23 @@ module Emailer::Incoming
   def receive(email)
     email = ParamsMail.new(email) if Hash === email
     
+    # TODO: cleanup this convoluted logic and ease a bit on the ivars pls
     process email
     get_target email
     get_action if @target.is_a?(Task)
+    
     case @type
     when :project then create_conversation
-    when :conversation then @target ? post_to(@target) : create_conversation
+    when :conversation
+      if @target then post_to(@target)
+      else create_conversation
+      end
     when :task
       unless @target
         @target = create_task
         get_action
       end
       post_to(@target)
-    else raise "Invalid target type"
     end
   end
 
@@ -153,13 +162,12 @@ module Emailer::Incoming
     attr_accessor :mail
     
     def initialize(mail, message)
-      raise "mail must be passed to error" if mail.nil?
       super(message)
       @mail = mail
     end
     
-    def from
-      @mail.from.kind_of?(Array) ? @mail.from.first : @mail.from
+    def sender?
+      mail.from.present?
     end
   end
   
@@ -207,40 +215,28 @@ module Emailer::Incoming
   # Decides which kind of object we'll be posting to (Conversation, Task, Task List..)
   # and finds it if appliable.
   def get_target(email)
-    extra_params = @to.split('+')
+    # projectname+targetclass+id@mailserver.com
+    permalink, klass, object_id = @to.split('+')
+    
+    begin
+      @type = klass ? klass.singularize.to_sym : :project
 
-    case extra_params.size
-      when 1 # projectname@mailserver.com
-        @type = :project
-        @target = @project
-      when 2 # projectname+targetclass@mailserver.com
-        case extra_params.second
-        when 'conversation', 'conversations'
-          @type = :conversation
-          @target = Conversation.find_by_name_and_project_id(@subject, @project.id)
-        when 'task', 'tasks'
-          @type = :task
-          @target = nil
+      if object_id
+        @target = @project.send(@type.to_s.pluralize).find(object_id)
+      elsif klass
+        case @type
+        when :conversation
+          @target = @project.conversations.find_by_name(@subject)
+        when :task then # do nothing
         else
-          raise "Invalid target class"
+          raise ArgumentError, "unknown type: #{@type}"
         end
-      when 3 # projectname+targetclass+id@mailserver.com
-        case extra_params.second
-        when 'conversation'
-          @type = :conversation
-          @target = Conversation.find_by_id_and_project_id(extra_params.third, @project.id)
-        when 'task_list'
-          @type = :task_list
-          @target = TaskList.find_by_id_and_project_id(extra_params.third, @project.id)
-        when 'task'
-          @type = :task
-          @target = Task.find_by_id_and_project_id(extra_params.third, @project.id)          
-        else
-          raise "Invalid target class"
-        end
-        raise TargetNotFoundError.new(email, "#{extra_params.second} #{extra_params.third} not found for #{@project.name}") if @target.nil?
       else
-        raise "Invalid recipient: '#{@to}'"
+        @target = @project
+      end
+    rescue ArgumentError, NoMethodError, ActiveRecord::RecordNotFound => ex
+      Rails.logger.debug "[Incoming email] captured #{ex.class}: #{ex.message}"
+      raise TargetNotFoundError.new(email, "couldn't process target #{@to}")
     end
   end
   
