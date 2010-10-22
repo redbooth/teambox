@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
-  before_filter :load_task, :except => [:new, :create, :reorder]
+  before_filter :load_task, :except => [:new, :create, :reorder, :shorthand]
+  before_filter :load_task_only, :only => [:shorthand]
   before_filter :load_task_list, :only => [:new, :create]
   before_filter :set_page_title
 
@@ -16,6 +17,14 @@ class TasksController < ApplicationController
       f.json { render :as_json => @task.to_xml }
       f.yaml { render :as_yaml => @task.to_xml }
     end
+  end
+
+  def shorthand
+    if current_user.projects.exists? @task.project
+      return redirect_to [@task.project, @task.task_list, @task]
+    end
+    @current_project = @task.project
+    render 'projects/not_in_project', :status => :forbidden
   end
 
   def new
@@ -137,6 +146,12 @@ class TasksController < ApplicationController
       parent = load_task_list ? @task_list : @current_project
       @task = parent.tasks.find params[:id]
     end
+
+    def load_task_only
+      task_id = params[:task_id] || params[:id]
+      @task = Task.find task_id
+    end
+
     
     def redirect_to_task
       redirect_to [@current_project, @task_list || @task.task_list, @task]
