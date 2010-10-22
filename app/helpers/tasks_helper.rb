@@ -10,8 +10,8 @@ module TasksHelper
       classes << 'due_month' if task.due_in?(1.months)
       classes << 'overdue' if task.overdue?
       classes << 'unassigned_date' if task.due_on.nil?
+      classes << "status_#{task.status_name}"
       classes << (task.assigned.nil? ? 'unassigned' : "user_#{task.assigned.user_id}")
-      classes << 'mine' if task.assigned_to?(current_user)
     end.join(' ')
   end
 
@@ -36,20 +36,6 @@ module TasksHelper
     render 'tasks/assigned', :task => task, :user => user
   end
 
-  def check_status_type(task,status_type)
-    unless [:column,:content,:header].include?(status_type)
-      raise ArgumentError, "Invalid Status type, was expecting :column, :content or :header but got #{status_type}"
-    end
-    case status_type
-      when :column
-        "column_task_status_#{task.id}"
-      when :content
-        "content_task_status_#{task.id}"
-      when :header
-        "header_task_status_#{task.id}"
-    end
-  end
-
   def comment_task_status(comment)
     if comment.status_transition?
       content_tag(:span, short_status_name(comment, true),
@@ -64,8 +50,7 @@ module TasksHelper
   end
 
   def task_status(task,status_type)
-    id = check_status_type(task,status_type)
-    out = "<span id='#{id}' class='task_status task_status_#{task.status_name}'>"
+    out = "<span class='task_status'>"
     out << case status_type
     when :column  then localized_status_name(task)
     when :content then task.comments_count.to_s

@@ -1,4 +1,7 @@
 .filter_box
+  %p= t('task_lists.filter.by_name')
+  %input#filter_tasks_by_name{ :type => 'search' }
+
   %p= t('task_lists.filter.assigned_to')
   = filter_assigned_dropdown(project)
 

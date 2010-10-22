@@ -74,6 +74,12 @@ Task = {
     })
   },
 
+  highlight_my_tasks: function() {
+    $$(".task.user_"+my_user.id).each(function(task){
+      task.addClassName('mine')
+    })
+  },
+
   insertTask: function(task_list_id, archived, task_id, html) {
     var container = archived ? $(task_list_id + '_the_closed_tasks') : $(task_list_id + '_the_main_tasks');
     container.insert({bottom: html});
@@ -124,8 +130,10 @@ document.observe('jenny:cancel:edit_task', function(evt) {
   $('show_task').down(".task_header").show();
 });
 
-// Enable task sort on load
+// Enable task sort on load and highlight my tasks
 document.observe('dom:loaded', function(e) {
-	if ($$('.tasks').length > 0)
-	  Task.make_all_sortable();
+  if ($$('.tasks').length > 0) Task.make_all_sortable();
+  Task.highlight_my_tasks();
+  Filter.updateCounts(false);
+  Filter.updateFilters();
 });
