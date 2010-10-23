@@ -7,6 +7,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.register          '/register',            :controller => 'users',       :action => 'create'
   map.signup            '/signup',              :controller => 'users',       :action => 'new'
+
+  map.tasks             '/tasks/:task_id',      :controller => 'tasks',       :action => 'shorthand'
   
   map.search            '/search',              :controller => 'search'
 
