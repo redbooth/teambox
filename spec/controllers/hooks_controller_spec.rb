@@ -122,7 +122,7 @@ describe HooksController do
         end
         
         it "should raise (200 for sendgrid) and create a bounce message if an unknown user posts to a project" do
-          options =  @options.merge!(:from => 'random_person@teambox.com')
+          options = @options.merge!(:from => 'random_person@teambox.com')
           check_bounce_message(options) do
             post :create, options
           end
@@ -130,14 +130,14 @@ describe HooksController do
         end
         
         it "should raise (200 for sendgrid) and create a bounce message if a user does not belong to a project" do
-          options =  @options.merge!(:from => Factory(:user).email)
+          options = @options.merge!(:from => Factory(:user).email)
           check_bounce_message(options) do
             post :create, options
           end
           response.response_code.should == 200
         end
       
-        it "should raise (200 for sendgrid) and create a bounce message if a project is not found" do |variable|
+        it "should raise (200 for sendgrid) and create a bounce message if a project is not found" do
           options = @options.merge!(:to => "#{@project.permalink}+task+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}")
           check_bounce_message(options) do
             post :create, options
@@ -145,20 +145,22 @@ describe HooksController do
           response.response_code.should == 200
         end
         
-        it "should raise (200 for sendgrid) and create a bounce message if a conversation is not found" do |variable|
+        it "should raise (200 for sendgrid) and create a bounce message if a conversation is not found" do
           options = @options.merge(:to => "#{@project.permalink}+conversation+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}")
           check_bounce_message(options) do
             post :create, options
           end
           response.response_code.should == 200
         end
-      
-        it "should only create one bounce message every day if an exception is raised" do
-          options =  @options.merge!(:from => Factory.build(:user).email) # Do not save just build for email
-          Emailer.should_receive(:deliver_bounce_message).once
+        
+        it "should raise (200 for sendgrid) and create a bounce message for invalid target" do
+          address = "#{@project.permalink}+tasknuevo@#{Teambox.config.smtp_settings[:domain]}"
+          options = @options.merge(:to => address)
           
-          post :create, options
-          post :create, options
+          check_bounce_message(options) do
+            post :create, options
+          end
+          response.response_code.should == 200
         end
       end
       

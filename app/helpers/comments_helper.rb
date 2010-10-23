@@ -22,11 +22,14 @@ module CommentsHelper
   def activity_comment_target_link(comment, connector = "&rarr;")
     link = case comment.target_type
       when 'Conversation'
-        link_to_conversation(comment.target.target)
+        conversation = comment.target.target
+        link_to h(conversation), project_conversation_path(comment.project, conversation)
       when 'Task'
-        link_to_task(comment.target.target)
+        task = comment.target.target
+        link_to h(task), project_task_path(comment.project, task)
       when 'TaskList'
-        link_to_task_list(comment.target.target)
+        task_list = comment.target.target
+        link_to h(task_list), project_task_list_path(comment.project, task_list)
     end
     "<span class='arr target_arr'>#{connector}</span> <span class='target'>#{link}</span>" if link
   end
@@ -36,4 +39,11 @@ module CommentsHelper
     content_tag :div, render(comments), :class => 'comments', :id => 'comments'
   end
 
+  def comment_data(comment)
+    {}.tap do |data|
+      data[:'data-editable-before'] = datetime_ms(15.minutes.since(comment.created_at))
+      data[:'data-user'] = comment.user.id
+      data[:'data-project'] = comment.project.id
+    end
+  end
 end

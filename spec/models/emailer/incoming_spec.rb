@@ -256,7 +256,9 @@ describe Emailer do
         
         lambda do
           Emailer.receive(@email_template.to_s)
-        end.should raise_error(Emailer::Incoming::UserNotFoundError) {|e| e.from.should == @email_template.from.first}
+        end.should raise_error(Emailer::Incoming::UserNotFoundError) { |e|
+          e.mail.from.should == @email_template.from
+        }
       end
       
       it "the specified project does not exist" do

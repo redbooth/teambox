@@ -144,7 +144,7 @@ var Hours = {
   },
   
   clearCommentBlocks: function(){
-    $$('p.hours').each(function(e){e.remove();});
+    $$('p.hours').invoke("remove")
   },
   
   sumByHours: function(field, map) {
@@ -155,7 +155,7 @@ var Hours = {
     this.showWeekends = false;
     
     // Hide all comments
-    $$('div.comment').each(function(e){e.hide();});
+    $$('div.comment').invoke("hide")
     
     comments = this.reduceComments(comments, function(key, values){
       var item = {};
