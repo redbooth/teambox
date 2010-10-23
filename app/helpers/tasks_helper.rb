@@ -50,13 +50,14 @@ module TasksHelper
   end
 
   def task_status(task,status_type)
-    out = "<span class='task_status'>"
+    status_for_column = status_type == :column ? "task_status_#{task.status_name}" : ''
+    out = %(<span class='task_status #{status_for_column}'>)
     out << case status_type
     when :column  then localized_status_name(task)
     when :content then task.comments_count.to_s
     when :header  then localized_status_name(task)
     end
-    out << "</span>"
+    out << %(</span>)
     out
   end
 
