@@ -180,7 +180,7 @@ class Project < ActiveRecord::Base
           end
           if host
             port_in_url = (port == 80) ? '' : ":#{port}"
-            url         "http://#{host}#{port_in_url}/projects/#{task.project.permalink}/task_lists/#{task.task_list.id}/tasks/#{task.id}"
+            url         "http://#{host}#{port_in_url}/projects/#{task.project.permalink}/tasks/#{task.id}"
           end
           klass         task.project.name
           dtstamp       DateTime.civil(created_date.year,created_date.month,created_date.day,created_date.hour,created_date.min,created_date.sec,created_date.offset)
