@@ -97,14 +97,16 @@ ActionController::Routing::Routes.draw do |map|
 
     project.hooks 'hooks/:hook_name', :controller => 'hooks', :action => 'create', :conditions => { :method => :post }
 
+    # Use routes for /project/:project_id/tasks instead of /project/:project_id/task_lists/:task_list_id/tasks
+    project.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put, :reorder => :put }
+
     project.resources :task_lists,
       :collection => { :gantt_view => :get, :archived => :get  },
       :member => { :watch => :put, :unwatch => :put, :archive => :put, :unarchive => :put, :reorder => :put } do |task_lists|
+        # deprecated routes, use "project.resources :tasks" directly
         task_lists.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put }
     end
-    
-    project.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put, :reorder => :put }
-    
+
     project.contacts 'contacts', :controller => :people, :action => :contacts, :method => :get
     project.resources :people, :member => { :destroy => :get }
     project.resources :conversations, :has_many => [:comments], :member => { :watch => :put, :unwatch => :put }

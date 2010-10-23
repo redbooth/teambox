@@ -1,7 +1,6 @@
 - thread ||= activity.thread # you can pass :thread or :activity into the partial
 - thread_class = thread.class.name.underscore
 - thread_id = "#{thread_class}_#{thread.id}"
-- thread_link = thread.is_a?(Task) ? [thread.task_list.project, thread.task_list, thread] : [thread.project, thread]
 - comments = thread.comments
 
 .thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}" }
@@ -18,7 +17,7 @@
         = t("activities.thread.created.#{thread_class}", :project => h(thread.project.name))
         = activity_project_link(thread.project)
       %p.thread_title
-        = link_to h(thread), thread_link, :class => thread_class
+        = link_to h(thread), [thread.project, thread], :class => thread_class
         - if thread.is_a?(Task)
           = t('.on_task_list')
           = link_to h(thread.task_list), [thread.task_list.project, thread.task_list], :class => :task_list
