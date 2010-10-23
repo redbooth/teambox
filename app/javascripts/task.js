@@ -29,7 +29,12 @@ document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
 })
 
 document.on('click', '.date_picker img', function(e, element) {
-	new CalendarDateSelect(element.next('input'), element.next('span'), {buttons:true, popup:'force', time:false, year_range:[2008, 2020]} );
+  new CalendarDateSelect(element.next('input'), element.next('span'), {
+    buttons: true,
+    popup: 'force',
+    time: false,
+    year_range: [2008, 2020]
+  })
 })
 
 Task = {
@@ -52,14 +57,14 @@ Task = {
 
   makeSortable: function(task_id, all_task_ids) {
     Sortable.create(task_id, {
-      constraint:'vertical',
+      constraint: 'vertical',
       containment: all_task_ids,
       // format: /.*task_(\d+)_task_task/,
-      handle:'img.task_drag',
+      handle: 'img.task_drag',
       dropOnEmpty: true,
       // that makes the task disappear when it leaves its original task list
       // only:'task',
-      tag:'div',
+      tag: 'div',
       onChange: Task.sortableChange.bind(Task),
       onUpdate: Task.sortableUpdate.bind(Task)
     })
@@ -75,9 +80,7 @@ Task = {
   },
 
   highlight_my_tasks: function() {
-    $$(".task.user_"+my_user.id).each(function(task){
-      task.addClassName('mine')
-    })
+    $$(".task.user_"+my_user.id).invoke('addClassName', 'mine')
   },
 
   insertTask: function(task_list_id, archived, task_id, html) {

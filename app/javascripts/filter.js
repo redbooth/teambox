@@ -10,15 +10,15 @@ Filter = {
   },
   
   showAllTaskLists: function() {
-    $$(".task_list_container").each(function(e){ e.show() })
+    $$(".task_list_container").invoke('show')
   },
   showAllTasks: function() {
-    $$(".tasks div.task").each(function(e){ e.show() });
-    $$(".tasks.closed div.task").each(function(e){ e.show() });
+    $$(".tasks div.task").invoke('show')
+    $$(".tasks.closed div.task").invoke('show')
   },
   hideAllTasks: function() {
-    $$(".tasks div.task").each(function(e){ e.hide() });
-    $$(".tasks.closed div.task").each(function(e){ e.hide() });
+    $$(".tasks div.task").invoke('hide')
+    $$(".tasks.closed div.task").invoke('hide')
   },
   showTasks: function(by, filter) {
     $$("div.task."+by).each(function(e){
