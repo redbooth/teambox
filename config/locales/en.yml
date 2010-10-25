@@ -169,6 +169,7 @@ en:
       phone_for_integration: Optional. For future SMS integration
       password: Password
       password_confirmation: Confirm Password
+      old_password: Old password
       sunday: Sunday
       monday: Monday
       betatester: Use beta features (less stable) before they're released.

@@ -14,6 +14,10 @@
       
 #password_fields{ :style => 'display: none' }
   .password.text_field
+    = f.label :old_password, t('users.form.old_password')
+    = f.password_field :old_password, :autocomplete => 'off'
+    = errors_for user, :old_password
+  .password.text_field
     = f.label :password, t('users.form.password')
     = f.password_field :password, :autocomplete => 'off'
     = errors_for user, :password

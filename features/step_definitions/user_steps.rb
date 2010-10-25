@@ -45,6 +45,10 @@ Given /It is my first time logging in/ do
   @current_user.update_attribute(:welcome,false)
 end
 
+Given /^(?:My|His|Her) password is "([^\"]*)"$/ do |password|
+  @current_user.update_attribute(:password, password)
+end
+
 Given /^there is a user called "([^\"]*)"$/ do |login|
   Factory(:user, :login => login, :email => "#{login}@example.com")
 end

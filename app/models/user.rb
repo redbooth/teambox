@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
                   :biography,
                   :password,
                   :password_confirmation,
+                  :old_password,
                   :time_zone,
                   :locale,
                   :first_day_of_week,
@@ -56,7 +57,7 @@ class User < ActiveRecord::Base
                   :notify_tasks,
                   :wants_task_reminder
 
-  attr_accessor   :activate
+  attr_accessor   :activate, :old_password
 
   before_validation :sanitize_name
   before_destroy :rename_as_deleted
