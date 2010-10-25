@@ -169,10 +169,11 @@ document.on('keyup', '#filter_tasks_by_name', function(evt,el) {
   Filter.updateFilters();
 }.throttle(200)) // throttling the function improves performance
 
-document.on("change", "#filter_assigned", function(evt, el){
+// handles the "clear searchbox" event for webkit
+document.on('click', '#filter_tasks_by_name', function(evt,el) {
   Filter.updateFilters();
-});
+})
 
-document.on("change", "#filter_due_date", function(evt, el){
+document.on("change", "#filter_tasks_by_name, #filter_assigned, #filter_due_date", function(evt, el){
   Filter.updateFilters();
 });
