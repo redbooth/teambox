@@ -107,6 +107,8 @@ defaults: &defaults
   #  - :provider: facebook
   #    :key: 
   #    :secret: 
+  
+  heroku: <%= !!ENV['HEROKU_TYPE'] %>
 
 development:
   <<: *defaults

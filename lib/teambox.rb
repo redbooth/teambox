@@ -1,6 +1,6 @@
 module Teambox
   def self.config
-    Rails.configuration.teambox
+    Rails.configuration
   end
 
   class Initializer < Rails::Initializer
@@ -21,7 +21,7 @@ module Teambox
 
     def load_application_classes
       # Deprecated
-      Object.const_set(:APP_CONFIG, Teambox.config)
+      Object.const_set(:APP_CONFIG, Rails.configuration.external)
       super
     end
 
@@ -38,7 +38,7 @@ module Teambox
       if Teambox.config.amazon_s3
         Paperclip::Attachment.default_options.update(
           :storage => :s3,
-          :s3_credentials => configuration.amazon_s3_config_file
+          :s3_credentials => configuration.amazon_s3_config_file.to_s
         )
       end
     end
@@ -52,59 +52,57 @@ module Teambox
   end
 
   class Configuration < Rails::Configuration
-    attr_reader :teambox, :tender, :skip_gem_plugins
-    attr_writer :heroku
-
     def initialize
       super
-      @teambox = Rails::OrderedOptions.new
-      @tender = Rails::OrderedOptions.new
-      @heroku = !!ENV['HEROKU_TYPE']
-      @skip_gem_plugins = []
+      self.tender = {}
+      self.skip_gem_plugins = []
+      self.providers = []
+    end
+    
+    def external
+      @choices
+    end
+    
+    def from_file(name)
+      super
 
-      YAML.load_file(Rails.root + 'config/teambox.yml')[RAILS_ENV].each do |key, value|
-        @teambox[key] = value
-      end
-
-      if ENV['URL'] and @teambox.app_domain == 'app.teambox.com'
-        @teambox.app_domain = ENV['URL']
+      if ENV['URL'] and app_domain == 'app.teambox.com'
+        self.app_domain = ENV['URL']
       end
 
       # By default, we'll run on the community mode, but test on the non-community version
-      @teambox.community = (@teambox.community.nil? || @teambox.community)
-      @teambox.community = false if %w(test cucumber).include?(RAILS_ENV)
+      if %w[test cucumber].include? RAILS_ENV
+        self.community = false
+      elsif !self.respond_to?(:community) or self.community.nil?
+        self.community = true
+      end
 
-      @teambox.amazon_s3 = true if heroku?
+      self.amazon_s3 = true if heroku?
 
-      self.time_zone = @teambox.time_zone
-      self.i18n.default_locale = @teambox.default_locale
+      self.i18n.default_locale = default_locale
 
-      self.action_mailer.default_url_options = { :host => @teambox.app_domain }
+      self.action_mailer.default_url_options = { :host => app_domain }
 
       if ENV['SENDGRID_PASSWORD'] and
-          @teambox.smtp_settings[:address] == 'smtp.sendgrid.net' and
-          @teambox.smtp_settings[:password] == 'PASSWORD'
-        @teambox.smtp_settings.update(
+          smtp_settings[:address] == 'smtp.sendgrid.net' and
+          smtp_settings[:password] == 'PASSWORD'
+        smtp_settings.update(
           :user_name  => ENV['SENDGRID_USERNAME'],
           :password   => ENV['SENDGRID_PASSWORD'],
           :domain     => ENV['SENDGRID_DOMAIN']
         )
 
-        @teambox.allow_outgoing_email = true
+        self.allow_outgoing_email = true
       end
 
-      if @teambox.allow_outgoing_email
-        self.action_mailer.delivery_method = :smtp
-        self.action_mailer.smtp_settings = @teambox.smtp_settings
+      if allow_outgoing_email
+        action_mailer.delivery_method = :smtp
+        action_mailer.smtp_settings = smtp_settings
       end
-    end
-
-    def heroku?
-      @heroku
     end
     
     def amazon_s3_config_file
-      "#{Rails.root}/config/amazon_s3.yml"
+      Rails.root + 'config/amazon_s3.yml'
     end
     
     def default_plugin_locators
