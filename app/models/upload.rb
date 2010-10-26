@@ -72,7 +72,7 @@ class Upload < RoleRecord
 
   def after_create
     save_slot if page
-    project.log_activity(self, 'create', user_id) if page_id
+    project.log_activity(self, 'create', user_id)
   end
 
   def cleanup_activities
