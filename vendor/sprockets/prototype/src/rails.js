@@ -27,7 +27,8 @@
 
   var submitBubbles = isEventSupported('submit'),
       changeBubbles = isEventSupported('change'),
-      emulateFocusin = !Prototype.Browser.WebKit && document.addEventListener;
+      emulateFocusin = document.addEventListener &&
+        (Prototype.Browser.MobileSafari || !Prototype.Browser.WebKit);
 
   if (!submitBubbles || !changeBubbles || emulateFocusin) {
     // augment the Event.Handler class to observe custom events when needed
