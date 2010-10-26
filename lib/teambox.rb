@@ -57,6 +57,7 @@ module Teambox
       self.tender = {}
       self.skip_gem_plugins = []
       self.providers = []
+      self.community = nil
     end
     
     def external
@@ -73,7 +74,7 @@ module Teambox
       # By default, we'll run on the community mode, but test on the non-community version
       if %w[test cucumber].include? RAILS_ENV
         self.community = false
-      elsif !self.respond_to?(:community) or self.community.nil?
+      elsif self.community.nil?
         self.community = true
       end
 
