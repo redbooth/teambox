@@ -139,6 +139,8 @@ Factory.define :upload do |upload|
   upload.asset_file_name 'pic.png'
   upload.asset_file_size 42
   upload.asset_content_type 'image/png'
+  upload.association(:project)
+  upload.association(:user)
 end
 
 Factory.define :page do |page|

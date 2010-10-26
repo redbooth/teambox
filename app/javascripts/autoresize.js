@@ -1,6 +1,6 @@
 document.on('keyup', 'textarea', function(e, area) {
-  area.resizeToText(false)
-});
+  area.resizeToText.defer(false)
+}.debounce(200));
 
 document.on('facebox:opened', function() {
   $$('.facebox-content textarea').each(function(element){

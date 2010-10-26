@@ -285,7 +285,8 @@ describe Comment do
     it "should link existing upload" do
       upload = Factory.create :upload
       comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
-        :body => 'Here is that cat video I promised'
+        :body => 'Here is that cat video I promised',
+        :project => upload.project, :user => upload.user
 
       comment.uploads.should == [upload]
       upload.reload
@@ -308,7 +309,9 @@ describe Comment do
     
     it "should allow the creation of a comment with a file but no body" do
       upload = Factory.create :upload
-      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => nil
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
+                                         :body => nil,
+                                         :project => upload.project
       
       comment.should have(1).upload
       upload = comment.uploads.first
@@ -317,7 +320,9 @@ describe Comment do
     
     it "should allow you to delete the upload and keep the comment if there is a body" do
       upload = Factory.create :upload
-      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => 'test'
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
+                                         :body => 'test',
+                                         :project => upload.project
       
       comment.should have(1).upload
       comment.uploads.first.destroy
@@ -341,7 +346,7 @@ describe Comment do
     
     it "should allow you to delete the upload and keep the comment if there is no body" do
       upload = Factory.create :upload
-      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => nil
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => nil, :project => upload.project
       
       comment.should have(1).upload
       
