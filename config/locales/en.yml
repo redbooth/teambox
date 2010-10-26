@@ -446,6 +446,7 @@ en:
       invite_people: Invite people to the project
       invite_by_email: Invite users by entering their email addresses
       not_allowed: "You can't create any more projects with your current account."
+      sending: Creating the project…
     edit:
       title_settings: General Settings
       title_picture: Project Logo
@@ -737,9 +738,11 @@ en:
     create: Add Task
     edit:
       submit: Update Task
+      sending: Updating the task…
     new:
       title: New Task
       submit: Add Task
+      sending: Creating the task…
     show:
       title: "Task: %{name}"
     link:

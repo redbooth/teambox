@@ -17,7 +17,7 @@
       = f.text_area :invite_emails, :placeholder => "john@galt.com, francisco@danconia.com"
   
   .submit
-    = f.submit t('.submit')
+    = f.submit t('.submit'), :'data-disable-with' => t('.sending')
   
 - content_for :column do
   = render 'projects/new_primer'
