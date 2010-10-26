@@ -23,6 +23,7 @@ gem 'hpricot', '~> 0.8.2'
 gem 'json'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'tilt'
+gem 'choices', '>= 0.2.0'
 
 group :plugins do
   gem 'sprockets-rails', '~> 0.0.1'

@@ -24,6 +24,10 @@ InlineTasks = {
           new Effect.Appear(task.down('.expanded_actions'), {duration: 0.5})
           task.addClassName('expanded')
           format_posted_date()
+        },
+        onFailure: function(r) {
+          task.down('.loading_icon').remove()
+          task.down('span.task_status').show()
         }
       })
     }
