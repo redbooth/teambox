@@ -810,7 +810,7 @@ en:
     buttons:
       new_note: Text
       new_divider: Divider
-      new_upload: Upload
+      new_upload: Image or file
       new_task_list: Task List
     new:
       title: New Page
