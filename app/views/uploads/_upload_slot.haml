@@ -1,7 +1,12 @@
-.upload{ :id => "upload_#{upload_slot.id}" }
+.upload{ :id => "upload_#{upload_slot.id}", :class => upload_slot.image? ? 'image' : nil }
   = page_upload_actions_link(page,upload_slot)
-  .info
-    = link_to h(upload_slot.file_type), upload_slot.url, :class => upload_slot.file_type, :rel => (upload_slot.image? ? 'facebox' : '')
+  - if upload_slot.image?
+    .thumb
+      %a{:href => upload_slot.url}
+        %img{:src => upload_slot.url}
+  - else
+    .info
+      = link_to h(upload_slot.file_type), upload_slot.url, :class => upload_slot.file_type, :rel => (upload_slot.image? ? 'facebox' : '')
   .block
     .filename.show_details
       .body
