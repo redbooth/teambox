@@ -8,10 +8,8 @@
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title= "#{@page_title} Teambox"
     = stylesheet_link_tag 'application', :media => :screen
-    = stylesheet_link_tag 'colorpicker', :media => :screen
     = #stylesheet_link_tag 'custom', :media => :screen
     = stylesheet_link_tag 'print', :media => :print
-    = organization_link_colour
     = sprockets_include_tag
     = yield :js_includes
     - javascript_tag do

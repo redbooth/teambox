@@ -94,7 +94,7 @@ en:
     create_project:
       left: created the project
       title: "%{person} created the project %{project}"
-
+      
     thread:
       on_task_list: "on"
       more_comments:
@@ -469,7 +469,6 @@ en:
   organizations:
     column:
       general_settings: General settings
-      appearance: Appearance
       admin_users: Manage users
       admin_projects: Manage projects
       billing: Plans and Billing
@@ -482,8 +481,6 @@ en:
       submit: Save changes
       saved: Changes saved
       invalid: Invalid organization
-    appearance:
-      submit: Save changes
     external_view:
       create_your_own_org: "However, you can <a href='%{link}'>create your own organization</a> for your projects."
       request_permission: "To access this organization, you must request permission to some of the administrators:"
@@ -516,20 +513,12 @@ en:
         save_with_yearly_plans: <b>Save 20%</b>. You can also sign up for any plan yearly and <b>get two months free</b>.
         signup_links: "Sign up yearly for <a href='%{corporate}'>Corporate ($2990)</a>, <a href='%{pro}'>Pro ($990)</a>, <a href='%{basic}'>Basic ($290)</a> or <a href='%{personal}'>Personal ($120)</a>."
     fields:
+      logo: Logo <em>Ideally should be 134x36 pixels</em>
       name: "Organization name"
       name_placeholder: Your organization
       permalink: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
       domain: "Domain <em>You can use your own domain for your organization, check the <a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='How to use your own domain for your organization in Teambox'>documentation</a>.</em>"
-    appearance_fields:
-      colours: Site colors
-      logo: Logo <em>Ideally should be 134x36 pixels</em>
-      links_colour: default link color
-      highlight_colour: highlight color
-      link_hover_colour: default link hover color
-      text_colour: default text color
-      header_bar_colour: header bar color
       description: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
-
     index:
       about:
         title: About Organizations
@@ -1030,7 +1019,7 @@ en:
       close: Hide preview
       preview: Preview
       showing: "..."
-
+      
   example_projects:
     new:
       learn: Learn by example!
@@ -1298,7 +1287,7 @@ en:
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
       problems: "If you have any problems, please contact us at %{support}"
-      successfully_reset: "Your password has been successfully reset."
+      successfully_reset: "Your password has been successfully reset." 
     forgot_password:
       subject: "Password retrieval for Teambox"
     notify:
