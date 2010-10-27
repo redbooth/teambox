@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101014112847) do
+ActiveRecord::Schema.define(:version => 20101026091837) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(:version => 20101014112847) do
     t.integer  "logo_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "settings"
   end
 
   add_index "organizations", ["domain"], :name => "index_organizations_on_domain"

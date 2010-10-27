@@ -1,13 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :sprockets, :only => [:index, :show]
-  
+
   map.logout            '/logout',              :controller => 'sessions',    :action => 'destroy'
   map.login             '/login',               :controller => 'sessions',    :action => 'new'
   map.login_backdoor    '/login/:username',     :controller => 'sessions',    :action => 'backdoor' if Rails.env.cucumber?
-  
+
   map.register          '/register',            :controller => 'users',       :action => 'create'
   map.signup            '/signup',              :controller => 'users',       :action => 'new'
-  
+
   map.search            '/search',              :controller => 'search'
 
   map.welcome           '/welcome',             :controller => 'users',       :action => 'welcome'
@@ -36,7 +36,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reset_passwords
   map.resource :session
-  map.resources :organizations, :member => [:projects, :external_view, :delete] do |org|
+  map.resources :organizations, :member => [:projects, :external_view, :delete, :appearance] do |org|
     org.resources :memberships, :member => [:change_role, :add, :remove]
   end
 
@@ -62,7 +62,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :task_lists do |task_lists|
       task_lists.resources :tasks
     end
-    
+
     user.show_more   'activities/users/:id/show_more.:format',  :controller => 'activities', :action => 'show_more',  :method => :get
   end
 
@@ -111,10 +111,10 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :people, :member => { :destroy => :get }
     project.resources :conversations, :has_many => [:comments], :member => { :watch => :put, :unwatch => :put }
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }, :collection => { :resort => :post }
-    
+
     project.search 'search', :controller => 'search'
   end
-  
+
   map.public_projects '/public', :controller => 'public/projects', :action => :index
 
   map.namespace(:public) do |p|
@@ -131,7 +131,7 @@ ActionController::Routing::Routes.draw do |map|
     doc.api_changes   'api/changes',   :action => 'changes'
     doc.api_model     'api/:model',   :action => 'model'
   end
-  
+
   map.namespace(:api_v1, :path_prefix => 'api/1') do |api|
     api.resources :projects, :except => [:new, :edit], :member => {:transfer => :put} do |project|
       project.resources :activities, :only => [:index, :show]
@@ -156,8 +156,8 @@ ActionController::Routing::Routes.draw do |map|
     api.resources :activities, :only => [:index, :show]
     api.resources :invitations, :except => [:new, :edit, :update, :create], :member => {:accept => :put}
     api.resources :users, :only => [:index, :show]
-    
-    
+
+
     api.resources :tasks, :except => [:new, :edit, :create], :member => {:watch => :put, :unwatch => :put}
     api.resources :comments, :except => [:new, :create, :edit]
     api.resources :conversations, :except => [:new, :edit], :member => {:watch => :put, :unwatch => :put} do |conversation|
@@ -173,16 +173,16 @@ ActionController::Routing::Routes.draw do |map|
     api.resources :pages, :except => [:new, :edit], :member => {:reorder => :put}, :collection => {:resort => :put}
     api.resources :notes, :except => [:new, :edit]
     api.resources :dividers, :except => [:new, :edit]
-    
+
     api.resources :organizations, :except => [:new, :edit, :destroy] do |organization|
       organization.resources :projects, :except => [:new, :edit], :member => {:transfer => :put}
       organization.resources :memberships, :except => [:new, :edit, :create]
     end
-    
+
     api.search 'search', :controller => 'search'
     api.account 'account', :controller => :users, :action => :current, :conditions => { :method => :get }
   end
-  
+
   map.resources :task_lists, :only => [ :index ], :collection => { :gantt_view => :get }
   map.resources :conversations, :only => [ :create ]
   # map.resources :pages, :only => [ :index ]

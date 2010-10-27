@@ -54,9 +54,9 @@ function hideBySelector(selector) {
 function insertCss(css) {
   var head = document.getElementsByTagName('head')[0],
       style = document.createElement('style')
-  
+
   style.setAttribute("type", "text/css")
-  
+
   if (style.styleSheet) { // IE
     style.styleSheet.cssText = css;
   } else { // w3c
