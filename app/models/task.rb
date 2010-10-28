@@ -34,12 +34,13 @@ class Task < RoleRecord
   
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_save :set_comments_author, :if => :updating_user
-  before_save :save_changes_to_comment, :if => :track_changes?
   before_save :transition_from_new_to_open, :if => :assigned_id?
+  before_save :save_changes_to_comment, :if => :track_changes?
   before_update :remember_comment_created
   
   def track_changes?
-    updating_user and (status_changed? or assigned_id_changed?)
+    (new_record? and not status_new?) or
+    (updating_user and (status_changed? or assigned_id_changed?))
   end
 
   def archived?
@@ -271,14 +272,14 @@ class Task < RoleRecord
   def save_changes_to_comment # before_save
     comment = comments.detect(&:new_record?) || comments.build_by_user(updating_user)
     
-    if status_changed?
+    if status_changed? or self.new_record?
       comment.status = self.status
-      comment.previous_status = self.status_was
+      comment.previous_status = self.status_was if status_changed?
     end
     
-    if assigned_id_changed?
+    if assigned_id_changed? or self.new_record?
       comment.assigned_id = self.assigned_id
-      comment.previous_assigned_id = self.assigned_id_was
+      comment.previous_assigned_id = self.assigned_id_was if assigned_id_changed?
     end
     true
   end

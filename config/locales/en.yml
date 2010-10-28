@@ -731,6 +731,7 @@ en:
     assigned:
       assigned_to: "Assigned to %{user}"
       myself: "Assign to myself (%{user})"
+      unassigned: Cleared the assigned user
     due_on:
       due_on: Due on
       today: Today

@@ -145,6 +145,26 @@ describe Task do
     end
   end
   
+  describe "creating with assigned" do
+    it do
+      @task_list = Factory(:task_list)
+      @project = @task_list.project
+      @user = @project.user
+      
+      task = @task_list.tasks.create_by_user(@user,
+        :assigned_id => @project.people.first.id, :name => "My task",
+        :comments_attributes => [{:body => "My comment"}]
+      )
+      
+      task.should be_assigned
+      task.should be_open
+      
+      comment = task.comments.first
+      comment.assigned_id.should == task.assigned_id
+      comment.status.should == task.status
+    end
+  end
+  
   describe "updating" do
     it "allows several blank comments with hours" do
       task = Factory(:task, :comments_attributes => {"0" => {:human_hours => "30m"}})
@@ -197,7 +217,6 @@ describe Task do
       comment.body.should == "Do it by tomorrow"
       comment.previous_assigned_id.should be_nil
       comment.assigned_id.should == person2.id
-      comment.status.should be_nil
       
       task.reload
       task.update_attributes(:assigned_id => person3.id, :comments_attributes => [{:body => ""}])
@@ -209,7 +228,6 @@ describe Task do
       comment.body.should be_blank
       comment.previous_assigned_id.should == person2.id
       comment.assigned_id.should == person3.id
-      comment.status.should be_nil
     end
   end
 

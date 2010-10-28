@@ -9,11 +9,11 @@ class Comment
   end
 
   def initial_status?
-    status && previous_status.nil?
+    status? and not previous_status?
   end
 
   def assigned_transition?
-    assigned != previous_assigned
+    assigned_id != previous_assigned_id
   end
   
   def status_transition?
