@@ -9,7 +9,7 @@
     = f.text_field :email, :readonly => 'readonly', :style => 'color: #999'
   - else
     = f.text_field :email
-    - tooltip t('.tooltips.email')
+    - tooltip t('users.form.tooltips.email')
   = errors_for user, :email
       
 #password_fields{ :style => 'display: none' }
