@@ -1,0 +1,1653 @@
+# Original translation
+# Mark missing translations by adding ##### at the end of the line
+sv:
+  # if latest_announcement is less than 5 characters, it will not be displayed
+  latest_announcement: "<strong>New</strong>: Earn money by referring new users into Teambox. Log in and go into your affiliate area to make up a 15% of the income you generate!<br/><br/>Read <a href='http://blog.teambox.com'>our blog</a> for more news about Teambox."
+  common:
+    and: och
+    or: eller
+    in_project: i
+    delete: Ta bort
+    edit: Ändra
+    rename: Byt namn
+    accept: Acceptera
+    decline: Neka
+    cancel: Avbryt
+    close: Stäng
+    save: Spara
+    show_more: Visa mer
+    print: Skriv ut denna sida
+    prev: Föregående
+    next: Nästa
+    tasks:
+      one: 1 uppgift
+      other: "%{count} uppgifter"
+    comment:
+      one: "%{count} kommentar"
+      other: "%{count} kommentarer"
+    not_allowed: You are not allowed to do that!
+    calendar: Kalender
+    gantt_chart: Gantt-diagram
+  confirm:
+    delete_task_list: Are you sure you want to delete this task list?
+    delete_task: Are you sure you want to delete this task?
+    delete_page: Are you sure you want to delete this page?
+    delete_upload: Are you sure you want to delete this file?
+    delete_group: Are you sure you want to delete this group?
+  not_found:
+    user: "User does not exist."
+    conversation: "Conversation %{id} not found in this project."
+    project: "The project %{id} doesn't exist."
+    page: "Page %{id} not found in this project."
+    task_list: "Task list %{id} not found in this project."
+    task: "Task %{id} not found in this project."
+  deleted:
+    conversation: "Deleted %{name} conversation"
+    task: "Deleted %{name} task"
+    task_list: "Deleted %{name} task list"
+    page: "Deleted %{name} page"
+    upload: "Deleted %{name} file"
+    person: "%{name} is no longer in the project"
+    left_project: "You are no longer in this project"
+  activities:
+    create_upload:
+      title: "%{user} uploaded file %{file}"
+    create_conversation:
+      create_conversation: started the conversation
+      title: "%{user} started a conversation: %{conversation}"
+    create_comment:
+      create_comment: skapade kommentaren
+      title: "%{user} commented on %{target}"
+    create_comment_task:
+      title: "%{user} updated task %{target}"
+    create_comment_project:
+      title: "%{user} updated status on %{target}"
+    create_comment_conversation:
+      title: "%{user} followed up on conversation %{target}"
+    create_task_list:
+      create_task_list: created the task list
+      title: "%{user} created task list %{task_list}"
+    create_task:
+      create_task: skapade uppgiften
+      title: "%{user} created task %{task} in %{task_list}"
+    create_page:
+      create_page: skapade sidan
+      title: "%{user} created page %{page}"
+    edit_page:
+      edit_page: ändrade sidan
+      title: "%{user} edited the page %{page}"
+    create_note:
+      create_note: la till anteckning
+      title: '%{user} skapade anteckning <strong>%{note}</strong> i %{page}'
+    edit_note:
+      edit_note: edited note
+      title: '%{user} edited the note "%{note}" in %{page}'
+    create_person:
+      create_person: joined the project
+      by: by
+      title: "%{person} joined the project %{project}"
+    delete_person:
+      delete_person: left the project
+      by: by
+      left: left the project
+      title: "%{person} left the project %{project}"
+    create_project:
+      left: created the project
+      title: "%{person} created the project %{project}"
+      
+    thread:
+      on_task_list: "on"
+      more_comments:
+        one: "Show one previous comment"
+        other: "Show %{count} previous comments"
+      created:
+        task: "skapade en uppgift"
+        conversation: "created the conversation"
+  avatars:
+    new:
+      title: Upload an avatar
+      upload: Upload
+    edit:
+      upload_new_image: Upload a new image for your avatar
+      upload: Upload this avatar
+    show:
+      save: Spara ändringar
+  reset_passwords:
+    new:
+      title: So you forgot your password?
+      email: Which email did you sign up with?
+      back: Back to Login screen
+      submit: Send me a link to reset my password
+    create:
+      not_found: "We can't find a user with that email: %{email}<br/>Please check the email address and try again. If that doesn't work, contact us at %{support}"
+      invalid: "The change password URL you visited is either invalid or expired. Try using I Forgot my Password again from the home page.<br/>If that doesn't work, contact us at %{support}"
+      password_not_updated: "New password is not valid. Try again."
+      password_updated: "Password was successfully updated."
+    sent:
+      title: Återställ lösenord
+      login_link_sent: "We just sent you an email to %{email} so you can retrieve your password."
+      follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
+      not_found: "The email %{email} doesn't belong to any Teambox user. Maybe you misspelt it?"
+      change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"
+    reset:
+      title: You can now reset your password
+      submit: Återställ mitt lösenord
+  cards:
+    card:
+      phone_numbers: Phone Numbers
+      email_addresses: Email Addresses
+      websites: Websites
+      addresses: Addresses
+      ims: IM
+      social_networks: Social Networks
+      vcard: Download vCard
+    card_types:
+      business: Business
+      fax: Fax
+      home: Home
+      mobile: Mobile
+      other: Other
+      personal: Personal
+      work: Work
+    field:
+      add_phone_numbers: Phone Number
+      add_email_addresses: Add Email
+      add_websites: Add Website
+      add_addresses: Add Address
+      add_ims: Add IM
+      add_social_networks: Add Social Network
+  users:
+    form:
+      login: Användarnamn
+      first_name: Förnamn
+      last_name: Efternamn
+      biography: Biografi
+      time_zone: Tidszon
+      language: Språk
+      email: Epost
+      phone: Phone Number
+      phone_for_integration: Valfritt. För framtida SMS-integration
+      password: Lösenord
+      password_confirmation: Bekräfta lösenord
+      sunday: Söndag
+      monday: Måndag
+      betatester: Använd betafunktioner (mindre stabilt) innan de släpps.
+      first_day_of_week: Veckan börjar med
+      change_password: Byt lösenord
+      confirm_password: Confirm password
+      notifications:
+        clarification: |
+          When someone mentions you (as '@%{login}' or '@all') in conversation or a task,
+          you will be notified and added as a watcher for that item.
+        notify_conversations: Notify me of updates to conversations I'm watching
+        notify_tasks: Notify me of updates to tasks I'm watching
+        wants_task_reminder: Send me a daily reminder of tasks assigned to me that are due soon
+      invalid_login: "use only letters, numbers and underscores"
+      delete:
+        steps_before_1: "To delete your Teambox account, you first need to leave or delete all your current projects."
+        steps_before_2: "This will ensure that no other users will lose data on their projects when you delete your account."
+        steps_before_3: "Leave or delete your current projects and then come back to this page to delete your account."
+        what_will_happen: "After deleting your account, your Teambox profile will not be accessible anymore."
+        delete_my_account: "Delete my account now"
+        account_deleted: "Your account has been deleted. We will miss you!"
+        couldnt_delete_account: "We can't delete your account because you still have active or archived projects."
+      picture:
+        field: Ny avatar
+        presence: "You can't upload a blank file"
+        max_size: "File size can't exceed %{mb}"
+        we_have_this_avatar: "This is the picture we currently have of you:"
+        gravatar_in_use: "We don't have a picture of you, so we're using %{gravatar}."
+        upload_here_or_at_gravatar: "You can either upload a picture here or set one on %{gravatar}."
+        destroy: Ta bort avatar
+      tooltips:
+        login: "You need a username to login. People will be able to find you by username. Must be all lowercase, no spaces. You can use undescores."
+        first_name: Up to 20 characters.
+        last_name: Up to 20 characters.
+        email: Enter your real email so your teammates can contact you.
+        password: "Combining uppercase and lowercase letters and numbers is a good idea."
+        phone: "Preferrably cell phone. Enter it including the country code, e.g. +1 (415) 1234-567"
+      new:
+        use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
+    new:
+      title: Create an Account
+      submit: Create account
+      no_public_signup: "Public signups are not allowed on this system."
+      you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
+      existing_user: "If you already have an account, <a href='%{login_url}'>log in</a> or <a href='%{forgot_url}'>retrieve your password</a>."
+      you_already_have_an_account: "You already have a Teambox account for the address %{email}. <a href='%{login_link}'>Log in with this email</a> or <a href='%{reset_password_link}'>reset your password</a> if you forgot it."
+    create:
+      thanks: Thanks for signing up!
+      error: "We couldn't set up that account, sorry. Please try again, or contact an admin (link is above)."
+    edit:
+      title_settings: Your Account Settings
+      title_profile: Your Profile Settings
+      title_picture: Your Profile Picture
+      title_notifications: Your Notifications
+      title_linked_accounts: Linked Application Accounts
+      title_deletion: Project Archiving/Deletion
+      title_delete: Delete Account
+      submit: Uppdatera konto
+    update:
+      updated: User profile updated!
+      error: "Couldn't save the updated profile. Please correct the mistakes and retry."
+    activation:
+      resent: "We've re-sent the activation email. Take a look at your inbox!"
+      already_done: "You have already confirmed your email! You can now use Teambox."
+      activated: "Your account has been activated! Welcome to Teambox :)"
+      invalid: "<p>Invalid or expired access link. Login with your email and password.</p><p>If you don't remember your login data, follow the Forgot your Password link.</p>"
+      invalid_user: Invalid user
+    show:
+      profile: Profil
+      projects: Projekt
+      recent_activity_for: "Recent activity for %{user_name}"
+      pending_invite: "%{name} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
+      projects_in_common_with: "Projects you share with %{user_name}"
+    user:
+      formatted_address: "%{street}, %{city} (%{country})"
+      remove_from_project: Remove from Project
+    welcome:
+      get_started: Get started with Teambox!
+      intro1: "You're our newest member! You'll soon see how Teambox can become your day's starting point."
+      intro2: "Where can you go now? Create a project to <b>collaborate</b>:" # or an agenda to <b>keep track of contacts</b>:"
+      projects:
+        title: Projekt
+        share_and_collaborate: "Share and collaborate with your team! Project wall updates, conversations, tasks, pages and files."
+        create_your_first_project: "An event, a design, a product... Go ahead and <a href='%{link}'>create your first project</a> now!"
+      spread:
+        title: Do you love us too?
+        reasons: "We've been working on Teambox for years, hoping it will be useful for you.<br/>We're real people, motivated developers with a mission, just like you!"
+        help: You can <b>help us</b> by telling your friends how you enjoy Teambox on
+        twitter: 'Twitter,'
+        facebook: Facebook
+        in_your_site: in your site!
+        tell_us: "If you enjoy using Teambox, consider also <a href='mailto:%{address}'>telling us about it</a> in an email!"
+      stop_welcome: Stop showing this Welcome tab
+    feeds:
+      title: Sync your activity feeds
+      follow_activities: "You can follow Teambox activities from News Readers (Desktop or Mobile)."
+      receive_notifications: "By using a Feed Reader on your computer or mobile device, you will receive notifications from activities in your projects."
+      configure: "You can configure your feed reader to alert you every time something new happens in Teambox, even if you don't have it open in a window."
+      import:
+        title: How to import a news feed
+        body: "Beneath you have a list of feeds you can follow. To import them into your feed reader you need to <strong>right-click the link</strong> and select <strong>copy link address</strong>. Next, go to your feed reader, add a new Feed and paste the address of that feed."
+      your_feeds: Your news feeds
+      subscribe_to_all: Activity for All Projects
+      subscribe_to_project: Activity for %{project}
+      feed_reader:
+        title: Which news reader should I use?
+        body: "Refer to the <a href='%{link}'>knowledge base</a> for this."
+      more_tips:
+        title: Mer tips
+        body: "Learn <a href='%{link}'>more ways to access Teambox</a>."
+    calendars:
+      title: Synka dina kalendrar
+      tasks_can_be_synced: "Teambox tasks can be synched with your usual Calendars so you don't forget what's coming up."
+      possible_clients: "You can sync your Google Calendar, your Apple's iCal, Outlook, Blackberry and others."
+      your_calendars: Dina kalendrar
+      subscribe_to_all: "All Projects: "
+      subscribe_to_project: "Project %{project}: "
+      how_to:
+        title: "How to sync your calendars"
+        body: "Basically, you should import the links below into your calendar client. Visit our <a href='%{link}'>knowledge base</a> to learn how to use them with your calendar app."
+      clients:
+        title: Specific instructions
+        body: "Refer to the <a href='%{link}'>knowledge base</a> for instructions on how to configure Google Calendar, Apple's iCal, Outlook, Blackberry and others."
+    unconfirmed_email:
+      title: Confirm your email
+      invitation_sent_to: "An email invitation was sent to <i>%{email}</i>, in order to verify your email address."
+      follow_the_link: Please <b>open this email and follow the link inside it</b> to activate your account.
+      problems_title: Problems?
+      resend: "Can't find the email? Press <a href='%{link}'>here</a> to re-send the activation email."
+      spam: "Make sure the email wasn't classified as spam by your email client."
+      wrong_address: "Wrong address? If you mistyped your email address, <a href='%{link}'>cancel the signup process</a> and re-create your account with a valid address."
+      problems: "If you're still having problems, please contact us at %{support}"
+    daily_task_reminder_email:
+      daily_task_reminder: "Daily task reminder"
+      daily_task_reminder_from_teambox: "This is the daily task reminder email from Teambox"
+      late_tasks: "Late tasks"
+      tasks_for_today: "Tasks for today"
+      tasks_for_tomorrow: "Tasks for tomorrow"
+      tasks_for_next_two_weeks: "Tasks for next two weeks"
+      tasks_without_a_due_date: "Tasks without a due date"
+      you_receive_this_message: "You received this message because you opted for it. You can disable it on your %{link}"
+      settings_page: "settings page"
+    text_styles:
+      block_of_code: Paste your code indented (4 spaces or tabs) to paste it as a block of code.
+      enter_this:
+        bold_text: "**fet** text"
+        header: |
+          Rubrik
+          ======
+        image: "![alt text](http://w3.org/img.jpg)"
+        italic_text: "*kursiv* text"
+        link: "[Länka något](http://teambox.com)"
+        ordered_list: |
+          1. sorterad lista
+          2. lämna tomma rader!
+        smaller_header: |
+          Mindre rubrik
+          ---------
+        title: Skriv detta
+        unordered_list: |
+          * osorterad lista
+          * lämna tomma rader över och under
+      to_see_this:
+        bold_text: "<strong style=\"font-weight: bold\">fet</strong> text"
+        header: "<h3 style=\"font-size:18px\">Rubrik</h3>"
+        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text: "<i>kursiv</i> text"
+        link: "<a href=\"http://www.teambox.com\">Länka något</a>"
+        ordered_list: |
+          <li>sorterad lista</li>
+          <li>lämna tomma rader!</li>
+        smaller_header: "<h4 style=\"font-size:14px\">Mindre rubrik</h4>"
+        title: För att se detta
+        unordered_list: |
+          <li>osorterad lista</li>
+          <li>lämna tomma rader över och under</li>
+  projects:
+    index:
+      projects: Mina projekt
+      subscribe: Prenumerera på nyhetsflödet
+      new_project: Nytt projekt
+      rss:
+        title: Teambox projects overview
+        description: Overview of all projects in Teambox
+      archived: "Show %{count} Archived Projects..."
+    primer:
+      empty: You don't own or belong to any projects yet.
+      create_first: Create your first project!
+      define1: "Use projects to <b>collaborate</b> with groups of people: A website, organizing a party, client work..."
+      define2: "You can create <b>as many projects as you wish</b> to share with different users online."
+      item1: "<b>Create a project</b>, name it and <b>invite some contacts</b> to it."
+      item2: "<b>Comment</b> about what you're doing in the main timeline."
+      item3: "<b>Discuss</b> important decisions with Conversations."
+      item4: "<b>Plan</b> what needs to be done and post updates with Tasks."
+      item5: "<b>Share information</b> with easily editable Pages for each project."
+      footer: "Projects are a centralized way of collaborating, so you'll never need to email your team again."
+    show:
+      update_your_status: "Update your status..."
+      text_styling: Formatting help
+      new_task_list_link: New Task List
+      subscribe: Subscribe to the news feed
+      tip: Mentioning somebody's @username will send them an email with your message
+      public_project: Public site for this project
+      rss:
+        title: "%{name} activity feed"
+        description: "Recent activities for the project %{name}"
+    people_list:
+      invite_people: 'Invite people...'
+      people_in_project: People in this project
+      pending_invitations:
+        one: One invitation pending
+        other: "%{count} invitations pending"
+    recent_conversations:
+      title: Recent conversations
+      view_all: View all conversations
+      new: "+ New conversation"
+      first: "+ Create the first conversation"
+    fields:
+      tracks_time: "Enable time tracking. <em>Will allow users to log time for tasks.</em>"
+      public_project: "Public project. <em>Anybody will be able to access it and join it at the <a href='/public'>public projects section</a>.</em>"
+      archiving: "Archive this project"
+      forever: "Delete this project forever"
+      owner: "Owner"
+      owner_description: "The owner is the main responsible for a project. He or she cannot be removed from the project before ownership is transferred to another user."
+      name: "Project Name <em>Keep it short and descriptive, for example: Taggart Transcontinental.</em>"
+      name_example: Project name
+      permalink: "Permalink <em>Short identifier for the project</em>"
+      permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
+      archived: "Archive this Project <em>This will keep it accessible for its members, but not writable anymore.</em>"
+      confirm_delete: "Are you sure you want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you'd rather keep it, use Archive Project instead."
+      settings:
+        you_cant_unarchive: "You have {{active}} active projects, and your current plan only allows {{max}} projects"
+        upgrade: "In order to <b>unarchive this project</b> and be able to edit it, you must <a href='{{link}}'>upgrade your account and get more storage and features</a> or archive other projects."
+      extra_options: "More options"
+      organization: Organization
+      new:
+        time_tracking_docs: Learn more.
+        choose_organization:
+          new_org_name: "Organization name <em>You may later add more projects to this same organization</em>"
+          choose_org: "Organization <em>Which organization does this project belong to?</em>"
+          or_create_a_new_org: "or create a <a href='%{link}'>new organization</a>"
+      settings:
+        you_cant_transfer_this_project: "This project belongs to the <b>%{organization}</b> organization. You don't have the rights to transfer it."
+        manage_organizations: Manage organizations.
+    new_primer:
+      define1: A project is a shared group with your teammates.
+      define2: "Inside a project, each team member can:"
+      feature1: Post status updates.
+      feature2: Start conversations or reply.
+      feature3: Send attachments.
+      feature4: Assign and review tasks.
+      feature5: Comment on tasks.
+      feature6: Track hours spent on each item.
+      feature7: "Create, edit and view pages."
+      footer: This project will belong to you. You can transfer this project to other contacts at any time.
+      limited: "As a free account, you can only upload up to 50 Mb of attachments to this project."
+      upgrade: Upgrade your account now!
+    new:
+      title: Skapa ett projekt
+      submit: Create project and start collaborating
+      new_project: Nytt projekt...
+      created: Your project has been created!
+      invalid_project: "Invalid project, correct errors and try again."
+      create_an_example_project: "First time in Teambox? <a href='%{link}'>Create an example project</a> to play around and learn."
+      active_projects:
+        zero: You have no active projects.
+        one: You have one active project.
+        other: "You have {{count}} active projects."
+      you_can_create_more:
+        zero: "You can't create any more projects.<br/>The maximum of projects with your current plan is {{max}}."
+        one: You can create one more project with your current plan.
+        other: "You can create {{count}} more projects with your current plan."
+      upgrade:
+        to_2: "<a href='{{link}}'>Upgrade your account now</a> to create <b>up to {{projects}} projects</b>, store up to <b>{{storage}} Gb</b> of files and use the <b>search bar across all projects</b>."
+      invite_people: Invite people to the project
+      invite_by_email: Invite users by entering their email addresses
+      not_allowed: "You can't create any more projects with your current account."
+      sending: Creating the project…
+    edit:
+      title_settings: General Settings
+      title_picture: Project Logo
+      title_deletion: Archive/Delete Project
+      title_ownership: Ownership
+      submit: Save Changes
+      change_owner: Change owner
+      transferred: "Project ownership has been transferred."
+      invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
+      success: Project updated
+      error: Couldn't change project settings
+    not_in_project:
+      title: "Join '%{project}' project?"
+      explain_admin: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because you're an administrator of the <b>%{organization}</b> organization."
+      explain_public: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because this is a <b>public project</b>."
+      not_allowed: This is a private project and you're not authorized to access it.
+      join: Join this project
+    join:
+      welcome: You're now part of this project
+  organizations:
+    column:
+      general_settings: General settings
+      admin_users: Hantera användare
+      admin_projects: Hantera projekt
+      billing: Plans and Billing
+      delete: Ta bort denna organisation
+    edit:
+      there_are: "There are"
+      number_of_users: "%{count} users"
+      public_site: "Your organization's public site is %{link}"
+      number_of_projects: "%{count} projects"
+      submit: Save changes
+      saved: Changes saved
+      invalid: Invalid organization
+    external_view:
+      create_your_own_org: "However, you can <a href='%{link}'>create your own organization</a> for your projects."
+      request_permission: "To access this organization, you must request permission to some of the administrators:"
+      title: "%{name}"
+      you_cant_access: You don't have permission to access or edit this organization.
+    usage:
+      active_projects:
+        title: "%{now} / %{max} active projects"
+        explain: Deleted and archived projects don't count against the limit.
+      storage:
+        title: "%{now} / %{max}"
+        explain: Attached files on your organization.
+    billing:
+      billing_email: Billing e-mail <em>We will send invoices to this address</em>
+      submit: Update billing e-mail
+      plan: Plan
+      storage: Storage
+      projects: Projects
+      search: Search
+      upgrade: Upgrade now!
+      current_plan: Your current plan
+      downgrade: Downgrade
+      billing_area: "You can access your invoices, downgrade or change your billing options at any time from the <a href='%{link}'>billing area</a>."
+      suggested_upgrade:
+        upgrade_to: "Upgrade to %{plan}"
+        for_only: "for $%{price} more a month"
+        get_projects: "Up to <b>%{number} projects</b>"
+        get_storage: "Up to <b>%{number}</b>"
+      yearly_plans:
+        save_with_yearly_plans: <b>Save 20%</b>. You can also sign up for any plan yearly and <b>get two months free</b>.
+        signup_links: "Sign up yearly for <a href='%{corporate}'>Corporate ($2990)</a>, <a href='%{pro}'>Pro ($990)</a>, <a href='%{basic}'>Basic ($290)</a> or <a href='%{personal}'>Personal ($120)</a>."
+    fields:
+      logo: Logo <em>Ideally should be 134x36 pixels</em>
+      name: "Organization name"
+      name_placeholder: Your organization
+      permalink: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
+      domain: "Domain <em>You can use your own domain for your organization, check the <a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='How to use your own domain for your organization in Teambox'>documentation</a>.</em>"
+      description: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
+    index:
+      about:
+        title: About Organizations
+        explain1: An organization allows you to group projects and users under a brand name.
+        explain2: "You can link them to your own domain to customize your Teambox space. Use your own logo and login page, and share it with your clients."
+      new:
+        create: "+ Create a new Organization"
+        explain: "Brand it with your own logo and website, and create projects inside."
+      title: Organizations
+    not_admin: "You can't access the billing page because you are not an administrator."
+    not_in_community: "The community version doesn't support multiple organizations"
+    new:
+      title: Ny organisation
+      explain: Organize your people and projects inside an organization.
+      submit: Create Organization
+      created: Your organization has been created!
+      invalid_organization: Invalid organization, correct errors and try again.
+    organization:
+      you_are: "You're an <strong>%{role}</strong> of this organization"
+      admin: admin
+      participant: participant
+      external: external worker
+      number_of_projects:
+        one: One project
+        other: %{count} projects
+      more_users: "and %{count} more users"
+    projects:
+      title: "'%{name}' organization"
+      new_project: New project
+      active_projects: Active projects
+      archived_projects: Archived projects
+      role: "you're an <strong>%{role}</strong>"
+      last_activity: "last activity at %{date}"
+      instructions: "These are the projects for this organization. If you're an admin, you can transfer a project to <a href='%{organizations_link}'>other organizations</a> by opening the project's settings."
+      settings: settings
+    you_are_not_admin: You are not an admin of this organization. Only admins can edit its settings and manage users.
+    delete:
+      need_to_be_admin: You need to be an administrator to destroy this organization
+      not_with_projects: You can't destroy this organization because it still has projects
+      go_delete_some_projects: "You need to <a href='%{link}'>delete or transfer</a> all the projects from this organization before deleting it."
+      delete: Delete this organization
+      clarification: "If you delete this organization, all the information that's attached to this organization will be lost forever. The users that belong to this organization will still be able to login to Teambox and work with their other organizations."
+      confirm: I understand that deleting this organization is irreversible and I all the content related to this organization will be lost.
+      deleted: You deleted the organization
+  memberships:
+    index:
+      title: "'%{name}' organization"
+      admins:
+        title: Admins
+        explain: "Can access any project and manage the organization's settings."
+      users:
+        title: Participants
+        explain: "Can create projects inside the organization, but only access the projects they're invited to."
+      in_projects_but_not_in_the_organization:
+        title: External people
+        explain: Can access only the projects they are invited to. Can't create projects inside the organization.
+      no_users: No users here
+      add_to_the_org: Add to the organization as a participant
+      add_as_admin: add as an admin
+      make_admin: Give admin rights
+      remove_admin: Remove admin rights
+      remove: remove from this organization
+    roles:
+      external: Don't invite. User won't be able to create projects in this organization.
+      participant: As a participant. Will be able to create his own projects.
+      admin: As an administrator. Will be able to add new users and manage the organization.
+  invitations:
+    fields:
+      user_or_email: "Enter your teammate's username or email:"
+    invitation:
+      invited_user: "%{inviter} invited <b>%{invitee}</b> to join the project."
+      invited_email: "%{inviter} invited <b>%{email}</b> to join the project."
+      time_ago: "(%{time_ago_in_words} sedan)"
+      resend: Re-send invitation email
+      pending: "An email was sent to this user, but they still haven't confirmed."
+      discard: Discard invitation
+    group_invitation:
+      invited_user: "%{inviter} invited <b>%{invitee}</b> to join the group."
+      invited_email: "%{inviter} invited <b>%{email}</b> to join the group."
+    sent:
+      email_sent: "Email invitation has been sent"
+    pending:
+      to_access_or: to access the project or
+      invited_to_join: "%{by} has invited you to join the project %{project}."
+    resend:
+      resent: "The invitation has been resent to %{recipient}"
+      return: Go back
+    index_user:
+      title: Pending invitations
+      no_invitations: "You have no pending project invitations."
+    search:
+      username_or_email: "Enter your teammate's username or email"
+      invite_people: Invite people to this project
+      invite: Invite
+      role: "Select a role for this project"
+      submit: Send
+      invite_from_project: "Invite from Project"
+      help: Help
+    recent:
+      invite: "Invite %{username}"
+    errors:
+      invalid: "Invalid invitation"
+      invalid_code: "Invalid invitation code"
+    destroy:
+      discarded: "The invitation to %{user} has been discarded"
+    invite_format:
+      title: "In the username/email box, use either a list of usernames or email addresses. e.g.:"
+      enter_this:
+        title: Enter this
+      to_invite:
+        title: To invite
+        not_example: '(NOT <span class="mention">@fred</span> or <span class="mention">@lisa</span>)'
+  conversations:
+    actions:
+      confirm_delete: Are you sure you to delete this conversation?
+    link:
+      edit: Edit
+    fields:
+      name: Title
+      body: First comment
+      tooltips:
+        name: "As short as possible, this will appear in notification email's subjects"
+        body: "Ask a question, tell your team what's new, start a discussion"
+    new:
+      title: New Conversation
+      submit: Create
+    watcher_fields:
+      add_suscribers: Which people will be watching this conversation?
+      subscribe_note: These people will be notified via email of this message and any following comments.<br/>They can unsubscribe at any time.
+      invite_users: You are the only user in this project!
+      no_users_yet: "Conversations are more useful when shared. <a href='%{invite_link}'>Invite some users</a> to this project now so they can access this conversation, answer and receive updates."
+      people_all: "All people in project"
+      cant_notify: "This is a public project. To avoid unwanted emails, we're not showing the list of users that you can notify."
+    edit:
+      submit: 'Update Conversation'
+    index:
+      new_conversation: "New Conversation"
+      view_single: Read more
+      rss:
+        title: "%{name} conversations"
+        description: "Conversations for project %{name}"
+    primer:
+      empty: This project doesn't have any conversations yet.
+      create_first: Create the first conversation in this project!
+      define: "Use conversations to <b>discuss decisions</b> and <b>update your team</b> in a centralized way.<br/>Each conversation is a thread of comments, which replace messy emails."
+      item1: "<b>Share files</b>. Comments can have attached files, too."
+      item2: "<b>Subscribe</b> to a conversation to be notified about future replies by email or RSS."
+      item3: "<b>Impress</b>. Any comment can be formatted with text styles."
+      item4: "<b>Inbox-driven?</b> You can reply to a conversation from your email."
+      footer1: "Conversations are great to <b>share a design</b>, <b>decide a date</b> for meeting or <b>report</b> some news."
+      footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
+    column:
+      new_conversation: New Conversation
+      cant_create: You don't have permission to create conversations in this project
+      subscribe: Subscribe to the news feed
+    conversation_with_extract:
+      posted_by: Posted by
+    show:
+      started_by: Started by
+      edit: Edit title
+      message: message
+      messages: messages
+    short_conversation:
+      comment: comment
+      comments: comments
+  hours:
+    comments: Time Entries
+    filter_by: Filtrera efter
+    report: Rapport
+    week_num: Vecka %{num}
+    entry_hours: hrs
+    entry_total: Totalt
+    week_total: Totalt
+    all_tasks: Alla uppgifter
+    all_users: Alla användare
+    reports:
+      user: Användare
+      project: Projekt
+      task: Uppgifter
+    filters:
+      assigned_to: Personer
+      tasks: Uppgifter
+      projects: Projekt
+      organizations: Organizations
+    filter_assigned:
+      anybody: "Vem som helst"
+      my_tasks: "Mina uppgifter"
+    filter_project:
+      all: "Alla projekt"
+    filter_organization:
+      all: "Alla organisationer"
+
+  tasks:
+    my_tasks_listing:
+      tasks: My Tasks
+      back: "Back to the Overview"
+    errors:
+      name:
+        cant_be_blank: 'must not be blank'
+        too_long: 'must be shorter than 255 characters'
+    fields:
+      title: New Task
+      task: "Choose an actionable task. The more specific, the better."
+      name: Enter a Task title <i>eg. Upload Logo Proposal</i>
+      optional: You can provide better instructions for this Task below.
+      body: What needs to be done? <i>optional</i>
+      due_on: Needs to be done before... <i>optional</i>
+      assigned_to: Who is responsible?
+      assigned_to_nobody: Nobody
+    assigned:
+      assigned_to: "Assigned to %{user}"
+      myself: "Assign to myself (%{user})"
+      unassigned: Cleared the assigned user
+    due_on:
+      due_on: Due on
+      today: Idag
+      tomorrow: Imorgon
+    create: Add Task
+    edit:
+      submit: Update Task
+      sending: Updating the task…
+    new:
+      title: New Task
+      submit: Add Task
+      sending: Creating the task…
+    show:
+      title: "Task: %{name}"
+    link:
+      new: + Add Task
+      edit: Edit
+      hide_archived_tasks:
+        one: "Hide 1 archived task"
+        other: "Hide %{count} archived tasks"
+    destroy_message:
+      deleted: "The Task <b>%{name}</b> was successfully deleted!"
+    archive_message:
+      archived: "The Task <b>%{name}</b> was successfully archived!"
+    archive_box:
+      you_are_done: It looks like you're done with this task!
+      archive: Archive this task
+      reopen: Reopen this task
+    unarchive_box:
+      task_is_closed: This task is closed and archived
+      unarchive: Unarchive
+      reopen: Återöppna uppgiften
+    overdue: "%{days} days late"
+    status:
+      new: ny
+      open: öppen
+      hold: väntar
+      resolved: löst
+      rejected: avvisad
+    my_tasks:
+      my_tasks: My tasks for all projects
+    overview_box:
+      title: "This task"
+      status: "Status"
+  notes:
+    actions:
+      delete_confirm: Are you sure you want to delete this note?
+    new:
+      submit: Add Note
+    edit:
+      submit: Update Note
+    fields:
+      title: Title
+      body: Body
+      text_styling: Text Styling
+  dividers:
+    actions:
+      delete_confirm: Are you sure you want to delete this divider?
+    new:
+      submit: Lägg till
+    edit:
+      submit: Uppdatera
+  pages:
+    index:
+      pages_in_this_project: Pages in this project
+      rss:
+        title: "%{name} pages"
+        description: "Pages in project %{name}"
+    primer:
+      empty: This project doesn't have any pages yet.
+      create_first: Create the first page in this project!
+      define1: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
+      define2: "Editing a page is easy and fun, with drag-and-drop elements you can edit in place."
+      item1: "<b>Share</b>. All your teammates can view and edit the project's pages."
+      item2: "<b>Publish</b>. Instant web publishing with shared pages. Show the world."
+      item3: "<b>Print</b>. Pages are printer-friendly. Try printing or exporting a PDF!"
+      item4: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
+      footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
+      footer2: "You can also attach files to any page inside each note. Enjoy!"
+    buttons:
+      new_note: Text
+      new_divider: Divider
+      new_upload: Image or file
+      new_task_list: Task List
+    new:
+      title: New Page
+      define1: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
+      define2: "Editing a page is easy and fun, with drag-and-drop elements you can edit in place."
+      feature1: "<b>Share</b>. All your teammates can view and edit the project's pages."
+      feature2: "<b>Publish</b>. Instant web publishing with shared pages. Show the world."
+      feature3: "<b>Print</b>. Pages are printer-friendly. Try printing or exporting a PDF!"
+      feature4: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
+      footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
+      footer2: "You can also attach files to any page inside each note. Enjoy!"
+      submit: Create page
+      sending: Sending...
+    edit:
+      title: Ändra sida
+      submit: Uppdatera
+    fields:
+      name: Namn
+      name_description: Choose a short and descriptive title
+      description: Description
+      description_description: "Optional short notes about it. Doesn't allow text styles."
+    slots:
+      insert_here: Insert Here
+    column:
+      new_page: New Page
+      cant_create: You don't have permission to create pages in this project
+      all_pages: All Pages
+      reorder: Reorder
+      reorder_done: Klar
+  task_lists:
+    errors:
+      name:
+        cant_be_blank: Name must not be blank
+        too_long: 'Name must be shorter than 255 characters'
+    archived:
+      title: All Archived Tasks
+      description: You're currently looking at archived tasks. These are tasks that have been closed.
+    archive_box:
+      unarchive_list: This task list is archived.
+    actions:
+      resolve_and_archive: "Resolve all tasks and archive"
+      confirm_resolve_and_archive: "Are you sure you want to resolve and archive this task list?"
+      archive: "archive this task list"
+      rename: "Rename task list"
+      set_dates: "Set the start & end date"
+      show_archived:
+        one: "Show 1 archived task"
+        other: "Show %{count} archived tasks"
+    fields:
+      title: New Task List
+      task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
+      name: "Choose a name for this Task List <i>eg. Prepare a Prototype</i>"
+      optional: "If you set starting and ending dates, this task will be displayed in the Gantt chart"
+      start_on: Starts on... <i>optional</i>
+      finish_on: End on... <i>optional</i>
+    filter:
+      by_name: Filtrera uppgifter efter namn
+      anybody: Vem som helst
+      my_tasks: Mina uppgifter
+      unassigned: Unassigned
+      anytime: Närsomhelst
+      late_tasks: Försenade uppgifter
+      no_date_assigned: Inget datum tilldelat
+      today: Idag
+      tomorrow: Imorgon
+      due_date: "Visa uppgifter som förfaller..."
+      assigned_to: "Visa uppgifter som tilldelats..."
+      week: "Denna vecka"
+      2weeks: "Nästa 2 veckor"
+      3weeks: "Nästa 3 veckor"
+      month: "Inom 1 månad"
+    link:
+      new: New Task List
+      edit: Ändra
+      reorder: Reorder Task Lists
+      reorder_done: Done reorder
+      unarchive: Unarchive
+    index:
+      no_dates_assigned: No dates assigned
+      starts_on: "Börjar %{date}"
+      ends_on: "Slutar %{date}"
+      add_link: New Task List
+      empty: No tasks in this category!
+      tasks_for_all_projects: Uppgifter i alla projekt
+      tasks_for_project: Task lists for this project
+      other_views: Andra vyer
+      gantt_view: Projektets Gantt och kalender
+      rss:
+        title: "%{name} task updates"
+        description: "Tasks activity for project %{name}"
+    gantt_view:
+      back_to_normal_view: Go back to normal view
+      view_for_all_projects: view Calendar and Gantt charts for all projects
+    primer:
+      empty: This project doesn't have any task lists yet.
+      create_first: Create the first task list in this project!
+      define: "Use tasks to <b>plan ahead</b>, <b>keep track of progress</b> and <b>review what's been done</b>.<br/><i>What? Who? When?</i> Tasks can have a status, an assigned person and due dates."
+      item1: "<b>Plan</b>. Create tasks inside each list and assign them to your teammates."
+      item2: "<b>Report</b>. Post comments for each task. Attach files. Ask for feedback."
+      item3: "<b>Follow</b>. Receive notifications for tasks related to you."
+      item4: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
+      footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others now."
+      footer2: "It's time to forget about Excel planning sheets and complex Gantt charts!"
+    overview_box:
+      this_list: "This task list"
+      starts_on: "Starts on:"
+      ends_on: "Ends on:"
+      undefined: "Undefined"
+    new:
+      title: New Task List
+      submit: Add Task List
+    edit:
+      submit: Update Task List
+    column:
+      new_task_list: New Task List
+      cant_create: You don't have permission to create tasks in this project
+      subscribe: Subscribe to the news feed
+      other_views: Other views
+      gantt_view: Project Gantt and calendar
+    show:
+      title: "Task List: %{name}"
+    destroy_message:
+      deleted: "The Task List <b>%{name}</b> was successfully deleted!"
+  people:
+    link:
+      edit: Ändra
+    update:
+      success: "You have updated %{name}'s role"
+    edit:
+      submit: Update person
+    fields:
+      role: Role
+      observer: Observer. Read-only access to the project.
+      commenter: "Commenter. Can comment, but not create new elements."
+      participant: "Participant. Can do everything, but not invite users."
+      admin: "Admin. Can invite users to the project, and delete comments."
+    header:
+      owner: Projektägare
+      observer: Observatör
+      commenter: Kommentatör
+      participant: Deltagare
+      admin: Administratör
+      remove: Ta bort
+      transfer: Överför ägande
+      leave_project: Lämna projekt
+      confirm_delete: Are you sure you want to remove this person from the project?
+    errors:
+      user_or_email: "User not found. Enter his or her username or email."
+      users_or_emails: "Invalid usernames or email addresses"
+    column:
+      select_project: Select a project
+      no_contacts: There are no people available to invite.
+      inviting: "Inviting other users"
+      only_admins_can_invite: "Only admins can invite people to this project."
+      contact_admins: "In this project, only %{admins} can invite new members."
+      leaving: "Leaving the project"
+      you_can_leave: "You can leave this project at any time. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
+      leave_project: "Leave this project"
+      confirm_delete: Are you sure you want to leave this project?
+      leave_project: Leave project
+  comments:
+    fields:
+      attach: Bifoga
+    attach:
+      tooltip: Bifoga
+    comment:
+      commented_on: "-"
+      commented_on_a_task_list: "-"
+      confirm_delete: Are you sure you want to delete this comment?
+      hours: "%{hours}h"
+      hours_with_minutes: "%{hours}h %{minutes}m"
+      cannot_edit: "Kommentar kan inte ändras efter 15 minuter"
+      loading: "Laddar..."
+    hours:
+      add_hours: Timmar
+      tooltip: Add hours to this task
+      hours: How many hours did you put into this task?
+      time_tracking_docs: Learn how to use time-tracking
+    new:
+      comment_on_project: "Kommentera:"
+      assigned_to_nobody: 'Unassigned'
+      assigned_to: "Assigned to:"
+      submit: Spara
+      sending: Skickar…
+      project: "Vad jobbar du med? Dela idéer, länkar och uppdateringar."
+      conversation: "Send a message to the rest of the group."
+      task_list: "Share ideas for this task list. To create and assign tasks, use the sidebar."
+      task: "Define what needs to be done, assign this task to somebody."
+    convert_form:
+      name: "Enter a name for this task"
+      destination: "Select the destination task list"
+      submit: "Konvertera"
+    edit:
+      submit: Spara
+    errors:
+      cannot_update: You do not have permission to update this comment
+    actions:
+      conversation_url: Konversationssida
+      confirm_delete: Är du säker att du vill ta bort denna kommentar?
+      convert_task: Convert to task
+      edit: Ändra kommentar
+    preview:
+      close: Göm förhandsvisning
+      preview: Förhandsvisning
+      showing: "..."
+      
+  example_projects:
+    new:
+      learn: Learn by example!
+      line1: "If it's your first time using Teambox, you can create an example project with some contents."
+      line2: "Navigating through the pages will teach you how to use each part of Teambox."
+      line3: "Make sure you <b>read the instructions</b> and <b>experiment</b> creating, editing and deleting elements!"
+      create: Create an example project
+      line4: "In this project you won't be able to invite other users, but you can do all the rest."
+      error: "Could not create example project."
+      error_list: "Could not create example project. The following projects are invalid: %{list}."
+  uploads:
+    tooltip: Ladda upp en fil
+    comment_upload_link: Attachment
+    new:
+      select_a_file: Select a file
+      uploading: Laddar upp...
+    index:
+      new_file: Ladda upp en fil
+      cant_create: You don't have permission to upload files to this project
+      max_upload_size: "Max upload size is %{mb} Mb"
+    form:
+      presence: "You can't upload a blank file"
+      max_size: "File size can't exceed %{mb} MB"
+      select_file: Select file
+      description: Title <i>(optional)</i>
+      upload: Upload file
+    primer:
+      empty: This project doesn't have any files yet.
+      create_first: Upload the first file to this project!
+      define1: "Ever had problems sharing a file with your team? Teambox makes sharing easy again."
+      define2: "You can upload files here or attach documents to conversations, tasks or pages. "
+      item1: "<b>Bigger files</b>. Upload files of any size and forget about email limitations."
+      item2: "<b>Versioning</b>. Upload new versions of a file and keep track of changes."
+      item3: "<b>Always available</b>. Files stay in context in the project for future reference."
+    upload:
+      download: Download
+      uploaded_by: Uploaded by
+      remove: Delete
+      on_: "on"
+  sessions:
+    fields:
+      username_or_email: Epost eller Användarnamn
+      password: Lösenord
+      forgot: Forgot your password?
+      signup: Sign up for an account
+    new:
+      title: Logga in
+      video: What's Teambox about?
+      submit: Logga in
+      login_failed: "Couldn't log you in as %{login}"
+  sites:
+    show:
+      submit: Logga in
+    fields:
+      password: Lösenord
+      username_or_email: Email or Username
+  plans:
+    thanks:
+      title: Thank you for your support!
+      explain: "By purchasing a premium account, you're contributing to Teambox's development and getting much more."
+      you_can_now_create: "You can now create up to %{projects} projects."
+    show:
+      plan: Teambox plans
+      current_plan: "Your current plan is <strong>{{name}}</strong>."
+      max_projects: "You can have up to {{max}} projects."
+      max_storage: "You can store up to {{max}}."
+      branding:
+        configure: "Your plan supports custom branding and domain names. <a href='{{link}}'>Configure your branding here</a>."
+        not_available: "Your plan doesn't support <strong>custom branding</strong>. Upgrade to a higher account to get it."
+    copies:
+      copy1: "Liking Teambox? We're full-time workers! <a href='{{link}}'>Upgrade now</a> to support our development!"
+      copy2: "<a href='{{link}}'>Upgrade now</a> to get more projects, storage and search across all projects."
+      copy3: "<a href='{{link}}'>Get more done</a> with a premium account! Extra storage, up to 2000 projects."
+      copy4: "<a href='{{link}}'>Work better</a> with a premium account: Search bar across all projects."
+      copy5: "<a href='{{link}}'>Upgrade your Teambox account now</a> and enjoy professional collaboration!"
+      copy6: "Search bar across all projects could save you hours. <a href='{{link}}'>Upgrade now</a> to have it!"
+      copy7: "Your business matters! <a href='{{link}}'>Get the best support</a> for Teambox with our premium plans."
+
+  shared:
+    strip:
+      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
+    gantt_banner_primer:
+      title: There are no task lists due to show
+    upcoming_events_primer:
+      title: There are no tasks due to show
+    projects:
+      projects: Project
+    archived_projects:
+      archived_projects: Archived Projects
+    navigation:
+      welcome: Välkommen
+      all_projects: 'Alla projekt'
+      new_project: +
+    project_settings_navigation:
+      general: Allmänna inställningar
+      picture: Projektbild
+      deletion: Project Archiving/Deletion
+      ownership: Ägande
+    project_navigation:
+      overview: Översikt
+      all_conversations: Alla konversationer
+      conversations: Konversationer
+      task_lists: Uppgiftslistor
+      gantt: Kalendrar och diagram
+      all_task_lists: Alla uppgifter
+      project_settings: Projektinställningar
+      all_pages: Alla sidor
+      people: Personer
+      pages: Sidor
+      time_tracking: Tidredovisning
+      login: Logga in
+      signup: Signup
+      files: Filer
+      invitations: Inbjudningar
+      organizations: Organisationer
+      organization: Organisation
+      affiliate_area: Affiliate Area
+    projects_dropdown:
+      all_projects: Översikt för alla projekt
+      new_project: + Nytt projekt
+      recent_projects: Recent projects
+    global_navigation:
+      project_invitations: Project Invitations
+      home: Hem
+      logout: Logga ut
+      login: Logga in
+      project_invitations: "Invitations (%{count})"
+      settings: Inställningar
+    public_navigation:
+      home: Teambox
+      tour: Tour
+      users: Our Users
+      services: Services
+      community: Community
+      help: Help and Support
+      privacy: Privacy
+      terms: Terms of use
+    user_navigation:
+      account_settings: Account Settings
+      profile_information: Profile Information
+      profile_picture: Profile Picture
+      linked_accounts: Linked Accounts
+      notifications: Notifications
+      plans_and_billing: Plans and Billing
+      delete_account: Delete Account...
+    task_navigation:
+      all_tasks: "All Tasks"
+      unarchived_tasks: "Unarchived Tasks"
+      my_tasks:
+        one: "My 1 Task"
+        other: "My %{count} Tasks"
+      my_assigned_tasks: "only tasks assigned to me"
+      everybodys_tasks: "Everybody's Tasks"
+      hide_archived_tasks: "Hide Archived Tasks"
+    footer:
+      support: Feedback and bugs
+      mobile: Mobile version
+      help: Help and Support
+    watchers:
+      unwatch: Sluta bevaka
+      watch: Bevaka
+      people_watching: "People watching: "
+      nobody_watching: "Nobody is watching"
+      started_watching: "You will now be notified of updates by email."
+      stopped_watching: "You will no longer receive notifications for this item."
+    upgrade_browser:
+      upgrade: You're using an outdated version of Internet Explorer. Teambox may not work properly under this version.
+      ie: Upgrade to Internet Explorer 8
+      or_install: or install
+      chrome: "Chrome,"
+      firefox: "Firefox"
+      safari: "Safari"
+    chrome_frame:
+      enhance: Enhance your Teambox experience with Google Chrome Frame. Click <a href="%{link}" target=\"_blank\">here</a> to set it up.
+    instructions:
+      subscribe_to_feeds: Prenumerera på flöden...
+      subscribe_to_calendars: Prenumerera på kalendrar...
+      send_email: Post a new comment by email...
+      send_email_conversations: Post a new conversation by email...
+      send_email_help_project: "To post a new comment to this project's activity wall send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the wall."
+      send_email_help_conversations: "To create a new conversation send an email to <a href=\"mailto:%{email}\">%{email}</a> with Subject for the title and Body for the comment. Only members from the project can create a new conversation."
+      send_email_help_conversation: "To post a new comment to this conversation send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the conversation."
+      send_email_help_task: "To post a new comment to this task send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can comment to the task."
+  affiliate:
+    area: Affiliate Area
+    index:
+      facebook: Facebook
+      twitter: Twitter
+      website: "Share it on your website,"
+      send_invites: Invite to Teambox
+      sent_invites_to: "The invitation email will be sent to the following addresses:"
+      refer_info: "Refer %{users} users on %{plan} accounts, get $%{credit} every month."
+      desc_1: "With our partner tools, you can get <strong>free months</strong> using Teambox or make <strong>real money</strong> by referring others."
+      desc_2: "Bring new users to Teambox, and get <strong>%{percent}% of the income</strong> your referred users generate, <strong>forever</strong>."
+      option_1: "Option 1: Share this link"
+      option_2: "Option 2: Invite your contacts by entering their email"
+      option_3: "Option 3: Invite your contacts by importing contacts from a CSV file"
+      twitter_link: "Try+Teambox+to+collaborate+with+your+team,+sign+up+for+free+at+%{link}"
+      referred_users: "Your referred users "
+      no_referred_users: "You don't have any referred users yet."
+      credits_earned: "Credit you've earned"
+      use_money: "You can use this money to get a"
+      premium_plan: "premium account"
+      use_money_cash: "or to earn real cash."
+      plan_for: "plan for"
+      over_200: "Whenever you have over $200,"
+      send_money: "and we will send you the money you've earned."
+      get_in_touch: "get in touch with us"
+      ideas: "Some ideas to make the most out of Teambox"
+      idea1: "Create a site about how to use Teambox, with guides for beginners."
+      idea2: "Post a link to Teambox on your blog and talk about how it helped you."
+      idea3: "Run an event about Project Collaboration and refer your attendees."
+      idea4: "Simply email invitations to new users."
+      learn_more: "Learn more..."
+      use_tracking_code: "You must use a tracking code so we can know which users are coming from you."
+      tracking1: "When you refer users to Teambox, they must sign up at a page with a special parameter."
+      tracking2: "This parameter is unique for you, and it allows us to track your users."
+      tracking3: "Once a user follows this link, they will be marked as coming from you."
+      tracking4: "Even if they navigate away from the page and come later, we store this data in their session so when they sign up we still remember they came from you."
+      tracking5: "Your special page for signup is"
+      tracking6: "Post this link on Facebook, Twitter, on your own site, or send it by email to a friend. After they sign up you will receive an email confirmation."
+      addresses: "addresses"
+      sent_number_of_invites: "The invitation email will be sent to"
+    notification:
+      new_signup: "A user signed up on Teambox using your referral code!"
+      new_subscription: "A user upgraded his account on Teambox using your referral code!"
+      accepted_subscription: "%{name} (%{email}) just signed up on Teambox using your referral code."
+      upgraded_subscription: "%{name} (%{email}) just upgraded his account on Teambox, and you are earning $%{price} in credit"
+      check_your_earnings: "Go check your earnings from referrals on Teambox"
+      check_your_referrals: "Go check your referred users on Teambox"
+      wait: "The transaction has been just processed, but may take a while to be reflected on your Teambox Partner area"
+  roles:
+    observer: observatör
+    commenter: kommenterare
+    participant: deltagare
+    admin: administratör
+  emailer:
+    common:
+      do_not_answer: "Svara inte på detta mejl."
+      answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
+    invitation:
+      subject: "%{user} shared [%{project}] with you"
+      collaborate_with: "%{name} wants to collaborate with you on Teambox:"
+      you_have_been_invited_to: "You have been invited to the project <b>%{project}</b>"
+      accept_the_invitation: Accept the invitation to start collaborating
+      current_users: "Current users in this project:"
+      plaintext_link: "If the above link doesn't work, copy and paste the following code into your browser bar: "
+      teambox_is_a_pm_platform: "Teambox is a project management platform made for real-world collaboration."
+      plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
+      report_abuse: "This email was sent to you at your contact's request. Please report any abuse."
+      subject_without_project: "%{name} invited you to Teambox"
+    confirm:
+      subject: "Get started with Teambox"
+      hey: "Tjenare %{user_name}!"
+      follow_the_link: "In order to <b>complete your signup</b> for Teambox, we need you to log in by clicking here:"
+      log_in: "Log into Teambox now!"
+      plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
+      report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
+      problems: "If you have any problems, please contact us at %{support}"
+    reset_password:
+      subject: "Your password has successfully been reset"
+      hey: "Hey, %{user_name}!"
+      follow_the_link: "In order to <b>set a new password</b> for Teambox, we need you to log in with the following link:"
+      log_in: "Log into Teambox now!"
+      plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
+      report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
+      problems: "If you have any problems, please contact us at %{support}"
+      successfully_reset: "Your password has been successfully reset." 
+    forgot_password:
+      subject: "Password retrieval for Teambox"
+    notify:
+      project: "Teambox Project:"
+      view_online: "You can <a href='%{link}'>view this conversation online</a> to answer and attach files."
+      reply: "You can also reply to this email to post a reply in the conversation."
+      task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
+      are_watching: " are suscribed to this conversation, and will be notified of future replies."
+      stop_watching: "<a href='%{stop_watching_url}'>Stop watching</a> this thread to stop receiving email notifications."
+      notification_settings: "You can change your <a href='%{url}'>notification settings</a> for further emails."
+      comment: "Comment on project's wall: "
+      conversation: "Conversation:"
+      task: "Task:"
+      task_list: "Task List:"
+      comments: "%{number} comments"
+      assigned_to: "Assigned to <b>%{user}</b>"
+      due_on: "Due on %{date}"
+      status: "Status: %{status}"
+      my_tasks: "More tasks assigned to you in %{project}"
+    upload:
+      file: "File:"
+    bounce:
+      subject: "Error sending email to Teambox"
+      user_not_found_error: "This email address is not associated with any Teambox account."
+      not_project_member_error: "You are not a member of the specified Teambox project."
+      project_not_found_error: "There is no project on Teambox corresponding to this email address."
+      target_not_found_error: "We couldn't find the item where you are trying to post your comment."
+      not_delivered: "Your email couldn't be processed by Teambox. View our documentation to learn which types of email we accept: %{link}"
+
+  weakling:
+    default: Must be at least 5 characters
+    error: too short
+    weak: weak
+    average: average
+    strong: strong
+
+  form:
+    cancel: Cancel
+
+  page_title:
+    show_projects: Overview
+    index_task_lists: All Task Lists
+    index_conversations: All Conversations
+    index_pages: All Pages
+    index_uploads: All File Uploads
+    create_uploads: File Upload
+    index_projects: All Projects
+    edit_projects: Edit Project
+    index_people: People
+    new_users: Signup
+    new_pages: New Page
+    create_users: Signup
+    edit_users: Edit
+    welcome_users: Welcome!
+    new_projects: New Project
+    archived_task_lists: Archived Tasks
+    new_example_projects: Create an Example Project
+    new_conversations: New Conversation
+    results_search: Search
+    show_plans: Plans
+
+  search:
+    placeholder: "Search all projects"
+    placeholder_in_project: "Search in project"
+    submit: Search
+    index:
+      title: Searching in all projects
+      title_in_project: "Searching in project: %{project}"
+      search_again: Search again
+      report: '%{count} results found for "%{term}"'
+
+  number:
+    # Used in number_with_delimiter()
+    # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
+    format:
+      # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
+      separator: "."
+      # Delimets thousands (e.g. 1,000,000 is a million) (always in groups of three)
+      delimiter: ","
+      # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
+      precision: 3
+
+    # Used in number_to_currency()
+    currency:
+      format:
+        # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
+        format: "%u%n"
+        unit: "$"
+        # These three are to override number.format and are optional
+        separator: "."
+        delimiter: ","
+        precision: 2
+
+    # Used in number_to_percentage()
+    percentage:
+      format:
+        # These three are to override number.format and are optional
+        # separator:
+        delimiter: ""
+        # precision:
+
+    # Used in number_to_precision()
+    precision:
+      format:
+        # These three are to override number.format and are optional
+        # separator:
+        delimiter: ""
+        # precision:
+
+    # Used in number_to_human_size()
+    human:
+      format:
+        # These three are to override number.format and are optional
+        # separator:
+        delimiter: ""
+        precision: 1
+      storage_units:
+        # Storage units output formatting.
+        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%n %u"
+        units:
+          byte:
+            one: "byte"
+            other: "bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+
+  # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
+  datetime:
+    time_ago: "%{time_ago_in_words} sedan"
+    distance_in_words:
+      half_a_minute: "en halv minut"
+      less_than_x_seconds:
+        one:   "nu"
+        other: "nu"
+      x_seconds:
+        one:   "nu"
+        other: "nu"
+      less_than_x_minutes:
+        one:   "nu"
+        other: "mindre än %{count} minuter"
+      x_minutes:
+        one:   "1 minut"
+        other: "%{count} minuter"
+      about_x_hours:
+        one:   "ungefär 1 hour"
+        other: "ungefär %{count} hours"
+      x_days:
+        one:   "1 day"
+        other: "%{count} days"
+      about_x_months:
+        one:   "ungefär 1 månad"
+        other: "ungefär %{count} månader"
+      x_months:
+        one:   "1 månad"
+        other: "%{count} månader"
+      about_x_years:
+        one:   "ungefär 1 år"
+        other: "ungefär %{count} år"
+      over_x_years:
+        one:   "över 1 år"
+        other: "över %{count} år"
+    prompts:
+      year:   "År"
+      month:  "Månad"
+      day:    "Dag"
+      hour:   "Timme"
+      minute: "Minut"
+      second: "Sekund"
+
+  calendar:
+    abbr_weekdays: [S, M, T, O, T, F, L]
+    ok: OK
+    now: Nu
+    today: Idag
+    clear: Clear
+
+  activerecord:
+    models:
+      card: Card
+      address: Adress
+      email_address: Epost
+      phone_number: Telefon
+      website: Webb
+      im: IM
+      social_network: Socialt nätverk
+      project: Projekt
+      task_list: Task List
+      task: Uppgift
+      comment: Comment
+      conversation: Conversation
+      page: Sida
+      divider: Divider
+      note: Text
+      invitation: Invitation
+      upload: Upload
+      organization: Organisation
+    attributes:
+      address:
+        city: Stad
+        country: Land
+        state: State
+        street: Gata
+        zip: Postnummer
+      card:
+        street: Street
+        city: City
+        state: State
+        zip: ZIP
+        country: Country
+      email_address:
+        name: Address
+        account_type: Type
+      phone_number:
+        name: Phone
+        account_type: Type
+      website:
+        name: Site
+      im:
+        name: Address
+        account_im_type: Service
+        account_type: Type
+      social_network:
+        name: Address
+        account_network_type: Network
+        account_type: Type
+      user:
+        login: Username
+        first_name: First name
+        last_name: Last name
+        biography: Biography
+        email: Email
+        time_zone: Time zone
+        language: Language
+        first_day_of_week: Första dagen i veckan
+      project:
+        name: Namn
+        permalink: Permalink
+      task_list:
+        name: Name
+        start_on: Start date
+        finish_on: Finish date
+      task:
+        name: Namn
+        status: Status
+        due_on: Due date
+      comment:
+        body: Body
+        hours: Hours
+        status: Status
+      conversation:
+        name: Name
+      pages:
+        name: Sida
+        description: Beskrivning
+      divider:
+        name: Name
+      note:
+        name: Name
+        body: Body
+      invitation:
+        email: Email
+      upload:
+        description: Beskrivning
+    errors:
+      messages:
+        inclusion: "is not included in the list"
+        exclusion: "is reserved"
+        invalid: "is invalid"
+        confirmation: "doesn't match confirmation"
+        accepted: "must be accepted"
+        empty: "can't be empty"
+        blank: "can't be blank"
+        too_long: "is too long (maximum is %{count} characters)"
+        too_short: "is too short (minimum is %{count} characters)"
+        wrong_length: "is the wrong length (should be %{count} characters)"
+        taken: "has already been taken"
+        not_a_number: "is not a number"
+        greater_than: "must be greater than %{count}"
+        greater_than_or_equal_to: "must be greater than or equal to %{count}"
+        equal_to: "must be equal to %{count}"
+        less_than: "must be less than %{count}"
+        less_than_or_equal_to: "must be less than or equal to %{count}"
+        odd: "måste vara ojämnt"
+        even: "måste vara jämnt"
+        record_invalid: "Validation failed: %{errors}"
+      models:
+        comment:
+          attributes:
+            body:
+              blank: "Can't post an empty comment."
+              duplicate: "Duplicate comment"
+        conversation:
+          attributes:
+            name:
+              no_title: "Please give this conversation a title."
+            comments:
+              must_have_one: "The conversation cannot start with an empty comment."
+        task:
+          attributes:
+            assigned:
+              doesnt_belong: "Assigned user doesn't belong to the project"
+
+  locales:
+    en: Engelska
+    pl: Polska
+    tr: Turkiska
+    sv: Svenska
+
+  date:
+    yesterday: Igår
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+    order: [ :day, :month, :year ]
+
+    day_names: [Söndag, Måndag, Tisdag, Onsdag, Torsdag, Fredag, Lördag]
+    abbr_day_names: [Sön, Mån, Tis, Ons, Tors, Fre, Lör]
+
+    month_names: [~, Januari, Februari, Mars, April, Maj, Juni, Juli, Augusti, September, Oktober, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, Maj, Jun, Jul, Aug, Sep, Okt, Nov, Dec]
+    order: [ :year, :month, :day ]
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      short: "%H:%M"
+      long: "%B %d, %Y %H:%M"
+    am: "am"
+    pm: "pm"
+
+  support:
+    select:
+      prompt: "Välj"
+    array:
+      words_connector: ", "
+      two_words_connector: " och "
+      last_word_connector: " och "
+  oauth:
+    this_account_will_be_linked_to: "This account will be linked with %{provider}"
+    account_linked: "Ditt konto har länkats."
+    app_unlinked: "App unlinked"
+    not_linked: "That service is not linked to your Teambox account."
+    already_linked_to_your_account: "This service is already linked to your account. You can log in with it."
+    already_taken_by_other_account: "This service is already linked to another account on the system. Try logging out and logging in with it. To link it to a different account, you'll need to unlink it from the current one."
+    auth_status: OAuth Auth
+    auth_status_linked: Linked with the provider
+    auth_status_link: Link with your account
+    logged_in: Logged in successfully
+    your_account_is_linked: "Your %{provider} profile is <strong>linked</strong> to Teambox."
+    your_account_is_not_linked: "Your %{provider} profile is <strong>not linked</strong> to Teambox."
+    link_account: Länka konto.
+    unlink_account: Unlink account.
+    user_exists: This %{provider} profile is not linked with any account yet.
+    user_already_exists_by_email: "Link '%{email}' to your Teambox account"
+    user_already_exists_by_login: "The username '%{login}' is already taken"
+    user_exists_instruction: If you already have a Teambox account, log in to link it automatically to your %{provider} profile.
+    user_exists_is_not_yours: If you don't own the account '%{account}', %{signup_for_a_new_account}.
+    signup_for_a_new_account: klicka här för att registrera ett nytt konto
