@@ -40,7 +40,7 @@ class Project < ActiveRecord::Base
   end
 
   def remove_user(user)
-    people.find_by_user_id!(user.id).destroy
+    people.find_by_user_id(user.id).try(:destroy)
   end
 
   def transfer_to(person)
