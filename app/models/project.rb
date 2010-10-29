@@ -29,9 +29,9 @@ class Project < ActiveRecord::Base
   end
 
   def add_user(user, params={})
-    unless Person.exists? :user_id => user.id, :project_id => id
+    unless has_member?(user)
       people.build.tap do |person|
-        person.user_id = user.id
+        person.user = user
         person.role = params[:role] if params[:role]
         person.source_user_id = params[:source_user].try(:id)
         person.save
@@ -40,9 +40,7 @@ class Project < ActiveRecord::Base
   end
 
   def remove_user(user)
-    if person = Person.find_by_user_id_and_project_id(user.id, id)
-      person.destroy
-    end
+    people.find_by_user_id!(user.id).destroy
   end
 
   def transfer_to(person)
@@ -53,7 +51,7 @@ class Project < ActiveRecord::Base
   end
 
   def has_member?(user)
-    Person.exists?(:project_id => self.id, :user_id => user.id)
+    people.exists?(:user_id => user.id)
   end
 
   def task_lists_assigned_to(user)
