@@ -145,12 +145,14 @@ describe Task do
     end
   end
   
-  describe "creating with assigned" do
-    it do
+  describe "creating with assigned user and first comment" do
+    before do
       @task_list = Factory(:task_list)
       @project = @task_list.project
       @user = @project.user
-      
+    end
+    
+    it "tracks the initial assigned user and status" do
       task = @task_list.tasks.create_by_user(@user,
         :assigned_id => @project.people.first.id, :name => "My task",
         :comments_attributes => [{:body => "My comment"}]
