@@ -170,14 +170,15 @@ module ApplicationHelper
     request.protocol + request.host + request.port_string
   end
   
-  def friendly_hours_value(hours)
-    hours = hours.to_f
-    if hours > 0
-      minutes = (hours % 1) * 60
+  def human_hours(hours)
+    total = hours.to_f
+    if total > 0
+      hours = (total * 100).round.to_f / 100
+      minutes = ((hours % 1) * 60).to_i
       if minutes.zero?
         t('comments.comment.hours', :hours => hours.to_i)
       else
-        t('comments.comment.hours_with_minutes', :hours => hours.to_i, :minutes => minutes.to_i)
+        t('comments.comment.hours_with_minutes', :hours => hours.to_i, :minutes => minutes)
       end
     end
   end

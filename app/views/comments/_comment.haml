@@ -29,7 +29,7 @@
           - if comment.task_comment?
             = comment_task_status(comment)
           - if comment.hours?
-            = content_tag(:span, friendly_hours_value(comment.hours), :class => :hours)
+            = content_tag(:span, human_hours(comment.hours), :class => :hours)
         
         - if comment.task_comment? and comment.assigned_transition?
           %p.assigned_transition
