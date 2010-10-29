@@ -14,12 +14,24 @@ describe ApplicationHelper, "#human_hours" do
     result(1 + 13/60.0).should == "1h 13m"
   end
 
+  it "handles 1/3" do
+    result(20/60.0).should == "0h 20m"
+  end
+
   it "removes incomplete minutes" do
-    result(1.01).should == "1h"
+    result(1.001).should == "1h"
+  end
+
+  it "rounds up complete minutes" do
+    result(1.995).should == "2h"
   end
   
   it "rounds up correctly" do
     result(159.999840000001).should == "160h"
+  end
+  
+  it "rounds down zero" do
+    result(0.001).should be_nil
   end
   
   def result(hours)

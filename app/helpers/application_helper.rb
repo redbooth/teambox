@@ -171,10 +171,15 @@ module ApplicationHelper
   end
   
   def human_hours(hours)
-    total = hours.to_f
-    if total > 0
-      hours = (total * 100).round.to_f / 100
-      minutes = ((hours % 1) * 60).to_i
+    hours = (hours.to_f * 100).round.to_f / 100
+    if hours > 0
+      minutes = ((hours % 1) * 60).round
+      
+      if minutes == 60
+        hours += 1
+        minutes = 0
+      end
+      
       if minutes.zero?
         t('comments.comment.hours', :hours => hours.to_i)
       else
