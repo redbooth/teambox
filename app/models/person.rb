@@ -5,6 +5,9 @@ class Person < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
   belongs_to :source_user, :class_name => 'User'
+  has_many :tasks, :foreign_key => 'assigned_id', :dependent => :nullify
+  
+  after_destroy :log_delete, :cleanup_after
 
   acts_as_paranoid
   
@@ -57,11 +60,6 @@ class Person < ActiveRecord::Base
     project.log_activity(self, 'create', user_id) unless project.user == user
     # promote the project owner to admin
     update_attribute :role, ROLES[:admin] if project.user == user
-  end
-  
-  def after_destroy
-    project.log_activity(self, 'delete')
-    user.remove_recent_project(project)
   end
   
   def self.users_from_projects(projects)
@@ -121,5 +119,15 @@ class Person < ActiveRecord::Base
   
   def to_json(options = {})
     to_api_hash(options).to_json
+  end
+  
+  protected
+  
+  def log_delete
+    project.log_activity(self, 'delete')
+  end
+  
+  def cleanup_after
+    user.remove_recent_project(project)
   end
 end

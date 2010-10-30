@@ -35,17 +35,20 @@ module TasksHelper
   def render_assignment(task,user)
     render 'tasks/assigned', :task => task, :user => user
   end
+  
+  def task_status_badge(name)
+    content_tag(:span, localized_status_name(name), :class => "task_status task_status_#{name}")
+  end
 
   def comment_task_status(comment)
-    if comment.status_transition?
-      content_tag(:span, short_status_name(comment, true),
-        :class => "task_status task_status_#{comment.previous_status_name}") +
-      content_tag(:span, '&rarr;', :class => "arr status_arr") +
-      content_tag(:span, short_status_name(comment, false),
-        :class => "task_status task_status_#{comment.status_name}")
-    elsif comment.initial_status?
-      content_tag(:span, short_status_name(comment, false),
-            :class => "task_status task_status_#{comment.status_name}")
+    if comment.initial_status? or comment.status_transition?
+      [].tap { |out|
+        if comment.status_transition?
+          out << task_status_badge(comment.previous_status_name)
+          out << content_tag(:span, '&rarr;', :class => "arr status_arr")
+        end
+        out << task_status_badge(comment.status_name)
+      }.join(' ')
     end
   end
 
@@ -92,15 +95,6 @@ module TasksHelper
       :task_list => task_list,
       :current_target => nil,
       :editable => editable}}
-  end
-
-  def short_status_name(comment, previous = false)
-    prev = previous ? 'previous_' : ''
-    if comment.try("#{prev}status_open?") && comment.try("#{prev}assigned?")
-      h(comment.try("#{prev}assigned").user.short_name)
-    else
-      localized_status_name(comment.try("#{prev}status_name"))
-    end
   end
 
   def localized_status_name(task_or_status)

@@ -17,6 +17,7 @@ class User
   validates_length_of       :email,       :within => 6..100 #r@a.wk
   validates_uniqueness_of   :email,       :case_sensitive => false
   validates_email_format_of :email,       :message => Authentication.bad_email_message
+  validate_on_update        :old_password_provided?, :if => lambda { |u| u.password_confirmation.present? and !u.performing_reset }
   
   def before_validate
     [self.email, self.login, self.first_name, self.last_name].strip!
@@ -40,6 +41,10 @@ class User
 
   def password_required?
     crypted_password.blank? || !password.blank? || performing_reset
+  end
+
+  def old_password_provided?
+    @errors.add :old_password, 'is required' if old_password.blank? or !authenticated? old_password
   end
 
 end

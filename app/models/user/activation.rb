@@ -25,7 +25,7 @@ class User
   def generate_login_code!
     self.login_token = ActiveSupport::SecureRandom.hex(20)
     self.login_token_expires_at = 1.month.from_now
-    self.save!
+    self.save(false)
   end
   
   def expire_login_code!

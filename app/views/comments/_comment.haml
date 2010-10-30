@@ -29,7 +29,15 @@
           - if comment.task_comment?
             = comment_task_status(comment)
           - if comment.hours?
-            = content_tag(:span, friendly_hours_value(comment.hours), :class => :hours)
+            = content_tag(:span, human_hours(comment.hours), :class => :hours)
+        
+        - if comment.task_comment? and comment.assigned_transition?
+          %p.assigned_transition
+            - if comment.assigned_id?
+              = t('tasks.assigned.assigned_to', :user => comment.assigned.user.name)
+            - else
+              = t('tasks.assigned.unassigned')
+        
         ~ comment.body_html
 
       - if comment.uploads.any?
