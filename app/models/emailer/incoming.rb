@@ -38,8 +38,11 @@ module Emailer::Incoming
         begin
           Emailer.receive(email.pop)
           email.delete
-        rescue Exception
+        rescue Exception => e
           Rails.logger.error "Error receiving email at #{Time.now}: #{$!}"
+          if e.message == "Exclude Auto Responder"
+            email.delete
+          end
         end
       end
     end
