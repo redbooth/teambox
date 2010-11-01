@@ -14,6 +14,11 @@ describe Comment do
     end
   end
   
+  it "should not allow comment creation with a blank title" do
+    comment = Factory.build(:comment, :body => nil)
+    comment.should_not be_valid
+  end
+  
   describe "copying ownership" do
     before do
       @target = Factory.build(:simple_conversation, :body => nil)
@@ -107,28 +112,28 @@ describe Comment do
       comment.mentioned.should_not include(@user)
     end
 
-    describe "commenting" do
+    describe "commenting adds you as a watcher" do
       before do
         @project = Factory(:project)
         @pablo = Factory(:confirmed_user)
         @project.add_user(@pablo)
       end
 
-      it "on a conversation should add you as a watcher" do
-        @conversation = Factory(:conversation, :project => @project, :user => @project.user)
-        @conversation.watchers_ids.should_not include(@pablo.id)
-        comment = Factory(:comment, :project => @project, :user => @pablo, :target => @conversation)
-        @conversation.reload.watchers_ids.should include(@pablo.id)
+      it "on a conversation" do
+        conversation = Factory(:conversation, :project => @project, :user => @project.user)
+        conversation.watchers_ids.should_not include(@pablo.id)
+        comment = Factory(:comment, :project => @project, :user => @pablo, :target => conversation)
+        conversation.reload.watchers_ids.should include(@pablo.id)
       end
 
-      it "on a task should add you as a watcher" do
+      it "on a task" do
         @task = Factory(:task, :project => @project, :user => @project.user)
         @task.watchers_ids.should_not include(@pablo.id)
         comment = Factory(:comment, :project => @project, :user => @pablo, :target => @task)
         @task.reload.watchers_ids.should include(@pablo.id)
       end
     end
-
+    
     describe "mentioning @user" do
       before do
         @project.add_user(@user)
@@ -203,6 +208,31 @@ describe Comment do
     end
   end
   
+  describe "commenting updates the updated_at field" do
+    before do
+      @project = Factory(:project)
+      @user = @project.user
+    end
+    
+    it "on a conversation" do
+      conversation = Factory(:conversation, :project => @project, :user => @project.user)
+      conversation.update_attribute :updated_at, 1.day.ago
+      lambda {
+        Factory(:comment, :project => @project, :user => @user, :target => conversation)
+        conversation.reload
+      }.should change(conversation, :updated_at)
+    end
+    
+    it "on a task" do
+      task = Factory(:task, :project => @project, :user => @project.user)
+      task.update_attribute :updated_at, 1.day.ago
+      lambda {
+        Factory(:comment, :project => @project, :user => @user, :target => task)
+        task.reload
+      }.should change(task, :updated_at)
+    end
+  end
+  
   describe "permissions" do
     before do
       @project = Factory(:project)
@@ -255,7 +285,8 @@ describe Comment do
     it "should link existing upload" do
       upload = Factory.create :upload
       comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
-        :body => 'Here is that cat video I promised'
+        :body => 'Here is that cat video I promised',
+        :project => upload.project, :user => upload.user
 
       comment.uploads.should == [upload]
       upload.reload
@@ -274,6 +305,68 @@ describe Comment do
       upload.description.should == 'Here is that dog video I promised'
       upload.user_id.should == comment.user_id
       upload.project_id.should == comment.project_id
+    end
+    
+    it "should allow the creation of a comment with a file but no body" do
+      upload = Factory.create :upload
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
+                                         :body => nil,
+                                         :project => upload.project
+      
+      comment.should have(1).upload
+      upload = comment.uploads.first
+      upload.comment.should == comment
+    end
+    
+    it "should allow you to delete the upload and keep the comment if there is a body" do
+      upload = Factory.create :upload
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
+                                         :body => 'test',
+                                         :project => upload.project
+      
+      comment.should have(1).upload
+      comment.uploads.first.destroy
+      comment.reload
+      comment.body.should == 'test' # Still has the right body
+      comment.should have(0).uploads
+    end
+    
+    it "should not set a deleted message on the comment if there is still a file remaining" do
+      upload1, upload2 = Factory.create(:upload), Factory.create(:upload)
+      comment = Factory.create :comment, :upload_ids => [upload1.id.to_s, upload2.id.to_s], :body => nil
+      
+      comment.should have(2).uploads
+      
+      lambda do
+        comment.uploads.first.destroy
+      end.should_not raise_error
+      
+      comment.reload.should have(1).uploads
+    end
+    
+    it "should allow you to delete the upload and keep the comment if there is no body" do
+      upload = Factory.create :upload
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => nil, :project => upload.project
+      
+      comment.should have(1).upload
+      
+      lambda do
+        comment.uploads.first.destroy
+      end.should_not raise_error
+      
+      comment.reload.should have(0).uploads
+      comment.body.should == "File deleted"
+    end
+    
+    it "touches comment on upload destroy" do
+      upload = Factory.create :upload
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
+        :body => "Can't touch this"
+      Comment.update_all({:updated_at => 15.minutes.ago}, :id => comment.id)
+
+      comment.reload.updated_at.should be_close(15.minutes.ago, 1)
+      upload.reload.destroy
+      comment.reload.updated_at.should be_close(Time.now, 1)
     end
   end
   

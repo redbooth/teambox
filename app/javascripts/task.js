@@ -29,7 +29,12 @@ document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
 })
 
 document.on('click', '.date_picker img', function(e, element) {
-	new CalendarDateSelect(element.next('input'), element.next('span'), {buttons:true, popup:'force', time:false, year_range:[2008, 2020]} );
+  new CalendarDateSelect(element.next('input'), element.next('span'), {
+    buttons: true,
+    popup: 'force',
+    time: false,
+    year_range: [2008, 2020]
+  })
 })
 
 Task = {
@@ -52,14 +57,14 @@ Task = {
 
   makeSortable: function(task_id, all_task_ids) {
     Sortable.create(task_id, {
-      constraint:'vertical',
+      constraint: 'vertical',
       containment: all_task_ids,
       // format: /.*task_(\d+)_task_task/,
-      handle:'img.task_drag',
+      handle: 'img.task_drag',
       dropOnEmpty: true,
       // that makes the task disappear when it leaves its original task list
       // only:'task',
-      tag:'div',
+      tag: 'div',
       onChange: Task.sortableChange.bind(Task),
       onUpdate: Task.sortableUpdate.bind(Task)
     })
@@ -72,6 +77,10 @@ Task = {
     task_div_ids.each(function(task_div_id){
       Task.makeSortable(task_div_id, task_div_ids);
     })
+  },
+
+  highlight_my_tasks: function() {
+    $$(".task.user_"+my_user.id).invoke('addClassName', 'mine')
   },
 
   insertTask: function(task_list_id, archived, task_id, html) {
@@ -124,47 +133,10 @@ document.observe('jenny:cancel:edit_task', function(evt) {
   $('show_task').down(".task_header").show();
 });
 
-// Enable task sort on load
+// Enable task sort on load and highlight my tasks
 document.observe('dom:loaded', function(e) {
-	if ($$('.tasks').length > 0)
-	  Task.make_all_sortable();
+  if ($$('.tasks').length > 0) Task.make_all_sortable();
+  Task.highlight_my_tasks();
+  Filter.updateCounts(false);
+  Filter.updateFilters();
 });
-
-// For Projects#index: Load task in main view with AJAX
-document.on('click', '.my_tasks_listing .task a', function(e, el) {
-  if (e.isMiddleClick()) return
-  e.stop();
-  
-  el.up('.task').down('.left_arrow_icon').hide()
-  el.up('.task').down('.loading_icon').show()
-  
-  new Ajax.Request(el.readAttribute('href')+".frag", {
-    method: "get",
-    onSuccess: function(r) {
-      $('content').update(r.responseText)
-      format_posted_date()
-      $('back_to_overview').show()
-    },
-    onComplete: function() {
-      el.up('.task').down('.left_arrow_icon').show()
-      el.up('.task').down('.loading_icon').hide()
-    }
-  })
-
-})
-
-// Remove task from sidebar if it's not assigned to me anymore
-document.on('ajax:success', '.task form', function(e, form) {
-  var status = form.down("select[name='task[status]']").getValue()
-  var person = form.down("select[name='task[assigned_id]']").getValue()
-
-  // my_projects contains a list of my Person models, we look them up to see if it's me
-  var is_assigned_to_me = (status == 1) && my_projects[person]
-  var task = $('my_tasks_'+form.up('.thread').readAttribute('data-id'))
-
-  if(task) {
-    if(is_assigned_to_me) { task.show() } else { task.hide() }
-  }
-})
-
-// TODO: If i assign something to myself, it should be added to my task list

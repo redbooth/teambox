@@ -21,12 +21,13 @@ gem 'pg', '~> 0.9.0', :require => nil, :group => 'pg'
 gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
 gem 'hpricot', '~> 0.8.2'
 gem 'json'
-gem 'oauth2'
-gem 'oauth'
+gem 'oa-oauth', :require => 'omniauth/oauth'
+gem 'tilt'
+gem 'choices', '>= 0.2.0'
 
 group :plugins do
   gem 'sprockets-rails', '~> 0.0.1'
-  gem 'thinking-sphinx', '~> 1.3.15', :require => 'thinking_sphinx'
+  gem 'thinking-sphinx', '~> 1.3.15', :require => nil
   gem 'will_paginate', '~> 2.3.14'
   gem 'acts-as-list', '~> 0.1.2', :require => 'acts_as_list'
   # gem 'acts_as_paranoid', '~> 0.3.1' # => too old!
@@ -44,7 +45,7 @@ end
 # we don't call the group :test because we don't want them auto-required
 group :testing do
   gem 'database_cleaner', '~> 0.5.0'
-  gem 'rspec-rails', '~> 1.3.2', :require => 'spec/rails'
+  gem 'rspec-rails', '~> 1.3.3', :require => 'spec/rails'
   gem 'factory_girl', '~> 1.2.3'
   gem 'pickle', '~> 0.2.1'
   gem 'cucumber-rails', '~> 0.3.0', :require => nil

@@ -81,16 +81,3 @@ Feature: Creating an organization
     And I follow "Pentagon"
     And I follow "Manage projects"
     And I should see "Spy the president"
-
-  Scenario: I can't create an organization with a duplicate permalink
-    When I go to the organizations page
-    And I follow "+ Create a new Organization"
-    And I fill in "organization_name" with "Serial Experiments"
-    And I fill in "organization_permalink" with "lain"
-    And I press "Create Organization"
-    When I go to the organizations page
-    And I follow "+ Create a new Organization"
-    And I fill in "organization_name" with "Experiments Lain"
-    And I fill in "organization_permalink" with "LAIN"
-    And I press "Create Organization"
-    Then I should see "has already been taken"

@@ -27,10 +27,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.create_project_invitation '/projects/:project_id/invite/:login', :controller => 'invitations', :action => 'create', :method => :posts
 
-  map.oauth_request   '/oauth/:provider',          :controller => 'oauth', :action => 'start' 
-  map.oauth_callback  '/oauth/:provider/callback', :controller => 'oauth', :action => 'callback'
+  map.auth_callback  '/auth/:provider/callback', :controller => 'auth', :action => 'callback'
+  map.auth_failure   '/auth/failure', :controller => 'auth', :action => 'failure'
   map.complete_signup '/complete_signup',          :controller => 'users', :action => 'complete_signup'
-  map.unlink_app      '/oauth/:provider/unlink',   :controller => 'users', :action => 'unlink_app'
+  map.unlink_app      '/auth/:provider/unlink',   :controller => 'users', :action => 'unlink_app'
 
   map.javascript_environment '/i18n/environment.js', :controller => 'javascripts', :action => 'environment'
 
@@ -79,6 +79,7 @@ ActionController::Routing::Routes.draw do |map|
       :has_many => [:pages, :people],
       :member => {:accept => :post, :decline => :post, :transfer => :put, :join => :get} do |project|
     project.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
+    project.hours_by_period 'time/by_period', :controller => 'hours', :action => 'by_period', :conditions => { :method => :get }
     project.time 'time', :controller => 'hours', :action => 'index'
 
     project.settings 'settings',  :controller => 'projects', :action => 'edit', :sub_action => 'settings'
@@ -96,14 +97,16 @@ ActionController::Routing::Routes.draw do |map|
 
     project.hooks 'hooks/:hook_name', :controller => 'hooks', :action => 'create', :conditions => { :method => :post }
 
+    # Use routes for /project/:project_id/tasks instead of /project/:project_id/task_lists/:task_list_id/tasks
+    project.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put, :reorder => :put }
+
     project.resources :task_lists,
       :collection => { :gantt_view => :get, :archived => :get  },
       :member => { :watch => :put, :unwatch => :put, :archive => :put, :unarchive => :put, :reorder => :put } do |task_lists|
+        # deprecated routes, use "project.resources :tasks" directly
         task_lists.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put }
     end
-    
-    project.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put, :reorder => :put }
-    
+
     project.contacts 'contacts', :controller => :people, :action => :contacts, :method => :get
     project.resources :people, :member => { :destroy => :get }
     project.resources :conversations, :has_many => [:comments], :member => { :watch => :put, :unwatch => :put }
@@ -185,6 +188,7 @@ ActionController::Routing::Routes.draw do |map|
   # map.resources :pages, :only => [ :index ]
 
   map.hours_by_month 'time/:year/:month', :controller => 'hours', :action => 'index', :conditions => { :method => :get }
+  map.hours_by_period 'time/by_period', :controller => 'hours', :action => 'by_period', :conditions => { :method => :get }
   map.time 'time', :controller => 'hours', :action => 'index'
 
   map.root :controller => 'projects', :action => 'index'

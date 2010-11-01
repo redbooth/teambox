@@ -13,6 +13,7 @@ require 'email_spec/matchers'
 require 'cancan/matchers'
 
 require 'rack/test'
+require 'csv'
 
 Spec::Runner.configure do |config|
   config.include AuthenticatedTestHelper, EmailSpec::Helpers, EmailSpec::Matchers, Rack::Test::Methods
@@ -117,6 +118,10 @@ def make_a_typical_project
     @organization.add_member(@admin, Membership::ROLES[:admin])
     @project.add_user(@admin, :role => Person::ROLES[:admin])
     @project
+end
+
+def decode_test_csv(body)
+  CSV.parse(body)
 end
 
 def dump_test_data

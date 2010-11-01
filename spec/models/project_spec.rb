@@ -81,7 +81,7 @@ describe Project do
     it "should log when a user is added without being invited" do
       person = @project.add_user(@user)
       Activity.last.project.should == @project
-      Activity.last.comment_type.should == nil
+      Activity.last.comment_target_type.should == nil
       Activity.last.target.should == person
       Activity.last.action.should == 'create'
       Activity.last.user.should == @user
@@ -91,7 +91,7 @@ describe Project do
     it "should log when a user is added being invited" do
       person = @project.add_user(@user, :source_user => @owner)
       Activity.last.project.should == @project
-      Activity.last.comment_type.should == nil
+      Activity.last.comment_target_type.should == nil
       Activity.last.target.should == person
       Activity.last.action.should == 'create'
       Activity.last.user.should == @user
@@ -145,7 +145,7 @@ describe Project do
     it "should log he's leaving the project" do
       @project.reload.remove_user(@user)
       Activity.last.project.should == @project
-      Activity.last.comment_type.should == nil
+      Activity.last.comment_target_type.should == nil
       Activity.last.target.should == @person
       Activity.last.action.should == 'delete'
       Activity.last.user.should == @user
@@ -161,22 +161,6 @@ describe Project do
     end
 
     it "make sure activities still work when the object is deleted"
-  end
-
-  describe "permalinks" do
-    it "should use the given permalink if not taken" do
-      project1 = Factory.create(:project, {:name => 'Alice Lidell', :permalink => 'mad-hatter'})
-      project1.permalink.should == 'mad-hatter'
-      project2 = Factory.create(:project, {:name => 'Lorina Lidell', :permalink => 'mad-hatter'})
-      project2.permalink.should == 'mad-hatter-2'
-    end
-
-    it "should generate a unique permalink if none is given" do
-      project1 = Factory.create(:project, :name => 'Cheshire   Cat!!')
-      project1.permalink.should == 'cheshire-cat'
-      project2 = Factory.create(:project, :name => 'Cheshire Cat')
-      project2.permalink.should == 'cheshire-cat-2'
-    end
   end
 
   describe "#destroy" do

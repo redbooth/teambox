@@ -7,10 +7,20 @@ class HooksController < ApplicationController
     render :text => exception.message, :status => 400
   end
   
-  rescue_from 'Emailer::Incoming::MissingInfo', 'Emailer::Incoming::IllegalMail' do |exception|
+  rescue_from 'Emailer::Incoming::MissingInfo', 'Emailer::Incoming::Error' do |exception|
     logger.warn "[Emailer::Incoming] #{exception.message}"
+    EmailBounce.bounce_once_per_day(exception) unless params[:from].blank?
+    
     response.content_type = Mime::TEXT
     render :text => exception.message, :status => 200
+  end
+  
+  rescue_from 'ActiveRecord::RecordInvalid' do |exception|
+    if exception.message == "Validation failed: Body Duplicate comment"
+      head :ok
+    else
+      raise exception
+    end
   end
 
   def create

@@ -13,7 +13,6 @@ Feature: Changing Task Status from New
     And I select "new" from "Status"
     And I press "Save"
     And I wait for 0.2 second
-    Then I should see "new" within ".task_status_new"
     And I should see "I need to wait till the engine cools down" within ".body"
     And I should see "Status: new"
 

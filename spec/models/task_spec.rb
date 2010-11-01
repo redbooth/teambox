@@ -29,6 +29,19 @@ describe Task do
     end
   end
   
+  it "should allow creation with given statuses" do
+    Task::STATUS_NAMES.each do |status_name|
+      task = Factory(:task, :status => Task::STATUSES[status_name])
+      task.valid?.should == true
+    end
+  end
+  
+  it "should not allow a user to set an arbitrary status" do
+    task = Factory.build(:task, :status => 102203)
+    task.valid?.should == false
+    task.errors_on(:status).length.should == 1
+  end
+  
   it "doesn't break when assigning user on create" do
     task_list = Factory(:task_list)
     person = Factory(:person, :project => task_list.project)
@@ -132,6 +145,28 @@ describe Task do
     end
   end
   
+  describe "creating with assigned user and first comment" do
+    before do
+      @task_list = Factory(:task_list)
+      @project = @task_list.project
+      @user = @project.user
+    end
+    
+    it "tracks the initial assigned user and status" do
+      task = @task_list.tasks.create_by_user(@user,
+        :assigned_id => @project.people.first.id, :name => "My task",
+        :comments_attributes => [{:body => "My comment"}]
+      )
+      
+      task.should be_assigned
+      task.should be_open
+      
+      comment = task.comments.first
+      comment.assigned_id.should == task.assigned_id
+      comment.status.should == task.status
+    end
+  end
+  
   describe "updating" do
     it "allows several blank comments with hours" do
       task = Factory(:task, :comments_attributes => {"0" => {:human_hours => "30m"}})
@@ -184,7 +219,6 @@ describe Task do
       comment.body.should == "Do it by tomorrow"
       comment.previous_assigned_id.should be_nil
       comment.assigned_id.should == person2.id
-      comment.status.should be_nil
       
       task.reload
       task.update_attributes(:assigned_id => person3.id, :comments_attributes => [{:body => ""}])
@@ -196,7 +230,6 @@ describe Task do
       comment.body.should be_blank
       comment.previous_assigned_id.should == person2.id
       comment.assigned_id.should == person3.id
-      comment.status.should be_nil
     end
   end
 

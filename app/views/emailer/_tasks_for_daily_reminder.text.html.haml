@@ -6,9 +6,9 @@
       %tr
         %td{ :style => "width:30px"}
           %span{ :style => task_status_style(task) }= task.comments_count
-        %td{ :style => "width:650px"}
+        %td{ :style => "width:570px"}
           - if task.due_on
             %span{ :style => task_due_on_style(task) }
               = due_on(task)
-          = link_to h(task.name), project_task_list_task_url(task.project, task.task_list, task)
-          == [#{link_to h(task.project), task.project}]
+          = link_to h(task.name), project_task_url(task.project, task)
+          == [#{link_to h(task.project), project_url(task.project)}]

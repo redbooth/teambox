@@ -52,10 +52,8 @@ class UploadsController < ApplicationController
     @upload.user = current_user
     @page = @upload.page
     calculate_position(@upload) if @page
-
-    if @upload.save
-      @current_project.log_activity(@upload, 'create')
-    end
+    
+    @upload.save
 
     respond_to do |wants|
       wants.html {

@@ -29,9 +29,9 @@ class Project < ActiveRecord::Base
   end
 
   def add_user(user, params={})
-    unless Person.exists? :user_id => user.id, :project_id => id
+    unless has_member?(user)
       people.build.tap do |person|
-        person.user_id = user.id
+        person.user = user
         person.role = params[:role] if params[:role]
         person.source_user_id = params[:source_user].try(:id)
         person.save
@@ -40,9 +40,7 @@ class Project < ActiveRecord::Base
   end
 
   def remove_user(user)
-    if person = Person.find_by_user_id_and_project_id(user.id, id)
-      person.destroy
-    end
+    people.find_by_user_id(user.id).try(:destroy)
   end
 
   def transfer_to(person)
@@ -53,7 +51,7 @@ class Project < ActiveRecord::Base
   end
 
   def has_member?(user)
-    Person.exists?(:project_id => self.id, :user_id => user.id)
+    people.exists?(:user_id => user.id)
   end
 
   def task_lists_assigned_to(user)
@@ -62,29 +60,6 @@ class Project < ActiveRecord::Base
       t << task_list if task_list.tasks.count(:conditions => {:assigned_id => person.id, :status => Task::STATUSES[:open]}) > 0
       t
     end
-  end
-
-  # Optimized way of getting activities for one or more project.
-  # Can limit the number of records and page.
-  def self.get_activities_for(projects, *args)
-    options = args.extract_options!
-
-    if options[:before]
-      conditions = ["project_id IN (?) AND id < ?", Array(projects).collect{ |p| p.id }, options[:before] ]
-    elsif options[:after]
-      conditions = ["project_id IN (?) AND id > ?", Array(projects).collect{ |p| p.id }, options[:after] ]
-    else
-      conditions = ["project_id IN (?)", Array(projects).collect{ |p| p.id } ]
-    end
-    
-    if options[:user_id]
-      conditions[0] += ' AND user_id = ?'
-      conditions << options[:user_id]
-    end
-    
-    Activity.find(:all, :conditions => conditions,
-                        :order => 'id DESC',
-                        :limit => options[:limit] || APP_CONFIG['activities_per_page'])
   end
 
   def get_recent(model_class, limit = 5)
@@ -203,7 +178,7 @@ class Project < ActiveRecord::Base
           end
           if host
             port_in_url = (port == 80) ? '' : ":#{port}"
-            url         "http://#{host}#{port_in_url}/projects/#{task.project.permalink}/task_lists/#{task.task_list.id}/tasks/#{task.id}"
+            url         "http://#{host}#{port_in_url}/projects/#{task.project.permalink}/tasks/#{task.id}"
           end
           klass         task.project.name
           dtstamp       DateTime.civil(created_date.year,created_date.month,created_date.day,created_date.hour,created_date.min,created_date.sec,created_date.offset)

@@ -4,7 +4,6 @@ class TasksController < ApplicationController
   before_filter :set_page_title
 
   def show
-    return redirect_to [@current_project, @task.task_list, @task] unless @task.task_list.id == params[:task_list_id].to_i
     respond_to do |f|
       f.html
       f.frag { render :layout => false }
@@ -61,6 +60,9 @@ class TasksController < ApplicationController
         if request.xhr? or iframe?
           if @task.comment_created?
             comment = @task.comments.last(:order => 'id')
+
+            response.headers['X-JSON'] = @task.to_json(:include => :assigned)
+
             render :partial => 'comments/comment',
               :locals => { :comment => comment, :threaded => true }
           else
@@ -134,11 +136,11 @@ class TasksController < ApplicationController
     end
 
     def load_task
-      parent = load_task_list ? @task_list : @current_project
-      @task = parent.tasks.find params[:id]
+      @task = @current_project.tasks.find params[:id]
+      @task_list = @task.task_list
     end
     
     def redirect_to_task
-      redirect_to [@current_project, @task_list || @task.task_list, @task]
+      redirect_to [@current_project, @task]
     end
 end

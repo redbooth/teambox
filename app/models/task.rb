@@ -25,6 +25,7 @@ class Task < RoleRecord
 
   validates_presence_of :name, :message => I18n.t('tasks.errors.name.cant_be_blank')
   validates_length_of   :name, :maximum => 255, :message => I18n.t('tasks.errors.name.too_long')
+  validates_inclusion_of :status, :in => STATUSES.values, :message => "is not a valid status"
   
   validate :check_asignee_membership, :if => :assigned_id?
   
@@ -33,12 +34,13 @@ class Task < RoleRecord
   
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_save :set_comments_author, :if => :updating_user
-  before_save :save_changes_to_comment, :if => :track_changes?
   before_save :transition_from_new_to_open, :if => :assigned_id?
+  before_save :save_changes_to_comment, :if => :track_changes?
   before_update :remember_comment_created
   
   def track_changes?
-    updating_user and (status_changed? or assigned_id_changed?)
+    (new_record? and not status_new?) or
+    (updating_user and (status_changed? or assigned_id_changed?))
   end
 
   def archived?
@@ -221,7 +223,31 @@ class Task < RoleRecord
       base[:task_list] = task_list.to_api_hash(options)
     end
     
+    if Array(options[:include]).include? :assigned
+      base[:assigned] = assigned.to_api_hash(:include => :user) if assigned
+    end
+    
+    if Array(options[:include]).include? :user
+      base[:user] = {
+        :username => user.login,
+        :first_name => user.first_name,
+        :last_name => user.last_name,
+        :avatar_url => user.avatar_or_gravatar_url(:thumb)
+      }
+    end
+    
     base
+  end
+
+  define_index do
+    indexes name, :sortable => true
+
+    indexes comments.body, :as => :body
+    indexes comments.user.first_name, :as => :user_first_name
+    indexes comments.user.last_name, :as => :user_last_name
+    indexes comments.uploads(:asset_file_name), :as => :upload_name
+    
+    has project_id, created_at, updated_at
   end
 
   protected
@@ -246,14 +272,14 @@ class Task < RoleRecord
   def save_changes_to_comment # before_save
     comment = comments.detect(&:new_record?) || comments.build_by_user(updating_user)
     
-    if status_changed?
+    if status_changed? or self.new_record?
       comment.status = self.status
-      comment.previous_status = self.status_was
+      comment.previous_status = self.status_was if status_changed?
     end
     
-    if assigned_id_changed?
+    if assigned_id_changed? or self.new_record?
       comment.assigned_id = self.assigned_id
-      comment.previous_assigned_id = self.assigned_id_was
+      comment.previous_assigned_id = self.assigned_id_was if assigned_id_changed?
     end
     true
   end

@@ -8,4 +8,3 @@
   - f.fields_for :comments do |fields|
     .field.text_area
       = fields.text_area :body, :placeholder => t('comments.new.conversation')
-      - autocomplete_from_project(project)

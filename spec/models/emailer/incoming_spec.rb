@@ -60,8 +60,8 @@ describe Emailer do
         task.status_name.should == :new
       end
     
-      it "should add the uncategorized list if it exists" do
-        list = @project.task_lists.create(:user => @owner, :name => 'Uncategorized')
+      it "should add the Inbox list if it exists" do
+        list = @project.task_lists.create(:user => @owner, :name => 'Inbox')
         
         lambda do
           Emailer.receive(@email_template.to_s)
@@ -71,14 +71,14 @@ describe Emailer do
         task.task_list.should == list
       end
     
-      it "should create the uncategorized list if it does not exist" do
+      it "should create the Inbox list if it does not exist" do
         lambda do
           lambda do
             Emailer.receive(@email_template.to_s)
           end.should change(Task, :count).by(1)
         end.should change(TaskList, :count).by(1)
         
-        task_list = TaskList.find_by_name('Uncategorized')
+        task_list = TaskList.find_by_name('Inbox')
         task = Task.last(:order => 'tasks.id')
         task.task_list.should == task_list
       end
@@ -243,6 +243,56 @@ describe Emailer do
         conv.comments.first.body.should == "But I'm fixing it right now! And refactoring the Regexp too!\n\nI'm using #{prefix} on the subject"
         conv.user.should == @owner
       end
+    end
+    
+    context "should raise an error when" do
+      before do
+        @email_template.to = "#{@project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}"
+        @email_template.body = "#\nWe did some stuff"
+      end
+      
+      it "the email sender is not recognised" do
+        @email_template.from = "random.sender@example.com"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error(Emailer::Incoming::UserNotFoundError) { |e|
+          e.mail.from.should == @email_template.from
+        }
+      end
+      
+      it "the specified project does not exist" do
+        @email_template.to = "random_project+tasks@#{Teambox.config.smtp_settings[:domain]}"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::ProjectNotFoundError
+      end
+      
+      it "is not part of the specified project" do
+        @email_template.from = @janet.email
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::NotProjectMemberError
+      end
+      
+      it "the specified conversation does not exist" do
+        @email_template.to = "#{@project.permalink}+conversation+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::TargetNotFoundError
+      end
+      
+      it "the specified task does not exist" do
+        @email_template.to = "#{@project.permalink}+task+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}"
+        
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should raise_error Emailer::Incoming::TargetNotFoundError
+      end
+      
     end
   end
 end

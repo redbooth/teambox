@@ -27,7 +27,8 @@
 
   var submitBubbles = isEventSupported('submit'),
       changeBubbles = isEventSupported('change'),
-      emulateFocusin = !Prototype.Browser.WebKit && document.addEventListener;
+      emulateFocusin = document.addEventListener &&
+        (Prototype.Browser.MobileSafari || !Prototype.Browser.WebKit);
 
   if (!submitBubbles || !changeBubbles || emulateFocusin) {
     // augment the Event.Handler class to observe custom events when needed
@@ -65,7 +66,7 @@
         });
         form.store('emulated:submit', true);
       }
-    })
+    });
   }
 
   if (!changeBubbles) {
@@ -78,7 +79,7 @@
         });
         input.store('emulated:change', true);
       }
-    })
+    });
   }
 
   function handleRemote(element) {
@@ -90,7 +91,6 @@
     if (element.tagName.toLowerCase() === 'form') {
       method = element.readAttribute('method') || 'post';
       url    = element.readAttribute('action');
-      params = element.serialize();
       // serialize the form with respect to the submit button that was pressed
       params = element.serialize({ submit: element.retrieve('rails:submit-button') });
       // clear the pressed submit button information
@@ -115,6 +115,10 @@
     element.fire("ajax:after");
   }
 
+  function insertHiddenField(form, name, value) {
+    form.insert(new Element('input', { type: 'hidden', name: name, value: value }));
+  }
+
   function handleMethod(element) {
     var method = element.readAttribute('data-method'),
         url = element.readAttribute('href'),
@@ -125,66 +129,75 @@
     element.parentNode.insert(form);
 
     if (method !== 'post') {
-      var field = new Element('input', { type: 'hidden', name: '_method', value: method });
-      form.insert(field);
+      insertHiddenField(form, '_method', method);
     }
 
     if (csrf_param) {
-      var param = csrf_param.readAttribute('content'),
-          token = csrf_token.readAttribute('content'),
-          field = new Element('input', { type: 'hidden', name: param, value: token });
-      form.insert(field);
+      insertHiddenField(form, csrf_param.readAttribute('content'), csrf_token.readAttribute('content'));
     }
 
     form.submit();
   }
 
+  function disableFormElements(form) {
+    form.select('input[type=submit][data-disable-with]').each(function(input) {
+      input.store('rails:original-value', input.getValue());
+      input.setValue(input.readAttribute('data-disable-with')).disable();
+    });
+  }
+  
+  function enableFormElements(form) {
+    form.select('input[type=submit][data-disable-with]').each(function(input) {
+      input.setValue(input.retrieve('rails:original-value')).enable();
+    });
+  }
 
-  document.on("click", "*[data-confirm]", function(event, element) {
+  function allowAction(element) {
     var message = element.readAttribute('data-confirm');
-    if (!confirm(message)) event.stop();
+    return !message || confirm(message);
+  }
+
+  document.on('click', 'a[data-confirm], a[data-remote], a[data-method]', function(event, link) {
+    if (!allowAction(link)) {
+      event.stop();
+      return false;
+    }
+
+    if (link.readAttribute('data-remote')) {
+      handleRemote(link);
+      event.stop();
+    } else if (link.readAttribute('data-method')) {
+      handleMethod(link);
+      event.stop();
+    }
   });
 
-  document.on("click", "a[data-remote]", function(event, element) {
-    if (event.stopped) return;
-    handleRemote(element);
-    event.stop();
-  });
-
-  document.on("click", "a[data-method]", function(event, element) {
-    if (event.stopped) return;
-    handleMethod(element);
-    event.stop();
-  });
-
-  document.on("click", "form input[type=submit]", function(event, button) {
+  document.on("click", "form input[type=submit], form button[type=submit], form button:not([type])", function(event, button) {
     // register the pressed submit button
     event.findElement('form').store('rails:submit-button', button.name || false);
   });
 
   document.on("submit", function(event) {
-    var form = event.findElement(),
-        message = form.readAttribute('data-confirm');
+    var form = event.findElement();
 
-    if (message && !confirm(message)) {
+    if (!allowAction(form)) {
       event.stop();
       return false;
     }
 
-    form.select('input[type=submit][data-disable-with]').each(function(input) {
-      input.store('rails:original-value', input.getValue());
-      input.disable().setValue(input.readAttribute('data-disable-with'));
-    });
-
     if (form.readAttribute('data-remote')) {
       handleRemote(form);
       event.stop();
+    } else {
+      disableFormElements(form);
     }
   });
 
-  document.on("ajax:complete", "form", function(event, form) {
-    form.select('input[type=submit][data-disable-with]').each(function(input) {
-      input.setValue(input.retrieve('rails:original-value')).enable();
-    });
+  document.on('ajax:create', 'form', function(event, form) {
+    if (form == event.findElement()) disableFormElements(form);
+  });
+  
+  document.on('ajax:complete', 'form', function(event, form) {
+    if (form == event.findElement()) enableFormElements(form);
   });
 })();

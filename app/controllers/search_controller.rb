@@ -6,10 +6,14 @@ class SearchController < ApplicationController
     @search_terms = params[:q]
     
     unless @search_terms.blank?
-      @comments = Comment.search @search_terms,
-        :retry_stale => true, :order => 'created_at DESC',
-        :with => { :project_id => project_ids },
-        :page => params[:page]
+
+      @results = ThinkingSphinx.search @search_terms,
+          :retry_stale => true,
+          :order => 'updated_at DESC',
+          :with => { :project_id => project_ids },
+          :page => params[:page],
+          :classes => [Conversation, Task, Page]
+
     end
   end
   

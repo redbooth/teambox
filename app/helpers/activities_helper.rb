@@ -89,7 +89,7 @@ module ActivitiesHelper
       { :person => link_to_unless(plain, h(object.user.name), object.user),
         :project => link_to_unless(plain, h(activity.project), activity.project) }
     when 'create_task'
-      { :task => link_to_unless(plain, h(object), [activity.project, object.task_list, object]),
+      { :task => link_to_unless(plain, h(object), [activity.project, object]),
         :task_list => link_to_unless(plain, h(object.task_list), [activity.project, object.task_list]) }
     when 'create_task_list'
       { :task_list => link_to_unless(plain, h(object), [activity.project, object]) }
@@ -105,7 +105,7 @@ module ActivitiesHelper
       type << "_#{object.class.name.underscore}"
       
       target = case object
-      when Task then link_to_unless(plain, h(object.name), [object.project, object.task_list, object])
+      when Task then link_to_unless(plain, h(object.name), [object.project, object])
       when Project then link_to_unless(plain, h(object.name), object)
       when Conversation then link_to_unless(plain, h(object.name), [object.project, object])
       end
@@ -119,10 +119,10 @@ module ActivitiesHelper
   def activity_target_url(activity)
     if activity.target_type == 'Task'
       task = activity.target
-      project_task_list_task_url(activity.project, task.task_list_id, task)
-    elsif activity.comment_type == 'Task'
+      project_task_url(activity.project, task)
+    elsif activity.comment_target_type == 'Task'
       task = activity.target.target
-      project_task_list_task_url(activity.project, task.task_list_id, task)
+      project_task_url(activity.project, task)
     elsif activity.target_type == 'TaskList'
       project_task_list_url(activity.project, activity.target)
     elsif activity.target_type == 'Page'
@@ -131,7 +131,7 @@ module ActivitiesHelper
       project_uploads_url(activity.project)
     elsif activity.target_type == 'Conversation'
       project_conversation_url(activity.project, activity.target)
-    elsif activity.comment_type == 'Conversation'
+    elsif activity.comment_target_type == 'Conversation'
       project_conversation_url(activity.project, activity.target.target)
     else
       project_url(activity.project, :anchor => "activity_#{activity.id}")
@@ -170,33 +170,21 @@ module ActivitiesHelper
     end
   end
   
-  def link_to_conversation(conversation)
-    link_to h(conversation), project_conversation_path(conversation.project, conversation)
-  end
-  
-  def link_to_task_list(task_list)
-    link_to h(task_list), project_task_list_path(task_list.project, task_list)
-  end
-
-  def link_to_task(task)
-    link_to h(task), project_task_list_task_path(task.project, task.task_list,task)
-  end
-
   def activities_paginate_link(*args)
     options = args.extract_options!
 
-    if location_name == 'index_projects'
+    if location_name == 'index_projects' or location_name == 'show_activities'
       url = show_more_path(options[:last_activity].id)
     elsif location_name == 'show_more_activities' and params[:project_id].nil? and params[:user_id].nil?
       url = show_more_path(options[:last_activity].id)
     elsif location_name == 'show_users'
-        url = user_show_more_path(@user.id, options[:last_activity].id)
+      url = user_show_more_path(@user.id, options[:last_activity].id)
     elsif location_name == 'show_projects'
       url = project_show_more_path(@current_project.permalink, options[:last_activity].id)
     elsif location_name == 'show_more_activities' and params[:project_id]
       url = project_show_more_path(params[:project_id], options[:last_activity].id)
     elsif location_name == 'show_more_activities' and params[:user_id]
-        url = user_show_more_path(params[:user_id], options[:last_activity].id)
+      url = user_show_more_path(params[:user_id], options[:last_activity].id)
     else
       raise "unexpected location #{location_name}"
     end
@@ -221,10 +209,8 @@ module ActivitiesHelper
     end
   end
   
-  def show_more_button(activities)
-    if activities.size == APP_CONFIG['activities_per_page']
-      render 'activities/show_more'
-    end
+  def show_more_button
+    render 'activities/show_more' if @last_activity
   end
   
   def fluid_badge(count)

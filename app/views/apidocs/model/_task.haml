@@ -7,7 +7,7 @@
   %p= "Use the optional <tt>status</tt> parameter to filter tasks by their status id. For example, to only view new or open tasks, you would query <code>?status[]=0&status[]=1</code>."
 
 - doc_for :show,  :example => @task.to_api_hash,
-                  :includes => [:comments, :user] do
+                  :includes => [:comments, :user, :assigned] do
   %p= "Returns the data for a task."
   
 - doc_for :create, :parameters => {:name => 'Task', :start_on => '2010-01-01', :finish_on => '2010-02-01', :project_id => 123, :task_list_id => 456},

@@ -5,12 +5,12 @@ class ApiV1::UploadsController < ApiV1::APIController
   
   def index
     @uploads = if target
-      target.uploads.all(
+      target.uploads.scoped(api_scope).all(
         :conditions => api_range, 
         :limit => api_limit,
         :include => [:page, :user])
     else
-      Upload.find_all_by_project_id(current_user.project_ids,
+      Upload.scoped(api_scope).find_all_by_project_id(current_user.project_ids,
         :conditions => api_range, 
         :limit => api_limit,
         :include => [:page, :user])
@@ -53,6 +53,14 @@ class ApiV1::UploadsController < ApiV1::APIController
   
   def load_page
     @page = @current_project.pages.find params[:page_id] if params[:page_id]
+  end
+  
+  def api_scope
+    conditions = {}
+    unless params[:user_id].nil?
+      conditions[:user_id] = params[:user_id].to_i
+    end
+    {:conditions => conditions}
   end
   
   def load_upload

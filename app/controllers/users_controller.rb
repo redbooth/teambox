@@ -20,31 +20,37 @@ class UsersController < ApplicationController
   end
   
   def new
+    # Trying to accept a new account invitation, but you're already logged in
     if @invitation and logged_in?
       @invitation.invited_user = current_user
       @invitation.save
-      redirect_to projects_url(:invitation => @invitation.token)
+      flash[:success] = t('users.new.you_are_logged_in')
+      return redirect_to projects_url(:invitation => @invitation.token)
+    # Trying to create a user, but you're already logged in
     elsif logged_in?
       flash[:success] = t('users.new.you_are_logged_in')
-      redirect_to projects_path
+      return redirect_to projects_path
     else
-      load_app_link
-      load_profile
-
-      @user ||= User.new
-      @user.email = @invitation.email if @invitation
-
-      render :layout => 'sessions'
+      # Create an account from OAuth
+      if session[:profile] and session[:app_link]
+        signup_from_oauth(session[:profile], session[:app_link])
+      # Regular invitation
+      else
+        @user = User.new
+        @user.email = @invitation.email if @invitation
+      end
     end
+
+    render :layout => 'sessions'
   end
 
   def show
     @card = @user.card
     @projects_shared = @user.projects_shared_with(@current_user)
     @shares_invited_projects = @projects_shared.empty? && @user.shares_invited_projects_with?(@current_user)
-    @activities = Project.get_activities_for(@user.projects_shared_with(@current_user), :user_id => @user.id) 
-    @last_activity = @activities.last
-    
+    @activities = Activity.for_projects(@user.projects_shared_with(@current_user)).from_user(@user)
+    @last_activity = @activities.all.last
+
     respond_to do |format|
       if @user != @current_user and (!@shares_invited_projects and @projects_shared.empty?)
         format.html {
@@ -65,24 +71,24 @@ class UsersController < ApplicationController
     logout_keeping_session!
     @user = User.new(params[:user])
 
-    load_app_link
-
-    @user.confirmed_user = ((@invitation && @invitation.email == @user.email) or
-                            Rails.env.development? or !Teambox.config.email_confirmation_require or
-                            !!@app_link)
+    @user.confirmed_user = ((@invitation && @invitation.email == @user.email) or 
+                            (session[:profile] && session[:profile][:email] == @user.email) or
+                            Rails.env.development? or !Teambox.config.email_confirmation_require)
 
     if @user && @user.save
       self.current_user = @user
 
-      if @app_link
-        @app_link.user = @user
-        @app_link.save!
+      if applink = AppLink.find_by_id(session[:applink])
+        applink.user = @user
+        applink.save
       end
 
       if @invitation
         # Can be an invitation to a project or just to Teambox
         if @invitation.project
-          redirect_to(project_path(@invitation.project))
+          redirect_to project_path(@invitation.project)
+        else
+          redirect_to projects_path
         end
       else
         redirect_back_or_default root_path
@@ -90,7 +96,6 @@ class UsersController < ApplicationController
 
       flash[:success] = t('users.create.thanks')
     else
-      load_profile
       render :action => :new, :layout => 'sessions'
     end
   end
@@ -168,11 +173,11 @@ class UsersController < ApplicationController
     if current_user.projects.count == 0 && current_user.projects.archived.count == 0
       user = current_user
       logout_killing_session!
-      flash[:success] = t('users.form.account_deletion.account_deleted')
+      flash[:success] = t('users.form.delete.account_deleted')
       user.destroy
       redirect_to login_path
     else
-      flash[:error] = t('users.form.account_deletion.couldnt_delete_account')
+      flash[:error] = t('users.form.delete.couldnt_delete_account')
       redirect_to account_delete_path
     end
   end
@@ -203,23 +208,19 @@ class UsersController < ApplicationController
       end
     end
 
-    def load_app_link
-      if session[:app_link]
-        @app_link = AppLink.find(session[:app_link]) || raise("Invalid AppLink")
-        raise("AppLink already in use") if @app_link.user_id
+    def signup_from_oauth(profile, app_link)
+      @user ||= User.new
+      @user.first_name    = @user.first_name.presence || profile[:first_name]
+      @user.last_name     = @user.last_name.presence  || profile[:last_name]
+      if profile[:login]
+        @user.login     ||= User.find_available_login(profile[:login])
       end
+
+      @user.email       ||= profile[:email] unless User.find_by_email(profile[:email])
+
+      @provider = profile[:provider]
     end
 
-    def load_profile
-      @user ||= User.new
-      if @profile = session[:profile]
-        @user.first_name    = @user.first_name.presence || @profile[:first_name]
-        @user.last_name     = @user.last_name.presence  || @profile[:last_name]
-        @user.login       ||= @profile[:login]
-        @user.email       ||= @profile[:email]
-      end
-    end
-    
     def can_users_signup?
       unless @invitation || signups_enabled?
         flash[:error] = t('users.new.no_public_signup')

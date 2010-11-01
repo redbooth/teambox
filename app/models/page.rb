@@ -1,7 +1,7 @@
 class Page < RoleRecord
-  has_many :notes, :dependent => :delete_all
-  has_many :dividers, :dependent => :delete_all
-  has_many :uploads, :dependent => :delete_all
+  has_many :notes, :dependent => :destroy
+  has_many :dividers, :dependent => :destroy
+  has_many :uploads, :dependent => :destroy
   
   has_many :slots, :class_name => 'PageSlot', :order => 'position ASC', :dependent => :delete_all
 
@@ -159,4 +159,18 @@ class Page < RoleRecord
     
     base
   end
+  
+  define_index do
+    indexes name, :sortable => true
+    indexes description
+
+    indexes notes.name
+    indexes notes.body
+    indexes dividers.name
+    indexes notes.body
+    indexes uploads(:asset_file_name)
+    
+    has project_id, created_at, updated_at
+  end
+  
 end

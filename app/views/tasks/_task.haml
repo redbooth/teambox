@@ -3,23 +3,24 @@
 - task_list ||= task.task_list
 
 %div[task]{ :class => task_classes(task) }
-  .inner
-    .taskStatus	
-      - if editable and !task.archived?
-        = image_tag('drag.png', :class => 'task_drag')
-      = task_status(task,:content)
-    .taskName{ :class => "task_item_#{task.status_name}"}
-      %span.status= localized_status_name(task)
-      = link_to h(task), [project, task_list, task], :class => 'name'
-      - unless (task.due_on.nil? && task.unassigned?) || task.closed?
-        %span.assigned
-          = due_on(task) if task.due_on
-          = "-" unless task.assigned.nil? || task.due_on.nil?
-          = link_to h(task.assigned.short_name), user_path(task.assigned.user) if task.assigned
-      .task_extended
+  .taskStatus
+    = image_tag('drag.png', :class => 'task_drag') if editable and !task.archived?
+    = task_status(task, :content)
+  .taskName
+    .expanded_actions{ :style => 'display: none' }
+      %a.full{ :href => project_task_path(project, task) } Full view
+      %a.hide{ :href => '#' } Hide comments
+    = link_to h(task), [project, task], :class => :name
+    - unless task.closed?
+      - if task.due_on
+        %span.assigned_date= due_on(task)
+      - if task.assigned
+        %span.assigned_user= link_to h(task.assigned.short_name), user_path(task.assigned.user)
+    - unless @current_project
+      .extended
         %span.project
           = link_to h(project), project
           &rarr;
         %span.task_list
           = link_to h(task_list), [project, task_list]
-    .clear
+  .clear

@@ -108,7 +108,7 @@ class ApiV1::APIController < ApplicationController
   def handle_api_success(object,options={})
     respond_to do |f|
       if options.delete(:is_new) || false
-        f.json { render :json => api_wrap(object).to_json, :status => options.delete(:status) || :created }
+        f.json { render :json => api_wrap(object, options).to_json, :status => options.delete(:status) || :created }
       else
         f.json { head(options.delete(:status) || :ok) }
       end

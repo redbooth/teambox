@@ -28,7 +28,7 @@ module BannerHelper
     link_name = truncate(h(task.name), :length => 20)
     link_name << " (#{content_tag(:span,h(task.assigned.user.short_name))})" if task.open? && task.assigned
     link_to link_name,
-      project_task_list_task_path(task.project,task.task_list,task),
+      project_task_path(task.project, task),
       :class => "task_status_#{task.status_name}"
   end
 

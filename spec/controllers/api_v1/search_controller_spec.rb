@@ -6,7 +6,7 @@ describe ApiV1::SearchController do
       @user = login_as(:confirmed_user)
       @project = Factory.create :project, :user => @user, :permalink => 'important-project'
       @comment = Factory.create :comment, :project => @project
-      @results = mock('results', {:to_api_hash => [@comment.to_api_hash]})
+      @results = mock('results', {:map => [@comment.to_api_hash], :is_a? => true})
     end
     
     it "searches across all user's projects" do
@@ -15,14 +15,14 @@ describe ApiV1::SearchController do
       p1 = @project
       p2 = Factory.create :project, :user => @user
       
-      Comment.should_receive(:search).
+      ThinkingSphinx.should_receive(:search).
         with(*search_params([p1.id, p2.id])).and_return(@results)
       
       get :index, :q => 'important'
       response.should be_success
+      JSON.parse(response.body)['objects'].length.should == 1
       
       assigns[:search_terms].should == 'important'
-      assigns[:comments].should == @results
     end
     
     it "rejects unauthorized search" do
@@ -40,13 +40,12 @@ describe ApiV1::SearchController do
       owner.stub!(:can_search?).and_return(true)
       controller.stub!(:project_owner).and_return(owner)
       
-      Comment.should_receive(:search).
+      ThinkingSphinx.should_receive(:search).
         with(*search_params(@project.id)).and_return(@results)
       
       get :index, :q => 'important', :project_id => @project.permalink
       response.should be_success
-      
-      assigns[:comments].should == @results
+      JSON.parse(response.body)['objects'].length.should == 1
     end
     
     it "reject searching in unauthorized project" do
@@ -57,8 +56,9 @@ describe ApiV1::SearchController do
     end
     
     def search_params(project_ids)
-      ['important', { :retry_stale => true, :order => 'created_at DESC',
+      ['important', { :retry_stale => true, :order => 'updated_at DESC',
         :with => { :project_id => project_ids },
+        :classes => [Conversation, Task, Page],
         :page => nil}]
     end
   end

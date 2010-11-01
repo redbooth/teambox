@@ -42,11 +42,11 @@ en:
     task_list: "Task list %{id} not found in this project."
     task: "Task %{id} not found in this project."
   deleted:
-    conversation: "Deleted <b>%{name}</b> conversation"
-    task: "Deleted <b>%{name}</b> task"
-    task_list: "Deleted <b>%{name}</b> task list"
-    page: "Deleted <b>%{name}</b> page"
-    upload: "Deleted <b>%{name}</b> file"
+    conversation: "Deleted %{name} conversation"
+    task: "Deleted %{name} task"
+    task_list: "Deleted %{name} task list"
+    page: "Deleted %{name} page"
+    upload: "Deleted %{name} file"
     person: "%{name} is no longer in the project"
     left_project: "You are no longer in this project"
   activities:
@@ -127,7 +127,7 @@ en:
       title: Reset Password
       login_link_sent: "We just sent you an email to %{email} so you can retrieve your password."
       follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
-      not_found: "The email <b>%{email}</b> doesn't belong to any Teambox user. Maybe you misspelt it?"
+      not_found: "The email %{email} doesn't belong to any Teambox user. Maybe you misspelt it?"
       change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"
     reset:
       title: You can now reset your password
@@ -169,6 +169,7 @@ en:
       phone_for_integration: Optional. For future SMS integration
       password: Password
       password_confirmation: Confirm Password
+      old_password: Old password
       sunday: Sunday
       monday: Monday
       betatester: Use beta features (less stable) before they're released.
@@ -446,6 +447,7 @@ en:
       invite_people: Invite people to the project
       invite_by_email: Invite users by entering their email addresses
       not_allowed: "You can't create any more projects with your current account."
+      sending: Creating the project…
     edit:
       title_settings: General Settings
       title_picture: Project Logo
@@ -730,6 +732,7 @@ en:
     assigned:
       assigned_to: "Assigned to %{user}"
       myself: "Assign to myself (%{user})"
+      unassigned: Cleared the assigned user
     due_on:
       due_on: Due on
       today: Today
@@ -737,9 +740,11 @@ en:
     create: Add Task
     edit:
       submit: Update Task
+      sending: Updating the task…
     new:
       title: New Task
       submit: Add Task
+      sending: Creating the task…
     show:
       title: "Task: %{name}"
     link:
@@ -810,7 +815,7 @@ en:
     buttons:
       new_note: Text
       new_divider: Divider
-      new_upload: Upload
+      new_upload: Image or file
       new_task_list: Task List
     new:
       title: New Page
@@ -867,6 +872,7 @@ en:
       start_on: Starts on... <i>optional</i>
       finish_on: End on... <i>optional</i>
     filter:
+      by_name: Filter tasks by name
       anybody: Anybody
       my_tasks: My tasks
       unassigned: Unassigned
@@ -1305,6 +1311,13 @@ en:
       my_tasks: "More tasks assigned to you in %{project}"
     upload:
       file: "File:"
+    bounce:
+      subject: "Error sending email to Teambox"
+      user_not_found_error: "This email address is not associated with any Teambox account."
+      not_project_member_error: "You are not a member of the specified Teambox project."
+      project_not_found_error: "There is no project on Teambox corresponding to this email address."
+      target_not_found_error: "We couldn't find the item where you are trying to post your comment."
+      not_delivered: "Your email couldn't be processed by Teambox. View our documentation to learn which types of email we accept: %{link}"
 
   weakling:
     default: Must be at least 5 characters
@@ -1632,5 +1645,9 @@ en:
     your_account_is_not_linked: "Your %{provider} profile is <strong>not linked</strong> to Teambox."
     link_account: Link account.
     unlink_account: Unlink account.
-    user_already_exists_by_email: The user %{email} has already a Teambox account.<br/>Log in with that account and link it from your Settings panel.
-    user_already_exists_by_login: The user %{login} has already a Teambox account.<br/>Log in with that account and link it from your Settings panel.
+    user_exists: This %{provider} profile is not linked with any account yet.
+    user_already_exists_by_email: "Link '%{email}' to your Teambox account"
+    user_already_exists_by_login: "The username '%{login}' is already taken"
+    user_exists_instruction: If you already have a Teambox account, log in to link it automatically to your %{provider} profile.
+    user_exists_is_not_yours: If you don't own the account '%{account}', %{signup_for_a_new_account}.
+    signup_for_a_new_account: click here to sign up for a new account

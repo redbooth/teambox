@@ -1,9 +1,9 @@
 - thread ||= activity.thread # you can pass :thread or :activity into the partial
-- thread_id = "#{thread.class.to_s}_#{thread.id}"
-- thread_link = thread.is_a?(Task) ? [thread.task_list.project, thread.task_list, thread] : [thread.project, thread]
+- thread_class = thread.class.name.underscore
+- thread_id = "#{thread_class}_#{thread.id}"
 - comments = thread.comments
 
-.thread[thread]{ :'data-id' => thread.id }
+.thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}" }
   - if thread.is_a?(Conversation) and thread.simple and comments.size > 0
     = render comments.pop, :simpleconv => true
   - else
@@ -14,22 +14,22 @@
         = posted_date(thread.created_at)
       %p.starter
         = link_to(h(thread.user.name), thread.user) if thread.user
-        = t("activities.thread.created.#{thread.class.to_s.downcase}", :project => h(thread.project.name))
+        = t("activities.thread.created.#{thread_class}", :project => h(thread.project.name))
         = activity_project_link(thread.project)
       %p.thread_title
-        = link_to h(thread), thread_link, :class => thread.class.to_s.downcase
+        = link_to h(thread), [thread.project, thread], :class => thread_class
         - if thread.is_a?(Task)
           = t('.on_task_list')
           = link_to h(thread.task_list), [thread.task_list.project, thread.task_list], :class => :task_list
 
   .comments
     = render 'activities/thread_comments', :comments => comments, :thread => thread
-  
+
   - if thread.is_a? Task
-    - form_for [thread.project, thread], :html => {:multipart => true, :id => nil, :class => 'new_comment edit_task', :'data-project-id' => thread.project.id, :'data-remote' => true} do |form|
+    - form_for [thread.project, thread], :html => {:multipart => true, :id => nil, :class => 'new_comment edit_task', :'data-project-id' => thread.project_id, :'data-remote' => true} do |form|
       - form.fields_for :comments, thread.comments.build do |comment_fields|
-        = render 'comments/fields', :f => comment_fields, :task_form => form, :placeholder => t("comments.new.#{thread.class.name.underscore}")
+        = render 'comments/fields', :f => comment_fields, :task_form => form, :placeholder => t("comments.new.#{thread_class}")
       
   - else
-    - form_for [thread.project, thread, thread.comments.build], :html => {:multipart => true, :id => nil, :'data-project-id' => thread.project.id, :'data-remote' => true} do |form|
-      = render 'comments/fields', :f => form, :placeholder => t("comments.new.#{thread.class.name.underscore}")
+    - form_for [thread.project, thread, thread.comments.build], :html => {:multipart => true, :id => nil, :'data-project-id' => thread.project_id, :'data-remote' => true} do |form|
+      = render 'comments/fields', :f => form, :placeholder => t("comments.new.#{thread_class}")

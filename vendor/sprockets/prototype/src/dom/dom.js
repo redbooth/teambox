@@ -154,7 +154,18 @@ if (!Node.ELEMENT_NODE) {
  *      var a = new Element('a', {'class': 'foo', href: '/foo.html'}).update("Next page");
 **/
 
-(function(global) {
+(function(global) {  
+  // For performance reasons, we create new elements by cloning a "blank"
+  // version of a given element. But sometimes this causes problems. Skip
+  // the cache if:
+  //   (a) We're creating a SELECT element (troublesome in IE6);
+  //   (b) We're setting the `type` attribute on an INPUT element
+  //       (troublesome in IE9).
+  function shouldUseCache(tagName, attributes) {
+    if (tagName === 'select') return false;
+    if ('type' in attributes) return false;
+    return true;
+  }
   
   var HAS_EXTENDED_CREATE_ELEMENT_SYNTAX = (function(){
     try {
@@ -172,13 +183,19 @@ if (!Node.ELEMENT_NODE) {
     attributes = attributes || { };
     tagName = tagName.toLowerCase();
     var cache = Element.cache;
+    
     if (HAS_EXTENDED_CREATE_ELEMENT_SYNTAX && attributes.name) {
       tagName = '<' + tagName + ' name="' + attributes.name + '">';
-      delete attributes.name;
+      delete attributes.name;      
       return Element.writeAttribute(document.createElement(tagName), attributes);
     }
+    
     if (!cache[tagName]) cache[tagName] = Element.extend(document.createElement(tagName));
-    return Element.writeAttribute(cache[tagName].cloneNode(false), attributes);
+    
+    var node = shouldUseCache(tagName, attributes) ? 
+     cache[tagName].cloneNode(false) : document.createElement(tagName);
+    
+    return Element.writeAttribute(node, attributes);
   };
   
   Object.extend(global.Element, element || { });
@@ -188,6 +205,18 @@ if (!Node.ELEMENT_NODE) {
 
 Element.idCounter = 1;
 Element.cache = { };
+
+// Performs cleanup on an element before it is removed from the page.
+// See `Element#purge`.
+Element._purgeElement = function(element) {
+  var uid = element._prototypeUID;
+  if (uid) {
+    // Must go first because it relies on Element.Storage.
+    Element.stopObserving(element);
+    element._prototypeUID = void 0;
+    delete Element.Storage[uid];
+  }
+}
 
 /**
  *  mixin Element.Methods
@@ -449,6 +478,11 @@ Element.Methods = {
    *  Note that this method allows seamless content update of table related 
    *  elements in Internet Explorer 6 and beyond.
    *  
+   *  Any nodes replaced with `Element.update` will first have event
+   *  listeners unregistered and storage keys removed. This frees up memory
+   *  and prevents leaks in certain versions of Internet Explorer. (See
+   *  [[Element.purge]]).
+   *  
    *  ##### Examples
    *  
    *      language: html
@@ -551,7 +585,15 @@ Element.Methods = {
 
     function update(element, content) {
       element = $(element);
-
+      var purgeElement = Element._purgeElement;
+      
+      // Purge the element's existing contents of all storage keys and
+      // event listeners, since said content will be replaced no matter
+      // what.
+      var descendants = element.getElementsByTagName('*'),
+       i = descendants.length;
+      while (i--) purgeElement(descendants[i]);
+      
       if (content && content.toElement)
         content = content.toElement();
 
@@ -2459,211 +2501,6 @@ Element.Methods = {
   },
 
   /**
-   *  Element.cumulativeOffset(@element) -> Array
-   *
-   *  Returns the offsets of `element` from the top left corner of the
-   *  document, in pixels.
-   *
-   *  Returns an array in the form of `[leftValue, topValue]`. Also accessible
-   *  as properties: `{ left: leftValue, top: topValue }`.
-   *
-   *  ##### Example
-   *
-   *  Assuming the div `foo` is at (25,40), then:
-   *
-   *      var offset = $('foo').cumulativeOffset();
-   *      offset[0];
-   *      // -> 25
-   *      offset[1];
-   *      // -> 40
-   *      offset.left;
-   *      // -> 25
-   *      offset.top;
-   *      // -> 40
-  **/
-  cumulativeOffset: function(element) {
-    var valueT = 0, valueL = 0;
-    if (element.parentNode) {
-      do {
-        valueT += element.offsetTop  || 0;
-        valueL += element.offsetLeft || 0;
-        element = element.offsetParent;
-      } while (element);
-    }
-    return Element._returnOffset(valueL, valueT);
-  },
-
-  /**
-   *  Element.positionedOffset(@element) -> Array
-   *
-   *  Returns `element`'s offset relative to its closest positioned ancestor
-   *  (the element that would be returned by [[Element.getOffsetParent]]).
-   *
-   *  Returns an array in the form of `[leftValue, topValue]`. Also accessible
-   *  as properties: `{ left: leftValue, top: topValue }`.
-   *  
-   *  Calculates the cumulative `offsetLeft` and `offsetTop` of an element and
-   *  all its parents _until_ it reaches an element with a position other than
-   *  `static`.
-   *  
-   *  Note that all values are returned as _numbers only_ although they are
-   *  _expressed in pixels_.
-  **/
-  positionedOffset: function(element) {
-    var valueT = 0, valueL = 0;
-    do {
-      valueT += element.offsetTop  || 0;
-      valueL += element.offsetLeft || 0;
-      element = element.offsetParent;
-      if (element) {
-        if (element.tagName.toUpperCase() == 'BODY') break;
-        var p = Element.getStyle(element, 'position');
-        if (p !== 'static') break;
-      }
-    } while (element);
-    return Element._returnOffset(valueL, valueT);
-  },
-
-  /**
-   *  Element.absolutize(@element) -> Element
-   *
-   *  Turns `element` into an absolutely-positioned element _without_ changing
-   *  its position in the page layout.
-  **/
-  absolutize: function(element) {
-    element = $(element);
-    if (Element.getStyle(element, 'position') == 'absolute') return element;
-
-    var offsets = Element.positionedOffset(element),
-        top     = offsets[1],
-        left    = offsets[0],
-        width   = element.clientWidth,
-        height  = element.clientHeight;
-
-    element._originalLeft   = left - parseFloat(element.style.left  || 0);
-    element._originalTop    = top  - parseFloat(element.style.top || 0);
-    element._originalWidth  = element.style.width;
-    element._originalHeight = element.style.height;
-
-    element.style.position = 'absolute';
-    element.style.top    = top + 'px';
-    element.style.left   = left + 'px';
-    element.style.width  = width + 'px';
-    element.style.height = height + 'px';
-    return element;
-  },
-
-  /**
-   *  Element.relativize(@element) -> Element
-   *
-   *  Turns `element` into a relatively-positioned element without changing
-   *  its position in the page layout.
-   *
-   *  Used to undo a call to [[Element.absolutize]].
-  **/
-  relativize: function(element) {
-    element = $(element);
-    if (Element.getStyle(element, 'position') == 'relative') return element;
-
-    element.style.position = 'relative';
-    var top  = parseFloat(element.style.top  || 0) - (element._originalTop || 0),
-        left = parseFloat(element.style.left || 0) - (element._originalLeft || 0);
-
-    element.style.top    = top + 'px';
-    element.style.left   = left + 'px';
-    element.style.height = element._originalHeight;
-    element.style.width  = element._originalWidth;
-    return element;
-  },
-
-  /**
-   *  Element.cumulativeScrollOffset(@element) -> Array
-   *
-   *  Calculates the cumulative scroll offset (in pixels) of an element in
-   *  nested scrolling containers.
-   *
-   *  Returns an array in the form of `[leftValue, topValue]`. Also accessible
-   *  as properties: `{ left: leftValue, top: topValue }`.
-   *
-   *  ##### Example
-   *
-   *  Assuming the div `foo` is at scroll offset (0,257), then:
-   *
-   *      var offset = $('foo').cumulativeOffset();
-   *      offset[0];
-   *      // -> 0
-   *      offset[1];
-   *      // -> 257
-   *      offset.left;
-   *      // -> 0
-   *      offset.top;
-   *      // -> 257
-  **/
-  cumulativeScrollOffset: function(element) {
-    var valueT = 0, valueL = 0;
-    do {
-      valueT += element.scrollTop  || 0;
-      valueL += element.scrollLeft || 0;
-      element = element.parentNode;
-    } while (element);
-    return Element._returnOffset(valueL, valueT);
-  },
-
-  /**
-   *  Element.getOffsetParent(@element) -> Element
-   *
-   *  Returns `element`'s closest _positioned_ ancestor. If none is found, the
-   *  `body` element is returned.
-   *  
-   *  The returned element is `element`'s
-   *  [CSS containing block](http://www.w3.org/TR/CSS21/visudet.html#containing-block-details).
-  **/
-  getOffsetParent: function(element) {
-    if (element.offsetParent) return $(element.offsetParent);
-    if (element == document.body) return $(element);
-
-    while ((element = element.parentNode) && element != document.body)
-      if (Element.getStyle(element, 'position') != 'static')
-        return $(element);
-
-    return $(document.body);
-  },
-
-  /**
-   *  Element.viewportOffset(@element) -> Array
-   *
-   *  Returns the X/Y coordinates of element relative to the viewport.
-   *
-   *  Returns an array in the form of `[leftValue, topValue]`. Also accessible
-   *  as properties: `{ left: leftValue, top: topValue }`.
-  **/
-  viewportOffset: function(forElement) {
-    var valueT = 0, 
-        valueL = 0,
-        element = forElement;
-        
-    do {
-      valueT += element.offsetTop  || 0;
-      valueL += element.offsetLeft || 0;
-
-      // Safari fix
-      if (element.offsetParent == document.body &&
-        Element.getStyle(element, 'position') == 'absolute') break;
-
-    } while (element = element.offsetParent);
-
-    element = forElement;
-    do {
-      if (!Prototype.Browser.Opera || (element.tagName && (element.tagName.toUpperCase() == 'BODY'))) {
-        valueT -= element.scrollTop  || 0;
-        valueL -= element.scrollLeft || 0;
-      }
-    } while (element = element.parentNode);
-
-    return Element._returnOffset(valueL, valueT);
-  },
-
-  /**
    *  Element.clonePosition(@element, source[, options]) -> Element
    *  - source (Element | String): The source element (or its ID).
    *  - options (Object): The position fields to clone.
@@ -2817,8 +2654,6 @@ if (Prototype.Browser.Opera) {
   Element.Methods.getStyle = Element.Methods.getStyle.wrap(
     function(proceed, element, style) {
       switch (style) {
-        case 'left': case 'top': case 'right': case 'bottom':
-          if (proceed(element, 'position') === 'static') return null;
         case 'height': case 'width':
           // returns '0px' for hidden elements; we want it to return null
           if (!Element.visible(element)) return null;
@@ -2857,42 +2692,6 @@ if (Prototype.Browser.Opera) {
 }
 
 else if (Prototype.Browser.IE) {
-  // IE doesn't report offsets correctly for static elements, so we change them
-  // to "relative" to get the values, then change them back.
-  Element.Methods.getOffsetParent = Element.Methods.getOffsetParent.wrap(
-    function(proceed, element) {
-      element = $(element);
-      // IE throws an error if element is not in document
-      if (!element.parentNode) return $(document.body);
-      var position = element.getStyle('position');
-      if (position !== 'static') return proceed(element);
-      element.setStyle({ position: 'relative' });
-      var value = proceed(element);
-      element.setStyle({ position: position });
-      return value;
-    }
-  );
-
-  $w('positionedOffset viewportOffset').each(function(method) {
-    Element.Methods[method] = Element.Methods[method].wrap(
-      function(proceed, element) {
-        element = $(element);
-        if (!element.parentNode) return Element._returnOffset(0, 0);
-        var position = element.getStyle('position');
-        if (position !== 'static') return proceed(element);
-        // Trigger hasLayout on the offset parent so that IE6 reports
-        // accurate offsetTop and offsetLeft values for position: fixed.
-        var offsetParent = element.getOffsetParent();
-        if (offsetParent && offsetParent.getStyle('position') === 'fixed')
-          offsetParent.setStyle({ zoom: 1 });
-        element.setStyle({ position: 'relative' });
-        var value = proceed(element);
-        element.setStyle({ position: position });
-        return value;
-      }
-    );
-  });
-
   Element.Methods.getStyle = function(element, style) {
     element = $(element);
     style = (style == 'float' || style == 'cssFloat') ? 'styleFloat' : style.camelize();
@@ -3128,23 +2927,6 @@ else if (Prototype.Browser.WebKit) {
       } catch (e) { }
 
     return element;
-  };
-
-  // Safari returns margins on body which is incorrect if the child is absolutely
-  // positioned.  For performance reasons, redefine Element#cumulativeOffset for
-  // KHTML/WebKit only.
-  Element.Methods.cumulativeOffset = function(element) {
-    var valueT = 0, valueL = 0;
-    do {
-      valueT += element.offsetTop  || 0;
-      valueL += element.offsetLeft || 0;
-      if (element.offsetParent == document.body)
-        if (Element.getStyle(element, 'position') == 'absolute') break;
-
-      element = element.offsetParent;
-    } while (element);
-
-    return Element._returnOffset(valueL, valueT);
   };
 }
 
@@ -3519,7 +3301,8 @@ Element.addMethods = function(methods) {
       "FORM":     Object.clone(Form.Methods),
       "INPUT":    Object.clone(Form.Element.Methods),
       "SELECT":   Object.clone(Form.Element.Methods),
-      "TEXTAREA": Object.clone(Form.Element.Methods)
+      "TEXTAREA": Object.clone(Form.Element.Methods),
+      "BUTTON":   Object.clone(Form.Element.Methods)
     });
   }
 
@@ -3715,8 +3498,8 @@ Element.addMethods({
       uid = 0;
     } else {
       if (typeof element._prototypeUID === "undefined")
-        element._prototypeUID = [Element.Storage.UID++];
-      uid = element._prototypeUID[0];
+        element._prototypeUID = Element.Storage.UID++;
+      uid = element._prototypeUID;
     }
 
     if (!Element.Storage[uid])
@@ -3786,5 +3569,26 @@ Element.addMethods({
       }
     }
     return Element.extend(clone);
+  },
+  
+  /**
+   *  Element.purge(@element) -> null
+   *  
+   *  Removes all event listeners and storage keys from an element.
+   *  
+   *  To be used just before removing an element from the page.
+  **/
+  purge: function(element) {
+    if (!(element = $(element))) return;    
+    var purgeElement = Element._purgeElement;
+    
+    purgeElement(element);
+
+    var descendants = element.getElementsByTagName('*'),
+     i = descendants.length;
+
+    while (i--) purgeElement(descendants[i]);
+
+    return null;
   }
 });

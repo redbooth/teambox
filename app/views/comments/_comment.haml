@@ -2,8 +2,7 @@
 - simpleconv = false unless local_assigns[:simpleconv]
 
 - cache_comment(comment, threaded, simpleconv) do
-  %div[comment]{ :'data-editable-before' => datetime_ms(15.minutes.since(comment.created_at)),
-                  :'data-user' => comment.user.id, :'data-project' => comment.project.id }
+  %div[comment]{ comment_data(comment) }
     .info
       - if threaded
         = micro_avatar(comment.user)
@@ -18,7 +17,8 @@
             - case comment.target
             - when Conversation
               = link_to t('comments.actions.conversation_url'), project_conversation_path(comment.project, comment.target)
-            - unless comment.target.is_a?(Project) or comment.target.is_a?(TaskList) # legacy comments targeting a Project or a TaskList
+            - # There are legacy comments targeting projects and task lists, so we need an if here:
+            - if comment.target.is_a?(Conversation) or comment.target.is_a?(Task)
               = link_to t('comments.actions.edit'), [:edit, comment.project, comment.target, comment],
                   :rel => 'facebox', :'data-uneditable-message' => t('.cannot_edit'), :class => :edit
               = link_to t('common.delete'), [comment.project, comment.target, comment], :'data-method' => 'delete',
@@ -29,7 +29,15 @@
           - if comment.task_comment?
             = comment_task_status(comment)
           - if comment.hours?
-            = content_tag(:span, friendly_hours_value(comment.hours), :class => :hours)
+            = content_tag(:span, human_hours(comment.hours), :class => :hours)
+        
+        - if comment.task_comment? and comment.assigned_transition?
+          %p.assigned_transition
+            - if comment.assigned_id?
+              = t('tasks.assigned.assigned_to', :user => comment.assigned.user.name)
+            - else
+              = t('tasks.assigned.unassigned')
+        
         ~ comment.body_html
 
       - if comment.uploads.any?

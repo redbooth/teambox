@@ -288,6 +288,14 @@ class ApplicationController < ActionController::Base
     def add_chrome_frame_header
       headers['X-UA-Compatible'] = 'chrome=1' if chrome_frame? && request.format == :html
     end
+
+    def redirect_back_or_to(path)
+      begin
+        redirect_to :back
+      rescue ActionController::RedirectBackError
+        redirect_to path
+      end
+    end
     
     def chrome_frame?
       request.user_agent =~ /chromeframe/

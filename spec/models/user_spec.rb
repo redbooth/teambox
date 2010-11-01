@@ -11,6 +11,7 @@ describe User do
   it { should validate_presence_of(:login) }
   it { should validate_length_of(:login, :within => 3..40) }
   it { should validate_uniqueness_of(:login) }
+  it { should validate_confirmation_of(:password) }
 
   # TODO: Validates format of login, name and email
 

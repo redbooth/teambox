@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
                   :biography,
                   :password,
                   :password_confirmation,
+                  :old_password,
                   :time_zone,
                   :locale,
                   :first_day_of_week,
@@ -56,7 +57,7 @@ class User < ActiveRecord::Base
                   :notify_tasks,
                   :wants_task_reminder
 
-  attr_accessor   :activate
+  attr_accessor   :activate, :old_password
 
   before_validation :sanitize_name
   before_destroy :rename_as_deleted
@@ -279,12 +280,11 @@ class User < ActiveRecord::Base
     update_attribute :email, Regexp.last_match(1).to_s if email =~ DELETED_REGEX
   end
 
-  def link_to_app(provider, profile)
+  def link_to_app(provider, uid)
     link = AppLink.new
     link.user              = self
     link.provider          = provider
-    link.app_user_id       = profile[:id]
-    link.custom_attributes = profile[:original]
+    link.app_user_id       = uid
     link.save!
   end
 
