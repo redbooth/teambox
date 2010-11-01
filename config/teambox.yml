@@ -74,6 +74,8 @@ defaults: &defaults
   # This will allow users to post answers and comments by email.
   # When set to true, "reply above this line" notice will be displayed where relevant and accept emails.
   allow_incoming_email: false
+  
+  delay_data_processing: false
 
   # You will need to:
   # * Setup catch-all address for email received for any username of the incoming mail server.

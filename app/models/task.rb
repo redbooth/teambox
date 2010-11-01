@@ -29,6 +29,7 @@ class Task < RoleRecord
   
   # set by controller to indicate user that's doing task updating
   attr_accessor :updating_user
+  attr_accessor :updating_date
   
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_save :set_comments_author, :if => :updating_user
@@ -269,6 +270,8 @@ class Task < RoleRecord
 
   def save_changes_to_comment # before_save
     comment = comments.detect(&:new_record?) || comments.build_by_user(updating_user)
+    
+    comment.created_at = @updating_date if @updating_date
     
     if status_changed? or self.new_record?
       comment.status = self.status

@@ -120,6 +120,24 @@ def make_a_typical_project
     @project
 end
 
+def make_the_teambox_dump
+  @project = Factory(:project)
+  @task_list = Factory(:task_list, :project => @project)
+  @conversation = Factory(:conversation, :project => @project)
+  @task = Factory(:task, :task_list_id => @task_list.id, :project => @project)
+end
+
+def make_and_dump_the_teambox_dump
+  make_the_teambox_dump
+  @teambox_dump = dump_test_data
+  
+  @user_list = User.all.map(&:login)
+  
+  Organization.destroy_all
+  User.destroy_all
+  Project.destroy_all
+end
+
 def decode_test_csv(body)
   CSV.parse(body)
 end

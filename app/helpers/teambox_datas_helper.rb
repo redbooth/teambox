@@ -18,4 +18,18 @@ module TeamboxDatasHelper
       ["#{organization}", organization.permalink]
     end
   end
+  
+  def fields_for_teambox_import(form, data)
+    render :partial => 'teambox_datas/import_fields', :locals => {:f => form, :data => data}
+  end
+  
+  def fields_for_teambox_export(form, data)
+    render :partial => 'teambox_datas/export_fields', :locals => {:f => form, :data => data}
+  end
+  
+  def map_table_for_data(teambox_data)
+    render :partial => 'user_map',
+           :collection => teambox_data.user_map.map{|key,value|[key,value]},
+           :locals => {:users => teambox_data.users_lookup}
+  end
 end

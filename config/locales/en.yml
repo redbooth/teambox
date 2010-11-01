@@ -1007,20 +1007,28 @@ en:
   teambox_datas:
     new_import:
       title: "Import data"
-      select_file: Please choose a file containing your teambox data.
       submit: Import data
+    import_fields:
+      select_file: Please choose a file containing your data.
+      service: "Which service did you export your data from?"
+      please_supply_user_map: We detected the following users in your import. Please confirm which users correspond to which user on Teambox.
+      in_organization: "Put all projects in this organization"
+      user: User
+      teambox_user: Teambox user
     new_export:
       title: "Export data"
-      description: "Please select which projects you wish to export"
       submit: Export data
+    export_fields:
+      description: "Please select which projects you wish to export."
     index:
-      title: "Your data"
-      imports: "Imports"
-      exports: "Exports"
+      title: "Import or export your data"
+      imports: "Import data from a file"
+      imports_explain: "You may import Teambox backup files, or Basecamp projects."
+      exports: "Export your projects"
       no_imports: "There are no recent imports."
       no_exports: "There are no recent exports."
     show_export:
-      title: "Your data"
+      title: "Import / Export"
       projects: "Projects exported:"
       download: "Download export"
     data:
@@ -1031,10 +1039,8 @@ en:
       confirm_delete: "Are you sure you want to delete this data?"
     show_import:
       title: "Import data"
-      please_supply_user_map: We detected the following users in your import. Please confirm which users correspond to which user on Teambox.
-      user: User
-      teambox_user: Teambox user
       submit: Import
+      projects: "Imported projects"
       import_error: "There was an error loading your import. Please try again."
     column:
       description: "Here you can move your data in and out of Teambox."
@@ -1174,6 +1180,7 @@ en:
       notifications: Notifications
       plans_and_billing: Plans and Billing
       delete_account: Delete Account...
+      your_data: Import / Export
     task_navigation:
       all_tasks: "All Tasks"
       unarchived_tasks: "Unarchived Tasks"
@@ -1284,6 +1291,16 @@ en:
       plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
       report_abuse: "This email was sent to you at your contact's request. Please report any abuse."
       subject_without_project: "%{name} invited you to Teambox"
+    teamboxdata:
+        hey: "Hey, %{user_name}!"
+        data_imported: "Your data has been successfully imported into Teambox. To view details, please visit the following link:"
+        data_import_failed: "Your data could not be imported into Teambox. Please check that the data you uploaded is valid. To try again, visit the following link:"
+        data_exported: "Your data has been exported from Teambox, and is available as a download from the following link:"
+        data_export_failed: "Your data could not be exported from Teambox. To try again, please visit the following link:"
+        exported: "Your data is ready for download"
+        export_failed: "Your data could not be exported"
+        imported: "Your data has been imported"
+        import_failed: "Your data could not be imported"
     confirm:
       subject: "Get started with Teambox"
       hey: "Hey, %{user_name}!"

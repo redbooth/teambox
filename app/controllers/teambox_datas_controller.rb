@@ -14,10 +14,12 @@ class TeamboxDatasController < ApplicationController
   
   def show
     respond_to do |f|
-      if @data.type_name == :import and @data.data == nil
-        @data.destroy
-        flash[:error] = t('teambox_datas.show_import.import_error')
-        f.html { redirect_to teambox_datas_path }
+      if @data.type_name == :import and @data.need_data? and @data.data == nil
+        @data.status_name = :uploading
+        @data.processed_data_file_name = nil
+        @data.save
+        flash.now[:error] = t('teambox_datas.show_import.import_error')
+        f.html { render view_for_data(:show) }
       else
         f.html { render view_for_data(:show) }
       end
@@ -25,8 +27,7 @@ class TeamboxDatasController < ApplicationController
   end
   
   def new
-    # create import/export
-    @data = current_user.teambox_datas.build()
+    @data = current_user.teambox_datas.build(:service => 'teambox')
     @data.type_name = params[:type]
     
     respond_to do |f|
@@ -41,20 +42,26 @@ class TeamboxDatasController < ApplicationController
       if @data.save
         f.html { redirect_to teambox_data_path(@data) }
       else
+        flash.now[:error] = "There were errors with the information you supplied!"
         f.html { render view_for_data(:new) }
       end
     end
   end
   
   def update
-    @data.ready = true
-    
     respond_to do |f|
-      if @data.update_attributes(params[:teambox_data])
-        f.html { redirect_to teambox_datas_path }
-      else
-        flash.now[:error] = "There were errors with the information you supplied!"
+      if !@data.processing? and !@data.update_attributes(params[:teambox_data])
+        if @data.status_name == :uploading
+          flash.now[:error] = t('teambox_datas.show_import.import_error')
+        end
         f.html { render view_for_data(:show) }
+      else
+        if @data.processing?
+          f.html { redirect_to teambox_data_path(@data) }
+        else
+          flash.now[:error] = "There were errors with the information you supplied!"
+          f.html { render view_for_data(:show) }
+        end
       end
     end
   end
