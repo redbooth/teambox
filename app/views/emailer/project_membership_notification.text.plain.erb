@@ -1,0 +1,10 @@
+<%= dont_answer %>
+
+<%= t('emailer.project_membership_notification.you_have_been_added_to', :project => h(@project.name)) %>
+
+<%= t('emailer.project_membership_notification.project_link', :project => h(@project.name)) %>:
+<%= project_url(@project) %>
+
+<%= t('emailer.invitation.current_users') %> <%= @project.people.collect { |p| h(p.name) }.to_sentence %>
+
+<%= t('emailer.invitation.report_abuse') %>
