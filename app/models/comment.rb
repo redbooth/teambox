@@ -6,11 +6,11 @@ class Comment < ActiveRecord::Base
   
   concerned_with :tasks, :finders, :conversions
 
-  belongs_to :user
+  belongs_to :user, :with_deleted => true
   belongs_to :project
   belongs_to :target, :polymorphic => true, :counter_cache => true
-  belongs_to :assigned, :class_name => 'Person'
-  belongs_to :previous_assigned, :class_name => 'Person'
+  belongs_to :assigned, :class_name => 'Person', :with_deleted => true
+  belongs_to :previous_assigned, :class_name => 'Person', :with_deleted => true
   
   def task_comment?
     self.target_type == "Task"
@@ -87,12 +87,7 @@ class Comment < ActiveRecord::Base
 
     has user_id, project_id, created_at
   end
-  
-  # FIXME: avoid overriding the actual association
-  def user
-    user_id and User.find_with_deleted(user_id)
-  end
-  
+
   def duplicate_of?(another)
     [:body, :assigned_id, :status, :hours].all? { |prop|
       self.send(prop) == another.send(prop)
