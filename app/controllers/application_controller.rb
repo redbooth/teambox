@@ -10,12 +10,12 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password
 
-  before_filter :rss_token, 
+  before_filter :set_locale,
+                :rss_token,
                 :confirmed_user?, 
                 :load_project, 
                 :load_organizations,
                 :login_required, 
-                :set_locale, 
                 :touch_user, 
                 :belongs_to_project?,
                 :load_community_organization,
