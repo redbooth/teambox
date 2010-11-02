@@ -13,6 +13,6 @@
       user_invitations_path(:user_id => current_user.id)
 
   %li
-    = link_to t('.help'), "http://guide.teambox.com", :target => "_blank"
+    = link_to t('.help'), "http://guide.teambox.com##{controller_name}", :target => "_blank"
 
   %li= link_to t('.logout'), logout_path
