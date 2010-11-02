@@ -1150,6 +1150,7 @@ en:
       login: Login
       project_invitations: "Invitations (%{count})"
       settings: Settings
+      help: Help
     public_navigation:
       home: Teambox
       tour: Tour
