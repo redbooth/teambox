@@ -231,6 +231,16 @@ describe Task do
       comment.previous_assigned_id.should == person2.id
       comment.assigned_id.should == person3.id
     end
+
+    it "displays assigned users even when they are destroyed" do
+      user = Factory(:mislav)
+      project = Factory(:project)
+      person = Factory(:person, :project => project, :user => user)
+      task = Factory(:task, :assigned => person, :project => project)
+      person.destroy_without_callbacks # We don't use destroy because we want to avoid the nullify from Person#tasks association
+      task.reload.assigned.user.name.should == "Mislav Marohnić"
+    end
+
   end
 
   describe "due_today scope" do
