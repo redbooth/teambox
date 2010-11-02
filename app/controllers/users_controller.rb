@@ -193,6 +193,11 @@ class UsersController < ApplicationController
     redirect_to account_linked_accounts_path
   end
 
+  def disable_splash
+    current_user.update_attribute :splash_screen, false
+    head :ok
+  end
+
   private
     def find_user
       unless @user = ( User.find_by_login(params[:id]) || User.find_by_id(params[:id]) )

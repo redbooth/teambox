@@ -35,6 +35,7 @@ end
 
 Given /I have confirmed my email/ do
   @current_user.update_attribute(:confirmed_user,true)
+  @current_user.update_attribute(:splash_screen,false)
 end
 
 Given /I have never confirmed my email/ do

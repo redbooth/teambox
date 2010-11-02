@@ -61,7 +61,7 @@ module UsersHelper
   protected
 
     def json_user
-      { :id => current_user.id, :username => current_user.login }.to_json
+      { :id => current_user.id, :username => current_user.login, :splash_screen => current_user.splash_screen }.to_json
     end
 
     def json_people

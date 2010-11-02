@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
                   :card_attributes,
                   :notify_conversations,
                   :notify_tasks,
+                  :splash_screen,
                   :wants_task_reminder
 
   attr_accessor   :activate, :old_password
@@ -73,6 +74,7 @@ class User < ActiveRecord::Base
       self.invited_by = invitation.user
       invitation.user.update_attribute :invited_count, (invitation.user.invited_count + 1)
     end
+    self.splash_screen = true
   end
 
   def after_create
