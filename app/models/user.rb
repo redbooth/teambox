@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   has_many :invitations, :foreign_key => 'invited_user_id'
   has_many :activities
   has_many :uploads
-  has_many :app_links
+  has_many :app_links, :dependent => :destroy
   has_many :memberships
   has_many :teambox_datas
 
