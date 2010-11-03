@@ -27,6 +27,13 @@ class HooksController < ApplicationController
     case params[:hook_name]
     when 'github'
       @current_project.conversations.from_github JSON.parse(params[:payload])
+    when 'codaset'
+      case params[:event]
+      when 'git_push'
+        @current_project.conversations.from_codaset JSON.parse(params[:payload])
+      else
+        raise ArgumentError
+      end
     when 'email'
       Emailer.receive_params(params)
     when 'pivotal'

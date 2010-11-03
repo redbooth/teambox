@@ -246,6 +246,80 @@ describe HooksController do
       end
     end
     
+    describe "Codaset" do
+      describe "Git Push" do
+        it "posts to the project timeline" do
+          event = 'git_push'
+          payload = <<-JSON
+            {
+              "datetime": {
+                "d": "2010-10-21", 
+                "t": "20:06:00"
+              }, 
+              "project": {
+                "description": "testovaci", 
+                "id": 5822, 
+                "owner": {
+                  "id": 1976, 
+                  "login": "petrblaho", 
+                  "name": "Petr Blaho"
+                }, 
+                "slug": "testovaci", 
+                "state": "public", 
+                "title": "testovaci", 
+                "urls": {
+                  "long": "http://codaset.com/petrblaho/testovaci", 
+                  "short": "http://bit.ly/ceOHZ0"
+                }
+              }, 
+              "push": {
+                "branch": "master", 
+                "commit_count": 1, 
+                "commits": [
+                  {
+                    "commit_time": "2010-10-21 20:07:37", 
+                    "identifier": "f341364f52670c5a9b5c36fdb7a80e2f678ab11f", 
+                    "message": "First scaffold test", 
+                    "user": {
+                      "email": "petr.blaho@gmail.com", 
+                      "id": 1976, 
+                      "login": "petrblaho"
+                    }
+                  }
+                ], 
+                "message": "master changed from c998ad6 to f341364", 
+                "urls": {
+                  "long": "http://codaset.com/petrblaho/testovaci/source/master", 
+                  "short": "http://bit.ly/980bok"
+                }
+              }, 
+              "user": {
+                "email": null, 
+                "id": 1, 
+                "login": "anonymous", 
+                "name": "an anonymous user"
+              }
+            }
+             JSON
+          
+          post :create, :payload => payload, :hook_name => 'codaset', :event => event, :project_id => @project.id
+          
+          conversation = @project.conversations.first
+          conversation.should be_simple
+          conversation.name.should be_nil
+          
+          expected = (<<-HTML).strip
+          <div class='hook_codaset'><h3>New code on <a href='http://codaset.com/petrblaho/testovaci'>testovaci</a> master</h3>
+
+petrblaho - <a href='http://codaset.com/petrblaho/testovaci/source/master/commit/f341364f52670c5a9b5c36fdb7a80e2f678ab11f'>First scaffold test</a><br>
+</div>
+          HTML
+          
+          conversation.comments.first.body.should == expected
+        end
+      end
+    end
+    
     describe "GitHub" do
       it "posts to the project timeline" do
         payload = <<-JSON
