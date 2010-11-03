@@ -13,15 +13,6 @@
       %p.biography=h @user.biography
     = render_card(@card) if @card
     =# list_projects(@user.projects)
-  - if @current_user == @user
-    %h3= "Heute bearbeitete Aufgaben"
-    %textarea{:rows => 25, :cols => 35}
-      - for task in @user.tasks
-        = ['*', task.name, "<br />"].join " "
-    %h3= "Gestern bearbeitete Aufgaben"
-    %textarea{:rows => 25, :cols => 35}
-      - for task in @user.tasks(Time.now.midnight-1.day, Time.now.midnight)
-        = ['*', task.name, "<br />"].join " "
   - if current_user.observable?(@user) && current_user != @user
     %h3= t('.projects_in_common_with', :user_name => h(@user.name))
     #common_projects

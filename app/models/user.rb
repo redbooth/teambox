@@ -204,10 +204,6 @@ class User < ActiveRecord::Base
     @utc_offset ||= ActiveSupport::TimeZone[time_zone].utc_offset
   end
 
-  def tasks(from_date = Time.now.midnight, to_date = Time.now)
-    Task.all(:joins => 'JOIN comments ON comments.target_id = tasks.id JOIN activities ON activities.target_id = comments.id', :conditions => ['activities.user_id = ? AND activities.created_at >= ? AND activities.created_at <= ? AND comment_type = ?', self.id, from_date, to_date, 'Task'], :select => "DISTINCT(name)", :order => "activities.created_at DESC")
-  end
-
   def to_api_hash(options = {})
     base = {
       :id => id,
