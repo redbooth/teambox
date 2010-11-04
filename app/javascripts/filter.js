@@ -3,10 +3,15 @@ Filter = {
   count_due_date: null,
   
   init: function() {
-    var filter_assigned = $("filter_assigned");
-    var filter_due_date = $("filter_due_date");
-    if (filter_assigned) Filter.assigned_options = Filter.initOptions(filter_assigned.options);
-    if (filter_due_date) Filter.count_due_date = Filter.mapOptions(filter_due_date.options);
+    var filter_assigned = $("filter_assigned")
+    var filter_due_date = $("filter_due_date")
+
+    if (params("filter_assigned"))      $("filter_assigned").value      = params("filter_assigned")
+    if (params("filter_due_date"))      $("filter_due_date").value      = params("filter_due_date")
+    if (params("filter_tasks_by_name")) $("filter_tasks_by_name").value = params("filter_tasks_by_name")
+
+    if (filter_assigned) Filter.assigned_options = Filter.initOptions(filter_assigned.options)
+    if (filter_due_date) Filter.count_due_date = Filter.mapOptions(filter_due_date.options)
   },
   
   showAllTaskLists: function() {
@@ -175,5 +180,7 @@ document.on('click', '#filter_tasks_by_name', function(evt,el) {
 })
 
 document.on("change", "#filter_tasks_by_name, #filter_assigned, #filter_due_date", function(evt, el){
-  Filter.updateFilters();
+  Filter.updateFilters()
+  print_link = $$('.print_link').first()
+  print_link.href = 	window.location.href + '.print?filter_assigned=' + $('filter_assigned').value + '&filter_due_date=' + $('filter_due_date').value + '&filter_tasks_by_name='  + $('filter_tasks_by_name').value
 });
