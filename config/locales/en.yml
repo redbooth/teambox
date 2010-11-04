@@ -1364,7 +1364,10 @@ en:
       title: Searching in all projects
       title_in_project: "Searching in project: %{project}"
       search_again: Search again
-      report: '%{count} results found for "%{term}"'
+      no_results:
+        title: "We didn't find any results for '%{term}', sorry!"
+        explain: "Try using more specific search terms to find more results."
+      report: "We found %{count} results for your search terms '%{term}'"
 
   number:
     # Used in number_with_delimiter()
