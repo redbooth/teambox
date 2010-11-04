@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
   map.invite_format     '/invite_format',       :controller => 'invitations', :action => 'invite_format'
   map.feeds             '/feeds',               :controller => 'users',       :action => 'feeds'
   map.calendars         '/calendars',           :controller => 'users',       :action => 'calendars'
+  map.disable_splash    '/disable_splash',      :controller => 'users',       :action => 'disable_splash'
   map.forgot_password   '/forgot',              :controller => 'reset_passwords',   :action => 'new'
   map.reset_password    '/reset/:reset_code',   :controller => 'reset_passwords',   :action => 'reset'
   map.update_after_forgetting   '/forgetting',  :controller => 'reset_passwords',   :action => 'update_after_forgetting', :method => :put

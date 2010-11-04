@@ -313,7 +313,7 @@ fr:
       other: "%{count} commentaires"
     decline: Refuser
     delete: Effacer
-    edit: Éditer
+    edit: Modifier
     gantt_chart: "Diagramme de Gantt"
     in_project: dans
     next: Suivant
@@ -356,7 +356,7 @@ fr:
         description: "Conversations du projet %{name}"
         title: "%{name} conversations"
     link: 
-      edit: Éditer
+      edit: Modifier
     new: 
       submit: Créer
       title: "Nouvelle conversation"
@@ -374,7 +374,7 @@ fr:
       comment: réponse
       comments: réponses
     show: 
-      edit: "Éditer un titre"
+      edit: "Modifier un titre"
       message: message
       messages: messages
       started_by: "Commencé par"
@@ -901,7 +901,7 @@ fr:
       username_or_email: "Nom d’utilisateur ou courriel"
     show: 
       add_project: "Ajouter un projet"
-      edit: Éditer
+      edit: Modifier
   hours: 
     all_tasks: "Toutes les tâches"
     all_users: "Tous les utilisateurs"
@@ -1092,8 +1092,8 @@ fr:
     archived_task_lists: "Tâches archivées"
     create_uploads: "Ajouter un fichier"
     create_users: "Créer un compte"
-    edit_projects: "Éditer Projet"
-    edit_users: Éditer
+    edit_projects: "Modifier Projet"
+    edit_users: Modifier
     index_conversations: "Mes conversations"
     index_pages: "Mes pages"
     index_people: Personnes
@@ -1123,7 +1123,7 @@ fr:
       reorder_done: Terminé
     edit: 
       submit: Actualiser
-      title: "Éditer une page"
+      title: "Modifier une page"
     fields: 
       description: Description
       description_description: "Optionnel. Toute information utile pour les personnes qui lisent ou éditent cette page."
@@ -1191,7 +1191,7 @@ fr:
       remove: Expulser
       transfer: "Transférer le projet"
     link: 
-      edit: Éditer
+      edit: Modifier
     update: 
       success: "Vous avez mis à jour le rôle de %{name}"
   plans: 
@@ -1235,7 +1235,7 @@ fr:
       permalink_description: "Ceci sera l’adresse internet de votre projet. Choisissez une adresse concise et sans espace."
       public_project: "Projet public. <em>Tout le monde peut accéder et rejoindre le project depuis la <a href='/public'>section des projets publics</a>.</em>"
       settings: 
-        upgrade: "Pour sauvegarder ce projet et pouvoir l'éditer, vous devez <a href='%{link}'>vous abonnez à un plan suppérieur</a> pour obtenir plus de stockage et de fonctionalité, ou archiver d'autre projets."
+        upgrade: "Pour sauvegarder ce projet et pouvoir le modifier, vous devez <a href='%{link}'>vous abonnez à un plan suppérieur</a> pour obtenir plus de stockage et de fonctionalité, ou archiver d'autre projets."
         you_cant_unarchive: "Vous avez %{active} projets actifs, et votre plan actuel permet seulement %{max} projets"
       tracks_time: "Activer le suivi du temps"
     index: 
@@ -1517,7 +1517,7 @@ fr:
       tasks_for_all_projects: "Tâches pour tous vos projets"
       tasks_for_project: "Taches pour ce projet"
     link: 
-      edit: Éditer
+      edit: Modifier
       new: "Nouvelle liste de tâches"
       reorder: Réordonner
       reorder_done: "Tri effectué"
@@ -1574,7 +1574,7 @@ fr:
       task: "Choisir une tâche à effectuer. Plus c'est précis, mieux c'est."
       title: "Nouvelle tâche"
     link: 
-      edit: Éditer
+      edit: Modifier
       hide_archived_tasks: 
         one: "Cacher 1 tâche archivée"
         other: "Cacher %{count} tâches archivées"

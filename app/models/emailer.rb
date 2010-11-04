@@ -65,6 +65,14 @@ class Emailer < ActionMailer::Base
     body          :project => project, :task => task, :task_list => task.task_list, :recipient => user
   end
 
+  def project_membership_notification(invitation)
+    defaults
+    recipients    invitation.invited_user.email
+    from_reply_to "#{invitation.project.permalink}", invitation.user
+    subject       I18n.t("emailer.project_membership_notification.subject", :user => invitation.user.name, :project => invitation.project.name)
+    body          :project => invitation.project, :recipient => invitation.invited_user
+  end
+
   def daily_task_reminder(user)
     tasks = user.tasks_for_daily_reminder_email
     

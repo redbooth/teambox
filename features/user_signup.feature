@@ -1,4 +1,4 @@
-@signup
+@signup @javascript
 Feature: Signing up
 
   Scenario: Mislav successfully signs up and confirms his email
@@ -41,4 +41,3 @@ Feature: Signing up
     Given I am logged in as mislav
     When I go to the signup page
     Then I should see "You already have an account. Log out first to sign up as a different user."
-

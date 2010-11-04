@@ -18,6 +18,15 @@ describe ApiV1::ActivitiesController do
       JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.sort.should == (@project.activity_ids+@other_project.activity_ids).sort
     end
     
+    it "shows activities with a JSONP callback" do
+      login_as @user
+      
+      get :index, :callback => 'lolCat', :format => 'js'
+      response.should be_success
+      
+      response.body.split('(')[0].should == 'lolCat'
+    end
+    
     it "shows activities in a project" do
       login_as @user
       

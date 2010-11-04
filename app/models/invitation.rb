@@ -14,7 +14,7 @@ class Invitation < RoleRecord
 
   before_create :generate_token
   before_save :copy_user_email, :if => :invited_user
-  after_create :send_email
+  after_create :auto_accept, :send_email
 
   named_scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
 
@@ -97,11 +97,20 @@ class Invitation < RoleRecord
   def generate_token
     self.token ||= ActiveSupport::SecureRandom.hex(20)
   end
-  
+
+  def auto_accept
+    self.accept(invited_user) if belongs_to_organization?
+  end
+
   def send_email
     return if @is_silent
     if invited_user
-      Emailer.deliver_project_invitation self
+      if belongs_to_organization?
+        Emailer.deliver_project_membership_notification(self)
+        self.destroy
+      else
+        Emailer.deliver_project_invitation(self)
+      end
     else
       Emailer.deliver_signup_invitation self
     end
@@ -113,5 +122,9 @@ class Invitation < RoleRecord
   
   def copy_user_email
     self.email ||= invited_user.email
+  end
+
+  def belongs_to_organization?
+    invited_user and target.respond_to?(:organization) and target.organization.try(:is_user?, invited_user)
   end
 end

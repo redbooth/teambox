@@ -24,6 +24,7 @@ Factory.define :user do |user|
   user.password 'dragons'
   user.password_confirmation 'dragons'
   user.confirmed_user true
+  user.splash_screen false
 end
 
 # compatibility with older specs/cukes
@@ -31,6 +32,7 @@ Factory.define :confirmed_user, :parent => :user do |user|
 end
 
 Factory.define :unconfirmed_user, :parent => :user do |user|
+  user.splash_screen true
   user.confirmed_user false
 end
 

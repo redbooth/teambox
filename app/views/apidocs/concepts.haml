@@ -46,7 +46,7 @@
 
 %pre= "Accept: application/json"
 
-%p You can also use XML and YAML, but they're not officially supported.
+%p You can also use JSONP via <code>application/javascript</code>, or by using the extension ".js" in the route.
 
 %h2 Authentication
 
@@ -111,6 +111,14 @@
 
 %p For a single object, you will get a single JSON object containing the properties of the said object. In addition if you pass in one or more <tt>include[]</tt> parameters, additional referenced elements will be returned in the object, e.g. comments. Refer to the "Includes" section on a route for available includes.
 
+%h3 JSONP requests
+
+%p For JSONP requests (using the "js" format), the response will be javascript of the following format:
+
+%pre callback({DATA})
+
+%p Where "callback" is a javascript function specified by the <tt>callback</tt> parameter, and "DATA" is the normal data returned by the request.
+
 %h2 A note about RESTful routes
 
 %p Unless otherwise stated, most objects on the API conform to the following routes:
@@ -122,7 +130,7 @@
   %li PUT <code>/collection/id</code> to update an object
   %li DELETE <code>/collection/id</code> to delete an object
 
-%p All API methods accept JSON as input, and will return JSON.
+%p All API methods accept JSON as input, and will return either JSON or JSONP if specified.
 %p XML and YAML might be present on some parts, but are not officially supported.
 
 = render 'apidocs/column'

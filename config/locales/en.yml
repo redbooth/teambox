@@ -1150,6 +1150,7 @@ en:
       login: Login
       project_invitations: "Invitations (%{count})"
       settings: Settings
+      help: Help
     public_navigation:
       home: Teambox
       tour: Tour
@@ -1262,6 +1263,10 @@ en:
     common:
       do_not_answer: "Do not reply to this email."
       answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
+    project_membership_notification:
+      subject: "%{user} shared [%{project}] with you"
+      you_have_been_added_to: "You are now a member of the project <b> %{project}</b>"
+      project_link: "Click on the link below to start collaborating on <b> %{project}</b> now"
     invitation:
       subject: "%{user} shared [%{project}] with you"
       collaborate_with: "%{name} wants to collaborate with you on Teambox:"
