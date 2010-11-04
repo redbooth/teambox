@@ -13,6 +13,6 @@
       .wrapper
         .content#content
           = yield
-    = javascript_tag "Filter.updateFilters();"
     .filter{:style => "display: none"}
       = filter_task_lists
+      = javascript_tag "Filter.updateFilters();"
