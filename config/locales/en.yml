@@ -917,7 +917,7 @@ en:
       item2: "<b>Report</b>. Post comments for each task. Attach files. Ask for feedback."
       item3: "<b>Follow</b>. Receive notifications for tasks related to you."
       item4: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
-      footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others now."
+      footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others know."
       footer2: "It's time to forget about Excel planning sheets and complex Gantt charts!"
     overview_box:
       this_list: "This task list"
@@ -1364,7 +1364,10 @@ en:
       title: Searching in all projects
       title_in_project: "Searching in project: %{project}"
       search_again: Search again
-      report: '%{count} results found for "%{term}"'
+      no_results:
+        title: "We didn't find any results for '%{term}', sorry!"
+        explain: "Try using more specific search terms to find more results."
+      report: "We found %{count} results for your search terms '%{term}'"
 
   number:
     # Used in number_with_delimiter()

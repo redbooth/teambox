@@ -1,0 +1,23 @@
+.result
+  - case result
+  - when Conversation
+    .comment_icon
+    = link_to result.project, project_path(result.project)
+    &rarr;
+    - name = result.name || truncate(h(result.comments.try(:first).try(:body)), 80)
+    = link_to name, project_conversation_path(result.project, result)
+    %span.time= time_ago_in_words result.updated_at
+  - when Task
+    .task_icon
+    = link_to result.project, project_path(result.project)
+    &rarr;
+    = link_to result.task_list, project_task_list_path(result.project, result.task_list)
+    &rarr;
+    = link_to result.name, project_task_path(result.project, result)
+    %span.time= time_ago_in_words result.updated_at
+  - when Page
+    .page_icon
+    = link_to result.project, project_path(result.project)
+    &rarr;
+    = link_to result.name, project_page_path(result.project, result)
+    %span.time= time_ago_in_words result.updated_at
