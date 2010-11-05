@@ -559,9 +559,9 @@ en:
     delete:
       need_to_be_admin: You need to be an administrator to destroy this organization
       not_with_projects: You can't destroy this organization because it still has projects
-      go_delete_some_projects: "You need to <a href='%{link}'>delete or transfer</a> all the projects from this organization before deleting it."
+      go_delete_some_projects: "You can't delete an organization while it still has projects inside. Please <a href='%{link}'>delete or transfer</a> all the projects from this organization before deleting it."
       delete: Delete this organization
-      clarification: "If you delete this organization, all the information that's attached to this organization will be lost forever. The users that belong to this organization will still be able to login to Teambox and work with their other organizations."
+      clarification: "If you delete this organization, all the information that's attached to it organization will be lost forever. The users that belong to this organization will still be able to login to Teambox and work with their other organizations."
       confirm: I understand that deleting this organization is irreversible and I all the content related to this organization will be lost.
       deleted: You deleted the organization
   memberships:
