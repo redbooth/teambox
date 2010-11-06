@@ -200,15 +200,12 @@ en:
         gravatar_in_use: "We don't have a picture of you, so we're using %{gravatar}."
         upload_here_or_at_gravatar: "You can either upload a picture here or set one on %{gravatar}."
         destroy: Delete avatar
-      tooltips:
-        login: "You need a username to login. People will be able to find you by username. Must be all lowercase, no spaces. You can use undescores."
-        first_name: Up to 20 characters.
-        last_name: Up to 20 characters.
-        email: Enter your real email so your teammates can contact you.
-        password: "Combining uppercase and lowercase letters and numbers is a good idea."
-        phone: "Preferrably cell phone. Enter it including the country code, e.g. +1 (415) 1234-567"
       new:
         use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
+        account:
+          title: Your Teambox account
+          choose_username: Choose a username so people can find you. You will use it to log in.
+          validations: Must be all lowercase, no spaces allowed. You can use underscores.
     new:
       title: Create an Account
       submit: Create account

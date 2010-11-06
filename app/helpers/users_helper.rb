@@ -57,7 +57,79 @@ module UsersHelper
         a.micro_avatar.my_avatar { background: url(#{avatar_or_gravatar(current_user, :micro)}) no-repeat }
       </style>)
   end
-  
+
+  def js_for_signup_form_validations
+    error_messages = 
+      %w(too_long too_short empty invalid confirmation).inject({}) do |r,key|
+        r[key] = t("activerecord.errors.messages.#{key}")
+        r
+      end
+
+    javascript_tag <<-EOS
+    var FieldMessages = (#{error_messages.to_json})
+    var FieldErrors = {
+      add: function(input, message) {
+        input.up('div').addClassName('fieldWithErrors')
+        input.up('.text_field').down('.errors_for').innerHTML = message
+        this.setSuccess(input, false)
+      },
+      clear: function(input) {
+        if (input.up('.fieldWithErrors'))
+          input.up('.fieldWithErrors').removeClassName('fieldWithErrors')
+        input.up('.text_field').down('.errors_for').innerHTML = ""
+        this.setSuccess(input, true)
+      },
+      setSuccess: function(input, status) {
+        var icon = input.up('.text_field').down('.result_icon')
+        if (!icon) {
+          var icon = new Element('div', { 'class': 'result_icon' })
+          input.insert({after: icon})
+        }
+        icon.className = 'result_icon ' + (status ? 'static_tick_icon' : 'static_cross_icon')
+      }
+    }
+
+    document.on('change', '#user_first_name, #user_last_name', function(e,input) {
+      if(input.value.length > 20) {
+        FieldErrors.add(input, FieldMessages.too_long.gsub('%{count}',20))
+      } else if (input.value.length < 1) {
+        FieldErrors.add(input, FieldMessages.empty)
+      } else {
+        FieldErrors.clear(input)
+      }
+    })
+
+    document.on('change', '#user_login', function(e,input) {
+      if(!input.value.match(/^[a-z0-9_]+$/)) {
+        FieldErrors.add(input, FieldMessages.invalid)
+      } else if (input.value.length > 40) {
+        FieldErrors.add(input, FieldMessages.too_long.gsub('%{count}',40))
+      } else if (input.value.length < 3) {
+        FieldErrors.add(input, FieldMessages.too_short.gsub('%{count}',3))
+      } else {
+        FieldErrors.clear(input)
+      }
+    })
+
+    document.on('change', '#user_email', function(e,input) {
+      if(!input.value.match(/^[\w\.%\-]+@(?:[A-Z0-9\-]+\.)+(?:[A-Z]{2,3}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|jobs|coop|museum)$/i)) {
+        FieldErrors.add(input, FieldMessages.invalid)
+      } else if (input.value.length > 100) {
+        FieldErrors.add(input, FieldMessages.too_long.gsub('%{count}',100))
+      } else {
+        FieldErrors.clear(input)
+      }
+    })
+
+    document.on('change', '#user_password_confirmation', function(e,input) {
+      if(input.value != $('user_password').value) {
+        FieldErrors.add(input, FieldMessages.confirmation)
+      } else {
+        FieldErrors.clear(input)
+      }
+    })
+    EOS
+  end
 
   protected
 
