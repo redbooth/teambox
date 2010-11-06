@@ -146,6 +146,8 @@ document.observe('jenny:cancel:edit_task', function(evt) {
 
 // Enable task sort on load and highlight my tasks
 document.observe('dom:loaded', function(e) {
+  if(typeof(my_user) == "undefined") return
+
   if ($$('.tasks').length > 0) Task.make_all_sortable();
   Task.highlight_my_tasks();
   Filter.updateCounts(false);
