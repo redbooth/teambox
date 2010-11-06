@@ -67,7 +67,6 @@ function insertCss(css) {
 }
 
 //= require <weakling>
-//= require <fyi>
 //= require <calendar_date_select>
 //= require <facebox>
 //= require <showdown>

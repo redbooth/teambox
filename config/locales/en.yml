@@ -642,9 +642,6 @@ en:
     fields:
       name: Title
       body: First comment
-      tooltips:
-        name: "As short as possible, this will appear in notification email's subjects"
-        body: "Ask a question, tell your team what's new, start a discussion"
     new:
       title: New Conversation
       submit: Create
