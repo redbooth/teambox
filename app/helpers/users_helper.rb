@@ -1,11 +1,5 @@
 module UsersHelper
 
-  def user_page_name(user)
-    content_tag :h2,
-      [h(user.name),
-      content_tag(:span,"@#{user.login}", :class => 'login')].join('')
-  end
-
   def user_link(user)
     if user.name.blank?
       link_to user.login, user_path(user)
