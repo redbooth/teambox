@@ -64,9 +64,15 @@ module UsersHelper
         r[key] = t("activerecord.errors.messages.#{key}")
         r
       end
+    strength_messages =
+      %w(too_short weak average strong too_long).inject({}) do |r,key|
+        r[key] = t("password_strength.#{key}")
+        r
+      end
 
     javascript_tag <<-EOS
     var FieldMessages = (#{error_messages.to_json})
+    var StrengthMessages = (#{strength_messages.to_json})
     var FieldErrors = {
       add: function(input, message) {
         input.up('div').addClassName('fieldWithErrors')
@@ -86,6 +92,25 @@ module UsersHelper
           input.insert({after: icon})
         }
         icon.className = 'result_icon ' + (status ? 'static_tick_icon' : 'static_cross_icon')
+      },
+      displayStrength: function(input) {
+        this.clear(input);
+        var password = input.value
+        var score = 0;
+        if (password.match(/[!,@,#,$,%,^,&,*,?,_,~]/)) score += 1;
+        if (password.match(/([a-z])/)) score += 1;
+        if (password.match(/([A-Z])/)) score += 1;
+        if (password.match(/([0-9])/)) score += 1;
+        if (password.length >= 8) score += 2;
+        if (password.length >= 10) score += 2;
+
+        var strength = "average";
+        if (score < 3) strength = "weak";
+        if (score > 5) strength = "strong";
+
+        var message_field = input.up('.text_field').down('.errors_for');
+        message_field.innerHTML = StrengthMessages[strength];
+        message_field.className = "errors_for "+strength
       }
     }
 
@@ -121,13 +146,23 @@ module UsersHelper
       }
     })
 
-    document.on('change', '#user_password_confirmation', function(e,input) {
+    document.on('keydown', '#user_password', function(e,input) {
+      if (input.value.length < 6) {
+        FieldErrors.add(input, StrengthMessages.too_short.gsub('%{count}',6))
+      } else if (input.value.length > 40) {
+        FieldErrors.add(input, StrengthMessages.too_long.gsub('%{count}',40))
+      } else {
+        FieldErrors.displayStrength(input)
+      }
+    }.debounce(200))
+
+    document.on('keydown', '#user_password_confirmation', function(e,input) {
       if(input.value != $('user_password').value) {
         FieldErrors.add(input, FieldMessages.confirmation)
       } else {
         FieldErrors.clear(input)
       }
-    })
+    }.debounce(200))
     EOS
   end
 

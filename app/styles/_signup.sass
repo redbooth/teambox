@@ -58,6 +58,19 @@ $label_indent: 150px
         display: inline
         margin-left: 15px
 
+    .errors_for
+      display: block
+      color: rgb(160,160,160)
+      padding-left: $label_indent + 30px
+      &.weak
+        color: rgb(100,100,0)
+      &.average
+        color: rgb(50,50,50)
+      &.strong
+        color: rgb(0,150,0)
+    .fieldWithErrors .errors_for
+      color: rgb(160,160,160)
+
     fieldset
       border: none
       border-top: 1px solid #ccc

@@ -1637,6 +1637,14 @@ en:
       words_connector: ", "
       two_words_connector: " and "
       last_word_connector: ", and "
+
+  password_strength:
+    too_short: Too short
+    weak: Weak
+    average: Average
+    strong: Strong
+    too_long: Too long
+
   oauth:
     this_account_will_be_linked_to: "This account will be linked with %{provider}"
     account_linked: "Your account has been linked."
@@ -1658,3 +1666,4 @@ en:
     user_exists_instruction: If you already have a Teambox account, log in to link it automatically to your %{provider} profile.
     user_exists_is_not_yours: If you don't own the account '%{account}', %{signup_for_a_new_account}.
     signup_for_a_new_account: click here to sign up for a new account
+

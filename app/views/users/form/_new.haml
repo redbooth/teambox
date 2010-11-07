@@ -46,7 +46,6 @@
     = f.label :password_confirmation, t('users.form.confirm_password')
     = f.password_field :password_confirmation, :autocomplete => 'off'
     = errors_for user, :password_confirmation
-    = password_strength :password_strength, 'user_password'
 
 / - build_user_phone_number(user)
 / - f.fields_for :card do |card|
