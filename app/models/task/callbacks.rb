@@ -1,13 +1,14 @@
 class Task
+
+  def before_create
+    self.position ||= task_list.tasks.last ? task_list.tasks.last.position + 1 : 0
+  end
+
   def after_create
     project.log_activity(self, 'create')
   end
 
   def before_save
-    unless position
-      last_position = task_list.tasks.first(:select => 'position')
-      self.position = last_position.try(:position).try(:succ) || 1
-    end
     add_watcher(assigned.user, false) if assigned
     true
   end

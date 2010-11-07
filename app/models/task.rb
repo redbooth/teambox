@@ -19,8 +19,6 @@ class Task < RoleRecord
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| %w[body hours human_hours uploads_attributes].all? { |k| comment[k].blank? } }
 
-  acts_as_list :scope => :task_list
-
   attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes
 
   validates_presence_of :name, :message => I18n.t('tasks.errors.name.cant_be_blank')

@@ -116,3 +116,7 @@ Then /^I should not see the following tasks:$/ do |table|
     Then %(I should not see the task called "#{hash['task_name']}" in the "#{hash['task_list_name']}" task list)
   end
 end
+
+Then /^I should see the task "([^\"]*)" before "([^\"]*)"$/ do |task1, task2|
+  Task.find_by_name(task1).position.should < Task.find_by_name(task2).position
+end

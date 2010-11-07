@@ -48,6 +48,7 @@ module UsersHelper
     javascript_tag %(
       my_user = #{json_user}
       my_projects = #{json_people}
+      current_project = #{@current_project ? @current_project.id : 'null'}
     )
   end
   

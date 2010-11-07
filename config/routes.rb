@@ -102,8 +102,8 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put, :reorder => :put }
 
     project.resources :task_lists,
-      :collection => { :gantt_view => :get, :archived => :get  },
-      :member => { :watch => :put, :unwatch => :put, :archive => :put, :unarchive => :put, :reorder => :put } do |task_lists|
+      :collection => { :gantt_view => :get, :archived => :get, :reorder => :put },
+      :member => { :watch => :put, :unwatch => :put, :archive => :put, :unarchive => :put } do |task_lists|
         # deprecated routes, use "project.resources :tasks" directly
         task_lists.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put }
     end
