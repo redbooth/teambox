@@ -51,14 +51,18 @@ Task = {
   },
   
   sortableUpdate: function() {
-    var taskID = this.currentDraggable.id.split('_').last(),
-        taskList = this.currentDraggable.up('.task_list'),
-        position = taskList.select('.tasks .task').indexOf(this.currentDraggable) + 1,
-        ids = taskList.id.match(/project_(\d+)_task_list_(\d+)/)
-    
-    new Ajax.Request('/projects/' + ids[1] + '/tasks/' + taskID + '/reorder', {
+    var taskId = this.currentDraggable.readAttribute('data-task-id'),
+        taskList = this.currentDraggable.up('.task_list')
+        taskListId = taskList.readAttribute('data-task-list-id')
+
+    taskIds = taskList.select('.tasks .task').collect(
+      function(task) {
+          return task.readAttribute('data-task-id')
+      }).join(',')
+
+    new Ajax.Request('/projects/' + current_project + '/tasks/' + taskId + '/reorder', {
       method: 'put',
-      parameters: { task_list_id: ids[2], position: position }
+      parameters: { task_list_id: taskListId, task_ids: taskIds }
     })
   }.debounce(100),
 
@@ -121,13 +125,13 @@ document.on('click', 'a.show_archived_tasks_link', function(e, el) {
   });
 });
 
-document.observe('jenny:loaded:new_task', function(evt) {
+document.on('ajax:success', '.new_task form', function(e){
   setTimeout(function(){
     Task.make_all_sortable();
     TaskList.saveColumn();
     TaskList.updatePage('column', TaskList.restoreColumn);
   }, 0);
-});
+})
 
 document.observe('jenny:loaded:edit_task', function(evt) {
   setTimeout(function(){
@@ -142,6 +146,8 @@ document.observe('jenny:cancel:edit_task', function(evt) {
 
 // Enable task sort on load and highlight my tasks
 document.observe('dom:loaded', function(e) {
+  if(typeof(my_user) == "undefined") return
+
   if ($$('.tasks').length > 0) Task.make_all_sortable();
   Task.highlight_my_tasks();
   Filter.updateCounts(false);

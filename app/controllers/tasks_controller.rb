@@ -107,16 +107,19 @@ class TasksController < ApplicationController
   end
 
   def reorder
-    @task = @current_project.tasks.find params[:id]
     target_task_list = @current_project.task_lists.find params[:task_list_id]
-
     if @task.task_list != target_task_list
-      @task.remove_from_list
       @task.task_list = target_task_list
+      @task.save
     end
-    
-    @task.insert_at params[:position].to_i
-    
+
+    task_ids = params[:task_ids].split(',').collect {|t| t.to_i}
+    target_task_list.tasks.each do |t|
+      next unless task_ids.include?(t.id)
+      t.position = task_ids.index(t.id)
+      t.save
+    end
+
     head :ok
   end
 

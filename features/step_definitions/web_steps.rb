@@ -103,6 +103,14 @@ When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"(?: within "([^\"]*)")?$/ 
   end
 end
 
+When  /^(?:|I )drag "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
+  with_scope(selector) do
+    dragged_item = find(:xpath,"//*[.='#{dragged_item}']")
+    dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
+    dragged_item.drag_to dropped_item
+  end
+end
+
 When /^(.*) confirming with OK$/ do |main_task|
   if Capybara.current_driver == Capybara.javascript_driver
     page.evaluate_script("window.old_alert = window.alert")

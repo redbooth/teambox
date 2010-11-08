@@ -210,7 +210,7 @@ describe Task do
       user2 = Factory(:user); person2 = Factory(:person, :user => user2, :project => task.project)
       user3 = Factory(:user); person3 = Factory(:person, :user => user3, :project => task.project)
       task.updating_user = user
-      task.update_attributes(:assigned_id => person2.id, :comments_attributes => [{:body => "Do it by tomorrow"}])
+      task.reload.update_attributes!(:assigned_id => person2.id, :comments_attributes => [{:body => "Do it by tomorrow"}])
       task.should be_assigned_to(user2)
       task.should have(1).comments
       

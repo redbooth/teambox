@@ -1,5 +1,5 @@
 class TaskListsController < ApplicationController
-  before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive,:reorder]
+  before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive]
   before_filter :load_task_lists, :only => [:index]
   before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy,:archive,:unarchive]
   before_filter :set_page_title
@@ -104,7 +104,12 @@ class TaskListsController < ApplicationController
   end
 
   def reorder
-    @task_list.insert_at params[:position].to_i
+    task_list_ids = params[:task_list_ids].split(',').collect {|t| t.to_i}
+    @current_project.task_lists.each do |t|
+      next unless task_list_ids.include?(t.id)
+      t.position = task_list_ids.index(t.id)
+      t.save
+    end
     head :ok
   end
   

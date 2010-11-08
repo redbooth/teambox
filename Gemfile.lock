@@ -12,7 +12,6 @@ GEM
     activeresource (2.3.10)
       activesupport (= 2.3.10)
     activesupport (2.3.10)
-    acts-as-list (0.1.2)
     addressable (2.2.2)
     after_commit (1.0.8)
       activerecord (< 3.0.0)
@@ -157,7 +156,6 @@ PLATFORMS
 
 DEPENDENCIES
   SystemTimer (~> 1.2.0)
-  acts-as-list (~> 0.1.2)
   aws-s3 (~> 0.6.2)
   builder (~> 2.1.2)
   cancan (~> 1.2.0)

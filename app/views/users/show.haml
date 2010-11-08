@@ -1,27 +1,29 @@
-- content_for :banner do
-  = user_page_name(@user)
-
 - if @shares_invited_projects
   #primer
     .box
       %p= t('.pending_invite', :name => h(@user.name))
-
-- content_for :column do
-  = image_tag avatar_or_gravatar(@user, :profile), :class => 'avatar'
-  - if current_user.observable?(@user)
-    - unless @user.biography.blank?
-      %p.biography=h @user.biography
-    = render_card(@card) if @card
-  
-  - if current_user.observable?(@user) && current_user != @user
-    %h3= t('.projects_in_common_with', :user_name => h(@user.name))
-    #common_projects
-      - @projects_shared.each do |project|
-        .project_link
-          = project_link(project)
 
 - if current_user.observable?(@user)
   %h2= t('.recent_activity_for', :user_name => h(@user.name))
   #activities
     = list_activities(@activities)
     = show_more_button
+
+- content_for :column do
+  %h2
+    %span.login= "@"+@user.login
+    = h(@user.name)
+
+  = image_tag avatar_or_gravatar(@user, :profile), :class => 'avatar'
+
+  - if current_user.observable?(@user)
+    - unless @user.biography.blank?
+      %p.biography=h @user.biography
+    = render_card(@card) if @card
+  
+  - if current_user.observable?(@user) && current_user != @user && @projects_shared
+    %h3= t('.projects_in_common_with', :user_name => h(@user.name))
+    #common_projects
+      - @projects_shared.each do |project|
+        .project_link
+          = project_link(project)

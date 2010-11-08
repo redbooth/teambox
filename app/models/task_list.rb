@@ -2,7 +2,6 @@ class TaskList < RoleRecord
 
   include Watchable
 
-  acts_as_list :scope => :project
   attr_accessible :name, :start_on, :finish_on
 
   concerned_with :validation,

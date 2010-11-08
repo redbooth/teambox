@@ -25,8 +25,6 @@
       = navigation(@current_project,current_user.projects,current_user.recent_projects)
       .wrapper
         - show_flash
-        - if yield :banner
-          .banner= yield :banner
         - content_for_column = yield :column
         %div{ :class => content_for_column.blank? ? 'content_wrap_single' : 'content_wrap' }
           .content#content= yield

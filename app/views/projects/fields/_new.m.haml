@@ -2,7 +2,6 @@
   = f.label :name, t('projects.fields.name')
   = errors_for project, :name
   = f.text_field :name, :placeholder => t('projects.fields.name_example')
-  - tooltip t('projects.fields.name_description')
 
 .organization.text_field
   - if current_user.organizations.empty?

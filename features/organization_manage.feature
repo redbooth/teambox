@@ -119,7 +119,7 @@ Feature: Managing organizations
   Scenario: I can't delete an organization if it has projects
     Then I follow "ACME"
     And I follow "Delete"
-    Then I should see "You need to delete or transfer all the projects"
+    Then I should see "You can't delete an organization while it still has projects inside"
 
   Scenario: I can delete an organization if it has no projects
     When the organization called "ACME" has no projects

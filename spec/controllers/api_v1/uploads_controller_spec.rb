@@ -87,13 +87,11 @@ describe ApiV1::UploadsController do
     
     it "limits and offsets uploads" do
       login_as @user
-      
-      other_upload = mock_file(@user, @page)
-      
-      get :index, :project_id => @project.permalink, :since_id => @project.reload.upload_ids[1], :count => 1
+      mock_file(@user, @page)
+      @project.reload
+      get :index, :project_id => @project.permalink, :since_id => @project.upload_ids[1], :count => 1
       response.should be_success
-      
-      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.reload.upload_ids[2]]
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.upload_ids[0]]
     end
   end
   

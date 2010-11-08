@@ -6,12 +6,14 @@ var TaskList = {
   },
   
   sortableUpdate: function() {
-    var ids = this.currentDraggable.id.match(/project_(\d+)_task_list_(\d+)/),
-        position = this.currentDraggable.up().select('.task_list_container').indexOf(this.currentDraggable) + 1
-    
-    new Ajax.Request('/projects/' + ids[1] + '/task_lists/' + ids[2] + '/reorder', {
+    task_list_ids = this.currentDraggable.up().select('.task_list').collect(
+    function(task_list) {
+        return task_list.readAttribute('data-task-list-id')
+    }).join(',')
+
+    new Ajax.Request('/projects/' + current_project + '/task_lists/reorder', {
       method: 'put',
-      parameters: { position: position }
+      parameters: { task_list_ids: task_list_ids }
     })
   }.debounce(100),
 

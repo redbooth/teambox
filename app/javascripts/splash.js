@@ -1,4 +1,6 @@
 document.on("dom:loaded", function() {
+  if(typeof(my_user) == "undefined") return
+
   if(my_user.splash_screen) {
     $(document.body).insert({
       after: "<div id='splash'><a id='hide_splash' href='/disable_splash'><img src='/images/splash.jpg'/></a></div>"

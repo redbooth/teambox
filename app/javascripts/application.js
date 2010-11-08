@@ -66,8 +66,6 @@ function insertCss(css) {
   head.appendChild(style)
 }
 
-//= require <weakling>
-//= require <fyi>
 //= require <calendar_date_select>
 //= require <facebox>
 //= require <showdown>
