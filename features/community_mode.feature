@@ -13,7 +13,6 @@ Feature: When I use Teambox community version, there is only one organization
     When I go to the login page
     And I follow "Create your admin account now"
     Then I should not see "If you already have an account"
-    And I should not see "log in"
     And I should not see "retrieve your password"
     When I fill in the following:
       | Username         | mislav                    |
