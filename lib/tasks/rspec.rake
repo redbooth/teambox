@@ -3,6 +3,7 @@ unless ARGV.any? {|a| a =~ /^gems/}
 
   begin
     require 'spec/rake/spectask'
+    require 'spec/matchers'
 
     task :stats => "spec:statsetup"
 
