@@ -1,3 +1,5 @@
+require 'spec/matchers'
+
 module EmailSpec
 
     module Matchers
