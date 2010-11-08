@@ -78,7 +78,7 @@ en:
       title: "%{user} edited the page %{page}"
     create_note:
       create_note: added note
-      title: '%{user} created note <strong>%{note}</strong> in %{page}'
+      title: '%{user} created note "%{note}" in %{page}'
     edit_note:
       edit_note: edited note
       title: '%{user} edited the note "%{note}" in %{page}'

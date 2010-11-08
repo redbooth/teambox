@@ -21,7 +21,6 @@ class Note < RoleRecord
   
   def after_update
     project.log_activity(self, 'edit', updated_by.id)
-    page.update_attribute(:updated_at, Time.now)
   end
   
   def slot_view
