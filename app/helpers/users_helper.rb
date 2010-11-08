@@ -119,7 +119,7 @@ module UsersHelper
     })
 
     document.on('change', '#user_login', function(e,input) {
-      if(!input.value.match(/^[a-z0-9_]+$/)) {
+      if(!input.value.match(/^[a-z0-9_]+$/i)) {
         FieldErrors.add(input, FieldMessages.invalid)
       } else if (input.value.length > 40) {
         FieldErrors.add(input, FieldMessages.too_long.gsub('%{count}',40))
@@ -131,7 +131,7 @@ module UsersHelper
     })
 
     document.on('change', '#user_email', function(e,input) {
-      if(!input.value.match(/^[\w\.%\-]+@(?:[A-Z0-9\-]+\.)+(?:[A-Z]{2,3}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|jobs|coop|museum)$/i)) {
+      if(!input.value.match(/^[\\w\\.%\\-]+@(?:[A-Z0-9\\-]+\\.)+(?:[A-Z]{2,3}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|jobs|coop|museum)$/i)) {
         FieldErrors.add(input, FieldMessages.invalid)
       } else if (input.value.length > 100) {
         FieldErrors.add(input, FieldMessages.too_long.gsub('%{count}',100))
