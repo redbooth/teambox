@@ -122,7 +122,7 @@ class ApidocsController < ApplicationController
     end
     
     def load_example_data
-      @apiman = User.find_or_create_example_user('API Man', 'example_api_user')
+      @apiman = find_or_create_example_user('API Man', 'example_api_user')
       @project = @apiman.projects.first
       @organization = @apiman.organizations.first
       if @project.nil?
@@ -201,6 +201,27 @@ class ApidocsController < ApplicationController
           base
         end
       end.compact
+    end
+
+    def find_or_create_example_user(name, login=nil)
+      first_name, last_name = name.split
+      login ||= first_name
+      if user = User.find_by_login(login)
+        user
+      else
+        pass = ActiveSupport::SecureRandom.hex(10)
+        user = User.new(
+          :login => login,
+          :email => "#{login}@teambox.com",
+          :first_name => first_name,
+          :last_name => last_name,
+          :password => pass,
+          :password_confirmation => pass)
+
+        user.notify_conversations = false
+        user.notify_tasks = false
+        user.activate!
+      end
     end
 
 end

@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
   concerned_with  :activation,
                   :avatar,
                   :authentication,
-                  :example_project,
                   :recent_projects,
                   :roles,
                   :rss,

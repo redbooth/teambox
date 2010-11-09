@@ -22,9 +22,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.change_format     '/format/:f',           :controller => 'sessions',    :action => 'change_format'
 
-  map.new_example_project    '/example/new',    :controller => 'example_projects', :action => 'new'
-  map.create_example_project '/example/create', :controller => 'example_projects', :action => 'create'
-
   map.create_project_invitation '/projects/:project_id/invite/:login', :controller => 'invitations', :action => 'create', :method => :posts
 
   map.auth_callback  '/auth/:provider/callback', :controller => 'auth', :action => 'callback'

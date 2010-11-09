@@ -413,7 +413,6 @@ en:
       new_project: New Project...
       created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
-      create_an_example_project: "First time in Teambox? <a href='%{link}'>Create an example project</a> to play around and learn."
       active_projects:
         zero: You have no active projects.
         one: You have one active project.
@@ -1004,16 +1003,6 @@ en:
       preview: Preview
       showing: "..."
       
-  example_projects:
-    new:
-      learn: Learn by example!
-      line1: "If it's your first time using Teambox, you can create an example project with some contents."
-      line2: "Navigating through the pages will teach you how to use each part of Teambox."
-      line3: "Make sure you <b>read the instructions</b> and <b>experiment</b> creating, editing and deleting elements!"
-      create: Create an example project
-      line4: "In this project you won't be able to invite other users, but you can do all the rest."
-      error: "Could not create example project."
-      error_list: "Could not create example project. The following projects are invalid: %{list}."
   uploads:
     tooltip: Upload a file
     comment_upload_link: Attachment
@@ -1333,7 +1322,6 @@ en:
     welcome_users: Welcome!
     new_projects: New Project
     archived_task_lists: Archived Tasks
-    new_example_projects: Create an Example Project
     new_conversations: New Conversation
     results_search: Search
     show_plans: Plans
