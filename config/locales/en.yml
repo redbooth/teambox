@@ -243,23 +243,6 @@ en:
     user:
       formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: Remove from Project
-    welcome:
-      get_started: Get started with Teambox!
-      intro1: "You're our newest member! You'll soon see how Teambox can become your day's starting point."
-      intro2: "Where can you go now? Create a project to <b>collaborate</b>:" # or an agenda to <b>keep track of contacts</b>:"
-      projects:
-        title: Projects
-        share_and_collaborate: "Share and collaborate with your team! Project wall updates, conversations, tasks, pages and files."
-        create_your_first_project: "An event, a design, a product... Go ahead and <a href='%{link}'>create your first project</a> now!"
-      spread:
-        title: Do you love us too?
-        reasons: "We've been working on Teambox for years, hoping it will be useful for you.<br/>We're real people, motivated developers with a mission, just like you!"
-        help: You can <b>help us</b> by telling your friends how you enjoy Teambox on
-        twitter: 'Twitter,'
-        facebook: Facebook
-        in_your_site: in your site!
-        tell_us: "If you enjoy using Teambox, consider also <a href='mailto:%{address}'>telling us about it</a> in an email!"
-      stop_welcome: Stop showing this Welcome tab
     feeds:
       title: Sync your activity feeds
       follow_activities: "You can follow Teambox activities from News Readers (Desktop or Mobile)."
@@ -430,7 +413,6 @@ en:
       new_project: New Project...
       created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
-      create_an_example_project: "First time in Teambox? <a href='%{link}'>Create an example project</a> to play around and learn."
       active_projects:
         zero: You have no active projects.
         one: You have one active project.
@@ -1021,16 +1003,6 @@ en:
       preview: Preview
       showing: "..."
       
-  example_projects:
-    new:
-      learn: Learn by example!
-      line1: "If it's your first time using Teambox, you can create an example project with some contents."
-      line2: "Navigating through the pages will teach you how to use each part of Teambox."
-      line3: "Make sure you <b>read the instructions</b> and <b>experiment</b> creating, editing and deleting elements!"
-      create: Create an example project
-      line4: "In this project you won't be able to invite other users, but you can do all the rest."
-      error: "Could not create example project."
-      error_list: "Could not create example project. The following projects are invalid: %{list}."
   uploads:
     tooltip: Upload a file
     comment_upload_link: Attachment
@@ -1350,7 +1322,6 @@ en:
     welcome_users: Welcome!
     new_projects: New Project
     archived_task_lists: Archived Tasks
-    new_example_projects: Create an Example Project
     new_conversations: New Conversation
     results_search: Search
     show_plans: Plans

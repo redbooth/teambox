@@ -12,7 +12,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.search            '/search',              :controller => 'search'
 
-  map.welcome           '/welcome',             :controller => 'users',       :action => 'welcome'
   map.text_styles       '/text_styles',         :controller => 'users',       :action => 'text_styles'
   map.invite_format     '/invite_format',       :controller => 'invitations', :action => 'invite_format'
   map.feeds             '/feeds',               :controller => 'users',       :action => 'feeds'
@@ -24,9 +23,6 @@ ActionController::Routing::Routes.draw do |map|
   map.sent_password     '/reset_password_sent', :controller => 'reset_passwords',   :action => 'sent'
 
   map.change_format     '/format/:f',           :controller => 'sessions',    :action => 'change_format'
-
-  map.new_example_project    '/example/new',    :controller => 'example_projects', :action => 'new'
-  map.create_example_project '/example/create', :controller => 'example_projects', :action => 'create'
 
   map.create_project_invitation '/projects/:project_id/invite/:login', :controller => 'invitations', :action => 'create', :method => :posts
 
