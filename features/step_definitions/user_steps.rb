@@ -42,10 +42,6 @@ Given /I have never confirmed my email/ do
   @current_user.update_attribute(:confirmed_user,false)
 end
 
-Given /It is my first time logging in/ do
-  @current_user.update_attribute(:welcome,false)
-end
-
 Given /^(?:My|His|Her) password is "([^\"]*)"$/ do |password|
   @current_user.update_attribute(:password, password)
 end

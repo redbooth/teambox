@@ -10,7 +10,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.search            '/search',              :controller => 'search'
 
-  map.welcome           '/welcome',             :controller => 'users',       :action => 'welcome'
   map.text_styles       '/text_styles',         :controller => 'users',       :action => 'text_styles'
   map.invite_format     '/invite_format',       :controller => 'invitations', :action => 'invite_format'
   map.feeds             '/feeds',               :controller => 'users',       :action => 'feeds'
