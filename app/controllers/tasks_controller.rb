@@ -20,7 +20,7 @@ class TasksController < ApplicationController
 
   def shorthand
     if current_user.projects.exists? @task.project
-      return redirect_to [@task.project, @task.task_list, @task]
+      return redirect_to [@task.project, @task]
     end
     @current_project = @task.project
     render 'projects/not_in_project', :status => :forbidden
