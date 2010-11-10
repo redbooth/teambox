@@ -1,10 +1,6 @@
 class Task < RoleRecord
   
   include Watchable
-  extend InitializeNestedAttributesChildren
-
-  initialize_nested_attributes_children_for :comment, :target
-
 
   STATUS_NAMES = [:new, :open, :hold, :resolved, :rejected]
 
