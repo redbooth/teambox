@@ -56,7 +56,7 @@ describe ApiV1::SearchController do
     def search_params(project_ids)
       ['important', { :retry_stale => true, :order => 'updated_at DESC',
         :with => { :project_id => project_ids },
-        :classes => [Conversation, Task, Page],
+        :classes => [Conversation, Task, TaskList, Page],
         :page => nil}]
     end
   end
