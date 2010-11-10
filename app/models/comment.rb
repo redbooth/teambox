@@ -79,15 +79,6 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  define_index do
-    indexes body, :sortable => true
-    # indexes user(:name)
-    indexes uploads(:asset_file_name), :as => :upload_name
-    indexes target.name, :as => :target
-
-    has user_id, project_id, created_at
-  end
-
   def duplicate_of?(another)
     [:body, :assigned_id, :status, :hours].all? { |prop|
       self.send(prop) == another.send(prop)
