@@ -44,6 +44,11 @@ class TaskList < RoleRecord
     User.find_with_deleted(user_id)
   end
 
+  define_index do
+    indexes name, :sortable => true
+    has project_id, created_at, updated_at
+  end
+
   def to_xml(options = {})
     options[:indent] ||= 2
     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
