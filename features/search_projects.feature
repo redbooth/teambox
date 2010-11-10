@@ -48,6 +48,13 @@ Feature: Search comments in projects
     Then I should see "Feed the cats"
     And I should see "Gold Digging"
 
+  Scenario: Search for a task list
+    Given the task list called "Take care of the cats" belongs to the project called "Gold Digging"
+    When the search index is reindexed
+    And I search for "cats"
+    Then I should see "Take care of the cats"
+    And I should see "Gold Digging"
+
   Scenario: Search for a page
     Given the project page "Minerals to watch for" exists in "Gold Digging"
     When the search index is reindexed
