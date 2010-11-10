@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_filter :load_task, :except => [:new, :create, :reorder, :shorthand]
+  before_filter :load_task, :except => [:new, :create, :shorthand]
   before_filter :load_task_only, :only => [:shorthand]
   before_filter :load_task_list, :only => [:new, :create]
   before_filter :set_page_title
