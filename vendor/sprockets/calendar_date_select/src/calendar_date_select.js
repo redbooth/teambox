@@ -93,8 +93,8 @@ CalendarDateSelect = Class.create();
 CalendarDateSelect.prototype = {
   initialize: function(target_element, target_label, options) {
     this.target_element = $(target_element); // make sure it's an element, not a string
-		this.target_label = $(target_label);
-		this.target_scope = target_element.id;
+    this.target_label = $(target_label);
+    this.target_scope = target_element.id;
     if (!this.target_element) { alert("Target element " + target_element + " not found!"); return false;}
     if (this.target_element.tagName != "INPUT") this.target_element = this.target_element.down("INPUT")
     
@@ -373,7 +373,7 @@ CalendarDateSelect.prototype = {
     if ((this.target_element.disabled || this.target_element.readOnly) && this.options.get("popup") != "force") return false;
     var last_value = this.target_element.value;
     this.target_element.value = "";
-		this.target_label.innerHTML = "";
+    this.target_label.innerHTML = "<i>No date assigned</i>";
     this.clearSelectedClass();
     this.updateFooter('&#160;');
     if (last_value!=this.target_element.value) this.callback("onchange");

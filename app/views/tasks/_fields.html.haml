@@ -19,6 +19,6 @@
     = f.label :assigned_id, t('comments.new.assigned_to')
     = f.select :assigned_id, people_from_project_for_select(project)
 
-.pick_date
-  = f.label :due_on, t('.due_on')
-  = date_picker(f, :due_on)
+  .pick_date
+    = f.label :due_on, t('.due_on')
+    = date_picker(f, :due_on)

@@ -21,7 +21,7 @@ class Comment < ActiveRecord::Base
     :reject_if => lambda { |upload| upload['asset'].blank? }
 
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
-                  :upload_ids, :uploads_attributes
+                  :upload_ids, :uploads_attributes, :due_on
 
   named_scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
   named_scope :latest, :order => 'id DESC'

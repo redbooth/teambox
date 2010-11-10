@@ -38,7 +38,7 @@ class Task < RoleRecord
   
   def track_changes?
     (new_record? and not status_new?) or
-    (updating_user and (status_changed? or assigned_id_changed?))
+    (updating_user and (status_changed? or assigned_id_changed? or due_on_changed?))
   end
 
   def archived?
@@ -278,6 +278,11 @@ class Task < RoleRecord
     if assigned_id_changed? or self.new_record?
       comment.assigned_id = self.assigned_id
       comment.previous_assigned_id = self.assigned_id_was if assigned_id_changed?
+    end
+
+    if due_on_changed? or self.new_record?
+      comment.due_on = self.due_on
+      comment.previous_due_on = self.due_on_was if due_on_changed?
     end
     true
   end

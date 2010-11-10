@@ -32,6 +32,8 @@
         = task_form.select :status, task_statuses_for_select
         = task_form.label :assigned_id, t('comments.new.assigned_to')
         = task_form.select :assigned_id, people_from_project_for_select(project)
+        = task_form.label :due_on
+        = date_picker(task_form, :due_on)
 
   .submit
     %span.help= formatting_documentation_link
