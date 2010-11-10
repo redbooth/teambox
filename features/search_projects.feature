@@ -31,7 +31,7 @@ Feature: Search comments in projects
     Given there is a conversation titled "Where are the cats?" in the project "Gold Digging"
     When the search index is reindexed
     And I search for "cats"
-    Then I should see "Where are the cats?"
+    Then I should see "Where are the cats"
     And I should see "Gold Digging"
 
   Scenario: Search for a conversation by body
