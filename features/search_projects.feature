@@ -31,7 +31,7 @@ Feature: Search comments in projects
     Given there is a conversation titled "Where are the cats?" in the project "Gold Digging"
     When the search index is reindexed
     And I search for "cats"
-    Then I should see "Where are the cats?"
+    Then I should see "Where are the cats"
     And I should see "Gold Digging"
 
   Scenario: Search for a conversation by body
@@ -46,6 +46,13 @@ Feature: Search comments in projects
     When the search index is reindexed
     And I search for "cats"
     Then I should see "Feed the cats"
+    And I should see "Gold Digging"
+
+  Scenario: Search for a task list
+    Given the task list called "Take care of the cats" belongs to the project called "Gold Digging"
+    When the search index is reindexed
+    And I search for "cats"
+    Then I should see "Take care of the cats"
     And I should see "Gold Digging"
 
   Scenario: Search for a page

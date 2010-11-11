@@ -12,7 +12,7 @@ class SearchController < ApplicationController
           :order => 'updated_at DESC',
           :with => { :project_id => project_ids },
           :page => params[:page],
-          :classes => [Conversation, Task, Page]
+          :classes => [Conversation, Task, TaskList, Page]
 
     end
   end

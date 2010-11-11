@@ -35,8 +35,8 @@ document.on('ajax:success', 'form.edit_task', function(e, form) {
   counter.update(parseInt(counter.innerHTML) + 1)
 })
 
-document.on('click', '.date_picker img', function(e, element) {
-  new CalendarDateSelect(element.next('input'), element.next('span'), {
+document.on('click', '.date_picker', function(e, element) {
+  new CalendarDateSelect(element.down('input'), element.down('span'), {
     buttons: true,
     popup: 'force',
     time: false,

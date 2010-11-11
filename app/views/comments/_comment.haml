@@ -28,6 +28,7 @@
           = link_to(h(comment.user.name), comment.user, :class => :user) + " "
           - if comment.task_comment?
             = comment_task_status(comment)
+            = comment_task_due_on(comment)
           - if comment.hours?
             = content_tag(:span, human_hours(comment.hours), :class => :hours)
         

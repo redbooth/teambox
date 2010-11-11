@@ -45,8 +45,7 @@ form.new_comment, form.edit_comment
       padding: 2px 4px
       margin-right: 1em
   .actions
-    width: 55%
-    float: left
+    display: inline-block
     span
       font-size: 12px
       margin-right: 5px
@@ -68,10 +67,17 @@ form.new_comment, form.edit_comment
         width: 80px
       select[name="task[assigned_id]"]
         width: 130px
+    .date_picker
+      display: inline-block
+      img
+        display: none
+      span
+        margin-left: 10px
   .submit
-    width: 45% !important
     float: right
+    display: inline-block
     text-align: right
+    width: auto
   .project_select
     font-size: 13px
   .extra

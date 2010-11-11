@@ -50,6 +50,8 @@ class Comment
       base[:previous_assigned_id] = previous_assigned_id
       base[:previous_status] = previous_status
       base[:status] = status
+      base[:due_on] = due_on
+      base[:previous_due_on] = previous_due_on
     end
     
     if uploads.any?

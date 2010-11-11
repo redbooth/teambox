@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101102171602) do
+ActiveRecord::Schema.define(:version => 20101109112722) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(:version => 20101102171602) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "due_on"
+    t.date     "previous_due_on"
   end
 
   add_index "comments", ["deleted_at"], :name => "index_comments_on_deleted_at"
