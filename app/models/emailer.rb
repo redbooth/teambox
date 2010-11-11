@@ -112,6 +112,11 @@ class Emailer < ActionMailer::Base
       conversation = Conversation.find_by_name "Seth Godin's 'What matters now'"
       Emailer.create_notify_conversation(conversation.user, conversation.project, conversation)
     end
+
+    def daily_task_reminder
+      user = User.first
+      Emailer.create_daily_task_reminder(user)
+    end
   end
 
   private
