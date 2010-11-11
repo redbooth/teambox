@@ -1,0 +1,6 @@
+<% if Teambox.config.allow_incoming_email -%>
+<%= email_answer_line %>
+<%= t('emailer.common.answer_above_this_line') %>
+<% else -%>
+<%= t('emailer.common.do_not_answer') %>
+<% end %>

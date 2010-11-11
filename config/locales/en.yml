@@ -1278,12 +1278,12 @@ en:
       answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
     project_membership_notification:
       subject: "%{user} shared [%{project}] with you"
-      you_have_been_added_to: "You are now a member of the project <b> %{project}</b>"
-      project_link: "Click on the link below to start collaborating on <b> %{project}</b> now"
+      you_have_been_added_to: "You are now a member of the project %{project}"
+      project_link: "Click on the link below to start collaborating on %{project} now"
     invitation:
       subject: "%{user} shared [%{project}] with you"
       collaborate_with: "%{name} wants to collaborate with you on Teambox:"
-      you_have_been_invited_to: "You have been invited to the project <b>%{project}</b>"
+      you_have_been_invited_to: "You have been invited to the project %{project}"
       accept_the_invitation: Accept the invitation to start collaborating
       current_users: "Current users in this project:"
       plaintext_link: "If the above link doesn't work, copy and paste the following code into your browser bar: "
@@ -1304,7 +1304,8 @@ en:
     confirm:
       subject: "Get started with Teambox"
       hey: "Hey, %{user_name}!"
-      follow_the_link: "In order to <b>complete your signup</b> for Teambox, we need you to log in by clicking here:"
+      follow_this_link: "In order to %{complete} for Teambox, we need you to log in by clicking here:"
+      complete: complete your signup
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
@@ -1312,7 +1313,8 @@ en:
     reset_password:
       subject: "Your password has successfully been reset"
       hey: "Hey, %{user_name}!"
-      follow_the_link: "In order to <b>set a new password</b> for Teambox, we need you to log in with the following link:"
+      follow_this_link: "In order to %{new_password} for Teambox, we need you to log in with the following link:"
+      new_password: set a new password
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
@@ -1322,12 +1324,15 @@ en:
       subject: "Password retrieval for Teambox"
     notify:
       project: "Teambox Project:"
-      view_online: "You can <a href='%{link}'>view this conversation online</a> to answer and attach files."
+      view_this_converation_online: "You can %{converation} to answer and attach files."
+      converation: view this conversation online
       reply: "You can also reply to this email to post a reply in the conversation."
       task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
       are_watching: " are suscribed to this conversation, and will be notified of future replies."
-      stop_watching: "<a href='%{stop_watching_url}'>Stop watching</a> this thread to stop receiving email notifications."
-      notification_settings: "You can change your <a href='%{url}'>notification settings</a> for further emails."
+      stop_watching_link: "%{stop_watch} this thread to stop receiving email notifications."
+      stop_watch: Stop watching
+      notification_settings_link: "You can change your %{settings_link} for further emails."
+      settings_link: notification settings
       comment: "Comment on project's wall: "
       conversation: "Conversation:"
       task: "Task:"

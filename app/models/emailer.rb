@@ -135,6 +135,53 @@ class Emailer < ActionMailer::Base
       user = User.first
       Emailer.create_daily_task_reminder(user)
     end
+
+    def signup_invitation
+      invitation = Invitation.new do |i|
+        i.email = 'test@teambox.com'
+        i.token = ActiveSupport::SecureRandom.hex(20)
+        i.user = User.first
+        i.project = Project.first
+      end
+      Emailer.create_signup_invitation(invitation)
+    end
+
+    def reset_password
+      user = User.first
+      Emailer.create_reset_password(user)
+    end
+
+    def forgot_password
+      password_reset = ResetPassword.new do |passwd|
+        passwd.user = User.first
+        passwd.reset_code = ActiveSupport::SecureRandom.hex(20)
+      end
+      Emailer.create_forgot_password(password_reset)
+    end
+
+    def project_membership_notification
+      invitation = Invitation.new do |i|
+        i.user = User.first
+        i.invited_user = User.last
+        i.project = Project.first
+      end
+      Emailer.create_project_membership_notification(invitation)
+    end
+
+    def project_invitation
+      invitation = Invitation.new do |i|
+        i.token = ActiveSupport::SecureRandom.hex(20)
+        i.user = User.first
+        i.invited_user = User.last
+        i.project = Project.first
+      end
+      Emailer.create_project_invitation(invitation)
+    end
+
+    def confirm_email
+      user = User.first
+      Emailer.create_confirm_email(user)
+    end
   end
 
   private
