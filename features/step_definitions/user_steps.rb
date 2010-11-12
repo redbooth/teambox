@@ -76,6 +76,8 @@ Given /^(@.+) (?:has|have) (?:his|her|their) locale set to (.+)$/ do |users, nam
   when "english" then "en"
   when "spanish" then "es"
   when "italian" then "it"
+  when "french"  then "fr"
+  when "catalan" then "ca"
   else
     raise ArgumentError, "don't know locale #{name}"
   end
