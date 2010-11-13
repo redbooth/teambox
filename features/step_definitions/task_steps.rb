@@ -125,8 +125,8 @@ Then /^I fill the task comment box with "([^\"]*)"$/ do |text|
   Then %(I fill in "task[comments_attributes][0][body]" with "#{text}")
 end
 
-Then /^I click on the calendar icon$/ do
-  find('.actions .calendar_date_select_popup_icon').click
+Then /^I click on the date selector$/ do
+  find('.actions .localized_date').click
 end
 
 Then /^I select the month of "([^\"]*)" with the date picker$/ do |month|

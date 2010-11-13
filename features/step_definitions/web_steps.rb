@@ -67,6 +67,14 @@ When /^(?:|I )fill in the following(?: within "([^\"]*)")?:$/ do |selector, fiel
   end
 end
 
+When /^(?:|I )select the following(?: within "([^\"]*)")?:$/ do |selector, fields|
+  with_scope(selector) do
+    fields.rows_hash.each do |value, name|
+      When %{I select "#{name}" from "#{value}"}
+    end
+  end
+end
+
 When /^(?:|I )select "([^\"]*)" from "([^\"]*)"(?: within "([^\"]*)")?$/ do |value, field, selector|
   with_scope(selector) do
     select(value, :from => field)

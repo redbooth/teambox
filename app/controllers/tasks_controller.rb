@@ -36,12 +36,16 @@ class TasksController < ApplicationController
     respond_to do |f|
       f.html {
         if request.xhr?
-          render :partial => 'tasks/task', :locals => {
-            :project => @current_project,
-            :task_list => @task_list,
-            :task => @task.reload,
-            :editable => true
-          }
+          if @task.new_record?
+            output_errors_json(@task)
+          else
+            render :partial => 'tasks/task', :locals => {
+              :project => @current_project,
+              :task_list => @task_list,
+              :task => @task.reload,
+              :editable => true
+            }
+          end
         else
           if @task.new_record?
             render :new

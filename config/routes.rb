@@ -52,6 +52,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.destroy_user '/account/destroy', :controller => 'users', :action => 'destroy'
 
+  map.resources :teambox_datas, :as => :datas
   map.resources :users, :has_many => [:invitations], :member => {
                           :unconfirmed_email => :get,
                           :confirm_email => :get,

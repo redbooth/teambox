@@ -41,6 +41,7 @@ en:
     page: "Page %{id} not found in this project."
     task_list: "Task list %{id} not found in this project."
     task: "Task %{id} not found in this project."
+    data: "There was a problem locating your data."
   deleted:
     conversation: "Deleted %{name} conversation"
     task: "Deleted %{name} task"
@@ -1003,7 +1004,46 @@ en:
       close: Hide preview
       preview: Preview
       showing: "..."
-      
+  teambox_datas:
+    new_import:
+      title: "Import data"
+      submit: Import data
+    import_fields:
+      select_file: Please choose a file containing your data.
+      service: "Which service did you export your data from?"
+      please_supply_user_map: We detected the following users in your import. Please confirm which users correspond to which user on Teambox.
+      in_organization: "Put all projects in this organization"
+      user: User
+      teambox_user: Teambox user
+    new_export:
+      title: "Export data"
+      submit: Export data
+    export_fields:
+      description: "Please select which projects you wish to export."
+    index:
+      title: "Import or export your data"
+      imports: "Import data from a file"
+      imports_explain: "You may import Teambox backup files, or Basecamp projects."
+      exports: "Export your projects"
+      no_imports: "There are no recent imports."
+      no_exports: "There are no recent exports."
+    show_export:
+      title: "Import / Export"
+      projects: "Projects exported:"
+      download: "Download export"
+    data:
+      processing: "Currently processing..."
+      processed_at: "Processed at %{processed_at}"
+      incomplete: "More information required."
+      remove: Remove
+      confirm_delete: "Are you sure you want to delete this data?"
+    show_import:
+      title: "Import data"
+      submit: Import
+      projects: "Imported projects"
+      import_error: "There was an error loading your import. Please try again."
+    column:
+      description: "Here you can move your data in and out of Teambox."
   uploads:
     tooltip: Upload a file
     comment_upload_link: Attachment
@@ -1140,6 +1180,7 @@ en:
       notifications: Notifications
       plans_and_billing: Plans and Billing
       delete_account: Delete Account...
+      your_data: Import / Export
     task_navigation:
       all_tasks: "All Tasks"
       unarchived_tasks: "Unarchived Tasks"
@@ -1237,12 +1278,12 @@ en:
       answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
     project_membership_notification:
       subject: "%{user} shared [%{project}] with you"
-      you_have_been_added_to: "You are now a member of the project <b> %{project}</b>"
-      project_link: "Click on the link below to start collaborating on <b> %{project}</b> now"
+      you_have_been_added_to: "You are now a member of the project %{project}"
+      project_link: "Click on the link below to start collaborating on %{project} now"
     invitation:
       subject: "%{user} shared [%{project}] with you"
       collaborate_with: "%{name} wants to collaborate with you on Teambox:"
-      you_have_been_invited_to: "You have been invited to the project <b>%{project}</b>"
+      you_have_been_invited_to: "You have been invited to the project %{project}"
       accept_the_invitation: Accept the invitation to start collaborating
       current_users: "Current users in this project:"
       plaintext_link: "If the above link doesn't work, copy and paste the following code into your browser bar: "
@@ -1250,10 +1291,21 @@ en:
       plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
       report_abuse: "This email was sent to you at your contact's request. Please report any abuse."
       subject_without_project: "%{name} invited you to Teambox"
+    teamboxdata:
+        hey: "Hey, %{user_name}!"
+        data_imported: "Your data has been successfully imported into Teambox. To view details, please visit the following link:"
+        data_import_failed: "Your data could not be imported into Teambox. Please check that the data you uploaded is valid. To try again, visit the following link:"
+        data_exported: "Your data has been exported from Teambox, and is available as a download from the following link:"
+        data_export_failed: "Your data could not be exported from Teambox. To try again, please visit the following link:"
+        exported: "Your data is ready for download"
+        export_failed: "Your data could not be exported"
+        imported: "Your data has been imported"
+        import_failed: "Your data could not be imported"
     confirm:
       subject: "Get started with Teambox"
       hey: "Hey, %{user_name}!"
-      follow_the_link: "In order to <b>complete your signup</b> for Teambox, we need you to log in by clicking here:"
+      follow_this_link: "In order to %{complete} for Teambox, we need you to log in by clicking here:"
+      complete: complete your signup
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
@@ -1261,7 +1313,8 @@ en:
     reset_password:
       subject: "Your password has successfully been reset"
       hey: "Hey, %{user_name}!"
-      follow_the_link: "In order to <b>set a new password</b> for Teambox, we need you to log in with the following link:"
+      follow_this_link: "In order to %{new_password} for Teambox, we need you to log in with the following link:"
+      new_password: set a new password
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
@@ -1271,12 +1324,15 @@ en:
       subject: "Password retrieval for Teambox"
     notify:
       project: "Teambox Project:"
-      view_online: "You can <a href='%{link}'>view this conversation online</a> to answer and attach files."
+      view_this_converation_online: "You can %{converation} to answer and attach files."
+      converation: view this conversation online
       reply: "You can also reply to this email to post a reply in the conversation."
       task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
       are_watching: " are suscribed to this conversation, and will be notified of future replies."
-      stop_watching: "<a href='%{stop_watching_url}'>Stop watching</a> this thread to stop receiving email notifications."
-      notification_settings: "You can change your <a href='%{url}'>notification settings</a> for further emails."
+      stop_watching_link: "%{stop_watch} this thread to stop receiving email notifications."
+      stop_watch: Stop watching
+      notification_settings_link: "You can change your %{settings_link} for further emails."
+      settings_link: notification settings
       comment: "Comment on project's wall: "
       conversation: "Conversation:"
       task: "Task:"

@@ -32,6 +32,14 @@ render_tabnav :user do
       t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'notifications'
     end
 
+    if current_user.admin
+      add_tab do |t|
+        t.named t('.your_data')
+        t.links_to teambox_datas_path
+        t.highlights_on :controller => 'teambox_datas'
+      end
+    end
+
     add_tab do |t|
       t.named t('.delete_account')
       t.links_to account_delete_path

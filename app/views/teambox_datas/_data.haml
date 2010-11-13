@@ -1,0 +1,15 @@
+.teambox_data
+  .info
+    %p= link_to "#{data.created_at.to_s}", teambox_data_path(data)
+    %p.desc
+      - if data.processing?
+        = t('.processing')
+      - elsif !data.processed_at.nil?
+        %strong= data.projects.map(&:to_s).join(',')
+        = t('.processed_at', :processed_at => data.processed_at)
+      - else
+        = t('.incomplete')
+  .actions
+    = link_to t(data.processing?||data.need_data? ? 'common.cancel' : '.remove'), teambox_data_path(data, :anchor => 'destroy'),
+      'data-confirm' => t('.confirm_delete'), 'data-method' => 'delete', 'data-remote' => true
+  .clear

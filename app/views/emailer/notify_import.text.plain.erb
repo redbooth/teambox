@@ -1,0 +1,11 @@
+<%= dont_answer %>
+
+<%= t('emailer.teamboxdata.hey', :user_name => h(@user.name)) %>
+
+<% if @error %>
+<%= t('emailer.teamboxdata.data_import_failed') %>
+<%= teambox_data_url(@data) %>
+<% else %>
+<%= t('emailer.teamboxdata.data_imported') %>
+<%= teambox_data_url(@data) %>
+<% end %>

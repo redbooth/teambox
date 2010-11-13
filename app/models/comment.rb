@@ -118,7 +118,7 @@ class Comment < ActiveRecord::Base
     end
     
     if target.respond_to?(:updated_at)
-      target.update_attribute :updated_at, Time.now
+      target.update_attribute :updated_at, self.created_at
     end
   end
   

@@ -45,6 +45,24 @@ class Emailer < ActionMailer::Base
     subject       I18n.t("emailer.invitation.subject", :user => invitation.user.name, :project => invitation.project.name)
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
+  
+  def notify_export(data)
+    defaults
+    
+    error = !data.exported?
+    recipients    data.user.email
+    subject       error ? I18n.t('emailer.teamboxdata.export_failed') : I18n.t('emailer.teamboxdata.exported')
+    body          :data => data, :user => data.user, :error => error
+  end
+  
+  def notify_import(data)
+    defaults
+    
+    error = !data.imported?
+    recipients    data.user.email
+    subject       error ? I18n.t('emailer.teamboxdata.import_failed') : I18n.t('emailer.teamboxdata.imported')
+    body          :data => data, :user => data.user, :error => error
+  end
 
   def notify_conversation(user, project, conversation)
     title = conversation.name.blank? ? 
@@ -111,6 +129,58 @@ class Emailer < ActionMailer::Base
     def notify_conversation
       conversation = Conversation.find_by_name "Seth Godin's 'What matters now'"
       Emailer.create_notify_conversation(conversation.user, conversation.project, conversation)
+    end
+
+    def daily_task_reminder
+      user = User.first
+      Emailer.create_daily_task_reminder(user)
+    end
+
+    def signup_invitation
+      invitation = Invitation.new do |i|
+        i.email = 'test@teambox.com'
+        i.token = ActiveSupport::SecureRandom.hex(20)
+        i.user = User.first
+        i.project = Project.first
+      end
+      Emailer.create_signup_invitation(invitation)
+    end
+
+    def reset_password
+      user = User.first
+      Emailer.create_reset_password(user)
+    end
+
+    def forgot_password
+      password_reset = ResetPassword.new do |passwd|
+        passwd.user = User.first
+        passwd.reset_code = ActiveSupport::SecureRandom.hex(20)
+      end
+      Emailer.create_forgot_password(password_reset)
+    end
+
+    def project_membership_notification
+      invitation = Invitation.new do |i|
+        i.user = User.first
+        i.invited_user = User.last
+        i.project = Project.first
+      end
+      Emailer.create_project_membership_notification(invitation)
+    end
+
+    def project_invitation
+      invitation = Invitation.new do |i|
+        i.token = ActiveSupport::SecureRandom.hex(20)
+        i.user = User.first
+        i.invited_user = User.last
+        i.project = Project.first
+      end
+      Emailer.create_project_invitation(invitation)
+    end
+
+    def confirm_email
+      user = User.first
+      Emailer.create_confirm_email(user)
     end
   end
 

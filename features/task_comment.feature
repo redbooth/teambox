@@ -14,7 +14,7 @@ Feature: Commenting on a task
     When I follow "Setup Continious integration"
     And I wait for 1 second
     And I fill in the comment box with "This should be done in a while"
-    And I click on the calendar icon
+    And I click on the date selector
     And I select the month of "January" with the date picker
     And I select the year "2010" with the date picker
     And I select the day "25" with the date picker
@@ -22,7 +22,7 @@ Feature: Commenting on a task
     And I wait for 2 second
     Then I should see "Jan 25" within the last comment body
     But I fill in the comment box with "I change my mind, should be done ASAP."
-    And I click on the calendar icon
+    And I click on the date selector
     And I select the month of "January" with the date picker
     And I select the year "2010" with the date picker
     And I select the day "10" with the date picker

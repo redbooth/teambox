@@ -1,0 +1,7 @@
+<% if recent_tasks.any? -%>
+<%= t('emailer.notify.my_tasks', :project => h(project.name)) %>
+---------------------------------------
+<%- for task in recent_tasks %>
+<%= task.name %>: <%= task.overdue? ? t('tasks.overdue', :days => task.overdue) : I18n.l(task.due_on, :format => '%b %d') if task.due_on %> <%= localized_status_name(task) %> - <%= project_task_url(project, task) %>
+<%- end %>
+<%- end %>

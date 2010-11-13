@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101109112722) do
+ActiveRecord::Schema.define(:version => 20101112132101) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -343,10 +343,12 @@ ActiveRecord::Schema.define(:version => 20101109112722) do
     t.string   "processed_data_file_name"
     t.string   "processed_data_content_type"
     t.integer  "processed_data_file_size"
-    t.boolean  "is_processing",               :default => false
     t.datetime "processed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "processed_objects"
+    t.string   "service"
+    t.integer  "status",                      :default => 0
   end
 
   create_table "uploads", :force => true do |t|

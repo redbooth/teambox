@@ -18,6 +18,11 @@ document.on('keyup', '.task_header + .edit_task:has(a[href="#cancel"])', functio
   if (e.keyCode == Event.KEY_ESC) hideEditTaskFormAndShowHeader(form)
 })
 
+document.on('ajax:failure', 'form.new_task.app_form', function(e, form) {
+  var message = e.memo.responseJSON.first()[1]
+  form.down('div.text_field').insertOrUpdate('p.error', message)
+})
+
 document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
   var name = form.down('input[name="task[name]"]').getValue(),
       dueDate = form.down('span.localized_date').innerHTML
