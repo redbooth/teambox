@@ -14,7 +14,7 @@ document.on('click', '.task_header + .edit_task a[href="#cancel"]', function(e, 
   hideEditTaskFormAndShowHeader(link.up('.edit_task'))
 })
 
-document.on('keyup', '.task_header + .edit_task:has(a[href="#cancel"])', function(e, form) {
+document.on('keyup', '.task_header + .edit_task', function(e, form) {
   if (e.keyCode == Event.KEY_ESC) hideEditTaskFormAndShowHeader(form)
 })
 
