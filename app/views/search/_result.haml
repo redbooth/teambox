@@ -4,7 +4,7 @@
     .comment_icon
     = link_to result.project, project_path(result.project)
     &rarr;
-    - name = result.name || truncate(h(result.comments.try(:first).try(:body)), 80)
+    - name = result.name || truncate( h( sanitize( result.comments.try(:first).try(:body), :tags => [nil]) ), 80)
     = link_to name, project_conversation_path(result.project, result)
     %span.time= time_ago_in_words result.updated_at
   - when TaskList
