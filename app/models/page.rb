@@ -167,7 +167,6 @@ class Page < RoleRecord
     indexes notes.name
     indexes notes.body
     indexes dividers.name
-    indexes notes.body
     indexes uploads(:asset_file_name)
     
     has project_id, created_at, updated_at
