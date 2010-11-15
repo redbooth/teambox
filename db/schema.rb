@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101112132101) do
+ActiveRecord::Schema.define(:version => 20101115162241) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -117,6 +117,8 @@ ActiveRecord::Schema.define(:version => 20101112132101) do
     t.datetime "updated_at"
   end
 
+  add_index "dividers", ["page_id"], :name => "index_dividers_on_page_id"
+
   create_table "email_addresses", :force => true do |t|
     t.integer "card_id"
     t.string  "name"
@@ -184,6 +186,7 @@ ActiveRecord::Schema.define(:version => 20101112132101) do
   end
 
   add_index "notes", ["deleted_at"], :name => "index_notes_on_deleted_at"
+  add_index "notes", ["page_id"], :name => "index_notes_on_page_id"
 
   create_table "organizations", :force => true do |t|
     t.string   "name"
@@ -366,6 +369,7 @@ ActiveRecord::Schema.define(:version => 20101112132101) do
   end
 
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
+  add_index "uploads", ["page_id"], :name => "index_uploads_on_page_id"
 
   create_table "users", :force => true do |t|
     t.string   "login",                     :limit => 40
