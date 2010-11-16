@@ -453,7 +453,7 @@ en:
       admin_users: Manage users
       admin_projects: Manage projects
       billing: Plans and Billing
-      delete: Delete this organization
+      delete: Delete this organization...
     edit:
       there_are: "There are"
       number_of_users: "%{count} users"
