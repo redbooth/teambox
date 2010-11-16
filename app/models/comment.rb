@@ -6,11 +6,11 @@ class Comment < ActiveRecord::Base
   
   concerned_with :tasks, :finders, :conversions
 
-  belongs_to :user
+  belongs_to :user, :with_deleted => true
   belongs_to :project
   belongs_to :target, :polymorphic => true, :counter_cache => true
-  belongs_to :assigned, :class_name => 'Person'
-  belongs_to :previous_assigned, :class_name => 'Person'
+  belongs_to :assigned, :class_name => 'Person', :with_deleted => true
+  belongs_to :previous_assigned, :class_name => 'Person', :with_deleted => true
   
   def task_comment?
     self.target_type == "Task"
@@ -21,7 +21,7 @@ class Comment < ActiveRecord::Base
     :reject_if => lambda { |upload| upload['asset'].blank? }
 
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
-                  :upload_ids, :uploads_attributes
+                  :upload_ids, :uploads_attributes, :due_on
 
   named_scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
   named_scope :latest, :order => 'id DESC'
@@ -79,20 +79,6 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  define_index do
-    indexes body, :sortable => true
-    # indexes user(:name)
-    indexes uploads(:asset_file_name), :as => :upload_name
-    indexes target.name, :as => :target
-
-    has user_id, project_id, created_at
-  end
-  
-  # FIXME: avoid overriding the actual association
-  def user
-    user_id and User.find_with_deleted(user_id)
-  end
-  
   def duplicate_of?(another)
     [:body, :assigned_id, :status, :hours].all? { |prop|
       self.send(prop) == another.send(prop)
@@ -132,7 +118,7 @@ class Comment < ActiveRecord::Base
     end
     
     if target.respond_to?(:updated_at)
-      target.update_attribute :updated_at, Time.now
+      target.update_attribute :updated_at, self.created_at
     end
   end
   

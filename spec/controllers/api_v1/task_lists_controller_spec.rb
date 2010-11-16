@@ -22,6 +22,15 @@ describe ApiV1::TaskListsController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
     
+    it "shows task lists with a JSONP callback" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :callback => 'lolCat', :format => 'js'
+      response.should be_success
+      
+      response.body.split('(')[0].should == 'lolCat'
+    end
+    
     it "shows task lists in all projects" do
       login_as @user
       

@@ -13,13 +13,11 @@ class Task < RoleRecord
 
   belongs_to :task_list, :counter_cache => true
   belongs_to :page
-  belongs_to :assigned, :class_name => 'Person'
+  belongs_to :assigned, :class_name => 'Person', :with_deleted => true
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| %w[body hours human_hours uploads_attributes].all? { |k| comment[k].blank? } }
-
-  acts_as_list :scope => :task_list
 
   attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes
 
@@ -31,16 +29,18 @@ class Task < RoleRecord
   
   # set by controller to indicate user that's doing task updating
   attr_accessor :updating_user
+  attr_accessor :updating_date
   
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_save :set_comments_author, :if => :updating_user
   before_save :transition_from_new_to_open, :if => :assigned_id?
   before_save :save_changes_to_comment, :if => :track_changes?
+  before_save :save_completed_at
   before_update :remember_comment_created
   
   def track_changes?
     (new_record? and not status_new?) or
-    (updating_user and (status_changed? or assigned_id_changed?))
+    (updating_user and (status_changed? or assigned_id_changed? or due_on_changed?))
   end
 
   def archived?
@@ -272,6 +272,8 @@ class Task < RoleRecord
   def save_changes_to_comment # before_save
     comment = comments.detect(&:new_record?) || comments.build_by_user(updating_user)
     
+    comment.created_at = @updating_date if @updating_date
+    
     if status_changed? or self.new_record?
       comment.status = self.status
       comment.previous_status = self.status_was if status_changed?
@@ -281,9 +283,22 @@ class Task < RoleRecord
       comment.assigned_id = self.assigned_id
       comment.previous_assigned_id = self.assigned_id_was if assigned_id_changed?
     end
+
+    if due_on_changed? or self.new_record?
+      comment.due_on = self.due_on
+      comment.previous_due_on = self.due_on_was if due_on_changed?
+    end
     true
   end
-  
+
+  def save_completed_at
+    if [:resolved, :rejected].include? self.status_name
+      self.completed_at = Time.now
+    else
+      self.completed_at = nil
+    end if status_changed? or self.new_record?
+  end
+
   def copy_project_from_task_list
     self.project_id = task_list.project_id
   end

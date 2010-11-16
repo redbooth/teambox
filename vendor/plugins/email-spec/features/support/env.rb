@@ -11,6 +11,4 @@ class EmailSpecWorld
   end
 end
 
-World do
-  EmailSpecWorld.new
-end
+World(EmailSpecWorld)

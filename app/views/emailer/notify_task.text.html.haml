@@ -22,7 +22,7 @@
   = emailer_recent_tasks(@project, @recipient)
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
-    %p= t('emailer.notify.view_online', :link => project_task_url(@project, @task))
+    %p= t('emailer.notify.view_this_converation_online', :converation => link_to(t('emailer.notify.converation'), project_task_url(@project, @task)))
     = emailer_answer_to_this_email
 
   .footer{ :style => email_text(:small) }
@@ -31,5 +31,5 @@
       = t('emailer.notify.are_watching')
     = emailer_commands_for_tasks(@recipient)
     %p
-      = t('emailer.notify.stop_watching', :stop_watching_url => project_task_url(@project, @task))
-      = t('emailer.notify.notification_settings', :url => account_notifications_url)
+      = t('emailer.notify.stop_watching_link', :stop_watch => link_to(t('emailer.notify.stop_watch'), project_task_url(@project, @task)) )
+      = t('emailer.notify.notification_settings_link', :settings_link => link_to(t('emailer.notify.settings_link'), account_notifications_url) )

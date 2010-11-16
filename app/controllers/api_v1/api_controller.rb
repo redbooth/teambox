@@ -65,12 +65,14 @@ class ApiV1::APIController < ApplicationController
   def api_respond(object, options={})
     respond_to do |f|
       f.json { render :json => api_wrap(object, options).to_json }
+      f.js   { render :json => api_wrap(object, options).to_json, :callback => params[:callback] }
     end
   end
   
   def api_status(status)
     respond_to do |f|
       f.json { head status }
+      f.js   { render :json => {:status => status}.to_json, :status => status, :callback => params[:callback] }
     end
   end
   
@@ -95,6 +97,7 @@ class ApiV1::APIController < ApplicationController
     error = {'message' => message}
     respond_to do |f|
       f.json { render :as_json => error.to_xml(:root => 'error'), :status => status }
+      f.js { render :json => error.to_xml(:root => 'error'), :status => status, :callback => params[:callback] }
     end
   end
   
@@ -102,6 +105,7 @@ class ApiV1::APIController < ApplicationController
     error_list = object.nil? ? [] : object.errors
     respond_to do |f|
       f.json { render :as_json => error_list.to_xml, :status => options.delete(:status) || :unprocessable_entity }
+      f.js   { render :json => error_list.to_xml, :status => options.delete(:status) || :unprocessable_entity, :callback => params[:callback] }
     end
   end
   
@@ -109,8 +113,10 @@ class ApiV1::APIController < ApplicationController
     respond_to do |f|
       if options.delete(:is_new) || false
         f.json { render :json => api_wrap(object, options).to_json, :status => options.delete(:status) || :created }
+        f.js   { render :json => api_wrap(object, options).to_json, :status => options.delete(:status) || :created }
       else
         f.json { head(options.delete(:status) || :ok) }
+        f.js   { render :json => {:status => options.delete(:status) || :ok}.to_json, :callback => params[:callback] }
       end
     end
   end
@@ -143,7 +149,7 @@ class ApiV1::APIController < ApplicationController
   end
   
   def set_client
-    request.format = :json
+    request.format = :json unless request.format == :js
   end
   
 end

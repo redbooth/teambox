@@ -1,4 +1,6 @@
 class Task
+  default_scope :order => 'position ASC, created_at DESC'
+
   named_scope :archived,   :conditions => ['status >= ?', 3], :include => [:project, :task_list, :assigned]
   named_scope :unarchived, :conditions => ['status <  ?', 3], :include => [:project, :task_list, :assigned]
   

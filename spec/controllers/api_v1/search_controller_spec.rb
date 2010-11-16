@@ -49,16 +49,14 @@ describe ApiV1::SearchController do
     end
     
     it "reject searching in unauthorized project" do
-      controller.stub!(:user_can_search?).and_return(false)
-      
       get :index, :q => 'important', :project_id => @project.permalink
-      response.status.should == '501 Not Implemented'
+      response.status.should == (Teambox.config.allow_search ? '403 Forbidden' : '501 Not Implemented')
     end
     
     def search_params(project_ids)
       ['important', { :retry_stale => true, :order => 'updated_at DESC',
         :with => { :project_id => project_ids },
-        :classes => [Conversation, Task, Page],
+        :classes => [Conversation, Task, TaskList, Page],
         :page => nil}]
     end
   end

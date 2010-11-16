@@ -2,7 +2,6 @@ class TaskList < RoleRecord
 
   include Watchable
 
-  acts_as_list :scope => :project
   attr_accessible :name, :start_on, :finish_on
 
   concerned_with :validation,
@@ -43,6 +42,11 @@ class TaskList < RoleRecord
 
   def user
     User.find_with_deleted(user_id)
+  end
+
+  define_index do
+    indexes name, :sortable => true
+    has project_id, created_at, updated_at
   end
 
   def to_xml(options = {})

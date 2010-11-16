@@ -5,14 +5,14 @@ class SearchController < ApplicationController
   def index
     @search_terms = params[:q]
     
-    unless @search_terms.blank?
+    if @search_terms.present?
 
       @results = ThinkingSphinx.search @search_terms,
           :retry_stale => true,
           :order => 'updated_at DESC',
           :with => { :project_id => project_ids },
           :page => params[:page],
-          :classes => [Conversation, Task, Page]
+          :classes => [Conversation, Task, TaskList, Page]
 
     end
   end

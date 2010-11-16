@@ -1,10 +1,16 @@
 @signup
 Feature: Invite a user to a project
 
-  Background: 
-    Given a project exists with name: "Ruby Rockstars"
-    And a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić"
+  Background:
+    Given an organization exists with name: "ACME"
+    And a project exists with name: "Ruby Rockstars"
+    And the project "Ruby Rockstars" belongs to "ACME" organization
+    And a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić", email: "mislav@teambox.com"
+    And a confirmed user exists with login: "pablo", first_name: "Pablo", last_name: "Villalba", email: "pablo@teambox.com"
     And "mislav" is the owner of the project "Ruby Rockstars"
+    And "mislav" is an administrator in the organization called "ACME"
+    And "pablo" is a participant in the organization called "ACME"
+
 
   Scenario: Mislav invites some friends to a project
     Given I am logged in as mislav
@@ -62,6 +68,16 @@ Feature: Invite a user to a project
     When I go to the page of the "Teambox Roulette" project
     And I press "Accept"
     Then I should see "Teambox Roulette"
+
+  Scenario: Mislav invites a user who belongs to the project's organization
+    Given I am logged in as mislav
+    When I go to the people page of the "Ruby Rockstars" project
+    And I fill in "invitation_user_or_email" with "pablo"
+    And I press "Invite"
+    Then "pablo@teambox.com" should receive an email
+    When "pablo@teambox.com" opens the email
+    Then I should see "You are now a member of the project" in the email body
+    And I should see "Ruby Rockstars" in the email body
 
   Scenario: Mislav invites existing teambox users to a project
 

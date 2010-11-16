@@ -50,9 +50,6 @@ document.on('ajax:success', '.task_inline form', function(e, form) {
 
   var task_data = e.memo.headerJSON
 
-  var status_comments = task.down('.task_status')
-  status_comments.update(parseInt(status_comments.innerHTML) + 1)
-
   var status = task_data.status
   var status_name = $w("new open hold resolved rejected")[status]
 

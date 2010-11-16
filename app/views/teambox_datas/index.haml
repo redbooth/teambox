@@ -1,0 +1,29 @@
+- content_for :column do
+  = render 'shared/user_navigation'
+
+%h2= t('.title')
+%p
+  You can import and export your account information at any moment.
+  %br
+  Teambox produces standard JSON documents that you can import from any system supporting it.
+
+
+%h3= t('.imports')
+#data_imports
+  %p= t('.imports_explain')
+  - if @data_imports.any?
+    = render :partial => 'data', :collection => @data_imports
+  - else
+    %p= t('.no_imports')
+
+  = new_teambox_import_link
+
+%h3= t('.exports')
+
+#data_exports
+  - if @data_exports.any?
+    = render :partial => 'data', :collection => @data_exports
+  - else
+    %p= t('.no_exports')
+
+  = new_teambox_export_link

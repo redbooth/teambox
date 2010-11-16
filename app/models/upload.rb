@@ -14,7 +14,7 @@ class Upload < RoleRecord
 
   before_create :copy_ownership_from_comment
 
-  default_scope :order => 'created_at DESC'
+  default_scope :order => 'id DESC'
 
   attr_accessible :asset,
                   :page_id,
@@ -72,7 +72,7 @@ class Upload < RoleRecord
 
   def after_create
     save_slot if page
-    project.log_activity(self, 'create', user_id)
+    project.log_activity(self, 'create', user_id) unless comment
   end
 
   def cleanup_activities

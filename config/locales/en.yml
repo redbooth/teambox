@@ -41,6 +41,7 @@ en:
     page: "Page %{id} not found in this project."
     task_list: "Task list %{id} not found in this project."
     task: "Task %{id} not found in this project."
+    data: "There was a problem locating your data."
   deleted:
     conversation: "Deleted %{name} conversation"
     task: "Deleted %{name} task"
@@ -78,7 +79,7 @@ en:
       title: "%{user} edited the page %{page}"
     create_note:
       create_note: added note
-      title: '%{user} created note <strong>%{note}</strong> in %{page}'
+      title: '%{user} created note "%{note}" in %{page}'
     edit_note:
       edit_note: edited note
       title: '%{user} edited the note "%{note}" in %{page}'
@@ -200,15 +201,12 @@ en:
         gravatar_in_use: "We don't have a picture of you, so we're using %{gravatar}."
         upload_here_or_at_gravatar: "You can either upload a picture here or set one on %{gravatar}."
         destroy: Delete avatar
-      tooltips:
-        login: "You need a username to login. People will be able to find you by username. Must be all lowercase, no spaces. You can use undescores."
-        first_name: Up to 20 characters.
-        last_name: Up to 20 characters.
-        email: Enter your real email so your teammates can contact you.
-        password: "Combining uppercase and lowercase letters and numbers is a good idea."
-        phone: "Preferrably cell phone. Enter it including the country code, e.g. +1 (415) 1234-567"
       new:
         use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
+        account:
+          title: Your Teambox account
+          choose_username: Choose a username so people can find you. You will use it to log in.
+          validations: Must be all lowercase, no spaces allowed. You can use underscores.
     new:
       title: Create an Account
       submit: Create account
@@ -246,23 +244,6 @@ en:
     user:
       formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: Remove from Project
-    welcome:
-      get_started: Get started with Teambox!
-      intro1: "You're our newest member! You'll soon see how Teambox can become your day's starting point."
-      intro2: "Where can you go now? Create a project to <b>collaborate</b>:" # or an agenda to <b>keep track of contacts</b>:"
-      projects:
-        title: Projects
-        share_and_collaborate: "Share and collaborate with your team! Project wall updates, conversations, tasks, pages and files."
-        create_your_first_project: "An event, a design, a product... Go ahead and <a href='%{link}'>create your first project</a> now!"
-      spread:
-        title: Do you love us too?
-        reasons: "We've been working on Teambox for years, hoping it will be useful for you.<br/>We're real people, motivated developers with a mission, just like you!"
-        help: You can <b>help us</b> by telling your friends how you enjoy Teambox on
-        twitter: 'Twitter,'
-        facebook: Facebook
-        in_your_site: in your site!
-        tell_us: "If you enjoy using Teambox, consider also <a href='mailto:%{address}'>telling us about it</a> in an email!"
-      stop_welcome: Stop showing this Welcome tab
     feeds:
       title: Sync your activity feeds
       follow_activities: "You can follow Teambox activities from News Readers (Desktop or Mobile)."
@@ -433,7 +414,6 @@ en:
       new_project: New Project...
       created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
-      create_an_example_project: "First time in Teambox? <a href='%{link}'>Create an example project</a> to play around and learn."
       active_projects:
         zero: You have no active projects.
         one: You have one active project.
@@ -473,7 +453,7 @@ en:
       admin_users: Manage users
       admin_projects: Manage projects
       billing: Plans and Billing
-      delete: Delete this organization
+      delete: Delete this organization...
     edit:
       there_are: "There are"
       number_of_users: "%{count} users"
@@ -549,19 +529,24 @@ en:
     projects:
       title: "'%{name}' organization"
       new_project: New project
-      active_projects: Active projects
-      archived_projects: Archived projects
-      role: "you're an <strong>%{role}</strong>"
-      last_activity: "last activity at %{date}"
       instructions: "These are the projects for this organization. If you're an admin, you can transfer a project to <a href='%{organizations_link}'>other organizations</a> by opening the project's settings."
+    active_projects:
+      title: Active projects
+      role: "you're an <strong>%{role}</strong>"
       settings: settings
+      no_active_projects: There are no active projects in this organization.
+      dont_belong: You're not part of this project
+    archived_projects:
+      title: Archived projects
+      last_activity: "last activity at %{date}"
+        
     you_are_not_admin: You are not an admin of this organization. Only admins can edit its settings and manage users.
     delete:
       need_to_be_admin: You need to be an administrator to destroy this organization
       not_with_projects: You can't destroy this organization because it still has projects
-      go_delete_some_projects: "You need to <a href='%{link}'>delete or transfer</a> all the projects from this organization before deleting it."
+      go_delete_some_projects: "You can't delete an organization while it still has projects inside. Please <a href='%{link}'>delete or transfer</a> all the projects from this organization before deleting it."
       delete: Delete this organization
-      clarification: "If you delete this organization, all the information that's attached to this organization will be lost forever. The users that belong to this organization will still be able to login to Teambox and work with their other organizations."
+      clarification: "If you delete this organization, all the information that's attached to it organization will be lost forever. The users that belong to this organization will still be able to login to Teambox and work with their other organizations."
       confirm: I understand that deleting this organization is irreversible and I all the content related to this organization will be lost.
       deleted: You deleted the organization
   memberships:
@@ -640,9 +625,6 @@ en:
     fields:
       name: Title
       body: First comment
-      tooltips:
-        name: "As short as possible, this will appear in notification email's subjects"
-        body: "Ask a question, tell your team what's new, start a discussion"
     new:
       title: New Conversation
       submit: Create
@@ -737,6 +719,7 @@ en:
       due_on: Due on
       today: Today
       tomorrow: Tomorrow
+      undefined: No due date
     create: Add Task
     edit:
       submit: Update Task
@@ -917,7 +900,7 @@ en:
       item2: "<b>Report</b>. Post comments for each task. Attach files. Ask for feedback."
       item3: "<b>Follow</b>. Receive notifications for tasks related to you."
       item4: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
-      footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others now."
+      footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others know."
       footer2: "It's time to forget about Excel planning sheets and complex Gantt charts!"
     overview_box:
       this_list: "This task list"
@@ -1021,17 +1004,46 @@ en:
       close: Hide preview
       preview: Preview
       showing: "..."
-      
-  example_projects:
-    new:
-      learn: Learn by example!
-      line1: "If it's your first time using Teambox, you can create an example project with some contents."
-      line2: "Navigating through the pages will teach you how to use each part of Teambox."
-      line3: "Make sure you <b>read the instructions</b> and <b>experiment</b> creating, editing and deleting elements!"
-      create: Create an example project
-      line4: "In this project you won't be able to invite other users, but you can do all the rest."
-      error: "Could not create example project."
-      error_list: "Could not create example project. The following projects are invalid: %{list}."
+  teambox_datas:
+    new_import:
+      title: "Import data"
+      submit: Import data
+    import_fields:
+      select_file: Please choose a file containing your data.
+      service: "Which service did you export your data from?"
+      please_supply_user_map: We detected the following users in your import. Please confirm which users correspond to which user on Teambox.
+      in_organization: "Put all projects in this organization"
+      user: User
+      teambox_user: Teambox user
+    new_export:
+      title: "Export data"
+      submit: Export data
+    export_fields:
+      description: "Please select which projects you wish to export."
+    index:
+      title: "Import or export your data"
+      imports: "Import data from a file"
+      imports_explain: "You may import Teambox backup files, or Basecamp projects."
+      exports: "Export your projects"
+      no_imports: "There are no recent imports."
+      no_exports: "There are no recent exports."
+    show_export:
+      title: "Import / Export"
+      projects: "Projects exported:"
+      download: "Download export"
+    data:
+      processing: "Currently processing..."
+      processed_at: "Processed at %{processed_at}"
+      incomplete: "More information required."
+      remove: Remove
+      confirm_delete: "Are you sure you want to delete this data?"
+    show_import:
+      title: "Import data"
+      submit: Import
+      projects: "Imported projects"
+      import_error: "There was an error loading your import. Please try again."
+    column:
+      description: "Here you can move your data in and out of Teambox."
   uploads:
     tooltip: Upload a file
     comment_upload_link: Attachment
@@ -1150,6 +1162,7 @@ en:
       login: Login
       project_invitations: "Invitations (%{count})"
       settings: Settings
+      help: Help
     public_navigation:
       home: Teambox
       tour: Tour
@@ -1167,6 +1180,7 @@ en:
       notifications: Notifications
       plans_and_billing: Plans and Billing
       delete_account: Delete Account...
+      your_data: Import / Export
     task_navigation:
       all_tasks: "All Tasks"
       unarchived_tasks: "Unarchived Tasks"
@@ -1262,10 +1276,14 @@ en:
     common:
       do_not_answer: "Do not reply to this email."
       answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
+    project_membership_notification:
+      subject: "%{user} shared [%{project}] with you"
+      you_have_been_added_to: "You are now a member of the project %{project}"
+      project_link: "Click on the link below to start collaborating on %{project} now"
     invitation:
       subject: "%{user} shared [%{project}] with you"
       collaborate_with: "%{name} wants to collaborate with you on Teambox:"
-      you_have_been_invited_to: "You have been invited to the project <b>%{project}</b>"
+      you_have_been_invited_to: "You have been invited to the project %{project}"
       accept_the_invitation: Accept the invitation to start collaborating
       current_users: "Current users in this project:"
       plaintext_link: "If the above link doesn't work, copy and paste the following code into your browser bar: "
@@ -1273,10 +1291,21 @@ en:
       plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
       report_abuse: "This email was sent to you at your contact's request. Please report any abuse."
       subject_without_project: "%{name} invited you to Teambox"
+    teamboxdata:
+        hey: "Hey, %{user_name}!"
+        data_imported: "Your data has been successfully imported into Teambox. To view details, please visit the following link:"
+        data_import_failed: "Your data could not be imported into Teambox. Please check that the data you uploaded is valid. To try again, visit the following link:"
+        data_exported: "Your data has been exported from Teambox, and is available as a download from the following link:"
+        data_export_failed: "Your data could not be exported from Teambox. To try again, please visit the following link:"
+        exported: "Your data is ready for download"
+        export_failed: "Your data could not be exported"
+        imported: "Your data has been imported"
+        import_failed: "Your data could not be imported"
     confirm:
       subject: "Get started with Teambox"
       hey: "Hey, %{user_name}!"
-      follow_the_link: "In order to <b>complete your signup</b> for Teambox, we need you to log in by clicking here:"
+      follow_this_link: "In order to %{complete} for Teambox, we need you to log in by clicking here:"
+      complete: complete your signup
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
@@ -1284,7 +1313,8 @@ en:
     reset_password:
       subject: "Your password has successfully been reset"
       hey: "Hey, %{user_name}!"
-      follow_the_link: "In order to <b>set a new password</b> for Teambox, we need you to log in with the following link:"
+      follow_this_link: "In order to %{new_password} for Teambox, we need you to log in with the following link:"
+      new_password: set a new password
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
@@ -1294,12 +1324,15 @@ en:
       subject: "Password retrieval for Teambox"
     notify:
       project: "Teambox Project:"
-      view_online: "You can <a href='%{link}'>view this conversation online</a> to answer and attach files."
+      view_this_converation_online: "You can %{converation} to answer and attach files."
+      converation: view this conversation online
       reply: "You can also reply to this email to post a reply in the conversation."
       task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
       are_watching: " are suscribed to this conversation, and will be notified of future replies."
-      stop_watching: "<a href='%{stop_watching_url}'>Stop watching</a> this thread to stop receiving email notifications."
-      notification_settings: "You can change your <a href='%{url}'>notification settings</a> for further emails."
+      stop_watching_link: "%{stop_watch} this thread to stop receiving email notifications."
+      stop_watch: Stop watching
+      notification_settings_link: "You can change your %{settings_link} for further emails."
+      settings_link: notification settings
       comment: "Comment on project's wall: "
       conversation: "Conversation:"
       task: "Task:"
@@ -1346,7 +1379,6 @@ en:
     welcome_users: Welcome!
     new_projects: New Project
     archived_task_lists: Archived Tasks
-    new_example_projects: Create an Example Project
     new_conversations: New Conversation
     results_search: Search
     show_plans: Plans
@@ -1359,7 +1391,10 @@ en:
       title: Searching in all projects
       title_in_project: "Searching in project: %{project}"
       search_again: Search again
-      report: '%{count} results found for "%{term}"'
+      no_results:
+        title: "We didn't find any results for '%{term}', sorry!"
+        explain: "Try using more specific search terms to find more results."
+      report: "We found %{count} results for your search terms '%{term}'"
 
   number:
     # Used in number_with_delimiter()
@@ -1630,6 +1665,17 @@ en:
       words_connector: ", "
       two_words_connector: " and "
       last_word_connector: ", and "
+
+  password_strength:
+    too_short: Too short
+    weak: Weak
+    average: Average
+    strong: Strong
+    too_long: Too long
+
+  date_picker:
+    no_date_assigned: No date assigned
+
   oauth:
     this_account_will_be_linked_to: "This account will be linked with %{provider}"
     account_linked: "Your account has been linked."

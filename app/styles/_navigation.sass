@@ -45,15 +45,8 @@ div.navigation
     margin:
       right: 0px
       left: 10px
-  li.welcome_close
-    a
-      text-decoration: none
-    img
-      vertical-align: middle
-    span
-      vertical-align: middle
 
-div.user_navigation, div.project_settings_navigation, div.project_column_navigation
+div.user_navigation, div.project_settings_navigation, div.project_column_navigation, div.organization_navigation
   ul
     list-style-type: none
     margin: 0px
@@ -66,7 +59,6 @@ div.user_navigation, div.project_settings_navigation, div.project_column_navigat
       color: rgb(80, 80, 80)
       padding: 5px 10px
       margin-bottom: 5px
-      font-size: 14px
       &:hover
         color: #555555
         background: #ffe967
@@ -76,23 +68,6 @@ div.user_navigation, div.project_settings_navigation, div.project_column_navigat
         color: #555555
         background: #ffc947
         border: solid 1px #dfa927
-    .a_ignoreme
-      display: block
-      +rounded(5px)
-      background: rgb(240, 240, 240)
-      border: solid 1px rgb(200, 200, 200)
-      padding: 5px 10px
-      margin-bottom: 5px
-      font-size: 14px
-      &:hover
-        color: rgb(255, 255, 0)
-        background: rgb(0, 0, 200)
-        border: solid 1px rgb(0, 0, 200)
-      &.active
-        color: rgb(255, 255, 255)
-        background: rgb(0, 0, 200)
-        border: solid 1px rgb(0, 0, 200)
-        text-decoration: none
 
 div.task_navigation
   ul

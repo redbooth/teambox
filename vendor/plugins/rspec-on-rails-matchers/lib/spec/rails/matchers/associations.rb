@@ -1,33 +1,49 @@
+require 'spec/matchers'
+
 module Spec
   module Rails
     module Matchers
-      def belong_to(association)
-        return simple_matcher("model to belong to #{association}") do |model|
+
+      Spec::Matchers.define :belong_to do |association|
+        match do |model|
           model = model.class if model.is_a? ActiveRecord::Base
           model.reflect_on_all_associations(:belongs_to).find { |a| a.name == association }
         end
+        description do
+          "model to belong to #{association}"
+        end
       end
 
-      def have_many(association)
-        return simple_matcher("model to have many #{association}") do |model|
+      Spec::Matchers.define :have_many do |association|
+        match do |model|
           model = model.class if model.is_a? ActiveRecord::Base
           model.reflect_on_all_associations(:has_many).find { |a| a.name == association }
         end
+        description do
+          "model to have many #{association}"
+        end
       end
 
-      def have_one(association)
-        return simple_matcher("model to have one #{association}") do |model|
+      Spec::Matchers.define :have_one do |association|
+        match do |model|
           model = model.class if model.is_a? ActiveRecord::Base
           model.reflect_on_all_associations(:has_one).find { |a| a.name == association }
         end
+        description do
+          "model to have one #{association}"
+        end
       end
 
-      def have_and_belong_to_many(association)
-        return simple_matcher("model to have and belong to many #{association}") do |model|
+      Spec::Matchers.define :have_and_belong_to_many do |association|
+        match do |model|
           model = model.class if model.is_a? ActiveRecord::Base
           model.reflect_on_all_associations(:has_and_belongs_to_many).find { |a| a.name == association }
         end
+        description do
+          "model to have and belong to many #{association}"
+        end
       end
+
     end
   end
 end

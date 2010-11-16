@@ -52,9 +52,21 @@ module TasksHelper
     end
   end
 
+  def comment_task_due_on(comment)
+    if comment.due_on_change?
+      [].tap { |out|
+        if comment.due_on_transition?
+          out << span_for_due_date(comment.previous_due_on)
+          out << content_tag(:span, '&rarr;', :class => "arr due_on_arr")
+        end
+        out << span_for_due_date(comment.due_on)
+      }.join(' ')
+    end
+  end
+
   def task_status(task,status_type)
-    status_for_column = status_type == :column ? "task_status_#{task.status_name}" : ''
-    out = %(<span class='task_status #{status_for_column}'>)
+    status_for_column = status_type == :column ? "task_status_#{task.status_name}" : "task_counter"
+    out = %(<span data-task-id=#{task.id} class='task_status #{status_for_column}'>)
     out << case status_type
     when :column  then localized_status_name(task)
     when :content then task.comments_count.to_s
@@ -77,14 +89,6 @@ module TasksHelper
       :project => task_list && task_list.project,
       :task_list => task_list,
       :editable => editable
-  end
-
-  def task_fields(f,project,task_list,task)
-    render 'tasks/fields',
-      :f => f,
-      :project => project,
-      :task_list => task_list,
-      :task => task
   end
   
   def insert_task_options(project,task_list,task,editable=true)
@@ -129,7 +133,7 @@ module TasksHelper
   end
 
   def date_picker(f, field, embedded = false)
-    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : nil
+    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>"
     div_id = "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}"
     content_tag :div, :class => "date_picker #{'embedded' if embedded}" do
       image_tag('/images/calendar_date_select/calendar.gif', :class => 'calendar_date_select_popup_icon') <<
@@ -138,7 +142,7 @@ module TasksHelper
   end
   
   def embedded_date_picker(f, field)
-    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : nil
+    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>"
     div_id = "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}"
     content_tag :div, :class => "date_picker_embedded", :id => div_id do
       f.hidden_field(field) << content_tag(:span, date_field, :class => 'localized_date', :style => 'display: none') <<
@@ -147,7 +151,15 @@ module TasksHelper
   end
   
   def value_for_assigned_to_select
-    value = params[:assigned_to] == 'all' ? 'task' : params[:assigned_to]
-    value ||= 'task'
+    params[:assigned_to] == 'all' ? 'task' : (params[:assigned_to] || 'task')
   end
+
+  protected
+
+    def span_for_due_date(due_date)
+      content_tag(:span, due_date ?
+          localize(due_date, :format => :short) :
+          t('tasks.due_on.undefined'),
+        :class => "assigned_date")
+    end
 end

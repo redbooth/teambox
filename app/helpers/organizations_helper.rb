@@ -5,7 +5,7 @@ module OrganizationsHelper
   end
 
   def organization_navigation(organization)
-    render_tabnav :organizations_nav do 
+    render_tabnav :organization_navigation do 
       add_tab do |t|
         t.named t('.general_settings')
         t.links_to organization_path(@organization)

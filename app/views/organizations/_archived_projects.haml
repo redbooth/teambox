@@ -1,0 +1,8 @@
+- if @organization.projects.archived.any?
+  %h3= t('.title')
+  .projects
+    - @organization.projects.archived.each do |project|
+      %p.project
+        = link_to h(project), project
+        %span.status
+          = t('.last_activity', :date => project.updated_at.to_date)

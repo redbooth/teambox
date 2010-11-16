@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
   concerned_with  :activation,
                   :avatar,
                   :authentication,
-                  :example_project,
                   :recent_projects,
                   :roles,
                   :rss,
@@ -28,7 +27,7 @@ class User < ActiveRecord::Base
   has_many :invitations, :foreign_key => 'invited_user_id'
   has_many :activities
   has_many :uploads
-  has_many :app_links
+  has_many :app_links, :dependent => :destroy
   has_many :memberships
   has_many :teambox_datas
 
@@ -55,6 +54,7 @@ class User < ActiveRecord::Base
                   :card_attributes,
                   :notify_conversations,
                   :notify_tasks,
+                  :splash_screen,
                   :wants_task_reminder
 
   attr_accessor   :activate, :old_password
@@ -73,6 +73,7 @@ class User < ActiveRecord::Base
       self.invited_by = invitation.user
       invitation.user.update_attribute :invited_count, (invitation.user.invited_count + 1)
     end
+    self.splash_screen = true
   end
 
   def after_create

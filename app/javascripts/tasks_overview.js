@@ -25,7 +25,7 @@ document.on('click', '.my_tasks_listing .task a', function(e, el) {
 })
 
 // Remove task from sidebar if it's not assigned to me anymore
-document.on('ajax:success', '.task form', function(e, form) {
+document.on('ajax:success', ".thread[data-class='task'] form", function(e, form) {
   var status = form.down("select[name='task[status]']").getValue()
   var person = form.down("select[name='task[assigned_id]']").getValue()
 

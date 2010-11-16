@@ -14,8 +14,13 @@ document.on('click', '.task_header + .edit_task a[href="#cancel"]', function(e, 
   hideEditTaskFormAndShowHeader(link.up('.edit_task'))
 })
 
-document.on('keyup', '.task_header + .edit_task:has(a[href="#cancel"])', function(e, form) {
+document.on('keyup', '.task_header + .edit_task', function(e, form) {
   if (e.keyCode == Event.KEY_ESC) hideEditTaskFormAndShowHeader(form)
+})
+
+document.on('ajax:failure', 'form.new_task.app_form', function(e, form) {
+  var message = e.memo.responseJSON.first()[1]
+  form.down('div.text_field').insertOrUpdate('p.error', message)
 })
 
 document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
@@ -28,8 +33,15 @@ document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
   hideEditTaskFormAndShowHeader(form)
 })
 
-document.on('click', '.date_picker img', function(e, element) {
-  new CalendarDateSelect(element.next('input'), element.next('span'), {
+// update task counter
+document.on('ajax:success', 'form.edit_task', function(e, form) {
+	var task_data = e.memo.headerJSON
+	counter = $$('.task_counter[data-task-id='+ task_data.id +']').first()
+  counter.update(parseInt(counter.innerHTML) + 1)
+})
+
+document.on('click', '.date_picker', function(e, element) {
+  new CalendarDateSelect(element.down('input'), element.down('span'), {
     buttons: true,
     popup: 'force',
     time: false,
@@ -44,14 +56,18 @@ Task = {
   },
   
   sortableUpdate: function() {
-    var taskID = this.currentDraggable.id.split('_').last(),
-        taskList = this.currentDraggable.up('.task_list'),
-        position = taskList.select('.tasks .task').indexOf(this.currentDraggable) + 1,
-        ids = taskList.id.match(/project_(\d+)_task_list_(\d+)/)
-    
-    new Ajax.Request('/projects/' + ids[1] + '/tasks/' + taskID + '/reorder', {
+    var taskId = this.currentDraggable.readAttribute('data-task-id'),
+        taskList = this.currentDraggable.up('.task_list')
+        taskListId = taskList.readAttribute('data-task-list-id')
+
+    taskIds = taskList.select('.tasks .task').collect(
+      function(task) {
+          return task.readAttribute('data-task-id')
+      }).join(',')
+
+    new Ajax.Request('/projects/' + current_project + '/tasks/' + taskId + '/reorder', {
       method: 'put',
-      parameters: { task_list_id: ids[2], position: position }
+      parameters: { task_list_id: taskListId, task_ids: taskIds }
     })
   }.debounce(100),
 
@@ -114,13 +130,13 @@ document.on('click', 'a.show_archived_tasks_link', function(e, el) {
   });
 });
 
-document.observe('jenny:loaded:new_task', function(evt) {
+document.on('ajax:success', '.new_task form', function(e){
   setTimeout(function(){
     Task.make_all_sortable();
     TaskList.saveColumn();
     TaskList.updatePage('column', TaskList.restoreColumn);
   }, 0);
-});
+})
 
 document.observe('jenny:loaded:edit_task', function(evt) {
   setTimeout(function(){
@@ -135,6 +151,8 @@ document.observe('jenny:cancel:edit_task', function(evt) {
 
 // Enable task sort on load and highlight my tasks
 document.observe('dom:loaded', function(e) {
+  if(typeof(my_user) == "undefined") return
+
   if ($$('.tasks').length > 0) Task.make_all_sortable();
   Task.highlight_my_tasks();
   Filter.updateCounts(false);

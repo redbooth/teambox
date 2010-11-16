@@ -35,14 +35,11 @@ end
 
 Given /I have confirmed my email/ do
   @current_user.update_attribute(:confirmed_user,true)
+  @current_user.update_attribute(:splash_screen,false)
 end
 
 Given /I have never confirmed my email/ do
   @current_user.update_attribute(:confirmed_user,false)
-end
-
-Given /It is my first time logging in/ do
-  @current_user.update_attribute(:welcome,false)
 end
 
 Given /^(?:My|His|Her) password is "([^\"]*)"$/ do |password|
@@ -79,6 +76,8 @@ Given /^(@.+) (?:has|have) (?:his|her|their) locale set to (.+)$/ do |users, nam
   when "english" then "en"
   when "spanish" then "es"
   when "italian" then "it"
+  when "french"  then "fr"
+  when "catalan" then "ca"
   else
     raise ArgumentError, "don't know locale #{name}"
   end

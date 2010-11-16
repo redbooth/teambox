@@ -5,11 +5,19 @@ class Comment
   end
   
   def transition?
-    status_transition? || assigned_transition?
+    status_transition? || assigned_transition? || due_on_change?
   end
 
   def initial_status?
     status? and not previous_status?
+  end
+
+  def due_on_transition?
+    due_on != previous_due_on and !previous_due_on.nil?
+  end
+
+  def due_on_change?
+    due_on != previous_due_on
   end
 
   def assigned_transition?
@@ -26,6 +34,14 @@ class Comment
 
   def previous_assigned?
     !previous_assigned.nil?
+  end
+
+  def due_on?
+    !due_on.nil?
+  end
+
+  def previous_due_on?
+    !previous_due_on.nil?
   end
 
   def status_open?

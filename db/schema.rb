@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101014112847) do
+ActiveRecord::Schema.define(:version => 20101115162241) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(:version => 20101014112847) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "due_on"
+    t.date     "previous_due_on"
   end
 
   add_index "comments", ["deleted_at"], :name => "index_comments_on_deleted_at"
@@ -114,6 +116,8 @@ ActiveRecord::Schema.define(:version => 20101014112847) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "dividers", ["page_id"], :name => "index_dividers_on_page_id"
 
   create_table "email_addresses", :force => true do |t|
     t.integer "card_id"
@@ -182,6 +186,7 @@ ActiveRecord::Schema.define(:version => 20101014112847) do
   end
 
   add_index "notes", ["deleted_at"], :name => "index_notes_on_deleted_at"
+  add_index "notes", ["page_id"], :name => "index_notes_on_page_id"
 
   create_table "organizations", :force => true do |t|
     t.string   "name"
@@ -340,10 +345,12 @@ ActiveRecord::Schema.define(:version => 20101014112847) do
     t.string   "processed_data_file_name"
     t.string   "processed_data_content_type"
     t.integer  "processed_data_file_size"
-    t.boolean  "is_processing",               :default => false
     t.datetime "processed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "processed_objects"
+    t.string   "service"
+    t.integer  "status",                      :default => 0
   end
 
   create_table "tolk_locales", :force => true do |t|
@@ -389,6 +396,7 @@ ActiveRecord::Schema.define(:version => 20101014112847) do
   end
 
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
+  add_index "uploads", ["page_id"], :name => "index_uploads_on_page_id"
 
   create_table "users", :force => true do |t|
     t.string   "login",                       :limit => 40
@@ -410,9 +418,7 @@ ActiveRecord::Schema.define(:version => 20101014112847) do
     t.string   "profile_grade"
     t.string   "login_token",                 :limit => 40
     t.datetime "login_token_expires_at"
-    t.boolean  "welcome",                                    :default => false
-    t.boolean  "confirmed_user",                             :default => false
-    t.integer  "last_read_announcement"
+    t.boolean  "confirmed_user",                           :default => false
     t.datetime "deleted_at"
     t.string   "rss_token",                   :limit => 40
     t.boolean  "admin",                                      :default => false
@@ -435,6 +441,7 @@ ActiveRecord::Schema.define(:version => 20101014112847) do
     t.datetime "avatar_updated_at"
     t.datetime "visited_at"
     t.boolean  "betatester",                               :default => false
+    t.boolean  "splash_screen",                            :default => false
   end
 
   add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"

@@ -67,6 +67,14 @@ When /^(?:|I )fill in the following(?: within "([^\"]*)")?:$/ do |selector, fiel
   end
 end
 
+When /^(?:|I )select the following(?: within "([^\"]*)")?:$/ do |selector, fields|
+  with_scope(selector) do
+    fields.rows_hash.each do |value, name|
+      When %{I select "#{name}" from "#{value}"}
+    end
+  end
+end
+
 When /^(?:|I )select "([^\"]*)" from "([^\"]*)"(?: within "([^\"]*)")?$/ do |value, field, selector|
   with_scope(selector) do
     select(value, :from => field)
@@ -100,6 +108,14 @@ end
 When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"(?: within "([^\"]*)")?$/ do |path, field, selector|
   with_scope(selector) do
     attach_file(field, path)
+  end
+end
+
+When  /^(?:|I )drag "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
+  with_scope(selector) do
+    dragged_item = find(:xpath,"//*[.='#{dragged_item}']")
+    dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
+    dragged_item.drag_to dropped_item
   end
 end
 

@@ -12,4 +12,7 @@
     %li= link_to_unless_current t('.project_invitations', :count => current_user.invitations.count),
       user_invitations_path(:user_id => current_user.id)
 
+  %li
+    = link_to t('.help'), "http://guide.teambox.com##{controller_name}", :target => "_blank"
+
   %li= link_to t('.logout'), logout_path

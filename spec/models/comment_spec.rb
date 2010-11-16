@@ -378,4 +378,30 @@ describe Comment do
       comment.hours.should be_nil
     end
   end
+
+  context "deleting users" do
+    before do
+      assigned = Factory :user, :first_name => "Michael", :last_name => "Jackson"
+      project = Factory :project
+      @person = Factory :person, :user => assigned, :project => project
+      @comment = Factory :comment, :target => Factory(:task), :user => Factory(:mislav), :assigned => @person, :project => project
+      @user = @comment.user
+    end
+
+    it "should display information about the user after this being deleted" do
+      @user.destroy
+      @comment.reload.user.name.should == "Mislav Marohnić"
+    end
+
+    it "should display information about the assigned user after this being deleted" do
+      @person.destroy
+      @comment.reload.assigned.user.name.should == "Michael Jackson"
+    end
+
+    it "should display information about the previous assigned user after this being deleted" do
+      comment = Factory :comment, :target => @comment.target, :assigned => Factory(:person, :project => @comment.target.project), :previous_assigned => @person
+      @person.destroy
+      comment.reload.previous_assigned.user.name.should == "Michael Jackson"
+    end
+  end
 end

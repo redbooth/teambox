@@ -14,17 +14,6 @@ ActiveRecord::Associations::AssociationCollection.class_eval do
   end
 end
 
-ActsAsList::InstanceMethods.module_eval do
-  def remove_from_list
-    if in_list?
-      decrement_positions_on_lower_items
-      # Can cause "can't modify frozen object" error.
-      # Also, it's completely unnecessary.
-      # update_attribute position_column, nil
-    end
-  end
-end
-
 class ActiveRecord::Base
   def to_json(options = {})
     respond_to?(:to_api_hash) ? to_api_hash(options).to_json : super(options)

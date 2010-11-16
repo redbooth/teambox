@@ -203,14 +203,35 @@ describe Task do
       comment.status.should == 2
       comment.assigned_id.should be_nil
     end
-    
+
+    it "saves completed at" do
+      task = Factory(:task)
+      task.completed_at.should be_nil
+
+      task.update_attributes(:status => "1", :comments_attributes => [{:body => ""}])
+      task.reload
+      task.completed_at.should be_nil
+
+      task.update_attributes(:status => "4", :comments_attributes => [{:body => ""}])
+      task.reload
+      task.completed_at.beginning_of_day.to_date.should == Time.now.beginning_of_day.to_date
+
+      task.update_attributes(:status => "2", :comments_attributes => [{:body => ""}])
+      task.reload
+      task.completed_at.should be_nil
+
+      task.update_attributes(:status => "3", :comments_attributes => [{:body => ""}])
+      task.reload
+      task.completed_at.beginning_of_day.to_date.should == Time.now.beginning_of_day.to_date
+    end
+
     it "saves assigned user transitions" do
       task = Factory(:task)
       user = Factory(:user)
       user2 = Factory(:user); person2 = Factory(:person, :user => user2, :project => task.project)
       user3 = Factory(:user); person3 = Factory(:person, :user => user3, :project => task.project)
       task.updating_user = user
-      task.update_attributes(:assigned_id => person2.id, :comments_attributes => [{:body => "Do it by tomorrow"}])
+      task.reload.update_attributes!(:assigned_id => person2.id, :comments_attributes => [{:body => "Do it by tomorrow"}])
       task.should be_assigned_to(user2)
       task.should have(1).comments
       
@@ -231,6 +252,16 @@ describe Task do
       comment.previous_assigned_id.should == person2.id
       comment.assigned_id.should == person3.id
     end
+
+    it "displays assigned users even when they are destroyed" do
+      user = Factory(:mislav)
+      project = Factory(:project)
+      person = Factory(:person, :project => project, :user => user)
+      task = Factory(:task, :assigned => person, :project => project)
+      person.destroy_without_callbacks # We don't use destroy because we want to avoid the nullify from Person#tasks association
+      task.reload.assigned.user.name.should == "Mislav Marohnić"
+    end
+
   end
 
   describe "due_today scope" do

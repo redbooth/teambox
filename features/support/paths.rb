@@ -17,6 +17,8 @@ module NavigationHelpers
       login_path
     when /the forgot password page/
       "/forgot"
+    when /the your data page/
+      teambox_datas_path
     when /the pages of the "([^\"]*)" project/
       project_pages_path(Project.find_by_name($1))
     when /the page named "([^\"]*)"/

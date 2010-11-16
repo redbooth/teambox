@@ -9,7 +9,8 @@ def teambox_data_import(make_data)
         entry.split('=').tap {|values| object_maps['User'][values[0]] = values[1] }
       end
       TeamboxData.import_from_file(ENV['TEAMBOX_DATA'], object_maps, {:create_users => make_data, 
-                                                                      :create_organizations => make_data})
+                                                                      :create_organizations => make_data,
+                                                                      :format => ENV['TEAMBOX_DATA_FORMAT']})
     #rescue Exception => e
     #  puts e
     #end

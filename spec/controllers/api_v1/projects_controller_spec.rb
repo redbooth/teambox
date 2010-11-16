@@ -14,6 +14,15 @@ describe ApiV1::ProjectsController do
       JSON.parse(response.body)['objects'].length.should == 1
     end
     
+    it "shows projects with a JSONP callback" do
+      login_as @user
+      
+      get :index, :callback => 'lolCat', :format => 'js'
+      response.should be_success
+      
+      response.body.split('(')[0].should == 'lolCat'
+    end
+    
     it "does not show projects the user doesn't belong to" do
       login_as Factory(:confirmed_user)
       

@@ -116,3 +116,33 @@ Then /^I should not see the following tasks:$/ do |table|
     Then %(I should not see the task called "#{hash['task_name']}" in the "#{hash['task_list_name']}" task list)
   end
 end
+
+Then /^I should see the task "([^\"]*)" before "([^\"]*)"$/ do |task1, task2|
+  Task.find_by_name(task1).position.should < Task.find_by_name(task2).position
+end
+
+Then /^I fill the task comment box with "([^\"]*)"$/ do |text|
+  Then %(I fill in "task[comments_attributes][0][body]" with "#{text}")
+end
+
+Then /^I click on the date selector$/ do
+  find('.actions .localized_date').click
+end
+
+Then /^I select the month of "([^\"]*)" with the date picker$/ do |month|
+  Then %(I select "#{month}" from "task_due_on_month" within "div[class='calendar_date_select']")
+end
+
+Then /^I select the year "([^\"]*)" with the date picker$/ do |year|
+  Then %(I select "#{year}" from "task_due_on_year" within "div[class='calendar_date_select']")
+end
+
+Then /^I select the day "([^\"]*)" with the date picker$/ do |day|
+  Then %(I click the element that contain "#{day}" within "div[class='calendar_date_select']")
+end
+
+Then /^I should see "([^\"]*)"(?: and "([^\"]*)")? within the last comment body$/ do |text1, text2|
+  comment = all("div.comments .body").last.text
+  comment.should match(/#{text1}/)
+  comment.should match(/#{text2}/)
+end

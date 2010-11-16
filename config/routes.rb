@@ -10,20 +10,17 @@ ActionController::Routing::Routes.draw do |map|
   
   map.search            '/search',              :controller => 'search'
 
-  map.welcome           '/welcome',             :controller => 'users',       :action => 'welcome'
   map.text_styles       '/text_styles',         :controller => 'users',       :action => 'text_styles'
   map.invite_format     '/invite_format',       :controller => 'invitations', :action => 'invite_format'
   map.feeds             '/feeds',               :controller => 'users',       :action => 'feeds'
   map.calendars         '/calendars',           :controller => 'users',       :action => 'calendars'
+  map.disable_splash    '/disable_splash',      :controller => 'users',       :action => 'disable_splash'
   map.forgot_password   '/forgot',              :controller => 'reset_passwords',   :action => 'new'
   map.reset_password    '/reset/:reset_code',   :controller => 'reset_passwords',   :action => 'reset'
   map.update_after_forgetting   '/forgetting',  :controller => 'reset_passwords',   :action => 'update_after_forgetting', :method => :put
   map.sent_password     '/reset_password_sent', :controller => 'reset_passwords',   :action => 'sent'
 
   map.change_format     '/format/:f',           :controller => 'sessions',    :action => 'change_format'
-
-  map.new_example_project    '/example/new',    :controller => 'example_projects', :action => 'new'
-  map.create_example_project '/example/create', :controller => 'example_projects', :action => 'create'
 
   map.create_project_invitation '/projects/:project_id/invite/:login', :controller => 'invitations', :action => 'create', :method => :posts
 
@@ -53,6 +50,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.destroy_user '/account/destroy', :controller => 'users', :action => 'destroy'
 
+  map.resources :teambox_datas, :as => :datas
   map.resources :users, :has_many => [:invitations], :member => {
                           :unconfirmed_email => :get,
                           :confirm_email => :get,
@@ -101,8 +99,8 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put, :reorder => :put }
 
     project.resources :task_lists,
-      :collection => { :gantt_view => :get, :archived => :get  },
-      :member => { :watch => :put, :unwatch => :put, :archive => :put, :unarchive => :put, :reorder => :put } do |task_lists|
+      :collection => { :gantt_view => :get, :archived => :get, :reorder => :put },
+      :member => { :watch => :put, :unwatch => :put, :archive => :put, :unarchive => :put } do |task_lists|
         # deprecated routes, use "project.resources :tasks" directly
         task_lists.resources :tasks, :has_many => :comments, :member => { :watch => :put, :unwatch => :put }
     end

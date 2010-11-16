@@ -35,7 +35,8 @@ Given(/^a project with users? (.+)$/) do |users|
   @current_project = Factory(:project)
   
   each_user(users, true) do |user|
-    Factory(:person, :user => user, :project => @current_project)
+    person = Factory(:person, :user => user, :project => @current_project)
+    person.user.update_attribute :splash_screen, false
   end
 end
 
