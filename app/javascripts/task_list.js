@@ -353,7 +353,7 @@ document.on('click', '.task_list .new_task form a[href="#cancel"]', function(e, 
   hideTaskFormAndShowLink(link.up('form'))
 })
 
-document.on('keyup', '.task_list .new_task form:has(a[href="#cancel"])', function(e, form) {
+document.on('keyup', '.task_list .new_task form', function(e, form) {
   if (e.keyCode == Event.KEY_ESC) hideTaskFormAndShowLink(form)
 })
 

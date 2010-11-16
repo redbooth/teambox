@@ -159,18 +159,14 @@ class Page < RoleRecord
     
     base
   end
-  
+
   define_index do
     indexes name, :sortable => true
     indexes description
-
-    indexes notes.name
-    indexes notes.body
-    indexes dividers.name
-    indexes notes.body
-    indexes uploads(:asset_file_name)
-    
+    indexes notes.name, :as => :note_name
+    indexes notes.body, :as => :note_body
+    indexes dividers.name, :as => :divider_name
+    indexes uploads(:asset_file_name), :as => :upload_name
     has project_id, created_at, updated_at
   end
-  
 end

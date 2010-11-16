@@ -1,0 +1,41 @@
+=progress_bar_colors($abs_hue, $lighten=0%)
+  $hue: $abs_hue - 85deg
+  border: 1px solid adjust-hue(#5D8D24, $hue)
+  border-top: 1px solid adjust-hue(#3F670E, $hue)
+  border-bottom: 1px solid adjust-hue(#5D8E25, $hue)
+  div
+    background-color: lighten(adjust-hue(#68B400, $hue), $lighten)
+    &.bar1
+      +gradient(lighten(adjust-hue(#8DC54C, $hue), $lighten), lighten(adjust-hue(#C3E999, $hue), $lighten))
+      height: 4px
+    &.bar2
+      +gradient(lighten(adjust-hue(#B8E585, $hue), $lighten), lighten(adjust-hue(#68B400, $hue), $lighten))
+      height: 6px
+    &.bar3
+      +gradient(lighten(adjust-hue(#70BB0B, $hue), $lighten), lighten(adjust-hue(#97E142, $hue), $lighten))
+      height: 6px
+
+.progressbar
+  display: inline-block
+  width: 120px
+  background-color: #eee
+  div
+    display: block
+    width: 100px
+    margin: 0
+    padding: 0
+    &.bar1
+      height: 4px
+    &.bar2
+      height: 6px
+    &.bar3
+      height: 6px
+
+.progressbar
+  +progress_bar_colors(85deg)
+.progressbar.red
+  +progress_bar_colors(0deg, 10%)
+.progressbar.yellow
+  +progress_bar_colors(60deg)
+.progressbar.blue
+  +progress_bar_colors(200deg)
