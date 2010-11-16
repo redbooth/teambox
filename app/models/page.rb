@@ -161,6 +161,8 @@ class Page < RoleRecord
   end
 
   define_index do
+    where "`pages`.`deleted_at` IS NULL"
+
     indexes name, :sortable => true
     indexes description
     indexes notes.name, :as => :note_name

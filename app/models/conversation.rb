@@ -114,6 +114,8 @@ class Conversation < RoleRecord
   end
 
   define_index do
+    where "`conversations`.`deleted_at` IS NULL"
+
     indexes name, :sortable => true
 
     indexes comments.body, :as => :body
