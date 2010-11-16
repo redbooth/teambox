@@ -240,13 +240,15 @@ class Task < RoleRecord
   end
 
   define_index do
+    where "`tasks`.`deleted_at` IS NULL"
+
     indexes name, :sortable => true
 
     indexes comments.body, :as => :body
     indexes comments.user.first_name, :as => :user_first_name
     indexes comments.user.last_name, :as => :user_last_name
     indexes comments.uploads(:asset_file_name), :as => :upload_name
-    
+
     has project_id, created_at, updated_at
   end
 
