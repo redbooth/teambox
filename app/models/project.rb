@@ -1,5 +1,6 @@
 # A User model describes an actual user, with his password and personal info.
 # A Person model describes the relationship of a User that follows a Project.
+require "activity.rb"
 
 class Project < ActiveRecord::Base
   acts_as_paranoid
