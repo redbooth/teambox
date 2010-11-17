@@ -203,7 +203,28 @@ describe Task do
       comment.status.should == 2
       comment.assigned_id.should be_nil
     end
-    
+
+    it "saves completed at" do
+      task = Factory(:task)
+      task.completed_at.should be_nil
+
+      task.update_attributes(:status => "1", :comments_attributes => [{:body => ""}])
+      task.reload
+      task.completed_at.should be_nil
+
+      task.update_attributes(:status => "4", :comments_attributes => [{:body => ""}])
+      task.reload
+      task.completed_at.beginning_of_day.to_date.should == Time.now.beginning_of_day.to_date
+
+      task.update_attributes(:status => "2", :comments_attributes => [{:body => ""}])
+      task.reload
+      task.completed_at.should be_nil
+
+      task.update_attributes(:status => "3", :comments_attributes => [{:body => ""}])
+      task.reload
+      task.completed_at.beginning_of_day.to_date.should == Time.now.beginning_of_day.to_date
+    end
+
     it "saves assigned user transitions" do
       task = Factory(:task)
       user = Factory(:user)

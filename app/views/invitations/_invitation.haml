@@ -8,7 +8,10 @@
     = t('.invited_email', :email => invitation.email, :inviter => invitation.user.login)
   .status
     = t('.pending')
-    = t('.time_ago', :time_ago_in_words => time_ago_in_words(invitation.updated_at))
+    - if invitation.updated_at < 1.minute.ago
+      = t('.time_ago', :time_ago_in_words => time_ago_in_words(invitation.updated_at))
+    - else
+      = t('.just_now')
   - if invitation.editable?(current_user)
     .links
       = link_to t('invitations.invitation.resend'), polymorphic_path([:resend, invitation.target, invitation])

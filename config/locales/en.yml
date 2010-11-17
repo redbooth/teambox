@@ -453,7 +453,7 @@ en:
       admin_users: Manage users
       admin_projects: Manage projects
       billing: Plans and Billing
-      delete: Delete this organization
+      delete: Delete this organization...
     edit:
       there_are: "There are"
       number_of_users: "%{count} users"
@@ -578,6 +578,7 @@ en:
       invited_user: "%{inviter} invited <b>%{invitee}</b> to join the project."
       invited_email: "%{inviter} invited <b>%{email}</b> to join the project."
       time_ago: "(%{time_ago_in_words} ago)"
+      just_now: "(just now)"
       resend: Re-send invitation email
       pending: "An email was sent to this user, but they still haven't confirmed."
       discard: Discard invitation

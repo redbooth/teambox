@@ -35,6 +35,7 @@ class Task < RoleRecord
   before_save :set_comments_author, :if => :updating_user
   before_save :transition_from_new_to_open, :if => :assigned_id?
   before_save :save_changes_to_comment, :if => :track_changes?
+  before_save :save_completed_at
   before_update :remember_comment_created
   
   def track_changes?
@@ -239,13 +240,15 @@ class Task < RoleRecord
   end
 
   define_index do
+    where "`tasks`.`deleted_at` IS NULL"
+
     indexes name, :sortable => true
 
     indexes comments.body, :as => :body
     indexes comments.user.first_name, :as => :user_first_name
     indexes comments.user.last_name, :as => :user_last_name
     indexes comments.uploads(:asset_file_name), :as => :upload_name
-    
+
     has project_id, created_at, updated_at
   end
 
@@ -289,7 +292,15 @@ class Task < RoleRecord
     end
     true
   end
-  
+
+  def save_completed_at
+    if [:resolved, :rejected].include? self.status_name
+      self.completed_at = Time.now
+    else
+      self.completed_at = nil
+    end if status_changed? or self.new_record?
+  end
+
   def copy_project_from_task_list
     self.project_id = task_list.project_id
   end
