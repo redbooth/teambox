@@ -8,8 +8,8 @@ class ProjectsController < ApplicationController
   def index
     @new_conversation = Conversation.new(:simple => true)
     @activities = Activity.for_projects(@projects)
-    @threads = @activities.threads
-    @last_activity = @threads.all.last
+    @threads = @activities.threads.all(:include => [:project, :target])
+    @last_activity = @threads.last
     @archived_projects = @current_user.projects.archived
 
     respond_to do |f|
@@ -26,8 +26,8 @@ class ProjectsController < ApplicationController
 
   def show
     @activities = Activity.for_projects(@current_project)
-    @threads = @activities.threads
-    @last_activity = @threads.all.last
+    @threads = @activities.threads.all(:include => [:project, :target])
+    @last_activity = @threads.last
     @recent_conversations = @current_project.conversations.not_simple.recent(4)
     @new_conversation = @current_project.conversations.new(:simple => true)
 
