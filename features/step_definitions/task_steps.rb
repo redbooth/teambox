@@ -146,3 +146,11 @@ Then /^I should see "([^\"]*)"(?: and "([^\"]*)")? within the last comment body$
   comment.should match(/#{text1}/)
   comment.should match(/#{text2}/)
 end
+
+Then /^I fill the name field with "([^"]*)"$/ do |name|
+  Then %(I fill in "task_name" with "#{name}")
+end
+
+Then /^I should see "([^"]*)" within the task header$/ do |text|
+  Then %(I should see "#{text}" within ".task_header h2")
+end
