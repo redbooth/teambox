@@ -168,6 +168,10 @@ Then /^(?:|I )should see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, selec
   end
 end
 
+Then /^I should see "([^"]*)" only once$/ do |text|
+  all(:xpath,"//*[.='#{text}']").size.should == 1
+end
+
 Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   with_scope(selector) do
     if Capybara.current_driver == Capybara.javascript_driver
