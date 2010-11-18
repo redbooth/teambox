@@ -31,7 +31,11 @@
             = comment_task_due_on(comment)
           - if comment.hours?
             = content_tag(:span, human_hours(comment.hours), :class => :hours)
-        
+          - if simpleconv
+            %span.in_project
+              = t('.commented_in_project', :user => '', :project => '')
+              = link_to(comment.project, comment.project, :class => :project) + ": "
+
         - if comment.task_comment? and comment.assigned_transition?
           %p.assigned_transition
             - if comment.assigned_id?
