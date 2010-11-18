@@ -237,4 +237,25 @@ module ApplicationHelper
       %(<div style="background-image: url(#{fake_img})"></div>)
     end
   end
+
+  def organization_link_colour
+    "".tap do |html|
+      html << '<style type="text/css">'
+      html << "a { color: ##{@organization ? @organization.settings['colours']['links'] : ''};}"
+      html << "a:hover { color: ##{@organization ? @organization.settings['colours']['link_hover'] : ''};}"
+      html << "body { font-color: ##{@organization ? @organization.settings['colours']['text'] : ''};}"
+      html << '</style>'
+    end
+  end
+
+  def organization_header_bar_colour
+    "background: ##{@organization ? @organization.settings['colours']['header_bar'] : ''};"
+  end
+
+  def custom_organization_colour_field(f, organization, field)
+    colour = organization.settings['colours'][field]
+    "".tap do |html|
+      html << f.text_field(:settings, :id => "organization_settings_colours_#{field}", :name => "organization[settings][colours][#{field}]", :value => colour)
+    end
+  end
 end

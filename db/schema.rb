@@ -202,6 +202,7 @@ ActiveRecord::Schema.define(:version => 20101117103529) do
     t.integer  "logo_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "settings"
   end
 
   add_index "organizations", ["domain"], :name => "index_organizations_on_domain"

@@ -1,4 +1,7 @@
 class Organization < ActiveRecord::Base
+  include Metadata
+  extend Metadata::Defaults
+
   acts_as_paranoid
 
   has_permalink :name
@@ -23,7 +26,7 @@ class Organization < ActiveRecord::Base
   before_destroy :prevent_if_projects
   
   attr_accessor :is_example
-  attr_accessible :name, :permalink, :description, :logo
+  attr_accessible :name, :permalink, :description, :logo, :settings
 
   LogoSizes = {
     :square   => [96, 96],
@@ -128,3 +131,14 @@ class Organization < ActiveRecord::Base
     end
 
 end
+
+Organization.default_settings = {
+    'colours' => {
+      'header_bar' => '78ACD7',
+      'links' => '259BAD',
+      'highlight' => 'fff9da',
+      'text' => '333',
+      'link_hover' => 'df5249'
+    }
+  }
+

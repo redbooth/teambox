@@ -75,6 +75,9 @@ module NavigationHelpers
     when /the public site for "([^\"]*)" organization/
       organization = Organization.find_by_name($1)
       site_path(organization)
+    when /the appearance page for the "([^\"]*)" organization/
+      organization = Organization.find_by_name($1)
+      appearance_organization_path(organization)
     when /the apidocs page/
       '/api'
     when /time tracking/

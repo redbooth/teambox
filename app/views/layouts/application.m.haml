@@ -5,6 +5,7 @@
   %meta{ :name => 'viewport', :content => 'width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' }
   = csrf_meta_tag
   = stylesheet_link_tag 'mobile', :media => :all
+  = organization_link_colour
 
 %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
   #header

@@ -33,7 +33,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reset_passwords
   map.resource :session
-  map.resources :organizations, :member => [:projects, :external_view, :delete] do |org|
+  map.resources :organizations, :member => [:projects, :external_view, :delete, :appearance] do |org|
     org.resources :memberships, :member => [:change_role, :add, :remove]
   end
 
