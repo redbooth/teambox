@@ -8,7 +8,7 @@ module TeamboxDatasHelper
   end
   
   def options_for_user_map
-    [['Please Select...', '#invalid']] + current_user.users_with_shared_projects.map do |user|
+    [['Please Select...', '#invalid']] + current_user.users_for_user_map.map do |user|
       ["#{user.to_s} (@#{user.login})", user.login]
     end
   end

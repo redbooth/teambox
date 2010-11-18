@@ -309,6 +309,10 @@ class User < ActiveRecord::Base
       []
     end
   end
+  
+  def users_for_user_map
+    @users_for_user_map ||= self.organizations.map{|o| o.users + o.users_in_projects }.flatten.uniq
+  end
 
   protected
 
