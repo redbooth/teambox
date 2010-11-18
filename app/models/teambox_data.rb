@@ -28,7 +28,7 @@ class TeamboxData < ActiveRecord::Base
       end
       
       # All users need to be known to the owner
-      users = user.organizations.map{|o| o.users + o.users_in_projects }.flatten.compact.map(&:login)
+      users = user.users_for_user_map.map(&:login)
       
       user_map.each do |login,dest_login|
         if !users.include?(dest_login)
@@ -125,7 +125,6 @@ class TeamboxData < ActiveRecord::Base
   
   def do_import
     self.processed_at = Time.now
-    do_deliver = ActionMailer::Base.perform_deliveries
     next_status = :imported
     
     begin
@@ -136,7 +135,6 @@ class TeamboxData < ActiveRecord::Base
       
       throw Exception.new("Import is invalid") if !valid?
       
-      ActionMailer::Base.perform_deliveries = false
       if service == 'basecamp'
         unserialize_basecamp({'User' => user_map, 'Organization' => org_map})
       else
@@ -150,7 +148,6 @@ class TeamboxData < ActiveRecord::Base
     end
     
     self.status_name = next_status
-    ActionMailer::Base.perform_deliveries = do_deliver
     clear_import_data
     save unless new_record? or @check_state
     

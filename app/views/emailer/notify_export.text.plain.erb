@@ -7,5 +7,5 @@
 <%= teambox_data_url(@data) %>
 <% else %>
 <%= t('emailer.teamboxdata.data_exported') %>
-<%= "http://#{Teambox.config.app_domain}#{@data.processed_data.url}" %>
+<%= Teambox.config.amazon_s3 ? @data.processed_data.url : "http://#{Teambox.config.app_domain}#{@data.processed_data.url}" %>
 <% end %>

@@ -326,6 +326,31 @@ describe User do
       @me.contacts_not_in_project(@project).should include(user)
     end
   end
+  
+  describe "users for user map" do
+    before do
+      @org = Factory.create(:organization)
+      @admin = Factory.create(:user)
+      @org.add_member(@admin, Membership::ROLES[:admin])
+      @project = Factory.create(:project)
+      @user = Factory.create(:user)
+      @org.add_member(@user)
+    end
+    
+    it "should return all users in the organization and its projects" do
+      @admin.users_for_user_map.should include(@admin)
+      @admin.users_for_user_map.should include(@user)
+      @admin.users_for_user_map.should_not include(@project.user)
+      
+      @admin.users_for_user_map.length.should == 2
+      
+      @project.user.users_for_user_map.should_not include(@admin)
+      @project.user.users_for_user_map.should_not include(@user)
+      @project.user.users_for_user_map.should include(@project.user)
+      
+      @project.user.users_for_user_map.length.should == 1
+    end
+  end
 
   describe "in time zone" do
     before do

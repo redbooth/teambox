@@ -101,7 +101,7 @@
         }],
         "projects": [{
             "conversations": [{
-                "watchers": [1364],
+                "watchers": [1364,1362],
                 "updated_at": "2009-11-05 14:00:02 +0000",
                 "simple": false,
                 "created_at": "2009-11-05 14:00:02 +0000",

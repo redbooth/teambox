@@ -10,7 +10,7 @@ class Activity < ActiveRecord::Base
   named_scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
 
   named_scope :in_projects, lambda { |projects| { :conditions => ["project_id IN (?)", Array(projects).collect(&:id) ] } }
-  named_scope :limit_per_page, :limit => APP_CONFIG['activities_per_page']
+  named_scope :limit_per_page, :limit => Teambox.config.activities_per_page
   named_scope :by_id, :order => 'id DESC'
   named_scope :by_updated, :order => 'updated_at desc'
   named_scope :threads, :conditions => "target_type != 'Comment'"

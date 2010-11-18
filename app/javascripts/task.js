@@ -24,12 +24,9 @@ document.on('ajax:failure', 'form.new_task.app_form', function(e, form) {
 })
 
 document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
-  var name = form.down('input[name="task[name]"]').getValue(),
-      dueDate = form.down('span.localized_date').innerHTML
-
+  var name = form.down('input[name="task[name]"]').getValue()
   form.up('.content').select('.task_header h2, .task .thread_title a.task').invoke('update', name)
-  $('column').down('.due_on').update(dueDate)
-  
+
   hideEditTaskFormAndShowHeader(form)
 })
 

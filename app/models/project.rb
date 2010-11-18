@@ -15,6 +15,8 @@ class Project < ActiveRecord::Base
 
   attr_accessible :name, :permalink, :archived, :tracks_time, :public, :organization_attributes, :organization_id
 
+  attr_accessor :is_importing
+  
   def self.find_by_id_or_permalink(param)
     if param =~ /^\d+$/
       find(param)

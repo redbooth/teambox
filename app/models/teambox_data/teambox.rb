@@ -63,6 +63,7 @@ class TeamboxData
           project_data['permalink'] += "-#{rand}"
         end
         @project = unpack_object(Project.new, project_data, [])
+        @project.is_importing = true
         @project.user = resolve_user(project_data['owner_user_id'])
         @project.organization = @organization_map[project_data['organization_id']] || @project.user.organizations.first
         @project.save!
