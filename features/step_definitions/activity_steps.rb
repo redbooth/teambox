@@ -23,7 +23,3 @@ Given /^(\d+) comments are created in the project "([^"]*)"$/ do |count, project
     Factory(:comment, :target => @conversation)
   end
 end
-
-Then /^I should see "([^"]*)" only once$/ do |text|
-  all(:xpath,"//*[.='#{text}']").size.should == 1
-end
