@@ -3,7 +3,7 @@ class PeopleController < ApplicationController
   before_filter :set_page_title
   
   def index
-    @people = @current_project.people.all(:include => :user).sort_by { |p| p.user.updated_at }.reverse
+    @people = @current_project.people.in_alphabetical_order.all
     @invitations = @current_project.invitations
     
     respond_to do |f|

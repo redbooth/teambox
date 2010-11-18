@@ -7,7 +7,7 @@
 %p= t('.admins.explain')
 .users.users_admins
   - if @organization.admins.any?
-    - @organization.admins.each do |user|
+    - @organization.admins.in_alphabetical_order.each do |user|
       %p.user
         = micro_avatar(user)
         =h user.name
@@ -24,7 +24,7 @@
 %p= t('.users.explain')
 .users.users_participants
   - if @organization.participants.any?
-    - @organization.participants.each do |user|
+    - @organization.participants.in_alphabetical_order.each do |user|
       %p.user
         = micro_avatar(user)
         =h user.name

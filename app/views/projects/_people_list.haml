@@ -1,10 +1,11 @@
 .people_list{ :class => "#{'compact' if compact}" }
   %h2= t '.people_in_project'
-  .list
-    = list_users_statuses(project.users)
-    .clear
   - if project.invitations.count > 0
     .invitations_pending
       = link_to t('.pending_invitations', :count => project.invitations.count), project_people_path(project)
   .invite_people
     = link_to "+ #{t('.invite_people')}", project_people_path(project)
+  .list
+    = list_users_statuses(project.users.in_alphabetical_order)
+    .clear
+

@@ -28,6 +28,9 @@ class Person < ActiveRecord::Base
   named_scope :by_login, lambda { |login|
     {:include => :user, :conditions => {'users.login' => login}}
   }
+
+  named_scope :in_alphabetical_order, :include => :user, :order => 'users.first_name ASC'
+
   
   attr_accessible :role, :permissions
 

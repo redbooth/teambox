@@ -69,7 +69,7 @@ class Organization < ActiveRecord::Base
 
   # External users are simply involved in some project of the organization
   def external_users
-    users_in_projects - users
+    (users_in_projects - users).sort_by {|u| u.first_name}
   end
 
   def is_admin?(user)
