@@ -255,7 +255,8 @@ module ApplicationHelper
   def custom_organization_colour_field(f, organization, field)
     colour = organization.settings['colours'][field]
     "".tap do |html|
-      html << f.text_field(:settings, :id => "organization_settings_colours_#{field}", :name => "organization[settings][colours][#{field}]", :value => colour)
+      html << f.hidden_field(:settings, :id => "organization_settings_colours_#{field}", :name => "organization[settings][colours][#{field}]", :value => colour)
+      html << content_tag('button', '', :id => "organization_settings_colours_#{field}_swatch", :class => 'colorbox', :style=>"width: 56px; height: 56px; border: 1px outset #666; cursor: crosshair;")
     end
   end
 end

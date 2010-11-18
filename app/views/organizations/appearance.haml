@@ -1,3 +1,6 @@
+- content_for :stylesheet_includes do
+  = stylesheet_link_tag 'colorpicker', :media => :screen
+
 %h2=h @organization
 
 - if @organization.is_admin? current_user
