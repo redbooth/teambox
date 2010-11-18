@@ -3,6 +3,7 @@ class NotificationsObserver < ActiveRecord::Observer
   observe :comment
   
   def after_create(obj)
+    return if obj.try(:project).try(:is_importing)
     case obj
     when Comment
       case target = obj.target

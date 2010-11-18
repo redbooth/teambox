@@ -93,7 +93,6 @@ class TeamboxData
   end
   
   def self.import_from_file(name, user_map, opts={})
-    ActionMailer::Base.perform_deliveries = false
     data = File.open(name, 'r') do |file|
       opts[:format] == 'basecamp' ? Hash.from_xml(file.read) : ActiveSupport::JSON.decode(file.read)
     end
@@ -101,7 +100,6 @@ class TeamboxData
   end
   
   def self.export_to_file(projects, users, organizations, name)
-    ActionMailer::Base.perform_deliveries = false
     data = TeamboxData.new.serialize(organizations, projects, users)
     File.open(name, 'w') { |file| file.write data.to_json }
   end

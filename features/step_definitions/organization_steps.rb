@@ -12,6 +12,12 @@ Given /I am an administrator in the organization of the project called "([^\"]*)
   project.organization.add_member(@current_user, :admin)
 end
 
+Given /"([^\"]*)" is an administrator in the organization of the project called "([^\"]*)"$/ do |username,name|
+  project = Project.find_by_name(name)
+  project.organization.add_member(User.find_by_login(username), :admin)
+end
+
+
 Given /the organization of the project called "([^\"]*)" is called "([^\"]*)"$/ do |project_name, name|
   project = Project.find_by_name(project_name)
   project.organization.update_attribute(:name, name)
