@@ -124,10 +124,6 @@ module TasksHelper
     options.concat people.map { |p| [p.name, p.id] }.compact.sort_by(&:first)
   end
 
-  def task_overview_box(task)
-    render 'tasks/overview_box', :task => task
-  end
-
   def time_tracking_doc
     link_to(t('projects.fields.new.time_tracking_docs'), "http://help.teambox.com/faqs/advanced-features/time-tracking", :target => '_blank')
   end

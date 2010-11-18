@@ -10,7 +10,7 @@ Feature: Editing a task
       | Fix major bug | Bugs      | Teambox |
     And I go to the "Teambox" tasks page
 
-  Scenario: I change task date by commenting
+  Scenario: I change task name from full view
     When I follow "Fix major bug"
     And I wait for 1 second
     And I follow "Full view"
