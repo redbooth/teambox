@@ -74,7 +74,10 @@ class Emailer < ActionMailer::Base
     recipients    user.email
     from_reply_to "#{project.permalink}+conversation+#{conversation.id}", conversation.comments.first.user
     subject       "[#{project.permalink}] #{title}"
-    body          :project => project, :conversation => conversation, :recipient => user
+    body          :project => project,
+                  :conversation => conversation,
+                  :recipient => user,
+                  :organization => project.organization
   end
 
   def notify_task(user, project, task)
