@@ -1,4 +1,3 @@
-- project = local_assigns[:project] || f.object.project || f.object.target.try(:project)
 - task_form = nil unless local_assigns[:task_form]
 
 .field.text_area
@@ -22,8 +21,8 @@
 
   .actions
     %span= t('.attach') + ": "
-    = link_to t('uploads.comment_upload_link'), project ? [:new, project, :upload] : '#uploads', :class => 'attach_icon'
-  
+    = link_to t('uploads.comment_upload_link'), '#uploads', :class => 'attach_icon'
+
     - if task_form
       = link_to t('comments.hours.tooltip'), '#hours', :class => 'add_hours_icon'
     
@@ -31,7 +30,7 @@
         = task_form.label :status
         = task_form.select :status, task_statuses_for_select
         = task_form.label :assigned_id, t('comments.new.assigned_to')
-        = task_form.select :assigned_id, people_from_project_for_select(project)
+        = task_form.select :assigned_id, []
         = task_form.label :due_on
         = date_picker(task_form, :due_on)
 

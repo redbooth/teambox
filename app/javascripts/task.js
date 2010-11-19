@@ -112,7 +112,22 @@ Task = {
     var container = archived ? $(task_list_id + '_the_closed_tasks') : $(task_list_id + '_the_main_tasks');
     container.innerHTML = html;
     TaskList.updateList(task_list_id);
+  },
+
+  insertAssignableUsers: function() {
+    if (typeof _people == "object") {
+      $$('form.new_comment.edit_task .task_actions select#task_assigned_id').each(function(select) {
+        var project_id = select.up('form').readAttribute('data-project-id')
+        if (typeof _people[project_id] == "object") {
+          _people[project_id].each(function(person) {
+            var option = new Element('option', { 'value': person[0] }).insert(person[2])
+            select.insert(option)
+          })
+        }
+      })
+    }
   }
+
 }
 
 document.on('click', 'a.show_archived_tasks_link', function(e, el) {
@@ -154,4 +169,5 @@ document.observe('dom:loaded', function(e) {
   Task.highlight_my_tasks();
   Filter.updateCounts(false);
   Filter.updateFilters();
+  Task.insertAssignableUsers();
 });
