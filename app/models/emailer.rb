@@ -79,7 +79,7 @@ class Emailer < ActionMailer::Base
     defaults
     recipients    user.email
     from_reply_to "#{project.permalink}+task+#{task.id}", task.comments.first.user
-    subject       "[#{project.permalink}] #{task.name}"
+    subject       "[#{project.permalink}] #{task.name}#{task_description(task)}"
     body          :project => project, :task => task, :task_list => task.task_list, :recipient => user
   end
 
@@ -215,5 +215,11 @@ class Emailer < ActionMailer::Base
       content_type  'text/html'
       sent_on       Time.now
       from          from_address
+    end
+
+    def task_description(task)
+      desc = task.comments.first.try(:body)
+      task_description = truncate(desc ? desc : '', :length => 50)
+      task_description.blank? ? '' : " - #{task_description}"
     end
 end
