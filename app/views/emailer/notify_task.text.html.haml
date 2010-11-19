@@ -25,7 +25,7 @@
   = emailer_recent_tasks(@project, @recipient)
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
-    %p= t('emailer.notify.view_this_converation_online', :converation => link_to(t('emailer.notify.converation'), project_task_url(@project, @task), :style => inline_organization_link_colour))
+    %p= t('emailer.notify.view_this_task_online', :link => link_to(t('emailer.notify.task_link'), project_task_url(@project, @task), :style => inline_organization_link_colour))
     = emailer_answer_to_this_email
 
   .footer{ :style => email_text(:small) }
