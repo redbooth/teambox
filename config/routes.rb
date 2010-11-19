@@ -72,6 +72,8 @@ ActionController::Routing::Routes.draw do |map|
   map.project_archived 'projects/archived.:format',  :controller => 'projects', :action => 'index', :sub_action => 'archived'
 
   map.hooks 'hooks/:hook_name', :controller => 'hooks', :action => 'create', :conditions => { :method => :post }
+  map.notification '/notify/:token/:format', :controller => 'integrations', :action => 'notify', :format => nil
+
 
   map.resources :projects,
       :has_many => [:pages, :people],
@@ -84,6 +86,7 @@ ActionController::Routing::Routes.draw do |map|
     project.picture  'picture',   :controller => 'projects', :action => 'edit', :sub_action => 'picture'
     project.deletion 'deletion',  :controller => 'projects', :action => 'edit', :sub_action => 'deletion'
     project.ownership 'ownership', :controller => 'projects', :action => 'edit', :sub_action => 'ownership'
+    project.resources :integrations
 
     project.resources :invitations, :member => [:accept,:decline,:resend]
 

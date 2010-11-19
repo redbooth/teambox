@@ -1,0 +1,5 @@
+.hook
+  = link_to hook.name.capitalize, edit_project_integration_path(@current_project,hook)
+  %span.url= "http://#{Teambox.config.app_domain}/notify/#{hook.token}/"
+  = link_to t('common.edit'), edit_project_integration_path(@current_project,hook), :class => 'button'
+  = link_to t('common.delete'), project_integration_path(@current_project,hook), :method => :delete, :class => 'button', :confirm => t('confirm.delete_hook')

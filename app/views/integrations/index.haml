@@ -1,0 +1,14 @@
+- content_for :column do
+  = project_settings_navigation
+
+%h2= t(".title")
+
+%p= t('.explain')
+%p= t('.explain_more')
+
+- if @hooks.any?
+  = render :partial => "hook", :collection => @hooks
+
+%ul.template= render :partial => "template", :collection => @templates
+%p= t('.use_a_template')
+%p= link_to t(".new_hook"), new_project_integration_path(@current_project), :class => 'button'

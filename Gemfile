@@ -24,6 +24,8 @@ gem 'json'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'tilt'
 gem 'choices', '>= 0.2.0'
+gem 'mustache', '~> 0.11.2'
+gem 'crack', '~> 0.1.8'
 
 group :plugins do
   gem 'sprockets-rails', '~> 0.0.1'

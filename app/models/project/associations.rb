@@ -11,7 +11,8 @@ class Project
     delete.has_many :uploads
     delete.has_many :notes
     delete.has_many :dividers
-    
+    delete.has_many :hooks
+
     delete.with_options :order => 'id DESC' do |ordered|
       ordered.has_many :conversations
       ordered.has_many :activities

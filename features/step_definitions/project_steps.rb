@@ -57,6 +57,12 @@ Given /I am in the project called "([^\"]*)"$/ do |name|
   project.add_user(@current_user)
 end
 
+Given /^"([^\"]*)" is an admin of the project called "([^\"]*)"$/ do |username,name|
+  Given %(there is a project called "#{name}")
+  project = Project.find_by_name(name)
+  project.add_user(User.find_by_login(username), {:role => 3})
+end
+
 Given /^"([^\"]*)" is in the project called "([^\"]*)"$/ do |username,name|
   Given %(there is a project called "#{name}")
   project = Project.find_by_name(name)

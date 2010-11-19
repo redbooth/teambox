@@ -1,0 +1,19 @@
+- if hook.name
+  %h3= t("integrations.fields.urls", :hook => @hook.name)
+- token = (hook.token ? hook.token : h("<#{t('integrations.fields.your_token')}>"))
+- unless hook.token
+  %p= t('integrations.fields.no_token')
+%ul
+  %li
+    %span.format Raw post
+    %span.url 
+      = "http://#{Teambox.config.app_domain}/notify/#{token}"
+  %li
+    %span.format JSON
+    %span.url
+      = "http://#{Teambox.config.app_domain}/notify/#{token}/json"
+  %li
+    %span.format XML
+    %span.url
+      = "http://#{Teambox.config.app_domain}/notify/#{token}/xml"
+%p= t('integrations.fields.about_token')

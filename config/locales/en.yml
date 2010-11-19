@@ -1113,7 +1113,37 @@ en:
       copy5: "<a href='{{link}}'>Upgrade your Teambox account now</a> and enjoy professional collaboration!"
       copy6: "Search bar across all projects could save you hours. <a href='{{link}}'>Upgrade now</a> to have it!"
       copy7: "Your business matters! <a href='{{link}}'>Get the best support</a> for Teambox with our premium plans."
-
+  integrations:
+    index:
+      title: "Your hooks for this project"
+      explain: Integration Notification allow you to integrate Teambox with other web applications' notifications.
+      explain_more: |
+        You can use our examples or
+        <a target='_blank' href='http://help.teambox.com/faqs/integrations/webhooks'>learn how to integrate
+        your own services</a> with your projects.
+      use_a_template: You can use a template or create a new one from scratch.
+      new_hook: "Register a custom Notification Hooks"
+      submit: Register
+    fields:
+      name: Name of your hook
+      message: Message template <span>(<a href="http://help.teambox.com/faqs/integrations/webhooks" target="_blank">Instructions on editing templates</a>)</span>
+      instructions: Instructions for this webhook
+      urls: "URLs for '%{hook}'"
+      no_token: Your notification token will be generated when you will save the notification hook
+      your_token: your-token
+      about_token: |
+        Your hook URL contain a Token and an optional Format indicator at the end. The token allow Teambox to send webhook request from third party webservice
+        to the coresponding project. Format indicate to Teambox which kind of request it should expect.
+        Teambox support data in, JSON and XML, or simply raw HTTP post.
+    new:
+      title: "Create a new hook"
+      submit: Register your new webhook
+    edit:
+      title: "Edit the notification hook '%{hook}'"
+      url: "URLs for '%{hook}'"
+      submit: Update notification hook
+    destroy:
+      success: "The hook '%{hook}' was successfully deleted."
   shared:
     strip:
       archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
@@ -1131,6 +1161,7 @@ en:
       new_project: +
     project_settings_navigation:
       general: General Settings
+      notification_hooks: Integration Notification
       picture: Project Picture
       deletion: Project Archiving/Deletion
       ownership: Ownership
