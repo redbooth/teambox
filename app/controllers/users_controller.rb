@@ -49,6 +49,7 @@ class UsersController < ApplicationController
     @projects_shared = @user.projects_shared_with(@current_user)
     @shares_invited_projects = @projects_shared.empty? && @user.shares_invited_projects_with?(@current_user)
     @activities = Activity.for_projects(@user.projects_shared_with(@current_user)).from_user(@user)
+    @threads = @activities.threads
     @last_activity = @activities.all.last
 
     respond_to do |format|

@@ -6,7 +6,7 @@
 - if current_user.observable?(@user)
   %h2= t('.recent_activity_for', :user_name => h(@user.name))
   #activities
-    = list_activities(@activities)
+    = list_threads(@threads)
     = show_more_button
 
 - content_for :column do
