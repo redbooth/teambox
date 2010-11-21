@@ -95,6 +95,8 @@ en:
     create_project:
       left: created the project
       title: "%{person} created the project %{project}"
+    create_teambox_data:
+      title: "%{person} imported the project %{project}"
       
     thread:
       on_task_list: "on"

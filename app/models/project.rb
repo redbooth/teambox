@@ -16,6 +16,7 @@ class Project < ActiveRecord::Base
   attr_accessible :name, :permalink, :archived, :tracks_time, :public, :organization_attributes, :organization_id
 
   attr_accessor :is_importing
+  attr_accessor :import_activities
   
   def self.find_by_id_or_permalink(param)
     if param =~ /^\d+$/
@@ -27,9 +28,25 @@ class Project < ActiveRecord::Base
 
   def log_activity(target, action, creator_id=nil)
     creator_id ||= target.user_id
+    return log_later(target, action, creator_id) if self.is_importing
     Activity.log(self, target, action, creator_id)
   end
-
+  
+  def log_later(target, action, creator_id)
+    @import_activities ||= []
+    base = {:date => target.try(:created_at) || nil,
+            :project => self,
+            :action => action,
+            :creator_id => creator_id,
+            :target_id => target.id,
+            :target_class => target.class}
+    if target.is_a? Comment
+      base[:comment_target_type] = target.target_type
+      base[:comment_target_id] = target.target_id
+    end
+    @import_activities << base
+  end
+  
   def add_user(user, params={})
     unless has_member?(user)
       people.build.tap do |person|

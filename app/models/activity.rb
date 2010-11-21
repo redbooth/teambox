@@ -20,6 +20,7 @@ class Activity < ActiveRecord::Base
 
   def self.log(project,target,action,creator_id)
     project_id = project.try(:id)
+    return if project.try(:is_importing)
 
     if target.is_a? Comment
       comment_target_type = target.target_type
@@ -27,7 +28,7 @@ class Activity < ActiveRecord::Base
       # touch activity related to that comment's thread
       Activity.last(:conditions => ["target_type = ? AND target_id = ?", comment_target_type, comment_target_id]).try(:touch)
     end
-        
+    
     activity = Activity.new(
       :project_id => project_id,
       :target => target,

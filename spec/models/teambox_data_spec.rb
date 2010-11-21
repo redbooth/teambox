@@ -41,7 +41,7 @@ describe TeamboxData do
       user_map = user_list.inject({}){|a,key| a[key] = user.login; a}
       org_map = org_list.inject({}){|a,key| a[key] = organization.permalink; a}
       
-      TeamboxData.new.tap{|d| d.data = data }.unserialize(
+      TeamboxData.new.tap{|d| d.data = data; d.user = user }.unserialize(
         {'User' => user_map, 'Organization' => org_map}, {})
       
       Organization.count.should == 1
@@ -95,6 +95,7 @@ describe TeamboxData do
       User.count.should == 0
       Project.count.should == 0
       Organization.count.should == 0
+      Activity.count.should == 0
     end
     
     it "should preserve created_at dates" do
@@ -127,6 +128,7 @@ describe TeamboxData do
       TaskList.count.should == 0
       Task.count.should == 0
       Comment.count.should == 0
+      Activity.count.should == 0
       
       data = File.open("#{RAILS_ROOT}/spec/fixtures/campdump.xml") { |f| Hash.from_xml f.read }
       TeamboxData.new.tap{|d| d.service = 'basecamp'; d.data = data }.unserialize({}, {:create_users => true, :create_organizations => true})
@@ -234,6 +236,7 @@ describe TeamboxData do
       dump.status_name.should == :mapping
       dump.processed_at.should == nil
       organization.projects.length.should == 0
+      Activity.count.should == 0
     end
     
     it "should not alter existing memberships in the target organization" do
@@ -286,6 +289,7 @@ describe TeamboxData do
       dump.status_name.should == :mapping
       dump.processed_at.should == nil
       organization.projects.length.should == 0
+      Activity.count.should == 0
     end
   end
   

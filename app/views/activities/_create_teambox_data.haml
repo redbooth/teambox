@@ -1,0 +1,9 @@
+.activity
+  = thumb_avatar(activity.user)
+  .container
+    %span.user=h activity.user.short_name
+    = t("teambox_datas.data.user_imported_project")
+    = activity_project_link(activity.project)
+    .date
+      = posted_date activity.posted_date
+  .clear

@@ -11,6 +11,7 @@ class TeamboxData < ActiveRecord::Base
   before_update :check_state
   before_destroy :clear_import_data
   
+  acts_as_paranoid
   has_attached_file :processed_data,
     :url  => "/exports/:id/:basename.:extension",
     :path => Teambox.config.amazon_s3 ?

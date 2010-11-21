@@ -274,6 +274,7 @@ class Task < RoleRecord
   def save_changes_to_comment # before_save
     comment = comments.detect(&:new_record?) || comments.build_by_user(updating_user)
     
+    comment.project = project
     comment.created_at = @updating_date if @updating_date
     
     if status_changed? or self.new_record?
