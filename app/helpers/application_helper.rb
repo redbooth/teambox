@@ -18,8 +18,14 @@ module ApplicationHelper
     super unless args.first.to_sym == :column and mobile?
   end
   
-  def logo_image
-    logo = @organization ? @organization.logo(:top) : "header_logo_black.png"
+  def logo_image(organization = nil)
+    logo = if organization ||= Organization.find_from_host(request.host)
+      organization.logo ? organization.logo(:top) : "header_logo_black.png"
+    elsif @organization
+      @organization.logo ? @organization.logo(:top) : "header_logo_black.png"
+    else
+      "header_logo_black.png"
+    end
     image_tag(logo, :alt => "Teambox")
   end
 
