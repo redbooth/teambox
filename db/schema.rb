@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101117103529) do
+ActiveRecord::Schema.define(:version => 20101121194455) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -354,6 +354,7 @@ ActiveRecord::Schema.define(:version => 20101117103529) do
     t.text     "processed_objects"
     t.string   "service"
     t.integer  "status",                      :default => 0
+    t.datetime "deleted_at"
   end
 
   create_table "uploads", :force => true do |t|
