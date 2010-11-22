@@ -23,7 +23,7 @@ class Upload < RoleRecord
   include PageWidget
 
   has_attached_file :asset,
-    :styles => { :thumb => "64x48>" },
+    :styles => { :thumb => "150x150>" },
     :url  => "/assets/:id/:style/:basename.:extension",
     :path => Teambox.config.amazon_s3 ?
       "assets/:id/:style/:filename" :
