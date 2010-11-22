@@ -1,0 +1,15 @@
+<div class="thread" data-class="conversation" data-id="{{id}}" id="thread_conversation_{{id}}">
+
+  {{#first_comment}}
+    {{>first_comment}}
+  {{/first_comment}}
+
+  <div class="comments">
+    {{#comments}}
+      {{>comment}}
+    {{/comments}}
+  </div>
+
+  <%= render "javascripts/reply" %>
+
+</div>

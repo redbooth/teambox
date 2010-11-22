@@ -1,0 +1,60 @@
+<form action="/projects/{{#project}}{{permalink}}{{/project}}/conversations/{{id}}/comments" class="new_comment" data-project-id="{{project_id}}" data-remote="true" enctype="multipart/form-data" method="post">
+  <div style="margin:0;padding:0;display:inline">
+    {{#status}}<input name="_method" type="hidden" value="put">{{/status}}
+    <input name="authenticity_token" type="hidden" value="{{autenticity_token}}">
+  </div>
+  <div class="field text_area">
+    <a class="micro_avatar my_avatar" href="#"></a>
+    <textarea cols="40" id="comment_body" name="comment[body]" placeholder="Send a message to the rest of the group." rows="20" autocomplete="off"></textarea>
+    <div class="autocomplete" style="display: none"><ul></ul></div>
+  </div>
+  <div class="extra" style="display: block">
+    {{#is_task}}
+    <div class="field text_field hours_field">
+      <label>How many hours did you put into this task?</label>
+      <input id="task_comments_attributes_0_human_hours" name="task[comments_attributes][0][human_hours]" size="30" type="text">
+      <a href="http://help.teambox.com/faqs/advanced-features/time-tracking" target="_blank">Learn more.</a>
+    </div>
+    {{/is_task}}
+    <div class="upload_area">
+      <p>Select a file</p>
+      <input id="upload_file" name="comment[uploads_attributes][0][asset]" size="30" type="file">
+    </div>
+    <div class="actions">
+      <span>Attach: </span>
+      <a href="#uploads" class="attach_icon">Attachment</a>
+      {{#is_task}}
+      <a href="#hours" class="add_hours_icon">Add hours to this task</a>
+      <div class="task_actions">
+        <label for="task_status">Status</label>
+        <select id="task_status" name="task[status]">
+          <option value="0" selected="selected">new</option>
+          <option value="1">open</option>
+          <option value="2">hold</option>
+          <option value="3">resolved</option>
+          <option value="4">rejected</option>
+        </select>
+        <label for="task_assigned_id">Assigned to:</label>
+        <select data-assigned="17277" id="task_assigned_id" name="task[assigned_id]">
+          <option selected="selected">Unassigned</option>
+          <option value="17277">Pablo Villalba</option>
+          <option value="15996">David Niubó</option>
+          <option value="23554">Jordi Priu</option>
+          <option value="74322">Manel Sarasa</option>
+        </select>
+        <label for="task_due_on">Due date</label>
+        <div class="date_picker ">
+          <img alt="Calendar" class="calendar_date_select_popup_icon" src="https://teambox.com/images/calendar_date_select/calendar.gif">
+          <input id="task_due_on" name="task[due_on]" type="hidden">
+          <span class="localized_date"><i>No date assigned</i></span>
+        </div>
+      </div>
+      {{/is_task}}
+    </div>
+    <div class="submit">
+      <span class="help"><a href="/text_styles" class="style_icon" rel="facebox" title="Formatting help"></a></span>
+      <button class="preview" data-alternate="Hide preview">Preview</button>
+      <input data-disable-with="Sending…" id="comment_submit" name="commit" type="submit" value="Save">
+    </div>
+  </div>
+</form>

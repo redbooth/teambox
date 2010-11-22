@@ -1,0 +1,36 @@
+<div class="thread" data-class="conversation" data-id="{{id}}" id="thread_conversation_{{id}}">
+
+  <div class="title">
+    <div class="info">
+      {{#user}}
+        <a href="/users/{{username}}" class="thumb_avatar" style="background: url({{avatar_url}}) no-repeat"></a>
+      {{/user}}
+    </div>
+    <div class="date">
+      <time class="timeago" data-msec="{{created_at_msec}}" datetime="{{created_at}}" pubdate="true"></time>
+    </div>
+    <p class="starter">
+      {{#user}}
+        <a href="/users/{{username}}">{{first_name}} {{last_name}}</a>
+      {{/user}}
+      started the conversation
+      {{#project}}
+        <span class="project">in <a href="/projects/{{permalink}}">{{name}}</a></span>
+      {{/project}}
+    </p>
+    <p class="thread_title">
+      <a href="/projects/{{#project}}{{permalink}}{{/project}}/conversations/{{id}}" class="conversation">
+        {{name}}
+      </a>
+    </p>
+  </div>
+
+  <div class="comments">
+    {{#comments}}
+      {{>comment}}
+    {{/comments}}
+  </div>
+  
+  <%= render "javascripts/reply" %>
+  
+</div>

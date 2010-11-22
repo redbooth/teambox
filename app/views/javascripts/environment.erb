@@ -54,3 +54,19 @@ document.on("dom:loaded", function() {
 document.on("ajax:success", function() {
   format_posted_date.defer();
 });
+
+
+<%
+  templates = {}
+  templates[:conversation] = {}
+  templates[:conversation][:normal] = render("javascripts/conversation_normal")
+  templates[:conversation][:simple] = render("javascripts/conversation_normal")
+  templates[:task] = render("javascripts/task")
+  templates[:comment] = render("javascripts/comment")
+%>
+
+ThreadTemplates = (<%= templates.to_json %>)
+
+ThreadTemplates.first_comment = (<%=
+  templates[:comment].gsub("micro_avatar_url","avatar_url").gsub("micro_avatar","thumb_avatar").to_json
+%>)
