@@ -7,14 +7,14 @@ class ApiV1::ActivitiesController < ApiV1::APIController
                         :order => 'id DESC',
                         :limit => api_limit,
                         :include => [:target, :project, :user])
-    api_respond @activities, :references => [:target, :project, :user]
+    api_respond @activities, :references => [:target, :project, :user, :thread_comments]
   end
 
   def show
     @activity = Activity.find_by_id params[:id], :conditions => {:project_id => current_user.project_ids}
     
     if @activity
-      api_respond @activity, :include => [:project, :target, :user]
+      api_respond @activity, :include => [:project, :target, :user, :thread_comments]
     else
       api_status :not_found
     end

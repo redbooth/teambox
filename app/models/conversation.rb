@@ -7,6 +7,9 @@ class Conversation < RoleRecord
   
   attr_accessor :is_importing
   
+  has_one  :first_comment, :class_name => 'Comment', :as => :target, :order => 'created_at ASC'
+  has_many :recent_comments, :class_name => 'Comment', :as => :target, :order => 'created_at ASC', :limit => 2
+  
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
   
@@ -110,6 +113,14 @@ class Conversation < RoleRecord
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
+    
+    if Array(options[:include]).include? :thread_comments
+      base[:first_comment] = first_comment.to_api_hash(options)  if first_comment
+      base[:recent_comments] = recent_comments.map{|c|c.to_api_hash(options)}
+    else
+      base[:first_comment_id] = first_comment.id
+      base[:recent_comment_ids] = recent_comments.map{|c|c.id}
+    end
     
     if Array(options[:include]).include? :comments
       base[:comments] = comments.map{|c| c.to_api_hash(options)}

@@ -41,6 +41,14 @@ class Activity < ActiveRecord::Base
     
     activity
   end
+  
+  def thread_comments
+    if target.respond_to? :first_comment
+      [target.first_comment] + target.recent_comments
+    else
+      []
+    end
+  end
 
   def action_comment_type
     i = "#{action}#{target_type}"

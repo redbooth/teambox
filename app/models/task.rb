@@ -10,6 +10,9 @@ class Task < RoleRecord
   ACTIVE_STATUS_CODES = [:new, :open].map { |name| STATUSES[name] }
 
   concerned_with :scopes, :callbacks
+  
+  has_one  :first_comment, :class_name => 'Comment', :as => :target, :order => 'created_at ASC'
+  has_many :recent_comments, :class_name => 'Comment', :as => :target, :order => 'created_at ASC', :limit => 2
 
   belongs_to :task_list, :counter_cache => true
   belongs_to :page
@@ -225,6 +228,11 @@ class Task < RoleRecord
     
     if Array(options[:include]).include? :assigned
       base[:assigned] = assigned.to_api_hash(:include => :user) if assigned
+    end
+    
+    if Array(options[:include]).include? :thread_comments
+      base[:first_comment] = first_comment.to_api_hash(options) if first_comment
+      base[:recent_comments] = recent_comments.map{|c|c.to_api_hash(options)}
     end
     
     if Array(options[:include]).include? :user
