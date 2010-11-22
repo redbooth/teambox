@@ -1017,7 +1017,6 @@ en:
     preview:
       close: Hide preview
       preview: Preview
-      showing: "..."
   teambox_datas:
     new_import:
       title: "Import data"

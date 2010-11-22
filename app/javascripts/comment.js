@@ -72,9 +72,6 @@ function resetCommentsForm(form) {
   form.select('input[type=file]').each(function(input) {
     if (input.getValue()) input.remove()
   })
-  // clear and hide the preview area
-  var preview = form.down('.previewBox')
-  if (preview && preview.visible()) togglePreviewBox(preview.update(''))
   // clear hours
   var hours = form.down('input[name*="[human_hours]"]')
   if (hours) hours.setValue('')
@@ -189,40 +186,4 @@ document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
       input.store('autocompleter', autocompleter)
     }
   }
-})
-
-function togglePreviewBox(previewBox, enabled, button) {
-  if (enabled == undefined) enabled = previewBox.visible()
-  if (button == undefined) button = previewBox.up('form').down('button.preview')
-  
-  if (enabled) previewBox.hide()
-  else previewBox.show()
-  
-  var text = button.innerHTML
-  button.update(button.readAttribute('data-alternate')).writeAttribute('data-alternate', text)
-}
-
-document.on('click', 'form button.preview', function(e, button) {
-  e.stop()
-  
-  var enabled = false,
-      textarea = e.findElement('form').down('textarea'),
-      previewBox = textarea.next('.previewBox')
-  
-  if (!previewBox) {
-    previewBox = new Element('div', { 'class': 'previewBox textilized' })
-    textarea.insert({ after: previewBox })
-    
-    var formatter = new Showdown.converter;
-    formatter.makeHtml = formatter.makeHtml.wrap(function(make) {
-      previewBox.update(make(textarea.getValue()))
-    })
-    
-    textarea.on('keyup', formatter.makeHtml.bind(formatter).throttle(300))
-    formatter.makeHtml()
-  } else {
-    enabled = previewBox.visible()
-  }
-  
-  togglePreviewBox(previewBox, enabled, button)
 })

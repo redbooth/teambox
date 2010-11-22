@@ -265,4 +265,10 @@ module ApplicationHelper
       html << content_tag('button', '', :id => "organization_settings_colours_#{field}_swatch", :class => 'colorbox', :style=>"width: 56px; height: 56px; border: 1px outset #666; cursor: crosshair;")
     end
   end
+
+  def preview_button
+    content_tag(:button, :'data-alternate' => t('comments.preview.close'), :class => :preview) do
+      t('comments.preview.preview')
+    end
+  end
 end

@@ -161,9 +161,8 @@ this.makeHtml = function(text) {
 	text = text.replace(/~T/g,"~");
 
   // ** GFM **  Auto-link URLs and emails
-  text = text.replace(/https?\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!]/g, function(wholeMatch){
-    var left = RegExp.leftContext
-    var right = RegExp.rightContext
+  text = text.replace(/https?\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!]/g, function(wholeMatch,matchIndex){
+    var left = text.slice(0, matchIndex), right = text.slice(matchIndex)
     if (left.match(/<[^>]+$/) && right.match(/^[^>]*>/)) {return wholeMatch}
     return "<a href='" + wholeMatch + "'>" + wholeMatch + "</a>";
   });
