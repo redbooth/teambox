@@ -125,6 +125,7 @@ Task = {
           _people[project_id].each(function(person) {
             if (!select.select('[value=' + person[0] + ']').any()) {
               var option = new Element('option', { 'value': person[0] }).insert(person[2])
+              if (select.readAttribute('data-assigned') == person[0]) option.selected = true
               select.insert(option)
             }
           })
