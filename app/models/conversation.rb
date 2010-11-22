@@ -8,7 +8,7 @@ class Conversation < RoleRecord
   attr_accessor :is_importing
   
   has_one  :first_comment, :class_name => 'Comment', :as => :target, :order => 'created_at ASC'
-  has_many :recent_comments, :class_name => 'Comment', :as => :target, :order => 'created_at ASC', :limit => 2
+  has_many :recent_comments, :class_name => 'Comment', :as => :target, :order => 'created_at DESC', :limit => 2
   
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
