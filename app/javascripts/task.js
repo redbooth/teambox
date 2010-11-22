@@ -118,6 +118,7 @@ Task = {
     if (typeof _people == "object") {
       $$('form.new_comment.edit_task .task_actions select#task_assigned_id').each(function(select) {
         var project_id = select.up('form').readAttribute('data-project-id')
+        select.insert(new Element('option').insert(task_unassigned))
         if (typeof _people[project_id] == "object") {
           _people[project_id].each(function(person) {
             var option = new Element('option', { 'value': person[0] }).insert(person[2])

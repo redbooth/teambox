@@ -44,6 +44,8 @@ date_abbr_month_names = $w("<%= I18n.t('date.abbr_month_names').join(" ") %>");
 date_month_names = $w("<%= I18n.t('date.month_names').join(" ") %>");
 date_yesterday = '<%= I18n.t 'date.yesterday' %> ';
 
+task_unassigned = '<%= I18n.t 'comments.new.assigned_to_nobody' %>'
+
 document.on("dom:loaded", function() {
   format_posted_date();
   new PeriodicalExecuter(format_posted_date, 30);

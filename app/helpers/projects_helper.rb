@@ -201,7 +201,7 @@ module ProjectsHelper
     projects = @current_project ? [@current_project] : current_user.projects.reject{ |p| p.new_record? }
     return nil if projects.empty?
     data = {}
-    rows = Person.user_names_from_projects(projects)
+    rows = Person.user_names_from_projects(projects, current_user)
     rows.each do |project_id, login, first_name, last_name, person_id|
       data[project_id] ||= []
       data[project_id] << [person_id.to_s, login, "#{h first_name} #{h last_name}"]
