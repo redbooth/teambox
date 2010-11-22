@@ -10,3 +10,5 @@ if @activities.any?
   end
   page.insert_html :after, :activities, show_more_button
 end
+
+page << "Task.insertAssignableUsers()"
