@@ -19,3 +19,19 @@ config.action_mailer.raise_delivery_errors = false
 # Preview email rendering by visiting the "/mail_view" path
 # http://github.com/37signals/mail_view
 config.middleware.use MailView::Mapper, 'Emailer::Preview'
+
+class UselessStore
+  def logger
+    Rails.logger
+  end
+  def fetch(*args)
+    yield
+  end
+  def read(*args) end
+  def write(*args) end
+  def delete(*args) end
+  def increment(*args) end
+  def decrement(*args) end
+end
+
+config.cache_store = UselessStore.new
