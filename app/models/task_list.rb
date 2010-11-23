@@ -99,6 +99,14 @@ class TaskList < RoleRecord
       base[:tasks] = tasks.map {|t| t.to_api_hash(options)}
     end
     
+    if Array(options[:include]).include? :thread_comments
+      base[:first_comment] = first_comment.to_api_hash(options)  if first_comment
+      base[:recent_comments] = recent_comments.map{|c|c.to_api_hash(options)}
+    else
+      base[:first_comment_id] = first_comment.id
+      base[:recent_comment_ids] = recent_comments.map{|c|c.id}
+    end
+    
     if Array(options[:include]).include? :comments
       base[:comments] = comments.map {|c| c.to_api_hash(options)}
     end
