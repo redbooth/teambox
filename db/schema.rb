@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101121194455) do
+ActiveRecord::Schema.define(:version => 20101123155108) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20101121194455) do
   add_index "activities", ["created_at"], :name => "index_activities_on_created_at"
   add_index "activities", ["deleted_at"], :name => "index_activities_on_deleted_at"
   add_index "activities", ["project_id"], :name => "index_activities_on_project_id"
+  add_index "activities", ["target_id"], :name => "index_activities_on_target_id"
+  add_index "activities", ["target_type"], :name => "index_activities_on_target_type"
 
   create_table "addresses", :force => true do |t|
     t.integer "card_id"
@@ -243,7 +245,10 @@ ActiveRecord::Schema.define(:version => 20101121194455) do
     t.datetime "updated_at"
   end
 
+  add_index "people", ["deleted_at"], :name => "index_people_on_deleted_at"
+  add_index "people", ["project_id"], :name => "index_people_on_project_id"
   add_index "people", ["user_id", "project_id"], :name => "index_people_on_user_id_and_project_id"
+  add_index "people", ["user_id"], :name => "index_people_on_user_id"
 
   create_table "phone_numbers", :force => true do |t|
     t.integer "card_id"
