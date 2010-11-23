@@ -20,10 +20,10 @@ module PermalinkFu
       result = "#{klass}-#{result}" if Integer(result) rescue result
       result.size.zero? ? random_permalink : result
     rescue
-      random_permalink(string)
+      random_permalink
     end
 
-    def random_permalink(seed = nil)
+    def random_permalink
       rand(Time.now.to_i**2).to_s(36)
     end
   end
