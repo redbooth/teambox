@@ -70,11 +70,10 @@ class Object # I'd love to make this class SeedProject < Project, but that doesn
     comment.created_at = fake_time
 
     if assigned = params[:assigned]
-      person = task.project.people.find_by_user_id assigned.id
       task.status = Task::STATUSES[:open]
-      comment.previous_assigned_id = task.assigned
-      task.assigned = person
-      comment.assigned_id = person
+      comment.previous_assigned_id = task.assigned_id
+      task.assign_to(user)
+      comment.assigned_id = task.assigned_id
     end
 
     if status = params[:status]
