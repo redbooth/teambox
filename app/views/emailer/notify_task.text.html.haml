@@ -1,7 +1,7 @@
 .email{ :style =>  "#{email_global }#{inline_organization_text_colour}"}
   .header
     %h1
-      = link_to logo_image(@project.organization), projects_path(@project)
+      = link_to logo_image, projects_path(@project)
   .navigation{ :style=> email_navigation}
 
   = answer_instructions
