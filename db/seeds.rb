@@ -61,18 +61,37 @@ class Object # I'd love to make this class SeedProject < Project, but that doesn
     make_comment(user, body, target || Conversation.last)
   end
 
-  def status_update(user, body, assigned=nil, target=nil)
-    case assigned
-    when User
-      status = Task::STATUSES[:open]
-      person = Person.find(:first, :conditions => { :user_id => assigned.id, :project_id => self.id })
-      make_comment(user, body, target || Task.last, status, person)
-    when Symbol
-      status = Task::STATUSES[assigned]
-      make_comment(user, body, target || Task.last, status)
-    else
-      make_comment(user, body, target || Task.last)
+  def status_update(user, body, params={})
+    task = Task.last(:order => :id)
+
+    comment = task.comments.new
+    comment.user = user
+    comment.body = body
+    comment.created_at = fake_time
+
+    if assigned = params[:assigned]
+      person = task.project.people.find_by_user_id assigned.id
+      task.status = Task::STATUSES[:open]
+      comment.previous_assigned_id = task.assigned
+      task.assigned = person
+      comment.assigned_id = person
     end
+
+    if status = params[:status]
+      task.status = Task::STATUSES[status]
+      comment.previous_status = task.status
+      task.status = Task::STATUSES[status]
+      comment.status = Task::STATUSES[status]
+    end
+
+    if due_on = params[:due_on]
+      comment.previous_due_on = task.due_on
+      task.due_on = due_on
+      comment.due_on = due_on
+    end
+
+    task.save
+    comment.save
   end
 
   def make_page(user, name, description)
@@ -186,18 +205,18 @@ earthworks.reply(tomas,   "Thanks, Frank. I’ve read a couple of Godin’s othe
 
 earthworks.make_task_list(tomas, "Site Setup")
 earthworks.make_task(tomas, "Register all EarthworksYoga TLDs")
-earthworks.status_update(tomas, "@maya Please register all top level domains surrounding EarthworksYoga. (.com, .net, .info, .us) and create redirect links to the .com URL.", maya)
-earthworks.status_update(maya, "I registered EarthworksYoga.com, EarthworksYoga.net, EarthworksYoga.info and EarthworksYoga.us. You can re-open the task if you’d like me to register the .org.", :resolved)
+earthworks.status_update(tomas, "@maya Please register all top level domains surrounding EarthworksYoga. (.com, .net, .info, .us) and create redirect links to the .com URL.", {:due_on => (fake_time + 1.day), :assigned => maya})
+earthworks.status_update(maya, "I registered EarthworksYoga.com, EarthworksYoga.net, EarthworksYoga.info and EarthworksYoga.us. You can re-open the task if you’d like me to register the .org.", {:status => :resolved})
 
 earthworks.make_task(frank, "Set up AdWords campaign")
-earthworks.status_update(frank, "Go to http://adwords.google.com and set up AdWords for Earthworks. Contact @marco for any financial info you may need.", maya)
+earthworks.status_update(frank, "Go to http://adwords.google.com and set up AdWords for Earthworks. Contact @marco for any financial info you may need.")
 earthworks.status_update(frank, "Let me know if you need anything from me, Maya.")
 
 earthworks.make_task_list(frank, "Design")
 earthworks.make_task(corrina, "Create Flash banners")
-earthworks.status_update(corrina, "Based on the Earthworks Yoga logo assets I uploaded to files, create 3 Flash banners in the Skyscraper sizes as determined by the IAB guidelines (http://bit.ly/6cWKxh).", maya)
+earthworks.status_update(corrina, "Based on the Earthworks Yoga logo assets I uploaded to files, create 3 Flash banners in the Skyscraper sizes as determined by the IAB guidelines (http://bit.ly/6cWKxh).", {:assigned => maya})
 earthworks.status_update(maya, "My Flash isn’t the greatest. I’ve done a rough job of something decent and uploaded it to Files. What do you think?")
-earthworks.status_update(corrina, "Hmm. Those are pretty rough, but I can make ‘em pretty. Come over around 3pm if you wanna look over my shoulder. I’ll put this task on Hold for now.", :hold)
+earthworks.status_update(corrina, "Hmm. Those are pretty rough, but I can make ‘em pretty. Come over around 3pm if you wanna look over my shoulder. I’ll put this task on Hold for now.", { :status => :hold})
 
 earthworks.make_page(frank, "Site content", "This new Page was created for @marco to contribute his site content. He'll be supplying us with Home, About Us, Classes, Join Now, and Contact Us.")
 earthworks.make_note(marco, "Home", "Earthworks Yoga is a magical place where time stops and renewal begins. Marco promotes a comprehensive approach to wellness with hands-on bodywork, Yoga and Meditation, Yoga Heal-a-Thons, and high-tech energy medicine tools that detoxify and strengthen the body.\n\nEarthworks Yoga provides sacred space and support for transformation on all levels, fostering connection with the Highest Self and the Soul’s true purpose in this life. Living in harmony calls for clearing the physical and subtle bodies of all trauma which cuts off the flow of life force. The True Self emerges as lifelong patterns of fear, pain, and self-limitation dissolve.")
@@ -207,20 +226,20 @@ earthworks.make_note(marco, "Join Now", "- Unlimited access for just 33 cents a 
 earthworks.make_note(marco, "Contact Us", "The answers to most questions will be found in the FAQ page. A lot of the information will be found in the different pages of this site.\n\nFor comments and suggestions regarding this web site, please e-mail Webmaster@earthworksyoga.com\n\nFor schedule and other local information, please contact Marco [link to email].")
 
 earthworks.make_task(frank, "Collect collateral for online marketing design")
-earthworks.status_update(frank, "The online marketing collateral should include ads in all the common online sizes as determined by the IAB guidelines (http://bit.ly/6cWKxh). Let me know if you have any questions.", corrina)
-earthworks.status_update(corrina, "It's done!", frank)
-earthworks.status_update(frank, "Please install and configure the WordPress plugin called “All in One SEO Pack”.", tomas)
+earthworks.status_update(frank, "The online marketing collateral should include ads in all the common online sizes as determined by the IAB guidelines (http://bit.ly/6cWKxh). Let me know if you have any questions.", {:assigned => corrina})
+earthworks.status_update(corrina, "It's done!", {:assigned => frank})
+earthworks.status_update(frank, "Please install and configure the WordPress plugin called “All in One SEO Pack”.", {:assigned => tomas})
 
 earthworks.make_page(frank, "Staff bios", " I know it's cheesy to do these 3rd-person things, but it's the norm and it would be goof for our clients to know JUST HOW COOL WE ARE!")
 earthworks.make_note(tomas, "Tom's bio", "Tomas has been building websites since 1991, when he and Al Gore invented the internet together. Since then, he’s been involved with the development of websites and microsites for such conglomerates as Nike, the North Face, Cabela’s, Visa, and Toys’R’Us. In his free time, Tomas enjoys the music of the Kinks and the beers of Brooklyn Brewery.")
 
 earthworks.make_task(corrina, "Earthworks images for site")
-earthworks.status_update(corrina, "Please upload images to the Files tab here. Images should include those of the Earthworks Yoga studio and any other images you want incorporated into site design. Thanks!", marco)
+earthworks.status_update(corrina, "Please upload images to the Files tab here. Images should include those of the Earthworks Yoga studio and any other images you want incorporated into site design. Thanks!", {:due_on => (fake_time + 1.day), :assigned => marco})
 earthworks.status_update(marco, "My photographer’s coming next Monday. I should have you these by Thursday.")
-earthworks.status_update(marco, "I uploaded the images to the Teambox Files tab on Thursday. Let me know if/when you’ve reviewed them and how they look.", corrina)
+earthworks.status_update(marco, "I uploaded the images to the Teambox Files tab on Thursday. Let me know if/when you’ve reviewed them and how they look.", { :due_on => (fake_time + 3.day), :assigned => corrina})
 
 earthworks.make_task(frank, "Contact area businesses for banner exchange")
-earthworks.status_update(frank, "Please contact Green Earth Cafe, Nellie’s Tacos, Fenton’s, ROOZ, and Cato’s about a banner exchange with EarthworksYoga.com. Verbiage for your email can be found here in Teambox on the Pages tab.", maya)
+earthworks.status_update(frank, "Please contact Green Earth Cafe, Nellie’s Tacos, Fenton’s, ROOZ, and Cato’s about a banner exchange with EarthworksYoga.com. Verbiage for your email can be found here in Teambox on the Pages tab.", {:due_on => (fake_time + 1.day), :assigned => maya})
 
 earthworks.make_note(corrina, "Corrina's bio", "Corrina is a self-proclaimed design dork. After finishing cum laude from RISD in 2000, she went on to get a MFA at the Tisch School in New york City. Aside from her graphic design work , Corrina teaches two classes at the California College of Arts and Crafts in Oakland, California. Corrina loves Oakland and lives with her two cats. When she’s not at her desk in Photoshop, she’s running around Lake Merritt and enjoying yoga classes at Earthworks Yoga.")
 
