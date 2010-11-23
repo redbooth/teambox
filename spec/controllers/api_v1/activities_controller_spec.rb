@@ -90,7 +90,7 @@ describe ApiV1::ActivitiesController do
       login_as @user
       
       task = Factory.create(:task, :project => @project)
-      Factory.create(:comment, :target => task, :project => @project)
+      100.times { Factory.create(:comment, :target => task, :project => @project) }
       conversation = Factory.create(:conversation, :project => @project)
       Factory.create(:comment, :target => conversation, :project => @project)
       

@@ -6,8 +6,9 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     @activities = Activity.scoped(api_scope).all(:conditions => api_range,
                         :order => 'id DESC',
                         :limit => api_limit,
-                        :include => [:target, :project, :user])
-    api_respond @activities, :references => [:target, :project, :user, :thread_comments]
+                        :include => [:target, :project, :user, {:comment_target => [:first_comment, :recent_comments]}])
+    api_respond @activities,
+                :references => [:target, :project, :user, :refs_thread_comments, :refs_comment_target]
   end
 
   def show
