@@ -22,13 +22,13 @@ _translations = <%= Hash[
   less_than_one_ago = I18n.t('datetime.time_ago', :time_ago_in_words => less_than_one)
   one_minute = I18n.t('datetime.distance_in_words.x_minutes.one')
   one_minute_ago = I18n.t('datetime.time_ago', :time_ago_in_words => one_minute)
-  minutes = I18n.t('datetime.distance_in_words.x_minutes', :count => '" + minutes + "')
+  minutes = I18n.t('datetime.distance_in_words.x_minutes', :count => '$minutes$')
   minutes_ago = I18n.t('datetime.time_ago', :time_ago_in_words => minutes)
 %>
 function minutesAgoInWords(minutes) {
   if(minutes == 0) { return '<%= escape_javascript less_than_one %>'; }
   if(minutes == 1) { return '<%= escape_javascript one_minute_ago %>'; }
-  return "<%= escape_javascript minutes_ago %>";
+  return "<%= escape_javascript minutes_ago %>".gsub('$minutes$', minutes);
 }
 
 /* strftime strings */
