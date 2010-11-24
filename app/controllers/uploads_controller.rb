@@ -21,7 +21,9 @@ class UploadsController < ApplicationController
     mime_type = 'application/octet-stream' if mime_type == 'unknown/unknown'
 
     send_file_options = { :type => mime_type }
-    
+
+    response.headers['Cache-Control'] = 'private, max-age=31557600'
+
     case SEND_FILE_METHOD
       when :apache then send_file_options[:x_sendfile] = true
       when :nginx then head(:x_accel_redirect => path.gsub(Rails.root, ''), :content_type => send_file_options[:type]) and return

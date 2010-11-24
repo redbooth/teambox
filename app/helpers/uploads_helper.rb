@@ -13,7 +13,7 @@ module UploadsHelper
   end
     
   def upload_link_with_thumbnail(upload)
-    link_to image_tag(upload.asset(:thumb)),
+    link_to image_tag(upload.url(:thumb)),
       upload.url,
       :class => 'link_to_upload', :rel => 'facebox'
   end
