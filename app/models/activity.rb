@@ -53,7 +53,12 @@ class Activity < ActiveRecord::Base
   
   def refs_comment_target
     if comment_target.respond_to? :first_comment
-      [comment_target, comment_target.first_comment] + comment_target.recent_comments
+      [comment_target,
+       comment_target.first_comment,
+       comment_target.user,
+       comment_target.first_comment.user] + 
+       comment_target.recent_comments + 
+       comment_target.recent_comments.map(&:user)
     else
       [comment_target]
     end
