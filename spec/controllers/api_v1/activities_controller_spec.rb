@@ -104,7 +104,11 @@ describe ApiV1::ActivitiesController do
       references.include?("#{conversation.id}_Conversation").should == true
       references.include?("#{task.id}_Task").should == true
       references.include?("#{conversation.first_comment.id}_Comment").should == true
+      references.include?("#{conversation.first_comment.user.id}_User").should == true
+      references.include?("#{conversation.user_id}_User").should == true
       references.include?("#{task.first_comment.id}_Comment").should == true
+      references.include?("#{task.first_comment.user.id}_User").should == true
+      references.include?("#{task.user_id}_User").should == true
       
       data['objects'].each do |obj|
         if obj['type'] == 'Conversation'
