@@ -1,0 +1,8 @@
+#google_docs
+  %h2 Attach a Google Document
+  #search_form
+    - form_tag search_google_docs_path, :method => 'get', :'data-remote' => true do
+      = text_field_tag :q, @search_terms
+      = submit_tag 'Search Documents'
+    
+  = render :partial => 'list'

@@ -28,7 +28,8 @@ ActionController::Routing::Routes.draw do |map|
   map.auth_failure   '/auth/failure', :controller => 'auth', :action => 'failure'
   map.complete_signup '/complete_signup',          :controller => 'users', :action => 'complete_signup'
   map.unlink_app      '/auth/:provider/unlink',   :controller => 'users', :action => 'unlink_app'
-
+  map.resources :google_docs, :collection => [:search, :call_back, :authorize, :clear]
+  
   map.javascript_environment '/i18n/environment.js', :controller => 'javascripts', :action => 'environment'
 
   map.resources :reset_passwords

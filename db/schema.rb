@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101123155108) do
+ActiveRecord::Schema.define(:version => 20101124111325) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -146,6 +146,24 @@ ActiveRecord::Schema.define(:version => 20101123155108) do
     t.text     "mail"
     t.datetime "created_on"
   end
+
+  create_table "google_docs", :force => true do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.string   "title"
+    t.string   "document_id"
+    t.string   "document_type"
+    t.string   "url"
+    t.string   "edit_url"
+    t.string   "acl_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "google_docs", ["comment_id"], :name => "index_google_docs_on_comment_id"
+  add_index "google_docs", ["project_id"], :name => "index_google_docs_on_project_id"
+  add_index "google_docs", ["user_id"], :name => "index_google_docs_on_user_id"
 
   create_table "ims", :force => true do |t|
     t.integer "card_id"

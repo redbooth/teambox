@@ -24,6 +24,7 @@ gem 'json'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'tilt'
 gem 'choices', '>= 0.2.0'
+gem 'nokogiri'
 
 group :plugins do
   gem 'sprockets-rails', '~> 0.0.1'

@@ -23,6 +23,8 @@
     .attach
       %span= t('.attach') + ": "
       = link_to t('uploads.comment_upload_link'), '#uploads', :class => 'attach_icon'
+    
+    = render 'google_docs/form', :f => f
 
     - if task_form
       = link_to t('comments.hours.tooltip'), '#hours', :class => 'add_hours_icon'

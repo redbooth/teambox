@@ -177,6 +177,7 @@ DEPENDENCIES
   memcache-client (>= 1.7.4)
   mongrel (~> 1.1.5)
   mysql (~> 2.8.1)
+  nokogiri
   oa-oauth
   paperclip (~> 2.3.6)
   pg (~> 0.9.0)

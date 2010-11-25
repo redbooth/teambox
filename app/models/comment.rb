@@ -19,9 +19,13 @@ class Comment < ActiveRecord::Base
   has_many :uploads
   accepts_nested_attributes_for :uploads, :allow_destroy => true,
     :reject_if => lambda { |upload| upload['asset'].blank? }
-
+  
+  has_many :google_docs
+  accepts_nested_attributes_for :google_docs, :allow_destroy => true,
+    :reject_if => lambda { |google_docs| google_docs['title'].blank? || google_docs['url'].blank? }
+  
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
-                  :upload_ids, :uploads_attributes, :due_on
+                  :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes
 
   named_scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
   named_scope :latest, :order => 'id DESC'

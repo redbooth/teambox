@@ -79,6 +79,9 @@ function resetCommentsForm(form) {
   form.select('.hours_field, .upload_area').invoke('hide')
   // clear errors
   form.select('.error').invoke('remove')
+  //clear google docs hidden fields and list items in the file list
+  form.select('.google_docs_attachment .fields input').invoke('remove')
+  form.select('.google_docs_attachment .file_list li').invoke('remove')
 }
 
 // insert new simple conversation into stream after posting
