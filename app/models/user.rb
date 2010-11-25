@@ -219,7 +219,8 @@ class User < ActiveRecord::Base
       :biography => biography,
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
-      :avatar_url => avatar_or_gravatar_url(:thumb)
+      :avatar_url => avatar_or_gravatar_url(:thumb),
+      :micro_avatar_url => avatar_or_gravatar_url(:micro)
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
