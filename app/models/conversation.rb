@@ -22,7 +22,12 @@ class Conversation < RoleRecord
   named_scope :only_simple, :conditions => { :simple => true }
   named_scope :not_simple, :conditions => { :simple => false }
   named_scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
-  
+
+  def before_update
+    self.simple = false if simple? and name_changed? and !name.nil?
+    true
+  end
+
   def self.from_github(payload)
     text = description_for_github_push(payload)
     
