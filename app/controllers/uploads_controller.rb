@@ -43,7 +43,11 @@ class UploadsController < ApplicationController
       format.yaml { render :as_yaml => @uploads.to_xml({:root => 'files'}) }
     end
   end
-  
+
+  def show
+    redirect_to @upload.url
+  end
+
   def new
     @upload = @current_project.uploads.new
     @upload.user = current_user
