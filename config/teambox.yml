@@ -26,7 +26,8 @@ defaults: &defaults
   # See "config/amazon_s3.yml" for info about credentials.
   amazon_s3: false
   # Upload expiration for public URL, in minutes
-  amazon_s3_expiration: 3600
+  # Take fragment caching into consideration when setting this value
+  amazon_s3_expiration: 157680000
 
   asset_max_file_size: 50 # in megabytes
 
