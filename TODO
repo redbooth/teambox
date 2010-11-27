@@ -1,0 +1,45 @@
+Client-side threads
+================================
+
+To do:
+
+[x] Rendering conversations
+[x] Rendering tasks
+[x] Reply to conversations
+[ ] Replying to tasks
+[ ] Attaching files
+[ ] Menus
+[ ] Transitions for dates
+[ ] Time tracking
+[ ] Display attachments
+[ ] Translations
+[ ] Show more
+[ ] Show new
+[ ] Other activities (page, note, etc)
+
+
+Tests:
+
+[ ] Replying to a conversation
+[ ] Visiting a conversation's page
+[ ] Editing a comment for a conversation
+[ ] Deleting a comment for a conversation
+[ ] Attaching a file to a conversation, and seeing the attachment
+
+[ ] Replying to a task
+[ ] Visiting a task's page
+[ ] Editing a comment for a task
+[ ] Deleting a comment for a task
+[ ] Editing the last comment for a task (status changes)
+[ ] Deleting the last comment for a task (status changes)
+[ ] Attach a file to a task, and seeing the attachment
+[ ] Add hours to a task
+
+[ ] Comment not editable after X minutes
+[ ] Comment deletable by an admin only
+
+[ ] Show new
+[ ] Show more
+[ ] Typing text into an existing conversation and reloading its comments doesn't clear textarea
+[ ] Typing text into an existing task and reloading its comments doesn't clear textarea
+

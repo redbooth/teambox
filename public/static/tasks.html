@@ -56,28 +56,12 @@
         </ol> 
         
       </div> 
-      <div class="navigation" style="background: #78ACD7;"><div class="project" id="project"><ul><li class="nav_tab_container" id="projects_tab_container"><a href="/projects" class="nav_tab active" id="projects_tab" tabindex="100">All Projects <img alt="Triangle" class="triangle" src="/images/triangle.png?1290551794" /></a><ul class='nav_tab_list' id='projects_tab_list'> 
-        <li><a href="/projects" class="tab_item" style="font-weight: bold; margin: 3px 0 5px">Overview for all projects</a></li> 
-        <li> 
-          <p class='div' style='padding-top: 10px'><a href="/organizations/design-projects">Design projects</a></p> 
-          <div class='clear'></div> 
-        </li> 
-        <li> 
-          <a href="/projects/earthworks" class="tab_item">Earthworks Yoga</a> 
-          <div class='quicklinks'> 
-            <a href="/projects/earthworks/conversations" class="comment_icon"></a> 
-            <a href="/projects/earthworks/task_lists" class="task_icon"></a> 
-            <a href="/projects/earthworks/pages" class="page_icon"></a> 
-          </div> 
-          <div class='clear'></div> 
-        </li> 
-        <li><a href="/projects/new" class="tab_item" style="font-weight: bold; margin-top: 5px">+ New project</a></li> 
-      </ul> 
-       </li><li><a href="/task_lists" tabindex="110">All Tasks</a> </li><li><a href="/task_lists/gantt_view" tabindex="120">Calendar and charts</a> </li><li><a href="/time" tabindex="130">Time Tracking</a> </li><li class="right_side"><a href="/organizations" tabindex="140">Organizations</a> </li></ul></div><div class="clear"></div></div> 
+      <div class="navigation" style="background: #78ACD7;"><div class="project" id="project"><ul><li class="nav_tab_container_IGNORE" id="projects_tab_container"><a href="/static/activities" class="nav_tab" id="projects_tab" tabindex="100">All Projects</a>
+       </li><li><a href="/static/tasks" class="active" tabindex="110">All Tasks</a> </li><li><a href="/task_lists/gantt_view" tabindex="120">Calendar and charts</a> </li><li><a href="/time" tabindex="130">Time Tracking</a> </li><li class="right_side"><a href="/organizations" tabindex="140">Organizations</a> </li></ul></div><div class="clear"></div></div> 
       <div class='wrapper'> 
         <div class='content_wrap'> 
           <div class='content' id='content'> 
-            <form action="/conversations" class="new_conversation new_comment" data-remote="true" enctype="multipart/form-data" id="new_conversation" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="TJmoyHk7YiI9nFPVT4A8dwY9oOFZL3s95d4MS7xqf80=" /></div> 
+            <form style="display:none" action="/conversations" class="new_conversation new_comment" data-remote="true" enctype="multipart/form-data" id="new_conversation" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="TJmoyHk7YiI9nFPVT4A8dwY9oOFZL3s95d4MS7xqf80=" /></div> 
               <div class='project_select'> 
                 <label for="project_id">Comment on:</label> 
                 <select id="project_id" name="project_id"><optgroup label='Design projects'><option value="1">Earthworks Yoga</option></optgroup></select> 
@@ -110,6 +94,7 @@
         <div class='column_wrap'> 
           <div class='column' id='column'> 
             <p><a href="/projects/new" class="add_button" id="new_project_link"><span>New Project</span></a></p> 
+            <p><a id="clear_store" href="#">Clear localStorage</a></p>
             
             <a href="/feeds" class="subscribe">Subscribe to feeds...</a> 
             <a href="/calendars" class="calendars_link">Subscribe to calendars...</a> 

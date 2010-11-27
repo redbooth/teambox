@@ -55,14 +55,13 @@ document.on("ajax:success", function() {
   format_posted_date.defer();
 });
 
-
 <%
   templates = {}
   templates[:conversation] = {}
-  templates[:conversation][:normal] = render("javascripts/conversation_normal")
-  templates[:conversation][:simple] = render("javascripts/conversation_normal")
-  templates[:task] = render("javascripts/task")
-  templates[:comment] = render("javascripts/comment")
+  templates[:conversation][:normal] = render("javascripts/activities/conversation_normal")
+  templates[:conversation][:simple] = render("javascripts/activities/conversation_normal")
+  templates[:task] = render("javascripts/activities/task")
+  templates[:comment] = render("javascripts/activities/comment")
 %>
 
 ThreadTemplates = (<%= templates.to_json %>)
@@ -70,3 +69,12 @@ ThreadTemplates = (<%= templates.to_json %>)
 ThreadTemplates.first_comment = (<%=
   templates[:comment].gsub("micro_avatar_url","avatar_url").gsub("micro_avatar","thumb_avatar").to_json
 %>)
+
+<%
+  task_templates = {}
+  task_templates[:task_lists] = render("javascripts/tasks/task_lists")
+  task_templates[:task_list] = render("javascripts/tasks/task_list")
+  task_templates[:task] = render("javascripts/tasks/task")
+%>
+
+TaskTemplates = (<%= task_templates.to_json %>)

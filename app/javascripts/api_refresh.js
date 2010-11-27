@@ -1,5 +1,3 @@
-var url = "http://teambox.local/api/1/activities" //"?since_id=40"
-
 status_code = ['new', 'open', 'hold', 'resolved', 'rejected']
 
 renderStatusTransition = function(comment) {
@@ -22,87 +20,75 @@ renderDateTransition = function(comment) {
   return ""
 }
 
-document.on("dom:loaded", function() {
-  
-  new Ajax.Request(url, {
-    method: 'get',
-    onSuccess: function(response) {
-      var json = eval('('+response.responseText+')')
+thread_to_html = function(thread) {
 
-      json.findRef = function (id, type) { 
-        return this.references.detect( function(i) {
-          return ((i.id == id) && (i.type == type));
-        })
-      }
-
-      // Returns the parent model for an activity (Conversation, Task, Note, etc)
-      var returnParentThreads = function(activity) {
-        var ref = json.findRef(activity.target_id, activity.target_type)
-        if (ref.type == "Comment") // for comments, we look for the target Conversation or Task
-          ref = json.findRef(ref.target_id, ref.target_type)
-        if (activity.user_id)
-          ref.user = json.findRef(activity.user_id, "User")
-        if (activity.project_id)
-          ref.project = json.findRef(ref.project_id, "Project")
-        ref.created_at_msec = 1290121194000
-        return ref
-      }
-
-      // Returns the array of comments referenced by a thread.
-      var fetchComments = function(thread) {
-        if (thread.first_comment_id) { // conversation or task, has comments
-          var comment_ids = [thread.first_comment_id].concat(thread.recent_comment_ids || []).sort().uniq()
-          thread.comments = comment_ids.collect( function(id) {
-            var comment = json.findRef(id, "Comment")
-            comment.user = json.findRef(comment.user_id, "User")
-            return comment
-          })
-        }
-        return thread
-      }
-
-      // Collect activity threads and fetch their references (user, comments)
-      //var
-      threads = json.objects.collect(returnParentThreads).uniq().collect(fetchComments)
-
-      // Render the HTML for each thread
-      var threads_html = threads.collect(function(thread) {
-
-        if (thread.comments) {
-          thread.comments = thread.comments.collect( function(comment) {
-            comment.created_at_msec = 1290121194000
-            comment.editable_before_msec = 1290121194000
-            comment.status_transition = renderStatusTransition(comment)
-            comment.date_transition = renderDateTransition(comment)
-            return comment
-          })
-        }
-
-        var template = ThreadTemplates.conversation.simple
-      
-        switch(thread.type) {
-          case "Task":
-            thread.is_task = true
-            template = ThreadTemplates.task
-            break
-          case "Conversation":
-            if (thread.simple) { // check case where there are 0 comments
-              template = ThreadTemplates.conversation.simple
-              thread.first_comment = thread.comments.shift()
-            } else {
-              template = ThreadTemplates.conversation.normal
-            }
-            break
-          default:
-            template = "<p>Undefined template: {{type}} for thread {{id}}</p>"
-        }
-
-        return Mustache.to_html(template, thread, { comment: ThreadTemplates.comment, first_comment: ThreadTemplates.first_comment })
-      }).join("")
-
-      $('activities').insert({top: threads_html})
-      format_posted_date()
+  if (thread.type == "Conversation" && thread.simple) {
+    // TODO: check case where there are 0 comments
+    template = ThreadTemplates.conversation.simple
+    thread.first_comment = thread.comments.shift()
+  }
+  thread.is_task = function() { return this.type == "Task" }
+  thread.template = function() {
+    switch(thread.type) {
+      case "Task":
+        return ThreadTemplates.task
+      case "Conversation":
+        return this.simple ? ThreadTemplates.conversation.simple : ThreadTemplates.conversation.normal
+      default:
+        return "<p>Undefined template: {{type}} for thread {{id}}</p>"
     }
-  })
+  }
+  
+  return Mustache.to_html(thread.template(), thread, { comment: ThreadTemplates.comment, first_comment: ThreadTemplates.first_comment })
+}
 
+Load = {
+  Activities: function() {
+    var activities = Store.get("all/activities")
+    if (activities) {
+      $('content').insert({top: activities})
+      format_posted_date()
+    } else {
+      (new ApiRequest).getThreads(function(threads) {
+        var threads_html = threads.collect(thread_to_html).join("")
+        $('content').insert({top: threads_html})
+        format_posted_date()
+        Store.set("all/activities", threads_html)
+      })
+    }
+  },
+  Tasks: function() {
+    var tasks = Store.get("all/tasks"),
+        task_lists = Store.get("all/task_lists")
+    var renderTasks = function() {
+      var text = Mustache.to_html(
+        TaskTemplates.task_lists, { task_lists: task_lists }, {
+          task_list: TaskTemplates.task_list,
+          task: TaskTemplates.task
+      })
+      $('content').insert({top: text})
+    }
+    if (!tasks || !task_lists) {
+      (new ApiRequest).getTasks(function(data) {
+        tasks = data.tasks, task_lists = data.task_lists
+        Store.set("all/tasks", tasks)
+        Store.set("all/task_lists", task_lists)
+        renderTasks()
+      })
+    } else {
+      renderTasks()
+    }
+  }
+}
+
+document.on("dom:loaded", function() {
+  //Store.clear()
+  if (location.pathname.match("static/activities")) Load.Activities()
+  if (location.pathname.match("static/tasks")) Load.Tasks()
+})
+
+document.on("click", "a#clear_store", function(e) {
+  Store.clear()
+  alert("Storage cleared!")
+  e.stop()
 })

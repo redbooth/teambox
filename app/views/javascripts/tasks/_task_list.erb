@@ -1,0 +1,71 @@
+<div class="task_list_container" id="project_1_task_list_2">
+  <div action_url="/projects/earthworks/task_lists/2" class="task_list" data-task-list-id="2" id="project_1_task_list_2_with_main_tasks">
+
+    <div class="head" id="project_1_task_list_2_header_index">
+      <img alt="Drag" class="drag" src="/images/drag.png?1290537921">
+      <div class="actions_menu">
+        <span class="actiondate">No dates assigned</span>
+        <span class="loading" style="display:none">Loading...</span>
+        <img alt="Triangle" class="triangle" src="/images/triangle.png?1290551794">
+        <div class="extra">
+          <a href="/projects/earthworks/task_lists/2/edit?on_index=1&amp;part=title" class="taskListUpdate">Rename task list</a>
+          <a href="/projects/earthworks/task_lists/2/edit?on_index=1&amp;part=date" class="taskListUpdate">Set the start &amp; end date</a>
+          <a href="#" aconfirm="Are you sure you want to resolve and archive this task list?" action_url="/projects/earthworks/task_lists/2/archive?on_index=1" class="taskListResolve">Resolve all tasks and archive</a>
+          <a href="#" aconfirm="Are you sure you want to delete this task list?" action_url="/projects/earthworks/task_lists/2?on_index=1" class="taskListDelete">Delete</a>
+        </div>
+      </div>
+      <a href="/projects/earthworks/task_lists/2" id="project_1_task_list_2_title">{{name}}</a>
+    </div>
+
+    <div class="tasks open" id="project_1_task_list_2_the_main_tasks" style="position: relative">
+      {{#tasks}}
+        {{>task}}
+      {{/tasks}}
+    </div>
+
+    <div class="new_task">
+      <a href="/projects/earthworks/task_lists/2/tasks/new">+ Add Task</a>
+      <form action="/projects/earthworks/task_lists/2/tasks" class="app_form new_task" data-remote="true" id="new_task" method="post" style="display:none"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="TJmoyHk7YiI9nFPVT4A8dwY9oOFZL3s95d4MS7xqf80="></div>
+        <h3>New Task</h3>
+        <p>Choose an actionable task. The more specific, the better.</p>
+        <div class="name text_field">
+          <label for="task_name">Enter a Task title <i>eg. Upload Logo Proposal</i></label>
+          <input id="task_name" name="task[name]" size="30" type="text">
+        </div>
+        <p class="optional">You can provide better instructions for this Task below.</p>
+        <div class="body text_field">
+          <label for="task_comments_attributes_0_body">What needs to be done? <i>optional</i></label>
+          <textarea cols="40" id="task_comments_attributes_0_body" name="task[comments_attributes][0][body]" rows="3"></textarea>
+        </div>
+        <div class="assigned_to text_field">
+          <label for="task_assigned_id">Assigned to:</label>
+          <select id="task_assigned_id" name="task[assigned_id]"><option value="" selected="selected">Unassigned</option>
+          <option value="1">Frank Kramer</option>
+          <option value="2">Corrina Kottke</option>
+          <option value="5">Marco Fizzulo</option>
+          <option value="4">Maya Bhaskaran</option>
+          <option value="3">Tomas Santiago</option></select>
+        </div>
+        <div class="pick_date">
+          <label for="task_due_on">Needs to be done before... <i>optional</i></label>
+          <div class="date_picker "><img alt="Calendar" class="calendar_date_select_popup_icon" src="/images/calendar_date_select/calendar.gif?1283874039"><input id="task_due_on" name="task[due_on]" type="hidden"><span class="localized_date"><i>No date assigned</i></span></div>
+        </div>
+        <div class="submit">
+          <a href="#cancel">Cancel</a>
+          <button class="preview" data-alternate="Hide preview">Preview</button>
+          <input data-disable-with="Creating the task…" id="task_submit" name="commit" type="submit" value="Add Task">
+        </div>
+      </form>
+      <span id="project_1_task_list_2_archive_link" style="display:none">
+        or
+        <a href="#" aconfirm="Are you sure you want to resolve and archive this task list?" action_url="/projects/earthworks/task_lists/2/archive?on_index=1" class="taskListResolve">archive this task list</a>
+      </span>
+    </div>
+
+    <div class="task_list_closed" id="project_1_task_list_2_with_closed_tasks">
+      <div class="tasks closed" id="project_1_task_list_2_the_closed_tasks">
+      </div>
+    </div>
+
+  </div>
+</div>

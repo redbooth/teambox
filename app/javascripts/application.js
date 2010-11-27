@@ -7,6 +7,8 @@
 //= require <dragdrop>
 //= require <sound>
 //= require <mustache>
+//= require <api_library>
+//= require <api_refresh>
 
 // Call this on any function to transform it into a function that will only be called
 // once in the given interval. Example: function().throttle(200) for 200ms.
