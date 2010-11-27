@@ -370,6 +370,9 @@ en:
       view_all: View all conversations
       new: "+ New conversation"
       first: "+ Create the first conversation"
+    pages:
+      title: Pages
+      new: "+ New page"
     fields:
       tracks_time: "Enable time tracking. <em>Will allow users to log time for tasks.</em>"
       public_project: "Public project. <em>Anybody will be able to access it and join it at the <a href='/public'>public projects section</a>.</em>"
