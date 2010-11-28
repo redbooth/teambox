@@ -194,26 +194,6 @@ class TeamboxData < ActiveRecord::Base
     (imported? or exported?) and processed_at.nil?
   end
   
-  def project_ids=(value)
-    write_attribute :project_ids, Array(value).map(&:to_i).compact
-  end
-  
-  def projects
-    if user
-      Project.find(:all, :conditions => {:id => project_ids, :organization_id => user.admin_organization_ids})
-    else
-      Project.find(:all, :conditions => {:id => project_ids})
-    end
-  end
-  
-  def organizations_to_export
-    if user
-      Organization.find(:all, :conditions => {:projects => {:id => project_ids, :organization_id => user.admin_organization_ids}}, :joins => [:projects])
-    else
-      Organization.find(:all, :conditions => {:projects => {:id => project_ids}}, :joins => [:projects])
-    end
-  end
-  
   def users_to_export
     organizations_to_export.map{|o| o.users + o.users_in_projects }.flatten.compact
   end

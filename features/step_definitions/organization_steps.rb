@@ -28,6 +28,11 @@ Given /I am a participant in the organization called "([^\"]*)"$/ do |name|
   organization.add_member(@current_user, :participant)
 end
 
+Given /I am a participant in the organization of the project called "([^\"]*)"$/ do |name|
+  project = Project.find_by_name(name)
+  project.organization.add_member(@current_user, :participant)
+end
+
 Given /"([^\"]*)" is an administrator in the organization called "([^\"]*)"$/ do |user,name|
   user = User.find_by_login(user)
   organization = Organization.find_by_name(name) || Organization.create!(:name => name, :permalink => name)
