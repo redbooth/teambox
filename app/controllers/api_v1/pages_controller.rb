@@ -1,6 +1,5 @@
 class ApiV1::PagesController < ApiV1::APIController
   before_filter :load_page, :only => [:show, :update, :reorder, :destroy]
-  before_filter :check_permissions, :only => [:create,:update,:reorder,:resort,:destroy]
   
   def index
     query = {:conditions => api_range, :limit => api_limit, :order => 'id ASC', :include => [:project, :user]}
@@ -15,6 +14,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
   
   def create
+    authorize! :make_pages, @current_project
     @page = @current_project.new_page(current_user,params)
     if @page.save
       handle_api_success(@page, true)
@@ -28,6 +28,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
   
   def update
+    authorize! :update, @page
     if @page.update_attributes(params)
       handle_api_success(@page)
     else
@@ -36,6 +37,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
   
   def reorder
+    authorize! :update, @page
     order = params[:slots].collect { |id| id.to_i }
     current = @page.slots.map { |slot| slot.id }
     
@@ -58,6 +60,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
   
   def resort
+    authorize! :update, @page
     order = params[:pages].map(&:to_i)
     
     @current_project.pages.each do |page|
@@ -70,6 +73,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
 
   def destroy
+    authorize! :destroy, @page
     @page.destroy
 
     handle_api_success(@page)

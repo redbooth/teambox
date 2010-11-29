@@ -1,6 +1,10 @@
 class ConversationsController < ApplicationController
   before_filter :load_conversation, :except => [:index, :new, :create]
   before_filter :set_page_title
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    handle_cancan_error(exception)
+  end
 
   def new
     authorize! :converse, @current_project
@@ -92,6 +96,7 @@ class ConversationsController < ApplicationController
   end
 
   def watch
+    authorize! :watch, @conversation
     @conversation.add_watcher(current_user)
     
     respond_to do |f|

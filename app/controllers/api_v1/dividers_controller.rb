@@ -1,7 +1,6 @@
 class ApiV1::DividersController < ApiV1::APIController
   before_filter :load_page
   before_filter :load_divider, :except => [:index,:create]
-  before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
     query = {:include => :page}
@@ -20,6 +19,7 @@ class ApiV1::DividersController < ApiV1::APIController
   end
   
   def create
+    authorize! :update, @page
     @divider = @page.build_divider(params)
     @divider.updated_by = current_user
     calculate_position(@divider)
@@ -33,6 +33,7 @@ class ApiV1::DividersController < ApiV1::APIController
   end
   
   def update
+    authorize! :update, @page
     @divider.updated_by = current_user
     if @divider.update_attributes(params)
       handle_api_success(@divider)
@@ -42,6 +43,7 @@ class ApiV1::DividersController < ApiV1::APIController
   end
 
   def destroy
+    authorize! :update, @page
     @divider.destroy
     handle_api_success(@divider)
   end

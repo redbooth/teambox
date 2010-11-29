@@ -1,7 +1,6 @@
 class ApiV1::UploadsController < ApiV1::APIController
   before_filter :load_page
   before_filter :load_upload, :only => [:update,:show,:destroy]
-  before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
     @uploads = if target
@@ -24,6 +23,9 @@ class ApiV1::UploadsController < ApiV1::APIController
   end
   
   def create
+    authorize! :upload_files, @current_project
+    authorize! :update, @page if @page
+      
     @upload = @current_project.uploads.new params
     @upload.page = @page if @page
     @upload.user = current_user
@@ -41,6 +43,7 @@ class ApiV1::UploadsController < ApiV1::APIController
   end
 
   def destroy
+    authorize! :destroy, @upload
     @upload.destroy
     handle_api_success(@upload)
   end

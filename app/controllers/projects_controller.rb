@@ -1,9 +1,16 @@
 class ProjectsController < ApplicationController
-  before_filter :can_modify?, :only => [:edit, :update, :transfer, :destroy]
   before_filter :load_projects, :only => [:index]
   before_filter :set_page_title
   before_filter :disallow_for_community, :only => [:new, :create]
   before_filter :load_pending_projects, :only => [:index, :show]
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |f|
+      flash[:error] = t('common.not_allowed')
+      f.html { redirect_to projects_path }
+      handle_api_error(f, @current_project)
+    end
+  end
   
   def index
     @new_conversation = Conversation.new(:simple => true)
@@ -44,18 +51,14 @@ class ProjectsController < ApplicationController
   end
 
   def new
+    authorize! :create_project, current_user
     @project = Project.new
     @project.build_organization
   end
 
   def create
     @project = current_user.projects.new(params[:project])
-
-    unless current_user.can_create_project?
-      flash[:error] = t('projects.new.not_allowed')
-      redirect_to root_path
-      return
-    end
+    authorize! :create_project, current_user
 
     respond_to do |f|
       if @project.save
@@ -71,10 +74,13 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+    authorize! :update, @current_project
     @sub_action = params[:sub_action] || 'settings'
   end
   
   def update
+    authorize! :update, @current_project
+    authorize!(:transfer, @current_project) if params[:sub_action] == 'ownership'
     @sub_action = params[:sub_action] || 'settings'
     @organization = @current_project.organization if @current_project.organization
 
@@ -88,11 +94,7 @@ class ProjectsController < ApplicationController
   end
   
   def transfer
-    unless @current_project.owner?(current_user)
-      flash[:error] = t('common.not_allowed')
-      redirect_to projects_path
-      return
-    end
+    authorize! :transfer, @current_project
     
     # Grab new owner
     user_id = params[:project][:user_id] rescue nil
@@ -120,6 +122,7 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @current_project
     @current_project.destroy
     respond_to do |f|
       f.html { redirect_to projects_path }
@@ -146,22 +149,6 @@ class ProjectsController < ApplicationController
   
     def load_task_lists
       @task_lists = @current_project.task_lists.unarchived
-    end
-    
-    def can_modify?
-      if !( @current_project.owner?(current_user) or 
-            ( @current_project.admin?(current_user) and 
-              !(params[:controller] == 'transfer' or params[:sub_action] == 'ownership')))
-        
-          respond_to do |f|
-            flash[:error] = t('common.not_allowed')
-            f.html { redirect_to projects_path }
-            handle_api_error(f, @current_project)
-          end
-        return false
-      end
-      
-      true
     end
   
     def load_projects

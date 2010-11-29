@@ -4,7 +4,7 @@ describe ApiV1::ConversationsController do
   before do
     make_a_typical_project
     
-    @conversation = @project.new_conversation(@user, {:name => 'Something needs to be done'})
+    @conversation = @project.new_conversation(@owner, {:name => 'Something needs to be done'})
     @conversation.body = 'Hell yes!'
     @conversation.save!
     
@@ -48,10 +48,10 @@ describe ApiV1::ConversationsController do
     it "shows conversations created by a user" do
       login_as @user
       
-      get :index, :user_id => @user.id
+      get :index, :user_id => @owner.id
       response.should be_success
       
-      JSON.parse(response.body)['objects'].length.should == 2
+      JSON.parse(response.body)['objects'].map{|o|o['id']}.should == [@conversation.id]
     end
     
     it "shows no conversations created by a fictious user" do
@@ -178,6 +178,15 @@ describe ApiV1::ConversationsController do
   describe "#destroy" do
     it "should allow admins to destroy a conversation" do
       login_as @admin
+      
+      put :destroy, :project_id => @project.permalink, :id => @conversation.id
+      response.should be_success
+      
+      @project.conversations(true).length.should == 1
+    end
+    
+    it "should allow the creator to destroy a conversation" do
+      login_as @conversation.user
       
       put :destroy, :project_id => @project.permalink, :id => @conversation.id
       response.should be_success

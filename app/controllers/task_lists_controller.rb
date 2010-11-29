@@ -1,8 +1,23 @@
 class TaskListsController < ApplicationController
   before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive]
   before_filter :load_task_lists, :only => [:index]
-  before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy,:archive,:unarchive]
   before_filter :set_page_title
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    # Can they even edit the project?
+    if @task_list
+      respond_to do |f|
+        f.html { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+        f.m    { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+        f.js   {
+          render :text => "alert(\"#{t('common.not_allowed')}\");", :status => :unprocessable_entity
+        }
+        handle_api_error(f, @task_list)
+      end
+    else
+      handle_cancan_error(exception)
+    end
+  end
 
   def index
     @on_index = true
@@ -41,6 +56,7 @@ class TaskListsController < ApplicationController
   end
 
   def new
+    authorize! :make_task_lists, @current_project
     @on_index = true
     @task_list = @current_project.task_lists.new
     respond_to do |f|
@@ -51,6 +67,7 @@ class TaskListsController < ApplicationController
   end
 
   def create
+    authorize! :make_task_lists, @current_project
     @on_index = true
     @task_list = @current_project.create_task_list(current_user,params[:task_list])
     
@@ -72,6 +89,7 @@ class TaskListsController < ApplicationController
   end
   
   def edit
+    authorize! :update, @task_list
     @edit_part = params[:part]
     calc_onindex
     
@@ -83,6 +101,7 @@ class TaskListsController < ApplicationController
   end
 
   def update
+    authorize! :update, @task_list
     calc_onindex
     @saved = @task_list.update_attributes(params[:task_list])
     
@@ -104,6 +123,7 @@ class TaskListsController < ApplicationController
   end
 
   def reorder
+    authorize! :update, @task_list
     task_list_ids = params[:task_list_ids].split(',').collect {|t| t.to_i}
     @current_project.task_lists.each do |t|
       next unless task_list_ids.include?(t.id)
@@ -114,6 +134,7 @@ class TaskListsController < ApplicationController
   end
   
   def archive
+    authorize! :update, @task_list
     calc_onindex
     
     if request.method == :put and !@task_list.archived
@@ -153,9 +174,10 @@ class TaskListsController < ApplicationController
   end
   
   def unarchive
+    authorize! :update, @task_list
     calc_onindex
     
-    if request.method == :put and @task_list.editable?(current_user) and @task_list.archived
+    if request.method == :put and @task_list.archived
       @task_list.archived = false
       @saved = @task_list.save
     end
@@ -175,26 +197,20 @@ class TaskListsController < ApplicationController
 
   def destroy
     calc_onindex
-    if @task_list.editable?(current_user)
-      @task_list.try(:destroy)
+    authorize! :destroy, @task_list
+    
+    @task_list.try(:destroy)
 
-      respond_to do |f|
-        f.html { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
-        f.m    { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
-        f.js
-        handle_api_success(f, @task_list)
-      end
-    else
-      respond_to do |f|
-        f.html { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
-        f.m    { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
-        f.js   { render :text => 'alert("Not allowed!");'; }
-        handle_api_error(f, @task_list)
-      end
+    respond_to do |f|
+      f.html { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
+      f.m    { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
+      f.js
+      handle_api_success(f, @task_list)
     end
   end
 
   def watch
+    authorize! :watch, @task_list
     @task_list.add_watcher(current_user)
     respond_to{|f|f.js}
   end
@@ -281,19 +297,5 @@ class TaskListsController < ApplicationController
     def redirect_to_task_list(task_list=nil)
       redirect_to task_list ? project_task_list_path(@current_project, @task_list) :
                                project_task_lists_path(@current_project)
-    end
-    
-    def check_permissions
-      # Can they even edit the project?
-      unless @current_project.editable?(current_user)
-        respond_to do |f|
-          f.html { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
-          f.m    { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
-          f.js   {
-            render :text => "alert(\"#{t('common.not_allowed')}\");", :status => :unprocessable_entity
-          }
-        end
-        return false
-      end
     end
 end

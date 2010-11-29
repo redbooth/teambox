@@ -1,6 +1,5 @@
 class ApiV1::TaskListsController < ApiV1::APIController
   before_filter :load_task_list, :only => [:update,:show,:destroy,:archive,:unarchive]
-  before_filter :check_permissions, :only => [:create,:update,:destroy,:archive,:unarchive]
   
   def index
     query = {:conditions => api_range, :limit => api_limit, :include => [:user, :project]}
@@ -19,6 +18,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
 
   def create
+    authorize! :make_task_lists, @current_project
     @task_list = @current_project.create_task_list(current_user,params)
     
     if @task_list.new_record?
@@ -29,6 +29,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
 
   def update
+    authorize! :update, @task_list
     @saved = @task_list.update_attributes(params)
     
     if @saved
@@ -39,6 +40,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
 
   def reorder
+    authorize! :update, @task_list
     params[:task_lists].each_with_index do |task_list_id,idx|
       @task_list = @current_project.task_lists.find(task_list_id)
       @task_list.update_attribute(:position,idx.to_i)
@@ -48,6 +50,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
   
   def archive
+    authorize! :update, @task_list
     if request.method == :put and !@task_list.archived
       # Prototype for comment
       comment_attrs = {:comment_body => params[:message]}
@@ -77,6 +80,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
   
   def unarchive
+    authorize! :update, @task_list
     if request.method == :put and @task_list.editable?(current_user) and @task_list.archived
       @task_list.archived = false
       @saved = @task_list.save
@@ -90,6 +94,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
 
   def destroy
+    authorize! :destroy, @task_list
     @task_list.destroy
     handle_api_success(@task_list)
   end
@@ -114,13 +119,6 @@ class ApiV1::TaskListsController < ApiV1::APIController
         conditions[:user_id] = params[:user_id].to_i
       end
       {:conditions => conditions}
-    end
-    
-    def check_permissions
-      # Can they even edit the project?
-      unless @current_project.editable?(current_user)
-        api_error(t('common.not_allowed'), :unauthorized)
-      end
     end
     
     def api_include
