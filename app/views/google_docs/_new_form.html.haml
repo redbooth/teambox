@@ -1,0 +1,5 @@
+#create_google_document_form
+  - form_for GoogleDoc.new, :html => {:'data-remote' => true} do |f|
+    = f.text_field :title
+    = f.select :document_type, GoogleDocs::TYPES.map{|t| [t.titleize, t]}
+    = f.submit "Create", :'data-disable-with' => 'Creating...'

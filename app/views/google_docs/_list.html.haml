@@ -2,6 +2,6 @@
   - @list.each_with_index do |item, index|
     %li
       = google_docs_checkbox_tag(item, index)
-      = google_docs_image item[:type]
-      = link_to item[:title], item[:link], :target => '_blank'
-      (#{item[:type]})
+      = google_docs_image item[:document_type]
+      = link_to item[:title], item[:url], :target => '_blank'
+      (#{item[:document_type]})

@@ -9,6 +9,21 @@ document.on('ajax:success', '#google_docs #search_form form', function(e, form) 
 })
 
 document.on('change', '#google_docs input[type="checkbox"]', function(e, checkbox){
+  addGoogleDocToForm(function(field_name){
+    var data_field_name = 'data-' + field_name.gsub('_', '-')
+    return checkbox.readAttribute('data-' + field_name.gsub('_', '-'))
+  })
+})
+
+// Once the call to make a new document has been made we must add it to the list of documents
+document.on('ajax:success', '#google_docs #create_google_document_form form', function(e, form){
+  var doc = e.memo.responseText.evalJSON(true)
+  addGoogleDocToForm(function(field_name){
+    return doc[field_name]
+  })
+})
+
+function addGoogleDocToForm(getFormValue){
   // Find the various elements we are going to interact with
   var form_area = google_docs_originator.down('.google_docs_attachment_form_area')
   var prefix = form_area.readAttribute('data-object-name')
@@ -23,22 +38,22 @@ document.on('change', '#google_docs input[type="checkbox"]', function(e, checkbo
     var newInput = new Element('input', {
       type: 'hidden',
       name: prefix + '[google_docs_attributes][' + field_number + '][' + field_name + ']',
-      value: checkbox.readAttribute('data-' + field_name.gsub('_', '-'))
+      value: getFormValue(field_name)
     })
     
     form_area.down('.fields').insert(newInput)
   })
   
   // Add details about this document to the document list
-  var title = checkbox.readAttribute('data-title') 
-  var doc_type = checkbox.readAttribute('data-document-type')
-  var url = checkbox.readAttribute('data-url')
+  var title = getFormValue('title') 
+  var doc_type = getFormValue('document_type') 
+  var url = getFormValue('url')
   var image = '<img src="/images/google_docs/icon_6_' + doc_type + '.gif" />'
   form_area.down('.file_list').insert('<li>' + image + '<a href="' + url + '">' + title + '</li>')
   
   // Close facebox
   Prototype.Facebox.close()
-})
+}
 
 // Find the last number in a string - adapted from increment last number as we have many fields
 String.prototype.findLastNumber = function(){

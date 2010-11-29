@@ -1,12 +1,12 @@
 module GoogleDocsHelper
   def google_docs_checkbox_tag(item, index)
     check_box_tag "document_#{index}", item[:id], false,
-      'data-document-id' => item[:id],
+      'data-document-id' => item[:document_id],
       'data-title' => item[:title],
-      'data-url' => item[:link],
-      'data-document-type' => item[:type],
-      'data-edit-url' => item[:edit_link],
-      'data-acl-url' => item[:acl_link]
+      'data-url' => item[:url],
+      'data-document-type' => item[:document_type],
+      'data-edit-url' => item[:edit_url],
+      'data-acl-url' => item[:acl_url]
   end
   
   def google_docs_image(document_type)

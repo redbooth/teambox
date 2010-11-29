@@ -18,6 +18,13 @@ class GoogleDocsController < ApplicationController
     render :partial => 'list', :layout => false
   end
   
+  def create
+    doc = @docs.create(params[:google_doc])
+    
+    # We don't want to create an actual doc here just return the details so we can insert it using js
+    render :json => doc, :status => 201, :callback => params[:callback]
+  end
+  
   def authorize
     request_token = @consumer.get_request_token({:oauth_callback => call_back_google_docs_url}, {:scope => GoogleDocs::RESOURCES[:scope]})
     session[:request_token] = request_token.token
