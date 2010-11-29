@@ -23,7 +23,7 @@ class EmailBounce < ActiveRecord::Base
       from_email = exception.mail.from.first
       
       unless bounced_email_today?(from_email)
-        Emailer.deliver_bounce_message(exception) 
+        Emailer.deliver_bounce_message(exception.mail.from, exception.class.name.underscore.split('/').last)
         EmailBounce.create!(:email => from_email, :exception => exception)
       end
     end

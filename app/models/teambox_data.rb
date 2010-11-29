@@ -117,7 +117,7 @@ class TeamboxData < ActiveRecord::Base
   
   def post_check_state
     if type_name == :export
-      Emailer.send_with_language(:notify_export, user.locale, self) if @dispatch_notification
+      Emailer.send_with_language(:notify_export, user.locale, self.id) if @dispatch_notification
       TeamboxData.send_later(:delayed_export, self.id) if @dispatch_export
     elsif type_name == :import
       store_import_data if @do_store_import_data
@@ -152,7 +152,7 @@ class TeamboxData < ActiveRecord::Base
     clear_import_data
     save unless new_record? or @check_state
     
-    Emailer.send_with_language(:notify_import, user.locale, self)
+    Emailer.send_with_language(:notify_import, user.locale, self.id)
   end
   
   def do_export

@@ -12,28 +12,32 @@ class Emailer < ActionMailer::Base
 
   ANSWER_LINE = '-----------------------------==-----------------------------'
 
-  def confirm_email(user)
+  def confirm_email(user_id)
+    user = User.find(user_id)
     defaults
     recipients    user.email
     subject       I18n.t("emailer.confirm.subject")
     body          :user => user, :login_link => confirm_email_user_url(user, :token => user.login_token)
   end
 
-  def reset_password(user)
+  def reset_password(user_id)
+    user = User.find(user_id)
     defaults
     recipients    user.email
     subject       I18n.t("emailer.reset_password.subject")
     body          :user => user
   end
 
-  def forgot_password(reset_password)
+  def forgot_password(reset_password_id)
+    reset_password = ResetPassword.find(reset_password_id)
     defaults
     recipients    reset_password.user.email
     subject       I18n.t("emailer.forgot_password.subject")
     body          :user => reset_password.user, :url => reset_password_url(reset_password.reset_code)
   end
 
-  def project_invitation(invitation)
+  def project_invitation(invitation_id)
+    invitation = Invitation.find(invitation_id)
     defaults
     recipients    invitation.email
     from          from_user(nil, invitation.user)
@@ -41,14 +45,16 @@ class Emailer < ActionMailer::Base
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
   
-  def signup_invitation(invitation)
+  def signup_invitation(invitation_id)
+    invitation = Invitation.find(invitation_id)
     defaults
     recipients    invitation.email
     subject       I18n.t("emailer.invitation.subject", :user => invitation.user.name, :project => invitation.project.name)
     body          :referral => invitation.user, :project => invitation.project, :invitation => invitation
   end
   
-  def notify_export(data)
+  def notify_export(data_id)
+    data = TeamboxData.find(data_id)
     defaults
     
     error = !data.exported?
@@ -57,7 +63,8 @@ class Emailer < ActionMailer::Base
     body          :data => data, :user => data.user, :error => error
   end
   
-  def notify_import(data)
+  def notify_import(data_id)
+    data = TeamboxData.find(data_id)
     defaults
     
     error = !data.imported?
@@ -66,7 +73,10 @@ class Emailer < ActionMailer::Base
     body          :data => data, :user => data.user, :error => error
   end
 
-  def notify_conversation(user, project, conversation)
+  def notify_conversation(user_id, project_id, conversation_id)
+    user = User.find(user_id)
+    project = Project.find(project_id)
+    conversation = Conversation.find(conversation_id)
     title = conversation.name.blank? ? 
               truncate(conversation.comments.first(:order => 'id ASC').body.strip) :
               conversation.name
@@ -80,7 +90,10 @@ class Emailer < ActionMailer::Base
                   :organization => project.organization
   end
 
-  def notify_task(user, project, task)
+  def notify_task(user_id, project_id, task_id)
+    user = User.find(user_id)
+    project = Project.find(project_id)
+    task = Task.find(task_id)
     defaults
     recipients    user.email
     from_reply_to "#{project.permalink}+task+#{task.id}", task.comments.first.user
@@ -92,7 +105,8 @@ class Emailer < ActionMailer::Base
                   :organization => task.project.organization
   end
 
-  def project_membership_notification(invitation)
+  def project_membership_notification(invitation_id)
+    invitation = Invitation.find(invitation_id)
     defaults
     recipients    invitation.invited_user.email
     from_reply_to "#{invitation.project.permalink}", invitation.user
@@ -100,7 +114,8 @@ class Emailer < ActionMailer::Base
     body          :project => invitation.project, :recipient => invitation.invited_user
   end
 
-  def daily_task_reminder(user)
+  def daily_task_reminder(user_id)
+    user = User.find(user_id)
     tasks = user.tasks_for_daily_reminder_email
     
     defaults
@@ -109,12 +124,11 @@ class Emailer < ActionMailer::Base
     body          :user => user, :tasks => tasks
   end
   
-  def bounce_message(exception)
+  def bounce_message(exception_mail, pretty_exception)
     defaults
-    pretty_exception = exception.class.name.underscore.split('/').last
     info_url = 'http://help.teambox.com/faqs/advanced-features/email'
     
-    recipients    exception.mail.from
+    recipients    exception_mail
     subject       I18n.t("emailer.bounce.subject")
     body          I18n.t("emailer.bounce.#{pretty_exception}") + "\n\n---\n" +
                   I18n.t("emailer.bounce.not_delivered", :link => info_url)
@@ -132,17 +146,17 @@ class Emailer < ActionMailer::Base
   class Preview < MailView
     def notify_task
       task = Task.find_by_name "Contact area businesses for banner exchange"
-      Emailer.create_notify_task(task.user, task.project, task)
+      Emailer.create_notify_task(task.user.id, task.project.id, task.id)
     end
     
     def notify_conversation
       conversation = Conversation.find_by_name "Seth Godin's 'What matters now'"
-      Emailer.create_notify_conversation(conversation.user, conversation.project, conversation)
+      Emailer.create_notify_conversation(conversation.user.id, conversation.project.id, conversation.id)
     end
 
     def daily_task_reminder
       user = User.first
-      Emailer.create_daily_task_reminder(user)
+      Emailer.create_daily_task_reminder(user.id)
     end
 
     def signup_invitation
@@ -152,12 +166,13 @@ class Emailer < ActionMailer::Base
         i.user = User.first
         i.project = Project.first
       end
-      Emailer.create_signup_invitation(invitation)
+      invitation.save!
+      Emailer.create_signup_invitation(invitation.id)
     end
 
     def reset_password
       user = User.first
-      Emailer.create_reset_password(user)
+      Emailer.create_reset_password(user.id)
     end
 
     def forgot_password
@@ -165,7 +180,7 @@ class Emailer < ActionMailer::Base
         passwd.user = User.first
         passwd.reset_code = ActiveSupport::SecureRandom.hex(20)
       end
-      Emailer.create_forgot_password(password_reset)
+      Emailer.create_forgot_password(password_reset.id)
     end
 
     def project_membership_notification
@@ -174,7 +189,8 @@ class Emailer < ActionMailer::Base
         i.invited_user = User.last
         i.project = Project.first
       end
-      Emailer.create_project_membership_notification(invitation)
+      invitation.save!
+      Emailer.create_project_membership_notification(invitation.id)
     end
 
     def project_invitation
@@ -184,12 +200,13 @@ class Emailer < ActionMailer::Base
         i.invited_user = User.last
         i.project = Project.first
       end
-      Emailer.create_project_invitation(invitation)
+      invitation.save!
+      Emailer.create_project_invitation(invitation.id)
     end
 
     def confirm_email
       user = User.first
-      Emailer.create_confirm_email(user)
+      Emailer.create_confirm_email(user.id)
     end
   end
 
