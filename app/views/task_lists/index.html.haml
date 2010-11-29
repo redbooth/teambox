@@ -1,7 +1,7 @@
 - if @current_project
 
   .task_header
-    - if @current_project.editable?(current_user)
+    - if can? :make_task_lists, @current_project
       %p.text_actions
         %span
           = link_to t('task_lists.link.reorder'), "#", :id => :reorder_task_lists_link

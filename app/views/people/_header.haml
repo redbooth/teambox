@@ -6,7 +6,7 @@
       
     %p= time_ago_in_words(person.user.updated_at)
   
-  - if request.format != :m and project.admin?(current_user) and person.user != current_user
+  - if request.format != :m and can?(:update, person)
     .actions
       = link_to t('people.link.edit'), '#edit'
       - unless project.owner?(person.user)

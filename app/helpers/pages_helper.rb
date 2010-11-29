@@ -12,7 +12,7 @@ module PagesHelper
   end
   
   def new_page_link(project)
-    if project.editable?(current_user)
+    if can? :make_pages, project
       link_to content_tag(:span,t('.new_page')), new_project_page_path(project), :class => 'add_button'
     end
   end
@@ -73,7 +73,7 @@ module PagesHelper
   end
   
   def page_action_links(project,page)
-    if project.editable?(current_user)
+    if can? :update, page
       render 'pages/actions', :project => project, :page => page
     end
   end
@@ -91,7 +91,7 @@ module PagesHelper
   end
   
   def page_buttons(project,page)
-    if project.editable?(current_user)
+    if can? :update, page
       render 'pages/buttons', :project => project, :page => page
     end
   end
