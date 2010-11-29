@@ -3,13 +3,11 @@ ApiRequest = function ApiRequest() {
   // Evaluates JSON from the API and adds findRef() method to the collection
   this.parse = function(responseText) {
     this.json = eval('('+responseText+')')
-
     this.json.findRef = function(id, type) { 
       return this.references.detect(function(i) {
         return ((i.id == id) && (i.type == type))
       })
     }
-
     return this.json
   }
 
@@ -73,6 +71,8 @@ ApiRequest = function ApiRequest() {
           thread.comments = comment_ids.collect(function(id) {
             var comment = json.findRef(id, "Comment")
             comment.user = json.findRef(comment.user_id, "User")
+            comment.status_transition = Helpers.status_transition
+            comment.date_transition = Helpers.date_transition
             return comment
           })
         }
@@ -85,18 +85,4 @@ ApiRequest = function ApiRequest() {
     })
   }
 
-}
-
-
-Store = {
-  set: function(key, data) {
-    localStorage[key] = JSON.stringify(data)
-    return data
-  },
-  get: function(key) {
-    return localStorage[key] ? JSON.parse(localStorage[key]) : null
-  },
-  clear: function() {
-    localStorage.clear()
-  }
 }
