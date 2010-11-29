@@ -1,14 +1,14 @@
-<div class="status_new task unassigned unassigned_date" data-task-id="3" id="task_3" style="position: relative">
+<div class="status_new task unassigned unassigned_date" data-task-id="{{id}}" id="task_{{id}}" style="position: relative">
   <div class="taskStatus">
-    <img alt="Drag" class="task_drag" src="/images/drag.png?1290537921">
-    <span data-task-id="3" class="task_status task_counter">0</span>
+    <img alt="Drag" class="task_drag" src="/images/drag.png">
+    <span data-task-id="{{id}}" class="task_status task_counter">{{comments_count}}</span>
   </div>
   <div class="taskName">
     <div class="expanded_actions" style="display: none">
-      <a class="full" href="/projects/earthworks/tasks/3">Full view</a>
-      <a class="hide" href="#">Hide comments</a>
+      <a class="full" href="/projects/{{project_id}}/tasks/{{id}}"><%= t 'tasks.task.full_view' %></a>
+      <a class="hide" href="#"><%= t 'tasks.task.hide_comments' %></a>
     </div>
-    <a href="/projects/earthworks/tasks/3" class="name">{{name}}</a>
+    <a href="/projects/{{project_id}}/tasks/{{id}}" class="name">{{name}}</a>
   </div>
   <div class="clear"></div>
 </div>

@@ -26,6 +26,7 @@ Load = {
     }
     if (!tasks || !task_lists) {
       (new ApiRequest).getTasks(function(data) {
+        //var
         tasks = data.tasks, task_lists = data.task_lists
         Store.set("all/tasks", tasks)
         Store.set("all/task_lists", task_lists)

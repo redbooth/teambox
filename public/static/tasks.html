@@ -24,7 +24,7 @@
 </script>  </head> 
   <body class='index_projects en development controller_projects' reload_url='/projects'> 
     <script src="/javascripts/modernizr.js?1289156755" type="text/javascript"></script> 
-    <script src="/i18n/environment.js" type="text/javascript"></script> 
+    <script src="/i18n/environment.js?z" type="text/javascript"></script> 
     <style type='text/css'> 
             a.micro_avatar.my_avatar { background: url(http://www.gravatar.com/avatar/85ebbad6d49ffba12ada85b98baca888?size=24&default=identicon) no-repeat }
           </style> 
@@ -92,14 +92,35 @@
           </div> 
         </div> 
         <div class='column_wrap'> 
-          <div class='column' id='column'> 
-            <p><a href="/projects/new" class="add_button" id="new_project_link"><span>New Project</span></a></p> 
-            <p><a id="clear_store" href="#">Clear localStorage</a></p>
-            
-            <a href="/feeds" class="subscribe">Subscribe to feeds...</a> 
-            <a href="/calendars" class="calendars_link">Subscribe to calendars...</a> 
-          </div> 
-        </div> 
+          <div class="column" id="column">
+                      <a href="/projects/earthworks/task_lists/new" class="jennyaction new_task_list_link" form_id="project_1_task_list_new_form" header_id="project_1_task_list_new_header" id="project_1_task_list_new_link" link_id="project_1_task_list_new_link" new_record="1"><span>New Task List</span></a>
+                      <div class="filter_box">
+                        <p>Filter tasks by name</p>
+                        <input id="filter_tasks_by_name" type="search">
+                        <p>Display tasks assigned to...</p>
+                        <select id="filter_assigned" name="filter[assigned]">
+                        <option value="task">Anybody</option>
+                        <option value="mine">My tasks</option>
+                        <option value="unassigned">Unassigned</option>
+                        <option value="divider" disabled="">--------</option></select>
+                        <p>Display tasks with due date...</p>
+                        <select id="filter_due_date" name="filter[due_date]">
+                        <option value="all">Any time</option>
+                        <option value="overdue">Late tasks</option>
+                        <option value="unassigned_date">No date assigned</option>
+                        <option value="divider" disabled="disabled">--------</option>
+                        <option value="due_today">Today</option>
+                        <option value="due_tomorrow">Tomorrow</option>
+                        <option value="due_week">This week</option>
+                        <option value="due_2weeks">Next 2 weeks</option>
+                        <option value="due_3weeks">Next 3 weeks</option>
+                        <option value="due_month">Within 1 month</option></select>
+                      </div>
+                      <h2>Other views</h2>
+                      <a href="/projects/earthworks/task_lists/gantt_view" class="gantt_link">Project Gantt and calendar</a>
+                      <a href="/calendars" class="calendars_link">Subscribe to calendars...</a>
+                      <a href="/projects/earthworks/task_lists.print" class="print_link">Print this page</a>
+                    </div>        </div> 
       </div> 
       <div id='footer'> 
         <ol class='support'> 

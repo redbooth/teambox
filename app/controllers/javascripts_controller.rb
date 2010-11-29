@@ -16,7 +16,7 @@ class JavascriptsController < ApplicationController
   protected
 
     def http_caching
-      expires_in 14.days, :public => true
+      expires_in 10.minutes, :public => true
     end
 
 end
