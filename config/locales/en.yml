@@ -715,6 +715,9 @@ en:
       all: "All organizations"
 
   tasks:
+    task:
+      full_view: Full view
+      hide_comments: Hide comments
     my_tasks_listing:
       tasks: My Tasks
       back: "Back to the Overview"

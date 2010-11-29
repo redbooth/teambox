@@ -8,8 +8,8 @@
     = task_status(task, :content)
   .taskName
     .expanded_actions{ :style => 'display: none' }
-      %a.full{ :href => project_task_path(project, task) } Full view
-      %a.hide{ :href => '#' } Hide comments
+      %a.full{ :href => project_task_path(project, task) }= t('.full_view')
+      %a.hide{ :href => '#' }= t('.hide_comments')
     = link_to h(task), [project, task], :class => :name
     - unless task.closed?
       - if task.due_on
