@@ -19,7 +19,7 @@ Feature: Exporting data
 
   Scenario: Mislav attemps to export someone elses magic project he participates in
     Given a project exists with name: "Python Rockstars"
-    And I am an participant in the organization of the project called "Python Rockstars"
+    And I am a participant in the organization of the project called "Python Rockstars"
     When I go to the your data page
     When I follow "Export"
     Then I should not see "Python Rockstars"
