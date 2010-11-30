@@ -39,6 +39,9 @@ ApiRequest = function ApiRequest() {
       task_lists = task_lists.collect(function(task_list) {
         task_list.tasks = tasks.select(function(task) {
           return task.task_list_id == task_list.id
+        }).collect(function(task) {
+          task.status_class = (['new', 'open', 'hold', 'resolved', 'rejected'])[task.status]
+          return task
         })
         return task_list
       })
