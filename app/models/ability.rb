@@ -2,6 +2,9 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    
+    # Comment & commentable permissions
+    
     can :update, Comment do |comment|
       comment.user_id == user.id and
         Time.now < 15.minutes.since(comment.created_at)
@@ -18,6 +21,12 @@ class Ability
       project.commentable?(user)
     end
     
+    can :watch, [Task, Conversation] do |object|
+      object.project.commentable?(user)
+    end
+    
+    # Core object permissions
+    
     can :update, [Conversation, Task, TaskList, Page, Upload] do |object|
       object.editable?(user)
     end
@@ -26,25 +35,27 @@ class Ability
       object.owner?(user) or object.project.admin?(user)
     end
     
-    can :watch, [Task, Conversation] do |object|
-      object.project.commentable?(user)
-    end
+    # Person permissions
     
-    can :update, [Person] do |person|
+    can :update, Person do |person|
       person.project.admin?(user) and !person.project.owner?(person.user)
     end
     
-    can :destroy, [Person] do |person|
+    can :destroy, Person do |person|
       !person.project.owner?(person.user) and (person.user == user or person.project.admin?(user))
     end
     
-    can :update, [Invitation] do |invitation|
+    # Invite permissions
+    
+    can :update, Invitation do |invitation|
       invitation.editable?(user)
     end
     
-    can :destroy, [Invitation] do |invitation|
+    can :destroy, Invitation do |invitation|
       invitation.editable?(user)
     end
+    
+    # Project permissions
     
     can :converse, Project do |project|
       project.commentable?(user)
@@ -79,13 +90,17 @@ class Ability
       project.owner?(user)
     end
     
+    can :admin, Project do |project|
+      project.owner?(user) or project.admin?(user)
+    end
+    
+    # Organization permissions
+    
     can :admin, Organization do |organization|
       organization.is_admin?(user)
     end
     
-    can :admin, Project do |project|
-      project.owner?(user) or project.admin?(user)
-    end
+    # User permissions
     
     can :create_project, User do |the_user|
       the_user.can_create_project?

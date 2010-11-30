@@ -128,8 +128,7 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    authorize! :destroy, @page
-    if @page.editable?(current_user)
+    if can? :destroy, @page
       @page.try(:destroy)
 
       respond_to do |f|

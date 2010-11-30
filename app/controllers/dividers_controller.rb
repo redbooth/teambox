@@ -78,7 +78,7 @@ class DividersController < ApplicationController
   def destroy
     @slot_id = @divider.page_slot.id
     
-    if authorize(:destroy, @page)
+    if can?(:destroy, @page)
       @divider.destroy
       respond_to do |f|
         f.html { reload_page }

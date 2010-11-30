@@ -78,7 +78,7 @@ class NotesController < ApplicationController
   def destroy
     @slot_id = @note.page_slot.id
     
-    if authorize(:destroy, @page)
+    if can?(:destroy, @page)
       @note.destroy
       respond_to do |f|
         f.html { reload_page }
