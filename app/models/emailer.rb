@@ -134,12 +134,23 @@ class Emailer < ActionMailer::Base
                   I18n.t("emailer.bounce.not_delivered", :link => info_url)
   end
 
-  def self.send_with_language(template, language, *args)
-    meth = "deliver_#{template.to_s}"
-    old_locale = I18n.locale
-    I18n.locale = language
-    send(meth, *args)
-    I18n.locale = old_locale
+  class << self
+
+    def send_email(template, *args)
+      send_with_language(template, :en, *args)
+    end
+
+    def send_with_language(template, language, *args)
+      meth = "deliver_#{template.to_s}"
+      old_locale = I18n.locale
+      I18n.locale = language
+      begin
+        send(meth, *args)
+      ensure
+        I18n.locale = old_locale
+      end
+    end
+
   end
 
   # requires data from rake db:seed
