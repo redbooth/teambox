@@ -15,6 +15,6 @@ module Metadata
   end
 
   def settings
-    ActiveSupport::JSON.decode(read_attribute(:settings)) rescue self.class.default_settings
+    ActiveSupport::JSON.decode(read_attribute(:settings)) || self.class.default_settings rescue self.class.default_settings
   end
 end

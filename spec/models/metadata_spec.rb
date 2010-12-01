@@ -4,8 +4,13 @@ describe Metadata do
 
   describe "organization metadata" do
     before do
+      @previous_default_settings = Organization.default_settings
       Organization.default_settings = {'foo' => 'bar'}
       @organization = Factory(:organization)
+    end
+
+    after do
+      Organization.default_settings = @previous_default_settings
     end
 
     it "should have class level defaults" do
