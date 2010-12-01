@@ -106,13 +106,13 @@ class Invitation < RoleRecord
     return if @is_silent
     if invited_user
       if belongs_to_organization?
-        Emailer.deliver_project_membership_notification(self.id)
+        Emailer.send_email :project_membership_notification, self.id
         self.destroy
       else
-        Emailer.deliver_project_invitation(self.id)
+        Emailer.send_email :project_invitation, self.id
       end
     else
-      Emailer.deliver_signup_invitation self.id
+      Emailer.send_email :signup_invitation, self.id
     end
   end
   

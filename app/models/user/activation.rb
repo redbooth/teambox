@@ -4,12 +4,12 @@ class User
   
   def send_activation_email
     self.generate_login_code!
-    Emailer.deliver_confirm_email self.id
+    Emailer.send_email :confirm_email, self.id
   end
 
   def send_reset_password
     self.generate_login_code!
-    Emailer.deliver_reset_password self.id
+    Emailer.send_email :reset_password, self.id
   end
   
   def is_active?
