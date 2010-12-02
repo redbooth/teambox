@@ -70,14 +70,14 @@ class OrganizationsController < ApplicationController
   end
 
   def delete
-    if !@organization.is_admin? current_user
+    if !can?(:admin, @organization)
       flash[:error] = t('organizations.delete.need_to_be_admin')
       redirect_to @organization
     end
   end
 
   def destroy
-    if !@organization.is_admin? current_user
+    if !can?(:admin, @organization)
       flash[:error] = t('organizations.delete.need_to_be_admin')
       redirect_to @organization
     elsif @organization.projects.any?

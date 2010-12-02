@@ -50,7 +50,7 @@ describe ApiV1::PeopleController do
       login_as @admin
       
       put :update, :project_id => @project.permalink, :id => @owner.person_for(@project).id, :role => Person::ROLES[:participant]
-      response.status.should == '422 Unprocessable Entity'
+      response.status.should == '401 Unauthorized'
       
       @project.reload.admin?(@owner).should == true
     end

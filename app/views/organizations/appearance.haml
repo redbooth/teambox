@@ -3,7 +3,7 @@
 
 %h2=h @organization
 
-- if @organization.is_admin? current_user
+- if can?(:admin, @organization)
   - form_for @organization, :html => { :multipart => true } do |f|
     = f.error_messages
     = render 'organizations/appearance_fields', :f => f

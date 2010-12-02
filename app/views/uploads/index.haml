@@ -1,7 +1,7 @@
 = render @uploads, :activity => false
 
 - content_for :column do
-  - if @current_project.editable?(current_user)
+  - if can? :upload_files, @current_project
     - if @upload.errors.empty?
       = link_to content_tag(:span, t('.new_file')), new_project_upload_path(@current_project), :class => 'add_button'
     = render 'uploads/form', :project => @current_project, :upload => @upload, :page => nil

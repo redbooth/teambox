@@ -1,5 +1,6 @@
 class Activity < ActiveRecord::Base
   belongs_to :target, :polymorphic => true, :with_deleted => true
+  belongs_to :comment_target, :polymorphic => true, :with_deleted => true
   belongs_to :user
   belongs_to :project
   acts_as_paranoid
@@ -40,6 +41,27 @@ class Activity < ActiveRecord::Base
     activity.save
     
     activity
+  end
+  
+  def refs_thread_comments
+    if target.respond_to? :first_comment
+      [target.first_comment] + target.recent_comments
+    else
+      []
+    end
+  end
+  
+  def refs_comment_target
+    if comment_target.respond_to? :first_comment
+      [comment_target,
+       comment_target.first_comment,
+       comment_target.user,
+       comment_target.first_comment.user] + 
+       comment_target.recent_comments + 
+       comment_target.recent_comments.map(&:user)
+    else
+      [comment_target]
+    end
   end
 
   def action_comment_type

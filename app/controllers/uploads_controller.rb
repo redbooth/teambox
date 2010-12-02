@@ -2,9 +2,16 @@ class UploadsController < ApplicationController
   before_filter :find_upload, :only => [:destroy,:update,:thumbnail,:show]
   skip_before_filter :load_project, :only => [:download]
   before_filter :set_page_title
-  before_filter :check_permissions, :only => [:new,:create,:update,:destroy]
   
   SEND_FILE_METHOD = :default
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |f|
+      error_message = "You are not allowed to do that!"
+      f.js   { render :text => "alert('#{error_message}')" }
+      f.html { render :text => "alert('#{error_message}')" }
+    end
+  end
 
   def download
     head(:not_found) and return if (upload = Upload.find_by_id(params[:id])).nil?
@@ -43,13 +50,20 @@ class UploadsController < ApplicationController
       format.yaml { render :as_yaml => @uploads.to_xml({:root => 'files'}) }
     end
   end
-  
+
+  def show
+    redirect_to @upload.url
+  end
+
   def new
+    authorize! :upload_files, @current_project
     @upload = @current_project.uploads.new
     @upload.user = current_user
   end  
   
   def create
+    authorize! :upload_files, @current_project
+    authorize! :update, @page if @page
     @upload = @current_project.uploads.new params[:upload]
     @upload.user = current_user
     @page = @upload.page
@@ -78,6 +92,7 @@ class UploadsController < ApplicationController
   end
 
   def update
+    authorize! :update, @upload
     @upload.update_attributes(params[:upload])
 
     respond_to do |format|
@@ -87,21 +102,14 @@ class UploadsController < ApplicationController
   end
 
   def destroy
-    if @upload.editable?(current_user)
-      @upload.try(:destroy)
+    authorize! :destroy, @upload
+    @upload.try(:destroy)
 
-      respond_to do |f|
-        f.js
-        f.html do
-          flash[:success] = t('deleted.upload', :name => @upload.to_s)
-          redirect_to project_uploads_path(@current_project)
-        end
-      end
-    else
-      respond_to do |f|
-        error_message = "You are not allowed to do that!"
-        f.js   { render :text => "alert('#{error_message}')" }
-        f.html { render :text => "alert('#{error_message}')" }
+    respond_to do |f|
+      f.js
+      f.html do
+        flash[:success] = t('deleted.upload', :name => @upload.to_s)
+        redirect_to project_uploads_path(@current_project)
       end
     end
   end

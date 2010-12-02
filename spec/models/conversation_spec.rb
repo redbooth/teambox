@@ -47,6 +47,17 @@ describe Conversation do
     Conversation.find_by_id(@comment.target.id).should be_nil
   end
   
+  it "change to normal conversation if title is added to simple conversation" do
+    conversation = Factory.build(:simple_conversation, :body => nil)
+    conversation.comments_attributes = {"0" => { :body => "Just sayin' hi" }}
+    conversation.save
+
+    conversation.simple.should be_true
+    conversation.name = "Change to normal conversation"
+    conversation.save.should be_true
+    conversation.simple.should be_false
+  end
+
   it "allows watchers id on create" do
     project = Factory.create(:project)
     other_guy = Factory.create(:confirmed_user)

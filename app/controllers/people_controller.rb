@@ -2,6 +2,11 @@ class PeopleController < ApplicationController
   before_filter :load_person, :only => [:update, :destroy]
   before_filter :set_page_title
   
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = t('common.not_allowed')
+    redirect_to project_people_path(@current_project)
+  end
+  
   def index
     @people = @current_project.people.in_alphabetical_order.all
     @invitations = @current_project.invitations
@@ -16,6 +21,7 @@ class PeopleController < ApplicationController
   end
 
   def update
+    authorize! :update, @person
     @person.update_attributes params[:person]
     
     respond_to do |wants|
@@ -31,25 +37,21 @@ class PeopleController < ApplicationController
   end
 
   def destroy
-    if @user == current_user or @current_project.admin?(current_user)
-      @person.destroy
+    authorize! :destroy, @person
+    @person.destroy
       
-      respond_to do |wants|
-        wants.html {
-          if request.xhr?
-            head :ok
-          elsif @user == current_user
-            flash[:success] = t('deleted.left_project', :name => @user.name)
-            redirect_to root_path
-          else
-            flash[:success] = t('deleted.person', :name => @user.name)
-            redirect_to project_people_path(@current_project)
-          end
-        }
-      end
-    else
-      flash[:error] = t('common.not_allowed')
-      redirect_to project_people_path(@current_project)
+    respond_to do |wants|
+      wants.html {
+        if request.xhr?
+          head :ok
+        elsif @user == current_user
+          flash[:success] = t('deleted.left_project', :name => @user.name)
+          redirect_to root_path
+        else
+          flash[:success] = t('deleted.person', :name => @user.name)
+          redirect_to project_people_path(@current_project)
+        end
+      }
     end
   end
   

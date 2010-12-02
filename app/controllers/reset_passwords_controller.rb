@@ -14,7 +14,7 @@ class ResetPasswordsController < ApplicationController
     
     if @reset_password.save
       flash[:error] = nil
-      Emailer.deliver_forgot_password(@reset_password)
+      Emailer.send_email :forgot_password, @reset_password.id
       redirect_to sent_password_path(:email => @reset_password.email)
     else
       if @reset_password.errors.on(:user)
@@ -44,7 +44,7 @@ class ResetPasswordsController < ApplicationController
       @user.performing_reset = true
       if @user.update_attributes(params[:user])
         @reset_password.destroy
-        Emailer.deliver_reset_password(@user)
+        Emailer.send_email :reset_password, @user.id
         flash[:success] = I18n.t('reset_passwords.create.password_updated')
         self.current_user = @user
         redirect_to projects_path

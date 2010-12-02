@@ -1,7 +1,10 @@
 class PagesController < ApplicationController
   before_filter :load_page, :only => [ :show, :edit, :update, :reorder, :destroy ]
-  before_filter :check_permissions, :only => [:new,:create,:edit,:update,:reorder,:destroy]
   before_filter :set_page_title
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    handle_cancan_error(exception)
+  end
   
   def index
     if @current_project
@@ -21,10 +24,12 @@ class PagesController < ApplicationController
   end
   
   def new
+    authorize! :make_pages, @current_project
     @page = Page.new
   end
   
   def create
+    authorize! :make_pages, @current_project
     @page = @current_project.new_page(current_user,params[:page])    
     respond_to do |f|
       if @page.save
@@ -52,6 +57,7 @@ class PagesController < ApplicationController
   end
   
   def edit
+    authorize! :update, @page
     respond_to do |f|
       f.html
       f.m   {
@@ -66,6 +72,7 @@ class PagesController < ApplicationController
   end
   
   def update
+    authorize! :update, @page
     respond_to do |f|
       if @page.update_attributes(params[:page])
         f.html { redirect_to project_page_path(@current_project,@page) }
@@ -80,6 +87,7 @@ class PagesController < ApplicationController
   end
   
   def reorder
+    authorize! :update, @page
     order = params[:slots].collect { |id| id.to_i }
     current = @page.slots.map { |slot| slot.id }
     
@@ -109,6 +117,7 @@ class PagesController < ApplicationController
   end
   
   def resort
+    authorize! :reorder_objects, @current_project
     order = params[:pages].map(&:to_i)
     
     @current_project.pages.each do |page|
@@ -123,7 +132,7 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    if @page.editable?(current_user)
+    if can? :destroy, @page
       @page.try(:destroy)
 
       respond_to do |f|

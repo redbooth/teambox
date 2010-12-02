@@ -1,4 +1,4 @@
-- if @current_project.admin?(current_user)
+- if can? :admin, @current_project
   = render 'invitations/new', :project => @current_project, :invitation => Invitation.new(:role => 3)
 
 #people.people

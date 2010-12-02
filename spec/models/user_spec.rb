@@ -94,7 +94,7 @@ describe User do
 
     describe "activation email" do
       it "should send an activation email" do
-        Emailer.should_receive(:deliver_confirm_email).with(@user).once
+        Emailer.should_receive(:deliver_confirm_email).with(@user.id).once
         @user.send_activation_email
       end
 

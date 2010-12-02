@@ -83,11 +83,34 @@ class ApiV1::APIController < ApplicationController
       object.to_api_hash(options)
     end
     
-    if options[:references]
-      { :references => Array(object).map{ |obj|  
-          options[:references].map{|ref| obj.send(ref)}
-        }.flatten.compact.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))},
-        :objects => objects }
+    if options[:references] || options[:reference_collections]
+      { :objects => objects }.tap do |wrap|
+        # List of messages to send to the object to get referenced objects
+        if options[:references]
+          wrap[:references] = Array(object).map do |obj|
+            options[:references].map{|ref| obj.send(ref) }.flatten.compact
+          end.flatten.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
+        end
+        
+        # List of messages to send to the object to get referenced objects as [:class, id]
+        if options[:reference_collections]
+          query = {}
+          Array(object).each do |obj|
+            options[:reference_collections].each do |ref|
+              obj_query = obj.send(ref)
+              if obj_query
+                query[obj_query[0]] ||= []
+                query[obj_query[0]] << obj_query[1]
+              end
+            end
+          end
+          
+          wrap[:references] = (wrap[:references]||[]) + (query.map do |query_class, values|
+            objects = Kernel.const_get(query_class).find(:all, :conditions => {:id => values.uniq})
+            objects.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
+          end.flatten)
+        end
+      end
     else
       objects
     end

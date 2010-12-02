@@ -3,12 +3,7 @@ class CommentsController < ApplicationController
   before_filter :load_comment, :except => :create
   
   rescue_from CanCan::AccessDenied do |exception|
-    if request.xhr?
-      head :forbidden
-    else
-      flash[:error] = exception.message
-      redirect_to root_url
-    end
+    handle_cancan_error(exception)
   end
   
   def create
