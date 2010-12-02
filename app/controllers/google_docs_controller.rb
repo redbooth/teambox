@@ -1,6 +1,6 @@
 class GoogleDocsController < ApplicationController
   before_filter :create_consumer 
-  before_filter :create_docs_instance, :except => [:authorize, :call_back]
+  before_filter :create_docs_instance
   
   rescue_from 'GoogleDocs::RetrievalError' do |exception|
     render :authorization_required, :layout => !request.xhr?
@@ -25,40 +25,37 @@ class GoogleDocsController < ApplicationController
     render :json => doc, :status => 201, :callback => params[:callback]
   end
   
-  def authorize
-    request_token = @consumer.get_request_token({:oauth_callback => call_back_google_docs_url}, {:scope => GoogleDocs::RESOURCES[:scope]})
-    session[:request_token] = request_token.token
-    session[:request_secret] = request_token.secret
-    redirect_to request_token.authorize_url
+  def show
+    @google_doc = @current_project.google_docs.find(params[:id])
+    res = @docs.add_permission(@google_doc.acl_url, @app_link.app_user_id, :user, :reader)
+    
+    redirect_to @google_doc.url
   end
-  
-  def call_back
-    request_token = OAuth::RequestToken.new(@consumer, session[:request_token], session[:request_secret])
-    access_token = request_token.get_access_token(:oauth_verifier => request.params['oauth_verifier'])
-    session[:access_token] = access_token.token
-    session[:access_secret] = access_token.secret
-    flash[:notice] = "You account was successfuly linked to Google. We will do this properly soon"
-    redirect_to account_linked_accounts_path
-  end
-  
-  def clear
-    session[:access_token] = nil
-    session[:access_secret] = nil
-  end
-  
+
   protected
     def create_consumer
       auth_config = get_auth_config
+      unless auth_config
+        render :text => 'You have not added a google docs provider'
+        return false 
+      end
+      
       @consumer = OAuth::Consumer.new(auth_config.key, auth_config.secret, GoogleDocs::RESOURCES)
     end
     
     def create_docs_instance
-      @docs = GoogleDocs.new(session[:access_token], session[:access_secret], @consumer)
+      @app_link = current_user.app_links.find_by_provider('google')
+      unless @app_link
+        render :authorization_required, :layout => !request.xhr?
+        return false
+      end
+      
+      @docs = GoogleDocs.new(@app_link.access_token, @app_link.access_secret, @consumer)
     end
     
     def get_auth_config
       Teambox.config.providers.each do |provider|
-        return provider if provider.provider == 'google_docs'
+        return provider if provider.provider == 'google'
       end
       return false
     end

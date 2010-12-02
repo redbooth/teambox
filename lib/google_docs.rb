@@ -20,6 +20,8 @@ class GoogleDocs
   
   TYPES = %w{document drawing file pdf presentation spreadsheet} # folder removed
   HEADERS = {'GData-Version' => '3.0'}
+  ROLES = [:reader, :writer, :owner]
+  SCOPES = [:user, :group, :domain, :default]
   
   def initialize(access_token, access_secret, consumer)
     @consumer = consumer
@@ -29,6 +31,7 @@ class GoogleDocs
   def list(options = {})
     url = create_url(RESOURCES[:list], options)
     res = @access_token.get(url, HEADERS)
+    
     if res.code.to_i == 200
       return parse_list(res.body)
     else
@@ -51,6 +54,22 @@ class GoogleDocs
     end
   end
   
+  def add_permission(acl_url, scope, scope_type = :user, role = :reader)
+    raise ArguementError, "Unexpected scope_type #{scope_type}" unless SCOPES.include?(scope_type)
+    raise ArguementError, "Unexpected role #{role}" unless ROLES.include?(role)
+    
+    body = generate_acl_atom(scope, scope_type, role)
+    res = @access_token.post(acl_url, body, HEADERS.merge('Content-Type' => 'application/atom+xml'))
+    
+    if res.code.to_i == 201 # the acl entry was added
+      return res
+    elsif res.code.to_i == 409 # the acl entry already exists
+      return false
+    else
+      raise RetrievalError.new(res)
+    end
+  end
+  
   protected
     def parse_list(data)
       docs = []
@@ -64,7 +83,6 @@ class GoogleDocs
     
     def create_url(url, options)
       params = options.select{|k, v| !v.nil? }.map{|k, v| "#{k}=#{v}"}.join("&")
-      puts params
       params.blank? ? url : "#{url}?#{params}"
     end
   
@@ -89,6 +107,18 @@ class GoogleDocs
           :term => "http://schemas.google.com/docs/2007##{document_type}"
         )
         entry.title(title)
+      end
+    end
+    
+    def generate_acl_atom(scope, scope_type, role)
+      atom = xml = Builder::XmlMarkup.new(:indent => 2)
+      atom.entry('xmlns' => "http://www.w3.org/2005/Atom", 'xmlns:gAcl' => "http://schemas.google.com/acl/2007") do |entry|
+        entry.category(
+          :scheme => "http://schemas.google.com/g/2005#kind",
+          :term => "http://schemas.google.com/docs/2007#accessRule"
+        )
+        entry.gAcl :role, :value => role.to_s
+        entry.gAcl :scope, :type => scope_type.to_s, :value => scope
       end
     end
 end

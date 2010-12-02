@@ -279,11 +279,13 @@ class User < ActiveRecord::Base
     update_attribute :email, Regexp.last_match(1).to_s if email =~ DELETED_REGEX
   end
 
-  def link_to_app(provider, uid)
+  def link_to_app(provider, uid, credentials)
     link = AppLink.new
     link.user              = self
     link.provider          = provider
     link.app_user_id       = uid
+    link.access_token      = credentials ? credentials[:token] : nil
+    link.access_secret     = credentials ? credentials[:secret] : nil
     link.save!
   end
 

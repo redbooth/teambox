@@ -28,7 +28,8 @@ ActionController::Routing::Routes.draw do |map|
   map.auth_failure   '/auth/failure', :controller => 'auth', :action => 'failure'
   map.complete_signup '/complete_signup',          :controller => 'users', :action => 'complete_signup'
   map.unlink_app      '/auth/:provider/unlink',   :controller => 'users', :action => 'unlink_app'
-  map.resources :google_docs, :collection => [:search, :call_back, :authorize, :clear]
+  map.authorize_google_docs '/auth/google', :controller => 'auth', :provider => 'google'
+  map.resources :google_docs, :collection => [:search]
   
   map.javascript_environment '/i18n/environment.js', :controller => 'javascripts', :action => 'environment'
 
@@ -112,6 +113,7 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }, :collection => { :resort => :post }
     
     project.search 'search', :controller => 'search'
+    project.resources :google_docs, :collection => [:search]
   end
   
   map.public_projects '/public', :controller => 'public/projects', :action => :index

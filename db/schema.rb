@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101124111325) do
+ActiveRecord::Schema.define(:version => 20101130163336) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(:version => 20101124111325) do
     t.text     "custom_attributes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "access_token"
+    t.string   "access_secret"
   end
 
   add_index "app_links", ["user_id"], :name => "index_app_links_on_user_id"
@@ -157,6 +159,7 @@ ActiveRecord::Schema.define(:version => 20101124111325) do
     t.string   "url"
     t.string   "edit_url"
     t.string   "acl_url"
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

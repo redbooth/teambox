@@ -14,7 +14,8 @@ class Project < ActiveRecord::Base
                  :invitations
 
   attr_accessible :name, :permalink, :archived, :tracks_time, :public, :organization_attributes, :organization_id
-
+  has_many :google_docs
+  
   attr_accessor :is_importing
   attr_accessor :import_activities
   

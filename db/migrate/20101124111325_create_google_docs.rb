@@ -12,6 +12,8 @@ class CreateGoogleDocs < ActiveRecord::Migration
       t.string :edit_url
       t.string :acl_url
       
+      t.datetime :deleted_at
+      
       t.timestamps
     end
     
