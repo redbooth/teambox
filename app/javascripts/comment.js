@@ -115,13 +115,13 @@ document.on('ajax:success', '#facebox form.edit_comment', function(e, form) {
 })
 
 // remove deleted comment
-document.on('ajax:success', '.comment:not(.conversation .comment) .actions_menu a[data-method=delete]', function(e, link) {
+document.on('ajax:success', '.comment:not(div[data-class=conversation].thread .comment) .actions_menu a[data-method=delete]', function(e, link) {
   e.findElement('.comment').remove()
 })
 
 // when deleting comment, remove the conversation if empty: no comments, no title.
-document.on('ajax:success', '.conversation .comment .actions_menu a[data-method=delete]', function(e, link) {
-	var conversation = e.findElement('.conversation')
+document.on('ajax:success', 'div[data-class=conversation].thread .comment .actions_menu a[data-method=delete]', function(e, link) {
+	var conversation = e.findElement('.thread')
 	if (conversation.select('.comment').length == 1 && conversation.select('.title').length == 0) conversation.remove()
 	else e.findElement('.comment').remove()
 })
