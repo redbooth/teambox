@@ -1,6 +1,6 @@
 class ApiV1::TasksController < ApiV1::APIController
   before_filter :load_task_list
-  before_filter :load_task, :except => [:index, :create]
+  before_filter :load_task, :except => [:index, :create, :reorder]
   
   def index
     if @current_project
@@ -60,7 +60,7 @@ class ApiV1::TasksController < ApiV1::APIController
   end
   
   def reorder
-    authorize! :update, @task
+    authorize! :reorder_objects, @current_project
     new_task_ids_for_task_list = (params[:tasks] || []).reject { |task_id| task_id.blank? }.map(&:to_i)
     moved_task_ids = new_task_ids_for_task_list.to_set - @task_list.task_ids.to_set
     moved_task_ids.each do |moved_task_id|

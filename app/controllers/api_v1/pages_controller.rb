@@ -60,7 +60,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
   
   def resort
-    authorize! :update, @page
+    authorize! :reorder_objects, @current_project
     order = params[:pages].map(&:to_i)
     
     @current_project.pages.each do |page|

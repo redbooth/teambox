@@ -40,7 +40,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
 
   def reorder
-    authorize! :update, @task_list
+    authorize! :reorder_objects, @current_project
     params[:task_lists].each_with_index do |task_list_id,idx|
       @task_list = @current_project.task_lists.find(task_list_id)
       @task_list.update_attribute(:position,idx.to_i)

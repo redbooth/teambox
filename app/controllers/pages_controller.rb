@@ -2,6 +2,10 @@ class PagesController < ApplicationController
   before_filter :load_page, :only => [ :show, :edit, :update, :reorder, :destroy ]
   before_filter :set_page_title
   
+  rescue_from CanCan::AccessDenied do |exception|
+    handle_cancan_error(exception)
+  end
+  
   def index
     if @current_project
       @pages = @current_project.pages
@@ -113,7 +117,7 @@ class PagesController < ApplicationController
   end
   
   def resort
-    authorize! :update, @page
+    authorize! :reorder_objects, @current_project
     order = params[:pages].map(&:to_i)
     
     @current_project.pages.each do |page|

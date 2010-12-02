@@ -77,6 +77,10 @@ class Ability
       project.editable?(user)
     end
     
+    can :reorder_objects, Project do |project|
+      project.editable?(user)
+    end
+    
     # TODO: remove, this should be consolidated into the organization
     can :transfer, Project do |project|
       project.admin?(user)

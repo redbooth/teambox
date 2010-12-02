@@ -111,7 +111,7 @@ class TasksController < ApplicationController
   end
 
   def reorder
-    authorize! :update, @task
+    authorize! :reorder_objects, @current_project
     target_task_list = @current_project.task_lists.find params[:task_list_id]
     if @task.task_list != target_task_list
       @task.task_list = target_task_list

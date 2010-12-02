@@ -123,7 +123,7 @@ class TaskListsController < ApplicationController
   end
 
   def reorder
-    authorize! :update, @task_lists.first
+    authorize! :reorder_objects, @current_project
     task_list_ids = params[:task_list_ids].split(',').collect {|t| t.to_i}
     @task_lists.each do |t|
       next unless task_list_ids.include?(t.id)
