@@ -1,6 +1,6 @@
 class TaskListsController < ApplicationController
   before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive]
-  before_filter :load_task_lists, :only => [:index]
+  before_filter :load_task_lists, :only => [:index, :reorder]
   before_filter :set_page_title
   
   rescue_from CanCan::AccessDenied do |exception|
@@ -123,9 +123,9 @@ class TaskListsController < ApplicationController
   end
 
   def reorder
-    authorize! :update, @task_list
+    authorize! :update, @task_lists.first
     task_list_ids = params[:task_list_ids].split(',').collect {|t| t.to_i}
-    @current_project.task_lists.each do |t|
+    @task_lists.each do |t|
       next unless task_list_ids.include?(t.id)
       t.position = task_list_ids.index(t.id)
       t.save
