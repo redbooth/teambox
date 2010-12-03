@@ -14,7 +14,7 @@ class GoogleDocs
     :request_token_url => 'https://www.google.com/accounts/OAuthGetRequestToken',
     :access_token_url => 'https://www.google.com/accounts/OAuthGetAccessToken',
     :authorize_url => "https://www.google.com/accounts/OAuthAuthorizeToken",
-    :list => 'https://docs.google.com/feeds/default/private/full?showfolders=true',
+    :list => 'https://docs.google.com/feeds/default/private/full',
     :create => 'https://docs.google.com/feeds/default/private/full'
   }
   
@@ -40,7 +40,7 @@ class GoogleDocs
   end
   
   def create(options)
-    options.assert_valid_keys('title', 'document_type', 'x')
+    options.assert_valid_keys('title', 'document_type')
     raise(ArgumentError, "You must provide a title and document_type") if options[:title].nil? || options[:document_type].nil?
     
     body = generate_atom(options[:title], options[:document_type])

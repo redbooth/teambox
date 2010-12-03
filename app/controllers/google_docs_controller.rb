@@ -3,6 +3,7 @@ class GoogleDocsController < ApplicationController
   before_filter :create_docs_instance
   
   rescue_from 'GoogleDocs::RetrievalError' do |exception|
+    Rails.logger.warn "#{exception.class.name} #{exception.message}"
     render :authorization_required, :layout => !request.xhr?
   end 
   

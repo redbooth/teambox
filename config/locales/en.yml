@@ -1071,7 +1071,7 @@ en:
     tooltip: Upload a file
     comment_upload_link: Attachment
     new:
-      select_a_file: Select a file
+      select_a_file: Select a file to upload to Teambox
       uploading: Uploading...
     index:
       new_file: Upload a File
@@ -1727,3 +1727,11 @@ en:
     user_exists_instruction: If you already have a Teambox account, log in to link it automatically to your %{provider} profile.
     user_exists_is_not_yours: If you don't own the account '%{account}', %{signup_for_a_new_account}.
     signup_for_a_new_account: click here to sign up for a new account
+    
+  google_docs:
+    authorization_required: In order to use google docs you must first authorize teambox to use your google account.
+    authorize_link: Authorize Google Docs
+    create_new: Create a New Blank Document
+    attach: Attach a Google Document
+    search_placeholder: Search Google documents
+    new_document_placeholder: New document title
