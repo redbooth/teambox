@@ -113,6 +113,38 @@ class ConversationsController < ApplicationController
       f.html { redirect_to current_conversation }
     end
   end
+  
+  def convert_to_task
+    authorize! :update, @conversation
+
+    @conversation.attributes = params[:conversation]
+    success = @conversation.save
+    if success
+      @task = @conversation.convert_to_task!
+      success = @task && @task.errors.empty?
+    end
+
+    if success
+      if request.xhr? or iframe?
+        if request.referer.ends_with?(project_conversation_path(@current_project, @conversation))
+          render :text => project_task_path(@current_project, @task)
+        else
+          render :partial => 'activities/thread', :locals => {:thread => @task}
+        end
+      else
+        redirect_to current_conversation
+      end
+    else
+      if request.xhr? or iframe?
+        output_errors_json(@conversation)
+      else
+        # TODO: display inline instead of flash
+        flash.now[:error] = @conversation.errors.to_a.first[1]
+        render :action => :new
+      end
+    end
+
+  end
 
   protected
   

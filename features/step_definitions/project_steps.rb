@@ -51,6 +51,10 @@ Given /I am currently in the project (.*)$/ do |project_type|
   visit(projects_path(@current_project))
 end
 
+Given /I have recently managed the project "([^\"]*)"$/ do |name|
+  @current_project ||= Project.find_by_name(name)
+end
+
 Given /I am in the project called "([^\"]*)"$/ do |name|
   Given %(there is a project called "#{name}")
   project = Project.find_by_name(name)

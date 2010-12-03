@@ -7,7 +7,9 @@ class Activity < ActiveRecord::Base
 
   named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_target_type = 'TaskList' || comment_target_type = 'Task'"
   named_scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_target_type = 'Conversation'"
-  
+  named_scope :for_tasks, :conditions => "target_type = 'Task' || comment_target_type = 'Task'"
+  named_scope :in_targets, lambda {|targets| {:conditions => ["target_id IN (?) OR comment_target_id IN (?)", *(Array(targets).collect(&:id)*2)]}}
+
   named_scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
 
   named_scope :in_projects, lambda { |projects| { :conditions => ["project_id IN (?)", Array(projects).collect(&:id) ] } }

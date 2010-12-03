@@ -20,8 +20,9 @@
       = fields.file_field :asset, :id => 'upload_file'
 
   .actions
-    %span= t('.attach') + ": "
-    = link_to t('uploads.comment_upload_link'), '#uploads', :class => 'attach_icon'
+    .attach
+      %span= t('.attach') + ": "
+      = link_to t('uploads.comment_upload_link'), '#uploads', :class => 'attach_icon'
 
     - if task_form
       = link_to t('comments.hours.tooltip'), '#hours', :class => 'add_hours_icon'
@@ -33,6 +34,27 @@
         = task_form.select :assigned_id, [], {}, :'data-assigned' => task_form.object.assigned_id
         = task_form.label :due_on
         = date_picker(task_form, :due_on)
+
+    - if local_assigns[:conversation_form] && local_assigns[:project]
+      %span.convert_to_task
+        = link_to t('comments.conversations.convert_to_task'), '#convert_to_task'
+      .convert_to_task{:style => 'display:none;'}
+        .conversation_actions
+          .fields
+            = conversation_form.label :name, "#{t('conversations.convert_form.name')}:"
+            = conversation_form.text_field :name, :placeholder => t('comments.conversations.task_name'), :error_message => t('tasks.errors.name.cant_be_blank'), :disabled => true, :class => 'required'
+          .fields
+            = conversation_form.label :task_list_id, "#{t('conversations.convert_form.task_list')}:"
+            = conversation_form.select :task_list_id, [[t('comments.comment.loading'),""]], {}, :disabled => true
+          .fields
+            = conversation_form.label :status, "#{t('conversations.convert_form.status')}:"
+            = conversation_form.select :status, task_statuses_for_select, {}, :disabled => true
+            = conversation_form.select :assigned_id, [], {}, :'data-assigned' => conversation_form.object.assigned_id, :disabled => true
+          .fields
+            = date_picker(conversation_form, :due_on, false, :disabled => true)
+        .submit
+          = link_to t('common.cancel'), '#cancel_conversion', :class => 'cancel'
+          = f.submit t('comments.convert_form.submit'), :'data-disable-with' => t('comments.new.sending'), :disabled => true
 
   .submit
     %span.help= formatting_documentation_link

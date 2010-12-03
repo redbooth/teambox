@@ -93,7 +93,7 @@ document.on('ajax:success', '.thread .comments .more_comments', function(e, el) 
 })
 
 // insert new comment into thread after posting
-document.on('ajax:success', '.thread form', function(e, form) {
+document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, form) {
   resetCommentsForm(form)
   if (!e.memo.responseText.blank()) {
     form.up('.thread').down('.comments').insert(e.memo.responseText).
@@ -101,7 +101,7 @@ document.on('ajax:success', '.thread form', function(e, form) {
   }
 })
 
-document.on('ajax:failure', 'form.new_conversation, .thread form', function(e, form) {
+document.on('ajax:failure', 'form.new_conversation, .thread form:not(.not-new-comment)', function(e, form) {
   var message = e.memo.responseJSON.first()[1]
   form.down('div.text_area').insertOrUpdate('p.error', message)
 })

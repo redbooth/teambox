@@ -636,6 +636,10 @@ en:
   conversations:
     actions:
       confirm_delete: Are you sure you to delete this conversation?
+    convert_form:
+      name: "Name this task"
+      task_list: "Create task in"
+      status: "Status"
     link:
       edit: Edit
     fields:
@@ -980,6 +984,9 @@ en:
       attach: Attach
     attach:
       tooltip: Attach
+    conversations:
+      convert_to_task: "Convert to task"
+      task_name: "eg. Upload Logo Proposal"
     comment:
       commented_on: "-"
       commented_on_a_task_list: "-"

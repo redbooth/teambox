@@ -116,7 +116,7 @@ Task = {
 
   insertAssignableUsers: function() {
     if (typeof _people == "object") {
-      $$('form.new_comment.edit_task .task_actions select#task_assigned_id').each(function(select) {
+      $$('form.new_comment.edit_task .task_actions select#task_assigned_id, form.new_comment.edit_conversation .conversation_actions select#conversation_assigned_id').each(function(select) {
         var project_id = select.up('form').readAttribute('data-project-id')
         if (!select.descendants().any()) {
           select.insert(new Element('option').insert(task_unassigned))

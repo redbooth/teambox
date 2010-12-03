@@ -107,7 +107,7 @@ ActionController::Routing::Routes.draw do |map|
 
     project.contacts 'contacts', :controller => :people, :action => :contacts, :method => :get
     project.resources :people, :member => { :destroy => :get }
-    project.resources :conversations, :has_many => [:comments], :member => { :watch => :put, :unwatch => :put }
+    project.resources :conversations, :has_many => [:comments], :member => { :watch => :put, :unwatch => :put, :convert_to_task => :put }
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }, :collection => { :resort => :post }
     
     project.search 'search', :controller => 'search'

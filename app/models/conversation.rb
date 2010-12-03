@@ -4,6 +4,8 @@ class Conversation < RoleRecord
   include ActionView::Helpers::TextHelper
   
   include Watchable
+
+  concerned_with :tasks
   
   attr_accessor :is_importing
   

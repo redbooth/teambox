@@ -63,6 +63,46 @@ form.new_comment, form.edit_comment
         width: 80px
       select[name="task[assigned_id]"]
         width: 130px
+    div.attach
+      display: inline
+    div.convert_to_task
+      top: 8px
+      width: 600px
+      .fields
+        display: block
+        margin: 5px 0
+      label
+        display: inline-block
+        text-align: right
+        width: 160px
+        margin-right: 10px
+      input[type=text]
+        border: 1px solid #bbb
+        padding: 4px
+      select
+        margin: 0 5px 0 0
+      span.localized_date
+        margin-left: 180px
+    span.convert_to_task a
+      margin-left: 45px
+      font-size: 12px
+      font-style: normal
+      color: #666
+      text-decoration: none
+      border-bottom: 1px dashed #CCC
+      &:hover
+        border-bottom: 1px solid #CCC
+    .conversation_actions
+      display: inline
+      label
+        font-size: 12px
+        display: none
+      label.display
+        display: inline
+      select[name="conversation[status]"]
+        width: 80px
+      select[name="conversation[assigned_id]"]
+        width: 130px
     .date_picker
       display: inline-block
       img
