@@ -9,10 +9,15 @@ document.on('ajax:success', '#google_docs #search_form form', function(e, form) 
 })
 
 document.on('change', '#google_docs input[type="checkbox"]', function(e, checkbox){
-  addGoogleDocToForm(function(field_name){
-    var data_field_name = 'data-' + field_name.gsub('_', '-')
-    return checkbox.readAttribute('data-' + field_name.gsub('_', '-'))
-  })
+  if (checkbox.checked){
+    addGoogleDocToForm(function(field_name){
+      var data_field_name = 'data-' + field_name.gsub('_', '-')
+      return checkbox.readAttribute('data-' + field_name.gsub('_', '-'))
+    })
+  }
+  else {
+    removeGoogleDocFromForm(checkbox.readAttribute('data-document-id'))
+  }
 })
 
 // Once the call to make a new document has been made we must add it to the list of documents
@@ -21,7 +26,15 @@ document.on('ajax:success', '#google_docs #create_google_document_form form', fu
   addGoogleDocToForm(function(field_name){
     return doc[field_name]
   })
+  form.down('#google_doc_title').clear()
 })
+
+function removeGoogleDocFromForm(data_id){
+  var selector = '[data-gform="' + data_id + '"]'
+  google_docs_originator.getElementsBySelector(selector).each(function(element){
+    element.remove()
+  })
+}
 
 function addGoogleDocToForm(getFormValue){
   // Find the various elements we are going to interact with
@@ -38,7 +51,8 @@ function addGoogleDocToForm(getFormValue){
     var newInput = new Element('input', {
       type: 'hidden',
       name: prefix + '[google_docs_attributes][' + field_number + '][' + field_name + ']',
-      value: getFormValue(field_name)
+      value: getFormValue(field_name),
+      'data-gform': getFormValue('document_id')
     })
     
     form_area.down('.fields').insert(newInput)
@@ -48,11 +62,14 @@ function addGoogleDocToForm(getFormValue){
   var title = getFormValue('title') 
   var doc_type = getFormValue('document_type') 
   var url = getFormValue('url')
+  var gid = getFormValue('document_id')
   var image = '<img src="/images/google_docs/icon_6_' + doc_type + '.gif" />'
-  form_area.down('.file_list').insert('<li>' + image + '<a href="' + url + '">' + title + '</li>')
+  var image_span = '<span class="file_icon google_icon">' + image + '</span>'
+  var link = '<span class="filename"><a href="' + url + '">' + title + '</a></span>'
+  form_area.down('.file_list').insert('<li data-gform="' + gid  + '">' + image_span + link + '</li>')
   
   // Close facebox
-  Prototype.Facebox.close()
+  // Prototype.Facebox.close()
 }
 
 // Find the last number in a string - adapted from increment last number as we have many fields
