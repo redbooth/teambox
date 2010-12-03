@@ -19,7 +19,7 @@
   - if can? :observe, @user
     - unless @user.biography.blank?
       %p.biography=h @user.biography
-    = render_card(@card) if @card
+    = render_card(@card)
   
   - if can?(:observe, @user) && current_user != @user && @projects_shared
     %h3= t('.projects_in_common_with', :user_name => h(@user.name))

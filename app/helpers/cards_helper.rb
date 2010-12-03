@@ -7,7 +7,7 @@ module CardsHelper
   end
 
   def render_card(card)
-    render 'cards/card', :card => card
+    render 'cards/card', :card => card if card
   end
 
   def remove_link_unless_new_record(fields)
