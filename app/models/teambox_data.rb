@@ -121,6 +121,7 @@ class TeamboxData < ActiveRecord::Base
       TeamboxData.send_later(:delayed_export, self.id) if @dispatch_export
     elsif type_name == :import
       store_import_data if @do_store_import_data
+      Emailer.send_with_language(:notify_import, user.locale, self.id) if @dispatch_notification
     end
   end
   
@@ -143,16 +144,16 @@ class TeamboxData < ActiveRecord::Base
       end
     rescue Exception => e
       # Something went wrong?!
-      Rails.logger.warn "#{user} imported an invalid dump (#{self.id})"
+      Rails.logger.warn "#{user} imported an invalid dump (#{self.id}) #{e.inspect}"
       self.processed_at = nil
       next_status = :uploading
     end
     
     self.status_name = next_status
     clear_import_data
-    save unless new_record? or @check_state
+    @dispatch_notification = true
     
-    Emailer.send_with_language(:notify_import, user.locale, self.id)
+    save unless new_record? or @check_state
   end
   
   def do_export
