@@ -1,10 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  def current_user_tag
-    %(<meta name='current-username' content='#{current_user.login}'/>)
-  end
-
   def csrf_meta_tag
     if protect_against_forgery?
       out = %(<meta name="csrf-param" content="%s"/>\n)
