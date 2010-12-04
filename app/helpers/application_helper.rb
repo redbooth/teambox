@@ -1,6 +1,11 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  def coffeescript_include_tag
+    # required manual recompile: coffee -p app/coffeescripts/* > public/coffee.js
+    javascript_include_tag "/coffee"
+  end
+
   def csrf_meta_tag
     if protect_against_forgery?
       out = %(<meta name="csrf-param" content="%s"/>\n)

@@ -22,3 +22,4 @@ webrat-*
 capybara-*
 rerun.txt
 teambox2
+public/coffee.js
