@@ -1070,7 +1070,7 @@ sl:
     formats: 
       default: "%a, %d %b %Y %H:%M:%S %z"
       long: "%B %d, %Y %H:%M"
-      short: "%I:%M %p"
+      short: "%i:%M %p"
     pm: popoldne
   uploads: 
     comment_upload_link: Priponka
