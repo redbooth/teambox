@@ -34,3 +34,34 @@ window.format_posted_date = ->
       c.update posted_date.strftime(date_format_short)
     else
       c.update posted_date.strftime(date_format_long)
+
+
+Object.extend Date.prototype,
+  strftime: (format) ->
+    day = @getDay()
+    month = @getMonth()
+    hours = @getHours()
+    minutes = @getMinutes()
+    pad = (num) ->
+      num.toPaddedString(2)
+
+    format.gsub /\%([aAbBcdDHiImMpSwyY])/, (((part) ->
+      switch part[1]
+        when 'a' then date_abbr_day_names[day]
+        when 'A' then date_day_names[day]
+        when 'b' then date_abbr_month_names[month]
+        when 'B' then date_month_names[month]
+        when 'c' then @toString()
+        when 'd' then @getDate()
+        when 'D' then pad @getDate()
+        when 'H' then pad hours
+        when 'i' then (if hours == 12 || hours == 0 then 12 else (hours + 12) % 12)
+        when 'I' then (pad if hours == 12 || hours == 0 then 12 else (hours + 12) % 12)
+        when 'm' then pad month + 1
+        when 'M' then pad minutes
+        when 'p' then (if hours > 11 then time_pm else time_am)
+        when 'S' then pad @getSeconds()
+        when 'w' then day
+        when 'y' then pad @getFullYear() % 100
+        when 'Y' then @getFullYear().toString()
+    ).bind(this))
