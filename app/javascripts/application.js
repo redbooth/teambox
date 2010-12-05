@@ -175,11 +175,6 @@ Project = {
   }
 }
 
-document.on('click', 'a.closeThis', function(e, link) {
-  e.preventDefault()
-  $(link.parentNode).hide()
-})
-
 if (Prototype.Browser.Gecko) {
   document.on('dom:loaded', function() {
     var searchForm = $$('.search_bar form:has(input[name=search])').first()

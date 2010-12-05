@@ -12,3 +12,8 @@ document.on 'ajax:before', 'form', (e, form) ->
 # When clicking on a delete link, if the ajax DELETE succeeds, remove the DOM element
 document.on 'ajax:success', '.teambox_data a[data-method="delete"]', (e, link) ->
   link.up('.teambox_data').remove()
+
+# Clicking on a link with class closeThis will hide the parent element
+document.on 'click', 'a.closeThis', (e, link) ->
+  e.preventDefault()
+  $(link.parentNode).hide()
