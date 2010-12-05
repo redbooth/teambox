@@ -83,8 +83,9 @@ function resetCommentsForm(form) {
 
 // insert new simple conversation into stream after posting
 document.on('ajax:success', 'form.new_conversation', function(e, form) {
-  resetCommentsForm(form)
-  $('activities').insert({top: e.memo.responseText}).down('.thread').highlight({ duration: 1 })
+  resetCommentsForm(form);
+  $('activities').insert({top: e.memo.responseText}).down('.thread').highlight({ duration: 1 });
+  Task.insertAssignableUsers();
 })
 
 // "Show N previous comments" action in threads
