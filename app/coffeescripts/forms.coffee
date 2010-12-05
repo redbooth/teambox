@@ -8,3 +8,7 @@ document.on 'ajax:before', 'form', (e, form) ->
       input.previous('label').toggleClassName('error')
       input.insert after: "<span class='error'>(#{ input.getAttribute('error_message') })</span>"
       input.highlight duration: 1, color: 'red'
+
+# When clicking on a delete link, if the ajax DELETE succeeds, remove the DOM element
+document.on 'ajax:success', '.teambox_data a[data-method="delete"]', (e, link) ->
+  link.up('.teambox_data').remove()
