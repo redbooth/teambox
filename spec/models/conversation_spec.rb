@@ -151,6 +151,16 @@ describe Conversation do
       task.comments.any? {|comment| comment.body == "Just sayin' hi"}.should be_true
     end
 
+    it "and when converted to a task, and any new comments have been transferred to the task, it should update the comment counter cache" do
+      conversation = Factory.create(:conversation, :simple => false)
+      conversation.comments_attributes = {"0" => { :body => "Just sayin' hi" }}
+
+      task = conversation.convert_to_task!
+
+      task.should_not be_nil
+      task.comments_count.should == task.comments.length
+    end
+
     it "and when converted to a task, any new comment which fails validation should not be transferred to the task" do
       conversation = Factory.create(:conversation, :simple => false)
       conversation.comments_attributes = {"0" => { :body => "" }}

@@ -30,6 +30,9 @@ class Conversation
         task.comments << comment
       end
 
+      task.class.update_counters(task.id, :comments_count => comments.size)
+      task.comments_count = comments.size
+
       Activity.for_conversations.in_targets(self).each do |activity|
         activity.target = task if activity.target == self
         if activity.comment_target_type == self.class.name
