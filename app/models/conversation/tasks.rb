@@ -38,7 +38,11 @@ class Conversation
           activity.comment_target_type = task.class.name
           activity.comment_target_id = task.id
         end
-        activity.update_record_without_timestamping
+        if activity.target == task && activity.action == 'create'
+          activity.save
+        else
+          activity.update_record_without_timestamping
+        end
       end
 
       task.save
