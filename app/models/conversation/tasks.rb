@@ -15,7 +15,6 @@ class Conversation
       t.task_list = task_list
       t.assigned = assigned_person
       t.created_at = created_at
-      t.updated_at = updated_at
     end
 
     task.errors.each {|attr,msg| errors.add(attr, msg)}
@@ -42,7 +41,7 @@ class Conversation
         activity.update_record_without_timestamping
       end
 
-      task.update_record_without_timestamping
+      task.save
       self.reload.destroy
     end
     task

@@ -116,15 +116,22 @@ describe Conversation do
       task.due_on.should be_nil
     end
 
-    it "and when converted to a task, the task should retain same timestamps" do
-      conversation = Factory.create(:conversation, :simple => false)
-      conversation_comments = conversation.comments.map(&:id)
+    it "and when converted to a task, the task should retain same created_at timestamp" do
+      conversation = Factory.create(:conversation, :simple => false, :created_at => 2.hours.ago)
 
       task = conversation.convert_to_task!
 
       task.should_not be_nil
       task.created_at.to_s.should == conversation.created_at.to_s
-      task.updated_at.to_s.should == conversation.updated_at.to_s
+    end
+
+    it "and when converted to a task, the task's updated_at timestamp should be 'touched'" do
+      conversation = Factory.create(:conversation, :simple => false, :created_at => 2.hours.ago, :updated_at => 1.hour.ago)
+
+      task = conversation.convert_to_task!
+
+      task.should_not be_nil
+      task.updated_at.should be_close(Time.now, 1)
     end
 
     it "and when converted to a task, the comments should be transferred to the task" do
