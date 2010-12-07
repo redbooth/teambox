@@ -43,21 +43,26 @@ class ApiV1::APIController < ApplicationController
     end
   end
   
-  def check_permissions
-    unless @current_project.editable?(current_user)
-      api_error "You don't have permission to edit/update/delete within \"#{@current_project}\" project", :unauthorized
-    end
-  end
-  
   def load_task_list
-    if @current_project && params[:task_list_id]
-      @task_list = @current_project.task_lists.find(params[:task_list_id])
+    if params[:task_list_id]
+      @task_list = if @current_project
+        @current_project.task_lists.find(params[:task_list_id])
+      else
+        TaskList.find_by_id(params[:task_list_id], :conditions => {:project_id => current_user.project_ids})
+      end
+      api_status(:not_found) unless @task_list
     end
   end
   
   def load_page
-    @page = @current_project.pages.find params[:page_id]
-    api_status(:not_found) unless @page
+    if params[:page_id]
+      @page = if @current_project
+        @current_project.pages.find(params[:page_id])
+      else
+        Page.find_by_id(params[:page_id], :conditions => {:project_id => current_user.project_ids})
+      end
+      api_status(:not_found) unless @page
+    end
   end
 
   # Common api helpers

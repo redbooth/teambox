@@ -3,15 +3,18 @@ class ApiV1::DividersController < ApiV1::APIController
   before_filter :load_divider, :except => [:index,:create]
   
   def index
-    query = {:include => :page}
+    query = {:conditions => api_range,
+             :limit => api_limit,
+             :order => 'id ASC',
+             :include => [:project, :page]}
     
     @dividers = if target
-      target.dividers(query)
+      target.dividers.all(query)
     else
       Divider.find_all_by_project_id(current_user.project_ids, query)
     end
     
-    api_respond @dividers, :references => [:page]
+    api_respond @dividers, :references => [:project, :page]
   end
 
   def show
@@ -55,7 +58,11 @@ class ApiV1::DividersController < ApiV1::APIController
   end
   
   def load_divider
-    @divider = @page.dividers.find params[:id]
+    @divider = if target
+      target.dividers.find params[:id]
+    else
+      Divider.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+    end
     api_status(:not_found) unless @divider
   end
   

@@ -2,7 +2,10 @@ class ApiV1::PagesController < ApiV1::APIController
   before_filter :load_page, :only => [:show, :update, :reorder, :destroy]
   
   def index
-    query = {:conditions => api_range, :limit => api_limit, :order => 'id ASC', :include => [:project, :user]}
+    query = {:conditions => api_range,
+             :limit => api_limit,
+             :order => 'id ASC',
+             :include => [:project, :user]}
     
     @pages = if @current_project
       @current_project.pages.scoped(api_scope).all(query)
@@ -10,7 +13,7 @@ class ApiV1::PagesController < ApiV1::APIController
       Page.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
-    api_respond @pages, :include => :slots, :references => [:user]
+    api_respond @pages, :include => :slots, :references => [:project, :user]
   end
   
   def create
@@ -81,6 +84,15 @@ class ApiV1::PagesController < ApiV1::APIController
 
   protected
   
+  def load_page
+    @page = if @current_project
+      @current_project.pages.find(params[:id])
+    else
+      Page.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+    end
+    api_status(:not_found) if @page.nil?
+  end
+  
   def api_scope
     conditions = {}
     unless params[:user_id].nil?
@@ -88,13 +100,4 @@ class ApiV1::PagesController < ApiV1::APIController
     end
     {:conditions => conditions}
   end
-  
-  def load_page
-    @page = if @current_project
-      @current_project.pages.find params[:id]
-    else
-      Page.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
-    end
-    api_status(:not_found) unless @page
-  end  
 end

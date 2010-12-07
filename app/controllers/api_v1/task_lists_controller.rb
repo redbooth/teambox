@@ -100,28 +100,28 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
   
   protected
-
-    def load_task_list
-      @task_list = if @current_project
-        @current_project.task_lists.find(params[:id])
-      else
-        TaskList.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
-      end
-      api_status(:not_found) unless @task_list
+  
+  def load_task_list
+    @task_list = if @current_project
+      @current_project.task_lists.find(params[:id])
+    else
+      TaskList.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
+    api_status(:not_found) if @task_list.nil?
+  end
     
-    def api_scope
-      conditions = {}
-      unless params[:archived].nil?
-        conditions[:archived] = api_truth(params[:archived])
-      end
-      unless params[:user_id].nil?
-        conditions[:user_id] = params[:user_id].to_i
-      end
-      {:conditions => conditions}
+  def api_scope
+    conditions = {}
+    unless params[:archived].nil?
+      conditions[:archived] = api_truth(params[:archived])
     end
-    
-    def api_include
-      [:tasks, :comments] & (params[:include]||{}).map(&:to_sym)
+    unless params[:user_id].nil?
+      conditions[:user_id] = params[:user_id].to_i
     end
+    {:conditions => conditions}
+  end
+  
+  def api_include
+    [:tasks, :comments] & (params[:include]||{}).map(&:to_sym)
+  end
 end
