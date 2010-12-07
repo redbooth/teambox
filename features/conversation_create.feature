@@ -1,3 +1,4 @@
+@javascript
 Feature: Creating a conversation
 
   Background: 
