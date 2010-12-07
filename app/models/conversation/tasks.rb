@@ -25,6 +25,7 @@ class Conversation
 
       comments.each do |comment|
         comment.attributes = {:status => nil, :assigned_id => nil, :previously_assigned_id => nil}
+        comment.target = task
         comment.update_record_without_timestamping
         task.comments << comment
       end
