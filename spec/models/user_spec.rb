@@ -471,6 +471,21 @@ describe User do
     end
   end
 
+  describe "#assigned_tasks_count" do
+    before do
+      @user = Factory.create(:user)
+      @task = Factory.create(:task)
+      @task.project.add_user @user
+    end
+    it "should return assigned tasks count" do
+      @task.assign_to(@user)
+      @user.assigned_tasks_count.should == 1
+      @task.destroy
+      @user.assigned_tasks_count.should == 0
+    end
+  end
+
+
   describe "last visit tracking" do
     before do
       @user = Factory(:user)

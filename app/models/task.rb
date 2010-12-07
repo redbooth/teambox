@@ -38,6 +38,7 @@ class Task < RoleRecord
   before_save :set_comments_author, :if => :updating_user
   before_save :transition_from_new_to_open, :if => :assigned_id?
   before_save :save_changes_to_comment, :if => :track_changes?
+  before_save :expire_user_counter, :if => :track_changes?
   before_save :save_completed_at
   before_update :remember_comment_created
   
@@ -303,6 +304,18 @@ class Task < RoleRecord
       comment.previous_due_on = self.due_on_was if due_on_changed?
     end
     true
+  end
+
+  def expire_user_counter
+    if assigned_id_changed? or self.new_record?
+      expire_counter = [self.assigned_id]
+      expire_counter << self.assigned_id_was if assigned_id_changed?
+    end
+
+    expire_counter.each do |person_id|
+      person = Person.find(self.assigned_id)
+      person.user.assigned_tasks_count_expire
+    end
   end
 
   def save_completed_at
