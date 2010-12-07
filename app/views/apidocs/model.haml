@@ -4,9 +4,7 @@
 
 %h2 All the routes
 
-- for route in @consolidated_routes
-  - next unless route[:controller].singularize == @model.underscore
-  - next if ['edit', 'new'].include? route[:action]
+- for route in routes_for_model(@model)
   - doc = @api_docs["#{@model}##{route[:action]}"]
   - next if doc && doc[:ignore]
   .route
