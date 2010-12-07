@@ -19,6 +19,7 @@ class GoogleDocs
   }
   
   TYPES = %w{document drawing file pdf presentation spreadsheet} # folder removed
+  TYPES_YOU_CAN_CREATE = %w{document spreadsheet presentation}
   HEADERS = {'GData-Version' => '3.0'}
   ROLES = [:reader, :writer, :owner]
   SCOPES = [:user, :group, :domain, :default]

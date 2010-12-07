@@ -55,9 +55,6 @@ class GoogleDocsController < ApplicationController
     end
     
     def get_auth_config
-      Teambox.config.providers.each do |provider|
-        return provider if provider.provider == 'google'
-      end
-      return false
+      Teambox.config.providers.detect { |p| p.provider == 'google' }
     end
 end

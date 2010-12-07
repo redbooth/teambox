@@ -33,7 +33,7 @@
           this.open(response.responseText)
         }.bind(this),
         onFailure: function(response) {
-          this.open('There has been an error.', 'error')
+          this.open('<br/><p>There has been an error.</p>', 'error')
         }.bind(this)
       })
     },
