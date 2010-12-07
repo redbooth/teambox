@@ -7,7 +7,7 @@ class Conversation < RoleRecord
 
   concerned_with :tasks
   
-  attr_accessor :is_importing
+  attr_accessor :is_importing, :updating_user
   
   has_one  :first_comment, :class_name => 'Comment', :as => :target, :order => 'created_at ASC'
   has_many :recent_comments, :class_name => 'Comment', :as => :target, :order => 'created_at DESC', :limit => 2
@@ -27,6 +27,8 @@ class Conversation < RoleRecord
   named_scope :only_simple, :conditions => { :simple => true }
   named_scope :not_simple, :conditions => { :simple => false }
   named_scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
+
+  before_save :set_comments_author, :if => :updating_user
 
   def before_update
     self.simple = false if simple? and name_changed? and !name.nil?
@@ -150,5 +152,12 @@ class Conversation < RoleRecord
     unless comments.any?
       errors.add :comments, :must_have_one
     end
+  end
+
+  def set_comments_author # before_save
+    comments.select(&:new_record?).each do |comment|
+      comment.user = updating_user
+    end
+    true
   end
 end

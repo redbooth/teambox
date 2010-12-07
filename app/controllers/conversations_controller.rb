@@ -118,6 +118,7 @@ class ConversationsController < ApplicationController
     authorize! :update, @conversation
 
     @conversation.attributes = params[:conversation]
+    @conversation.updating_user = current_user
     @conversation.comments_attributes = {"0" => params[:comment]} if params[:comment]
 
     success = @conversation.save

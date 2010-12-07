@@ -12,6 +12,7 @@ class Conversation
       t.status = status.blank? ? 0 : status
       t.due_on = due_on
       t.user = user 
+      t.updating_user = updating_user
       t.task_list = task_list
       t.assigned = assigned_person
       t.created_at = created_at
