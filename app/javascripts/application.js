@@ -7,6 +7,9 @@
 //= require <dragdrop>
 //= require <sound>
 
+//if (typeof window['console'] == 'undefined')
+  var console = { log: function() {} }
+
 // Run the function as soon as it's called, but prevent further calls during `delay` ms
 // Example: function.throttle(200) will only run function() once every 200 ms.
 // Useful, for example, to avoid constant processing while typing in a live search box.
