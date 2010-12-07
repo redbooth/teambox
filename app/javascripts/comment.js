@@ -86,6 +86,9 @@ document.on('ajax:success', 'form.new_conversation', function(e, form) {
   resetCommentsForm(form);
   $('activities').insert({top: e.memo.responseText}).down('.thread').highlight({ duration: 1 });
   Task.insertAssignableUsers();
+
+  //disable _method input field for conversation forms on inserting simple conversations
+  disableConversationHttpMethodField();
 })
 
 // "Show N previous comments" action in threads

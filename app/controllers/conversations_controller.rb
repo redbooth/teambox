@@ -118,6 +118,8 @@ class ConversationsController < ApplicationController
     authorize! :update, @conversation
 
     @conversation.attributes = params[:conversation]
+    @conversation.comments_attributes = {"0" => params[:comment]} if params[:comment]
+
     success = @conversation.save
     if success
       @task = @conversation.convert_to_task!

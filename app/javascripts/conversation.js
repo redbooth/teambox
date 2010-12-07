@@ -11,7 +11,13 @@ document.on('click', '.edit_conversation a[href="#cancel"]', function(e, link) {
 document.on('ajax:success', 'form.edit_conversation:not(.convert-to-task)', function(e, form) {
   var name = form.down('input[name="conversation[name]"]').getValue()
   form.up('.content').select('.conversation_header h2, .conversation .thread_title a').invoke('update', name)
-  form.hide().previous('.conversation_header').show()
+
+  //If we're on the conversation page, hide form and show the header
+  var header = form.previous('.conversation_header');
+  if (header) {
+    form.hide();
+    header.show();
+  }
 });
 
 document.on('ajax:success', 'form.edit_conversation.convert-to-task', function(e, form) {
@@ -55,6 +61,16 @@ var toggleConvertToTaskForm = function(e, el, recurse) {
       submit = form.down('.submit', 1),
       attach = form.down('.attach');
   panel.select('select,input').each(function(e) {e.disabled = !e.disabled;});
+
+  //reenable convert to task submit button
+  //(If we previously submit a comment from a conversation
+  //the default rails action for elements with disable-with disables it)
+  panel.select('input[type=submit]').each(function(input) {
+    if (!form.down('select').disabled) {
+      input.disabled = false;
+    }
+  });
+
   panel.select('#conversation_task_list_id').each(function(select) {
     if (select.options[0].value == '' && !recurse) {
       var projectId = select.up('form').getAttribute('data-project-id');
@@ -64,13 +80,25 @@ var toggleConvertToTaskForm = function(e, el, recurse) {
     }
   });
 
+  //Undisable _method input field when showing the convert to task form.
+  form.select('input[name=_method]').each(function(input) {
+    input.disabled = !input.disabled;
+  });
+
+  //Avoid default comment actions for convert to task
   form.toggleClassName('not-new-comment');
   form.toggleClassName('convert-to-task');
-  // /projects/earthworks/conversations/5/convert_to_task
+
+  //Activate client-side validation for required inputs
+  form.toggleClassName('required');
+
+  // Normally, convert to task form submits to comments controller
+  // Ensure we change the action accordingly
   if (form.action.endsWith('/convert_to_task')) {
-    form.action = form.action.gsub(/\/convert_to_task/,'');
+    form.action = form.action.gsub(/\/convert_to_task/,'/comments');
   }
   else {
+    form.action = form.action.gsub(/\/comments/,'');
     form.action = form.action + '/convert_to_task';
   }
 
@@ -80,3 +108,16 @@ var toggleConvertToTaskForm = function(e, el, recurse) {
 document.on('click', 'span.convert_to_task a', toggleConvertToTaskForm);
 document.on('click', 'div.convert_to_task a.cancel', toggleConvertToTaskForm);
 
+// Since the conversation comments form is now a form for 
+// an existing conversation (rather than just a new comment as previously)
+// when submitting a comment from a conversation form, we disable the _method input field
+// (which would be put for the conversation) as new Comments can only be POSTed.
+//
+var disableConversationHttpMethodField = function(e) {
+  $$('form.new_comment.edit_conversation input[name=_method]').each(function(input) {
+    input.disabled = true;
+  });
+}
+
+//disable _method input field for conversation forms on dom ready
+document.observe('dom:loaded', disableConversationHttpMethodField);
