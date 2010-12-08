@@ -33,7 +33,7 @@ class TeamboxData < ActiveRecord::Base
       
       user_map.each do |login,dest_login|
         if !users.include?(dest_login)
-          @errors.add "user_map_#{login}", "#{dest_login} Not known to user #{users.inspect} [#{user_map.inspect}]"
+          @errors.add "user_map_#{login}", "#{dest_login} Not known to user"
         end
       end
     end

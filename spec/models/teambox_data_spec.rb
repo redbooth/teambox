@@ -217,6 +217,32 @@ describe TeamboxData do
       organization.reload.projects.length.should == 1
     end
     
+    it "should still import projects into the target organization after a DJ save" do
+      make_and_dump_the_teambox_dump
+      
+      organization = Factory(:organization)
+      user = Factory(:user)
+      user_map = @user_list.inject({}){|a,key| a[key] = user.login; a}
+      
+      organization.add_member(user, Membership::ROLES[:admin])
+      dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user; d.save}
+      dump.import_data = mock_uploader('dump.js', 'text/json', ActiveSupport::JSON.encode(@teambox_dump))
+      dump.save
+      dump.target_organization = organization.permalink
+      dump.user_map = user_map
+      dump.status_name = :pre_processing
+      
+      dump.save.should == true
+      dump = TeamboxData.find_by_id(dump.id)
+      
+      dump.map_data.should_not == nil
+      dump.error?.should_not == true
+      dump.status_name.should == :pre_processing
+      dump.do_import
+      dump.status_name.should == :imported
+      organization.reload.projects.length.should == 1
+    end
+    
     it "should not allow unknown users to be mapped" do
       make_and_dump_the_teambox_dump
       

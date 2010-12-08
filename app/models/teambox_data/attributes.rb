@@ -46,7 +46,11 @@ class TeamboxData
   end
   
   def map_data
-    @map_data ||= {}
+    if self[:map_data]
+      self[:map_data]
+    else
+      self[:map_data] = {}
+    end
   end
   
   def type_name
@@ -70,7 +74,7 @@ class TeamboxData
   end
   
   def project_ids=(value)
-    write_attribute :project_ids, Array(value).map(&:to_i).compact
+    self[:project_ids] = Array(value).map(&:to_i).compact
   end
   
   def projects
