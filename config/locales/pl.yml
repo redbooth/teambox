@@ -1598,7 +1598,7 @@ pl:
     formats: 
       default: "%a, %d %b %Y %H:%M:%S %z"
       long: "%B %d, %Y %H:%M"
-      short: "%i:%M %p"
+      short: "%I:%M %p"
     pm: pm
   uploads: 
     comment_upload_link: Załącznik

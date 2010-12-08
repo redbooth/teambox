@@ -9,7 +9,7 @@
       %strong{ :style => 'color: rgb(50,50,50);' }
         = h(comment.user.name) + ', '
       %span{ :style => 'color: rgb(150,150,150);' }
-        = I18n.l(comment.created_at.in_time_zone(@recipient.time_zone), :format => "%b %d &mdash; %i:%M %p")
+        = I18n.l(comment.created_at.in_time_zone(@recipient.time_zone), :format => "%b %d &mdash; %I:%M %p")
       - if comment.task_comment?
         %span{ :style => 'margin-left: 10px; color: rgb(150,150,150);' }
           = comment_task_status(comment)

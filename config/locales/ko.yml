@@ -1405,7 +1405,7 @@ ko:
     formats: 
       default: "%Y %b %d (%a) %H:%M:%S %z"
       long: "%Y %B %d %H:%M"
-      short: "%i:%M %p"
+      short: "%I:%M %p"
     pm: pm
   uploads: 
     comment_upload_link: 첨부
