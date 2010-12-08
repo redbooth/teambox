@@ -32,7 +32,7 @@ render_tabnav :user do
       t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'notifications'
     end
 
-    if current_user.admin
+    if current_user.betatester
       add_tab do |t|
         t.named t('.your_data')
         t.links_to teambox_datas_path
