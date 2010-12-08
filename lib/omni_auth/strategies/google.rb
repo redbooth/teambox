@@ -4,7 +4,7 @@ module OmniAuth
   module Strategies
     class Google < OmniAuth::Strategies::OAuth
       RESOURCES = {
-        :scope => 'https://docs.google.com/feeds/',
+        :scope => 'https://docs.google.com/feeds/ https://www.google.com/calendar/feeds/ https://www.google.com/m8/feeds/ https://mail.google.com/mail/feed/atom/',
         :request_token_url => 'https://www.google.com/accounts/OAuthGetRequestToken',
         :access_token_url => 'https://www.google.com/accounts/OAuthGetAccessToken',
         :authorize_url => "https://www.google.com/accounts/OAuthAuthorizeToken",
