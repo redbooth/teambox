@@ -315,13 +315,13 @@ class User < ActiveRecord::Base
   end
 
   def assigned_tasks_count
-    Rails.cache.fetch "assigned-tasks-count/#{self.id}/#{self.person_ids.join('-')}" do
+    Rails.cache.fetch "assigned-tasks-count/#{self.id}/#{Digest::SHA1.hexdigest(self.person_ids.join)}" do
       Task.assigned_to(self).count
     end
   end
 
   def assigned_tasks_count_expire
-    Rails.cache.delete "assigned-tasks-count/#{self.id}/#{self.person_ids.join('-')}"
+    Rails.cache.delete "assigned-tasks-count/#{self.id}/#{Digest::SHA1.hexdigest(self.person_ids.join)}"
   end
 
   def users_for_user_map
