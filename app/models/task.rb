@@ -312,7 +312,7 @@ class Task < RoleRecord
       expire_counter << self.assigned_id_was if assigned_id_changed?
     end
 
-    expire_counter.each do |person_id|
+    expire_counter.to_a.each do |person_id|
       person = Person.find(self.assigned_id)
       person.user.assigned_tasks_count_expire
     end
