@@ -1,3 +1,4 @@
+@javascript
 Feature: Watchers for conversations
 
   Background: 
@@ -12,6 +13,7 @@ Feature: Watchers for conversations
     Then @balint, @pablo and @james should be watching the conversation "Talk!"
     When I fill in the comment box with "Rockets!"
     And I press "Save"
+    And I wait for 1 second
     Then @balint, @pablo and @james should receive 2 emails
 
   Scenario: Existing conversation with watchers
@@ -21,8 +23,10 @@ Feature: Watchers for conversations
     And I follow "Politics"
     And I fill in the comment box with "Senators!"
     And I press "Save"
+    And I wait for 1 second
     And I fill in the comment box with "Rockets!"
     And I press "Save"
+    And I wait for 1 second
     Then @balint should receive no emails
     And @pablo and @james should receive 2 emails
 
@@ -34,7 +38,9 @@ Feature: Watchers for conversations
     And I follow "Politics"
     And I fill in the comment box with "Celebrities!"
     And I press "Save"
+    And I wait for 1 second
     And I fill in the comment box with "Controversy!"
     And I press "Save"
+    And I wait for 1 second
     Then @pablo should receive no emails
     And @balint and @james should receive 2 emails
