@@ -2,7 +2,8 @@ class ApiV1::PeopleController < ApiV1::APIController
   before_filter :load_person, :except => [:index]
   
   def index
-    @people = @current_project.people(:include => [:project, :user])
+    @people = @current_project.people(:include => [:project, :user],
+                                      :order => 'id DESC')
     
     api_respond @people, :references => [:project, :user]
   end

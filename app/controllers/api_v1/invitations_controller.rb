@@ -4,7 +4,9 @@ class ApiV1::InvitationsController < ApiV1::APIController
   
   def index
     authorize! :admin, @target
-    @invitations = @target.invitations.all(:conditions => api_range, :limit => api_limit)
+    @invitations = @target.invitations.all(:conditions => api_range,
+                                           :limit => api_limit,
+                                           :order => 'id DESC')
     
     api_respond @invitations, :include => [:project, :user], :references => [:project, :user]
   end

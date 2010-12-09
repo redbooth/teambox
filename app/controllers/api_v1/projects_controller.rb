@@ -2,7 +2,8 @@ class ApiV1::ProjectsController < ApiV1::APIController
   before_filter :load_organization
   
   def index
-    @projects = current_user.projects(:include => [:organization, :user])
+    @projects = current_user.projects(:include => [:organization, :user],
+                                      :order => 'id DESC')
     
     api_respond @projects, :references => [:organization, :user]
   end

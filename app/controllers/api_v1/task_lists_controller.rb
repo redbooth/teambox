@@ -2,7 +2,10 @@ class ApiV1::TaskListsController < ApiV1::APIController
   before_filter :load_task_list, :only => [:update,:show,:destroy,:archive,:unarchive]
   
   def index
-    query = {:conditions => api_range, :limit => api_limit, :include => [:user, :project]}
+    query = {:conditions => api_range,
+             :limit => api_limit,
+             :order => 'id DESC',
+             :include => [:user, :project]}
     
     @task_lists = if @current_project
       @current_project.task_lists.scoped(api_scope).all(query)

@@ -4,7 +4,7 @@ class ApiV1::PagesController < ApiV1::APIController
   def index
     query = {:conditions => api_range,
              :limit => api_limit,
-             :order => 'id ASC',
+             :order => 'id DESC',
              :include => [:project, :user]}
     
     @pages = if @current_project

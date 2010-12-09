@@ -198,4 +198,23 @@ class TeamboxData < ActiveRecord::Base
   def users_to_export
     organizations_to_export.map{|o| o.users + o.users_in_projects }.flatten.compact
   end
+  
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :data_type => type_name,
+      :service => service,
+      :status => status_name,
+      :user_id => user_id,
+      :processed_at => processed_at,
+      :created_at => created_at.to_s(:api_time)
+    }
+    
+    base[:processed_at] = processed_at.to_s(:api_time) if processed_at
+    base[:target_organization] = target_organization if target_organization
+    base[:project_ids] = project_ids if project_ids
+    base[:type] = self.class.to_s if options[:emit_type]
+    
+    base
+  end
 end

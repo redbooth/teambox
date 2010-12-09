@@ -335,4 +335,17 @@ describe TeamboxData do
       TeamboxData.export_to_file(Project.all, User.all, Organization.all, "#{RAILS_ROOT}/tmp/test-export.json")
     end
   end
+  
+  describe "to_api_hash" do
+    it "should generate an api representation of this object" do
+      make_the_teambox_dump
+      
+      user = Factory(:user)
+      dump = TeamboxData.new.tap{|d|d.type_name='export';d.user=user}
+      dump.project_ids = Project.all.map(&:id)
+      dump.save
+      
+      dump.to_api_hash.should_not == nil
+    end
+  end
 end

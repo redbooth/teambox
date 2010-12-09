@@ -5,7 +5,7 @@ class ApiV1::NotesController < ApiV1::APIController
   def index
     query = {:conditions => api_range,
              :limit => api_limit,
-             :order => 'id ASC',
+             :order => 'id DESC',
              :include => [:project, :page]}
     
     @notes = if target

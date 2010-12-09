@@ -5,7 +5,7 @@ class ApiV1::DividersController < ApiV1::APIController
   def index
     query = {:conditions => api_range,
              :limit => api_limit,
-             :order => 'id ASC',
+             :order => 'id DESC',
              :include => [:project, :page]}
     
     @dividers = if target

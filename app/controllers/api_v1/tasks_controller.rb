@@ -3,16 +3,15 @@ class ApiV1::TasksController < ApiV1::APIController
   before_filter :load_task, :except => [:index, :create, :reorder]
   
   def index
+    query = {:conditions => api_range,
+             :limit => api_limit,
+             :order => 'id DESC',
+             :include => [:task_list, :project, :user, :assigned]}
+    
     if @current_project
-      @tasks = (@task_list || @current_project).tasks.scoped(api_scope).all(
-        :conditions => api_range,
-        :limit => api_limit,
-        :include => [:task_list, :project, :user, :assigned])
+      @tasks = (@task_list || @current_project).tasks.scoped(api_scope).all(query)
     else
-      @tasks = Task.scoped(api_scope).find_all_by_project_id(current_user.project_ids, 
-        :conditions => api_range,
-        :limit => api_limit,
-        :include => [:task_list, :project, :user, :assigned])
+      @tasks = Task.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @tasks, :references => [:task_list, :project, :user, :assigned]

@@ -2,7 +2,10 @@ class ApiV1::CommentsController < ApiV1::APIController
   before_filter :load_comment, :only => [:update, :convert, :show, :destroy]
   
   def index
-    query = {:conditions => api_range, :limit => api_limit, :include => [:target, :user]}
+    query = {:conditions => api_range,
+             :limit => api_limit,
+             :order => 'id DESC',
+             :include => [:target, :user]}
     
     @comments = if target
       target.comments.scoped(api_scope).all(query)
