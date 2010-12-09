@@ -2,7 +2,7 @@ require 'lib/google_docs'
 
 class GoogleDocsController < ApplicationController
   before_filter :create_consumer 
-  before_filter :create_docs_instance
+  before_filter :create_docs_instance, :except => [:show]
   
   rescue_from 'GoogleDocs::RetrievalError' do |exception|
     Rails.logger.warn "#{exception.class.name} #{exception.message}"
@@ -30,6 +30,27 @@ class GoogleDocsController < ApplicationController
   
   def show
     @google_doc = @current_project.google_docs.find(params[:id])
+    @app_link = current_user.app_links.find_by_provider('google')
+    unless @app_link
+      render :authorization_required, :layout => !request.xhr?
+      return false
+    end
+    
+    # Find the document owner
+    doc_owner = @google_doc.user
+    unless doc_owner
+      render :text => 'This user does not exist any more', :layout => !request.xhr?
+      return false
+    end
+    
+    # find the app link for the document owner to get their access token and secret
+    owner_link = doc_owner.app_links.find_by_provider('google')
+    unless owner_link
+      render :text => 'The document owner has unlinked google', :layout => !request.xhr?
+      return false
+    end
+    
+    @docs = GoogleDocs.new(owner_link.access_token, owner_link.access_secret, @consumer)
     res = @docs.add_permission(@google_doc.acl_url, @app_link.app_user_id, :user, :reader)
     
     redirect_to @google_doc.url
