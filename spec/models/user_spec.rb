@@ -474,13 +474,18 @@ describe User do
   describe "#assigned_tasks_count" do
     before do
       @user = Factory.create(:user)
-      @task = Factory.create(:task)
+      @participant = Factory.create(:user)
+      @task = Factory.create(:task, :status => 0)
       @task.project.add_user @user
     end
     it "should return assigned tasks count" do
       @task.assign_to(@user)
+
+      @user.reload
       @user.assigned_tasks_count.should == 1
-      @task.destroy
+
+      @task.assign_to(@participant)
+      @user.reload
       @user.assigned_tasks_count.should == 0
     end
   end

@@ -33,12 +33,12 @@ class Task < RoleRecord
   # set by controller to indicate user that's doing task updating
   attr_accessor :updating_user
   attr_accessor :updating_date
-  
+
+  after_save :update_tasks_counts
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_save :set_comments_author, :if => :updating_user
   before_save :transition_from_new_to_open, :if => :assigned_id?
   before_save :save_changes_to_comment, :if => :track_changes?
-  before_save :expire_user_counter, :if => :track_changes?
   before_save :save_completed_at
   before_update :remember_comment_created
   
@@ -306,16 +306,18 @@ class Task < RoleRecord
     true
   end
 
-  def expire_user_counter
-    if assigned_id_changed? or self.new_record?
-      expire_counter = [self.assigned_id]
-      expire_counter << self.assigned_id_was if assigned_id_changed?
-    end
+  def update_tasks_counts
+    if assigned_id_changed? or status_changed? or self.new_record?
+      people_ids = [self.assigned_id]    if self.assigned_id
+      people_ids << self.assigned_id_was if self.assigned_id_was
 
-    expire_counter.to_a.each do |person_id|
-      person = Person.find(self.assigned_id)
-      person.user.assigned_tasks_count_expire
+      people_ids.each do |person_id|
+        if person = Person.find_by_id(person_id)
+          person.user.tasks_counts_update
+        end
+      end
     end
+    true
   end
 
   def save_completed_at

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101130163336) do
+ActiveRecord::Schema.define(:version => 20101208193430) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -439,6 +439,8 @@ ActiveRecord::Schema.define(:version => 20101130163336) do
     t.datetime "visited_at"
     t.boolean  "betatester",                               :default => false
     t.boolean  "splash_screen",                            :default => false
+    t.integer  "assigned_tasks_count"
+    t.integer  "completed_tasks_count"
   end
 
   add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"

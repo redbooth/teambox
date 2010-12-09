@@ -132,5 +132,6 @@ class Person < ActiveRecord::Base
   
   def cleanup_after
     user.remove_recent_project(project)
+    user.tasks_counts_update
   end
 end

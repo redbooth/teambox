@@ -314,14 +314,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  def assigned_tasks_count
-    Rails.cache.fetch "assigned-tasks-count/#{self.id}/#{Digest::SHA1.hexdigest(self.person_ids.join)}" do
-      Task.assigned_to(self).count
-    end
-  end
-
-  def assigned_tasks_count_expire
-    Rails.cache.delete "assigned-tasks-count/#{self.id}/#{Digest::SHA1.hexdigest(self.person_ids.join)}"
+  def tasks_counts_update
+    assigned_tasks = Task.assigned_to(self)
+    self.assigned_tasks_count  = assigned_tasks.select { |t| t.status < 3 }.count
+    self.completed_tasks_count = assigned_tasks.select { |t| t.status >= 3 }.count
+    self.save
   end
 
   def users_for_user_map
