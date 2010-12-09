@@ -83,7 +83,7 @@ class GoogleDocs
     end
     
     def create_url(url, options)
-      params = options.select{|k, v| !v.nil? }.map{|k, v| "#{k}=#{v}"}.join("&")
+      params = options.select{|k, v| !v.nil? }.map{|k, v| "#{k}=#{CGI::escape(v)}"}.join("&")
       params.blank? ? url : "#{url}?#{params}"
     end
   
