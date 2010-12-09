@@ -316,8 +316,9 @@ class User < ActiveRecord::Base
 
   def tasks_counts_update
     assigned_tasks = Task.assigned_to(self)
-    self.assigned_tasks_count  = assigned_tasks.select { |t| t.status < 3 }.count
-    self.completed_tasks_count = assigned_tasks.select { |t| t.status >= 3 }.count
+    # we do t.statys && t.status < 3 because some tasks might be 
+    self.assigned_tasks_count  = assigned_tasks.select { |t| t.status == 1 }.length
+    self.completed_tasks_count = assigned_tasks.select { |t| t.status == 3 }.length
     self.save
   end
 
