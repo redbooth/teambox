@@ -40,7 +40,7 @@ function addGoogleDocToForm(getFormValue){
   // Find the various elements we are going to interact with
   var form_area = google_docs_originator.down('.google_docs_attachment_form_area')
   var prefix = form_area.readAttribute('data-object-name')
-  var previous_field = form_area.down('input')
+  var previous_field = form_area.getElementsBySelector('input').last()
   
   // Work out the last field number and add one to it
   var field_number = previous_field ? previous_field.readAttribute('name').findLastNumber() + 1 : 0
@@ -75,5 +75,5 @@ function addGoogleDocToForm(getFormValue){
 // Find the last number in a string - adapted from increment last number as we have many fields
 String.prototype.findLastNumber = function(){
   var matches = this.match(/\d+/g)
-  return parseInt(matches.first())
+  return parseInt(matches.last())
 }
