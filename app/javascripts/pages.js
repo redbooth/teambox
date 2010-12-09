@@ -134,6 +134,7 @@ var InsertionBar = {
     if (this.current_form) {
       this.current_form.reset();
       this.current_form.hide();
+	  this.current_form.fire('ajax:complete');
       this.current_form = null;
     }
   }
