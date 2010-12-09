@@ -92,7 +92,8 @@ class GoogleDocs
       doc[:document_type], doc[:document_id] = entry.xpath("./gd:resourceId", "gd" => "http://schemas.google.com/g/2005").text.split(':')
       doc[:title] = entry.xpath("./atom:title/text()", "atom" => "http://www.w3.org/2005/Atom").first.text
       doc[:url] = entry.xpath("./atom:link[@rel='alternate']", "atom" => "http://www.w3.org/2005/Atom").first["href"]
-      doc[:edit_url] = entry.xpath("./atom:link[@rel='edit']", "atom" => "http://www.w3.org/2005/Atom").first["href"]
+      edit_entry = entry.xpath("./atom:link[@rel='edit']", "atom" => "http://www.w3.org/2005/Atom")
+      doc[:edit_url] = edit_entry.first ? edit_entry.first["href"] : nil
       doc[:acl_url] = entry.xpath("./gd:feedLink[@rel='http://schemas.google.com/acl/2007#accessControlList']","gd" => "http://schemas.google.com/g/2005").first["href"]
       doc
     end
