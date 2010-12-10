@@ -291,6 +291,9 @@ class Task < RoleRecord
   end
 
   def save_changes_to_comment # before_save
+    # We should only ever execute this method once per callback cycle
+    return if @saved_changes_to_comment
+
     comment = comments.detect(&:new_record?) || comments.build_by_user(updating_user)
     
     comment.project = project
@@ -310,6 +313,8 @@ class Task < RoleRecord
       comment.due_on = self.due_on
       comment.previous_due_on = self.due_on_was if due_on_changed?
     end
+
+    @saved_changes_to_comment = true
     true
   end
 
