@@ -33,8 +33,13 @@ class Upload < RoleRecord
 
   before_post_process :image?
   
-  validates_attachment_size :asset, :less_than => Teambox.config.asset_max_file_size.to_i.megabytes
-  validates_attachment_presence :asset
+  validates_attachment_size :asset, 
+                            :less_than => Teambox.config.asset_max_file_size.to_i.megabytes, 
+                            :message => I18n.t('uploads.form.max_size', 
+                                               :mb => Teambox.config.asset_max_file_size.to_i)
+
+  validates_attachment_presence :asset, :message => I18n.t('uploads.form.presence')
+
   validate :check_page
 
   def check_page
