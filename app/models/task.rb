@@ -309,6 +309,7 @@ class Task < RoleRecord
   def update_tasks_counts
     if assigned_id_changed? or status_changed? or self.new_record?
       people_ids = [self.assigned_id]    if self.assigned_id
+      people_ids ||= []
       people_ids << self.assigned_id_was if self.assigned_id_was
 
       people_ids.to_a.each do |person_id|
