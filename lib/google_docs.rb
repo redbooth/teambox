@@ -56,8 +56,8 @@ class GoogleDocs
   end
   
   def add_permission(acl_url, scope, scope_type = :user, role = :reader)
-    raise ArguementError, "Unexpected scope_type #{scope_type}" unless SCOPES.include?(scope_type)
-    raise ArguementError, "Unexpected role #{role}" unless ROLES.include?(role)
+    raise ArgumentError, "Unexpected scope_type #{scope_type}" unless SCOPES.include?(scope_type)
+    raise ArgumentError, "Unexpected role #{role}" unless ROLES.include?(role)
     
     body = generate_acl_atom(scope, scope_type, role)
     res = @access_token.post(acl_url, body, HEADERS.merge('Content-Type' => 'application/atom+xml'))
