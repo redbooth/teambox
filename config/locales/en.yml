@@ -52,7 +52,8 @@ en:
     left_project: "You are no longer in this project"
   activities:
     create_upload:
-      title: "%{user} uploaded file %{file}"
+      title: "%{user} uploaded a file: %{file}"
+      title_with_page: "%{user} uploaded a file to %{page}:"
     create_conversation:
       create_conversation: started the conversation
       title: "%{user} started a conversation: %{conversation}"
