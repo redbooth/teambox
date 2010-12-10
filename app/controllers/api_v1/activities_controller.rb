@@ -6,15 +6,16 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     @activities = Activity.scoped(api_scope).all(:conditions => api_range,
                         :order => 'id DESC',
                         :limit => api_limit,
-                        :include => [:target, :project, :user])
-    api_respond @activities, :references => [:target, :project, :user]
+                        :include => [:target, :project, :user, {:comment_target => [:user, {:first_comment => :user}, {:recent_comments => :user}]}])
+    api_respond @activities,
+                :references => [:target, :project, :user, :refs_thread_comments, :refs_comment_target]
   end
 
   def show
     @activity = Activity.find_by_id params[:id], :conditions => {:project_id => current_user.project_ids}
     
     if @activity
-      api_respond @activity, :include => [:project, :target, :user]
+      api_respond @activity, :include => [:project, :target, :user, :thread_comments]
     else
       api_status :not_found
     end

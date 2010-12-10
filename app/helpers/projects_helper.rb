@@ -179,6 +179,7 @@ module ProjectsHelper
     projects.reject{|p| p.user_id != user.id}.map {|p| [ p.name, p.id ]}
   end
 
+  # FIXME eventually migrate that to just use the plain json from projects_people_data
   def autocomplete_projects_people_data
     projects = @current_project ? [@current_project] : current_user.projects.reject{ |p| p.new_record? }
     return nil if projects.empty?
@@ -195,7 +196,19 @@ module ProjectsHelper
     
     javascript_tag "_people_autocomplete = #{names.to_json}"
   end
-  
+
+  def projects_people_data
+    projects = @current_project ? [@current_project] : current_user.projects.reject{ |p| p.new_record? }
+    return nil if projects.empty?
+    data = {}
+    rows = Person.user_names_from_projects(projects, current_user)
+    rows.each do |project_id, login, first_name, last_name, person_id|
+      data[project_id] ||= []
+      data[project_id] << [person_id.to_s, login, "#{h first_name} #{h last_name}"]
+    end
+    javascript_tag "_people = #{data.to_json}"
+  end
+
   def commentable_projects
     @projects.select { |p| p.commentable?(current_user) and not p.archived? }
   end

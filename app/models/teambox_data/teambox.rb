@@ -64,6 +64,7 @@ class TeamboxData
         end
         @project = unpack_object(Project.new, project_data, [])
         @project.is_importing = true
+        @project.import_activities = []
         @project.user = resolve_user(project_data['owner_user_id'])
         @project.organization = @organization_map[project_data['organization_id']] || @project.user.organizations.first
         @project.save!
@@ -143,9 +144,35 @@ class TeamboxData
         end
         
         @processed_objects[:project] << @project.id
+        @project
       end
       
       self.projects = @processed_objects[:project]
+      
+      # Restore all activities
+      @projects.map(&:import_activities).flatten.sort_by{|a|a[:date]}.each do |activity|
+        if activity[:target_type] == Comment
+          # touch activity related to that comment's thread
+          Activity.last(:conditions => ["target_type = ? AND target_id = ?",
+                                        activity[:comment_target_type], activity[:comment_target_id]]).try(:touch)
+        end
+        act = Activity.new(
+          :project_id => activity[:project].id,
+          :target_id => activity[:target_id],
+          :target_type => activity[:target_class].to_s,
+          :action => activity[:action],
+          :user_id => activity[:creator_id],
+          :comment_target_type => activity[:comment_target_type],
+          :comment_target_id => activity[:comment_target_id])
+        act.created_at = activity[:date]
+        act.updated_at = activity[:date]
+        act.save!
+      end
+      
+      @projects.each do |project|
+        project.is_importing = false
+        project.log_activity(self, 'create', user.id) if user
+      end
     end
   end
   

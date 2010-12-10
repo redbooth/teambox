@@ -29,7 +29,9 @@
     - form_for [thread.project, thread], :html => {:multipart => true, :id => nil, :class => 'new_comment edit_task', :'data-project-id' => thread.project_id, :'data-remote' => true} do |form|
       - form.fields_for :comments, thread.comments.build do |comment_fields|
         = render 'comments/fields', :f => comment_fields, :task_form => form, :placeholder => t("comments.new.#{thread_class}")
-      
+
   - else
-    - form_for [thread.project, thread, thread.comments.build], :html => {:multipart => true, :id => nil, :'data-project-id' => thread.project_id, :'data-remote' => true} do |form|
-      = render 'comments/fields', :f => form, :placeholder => t("comments.new.#{thread_class}")
+    - action = url_for([thread.project, thread, thread.comments.build])
+    - form_for [thread.project, thread], :url => action, :html => {:multipart => true, :id => nil, :class => 'new_comment edit_conversation', :'data-project-id' => thread.project_id, :'data-remote' => true} do |form|
+      - fields_for :comment, thread.comments.build do |comment_fields|
+        = render 'comments/fields', :f => comment_fields, :conversation_form => form, :placeholder => t("comments.new.#{thread_class}"), :project => thread.project

@@ -95,7 +95,9 @@ GEM
     oauth2 (0.0.13)
       faraday (~> 0.4.1)
       multi_json (>= 0.0.4)
-    paperclip (2.3.1.1)
+    paperclip (2.3.6)
+      activerecord
+      activesupport
     pg (0.9.0)
     pickle (0.2.12)
     rack (1.1.0)
@@ -175,8 +177,9 @@ DEPENDENCIES
   memcache-client (>= 1.7.4)
   mongrel (~> 1.1.5)
   mysql (~> 2.8.1)
+  nokogiri
   oa-oauth
-  paperclip (~> 2.3.1.1)
+  paperclip (~> 2.3.6)
   pg (~> 0.9.0)
   pickle (~> 0.2.1)
   rails (~> 2.3.5)

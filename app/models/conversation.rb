@@ -4,8 +4,13 @@ class Conversation < RoleRecord
   include ActionView::Helpers::TextHelper
   
   include Watchable
+
+  concerned_with :tasks
   
-  attr_accessor :is_importing
+  attr_accessor :is_importing, :updating_user
+  
+  has_one  :first_comment, :class_name => 'Comment', :as => :target, :order => 'created_at ASC'
+  has_many :recent_comments, :class_name => 'Comment', :as => :target, :order => 'created_at DESC', :limit => 2
   
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
@@ -22,7 +27,14 @@ class Conversation < RoleRecord
   named_scope :only_simple, :conditions => { :simple => true }
   named_scope :not_simple, :conditions => { :simple => false }
   named_scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
-  
+
+  before_save :set_comments_author, :if => :updating_user
+
+  def before_update
+    self.simple = false if simple? and name_changed? and !name.nil?
+    true
+  end
+
   def self.from_github(payload)
     text = description_for_github_push(payload)
     
@@ -106,6 +118,14 @@ class Conversation < RoleRecord
     
     base[:type] = self.class.to_s if options[:emit_type]
     
+    if Array(options[:include]).include? :thread_comments
+      base[:first_comment] = first_comment.to_api_hash(options)  if first_comment
+      base[:recent_comments] = recent_comments.map{|c|c.to_api_hash(options)}
+    elsif !Array(options[:include]).include?(:comments)
+      base[:first_comment_id] = first_comment.try(:id)
+      base[:recent_comment_ids] = recent_comments.map{|c|c.id}
+    end
+    
     if Array(options[:include]).include? :comments
       base[:comments] = comments.map{|c| c.to_api_hash(options)}
     end
@@ -132,5 +152,12 @@ class Conversation < RoleRecord
     unless comments.any?
       errors.add :comments, :must_have_one
     end
+  end
+
+  def set_comments_author # before_save
+    comments.select(&:new_record?).each do |comment|
+      comment.user = updating_user
+    end
+    true
   end
 end

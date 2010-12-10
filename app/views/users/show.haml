@@ -3,10 +3,10 @@
     .box
       %p= t('.pending_invite', :name => h(@user.name))
 
-- if current_user.observable?(@user)
+- if can? :observe, @user
   %h2= t('.recent_activity_for', :user_name => h(@user.name))
   #activities
-    = list_activities(@activities)
+    = list_threads(@threads)
     = show_more_button
 
 - content_for :column do
@@ -16,12 +16,12 @@
 
   = image_tag avatar_or_gravatar(@user, :profile), :class => 'avatar'
 
-  - if current_user.observable?(@user)
+  - if can? :observe, @user
     - unless @user.biography.blank?
       %p.biography=h @user.biography
-    = render_card(@card) if @card
+    = render_card(@card)
   
-  - if current_user.observable?(@user) && current_user != @user && @projects_shared
+  - if can?(:observe, @user) && current_user != @user && @projects_shared
     %h3= t('.projects_in_common_with', :user_name => h(@user.name))
     #common_projects
       - @projects_shared.each do |project|

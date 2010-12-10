@@ -38,6 +38,8 @@ class User < ActiveRecord::Base
 
   has_one :card
   accepts_nested_attributes_for :card
+  default_scope :order => 'users.updated_at DESC'
+  named_scope :in_alphabetical_order, :order => 'users.first_name ASC'
 
   attr_accessible :login,
                   :email,
@@ -277,11 +279,13 @@ class User < ActiveRecord::Base
     update_attribute :email, Regexp.last_match(1).to_s if email =~ DELETED_REGEX
   end
 
-  def link_to_app(provider, uid)
+  def link_to_app(provider, uid, credentials)
     link = AppLink.new
     link.user              = self
     link.provider          = provider
     link.app_user_id       = uid
+    link.access_token      = credentials ? credentials[:token] : nil
+    link.access_secret     = credentials ? credentials[:secret] : nil
     link.save!
   end
 
@@ -309,7 +313,15 @@ class User < ActiveRecord::Base
       []
     end
   end
-  
+
+  def tasks_counts_update
+    assigned_tasks = Task.assigned_to(self)
+    # we do t.statys && t.status < 3 because some tasks might be 
+    self.assigned_tasks_count  = assigned_tasks.select { |t| t.status == 1 }.length
+    self.completed_tasks_count = assigned_tasks.select { |t| t.status == 3 }.length
+    self.save
+  end
+
   def users_for_user_map
     @users_for_user_map ||= self.organizations.map{|o| o.users + o.users_in_projects }.flatten.uniq
   end

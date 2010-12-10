@@ -116,6 +116,10 @@ class Page < RoleRecord
     User.find_with_deleted(user_id)
   end
   
+  def refs_objects
+    notes+dividers+uploads
+  end
+  
   def to_xml(options = {})
     options[:indent] ||= 2
     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
@@ -155,6 +159,10 @@ class Page < RoleRecord
     
     if Array(options[:include]).include? :slots
       base[:slots] = slots.map{|s| s.to_api_hash(options)}
+    end
+    
+    if Array(options[:include]).include? :objects
+      base[:objects] = refs_objects.map{|o| o.to_api_hash(:emit_type => true)}
     end
     
     base

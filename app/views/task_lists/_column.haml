@@ -1,5 +1,5 @@
 - if @task_list.nil?
-  - if project.editable?(current_user)
+  - if can?(:make_task_lists, project)
     = task_list_link(project)
   - else
     %p= t('.cant_create')

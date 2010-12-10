@@ -3,7 +3,7 @@ class Upload < RoleRecord
   ICONS = %w(aac ai aiff avi bmp c cpp css dat dmg doc dotx dwg dxf eps exe flv gif h hpp html ics iso java jpg key mid mp3 mp4 mpg odf ods odt otp ots ott pdf php png ppt psd py qt rar rb rtf sql tga tgz tiff txt wav xls xlsx xml yml zip)
     
   belongs_to :user
-  belongs_to :comment, :touch => true
+  belongs_to :comment, :touch => true, :counter_cache => true
   belongs_to :project
   belongs_to :page
 
@@ -23,18 +23,25 @@ class Upload < RoleRecord
   include PageWidget
 
   has_attached_file :asset,
-    :styles => { :thumb => "64x48>" },
+    :styles => { :thumb => "150x150>" },
     :url  => "/assets/:id/:style/:basename.:extension",
     :path => Teambox.config.amazon_s3 ?
       "assets/:id/:style/:filename" :
-      ":rails_root/assets/:id/:style/:filename"
+      ":rails_root/assets/:id/:style/:filename",
+    :s3_permissions => 'private',
+    :s3_headers => {'Cache-Control' => 'max-age=157680000'}
 
   before_post_process :image?
   
-  validates_attachment_size :asset, :less_than => Teambox.config.asset_max_file_size.to_i.megabytes
-  validates_attachment_presence :asset
+  validates_attachment_size :asset, 
+                            :less_than => Teambox.config.asset_max_file_size.to_i.megabytes, 
+                            :message => I18n.t('uploads.form.max_size', 
+                                               :mb => Teambox.config.asset_max_file_size.to_i)
+
+  validates_attachment_presence :asset, :message => I18n.t('uploads.form.presence')
+
   validate :check_page
-  
+
   def check_page
     if page && (page.project_id != project_id)
       @errors.add :project, 'is not valid'
@@ -45,10 +52,12 @@ class Upload < RoleRecord
     !(asset_content_type =~ /^image.*/).nil?
   end
 
-  def url(*args)
-    u = asset.url(*args)
-    u = u.sub(/\.$/,'')
-    u
+  def url(style_name = nil, use_timestamp = false)
+    if !!Teambox.config.amazon_s3
+      AWS::S3::S3Object.url_for(asset.path(style_name), asset.bucket_name, {:expires_in => Teambox.config.amazon_s3_expiration.to_i})
+    else
+      asset.url(style_name, use_timestamp)
+    end
   end
 
   def file_name

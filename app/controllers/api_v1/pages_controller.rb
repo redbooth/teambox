@@ -1,9 +1,11 @@
 class ApiV1::PagesController < ApiV1::APIController
   before_filter :load_page, :only => [:show, :update, :reorder, :destroy]
-  before_filter :check_permissions, :only => [:create,:update,:reorder,:resort,:destroy]
   
   def index
-    query = {:conditions => api_range, :limit => api_limit, :order => 'id ASC', :include => [:project, :user]}
+    query = {:conditions => api_range,
+             :limit => api_limit,
+             :order => 'id DESC',
+             :include => [:project, :user]}
     
     @pages = if @current_project
       @current_project.pages.scoped(api_scope).all(query)
@@ -11,10 +13,11 @@ class ApiV1::PagesController < ApiV1::APIController
       Page.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
-    api_respond @pages, :include => :slots, :references => [:user]
+    api_respond @pages, :include => :slots, :references => [:project, :user]
   end
   
   def create
+    authorize! :make_pages, @current_project
     @page = @current_project.new_page(current_user,params)
     if @page.save
       handle_api_success(@page, true)
@@ -28,6 +31,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
   
   def update
+    authorize! :update, @page
     if @page.update_attributes(params)
       handle_api_success(@page)
     else
@@ -36,6 +40,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
   
   def reorder
+    authorize! :update, @page
     order = params[:slots].collect { |id| id.to_i }
     current = @page.slots.map { |slot| slot.id }
     
@@ -58,6 +63,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
   
   def resort
+    authorize! :reorder_objects, @current_project
     order = params[:pages].map(&:to_i)
     
     @current_project.pages.each do |page|
@@ -70,12 +76,22 @@ class ApiV1::PagesController < ApiV1::APIController
   end
 
   def destroy
+    authorize! :destroy, @page
     @page.destroy
 
     handle_api_success(@page)
   end
 
   protected
+  
+  def load_page
+    @page = if @current_project
+      @current_project.pages.find(params[:id])
+    else
+      Page.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+    end
+    api_status(:not_found) if @page.nil?
+  end
   
   def api_scope
     conditions = {}
@@ -84,13 +100,4 @@ class ApiV1::PagesController < ApiV1::APIController
     end
     {:conditions => conditions}
   end
-  
-  def load_page
-    @page = if @current_project
-      @current_project.pages.find params[:id]
-    else
-      Page.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
-    end
-    api_status(:not_found) unless @page
-  end  
 end

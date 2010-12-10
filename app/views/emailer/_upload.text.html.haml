@@ -1,3 +1,3 @@
 %li
   = t('.file')
-  = link_to_upload(upload, upload.file_name)
+  = link_to(upload.file_name, project_upload_url(upload.project, upload.id))

@@ -30,6 +30,19 @@ class ApplicationController < ActionController::Base
       end
     end
     
+    def handle_cancan_error(exception)
+      if request.xhr?
+        head :forbidden
+      else
+        flash[:error] = exception.message
+        redirect_to root_url
+      end
+    end
+    
+    def handle_no_permissions
+      render :text => "You don't have permission to edit/update/delete within \"#{@current_project.name}\" project", :status => :forbidden
+    end
+    
     def confirmed_user?
       if current_user and not current_user.is_active?
         redirect_to unconfirmed_email_user_path(current_user)

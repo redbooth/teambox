@@ -41,7 +41,7 @@ describe TeamboxData do
       user_map = user_list.inject({}){|a,key| a[key] = user.login; a}
       org_map = org_list.inject({}){|a,key| a[key] = organization.permalink; a}
       
-      TeamboxData.new.tap{|d| d.data = data }.unserialize(
+      TeamboxData.new.tap{|d| d.data = data; d.user = user }.unserialize(
         {'User' => user_map, 'Organization' => org_map}, {})
       
       Organization.count.should == 1
@@ -95,6 +95,7 @@ describe TeamboxData do
       User.count.should == 0
       Project.count.should == 0
       Organization.count.should == 0
+      Activity.count.should == 0
     end
     
     it "should preserve created_at dates" do
@@ -127,6 +128,7 @@ describe TeamboxData do
       TaskList.count.should == 0
       Task.count.should == 0
       Comment.count.should == 0
+      Activity.count.should == 0
       
       data = File.open("#{RAILS_ROOT}/spec/fixtures/campdump.xml") { |f| Hash.from_xml f.read }
       TeamboxData.new.tap{|d| d.service = 'basecamp'; d.data = data }.unserialize({}, {:create_users => true, :create_organizations => true})
@@ -215,6 +217,32 @@ describe TeamboxData do
       organization.reload.projects.length.should == 1
     end
     
+    it "should still import projects into the target organization after a DJ save" do
+      make_and_dump_the_teambox_dump
+      
+      organization = Factory(:organization)
+      user = Factory(:user)
+      user_map = @user_list.inject({}){|a,key| a[key] = user.login; a}
+      
+      organization.add_member(user, Membership::ROLES[:admin])
+      dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user; d.save}
+      dump.import_data = mock_uploader('dump.js', 'text/json', ActiveSupport::JSON.encode(@teambox_dump))
+      dump.save
+      dump.target_organization = organization.permalink
+      dump.user_map = user_map
+      dump.status_name = :pre_processing
+      
+      dump.save.should == true
+      dump = TeamboxData.find_by_id(dump.id)
+      
+      dump.map_data.should_not == nil
+      dump.error?.should_not == true
+      dump.status_name.should == :pre_processing
+      dump.do_import
+      dump.status_name.should == :imported
+      organization.reload.projects.length.should == 1
+    end
+    
     it "should not allow unknown users to be mapped" do
       make_and_dump_the_teambox_dump
       
@@ -234,6 +262,7 @@ describe TeamboxData do
       dump.status_name.should == :mapping
       dump.processed_at.should == nil
       organization.projects.length.should == 0
+      Activity.count.should == 0
     end
     
     it "should not alter existing memberships in the target organization" do
@@ -286,6 +315,7 @@ describe TeamboxData do
       dump.status_name.should == :mapping
       dump.processed_at.should == nil
       organization.projects.length.should == 0
+      Activity.count.should == 0
     end
   end
   
@@ -303,6 +333,19 @@ describe TeamboxData do
     it "should export data to a file" do
       make_the_teambox_dump
       TeamboxData.export_to_file(Project.all, User.all, Organization.all, "#{RAILS_ROOT}/tmp/test-export.json")
+    end
+  end
+  
+  describe "to_api_hash" do
+    it "should generate an api representation of this object" do
+      make_the_teambox_dump
+      
+      user = Factory(:user)
+      dump = TeamboxData.new.tap{|d|d.type_name='export';d.user=user}
+      dump.project_ids = Project.all.map(&:id)
+      dump.save
+      
+      dump.to_api_hash.should_not == nil
     end
   end
 end

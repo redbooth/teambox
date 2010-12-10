@@ -10,7 +10,7 @@
             = t('.role', :role => @roles[role])
             - if @roles[role] == 'admin'
               = "(" + link_to(t('.settings'), edit_project_path(project)) + ")"
-      - elsif @organization.is_admin? current_user
+      - elsif can?(:admin, @organization)
         %p.project
           = link_to h(project), project
           %span.status= t('.dont_belong')

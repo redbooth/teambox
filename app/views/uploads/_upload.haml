@@ -17,7 +17,7 @@
   .reference
     = activity_title upload
 
-    - if not activity and upload.editable?(current_user) and request.format != :m
+    - if not activity and can?(:update, upload) and request.format != :m
       &ndash;
       = link_to t('.remove'), [upload.project, upload], :'data-remote' => true,
           :'data-method' => 'delete', :'data-confirm' => t('confirm.delete_upload')

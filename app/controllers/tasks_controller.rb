@@ -3,6 +3,10 @@ class TasksController < ApplicationController
   before_filter :load_task_only, :only => [:shorthand]
   before_filter :load_task_list, :only => [:new, :create]
   before_filter :set_page_title
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    handle_cancan_error(exception)
+  end
 
   def show
     respond_to do |f|
@@ -27,10 +31,12 @@ class TasksController < ApplicationController
   end
 
   def new
+    authorize! :make_tasks, @current_project
     @task = @task_list.tasks.new
   end
 
   def create
+    authorize! :make_tasks, @current_project
     @task = @task_list.tasks.create_by_user(current_user, params[:task])
     
     respond_to do |f|
@@ -58,6 +64,7 @@ class TasksController < ApplicationController
   end
 
   def edit
+    authorize! :update, @task
     respond_to do |f|
       f.html
       f.js
@@ -65,6 +72,7 @@ class TasksController < ApplicationController
   end
 
   def update
+    authorize! :update, @task
     @task.updating_user = current_user
     success = @task.update_attributes params[:task]
 
@@ -98,6 +106,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @task
     @task.destroy
 
     respond_to do |f|
@@ -111,6 +120,7 @@ class TasksController < ApplicationController
   end
 
   def reorder
+    authorize! :reorder_objects, @current_project
     target_task_list = @current_project.task_lists.find params[:task_list_id]
     if @task.task_list != target_task_list
       @task.task_list = target_task_list
@@ -128,6 +138,7 @@ class TasksController < ApplicationController
   end
 
   def watch
+    authorize! :watch, @task
     @task.add_watcher(current_user)
     respond_to do |f|
       f.js

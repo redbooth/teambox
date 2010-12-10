@@ -1,19 +1,17 @@
 class ApiV1::UploadsController < ApiV1::APIController
   before_filter :load_page
   before_filter :load_upload, :only => [:update,:show,:destroy]
-  before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
+    query = {:conditions => api_range,
+             :limit => api_limit,
+             :order => 'id DESC',
+             :include => [:page, :user]}
+    
     @uploads = if target
-      target.uploads.scoped(api_scope).all(
-        :conditions => api_range, 
-        :limit => api_limit,
-        :include => [:page, :user])
+      target.uploads.scoped(api_scope).all(query)
     else
-      Upload.scoped(api_scope).find_all_by_project_id(current_user.project_ids,
-        :conditions => api_range, 
-        :limit => api_limit,
-        :include => [:page, :user])
+      Upload.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @uploads, :references => [:page, :user]
@@ -24,6 +22,9 @@ class ApiV1::UploadsController < ApiV1::APIController
   end
   
   def create
+    authorize! :upload_files, @current_project
+    authorize! :update, @page if @page
+      
     @upload = @current_project.uploads.new params
     @upload.page = @page if @page
     @upload.user = current_user
@@ -41,6 +42,7 @@ class ApiV1::UploadsController < ApiV1::APIController
   end
 
   def destroy
+    authorize! :destroy, @upload
     @upload.destroy
     handle_api_success(@upload)
   end

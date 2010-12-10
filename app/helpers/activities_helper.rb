@@ -16,8 +16,10 @@ module ActivitiesHelper
   def activity_section(activity)
     haml_tag 'div', :class => "activity #{activity.action_type}" do
       haml_concat micro_avatar(activity.user)
-      yield activity_title(activity)
-      haml_tag 'div', posted_date(activity.created_at), :class => :date unless rss?
+      haml_tag 'div', :class => :activity_block do
+        haml_tag 'div', posted_date(activity.created_at), :class => :date unless rss?
+        yield activity_title(activity)
+      end
     end
   end
 
@@ -31,6 +33,7 @@ module ActivitiesHelper
                       create_upload
                       create_person delete_person
                       create_project
+                      create_teambox_data
                       )
 
   def list_activities(activities)
@@ -48,7 +51,9 @@ module ActivitiesHelper
         render('activities/thread', :activity => activity).to_s
       end
     else
-      Rails.cache.fetch("#{activity.cache_key}/#{current_user.locale}") { show_activity(activity).to_s }
+      Rails.cache.fetch("#{activity.cache_key}/#{current_user.locale}") do
+        show_activity(activity).to_s
+      end
     end
   end
 
@@ -93,6 +98,9 @@ module ActivitiesHelper
         :task_list => link_to_unless(plain, h(object.task_list), [activity.project, object.task_list]) }
     when 'create_task_list'
       { :task_list => link_to_unless(plain, h(object), [activity.project, object]) }
+    when 'create_teambox_data'
+      { :person => link_to_unless(plain, h(object.user.name), object.user),
+        :project => link_to_unless(plain, h(activity.project), activity.project) }
     when 'create_upload'
       text = object.description.presence || object.file_name
       { :file => link_to_unless(plain, h(text), project_uploads_path(activity.project, :anchor => dom_id(object))) }

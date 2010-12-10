@@ -12,6 +12,7 @@ Feature: Public sites for organizations. Allow to view an entrance page and log 
     And "pablo" is a participant in the organization called "ACME"
     When I go to the organizations page
     And I follow "ACME"
+    And I go to the appearance page for the "ACME" organization
     And I fill in the following:
       | organization_description | <h2>A title!</h2> |
     And I press "Save changes"

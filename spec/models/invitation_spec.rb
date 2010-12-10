@@ -54,7 +54,7 @@ describe Invitation do
     it "should send an Invitation email to existing users" do
       user = Factory.create(:user)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_receive(:deliver_project_invitation).with(invitation).once
+      Emailer.should_receive(:deliver_project_invitation).once
       invitation.save
       user.invitations.length.should == 1
     end
@@ -63,7 +63,7 @@ describe Invitation do
       user = Factory.create(:user)
       @project.organization.add_member(user, :participant)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_receive(:deliver_project_membership_notification).with(invitation).once
+      Emailer.should_receive(:deliver_project_membership_notification).once
       invitation.save
       user.invitations.length.should == 0
     end
@@ -95,7 +95,7 @@ describe Invitation do
       user = Factory.create(:user)
       @project.organization.add_member(user, :participant)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_receive(:deliver_project_membership_notification).with(invitation).once
+      Emailer.should_receive(:deliver_project_membership_notification).once
       invitation.save
       user.invitations.length.should == 0
       invitation.should be_frozen
@@ -179,13 +179,13 @@ describe Invitation do
     it "can resend an email to an already invited user with an account who hasn't accepted" do
       user = Factory.create(:user)
       invitation = @project.new_invitation(@project.user, :user_or_email => user.login)
-      Emailer.should_receive(:deliver_project_invitation).with(invitation).once
+      Emailer.should_receive(:deliver_project_invitation).once
       invitation.save!
     end
 
     it "can resend an email to an already invited user without an account who hasn't accepted" do
       invitation = @project.new_invitation(@project.user, :user_or_email => "carl.jung@hotmail.ch")
-      Emailer.should_receive(:deliver_signup_invitation).with(invitation).once
+      Emailer.should_receive(:deliver_signup_invitation).once
       invitation.save!
     end
   end

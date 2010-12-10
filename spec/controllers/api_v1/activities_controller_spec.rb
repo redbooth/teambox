@@ -85,6 +85,41 @@ describe ApiV1::ActivitiesController do
       references.include?("#{@project.id}_Project").should == true
       references.include?("#{@project.people.last.id}_Person").should == true
     end
+    
+    it "returns comment references for conversation and task objects" do
+      login_as @user
+      
+      task = Factory.create(:task, :project => @project)
+      100.times { Factory.create(:comment, :target => task, :project => @project) }
+      conversation = Factory.create(:conversation, :project => @project)
+      Factory.create(:comment, :target => conversation, :project => @project)
+      
+      get :index, :project_id => @project.permalink
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      data['objects'].should_not == nil
+      
+      references.include?("#{conversation.id}_Conversation").should == true
+      references.include?("#{task.id}_Task").should == true
+      references.include?("#{conversation.first_comment.id}_Comment").should == true
+      references.include?("#{conversation.first_comment.user.id}_User").should == true
+      references.include?("#{conversation.user_id}_User").should == true
+      references.include?("#{task.first_comment.id}_Comment").should == true
+      references.include?("#{task.first_comment.user.id}_User").should == true
+      references.include?("#{task.user_id}_User").should == true
+      
+      data['objects'].each do |obj|
+        if obj['type'] == 'Conversation'
+          obj['first_comment_id'].should == conversation.first_comment.id
+          obj['recent_comment_ids'].should == conversation.recent_comment_ids
+        elsif obj['type'] == 'Task'
+          obj['first_comment_id'].should == task.first_comment.id
+          obj['recent_comment_ids'].should == task.recent_comment_ids
+        end
+      end
+    end
   end
   
   describe "#show" do
