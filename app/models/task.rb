@@ -311,7 +311,7 @@ class Task < RoleRecord
       people_ids = [self.assigned_id]    if self.assigned_id
       people_ids << self.assigned_id_was if self.assigned_id_was
 
-      people_ids.each do |person_id|
+      people_ids.to_a.each do |person_id|
         if person = Person.find_by_id(person_id)
           person.user.tasks_counts_update
         end
