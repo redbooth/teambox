@@ -175,8 +175,15 @@ class Task < RoleRecord
     else
       "#{activity[:description]} #PT"
     end
-    
-    self.comments_attributes = [{ :body => comment }]
+
+    #If this is a new_record, use #save_changes_to_comment callback
+    if track_changes?
+      comments << Comment.new(:body => comment)
+    else
+      #use nested attributes
+      self.comments_attributes = [{ :body => comment }]
+    end
+
     save!
   end
 
