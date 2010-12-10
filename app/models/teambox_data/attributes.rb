@@ -28,7 +28,7 @@ class TeamboxData
       users.each do |user|
         map[user['username']] = known_map[user['username']].try(:login)
       end
-      @map_data['User'] = map
+      map_data['User'] = map
     end
     map
   end
