@@ -82,7 +82,7 @@ class ApiV1::APIController < ApplicationController
   end
   
   def api_wrap(object, options={})
-    objects = if object.is_a? Enumerable
+    objects = if object.respond_to? :each
       object.map{|o| o.to_api_hash(options) }
     else
       object.to_api_hash(options)

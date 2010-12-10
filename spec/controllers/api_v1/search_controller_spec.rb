@@ -9,7 +9,7 @@ describe ApiV1::SearchController do
     end
     
     it "searches across all user's projects" do
-      @results = mock('results', {:map => [@comment.to_api_hash], :is_a? => true})
+      @results = mock('results', {:map => [@comment.to_api_hash], :each => true})
       controller.stub!(:user_can_search?).and_return(true)
       
       p1 = @project
@@ -44,7 +44,7 @@ describe ApiV1::SearchController do
     end
     
     it "searches in a single project" do
-      @results = mock('results', {:map => [@comment.to_api_hash], :is_a? => true})
+      @results = mock('results', {:map => [@comment.to_api_hash], :each => true})
       controller.stub!(:user_can_search?).and_return(false)
       
       Factory.create :person, :user => @user, :project => @project
