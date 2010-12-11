@@ -21,7 +21,7 @@ describe Activity do
       end
       
       Activity.count.should_not == 0
-      Activity.all.map{|a|a.target.nil?}.include?(true).should == false
+      Activity.all.any? { |a| a.target.nil? }.should == false
       
       Person.destroy_all
       Comment.destroy_all
@@ -29,7 +29,7 @@ describe Activity do
       TaskList.destroy_all
       Page.destroy_all
       
-      Activity.all.map{|a|a.target.nil?}.include?(true).should == false
+      Activity.all.any? { |a| a.target.nil? }.should == false
     end
   end
 end
