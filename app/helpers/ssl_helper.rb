@@ -64,14 +64,14 @@ module SslHelper
       UrlRewriter.requires_ssl?(requirements.merge(conditions))
     end
   end
-  
-  class Optimiser < ActionController::Routing::Optimisation::PositionalArguments
-    def guard_conditions
-      super.tap do |cond|
-        if Teambox.config.secure_logins
-          cond << "#{route.requires_ssl?? '' : '!'}request.ssl?"
-        end
-      end
-    end
-  end
+  # RAILS3 Fixme
+  # class Optimiser < ActionDispatch::Routing::Optimisation::PositionalArguments
+  #   def guard_conditions
+  #     super.tap do |cond|
+  #       if Teambox.config.secure_logins
+  #         cond << "#{route.requires_ssl?? '' : '!'}request.ssl?"
+  #       end
+  #     end
+  #   end
+  # end
 end

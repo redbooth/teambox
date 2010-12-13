@@ -3,7 +3,7 @@ module EmailSpec
     extend Deliveries
     
     def self.save_and_open_all_raw_emails
-      filename = "#{RAILS_ROOT}/tmp/email-#{Time.now.to_i}.txt"
+      filename = "#{Rails.root}/tmp/email-#{Time.now.to_i}.txt"
 
       File.open(filename, "w") do |f|
         all_emails.each do |m|
@@ -47,7 +47,7 @@ module EmailSpec
     end
   
     def self.save_and_open_email(mail)
-      filename = "#{RAILS_ROOT}/tmp/email-#{Time.now.to_i}.txt"
+      filename = "#{Rails.root}/tmp/email-#{Time.now.to_i}.txt"
 
       File.open(filename, "w") do |f|
         f.write mail.to_s
@@ -65,7 +65,7 @@ module EmailSpec
     end
     
     def self.tmp_email_filename(extension = '.txt')
-      "#{RAILS_ROOT}/tmp/email-#{Time.now.to_i}#{extension}"
+      "#{Rails.root}/tmp/email-#{Time.now.to_i}#{extension}"
     end
   end
 end

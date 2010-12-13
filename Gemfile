@@ -1,7 +1,7 @@
 source :rubygems
 
 group :rails do
-  gem 'rails', '~> 2.3.5', :require => nil
+  gem 'rails', '~> 3.0.3'
   gem 'builder', '~> 2.1.2'
   gem 'memcache-client', '>= 1.7.4', :require => nil
   gem 'tzinfo', '~> 0.3.12'
@@ -16,6 +16,7 @@ gem 'icalendar', '~> 1.1.3'
 gem 'libxml-ruby', '1.1.3', :require => 'libxml'
 gem 'rdiscount', '~> 1.6.3'
 gem 'haml', '~> 3.0.0.beta1'
+# gem 'mysql2'
 gem 'mysql', '~> 2.8.1', :require => nil, :group => 'mysql'
 gem 'pg', '~> 0.9.0', :require => nil, :group => 'pg'
 gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
@@ -23,7 +24,7 @@ gem 'hpricot', '~> 0.8.2'
 gem 'json'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'tilt'
-gem 'choices', '>= 0.2.0'
+gem 'choices'
 gem 'nokogiri'
 
 group :plugins do
@@ -32,7 +33,6 @@ group :plugins do
   gem 'will_paginate', '~> 2.3.14'
   # gem 'acts_as_paranoid', '~> 0.3.1' # => too old!
   gem 'paperclip', '~> 2.3.6'
-  gem 'vestal_versions', '~> 1.0.2'
   gem 'cancan', '~> 1.2.0'
   gem 'validates_email_format_of', '~> 1.4.2'
 end

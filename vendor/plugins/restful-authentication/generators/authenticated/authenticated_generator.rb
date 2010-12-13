@@ -327,7 +327,7 @@ class AuthenticatedGenerator < Rails::Generator::NamedBase
   end
 
   def has_rspec?
-    spec_dir = File.join(RAILS_ROOT, 'spec')
+    spec_dir = File.join(Rails.root, 'spec')
     options[:rspec] ||= (File.exist?(spec_dir) && File.directory?(spec_dir)) unless (options[:rspec] == false)
   end
 

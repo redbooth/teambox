@@ -1,5 +1,5 @@
 ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__) unless defined?(RAILS_ROOT)
+require File.expand_path('../../config/environment', __FILE__) unless defined?(Rails)
 require 'spec/autorun'
 require 'spec/rails'
 require File.expand_path('../factories', __FILE__)
@@ -23,7 +23,7 @@ Spec::Runner.configure do |config|
   # in your config/boot.rb
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
-  config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+  config.fixture_path = Rails.root + '/spec/fixtures/'
   
   # == Fixtures
   #
@@ -42,7 +42,7 @@ Spec::Runner.configure do |config|
   #
   # You can also declare which fixtures to use (for example fixtures for test/fixtures):
   #
-  # config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+  # config.fixture_path = Rails.root + '/spec/fixtures/'
   #
   # == Mock Framework
   #

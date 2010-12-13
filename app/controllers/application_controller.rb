@@ -109,7 +109,7 @@ class ApplicationController < ActionController::Base
     LOCALES_REGEX = /\b(#{ I18n.available_locales.join('|') })\b/
     
     def user_agent_locale
-      unless RAILS_ENV == 'test'
+      unless Rails.env.test?
         request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX && $&
       end
     end

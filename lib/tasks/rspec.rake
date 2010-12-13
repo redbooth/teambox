@@ -8,18 +8,18 @@ unless ARGV.any? {|a| a =~ /^gems/}
 
     desc "Run all specs in spec directory (excluding plugin specs)"
     Spec::Rake::SpecTask.new(:spec => "db:test:prepare") do |t|
-      t.spec_opts = ['--options', "\"#{RAILS_ROOT}/spec/spec.opts\""]
+      t.spec_opts = ['--options', "\"#{Rails.root}/spec/spec.opts\""]
       t.spec_files = FileList['spec/**/*_spec.rb']
     end
 
     namespace :spec do
       desc "Run all specs in spec directory with RCov (excluding plugin specs)"
       Spec::Rake::SpecTask.new(:rcov) do |t|
-        t.spec_opts = ['--options', "\"#{RAILS_ROOT}/spec/spec.opts\""]
+        t.spec_opts = ['--options', "\"#{Rails.root}/spec/spec.opts\""]
         t.spec_files = FileList['spec/**/*_spec.rb']
         t.rcov = true
         t.rcov_opts = lambda do
-          IO.readlines("#{RAILS_ROOT}/spec/rcov.opts").map {|l| l.chomp.split " "}.flatten
+          IO.readlines("#{Rails.root}/spec/rcov.opts").map {|l| l.chomp.split " "}.flatten
         end
       end
 
@@ -32,7 +32,7 @@ unless ARGV.any? {|a| a =~ /^gems/}
       [:models, :controllers, :views, :helpers, :lib, :integration].each do |sub|
         desc "Run the code examples in spec/#{sub}"
         Spec::Rake::SpecTask.new(sub => "db:test:prepare") do |t|
-          t.spec_opts = ['--options', "\"#{RAILS_ROOT}/spec/spec.opts\""]
+          t.spec_opts = ['--options', "\"#{Rails.root}/spec/spec.opts\""]
           t.spec_files = FileList["spec/#{sub}/**/*_spec.rb"]
         end
       end

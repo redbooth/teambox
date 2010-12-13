@@ -105,7 +105,7 @@ class UsersController < ApplicationController
     if params.has_key?(:sub_action)
       @sub_action = params[:sub_action]
     else
-      render :file => "#{RAILS_ROOT}/public/404.html", :status => 404
+      render :file => "#{Rails.root}/public/404.html", :status => 404
     end
   end
 

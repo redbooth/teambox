@@ -74,7 +74,7 @@ describe TeamboxData do
     end
     
     it "should rollback changes if an error occurs" do
-      data = File.open("#{RAILS_ROOT}/spec/fixtures/teamboxdump_invalid.json", 'r') do |file|
+      data = File.open("#{Rails.root}/spec/fixtures/teamboxdump_invalid.json", 'r') do |file|
         ActiveSupport::JSON.decode(file.read)
       end
       
@@ -99,7 +99,7 @@ describe TeamboxData do
     end
     
     it "should preserve created_at dates" do
-      data = File.open("#{RAILS_ROOT}/spec/fixtures/teamboxdump.json", 'r') do |file|
+      data = File.open("#{Rails.root}/spec/fixtures/teamboxdump.json", 'r') do |file|
         ActiveSupport::JSON.decode(file.read)
       end
       
@@ -130,7 +130,7 @@ describe TeamboxData do
       Comment.count.should == 0
       Activity.count.should == 0
       
-      data = File.open("#{RAILS_ROOT}/spec/fixtures/campdump.xml") { |f| Hash.from_xml f.read }
+      data = File.open("#{Rails.root}/spec/fixtures/campdump.xml") { |f| Hash.from_xml f.read }
       TeamboxData.new.tap{|d| d.service = 'basecamp'; d.data = data }.unserialize({}, {:create_users => true, :create_organizations => true})
       
       User.count.should == 1
@@ -150,7 +150,7 @@ describe TeamboxData do
     end
     
     it "should preserve created_at dates when loading a basecamp dump" do
-      data = File.open("#{RAILS_ROOT}/spec/fixtures/campdump.xml") { |f| Hash.from_xml f.read }
+      data = File.open("#{Rails.root}/spec/fixtures/campdump.xml") { |f| Hash.from_xml f.read }
       TeamboxData.new.tap{|d| d.service = 'basecamp'; d.data = data }.unserialize({}, {:create_users => true, :create_organizations => true})
       
       Comment.all.each {|o| o.created_at.year.should == 2009}
@@ -321,7 +321,7 @@ describe TeamboxData do
   
   describe "import_from_file" do
     it "should import data from a file" do
-      TeamboxData.import_from_file("#{RAILS_ROOT}/spec/fixtures/teamboxdump.json", {}, {:create_users => true, :create_organizations => true})
+      TeamboxData.import_from_file("#{Rails.root}/spec/fixtures/teamboxdump.json", {}, {:create_users => true, :create_organizations => true})
       
       Organization.count.should == 1
       Project.count.should == 1
@@ -332,7 +332,7 @@ describe TeamboxData do
   describe "export_to_file" do
     it "should export data to a file" do
       make_the_teambox_dump
-      TeamboxData.export_to_file(Project.all, User.all, Organization.all, "#{RAILS_ROOT}/tmp/test-export.json")
+      TeamboxData.export_to_file(Project.all, User.all, Organization.all, "#{Rails.root}/tmp/test-export.json")
     end
   end
   
