@@ -130,11 +130,13 @@ Then /^I click on the date selector$/ do
 end
 
 Then /^I select the month of "([^\"]*)" with the([\w|\s]*)date picker$/ do |month,type|
-  Then %(I select "#{month}" from "#{type.strip || 'task'}_due_on_month" within "div[class='calendar_date_select']")
+  type = type.try(:strip).blank? ? 'task' : type.strip
+  Then %(I select "#{month}" from "#{type}_due_on_month" within "div[class='calendar_date_select']")
 end
 
 Then /^I select the year "([^\"]*)" with the([\w|\s]*)date picker$/ do |year,type|
-  Then %(I select "#{year}" from "#{type.strip || 'task'}_due_on_year" within "div[class='calendar_date_select']")
+  type = type.try(:strip).blank? ? 'task' : type.strip
+  Then %(I select "#{year}" from "#{type}_due_on_year" within "div[class='calendar_date_select']")
 end
 
 Then /^I select the day "([^\"]*)" with the date picker$/ do |day|
