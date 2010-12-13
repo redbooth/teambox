@@ -23,7 +23,7 @@ Feature: Converting a conversation to a task
     And I wait for 2 seconds
     And I press "Convert"
     And I wait for 1 second
-    Then I should see "Politics"
+    Then I should see "Politics" in the thread title
     And I should see "created a task"
 
   Scenario: Converting a normal conversation on the overview page and adding a comment
