@@ -36,7 +36,7 @@ Feature: Converting a conversation to a task
     And I fill in "conversation_name" with "An exciting task for you"
     And I press "Convert"
     And I wait for 1 second
-    Then I should see "Politics"
+    Then I should see "Politics" in the thread title
     And I should see "Do this now"
     And I should see "created a task"
 

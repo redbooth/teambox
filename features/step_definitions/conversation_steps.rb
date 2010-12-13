@@ -70,7 +70,11 @@ Then /^I should see the error "([^\"]*)"(?: within "([^\"]*)")?$/ do |msg, selec
 end
 
 Then /^I should see "([^\"]+)" in the thread title$/ do |msg|
-  comment = all("p.thread_title a").first.text
+  link = false
+  wait_until do
+    link = find("p.thread_title a")
+  end
+  comment = link.text
   comment.should match(/#{msg}/)
 end
 
