@@ -78,6 +78,15 @@ Then /^I should see "([^\"]+)" in the thread title$/ do |msg|
   comment.should match(/#{msg}/)
 end
 
+Then /^I should see "([^\"]+)" in the page title$/ do |msg|
+  header = false
+  wait_until do
+    header = find("h2")
+  end
+  title = header.text
+  title.should match(/#{msg}/)
+end
+
 Then /^I should see "([^\"]+)" in the thread starter$/ do |msg|
   comment = all("p.starter").last.text.strip
   comment.should match(/#{msg}/)
