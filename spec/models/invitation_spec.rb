@@ -67,6 +67,17 @@ describe Invitation do
       invitation.save
       user.invitations.length.should == 0
     end
+    
+    it "should send a project membership notification email even when the invite is deleted" do
+      user = Factory.create(:user)
+      @project.organization.add_member(user, :participant)
+      invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
+      invitation.save
+      invitation.deleted?.should == true
+      user.invitations.length.should == 0
+      
+      Emailer.send_email(:project_membership_notification, invitation.id) rescue assert(false)
+    end
 
     it "should not send an Invitation email to users in the inviter's organization" do
       user = Factory.create(:user)
