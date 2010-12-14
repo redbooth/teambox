@@ -1,10 +1,10 @@
-require 'spec/matchers'
+require 'rspec/expectations'
 
-module Spec
+module RSpec
   module Rails
     module Matchers
 
-      Spec::Matchers.define :validate_presence_of do |attribute|
+      RSpec::Matchers.define :validate_presence_of do |attribute|
         match do |model|
           model.send("#{attribute}=", nil)
           !model.valid? && model.errors.invalid?(attribute)
@@ -14,7 +14,7 @@ module Spec
         end
       end
 
-      Spec::Matchers.define :validate_length_of do |attribute, options|
+      RSpec::Matchers.define :validate_length_of do |attribute, options|
         if options.has_key? :within
           min = options[:within].first
           max = options[:within].last
@@ -44,7 +44,7 @@ module Spec
         end
       end
 
-      Spec::Matchers.define :validate_uniqueness_of do |attribute|
+      RSpec::Matchers.define :validate_uniqueness_of do |attribute|
         match do |model|
           model.class.stub!(:find).and_return(true)
           !model.valid? && model.errors.invalid?(attribute)
@@ -54,7 +54,7 @@ module Spec
         end
       end
 
-      Spec::Matchers.define :validate_confirmation_of do |attribute|
+      RSpec::Matchers.define :validate_confirmation_of do |attribute|
         match do |model|
           model.send("#{attribute}_confirmation=", 'asdf')
           !model.valid? && model.errors.invalid?(attribute)

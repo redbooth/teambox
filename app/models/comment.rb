@@ -27,8 +27,8 @@ class Comment < ActiveRecord::Base
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
                   :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes
 
-  named_scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
-  named_scope :latest, :order => 'id DESC'
+  scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
+  scope :latest, :order => 'id DESC'
 
   # TODO: investigate how we can enable this and not break nested attributes
   # validates_presence_of :target_id, :user_id, :project_id
@@ -50,7 +50,7 @@ class Comment < ActiveRecord::Base
     hours and hours > 0
   end
 
-  named_scope :with_hours, :conditions => 'hours > 0'
+  scope :with_hours, :conditions => 'hours > 0'
 
   alias_attribute :human_hours, :hours
 

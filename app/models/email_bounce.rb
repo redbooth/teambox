@@ -1,10 +1,10 @@
 class EmailBounce < ActiveRecord::Base
   
-  named_scope :created_today, lambda {
+  scope :created_today, lambda {
     { :conditions => ["#{self.table_name}.created_at > ?", 1.day.ago] }
   }
   
-  named_scope :with_email, lambda { |address|
+  scope :with_email, lambda { |address|
     { :conditions => {:email => address} }
   }
   

@@ -80,7 +80,7 @@ describe Task do
     
       it "doesn't transition from closed to open" do
         @task.status_name = :resolved
-        @task.save(false)
+        @task.save(:validate => false)
         @task.assign_to @user
         @task.status_name.should == :resolved
       end

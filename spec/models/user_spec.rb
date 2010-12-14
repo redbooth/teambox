@@ -460,7 +460,7 @@ describe User do
       [:resolved, :hold, :rejected].each do |status|
         @task.assign_to @user
         @task.status_name = status
-        @task.save(false)
+        @task.save(:validate => false)
         @user.pending_tasks.should be_empty
       end
     end

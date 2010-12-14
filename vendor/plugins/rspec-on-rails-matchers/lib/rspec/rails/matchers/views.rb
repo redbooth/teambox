@@ -1,4 +1,4 @@
-module Spec
+module RSpec
   module Rails
     module Matchers
       def have_form_posting_to(url_or_path)

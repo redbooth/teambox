@@ -16,6 +16,14 @@ end
 
 class ActiveRecord::Base
 
+  # RAILS3 patch
+  def self.acts_as_paranoid
+  end
+
+  def self.find_with_deleted(*args)
+    find(*args)
+  end
+
   def update_record_without_timestamping
     class << self
       def record_timestamps; false; end

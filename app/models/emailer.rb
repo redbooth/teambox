@@ -14,10 +14,14 @@ class Emailer < ActionMailer::Base
 
   def confirm_email(user_id)
     user = User.find(user_id)
-    defaults
-    recipients    user.email
-    subject       I18n.t("emailer.confirm.subject")
-    body          :user => user, :login_link => confirm_email_user_url(user, :token => user.login_token)
+    # defaults
+    @user = user
+    @login_link = confirm_email_user_url(user, :token => user.login_token)
+
+    mail(
+      :recipients => user.email,
+      :subject => I18n.t("emailer.confirm.subject")
+    )
   end
 
   def reset_password(user_id)
@@ -141,11 +145,10 @@ class Emailer < ActionMailer::Base
     end
 
     def send_with_language(template, language, *args)
-      meth = "deliver_#{template.to_s}"
       old_locale = I18n.locale
       I18n.locale = language
       begin
-        send(meth, *args)
+        send(template, *args).deliver
       ensure
         I18n.locale = old_locale
       end
@@ -157,17 +160,17 @@ class Emailer < ActionMailer::Base
   class Preview < MailView
     def notify_task
       task = Task.find_by_name "Contact area businesses for banner exchange"
-      Emailer.create_notify_task(task.user.id, task.project.id, task.id)
+      Emailer.notify_task(task.user.id, task.project.id, task.id)
     end
     
     def notify_conversation
       conversation = Conversation.find_by_name "Seth Godin's 'What matters now'"
-      Emailer.create_notify_conversation(conversation.user.id, conversation.project.id, conversation.id)
+      Emailer.notify_conversation(conversation.user.id, conversation.project.id, conversation.id)
     end
 
     def daily_task_reminder
       user = User.first
-      Emailer.create_daily_task_reminder(user.id)
+      Emailer.daily_task_reminder(user.id)
     end
 
     def signup_invitation
@@ -178,12 +181,12 @@ class Emailer < ActionMailer::Base
         i.project = Project.first
       end
       invitation.save!
-      Emailer.create_signup_invitation(invitation.id)
+      Emailer.signup_invitation(invitation.id)
     end
 
     def reset_password
       user = User.first
-      Emailer.create_reset_password(user.id)
+      Emailer.reset_password(user.id)
     end
 
     def forgot_password
@@ -191,7 +194,7 @@ class Emailer < ActionMailer::Base
         passwd.user = User.first
         passwd.reset_code = ActiveSupport::SecureRandom.hex(20)
       end
-      Emailer.create_forgot_password(password_reset.id)
+      Emailer.forgot_password(password_reset.id)
     end
 
     def project_membership_notification
@@ -201,7 +204,7 @@ class Emailer < ActionMailer::Base
         i.project = Project.first
       end
       invitation.save!
-      Emailer.create_project_membership_notification(invitation.id)
+      Emailer.project_membership_notification(invitation.id)
     end
 
     def project_invitation
@@ -212,12 +215,12 @@ class Emailer < ActionMailer::Base
         i.project = Project.first
       end
       invitation.save!
-      Emailer.create_project_invitation(invitation.id)
+      Emailer.project_invitation(invitation.id)
     end
 
     def confirm_email
       user = User.first
-      Emailer.create_confirm_email(user.id)
+      Emailer.confirm_email(user.id)
     end
   end
 

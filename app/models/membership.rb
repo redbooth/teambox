@@ -4,8 +4,8 @@ class Membership < ActiveRecord::Base
   belongs_to :user
   belongs_to :organization
 
-  named_scope :admin?, :conditions => {'memberships.role' => ROLES[:admin]}
-  named_scope :participant?, :conditions => {'memberships.role' => ROLES[:participant]}
+  scope :admin?, :conditions => {'memberships.role' => ROLES[:admin]}
+  scope :participant?, :conditions => {'memberships.role' => ROLES[:participant]}
 
   validates_presence_of :user, :organization
   validates_inclusion_of :role, :in => [10,20,30]

@@ -20,16 +20,16 @@ class Person < ActiveRecord::Base
   ROLES = {:observer => 0, :commenter => 1, :participant => 2, :admin => 3}
   PERMISSIONS = [:view,:edit,:delete,:all]
   
-  named_scope :admins, :conditions => "role = #{ROLES[:admin]}"
+  scope :admins, :conditions => "role = #{ROLES[:admin]}"
   
-  named_scope :from_unarchived, :joins => :project,
+  scope :from_unarchived, :joins => :project,
     :conditions => ['projects.archived = ?', false]
   
-  named_scope :by_login, lambda { |login|
+  scope :by_login, lambda { |login|
     {:include => :user, :conditions => {'users.login' => login}}
   }
 
-  named_scope :in_alphabetical_order, :include => :user, :order => 'users.first_name ASC'
+  scope :in_alphabetical_order, :include => :user, :order => 'users.first_name ASC'
 
   
   attr_accessible :role, :permissions

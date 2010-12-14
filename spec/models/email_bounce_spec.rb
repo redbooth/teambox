@@ -3,7 +3,7 @@ require 'spec_helper'
 describe EmailBounce do
   before do
     @owner = Factory.create(:user)
-    @message = TMail::Mail.new
+    @message = Mail.new
     @message.from = @owner.email
   end
   

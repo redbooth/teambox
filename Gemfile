@@ -28,10 +28,11 @@ gem 'choices'
 gem 'nokogiri'
 
 group :plugins do
-  gem 'thinking-sphinx', '~> 1.3.15', :require => nil
   gem 'will_paginate', '~> 2.3.14'
 end
 
+# RAILS3 require => nil, for people who doens't have sphinx installed
+gem 'thinking-sphinx', '2.0.0', :require => 'thinking_sphinx'
 gem 'sprockets-rails', '~> 0.0.1'
 gem 'vestal_versions', '~> 1.0.2'
 gem 'paperclip', '~> 2.3.6'
@@ -44,10 +45,13 @@ group :development do
   gem 'mongrel', '~> 1.1.5', :require => nil
 end
 
+group :test, :development do
+  gem 'rspec-rails', '~> 2.3.0'
+end
+
 # we don't call the group :test because we don't want them auto-required
 group :testing do
   gem 'database_cleaner', '~> 0.5.0'
-  gem 'rspec-rails', '~> 1.3.3', :require => 'spec/rails'
   gem 'rcov'
   gem 'factory_girl', '~> 1.2.3'
   gem 'pickle', '~> 0.2.1'

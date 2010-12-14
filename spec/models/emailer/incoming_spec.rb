@@ -11,7 +11,7 @@ describe Emailer do
       @task = Factory(:task, :user_id => @owner.id, :project_id => @project.id)
       @conversation = Factory(:conversation, :user_id => @owner.id, :project_id => @project.id)
       
-      @email_template = TMail::Mail.new
+      @email_template = Mail.new
       @email_template.from = @owner.email
     end
     

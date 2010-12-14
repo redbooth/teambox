@@ -34,7 +34,7 @@ class <%= class_name %> < ActiveRecord::Base
     @activated = true
     self.activated_at = Time.now.utc
     self.activation_code = nil
-    save(false)
+    save(:validate => false)
   end
 
   # Returns true if the user has just been activated.

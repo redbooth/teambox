@@ -16,7 +16,7 @@ class Invitation < RoleRecord
   before_save :copy_user_email, :if => :invited_user
   after_create :auto_accept, :send_email
 
-  named_scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
+  scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
 
   # Reserved so invitations can be sent for other targets, in addition to Project
   def target

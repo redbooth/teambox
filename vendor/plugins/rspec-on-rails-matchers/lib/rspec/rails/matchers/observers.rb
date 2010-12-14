@@ -1,4 +1,4 @@
-module Spec
+module RSpec
   module Rails
     module Matchers
 

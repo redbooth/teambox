@@ -24,9 +24,9 @@ class Conversation < RoleRecord
   
   validate :check_comments_presence, :on => :create, :unless => :is_importing
 
-  named_scope :only_simple, :conditions => { :simple => true }
-  named_scope :not_simple, :conditions => { :simple => false }
-  named_scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
+  scope :only_simple, :conditions => { :simple => true }
+  scope :not_simple, :conditions => { :simple => false }
+  scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
 
   before_save :set_comments_author, :if => :updating_user
 

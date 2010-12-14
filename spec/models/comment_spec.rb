@@ -22,7 +22,7 @@ describe Comment do
   describe "copying ownership" do
     before do
       @target = Factory.build(:simple_conversation, :body => nil)
-      @target.save(false)
+      @target.save(:validate => false)
       @comment = Factory.build(:comment, :target => @target, :user => nil, :project => nil)
     end
     

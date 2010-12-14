@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   has_one :card
   accepts_nested_attributes_for :card
   default_scope :order => 'users.updated_at DESC'
-  named_scope :in_alphabetical_order, :order => 'users.first_name ASC'
+  scope :in_alphabetical_order, :order => 'users.first_name ASC'
 
   attr_accessible :login,
                   :email,
