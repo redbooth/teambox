@@ -142,6 +142,7 @@ Teambox::Application.routes.draw do
   end
 
   match '/public' => 'public/projects#index', :as => :public_projects
+  root :to => 'projects#index'
 
   namespace :public do
     match ':id' => 'projects#show', :as => :project

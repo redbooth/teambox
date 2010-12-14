@@ -28,16 +28,15 @@ gem 'choices'
 gem 'nokogiri'
 
 group :plugins do
-  gem 'sprockets-rails', '~> 0.0.1'
   gem 'thinking-sphinx', '~> 1.3.15', :require => nil
   gem 'will_paginate', '~> 2.3.14'
-  # gem 'acts_as_paranoid', '~> 0.3.1' # => too old!
-  gem 'cancan', '~> 1.2.0'
 end
 
+gem 'sprockets-rails', '~> 0.0.1'
 gem 'vestal_versions', '~> 1.0.2'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
+gem 'cancan', '~> 1.2.0'
 
 group :development do
   gem 'sqlite3-ruby', '~> 1.2.5', :require => nil
