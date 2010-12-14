@@ -5,7 +5,8 @@ When /I previously posted the following comments?:?$/ do |table|
   table.hashes.each do |hash|
     reg = hash['relative_time'].match(/(\d+)\s(\w+)\s[a][g][o]/)
     comment_time = Integer(reg[1]).send(reg[2].to_sym).ago
-    Factory(:comment, :project => project, :user => mislav, :target => conversation, :created_at => comment_time)
+    body = hash['body'] || "Just finished posting this comment (#{comment_time})"
+    Factory(:comment, :project => project, :user => mislav, :target => conversation, :created_at => comment_time, :body => body)
   end
 end
 
