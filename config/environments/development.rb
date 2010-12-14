@@ -17,6 +17,10 @@ Teambox::Application.configure do
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 
+  #RAILS 3 -  When using url_helpers in Mailers you now need to set host in the default url_options
+  config.action_mailer.default_url_options = {:host => Teambox.config.app_domain}
+
+
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 

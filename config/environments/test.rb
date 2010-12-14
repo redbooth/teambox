@@ -25,6 +25,9 @@ Teambox::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
+  #RAILS 3 -  When using url_helpers in Mailers you now need to set host in the default url_options
+  config.action_mailer.default_url_options = {:host => Teambox.config.app_domain}
+
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
@@ -33,3 +36,4 @@ Teambox::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 end
+

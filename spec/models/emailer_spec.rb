@@ -13,7 +13,7 @@ describe Emailer do
     it "should set Reply-to" do
       allow_incoming_mail do
         email = Emailer.notify_conversation(@user.id, @conversation.project.id, @conversation.id)
-        email.from_addrs.first.decoded.should == @full_address
+        email[:from].decoded.should == @full_address
         email.reply_to.should == [@address]
       end
     end

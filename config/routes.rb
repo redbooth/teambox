@@ -54,6 +54,12 @@ Teambox::Application.routes.draw do
   resources :teambox_datas
 
   resources :users do
+    #RAILS3 - The routes upgrade helper does a terrible job! Revise all routes!
+    member do
+      get :confirm_email
+      get :unconfirmed_email
+      get :contact_importer
+    end
     resources :conversations
     resources :task_lists do
       resources :tasks

@@ -61,4 +61,6 @@ module Teambox
   def self.config
     Rails.configuration.instance_variable_get('@choices')
   end
+
+  Object.const_set(:APP_CONFIG, config)
 end

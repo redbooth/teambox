@@ -78,7 +78,7 @@ module Emailer::Incoming
     email = ParamsMail.new(email) if Hash === email
     
     # TODO: cleanup this convoluted logic and ease a bit on the ivars pls
-    process email
+    process_incoming email
     get_target email
     get_action if @target.is_a?(Task)
     
@@ -179,7 +179,9 @@ module Emailer::Incoming
   class TargetNotFoundError < Error; end
 
   # accepts params in Sendgrid's format: http://wiki.sendgrid.com/doku.php?id=parse_api
-  def process(email)
+  # RAILS3 renamed from process as was conflicting with ActionMailer::Base#process
+  # RAILS3 check where used
+  def process_incoming(email)
     raise MissingInfo, "Invalid mail body" if email.body.blank?
     
     from = Array(email.from).first
