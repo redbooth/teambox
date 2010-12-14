@@ -35,6 +35,7 @@ group :plugins do
   gem 'cancan', '~> 1.2.0'
 end
 
+gem 'vestal_versions', '~> 1.0.2'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 
