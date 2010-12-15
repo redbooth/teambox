@@ -1,5 +1,4 @@
 class Emailer < ActionMailer::Base
-  include Rails.application.routes.url_helpers # Allows us to generate URLs
   include ActionView::Helpers::TextHelper
   include Emailer::Incoming
 
