@@ -33,7 +33,7 @@ document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
 // update task counter
 document.on('ajax:success', 'form.edit_task', function(e, form) {
   var task_data = e.memo.headerJSON
-  counter = $$('.task_counter[data-task-id='+ task_data.id +']').first()
+  var counter = $$('.task_counter[data-task-id='+ task_data.id +']').first()
   if (counter) counter.update(parseInt(counter.innerHTML) + 1)
 })
 
