@@ -1,4 +1,6 @@
 class TeamboxData < ActiveRecord::Base
+  include Immortal
+
   belongs_to :user
   concerned_with :serialization, :attributes, :teambox, :basecamp
   
@@ -11,7 +13,6 @@ class TeamboxData < ActiveRecord::Base
   before_update :check_state
   before_destroy :clear_import_data
   
-  acts_as_paranoid
   has_attached_file :processed_data,
     :url  => "/exports/:id/:basename.:extension",
     :path => Teambox.config.amazon_s3 ?
@@ -159,7 +160,7 @@ class TeamboxData < ActiveRecord::Base
   def do_export
     self.processed_at = Time.now
     @data = serialize(organizations_to_export, projects, users_to_export)
-    upload = ActionController::UploadedStringIO.new
+    upload = ActionDispatch::Http::UploadedFile.new
     upload.write(@data.to_json)
     upload.seek(0)
     upload.original_path = "#{user.login}-export.json"

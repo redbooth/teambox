@@ -1,4 +1,5 @@
 class Conversation < RoleRecord
+  include Immortal
 
   # needed for `truncate`
   include ActionView::Helpers::TextHelper
@@ -134,7 +135,7 @@ class Conversation < RoleRecord
   end
 
   define_index do
-    where "`conversations`.`deleted_at` IS NULL"
+    where "`conversations`.`deleted` = 0"
 
     indexes name, :sortable => true
 

@@ -1,4 +1,5 @@
 class Task < RoleRecord
+  include Immortal
   
   include Watchable
 
@@ -259,7 +260,7 @@ class Task < RoleRecord
   end
 
   define_index do
-    where "`tasks`.`deleted_at` IS NULL"
+    where "`tasks`.`deleted` = 0"
 
     indexes name, :sortable => true
 

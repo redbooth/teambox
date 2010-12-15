@@ -4,10 +4,10 @@ require 'digest/sha1'
 # A Person model describes the relationship of a User that follows a Project.
 
 class User < ActiveRecord::Base
+  include Immortal
 
   include ActionController::UrlWriter
 
-  acts_as_paranoid
   concerned_with  :activation,
                   :avatar,
                   :authentication,
@@ -177,7 +177,7 @@ class User < ActiveRecord::Base
       user_ids_in_project.include?(p.user_id)
     end.collect { |p| p.user_id }.uniq
 
-    conditions = ["id IN (?) AND deleted_at IS NULL", user_ids]
+    conditions = ["id IN (?) AND deleted = ?", user_ids, false]
 
     User.find(:all,
       :conditions => conditions,
@@ -249,7 +249,7 @@ class User < ActiveRecord::Base
       :select => 'user_id',
       :conditions => conditions,
       :limit => 300).collect { |p| p.user_id }.uniq
-    conditions = ["id IN (?) AND deleted_at IS NULL AND id != (?)", user_ids, self.id]
+    conditions = ["id IN (?) AND deleted = ? AND id != (?)", user_ids, false, self.id]
     User.find(:all,
       :conditions => conditions,
       :order => 'updated_at DESC',

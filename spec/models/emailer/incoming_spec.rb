@@ -57,7 +57,7 @@ describe Emailer do
         end.should change(Task, :count).by(1)
 
         task = Task.last(:order => 'tasks.id')
-        task.name.should == @email_template.body[0,252] + "..."
+        task.name.should == @email_template.body.to_s[0,252] + "..."
         task.status_name.should == :new
       end
 

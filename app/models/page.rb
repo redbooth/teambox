@@ -1,4 +1,5 @@
 class Page < RoleRecord
+  include Immortal
   has_many :notes, :dependent => :destroy
   has_many :dividers, :dependent => :destroy
   has_many :uploads, :dependent => :destroy
@@ -169,7 +170,7 @@ class Page < RoleRecord
   end
 
   define_index do
-    where "`pages`.`deleted_at` IS NULL"
+    where "`pages`.`deleted` = 0"
 
     indexes name, :sortable => true
     indexes description

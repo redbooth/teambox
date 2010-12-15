@@ -1,8 +1,7 @@
 class Organization < ActiveRecord::Base
+  include Immortal
   include Metadata
   extend Metadata::Defaults
-
-  acts_as_paranoid
 
   has_permalink :name
   has_many :projects #, :dependent => :destroy

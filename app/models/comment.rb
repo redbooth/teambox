@@ -1,8 +1,7 @@
 class Comment < ActiveRecord::Base
+  include Immortal
   
   extend ActiveSupport::Memoizable
-  
-  acts_as_paranoid
   
   concerned_with :tasks, :finders, :conversions
 

@@ -1,6 +1,7 @@
 require 'digest/sha1'
 
 class Invitation < RoleRecord
+  include Immortal
   belongs_to :invited_user, :class_name => 'User'
 
   validate :valid_user?
@@ -131,7 +132,7 @@ class Invitation < RoleRecord
   protected
 
     def valid_email?(value)
-      value =~ ValidatesEmailFormatOf::Regex
+      EmailValidator.check_address(value)
     end
 
 end

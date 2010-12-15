@@ -201,8 +201,8 @@ module Emailer::Incoming
     raise NotProjectMemberError.new(email, "User does not belong to project") unless @user.projects.include? @project
     
     #strip any remaining html tags (after strip_responses) from the body
-    @body    = strip_responses(email.body).strip_tags.strip
-    @subject = email.subject.gsub(REPLY_REGEX, "").strip
+    @body    = strip_responses(email.body).strip_tags.to_s.strip
+    @subject = email.subject.to_s.gsub(REPLY_REGEX, "").strip
     @files   = email.attachments || []
     
     Rails.logger.info "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
@@ -215,7 +215,7 @@ module Emailer::Incoming
   # finally strip any whitespace
   def strip_responses(body)
     # For GMail. Matches "On 19 August 2010 13:48, User <proj+conversation+22245@app.teambox.com<proj%2Bconversation%2B22245@app.teambox.com>> wrote:"
-    body.strip.
+    body.to_s.strip.
       gsub(/\n[^\r\n]*\d{2,4}.*\+.*\d@app.teambox.com.*:.*\z/m, '').
       split(Emailer::ANSWER_LINE).first.
       split("<div class='email'").first.

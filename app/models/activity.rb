@@ -1,9 +1,10 @@
 class Activity < ActiveRecord::Base
+  include Immortal
+
   belongs_to :target, :polymorphic => true, :with_deleted => true
   belongs_to :comment_target, :polymorphic => true, :with_deleted => true
   belongs_to :user
   belongs_to :project
-  acts_as_paranoid
 
   scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_target_type = 'TaskList' || comment_target_type = 'Task'"
   scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_target_type = 'Conversation'"
@@ -90,10 +91,6 @@ class Activity < ActiveRecord::Base
 
   def posted_date
     target.created_at
-  end
-
-  def deleted_date
-    target.deleted_at
   end
 
   def downcase_type

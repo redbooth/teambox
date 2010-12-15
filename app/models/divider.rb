@@ -1,8 +1,9 @@
 class Divider < RoleRecord
+  include Immortal
+
   belongs_to :page
   belongs_to :project
   has_one :page_slot, :as => :rel_object
-  acts_as_paranoid
   versioned
   
   include PageWidget

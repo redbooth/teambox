@@ -11,7 +11,7 @@ class Emailer < ActionMailer::Base
     def emailer_defaults
       {
       :content_type => 'text/html',
-      :sent_on => Time.now,
+      # :sent_on => Time.now,
       :from => from_address
       }
     end
@@ -92,7 +92,7 @@ class Emailer < ActionMailer::Base
     @project    = @invitation.project
     mail(
       :recipients => @invitation.email,
-      :from       => from_user(nil, @invitation.user),
+      :from       => self.class.from_user(nil, @invitation.user),
       :subject    => I18n.t("emailer.invitation.subject", 
                             :user => @invitation.user.name, 
                             :project => @invitation.project.name)

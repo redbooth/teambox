@@ -2,14 +2,14 @@
 # A Person model describes the relationship of a User that follows a Project.
 
 class Person < ActiveRecord::Base
+  include Immortal
+
   belongs_to :user
   belongs_to :project
   belongs_to :source_user, :class_name => 'User'
   has_many :tasks, :foreign_key => 'assigned_id', :dependent => :nullify
   
   after_destroy :log_delete, :cleanup_after
-
-  acts_as_paranoid
   
 #  validates_uniqueness_of :user, :scope => :project
   validates_presence_of :user, :project   # Make sure they both exist and are set
@@ -78,7 +78,7 @@ class Person < ActiveRecord::Base
       INNER JOIN projects ON projects.id = people.project_id
       INNER JOIN users ON users.id = people.user_id
       WHERE people.project_id IN (#{project_ids.join(',')})
-        AND people.deleted_at IS NULL
+        AND people.deleted = 0
       ORDER BY users.id = #{current_user.try(:id).to_i} DESC,users.login
     SQL
   end
