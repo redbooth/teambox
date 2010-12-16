@@ -98,7 +98,7 @@ class ApidocsController < ApplicationController
     end
     
     def mock_upload(file, type = 'image/png', data=nil)
-      upload = ActionController::UploadedStringIO.new
+      upload = ActionDispatch::Http::UploadedFile.new
       unless data.nil?
         upload.write(data)
         upload.seek(0)

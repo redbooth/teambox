@@ -1,8 +1,9 @@
 class Activity < ActiveRecord::Base
   include Immortal
 
-  belongs_to :target, :polymorphic => true, :with_deleted => true
-  belongs_to :comment_target, :polymorphic => true, :with_deleted => true
+  # RAILS3 fix with_deleted
+  belongs_to :target, :polymorphic => true#, :with_deleted => true
+  belongs_to :comment_target, :polymorphic => true#, :with_deleted => true
   belongs_to :user
   belongs_to :project
 

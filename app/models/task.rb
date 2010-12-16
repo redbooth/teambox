@@ -17,7 +17,9 @@ class Task < RoleRecord
 
   belongs_to :task_list, :counter_cache => true
   belongs_to :page
-  belongs_to :assigned, :class_name => 'Person', :with_deleted => true
+
+  # RAILS3 fix with_deleted
+  belongs_to :assigned, :class_name => 'Person'#, :with_deleted => true
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
   accepts_nested_attributes_for :comments, :allow_destroy => false,
