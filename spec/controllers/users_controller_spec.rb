@@ -57,7 +57,7 @@ describe UsersController do
       login_as @first_user
       get :show, :id => @second_user.id
       response.should_not render_template('users/show')
-      response.status.should == '302 Found'
+      response.status.should == 302
     end
     
     it "should show known users" do

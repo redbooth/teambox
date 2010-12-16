@@ -166,7 +166,7 @@ describe HooksController do
       
       def check_bounce_message(options, &block)
         Emailer.should_receive(:send_with_language).with(
-          :en, :deliver_bounce_message, kind_of(Array), kind_of(String)
+          :bounce_message, :en, kind_of(Array), kind_of(String)
         ).once
         
         lambda do

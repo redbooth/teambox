@@ -139,8 +139,9 @@ module Emailer::Incoming
     def field_to_addr(field)
       value = @params[field.to_sym]
       return if value.blank?
-      header = TMail::AddressHeader.new(field.to_s, value)
-      header.addrs.map &:spec
+      # RAILS3 report bug, this doesn't parse with a newline char at the end
+      header = Mail::Field.new(field.to_s, value.strip)
+      header.addrs.map &:address
     end
     
     def field_to_utf8(field)

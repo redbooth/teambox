@@ -64,12 +64,8 @@ RSpec.configure do |config|
 end
 
 def route_matches(path, method, params)
-  it "maps #{params.inspect} to #{path.inspect}" do
-    route_for(params).should == {:path => path, :method => method}
-  end
-
-  it "generates params #{params.inspect} from #{method.to_s.upcase} to #{path.inspect}" do
-    params_from(method.to_sym, path).should == params
+  it "is routable for params #{params.inspect} with #{method.to_s.upcase} and #{path.inspect}" do
+    { method.to_sym => path }.should route_to(params)
   end
 end
 
