@@ -8,9 +8,9 @@ class ApiV1::PagesController < ApiV1::APIController
              :include => [:project, :user]}
     
     @pages = if @current_project
-      @current_project.pages.scoped(api_scope).all(query)
+      @current_project.pages.where(api_scope).all(query)
     else
-      Page.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      Page.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @pages, :include => :slots, :references => [:project, :user]
@@ -98,6 +98,6 @@ class ApiV1::PagesController < ApiV1::APIController
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
     end
-    {:conditions => conditions}
+    conditions
   end
 end

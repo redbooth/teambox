@@ -9,9 +9,9 @@ class ApiV1::TasksController < ApiV1::APIController
              :include => [:task_list, :project, :user, :assigned]}
     
     if @current_project
-      @tasks = (@task_list || @current_project).tasks.scoped(api_scope).all(query)
+      @tasks = (@task_list || @current_project).tasks.where(api_scope).all(query)
     else
-      @tasks = Task.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      @tasks = Task.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @tasks, :references => [:task_list, :project, :user, :assigned]
@@ -92,7 +92,7 @@ class ApiV1::TasksController < ApiV1::APIController
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
     end
-    {:conditions => conditions}
+    conditions
   end
     
   def api_include

@@ -8,9 +8,9 @@ class ApiV1::ConversationsController < ApiV1::APIController
              :include => [:user, :project]}
     
     @conversations = if @current_project
-      @current_project.conversations.scoped(api_scope).all(query)
+      @current_project.conversations.where(api_scope).all(query)
     else
-      Conversation.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      Conversation.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @conversations, :references => [:user, :project]
@@ -83,7 +83,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
     end
-    {:conditions => conditions}
+    conditions
   end
   
   def add_watchers(hash)

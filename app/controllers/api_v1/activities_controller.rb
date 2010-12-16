@@ -3,7 +3,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
   before_filter :get_target, :only => [:index]
 
   def index
-    @activities = Activity.scoped(api_scope).all(:conditions => api_range,
+    @activities = Activity.where(api_scope).all(:conditions => api_range,
                         :order => 'id DESC',
                         :limit => api_limit,
                         :include => [:target, :project, :user, {:comment_target => [:user, {:first_comment => :user}, {:recent_comments => :user}]}])
@@ -31,7 +31,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
       conditions[:user_id] = params[:user_id].to_i
     end
     
-    {:conditions => conditions}
+    conditions
   end
   
   def get_target
