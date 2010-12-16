@@ -63,7 +63,7 @@ describe ApiV1::OrganizationsController do
       login_as @user
       
       put :update, :id => @organization.permalink, :permalink => 'ffffuuuuuu'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @organization.reload.permalink.should_not == 'ffffuuuuuu'
     end

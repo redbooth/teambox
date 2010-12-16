@@ -130,7 +130,7 @@ describe ApiV1::TaskListsController do
       login_as @observer
       
       post :create, :project_id => @project.permalink, :id => @task_list.id, :name => 'Another list!'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.task_lists(true).length.should == 2
     end
@@ -150,7 +150,7 @@ describe ApiV1::TaskListsController do
       login_as @observer
       
       put :update, :project_id => @project.permalink, :id => @task_list.id, :name => 'Modified'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @task_list.reload.name.should_not == 'Modified'
     end
@@ -170,7 +170,7 @@ describe ApiV1::TaskListsController do
       login_as @observer
       
       put :archive, :project_id => @project.permalink, :id => @task_list.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @task_list.reload.archived.should_not == true
     end
@@ -204,7 +204,7 @@ describe ApiV1::TaskListsController do
       @task_list.update_attribute(:archived, true)
       
       put :unarchive, :project_id => @project.permalink, :id => @task_list.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @task_list.reload.archived.should == true
     end
@@ -242,7 +242,7 @@ describe ApiV1::TaskListsController do
       login_as @observer
       
       put :destroy, :project_id => @project.permalink, :id => @task_list.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.task_lists(true).length.should == 2
     end

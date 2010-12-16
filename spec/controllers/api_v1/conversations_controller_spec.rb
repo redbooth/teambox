@@ -149,7 +149,7 @@ describe ApiV1::ConversationsController do
       login_as @observer
       
       post :create, :project_id => @project.permalink, :name => 'Created!', :body => 'Discuss...'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.conversations(true).length.should == 2
     end
@@ -169,7 +169,7 @@ describe ApiV1::ConversationsController do
       login_as @observer
       
       put :update, :project_id => @project.permalink, :id => @conversation.id, :name => 'Modified'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @conversation.reload.name.should_not == 'Modified'
     end
@@ -198,7 +198,7 @@ describe ApiV1::ConversationsController do
       login_as @user
       
       put :destroy, :project_id => @project.permalink, :id => @conversation.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.conversations(true).length.should == 2
     end

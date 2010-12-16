@@ -133,7 +133,7 @@ describe ApiV1::DividersController do
       login_as @observer
       
       post :create, :project_id => @project.permalink, :page_id => @page.id, :name => 'Divisions'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @page.dividers(true).length.should == 1
     end
@@ -153,7 +153,7 @@ describe ApiV1::DividersController do
       login_as @observer
       
       put :update, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id, :name => 'Modified'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @divider.reload.name.should_not == 'Modified'
     end
@@ -173,7 +173,7 @@ describe ApiV1::DividersController do
       login_as @observer
       
       put :destroy, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @page.dividers(true).length.should == 1
     end
