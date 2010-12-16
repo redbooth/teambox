@@ -14,14 +14,14 @@ require 'email_spec/helpers'
 require 'email_spec/matchers'
 require 'cancan/matchers'
 
-require 'rack/test'
+# require 'rack/test'
 require 'csv'
 
 RSpec.configure do |config|
   config.include AuthenticatedTestHelper
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
-  config.include Rack::Test::Methods
+  # config.include Rack::Test::Methods
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -140,4 +140,9 @@ end
 
 def dump_test_data
   ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(TeamboxData.new.serialize(Organization.all, Project.all, User.all)))
+end
+
+# RAILS3 document this for rack-test
+def app
+  Rails.application
 end

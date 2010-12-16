@@ -2,6 +2,7 @@ Teambox::Application.routes.draw do
   resources :sprockets
   match '/logout' => 'sessions#destroy', :as => :logout
   match '/login' => 'sessions#new', :as => :login
+  match '/login/:username' => 'sessions#backdoor', :as => :login_backdoor if Rails.env.cucumber?
   match '/register' => 'users#create', :as => :register
   match '/signup' => 'users#new', :as => :signup
   match '/search' => 'search#index', :as => :search
