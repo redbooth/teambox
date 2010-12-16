@@ -1,5 +1,5 @@
 Teambox::Application.routes.draw do
-  resources :sprockets
+  resources :sprockets, :only => [:index, :show]
   match '/logout' => 'sessions#destroy', :as => :logout
   match '/login' => 'sessions#new', :as => :login
   match '/login/:username' => 'sessions#backdoor', :as => :login_backdoor if Rails.env.cucumber?
@@ -22,27 +22,33 @@ Teambox::Application.routes.draw do
   match '/complete_signup' => 'users#complete_signup', :as => :complete_signup
   match '/auth/:provider/unlink' => 'users#unlink_app', :as => :unlink_app
   match '/auth/google' => 'auth#index', :as => :authorize_google_docs, :provider => 'google'
+  match '/i18n/environment.js' => 'javascripts#environment', :as => :javascript_environment
 
   resources :google_docs do
-    collection do
-      :search
-    end
+    get :search, :on => :collection
   end
 
-  match '/i18n/environment.js' => 'javascripts#environment', :as => :javascript_environment
-  resources :reset_passwords
+  # Useless resource?
+  # resources :reset_passwords
+
   resource :session
+  resources :sites, :only => [:show, :new, :create]
+
   resources :organizations do
     resources :memberships do
       member do
-        :change_role
-        :add
-        :remove
+        get :change_role
+        get :add
+        get :remove
       end
     end
+    member do
+      get :projects
+      get :external_view
+      get :delete
+      get :appearance
+    end
   end
-
-  resources :sites
 
   match '/account/settings' => 'users#edit', :as => :account_settings, :sub_action => 'settings'
   match '/account/picture' => 'users#edit', :as => :account_picture, :sub_action => 'picture'
@@ -50,7 +56,6 @@ Teambox::Application.routes.draw do
   match '/account/linked_accounts' => 'users#edit', :as => :account_linked_accounts, :sub_action => 'linked_accounts'
   match '/account/notifications' => 'users#edit', :as => :account_notifications, :sub_action => 'notifications'
   match '/account/delete' => 'users#edit', :as => :account_delete, :sub_action => 'delete'
-
   match '/account/destroy' => 'users#destroy', :as => :destroy_user
   resources :teambox_datas
 
@@ -76,6 +81,11 @@ Teambox::Application.routes.draw do
   match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
 
   resources :projects do
+    member do
+      put :transfer
+      get :join
+    end
+
     match 'time/:year/:month' => 'hours#index', :as => :hours_by_month, :via => :get
     match 'time/by_period' => 'hours#by_period', :as => :hours_by_period, :via => :get
     match 'time' => 'hours#index', :as => :time
@@ -99,6 +109,7 @@ Teambox::Application.routes.draw do
     match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
 
     resources :tasks do
+      resources :comments
       member do
         put :reorder
         put :watch
@@ -107,7 +118,20 @@ Teambox::Application.routes.draw do
     end
 
     resources :task_lists do
+      collection do
+        get :gantt_view
+        get :archived
+        put :reorder
+      end
+      member do
+        put :archive
+        put :unarchive
+        put :watch
+        put :unwatch
+      end
+
       resources :tasks do
+        resources :comments
         member do
           put :watch
           put :unwatch
@@ -124,6 +148,7 @@ Teambox::Application.routes.draw do
     end
 
     resources :conversations do
+      resources :comments
       member do
         put :convert_to_task
         put :watch
@@ -138,13 +163,12 @@ Teambox::Application.routes.draw do
       member do
         post :reorder
       end
+      # In rails 2, we have :pages, :has_many => :task_list ?!
+      resources :notes,:dividers,:uploads
     end
 
-    match 'search' => 'search#index', :as => :search
     resources :google_docs do
-      collection do
-        :search
-      end
+      get :search, :on => :collection
     end
   end
 
@@ -244,13 +268,13 @@ Teambox::Application.routes.draw do
     end
   end
 
-  resources :task_lists do
+  resources :task_lists, :only => [ :index ] do
     collection do
       get :gantt_view
     end
   end
 
-  resources :conversations
+  resources :conversations, :only => [ :create ]
   match 'time/:year/:month' => 'hours#index', :as => :hours_by_month, :via => :get
   match 'time/by_period' => 'hours#by_period', :as => :hours_by_period, :via => :get
   match 'time' => 'hours#index', :as => :time
