@@ -78,19 +78,14 @@ def generate_file(filename, size = 1024)
 end
 
 def mock_uploader(file, type = 'image/png', data=nil)
-  uploader = ActionController::UploadedStringIO.new
-  unless data.nil?
-    uploader.write(data)
-    uploader.seek(0)
-    uploader.original_path = file
+  file_path = data ? file : "%s/%s" % [ File.dirname(__FILE__), file ]
+  tempfile = Tempfile.new(file_path)
+  if data
+    tempfile << data
   else
-    uploader.original_path = "%s/%s" % [ File.dirname(__FILE__), file ]
-    uploader.write(File.read(uploader.original_path))
-    uploader.seek(0)
+    tempfile << File.read(file_path)
   end
-  
-  uploader.content_type = type
-  uploader
+  ActionDispatch::Http::UploadedFile.new({ :type => type, :filename => file_path, :tempfile => tempfile })
 end
 
 def mock_file(user, page=nil)
