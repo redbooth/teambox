@@ -6,7 +6,7 @@
                        :li_end => projects_tab_list(current_user.projects.unarchived)}
             }) do |t|
       name = project ? truncate(h(project.name), :length => 30) : t('shared.navigation.all_projects')
-      t.named "#{name} #{image_tag('triangle.png', :class => 'triangle')}"
+      t.named "#{name} #{image_tag('triangle.png', :class => 'triangle')}".html_safe
       t.links_to(project ? project_path(project) : projects_path)
       t.highlights_on :controller => :projects, :action => :index
       t.highlights_on :controller => :projects, :action => :show
@@ -77,7 +77,7 @@
 			page_tab = project.has_member?(current_user) ? {:id => 'pages_tab', :class => 'nav_tab', :li_class => 'nav_tab_container', :li_end => pages_tab_list(project, project.pages) } : {}
 			
       add_tab(:html => page_tab) do |t|
-        t.named "#{t('shared.project_navigation.pages')} #{image_tag('triangle.png', :class => 'triangle') if project.has_member?(current_user)}"
+        t.named "#{t('shared.project_navigation.pages')} #{image_tag('triangle.png', :class => 'triangle') if project.has_member?(current_user)}".html_safe
         t.links_to  project_pages_path(project)
         t.highlights_on :controller => :pages
         t.tab_index = 130

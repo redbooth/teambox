@@ -8,7 +8,7 @@ module TabnavHelper
       html << tag('div', options, true)
       html << capture(&block)
       html << '</div>' 
-      concat(html)
+      out html
       nil # avoid duplication if called with <%= %>
     else
       html
@@ -91,6 +91,6 @@ module TabnavHelper
   end
 
   def out(string)
-    concat string
+    concat string.html_safe
   end
 end
