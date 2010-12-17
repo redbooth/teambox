@@ -15,11 +15,7 @@ class ApiV1::APIController < ApplicationController
     project_id ||= params[:project_id]
     
     if project_id
-      @current_project = if project_id.to_s.match(API_NONNUMERIC)
-        Project.find_by_permalink(project_id)
-      else
-        Project.find_by_id(project_id)
-      end
+      @current_project = Project.find_by_id_or_permalink(project_id)
       api_status(:not_found) unless @current_project
     end
   end

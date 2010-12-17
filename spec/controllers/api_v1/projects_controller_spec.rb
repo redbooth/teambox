@@ -48,7 +48,7 @@ describe ApiV1::ProjectsController do
 
       lambda {
         post :create, project_attributes
-        response.status.should == '201 Created'
+        response.status.should == 201
       }.should change(Project, :count)
       
       JSON.parse(response.body)['organization_id'].to_i.should == @org.id

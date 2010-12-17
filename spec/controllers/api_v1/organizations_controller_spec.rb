@@ -91,7 +91,7 @@ describe ApiV1::OrganizationsController do
       login_as @user2
       
       get :show, :id => @organization.permalink
-      response.status.should == '404 Not Found'
+      response.status.should == 404
     end
   end
 end
