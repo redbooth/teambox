@@ -171,14 +171,6 @@ ActiveRecord::Schema.define(:version => 20101215175148) do
   add_index "google_docs", ["project_id"], :name => "index_google_docs_on_project_id"
   add_index "google_docs", ["user_id"], :name => "index_google_docs_on_user_id"
 
-  create_table "immortal_models", :force => true do |t|
-    t.string   "title"
-    t.integer  "value"
-    t.boolean  "deleted",    :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "ims", :force => true do |t|
     t.integer "card_id"
     t.string  "name"
