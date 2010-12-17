@@ -79,13 +79,13 @@ Teambox::Application.routes.draw do
     resources :task_lists do
       resources :tasks
     end
-    match 'activities/users/:id/show_more.:format' => 'activities#show_more', :as => :show_more, :method => :get
+    match 'activities/users/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
   end
 
-  match 'activities.:format' => 'activities#show', :as => :activities, :method => :get
-  match 'activities/:id/show_new.:format' => 'activities#show_new', :as => :show_new, :method => :get
-  match 'activities/:id/show_more.:format' => 'activities#show_more', :as => :show_more, :method => :get
-  match 'activities/:id/show_thread.:format' => 'activities#show_thread', :as => :show_thread, :method => :get
+  match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
+  match 'activities/:id/show_new(.:format)' => 'activities#show_new', :as => :show_new, :method => :get
+  match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
+  match 'activities/:id/show_thread(.:format)' => 'activities#show_thread', :as => :show_thread, :method => :get
 
   match 'projects/archived.:format' => 'projects#index', :as => :project_archived, :sub_action => 'archived'
 
@@ -115,9 +115,9 @@ Teambox::Application.routes.draw do
       end
     end
 
-    match 'activities.:format' => 'activities#show', :as => :activities, :method => :get
-    match 'activities/:id/show_new.:format' => 'activities#show_new', :as => :show_new, :method => :get
-    match 'activities/:id/show_more.:format' => 'activities#show_more', :as => :show_more, :method => :get
+    match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
+    match 'activities/:id/show_new(.:format)' => 'activities#show_new', :as => :show_new, :method => :get
+    match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
     resources :uploads
     match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
 
