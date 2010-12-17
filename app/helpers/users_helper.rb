@@ -49,7 +49,7 @@ module UsersHelper
   def load_my_avatar_for_new_comments
     %(<style type='text/css'>
         a.micro_avatar.my_avatar { background: url(#{avatar_or_gravatar(current_user, :micro)}) no-repeat }
-      </style>)
+      </style>).html_safe
   end
 
   def js_for_signup_form_validations

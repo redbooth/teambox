@@ -1,14 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-
-  def csrf_meta_tag
-    if protect_against_forgery?
-      out = %(<meta name="csrf-param" content="%s"/>\n)
-      out << %(<meta name="csrf-token" content="%s"/>)
-      out % [ Rack::Utils.escape_html(request_forgery_protection_token),
-              Rack::Utils.escape_html(form_authenticity_token) ]
-    end
-  end
   
   def content_for(*args)
     super unless args.first.to_sym == :column and mobile?
@@ -241,7 +232,7 @@ module ApplicationHelper
       html << "a:hover { color: ##{@organization ? @organization.settings['colours']['link_hover'] : ''};}"
       html << "body { font-color: ##{@organization ? @organization.settings['colours']['text'] : ''};}"
       html << '</style>'
-    end
+    end.html_safe
   end
 
   def organization_header_bar_colour
