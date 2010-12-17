@@ -49,7 +49,7 @@ module Immortal
   module InstanceMethods    
     def self.included(base)
       base.class_eval do
-        default_scope where(:deleted => false)
+        default_scope where(["deleted IS NULL OR deleted = ?", false])
         alias :mortal_destroy :destroy
         alias :destroy :immortal_destroy
       end
