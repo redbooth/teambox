@@ -2,15 +2,16 @@ require 'spec_helper'
 
 describe HooksController do
   it "should route to hooks controller" do
-    params_from(:post, '/hooks/email').should == {
-      :action => "create", :hook_name => "email", :controller => "hooks"
-    }
+    { :post => '/hooks/email' }.should route_to(:action => "create", 
+                                                :hook_name => "email", 
+                                                :controller => "hooks")
   end
-  
+
   it "should route to hooks controller scoped under project" do
-    params_from(:post, '/projects/12/hooks/pivotal').should == {
-      :action => "create", :hook_name => "pivotal", :controller => "hooks", :project_id => "12"
-    }
+    { :post => '/projects/12/hooks/pivotal' }.should route_to(:action => "create", 
+                                                              :hook_name => "pivotal", 
+                                                              :controller => "hooks", 
+                                                              :project_id => "12")
   end
 
   describe "#create" do

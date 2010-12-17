@@ -117,7 +117,7 @@ class UploadsController < ApplicationController
   private
     
     def find_upload
-      if params[:id].match /^\d+$/
+      if params[:id].to_s.match /^\d+$/
         @upload = @current_project.uploads.find(params[:id])
       else
         @upload = @current_project.uploads.find_by_asset_file_name(params[:id])

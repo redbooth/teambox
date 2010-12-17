@@ -127,7 +127,7 @@ describe ApiV1::TasksController do
       login_as @user
       
       get :show, :project_id => @project.permalink, :task_list_id => @other_list.id, :id => @task.id
-      response.status.should == '404 Not Found'
+      response.status.should == 404
     end
   end
   

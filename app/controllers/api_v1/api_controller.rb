@@ -15,7 +15,7 @@ class ApiV1::APIController < ApplicationController
     project_id ||= params[:project_id]
     
     if project_id
-      @current_project = if project_id.match(API_NONNUMERIC)
+      @current_project = if project_id.to_s.match(API_NONNUMERIC)
         Project.find_by_permalink(project_id)
       else
         Project.find_by_id(project_id)
@@ -26,7 +26,7 @@ class ApiV1::APIController < ApplicationController
   
   def load_organization
     if params[:organization_id]
-      @organization = if params[:organization_id].match(API_NONNUMERIC)
+      @organization = if params[:organization_id].to_s.match(API_NONNUMERIC)
         current_user.organizations.find_by_permalink(params[:organization_id])
       else
         current_user.organizations.find_by_id(params[:organization_id])

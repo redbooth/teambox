@@ -180,7 +180,7 @@ describe ApiV1::TaskListsController do
       
       put :archive, :project_id => @project.permalink, :id => @task_list.id
       put :archive, :project_id => @project.permalink, :id => @task_list.id
-      response.status.should == '422 Unprocessable Entity'
+      response.status.should == 422
       
       @task_list.reload.archived.should == true
     end
@@ -213,7 +213,7 @@ describe ApiV1::TaskListsController do
       login_as @user
       
       put :unarchive, :project_id => @project.permalink, :id => @task_list.id
-      response.status.should == '422 Unprocessable Entity'
+      response.status.should == 422
       
       @task_list.reload.archived.should == false
     end

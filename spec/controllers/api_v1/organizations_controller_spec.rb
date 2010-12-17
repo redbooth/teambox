@@ -41,7 +41,7 @@ describe ApiV1::OrganizationsController do
 
       lambda {
         post :create, organization_attributes
-        response.status.should == '201 Created'
+        response.status.should == 201
       }.should change(Organization, :count)
       
       JSON.parse(response.body)['name'].should == organization_attributes[:name]

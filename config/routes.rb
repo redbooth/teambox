@@ -109,9 +109,9 @@ Teambox::Application.routes.draw do
 
     resources :invitations do
       member do
-        :accept
-        :decline
-        :resend
+        put :accept
+        put :decline
+        get :resend
       end
     end
 
