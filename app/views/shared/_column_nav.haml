@@ -1,0 +1,42 @@
+.nav_links
+
+  .el
+    = link_to "All projects", projects_path, :class => 'home'
+    %span= current_user.projects.unarchived.count
+  .contained
+    - for project in current_user.recent_projects
+      .el= link_to project, project, :class => 'project'
+      .contained
+        .el= link_to "Recent activity", project_path(project), :class => 'recent_activity'
+        .el= link_to "Conversations", project_conversations_path(project), :class => 'conversations'
+        .el= link_to "Tasks", project_task_lists_path(project), :class => 'tasks'
+        .el= link_to "Pages", project_pages_path(project), :class => 'pages'
+        .el= link_to "Files", project_uploads_path(project), :class => 'files'
+        .el= link_to "Settings", project_settings_path(project), :class => 'settings'
+        .el= link_to "People & Permissions", project_people_path(project), :class => 'people'
+    /.el= link_to "Show 2 more...", "", :class => 'more'
+    - if !Teambox.config.community || (@community_organization && @community_role)
+      .el
+        = link_to "+ New Project", new_project_path, :class => 'more'
+
+  .el
+    = link_to "My Tasks", task_lists_path, :class => 'tasks'
+    %span 5
+  .contained
+    - for task in current_user.pending_tasks
+      .el
+        = link_to task, project_task_path(task.project_id, task)
+        = render_due_on(task,current_user)
+
+  .el= link_to "Organizations", organizations_path, :class => 'people'
+  .contained
+    - for organization in current_user.organizations
+      .el= link_to organization, organization_path(organization)
+      .contained
+        .el= link_to t('organizations.column.general_settings'), edit_organization_path(organization)
+        .el= link_to t('organizations.column.admin_projects'), projects_organization_path(organization)
+        .el= link_to t('organizations.column.admin_users'), organization_memberships_path(organization)
+        .el= link_to t('organizations.column.appearance'), appearance_organization_path(organization)
+        - if organization.is_admin? current_user
+          .el= link_to t('organizations.column.delete'), delete_organization_path(organization)
+    .el= link_to "Manage organizations...", organizations_path, :class => 'more'

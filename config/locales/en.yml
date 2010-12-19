@@ -19,9 +19,6 @@ en:
     print: Print this page
     prev: Previous
     next: Next
-    tasks:
-      one: 1 task
-      other: "%{count} tasks"
     comment:
       one: "%{count} comment"
       other: "%{count} comments"
@@ -553,7 +550,6 @@ en:
     archived_projects:
       title: Archived projects
       last_activity: "last activity at %{date}"
-        
     you_are_not_admin: You are not an admin of this organization. Only admins can edit its settings and manage users.
     delete:
       need_to_be_admin: You need to be an administrator to destroy this organization
@@ -1138,10 +1134,6 @@ en:
       title: There are no task lists due to show
     upcoming_events_primer:
       title: There are no tasks due to show
-    projects:
-      projects: Projects
-    archived_projects:
-      archived_projects: Archived Projects
     navigation:
       welcome: Welcome
       all_projects: 'All Projects'
@@ -1170,10 +1162,6 @@ en:
       organizations: Organizations
       organization: Organization
       affiliate_area: Affiliate Area
-    projects_dropdown:
-      all_projects: Overview for all projects
-      new_project: + New project
-      recent_projects: Recent projects
     global_navigation:
       project_invitations: Project Invitations
       home: Home

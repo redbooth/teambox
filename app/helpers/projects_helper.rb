@@ -34,22 +34,6 @@ module ProjectsHelper
     render :partial => 'users/status', :collection => users, :as => :user
   end
   
-  def list_projects(projects)
-    if projects.any?
-      render 'shared/projects', :projects => projects
-    end
-  end
-
-  def list_archived_projects(projects)
-    if projects.any?
-      render 'shared/archived_projects', :projects => projects
-    end
-  end
-  
-  def project_link(project)
-    link_to h(project.name), project_path(project)
-  end
-  
   def new_project_link
     if !Teambox.config.community || (@community_organization && !@community_role.nil?)
       link_to content_tag(:span, t('.new_project')), new_project_path,
@@ -57,10 +41,6 @@ module ProjectsHelper
     end
   end
   
-  def projects_tab_list(projects)
-    render 'shared/projects_dropdown', :projects => projects
-  end
-
   def project_fields(f,project,sub_action='new')
     render "projects/fields/#{sub_action}",  :f => f, :project => project
   end
@@ -135,18 +115,6 @@ module ProjectsHelper
         project_person_path(project, current_user.people.detect { |p| p.project_id == project.id }),
         :method => :delete, :confirm => t('people.column.confirm_delete'), :class => :leave_link
     end
-  end
-
-  def quicklink_conversations(project)
-    link_to '', project_conversations_path(project), :class => :comment_icon
-  end
-  
-  def quicklink_tasks(project)
-    link_to '', project_task_lists_path(project), :class => :task_icon
-  end
-
-  def quicklink_pages(project)
-    link_to '', project_pages_path(project), :class => :page_icon
   end
 
   def reset_autorefresh

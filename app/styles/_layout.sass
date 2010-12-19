@@ -3,6 +3,7 @@ html, body
   padding: 0px
   background-color: white
 
+// For autoloading of scroll
 body.index_projects, body.show_projects, body.show_users
   padding-bottom: 300px
 
@@ -23,22 +24,13 @@ div.column_wrap
   div.column
     background: rgb(255, 255, 255)
     padding: 10px
+      left: 0
+    border:
+      left: 1px solid #eee
     select
       max-width: 280px
-    div.active
-      +rounded(5px)
-      background: $navbar
-      color: white
-      padding: 3px
-      span
-        background: $navbar
-        padding-right: 0px
-      a
-        color: rgb(255, 255, 255)
-      .task_status
-        background: rgb(150, 150, 250)
-        color: rgb(50, 50, 250)
-        font-weight: bold
+    .view_sidebar
+      margin-left: 15px
 
 div.container
   width: 960px

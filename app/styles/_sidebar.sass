@@ -1,0 +1,92 @@
+.nav_links, .more_links
+  padding: 0
+  margin: 0
+    bottom: 20px
+
+  .el
+    display: block
+    width: 100%
+    padding-left: 10px
+    position: relative
+    span
+      position: absolute
+      right: 5px
+      top: 4px
+      background-color: lighten($navbar, 30)
+      padding: 2px 4px
+      font-size: 11px
+      +rounded(3px)
+    &.selected, &.selected:hover
+      background: lighten($navbar, 20)
+    &:hover
+      background: lighten($navbar, 30)
+    &.expanded
+      a
+        font-weight: bold
+      span
+        display: none
+
+  .contained
+    .el
+      font-size: 11px
+      a
+        padding-left: 30px
+      a.more
+        color: #777
+    .contained
+      .el
+        padding-left: 36px
+
+  .space
+    height: 20px
+
+  a
+    padding: 5px
+    display: block
+    color: #333
+    &:hover
+      text-decoration: none
+    padding-left: 28px
+    background-position: 3px 4px
+    background-repeat: no-repeat
+    &.home
+      background-image: url(/famfamfam/house.png)
+    &.add
+      background-image: url(/famfamfam/add.png)
+    &.recent_activity
+      background-image: url(/famfamfam/newspaper.png)
+    &.conversations
+      background-image: url(/famfamfam/comment.png)
+    &.tasks
+      background-image: url(/famfamfam/tick.png)
+    &.pages
+      background-image: url(/famfamfam/layout_content.png)
+    &.files
+      background-image: url(/famfamfam/folder.png)
+    &.people
+      background-image: url(/famfamfam/group.png)
+    &.chat
+      background-image: url(/famfamfam/emoticon_smile.png)
+    &.contacts
+      background-image: url(/famfamfam/report_user.png)
+    &.recent_activities
+      background-image: url(/famfamfam/user_comment.png)
+    &.advanced
+      background-image: url(/famfamfam/pill.png)
+    &.feeds
+      background-image: url(/famfamfam/feed.png)
+    &.calendar
+      background-image: url(/famfamfam/date.png)
+    &.affiliate
+      background-image: url(/famfamfam/money_dollar.png)
+    &.settings
+      background-image: url(/famfamfam/cog.png)
+
+
+.my_tasks_listing
+  .task
+    height: 19px
+    margin: 4px
+    overflow: hidden
+    a
+      color: #333

@@ -33,17 +33,6 @@ module ApplicationHelper
     end
   end
 
-  def navigation(project,projects,recent_projects)
-    render 'shared/navigation',
-      :project => project,
-      :projects => projects,
-      :recent_projects => recent_projects
-  end
-
-  def project_navigation(project)
-    render 'shared/project_navigation', :project => project
-  end
-
   def search_bar
     render 'shared/search_bar'
   end

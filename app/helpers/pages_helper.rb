@@ -78,10 +78,6 @@ module PagesHelper
     end
   end
   
-  def pages_tab_list(project,pages)
-    render 'shared/pages_dropdown', :project => project, :pages => pages
-  end
-  
   def page_slot_fields(slot = 0, before = 0)
     render 'pages/slot_fields', :pos_slot => slot, :pos_before => before
   end

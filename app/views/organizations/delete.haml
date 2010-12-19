@@ -6,5 +6,3 @@
   .danger
     %p= t('.clarification')
     = link_to t('.delete'), organization_path(@organization), :method => :delete, :class => 'button', :confirm => t('.confirm')
-
-= render 'organizations/column'

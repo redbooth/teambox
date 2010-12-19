@@ -12,7 +12,7 @@
     = header
     = navigation(@current_project,current_user.projects,current_user.recent_projects)
   #content
-    = project_navigation(@current_project) if @current_project
+    = render 'shared/project_navigation', :project => @current_project if @current_project
     = yield
   #footer
     = link_to "Use full Teambox", change_format_path(:html)

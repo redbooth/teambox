@@ -22,6 +22,7 @@
 @import actions_menu
 @import teambox_data
 @import google_docs
+@import sidebar
 
 @import calendar_date_select
 @import autocomplete
@@ -29,3 +30,38 @@
 @import progress_bars
 @import tooltips
 @import preview
+
+.navigation
+  display: none
+
+// overriding a default style
+#column .nav_links .conversations
+  margin: 0
+
+div.column_wrap h2
+  text-transform: none
+  font-weight: bold
+
+.activity .upload_list .upload_file span
+  display: inline-block
+  height: 16px
+  max-width: 400px
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+
+.header
+  .upgrade
+    font-size: 12px
+    background-position: 3px 5px
+    background-repeat: no-repeat
+    background-image: url(/famfamfam/star.png)
+    height: 20px
+    display: inline-block
+    margin:
+      top: 4px
+      left: 40px
+    padding:
+      top:  6px
+      left: 25px
+    color: #333
