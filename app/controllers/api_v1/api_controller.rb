@@ -30,7 +30,7 @@ class ApiV1::APIController < ApplicationController
   def belongs_to_project?
     if @current_project
       unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-        api_error t('common.not_allowed'), :unauthorized
+        api_error(t('common.not_allowed'), :unauthorized)
       end
     end
   end
@@ -113,19 +113,19 @@ class ApiV1::APIController < ApplicationController
     end
   end
   
-  def api_error(message, status)
-    error = {'message' => message}
+  def api_error(the_message, status_code)
+    the_list = {:errors => [{:message => the_message}]}
     respond_to do |f|
-      f.json { render :as_json => error.to_xml(:root => 'error'), :status => status }
-      f.js { render :json => error.to_xml(:root => 'error'), :status => status, :callback => params[:callback] }
+      f.json { render :json => the_list.to_json, :status => status_code }
+      f.js { render :json => the_list.to_json, :status => status_code, :callback => params[:callback] }
     end
   end
   
   def handle_api_error(object,options={})
-    error_list = object.nil? ? [] : object.errors
+    the_list = {:errors => object.try(:errors)||[]}
     respond_to do |f|
-      f.json { render :as_json => error_list.to_xml, :status => options.delete(:status) || :unprocessable_entity }
-      f.js   { render :json => error_list.to_xml, :status => options.delete(:status) || :unprocessable_entity, :callback => params[:callback] }
+      f.json { render :json => the_list.to_json, :status => options.delete(:status) || :unprocessable_entity }
+      f.js   { render :json => the_list.to_json, :status => options.delete(:status) || :unprocessable_entity, :callback => params[:callback] }
     end
   end
   

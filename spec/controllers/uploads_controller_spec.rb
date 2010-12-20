@@ -53,7 +53,7 @@ describe UploadsController do
            :upload => {:asset => mock_uploader('lawsuit.txt', 'text/plain', "1 million dollars please")}
       
       @project.uploads(true).length.should == 3
-      @project.uploads.first.asset.original_filename.should == 'lawsuit.txt'
+      @project.uploads.last.asset.original_filename.should == 'lawsuit.txt'
     end
     
     it "should insert uploads at the top of a page" do

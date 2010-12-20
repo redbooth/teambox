@@ -91,7 +91,7 @@ describe ApiV1::UploadsController do
       @project.reload
       get :index, :project_id => @project.permalink, :since_id => @project.upload_ids[1], :count => 1
       response.should be_success
-      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.upload_ids[0]]
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.upload_ids[2]]
     end
   end
   

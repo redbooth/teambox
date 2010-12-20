@@ -15,11 +15,11 @@ class ApplicationController < ActionController::Base
                 :confirmed_user?, 
                 :load_project, 
                 :load_organizations,
+                :set_client,
                 :login_required, 
-                :touch_user, 
+                :touch_user,
                 :belongs_to_project?,
                 :load_community_organization,
-                :set_client,
                 :add_chrome_frame_header
   
   private
