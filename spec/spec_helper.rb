@@ -142,6 +142,11 @@ def dump_test_data
   ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(TeamboxData.new.serialize(Organization.all, Project.all, User.all)))
 end
 
+# Backwards compatibility fix: this way we can use it in subject blocks
+def description
+  self.example.description
+end
+
 # RAILS3 document this for rack-test
 def app
   Rails.application
