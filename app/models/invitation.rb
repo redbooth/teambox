@@ -127,4 +127,11 @@ class Invitation < RoleRecord
   def belongs_to_organization?
     invited_user and target.respond_to?(:organization) and target.organization.try(:is_user?, invited_user)
   end
+
+  protected
+
+    def valid_email?(value)
+      value =~ ValidatesEmailFormatOf::Regex
+    end
+
 end

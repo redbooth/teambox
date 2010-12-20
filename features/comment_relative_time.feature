@@ -11,7 +11,7 @@ Feature: Comment have human readable relative date
       | 1 days ago     |
 
   Scenario: I look at relative time of posted comment
-    And I go to the conversations page
+    When I go to the conversations page
     And I follow "Testing date"
     Then I should see the following time representation:
       | formatted_relative_time |

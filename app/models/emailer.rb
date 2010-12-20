@@ -106,7 +106,7 @@ class Emailer < ActionMailer::Base
   end
 
   def project_membership_notification(invitation_id)
-    invitation = Invitation.find(invitation_id)
+    invitation = Invitation.find_with_deleted(invitation_id)
     defaults
     recipients    invitation.invited_user.email
     from_reply_to "#{invitation.project.permalink}", invitation.user

@@ -34,6 +34,7 @@ group :plugins do
   gem 'paperclip', '~> 2.3.6'
   gem 'vestal_versions', '~> 1.0.2'
   gem 'cancan', '~> 1.2.0'
+  gem 'validates_email_format_of', '~> 1.4.2'
 end
 
 group :development do

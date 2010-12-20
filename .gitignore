@@ -8,6 +8,7 @@
 config/database.yml
 config/teambox.local.yml
 /coverage
+/exports
 db/*.sqlite3
 db/sphinx
 config/*.sphinx.conf

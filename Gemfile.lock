@@ -147,6 +147,7 @@ GEM
     tmail (1.2.7.1)
     trollop (1.16.2)
     tzinfo (0.3.23)
+    validates_email_format_of (1.4.2)
     vestal_versions (1.0.2)
       activerecord (>= 2.1.0)
     whenever (0.4.2)
@@ -194,6 +195,7 @@ DEPENDENCIES
   tilt
   tmail (~> 1.2.3)
   tzinfo (~> 0.3.12)
+  validates_email_format_of (~> 1.4.2)
   vestal_versions (~> 1.0.2)
   whenever (~> 0.4.1)
   will_paginate (~> 2.3.14)
