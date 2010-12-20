@@ -23,7 +23,7 @@ module Teambox
   end
 
   def self.config
-    Rails.configuration.instance_variable_get('@choices')
+    Rails.configuration
   end
 
   class Application < Rails::Application

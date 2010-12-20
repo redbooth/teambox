@@ -24,7 +24,7 @@ gem 'hpricot', '~> 0.8.2'
 gem 'json'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'tilt'
-gem 'choices'
+gem 'choices', :git => "git@github.com:teambox/choices.git"
 gem 'nokogiri'
 
 group :plugins do

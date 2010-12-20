@@ -1,3 +1,10 @@
+GIT
+  remote: git@github.com:teambox/choices.git
+  revision: ab5c534c516ab7dadf71e592db2e095adb191153
+  specs:
+    choices (0.2.0)
+      hashie (>= 0.4.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -47,8 +54,6 @@ GEM
     cgi_multipart_eof_fix (2.5.0)
     childprocess (0.1.4)
       ffi (~> 0.6.3)
-    choices (0.2.0)
-      hashie (>= 0.4.0)
     chronic (0.3.0)
     columnize (0.3.2)
     configuration (1.2.0)
@@ -207,7 +212,7 @@ DEPENDENCIES
   builder (~> 2.1.2)
   cancan (~> 1.2.0)
   capybara (~> 0.3.5)
-  choices
+  choices!
   cucumber-rails (~> 0.3.0)
   database_cleaner (~> 0.5.0)
   factory_girl (~> 1.2.3)
