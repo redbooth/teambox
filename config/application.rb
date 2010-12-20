@@ -22,6 +22,10 @@ module Teambox
     def decrement(*args) end
   end
 
+  def self.config
+    Rails.configuration.instance_variable_get('@choices')
+  end
+
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -56,10 +60,10 @@ module Teambox
     config.from_file 'teambox.yml'
 
     config.cache_store = UselessStore.new
-  end
 
-  def self.config
-    Rails.configuration.instance_variable_get('@choices')
+    # Redirect http to https if secure_logins is true
+    # https://github.com/tobmatth/rack-ssl-enforcer
+    config.middleware.use Rack::SslEnforcer if Teambox.config.secure_logins
   end
 
   Object.const_set(:APP_CONFIG, config)

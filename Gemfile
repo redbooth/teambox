@@ -39,7 +39,7 @@ gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.2.0'
 gem 'immortal'
-#gem 'rails3_acts_as_paranoid', :git => 'git://github.com/goncalossilva/rails3_acts_as_paranoid.git'
+gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer' 
 
 group :development do
   gem 'sqlite3-ruby', '~> 1.2.5', :require => nil

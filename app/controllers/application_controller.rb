@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
   include AuthenticatedSystem
-  include SslHelper
 
   filter_parameter_logging :password
 
