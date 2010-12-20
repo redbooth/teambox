@@ -109,8 +109,13 @@ class User < ActiveRecord::Base
   end
   
   def locale
+<<<<<<< HEAD
     if I18n.available_locales.include? self[:locale].to_sym
       self[:locale].to_s
+=======
+    if I18n.available_locales.map(&:to_s).include? self[:locale]
+      self[:locale]
+>>>>>>> avoid load order issue with spec and I18n
     else
       I18n.default_locale.to_s
     end
