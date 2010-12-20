@@ -64,6 +64,14 @@ class Organization < ActiveRecord::Base
   def to_param
     permalink
   end
+  
+  def self.find_by_id_or_permalink(param)
+    if param.to_s =~ /^\d+$/
+      find(param)
+    else
+      find_by_permalink(param)
+    end
+  end
 
   def users_in_projects
     User.find(:all, :joins => :people, :conditions => {:people => {:project_id => project_ids}}).uniq

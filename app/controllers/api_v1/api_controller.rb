@@ -1,9 +1,7 @@
 class ApiV1::APIController < ApplicationController
-  skip_before_filter :load_organization
   skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token
 
   API_LIMIT = 50
-  API_NONNUMERIC = /[^0-9]+/
 
   protected
   
@@ -21,14 +19,12 @@ class ApiV1::APIController < ApplicationController
   end
   
   def load_organization
-    if params[:organization_id]
-      @organization = if params[:organization_id].to_s.match(API_NONNUMERIC)
-        current_user.organizations.find_by_permalink(params[:organization_id])
-      else
-        current_user.organizations.find_by_id(params[:organization_id])
-      end
+    organization_id ||= params[:organization_id]
+    
+    if organization_id
+      @organization = Organization.find_by_id_or_permalink(organization_id)
+      api_status(:not_found) unless @organization
     end
-    api_status(:not_found) if params[:organization_id] and @organization.nil?
   end
   
   def belongs_to_project?

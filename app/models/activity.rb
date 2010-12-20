@@ -60,7 +60,7 @@ class Activity < ActiveRecord::Base
       [comment_target,
        comment_target.first_comment,
        comment_target.user,
-       comment_target.first_comment.user] + 
+       comment_target.first_comment.try(:user)] + 
        comment_target.recent_comments + 
        comment_target.recent_comments.map(&:user)
     else

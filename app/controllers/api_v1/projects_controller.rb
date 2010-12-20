@@ -59,7 +59,9 @@ class ApiV1::ProjectsController < ApiV1::APIController
   protected
   
   def load_project
-    if project_id ||= params[:id]
+    project_id ||= params[:id]
+    
+    if project_id
       @current_project = Project.find_by_id_or_permalink(project_id)
       api_status(:not_found) unless @current_project
     end

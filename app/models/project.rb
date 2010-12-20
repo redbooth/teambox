@@ -20,7 +20,7 @@ class Project < ActiveRecord::Base
   attr_accessor :import_activities
   
   def self.find_by_id_or_permalink(param)
-    if param =~ /^\d+$/
+    if param.to_s =~ /^\d+$/
       find(param)
     else
       find_by_permalink(param)
