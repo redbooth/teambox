@@ -6,7 +6,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     @activities = Activity.where(api_scope).all(:conditions => api_range,
                         :order => 'id DESC',
                         :limit => api_limit,
-                        :include => [:target, :project, :user, {:comment_target => [:user, {:first_comment => :user}, {:recent_comments => :user}]}])
+                        :include => [:target, :project, :user, {:comment_target => [:user, {:recent_comments => :user}]}])
     api_respond @activities,
                 :references => [:target, :project, :user, :refs_thread_comments, :refs_comment_target]
   end
