@@ -31,8 +31,7 @@ group :plugins do
   gem 'will_paginate', '~> 2.3.14'
 end
 
-# RAILS3 require => nil, for people who doens't have sphinx installed
-gem 'thinking-sphinx', '2.0.0', :require => 'thinking_sphinx'
+gem 'thinking-sphinx', '2.0.0', :require => nil
 gem 'sprockets-rails', '~> 0.0.1'
 gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_versions'
 gem 'paperclip', '~> 2.3.6'
