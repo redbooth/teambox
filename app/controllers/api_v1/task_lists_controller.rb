@@ -54,7 +54,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   
   def archive
     authorize! :update, @task_list
-    if request.method == :put and !@task_list.archived
+    unless @task_list.archived
       # Prototype for comment
       comment_attrs = {:comment_body => params[:message]}
       comment_attrs[:body] ||= "Archived task list"
@@ -84,7 +84,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   
   def unarchive
     authorize! :update, @task_list
-    if request.method == :put and @task_list.editable?(current_user) and @task_list.archived
+    if @task_list.archived
       @task_list.archived = false
       @saved = @task_list.save
     end
