@@ -63,7 +63,7 @@ class Emailer < ActionMailer::Base
     @login_link = confirm_email_user_url(@user, :token => @user.login_token)
 
     mail(
-      :recipients => @user.email,
+      :to         => @user.email,
       :subject => I18n.t("emailer.confirm.subject")
     )
   end
@@ -71,7 +71,7 @@ class Emailer < ActionMailer::Base
   def reset_password(user_id)
     @user = User.find(user_id)
     mail(
-      :recipients => @user.email,
+      :to         => @user.email,
       :subject    => I18n.t("emailer.reset_password.subject")
     )
   end
@@ -81,7 +81,7 @@ class Emailer < ActionMailer::Base
     @user = reset_password.user
     @url  = reset_password_url(reset_password.reset_code)
     mail(
-      :recipients =>   reset_password.user.email,
+      :to         =>   reset_password.user.email,
       :subject    =>   I18n.t("emailer.forgot_password.subject")
     )
   end
@@ -91,7 +91,7 @@ class Emailer < ActionMailer::Base
     @referral   = @invitation.user
     @project    = @invitation.project
     mail(
-      :recipients => @invitation.email,
+      :to         => @invitation.email,
       :from       => self.class.from_user(nil, @invitation.user),
       :subject    => I18n.t("emailer.invitation.subject", 
                             :user => @invitation.user.name, 
@@ -104,7 +104,7 @@ class Emailer < ActionMailer::Base
     @referral   = @invitation.user
     @project    = @invitation.project
     mail(
-      :recipients => @invitation.email,
+      :to         => @invitation.email,
       :subject    => I18n.t("emailer.invitation.subject", 
                             :user    => @invitation.user.name, 
                             :project => @invitation.project.name)
@@ -116,7 +116,7 @@ class Emailer < ActionMailer::Base
     @user  = @data.user
     @error = !@data.exported?
     mail(
-      :recipients => @data.user.email,
+      :to         => @data.user.email,
       :subject    => @error ? I18n.t('emailer.teamboxdata.export_failed') : I18n.t('emailer.teamboxdata.exported')
     )
   end
@@ -126,7 +126,7 @@ class Emailer < ActionMailer::Base
     @user  = @data.user
     @error = !@data.imported?
     mail(
-      :recipients => @data.user.email,
+      :to         => @data.user.email,
       :subject    => @error ? I18n.t('emailer.teamboxdata.import_failed') : I18n.t('emailer.teamboxdata.imported')
     )
   end
@@ -142,7 +142,7 @@ class Emailer < ActionMailer::Base
                     @conversation.name
 
     mail({
-      :recipients    => @recipient.email,
+      :to            => @recipient.email,
       :subject       => "[#{@project.permalink}] #{title}"
     }.merge(
       from_reply_to "#{@project.permalink}+conversation+#{@conversation.id}", @conversation.comments.first.user
@@ -156,7 +156,7 @@ class Emailer < ActionMailer::Base
     @recipient    = User.find(user_id)
     @organization = @task.project.organization
     mail({
-      :recipients    => @recipient.email,
+      :to            => @recipient.email,
       :subject       => "[#{@project.permalink}] #{@task.name}#{task_description(@task)}"
     }.merge(
       from_reply_to "#{@project.permalink}+task+#{@task.id}", @task.comments.first.user
@@ -168,7 +168,7 @@ class Emailer < ActionMailer::Base
     @project    = @invitation.project
     @recipient  = @invitation.invited_user
     mail({
-      :recipients    => @invitation.invited_user.email,
+      :to            => @invitation.invited_user.email,
       :subject       => I18n.t("emailer.project_membership_notification.subject", 
                                :user => @invitation.user.name, 
                                :project => @invitation.project.name)
@@ -181,7 +181,7 @@ class Emailer < ActionMailer::Base
     @user  = User.find(user_id)
     @tasks = @user.tasks_for_daily_reminder_email
     mail(
-      :recipients => @user.email,
+      :to         => @user.email,
       :subject    => I18n.t("users.daily_task_reminder_email.daily_task_reminder")
     ) 
   end
@@ -190,7 +190,7 @@ class Emailer < ActionMailer::Base
     info_url = 'http://help.teambox.com/faqs/advanced-features/email'
 
     mail(
-      :recipients => exception_mail,
+      :to         => exception_mail,
       :subject    => I18n.t("emailer.bounce.subject"),
       :body       => I18n.t("emailer.bounce.#{pretty_exception}") + "\n\n---\n" +
                      I18n.t("emailer.bounce.not_delivered", :link => info_url)
