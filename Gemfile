@@ -34,7 +34,7 @@ end
 # RAILS3 require => nil, for people who doens't have sphinx installed
 gem 'thinking-sphinx', '2.0.0', :require => 'thinking_sphinx'
 gem 'sprockets-rails', '~> 0.0.1'
-gem 'vestal_versions', '~> 1.0.2'
+gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_versions'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.2.0'
