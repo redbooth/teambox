@@ -20,7 +20,7 @@
           - else
             = t('tasks.assigned.unassigned')
 
-      ~ comment.body_html
+      ~raw comment.body_html
 
     - if comment.uploads.any?
       %ul

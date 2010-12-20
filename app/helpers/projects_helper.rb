@@ -104,10 +104,10 @@ module ProjectsHelper
 
     if email_help
       span = content_tag(:span, :id => 'email_help', :style => 'display:none') do
-        %(<p>#{email_help}</p><a href='#' class='closeThis'>#{t('common.close')}</a>)
+        %(<p>#{email_help}</p><a href='#' class='closeThis'>#{t('common.close')}</a>).html_safe
       end
       link_to_function(t('shared.instructions.send_email' + suffix),
-        ("$('email_help').toggle()"), :class => :email_link) + span
+        ("$('email_help').toggle()".html_safe), :class => :email_link) + span
     end
   end
 

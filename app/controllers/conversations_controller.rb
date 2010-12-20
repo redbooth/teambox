@@ -100,7 +100,7 @@ class ConversationsController < ApplicationController
     @conversation.add_watcher(current_user)
     
     respond_to do |f|
-      f.js
+      f.js { render :layout => false }
       f.html { redirect_to current_conversation }
     end
   end
@@ -109,7 +109,7 @@ class ConversationsController < ApplicationController
     @conversation.remove_watcher(current_user)
     
     respond_to do |f|
-      f.js
+      f.js { render :layout => false }
       f.html { redirect_to current_conversation }
     end
   end

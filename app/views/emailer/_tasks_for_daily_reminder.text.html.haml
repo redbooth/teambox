@@ -15,5 +15,5 @@
           - comment = task.comments.first
           - if comment
             .span{ :style => email_text(:normal) + 'border-bottom: 1px #555' }
-              ~ comment.body_html
+              ~raw comment.body_html
 

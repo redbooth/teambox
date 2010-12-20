@@ -132,14 +132,14 @@ class TasksController < ApplicationController
     authorize! :watch, @task
     @task.add_watcher(current_user)
     respond_to do |f|
-      f.js
+      f.js { render :layout => false }
     end
   end
 
   def unwatch
     @task.remove_watcher(current_user)
     respond_to do |f|
-      f.js
+      f.js { render :layout => false }
     end
   end
 

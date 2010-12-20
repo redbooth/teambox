@@ -45,7 +45,7 @@ module TasksHelper
       [].tap { |out|
         if comment.status_transition?
           out << task_status_badge(comment.previous_status_name)
-          out << content_tag(:span, '&rarr;', :class => "arr status_arr")
+          out << content_tag(:span, '&rarr;'.html_safe, :class => "arr status_arr")
         end
         out << task_status_badge(comment.status_name)
       }.join(' ').html_safe
@@ -135,7 +135,7 @@ module TasksHelper
   end
 
   def date_picker(f, field, embedded = false, html_options = {})
-    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>"
+    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>".html_safe
     div_id = "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}"
     content_tag :div, :class => "date_picker #{'embedded' if embedded}" do
       image_tag('/images/calendar_date_select/calendar.gif', :class => 'calendar_date_select_popup_icon') <<
@@ -144,7 +144,7 @@ module TasksHelper
   end
   
   def embedded_date_picker(f, field)
-    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>"
+    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>".html_safe
     div_id = "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}"
     content_tag :div, :class => "date_picker_embedded", :id => div_id do
       f.hidden_field(field) << content_tag(:span, date_field, :class => 'localized_date', :style => 'display: none') <<
