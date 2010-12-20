@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/adamcooper/vestal_versions
+  revision: 6273df533f85014062e346cb1807b0531a809ee2
+  specs:
+    vestal_versions (1.2.2)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+
+GIT
   remote: git@github.com:teambox/choices.git
   revision: 675faa587554c08b0f060fc240974b33fcd3d24d
   specs:
@@ -196,8 +204,6 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
-    vestal_versions (1.0.2)
-      activerecord (>= 2.1.0)
     whenever (0.4.2)
       chronic (>= 0.2.3)
     will_paginate (2.3.15)
@@ -246,6 +252,6 @@ DEPENDENCIES
   tilt
   tmail (~> 1.2.3)
   tzinfo (~> 0.3.12)
-  vestal_versions (~> 1.0.2)
+  vestal_versions (~> 1.2.2)!
   whenever (~> 0.4.1)
   will_paginate (~> 2.3.14)
