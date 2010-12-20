@@ -18,7 +18,7 @@
 =# javascript_tag autorefresh(@activities, @current_project)
 
 - content_for :column do
-  = render 'recent_conversations', :project => @current_project, :conversations => @recent_conversations
+  = render 'recent_conversations', :project => @current_project, :recent_conversations => @recent_conversations
   = render 'pages', :project => @current_project, :pages => @current_project.pages
 
   = render 'people_list', :project => @current_project, :compact => false

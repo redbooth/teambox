@@ -48,7 +48,7 @@ module TasksHelper
           out << content_tag(:span, '&rarr;', :class => "arr status_arr")
         end
         out << task_status_badge(comment.status_name)
-      }.join(' ')
+      }.join(' ').html_safe
     end
   end
 
@@ -57,10 +57,10 @@ module TasksHelper
       [].tap { |out|
         if comment.due_on_transition?
           out << span_for_due_date(comment.previous_due_on)
-          out << content_tag(:span, '&rarr;', :class => "arr due_on_arr")
+          out << content_tag(:span, '&rarr;'.html_safe, :class => "arr due_on_arr")
         end
         out << span_for_due_date(comment.due_on)
-      }.join(' ')
+      }.join(' ').html_safe
     end
   end
 
@@ -73,7 +73,7 @@ module TasksHelper
     when :header  then localized_status_name(task)
     end
     out << %(</span>)
-    out
+    out.html_safe
   end
 
   def due_on(task)

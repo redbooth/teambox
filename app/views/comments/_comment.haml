@@ -43,7 +43,7 @@
             - else
               = t('tasks.assigned.unassigned')
         
-        ~ comment.body_html
+        ~ comment.body_html.html_safe
 
       - if comment.uploads.any?
         - if comment.uploads.all? { |upload| upload.image? }

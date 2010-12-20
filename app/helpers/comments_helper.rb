@@ -11,7 +11,7 @@ module CommentsHelper
   
   def activity_comment_user_link(comment)
     if comment.user.deleted?
-      "<span class='author' style='text-decoration: line-through'>#{h comment.user.name}</span>"
+      "<span class='author' style='text-decoration: line-through'>#{h comment.user.name}</span>".html_safe
     else
       content_tag :span,
         link_to(h(comment.user.name), user_path(comment.user)),

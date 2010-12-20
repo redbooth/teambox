@@ -9,8 +9,8 @@ module ActivitiesHelper
       out << "#{t('common.in_project')} "
       out <<   link_to(h(project), project_path(project))
       out << "</span>"
-      out
-    end  
+      out.html_safe
+    end
   end
   
   def activity_section(activity)
@@ -41,7 +41,7 @@ module ActivitiesHelper
   end
 
   def list_threads(activities)
-    activities.map { |activity| show_threaded_activity(activity) }.join('')
+    activities.map { |activity| show_threaded_activity(activity) }.join('').html_safe
   end
 
   def show_threaded_activity(activity)
