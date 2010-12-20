@@ -1,4 +1,4 @@
-- if Teambox.config.providers and !Teambox.config.providers.empty?
+- if Teambox.config.providers? and !Teambox.config.providers.empty?
   - Teambox.config.providers.each do |provider|
     %p{:id => provider[:provider].downcase}
       - if current_user.app_links.find_by_provider(provider[:provider])
