@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/adamcooper/vestal_versions
-  revision: 6273df533f85014062e346cb1807b0531a809ee2
+  revision: 6273df5
   specs:
     vestal_versions (1.2.2)
       activerecord (>= 3.0.0)
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git@github.com:teambox/choices.git
-  revision: 675faa587554c08b0f060fc240974b33fcd3d24d
+  revision: 675faa5
   specs:
     choices (0.2.0)
       hashie (>= 0.4.0)
@@ -51,7 +51,7 @@ GEM
       mime-types
       xml-simple
     builder (2.1.2)
-    cancan (1.2.0)
+    cancan (1.4.1)
     capybara (0.3.9)
       culerity (>= 0.2.4)
       mime-types (>= 1.16)
@@ -73,7 +73,7 @@ GEM
       term-ansicolor (~> 1.0.5)
     cucumber-rails (0.3.2)
       cucumber (>= 0.8.0)
-    culerity (0.2.12)
+    culerity (0.2.13)
     daemons (1.1.0)
     database_cleaner (0.5.2)
     diff-lcs (1.1.2)
@@ -91,7 +91,7 @@ GEM
     gherkin (2.3.2)
       json (~> 1.4.6)
       term-ansicolor (~> 1.0.5)
-    haml (3.0.24)
+    haml (3.0.25)
     hashie (0.4.0)
     hpricot (0.8.3)
     i18n (0.5.0)
@@ -133,7 +133,7 @@ GEM
     oauth2 (0.1.0)
       faraday (~> 0.5.0)
       multi_json (~> 0.0.4)
-    paperclip (2.3.6)
+    paperclip (2.3.8)
       activerecord
       activesupport
     pg (0.9.0)
@@ -166,11 +166,11 @@ GEM
       rspec-core (~> 2.3.0)
       rspec-expectations (~> 2.3.0)
       rspec-mocks (~> 2.3.0)
-    rspec-core (2.3.0)
+    rspec-core (2.3.1)
     rspec-expectations (2.3.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.3.0)
-    rspec-rails (2.3.0)
+    rspec-rails (2.3.1)
       actionpack (~> 3.0)
       activesupport (~> 3.0)
       railties (~> 3.0)
@@ -204,6 +204,10 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
+    webrat (0.7.2)
+      nokogiri (>= 1.2.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5.3)
     whenever (0.4.2)
       chronic (>= 0.2.3)
     will_paginate (2.3.15)
@@ -216,7 +220,7 @@ DEPENDENCIES
   SystemTimer (~> 1.2.0)
   aws-s3 (~> 0.6.2)
   builder (~> 2.1.2)
-  cancan (~> 1.2.0)
+  cancan (~> 1.4.1)
   capybara (~> 0.3.5)
   choices!
   cucumber-rails (~> 0.3.0)
@@ -242,7 +246,7 @@ DEPENDENCIES
   rails (~> 3.0.3)
   rcov
   rdiscount (~> 1.6.3)
-  rspec-rails (~> 2.3.0)
+  rspec-rails (~> 2.3.1)
   ruby-debug (~> 0.10.3)
   sprockets-rails (~> 0.0.1)
   sqlite3-ruby (~> 1.2.5)
@@ -253,5 +257,6 @@ DEPENDENCIES
   tmail (~> 1.2.3)
   tzinfo (~> 0.3.12)
   vestal_versions (~> 1.2.2)!
+  webrat
   whenever (~> 0.4.1)
   will_paginate (~> 2.3.14)

@@ -36,7 +36,7 @@ gem 'sprockets-rails', '~> 0.0.1'
 gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_versions'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
-gem 'cancan', '~> 1.2.0'
+gem 'cancan', '~> 1.4.1'
 gem 'immortal'
 gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer' 
 
@@ -47,7 +47,8 @@ group :development do
 end
 
 group :test, :development do
-  gem 'rspec-rails', '~> 2.3.0'
+  gem 'rspec-rails', '~> 2.3.1'
+  gem 'webrat'
 end
 
 # we don't call the group :test because we don't want them auto-required
