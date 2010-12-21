@@ -173,7 +173,7 @@ describe Task do
       task.update_attributes(:comments_attributes => {"0" => {:human_hours => "30m"}})
       task.update_attributes(:comments_attributes => {"0" => {:hours => "0.2"}})
       task.should have(3).comments
-      task.total_hours.should be_close(1.2, 0.001)
+      task.total_hours.should be_within(0.001).of(1.2)
     end
     
     it "saves status transitions" do
