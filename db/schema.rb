@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101215175148) do
+ActiveRecord::Schema.define(:version => 20101220141905) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -461,7 +461,7 @@ ActiveRecord::Schema.define(:version => 20101215175148) do
     t.integer  "user_id"
     t.string   "user_type"
     t.string   "user_name"
-    t.text     "changes"
+    t.text     "modifications"
     t.integer  "number"
     t.string   "tag"
     t.datetime "created_at"
