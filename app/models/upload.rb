@@ -158,7 +158,7 @@ class Upload < RoleRecord
   end
   
   def update_comment_to_show_delete
-    if self.comment && self.comment.body.blank? && self.comment.uploads.size == 1
+    if self.comment && self.comment.body.blank? && self.comment.uploads.count == 1
       self.comment.update_attributes(:body => "File deleted")
     end
   end
