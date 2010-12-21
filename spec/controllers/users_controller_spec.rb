@@ -28,7 +28,7 @@ describe UsersController do
     end
 
     it "should render the new template" do
-      response.should render_template('users/new.haml')
+      response.should render_template('users/new')
     end
 
     it "should have errors on the user" do
