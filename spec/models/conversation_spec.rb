@@ -131,7 +131,7 @@ describe Conversation do
       task = conversation.convert_to_task!
 
       task.should_not be_nil
-      task.updated_at.should be_close(Time.now, 1)
+      task.updated_at.should be_within(1).of(Time.now)
     end
 
     it "and when converted to a task, the comments should be transferred to the task" do
