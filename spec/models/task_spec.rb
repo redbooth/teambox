@@ -123,8 +123,8 @@ describe Task do
     end
     
     it "gets correct tasks" do
-      tasks = Task.active.assigned_to(@user).all(:order => 'tasks.id')
-      tasks.map(&:name).should == ["Feed the cat", "Feed the dog"]
+      tasks = Task.active.assigned_to(@user).order('name').all
+      tasks.map(&:name).should == ["Feed the dog", "Feed the cat"]
     end
   end
   
@@ -262,10 +262,11 @@ describe Task do
     end
 
     it "displays assigned users even when they are destroyed" do
+      # Require with_deleted relationship port in immortal
       user = Factory(:mislav)
       project = Factory(:project)
       person = Factory(:person, :project => project, :user => user)
-      task = Factory(:task, :assigned => person, :project => project)
+      task = Factory(:task, :project => project)
       person.destroy_without_callbacks # We don't use destroy because we want to avoid the nullify from Person#tasks association
       task.reload.assigned.user.name.should == "Mislav Marohnić"
     end
