@@ -7,8 +7,6 @@ class ApplicationController < ActionController::Base
   
   include AuthenticatedSystem
 
-  filter_parameter_logging :password
-
   before_filter :set_locale,
                 :rss_token,
                 :confirmed_user?, 
