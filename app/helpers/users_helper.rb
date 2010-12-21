@@ -30,7 +30,7 @@ module UsersHelper
   end
   
   def gravatar_url
-    "<a href='http://gravatar.com'>Gravatar</a>"
+    "<a href='http://gravatar.com'>Gravatar</a>".html_safe
   end
   
   def build_user_phone_number(user)

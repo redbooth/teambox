@@ -14,7 +14,7 @@ module CardsHelper
     ''.tap do |out|
       out << fields.hidden_field(:_destroy) unless fields.object.new_record?
       out << link_to("", "##{fields.object.class.name.underscore}", :class => 'remove_nested_item trash_icon')
-    end
+    end.html_safe
   end
 
   def generate_html(form_builder, method, options = {})

@@ -142,7 +142,7 @@ module ApplicationHelper
     when Array then errors.first
     when String then errors
     end
-    "<div class='errors_for'>#{error}</div>"
+    "<div class='errors_for'>#{error}</div>".html_safe
   end
 
   def formatting_documentation_link
@@ -207,7 +207,7 @@ module ApplicationHelper
       end
       %(<div style="background-color: rgb(255,255,220); border-bottom: 1px solid rgb(200,200,150); width: 100%; display: block; font-size: 12px; padding: 10px 0; text-align: center">
         #{message}
-      </div>)
+      </div>).html_safe
     end
   end
   
@@ -221,7 +221,7 @@ module ApplicationHelper
   def tracking_code
     if Teambox.config.tracking_enabled and Rails.env.production?
       fake_img = "http://teambox.com/logo.png/#{request.host}"
-      %(<div style="background-image: url(#{fake_img})"></div>)
+      %(<div style="background-image: url(#{fake_img})"></div>).html_safe
     end
   end
 
@@ -244,7 +244,7 @@ module ApplicationHelper
     "".tap do |html|
       html << f.hidden_field(:settings, :id => "organization_settings_colours_#{field}", :name => "organization[settings][colours][#{field}]", :value => colour)
       html << content_tag('button', '', :id => "organization_settings_colours_#{field}_swatch", :class => 'colorbox', :style=>"width: 56px; height: 56px; border: 1px outset #666; cursor: crosshair;")
-    end
+    end.html_safe
   end
 
   def preview_button

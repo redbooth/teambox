@@ -1,9 +1,9 @@
 .text_field
-  %label= t('.name')
+  %label= t('.name').html_safe
   = errors_for @organization, :name
   = f.text_field :name
 .text_field
-  %label= t('.permalink')
+  %label= t('.permalink').html_safe
   = errors_for @organization, :permalink
   = f.text_field :permalink
 -#.text_field

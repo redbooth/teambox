@@ -1,6 +1,6 @@
 %h2=h @organization
 
-%p= t('.public_site', :link => link_to(public_url_for_organization(@organization), public_url_for_organization(@organization)))
+%p= t('.public_site', :link => link_to(public_url_for_organization(@organization), public_url_for_organization(@organization))).html_safe
 
 - if can?(:admin, @organization)
   %p

@@ -134,7 +134,7 @@ module CalendarsHelper
     if cur.wday == last_weekday
       cal << "</tr><tr>"
     end
-    cal
+    cal.html_safe
   end
 
   def day_names(first_weekday)
@@ -172,7 +172,7 @@ module CalendarsHelper
       cal << " weekendDay" if weekend?(d)
       cal << %("><div class=\"cd\">#{d.day}</div></td>)
     end unless first.wday == first_weekday
-    cal
+    cal.html_safe
   end
 
   def print_next_month_days(first_weekday,last_weekday,week_tally,week_count,last,total_tally,total_sum)
@@ -184,6 +184,7 @@ module CalendarsHelper
     end unless last.wday == last_weekday
     cal << "</tr>"
     cal << "</table>"
+    cal.html_safe
   end
 
   def first_day_of_week(day)

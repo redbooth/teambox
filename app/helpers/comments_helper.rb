@@ -31,7 +31,7 @@ module CommentsHelper
         task_list = comment.target.target
         link_to h(task_list), project_task_list_path(comment.project, task_list)
     end
-    "<span class='arr target_arr'>#{connector}</span> <span class='target'>#{link}</span>" if link
+    "<span class='arr target_arr'>#{connector}</span> <span class='target'>#{link}</span>".html_safe if link
   end
 
   # TODO: phase out?
