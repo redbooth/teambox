@@ -57,6 +57,46 @@ module Teambox
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+
+    def config.from_file(file)
+      self.skip_gem_plugins = []
+      self.providers = []
+      self.community = nil
+      super
+
+      if ENV['URL'] and app_domain == 'app.teambox.com'
+        self.app_domain = ENV['URL']
+      end
+
+      # By default, we'll run on the community mode, but test on the non-community version
+      if %w[test cucumber].include? Rails.env
+        self.community = false
+      elsif self.community.nil?
+        self.community = true
+      end
+
+      self.amazon_s3 = true if heroku?
+      self.i18n.default_locale = default_locale
+      self.action_mailer.default_url_options = { :host => app_domain }
+
+      if ENV['SENDGRID_PASSWORD'] and
+          smtp_settings[:address] == 'smtp.sendgrid.net' and
+          smtp_settings[:password] == 'PASSWORD'
+          smtp_settings.update(
+            :user_name  => ENV['SENDGRID_USERNAME'],
+            :password   => ENV['SENDGRID_PASSWORD'],
+            :domain     => ENV['SENDGRID_DOMAIN']
+          )
+        self.allow_outgoing_email = true
+      end
+
+      if allow_outgoing_email
+        action_mailer.delivery_method = :smtp
+        action_mailer.smtp_settings = smtp_settings
+      end
+
+    end
     config.from_file 'teambox.yml'
 
     config.cache_store = UselessStore.new
@@ -64,6 +104,17 @@ module Teambox
     # Redirect http to https if secure_logins is true
     # https://github.com/tobmatth/rack-ssl-enforcer
     config.middleware.use Rack::SslEnforcer if Teambox.config.secure_logins
+
+  end
+
+  def self.fetch_incoming_email
+    if config.allow_incoming_email
+      settings = config.incoming_email_settings
+      Emailer::Incoming.fetch(settings)
+    else
+      abort "This application instance isn't set to process incoming email.\n" +
+        "Check the 'allow_incoming_email' configuration option"
+    end
   end
 
   Object.const_set(:APP_CONFIG, config)
