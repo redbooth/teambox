@@ -1,4 +1,4 @@
 ## TO FIX
 
 - Task lists JS stuff
-- show more
+- automatic scrolling: broken because of the unobtrusive data-remote thing

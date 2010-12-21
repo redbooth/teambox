@@ -196,22 +196,14 @@ module ActivitiesHelper
     else
       raise "unexpected location #{location_name}"
     end
-    link_to content_tag(:span, t('common.show_more')),
-      :url => url,
-      :remote => true,
-      :loading => activities_paginate_loading,
-      :html => {
-        :class => 'activity_paginate_link button',
-        :id => 'activity_paginate_link' }
+    link_to(content_tag(:span, t('common.show_more')),
+            url,
+            :remote => true,
+            :class => 'activity_paginate_link button',
+            :id => 'activity_paginate_link'
+            )
   end
   
-  def activities_paginate_loading
-    update_page do |page|
-      page['activity_paginate_link'].hide
-      page['activity_paginate_loading'].show
-    end
-  end
-
   def show_more(after)
     update_page do |page|
       page['activities'].insert list_activities(@activities)
