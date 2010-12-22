@@ -30,8 +30,12 @@ class Conversation < RoleRecord
   scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
 
   before_save :set_comments_author, :if => :updating_user
+  before_update :set_simple
+  after_create :log_create
+  after_destroy :clear_targets
+  
 
-  def before_update
+  def set_simple
     self.simple = false if simple? and name_changed? and !name.nil?
     true
   end
@@ -62,11 +66,11 @@ class Conversation < RoleRecord
     return text
   end
 
-  def after_create
+  def log_create
     project.log_activity(self,'create')
   end
 
-  def after_destroy
+  def clear_targets
     Activity.destroy_all :target_id => self.id, :target_type => self.class.to_s
   end
 

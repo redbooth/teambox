@@ -6,7 +6,7 @@ class TeamboxData < ActiveRecord::Base
   
   attr_accessible :project_ids, :type_name, :import_data, :user_map, :target_organization, :service
   
-  before_validation_on_create :set_service
+  before_validation :set_service, :on => :create
   before_create :check_state
   after_create  :post_check_state
   after_update  :post_check_state

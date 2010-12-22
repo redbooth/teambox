@@ -10,6 +10,8 @@ class Membership < ActiveRecord::Base
   validates_presence_of :user, :organization
   validates_inclusion_of :role, :in => [10,20,30]
   validates_uniqueness_of :user_id, :scope => :organization_id
+  
+  before_validation :set_default_role, :on => :create
 
 
   attr_accessor :user_or_email
@@ -21,7 +23,7 @@ class Membership < ActiveRecord::Base
   #   20 for a participant. Can create projects inside the organization, and only access projects where he's been invited to.
   #   10 for an external user. Can only access projects where he's been invited to. (NOT stored in database)
 
-  def before_validation_on_create
+  def set_default_role
     self.role ||= ROLES[:admin]
   end
 

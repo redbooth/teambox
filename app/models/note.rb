@@ -9,18 +9,19 @@ class Note < RoleRecord
   include PageWidget
   
   before_destroy :clear_slot
+  after_create :save_slot, :log_create
+  after_update :touch_updated
   
   formats_attributes :body
   
   attr_accessor :deleted
   attr_accessible :body, :deleted, :name
   
-  def after_create
-    save_slot
+  def log_create
     project.log_activity(self, 'create', updated_by.id)
   end
   
-  def after_update
+  def touch_updated
     project.log_activity(self, 'edit', updated_by.id)
   end
   

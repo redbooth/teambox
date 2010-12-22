@@ -15,6 +15,9 @@ class Page < RoleRecord
   
   default_scope :order => 'position ASC, created_at DESC, id DESC'
   
+  after_create :log_create
+  after_update :log_update
+  
   def build_note(note = {})
     self.notes.build(note) do |note|
       note.project_id = self.project_id
@@ -97,11 +100,11 @@ class Page < RoleRecord
     groups
   end
   
-  def after_create
+  def log_create
     project.log_activity(self,'create')
   end
   
-  def after_update
+  def log_update
     project.log_activity(self, 'edit') unless @suppress_activity
   end
   

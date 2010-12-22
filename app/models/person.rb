@@ -9,6 +9,7 @@ class Person < ActiveRecord::Base
   belongs_to :source_user, :class_name => 'User'
   has_many :tasks, :foreign_key => 'assigned_id', :dependent => :nullify
   
+  after_create :log_create
   after_destroy :log_delete, :cleanup_after
   
 #  validates_uniqueness_of :user, :scope => :project
@@ -58,7 +59,7 @@ class Person < ActiveRecord::Base
     user.login
   end
   
-  def after_create
+  def log_create
     # for a new project, we log create_project, not create_person
     project.log_activity(self, 'create', user_id) unless project.user == user
     # promote the project owner to admin

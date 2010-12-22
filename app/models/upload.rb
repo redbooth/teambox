@@ -14,6 +14,7 @@ class Upload < RoleRecord
   after_destroy  :cleanup_activities
 
   before_create :copy_ownership_from_comment
+  after_create  :log_create
 
   # RAILS3 check where this was important
   # default_scope :order => 'id DESC'
@@ -81,7 +82,7 @@ class Upload < RoleRecord
     'uploads/upload_slot'
   end
 
-  def after_create
+  def log_create
     save_slot if page
     project.log_activity(self, 'create', user_id) unless comment
   end

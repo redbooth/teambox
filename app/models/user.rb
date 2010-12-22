@@ -61,14 +61,18 @@ class User < ActiveRecord::Base
 
   before_validation :sanitize_name
   before_destroy :rename_as_deleted
+  
+  before_create :init_user
+  after_create :clear_invites
+  before_save :update_token
 
-  def before_save
+  def update_token
     self.recent_projects_ids ||= []
     self.rss_token ||= generate_rss_token
     self.visited_at ||= Time.now
   end
 
-  def before_create
+  def init_user
     if invitation = Invitation.find_by_email(email)
       self.invited_by = invitation.user
       invitation.user.update_attribute :invited_count, (invitation.user.invited_count + 1)
@@ -76,7 +80,7 @@ class User < ActiveRecord::Base
     self.splash_screen = true
   end
 
-  def after_create
+  def clear_invites
     send_activation_email unless self.confirmed_user
 
     if invitations = Invitation.find_all_by_email(email)

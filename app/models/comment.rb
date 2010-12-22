@@ -33,7 +33,7 @@ class Comment < ActiveRecord::Base
   # TODO: investigate how we can enable this and not break nested attributes
   # validates_presence_of :target_id, :user_id, :project_id
   
-  validate_on_create :check_duplicate, :if => lambda { |c| c.target_id? and not c.hours? }
+  validate :check_duplicate, :if => lambda { |c| c.target_id? and not c.hours? }, :on => :create
   validates_presence_of :body, :unless => lambda { |c| c.task_comment? or c.uploads.to_a.any? }
 
   # was before_create, but must happen before format_attributes
