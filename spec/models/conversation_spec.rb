@@ -24,14 +24,14 @@ describe Conversation do
     
     lambda {
       conversation.save.should be_false
-      conversation.errors.on(:comments).should == "The conversation cannot start with an empty comment."
+      conversation.errors_on(:comments).should == ["The conversation cannot start with an empty comment."]
     }.should_not change(described_class, :count)
   end
   
   it "fails with blank name if not simple" do
     conversation = Factory.build(:conversation, :name => "", :simple => false)
     conversation.save.should be_false
-    conversation.errors.on(:name).should == "Please give this conversation a title."
+    conversation.errors_on(:name).should == ["Please give this conversation a title."]
   end
   
   it "allows blank name if simple" do

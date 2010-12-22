@@ -6,7 +6,7 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   include Immortal
 
-  include ActionController::UrlWriter
+  include Rails.application.routes.url_helpers
 
   concerned_with  :activation,
                   :avatar,

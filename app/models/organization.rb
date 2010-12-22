@@ -129,7 +129,7 @@ class Organization < ActiveRecord::Base
 
     def ensure_unicity_for_community_version
       if Teambox.config.community && new_record?
-        errors.add_to_base("Can't have more than one organization") if Organization.count > 0
+        errors.add(:base, "Can't have more than one organization") if Organization.count > 0
       end
     end
 

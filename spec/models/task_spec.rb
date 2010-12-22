@@ -98,7 +98,7 @@ describe Task do
       
       @task.assigned = person
       @task.should_not be_valid
-      @task.errors.on(:assigned).should == "Assigned user doesn't belong to the project"
+      @task.errors_on(:assigned).should == ["Assigned user doesn't belong to the project"]
     end
   end
   

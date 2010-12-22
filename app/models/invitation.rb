@@ -67,11 +67,11 @@ class Invitation < RoleRecord
   protected
 
   def valid_user?
-    @errors.add_to_base('Must belong to a valid user') if user.nil? or user.deleted?
+    @errors.add(:base, 'Must belong to a valid user') if user.nil? or user.deleted?
   end
   
   def valid_role?
-    @errors.add_to_base('Not authorized') if target.is_a?(Project) and user and !target.admin?(user)
+    @errors.add(:base, 'Not authorized') if target.is_a?(Project) and user and !target.admin?(user)
   end
   
   def user_already_invited?

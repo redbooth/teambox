@@ -18,7 +18,7 @@ describe UsersController do
   it 'requires email on signup' do
     lambda do
       do_create(:email => nil)
-      assigns[:user].errors.on(:email).should_not be_nil
+      assigns[:user].errors_on(:email).should_not be_nil
     end.should_not change(User, :count)
   end
 
@@ -41,7 +41,7 @@ describe UsersController do
   end
   
   describe "#show" do
-    integrate_views
+    render_views
     
     before do
       @first_project = make_a_typical_project
