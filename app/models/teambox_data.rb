@@ -160,10 +160,12 @@ class TeamboxData < ActiveRecord::Base
   def do_export
     self.processed_at = Time.now
     @data = serialize(organizations_to_export, projects, users_to_export)
-    upload = ActionDispatch::Http::UploadedFile.new
-    upload.write(@data.to_json)
-    upload.seek(0)
-    upload.original_path = "#{user.login}-export.json"
+    upload_data = Tempfile.new("#{user.login}-export")
+    upload_data.write(@data.to_json)
+    upload_data.seek(0)
+    upload = ActionDispatch::Http::UploadedFile.new(:type => 'application/json',
+                                                    :filename => "#{user.login}-export.json",
+                                                    :tempfile => upload_data)
     self.processed_data = upload
     self.status_name = :exported
     @dispatch_notification = true
