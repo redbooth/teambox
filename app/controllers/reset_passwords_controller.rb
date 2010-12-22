@@ -20,7 +20,7 @@ class ResetPasswordsController < ApplicationController
       if @reset_password.errors.on(:user)
         @reset_password.errors.clear
         flash[:error] = I18n.t('reset_passwords.create.not_found',
-                                {:email => @reset_password.email, :support => APP_CONFIG['support']})
+                                {:email => @reset_password.email, :support => Teambox.config.support})
       end
       render :new
     end
@@ -31,7 +31,7 @@ class ResetPasswordsController < ApplicationController
       @user = ResetPassword.find(:first, :conditions => ['reset_code = ? and expiration_date > ?', params[:reset_code], Time.current]).user
       throw ActiveRecord::RecordInvalid if @user.nil? or @user.deleted?
     rescue
-      flash[:error] = I18n.t('reset_passwords.create.invalid', :support => APP_CONFIG['support'])
+      flash[:error] = I18n.t('reset_passwords.create.invalid', :support => Teambox.config.support)
       redirect_to login_path
     end
   end
@@ -53,7 +53,7 @@ class ResetPasswordsController < ApplicationController
         render :action => :reset, :reset_code => params[:reset_code]
       end
     else
-      flash.now[:notice] = I18n.t('reset_passwords.create.invalid', :support => APP_CONFIG['support'])
+      flash.now[:notice] = I18n.t('reset_passwords.create.invalid', :support => Teambox.config.support)
       @reset_password = ResetPassword.new
       render :action => :new, :reset_code => params[:reset_code]
     end

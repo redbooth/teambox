@@ -11,4 +11,4 @@
   %li= t('.spam')
   %li= t('.wrong_address', :link => logout_path)
     
-%p= t('.problems', :support => link_to(APP_CONFIG['support'], APP_CONFIG['support']))
+%p= t('.problems', :support => link_to(Teambox.config.support, Teambox.config.support))

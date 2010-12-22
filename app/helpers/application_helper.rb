@@ -188,7 +188,7 @@ module ApplicationHelper
   end
   
   def time_tracking_enabled?
-    APP_CONFIG['allow_time_tracking'] || false
+    Teambox.config.allow_time_tracking || false
   end
   
   def auto_discovery_link_by_context(user, project)

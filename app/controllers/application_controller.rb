@@ -280,7 +280,7 @@ class ApplicationController < ActionController::Base
     end
 
     def time_tracking_enabled?
-      APP_CONFIG['allow_time_tracking'] || false
+      Teambox.config.allow_time_tracking || false
     end
 
     def load_community_organization

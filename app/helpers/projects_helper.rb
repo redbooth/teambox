@@ -162,7 +162,7 @@ module ProjectsHelper
       remote_function(:url => show_new_path(first_id))
     end
 
-    interval = APP_CONFIG['autorefresh_interval']*1000
+    interval = Teambox.config.autorefresh_interval*1000
 
     "autorefresh = setInterval(\"#{ajax_request}\", #{interval})"
   end
