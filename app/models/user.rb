@@ -162,7 +162,6 @@ class User < ActiveRecord::Base
   end
 
   def contacts_not_in_project(project)
-<<<<<<< HEAD
     user_ids_not_in_project = User.where(:people => {:project_id => self.projects}).
       joins(:people).
       select('users.id').
@@ -171,17 +170,6 @@ class User < ActiveRecord::Base
     user_ids = user_ids_not_in_project.reject! { |u| user_ids_in_project.include?(u) }.uniq
 
     User.where(:id => user_ids[0, 10]).order('updated_at DESC')
-=======
-    people = Person.where(:project_id => Array(self.projects).collect{ |p| p.id } ).select(:user_id).limit(300)
-
-    user_ids_in_project = project.user_ids
-
-    user_ids = people.reject! do |p|
-      user_ids_in_project.include?(p.user_id)
-    end.collect { |p| p.user_id }.uniq
-
-    User.where(:id => user_ids).order('updated_at DESC').limit(10)
->>>>>>> fix user.contacts_not_in_project(project)
   end
 
   def to_xml(options = {})
