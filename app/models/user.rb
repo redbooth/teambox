@@ -18,8 +18,6 @@ class User < ActiveRecord::Base
                   :validation,
                   :task_reminders
 
-  LOCALE_CODES = I18n.available_locales.map(&:to_s)
-
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
   has_many :people
@@ -111,8 +109,8 @@ class User < ActiveRecord::Base
   end
   
   def locale
-    if LOCALE_CODES.include? self[:locale]
-      self[:locale]
+    if I18n.available_locales.include? self[:locale].to_sym
+      self[:locale].to_s
     else
       I18n.default_locale.to_s
     end
