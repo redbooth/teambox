@@ -56,7 +56,7 @@ describe Emailer do
           Emailer.receive(@email_template.to_s)
         end.should change(Task, :count).by(1)
 
-        task = Task.last(:order => 'tasks.id')
+        task = Task.order('id desc').first
         task.name.should == @email_template.body.to_s[0,252] + "..."
         task.status_name.should == :new
       end
@@ -69,7 +69,7 @@ describe Emailer do
           Emailer.receive(@email_template.to_s)
         end.should change(Task, :count).by(1)
 
-        task = Task.last(:order => 'tasks.id')
+        task = Task.order('id desc').first
         task.name.should == "Bold no more!  See more here..."
         task.status_name.should == :new
       end

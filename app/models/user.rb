@@ -162,25 +162,14 @@ class User < ActiveRecord::Base
   end
 
   def contacts_not_in_project(project)
-    conditions = ["project_id IN (?)", Array(self.projects).collect{ |p| p.id } ]
+    user_ids_not_in_project = User.where(:people => {:project_id => self.projects}).
+      joins(:people).
+      select('users.id').
+      limit(300).map(&:id)
+    user_ids_in_project = project.user_ids
+    user_ids = user_ids_not_in_project.reject! { |u| user_ids_in_project.include?(u) }.uniq
 
-    people = Person.find(:all,
-      :select => 'user_id',
-      :conditions => conditions,
-      :limit => 300)
-
-    user_ids_in_project = project.users.collect { |u| u.id }
-
-    user_ids = people.reject! do |p|
-      user_ids_in_project.include?(p.user_id)
-    end.collect { |p| p.user_id }.uniq
-
-    conditions = ["id IN (?) AND deleted = ?", user_ids, false]
-
-    User.find(:all,
-      :conditions => conditions,
-      :order => 'updated_at DESC',
-      :limit => 10)
+    User.where(:id => user_ids[0, 10]).order('updated_at DESC')
   end
 
   def to_xml(options = {})
