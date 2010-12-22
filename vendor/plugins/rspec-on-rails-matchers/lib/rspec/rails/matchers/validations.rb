@@ -7,7 +7,7 @@ module RSpec
       RSpec::Matchers.define :validate_presence_of do |attribute|
         match do |model|
           model.send("#{attribute}=", nil)
-          !model.valid? && model.errors.invalid?(attribute)
+          !model.valid? && model.errors[attribute].any?
         end
         description do
           "model to validate the presence of #{attribute}"
@@ -30,12 +30,12 @@ module RSpec
           invalid = false
           if !min.nil? && min >= 1
             model.send("#{attribute}=", 'a' * (min - 1))
-            invalid = !model.valid? && model.errors.invalid?(attribute)
+            invalid = !model.valid? && model.errors[attribute].any?
           end
 
           if !max.nil?
             model.send("#{attribute}=", 'a' * (max + 1))
-            invalid ||= !model.valid? && model.errors.invalid?(attribute)
+            invalid ||= !model.valid? && model.errors[attribute].any?
           end
           invalid
         end
@@ -47,7 +47,7 @@ module RSpec
       RSpec::Matchers.define :validate_uniqueness_of do |attribute|
         match do |model|
           model.class.stub!(:find).and_return(true)
-          !model.valid? && model.errors.invalid?(attribute)
+          !model.valid? && model.errors[attribute].any?
         end
         description do
           "model to validate the uniqueness of #{attribute}"
@@ -57,7 +57,7 @@ module RSpec
       RSpec::Matchers.define :validate_confirmation_of do |attribute|
         match do |model|
           model.send("#{attribute}_confirmation=", 'asdf')
-          !model.valid? && model.errors.invalid?(attribute)
+          !model.valid? && model.errors[attribute].any?
         end
         description do
           "model to validate the confirmation of #{attribute}"

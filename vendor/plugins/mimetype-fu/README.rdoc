@@ -1,5 +1,8 @@
-MimetypeFu
-==========
+= MimetypeFu
+
+Modified version of: https://github.com/howcast/mimetype-fu
+
+Original author: howcast
 
 Some great Rails plugins like attachment_fu use the content type/mime type of a file to validate the instance of an object.
 The plugin usually gets the mime type using the CGI request, however, if the file is already in the system, this approach won't work.

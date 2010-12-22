@@ -38,7 +38,7 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
 end
 
 desc 'Run the RSpec tests.'
-RSpec::Rake::SpecTask.new(:spec) do |t|
+Spec::Rake::SpecTask.new(:spec) do |t|
   t.spec_files = FileList['spec/**/*_spec.rb']
 end
 

@@ -10,11 +10,10 @@ Gem::Specification.new do |s|
   s.description = %q{get the mimetype of a file directly in Ruby}
   s.email = %q{josh@vitamin-j.com}
   s.extra_rdoc_files = [
-    "README"
+    "README.rdoc"
   ]
   s.files = [
-    "MIT-LICENSE",
-     "README",
+     "MIT-LICENSE",
      "Rakefile",
      "VERSION",
      "init.rb",
@@ -25,10 +24,8 @@ Gem::Specification.new do |s|
      "mimetype-fu.gemspec",
      "spec/fixtures/file.jpg",
      "spec/fixtures/file.rb",
-     "spec/fixtures/file.unknown",
      "spec/mime_type_spec.rb",
      "spec/spec_helper.rb",
-     "tasks/mimetype_fu_tasks.rake",
      "test/mimetype_fu_test.rb",
      "uninstall.rb"
   ]

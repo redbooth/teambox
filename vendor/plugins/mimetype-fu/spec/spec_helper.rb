@@ -1,6 +1,6 @@
 ENV["RAILS_ENV"] = "test"
-require File.expand_path(File.dirname(__FILE__) + "/../../../../config/environment")
-require 'test_help'
+#require File.expand_path(File.dirname(__FILE__) + "/../../../../config/environment")
+#require 'test_help'
 
 def create_file(filename, mode='w')
   @file = File.new(File.dirname(__FILE__) + "/fixtures/#{filename}", mode)
