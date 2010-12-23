@@ -646,41 +646,6 @@ sl:
       learn: "Nauči se s primera"
   form: 
     cancel: Prekliči
-  groups: 
-    column_group: 
-      projects: Projekti
-      your_groups: "Tvoje skupine"
-    edit: 
-      submit: Posodobi
-    fields: 
-      description: Opis
-      name: Ime
-      permalink: Povezava
-    header: 
-      leave: Zapusti
-      remove: Odstrani
-    index: 
-      remove_project: Odstrani
-      submit_project: Dodaj
-      title: Skupine
-      whats_this: "Kaj je to?"
-    logo_fields: 
-      current: "Trenutni Logotip"
-      delete: Odstrani
-      upload: Datoteke
-    new: 
-      invalid_group: "Napačna skupina"
-      submit: Ustvari
-      title: "Ustvari skupino"
-    primer: 
-      create_group: "Ustvari skupino"
-    search: 
-      invite: Povabi
-      invite_people: "Povabi osebe v skupino"
-      username_or_email: "Uporabniško ime ali email"
-    show: 
-      add_project: "Dodaj projekt"
-      edit: Uredi
   hours: 
     all_tasks: "Vsa opravila"
     all_users: "Vsi uporabniki"
@@ -829,7 +794,7 @@ sl:
       new: 
         time_tracking_docs: "Izvedi več"
       owner: Lastnik
-      tracks_time: "Omogoči sledenje času. <em>To bo omogočilo, da uporabniki vnesejo čas ki so ga porabili za opravilo.</em>"
+      tracks_time_html: "Omogoči sledenje času. <em>To bo omogočilo, da uporabniki vnesejo čas ki so ga porabili za opravilo.</em>"
     index: 
       new_project: "Nov Projekt"
       projects: "Moji Projekti"
@@ -840,12 +805,12 @@ sl:
       new_project: "Nov Projekt"
       title: "Ustvari projekt"
     new_primer: 
-      feature1: "Objavi posodobitev statusa"
-      feature2: "Začni pogovr ali odgovori"
-      feature3: "Pošlji priponke"
-      feature4: "Dodeli ali preglej opravila"
-      feature5: "Komentiraj opravila"
-      feature7: "Dodaj, uredi in poglej strani."
+      feature1_html: "Objavi posodobitev statusa"
+      feature2_html: "Začni pogovr ali odgovori"
+      feature3_html: "Pošlji priponke"
+      feature4_html: "Dodeli ali preglej opravila"
+      feature5_html: "Komentiraj opravila"
+      feature7_html: "Dodaj, uredi in poglej strani."
     primer: 
       create_first: "Ustvari svoj prvi projekt"
     show: 
@@ -896,7 +861,6 @@ sl:
       all_task_lists: "Vse naloge"
       conversations: Pogovori
       files: Priponke
-      groups: "Skupine Projekta"
       invitations: Povabila
       login: Prijava
       overview: Pregled
@@ -1008,7 +972,7 @@ sl:
     primer: 
       create_first: "Ustvari prvi seznam opravil v tem projektu!"
       empty: "Ta projekt je še brez seznama opravil."
-      item3: "<b>Sledi</b>. Prejmi obvestila, za dodeljena opravila"
+      item3_html: "<b>Sledi</b>. Prejmi obvestila, za dodeljena opravila"
     show: 
       title: "Seznam Opravil: %{name}"
   tasks: 
