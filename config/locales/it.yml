@@ -1127,8 +1127,8 @@ it:
         field: "La tua icona"
         max_size: "Il file non può essere superiore di %{mb}"
         presence: "Non puoi caricare un file vuoto"
-        upload_here_or_at_gravatar: "Puoi caricare un nuovo avatar in Teambox, o creare un %{gravatar} che puoi usare in Teambox o in altri siti web."
-        we_have_this_avatar: "Questa è la tua immagine:"
+        upload_here_or_at_gravatar_html: "Puoi caricare un nuovo avatar in Teambox, o creare un %{gravatar} che puoi usare in Teambox o in altri siti web."
+        we_have_this_avatar_html: "Questa è la tua immagine:"
       biography: Biografia
       change_password: "Modifica la password"
       confirm_password: "Conferma la password"

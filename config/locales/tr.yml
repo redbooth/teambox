@@ -360,7 +360,7 @@ tr:
       title: "Yeni Sohbet"
     primer: 
       create_first: "Bu projenin ilk sohbetini oluşturun!"
-      define: "Ortak bir platformda <b>kararları tartışmak</b> ve <b>takımınızı bilgilendirmek</b> için sohbetleri kullanın.<br/>Her sohbet, karmaşık e-postaların yerini alacak bir yorumlar dizisidir."
+      define_html: "Ortak bir platformda <b>kararları tartışmak</b> ve <b>takımınızı bilgilendirmek</b> için sohbetleri kullanın.<br/>Her sohbet, karmaşık e-postaların yerini alacak bir yorumlar dizisidir."
       empty: "Henüz bu projenin sohbeti yok."
       footer1_html: "Sohbetler <b>bir tasarımı paylaşmak</b>, bir toplantının <b>tarihine karar vermek</b> veya bazı haberleri <b>raporlamak</b> için oldukça kullanışlıdır."
       footer2_html: "Arka arkaya geldiklerinden, liste içinde geri gidip hangi dosyaların gönderildiğini ve bu dosya ile ilgili hangi takım arkadaşınızın ne dediğini kolaylıkla görebilirsiniz. Teambox ortamında, <b>ortak çalışma, aynı zamanda reporlama yapmaktır</b>."

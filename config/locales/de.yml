@@ -278,7 +278,7 @@ de:
       title: "Neue Konversation"
     primer: 
       create_first: "Erstellen Sie die erste Konversation in diesem Projekt!"
-      define: "Nutzen Sie Konversationen, um <b>Entscheidungen zu diskutieren</b> und <b>ihr Team zu informieren</b> auf einer zentralen Plattform.<br/> Jede Konversation ist ein Kommentarbaum, der viele Emails überflüssig macht."
+      define_html: "Nutzen Sie Konversationen, um <b>Entscheidungen zu diskutieren</b> und <b>ihr Team zu informieren</b> auf einer zentralen Plattform.<br/> Jede Konversation ist ein Kommentarbaum, der viele Emails überflüssig macht."
       empty: "Dieses Projekt hat bisher keine Konversationen."
       footer1_html: "Konversationen sind hervorragend, um <b>ein Design zu bearbeiten</b>, <b>einen Termin zu entscheiden</b> für ein Treffen oder um Neuigkeiten <b>mitzuteilen</b>."
       footer2_html: "Durch die Baumanordnung ist es einfach, den zeitlichen Ablauf zu verfolgen, zu sehen welche Dateien gesendet worden sind und die Meinungen jedes Teilnehmers  zu kennen. In Teambox heißt <b>zusammenarbeiten auch kommunizieren</b>."
@@ -1279,7 +1279,7 @@ de:
       undefined: "Nicht definiert"
     primer: 
       create_first: "Erstellen Sie die erste Aufgabenliste in diesem Projekt!"
-      define: "Nutzen Sie Aufgaben, um <b>vorauszuplanen</b>, <b>Fortschritte zu erfassen</b> und <b>nachzuvollziehen, was gemacht worden ist</b>.<br/><i>Was? Wer? Wann?</i> Aufgaben können einen Status haben, eine zugeordnete Person und ein Fälligkeitsdatum."
+      define_html: "Nutzen Sie Aufgaben, um <b>vorauszuplanen</b>, <b>Fortschritte zu erfassen</b> und <b>nachzuvollziehen, was gemacht worden ist</b>.<br/><i>Was? Wer? Wann?</i> Aufgaben können einen Status haben, eine zugeordnete Person und ein Fälligkeitsdatum."
       empty: "Dieses Projekt hat bisher keine Aufgabenlisten."
       footer1_html: "Aufgaben sind ein einfacher und agiler Weg, um <b>Sachen zu erledigen</b> und das anderen mitzuteilen."
       footer2_html: "Es ist an der Zeit, die Excel Planungstabellen und komplexen GANTT-Charts abzulösen!"
@@ -1449,11 +1449,11 @@ de:
       picture: 
         destroy: "Avatar löschen"
         field: "Ihr Avatar"
-        gravatar_in_use: "Wir haben kein Bild von Ihnen, daher benutzen wir %{gravatar}: "
+        gravatar_in_use_html: "Wir haben kein Bild von Ihnen, daher benutzen wir %{gravatar}: "
         max_size: "Die Datei ist größer als %{mb}"
         presence: "Sie können keine leere Datei hochladen"
-        upload_here_or_at_gravatar: "Sie können hier einen neuen Avator hochladen, oder laden Sie ihren globalen Avatar zu der Adresse %{gravatar}, um ihn für Teambox und für viele andere Webseiten zu benutzen."
-        we_have_this_avatar: "Dies ist ihr momentaner Avatar: "
+        upload_here_or_at_gravatar_html: "Sie können hier einen neuen Avator hochladen, oder laden Sie ihren globalen Avatar zu der Adresse %{gravatar}, um ihn für Teambox und für viele andere Webseiten zu benutzen."
+        we_have_this_avatar_html: "Dies ist ihr momentaner Avatar: "
       biography: Lebenslauf
       change_password: "Passwort ändern"
       confirm_password: "Passwort bestätigen"

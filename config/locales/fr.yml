@@ -362,7 +362,7 @@ fr:
       title: "Nouvelle conversation"
     primer: 
       create_first: "Créez la première conversation de ce projet!"
-      define: "<b>Discutez au sujet des décisions</b> et <b>mettez votre équipe au courant</b> des dernières nouvelles de manière centralisée.<br/>Chaque conversation est une liste de messages remplaçant les courriels confus."
+      define_html: "<b>Discutez au sujet des décisions</b> et <b>mettez votre équipe au courant</b> des dernières nouvelles de manière centralisée.<br/>Chaque conversation est une liste de messages remplaçant les courriels confus."
       empty: "Il n’y a pour l’instant aucune conversation dans ce projet."
       footer1_html: "Les conversations sont l’outil parfait pour <b>partager un design</b>, <b>décider d’une date</b> de réunion ou <b>informer</b> les autres des nouvelles d’un projet."
       footer2_html: "Étant ordonnées par fils, il est facile de retourner en arrière dans le temps pour voir quels fichiers ont été envoyés et ce qui a été dit par chaque membre de l’équipe. Dans Teambox, <b>collaborer</b> génère une <b>traçabilité</b> de ce qui a été fait."
@@ -1474,7 +1474,7 @@ fr:
       undefined: "Non défini"
     primer: 
       create_first: "Créez la première liste de tâches!"
-      define: "Utilisez les tâches pour <b>planifier</b>, <b>voir ce qui a été fait</b> et <b>ne pas oublier des idées pour le futur</b>.<br/><i>Quoi ? Qui ? Quand ?</i> Les tâches peuvent avoir un statut, un responsable et une échéance."
+      define_html: "Utilisez les tâches pour <b>planifier</b>, <b>voir ce qui a été fait</b> et <b>ne pas oublier des idées pour le futur</b>.<br/><i>Quoi ? Qui ? Quand ?</i> Les tâches peuvent avoir un statut, un responsable et une échéance."
       empty: "Ce projet ne contient pour l’instant aucune conversation."
       footer1_html: "C’est une façon simple et habile de <b>faire les choses</b> et de le garder les autres informé."
       footer2_html: "Il est maintenant temps d’oublier les plannifications sur Excel et les diagrammes de Gantt trop complexes!"
@@ -1648,11 +1648,11 @@ fr:
       avatar: 
         destroy: "Supprimer l'image de profil"
         field: "Votre image"
-        gravatar_in_use: "Nous n'avons pas d'image de vous, nous utilisons donc %{gravatar} :"
+        gravatar_in_use_html: "Nous n'avons pas d'image de vous, nous utilisons donc %{gravatar} :"
         max_size: "La taille du fichier ne peut pas excéder %{mb} Mb"
         presence: "Il n’est pas possible de télécharger un fichier vide"
-        upload_here_or_at_gravatar: "Ajoutez une nouvelle image ici ou créez un %{gravatar} qui deviendra votre image de profil sur teambox."
-        we_have_this_avatar: "Voici votre image d’utilisateur:"
+        upload_here_or_at_gravatar_html: "Ajoutez une nouvelle image ici ou créez un %{gravatar} qui deviendra votre image de profil sur teambox."
+        we_have_this_avatar_html: "Voici votre image d’utilisateur:"
       biography: Biographie
       change_password: "Changer de mot de passe"
       confirm_password: "Confirmer le mot de passe"

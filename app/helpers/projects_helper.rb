@@ -19,7 +19,7 @@ module ProjectsHelper
   def permalink_example(permalink)
     out = host_with_protocol + projects_path + '/'
     out << content_tag(:span, permalink, :id => 'handle', :class => 'good')
-    content_tag(:div, out, :id => 'preview')
+    content_tag(:div, out.html_safe, :id => 'preview')
   end
 
   def watch_permalink_example

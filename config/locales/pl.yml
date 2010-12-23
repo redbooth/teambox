@@ -362,7 +362,7 @@ pl:
       title: "Nowa dyskusja"
     primer: 
       create_first: "Rozpocznij pierwszą dyskusję w tym projekcie!"
-      define: "Używaj dyskusji by <b>omawiać decyzje</b> i <b>powiadamiać swój zespół o zmianach</b>. Każda dyskusja jest zbiorem komentarzy które zastępują masę email'i."
+      define_html: "Używaj dyskusji by <b>omawiać decyzje</b> i <b>powiadamiać swój zespół o zmianach</b>. Każda dyskusja jest zbiorem komentarzy które zastępują masę email'i."
       empty: "W tym projekcie nie rozpoczęto jeszcze żadnych dyskusji."
       footer1_html: "Dyskusje są świetne do <b>omawiania planów</b>, <b>decydowania o datach</b> spotkań czy <b>raportowania</b> o postępach."
       footer2_html: "Ponieważ są one publikowane, bez problemu można cofnąć się w czasie i sprawdzić które pliki zostały wysłane oraz przejrzeć komentarze zespołu. W Teambox-ie <b>współpraca to również sprawozdawczość<b>."
@@ -1467,7 +1467,7 @@ pl:
       undefined: Niezdefiniowane
     primer: 
       create_first: "Stwórz pierwsze zadanie w tym projekcie"
-      define: "Używaj zadań do <b>planowania prac</b>, <b>śledzenia zmian</b> oraz <b> sprawdzania co zostało już zrobione</b>. <br/><i>Co? Kto? Kiedy?</i> Zadania mogą być oznaczone statusem, wykonawcą oraz terminem realizacji"
+      define_html: "Używaj zadań do <b>planowania prac</b>, <b>śledzenia zmian</b> oraz <b> sprawdzania co zostało już zrobione</b>. <br/><i>Co? Kto? Kiedy?</i> Zadania mogą być oznaczone statusem, wykonawcą oraz terminem realizacji"
       empty: "Ten projekt nie ma jeszcze żadnych zadań."
       footer1_html: "Zadania są prostą i odpowiednią metodą <b>doprowadzenia roboty do końca</b> i pokazywania tego innym."
       footer2_html: "Już czas zapomnieć o Excel'u i planowania w arkuszu oraz skomplikowanych diagramach Gantta!"
@@ -1641,11 +1641,11 @@ pl:
       picture: 
         destroy: "Usuń avatar"
         field: "Nowy avatar"
-        gravatar_in_use: "Nie mamy twojego zdjęcia, więc używamy  %{gravatar}:"
+        gravatar_in_use_html: "Nie mamy twojego zdjęcia, więc używamy  %{gravatar}:"
         max_size: "Wielkość pliku nie może przekroczyć  %{mb}"
         presence: "Nie możesz wysłać pustego zdjęcia"
-        upload_here_or_at_gravatar: "Możesz wysłać swoje zdjęcie lub ustawić je na  %{gravatar}."
-        we_have_this_avatar: "To twoje zdjęcie które posiadamy:"
+        upload_here_or_at_gravatar_html: "Możesz wysłać swoje zdjęcie lub ustawić je na  %{gravatar}."
+        we_have_this_avatar_html: "To twoje zdjęcie które posiadamy:"
       biography: Biografia
       change_password: "Zmień hasło"
       confirm_password: "Potwierdź hasło"

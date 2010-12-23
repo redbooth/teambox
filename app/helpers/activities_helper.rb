@@ -121,7 +121,7 @@ module ActivitiesHelper
     else
       raise ArgumentError, "unknown activity type #{type}"
     end
-    t("activities.#{type}.title", values)
+    t("activities.#{type}.title", values).html_safe
   end
   
   def activity_target_url(activity)

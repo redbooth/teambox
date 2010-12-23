@@ -223,7 +223,7 @@ zh:
       title: 新的话题
     primer: 
       create_first: 在这个项目中创建第一个话题！
-      define: 使用话题作为一个集中的方式<b>讨论决定</b>和<b>同步您的团队</b>。<br/>每个话题是一系列的评论，用于代替成堆的邮件。
+      define_html: 使用话题作为一个集中的方式<b>讨论决定</b>和<b>同步您的团队</b>。<br/>每个话题是一系列的评论，用于代替成堆的邮件。
       empty: 当前项目还没有任何话题。
       footer1_html: "话题是一个很好的方式，用于<b>分享设计</b>, <b>决定会议日期</b>或者<b>报告新闻动态</b>。"
       footer2_html: 因为话题是线程式的，它很容易回溯了解到某个文件已经发布，每个成员说过的内容。在Teambox中，<b>协作也是汇报的过程</b>.
@@ -1077,7 +1077,7 @@ zh:
       title: 创建任务列表
     primer: 
       create_first: 在这个项目中创建第一个任务列表！
-      define: "使用任务进行<b>事前计划</b>, <b>跟踪进程</b>和<b>了解已经完成的工作</b>。<br/><i>何事？何人？何时？</i> 任务可以有状态，执行者和截止日期。"
+      define_html: "使用任务进行<b>事前计划</b>, <b>跟踪进程</b>和<b>了解已经完成的工作</b>。<br/><i>何事？何人？何时？</i> 任务可以有状态，执行者和截止日期。"
       empty: 这个项目还没有任何话题。
       footer1_html: 任务是一个简单而敏捷的方式去<b>完成事情</b>，所以，马上使用它吧。
       footer2_html: 是时候忘记Excel计划表和复杂的甘特图了！
@@ -1201,8 +1201,8 @@ zh:
         field: 您的头像
         max_size: "文件大小不能超过%{mb}"
         presence: 您不能上传空文件
-        upload_here_or_at_gravatar: "您可以在这里上传新的头像，或上传到%{gravatar}作为一个通用的头像，用于Teambox或其它网站。"
-        we_have_this_avatar: 当前您的头像：
+        upload_here_or_at_gravatar_html: "您可以在这里上传新的头像，或上传到%{gravatar}作为一个通用的头像，用于Teambox或其它网站。"
+        we_have_this_avatar_html: 当前您的头像：
       biography: 自我介绍
       change_password: 修改密码
       confirm_password: 确认密码

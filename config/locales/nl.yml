@@ -212,7 +212,7 @@ nl:
       title: "Nieuwe conversatie"
     primer: 
       create_first: "Maak uw eerste conversatie aan in dit project!"
-      define: "Gebruik conversaties om <b>beslissingen te bespreken</b> en <b>update uw team</b> in een gecentraliseerde manier.<br/>Elke conversatie is een draad van opmerkingen, die rommelige e-mails vervangen."
+      define_html: "Gebruik conversaties om <b>beslissingen te bespreken</b> en <b>update uw team</b> in een gecentraliseerde manier.<br/>Elke conversatie is een draad van opmerkingen, die rommelige e-mails vervangen."
       empty: "Dit project heeft nog geen conversaties."
       footer1_html: "Conversaties zijn goed voor <b>een ontwerp te delen</b>, <b>een datum te beslissen</b> voor bijeenkomsten of nieuws te <b>raporteren</b>."
       item1_html: "<b>Deel bestanden</b>. Reacties kunnen ook bijlagen bestanden hebben."
@@ -1016,7 +1016,7 @@ nl:
       title: "Nieuwe Takenlijst"
     primer: 
       create_first: "Maak uw eerste takenlijst aan voor dit project!"
-      define: "Gebruik taken om <b>vooruit te plannen</b>, <b>blijf op de hoogte van de voortgang</b> end <b>herzie wat er gebeurd is</b>.<br/><i>Wat? Wie? Wanneer?</i> Taken kunnen een status hebben, een toegewezen persoon en vervaldata."
+      define_html: "Gebruik taken om <b>vooruit te plannen</b>, <b>blijf op de hoogte van de voortgang</b> end <b>herzie wat er gebeurd is</b>.<br/><i>Wat? Wie? Wanneer?</i> Taken kunnen een status hebben, een toegewezen persoon en vervaldata."
       empty: "Dit project heeft nog geen conversaties."
       footer1_html: "Taken zijn een eenvoudige en flexibele manier om <b>dingen gedaan te krijgen</b> en anderen dat te laten weten."
       footer2_html: "Het is tijd om excel planning sheets en complexe GANTT charts te vergeten!"
@@ -1140,8 +1140,8 @@ nl:
         field: "Uw avatar"
         max_size: "Bestandsgrootte mag niet meer zijn dan %{mb}"
         presence: "U kunt geen leeg bestand uploaden"
-        upload_here_or_at_gravatar: "U kunt hier een nieuwe avatar uploaden, of upload het naar %{gravatar} voor een globale avatar die u kunt gebruiken bij Teambox en vele andere websites."
-        we_have_this_avatar: "Dit is uw tijdelijke avatar:"
+        upload_here_or_at_gravatar_html: "U kunt hier een nieuwe avatar uploaden, of upload het naar %{gravatar} voor een globale avatar die u kunt gebruiken bij Teambox en vele andere websites."
+        we_have_this_avatar_html: "Dit is uw tijdelijke avatar:"
       biography: Biografie
       change_password: "Wachtwoord veranderen"
       confirm_password: "Bevestig wachtwoord"

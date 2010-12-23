@@ -362,7 +362,7 @@ ca:
       title: "Nova conversa"
     primer: 
       create_first: "Crea la primera conversa per aquest projecte!"
-      define: "<b>Conversa sobre decisions</b> i <b>posa el teu equip al dia</b> d´una forma centralitzada.<br/>Cadascuna de les converses és una llista de missatges, que reemplacen als confusos missatges."
+      define_html: "<b>Conversa sobre decisions</b> i <b>posa el teu equip al dia</b> d´una forma centralitzada.<br/>Cadascuna de les converses és una llista de missatges, que reemplacen als confusos missatges."
       empty: "Encara no hi ha cap conversa en aquest projecte."
       footer1_html: "Las converses són perfectes per a <b>compartir un disseny</b>, <b>decidir una data</b> per a reunirse o <b>informar</b> sobre las notícies del projecte."
       footer2_html: "S'ordenen per fils, es fàcil tornar enrere en el temps i veure quins arxius es van enviar i què van dir els membres de l'equip. A Teambox, <b>col.laborar</b> genera una <b>traçabilitat</b> del que s'ha fet."
@@ -1418,7 +1418,7 @@ ca:
       undefined: "Sense definir"
     primer: 
       create_first: "Crea la primera llista de tasques!"
-      define: "Fes servir tasques per a <b>planificar</b>, <b>veure que s'ha fet</b> i <b>no oblidar ides futures</b>.<br/><i>Què? Qui? Quan?</i> Les tasques poden tenir un estat, un responsable i una data límit."
+      define_html: "Fes servir tasques per a <b>planificar</b>, <b>veure que s'ha fet</b> i <b>no oblidar ides futures</b>.<br/><i>Què? Qui? Quan?</i> Les tasques poden tenir un estat, un responsable i una data límit."
       empty: "Encara no hi ha cap conversa en aquest projecte."
       footer1_html: "Es una manera sencilla i àgil de <b>conseguir fer el que et proposes</b> i fer-ho saber."
       footer2_html: "¡Ja és hora d'oblidar els plannings en Excel i els complexos diagrames Gantt!"
@@ -1592,11 +1592,11 @@ ca:
       picture: 
         destroy: "Esborrar l'avatar"
         field: "La teva icona"
-        gravatar_in_use: "No tenim una fota teva, així que estem utilitzant  %{gravatar}:"
+        gravatar_in_use_html: "No tenim una fota teva, així que estem utilitzant  %{gravatar}:"
         max_size: "L'arxiu no pot ser més gran de %{mb}"
         presence: "No pots pujar un fitxer buit"
-        upload_here_or_at_gravatar: "Pots pujar un nou avatar a Teambox, o crear un %{gravatar} que pots utilitzar a Teambox i d'altres webs."
-        we_have_this_avatar: "Aquesta es la imatge que tenim de tu:"
+        upload_here_or_at_gravatar_html: "Pots pujar un nou avatar a Teambox, o crear un %{gravatar} que pots utilitzar a Teambox i d'altres webs."
+        we_have_this_avatar_html: "Aquesta es la imatge que tenim de tu:"
       biography: Biografía
       change_password: "Canviar contrasenya"
       confirm_password: "Confirmar contrasenya"

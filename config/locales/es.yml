@@ -386,7 +386,7 @@ es:
       title: "Nueva conversación"
     primer: 
       create_first: "Crea la primera conversación para este proyecto!"
-      define: "<b>Conversa sobre decisiones</b> y <b>pon a tu equipo al día</b> de una forma centralizada.<br/>Cada conversación es una lista de mensajes, que reemplazan a los confusos mensajes."
+      define_html: "<b>Conversa sobre decisiones</b> y <b>pon a tu equipo al día</b> de una forma centralizada.<br/>Cada conversación es una lista de mensajes, que reemplazan a los confusos mensajes."
       empty: "Aún no hay ninguna conversación en este proyecto."
       footer1_html: "Las conversaciones son perfectas para <b>compartir un diseño</b>, <b>decidir una fecha</b> para reunirse o <b>informar</b> sobre las noticias del proyecto."
       footer2_html: "Estando ordenadas por hilos, es fácil volver atrás en el tiempo y ver qué archivos se enviaron y qué dijo cada miembro del equipo. En Teambox, <b>colaborar</b> genera una <b>trazabilidad</b> de qué se hizo."
@@ -1576,7 +1576,7 @@ es:
       undefined: Indefinido
     primer: 
       create_first: "Crea la primera lista de tareas!"
-      define: "Usa tareas para <b>planificar</b>, <b>ver qué se ha hecho</b> y <b>no olvidar ideas futuras</b>.<br/><i>¿Qué? ¿Quién? ¿Cuándo?</i> Las tareas pueden tener un estado, un responsable y una fecha límite."
+      define_html: "Usa tareas para <b>planificar</b>, <b>ver qué se ha hecho</b> y <b>no olvidar ideas futuras</b>.<br/><i>¿Qué? ¿Quién? ¿Cuándo?</i> Las tareas pueden tener un estado, un responsable y una fecha límite."
       empty: "Aún no hay ninguna conversación en este proyecto."
       footer1_html: "Es una forma sencilla y ágil de <b>conseguir hacer lo que te propones</b> y hacerlo saber."
       footer2_html: "¡Ya es hora de olvidar los plannings en Excel y los complejos diagramas GANTT!"
@@ -1778,11 +1778,11 @@ es:
       picture: 
         destroy: "Borrar imagen de perfil"
         field: "Tu icono"
-        gravatar_in_use: "No tenemos ninguna imagen de perfil tuya, así que estamos usando %{gravatar}:"
+        gravatar_in_use_html: "No tenemos ninguna imagen de perfil tuya, así que estamos usando %{gravatar}:"
         max_size: "El archivo no puede ser mayor de %{mb}"
         presence: "No puedes subir un fichero vacío"
-        upload_here_or_at_gravatar: "Puedes subir un nuevo avatar en Teambox, o crear un %{gravatar} que puedes usar en Teambox y otra webs."
-        we_have_this_avatar: "Esta es la imagen que tenemos de ti:"
+        upload_here_or_at_gravatar_html: "Puedes subir un nuevo avatar en Teambox, o crear un %{gravatar} que puedes usar en Teambox y otra webs."
+        we_have_this_avatar_html: "Esta es la imagen que tenemos de ti:"
       sunday: Domingo
       time_zone: "Zona horaria"
       tooltips: 

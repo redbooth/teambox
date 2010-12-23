@@ -329,7 +329,7 @@ pt-BR:
       title: "Nova conversa"
     primer: 
       create_first: "Cria a primeira conversa para este projeto!"
-      define: "<b>Conversa sobre decisiones</b> y <b>pon a tu equipo al día</b> de una forma centralizada.<br/>Cada conversación es una lista de mensajes, que reemplazan a los confusos mensajes."
+      define_html: "<b>Conversa sobre decisiones</b> y <b>pon a tu equipo al día</b> de una forma centralizada.<br/>Cada conversación es una lista de mensajes, que reemplazan a los confusos mensajes."
       empty: "Ainda não existe nenhuma conversa neste projeto."
       footer1_html: "As conversas são perfeitas para <b>compartilhar um desenho</b>, <b>decidir uma data</b> para se reunir ou <b>relatar</b> as novidades do projeto."
       footer2_html: "Estando ordenadas por hilos, es fácil volver atrás en el tiempo y ver qué archivos se enviaron y qué dijo cada miembro del equipo. En Teambox, <b>colaborar</b> genera una <b>trazabilidad</b> de qué se hizo."
@@ -1324,7 +1324,7 @@ pt-BR:
       undefined: Indefinido
     primer: 
       create_first: "Cria a primeira lista de tarefas!"
-      define: "Usa tareas para <b>planificar</b>, <b>ver qué se ha hecho</b> y <b>no olvidar ideas futuras</b>.<br/><i>¿Qué? ¿Quién? ¿Cuándo?</i> Las tareas pueden tener un estado, un responsable y una fecha límite."
+      define_html: "Usa tareas para <b>planificar</b>, <b>ver qué se ha hecho</b> y <b>no olvidar ideas futuras</b>.<br/><i>¿Qué? ¿Quién? ¿Cuándo?</i> Las tareas pueden tener un estado, un responsable y una fecha límite."
       empty: "Ainda não tem nenhuma conversa neste projeto."
       footer1_html: "Es una forma sencilla y ágil de <b>conseguir hacer lo que te propones</b> y hacerlo saber."
       footer2_html: "¡Esquece os plannings no Excel e os complexos diagramas GANTT!"
@@ -1483,11 +1483,11 @@ pt-BR:
       picture: 
         destroy: "Eliminar avatar"
         field: "Novo avatar"
-        gravatar_in_use: "Não temos nenhuma foto sua, então iremos utilizar %{gravatar}:"
+        gravatar_in_use_html: "Não temos nenhuma foto sua, então iremos utilizar %{gravatar}:"
         max_size: "O arquivo não pode ser maior de %{mb}"
         presence: "Você não pode subir um arquivo vazio"
-        upload_here_or_at_gravatar: "Você pode subir uma foto aqui, ou configurar uma em %{gravatar}."
-        we_have_this_avatar: "Esta é a imagem que você tem neste momento:"
+        upload_here_or_at_gravatar_html: "Você pode subir uma foto aqui, ou configurar uma em %{gravatar}."
+        we_have_this_avatar_html: "Esta é a imagem que você tem neste momento:"
       biography: Biografía
       change_password: "Cambiar contraseña"
       confirm_password: "Confirmar contraseña"
