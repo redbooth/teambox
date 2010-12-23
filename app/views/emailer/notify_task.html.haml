@@ -16,7 +16,7 @@
       = t('emailer.notify.task')
       = link_to h(@task.name), project_task_url(@project, @task), :style => inline_organization_link_colour
     - if @task.assigned
-      %p= t('emailer.notify.assigned_to', :user => h(@task.assigned.user.name))
+      %p= t('emailer.notify.assigned_to_html', :user => h(@task.assigned.user.name))
     %p= t('emailer.notify.status', :status => localized_status_name(@task))
     - if @task.due_on
       %p= t('emailer.notify.due_on', :date => due_on(@task))

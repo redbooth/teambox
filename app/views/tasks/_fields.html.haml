@@ -3,7 +3,7 @@
   %p= t('.task')
 
 .name.text_field
-  = f.label :name, t('.name')
+  = f.label :name, t('.name_html')
   = f.text_field :name, :autofocus => %w[new edit].include?(action_name) || nil
   
 - if f.object.new_record?
@@ -12,7 +12,7 @@
   - f.object.comments.build
   - f.fields_for :comments do |comment_fields|
     .body.text_field
-      = comment_fields.label :body, t('.body')
+      = comment_fields.label :body, t('.body_html')
       = comment_fields.text_area :body, :rows => 3
 
   .assigned_to.text_field
@@ -20,5 +20,5 @@
     = f.select :assigned_id, people_from_project_for_select(project)
 
   .pick_date
-    = f.label :due_on, t('.due_on')
+    = f.label :due_on, t('.due_on_html')
     = date_picker(f, :due_on)

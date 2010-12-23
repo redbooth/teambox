@@ -1,13 +1,13 @@
-%h2= t('.title').html_safe
+%h2= t('.title')
 
-%p= t('.follow_activities').html_safe
-%p= t('.receive_notifications').html_safe
-%p= t('.configure').html_safe
+%p= t('.follow_activities')
+%p= t('.receive_notifications')
+%p= t('.configure')
 
-%h3= t('.import.title').html_safe
-%p= t('.import.body').html_safe
+%h3= t('.import.title')
+%p= t('.import.body_html')
 
-%h3= t('.your_feeds').html_safe
+%h3= t('.your_feeds')
 
 = subscribe_to_all_projects_link
 
@@ -15,8 +15,8 @@
   = subscribe_to_project_link(project)
 
 - content_for :column do
-  %h2= t('.feed_reader.title').html_safe
-  %p= t('.feed_reader.body', :link => "http://help.teambox.com/faqs/more-ways-to-access-teambox/sync-tools#feeds").html_safe
+  %h2= t('.feed_reader.title')
+  %p= t('.feed_reader.body_html', :link => "http://help.teambox.com/faqs/more-ways-to-access-teambox/sync-tools#feeds")
   
-  %h2= t('.more_tips.title').html_safe
-  %p= t('.more_tips.body', :link => "http://help.teambox.com/faqs/more-ways-to-access-teambox/sync-tools#feeds").html_safe
+  %h2= t('.more_tips.title')
+  %p= t('.more_tips.body_html', :link => "http://help.teambox.com/faqs/more-ways-to-access-teambox/sync-tools#feeds")

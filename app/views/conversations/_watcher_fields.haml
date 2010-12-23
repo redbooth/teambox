@@ -18,8 +18,8 @@
               =h user.name
           
       .clear
-      %p= t('.subscribe_note')
+      %p= t('.subscribe_note_html')
     - else
       %h3= t('.invite_users')
       .clear
-      %p= t('.no_users_yet', :invite_link => project_people_path(project))
+      %p= t('.no_users_yet_html', :invite_link => project_people_path(project))

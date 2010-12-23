@@ -8,12 +8,12 @@
       = custom_organization_colour_field(f, @organization, field)
 
 .option_fields
-  %label= t('.logo').html_safe
+  %label= t('.logo_html')
   .option
     = f.file_field :logo
   %img.logo_square{ :src => @organization.logo.url(:square) }
   %img.logo_top{ :src => @organization.logo.url(:top) }
 .text_area
-  %label= t('.description').html_safe
+  %label= t('.description_html')
   = errors_for @organization, :description
   = f.text_area :description

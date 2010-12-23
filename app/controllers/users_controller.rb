@@ -152,7 +152,7 @@ class UsersController < ApplicationController
           self.current_user = @user
         end
       else
-        flash[:error] = t('users.activation.invalid')
+        flash[:error] = t('users.activation.invalid_html')
       end
     else
       flash[:error] = t('users.activation.invalid_user')
