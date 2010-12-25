@@ -12,7 +12,7 @@
 = subscribe_to_all_projects_link
 
 - for project in current_user.projects.unarchived
-  = subscribe_to_project_link(project)
+  %p= subscribe_to_project_link(project)
 
 - content_for :column do
   %h2= t('.feed_reader.title')

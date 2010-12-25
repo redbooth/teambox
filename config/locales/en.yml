@@ -1141,9 +1141,20 @@ en:
     upcoming_events_primer:
       title: There are no tasks due to show
     navigation:
-      welcome: Welcome
-      all_projects: 'All Projects'
-      new_project: +
+      recent_activity: Recent activity
+      all_projects: Projects
+      show_all_projects: Show all projects...
+      new_project: + New Project
+      conversations: Conversations
+      tasks: Tasks
+      pages: Pages
+      files: Files
+      settings: Settings
+      people: "People & Permissions"
+      my_tasks: My Tasks
+      show_all_tasks: View all tasks in my projects...
+      organizations: Organizations
+      show_all_organizations: "Manage organizations..."
     project_settings_navigation:
       general: General Settings
       picture: Project Picture

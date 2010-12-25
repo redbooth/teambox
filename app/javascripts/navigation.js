@@ -31,9 +31,11 @@ NavigationBar = {
         el.addClassName('expanded')
         contained.show()
       }
+      // Stop the event and don't follow the link
       return true
     }
-    return false
+    // Stop the event if it's selected (don't follow the link)
+    return el.hasClassName('selected')
   }
 }
 
@@ -46,6 +48,11 @@ document.on("dom:loaded", function() {
     current.addClassName('selected')
     NavigationBar.toggleElement(current)
     NavigationBar.showContainers(current)
+  }
+  // If we're on All Projects, then expand the recent projects list
+  var elements = $$('.nav_links .el')
+  if (elements[0].hasClassName('selected')) {
+    NavigationBar.toggleElement(elements[1])
   }
 })
 
