@@ -14,14 +14,15 @@
         .el= link_to "Files", project_uploads_path(project), :class => 'files'
         .el= link_to "Settings", project_settings_path(project), :class => 'settings'
         .el= link_to "People & Permissions", project_people_path(project), :class => 'people'
-    /.el= link_to "Show 2 more...", "", :class => 'more'
+    - if current_user.people.count > 3
+      .el= link_to "Show all projects...", all_projects_path, :class => 'more'
     - if !Teambox.config.community || (@community_organization && @community_role)
       .el
         = link_to "+ New Project", new_project_path, :class => 'more'
 
   .el
     = link_to "My Tasks", task_lists_path, :class => 'tasks'
-    %span 5
+    %span= current_user.pending_tasks.length
   .contained
     - for task in current_user.pending_tasks
       .el

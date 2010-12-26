@@ -363,6 +363,8 @@ Teambox::Application.routes.draw do
     match 'time/by_period' => 'hours#by_period', :as => :hours_by_period, :via => :get
     match 'time' => 'hours#index', :as => :time
 
+    match '/my_projects' => 'projects#list', :as => :all_projects
+
     root :to => 'projects#index'
 
     match 'assets/:id/:style/:filename' => 'uploads#download', :constraints => { :filename => /.*/ }, :via => :get

@@ -448,6 +448,12 @@ en:
       join: Join this project
     join:
       welcome: You're now part of this project
+    list:
+      archived: Archived
+      archived_at: archived at {{date}}
+      show_archived:
+        one: Show one archived project
+        other: Show {{count}} archived projects
   organizations:
     column:
       general_settings: General settings
