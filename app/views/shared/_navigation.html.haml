@@ -51,4 +51,5 @@
           .el= link_to t('organizations.column.admin_users'), organization_memberships_path(organization)
           .el= link_to t('organizations.column.appearance'), appearance_organization_path(organization)
           .el= link_to t('organizations.column.delete'), delete_organization_path(organization)
-    .el= link_to t('.show_all_organizations'), organizations_path, :class => 'more'
+    - unless Teambox.config.community
+      .el= link_to t('.show_all_organizations'), organizations_path, :class => 'more'

@@ -2,12 +2,6 @@
 t.named t('shared.project_navigation.all_task_lists')
 t.named t('shared.project_navigation.gantt')
 
-# If we're on the community version, we'll show only one organization
-if Teambox.config.community && Organization.last
-         t.links_to organization_path(Organization.last)
-elsif !Teambox.config.community
-         t.links_to organizations_path
-
 organization_header_bar_colour
 
 leave project, invite and others should become part of People in a project
