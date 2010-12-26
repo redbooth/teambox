@@ -13,10 +13,6 @@ class OrganizationsController < ApplicationController
     redirect_to edit_organization_path(@organization)
   end
 
-  def members
-    @users_not_belonging_to_org = @organization.external_users
-  end
-
   def projects
     @people = current_user.people
     @roles = {  Person::ROLES[:observer] =>    t('roles.observer'),
