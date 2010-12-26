@@ -17,7 +17,6 @@ class ProjectsController < ApplicationController
     @activities = Activity.for_projects(@projects)
     @threads = @activities.threads.all(:include => [:project, :target])
     @last_activity = @threads.last
-    @archived_projects = @current_user.projects.archived
 
     respond_to do |f|
       f.html
@@ -171,15 +170,7 @@ class ProjectsController < ApplicationController
     end
   
     def load_projects
-      if params.has_key?(:sub_action)
-        @sub_action = params[:sub_action]
-        if @sub_action == 'archived'
-          @projects = current_user.projects.archived
-        end  
-      else
-        @sub_action = 'all'
-        @projects = current_user.projects.unarchived
-      end
+      @projects = current_user.projects.unarchived
     end
 
     def load_pending_projects
