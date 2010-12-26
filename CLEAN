@@ -1,10 +1,6 @@
-shared.project_navigation
-
 
 t.named t('shared.project_navigation.all_task_lists')
 t.named t('shared.project_navigation.gantt')
-if time_tracking_enabled? # show global time-tracking reports
-  t.named t('shared.project_navigation.time_tracking')
 
 # If we're on the community version, we'll show only one organization
 if Teambox.config.community && Organization.last
@@ -12,28 +8,16 @@ if Teambox.config.community && Organization.last
 elsif !Teambox.config.community
          t.links_to organizations_path
 
-page_tab = project.has_member?(current_user) ? {:id => 'pages_tab', :class => 'nav_tab', :li_class => 'nav_tab_container', :li_end => pages_tab_list(project, project.pages) } : {}
-
-if time_tracking_enabled? and project.tracks_time
-  add_tab do |t|
-    t.named t('shared.project_navigation.time_tracking')
-    t.links_to  project_time_path(project)
-    t.highlights_on :controller => :hours
-    t.tab_index = 140
-  end
-end
-
-if project.admin?(current_user)
-  t.named t('shared.project_navigation.project_settings')
-
-
 organization_header_bar_colour
 
-new conv / task / page, etc
 leave project, invite and others should become part of People in a project
 
-
-Verify permissions for..
+Add or check permissions for...
 - New Project (community check, org check)
 - Time tracking (maybe make it globally available?)
 - New conv, task, page, file
+- Project settings (if project.admin?)
+- Time tracking: time_tracking_enabled? and project.tracks_time
+
+Verify Mobile version (shared.project_navigation)
+Make sure we're not doing super-slow queries with the sidebar

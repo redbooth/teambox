@@ -16,8 +16,10 @@
         .el= link_to t('.tasks'), project_task_lists_path(project), :class => 'tasks'
         .el= link_to t('.pages'), project_pages_path(project), :class => 'pages'
         .el= link_to t('.files'), project_uploads_path(project), :class => 'files'
-        .el= link_to t('.settings'), project_settings_path(project), :class => 'settings'
-        .el= link_to t('.people'), project_people_path(project), :class => 'people'
+        - if true
+          .el= link_to t('.settings'), project_settings_path(project), :class => 'settings'
+        - if true
+          .el= link_to t('.people'), project_people_path(project), :class => 'people'
     - if current_user.people.count > 3
       .el= link_to t('.show_all_projects'), all_projects_path, :class => 'more'
     - if !Teambox.config.community || (@community_organization && @community_role)
