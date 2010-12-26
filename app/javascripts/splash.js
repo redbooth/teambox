@@ -3,7 +3,7 @@ document.on("dom:loaded", function() {
 
   if(my_user.splash_screen) {
     $(document.body).insert({
-      after: "<div id='splash'><a id='hide_splash' href='/disable_splash'><img src='/images/splash.jpg'/></a></div>"
+      top: "<div id='splash'><a id='hide_splash' href='/disable_splash'><img src='/images/splash.jpg'/></a></div>"
     })
     $('container').hide()
     
