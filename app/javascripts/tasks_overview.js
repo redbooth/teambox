@@ -39,22 +39,3 @@ document.on('ajax:success', ".thread[data-class='task'] form", function(e, form)
   }
 })
 
-// Load activities on main view using AJAX
-document.on('click', '#back_to_overview', function(e, el) {
-  if (e.isMiddleClick()) return
-  e.stop()
-
-  $('content').update("<div class='loading_icon'> </div>")
-
-  new Ajax.Request(el.readAttribute('href')+".frag", {
-    method: "get",
-    onSuccess: function(r) {
-      $('content').update(r.responseText)
-      format_posted_date()
-      addHashForAjaxLink(el.readAttribute('href'))
-      $('back_to_overview').hide()
-    }
-  })
-})
-
-// TODO: If i assign something to myself, it should be added to my task list

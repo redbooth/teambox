@@ -36,6 +36,11 @@ NavigationBar = {
     }
     // Stop the event if it's selected (don't follow the link)
     return el.hasClassName('selected')
+  },
+
+  selectElement: function(el) {
+    $$('.nav_links .el.selected').invoke('removeClassName', 'selected')
+    el.addClassName('selected')
   }
 }
 
@@ -59,4 +64,28 @@ document.on("dom:loaded", function() {
 document.on('click', '.nav_links .el', function(e,el) {
   if (e.isMiddleClick()) return
   NavigationBar.toggleElement(el, true) && e.stop()
+})
+
+
+// Load navigation elements on main view using AJAX
+document.on('click', '.nav_links a.ajax', function(e,a) {
+  if (e.isMiddleClick()) return
+  e.stop()
+  new Ajax.Request(a.readAttribute('href')+".frag", {
+    method: "get",
+    onLoading: function(r) { Loading.show() },
+    onComplete: function(r) { Loading.hide() },
+    onSuccess: function(r) {
+      // Mark the new element as selected
+      NavigationBar.selectElement(a.up('.el'))
+      // Insert the content, and update posted dates if necessary
+      $('content').update(r.responseText)
+      format_posted_date()
+      // Display the AJAX route in the navigation bar
+      pushHistoryState(a.readAttribute('href'))
+    },
+    onFailure: function(r) {
+      alert("Error while loading the page. Please try reloading the page.")
+    }
+  })
 })
