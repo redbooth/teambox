@@ -898,6 +898,7 @@ en:
       add_link: New Task List
       empty: No tasks in this category!
       tasks_for_all_projects: Tasks across all projects
+      tasks_for_all_projects_explain: "Displaying all tasks. In order to manage task lists and reorder tasks, open each project's tasks."
       tasks_for_project: Task lists for this project
       other_views: Other views
       gantt_view: Project Gantt and calendar
