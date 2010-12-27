@@ -15,7 +15,7 @@ NavigationBar = {
     }
   },
 
-  toggleElement: function(el) {
+  toggleElement: function(el, effect) {
     var contained = el.next()
     // if next element is an expanded area..
     if (contained && contained.hasClassName('contained')) {
@@ -29,7 +29,7 @@ NavigationBar = {
         el.up().select('.el').invoke('removeClassName', 'expanded')
         // expand the selected one
         el.addClassName('expanded')
-        contained.show()
+        effect ? contained.blindDown({ duration: 0.2 }) : contained.show()
       }
       // Stop the event and don't follow the link
       return true
@@ -58,5 +58,5 @@ document.on("dom:loaded", function() {
 
 document.on('click', '.nav_links .el', function(e,el) {
   if (e.isMiddleClick()) return
-  NavigationBar.toggleElement(el) && e.stop()
+  NavigationBar.toggleElement(el, true) && e.stop()
 })
