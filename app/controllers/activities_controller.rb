@@ -10,16 +10,19 @@ class ActivitiesController < ApplicationController
     @last_activity = @threads.all.last
 
     respond_to do |format|
-      format.html { redirect_to projects_path }
+      format.html do
+        if params[:nolayout]
+          @new_conversation = Conversation.new(:simple => true)
+          @projects = current_user.projects.unarchived
+          render :layout => false
+        else
+          redirect_to projects_path
+        end
+      end
       format.m
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }
-      format.frag do
-        @new_conversation = Conversation.new(:simple => true)
-        @projects = current_user.projects.unarchived
-        render :layout => false
-      end
     end
   end
 

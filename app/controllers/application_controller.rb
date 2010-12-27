@@ -18,7 +18,10 @@ class ApplicationController < ActionController::Base
                 :belongs_to_project?,
                 :load_community_organization,
                 :add_chrome_frame_header
-  
+
+  # If the parameter ?nolayout=1 is passed, then we will render without a layout
+  layout proc{ |controller| controller.params[:nolayout] ? "parts" : "application" }
+
   private
 
     def check_permissions

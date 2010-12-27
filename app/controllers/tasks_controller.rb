@@ -10,7 +10,6 @@ class TasksController < ApplicationController
   def show
     respond_to do |f|
       f.html
-      f.frag { render :layout => false }
       f.js {
         @show_part = params[:part]
         render :template => 'tasks/reload'
