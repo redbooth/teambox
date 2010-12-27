@@ -29,9 +29,25 @@ document.on('click', 'form button.preview', function(e, button) {
   if (!box) box = Preview.init(textarea)
 
   Preview.toggle(box, button)
+  Preview.manualPreview = true
 })
 
 document.on('ajax:success', 'form, div.preview', function(e, form) {
   var box = form.down('div.preview')
   if (box) box.remove()
+})
+
+document.on('keyup', 'form textarea', function(e, area) {
+  if (Preview.manualPreview) return
+  if (e.keyCode == Event.KEY_RETURN) {
+    var form = area.up('form'),
+        textarea = form.down('textarea'),
+        box = form.down('div.preview'),
+        button = form.down('button.preview')
+
+    if (!box) box = Preview.init(textarea)
+    if (box.hasClassName('invisible')) {
+      Preview.toggle(box, button)
+    }
+  }
 })
