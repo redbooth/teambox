@@ -14,7 +14,7 @@ document.on('click', '.my_tasks_listing .task a', function(e, el) {
       $('content').update(r.responseText)
       format_posted_date()
       Task.insertAssignableUsers()
-      addHashForAjaxLink(el.readAttribute('href'))
+      pushHistoryState(el.readAttribute('href'))
       $('back_to_overview').show()
     },
     onComplete: function() {
