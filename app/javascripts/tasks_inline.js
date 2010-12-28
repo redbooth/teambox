@@ -13,9 +13,11 @@ InlineTasks = {
         task.down('span.task_status').insert({ before: "<div class='loading_icon'> </div>" })
         task.down('span.task_status').hide()
       }
-      new Ajax.Request(task.down('a.name').readAttribute('href')+".frag", {
+      console.log(task.down('a.name').readAttribute('href')+"?nolayout=1")
+      new Ajax.Request(task.down('a.name').readAttribute('href')+".html?nolayout=1", {
         method: "get",
         onSuccess: function(r) {
+          console.log(r)
           task.down('.loading_icon').remove()
           task.down('span.task_status').show()
           var block = "<div class='task_inline' style='display:none' id='"+block_id+"'>"+r.responseText+"</div>"

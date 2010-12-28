@@ -20,7 +20,14 @@ class ApplicationController < ActionController::Base
                 :add_chrome_frame_header
 
   # If the parameter ?nolayout=1 is passed, then we will render without a layout
-  layout proc{ |controller| controller.params[:nolayout] ? "parts" : "application" }
+  # If the parameter ?extractparts=1 is passed, then we will render blocks for content and sidebar
+  layout proc { |controller|
+    if controller.params[:nolayout]
+      nil
+    else
+      controller.params[:extractparts] ? "parts" : "application"
+    end
+  }
 
   private
 

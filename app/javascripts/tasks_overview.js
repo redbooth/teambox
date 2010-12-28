@@ -8,7 +8,7 @@ document.on('click', '.my_tasks_listing .task a', function(e, el) {
   task.down('.left_arrow_icon').hide()
   task.down('.loading_icon').show()
   
-  new Ajax.Request(task.down('a.name').readAttribute('href')+".frag", {
+  new Ajax.Request(task.down('a.name').readAttribute('href')+"?nolayout=1", {
     method: "get",
     onSuccess: function(r) {
       $('content').update(r.responseText)

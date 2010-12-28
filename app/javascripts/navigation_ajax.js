@@ -17,7 +17,7 @@ document.on('click', '.nav_links a.ajax', function(e,a) {
   if (e.isMiddleClick()) return
   e.stop()
   $$('.nav_links a').invoke('removeClassName', 'loading')
-  new Ajax.Request(a.readAttribute('href')+"?nolayout=1", {
+  new Ajax.Request(a.readAttribute('href')+"?extractparts=1", {
     method: "get",
     onLoading: function(r) { a.addClassName('loading') },
     onComplete: function(r) { a.removeClassName('loading') },
