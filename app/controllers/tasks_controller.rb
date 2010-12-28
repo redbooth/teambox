@@ -58,7 +58,7 @@ class TasksController < ApplicationController
     authorize! :update, @task
     respond_to do |f|
       f.html
-      f.js
+      f.js { render :layout => false }
     end
   end
 
@@ -104,7 +104,7 @@ class TasksController < ApplicationController
         flash[:success] = t('deleted.task', :name => @task.to_s)
         redirect_to [@current_project, @task_list]
       }
-      f.js
+      f.js { render :layout => false }
       handle_api_success(f, @task)
     end
   end

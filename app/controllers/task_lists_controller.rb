@@ -62,7 +62,7 @@ class TaskListsController < ApplicationController
     respond_to do |f|
       f.html
       f.m
-      f.js
+      f.js { render :layout => false }
     end
   end
 
@@ -160,7 +160,7 @@ class TaskListsController < ApplicationController
       respond_to do |f|
         f.html { non_js_list_redirect }
         f.m    { non_js_list_redirect }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @task_list)
       end
     else
@@ -204,7 +204,7 @@ class TaskListsController < ApplicationController
     respond_to do |f|
       f.html { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
       f.m    { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
-      f.js
+      f.js   { render :layout => false }
       handle_api_success(f, @task_list)
     end
   end

@@ -48,7 +48,7 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to projects_path }
-      format.js
+      format.js { render :layout => false }
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }
