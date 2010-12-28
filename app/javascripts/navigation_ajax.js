@@ -16,10 +16,11 @@ extractParts = function(responseText) {
 document.on('click', '.nav_links a.ajax', function(e,a) {
   if (e.isMiddleClick()) return
   e.stop()
+  $$('.nav_links a').invoke('removeClassName', 'loading')
   new Ajax.Request(a.readAttribute('href')+"?nolayout=1", {
     method: "get",
-    onLoading: function(r) { Loading.show() },
-    onComplete: function(r) { Loading.hide() },
+    onLoading: function(r) { a.addClassName('loading') },
+    onComplete: function(r) { a.removeClassName('loading') },
     onSuccess: function(r) {
       // Mark the new element as selected
       NavigationBar.selectElement(a.up('.el'))
@@ -36,7 +37,8 @@ document.on('click', '.nav_links a.ajax', function(e,a) {
       pushHistoryState(a.readAttribute('href'))
     },
     onFailure: function(r) {
-      alert("Error while loading the page. Please try reloading the page.")
+      // Force redirect if the AJAX load failed
+      document.location = a.readAttribute('href')
     }
   })
 })
