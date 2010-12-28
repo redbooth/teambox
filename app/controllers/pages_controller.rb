@@ -80,7 +80,7 @@ class PagesController < ApplicationController
         handle_api_success(f, @page)
       else
         f.html { render :edit }
-          f.html { render :edit }
+        f.html { render :edit }
         handle_api_error(f, @page)
       end
     end
@@ -111,7 +111,7 @@ class PagesController < ApplicationController
     end
     
     respond_to do |f|
-      f.js
+      f.js   { render :layout => false }
       handle_api_success(f, @page)
     end
   end
@@ -127,7 +127,7 @@ class PagesController < ApplicationController
     end
     
     respond_to do |f|
-      f.js { render :reorder }
+      f.js { render :reorder, :layout => false }
     end
   end
 

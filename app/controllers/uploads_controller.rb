@@ -96,17 +96,18 @@ class UploadsController < ApplicationController
     @upload.update_attributes(params[:upload])
 
     respond_to do |format|
-      format.js
+      format.js   { render :layout => false }
       format.html { redirect_to project_uploads_path(@current_project) }
     end
   end
 
   def destroy
     authorize! :destroy, @upload
+    @slot_id = @upload.page_slot.try(:id)
     @upload.try(:destroy)
 
     respond_to do |f|
-      f.js
+      f.js   { render :layout => false }
       f.html do
         flash[:success] = t('deleted.upload', :name => @upload.to_s)
         redirect_to project_uploads_path(@current_project)
