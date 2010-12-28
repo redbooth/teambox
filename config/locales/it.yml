@@ -229,8 +229,8 @@ it:
     watcher_fields: 
       add_suscribers: "Chi seguirà questa conversazione?"
       invite_users: "Sei l'unico utente in questo progetto!"
-      no_users_yet: "Conversare è più utile quando non lo fai da solo. <a href='%{invite_link}'>Invita alcuni utenti</a> a questo progetto perchè possano leggere, commentare e ricevere aggiornamenti su questa conversazione."
-      subscribe_note: "Queste persone verranno notificate via mail di questo messaggio e di tutti i commenti seguenti.<br/>Possono scegliere di smettere di seguire la conversazione in qualunque momento."
+      no_users_yet_html: "Conversare è più utile quando non lo fai da solo. <a href='%{invite_link}'>Invita alcuni utenti</a> a questo progetto perchè possano leggere, commentare e ricevere aggiornamenti su questa conversazione."
+      subscribe_note_html: "Queste persone verranno notificate via mail di questo messaggio e di tutti i commenti seguenti.<br/>Possono scegliere di smettere di seguire la conversazione in qualunque momento."
   countries: 
     AC: "Isola di Ascensione"
     AD: Andorra
@@ -663,7 +663,7 @@ it:
     invitation: 
       discard: "Rifiuta l'invito"
       invited_email: "%{inviter} ha invitato <b>%{email}</b> a unirsi al progetto."
-      invited_user: "%{inviter} ha invitato <b>%{invitee}</b> a unirsi al progetto."
+      invited_user_html: "%{inviter} ha invitato <b>%{invitee}</b> a unirsi al progetto."
       pending: "E' stata inviata una mail a questo utente, però non ha ancora confermato"
       resend: "Reinvia la mail d'invito"
       time_ago: "(%{time_ago_in_words} fa)"
@@ -815,7 +815,7 @@ it:
       name: Nome
       owner: Proprietario
       owner_description: "Il propietario è il responsabile principale di un progetto. Il proprietario non può essere rimosso da un progetto a meno che la proprietà non venga trasferita ad un altro utente."
-      permalink: URL
+      permalink_html: URL
       permalink_description: "Questo sarà l'indirizzo web del tuo progetto. Mantienilo breve. Non si accettano spazi"
     index: 
       archived: "Mostra %{count} progetti archiviati..."
@@ -941,7 +941,7 @@ it:
       tour: Tour
       users: Utenti
     strip: 
-      archived: "Questo progetto è archiviato. Per modificarlo o scrivere commenti devi ripristinarlo nelle <a href='%{link}'>impostazioni del progetto</a>"
+      archived_html: "Questo progetto è archiviato. Per modificarlo o scrivere commenti devi ripristinarlo nelle <a href='%{link}'>impostazioni del progetto</a>"
     task_navigation: 
       all_tasks: "Tutti i compiti"
       everybodys_tasks: "Compiti di tutti"
@@ -986,7 +986,7 @@ it:
       new_task_list: "Nuova lista di compiti"
       subscribe: "Iscriviti ai compiti"
     destroy_message: 
-      deleted: "La lista <b>%{name}</b> è stata cancellata!"
+      deleted_html: "La lista <b>%{name}</b> è stata cancellata!"
     edit: 
       submit: Aggiorna
     errors: 
@@ -1021,12 +1021,12 @@ it:
       reopen: "Riapri questo compito"
       you_are_done: "Sembra che hai già finito con questo compito!"
     archive_message: 
-      archived: "Il compito <b>%{name}</b> è stato archiviato con successo!"
+      archived_html: "Il compito <b>%{name}</b> è stato archiviato con successo!"
     assigned: 
       assigned_to: "Responsabile: %{user}"
     create: "Aggiungi un compito"
     destroy_message: 
-      deleted: "Il compito <b>%{name}</b> è stato cancellato con successo!"
+      deleted_html: "Il compito <b>%{name}</b> è stato cancellato con successo!"
     due_on: 
       due_on: Data
       today: Oggi
@@ -1074,7 +1074,7 @@ it:
   uploads: 
     comment_upload_link: Allegato
     form: 
-      description: "Descrizione <i>(opzionale)</i>"
+      description_html: "Descrizione <i>(opzionale)</i>"
       max_size: "La dimensione massima di un file è di %{mb}"
       presence: "Non puoi caricare un file vuoto"
       select_file: "Scegli un file"

@@ -381,9 +381,9 @@ fr:
     watcher_fields: 
       add_suscribers: "Qui suivra cette conversation?"
       invite_users: "Vous êtes l’unique utilisateur dans ce projet!"
-      no_users_yet: "Les conversations sont plus utiles lorsqu’il y a plusieurs personnes. <a href='%{invite_link}'>Invitez d’autres personnes</a> à se joindre à ce projet afin qu’ils puissent lire, commenter et recevoir les actualisations de cette conversation."
+      no_users_yet_html: "Les conversations sont plus utiles lorsqu’il y a plusieurs personnes. <a href='%{invite_link}'>Invitez d’autres personnes</a> à se joindre à ce projet afin qu’ils puissent lire, commenter et recevoir les actualisations de cette conversation."
       people_all: "Toutes les personnes dans le projet"
-      subscribe_note: "Ces personnes recevront une notification par courriels de ce message et des commentaires ultérieurs.<br/>Vous pouvez arrêter de suivre cette conversation à tout moment."
+      subscribe_note_html: "Ces personnes recevront une notification par courriels de ce message et des commentaires ultérieurs.<br/>Vous pouvez arrêter de suivre cette conversation à tout moment."
   countries: 
     AC: AC
     AD: Andorre
@@ -878,16 +878,13 @@ fr:
       invalid_code: "Code d’invitation invalide"
     fields: 
       user_or_email: "Entrez le courriel ou nom d’utilisateur de la personne que vous souhaitez inviter:"
-    group_invitation: 
-      invited_email: "%{inviter} a invité <b>%{email}</b> à joindre le groupe."
-      invited_user: "%{inviter} a invité <b>%{invitee}</b> à joindre le groupe."
     index_user: 
       no_invitations: "Vous n’avez aucune invitation en attente de réponse."
       title: "Invitations en attente de réponse"
     invitation: 
       discard: "Ne plus montrer cette invitation"
       invited_email: "%{inviter} a invité <b>%{email}</b> à rejoindre le projet."
-      invited_user: "%{inviter} a invité <b>%{invitee}</b> à rejoindre le projet."
+      invited_user_html: "%{inviter} a invité <b>%{invitee}</b> à rejoindre le projet."
       pending: "Un courriel a été envoyé à cet utilisateur, mais celui‑ci n’a pas encore accepté l’invitation"
       resend: "Renvoyer un courriel d’invitation"
       time_ago: "(Il y a %{time_ago_in_words})"
@@ -896,7 +893,7 @@ fr:
         title: Entrez ceci
       title:  "Dans la boîte nom d'utilisateurs/courriel, utilisé une liste de noms d'utilisateurs ou d'adresses courriels. e.g.:"
       to_invite: 
-        not_example: '(PAS <span class="mention">@fred</span> ni <span class="mention">@lisa</span>)'
+        not_example_html: '(PAS <span class="mention">@fred</span> ni <span class="mention">@lisa</span>)'
         title: Pour inviter
     pending: 
       invited_to_join: "%{by} vous a invité à rejoindre le projet %{project}."
@@ -1023,8 +1020,8 @@ fr:
     auth_status_linked: Ce profil est associé avec votre compte
     auth_status_link: Associer ce profil avec votre compte
     logged_in: Connexion réussi
-    your_account_is_linked: "Votre profil %{provider} est associé avec Teambox."
-    your_account_is_not_linked: "Votre profil %{provider} est <strong>n'est pas associé</strong> avec Teambox."
+    your_account_is_linked_html: "Votre profil %{provider} est associé avec Teambox."
+    your_account_is_not_linked_html: "Votre profil %{provider} est <strong>n'est pas associé</strong> avec Teambox."
     link_account: Associé le profil.
     unlink_account: Dissocier le profil.
     user_exists: "Ce profil %{provider} n'est pas encore associé avec aucun compte."
@@ -1176,11 +1173,11 @@ fr:
         time_tracking_docs: "En savoir plus."
       owner: Propriétaire
       owner_description: "Le propriétaire du projet est la seule personne qui peut modifier les paramètres de ce projet. Une fois que vous aurez transférer le projet à quelqu’un d’autre, vous ne serez plus autorisé à modifier certain paramètres du projet."
-      permalink: Lien permanant
+      permalink_html: Lien permanant
       permalink_description: "Ceci sera l’adresse internet de votre projet. Choisissez une adresse concise et sans espace."
       public_project_html: "Projet public. <em>Tout le monde peut accéder et rejoindre le project depuis la <a href='/public'>section des projets publics</a>.</em>"
       settings: 
-        upgrade: "Pour sauvegarder ce projet et pouvoir le modifier, vous devez <a href='%{link}'>vous abonnez à un plan suppérieur</a> pour obtenir plus de stockage et de fonctionalité, ou archiver d'autre projets."
+        upgrade_html: "Pour sauvegarder ce projet et pouvoir le modifier, vous devez <a href='%{link}'>vous abonnez à un plan suppérieur</a> pour obtenir plus de stockage et de fonctionalité, ou archiver d'autre projets."
         you_cant_unarchive: "Vous avez %{active} projets actifs, et votre plan actuel permet seulement %{max} projets"
       tracks_time_html: "Activer le suivi du temps"
     index: 
@@ -1206,11 +1203,11 @@ fr:
       submit: "Créer un projet et commencer à inviter des utilisateurs"
       title: "Créer un projet"
       upgrade: 
-        to_2: "<a href='%{link}'>Abonnez vous maintenant</a> pour créer <b>plus de %{projects} projets<b>, stocker <b>%{storage} Gb<b> de fichiers et utilisez la <b>barre de recherches à travers tous vos projets<b>."
+        to_2_html: "<a href='%{link}'>Abonnez vous maintenant</a> pour créer <b>plus de %{projects} projets<b>, stocker <b>%{storage} Gb<b> de fichiers et utilisez la <b>barre de recherches à travers tous vos projets<b>."
       you_can_create_more: 
         one: "Vous pouvez créer un projet supplémentaire avec votre plan actuel."
         other: "Vous pouvez créer %{count} projets supplémentaires avec votre plan actuel."
-        zero: "Vous ne pouvez plus créer de projet.<br/>La limite de projets avec votre plan actuel est %{max}."
+        zero_html: "Vous ne pouvez plus créer de projet.<br/>La limite de projets avec votre plan actuel est %{max}."
     new_primer: 
       define1_html: "Un projet est un groupe partagé avec votre équipe."
       define2_html: "À l’intérieur d’un projet, chaque membre a la possibilité de:"
@@ -1311,10 +1308,10 @@ fr:
     instructions: 
       send_email: "Envoyez un nouveau commentaire par courriel..."
       send_email_conversations: "Envoyez une nouvelle conversation par courriel..."
-      send_email_help_conversation: "Pour envoyez un nouveau commentaire dans cette conversation, envoyez un courriel à  <a href=\"mailto:%{email}\">%{email}</a>. Seuls les membres du projet peuvent écrire sur la conversation."
-      send_email_help_conversations: "Pour créer une nouvelle conversation envoyez un courriel à <a href=\"mailto:%{email}\">%{email}</a> avec le Sujet pour le titre et le Corps pour le commentaire. Seuls les membres du projet peuvent créer une nouvelle conversation."
-      send_email_help_project: "Pour envoyez un nouveau commentaire sur le mur d'activités de projet, envoyez un courriel à <a href=\"mailto:%{email}\">%{email}</a>. Seuls les membres du projet peuvent poster sur le mur."
-      send_email_help_task: "Pour poster un nouveau commentaire à cette tâche, envoyez un courriel à  <a href=\"mailto:%{email}\">%{email}</a>. Seuls les membres du projet peuvent commenter cette tâche."
+      send_email_help_conversation_html: "Pour envoyez un nouveau commentaire dans cette conversation, envoyez un courriel à  <a href=\"mailto:%{email}\">%{email}</a>. Seuls les membres du projet peuvent écrire sur la conversation."
+      send_email_help_conversations_html: "Pour créer une nouvelle conversation envoyez un courriel à <a href=\"mailto:%{email}\">%{email}</a> avec le Sujet pour le titre et le Corps pour le commentaire. Seuls les membres du projet peuvent créer une nouvelle conversation."
+      send_email_help_project_html: "Pour envoyez un nouveau commentaire sur le mur d'activités de projet, envoyez un courriel à <a href=\"mailto:%{email}\">%{email}</a>. Seuls les membres du projet peuvent poster sur le mur."
+      send_email_help_task_html: "Pour poster un nouveau commentaire à cette tâche, envoyez un courriel à  <a href=\"mailto:%{email}\">%{email}</a>. Seuls les membres du projet peuvent commenter cette tâche."
       subscribe_to_calendars: "S'abonner aux calendriers..."
       subscribe_to_feeds: "S'abonner aux flux..."
     navigation: 
@@ -1354,7 +1351,7 @@ fr:
       tour: Tour
       users: Utilisateurs
     strip: 
-      archived: "Ce projet est archivé. Pour editer ou commenter sur ce projet vous devez le réactiver sur la <a href='%{link}'>page Paramètres du projet</a>"
+      archived_html: "Ce projet est archivé. Pour editer ou commenter sur ce projet vous devez le réactiver sur la <a href='%{link}'>page Paramètres du projet</a>"
     task_navigation: 
       all_tasks: Toutes
       everybodys_tasks: "Tâches de tout le monde"
@@ -1417,7 +1414,7 @@ fr:
       other_views: "Autres vues"
       subscribe: "Souscrivez à ces tâches"
     destroy_message: 
-      deleted: "La liste <b>%{name}</b> a été effacée !"
+      deleted_html: "La liste <b>%{name}</b> a été effacée !"
     edit: 
       submit: Actualiser
     errors: 
@@ -1490,12 +1487,12 @@ fr:
       reopen: "Réouvrir cette tâche"
       you_are_done: "Il semble que cette tâche soit terminée."
     archive_message: 
-      archived: "La tâche <b>%{name}</b> a été archivée!"
+      archived_html: "La tâche <b>%{name}</b> a été archivée!"
     assigned: 
       assigned_to: "Responsable: %{user}"
     create: "Ajouter une tâche"
     destroy_message: 
-      deleted: "La tâche <b>%{name}</b> a été supprimée"
+      deleted_html: "La tâche <b>%{name}</b> a été supprimée"
     due_on: 
       due_on: Échéance
       today: Aujourd’hui
@@ -1552,7 +1549,7 @@ fr:
   uploads: 
     comment_upload_link: "Fichier joint"
     form: 
-      description: "Description <i>(optionnel)</i>"
+      description_html: "Description <i>(optionnel)</i>"
       max_size: "La taille du fichier ne peut excéder %{mb} Mb"
       presence: "Vous ne pouvez pas joindre un fichier vide"
       select_file: "Sélectionner un fichier"
@@ -1712,12 +1709,12 @@ fr:
             liste désordonnée
             laissez des lignes vides
       to_see_this: 
-        bold_text: "texte <strong style=\"font-weight: bold\">gras</strong>"
-        header: "<h3 style=\"font-size:18px\">En-tête</h3>"
-        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
-        italic_text: "<i>italics</i> text"
-        link: "<a href=\"http://www.teambox.com\">Un lien</a>"
-        title: "Pour le voir"
+        bold_text_html: "texte <strong style=\"font-weight: bold\">gras</strong>"
+        header_html: "<h3 style=\"font-size:18px\">En-tête</h3>"
+        image_html: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text_html: "<i>italics</i> text"
+        link_html: "<a href=\"http://www.teambox.com\">Un lien</a>"
+        title_html: "Pour le voir"
     unconfirmed_email: 
       follow_the_link_html: "<b>Cliquez sur le lien qui se trouve dans ce courriel</b> pour activer votre compte."
       invitation_sent_to_html: "Nous avons envoyé une invitation à l’adresse <i>%{email}</i> afin de vérifier qu’il n’y a pas d’erreur dans l’adresse courriel."

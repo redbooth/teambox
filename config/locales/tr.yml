@@ -379,9 +379,9 @@ tr:
     watcher_fields: 
       add_suscribers: "Bu sohbeti kimler izleyecek?"
       invite_users: "Bu projedeki tek kullanıcı sizsiniz!"
-      no_users_yet: "Sohbetler paylaşıldıkça daha kullanışlı olur. Bu projeye <a href='%{invite_link}'>diğer kullanıcıları davet edin</a>, böylece onlar da sohbete katılabilir, cevaplar yazabilir ve güncellemeleri takip edebilirler."
+      no_users_yet_html: "Sohbetler paylaşıldıkça daha kullanışlı olur. Bu projeye <a href='%{invite_link}'>diğer kullanıcıları davet edin</a>, böylece onlar da sohbete katılabilir, cevaplar yazabilir ve güncellemeleri takip edebilirler."
       people_all: "Projedeki tüm kişiler"
-      subscribe_note: "Bu kişilere, bu mesaj ve iligli tüm yorumlar hakkında e-posta gönderilecek.<br/> Bu kişiler, diledikleri zaman aboneliklerini durdurabilirler."
+      subscribe_note_html: "Bu kişilere, bu mesaj ve iligli tüm yorumlar hakkında e-posta gönderilecek.<br/> Bu kişiler, diledikleri zaman aboneliklerini durdurabilirler."
   countries: 
     AC: "Ascension Island"
     AD: Andorra
@@ -867,16 +867,13 @@ tr:
       invalid_code: "Geçersiz davet kodu"
     fields: 
       user_or_email: "Takım arkadaşınızın kullanıcı adını veya e-postasını girin:"
-    group_invitation: 
-      invited_email: "%{inviter}, <b>%{email}</b> e-posta adresinin sahibini gruba davet etti."
-      invited_user: "%{inviter}, <b>%{invitee}</b> adlı kişiyi gruba davet etti. "
     index_user: 
       no_invitations: "Bekleyen proje davetiniz yok."
       title: "Bekleyen davetler"
     invitation: 
       discard: "Daveti redded"
       invited_email: "%{inviter}, <b>%{email}</b> e-posta adresinin sahibini projeye davet etti."
-      invited_user: "%{inviter}, <b>%{invitee}</b> adlı kişiyi projeye davet etti."
+      invited_user_html: "%{inviter}, <b>%{invitee}</b> adlı kişiyi projeye davet etti."
       pending: "Kullanıcıya bir e-posta gönderildi fakat kullanıcı henüz teyit etmedi."
       resend: "Davet e-postasını tekrar gönder"
       time_ago: "(%{time_ago_in_words} önce)"
@@ -1006,8 +1003,8 @@ tr:
     unlink_account: "Hesabın bağlantısını kesin."
     user_already_exists_by_email: "%{email} kullanıcısının zaten bir Teambox hesabı var. <br/>O hesapla giriş yapın ve Ayar panelinizden o hesabı bağlayın."
     user_already_exists_by_login: "%{login} kullanıcısının zaten bir Teambox hesabı var. <br/>O hesapla giriş yapın ve Ayar panelinizden o hesabı bağlayın."
-    your_account_is_linked: "%{provider} profiliniz Teambox'a <strong>bağlı</strong>."
-    your_account_is_not_linked: "%{provider} profiliniz Teambox'a <strong>bağlı değil</strong>."
+    your_account_is_linked_html: "%{provider} profiliniz Teambox'a <strong>bağlı</strong>."
+    your_account_is_not_linked_html: "%{provider} profiliniz Teambox'a <strong>bağlı değil</strong>."
   page_title: 
     archived_task_lists: "Arşivlenmiş Görevler"
     create_uploads: "Dosya Gönderimi"

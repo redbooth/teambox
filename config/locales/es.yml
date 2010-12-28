@@ -406,9 +406,9 @@ es:
       add_suscribers: "¿Quién seguirá esta conversación?"
       cant_notify: "Se trata de un proyecto público. Para evitar mensajes de correo electrónico no deseado, no estamos mostrando la lista de usuarios que pueden notificar."
       invite_users: "Eres el único usuario en este proyecto!"
-      no_users_yet: "Conversar es más útil cuando no lo haces solo. <a href='%{invite_link}'>Invita a algunos usuarios</a> a este proyecto para que puedan leer, comentar y recibir actualizaciones de esta conversación."
+      no_users_yet_html: "Conversar es más útil cuando no lo haces solo. <a href='%{invite_link}'>Invita a algunos usuarios</a> a este proyecto para que puedan leer, comentar y recibir actualizaciones de esta conversación."
       people_all: "Toda la gente en el proyecto"
-      subscribe_note: "Estas personas serán notificadas via email de este mensaje y los comentarios posteriores.<br/>Pueden dejar de seguir la conversación en cualquier momento."
+      subscribe_note_html: "Estas personas serán notificadas via email de este mensaje y los comentarios posteriores.<br/>Pueden dejar de seguir la conversación en cualquier momento."
   countries: 
     AC: "Isla de la Ascensión"
     AD: Andorra
@@ -899,16 +899,13 @@ es:
       invalid_code: "Código de invitación inválido"
     fields: 
       user_or_email: "Introduce el email o usuario de tu compañero:"
-    group_invitation: 
-      invited_email: "%{inviter} ha invitado a <b>%{email}</b> para unirse al grupo."
-      invited_user: "%{inviter} ha invitado a <b>%{invitee}</b> para unirse al grupo."
     index_user: 
       no_invitations: "No tienes ninguna invitación pendiente."
       title: "Invitaciones pendientes"
     invitation: 
       discard: "Descartar invitación"
       invited_email: "%{inviter} ha invitado a <b>%{email}</b> al proyecto."
-      invited_user: "%{inviter} ha invitado a <b>%{invitee}</b> al proyecto."
+      invited_user_html: "%{inviter} ha invitado a <b>%{invitee}</b> al proyecto."
       pending: "Se ha enviado un email a este usuario, pero aún no ha confirmado"
       resend: "Reenviar email de invitación"
       time_ago: "(hace %{time_ago_in_words})"
@@ -917,7 +914,7 @@ es:
         title: Introduce
       title: "En la caja de texto, puedes introducir una lista de usuario o de direcciones de correo. ej.:"
       to_invite: 
-        not_example: "(Ni <span class=\"mention\">@fred</span> ni <span class=\"mention\">@lisa</span>)"
+        not_example_html: "(Ni <span class=\"mention\">@fred</span> ni <span class=\"mention\">@lisa</span>)"
         title: "Invitarás a"
     pending: 
       invited_to_join: "%{by} te ha invitado a unirte al proyecto %{project}."
@@ -1031,8 +1028,8 @@ es:
     unlink_account: "Desenlazar cuenta"
     user_already_exists_by_email: "El usuario %{email} ya tiene una cuenta en Teambox.<br/>inicia sesión con esa cuenta y vincula desde el panel de configuración."
     user_already_exists_by_login: "El usuario %{login} ya tiene una cuenta en Teambox.<br/>Inicia sesión con esa cuenta y vincula desde el panel de administración."
-    your_account_is_linked: "Tu cuenta de %{provider} <strong>está enlazada</strong> con Teambox."
-    your_account_is_not_linked: "Tu cuenta de %{provider} <strong>no está enlazada</strong> con Teambox."
+    your_account_is_linked_html: "Tu cuenta de %{provider} <strong>está enlazada</strong> con Teambox."
+    your_account_is_not_linked_html: "Tu cuenta de %{provider} <strong>no está enlazada</strong> con Teambox."
   organizations: 
     billing: 
       current_plan: "Tu plan actual"
@@ -1282,11 +1279,11 @@ es:
       submit: "Crear proyecto y empezar a invitar usuarios"
       title: "Crear un proyecto"
       upgrade: 
-        to_2: "<a href='%{link}'>Compra una cuenta de más capacidad</a> para crear <b>hasta %{projects} proyects</b>, almacenar hasta <b>%{storage} Gb</b> de archivos y usar la <b>barra de búsqueda en proyectos</b>."
+        to_2_html: "<a href='%{link}'>Compra una cuenta de más capacidad</a> para crear <b>hasta %{projects} proyects</b>, almacenar hasta <b>%{storage} Gb</b> de archivos y usar la <b>barra de búsqueda en proyectos</b>."
       you_can_create_more: 
         one: "Puedes crear un proyecto más con tu cuenta."
         other: "Puedes crear %{count} proyectos más con tu cuenta."
-        zero: "No puedes crear más proyectos.<br/>Sólo puedes tener %{max} proyectos con tu cuenta."
+        zero_html: "No puedes crear más proyectos.<br/>Sólo puedes tener %{max} proyectos con tu cuenta."
     new_primer: 
       define1_html: "Un proyecto es un grupo compartido con tus contactos."
       define2_html: "Dentro de un proyecto, cada miembro puede:"
@@ -1396,10 +1393,10 @@ es:
     instructions: 
       send_email: "Publicar comentario por email"
       send_email_conversations: "Publica una nueva conversación por email..."
-      send_email_help_conversation: "Para publicar un comentario en esta conversación envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Solo los miembros de este proyecto pueden publicar en esta conversación."
-      send_email_help_conversations: "Para crear una nueva conversación envía un email a <a href=\"mailto:%{email}\">%{email}</a> con el tema para el título y el cuerpo para el comentario. Solo los miembros del proyecto pueden crear una nueva conversación."
-      send_email_help_project: "Para publicar un nuevo comentario en el muro de actividad del proyecto envía un email a <a href=\"mailto:%{email}\">%{email}</a>. Solo los miembros del proyecto pueden publicar en el muro."
-      send_email_help_task: "Para publicar un nuevo comentario en esta tarea envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Solo los miembros del proyecto pueden comentar en la tarea."
+      send_email_help_conversation_html: "Para publicar un comentario en esta conversación envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Solo los miembros de este proyecto pueden publicar en esta conversación."
+      send_email_help_conversations_html: "Para crear una nueva conversación envía un email a <a href=\"mailto:%{email}\">%{email}</a> con el tema para el título y el cuerpo para el comentario. Solo los miembros del proyecto pueden crear una nueva conversación."
+      send_email_help_project_html: "Para publicar un nuevo comentario en el muro de actividad del proyecto envía un email a <a href=\"mailto:%{email}\">%{email}</a>. Solo los miembros del proyecto pueden publicar en el muro."
+      send_email_help_task_html: "Para publicar un nuevo comentario en esta tarea envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Solo los miembros del proyecto pueden comentar en la tarea."
       subscribe_to_calendars: "Suscribirme a los calendarios..."
       subscribe_to_feeds: "Suscribirme a las actividades..."
     navigation: 
@@ -1446,7 +1443,7 @@ es:
       tour: Tour
       users: Testimonios
     strip: 
-      archived: "Este proyecto está archivado. Para editarlo o comentar en él debes desarchivarlo en las <a href='%{link}'>preferencias del proyecto</a>"
+      archived_html: "Este proyecto está archivado. Para editarlo o comentar en él debes desarchivarlo en las <a href='%{link}'>preferencias del proyecto</a>"
     task_navigation: 
       all_tasks: Todas
       everybodys_tasks: "Todas las tareas"
@@ -1515,7 +1512,7 @@ es:
       other_views: "Otras vistas"
       subscribe: "Suscríbete a las tareas"
     destroy_message: 
-      deleted: "La lista <b>%{name}</b> ha sido borrada!"
+      deleted_html: "La lista <b>%{name}</b> ha sido borrada!"
     edit: 
       submit: Actualizar
     errors: 
@@ -1592,13 +1589,13 @@ es:
       reopen: "Reabrir esta tarea"
       you_are_done: "Parece que ya has terminado con esta tarea."
     archive_message: 
-      archived: "La tarea <b>%{name}</b> ha sido archivada!"
+      archived_html: "La tarea <b>%{name}</b> ha sido archivada!"
     assigned: 
       assigned_to: "Responsable: %{user}"
       myself: "Asignada a mi mismo (%{user})"
     create: "Añadir Tarea"
     destroy_message: 
-      deleted: "La tarea <b>%{name}</b> se ha borrado"
+      deleted_html: "La tarea <b>%{name}</b> se ha borrado"
     due_on: 
       due_on: Fecha
       today: Hoy
@@ -1658,7 +1655,7 @@ es:
   uploads: 
     comment_upload_link: Adjunto
     form: 
-      description: "Descripción <i>(opcional)</i>"
+      description_html: "Descripción <i>(opcional)</i>"
       max_size: "El tamaño máximo de archivo son %{mb}"
       presence: "No puedes subir un archivo vacío"
       select_file: "Seleccionar archivo"
@@ -1823,17 +1820,17 @@ es:
             * lista ordenada
             * deja una línea antes y después
       to_see_this: 
-        bold_text: "texto <strong style=\"font-weight: bold\">negrita</strong>"
-        header: "<h3 style=\"font-size:18px\">Cabecera</h3>"
-        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
-        italic_text: "texto <i>italica</i>"
-        link: "<a href=\"http://www.teambox.com\">Un enlace</a>"
-        ordered_list: |
+        bold_text_html: "texto <strong style=\"font-weight: bold\">negrita</strong>"
+        header_html: "<h3 style=\"font-size:18px\">Cabecera</h3>"
+        image_html: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text_html: "texto <i>italica</i>"
+        link_html: "<a href=\"http://www.teambox.com\">Un enlace</a>"
+        ordered_list_html: |
             <li>lista ordenada</li>
             <li>deja una línea en blanco!</li>
-        smaller_header: "<h4 style=\"font-size:14px\">Cabecera pequeña</h4>"
-        title: "Para ver esto"
-        unordered_list: |
+        smaller_header_html: "<h4 style=\"font-size:14px\">Cabecera pequeña</h4>"
+        title_html: "Para ver esto"
+        unordered_list_html: |
             <li>lista ordenada</li>
             <li>deja una línea antes y después</li>
     unconfirmed_email: 

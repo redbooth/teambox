@@ -981,12 +981,12 @@ sl:
       reopen: "Ponovno odpri to opravilo"
       you_are_done: "Kot kaže si končal s tem opravilom!"
     archive_message: 
-      archived: "Opravilo <b>%{name}</b> je bilo uspešno arhivirano!"
+      archived_html: "Opravilo <b>%{name}</b> je bilo uspešno arhivirano!"
     assigned: 
       assigned_to: "Dodeljeno %{user}"
     create: "Dodaj opravilo"
     destroy_message: 
-      deleted: "Opravilo <b>%{name}</b> je bilo uspešno izbrisano!"
+      deleted_html: "Opravilo <b>%{name}</b> je bilo uspešno izbrisano!"
     due_on: 
       due_on: Rok
       today: Danes
@@ -1039,7 +1039,7 @@ sl:
   uploads: 
     comment_upload_link: Priponka
     form: 
-      description: Naslov<i>(opcijsko)</i>
+      description_html: Naslov<i>(opcijsko)</i>
       select_file: "Izberi datoteko"
       upload: "Naloži datoteko"
     index: 

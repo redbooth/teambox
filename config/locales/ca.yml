@@ -381,9 +381,9 @@ ca:
     watcher_fields: 
       add_suscribers: "Qui seguirà aquesta conversa?"
       invite_users: "Ets l'unic usuari en aquest projecte!"
-      no_users_yet: "Conversar es més útil quan no ho fas sol. <a href='%{invite_link}'>Convida a alguns usuaris</a> en aquest projecte per que puguin llegir, comentar i rebre actualitzacions d'aquesta conversa."
+      no_users_yet_html: "Conversar es més útil quan no ho fas sol. <a href='%{invite_link}'>Convida a alguns usuaris</a> en aquest projecte per que puguin llegir, comentar i rebre actualitzacions d'aquesta conversa."
       people_all: "All people in project"
-      subscribe_note: "Aquestes persones rebran una notificació via email d´aquest missatge i els comentaris posteriors.<br/>Poden deixar de seguir la conversa en qualsevol moment."
+      subscribe_note_html: "Aquestes persones rebran una notificació via email d´aquest missatge i els comentaris posteriors.<br/>Poden deixar de seguir la conversa en qualsevol moment."
   countries: 
     AC: "Illa de l'Ascensió"
     AD: Andorra
@@ -870,16 +870,13 @@ ca:
       invalid_code: "Codi d'invitació no vàlid"
     fields: 
       user_or_email: "Introdueix l´email o usuari del teu company:"
-    group_invitation: 
-      invited_email: "%{inviter} va convidar <b>%{email}</b> per unir-se al grup."
-      invited_user: "%{inviter} va convidar <b>%{invitee}</b> per unir-se al grup."
     index_user: 
       no_invitations: "No tens cap invitació pendent."
       title: "Invitacions pendents"
     invitation: 
       discard: "Descartar invitació"
       invited_email: "%{inviter} ha convidat a <b>%{email}</b> al projecte."
-      invited_user: "%{inviter} ha convidat a <b>%{invitee}</b> al projecte."
+      invited_user_html: "%{inviter} ha convidat a <b>%{invitee}</b> al projecte."
       pending: "S'ha enviat un email en aquest usuari, pero encara no ho ha confirmat"
       resend: "Reenviar l'email d'invitació"
       time_ago: "(hace %{time_ago_in_words})"
@@ -888,7 +885,7 @@ ca:
         title: "Introdueix això"
       title: "En el nom d'usuari/email, utilitza també aquesta llista de noms d'usuari o adreces d'email, p.e:"
       to_invite: 
-        not_example: "(NOT <span class=\"mention\">@fred</span> or <span class=\"mention\">@lisa</span>)"
+        not_example_html: "(NOT <span class=\"mention\">@fred</span> or <span class=\"mention\">@lisa</span>)"
         title: Convidar
     pending: 
       invited_to_join: "%{by} t´ha convidat a unir-te al projecte %{project}."
@@ -973,8 +970,8 @@ ca:
     unlink_account: "Compte no connectat"
     user_already_exists_by_email: "L'usuari %{email} ja disposa d'un compte a Teambox.<br/>accedeix amb aquest compte i vincula des de el panell de configuració."
     user_already_exists_by_login: "L'usuari %{login} ja disposa d'un compte a Teambox.<br/>Accedeix amb aquest compte i vincula des del panell de configuració."
-    your_account_is_linked: "El vostre %{provider} perfil està <strong>connectat</strong> a Teambox."
-    your_account_is_not_linked: "El vostre %{provider} perfil <strong>no està connectat</strong> a Teambox."
+    your_account_is_linked_html: "El vostre %{provider} perfil està <strong>connectat</strong> a Teambox."
+    your_account_is_not_linked_html: "El vostre %{provider} perfil <strong>no està connectat</strong> a Teambox."
   page_title: 
     archived_task_lists: "Tasques arxivades"
     create_uploads: "Pujar arxiu"
@@ -1124,7 +1121,7 @@ ca:
       permalink_description: "Això formarà l'adreça web del teu projecte. L'has de mantenir breu. No es permeten espais"
       public_project_html: "Projecte públic. <em>Qualsevol persona podrà accedir i unir-se al projecte a la <a href='/public'>secció de projecets públics</a>.</em>"
       settings: 
-        upgrade: "Per <b>desarxivar aquest projecte</b> i poder modificar-lo, has <a href='%{link}'>d'actualitzar el teu compte i obtenir major capacitat d'emmagatzematge i característiques</a> o arxivar altres projectes."
+        upgrade_html: "Per <b>desarxivar aquest projecte</b> i poder modificar-lo, has <a href='%{link}'>d'actualitzar el teu compte i obtenir major capacitat d'emmagatzematge i característiques</a> o arxivar altres projectes."
         you_cant_unarchive: "Tens %{active} projectes actius i el teu pla actual només  permet %{max} projectes"
       tracks_time_html: "Habilita el tome tracking. <em> permetrà als usuaris el registre de temps per a les tasques. </ em>"
     index: 
@@ -1150,10 +1147,10 @@ ca:
       submit: "Crear projecte i començar a col·laborar"
       title: "Crear un projecte"
       upgrade: 
-        to_2: "<a href='%{link}'>Actualitza el teu compte ara</a> per crear <b>fins a %{projects} projectes</b>, permet emmagatzemar fins a <b>%{storage} Gb</b> d'arxius i utilitzar la <b>barra de búsqueda per a tots els projectes</b>."
+        to_2_html: "<a href='%{link}'>Actualitza el teu compte ara</a> per crear <b>fins a %{projects} projectes</b>, permet emmagatzemar fins a <b>%{storage} Gb</b> d'arxius i utilitzar la <b>barra de búsqueda per a tots els projectes</b>."
       you_can_create_more: 
         other: "Tu pots crear %{count} projectes més amb el teu pla actual."
-        zero: "No pots crear cap més projecte.<br/>El màxim de projectes amb el teu pla es de %{max}."
+        zero_html: "No pots crear cap més projecte.<br/>El màxim de projectes amb el teu pla es de %{max}."
         one: "Tu pots crear un projecte més amb el teu pla actual."
     new_primer: 
       define1_html: "Un projecte és un grup compartit amb els teus contactes."
@@ -1255,10 +1252,10 @@ ca:
     instructions: 
       send_email: "Publicar un nou comentari per email..."
       send_email_conversations: "Publica una conversación por email"
-      send_email_help_conversation: "Per publicar un nou comentari en aquesta conversa envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden publicar en aquesta conversa."
-      send_email_help_conversations: "Per crear una nova conversa envia un email a <a href=\"mailto:%{email}\">%{email}</a> amb el tema del títol i el cos pel comentari. Només els membres del projecte poden crear noves converses."
-      send_email_help_project: "Per publicar un nou comentari en el mur d'activitat del projecte envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden publicar en el mur."
-      send_email_help_task: "Per publicar un nou comentari en aquesta tasca envia un email a  <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden comentar a la tasca."
+      send_email_help_conversation_html: "Per publicar un nou comentari en aquesta conversa envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden publicar en aquesta conversa."
+      send_email_help_conversations_html: "Per crear una nova conversa envia un email a <a href=\"mailto:%{email}\">%{email}</a> amb el tema del títol i el cos pel comentari. Només els membres del projecte poden crear noves converses."
+      send_email_help_project_html: "Per publicar un nou comentari en el mur d'activitat del projecte envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden publicar en el mur."
+      send_email_help_task_html: "Per publicar un nou comentari en aquesta tasca envia un email a  <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden comentar a la tasca."
       subscribe_to_calendars: "Subscriure als calendaris"
       subscribe_to_feeds: "Subscriure als feeds"
     navigation: 
@@ -1298,7 +1295,7 @@ ca:
       tour: Tour
       users: Testimonis
     strip: 
-      archived: "Aquest projecte és arxivat. Per a editar o comentar-ho has de desarxivarlo a les <a href='%{link}'>preferències del projecte</a>"
+      archived_html: "Aquest projecte és arxivat. Per a editar o comentar-ho has de desarxivarlo a les <a href='%{link}'>preferències del projecte</a>"
     task_navigation: 
       all_tasks: Totes
       everybodys_tasks: "Everybody's tasks"
@@ -1361,7 +1358,7 @@ ca:
       other_views: "Altres vistes"
       subscribe: "Subscriu-te a les tasques"
     destroy_message: 
-      deleted: "La lllista <b>%{name}</b> ha estat esborrada!"
+      deleted_html: "La lllista <b>%{name}</b> ha estat esborrada!"
     edit: 
       submit: Actualitzar
     errors: 
@@ -1434,12 +1431,12 @@ ca:
       reopen: "Reobrir aquesta tasca"
       you_are_done: "Sembla que ja has acabat amb aquesta tasca."
     archive_message: 
-      archived: "La tasca <b>%{name}</b> ha estat arxivada!"
+      archived_html: "La tasca <b>%{name}</b> ha estat arxivada!"
     assigned: 
       assigned_to: "Responsable: %{user}"
     create: "Afegir Tasca"
     destroy_message: 
-      deleted: "La tasca <b>%{name}</b> s'ha esborrat"
+      deleted_html: "La tasca <b>%{name}</b> s'ha esborrat"
     due_on: 
       due_on: Data
       today: Avui
@@ -1496,7 +1493,7 @@ ca:
   uploads: 
     comment_upload_link: Adjunto
     form: 
-      description: "Descripció <i>(opcional)</i>"
+      description_html: "Descripció <i>(opcional)</i>"
       max_size: "El tamany màxim d'arxiu són %{mb}"
       presence: "No pots pujar un arxiu buit"
       select_file: "Seleccionar arxiu"
@@ -1659,17 +1656,17 @@ ca:
             * llista desordenada
             * deixar linees en blanc al voltant
       to_see_this: 
-        bold_text: "<strong style=\"font-weight: bold\">bold</strong> text"
-        header: "<h3 style=\"font-size:18px\">Header</h3>"
-        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
-        italic_text: "<i>italics</i> text"
-        link: "<a href=\"http://www.teambox.com\">Link something</a>"
-        ordered_list: |-
+        bold_text_html: "<strong style=\"font-weight: bold\">bold</strong> text"
+        header_html: "<h3 style=\"font-size:18px\">Header</h3>"
+        image_html: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text_html: "<i>italics</i> text"
+        link_html: "<a href=\"http://www.teambox.com\">Link something</a>"
+        ordered_list_html: |-
             <li>ordered list</li>
             <li>leave empty lines!</li>
-        smaller_header: "<h4 style=\"font-size:14px\">Smaller header</h4>"
-        title: "Per veure això"
-        unordered_list: |-
+        smaller_header_html: "<h4 style=\"font-size:14px\">Smaller header</h4>"
+        title_html: "Per veure això"
+        unordered_list_html: |-
             <li>unordered list</li>
             <li>leave empty lines around</li>
     unconfirmed_email: 

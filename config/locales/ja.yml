@@ -381,9 +381,9 @@ ja:
     watcher_fields: 
       add_suscribers: 誰がこのチャットの更新を受け取りますか?
       invite_users: あなたはこのプロジェクトの唯一のメンバーです!
-      no_users_yet: "チャットは共有する事により、もっと便利になります。今すぐこのプロジェクトに<a href='%{invite_link}'>他のユーザーを招待</a>して、このチャットにアクセス出来るようにして、コメントを投稿したり、更新を受け取れるようにしましょう。"
+      no_users_yet_html: "チャットは共有する事により、もっと便利になります。今すぐこのプロジェクトに<a href='%{invite_link}'>他のユーザーを招待</a>して、このチャットにアクセス出来るようにして、コメントを投稿したり、更新を受け取れるようにしましょう。"
       people_all: プロジェクト中の全ての人々
-      subscribe_note: これらの人々には、このメッセージと今後のコメントがメールで通知されます。<br/>いつでも通知を解除することができます。
+      subscribe_note_html: これらの人々には、このメッセージと今後のコメントがメールで通知されます。<br/>いつでも通知を解除することができます。
   countries: 
     AC: アセンション島
     AD: アンドラ
@@ -870,16 +870,13 @@ ja:
       invalid_code: 無効な招待コード
     fields: 
       user_or_email: "チームメイトのユーザー名、もしくはeメールを入力:"
-    group_invitation: 
-      invited_email: "%{inviter}は<b>%{email}</b>をこのグループに招待しました。"
-      invited_user: "%{inviter}は<b>%{invitee}</b>をこのグループに招待しました。"
     index_user: 
       no_invitations: 保留している招待はありません。
       title: 保留している招待
     invitation: 
       discard: 招待を取り消す
       invited_email: "%{inviter}は<b>%{email}</b>をこのプロジェクトに招待しました。"
-      invited_user: "%{inviter}は<b>%{invitee}</b>をこのプロジェクトに招待しました。"
+      invited_user_html: "%{inviter}は<b>%{invitee}</b>をこのプロジェクトに招待しました。"
       pending: このユーザーに招待メールを送信しましたが、まだ確認されていません
       resend: 招待メールを再送する
       time_ago: "(%{time_ago_in_words} 前)"
@@ -888,7 +885,7 @@ ja:
         title: これを入力して下さい
       title: "ユーザー名/メールボックス内では、ユーザー名のリスト若しくはメールアドレスを利用して下さい。例えば "
       to_invite: 
-        not_example: "(NOT <span class=\"mention\">@fred</span> or <span class=\"mention\">@lisa</span>)"
+        not_example_html: "(NOT <span class=\"mention\">@fred</span> or <span class=\"mention\">@lisa</span>)"
         title: 招待
     pending: 
       invited_to_join: "%{by}があなたを%{project}プロジェクトに招待しました。"
@@ -1025,8 +1022,8 @@ ja:
     unlink_account: アカウントのリンクを外す。
     user_already_exists_by_email: "%{email} はすでにTeamboxのアカウントを持っています。<br/>そのアカウントを利用しログインをして頂き、設定パネルよりリンクして下さい。"
     user_already_exists_by_login: "%{login} はすでにTeamboxのアカウントを持っています。<br/>そのアカウントを利用しログインをして頂き、設定パネルよりリンクして下さい。"
-    your_account_is_linked: "プロファイル%{provider}がTeamboxと<strong>リンクされました。</strong>"
-    your_account_is_not_linked: "プロファイル %{provider}はTeambox と <strong>リンクされていません。</strong> "
+    your_account_is_linked_html: "プロファイル%{provider}がTeamboxと<strong>リンクされました。</strong>"
+    your_account_is_not_linked_html: "プロファイル %{provider}はTeambox と <strong>リンクされていません。</strong> "
   page_title: 
     archived_task_lists: アーカイブされたタスク
     create_uploads: ファイルのアップロード
@@ -1174,7 +1171,7 @@ ja:
       permalink_description: あなたのプロジェクトのアドレスです。なるべく短くしましょう。空白を入れることはできません。
       public_project_html: "公開プロジェクト。<em>誰でもアクセス及び参加が<a href='/public'>公開プロジェクトセクション</a>から出来ます。</em> "
       settings: 
-        upgrade: "<b>このプロジェクトをアーカイブから戻し</b>、編集可能にするには、<a href='%{link}'>アップグレードを行い、容量及び機能アップ</a>するか、他のプロジェクトをアーカイブする必要があります。"
+        upgrade_html: "<b>このプロジェクトをアーカイブから戻し</b>、編集可能にするには、<a href='%{link}'>アップグレードを行い、容量及び機能アップ</a>するか、他のプロジェクトをアーカイブする必要があります。"
         you_cant_unarchive: " %{active}のプロジェクトを利用中です。現在のプランでは %{max} のプロジェクトまでご利用可能です。"
       tracks_time_html: "タイム・トラッキング可能です。<em>Will allow users to log time for tasks.</em>"
     index: 
@@ -1200,7 +1197,7 @@ ja:
       submit: プロジェクトを作成して招待を開始する
       title: プロジェクトの作成
       upgrade: 
-        to_2: "<a href='%{link}'>アップグレードはこちらから</a> to create <b>up to %{projects} projects</b>, store up to <b>%{storage} Gb</b> of files and use the <b>search bar across all projects</b>. "
+        to_2_html: "<a href='%{link}'>アップグレードはこちらから</a> to create <b>up to %{projects} projects</b>, store up to <b>%{storage} Gb</b> of files and use the <b>search bar across all projects</b>. "
       you_can_create_more: 
         one: あと一つプロジェクトを現在のプランで追加出来ます。
         other: "プロジェクトの追加はこれ以上出来ません。<br/>現在ご利用のプランにおける最大プロジェクト数は%{max}です。"
@@ -1305,10 +1302,10 @@ ja:
     instructions: 
       send_email: メールで新しいコメントを投稿する...
       send_email_conversations: メールで新しい会話を投稿する...
-      send_email_help_conversation: "新しい会話をこのタスクにポストするには、<a href=\"mailto:%{email}\">%{email}</a>にメールして下さい。プロジェクトのメンバーのみタスクにコメント出来ます。"
-      send_email_help_conversations: "新しい会話を作成するには、<a href=\"mailto:%{email}\">%{email}</a>にタイトルを題名に、本文をコメントとしてメールして下さい。プロジェクトのメンバーのみ新しい会話を作成出来ます。"
-      send_email_help_project: "新しいコメントをこのプジェクトの掲示板にポストするには、<a href=\"mailto:%{email}\">%{email}</a>にメールして下さい。プロジェクトのメンバーのみタスクにコメント出来ます。"
-      send_email_help_task: "新しいコメントをこのタスクにポストするには、<a href=\"mailto:%{email}\">%{email}</a>にメールして下さい。プロジェクトのメンバーのみタスクにコメント出来ます。"
+      send_email_help_conversation_html: "新しい会話をこのタスクにポストするには、<a href=\"mailto:%{email}\">%{email}</a>にメールして下さい。プロジェクトのメンバーのみタスクにコメント出来ます。"
+      send_email_help_conversations_html: "新しい会話を作成するには、<a href=\"mailto:%{email}\">%{email}</a>にタイトルを題名に、本文をコメントとしてメールして下さい。プロジェクトのメンバーのみ新しい会話を作成出来ます。"
+      send_email_help_project_html: "新しいコメントをこのプジェクトの掲示板にポストするには、<a href=\"mailto:%{email}\">%{email}</a>にメールして下さい。プロジェクトのメンバーのみタスクにコメント出来ます。"
+      send_email_help_task_html: "新しいコメントをこのタスクにポストするには、<a href=\"mailto:%{email}\">%{email}</a>にメールして下さい。プロジェクトのメンバーのみタスクにコメント出来ます。"
       subscribe_to_calendars: カレンダー登録
       subscribe_to_feeds: フィード登録
     navigation: 
@@ -1348,7 +1345,7 @@ ja:
       tour: 概要
       users: お客様の声
     strip: 
-      archived: "このプロジェクトはアーカイブされています。このプロジェクトを編集したり、コメントしたりするには<a href='%{link}'>プロジェクト 設定</a>でアーカイブを復元してください。"
+      archived_html: "このプロジェクトはアーカイブされています。このプロジェクトを編集したり、コメントしたりするには<a href='%{link}'>プロジェクト 設定</a>でアーカイブを復元してください。"
     task_navigation: 
       all_tasks: 全てのタスク
       everybodys_tasks: 全員のタスク
@@ -1411,7 +1408,7 @@ ja:
       other_views: ビューの変更
       subscribe: ニュースフィードを購読する
     destroy_message: 
-      deleted: "タスクリスト <b>%{name}</b> は削除されました"
+      deleted_html: "タスクリスト <b>%{name}</b> は削除されました"
     edit: 
       submit: タスクリストの更新
     errors: 
@@ -1484,12 +1481,12 @@ ja:
       reopen: タスクをりオープンする
       you_are_done: このタスクは終了しています。
     archive_message: 
-      archived: "タスク <b>%{name}</b> はアーカイブされました。"
+      archived_html: "タスク <b>%{name}</b> はアーカイブされました。"
     assigned: 
       assigned_to: "%{user}に割り当て"
     create: タスクを追加
     destroy_message: 
-      deleted: "タスク <b>%{name}</b> は削除されました。"
+      deleted_html: "タスク <b>%{name}</b> は削除されました。"
     due_on: 
       due_on: 締切
       today: 今日
@@ -1546,7 +1543,7 @@ ja:
   uploads: 
     comment_upload_link: 添付
     form: 
-      description: "タイトル <i>(任意)</i>"
+      description_html: "タイトル <i>(任意)</i>"
       max_size: "ファイルサイズは %{mb} Mbを超えることはできません。"
       presence: 空ファイルはアップロードできません。
       select_file: ファイルを選択
@@ -1709,17 +1706,17 @@ ja:
             * 順番を整えていないリスト
             * まわりに空行を残して下さい
       to_see_this: 
-        bold_text: "<strong style=\"font-weight: bold\">太字</strong>テキスト "
-        header: "<h3 style=\"font-size:18px\">ヘッダー</h3>"
-        image: "<img src=\"http://www.w3.org/Icons/valid-html401\"> "
-        italic_text: "<i>斜体</i> テキスト "
-        link: "<a href=\"http://www.teambox.com\">何かしらのリンク</a> "
-        ordered_list: |-
+        bold_text_html: "<strong style=\"font-weight: bold\">太字</strong>テキスト "
+        header_html: "<h3 style=\"font-size:18px\">ヘッダー</h3>"
+        image_html: "<img src=\"http://www.w3.org/Icons/valid-html401\"> "
+        italic_text_html: "<i>斜体</i> テキスト "
+        link_html: "<a href=\"http://www.teambox.com\">何かしらのリンク</a> "
+        ordered_list_html: |-
             <li>順番を整えたリスト</li>
             <li>まわりに空行を残して下さい</li>
-        smaller_header: "<h4 style=\"font-size:14px\">より小さいヘッダー</h4>"
-        title: これを見る
-        unordered_list: |-
+        smaller_header_html: "<h4 style=\"font-size:14px\">より小さいヘッダー</h4>"
+        title_html: これを見る
+        unordered_list_html: |-
             <li>順番を整えていないリスト</li>
             <li>まわりに空行を残して下さい</li>
     unconfirmed_email: 

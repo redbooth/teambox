@@ -242,9 +242,9 @@ zh:
     watcher_fields: 
       add_suscribers: 哪些人将关注这个话题？
       invite_users: 您是这个项目的唯一成员！
-      no_users_yet: "话题因分享而更有用。现在就<a href='%{invite_link}'>邀请某人</a>加入此项目，以便他们可以读取这个话题，解答问题或收到更新提示。"
+      no_users_yet_html: "话题因分享而更有用。现在就<a href='%{invite_link}'>邀请某人</a>加入此项目，以便他们可以读取这个话题，解答问题或收到更新提示。"
       people_all: 所有项目成员
-      subscribe_note: 这些人将通过email得到这个消息及相关评论的提醒。<br/>他们可以随时取消订阅。
+      subscribe_note_html: 这些人将通过email得到这个消息及相关评论的提醒。<br/>他们可以随时取消订阅。
   countries: 
     AC: 阿森松岛
     AD: 安道尔
@@ -691,16 +691,13 @@ zh:
       invalid_code: 无效的邀请码
     fields: 
       user_or_email: 请输入你队友的用户名或email：
-    group_invitation: 
-      invited_email: "%{inviter}邀请<b>%{email}</b>加入这个小组。"
-      invited_user: "%{inviter}邀请<b>%{invitee}</b>加入这个小组。"
     index_user: 
       no_invitations: 您没有未处理的项目邀请。
       title: 待确认的邀请
     invitation: 
       discard: 放弃邀请
       invited_email: "%{inviter}邀请<b>%{email}</b>加入这个项目。"
-      invited_user: "%{inviter}邀请<b>%{invitee}</b>加入这个项目。"
+      invited_user_html: "%{inviter}邀请<b>%{invitee}</b>加入这个项目。"
       pending: 已经向此用户发送邀请邮件，但对方还没有确认邀请。
       resend: 重新发送邀请邮件
       time_ago: "(%{time_ago_in_words}以前)"
@@ -874,7 +871,7 @@ zh:
       name: 名称
       owner: 所有者
       owner_description: 所有者是一个项目的主要负责人，他不能被从此项目中移除，除非先行指定另一个所有者。
-      permalink: URL
+      permalink_html: URL
       permalink_description: 这是您项目的网址。请尽量简短，不允许有空格。
       tracks_time_html: 启用时间跟踪
     index: 
@@ -1003,7 +1000,7 @@ zh:
       tour: 教程
       users: 我们的用户
     strip: 
-      archived: "此项目已经存档。要修改或评论此项目，你必须首先通过<a href='%{link}'>项目设置页面</a>取消归档这个项目"
+      archived_html: "此项目已经存档。要修改或评论此项目，你必须首先通过<a href='%{link}'>项目设置页面</a>取消归档这个项目"
     task_navigation: 
       all_tasks: 全部任务
       everybodys_tasks: 所有人的任务
@@ -1052,7 +1049,7 @@ zh:
       new_task_list: 创建任务列表
       subscribe: 订阅动态反馈
     destroy_message: 
-      deleted: "任务列表<b>%{name}</b>已经被成功删除！"
+      deleted_html: "任务列表<b>%{name}</b>已经被成功删除！"
     edit: 
       submit: 更新任务列表
     errors: 
@@ -1093,12 +1090,12 @@ zh:
       reopen: 重新打开任务
       you_are_done: 看上去您已经完成了这个任务！
     archive_message: 
-      archived: "任务 <b>%{name}</b>已经成功存档！"
+      archived_html: "任务 <b>%{name}</b>已经成功存档！"
     assigned: 
       assigned_to: "分配给%{user}"
     create: 添加任务
     destroy_message: 
-      deleted: "任务 <b>%{name}</b>已经成功删除！"
+      deleted_html: "任务 <b>%{name}</b>已经成功删除！"
     due_on: 
       due_on: 截止于
       today: 今天
@@ -1146,7 +1143,7 @@ zh:
   uploads: 
     comment_upload_link: 附件
     form: 
-      description: "标题 <i>(可选)</i>"
+      description_html: "标题 <i>(可选)</i>"
       max_size: "文件大小不能超过%{mb}"
       presence: 您不能上传空文件
       select_file: 选择文件

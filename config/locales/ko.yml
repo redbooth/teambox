@@ -325,9 +325,9 @@ ko:
     watcher_fields: 
       add_suscribers: "누가 이 대화를 봅니까?"
       invite_users: "당신이 이 프로젝트의 유일한 사용자 입니다!"
-      no_users_yet: "대화는 공유했을대 더욱 유용합니다. <a href='%{invite_link}'>다른 유저를 초대하세요</a> 초대된 사용자들은 대화에 참여할 수 있고 업데이트를 볼 수 있습니다."
+      no_users_yet_html: "대화는 공유했을대 더욱 유용합니다. <a href='%{invite_link}'>다른 유저를 초대하세요</a> 초대된 사용자들은 대화에 참여할 수 있고 업데이트를 볼 수 있습니다."
       people_all: "프로젝트에 속한 모든 사람"
-      subscribe_note: "이 사람들은 메일로 메시지와 앞으로의 코멘트에 대해 알림을 받습니다.<br/>언제라도 이 사람들은 알림을 받지 않을 수 있습니다."
+      subscribe_note_html: "이 사람들은 메일로 메시지와 앞으로의 코멘트에 대해 알림을 받습니다.<br/>언제라도 이 사람들은 알림을 받지 않을 수 있습니다."
   countries: 
     AC: "어센션 섬"
     AD: 안도라
@@ -803,16 +803,13 @@ ko:
       invalid_code: "부적절한 초대 오류번호"
     fields: 
       user_or_email: "다른 팀원의 사용자명이나 이메일을 입력하세요:"
-    group_invitation: 
-      invited_email: "%{inviter}님께서 <b>%{email}</b> 주소를 그룹에 초대했습니다."
-      invited_user: "%{inviter}님께서 <b>%{invitee}</b>님을 그룹에 초대했습니다."
     index_user: 
       no_invitations: "수락하지 않은 초대가 없습니다."
       title: "수락하지 않은 초대"
     invitation: 
       discard: "초대 취소"
       invited_email: "%{inviter}님께서 <b>%{email}</b> 주소를 프로젝트에 초대했습니다."
-      invited_user: "%{inviter}님께서 <b>%{invitee}</b>님을 프로젝트에 초대했습니다."
+      invited_user_html: "%{inviter}님께서 <b>%{invitee}</b>님을 프로젝트에 초대했습니다."
       pending: "이메일이 사용자에게 발송되었습니다만, 아직까지 사용자가 확인하지 않았습니다."
       resend: "초대메일 재전송"
       time_ago: "(%{time_ago_in_words} 이전)"
@@ -894,8 +891,8 @@ ko:
     unlink_account: "계정 연결 해제"
     user_already_exists_by_email: "사용자 %{email}님은 이미 팀박스 계정을 가지고 있습니다.<br/>그 계정으로 로그인하시고 환경설정 패널에서 연결해보시기 바랍니다."
     user_already_exists_by_login: "사용자 %{login}님은 이미 팀박스 계정을 가지고 있습니다.<br/>그 계정으로 로그인하시고 환경설정 패널에서 연결해보시기 바랍니다."
-    your_account_is_linked: "%{provider}프로필이 팀박스에 <strong>연결되었습니다.</strong>"
-    your_account_is_not_linked: "%{provider}프로필이 팀박스에 <strong>연결되지 않았습니다.</strong>"
+    your_account_is_linked_html: "%{provider}프로필이 팀박스에 <strong>연결되었습니다.</strong>"
+    your_account_is_not_linked_html: "%{provider}프로필이 팀박스에 <strong>연결되지 않았습니다.</strong>"
   page_title: 
     archived_task_lists: "보관된 테스크들"
     create_uploads: "파일 업로드"
@@ -1018,7 +1015,7 @@ ko:
         time_tracking_docs: "Learn more."
       owner: 소유자
       owner_description: "소유자는 프로젝트의 책임자입니다. 소유자는 소유권을 다른 사용자에게 넘기기 전까지 해당 프로젝트에서 삭제되지 않습니다."
-      permalink: "Permalink: <em>프로젝트를 인식하기 위한 짧은 텍스트</em>"
+      permalink_html: "Permalink: <em>프로젝트를 인식하기 위한 짧은 텍스트</em>"
       permalink_description: "당신의 프로젝트의 웹 주소가 됩니다. 가급적 짧게 작성해 주시고 공백은 허용되지 않습니다."
       tracks_time_html: "타임 트래킹 활성화. <em>작업한 테스크에 대한 시간기록 활성화.</em>"
     index: 
@@ -1116,10 +1113,10 @@ ko:
     instructions: 
       send_email: "이메일로 코멘트 달기..."
       send_email_conversations: "이메일로 새로운 대화 생성하기..."
-      send_email_help_conversation: "이 대화에 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 대화에 코멘트를 작성할 수 있습니다."
-      send_email_help_conversations: "새로운 대화를 생성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 이메일 제목이 대화의 제목이 되고 이메일 내용이 코멘트가 됩니다. 프로젝트의 멤버들만이 대화를 생성할 수 있습니다."
-      send_email_help_project: "이 프로젝트의 최근활동 페이지에 새로운 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 최근활동 페이지에 코멘트를 달 수 있습니다."
-      send_email_help_task: "이 테스크에 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 테스크에 코멘트를 작성할 수 있습니다."
+      send_email_help_conversation_html: "이 대화에 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 대화에 코멘트를 작성할 수 있습니다."
+      send_email_help_conversations_html: "새로운 대화를 생성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 이메일 제목이 대화의 제목이 되고 이메일 내용이 코멘트가 됩니다. 프로젝트의 멤버들만이 대화를 생성할 수 있습니다."
+      send_email_help_project_html: "이 프로젝트의 최근활동 페이지에 새로운 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 최근활동 페이지에 코멘트를 달 수 있습니다."
+      send_email_help_task_html: "이 테스크에 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 테스크에 코멘트를 작성할 수 있습니다."
       subscribe_to_calendars: "캘린더 구독하기..."
       subscribe_to_feeds: "피드 구독하기..."
     navigation: 
@@ -1159,7 +1156,7 @@ ko:
       tour: 소개
       users: 추천글들
     strip: 
-      archived: "이 프로젝트는 따로 보관해놓았습니다. 이 프로젝트를 수정하거나 코멘트를 남기시려면 <a href='%{link}'>프로젝트 설정 페이지</a>에서 보관을 취소해주세요."
+      archived_html: "이 프로젝트는 따로 보관해놓았습니다. 이 프로젝트를 수정하거나 코멘트를 남기시려면 <a href='%{link}'>프로젝트 설정 페이지</a>에서 보관을 취소해주세요."
     task_navigation: 
       all_tasks: "모든 테스크들"
       everybodys_tasks: "모든 사람들의 테스크들"
@@ -1221,7 +1218,7 @@ ko:
       other_views: "다른 뷰"
       subscribe: "뉴스 피드 구독하기"
     destroy_message: 
-      deleted: "테스크 리스트 <b>%{name}</b>가 삭제되었습니다!"
+      deleted_html: "테스크 리스트 <b>%{name}</b>가 삭제되었습니다!"
     edit: 
       submit: "테스크 리스트 업데이트"
     errors: 
@@ -1294,12 +1291,12 @@ ko:
       reopen: "이 테스크를 다시 시작"
       you_are_done: "테스크를 완료한것 같습니다!"
     archive_message: 
-      archived: "<b>%{name}</b> 테스크가 보관되었습니다!"
+      archived_html: "<b>%{name}</b> 테스크가 보관되었습니다!"
     assigned: 
       assigned_to: "%{user}님이 책임자 입니다."
     create: "테스크 추가"
     destroy_message: 
-      deleted: "<b>%{name}</b> 테스크가 삭제되었습니다!"
+      deleted_html: "<b>%{name}</b> 테스크가 삭제되었습니다!"
     due_on: 
       due_on: 완료일
       today: 오늘
@@ -1356,7 +1353,7 @@ ko:
   uploads: 
     comment_upload_link: 첨부
     form: 
-      description: "타이틀 <i>(옵션)</i>"
+      description_html: "타이틀 <i>(옵션)</i>"
       max_size: "파일 사이즈는 %{mb}을 넘을 수 없습니다."
       presence: "빈 파일을 업로드할 수 없습니다."
       select_file: "파일 선택"

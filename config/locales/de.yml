@@ -297,9 +297,9 @@ de:
     watcher_fields: 
       add_suscribers: "Welche Teilnehmer verfolgen diese Konversation?"
       invite_users: "Sie sind der einzige Benutzer in diesem Projekt!"
-      no_users_yet: "Konversationen sind nützlicher wenn sie geteilt werden. <a href='%{invite_link}'>Laden Sie Benutzer ein</a> zu diesem Projekt, so dass sie diese Konversation lesen können, Antworten senden können und Aktualisierungen erhalten."
+      no_users_yet_html: "Konversationen sind nützlicher wenn sie geteilt werden. <a href='%{invite_link}'>Laden Sie Benutzer ein</a> zu diesem Projekt, so dass sie diese Konversation lesen können, Antworten senden können und Aktualisierungen erhalten."
       people_all: "Alle Teilnehmer im Projekt"
-      subscribe_note: "Diese Teilnehmer werden über diese Nachricht und alle folgenden Kommentare per Email informiert.<br/> Sie können die Benachrichtigung jederzeit abbestellen."
+      subscribe_note_html: "Diese Teilnehmer werden über diese Nachricht und alle folgenden Kommentare per Email informiert.<br/> Sie können die Benachrichtigung jederzeit abbestellen."
   countries: 
     AC: Ascension
     AD: Andorra
@@ -785,16 +785,13 @@ de:
       invalid_code: "Ungültiger Einladungscode"
     fields: 
       user_or_email: "Geben Sie den Benutzernamen oder die Email ein:"
-    group_invitation: 
-      invited_email: "%{inviter} hat <b>%{email}</b> zu der Gruppe eingeladen."
-      invited_user: "%{inviter} hat <b>%{invitee}</b> zu der Gruppe eingeladen."
     index_user: 
       no_invitations: "Sie haben keine offenen Projekt Einladungen."
       title: "Offene Einladungen"
     invitation: 
       discard: "Einladung verwerfen"
       invited_email: "%{inviter} hat <b>%{email}</b> eingeladen am Projekt teilzunehmen."
-      invited_user: "%{inviter} hat <b>%{invitee}</b> eingeladen am Projekt teilzunehmen."
+      invited_user_html: "%{inviter} hat <b>%{invitee}</b> eingeladen am Projekt teilzunehmen."
       pending: "Eine Email wurde an den Benutzer versendet, aber sie wurde noch nicht bestätigt."
       resend: "Einladungs-Email noch einmal versenden"
       time_ago: "(%{time_ago_in_words} vorher)"
@@ -877,8 +874,8 @@ de:
     not_linked: "Dieser Dienst ist nicht mit Ihrem Teambox Konto verbunden."
     this_account_will_be_linked_to: "Dieses Konto wird verbunden mit %{provider} "
     unlink_account: "Verbindung zu Konto aufheben"
-    your_account_is_linked: "Ihr %{provider} Profil ist <strong>verbunden</strong> mit Teambox."
-    your_account_is_not_linked: "Ihr %{provider} Profil ist <strong>nicht verbunden</strong> mit Teambox"
+    your_account_is_linked_html: "Ihr %{provider} Profil ist <strong>verbunden</strong> mit Teambox."
+    your_account_is_not_linked_html: "Ihr %{provider} Profil ist <strong>nicht verbunden</strong> mit Teambox"
   page_title: 
     archived_task_lists: "Archivierte Aufgaben"
     create_uploads: "Datei hochladen"
@@ -1022,7 +1019,7 @@ de:
       permalink_html: URL
       permalink_description: "Dies wird die Web-Adresse Ihres Projektes. Wählen Sie sie so kurz wie möglich und vermeiden Sie Leerzeichen."
       settings: 
-        upgrade: "Um <b>dieses Projekt wiederherzustellen</b> und es wieder zu bearbetiten, müssen Sie <a href='%{link}'>Ihren Tarif hochstufen. Sie erhalten mehr Speicherplatz und mehr Möglichkeiten </a> oder Sie archivieren andere Projekte. "
+        upgrade_html: "Um <b>dieses Projekt wiederherzustellen</b> und es wieder zu bearbetiten, müssen Sie <a href='%{link}'>Ihren Tarif hochstufen. Sie erhalten mehr Speicherplatz und mehr Möglichkeiten </a> oder Sie archivieren andere Projekte. "
         you_cant_unarchive: "Sie haben %{active} aktive Projekte, und Ihr Tarif erlaubt maximal %{max} Projekte"
       tracks_time_html: "Zeiterfassung aktivieren"
     index: 
@@ -1046,11 +1043,11 @@ de:
       submit: "Neues Projekt erstellen und Teilnehmer einladen"
       title: "Ein neues Projekt erstellen"
       upgrade: 
-        to_2: "<a href='%{link}'>Stufen Sie Ihren Tarif hoch</a>für <b>bis zu %{projects} Projekte</b>, speichern Sie bis zu <b>%{storage} Gb</b> Dateien und nutzen Sie die <b>Suchleiste über alle Projekte</b>. "
+        to_2_html: "<a href='%{link}'>Stufen Sie Ihren Tarif hoch</a>für <b>bis zu %{projects} Projekte</b>, speichern Sie bis zu <b>%{storage} Gb</b> Dateien und nutzen Sie die <b>Suchleiste über alle Projekte</b>. "
       you_can_create_more: 
         one: "Sie können mit Ihrem aktuellen Tarif noch ein Projekt erstellen."
         other: "Sie können mit Ihrem aktuellen Tarif noch %{count} Projekte erstellen."
-        zero: "Sie können keine Projekte mehr erstellen. <br/>Die maximale Anzahl von Projekten mit Ihrem aktuellen Tarif ist %{max}."
+        zero_html: "Sie können keine Projekte mehr erstellen. <br/>Die maximale Anzahl von Projekten mit Ihrem aktuellen Tarif ist %{max}."
     new_primer: 
       define1_html: "Ein Projekt ist eine freigegebene Gruppe mit Ihren Teammitgliedern."
       define2_html: "In einem Projekt kann jedes Teammitglied:"
@@ -1164,7 +1161,7 @@ de:
       tour: Tour
       users: "Unsere Benutzer"
     strip: 
-      archived: "Dieses Projekt ist archiviert. Um dieses Projekt zu bearbeiten oder zu kommentieren, müssen Sie es aus dem Archiv holen auf der Seite <a href='%{link}'>Projekt Einstellungen</a>"
+      archived_html: "Dieses Projekt ist archiviert. Um dieses Projekt zu bearbeiten oder zu kommentieren, müssen Sie es aus dem Archiv holen auf der Seite <a href='%{link}'>Projekt Einstellungen</a>"
     task_navigation: 
       all_tasks: "Alle Aufgaben"
       everybodys_tasks: "Aufgaben für alle"
@@ -1226,7 +1223,7 @@ de:
       other_views: "Other views"
       subscribe: "Abonnieren Sie den Nachrichten Feed"
     destroy_message: 
-      deleted: "Die Aufgabenliste <b>%{name}</b> wurde erfolgreich gelöscht!"
+      deleted_html: "Die Aufgabenliste <b>%{name}</b> wurde erfolgreich gelöscht!"
     edit: 
       submit: "Aufgabenliste aktualisieren"
     errors: 
@@ -1295,12 +1292,12 @@ de:
       reopen: "Diese Aufgabe wieder öffnen"
       you_are_done: "Die Aufgabe scheint erledigt zu sein!"
     archive_message: 
-      archived: "Die Aufgabe <b>%{name}</b> wurde erfolgreich archiviert!"
+      archived_html: "Die Aufgabe <b>%{name}</b> wurde erfolgreich archiviert!"
     assigned: 
       assigned_to: "Zugeordnet zu %{user}"
     create: "Aufgabe hinzufügen"
     destroy_message: 
-      deleted: "Die Aufgabe <b>%{name}</b> wurde erfolgreich gelöscht!"
+      deleted_html: "Die Aufgabe <b>%{name}</b> wurde erfolgreich gelöscht!"
     due_on: 
       due_on: "Fällig am"
       today: Heute
@@ -1354,7 +1351,7 @@ de:
   uploads: 
     comment_upload_link: Anhang
     form: 
-      description: "Titel <i>(optional)</i>"
+      description_html: "Titel <i>(optional)</i>"
       max_size: "Dateigröße darf nicht größer sein als %{mb}"
       presence: "Sie können keine leere Datei hochladen"
       select_file: "Datei auswählen"

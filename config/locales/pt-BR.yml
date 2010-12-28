@@ -348,9 +348,9 @@ pt-BR:
     watcher_fields: 
       add_suscribers: "Quem irá seguir esta conversa?"
       invite_users: "Você é o único usuário no projeto!"
-      no_users_yet: "Conversar es más útil cuando no lo haces solo. <a href='%{invite_link}'>Invita a algunos usuarios</a> a este proyecto para que puedan leer, comentar y recibir actualizaciones de esta conversación."
+      no_users_yet_html: "Conversar es más útil cuando no lo haces solo. <a href='%{invite_link}'>Invita a algunos usuarios</a> a este proyecto para que puedan leer, comentar y recibir actualizaciones de esta conversación."
       people_all: "Todas as pessõas no projeto"
-      subscribe_note: "Estas persoas serão notificadas via email deste mensagem e os seguintes comentários.<br/>Podem deixar de seguir a conversa a qualquer momento."
+      subscribe_note_html: "Estas persoas serão notificadas via email deste mensagem e os seguintes comentários.<br/>Podem deixar de seguir a conversa a qualquer momento."
   countries: 
     AC: "Ilha de Ascensão"
     AD: Andorra
@@ -821,16 +821,13 @@ pt-BR:
       invalid_code: "Código do convite inválido"
     fields: 
       user_or_email: "Insire o email do usuário de teu parceiro:"
-    group_invitation: 
-      invited_email: "%{inviter} tem convidado ao <b>%{email}</b> para unir-se ao grupo."
-      invited_user: "%{inviter} tem convidado ao <b>%{invitee}</b> para unir-se ao grupo."
     index_user: 
       no_invitations: "Não tem nenhum convite pendiente."
       title: "Convites pendentes"
     invitation: 
       discard: "Rejeitar convite"
       invited_email: "%{inviter} tem convidado a <b>%{email}</b> ao projeto."
-      invited_user: "%{inviter} tem convidado a <b>%{invitee}</b> ao projeto."
+      invited_user_html: "%{inviter} tem convidado a <b>%{invitee}</b> ao projeto."
       pending: "Foi enviado um mail para este usuário, mas ainda não foi confirmado"
       resend: "Reenviar o email de convite"
       time_ago: "(hace %{time_ago_in_words})"
@@ -838,7 +835,7 @@ pt-BR:
       enter_this: 
         title: "Ingresse isto"
       to_invite: 
-        not_example: "(NÃO <span class=\"mention\">@fred</span> ou <span class=\"mention\">@lisa</span>)"
+        not_example_html: "(NÃO <span class=\"mention\">@fred</span> ou <span class=\"mention\">@lisa</span>)"
         title: "Para convidar"
     pending: 
       invited_to_join: "%{by} enviou um convite para unir-se no projeto %{project}."
@@ -1036,7 +1033,7 @@ pt-BR:
         time_tracking_docs: "Aprender mais."
       owner: Dono
       owner_description: "O propietário é o máximo responsável de um projeto. Não pode ser explusado do projeto, a não ser que tenha outro usuário como dono."
-      permalink: URL
+      permalink_html: URL
       permalink_description: "Isto ira ser o endereço web do projeto. Não são permitidos os espaços."
       tracks_time_html: "Ativar time tracking (registro de horas)"
     index: 
@@ -1064,7 +1061,7 @@ pt-BR:
       you_can_create_more: 
         one: "Você pode criar um ou mais projetos com seu plano atual."
         other: "Você pode criar {{count}} projetos mais com seu plano atual."
-        zero: "Você não pode criar mais projetos.<br/>O número máximo de projetos no seu plano é de {{max}}."
+        zero_html: "Você não pode criar mais projetos.<br/>O número máximo de projetos no seu plano é de {{max}}."
     new_primer: 
       define1_html: "Um projeto é um grupo compartilhado com teus colaboradores."
       define2_html: "No projeto, cada usuário pode:"
@@ -1165,7 +1162,7 @@ pt-BR:
     instructions: 
       send_email: "Escreva um novo comentário por email..."
       send_email_conversations: "Envie uma nova conversa por email"
-      send_email_help_conversation: "Para publicar um novo comentário nesta conversa envie um email para <a href=\"mailto:%{email}\">%{email}</a>. Apenas membros deste projeto podem publicar comentários na conversa."
+      send_email_help_conversation_html: "Para publicar um novo comentário nesta conversa envie um email para <a href=\"mailto:%{email}\">%{email}</a>. Apenas membros deste projeto podem publicar comentários na conversa."
       subscribe_to_calendars: "Assinar aos calendários..."
       subscribe_to_feeds: "Assinar ao feed de noticias..."
     navigation: 
@@ -1205,7 +1202,7 @@ pt-BR:
       tour: Tour
       users: Testemunhos
     strip: 
-      archived: "Este projeto está arquivado. Para editar ou comentar precisa desarquivá-lo nas <a href='%{link}'>preferências do projeto</a>"
+      archived_html: "Este projeto está arquivado. Para editar ou comentar precisa desarquivá-lo nas <a href='%{link}'>preferências do projeto</a>"
     task_navigation: 
       all_tasks: Todas
       everybodys_tasks: "Todas as tarefas"
@@ -1267,7 +1264,7 @@ pt-BR:
       other_views: "Outras vistas"
       subscribe: "Assinga a lista de tarefas"
     destroy_message: 
-      deleted: "A lista <b>%{name}</b> foi eliminada!"
+      deleted_html: "A lista <b>%{name}</b> foi eliminada!"
     edit: 
       submit: Atualizar
     errors: 
@@ -1340,12 +1337,12 @@ pt-BR:
       reopen: "Reabrir esta tarefa"
       you_are_done: "Parece que você já finalizou com esta tarefa."
     archive_message: 
-      archived: "A tarefa <b>%{name}</b> foi arquivada!"
+      archived_html: "A tarefa <b>%{name}</b> foi arquivada!"
     assigned: 
       assigned_to: "Responsável: %{user}"
     create: "Adicionar tarefa"
     destroy_message: 
-      deleted: "A tarefa <b>%{name}</b> foi eliminada"
+      deleted_html: "A tarefa <b>%{name}</b> foi eliminada"
     due_on: 
       due_on: "Data limíte"
       today: Hoje
@@ -1402,7 +1399,7 @@ pt-BR:
   uploads: 
     comment_upload_link: Arquivos
     form: 
-      description: "Descrição <i>(opcional)</i>"
+      description_html: "Descrição <i>(opcional)</i>"
       max_size: "O tamanho máximo do arquivo é %{mb}"
       presence: "Você não pode enviar um arquivo vazio"
       select_file: "Escolher arquivo"
@@ -1548,17 +1545,17 @@ pt-BR:
             * lista sem ordem
             * deixar linhas em branco ao redor
       to_see_this: 
-        bold_text: "texto em <strong style=\"font-weight: bold\">negrito</strong>"
-        header: "<h3 style=\"font-size:18px\">Cabeçalho</h3>"
-        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
-        italic_text: "texto <i>itálico</i>"
-        link: "<a href=\"http://www.teambox.com\">Enlace alguma coisa</a>"
-        ordered_list: |-
+        bold_text_html: "texto em <strong style=\"font-weight: bold\">negrito</strong>"
+        header_html: "<h3 style=\"font-size:18px\">Cabeçalho</h3>"
+        image_html: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text_html: "texto <i>itálico</i>"
+        link_html: "<a href=\"http://www.teambox.com\">Enlace alguma coisa</a>"
+        ordered_list_html: |-
             <li>lista ordenada</li>
             <li>deixe linhas em branco!</li>
-        smaller_header: "<h4 style=\"font-size:14px\"> Cabeçalho menor</h4>"
-        title: "Para visualizar isto"
-        unordered_list: |-
+        smaller_header_html: "<h4 style=\"font-size:14px\"> Cabeçalho menor</h4>"
+        title_html: "Para visualizar isto"
+        unordered_list_html: |-
             <li>lista sem ordem</li>
             <li>deixar linhas em branco ao redor</li>
     unconfirmed_email: 

@@ -230,9 +230,9 @@ nl:
     watcher_fields: 
       add_suscribers: "Welke mensen zullen deze conversatie bekijken?"
       invite_users: "U bent de enige gebruiker in dit project!"
-      no_users_yet: "Conversaties zijn meer zinvol wanneer ze gedeeld zijn. <a href='%{invite_link}'>Nodig wat gebruikers uit</a> bij dit project zodat ze deze conversatie kunnen inzien, beantwoorden en updates kunnen ontvangen."
+      no_users_yet_html: "Conversaties zijn meer zinvol wanneer ze gedeeld zijn. <a href='%{invite_link}'>Nodig wat gebruikers uit</a> bij dit project zodat ze deze conversatie kunnen inzien, beantwoorden en updates kunnen ontvangen."
       people_all: "Alle mensen in dit project"
-      subscribe_note: "Deze mensen zullen op de hoogte gesteld worden via een e-mail van dit bericht en elk volgende reacties.<br/>Ze kunnen op elk moment zichzelf uitschrijven."
+      subscribe_note_html: "Deze mensen zullen op de hoogte gesteld worden via een e-mail van dit bericht en elk volgende reacties.<br/>Ze kunnen op elk moment zichzelf uitschrijven."
   countries: 
     AC: "Ascension; [draft=contributed]"
     AD: Andorra
@@ -665,7 +665,7 @@ nl:
     invitation: 
       discard: "Verwerp uitnodiging"
       invited_email: "%{inviter} nodigde <b>%{email}</b> uit om mee te doen aan het project."
-      invited_user: "%{inviter} nodigt <b>%{invitee}</b> uit om mee te doen aan het project."
+      invited_user_html: "%{inviter} nodigt <b>%{invitee}</b> uit om mee te doen aan het project."
       pending: "Een e-mail is verzonden naar deze gebruiker, maar het is nog steeds niet bevestigd."
       resend: "Herzend uitnodigings e-mail"
       time_ago: "(%{time_ago_in_words} geleden)"
@@ -821,7 +821,7 @@ nl:
       name: Naam
       owner: Eigenaar
       owner_description: "De eigenaar is de hoofdverantwoordelijke voor een project. Hij kan niet verwijderd worden uit het project tenzij eigendom wordt overgedragen aan een andere gebruiker."
-      permalink: URL
+      permalink_html: URL
       permalink_description: "Dit zal het webadres van uw project zijn. Houd het zo kort mogelijk. geen spaties toegestaan."
     index: 
       archived: "Toon %{count} Gearchiveerde projecten..."
@@ -946,7 +946,7 @@ nl:
       tour: Rondleiding
       users: "Onze Gebruikers"
     strip: 
-      archived: "Dit project is gearchiveerd. Om dit project te wijzigen of reacties eraan te geven, moet u het eerst uit het archief halen in de <a href='%{link}'>Project Instellingen pagina</a>"
+      archived_html: "Dit project is gearchiveerd. Om dit project te wijzigen of reacties eraan te geven, moet u het eerst uit het archief halen in de <a href='%{link}'>Project Instellingen pagina</a>"
     task_navigation: 
       all_tasks: "Alle Taken"
       everybodys_tasks: "Iedereen zijn taken"
@@ -991,7 +991,7 @@ nl:
       new_task_list: "Nieuwe takenlijst"
       subscribe: "Abboneer u op een nieuws-feed"
     destroy_message: 
-      deleted: "De takenlijst <b>%{name}</b> was succesvol verwijderd!"
+      deleted_html: "De takenlijst <b>%{name}</b> was succesvol verwijderd!"
     edit: 
       submit: "Update Takenlijst"
     errors: 
@@ -1032,12 +1032,12 @@ nl:
       reopen: "Heropen deze taak"
       you_are_done: "Het ziet er naar uit dat u klaar bent met deze taak!"
     archive_message: 
-      archived: "De taak  <b>%{name}</b> was succesvol gearchiveerd!"
+      archived_html: "De taak  <b>%{name}</b> was succesvol gearchiveerd!"
     assigned: 
       assigned_to: "Toewijzen aan %{user}"
     create: "Voeg Taak Toe"
     destroy_message: 
-      deleted: "Te taak <b>%{name}</b> is succesvol verwijderd!"
+      deleted_html: "Te taak <b>%{name}</b> is succesvol verwijderd!"
     due_on: 
       due_on: "Door op"
       today: Vandaag
@@ -1085,7 +1085,7 @@ nl:
   uploads: 
     comment_upload_link: Bijlage
     form: 
-      description: "Titel <i>(optioneel)</i>"
+      description_html: "Titel <i>(optioneel)</i>"
       max_size: "Bestandsgrootte mag niet meer zijn dan %{mb}"
       presence: "U kan geen leeg bestand uploaden"
       select_file: "Selecteer bestand"

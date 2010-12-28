@@ -381,9 +381,9 @@ pl:
     watcher_fields: 
       add_suscribers: "Kto będzie oglądał tę dyskusję?"
       invite_users: "Jesteś jedyną osobą w tym projekcie!"
-      no_users_yet: "Dyskusje są najbardziej przydatne kiedy są współdzielone. <a href='%{invite_link}'>Zaproś znajomych</a> do tego projektu by mogli uczestniczyć w dyskusji, odpowiadać i otrzymywać powiadomienia."
+      no_users_yet_html: "Dyskusje są najbardziej przydatne kiedy są współdzielone. <a href='%{invite_link}'>Zaproś znajomych</a> do tego projektu by mogli uczestniczyć w dyskusji, odpowiadać i otrzymywać powiadomienia."
       people_all: "Wszyscy uczestnicy projektu"
-      subscribe_note: "Te osoby będą dostawać powiadomienia email o tej wiadomości i każdym kolejnym komentarzu. <br/>Mogą z nich zrezygnować w każdej chwili"
+      subscribe_note_html: "Te osoby będą dostawać powiadomienia email o tej wiadomości i każdym kolejnym komentarzu. <br/>Mogą z nich zrezygnować w każdej chwili"
   countries: 
     AC: Wniebowstąpienia
     AD: Andora
@@ -876,16 +876,13 @@ pl:
       invalid_code: "Niewłaściwy kod"
     fields: 
       user_or_email: "Wprowadź nazwy użytkowników swoich pracowników lub ich adresy email:"
-    group_invitation: 
-      invited_email: "%{inviter} zaprosił <b>%{email}</b> do grupy. "
-      invited_user: "%{inviter} zaprosił <b>%{invitee}</b> do grupy."
     index_user: 
       no_invitations: "Nie masz żadnych oczekujących zaproszeń do projektów."
       title: "Zaproszenia czekające na akceptacje"
     invitation: 
       discard: "Odrzuć zaproszenie"
       invited_email: "%{inviter} zaprosił <b>%{email}</b> do projektu"
-      invited_user: "%{inviter} zaprosił <b>%{invitee}</b> do projektu"
+      invited_user_html: "%{inviter} zaprosił <b>%{invitee}</b> do projektu"
       pending: "Email został wysłany do tego użytkownika, jednak jeszcze go nie potwiedził"
       resend: "Wyślij ponownie zaproszenie email"
       time_ago: "(%{time_ago_in_words} temu)"
@@ -894,7 +891,7 @@ pl:
         title: Wpisz
       title: "W polu użytkownika/adresu email wpisz albo listę nazw użytkowników albo ich adresów email, na przykład:"
       to_invite: 
-        not_example: "(NIE <span class=\"mention\">@fred</span> ani <span class=\"mention\">@lisa</span>) "
+        not_example_html: "(NIE <span class=\"mention\">@fred</span> ani <span class=\"mention\">@lisa</span>) "
         title: "Aby zaprosić"
     pending: 
       invited_to_join: "%{by} zaprosił Cię do projektu %{project}.\n"
@@ -1024,8 +1021,8 @@ pl:
     unlink_account: "Odłącz konto"
     user_already_exists_by_email: "Użytkownik %{email} posiada już konto Teambox. <br/>Zaloguj się ze swojego konta i dodaj link ze swojego panelu ustawień"
     user_already_exists_by_login: "Użytkownik %{login} ma już konto Teambox. <br/>Zaloguj się z tego konta i dodaj go z panelu ustawień"
-    your_account_is_linked: "Twoje konto %{provider} jest <strong>podłączone</strong> do Teambox'a."
-    your_account_is_not_linked: "Twój %{provider} profil <strong>nie jest</strong> połączony z Teambox'em"
+    your_account_is_linked_html: "Twoje konto %{provider} jest <strong>podłączone</strong> do Teambox'a."
+    your_account_is_not_linked_html: "Twój %{provider} profil <strong>nie jest</strong> połączony z Teambox'em"
   page_title: 
     archived_task_lists: "Archiwizuj zadania"
     create_uploads: "Wyślij plik"
@@ -1169,11 +1166,11 @@ pl:
         time_tracking_docs: "Dowiedź się więcej."
       owner: Właściciel
       owner_description: "Właściciel jest osobą odpowiedzialną za projekt. Może usuwać z projektu do momentu przekazania władzy innemu użytkownikowi."
-      permalink: "Permalink <em>krótki identyfikator projektu</em>"
+      permalink_html: "Permalink <em>krótki identyfikator projektu</em>"
       permalink_description: "To będzie adres projektu. Trzymaj go najkrócej jak się da. Spacje są dopuszczalne."
       public_project_html: "Publiczne projekty. <em>Każdy ma do nich dostęp i może dołączyć do nich w <a href='/public'>sekcji publicznych projektów</a>.</em>"
       settings: 
-        upgrade: "żeby <b>przywrócić projekt z archiwum</b> i móc go edytować musisz <a href='%{link}'>podnieść status swojego konta dostając więcej pojemności i możliwości</a>  albo zarchiwizować inne projekty"
+        upgrade_html: "żeby <b>przywrócić projekt z archiwum</b> i móc go edytować musisz <a href='%{link}'>podnieść status swojego konta dostając więcej pojemności i możliwości</a>  albo zarchiwizować inne projekty"
         you_cant_unarchive: "Masz %{active} aktywnych projektów a Twój aktualny plan pozwala na maksimum %{max}  projektów"
       tracks_time_html: "Włącz śledzenie czasu. <em>Pozwoli to użytkownikom zapisywać czas poświęcony na wykonanie poszczególnych zadań.</em>"
     index: 
@@ -1199,11 +1196,11 @@ pl:
       submit: "Stwórz konto i zacznij współpracować"
       title: "Stwórz projekt"
       upgrade: 
-        to_2: "<a href='%{link}'>Ulepsz swoje konto</a>by móc stworzyć<b>nawet do%{projects} projektów</b>, zgromadzić nawet<b>%{storage} Gb</b>danych i używać paska wyszukiwarki we wszystkich projektach"
+        to_2_html: "<a href='%{link}'>Ulepsz swoje konto</a>by móc stworzyć<b>nawet do%{projects} projektów</b>, zgromadzić nawet<b>%{storage} Gb</b>danych i używać paska wyszukiwarki we wszystkich projektach"
       you_can_create_more: 
         one: "Możesz stworzyć %{count} projektów w obecnym planie pracy."
         other: "Możesz stworzyć jeden dodatkowy projekt w obecnym planie racy."
-        zero: "Nie możesz dodać nowego projektu.<br/>Maksymalna liczba projektów które możesz utworzyć to %{max}."
+        zero_html: "Nie możesz dodać nowego projektu.<br/>Maksymalna liczba projektów które możesz utworzyć to %{max}."
     new_primer: 
       define1_html: "Projekt jest dzielony z twoimi współpracownikami."
       define2_html: "W projekcie, każdy użytkownik może:"
@@ -1304,10 +1301,10 @@ pl:
     instructions: 
       send_email: "Dodaj nowy komentarz poprzez email..."
       send_email_conversations: "Rozpocznij nową dyskusję poprzez email..."
-      send_email_help_conversation: "By dodać komentarz do tego wątku wyślij email do<a href=\"mailto:%{email}\">%{email}</a>. Tylko członkowie projektu mogą dodawać komentarze"
-      send_email_help_conversations: "By rozpocząć nową dyskusję wyślij email pod adres <a href=\"mailto:%{email}\">%{email}</a> gdzie tytuł maila jest tytułem dyskusji a jego treść tekstem dyskusji. Tylko członkowie projektu mogą rozpoczynać dyskusję."
-      send_email_help_project: "By dodać komentarz do strony głównej projektu wyślij email do <a href=\"mailto:%{email}\">%{email}</a>. Tylko członkowie projektu mogą dodawać komentarze na stronie głównej"
-      send_email_help_task: "By dodać nowy komntarz do tego zadania wyślij email do <a href=\"mailto:%{email}\">%{email}</a>. Tylko członkowie projektu mogą dodawać komentarze do poszczególnych zadań"
+      send_email_help_conversation_html: "By dodać komentarz do tego wątku wyślij email do<a href=\"mailto:%{email}\">%{email}</a>. Tylko członkowie projektu mogą dodawać komentarze"
+      send_email_help_conversations_html: "By rozpocząć nową dyskusję wyślij email pod adres <a href=\"mailto:%{email}\">%{email}</a> gdzie tytuł maila jest tytułem dyskusji a jego treść tekstem dyskusji. Tylko członkowie projektu mogą rozpoczynać dyskusję."
+      send_email_help_project_html: "By dodać komentarz do strony głównej projektu wyślij email do <a href=\"mailto:%{email}\">%{email}</a>. Tylko członkowie projektu mogą dodawać komentarze na stronie głównej"
+      send_email_help_task_html: "By dodać nowy komntarz do tego zadania wyślij email do <a href=\"mailto:%{email}\">%{email}</a>. Tylko członkowie projektu mogą dodawać komentarze do poszczególnych zadań"
       subscribe_to_calendars: "Subskrybuj kalendarze..."
       subscribe_to_feeds: "Subskrybuj kanał..."
     navigation: 
@@ -1347,7 +1344,7 @@ pl:
       tour: "Jak to Działa"
       users: "Nasi użytkownicy"
     strip: 
-      archived: "Ten projekt został archiwizowany. By edytować lub komentować ten projekt, musisz go przywrócić z archiwum na <a href='%{link}'>Stronie Ustawień Projektu</a>"
+      archived_html: "Ten projekt został archiwizowany. By edytować lub komentować ten projekt, musisz go przywrócić z archiwum na <a href='%{link}'>Stronie Ustawień Projektu</a>"
     task_navigation: 
       all_tasks: "Wszystkie zadania"
       everybodys_tasks: "Zadania wszystkich"
@@ -1410,7 +1407,7 @@ pl:
       other_views: "Inne widoki"
       subscribe: "Subskrybuj listę newsów"
     destroy_message: 
-      deleted: "Lista zadań <b>%{name}</b> została pomyślnie usunięta"
+      deleted_html: "Lista zadań <b>%{name}</b> została pomyślnie usunięta"
     edit: 
       submit: "Aktualizuj Listę zadań"
     errors: 
@@ -1483,12 +1480,12 @@ pl:
       reopen: "Przywróć to zadanie"
       you_are_done: "Wygląda na to że skończyłeś z tym zadaniem"
     archive_message: 
-      archived: "Zadanie <b>%{name}</b> zostało pomyślnie zarchiwizowane!"
+      archived_html: "Zadanie <b>%{name}</b> zostało pomyślnie zarchiwizowane!"
     assigned: 
       assigned_to: "Przypisz do %{user}"
     create: "Dodaj zadanie"
     destroy_message: 
-      deleted: "Zadanie <b>%{name}</b> zostało pomyślnie usunięte!"
+      deleted_html: "Zadanie <b>%{name}</b> zostało pomyślnie usunięte!"
     due_on: 
       due_on: Do
       today: Dziś
@@ -1545,7 +1542,7 @@ pl:
   uploads: 
     comment_upload_link: Załącznik
     form: 
-      description: "Tytuł <i>(opcjonalnie)</i>"
+      description_html: "Tytuł <i>(opcjonalnie)</i>"
       max_size: "Wielkość pliku nie może przekroczyć %{mb} MB"
       presence: "Nie możesz wysłać pustego pliku"
       select_file: "Wybierz plik"
@@ -1708,17 +1705,17 @@ pl:
             * wykropkowana lista
             * zostaw puste pola dookoła
       to_see_this: 
-        bold_text: "tekst <strong style=\"font-weight: bold\">pogrubiony</strong>"
-        header: "<h3 style=\"font-size:18px\">Nagłówek</h3>"
-        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
-        italic_text: "tekst <i>pochylony</i>"
-        link: "<a href=\"http://www.teambox.com\">Tekst odnośnika</a>"
-        ordered_list: |-
+        bold_text_html: "tekst <strong style=\"font-weight: bold\">pogrubiony</strong>"
+        header_html: "<h3 style=\"font-size:18px\">Nagłówek</h3>"
+        image_html: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text_html: "tekst <i>pochylony</i>"
+        link_html: "<a href=\"http://www.teambox.com\">Tekst odnośnika</a>"
+        ordered_list_html: |-
             <li>wypunktowana lista</li>
             <li>zostaw puste pola!</li>
-        smaller_header: "<h4 style=\"font-size:14px\">Mniejszy nagłówek</h4>"
-        title: Zobacz
-        unordered_list: |-
+        smaller_header_html: "<h4 style=\"font-size:14px\">Mniejszy nagłówek</h4>"
+        title_html: Zobacz
+        unordered_list_html: |-
             <li>wykropkowana lista</li>
             <li>zostaw puste pola wokoło!</li>
     unconfirmed_email: 
