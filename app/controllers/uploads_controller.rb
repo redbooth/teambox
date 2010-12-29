@@ -78,8 +78,7 @@ class UploadsController < ApplicationController
           render :new
         elsif @upload.page
           if iframe?
-            template = self.view_paths.find_template(default_template_name(action_name), :js)
-            code = render_to_string :template => template
+            code = render_to_string 'create.js.rjs', :layout => false
             render :template => 'shared/iframe_rjs', :layout => false, :locals => { :code => code }
           else
             redirect_to [@current_project, @upload.page]
