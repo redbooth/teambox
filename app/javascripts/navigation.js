@@ -24,10 +24,11 @@ NavigationBar = {
       if (el.hasClassName('expanded')) {
         // contract it if it's open
         el.removeClassName('expanded')
-        contained.hide()
+        contained.blindUp({ duration: 0.2 })
       } else {
         // contract others if open
-        el.up().select('.contained').invoke('hide')
+        var visible_containers = el.up().select('.contained').select( function(e) { return e.visible() })
+        effect ? visible_containers.invoke("blindUp", { duration: 0.2 }) : visible_containers.invoke('hide')
         el.up().select('.el').invoke('removeClassName', 'expanded')
         // expand the selected one
         el.addClassName('expanded')
