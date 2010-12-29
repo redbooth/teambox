@@ -3,7 +3,6 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
-# RAILS3 check
 require File.expand_path('../factories', __FILE__)
 
 # Requires supporting ruby files with custom matchers and macros, etc,

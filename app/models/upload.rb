@@ -16,9 +16,6 @@ class Upload < RoleRecord
   before_create :copy_ownership_from_comment
   after_create  :log_create
 
-  # RAILS3 check where this was important
-  # default_scope :order => 'id DESC'
-
   attr_accessible :asset,
                   :page_id,
                   :description
