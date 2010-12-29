@@ -1,2 +1,2 @@
-- form_for [@target.project, @target, @comment], :html => { :'data-remote' => true, :multipart => true } do |form|
+= form_for [@target.project, @target, @comment], :html => { :'data-remote' => true, :multipart => true } do |form|
   = render 'fields', :f => form

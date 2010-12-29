@@ -1,6 +1,6 @@
 %h2= t('.title')
 
-- form_for(@reset_password) do |f|
+= form_for(@reset_password) do |f|
   .email.text_field
     = f.label :email
     = errors_for @reset_password, :email

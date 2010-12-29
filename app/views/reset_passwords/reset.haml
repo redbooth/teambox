@@ -1,6 +1,6 @@
 %h2= t('.title')
 
-- form_for(:user, :url => update_after_forgetting_path) do |f|
+= form_for(:user, :url => update_after_forgetting_path) do |f|
   %p.message
     Please enter a new password and confirm it.
   - if flash[:notice]

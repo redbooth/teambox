@@ -1,4 +1,4 @@
-- form_for [project,page,note], :html => { :style => 'display: none', :'data-remote' => 'true' } do |f|
+= form_for [project,page,note], :html => { :style => 'display: none', :'data-remote' => 'true' } do |f|
   = page_slot_fields
   = note_fields(f)
   .submit{ :id => "note_submit" }

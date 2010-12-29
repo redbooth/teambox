@@ -10,7 +10,7 @@
   %p.optional= t('.optional')
   
   - f.object.comments.build
-  - f.fields_for :comments do |comment_fields|
+  = f.fields_for :comments do |comment_fields|
     .body.text_field
       = comment_fields.label :body, t('.body_html')
       = comment_fields.text_area :body, :rows => 3

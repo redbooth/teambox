@@ -2,7 +2,7 @@
 - task_action = task.new_record?? :new : :edit
 - i18n_scope = [:tasks, task_action]
 
-- form_for [project, task_list, task], :html => { :class => "app_form #{task_action}_task", :style => shown ? nil : 'display:none', :'data-remote' => !shown || nil } do |form|
+= form_for [project, task_list, task], :html => { :class => "app_form #{task_action}_task", :style => shown ? nil : 'display:none', :'data-remote' => !shown || nil } do |form|
   = render 'tasks/fields', :f => form, :project => project
   .submit
     - unless shown

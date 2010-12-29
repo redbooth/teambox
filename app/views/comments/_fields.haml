@@ -16,7 +16,7 @@
     %p= t('uploads.new.select_a_file')
 
     - f.object.uploads.build
-    - f.fields_for :uploads do |fields|
+    = f.fields_for :uploads do |fields|
       = fields.file_field :asset, :id => 'upload_file'
 
   .actions

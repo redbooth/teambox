@@ -6,7 +6,7 @@
       .avatar_crop_preview
         = image_tag profile_user_avatar_path(@user, :jpg), :id => 'avatar_crop'
       %br/
-    - form_for :avatar, @avatar, :url => user_avatar_path(@user), :html => { :method => :put } do |f|
+    = form_for :avatar, @avatar, :url => user_avatar_path(@user), :html => { :method => :put } do |f|
       #results
         = hidden_field_tag 'id', @avatar.id
         = f.hidden_field :x1, :id => 'x1'

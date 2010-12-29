@@ -2,6 +2,6 @@
 
 %p=h @task_list
 
-- form_for [@current_project,@task_list,@task] do |f|
+= form_for [@current_project,@task_list,@task] do |f|
   = render 'tasks/fields', :f => f, :project => @current_project, :task_list => @task_list, :task => @task
   = f.submit t('.submit')
