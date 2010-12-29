@@ -57,7 +57,7 @@ end
 
 When /^(?:|I )click the conversation's comment box(?: within "([^\"]*)")?$/ do |selector|
   with_scope(selector) do
-    xpath = Capybara::XPath.append('//form[contains(@class,"edit_conversation")]//*[@id="comment_body"]')
+    xpath = Capybara::XPath.append('//form[contains(@class,"edit_conversation")]//*[@name="comment[body]"]')
     locate(:xpath, xpath, "cannot click: no conversation comment textarea found").click
   end
 end
