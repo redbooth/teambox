@@ -161,7 +161,7 @@ class ApplicationController < ActionController::Base
     MobileClients = /(iPhone|iPod|Android|Opera mini|Blackberry|Palm|Windows CE|Opera mobi|iemobile|webOS)/i
 
     def set_client
-      if [:html, :m].include?(request.format.to_sym) and session[:format]
+      if [:html, :m].include?(request.format.try(:to_sym)) and session[:format]
         # Format has been forced by Sessions#change_format
         request.format = session[:format].to_sym
       else
