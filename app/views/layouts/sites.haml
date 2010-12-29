@@ -7,7 +7,7 @@
     = stylesheet_link_tag 'sessions', 'sites'
     = sprockets_include_tag
 
-  %body{ :class => "#{location_name} #{I18n.locale} #{ENV['RAILS_ENV']}"}
+  %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
     .container
       .wrapper
         .content
