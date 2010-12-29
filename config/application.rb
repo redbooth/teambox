@@ -8,20 +8,6 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Teambox
 
-  class UselessStore
-    def logger
-      Rails.logger
-    end
-    def fetch(*args)
-      yield
-    end
-    def read(*args) end
-    def write(*args) end
-    def delete(*args) end
-    def increment(*args) end
-    def decrement(*args) end
-  end
-
   def self.config
     Rails.configuration
   end
@@ -98,8 +84,6 @@ module Teambox
 
     end
     config.from_file 'teambox.yml'
-
-    config.cache_store = UselessStore.new
 
     # Redirect http to https if secure_logins is true
     # https://github.com/tobmatth/rack-ssl-enforcer

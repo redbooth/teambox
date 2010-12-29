@@ -26,5 +26,23 @@ Teambox::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+
+  class UselessStore
+    def logger
+      Rails.logger
+    end
+    def fetch(*args)
+      yield
+    end
+    def read(*args) end
+    def write(*args) end
+    def delete(*args) end
+    def increment(*args) end
+    def decrement(*args) end
+  end
+
+  config.cache_store = UselessStore.new
+
 end
 
