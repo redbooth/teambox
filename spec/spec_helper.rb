@@ -80,6 +80,7 @@ def mock_uploader(file, type = 'image/png', data=nil)
   else
     tempfile << File.read(file_path)
   end
+  tempfile.seek(0)
   ActionDispatch::Http::UploadedFile.new({ :type => type, :filename => file_path, :tempfile => tempfile })
 end
 

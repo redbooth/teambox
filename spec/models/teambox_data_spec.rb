@@ -89,7 +89,7 @@ describe TeamboxData do
       begin
         TeamboxData.new.tap{|d| d.data = data }.unserialize({}, {:create_users => true, :create_organizations => true})
       rescue => e
-        e.to_s.should == "Validation failed: Name must not be blank, Name must be shorter than 255 characters"
+        e.to_s.match(/Validation failed:/).should_not == nil
       end
       
       User.count.should == 0
@@ -238,7 +238,9 @@ describe TeamboxData do
       dump.map_data.should_not == nil
       dump.error?.should_not == true
       dump.status_name.should == :pre_processing
+      dump.data.should_not == nil
       dump.do_import
+      
       dump.status_name.should == :imported
       organization.reload.projects.length.should == 1
     end
