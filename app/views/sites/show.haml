@@ -4,7 +4,7 @@
   %p= @organization.description.html_safe
 
 - content_for :column do
-  - form_tag sites_path, :class => 'new_session', :id => 'new_session' do
+  = form_tag sites_path, :class => 'new_session', :id => 'new_session' do
     = hidden_field_tag :id, @organization.permalink
     = upgrade_browser
     = render 'sites/fields'
