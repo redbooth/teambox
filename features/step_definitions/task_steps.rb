@@ -129,11 +129,11 @@ Then /^I click on the date selector$/ do
   find('.actions .localized_date').click
 end
 
-Then /^I select the month of "([^\"]*)" with the (\w*) date picker$/ do |month,type|
+Then /^I select the month of "([^\"]*)" with the(?: ([^\"]*))? date picker$/ do |month,type|
   Then %(I select "#{month}" from "#{type || 'task'}_due_on_month" within "div[class='calendar_date_select']")
 end
 
-Then /^I select the year "([^\"]*)" with the (\w*) date picker$/ do |year,type|
+Then /^I select the year "([^\"]*)" with the(?: ([^\"]*))? date picker$/ do |year,type|
   Then %(I select "#{year}" from "#{type || 'task'}_due_on_year" within "div[class='calendar_date_select']")
 end
 
