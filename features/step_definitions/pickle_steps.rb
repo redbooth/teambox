@@ -61,15 +61,3 @@ end
 Then(/^#{capture_model} should not be #{capture_model}(?:'s)? (\w+)$/) do |target, owner, association|
   model!(owner).send(association).should_not == model!(target)
 end
-
-# assert model.predicate? 
-# RAILS3 not needed and raises fucking weird error
-# Then(/^#{capture_model} should (?:be|have) (?:an? )?#{capture_predicate}$/) do |name, predicate|
-#   model!(name).should send("be_#{predicate.gsub(' ', '_')}")
-# end
-
-# assert not model.predicate?
-# RAILS3 not needed and raises fucking weird error
-# Then(/^#{capture_model} should not (?:be|have) (?:an? )?#{capture_predicate}$/) do |name, predicate|
-#   model!(name).should_not send("be_#{predicate.gsub(' ', '_')}")
-# end
