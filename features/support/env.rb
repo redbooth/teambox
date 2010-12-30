@@ -15,6 +15,8 @@ require 'cucumber/web/tableish'
 require 'capybara/rails'
 require 'capybara/cucumber'
 require 'capybara/session'
+require 'cucumber/rails/active_record'
+require 'cucumber/rspec/doubles'
 
 require 'email_spec/cucumber'
 
@@ -44,6 +46,9 @@ if defined?(ActiveRecord::Base)
   require 'database_cleaner'
   DatabaseCleaner.strategy = :truncation
 end
+
+require 'rack/test'	
+require 'rack/test/cookie_jar'
 
 Before do
   # Tests are written to target non-community version, except where noted (I am using the community version)
