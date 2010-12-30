@@ -109,8 +109,10 @@ document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, fo
 })
 
 document.on('ajax:failure', 'form.new_conversation, .thread form:not(.not-new-comment)', function(e, form) {
-  var message = e.memo.responseJSON.first()[1]
-  form.down('div.text_area').insertOrUpdate('p.error', message)
+  var message = $H(e.memo.responseJSON)
+	message.each( function(error) {
+		form.down('div.text_area').insertOrUpdate('p.error', error.value)
+	})
 })
 
 // update edited comment
