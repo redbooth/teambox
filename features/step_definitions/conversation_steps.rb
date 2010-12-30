@@ -50,15 +50,13 @@ end
 
 When /^(?:|I )fill in the conversation's comment box with "([^\"]*)"(?: within "([^\"]*)")?$/ do |value, selector|
   with_scope(selector) do
-    xpath = Capybara::XPath.append('//form[contains(@class,"edit_conversation")]//*[@id="conversation_comments_attributes_0_body"]')
-    locate(:xpath, xpath, "cannot fill in: no conversation comment textarea found").set(value)
+    find(:xpath, '//form[contains(@class,"edit_conversation")]//*[@id="conversation_comments_attributes_0_body"]').set(value)
   end
 end
 
 When /^(?:|I )click the conversation's comment box(?: within "([^\"]*)")?$/ do |selector|
   with_scope(selector) do
-    xpath = Capybara::XPath.append('//form[contains(@class,"edit_conversation")]//*[@name="comment[body]"]')
-    locate(:xpath, xpath, "cannot click: no conversation comment textarea found").click
+    find(:xpath, '//form[contains(@class,"edit_conversation")]//*[@name="comment[body]"]').click
   end
 end
 

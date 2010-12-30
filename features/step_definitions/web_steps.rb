@@ -24,25 +24,25 @@ When /^(?:|I )go to (.+)$/ do |page_name|
   visit path_to(page_name)
 end
 
-When /^(?:|I )press "([^\"]*)"(?: within "([^\"]*)")?$/ do |button, selector|
+When /^(?:|I )press "([^"]*)"(?: within "([^"]*)")?$/ do |button, selector|
   with_scope(selector) do
     click_button(button)
   end
 end
 
-When /^(?:|I )follow "([^\"]*)"(?: within "([^\"]*)")?$/ do |link, selector|
+When /^(?:|I )follow "([^"]*)"(?: within "([^"]*)")?$/ do |link, selector|
   with_scope(selector) do
     click_link(link)
   end
 end
 
-When /^(?:|I )fill in "([^\"]*)" with "([^\"]*)"(?: within "([^\"]*)")?$/ do |field, value, selector|
+When /^(?:|I )fill in "([^"]*)" with "([^"]*)"(?: within "([^"]*)")?$/ do |field, value, selector|
   with_scope(selector) do
     fill_in(field, :with => value)
   end
 end
 
-When /^(?:|I )fill in "([^\"]*)" for "([^\"]*)"(?: within "([^\"]*)")?$/ do |value, field, selector|
+When /^(?:|I )fill in "([^"]*)" for "([^"]*)"(?: within "([^"]*)")?$/ do |value, field, selector|
   with_scope(selector) do
     fill_in(field, :with => value)
   end
@@ -59,7 +59,7 @@ end
 # TODO: Add support for checkbox, select og option
 # based on naming conventions.
 #
-When /^(?:|I )fill in the following(?: within "([^\"]*)")?:$/ do |selector, fields|
+When /^(?:|I )fill in the following(?: within "([^"]*)")?:$/ do |selector, fields|
   with_scope(selector) do
     fields.rows_hash.each do |name, value|
       When %{I fill in "#{name}" with "#{value}"}
@@ -75,7 +75,7 @@ When /^(?:|I )select the following(?: within "([^\"]*)")?:$/ do |selector, field
   end
 end
 
-When /^(?:|I )select "([^\"]*)" from "([^\"]*)"(?: within "([^\"]*)")?$/ do |value, field, selector|
+When /^(?:|I )select "([^"]*)" from "([^"]*)"(?: within "([^"]*)")?$/ do |value, field, selector|
   with_scope(selector) do
     select(value, :from => field)
   end
@@ -87,51 +87,27 @@ When /^(?:|I )click the element that contain "([^\"]*)"(?: within "([^\"]*)")?$/
   end
 end
 
-When /^(?:|I )check "([^\"]*)"(?: within "([^\"]*)")?$/ do |field, selector|
+When /^(?:|I )check "([^"]*)"(?: within "([^"]*)")?$/ do |field, selector|
   with_scope(selector) do
     check(field)
   end
 end
 
-When /^(?:|I )uncheck "([^\"]*)"(?: within "([^\"]*)")?$/ do |field, selector|
+When /^(?:|I )uncheck "([^"]*)"(?: within "([^"]*)")?$/ do |field, selector|
   with_scope(selector) do
     uncheck(field)
   end
 end
 
-When /^(?:|I )choose "([^\"]*)"(?: within "([^\"]*)")?$/ do |field, selector|
+When /^(?:|I )choose "([^"]*)"(?: within "([^"]*)")?$/ do |field, selector|
   with_scope(selector) do
     choose(field)
   end
 end
 
-When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"(?: within "([^\"]*)")?$/ do |path, field, selector|
+When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"(?: within "([^"]*)")?$/ do |path, field, selector|
   with_scope(selector) do
     attach_file(field, path)
-  end
-end
-
-When  /^(?:|I )drag "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
-  with_scope(selector) do
-    dragged_item = find(:xpath,"//*[.='#{dragged_item}']")
-    dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
-    dragged_item.drag_to dropped_item
-  end
-end
-
-When /^(.*) confirming with OK$/ do |main_task|
-  if Capybara.current_driver == Capybara.javascript_driver
-    page.evaluate_script("window.old_alert = window.alert")
-    page.evaluate_script("window.old_confirm = window.confirm")
-    page.evaluate_script("window.alert = function(msg) { return true; }")
-    page.evaluate_script("window.confirm = function(msg) { return true; }")
-  end
-  
-  When main_task
-  
-  if Capybara.current_driver == Capybara.javascript_driver
-    page.evaluate_script("window.alert = window.old_alert")
-    page.evaluate_script("window.confirm = window.old_confirm")
   end
 end
 
@@ -142,11 +118,9 @@ Then /^(?:|I )should see JSON:$/ do |expected_json|
   expected.should == actual
 end
 
-Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
+Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)")?$/ do |text, selector|
   with_scope(selector) do
-    if Capybara.current_driver == Capybara.javascript_driver
-      page.has_xpath?(Capybara::XPath.content(text), :visible => true)
-    elsif page.respond_to? :should
+    if page.respond_to? :should
       page.should have_content(text)
     else
       assert page.has_content?(text)
@@ -154,16 +128,13 @@ Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   end
 end
 
-Then /^(?:|I )should see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, selector|
+Then /^(?:|I )should see \/([^\/]*)\/(?: within "([^"]*)")?$/ do |regexp, selector|
+  regexp = Regexp.new(regexp)
   with_scope(selector) do
-    args = ['//*', {
-      :text => Regexp.new(regexp),
-      :visible => Capybara.current_driver == Capybara.javascript_driver
-    }]
     if page.respond_to? :should
-      page.should have_xpath(*args)
+      page.should have_xpath('//*', :text => regexp)
     else
-      assert page.has_xpath?(*args)
+      assert page.has_xpath?('//*', :text => regexp)
     end
   end
 end
@@ -172,11 +143,9 @@ Then /^I should see "([^"]*)" only once$/ do |text|
   all(:xpath,"//*[.='#{text}']").size.should == 1
 end
 
-Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
+Then /^(?:|I )should not see "([^"]*)"(?: within "([^"]*)")?$/ do |text, selector|
   with_scope(selector) do
-    if Capybara.current_driver == Capybara.javascript_driver
-      page.has_no_xpath?(Capybara::XPath.content(text), :visible => true)
-    elsif page.respond_to? :should
+    if page.respond_to? :should
       page.should have_no_content(text)
     else
       assert page.has_no_content?(text)
@@ -184,21 +153,18 @@ Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selec
   end
 end
 
-Then /^(?:|I )should not see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, selector|
+Then /^(?:|I )should not see \/([^\/]*)\/(?: within "([^"]*)")?$/ do |regexp, selector|
+  regexp = Regexp.new(regexp)
   with_scope(selector) do
-    args = ['//*', {
-      :text => Regexp.new(regexp),
-      :visible => Capybara.current_driver == Capybara.javascript_driver
-    }]
     if page.respond_to? :should
-      page.should have_no_xpath(*args)
+      page.should have_no_xpath('//*', :text => regexp)
     else
-      assert page.has_no_xpath?(*args)
+      assert page.has_no_xpath?('//*', :text => regexp)
     end
   end
 end
 
-Then /^the "([^\"]*)" field(?: within "([^\"]*)")? should contain "([^\"]*)"$/ do |field, selector, value|
+Then /^the "([^"]*)" field(?: within "([^"]*)")? should contain "([^"]*)"$/ do |field, selector, value|
   with_scope(selector) do
     field = find_field(field)
     field_value = (field.tag_name == 'textarea') ? field.text : field.value
@@ -210,7 +176,7 @@ Then /^the "([^\"]*)" field(?: within "([^\"]*)")? should contain "([^\"]*)"$/ d
   end
 end
 
-Then /^the "([^\"]*)" field(?: within "([^\"]*)")? should not contain "([^\"]*)"$/ do |field, selector, value|
+Then /^the "([^"]*)" field(?: within "([^"]*)")? should not contain "([^"]*)"$/ do |field, selector, value|
   with_scope(selector) do
     field = find_field(field)
     field_value = (field.tag_name == 'textarea') ? field.text : field.value
@@ -222,7 +188,7 @@ Then /^the "([^\"]*)" field(?: within "([^\"]*)")? should not contain "([^\"]*)"
   end
 end
 
-Then /^the "([^\"]*)" checkbox(?: within "([^\"]*)")? should be checked$/ do |label, selector|
+Then /^the "([^"]*)" checkbox(?: within "([^"]*)")? should be checked$/ do |label, selector|
   with_scope(selector) do
     field_checked = find_field(label)['checked']
     if field_checked.respond_to? :should
@@ -233,13 +199,13 @@ Then /^the "([^\"]*)" checkbox(?: within "([^\"]*)")? should be checked$/ do |la
   end
 end
 
-Then /^the "([^\"]*)" checkbox(?: within "([^\"]*)")? should not be checked$/ do |label, selector|
+Then /^the "([^"]*)" checkbox(?: within "([^"]*)")? should not be checked$/ do |label, selector|
   with_scope(selector) do
     field_checked = find_field(label)['checked']
-    if field_checked.respond_to? :should_not
-      field_checked.should_not be_true
+    if field_checked.respond_to? :should
+      field_checked.should be_false
     else
-      assert ! field_checked
+      assert !field_checked
     end
   end
 end
@@ -268,4 +234,28 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+When  /^(?:|I )drag "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
+  with_scope(selector) do
+    dragged_item = find(:xpath,"//*[.='#{dragged_item}']")
+    dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
+    dragged_item.drag_to dropped_item
+  end
+end
+
+When /^(.*) confirming with OK$/ do |main_task|
+  if Capybara.current_driver == Capybara.javascript_driver
+    page.evaluate_script("window.old_alert = window.alert")
+    page.evaluate_script("window.old_confirm = window.confirm")
+    page.evaluate_script("window.alert = function(msg) { return true; }")
+    page.evaluate_script("window.confirm = function(msg) { return true; }")
+  end
+  
+  When main_task
+  
+  if Capybara.current_driver == Capybara.javascript_driver
+    page.evaluate_script("window.alert = window.old_alert")
+    page.evaluate_script("window.confirm = window.old_confirm")
+  end
 end
