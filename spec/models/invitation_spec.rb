@@ -76,7 +76,7 @@ describe Invitation do
       invitation.deleted?.should == true
       user.invitations.length.should == 0
       
-      Emailer.send_email(:project_membership_notification, invitation.id) rescue assert(false)
+      Emailer.send_email(:project_membership_notification, invitation.id)# rescue assert(false)
     end
 
     it "should not send an Invitation email to users in the inviter's organization" do

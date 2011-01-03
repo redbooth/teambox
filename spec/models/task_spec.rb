@@ -267,6 +267,8 @@ describe Task do
       project = Factory(:project)
       person = Factory(:person, :project => project, :user => user)
       task = Factory(:task, :project => project)
+      task.assigned = person
+      task.save!
       person.destroy_without_callbacks # We don't use destroy because we want to avoid the nullify from Person#tasks association
       task.reload.assigned.user.name.should == "Mislav Marohnić"
     end

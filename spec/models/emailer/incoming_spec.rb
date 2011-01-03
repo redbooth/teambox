@@ -27,7 +27,7 @@ describe Emailer do
           Emailer.receive(@email_template.to_s)
         end.should change(Task, :count).by(1)
       
-        task = Task.last(:order => 'tasks.id')
+        task = Task.first(:order => 'tasks.id DESC')
         task.user.should == @owner
         task.name.should == @email_template.subject
         task.status_name.should == :new
@@ -102,7 +102,7 @@ describe Emailer do
           Emailer.receive(@email_template.to_s)
         end.should change(Task, :count).by(1)
 
-        task = Task.last(:order => 'tasks.id')
+        task = Task.first(:order => 'tasks.id DESC')
         task.name.should == "Get things done:\n          \n           Cook\n           Clean\n           Play"
         task.status_name.should == :new
       end
@@ -116,7 +116,7 @@ describe Emailer do
           Emailer.receive(@email_template.to_s)
         end.should change(Task, :count).by(1)
       
-        task = Task.last(:order => 'tasks.id')
+        task = Task.first(:order => 'tasks.id DESC')
         task.task_list.should == list
       end
     
@@ -128,7 +128,7 @@ describe Emailer do
         end.should change(TaskList, :count).by(1)
         
         task_list = TaskList.find_by_name('Inbox')
-        task = Task.last(:order => 'tasks.id')
+        task = Task.first(:order => 'tasks.id DESC')
         task.task_list.should == task_list
       end
       
@@ -136,7 +136,7 @@ describe Emailer do
         @email_template.body = "##{@fred.login}\nWe did some stuff"
         Emailer.receive(@email_template.to_s)
         
-        task = Task.last(:order => 'tasks.id')
+        task = Task.first(:order => 'tasks.id DESC')
         task.assigned.user.id.should == @fred.id
         comment = task.comments.last
         comment.assigned.user.id.should == @fred.id
@@ -149,7 +149,7 @@ describe Emailer do
         @email_template.body = "#hold\nWe did some stuff"
         Emailer.receive(@email_template.to_s)
         
-        task = Task.last(:order => 'tasks.id')
+        task = Task.first(:order => 'tasks.id DESC')
         task.assigned.should be_nil
         comment = task.comments.last
         comment.assigned.should be_nil
@@ -276,7 +276,7 @@ describe Emailer do
         Emailer.receive(@email_template.to_s)
       }.should change(Comment, :count).by(1)
       
-      comment = @conversation.comments(true).last(:order => 'comments.id')
+      comment = @conversation.comments(true).first(:order => 'comments.id DESC')
       comment.body.should == "I am outraged!"
     end
 

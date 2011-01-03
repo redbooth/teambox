@@ -155,7 +155,7 @@ describe Project do
       @user.add_recent_project(@project)
       @user.recent_projects.should include(@project)
       @project.remove_user(@user)
-      @project.people.each do |person|
+      @project.people(true).each do |person|
         person.user.recent_projects.should_not include(@project)
       end
     end

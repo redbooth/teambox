@@ -164,7 +164,7 @@ class Emailer < ActionMailer::Base
   end
 
   def project_membership_notification(invitation_id)
-    @invitation = Invitation.find(invitation_id)
+    @invitation = Invitation.find_with_deleted(invitation_id)
     @project    = @invitation.project
     @recipient  = @invitation.invited_user
     mail({
