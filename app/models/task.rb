@@ -45,6 +45,10 @@ class Task < RoleRecord
   before_save :save_completed_at
   before_update :remember_comment_created
   
+  def assigned
+    @assigned ||= assigned_id ? Person.find_with_deleted(assigned_id) : nil
+  end
+  
   def track_changes?
     (new_record? and not status_new?) or
     (updating_user and (status_changed? or assigned_id_changed? or due_on_changed?))
@@ -127,7 +131,7 @@ class Task < RoleRecord
   end
 
   def user
-    user_id && User.find_with_deleted(user_id)
+    @user ||= user_id ? User.find_with_deleted(user_id) : nil
   end
   
   TRACKER_STATUS_MAP = {

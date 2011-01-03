@@ -105,7 +105,7 @@ class Upload < RoleRecord
   end
   
   def user
-    User.find_with_deleted(user_id)
+    @user ||= user_id ? User.find_with_deleted(user_id) : nil
   end
 
   def to_xml(options = {})

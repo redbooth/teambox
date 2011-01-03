@@ -5,15 +5,26 @@ class Comment < ActiveRecord::Base
   
   concerned_with :tasks, :finders, :conversions
 
-  # RAILS3 fix with_deleted
-  belongs_to :user#, :with_deleted => true
+  belongs_to :user
   belongs_to :project
   belongs_to :target, :polymorphic => true, :counter_cache => true
-  belongs_to :assigned, :class_name => 'Person'#, :with_deleted => true
-  belongs_to :previous_assigned, :class_name => 'Person'#, :with_deleted => true
+  belongs_to :assigned, :class_name => 'Person'
+  belongs_to :previous_assigned, :class_name => 'Person'
   
   def task_comment?
     self.target_type == "Task"
+  end
+  
+  def user
+    @user ||= user_id ? User.find_with_deleted(user_id) : nil
+  end
+  
+  def assigned
+    @assigned ||= assigned_id ? Person.find_with_deleted(assigned_id) : nil
+  end
+  
+  def previous_assigned
+    @previous_assigned ||= previous_assigned_id ? Person.find_with_deleted(previous_assigned_id) : nil
   end
 
   has_many :uploads

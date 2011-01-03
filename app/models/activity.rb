@@ -1,9 +1,8 @@
 class Activity < ActiveRecord::Base
   include Immortal
 
-  # RAILS3 fix with_deleted
-  belongs_to :target, :polymorphic => true#, :with_deleted => true
-  belongs_to :comment_target, :polymorphic => true#, :with_deleted => true
+  belongs_to :target, :polymorphic => true
+  belongs_to :comment_target, :polymorphic => true
   belongs_to :user
   belongs_to :project
 
@@ -86,6 +85,14 @@ class Activity < ActiveRecord::Base
     i == current_type
   end
   
+  def target
+    @target ||= target_id ? Kernel.const_get(target_type).find_with_deleted(target_id) : nil
+  end
+  
+  def comment_target
+    @comment_target ||= comment_target_id ? Kernel.const_get(comment_target_type).find_with_deleted(comment_target_id) : nil
+  end
+  
   def user
     target.user
   end
@@ -99,7 +106,7 @@ class Activity < ActiveRecord::Base
   end
 
   def user
-    @user ||= User.find_with_deleted(user_id)
+    @user ||= user_id ? User.find_with_deleted(user_id) : nil
   end
 
   def thread
