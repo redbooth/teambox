@@ -1,7 +1,7 @@
 !!! Strict
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang'=>"en", :lang=>"en" }
   %head
-    %meta{ 'http-equiv' => "content-type", :content => "text/html;charset=utf-8" }
+    %meta{ :charset => "UTF-8" }
     = csrf_meta_tag
     = auto_discovery_link_by_context(current_user, @current_project)
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
