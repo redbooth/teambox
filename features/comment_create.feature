@@ -25,7 +25,6 @@ Feature: Posting a comment on a project wall
 
   Scenario: I compose a comment with line breaks
     When I fill in the comment box with line breaks
-    And I press "Preview"
     Then I should see "Text with<br />a break" in the preview
 
   Scenario: I compose a comment with underscored words, links and emails
