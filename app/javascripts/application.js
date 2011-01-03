@@ -91,11 +91,11 @@ Event.addBehavior({
 });
 
 Element.addMethods({
-  forceShow: function(element) {
-    return $(element).setStyle({ display: 'block' })
+  forceShow: function(element, display) {
+    return $(element).setStyle({ display: (display || 'block') })
   },
   swapVisibility: function(element, other) {
-    $(other).forceShow()
+    $(other).forceShow('inline-block')
     return $(element).hide()
   },
   insertOrUpdate: function(element, selector, content) {

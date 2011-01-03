@@ -870,7 +870,8 @@ en:
       start_on_html: Starts on... <i>optional</i>
       finish_on_html: End on... <i>optional</i>
     filter:
-      by_name: Filter tasks by name
+      filter_tasks: Filter tasks
+      by_name: By name...
       anybody: Anybody
       my_tasks: My tasks
       unassigned: Unassigned
@@ -879,12 +880,11 @@ en:
       no_date_assigned: No date assigned
       today: Today
       tomorrow: Tomorrow
-      due_date: "Display tasks with due date..."
-      assigned_to: "Display tasks assigned to..."
       week: "This week"
       2weeks: "Next 2 weeks"
       3weeks: "Next 3 weeks"
       month: "Within 1 month"
+      hide: Hide
     link:
       new: New Task List
       edit: Edit
