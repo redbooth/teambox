@@ -96,7 +96,7 @@ document.on('ajax:success', 'form.new_conversation', function(e, form) {
 
 // "Show N previous comments" action in threads
 document.on('ajax:success', '.thread .comments .more_comments', function(e, el) {
-  el.up('.comments').update(e.memo.responseText).highlight({ duration: 2 })
+  el.up('.comments').update(e.memo.responseText).blindDown({ duration: 0.5 })
 })
 
 document.on('click', '.thread .comments .more_comments a', function(e, el) {
