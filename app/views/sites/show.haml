@@ -1,7 +1,7 @@
 %h1= image_tag @organization.logo.url(:top), :alt => h(@organization.name)
 
 .custom_html
-  %p= @organization.description.try(:html_safe)
+  = @organization.description.try(:html_safe)
 
 - content_for :column do
   = form_tag sites_path, :class => 'new_session', :id => 'new_session' do
