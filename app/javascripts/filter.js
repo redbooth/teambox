@@ -27,7 +27,7 @@ Filter = {
     $$(".tasks.closed div.task").invoke('hide')
   },
   showTasks: function(by, filter) {
-    $$("div.task."+by).each(function(e){
+    $$(".tasks div.task."+by).each(function(e){
       if (filter == null || e.hasClassName(filter))
         e.show();
       else
@@ -35,7 +35,7 @@ Filter = {
     });
   },
   countTasks: function(by, date_filter) {
-    return $$("div.task." + by).select(function(e){
+    return $$(".tasks div.task." + by).select(function(e){
       return (date_filter == null || e.hasClassName(date_filter))
     }).length
   },

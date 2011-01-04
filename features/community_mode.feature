@@ -78,7 +78,6 @@ Feature: When I use Teambox community version, there is only one organization
     And I press "Login"
     Then I should see "All Projects"
     And I should see "Organization"
-    But I should not see "Organizations"
 
   Scenario: I can't create a second organization
     Given @mislav exists and is logged in
@@ -94,11 +93,10 @@ Feature: When I use Teambox community version, there is only one organization
     And I am currently in the project ruby_rockstars
     And "mislav" is an administrator in the organization called "ACME"
     When I go to the home page
-    And I follow "+ New project" within "#projects_tab_list"
+    And I follow "+ New Project"
     And I fill in "Name" with "Another project"
     And I press "Create project and start collaborating"
-    Then I should see "Ruby Rockstars" within "#projects_tab_list"
-    Then I should see "Another project" within "#projects_tab_list"
+    Then I should see "Another project" within "#column"
 
   Scenario: I create a second project in the organization as a participant
     Given @mislav exists and is logged in
@@ -108,8 +106,7 @@ Feature: When I use Teambox community version, there is only one organization
     And I follow "+ New project" within "#projects_tab_list"
     And I fill in "Name" with "Another project"
     And I press "Create project and start collaborating"
-    Then I should see "Ruby Rockstars" within "#projects_tab_list"
-    Then I should see "Another project" within "#projects_tab_list"
+    Then I should see "Another project" within "#column"
 
   Scenario: I can't create a project if I'm not part of the organization
     Given @mislav exists and is logged in
@@ -126,6 +123,7 @@ Feature: When I use Teambox community version, there is only one organization
     And I am currently in the project ruby_rockstars
     And "mislav" is an administrator in the organization called "ACME"
     And I go to the home page
+    Then show me the page
     Then I should see "configure your organization"
     When I follow "Click here"
     Then I should see "Introduce some HTML code for your main site to configure your site"
