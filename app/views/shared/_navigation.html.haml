@@ -16,9 +16,9 @@
         .el= link_to t('.tasks'), project_task_lists_path(project), :class => 'tasks'
         .el= link_to t('.pages'), project_pages_path(project), :class => 'pages ajax'
         .el= link_to t('.files'), project_uploads_path(project), :class => 'files ajax'
-        - if true
+        - if can?(:update, project)
           .el= link_to t('.settings'), project_settings_path(project), :class => 'settings ajax'
-        - if true
+        - if can?(:admin, project)
           .el= link_to t('.people'), project_people_path(project), :class => 'people ajax'
     - if current_user.people.count > 3
       .el= link_to t('.show_all_projects'), all_projects_path, :class => 'more ajax'
@@ -46,7 +46,7 @@
       .contained
         .el= link_to t('organizations.column.general_settings'), edit_organization_path(organization), :class => 'ajax'
         .el= link_to t('organizations.column.admin_projects'), projects_organization_path(organization), :class => 'ajax'
-        - if organization.is_admin? current_user
+        - if can?(:admin, organization)
           .el= link_to t('organizations.column.admin_users'), organization_memberships_path(organization), :class => 'ajax'
           .el= link_to t('organizations.column.appearance'), appearance_organization_path(organization), :class => 'ajax'
           .el= link_to t('organizations.column.delete'), delete_organization_path(organization), :class => 'ajax'

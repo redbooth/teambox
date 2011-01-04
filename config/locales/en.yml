@@ -440,6 +440,7 @@ en:
       invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
       success: Project updated
       error: Couldn't change project settings
+      deleted: You deleted the project
     not_in_project:
       title: "Join '%{project}' project?"
       explain_admin_html: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because you're an administrator of the <b>%{organization}</b> organization."

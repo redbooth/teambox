@@ -103,7 +103,7 @@ Feature: When I use Teambox community version, there is only one organization
     And I am currently in the project ruby_rockstars
     And "mislav" is a participant in the organization called "ACME"
     When I go to the home page
-    And I follow "+ New project" within "#projects_tab_list"
+    And I follow "+ New Project"
     And I fill in "Name" with "Another project"
     And I press "Create project and start collaborating"
     Then I should see "Another project" within "#column"
@@ -113,7 +113,7 @@ Feature: When I use Teambox community version, there is only one organization
     And I am currently in the project ruby_rockstars
     And "mislav" is not a member of the organization called "ACME"
     And I go to the home page
-    Then I should not see "+ New project" within "#projects_tab_list"
+    Then I should not see "+ New Project"
     And I should not see "New project"
     When I go to the new project page
     Then I should see "You're not authorized to create projects on this organization."

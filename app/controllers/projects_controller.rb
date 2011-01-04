@@ -124,7 +124,10 @@ class ProjectsController < ApplicationController
     authorize! :destroy, @current_project
     @current_project.destroy
     respond_to do |f|
-      f.html { redirect_to projects_path }
+      f.html {
+        flash[:success] = t('projects.edit.deleted')
+        redirect_to projects_path
+      }
     end
   end
 
