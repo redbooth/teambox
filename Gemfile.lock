@@ -201,9 +201,9 @@ GEM
     text-format (1.0.0)
       text-hyphen (~> 1.0.0)
     text-hyphen (1.0.0)
-    thinking-sphinx (2.0.0)
-      activerecord (>= 3.0.0)
-      riddle (>= 1.2.0)
+    thinking-sphinx (2.0.1)
+      activerecord (>= 3.0.3)
+      riddle (>= 1.2.1)
     thor (0.14.6)
     tilt (1.2.1)
     tmail (1.2.7.1)
@@ -261,7 +261,7 @@ DEPENDENCIES
   sqlite3-ruby (~> 1.2.5)
   teambox-permalink_fu
   text-format (>= 0.6.3)
-  thinking-sphinx (= 2.0.0)
+  thinking-sphinx (= 2.0.1)
   tilt
   tmail (~> 1.2.3)
   tzinfo (~> 0.3.12)
