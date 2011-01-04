@@ -99,6 +99,10 @@ document.on('ajax:success', '.thread .comments .more_comments', function(e, el) 
   el.up('.comments').update(e.memo.responseText).highlight({ duration: 2 })
 })
 
+document.on('click', '.thread .comments .more_comments a', function(e, el) {
+  el.update("<img src='/images/loading.gif'/>")
+})
+
 // insert new comment into thread after posting
 document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, form) {
   resetCommentsForm(form)
