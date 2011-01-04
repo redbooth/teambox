@@ -123,7 +123,6 @@ Feature: When I use Teambox community version, there is only one organization
     And I am currently in the project ruby_rockstars
     And "mislav" is an administrator in the organization called "ACME"
     And I go to the home page
-    Then show me the page
     Then I should see "configure your organization"
     When I follow "Click here"
     Then I should see "Introduce some HTML code for your main site to configure your site"

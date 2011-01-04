@@ -100,7 +100,7 @@ Filter = {
     Filter.showAllTaskLists();
     Filter.hideAllTasks();
 
-    if (name_match == "" && assigned == 'task' && filter == null)
+    if ((name_match == "" || name_match == el_name.readAttribute('placeholder')) && assigned == 'task' && filter == null)
     {
       Filter.showAllTasks();
     } else {
