@@ -1,4 +1,3 @@
-# RAILS3 spec this
 require 'mail'
 class EmailValidator < ActiveModel::EachValidator
    def validate_each(record, attribute, value)

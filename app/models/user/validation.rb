@@ -15,7 +15,7 @@ class User
 
   validates_length_of       :email,       :within => 6..100 #r@a.wk
   validates_uniqueness_of   :email,       :case_sensitive => false
-  # RAILS3 document this fucking syntax for message
+  
   validates                 :email,       :presence => true, :email => { :message => Authentication.bad_email_message }
   validate  :old_password_provided?, :if => lambda { |u| u.password_confirmation.present? and !u.performing_reset }, :on => :update
   
