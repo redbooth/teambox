@@ -7,8 +7,8 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git@github.com:teambox/choices.git
-  revision: 675faa5
+  remote: git://github.com/teambox/choices.git
+  revision: 675faa587554c08b0f060fc240974b33fcd3d24d
   specs:
     choices (0.2.0)
       hashie (>= 0.4.0)
