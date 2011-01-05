@@ -1,4 +1,4 @@
-@signup
+@signup @javascript
 Feature: Invite a user to a project
 
   Background:
@@ -84,4 +84,11 @@ Feature: Invite a user to a project
   Scenario: Mislav resends invitation email
 
   Scenario: Mislav deletes an invitation that hasnt been accepted
+    Given I am logged in as mislav
+    When I go to the people page of the "Ruby Rockstars" project
+    And I fill in "invitation_user_or_email" with "charles@teambox.com"
+    And I press "Invite"
+    And I follow "Discard invitation"
+    And I wait for 1 second
+    Then I should not see "charles@teambox.com"
 
