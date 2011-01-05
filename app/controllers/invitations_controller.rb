@@ -96,13 +96,13 @@ class InvitationsController < ApplicationController
   def destroy
     @invitation = Invitation.find_by_id params[:id]
     authorize! :destroy, @invitation
-    
-    respond_to do |wants|
-      wants.html {
-        flash[:notice] = t('invitations.destroy.discarded', :user => @invitation.email)
-        redirect_back_or_to root_path
-      }
-      wants.js
+
+    @invitation.destroy
+
+    if request.xhr?
+      head :ok
+    else
+      redirect_back_or_to root_path
     end
   end
   

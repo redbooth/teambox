@@ -1,7 +1,0 @@
-invitation_id = "invitation_#{params[:id]}"
-fade_duration = 0.5
-
-page.visual_effect :fade, invitation_id, :duration => fade_duration
-page.delay(fade_duration) do
-  page[invitation_id].remove
-end

@@ -17,5 +17,5 @@
       = link_to t('invitations.invitation.resend'), polymorphic_path([:resend, invitation.target, invitation])
       = loading('resend_invitation', invitation.id)
       = t('common.or')
-      %span.discard= link_to t('invitations.invitation.discard'),
-        polymorphic_path([invitation.target, invitation]), 'data-method' => 'delete', 'data-remote' => true
+      %span.discard
+        = link_to t('invitations.invitation.discard'), polymorphic_path([invitation.target, invitation]), 'data-method' => 'delete', 'data-remote' => true, :class => 'invitation-destroy'
