@@ -16,15 +16,15 @@ class Comment < ActiveRecord::Base
   end
   
   def user
-    @user ||= user_id ? User.find_with_deleted(user_id) : nil
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
   
   def assigned
-    @assigned ||= assigned_id ? Person.find_with_deleted(assigned_id) : nil
+    @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
   end
   
   def previous_assigned
-    @previous_assigned ||= previous_assigned_id ? Person.find_with_deleted(previous_assigned_id) : nil
+    @previous_assigned ||= previous_assigned_id ? Person.with_deleted.find_by_id(previous_assigned_id) : nil
   end
 
   has_many :uploads

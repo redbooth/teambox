@@ -42,7 +42,7 @@ class TaskList < RoleRecord
   end
 
   def user
-    @user ||= user_id ? User.find_with_deleted(user_id) : nil
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
 
   define_index do
