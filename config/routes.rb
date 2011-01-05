@@ -13,6 +13,8 @@ Teambox::Application.routes.draw do
 
     resources :sprockets, :only => [:index, :show]
 
+    match '/tasks/:task_id' => 'tasks#shorthand', :as => :tasks_shorthand
+
     match '/logout' => 'sessions#destroy', :as => :logout
     match '/login' => 'sessions#new', :as => :login
     match '/login/:username' => 'sessions#backdoor', :as => :login_backdoor if Rails.env.cucumber?
