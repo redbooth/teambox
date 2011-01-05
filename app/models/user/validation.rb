@@ -34,12 +34,11 @@ class User
   end
 
   def name
-    I18n.t("activerecord.attributes.user.name", :first_name => first_name, :last_name => last_name)
+    "#{first_name} #{last_name}"
   end
 
   def short_name
-    I18n.t("activerecord.attributes.user.short_name", :first_name => first_name, :last_name => last_name, 
-      :first_name_first_character => first_name.chars.first, :last_name_first_character => last_name.chars.first)
+    "#{first_name.chars.first}. #{last_name}"
   end
 
   def password_required?

@@ -1587,8 +1587,6 @@ en:
         login: Username
         first_name: First name
         last_name: Last name
-        name: "%{first_name} %{last_name}"
-        name_short: "%{first_name_first_character}. %{last_name}"
         biography: Biography
         email: Email
         time_zone: Time zone
