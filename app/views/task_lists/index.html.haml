@@ -1,13 +1,15 @@
 - if @current_project
-
   .task_header
-    - if can? :make_task_lists, @current_project
-      %p.text_actions
-        %span
-          = link_to t('task_lists.link.reorder'), "#", :id => :reorder_task_lists_link
-          = link_to t('task_lists.link.reorder_done'), "#", :id => :done_reordering_task_lists_link, :style => 'display:none'
+    %p.text_actions
+      - if can? :reorder_objects, @current_project
+        = link_to t('task_lists.link.reorder'), "#", :id => :reorder_task_lists_link
+        = link_to t('task_lists.link.reorder_done'), "#", :id => :done_reordering_task_lists_link, :style => 'display:none'
+      - if can? :make_task_lists, @current_project
+        = task_list_link(@current_project)
 
     %h2= t('.tasks_for_project')
+
+  = filter_task_lists
 
   - if can? :make_task_lists, @current_project
     = task_list_form(@current_project,TaskList.new)
@@ -22,13 +24,14 @@
 
 - else
   %h2= t('.tasks_for_all_projects')
+  %p= t('.tasks_for_all_projects_explain')
+
+  = filter_task_lists
 
   #tasks_for_all_projects
     = tasks_for_all_projects(@tasks)
 
   - content_for :column do
-    = filter_task_lists
-
     %h2= t('.other_views')
     = gantt_view_link
     = instructions_for_calendars

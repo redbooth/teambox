@@ -20,7 +20,7 @@ class User
       self.recent_projects_ids = self.recent_projects_ids.unshift(project.id).slice(0,6)
       @recent_projects = nil
       @projects = nil
-      self.save(false)
+      self.save(:validate => false)
     end
   end
   
@@ -28,7 +28,7 @@ class User
     self.recent_projects_ids ||= []
     if self.recent_projects_ids.delete(project.id)
       @recent_projects = nil
-      self.save(false)
+      self.save(:validate => false)
     end    
   end
   

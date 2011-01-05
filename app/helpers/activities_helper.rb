@@ -9,8 +9,8 @@ module ActivitiesHelper
       out << "#{t('common.in_project')} "
       out <<   link_to(h(project), project_path(project))
       out << "</span>"
-      out
-    end  
+      out.html_safe
+    end
   end
   
   def activity_section(activity)
@@ -41,7 +41,7 @@ module ActivitiesHelper
   end
 
   def list_threads(activities)
-    activities.map { |activity| show_threaded_activity(activity) }.join('')
+    activities.map { |activity| show_threaded_activity(activity) }.join('').html_safe
   end
 
   def show_threaded_activity(activity)
@@ -121,7 +121,7 @@ module ActivitiesHelper
     else
       raise ArgumentError, "unknown activity type #{type}"
     end
-    t("activities.#{type}.title", values)
+    t("activities.#{type}.title", values).html_safe
   end
   
   def activity_target_url(activity)
@@ -196,21 +196,14 @@ module ActivitiesHelper
     else
       raise "unexpected location #{location_name}"
     end
-    link_to_remote content_tag(:span, t('common.show_more')),
-      :url => url,
-      :loading => activities_paginate_loading,
-      :html => {
-        :class => 'activity_paginate_link button',
-        :id => 'activity_paginate_link' }
+    link_to(content_tag(:span, t('common.show_more')),
+            url,
+            :remote => true,
+            :class => 'activity_paginate_link button',
+            :id => 'activity_paginate_link'
+            )
   end
   
-  def activities_paginate_loading
-    update_page do |page|
-      page['activity_paginate_link'].hide
-      page['activity_paginate_loading'].show
-    end
-  end
-
   def show_more(after)
     update_page do |page|
       page['activities'].insert list_activities(@activities)

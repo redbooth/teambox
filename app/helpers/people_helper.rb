@@ -9,8 +9,8 @@ module PeopleHelper
   end
   
   def options_from_other_projects(projects)
-    "<option value=''>#{t('people.column.select_project')}</option>" +
-      options_from_collection_for_select(projects, :id, :name)
+    ("<option value=''>#{t('people.column.select_project')}</option>" +
+      options_from_collection_for_select(projects, :id, :name)).html_safe
   end
 
   def options_for_projects_by_organization(commentable_projects)
@@ -18,7 +18,7 @@ module PeopleHelper
       "<optgroup label='#{h(org)}'>" +
         options_from_collection_for_select(projects, :id, :name) +
       "</optgroup>"
-    end.join
+    end.join.html_safe
   end
 
 end

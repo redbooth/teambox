@@ -19,6 +19,8 @@ class MoveProjectsToOrganizations < ActiveRecord::Migration
       )
     end
     
+    begin
+    
     organization = Organization.create!(:name => "Your company name", :permalink => "organization", :description => description)
     
     Project.find_each(:batch_size => 500) do |project|
@@ -26,6 +28,9 @@ class MoveProjectsToOrganizations < ActiveRecord::Migration
     end
     User.find_each(:batch_size => 500) do |user|
       organization.add_member(user)
+    end
+    
+    rescue
     end
   end
 

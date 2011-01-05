@@ -208,7 +208,7 @@ describe ApiV1::CommentsController do
       conversation.comments.length.should == 1
       
       post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :body => 'Created!'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       conversation.reload.comments(true).length.should == 1
     end
@@ -225,14 +225,14 @@ describe ApiV1::CommentsController do
       @comment.update_attribute(:created_at, Time.now - 16.minutes)
       
       put :update, :project_id => @project.permalink, :id => @comment.id, :body => 'Updated FAIL!'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
     end
     
     it "should not allow anyone else to modify another comment" do
       login_as @project.user
       
       put :update, :project_id => @project.permalink, :id => @comment.id, :body => 'Updated!'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
     end
   end
   
@@ -259,7 +259,7 @@ describe ApiV1::CommentsController do
       login_as @observer
       
       put :destroy, :project_id => @project.permalink, :id => @comment.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.comments(true).length.should == 1
     end

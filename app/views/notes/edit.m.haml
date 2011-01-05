@@ -1,11 +1,11 @@
-- form_for [@note.project,@note.page,@note] do |f|
+= form_for [@note.project,@note.page,@note] do |f|
   = note_fields(f)
   .submit{ :id => "note_submit_#{@note.id}" }
     = f.submit t('.submit')
     = t('common.or')
     = link_to t('common.cancel'), project_page_path(@note.project, @note.page)
 
-- form_for [@note.project,@note.page,@note], :html => {:id => "note_destroy_#{@note.id}", :method => :delete} do |f|
+= form_for [@note.project,@note.page,@note], :html => {:id => "note_destroy_#{@note.id}", :method => :delete} do |f|
   .destruct_submit
     = t('common.or')
     = f.submit t('common.delete')

@@ -22,7 +22,7 @@ describe Comment do
   describe "copying ownership" do
     before do
       @target = Factory.build(:simple_conversation, :body => nil)
-      @target.save(false)
+      @target.save(:validate => false)
       @comment = Factory.build(:comment, :target => @target, :user => nil, :project => nil)
     end
     
@@ -364,16 +364,16 @@ describe Comment do
         :body => "Can't touch this"
       Comment.update_all({:updated_at => 15.minutes.ago}, :id => comment.id)
 
-      comment.reload.updated_at.should be_close(15.minutes.ago, 5)
+      comment.reload.updated_at.should be_within(1).of(15.minutes.ago)
       upload.reload.destroy
-      comment.reload.updated_at.should be_close(Time.now, 5)
+      comment.reload.updated_at.should be_within(1).of(Time.now)
     end
   end
   
   context "hours" do
     it "assigns human hours" do
       comment = Factory.build :comment, :human_hours => "2:30"
-      comment.hours.should be_close(2.5, 0.001)
+      comment.hours.should be_within(0.001).of(2.5)
       comment.human_hours = " "
       comment.hours.should be_nil
     end

@@ -5,6 +5,6 @@
 
 - if f.object.new_record?
   - f.object.comments.build
-  - f.fields_for :comments do |fields|
+  = f.fields_for :comments do |fields|
     .field.text_area
       = fields.text_area :body, :placeholder => t('comments.new.conversation')

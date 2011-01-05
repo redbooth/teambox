@@ -185,8 +185,8 @@ ca:
     index: 
       addresses: adreces
       credits_earned: "Crèdit que ha guanyat"
-      desc_1: "Amb la nostra eina per a partners, pots aconseguir<strong>mesos gratis</strong> utilitzant Teambox o obtenint <strong>diners reals</strong> prescrivint-lo a d'altres usuaris."
-      desc_2: "Porta nous usuaris a Teambox, rebràs <strong>%{percent}% dels ingressos</strong> de les referències dels usuaris generats, <strong>per sempre</strong>."
+      desc_1_html: "Amb la nostra eina per a partners, pots aconseguir<strong>mesos gratis</strong> utilitzant Teambox o obtenint <strong>diners reals</strong> prescrivint-lo a d'altres usuaris."
+      desc_2_html: "Porta nous usuaris a Teambox, rebràs <strong>%{percent}% dels ingressos</strong> de les referències dels usuaris generats, <strong>per sempre</strong>."
       facebook: Facebook
       get_in_touch: "Posa't en contacte amb nosaltres"
       idea1: "Crear un lloc web sobre com utilitzar Teambox, amb guies per a principiants."
@@ -362,14 +362,14 @@ ca:
       title: "Nova conversa"
     primer: 
       create_first: "Crea la primera conversa per aquest projecte!"
-      define: "<b>Conversa sobre decisions</b> i <b>posa el teu equip al dia</b> d´una forma centralitzada.<br/>Cadascuna de les converses és una llista de missatges, que reemplacen als confusos missatges."
+      define_html: "<b>Conversa sobre decisions</b> i <b>posa el teu equip al dia</b> d´una forma centralitzada.<br/>Cadascuna de les converses és una llista de missatges, que reemplacen als confusos missatges."
       empty: "Encara no hi ha cap conversa en aquest projecte."
-      footer1: "Las converses són perfectes per a <b>compartir un disseny</b>, <b>decidir una data</b> per a reunirse o <b>informar</b> sobre las notícies del projecte."
-      footer2: "S'ordenen per fils, es fàcil tornar enrere en el temps i veure quins arxius es van enviar i què van dir els membres de l'equip. A Teambox, <b>col.laborar</b> genera una <b>traçabilitat</b> del que s'ha fet."
-      item1: "<b>Comparteix arxius</b>. Pots adjuntar arxius a cadascun dels missatges."
-      item2: "<b>Suscríbete</b> a una conversa pots rebre notificacions de respostes per email i RSS."
-      item3: "<b>Expresat</b>. Pots utilitzar negreta, cursiva i estils de text."
-      item4: "<b>Integrat amb el teu email</b>. Pots contestar des del teu email per publicar una resposta."
+      footer1_html: "Las converses són perfectes per a <b>compartir un disseny</b>, <b>decidir una data</b> per a reunirse o <b>informar</b> sobre las notícies del projecte."
+      footer2_html: "S'ordenen per fils, es fàcil tornar enrere en el temps i veure quins arxius es van enviar i què van dir els membres de l'equip. A Teambox, <b>col.laborar</b> genera una <b>traçabilitat</b> del que s'ha fet."
+      item1_html: "<b>Comparteix arxius</b>. Pots adjuntar arxius a cadascun dels missatges."
+      item2_html: "<b>Suscríbete</b> a una conversa pots rebre notificacions de respostes per email i RSS."
+      item3_html: "<b>Expresat</b>. Pots utilitzar negreta, cursiva i estils de text."
+      item4_html: "<b>Integrat amb el teu email</b>. Pots contestar des del teu email per publicar una resposta."
     short_conversation: 
       comment: resposta
       comments: respostes
@@ -381,9 +381,9 @@ ca:
     watcher_fields: 
       add_suscribers: "Qui seguirà aquesta conversa?"
       invite_users: "Ets l'unic usuari en aquest projecte!"
-      no_users_yet: "Conversar es més útil quan no ho fas sol. <a href='%{invite_link}'>Convida a alguns usuaris</a> en aquest projecte per que puguin llegir, comentar i rebre actualitzacions d'aquesta conversa."
+      no_users_yet_html: "Conversar es més útil quan no ho fas sol. <a href='%{invite_link}'>Convida a alguns usuaris</a> en aquest projecte per que puguin llegir, comentar i rebre actualitzacions d'aquesta conversa."
       people_all: "All people in project"
-      subscribe_note: "Aquestes persones rebran una notificació via email d´aquest missatge i els comentaris posteriors.<br/>Poden deixar de seguir la conversa en qualsevol moment."
+      subscribe_note_html: "Aquestes persones rebran una notificació via email d´aquest missatge i els comentaris posteriors.<br/>Poden deixar de seguir la conversa en qualsevol moment."
   countries: 
     AC: "Illa de l'Ascensió"
     AD: Andorra
@@ -776,7 +776,6 @@ ca:
       answer_above_this_line: "CONTESTA PER SOBRE D'AQUESTA LINIA PER RESPONDRE"
       do_not_answer: "No responguis a aquest email."
     confirm: 
-      follow_the_link: "Per a <b>completar el teu registre</b> a Teambox només has de seguir aquest enllaç:"
       hey: "Hola, %{user_name}!"
       log_in: "Entra a Teambox ara!"
       plaintext_link: "Si l'enllaç de sobre no funciona, copia i enganxa el següent a la barra d'adreces del teu navegador:"
@@ -818,7 +817,6 @@ ca:
       task_list: "Llista de tasques:"
       view_online: "Pots <a href='%{link}'>entrar a Teambox</a> per respondre i adjuntar arxius."
     reset_password: 
-      follow_the_link: "Per a <b>restablir la teva contrasenya</b> a Teambox només has de seguir aquest enllaç:"
       hey: "Hola, %{user_name}!"
       log_in: "Entra a Teambox ara!"
       plaintext_link: "Si l'enllaç de sobre no funciona, copia i enganxa el següent a la barra d'adreces del teu navegador:"
@@ -841,59 +839,6 @@ ca:
       line4: "En aquest projecte no podràs convidar a d'altres usuaris, però si pots fer tota la resta."
   form: 
     cancel: Cancel.lar
-  groups: 
-    column_group: 
-      projects: Projectes
-      your_groups: "Els teus grups"
-    edit: 
-      submit: Actualització
-    errors: 
-      already_own: "Ja tens un grup!"
-      no_edit: "No pots editar aquest grup"
-      not_admin: "No pots administrar aquest grup"
-      not_enabled: "Els Grups no estan permesos en aquest sistema"
-      upgrade: "Per tal de <b>crear dominis amb el teu branding </b>, hauràs de %{link}."
-      upgrade_account: "Actualitza el teu compte"
-    fields: 
-      description: "HTML que es mostrarà a la pàgina principal"
-      name: Nom
-      permalink: Permalink
-      permalink_description: "Es pot accedir al domini del seu grup des de "
-    header: 
-      leave: Deixar
-      remove: Eliminar
-    index: 
-      description: "Utilitzeu grups per compartir recursos amb altres, i uniu els projectes sota un mateix nom!"
-      groups_in: "Grups que són a"
-      no_groups: "No pertanyen a cap grup."
-      remove_project: Eliminar
-      submit_project: Afegir
-      title: Grups
-      whats_this: "Què és això?"
-      your_group: "El vostre grup"
-    logo_fields: 
-      current: "Logo actual"
-      delete: Eliminar
-      description: "Aquest logotip apareixerà en tots els projectes que pertanyen a aquest grup"
-      upload: Pujar
-    new: 
-      created: "El teu grup ha estat creat"
-      explain: "Només pots tenir un grup"
-      invalid_group: "Grup no vàlid"
-      submit: Crear
-      title: "Crear grup"
-    primer: 
-      configure_domain: "Pots utilitzar un subtítol personalitzat, com http://lateva companyia.teambox.com, o pot estar vinculada al seu propi nom de domini, com a http://elteudomini.com. <a href='%{link}' target='_blank'>Aprèn com fer això</a>."
-      create_group: "Crear un grup"
-      explain: "Els grups són una forma de branding de la seva experiència amb Teambox. Podeu tenir una pantalla d'accés amb el vostre propi logotip i text HTML."
-      no_group_create: "No ets propietari d'un grup. %{link}."
-    search: 
-      invite: Convidar
-      invite_people: "Convidar persones al grup"
-      username_or_email: "Usuari o email"
-    show: 
-      add_project: "Afegir al projecte"
-      edit: Editar
   hours: 
     all_tasks: "Totes les tasques"
     all_users: "Tots els usuaris"
@@ -925,16 +870,13 @@ ca:
       invalid_code: "Codi d'invitació no vàlid"
     fields: 
       user_or_email: "Introdueix l´email o usuari del teu company:"
-    group_invitation: 
-      invited_email: "%{inviter} va convidar <b>%{email}</b> per unir-se al grup."
-      invited_user: "%{inviter} va convidar <b>%{invitee}</b> per unir-se al grup."
     index_user: 
       no_invitations: "No tens cap invitació pendent."
       title: "Invitacions pendents"
     invitation: 
       discard: "Descartar invitació"
       invited_email: "%{inviter} ha convidat a <b>%{email}</b> al projecte."
-      invited_user: "%{inviter} ha convidat a <b>%{invitee}</b> al projecte."
+      invited_user_html: "%{inviter} ha convidat a <b>%{invitee}</b> al projecte."
       pending: "S'ha enviat un email en aquest usuari, pero encara no ho ha confirmat"
       resend: "Reenviar l'email d'invitació"
       time_ago: "(hace %{time_ago_in_words})"
@@ -943,7 +885,7 @@ ca:
         title: "Introdueix això"
       title: "En el nom d'usuari/email, utilitza també aquesta llista de noms d'usuari o adreces d'email, p.e:"
       to_invite: 
-        not_example: "(NOT <span class=\"mention\">@fred</span> or <span class=\"mention\">@lisa</span>)"
+        not_example_html: "(NOT <span class=\"mention\">@fred</span> or <span class=\"mention\">@lisa</span>)"
         title: Convidar
     pending: 
       invited_to_join: "%{by} t´ha convidat a unir-te al projecte %{project}."
@@ -965,7 +907,7 @@ ca:
       username_or_email: "Introdueix l´email o nom d´usuari del teu company"
     sent: 
       email_sent: "<b>Hem enviat un email avisant l'usuari que accepti la teva invitació</b>. Si no poden trobar l'email, assegurat que no s´ha classificat com a spam. Si el problema persisteix, ens escrius un email."
-  latest_announcement: "<strong>Novetat</strong>: Guanya diners enviant usuaris a Teambox. Pots guanyar el 15% del que els usuaris que enviis a Teambox paguin. Llegeix més al <a href='http://blog.teambox.com'>nostre blog</a>."
+  last_announcement_html: "<strong>Novetat</strong>: Guanya diners enviant usuaris a Teambox. Pots guanyar el 15% del que els usuaris que enviis a Teambox paguin. Llegeix més al <a href='http://blog.teambox.com'>nostre blog</a>."
   locales: 
     ca: Català
     es: Castellà
@@ -1028,8 +970,8 @@ ca:
     unlink_account: "Compte no connectat"
     user_already_exists_by_email: "L'usuari %{email} ja disposa d'un compte a Teambox.<br/>accedeix amb aquest compte i vincula des de el panell de configuració."
     user_already_exists_by_login: "L'usuari %{login} ja disposa d'un compte a Teambox.<br/>Accedeix amb aquest compte i vincula des del panell de configuració."
-    your_account_is_linked: "El vostre %{provider} perfil està <strong>connectat</strong> a Teambox."
-    your_account_is_not_linked: "El vostre %{provider} perfil <strong>no està connectat</strong> a Teambox."
+    your_account_is_linked_html: "El vostre %{provider} perfil està <strong>connectat</strong> a Teambox."
+    your_account_is_not_linked_html: "El vostre %{provider} perfil <strong>no està connectat</strong> a Teambox."
   page_title: 
     archived_task_lists: "Tasques arxivades"
     create_uploads: "Pujar arxiu"
@@ -1077,27 +1019,27 @@ ca:
         description: "Pàgines del projecte %{name}"
         title: "%{name} pàgines"
     new: 
-      define1: "Aquí pots <b>compartir informació d'us freqüent</b> amb el teu equip: Un roadmap, links útils, instruccions, plantilles d'emails..."
-      define2: "Editar una pàgina es senzill i divertit, amb elements arrossegables que pots editar en el lloc."
-      feature1: "<b><b>Comparteix</b>. Tots els membres del projecte les poden veure i editar."
-      feature2: "<b>Publica</b>. Publicació instantània a la web amb les pàgines compartides. Crea una web en segons."
-      feature3: "<b>Imprimeix</b>. Les pàgines estan preparades per a ser impreses. Prova a imprimir una o exportarles com a PDF!"
-      feature4: "<b>Wiki</b>. Actuen com un wiki, donant tota la informació del teu projecte."
-      footer1: "Utilitza Teambox com una <b>pissarra compartida</b> per a informació d'us freqüent."
-      footer2: "També pots adjuntar arxius a qualsevol pàgina del projecte. Disfruta!"
+      define1_html: "Aquí pots <b>compartir informació d'us freqüent</b> amb el teu equip: Un roadmap, links útils, instruccions, plantilles d'emails..."
+      define2_html: "Editar una pàgina es senzill i divertit, amb elements arrossegables que pots editar en el lloc."
+      feature1_html: "<b><b>Comparteix</b>. Tots els membres del projecte les poden veure i editar."
+      feature2_html: "<b>Publica</b>. Publicació instantània a la web amb les pàgines compartides. Crea una web en segons."
+      feature3_html: "<b>Imprimeix</b>. Les pàgines estan preparades per a ser impreses. Prova a imprimir una o exportarles com a PDF!"
+      feature4_html: "<b>Wiki</b>. Actuen com un wiki, donant tota la informació del teu projecte."
+      footer1_html: "Utilitza Teambox com una <b>pissarra compartida</b> per a informació d'us freqüent."
+      footer2_html: "També pots adjuntar arxius a qualsevol pàgina del projecte. Disfruta!"
       submit: "Crear pàgina"
       title: "Nova pàgina"
     primer: 
       create_first: "Crea la primera pàgina!"
-      define1: "Aquí pots <b>compartir informació d' us freqüent </b> amb el teu equip: Un roadmap, links útils, instruccions, plantilles d'emails..."
-      define2: "Editar una pàgina es senzill i divertit, amb elements arrossegables que pots editar en el lloc."
+      define1_html: "Aquí pots <b>compartir informació d' us freqüent </b> amb el teu equip: Un roadmap, links útils, instruccions, plantilles d'emails..."
+      define2_html: "Editar una pàgina es senzill i divertit, amb elements arrossegables que pots editar en el lloc."
       empty: "Encara no hi ha cap pàgina en aquest projecte."
-      footer1: "Utilitza Teambox com una <b>pissarra compartida</b> per a informació d'us freqüent."
-      footer2: "També pots adjuntar arxius a qualsevol pàgina del projecte. Disfruta!"
-      item1: "<b>Comparteix</b>. Tots els membres del projecte les poden veure i editar."
-      item2: "<b>Publica</b>. Publicació instantània a la web amb les pàgines compartides. Crea una web en segons."
-      item3: "<b>Imprimeix</b>. Les pàgines estan preparades per a ser impreses. Prova a imprimir una o exportarles com a PDF!"
-      item4: "<b>Wiki</b>. Actuen com un wiki, donant tota la informació del teu projecte."
+      footer1_html: "Utilitza Teambox com una <b>pissarra compartida</b> per a informació d'us freqüent."
+      footer2_html: "També pots adjuntar arxius a qualsevol pàgina del projecte. Disfruta!"
+      item1_html: "<b>Comparteix</b>. Tots els membres del projecte les poden veure i editar."
+      item2_html: "<b>Publica</b>. Publicació instantània a la web amb les pàgines compartides. Crea una web en segons."
+      item3_html: "<b>Imprimeix</b>. Les pàgines estan preparades per a ser impreses. Prova a imprimir una o exportarles com a PDF!"
+      item4_html: "<b>Wiki</b>. Actuen com un wiki, donant tota la informació del teu projecte."
     slots: 
       insert_here: "Insertar Aquí"
   people: 
@@ -1175,13 +1117,13 @@ ca:
         time_tracking_docs: "Més informació."
       owner: Propietari
       owner_description: "El propietari és el màxim responsable d'un projecte. No es pot expulsar del projecte, a menys que un altre usuari sigui anomenat propietari."
-      permalink: URL
+      permalink_html: URL
       permalink_description: "Això formarà l'adreça web del teu projecte. L'has de mantenir breu. No es permeten espais"
-      public_project: "Projecte públic. <em>Qualsevol persona podrà accedir i unir-se al projecte a la <a href='/public'>secció de projecets públics</a>.</em>"
+      public_project_html: "Projecte públic. <em>Qualsevol persona podrà accedir i unir-se al projecte a la <a href='/public'>secció de projecets públics</a>.</em>"
       settings: 
-        upgrade: "Per <b>desarxivar aquest projecte</b> i poder modificar-lo, has <a href='%{link}'>d'actualitzar el teu compte i obtenir major capacitat d'emmagatzematge i característiques</a> o arxivar altres projectes."
+        upgrade_html: "Per <b>desarxivar aquest projecte</b> i poder modificar-lo, has <a href='%{link}'>d'actualitzar el teu compte i obtenir major capacitat d'emmagatzematge i característiques</a> o arxivar altres projectes."
         you_cant_unarchive: "Tens %{active} projectes actius i el teu pla actual només  permet %{max} projectes"
-      tracks_time: "Habilita el tome tracking. <em> permetrà als usuaris el registre de temps per a les tasques. </ em>"
+      tracks_time_html: "Habilita el tome tracking. <em> permetrà als usuaris el registre de temps per a les tasques. </ em>"
     index: 
       archived: "Veure %{count} projectes arxivats..."
       new_project: "Cap Projecte"
@@ -1205,21 +1147,21 @@ ca:
       submit: "Crear projecte i començar a col·laborar"
       title: "Crear un projecte"
       upgrade: 
-        to_2: "<a href='%{link}'>Actualitza el teu compte ara</a> per crear <b>fins a %{projects} projectes</b>, permet emmagatzemar fins a <b>%{storage} Gb</b> d'arxius i utilitzar la <b>barra de búsqueda per a tots els projectes</b>."
+        to_2_html: "<a href='%{link}'>Actualitza el teu compte ara</a> per crear <b>fins a %{projects} projectes</b>, permet emmagatzemar fins a <b>%{storage} Gb</b> d'arxius i utilitzar la <b>barra de búsqueda per a tots els projectes</b>."
       you_can_create_more: 
         other: "Tu pots crear %{count} projectes més amb el teu pla actual."
-        zero: "No pots crear cap més projecte.<br/>El màxim de projectes amb el teu pla es de %{max}."
+        zero_html: "No pots crear cap més projecte.<br/>El màxim de projectes amb el teu pla es de %{max}."
         one: "Tu pots crear un projecte més amb el teu pla actual."
     new_primer: 
-      define1: "Un projecte és un grup compartit amb els teus contactes."
-      define2: "Dins de cada projecte, cadascun dels membres pot:"
-      feature1: "Publicar que fa ara mateix."
-      feature2: "Començar converses o respondre."
-      feature3: "Adjuntar arxius."
-      feature4: "Asignar i planificar."
-      feature5: "Comentar les tasques."
-      feature6: "Fer <i>time-tracking</i>."
-      feature7: "Crear i editar pàgines compartides."
+      define1_html: "Un projecte és un grup compartit amb els teus contactes."
+      define2_html: "Dins de cada projecte, cadascun dels membres pot:"
+      feature1_html: "Publicar que fa ara mateix."
+      feature2_html: "Començar converses o respondre."
+      feature3_html: "Adjuntar arxius."
+      feature4_html: "Asignar i planificar."
+      feature5_html: "Comentar les tasques."
+      feature6_html: "Fer <i>time-tracking</i>."
+      feature7_html: "Crear i editar pàgines compartides."
       footer: "Aquest projecte et pertany només a tu. Pots transferir-lo als teus contactes en qualsevol moment."
       limited: "És un compte gratuït, només pots pujar fins a 50 Mb d'arxius per projecte."
       upgrade: "Aconsegueix un compte premium ara!"
@@ -1231,15 +1173,15 @@ ca:
       people_in_project: "Persones en aquest projecte"
     primer: 
       create_first: "Crea el teu primer projecte!"
-      define1: "<b>Col.labora</b> amb el teu grup pels  teus projectes: un lloc web, organitzar un festa, treballs per a clients..."
-      define2: "Pots crear <b>tants projectes com vulguis</b> i accedir a ells online."
+      define1_html: "<b>Col.labora</b> amb el teu grup pels  teus projectes: un lloc web, organitzar un festa, treballs per a clients..."
+      define2_html: "Pots crear <b>tants projectes com vulguis</b> i accedir a ells online."
       empty: "Encara no pertanys a cap projecte"
       footer: "Els projectes són una forma centralitza de col.laborar, per a que mai més hagis d'enviar emails al teu equip."
-      item1: "<b>Crea un projecte</b>, l'anomenes com vulguis i <b>convida els teus contactes</b> a ell."
-      item2: "<b>Comenta</b> el que fas en cada moment en el mur del projecte."
-      item3: "<b>Comenta</b> les decisions importants a Converses."
-      item4: "<b>Planifica</b>el que has def fer amb les Tasques."
-      item5: "<b>Comparteix informació</b> amb les Pàgines dins de cada projecte."
+      item1_html: "<b>Crea un projecte</b>, l'anomenes com vulguis i <b>convida els teus contactes</b> a ell."
+      item2_html: "<b>Comenta</b> el que fas en cada moment en el mur del projecte."
+      item3_html: "<b>Comenta</b> les decisions importants a Converses."
+      item4_html: "<b>Planifica</b>el que has def fer amb les Tasques."
+      item5_html: "<b>Comparteix informació</b> amb les Pàgines dins de cada projecte."
     recent_conversations: 
       first: "+ Crear la primera conversa"
       new: "+ Nova conversa"
@@ -1257,7 +1199,7 @@ ca:
   reset_passwords: 
     create: 
       invalid: "L'enllaç que has seguit per recuperar la contrasenya no es vàlid o ha expirat. Intenta recordar-te'n de la contrasenya de nou desde la pàgina principal.<br/>Si això no funcionés, escriu-nos: %{support}"
-      not_found: "No s'ha trobat cap usuari amb l'email: %{email}<br/>Comprova que ho escrius bé i fes-ho de nou. Si encara no funcionés, ens escrius: %{support}"
+      not_found_html: "No s'ha trobat cap usuari amb l'email: %{email}<br/>Comprova que ho escrius bé i fes-ho de nou. Si encara no funcionés, ens escrius: %{support}"
       password_not_updated: "El nou password no es vàlid. Intenta-ho de nou."
       password_updated: "Has canviat la teva contrasenya. Ja pots accedir a Teambox."
     new: 
@@ -1269,10 +1211,8 @@ ca:
       submit: "Reinicia el meu password"
       title: "Ja pots reiniciar el teu password"
     sent: 
-      change_password_now: "Benvingut de nou. Ara és el moment d' b>escollir una nova contrasenya</b> que no oblidaràs"
-      follow_the_link: "Segueix l'enllaç del correu electrònic per accedir a Teambox.Si no ho trobes, assegura't de que no hi és a la carpeta de correo no desitjat"
+      follow_the_link_html: "Segueix l'enllaç del correu electrònic per accedir a Teambox.Si no ho trobes, assegura't de que no hi és a la carpeta de correo no desitjat"
       login_link_sent: "T'hem enviat un correu electrònic a %{email} per poder canviar la contrasenya."
-      not_found: "El correu electrònic <b>%{email}</b> no pertany a cap usuari de Teambox. Potser ho vas escriure malament."
       title: "Restablir contrasenya"
   search: 
     index: 
@@ -1312,10 +1252,10 @@ ca:
     instructions: 
       send_email: "Publicar un nou comentari per email..."
       send_email_conversations: "Publica una conversación por email"
-      send_email_help_conversation: "Per publicar un nou comentari en aquesta conversa envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden publicar en aquesta conversa."
-      send_email_help_conversations: "Per crear una nova conversa envia un email a <a href=\"mailto:%{email}\">%{email}</a> amb el tema del títol i el cos pel comentari. Només els membres del projecte poden crear noves converses."
-      send_email_help_project: "Per publicar un nou comentari en el mur d'activitat del projecte envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden publicar en el mur."
-      send_email_help_task: "Per publicar un nou comentari en aquesta tasca envia un email a  <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden comentar a la tasca."
+      send_email_help_conversation_html: "Per publicar un nou comentari en aquesta conversa envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden publicar en aquesta conversa."
+      send_email_help_conversations_html: "Per crear una nova conversa envia un email a <a href=\"mailto:%{email}\">%{email}</a> amb el tema del títol i el cos pel comentari. Només els membres del projecte poden crear noves converses."
+      send_email_help_project_html: "Per publicar un nou comentari en el mur d'activitat del projecte envia un email a <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden publicar en el mur."
+      send_email_help_task_html: "Per publicar un nou comentari en aquesta tasca envia un email a  <a href=\"mailto:%{email}\">%{email}</a>. Només els membres del projecte poden comentar a la tasca."
       subscribe_to_calendars: "Subscriure als calendaris"
       subscribe_to_feeds: "Subscriure als feeds"
     navigation: 
@@ -1329,7 +1269,6 @@ ca:
       conversations: Converses
       files: Arxius
       gantt: "Calendari i gràfics"
-      groups: "Grups de Projectes"
       invitations: Invitacions
       login: Login
       overview: Resum
@@ -1356,7 +1295,7 @@ ca:
       tour: Tour
       users: Testimonis
     strip: 
-      archived: "Aquest projecte és arxivat. Per a editar o comentar-ho has de desarxivarlo a les <a href='%{link}'>preferències del projecte</a>"
+      archived_html: "Aquest projecte és arxivat. Per a editar o comentar-ho has de desarxivarlo a les <a href='%{link}'>preferències del projecte</a>"
     task_navigation: 
       all_tasks: Totes
       everybodys_tasks: "Everybody's tasks"
@@ -1419,7 +1358,7 @@ ca:
       other_views: "Altres vistes"
       subscribe: "Subscriu-te a les tasques"
     destroy_message: 
-      deleted: "La lllista <b>%{name}</b> ha estat esborrada!"
+      deleted_html: "La lllista <b>%{name}</b> ha estat esborrada!"
     edit: 
       submit: Actualitzar
     errors: 
@@ -1476,14 +1415,14 @@ ca:
       undefined: "Sense definir"
     primer: 
       create_first: "Crea la primera llista de tasques!"
-      define: "Fes servir tasques per a <b>planificar</b>, <b>veure que s'ha fet</b> i <b>no oblidar ides futures</b>.<br/><i>Què? Qui? Quan?</i> Les tasques poden tenir un estat, un responsable i una data límit."
+      define_html: "Fes servir tasques per a <b>planificar</b>, <b>veure que s'ha fet</b> i <b>no oblidar ides futures</b>.<br/><i>Què? Qui? Quan?</i> Les tasques poden tenir un estat, un responsable i una data límit."
       empty: "Encara no hi ha cap conversa en aquest projecte."
-      footer1: "Es una manera sencilla i àgil de <b>conseguir fer el que et proposes</b> i fer-ho saber."
-      footer2: "¡Ja és hora d'oblidar els plannings en Excel i els complexos diagrames Gantt!"
-      item1: "<b>Planifica</b>. Crea tasques dins la llista i assignales als teus contactes."
-      item2: "<b>Informa</b>. Publica comentaris per les tasques amb els avenços. Adjunta arxius. Demana opinió."
-      item3: "<b>Estigues al dia</b>. Rep notificacions per a tasques que et concerneixen."
-      item4: "<b>Revisa</b>. Una tasca completada no s'esborra, de manera que després pots veure que es va fer."
+      footer1_html: "Es una manera sencilla i àgil de <b>conseguir fer el que et proposes</b> i fer-ho saber."
+      footer2_html: "¡Ja és hora d'oblidar els plannings en Excel i els complexos diagrames Gantt!"
+      item1_html: "<b>Planifica</b>. Crea tasques dins la llista i assignales als teus contactes."
+      item2_html: "<b>Informa</b>. Publica comentaris per les tasques amb els avenços. Adjunta arxius. Demana opinió."
+      item3_html: "<b>Estigues al dia</b>. Rep notificacions per a tasques que et concerneixen."
+      item4_html: "<b>Revisa</b>. Una tasca completada no s'esborra, de manera que després pots veure que es va fer."
     show: 
       title: "Llista de tasques: %{name}"
   tasks: 
@@ -1492,12 +1431,12 @@ ca:
       reopen: "Reobrir aquesta tasca"
       you_are_done: "Sembla que ja has acabat amb aquesta tasca."
     archive_message: 
-      archived: "La tasca <b>%{name}</b> ha estat arxivada!"
+      archived_html: "La tasca <b>%{name}</b> ha estat arxivada!"
     assigned: 
       assigned_to: "Responsable: %{user}"
     create: "Afegir Tasca"
     destroy_message: 
-      deleted: "La tasca <b>%{name}</b> s'ha esborrat"
+      deleted_html: "La tasca <b>%{name}</b> s'ha esborrat"
     due_on: 
       due_on: Data
       today: Avui
@@ -1554,7 +1493,7 @@ ca:
   uploads: 
     comment_upload_link: Adjunto
     form: 
-      description: "Descripció <i>(opcional)</i>"
+      description_html: "Descripció <i>(opcional)</i>"
       max_size: "El tamany màxim d'arxiu són %{mb}"
       presence: "No pots pujar un arxiu buit"
       select_file: "Seleccionar arxiu"
@@ -1567,12 +1506,12 @@ ca:
       select_a_file: "Selecciona un arxiu"
     primer: 
       create_first: "Puja el primer arxiu!"
-      define1: "Alguna vegada has tingut problemes al compartir un arxiu? Amb Teambox torna a ser fácil."
-      define2: "Pots pujar arxius aqui o adjuntarlos a converses, tasques o pàgines."
+      define1_html: "Alguna vegada has tingut problemes al compartir un arxiu? Amb Teambox torna a ser fácil."
+      define2_html: "Pots pujar arxius aqui o adjuntarlos a converses, tasques o pàgines."
       empty: "Encara no hi ha cap arxiu en aquest projecte"
-      item1: "<b>Més capacitat</b>. Puja arxius de qualsevol tamany i oblida les limitacions de l'email."
-      item2: "<b>Versions</b>. Puja versions noves d'arxius i guarda l'històric."
-      item3: "<b>Sempre disponibles</b>. Els arxius romanen a Teambox per poder consultarlos en el futur."
+      item1_html: "<b>Més capacitat</b>. Puja arxius de qualsevol tamany i oblida les limitacions de l'email."
+      item2_html: "<b>Versions</b>. Puja versions noves d'arxius i guarda l'històric."
+      item3_html: "<b>Sempre disponibles</b>. Els arxius romanen a Teambox per poder consultarlos en el futur."
     tooltip: "Pujar un arxiu"
     upload: 
       download: Descarregar
@@ -1583,15 +1522,15 @@ ca:
     activation: 
       activated: "Hem activat el teu compte! Benvingut a Teambox :)"
       already_done: "Ja has confirmat el teu email! Pots començar a usar Teambox quan vulguis."
-      invalid: "<p>Has utilitzat un enllaç no vàlid per accedir a Teambox. Entra amb el teu usuari i contrasenya des de la pàgina principal.</p><p>Si no te'n recordes de les teves dades, utilitza l'enllaç de Recordar Contrasenya.</p>"
+      invalid_html: "<p>Has utilitzat un enllaç no vàlid per accedir a Teambox. Entra amb el teu usuari i contrasenya des de la pàgina principal.</p><p>Si no te'n recordes de les teves dades, utilitza l'enllaç de Recordar Contrasenya.</p>"
       invalid_user: "Usuari no vàlid"
       resent: "Hem tornat a enviar el correu d'activació. ¡Troba-ho a la teva safata d'entrada!"
     calendars: 
       clients: 
-        body: "Consulteu la<a href='%{link}'>base de coneixements</a> per obtenir instruccions sobre com configurar Google Calendar, Apple's iCal, Outlook, Blackberry i d'altres."
+        body_html: "Consulteu la<a href='%{link}'>base de coneixements</a> per obtenir instruccions sobre com configurar Google Calendar, Apple's iCal, Outlook, Blackberry i d'altres."
         title: "Instruccions específiques"
       how_to: 
-        body: "Bàsicament, has d'importar els enllaços al teu client de calendari. Visita la nostra pàgina <a href='%{link}'> <base de coneixements / a> per aprendre a utilitzar-ho amb la teva aplicació de calendari"
+        body_html: "Bàsicament, has d'importar els enllaços al teu client de calendari. Visita la nostra pàgina <a href='%{link}'> <base de coneixements / a> per aprendre a utilitzar-ho amb la teva aplicació de calendari"
         title: "Com sincronitzar els teus calendaris"
       possible_clients: "Pots sincronitzar el teu Google Calendar, el teu Apple iCal, Outlook, Blackberry i d'altres."
       subscribe_to_all: "Tots els projectes:"
@@ -1624,14 +1563,14 @@ ca:
     feeds: 
       configure: "Pots configurar el teu lector de feeds perquè t'avisi cada vegada que passa alguna cosa nova a Teambox, encara que no el tinguis obert en una finestra."
       feed_reader: 
-        body: "Consulteu la <a href='%{link}'>base de coneixements</a> per a això."
+        body_html: "Consulteu la <a href='%{link}'>base de coneixements</a> per a això."
         title: "Quin lector de notícies he d'utilitzar?"
       follow_activities: "Podeu seguir les activitats de Teambox desde els lectors de notícies (Escriptori o Mòbil)"
       import: 
         body: "A sota té una llista dels links als que pot seguir. Per importar el teu lector de feeds necessita<strong>clic al botó dret</strong> i seleccionar <strong>copiar l'adreça de l'enllaç</strong>. A continuació, ves al teu lector de feeds, afegeix un nou canal i enganxa l'adreça d'aquest canal."
         title: "Com importar el feed de notícies"
       more_tips: 
-        body: "Apreneu <a href='%{link}'>altres formes d'accedir a Teambox</a>."
+        body_html: "Apreneu <a href='%{link}'>altres formes d'accedir a Teambox</a>."
         title: "més consells"
       receive_notifications: "En utilitzar un lector de feeds en el teu ordinador o dispositiu mòbil, rebràs notificacions de les activitats en els teus projectes."
       subscribe_to_all: "Activitat de tots els Projectes"
@@ -1650,11 +1589,11 @@ ca:
       picture: 
         destroy: "Esborrar l'avatar"
         field: "La teva icona"
-        gravatar_in_use: "No tenim una fota teva, així que estem utilitzant  %{gravatar}:"
+        gravatar_in_use_html: "No tenim una fota teva, així que estem utilitzant  %{gravatar}:"
         max_size: "L'arxiu no pot ser més gran de %{mb}"
         presence: "No pots pujar un fitxer buit"
-        upload_here_or_at_gravatar: "Pots pujar un nou avatar a Teambox, o crear un %{gravatar} que pots utilitzar a Teambox i d'altres webs."
-        we_have_this_avatar: "Aquesta es la imatge que tenim de tu:"
+        upload_here_or_at_gravatar_html: "Pots pujar un nou avatar a Teambox, o crear un %{gravatar} que pots utilitzar a Teambox i d'altres webs."
+        we_have_this_avatar_html: "Aquesta es la imatge que tenim de tu:"
       biography: Biografía
       change_password: "Canviar contrasenya"
       confirm_password: "Confirmar contrasenya"
@@ -1687,11 +1626,11 @@ ca:
       new:
         use_this_email: "Has estat convidat a Teambox amb aquesta adreça de correu. Si vols accedir als projectes de qui et va convidar, no canviïs l'adreça de correu. Podràs canviar el teu correu una vegada estiguis donat d'alta."
     new: 
-      existing_user: "Si ja tens un compte, <a href='%{login_url}'>identifíca't</a> o <a href='%{forgot_url}'>restableix la teva contrasenya</a>."
+      existing_user_html: "Si ja tens un compte, <a href='%{login_url}'>identifíca't</a> o <a href='%{forgot_url}'>restableix la teva contrasenya</a>."
       no_public_signup: "Només es permeten registres per invitació."
       submit: "Crear un compte"
       title: "Crear un compte"
-      you_already_have_an_account: "Ja tens un compte a Teambox amb l'adreça %{email}. <a href='%{login_link}'>logat amb aquest email</a> o <a href='%{reset_password_link}'>restableix la teva contrasenya</a> si se't va oblidar."
+      you_already_have_an_account_html: "Ja tens un compte a Teambox amb l'adreça %{email}. <a href='%{login_link}'>logat amb aquest email</a> o <a href='%{reset_password_link}'>restableix la teva contrasenya</a> si se't va oblidar."
       you_are_logged_in: "Ja tens un compte de Teambox. Si vols entrar com un altre usuari, tanca la sessió i intenta-ho de nou."
     show: 
       pending_invite: "%{name} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."
@@ -1717,28 +1656,28 @@ ca:
             * llista desordenada
             * deixar linees en blanc al voltant
       to_see_this: 
-        bold_text: "<strong style=\"font-weight: bold\">bold</strong> text"
-        header: "<h3 style=\"font-size:18px\">Header</h3>"
-        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
-        italic_text: "<i>italics</i> text"
-        link: "<a href=\"http://www.teambox.com\">Link something</a>"
-        ordered_list: |-
+        bold_text_html: "<strong style=\"font-weight: bold\">bold</strong> text"
+        header_html: "<h3 style=\"font-size:18px\">Header</h3>"
+        image_html: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text_html: "<i>italics</i> text"
+        link_html: "<a href=\"http://www.teambox.com\">Link something</a>"
+        ordered_list_html: |-
             <li>ordered list</li>
             <li>leave empty lines!</li>
-        smaller_header: "<h4 style=\"font-size:14px\">Smaller header</h4>"
-        title: "Per veure això"
-        unordered_list: |-
+        smaller_header_html: "<h4 style=\"font-size:14px\">Smaller header</h4>"
+        title_html: "Per veure això"
+        unordered_list_html: |-
             <li>unordered list</li>
             <li>leave empty lines around</li>
     unconfirmed_email: 
-      follow_the_link: "Així que <b>obre aquest correu i segueix l'enllaç que hi ha</b> per activar el teu compte."
-      invitation_sent_to: "Hem enviat una invitació a <i>%{email}</i>, per verificar la teva adreça de correu."
+      follow_the_link_html: "Així que <b>obre aquest correu i segueix l'enllaç que hi ha</b> per activar el teu compte."
+      invitation_sent_to_html: "Hem enviat una invitació a <i>%{email}</i>, per verificar la teva adreça de correu."
       problems: "Si encara tens problemes, escriu-nos! %{support}"
       problems_title: "Cap problema?"
       resend: "¿No trobes el correu de confirmació? Pitja <a href='%{link}'>aquí</a> per reenviar el correu."
       spam: "Assegura't que el teu correu no s'ha classificat com a correu no desitjat."
       title: "Confirma la teva adreça de correu"
-      wrong_address: "Adreça equivocada? Si vas escriure incorrectament la teva adreça de correu, <a href='%{link}'>cancel.la el procés</a> i torna a crear el teu compte amb un correu vàlid."
+      wrong_address_html: "Adreça equivocada? Si vas escriure incorrectament la teva adreça de correu, <a href='%{link}'>cancel.la el procés</a> i torna a crear el teu compte amb un correu vàlid."
     update: 
       error: "No s'ha pogut actualitzar el perfil. Corregeix els errors i intenta-ho de nou."
       updated: "Perfil actualitzat"

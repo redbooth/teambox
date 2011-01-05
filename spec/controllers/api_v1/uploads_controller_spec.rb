@@ -91,7 +91,7 @@ describe ApiV1::UploadsController do
       @project.reload
       get :index, :project_id => @project.permalink, :since_id => @project.upload_ids[1], :count => 1
       response.should be_success
-      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.upload_ids[0]]
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.upload_ids[2]]
     end
   end
   
@@ -174,7 +174,7 @@ describe ApiV1::UploadsController do
       
       post :create,
            mock_file_params.merge(:project_id => @project.permalink)
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.uploads(true).length.should == 2
     end
@@ -194,7 +194,7 @@ describe ApiV1::UploadsController do
       login_as @observer
       
       put :destroy, :project_id => @project.permalink, :id => @upload.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.uploads(true).length.should == 2
     end

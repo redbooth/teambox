@@ -1,4 +1,5 @@
 class Task < RoleRecord
+  include Immortal
   
   include Watchable
 
@@ -16,7 +17,8 @@ class Task < RoleRecord
 
   belongs_to :task_list, :counter_cache => true
   belongs_to :page
-  belongs_to :assigned, :class_name => 'Person', :with_deleted => true
+
+  belongs_to :assigned, :class_name => 'Person'
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
   accepts_nested_attributes_for :comments, :allow_destroy => false,
@@ -41,6 +43,10 @@ class Task < RoleRecord
   before_save :save_changes_to_comment, :if => :track_changes?
   before_save :save_completed_at
   before_update :remember_comment_created
+  
+  def assigned
+    @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
+  end
   
   def track_changes?
     (new_record? and not status_new?) or
@@ -124,7 +130,7 @@ class Task < RoleRecord
   end
 
   def user
-    user_id && User.find_with_deleted(user_id)
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
   
   TRACKER_STATUS_MAP = {
@@ -259,7 +265,7 @@ class Task < RoleRecord
   end
 
   define_index do
-    where "`tasks`.`deleted_at` IS NULL"
+    where "`tasks`.`deleted` = 0"
 
     indexes name, :sortable => true
 

@@ -19,7 +19,7 @@ Scenario: Pablo joins the project as an admin because he's an administrator in t
   When I follow "Ruby Rockstars"
   And I follow "Join this project"
   Then I should see "You're now part of this project"
-  And I should see "Project Settings"
+  And I should see "Settings"
 
 Scenario: Pablo joins the project as a commenter because it's a public project
   Given I go to to the page of the "Ruby Rockstars" project
@@ -33,7 +33,7 @@ Scenario: Pablo joins the project as a commenter because it's a public project
   And I follow "Join this group"
   And I follow "Join this project"
   Then I should see "You're now part of this project"
-  And I should not see "Project Settings"
+  And I should not see "Settings" within "#column"
 
 Scenario: Pablo can't join a project because he's not authorized
   Given I log out

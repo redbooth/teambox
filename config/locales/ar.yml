@@ -172,8 +172,8 @@ ar:
     index: 
       addresses: العناوين
       credits_earned: "رصيدك "
-      desc_1: "باستخدام أدوات الشركاء، يمكنك الحصول على <strong>أشهر مجانية</strong> من استخدام Teambox أو تحقيق <strong>مبالغ فعلية</strong> بإرسال الآخرين إلينا."
-      desc_2: "أحضر مستخدمين جدد إلى  Teambox, واحصل على <strong>%{percent}% من الدخل</strong> العائد ممن أرسلتهم, <strong>مدى الحياة</strong>."
+      desc_1_html: "باستخدام أدوات الشركاء، يمكنك الحصول على <strong>أشهر مجانية</strong> من استخدام Teambox أو تحقيق <strong>مبالغ فعلية</strong> بإرسال الآخرين إلينا."
+      desc_2_html: "أحضر مستخدمين جدد إلى  Teambox, واحصل على <strong>%{percent}% من الدخل</strong> العائد ممن أرسلتهم, <strong>مدى الحياة</strong>."
       facebook: فيسبوك
       get_in_touch: "تواصل معنا"
       idea1: "اخلق موقع عن طيفية استخدام Teambox، مع إرشادات للمبتدئين."

@@ -30,5 +30,5 @@ Feature: Public sites for organizations. Allow to view an entrance page and log 
       | login     | mislav       |
       | password  | dragons      |
     And I press "Login"
-    Then I should see "ACME" within "ul#projects_tab_list"
+    Then I should see "ACME" within "#column"
 

@@ -10,8 +10,8 @@ module CommentsHelper
   end
   
   def activity_comment_user_link(comment)
-    if comment.user.deleted_at
-      "<span class='author' style='text-decoration: line-through'>#{h comment.user.name}</span>"
+    if comment.user.deleted?
+      "<span class='author' style='text-decoration: line-through'>#{h comment.user.name}</span>".html_safe
     else
       content_tag :span,
         link_to(h(comment.user.name), user_path(comment.user)),
@@ -31,7 +31,7 @@ module CommentsHelper
         task_list = comment.target.target
         link_to h(task_list), project_task_list_path(comment.project, task_list)
     end
-    "<span class='arr target_arr'>#{connector}</span> <span class='target'>#{link}</span>" if link
+    "<span class='arr target_arr'>#{connector}</span> <span class='target'>#{link}</span>".html_safe if link
   end
 
   # TODO: phase out?

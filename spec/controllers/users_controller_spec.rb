@@ -18,7 +18,7 @@ describe UsersController do
   it 'requires email on signup' do
     lambda do
       do_create(:email => nil)
-      assigns[:user].errors.on(:email).should_not be_nil
+      assigns[:user].errors_on(:email).should_not be_nil
     end.should_not change(User, :count)
   end
 
@@ -28,7 +28,7 @@ describe UsersController do
     end
 
     it "should render the new template" do
-      response.should render_template('users/new.haml')
+      response.should render_template('users/new')
     end
 
     it "should have errors on the user" do
@@ -41,7 +41,7 @@ describe UsersController do
   end
   
   describe "#show" do
-    integrate_views
+    render_views
     
     before do
       @first_project = make_a_typical_project
@@ -57,7 +57,7 @@ describe UsersController do
       login_as @first_user
       get :show, :id => @second_user.id
       response.should_not render_template('users/show')
-      response.status.should == '302 Found'
+      response.status.should == 302
     end
     
     it "should show known users" do
@@ -69,15 +69,15 @@ describe UsersController do
     it "should show the selected user in the title and not the logged in user" do
       login_as @first_user
       get :show, :id => @another_first_user.id
-      response.should have_tag 'title', /#{@another_first_user.name}/
-      response.should_not have_tag 'title', /#{@first_user.name}/
+      response.should have_selector 'title', :content => @another_first_user.name
+      response.should_not have_selector 'title', :content => @first_user.name
     end
     
     it "should show projects that you share with this user and not projects that you don't" do
       login_as @first_user
       get :show, :id => @another_first_user.id
-      response.should have_tag '.project_link a', @first_project.name
-      response.should_not have_tag '.project_link a', @second_project.name
+      response.should have_selector '.project_link a', :content => @first_project.name
+      response.should_not have_selector '.project_link a', :content => @second_project.name
     end
   end
 

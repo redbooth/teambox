@@ -130,7 +130,7 @@ describe ApiV1::PagesController do
       login_as @observer
       
       put :update, :project_id => @project.permalink, :id => @page.id, :name => 'Unimportant Plans'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @page.reload.name.should == 'Important plans!'
     end
@@ -150,7 +150,7 @@ describe ApiV1::PagesController do
       login_as @observer
       
       put :destroy, :project_id => @project.permalink, :id => @page.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.pages.length.should == 1
     end

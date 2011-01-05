@@ -8,6 +8,16 @@ When /^I fill in the search box with "(.+)"$/ do |value|
   When(%(I fill in "q" with "#{value}"))
 end
 
+When /^I submit the search/ do
+  if Capybara.current_driver == Capybara.javascript_driver
+    within(:xpath, "//form[@id='search']") do
+      locate(:xpath, "//input[@name='q']").node.send_keys(:return)
+    end
+  else
+    # Not Implemented yet
+  end
+end
+
 Given /^there is a conversation titled "(.+)" in the project "(.+)"$/ do |title, project_name|
   Factory(:conversation,
     :name => title,

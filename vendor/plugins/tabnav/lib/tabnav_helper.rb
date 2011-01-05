@@ -8,7 +8,7 @@ module TabnavHelper
       html << tag('div', options, true)
       html << capture(&block)
       html << '</div>' 
-      concat(html)
+      out html
       nil # avoid duplication if called with <%= %>
     else
       html
@@ -35,7 +35,7 @@ module TabnavHelper
   end
   
   def controller_names
-    files = Dir.entries(File.join(RAILS_ROOT, 'app/controllers'))
+    files = Dir.entries(File.join(Rails.root, 'app/controllers'))
     controllers = files.select {|x| x.match '_controller.rb'}
     controllers.map {|x| x.sub '_controller.rb', ''}.sort
   end
@@ -91,6 +91,6 @@ module TabnavHelper
   end
 
   def out(string)
-    concat string
+    concat string.html_safe
   end
 end

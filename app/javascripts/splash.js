@@ -1,4 +1,5 @@
 document.on("dom:loaded", function() {
+  return // Disabling splash screen until the UI is more stable to create a new one. FIXME
   if(typeof(my_user) == "undefined") return
 
   if(my_user.splash_screen) {

@@ -49,7 +49,7 @@ describe ApiV1::UsersController do
       login_as @user
       
       get :show, :id => @fred.login
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
     end
   end
   

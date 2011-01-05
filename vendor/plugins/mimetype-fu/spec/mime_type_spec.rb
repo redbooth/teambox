@@ -16,7 +16,7 @@ describe "An open file" do
       File.size(@file).should == 0
     end
 
-    it_should_have_a_mime_type_of("application/x-empty")
+    it_should_have_a_mime_type_of("application/x-empty; charset=binary")
 
   end
 
@@ -29,20 +29,21 @@ describe "An open file" do
     end
 
     it_should_have_an_extension_of('png')
-    it_should_have_a_mime_type_of("image/png")
+    it_should_have_a_mime_type_of("image/png; charset=binary")
 
   end
 
   describe 'with spaces in name' do
 
     before {write_file('file with spaces.png', "\211PNG\r\n\032\n", 'wb')}
+    after { delete_file}
 
     it 'should have an extension' do
       File.extname(@file.path).should == '.png'
     end
 
     it 'should have a mime type' do
-     File.mime_type?(@file).should == "image/png"
+      File.mime_type?(@file).should == "image/png; charset=binary"
     end
 
   end
@@ -56,7 +57,7 @@ describe "An open file" do
     end
 
     it_should_have_an_extension_of('unknown')
-    it_should_have_a_mime_type_of("application/octet-stream")
+    it_should_have_a_mime_type_of("application/octet-stream; charset=binary")
 
   end
 
@@ -68,7 +69,7 @@ describe "An open file" do
       File.size(@file).should > 0
     end
 
-    it_should_have_a_mime_type_of("application/octet-stream")
+    it_should_have_a_mime_type_of("application/octet-stream; charset=binary")
 
   end
 

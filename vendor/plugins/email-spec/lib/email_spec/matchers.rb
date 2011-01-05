@@ -1,11 +1,37 @@
-require 'spec/matchers'
-
 module EmailSpec
+  module Matchers
+    class ReplyTo
+      def initialize(email)
+        @expected_reply_to = Mail::ReplyToField.new(email).addrs.first
+      end
 
-    module Matchers
+      def description
+        "have reply to as #{@expected_reply_to.address}"
+      end
+
+      def matches?(email)
+        @email = email
+        @actual_reply_to = (email.reply_to || []).first
+        !@actual_reply_to.nil? &&
+          @actual_reply_to == @expected_reply_to.address
+      end
+
+      def failure_message
+        "expected #{@email.inspect} to reply to #{@expected_reply_to.address.inspect}, but it replied to #{@actual_reply_to.inspect}"
+      end
+
+      def negative_failure_message
+        "expected #{@email.inspect} not to deliver to #{@expected_reply_to.address.inspect}, but it did"
+      end
+    end
+
+    def reply_to(email)
+      ReplyTo.new(email)
+    end
+
+    alias :have_reply_to :reply_to
 
     class DeliverTo
-
       def initialize(expected_email_addresses_or_objects_that_respond_to_email)
         emails = expected_email_addresses_or_objects_that_respond_to_email.map do |email_or_object|
           email_or_object.kind_of?(String) ? email_or_object : email_or_object.email
@@ -20,7 +46,7 @@ module EmailSpec
 
       def matches?(email)
         @email = email
-        @actual_recipients = (email.to || []).sort
+        @actual_recipients = (Array(email.to) || []).sort
         @actual_recipients == @expected_email_addresses
       end
 
@@ -42,25 +68,28 @@ module EmailSpec
     class DeliverFrom
 
       def initialize(email)
-        @expected_email_addresses = email
+        @expected_sender = Mail::FromField.new(email).addrs.first
       end
 
       def description
-        "be delivered from #{@expected_email_addresses.inspect}"
+        "be delivered from #{@expected_sender}"
       end
 
       def matches?(email)
         @email = email
-        @actual_sender = (email.from || []).first
-        @actual_sender.eql? @expected_email_addresses
+        @actual_sender = (email.header[:from].addrs || []).first
+
+        !@actual_sender.nil? &&
+          @actual_sender.address == @expected_sender.address &&
+          @actual_sender.display_name == @expected_sender.display_name
       end
 
       def failure_message
-        "expected #{@email.inspect} to deliver from #{@expected_email_addresses.inspect}, but it delivered from #{@actual_sender.inspect}"
+        %(expected #{@email.inspect} to deliver from "#{@expected_sender.to_s}", but it delivered from "#{@actual_sender.to_s}")
       end
 
       def negative_failure_message
-        "expected #{@email.inspect} not to deliver from #{@expected_email_addresses.inspect}, but it did"
+        %(expected #{@email.inspect} not to deliver from "#{@expected_sender.to_s}", but it did)
       end
     end
 
@@ -86,7 +115,7 @@ module EmailSpec
 
       def matches?(email)
         @email = email
-        @actual_recipients = (email.bcc || []).sort
+        @actual_recipients = (Array(email.bcc) || []).sort
         @actual_recipients == @expected_email_addresses
       end
 
@@ -103,83 +132,94 @@ module EmailSpec
       BccTo.new(expected_email_addresses_or_objects_that_respond_to_email.flatten)
     end
 
-    Spec::Matchers.define :have_subject do |expected|
+      RSpec::Matchers.define :have_subject do
       match do |given|
-        if expected.is_a?(String)
-          given.subject == expected
+        given_subject = given.subject
+        expected_subject = expected.first
+        
+        if expected_subject.is_a?(String)
+          description { "have subject of #{expected_subject.inspect}" }
+          failure_message_for_should { "expected the subject to be #{expected_subject.inspect} but was #{given_subject.inspect}" }
+          failure_message_for_should_not { "expected the subject not to be #{expected_subject.inspect} but was" }
+
+          given_subject == expected_subject
         else
-          !!(given.subject =~ expected)
+          description { "have subject matching #{expected_subject.inspect}" }
+          failure_message_for_should { "expected the subject to match #{expected_subject.inspect}, but did not.  Actual subject was: #{given_subject.inspect}" }
+          failure_message_for_should_not { "expected the subject not to match #{expected_subject.inspect} but #{given_subject.inspect} does match it." }
+
+          !!(given_subject =~ expected_subject)
         end
       end
-      description do
-        expected.is_a?(String) ? "have subject of #{expected.inspect}" : "have subject matching #{expected.inspect}"
-      end
-      failure_message do |given|
-        expected.is_a?(String) ? "expected the subject to be #{expected.inspect} but was #{given.subject.inspect}" : "expected the subject to match #{expected.inspect}, but did not.  Actual subject was: #{given.subject.inspect}"
-      end
-      negative_failure_message do |given|
-        expected.is_a?(String) ? "expected the subject not to be #{expected.inspect} but was" : "expected the subject not to match #{expected.inspect} but #{given.subject.inspect} does match it."
-      end
     end
-
-    Spec::Matchers.define :include_email_with_subject do |expected|
+    
+      RSpec::Matchers.define :include_email_with_subject do
       match do |given_emails|
-        if expected.is_a?(String)
-          given_emails.map(&:subject).include?(expected)
+        expected_subject = expected.first
+        
+        if expected_subject.is_a?(String)
+          description { "include email with subject of #{expected_subject.inspect}" }
+          failure_message_for_should { "expected at least one email to have the subject #{expected_subject.inspect} but none did. Subjects were #{given_emails.map(&:subject).inspect}" }
+          failure_message_for_should_not { "expected no email with the subject #{expected_subject.inspect} but found at least one. Subjects were #{given_emails.map(&:subject).inspect}" }
+          
+          given_emails.map(&:subject).include?(expected_subject)
         else
-          !!(given_emails.any?{ |mail| mail.subject =~ expected })
+          description { "include email with subject matching #{expected_subject.inspect}" }
+          failure_message_for_should { "expected at least one email to have a subject matching #{expected_subject.inspect}, but none did. Subjects were #{given_emails.map(&:subject).inspect}" }
+          failure_message_for_should_not { "expected no email to have a subject matching #{expected_subject.inspect} but found at least one. Subjects were #{given_emails.map(&:subject).inspect}" }
+          
+          !!(given_emails.any?{ |mail| mail.subject =~ expected_subject })
         end
-      end
-      description do
-        expected.is_a?(String) ? "include email with subject of #{expected.inspect}" : "include email with subject matching #{expected.inspect}"
-      end
-      failure_message do |given_emails|
-        expected.is_a?(String) ? "expected at least one email to have the subject #{expected.inspect} but none did. Subjects were #{given_emails.map(&:subject).inspect}" : "expected at least one email to have a subject matching #{expected.inspect}, but none did. Subjects were #{given_emails.map(&:subject).inspect}"
-      end
-      negative_failure_message do |given_emails|
-        expected.is_a?(String) ? "expected no email with the subject #{expected.inspect} but found at least one. Subjects were #{given_emails.map(&:subject).inspect}" : "expected no email to have a subject matching #{expected.inspect} but found at least one. Subjects were #{given_emails.map(&:subject).inspect}"
       end
     end
 
-    Spec::Matchers.define :have_body_text do |expected|
-      normalized_expected = expected.gsub(/\s+/, " ")
+      RSpec::Matchers.define :have_body_text do
       match do |given|
-        normalized_body = given.body.gsub(/\s+/, " ")
-        if expected.is_a?(String)
+        expected_text = expected.first
+        
+        if expected_text.is_a?(String)
+          normalized_body = given.default_part_body.to_s.gsub(/\s+/, " ")
+          normalized_expected = expected_text.gsub(/\s+/, " ")
+          description { "have body including #{normalized_expected.inspect}" }
+          failure_message_for_should { "expected the body to contain #{normalized_expected.inspect} but was #{normalized_body.inspect}" }
+          failure_message_for_should_not { "expected the body not to contain #{normalized_expected.inspect} but was #{normalized_body.inspect}" }
+    
           normalized_body.include?(normalized_expected)
         else
-          !!(given.body =~ expected)
+          given_body = given.default_part_body.to_s
+          description { "have body matching #{expected_text.inspect}" }
+          failure_message_for_should { "expected the body to match #{expected_text.inspect}, but did not.  Actual body was: #{given_body.inspect}" }
+          failure_message_for_should_not { "expected the body not to match #{expected_text.inspect} but #{given_body.inspect} does match it." }
+    
+          !!(given_body =~ expected_text)
         end
-      end
-      description do
-        expected.is_a?(String) ? "have body including #{normalized_expected.inspect}" : "have body matching #{expected.inspect}"
-      end
-      failure_message do |given|
-        expected.is_a?(String) ? "expected the body to contain #{normalized_expected.inspect} but was #{given.body.gsub(/\s+/, " ").inspect}" : "expected the body to match #{expected.inspect}, but did not.  Actual body was: #{given.body.inspect}"
-      end
-      negative_failure_message do |given|
-        expected.is_a?(String) ? "expected the body not to contain #{normalized_expected.inspect} but was #{given.body.gsub(/\s+/, " ").inspect}" : "expected the body not to match #{expected.inspect} but #{given.body.inspect} does match it."
       end
     end
 
-    Spec::Matchers.define :have_header do |expected_name, expected_value|
-      match do |given_emails|
+    def mail_headers_hash(email_headers)
+      email_headers.fields.inject({}) { |hash, field| hash[field.field.class::FIELD_NAME] = field.to_s; hash }
+    end
+
+      RSpec::Matchers.define :have_header do
+      match do |given|
+        given_header = given.header
+        expected_name, expected_value = *expected
+
         if expected_value.is_a?(String)
-          given.header[expected_name].to_s == expected_value
+          description { "have header #{expected_name}: #{expected_value}" }
+
+          failure_message_for_should { "expected the headers to include '#{expected_name}: #{expected_value}' but they were #{mail_headers_hash(given_header).inspect}" }
+          failure_message_for_should_not { "expected the headers not to include '#{expected_name}: #{expected_value}' but they were #{mail_headers_hash(given_header).inspect}" }
+    
+          given_header[expected_name].to_s == expected_value
         else
-          given.header[expected_name].to_s =~ expected_value
+          description { "have header #{expected_name} with value matching #{expected_value.inspect}" }
+          failure_message_for_should { "expected the headers to include '#{expected_name}' with a value matching #{expected_value.inspect} but they were #{mail_headers_hash(given_header).inspect}" }
+          failure_message_for_should_not { "expected the headers not to include '#{expected_name}' with a value matching #{expected_value.inspect} but they were #{mail_headers_hash(given_header).inspect}" }
+    
+          given_header[expected_name].to_s =~ expected_value
         end
       end
-      description do
-        expected.is_a?(String) ? "have header #{expected_name}: #{expected_value}" : "have header #{expected_name} with value matching #{expected_value.inspect}"
-      end
-      failure_message do
-        expected.is_a?(String) ? "expected the headers to include '#{expected_name}: #{expected_value}' but they were #{given.header.inspect}" : "expected the headers to include '#{expected_name}' with a value matching #{expected_value.inspect} but they were #{given.header.inspect}"
-      end
-      negative_failure_message do
-        expected.is_a?(String) ? "expected the headers not to include '#{expected_name}: #{expected_value}' but they were #{given.header.inspect}" : "expected the headers not to include '#{expected_name}' with a value matching #{expected_value.inspect} but they were #{given.header.inspect}"
-      end
     end
-
   end
 end

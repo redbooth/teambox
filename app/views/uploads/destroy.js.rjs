@@ -1,6 +1,6 @@
 upload_item_id = "upload_#{@upload.id}"
 if !@page.nil?
-  upload_slot_id = "page_slot_#{@upload.page_slot.id}"
+  upload_slot_id = "page_slot_#{@slot_id}"
 else
   upload_slot_id = nil
 end

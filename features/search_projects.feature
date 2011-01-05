@@ -1,4 +1,4 @@
-@sphinx @no-txn
+@sphinx @no-txn @javascript
 Feature: Search comments in projects
   In order to discover what has been said about a subject
   As a Teambox user
@@ -14,6 +14,7 @@ Feature: Search comments in projects
     And I follow "Gold Digging"
     And I fill in the comment box with "I found a hunk of gold today in the mine!"
     And I press "Save"
+    And I go to the projects page
     And I follow "Space elevator"
     And I fill in the comment box with "Let's finish this space elevator before Tuesday."
     And I press "Save"
@@ -21,7 +22,7 @@ Feature: Search comments in projects
     
     When the search index is rebuilt
     And I fill in the search box with "the mine"
-    And I press "Search"
+    And I submit the search
     Then I should see "1 result"
     And I should see "Gold Digging"
     And I should see "I found a hunk of gold"

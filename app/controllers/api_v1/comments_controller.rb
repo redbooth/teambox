@@ -8,9 +8,9 @@ class ApiV1::CommentsController < ApiV1::APIController
              :include => [:target, :user]}
     
     @comments = if target
-      target.comments.scoped(api_scope).all(query)
+      target.comments.where(api_scope).all(query)
     else
-      Comment.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      Comment.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @comments, :references => [:target, :user, :project]
@@ -66,7 +66,7 @@ class ApiV1::CommentsController < ApiV1::APIController
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
     end
-    {:conditions => conditions}
+    conditions
   end
 
   def target

@@ -40,7 +40,7 @@ describe ApiV1::SearchController do
       controller.stub!(:user_can_search?).and_return(false)
       
       get :index, :q => 'important'
-      ['501 Not Implemented', '403 Forbidden'].include?(response.status).should == true
+      [501, 403].include?(response.status).should == true
     end
     
     it "searches in a single project" do
@@ -62,7 +62,7 @@ describe ApiV1::SearchController do
     
     it "reject searching in unauthorized project" do
       get :index, :q => 'important', :project_id => @project.permalink
-      response.status.should == (Teambox.config.allow_search ? '403 Forbidden' : '501 Not Implemented')
+      response.status.should == (Teambox.config.allow_search ? 403 : 501)
     end
     
     def search_params(project_ids)

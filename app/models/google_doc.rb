@@ -1,4 +1,5 @@
 class GoogleDoc < RoleRecord
+  include Immortal
   belongs_to :user
   belongs_to :project
   belongs_to :comment, :touch => true

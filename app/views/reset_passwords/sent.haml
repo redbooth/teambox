@@ -1,5 +1,5 @@
 %h2= t('.title')
 
-- form_tag '' do
+= form_tag '' do
   %p= t('.login_link_sent', :email => h(params[:email])) 
-  %p= t('.follow_the_link')
+  %p= t('.follow_the_link_html')

@@ -1,6 +1,7 @@
 require 'digest/sha1'
 
 class Invitation < RoleRecord
+  include Immortal
   belongs_to :invited_user, :class_name => 'User'
 
   validate :valid_user?
@@ -16,7 +17,7 @@ class Invitation < RoleRecord
   before_save :copy_user_email, :if => :invited_user
   after_create :auto_accept, :send_email
 
-  named_scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
+  scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
 
   # Reserved so invitations can be sent for other targets, in addition to Project
   def target
@@ -66,11 +67,11 @@ class Invitation < RoleRecord
   protected
 
   def valid_user?
-    @errors.add_to_base('Must belong to a valid user') if user.nil? or user.deleted?
+    @errors.add(:base, 'Must belong to a valid user') if user.nil? or user.deleted?
   end
   
   def valid_role?
-    @errors.add_to_base('Not authorized') if target.is_a?(Project) and user and !target.admin?(user)
+    @errors.add(:base, 'Not authorized') if target.is_a?(Project) and user and !target.admin?(user)
   end
   
   def user_already_invited?
@@ -131,7 +132,7 @@ class Invitation < RoleRecord
   protected
 
     def valid_email?(value)
-      value =~ ValidatesEmailFormatOf::Regex
+      EmailValidator.check_address(value)
     end
 
 end

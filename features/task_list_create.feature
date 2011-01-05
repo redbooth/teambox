@@ -21,6 +21,7 @@ Feature: Creating a task list
     And I wait for 2 seconds
     And I fill in "task_list_name" with "Really Awesome Ruby Yahh" within "form[id$='_edit_form']"
     And I press "Update Task List"
+    And I wait for .2 second
     Then I should see "Really Awesome Ruby Yahh" within ".head a"
 
   Scenario: Mislav edits a task list due date

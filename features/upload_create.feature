@@ -16,10 +16,9 @@ Feature: Uploading a file
   Scenario: Mislav tries to upload a file with no asset and fails
     When I press "Upload file"
     Then I should see "There was an error uploading the file"
-    And I should see "You can't upload a blank file"
 
   Scenario: Mislav tries to upload a file thats too big (that's what she said)
     When I attach a 2MB file to "upload_asset"
     And I press "Upload file"
-    Then I should see "File size can't exceed 1 MB"
+    Then I should see "There was an error uploading the file"
 

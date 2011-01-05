@@ -70,8 +70,13 @@ module NavigationHelpers
       public_projects_path
     when /the organizations page/
       organizations_path
+    when /the admin users page for the for "([^\"]*)" organization/
+      organization_memberships_path(Organization.find_by_name($1))
     when /the new organization page/
       new_organization_path
+    when /the participant page for the "([^\"]*)" organization/
+      organization = Organization.find_by_name($1)
+      organization_path(organization)
     when /the public site for "([^\"]*)" organization/
       organization = Organization.find_by_name($1)
       site_path(organization)

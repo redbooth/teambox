@@ -2,12 +2,17 @@
 
 # Global Setup
 if defined?(ActionMailer)
-  ActionMailer::Base.delivery_method = :test unless ActionMailer::Base.delivery_method == :activerecord
+  unless [:test, :activerecord, :cache, :file].include?(ActionMailer::Base.delivery_method)
+    ActionMailer::Base.delivery_method = :test
+  end
   ActionMailer::Base.perform_deliveries = true
 
   Before do
     # Scenario setup
-    ActionMailer::Base.deliveries.clear if ActionMailer::Base.delivery_method == :test
+    case ActionMailer::Base.delivery_method
+      when :test then ActionMailer::Base.deliveries.clear
+      when :cache then ActionMailer::Base.clear_cache
+    end
   end
 end
 

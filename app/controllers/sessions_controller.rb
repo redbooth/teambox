@@ -1,7 +1,6 @@
 # This controller handles the login/logout function of the site.
 class SessionsController < ApplicationController
 
-  force_ssl :only => :new
   no_login_required :except => :destroy
 
   skip_before_filter :confirmed_user?
@@ -94,12 +93,21 @@ protected
     return if logged_in?
     if Teambox.config.community
       if User.count == 0
-        render 'configure_your_deployment.haml'
+        respond_to do |f|
+          f.html { render 'configure_your_deployment.haml' }
+          f.m { render 'configure_your_deployment.haml' }
+        end
       elsif @organization = Organization.first
-        render 'sites/show', :layout => 'sites'
+        respond_to do |f|
+          f.html { render 'sites/show', :layout => 'sites' }
+          f.m { render 'sites/show', :layout => 'sites' }
+        end
       else
         flash[:error] = "The configuration didn't finish. Please log in as #{User.first} and complete it by creating an organization."
-        render :new
+        respond_to do |f|
+          f.html { render :new }
+          f.m { render :new }
+        end
       end
     end
   end

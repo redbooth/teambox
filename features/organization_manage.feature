@@ -80,7 +80,8 @@ Feature: Managing organizations
     Given I am logged in as @pablo
     When I go to the organizations page
     And I follow "ACME"
-    And I follow "Manage users"
+    Then I should not see "Manage users"
+    When I go to the admin users page for the for "ACME" organization
     Then I should see "You are not an admin of this organization. Only admins can edit its settings and manage users."
     Then I should not see "Remove admin rights" within ".users_admins"
     And I should not see "remove from this organization" within ".users_admins"
@@ -104,9 +105,9 @@ Feature: Managing organizations
   Scenario: I can't access organizations as an external user
     Given I am logged in as @jordi
     And I go to the organizations page
-    When I follow "ACME"
+    Then I should not see "ACME"
+    When I go to the participant page for the "ACME" organization
     Then I should see "You don't have permission to access or edit this organization."
-    And I should see "Mislav" within ".users_admins"
 
   Scenario: I can't delete an organization if I'm not an admin
     Then I follow "ACME"

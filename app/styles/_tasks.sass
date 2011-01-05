@@ -10,12 +10,6 @@ div.column
     font-size: 10px
     float: none
 
-.filter_box
-  #filter_tasks_by_name
-    width: 130px
-  p
-    color: #666
-
 form.new_task, form.edit_task, .task_list_form
   margin-bottom: 10px
   label
@@ -78,6 +72,7 @@ form.new_task, form.edit_task, .task_list_form
     float: right
     font-size: 12px
     color: rgb(200,200,200)
+    margin: 0
   .watching
     font-size: 12px
     margin-left: 20px
@@ -230,6 +225,10 @@ form.new_task, form.edit_task, .task_list_form
         display: block
         padding-left: 46px
         margin: 3px 0 5px
+        font-size: 11px
+        color: #555
+        a
+          color: #555
 
 div.tasks
   padding-bottom: 5px
@@ -343,12 +342,21 @@ p.view_for_all
   font-size: 12px
   margin: 10px 0
 
-.my_tasks_listing
-  .task
-    display: block
-    margin: 6px 0
-    a
-      line-height: 17px
-    img.loading
-      padding: 0px 10px 1px 1px
-      float: left
+.filters
+  display: block
+  background-color: #f9f9f9
+  border: 1px solid #ddd
+  font-size: 12px
+  margin: 25px 0
+  padding: 5px 10px
+  input
+    width: 120px
+    margin: 0 5px
+  select
+    margin: 0 5px
+    max-width: 150px
+  a.closeThis
+    float: right
+    color: #555
+    text-decoration: underline
+    padding-top: 2px

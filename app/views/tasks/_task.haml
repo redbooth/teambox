@@ -22,5 +22,5 @@
           = link_to h(project), project
           &rarr;
         %span.task_list
-          = link_to h(task_list), [project, task_list]
+          = link_to h(task_list), project_task_lists_path(project)+"#project_#{project.id}_task_list_#{task.task_list_id}"
   .clear

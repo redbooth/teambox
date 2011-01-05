@@ -6,7 +6,7 @@ module GuiHelper
       <div class='bar1' style='width:#{width*ratio}px'></div>
       <div class='bar2' style='width:#{width*ratio}px'></div>
       <div class='bar3' style='width:#{width*ratio}px'></div>
-    </div>"
+    </div>".html_safe
   end
 
   def warning_progress_bar(now, max, width=200)

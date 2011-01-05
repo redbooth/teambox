@@ -5,7 +5,7 @@ module PageNotesHelper
   end
   
   def new_page_note_link(project,page)
-    link_to "<span>#{t('.new_note')}</span>", new_project_page_note_path(project, page), :class => 'add_button note_button'
+    link_to "<span>#{t('.new_note')}</span>".html_safe, new_project_page_note_path(project, page), :class => 'add_button note_button'
   end
   
   def remove_form(show_element=nil)

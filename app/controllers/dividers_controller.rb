@@ -27,12 +27,12 @@ class DividersController < ApplicationController
       if !@divider.new_record?
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @divider, true)
       else
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @divider)
       end
     end
@@ -50,7 +50,7 @@ class DividersController < ApplicationController
     authorize! :update, @page
     respond_to do |f|
       f.m
-      f.js
+      f.js   { render :layout => false }
     end
   end
   
@@ -62,14 +62,14 @@ class DividersController < ApplicationController
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @divider)
       end
     end
@@ -83,14 +83,14 @@ class DividersController < ApplicationController
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_page }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_page }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @divider)
       end
     end
@@ -116,7 +116,7 @@ class DividersController < ApplicationController
         @divider = @page.dividers.find(params[:id])
       rescue
         respond_to do |f|
-          f.js
+          f.js   { render :layout => false }
           handle_api_error(f, @divider)
         end
       end

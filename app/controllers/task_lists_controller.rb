@@ -62,7 +62,7 @@ class TaskListsController < ApplicationController
     respond_to do |f|
       f.html
       f.m
-      f.js
+      f.js { render :layout => false }
     end
   end
 
@@ -75,14 +75,14 @@ class TaskListsController < ApplicationController
       respond_to do |f|
         f.html { redirect_to_task_list @task_list }
         f.m    { redirect_to_task_list }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @task_list, true)
       end
     else
       respond_to do |f|
         f.html { render :new }
         f.m    { render :new }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @task_list)
       end
     end
@@ -96,7 +96,7 @@ class TaskListsController < ApplicationController
     respond_to do |f|
       f.html
       f.m
-      f.js
+      f.js { render :layout => false }
     end
   end
 
@@ -109,14 +109,14 @@ class TaskListsController < ApplicationController
       respond_to do |f|
         f.html { non_js_list_redirect }
         f.m    { non_js_list_redirect }
-        f.js {}
+        f.js   { render :layout => false }
         handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
         f.html { render :edit }
         f.m    { render :edit }
-        f.js {}
+        f.js   { render :layout => false }
         handle_api_error(f, @task_list)
       end
     end
@@ -137,7 +137,7 @@ class TaskListsController < ApplicationController
     authorize! :update, @task_list
     calc_onindex
     
-    if request.method == :put and !@task_list.archived
+    if request.method_symbol == :put and !@task_list.archived
       # Prototype for comment
       comment_attrs = {}
       comment_attrs[:status] = Task::STATUSES[:resolved]
@@ -160,7 +160,7 @@ class TaskListsController < ApplicationController
       respond_to do |f|
         f.html { non_js_list_redirect }
         f.m    { non_js_list_redirect }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @task_list)
       end
     else
@@ -177,7 +177,7 @@ class TaskListsController < ApplicationController
     authorize! :update, @task_list
     calc_onindex
     
-    if request.method == :put and @task_list.archived
+    if request.method_symbol == :put and @task_list.archived
       @task_list.archived = false
       @saved = @task_list.save
     end
@@ -204,7 +204,7 @@ class TaskListsController < ApplicationController
     respond_to do |f|
       f.html { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
       f.m    { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
-      f.js
+      f.js   { render :layout => false }
       handle_api_success(f, @task_list)
     end
   end

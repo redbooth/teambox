@@ -1,4 +1,4 @@
-@signup
+@signup @javascript
 Feature: Invite a user to a project
 
   Background:
@@ -62,8 +62,6 @@ Feature: Invite a user to a project
     Given there is a project called "Teambox Roulette"
     When I go to the page of the "Teambox Roulette" project
     Then I should see "This is a private project and you're not authorized to access it."
-    When I follow "Conversations"
-    Then I should see "This is a private project and you're not authorized to access it."
     Given the owner of the project "Teambox Roulette" sent an invitation to "mislav"
     When I go to the page of the "Teambox Roulette" project
     And I press "Accept"
@@ -86,4 +84,11 @@ Feature: Invite a user to a project
   Scenario: Mislav resends invitation email
 
   Scenario: Mislav deletes an invitation that hasnt been accepted
+    Given I am logged in as mislav
+    When I go to the people page of the "Ruby Rockstars" project
+    And I fill in "invitation_user_or_email" with "charles@teambox.com"
+    And I press "Invite"
+    And I follow "Discard invitation"
+    And I wait for 1 second
+    Then I should not see "charles@teambox.com"
 

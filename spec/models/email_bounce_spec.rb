@@ -3,7 +3,7 @@ require 'spec_helper'
 describe EmailBounce do
   before do
     @owner = Factory.create(:user)
-    @message = TMail::Mail.new
+    @message = Mail.new
     @message.from = @owner.email
   end
   
@@ -58,7 +58,7 @@ describe EmailBounce do
   
   it "should only call deliver_bounce_message once per day when sent #bounce_once_per_day" do
     exception = Emailer::Incoming::Error.new(@message, "Our error")
-    Emailer.should_receive(:deliver_bounce_message).with(exception.mail.from, exception.class.name.underscore.split('/').last).once
+    Emailer.should_receive(:send_with_language).with(:bounce_message, :en, exception.mail.from, exception.class.name.underscore.split('/').last).once
     
     EmailBounce.bounce_once_per_day(exception)
     EmailBounce.bounce_once_per_day(exception)

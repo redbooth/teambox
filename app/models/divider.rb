@@ -1,22 +1,21 @@
 class Divider < RoleRecord
+  include Immortal
+
   belongs_to :page
   belongs_to :project
   has_one :page_slot, :as => :rel_object
-  acts_as_paranoid
   versioned
   
   include PageWidget
   
   before_destroy :clear_slot
+  after_create :save_slot
+  after_update :touch_updated
 
   attr_accessor :deleted
   attr_accessible :body, :deleted, :name
   
-  def after_create
-    save_slot
-  end
-  
-  def after_update
+  def touch_updated
     page.update_attribute(:updated_at, Time.now)
   end
 

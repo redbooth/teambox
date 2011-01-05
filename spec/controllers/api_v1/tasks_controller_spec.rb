@@ -127,7 +127,7 @@ describe ApiV1::TasksController do
       login_as @user
       
       get :show, :project_id => @project.permalink, :task_list_id => @other_list.id, :id => @task.id
-      response.status.should == '404 Not Found'
+      response.status.should == 404
     end
   end
   
@@ -146,7 +146,7 @@ describe ApiV1::TasksController do
       login_as @observer
       
       post :create, :project_id => @project.permalink, :id => @task.id, :task_list_id => @task_list.id, :name => 'Another TODO!'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @task_list.tasks(true).length.should == 1
     end
@@ -166,7 +166,7 @@ describe ApiV1::TasksController do
       login_as @observer
       
       put :update, :project_id => @project.permalink, :id => @task.id, :name => 'Modified'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @task.reload.name.should_not == 'Modified'
     end
@@ -186,7 +186,7 @@ describe ApiV1::TasksController do
       login_as @observer
       
       put :watch, :project_id => @project.permalink, :id => @task.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @task.reload.watchers_ids.include?(@observer.id).should_not == true
     end
@@ -226,7 +226,7 @@ describe ApiV1::TasksController do
       login_as @observer
       
       put :destroy, :project_id => @project.permalink, :id => @task.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @task_list.tasks(true).length.should == 1
     end

@@ -1,11 +1,11 @@
 .person.invitation{:id => "invitation_#{invitation.id}"}
   - if invitation.invited_user
     = thumb_avatar(invitation.invited_user)
-    = t('.invited_user', :invitee => invitation.invited_user.login, :inviter => invitation.user.login)
+    = t('.invited_user_html', :invitee => invitation.invited_user.login, :inviter => invitation.user.login)
   - else
     .new_user_avatar
       %p +
-    = t('.invited_email', :email => invitation.email, :inviter => invitation.user.login)
+    = t('.invited_email_html', :email => invitation.email, :inviter => invitation.user.login)
   .status
     = t('.pending')
     = t('.time_ago', :time_ago_in_words => time_ago_in_words(invitation.updated_at))

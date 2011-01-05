@@ -1,19 +1,30 @@
 class Comment < ActiveRecord::Base
+  include Immortal
   
   extend ActiveSupport::Memoizable
   
-  acts_as_paranoid
-  
   concerned_with :tasks, :finders, :conversions
 
-  belongs_to :user, :with_deleted => true
+  belongs_to :user
   belongs_to :project
   belongs_to :target, :polymorphic => true, :counter_cache => true
-  belongs_to :assigned, :class_name => 'Person', :with_deleted => true
-  belongs_to :previous_assigned, :class_name => 'Person', :with_deleted => true
+  belongs_to :assigned, :class_name => 'Person'
+  belongs_to :previous_assigned, :class_name => 'Person'
   
   def task_comment?
     self.target_type == "Task"
+  end
+  
+  def user
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
+  end
+  
+  def assigned
+    @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
+  end
+  
+  def previous_assigned
+    @previous_assigned ||= previous_assigned_id ? Person.with_deleted.find_by_id(previous_assigned_id) : nil
   end
 
   has_many :uploads
@@ -27,13 +38,13 @@ class Comment < ActiveRecord::Base
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
                   :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes
 
-  named_scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
-  named_scope :latest, :order => 'id DESC'
+  scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
+  scope :latest, :order => 'id DESC'
 
   # TODO: investigate how we can enable this and not break nested attributes
   # validates_presence_of :target_id, :user_id, :project_id
   
-  validate_on_create :check_duplicate, :if => lambda { |c| c.target_id? and not c.hours? }
+  validate :check_duplicate, :if => lambda { |c| c.target_id? and not c.hours? }, :on => :create
   validates_presence_of :body, :unless => lambda { |c| c.task_comment? or c.uploads.to_a.any? or c.google_docs.any? }
 
   # was before_create, but must happen before format_attributes
@@ -50,7 +61,7 @@ class Comment < ActiveRecord::Base
     hours and hours > 0
   end
 
-  named_scope :with_hours, :conditions => 'hours > 0'
+  scope :with_hours, :conditions => 'hours > 0'
 
   alias_attribute :human_hours, :hours
 
