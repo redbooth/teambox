@@ -1,0 +1,16 @@
+- upload = @upload
+- icon_path = "file_icons/48px/#{h upload.file_type}.png"
+
+.file
+  .fade
+  .info
+    - if Rails.root.join("public/images/#{icon_path}").exist?
+      = link_to image_tag(icon_path), upload.url, :class => 'file_icon', :rel => (upload.image? ? 'facebox' : '')
+    - else
+      = link_to upload.file_type, upload.url, :class => upload.file_type, :rel => (upload.image? ? 'facebox' : '')
+
+  .filename
+    = link_to_upload(upload, upload.file_name)
+    %p== #{number_to_human_size(upload.size)}, by #{upload.user.name}
+
+= javascript_tag "document.on('click', '#content', function(e,el) { e.stop(); window.location = el.down('.filename a').readAttribute('href') })"

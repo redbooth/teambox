@@ -368,6 +368,7 @@ Teambox::Application.routes.draw do
     root :to => 'projects#index'
 
     match 'assets/:id/:style/:filename' => 'uploads#download', :constraints => { :filename => /.*/ }, :via => :get
+    match 'd/:id' => 'public_downloads#download', :via => :get
 
   end
 

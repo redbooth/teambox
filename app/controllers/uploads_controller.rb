@@ -113,7 +113,7 @@ class UploadsController < ApplicationController
       end
     end
   end
-  
+
   private
     
     def find_upload
