@@ -13,7 +13,7 @@ Feature: Changing Task Status from New
     And I select "new" from "Status"
     And I press "Save"
     And I wait for 0.2 second
-    And I should see "I need to wait till the engine cools down" within ".body"
+    And I should see "I need to wait till the engine cools down"
     And I should see "Status: new"
 
   Scenario: Mislav changes task (new -> open:Mislav)
@@ -29,7 +29,7 @@ Feature: Changing Task Status from New
     And I press "Save"
     And I wait for .2 seconds
     Then I should see "new → hold"
-    And I should see "I need to wait till the engine cools down" within ".body"
+    And I should see "I need to wait till the engine cools down"
     And I should see "Status: hold"
 
   # And I choose "comment_status_2"
@@ -39,7 +39,7 @@ Feature: Changing Task Status from New
     And I press "Save"
     And I wait for .2 seconds
     Then I should see "new → resolved"
-    And I should see "I need to wait till the engine cools down" within ".body"
+    And I should see "I need to wait till the engine cools down"
     And I should see "Status: resolved"
 
   Scenario: Mislav changes task (new -> rejected)
@@ -48,7 +48,7 @@ Feature: Changing Task Status from New
     And I press "Save"
     And I wait for .2 seconds
     Then I should see "new → rejected"
-    And I should see "I need to wait till the engine cools down" within ".body"
+    And I should see "I need to wait till the engine cools down"
     And I should see "Status: rejected"
 
   Scenario: Mislav shouldn't be able to change task (hold -> new)
@@ -62,7 +62,7 @@ Feature: Changing Task Status from New
     And I press "Save"
     And I wait for .2 seconds
     And I should see "hold → resolved"
-    And I should see "done!" within ".body"
+    And I should see "done!"
     And I should see "Status: resolved"
 
   Scenario: Mislav changes task (hold -> rejected)
@@ -72,7 +72,7 @@ Feature: Changing Task Status from New
     And I press "Save"
     And I wait for .2 seconds
     And I should see "hold → rejected"
-    And I should see "done!" within ".body"
+    And I should see "done!"
     And I should see "Status: rejected"
 
   Scenario: Mislav shouldn't be able to change task (rejected -> new)
