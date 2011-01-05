@@ -38,7 +38,9 @@ class User
   end
 
   def short_name
-    "#{first_name.chars.first}. #{last_name}"
+     I18n.t 'common.format_name_short', :first_name => first_name, :last_name => last_name, 
+                                        :first_name_first_character => first_name.chars.first, 
+                                        :last_name_first_character => last_name.chars.first)
   end
 
   def password_required?
