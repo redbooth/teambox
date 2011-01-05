@@ -41,7 +41,7 @@ describe ApiV1::OrganizationsController do
 
       lambda {
         post :create, organization_attributes
-        response.status.should == '201 Created'
+        response.status.should == 201
       }.should change(Organization, :count)
       
       JSON.parse(response.body)['name'].should == organization_attributes[:name]
@@ -63,7 +63,7 @@ describe ApiV1::OrganizationsController do
       login_as @user
       
       put :update, :id => @organization.permalink, :permalink => 'ffffuuuuuu'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @organization.reload.permalink.should_not == 'ffffuuuuuu'
     end
@@ -91,7 +91,7 @@ describe ApiV1::OrganizationsController do
       login_as @user2
       
       get :show, :id => @organization.permalink
-      response.status.should == '404 Not Found'
+      response.status.should == 404
     end
   end
 end

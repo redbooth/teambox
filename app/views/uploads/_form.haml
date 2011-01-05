@@ -2,9 +2,9 @@
 - is_valid = upload.asset.errors.empty? && upload.errors.empty?
 
 
-- form_for [project, upload], :html => { :multipart => true, :style => hidden ? 'display: none' : nil, :class => "upload_form app_form #{'form_error' unless upload.errors.empty?}" } do |f|
+= form_for [project, upload], :html => { :multipart => true, :style => hidden ? 'display: none' : nil, :class => "upload_form app_form #{'form_error' unless upload.errors.empty?}" } do |f|
   .description.text_field
-    = f.label :description, t('.description')
+    = f.label :description, t('.description_html')
     = f.text_field :description
   .file
     = f.label :asset, t('.select_file')

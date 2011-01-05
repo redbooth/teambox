@@ -1,8 +1,7 @@
 class Organization < ActiveRecord::Base
+  include Immortal
   include Metadata
   extend Metadata::Defaults
-
-  acts_as_paranoid
 
   has_permalink :name
   has_many :projects #, :dependent => :destroy
@@ -15,7 +14,7 @@ class Organization < ActiveRecord::Base
   validates_length_of     :name, :minimum => 4
 
   validates_presence_of   :permalink
-  validates_uniqueness_of :permalink, :case_sensitive => false
+  validates_uniqueness_of :permalink, :case_sensitive => false, :scope => :deleted
   validates_uniqueness_of :domain, :case_sensitive => false, :allow_nil => true, :allow_blank => true
   validates_length_of     :permalink, :minimum => 4
   validates_exclusion_of  :permalink, :in => %w(www help support mail pop smtp ftp guide)
@@ -64,6 +63,14 @@ class Organization < ActiveRecord::Base
 
   def to_param
     permalink
+  end
+  
+  def self.find_by_id_or_permalink(param)
+    if param.to_s =~ /^\d+$/
+      find(param)
+    else
+      find_by_permalink(param)
+    end
   end
 
   def users_in_projects
@@ -122,7 +129,7 @@ class Organization < ActiveRecord::Base
 
     def ensure_unicity_for_community_version
       if Teambox.config.community && new_record?
-        errors.add_to_base("Can't have more than one organization") if Organization.count > 0
+        errors.add(:base, "Can't have more than one organization") if Organization.count > 0
       end
     end
 

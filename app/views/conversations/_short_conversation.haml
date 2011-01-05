@@ -8,7 +8,7 @@
             = link_to h(conversation), [@current_project, conversation]
             %span= t('common.comment', :count => conversation.comments_count)
           .textilized
-            ~ comment.body_html
+            ~raw comment.body_html
         - if comment.uploads.any?
           - if comment.uploads.all? { |upload| upload.image? }
             .upload_images

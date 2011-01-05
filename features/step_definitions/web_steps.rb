@@ -111,30 +111,6 @@ When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"(?: within "([^\"]*)")?$/ 
   end
 end
 
-When  /^(?:|I )drag "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
-  with_scope(selector) do
-    dragged_item = find(:xpath,"//*[.='#{dragged_item}']")
-    dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
-    dragged_item.drag_to dropped_item
-  end
-end
-
-When /^(.*) confirming with OK$/ do |main_task|
-  if Capybara.current_driver == Capybara.javascript_driver
-    page.evaluate_script("window.old_alert = window.alert")
-    page.evaluate_script("window.old_confirm = window.confirm")
-    page.evaluate_script("window.alert = function(msg) { return true; }")
-    page.evaluate_script("window.confirm = function(msg) { return true; }")
-  end
-  
-  When main_task
-  
-  if Capybara.current_driver == Capybara.javascript_driver
-    page.evaluate_script("window.alert = window.old_alert")
-    page.evaluate_script("window.confirm = window.old_confirm")
-  end
-end
-
 Then /^(?:|I )should see JSON:$/ do |expected_json|
   require 'json'
   expected = JSON.pretty_generate(JSON.parse(expected_json))
@@ -145,7 +121,7 @@ end
 Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   with_scope(selector) do
     if Capybara.current_driver == Capybara.javascript_driver
-      page.has_xpath?(Capybara::XPath.content(text), :visible => true)
+      page.has_xpath?(XPath::HTML.content(text), :visible => true)
     elsif page.respond_to? :should
       page.should have_content(text)
     else
@@ -168,14 +144,14 @@ Then /^(?:|I )should see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, selec
   end
 end
 
-Then /^I should see "([^"]*)" only once$/ do |text|
+Then /^I should see "([^\"]*)" only once$/ do |text|
   all(:xpath,"//*[.='#{text}']").size.should == 1
 end
 
 Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   with_scope(selector) do
     if Capybara.current_driver == Capybara.javascript_driver
-      page.has_no_xpath?(Capybara::XPath.content(text), :visible => true)
+      page.has_no_xpath?(XPath::HTML.content(text), :visible => true)
     elsif page.respond_to? :should
       page.should have_no_content(text)
     else
@@ -236,10 +212,10 @@ end
 Then /^the "([^\"]*)" checkbox(?: within "([^\"]*)")? should not be checked$/ do |label, selector|
   with_scope(selector) do
     field_checked = find_field(label)['checked']
-    if field_checked.respond_to? :should_not
-      field_checked.should_not be_true
+    if field_checked.respond_to? :should
+      field_checked.should be_false
     else
-      assert ! field_checked
+      assert !field_checked
     end
   end
 end
@@ -268,4 +244,28 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+When  /^(?:|I )drag "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
+  with_scope(selector) do
+    dragged_item = find(:xpath,"//*[.='#{dragged_item}']")
+    dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
+    dragged_item.drag_to dropped_item
+  end
+end
+
+When /^(.*) confirming with OK$/ do |main_task|
+  if Capybara.current_driver == Capybara.javascript_driver
+    page.evaluate_script("window.old_alert = window.alert")
+    page.evaluate_script("window.old_confirm = window.confirm")
+    page.evaluate_script("window.alert = function(msg) { return true; }")
+    page.evaluate_script("window.confirm = function(msg) { return true; }")
+  end
+  
+  When main_task
+  
+  if Capybara.current_driver == Capybara.javascript_driver
+    page.evaluate_script("window.alert = window.old_alert")
+    page.evaluate_script("window.confirm = window.old_confirm")
+  end
 end

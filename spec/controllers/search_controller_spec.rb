@@ -57,7 +57,7 @@ describe SearchController do
       project = Factory.create :project, :permalink => 'important-project'
       
       get :index, :q => 'important', :project_id => project.permalink
-      response.status.should == "403 Forbidden"
+      response.status.should == 403
     end
     
     def search_params(project_ids)

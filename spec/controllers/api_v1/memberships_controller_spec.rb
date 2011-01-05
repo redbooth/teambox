@@ -64,7 +64,7 @@ describe ApiV1::MembershipsController do
       login_as @user
       
       put :update, :organization_id => @organization.permalink, :id => @observer.member_for(@organization).id, :role => Membership::ROLES[:admin]
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @organization.reload.is_admin?(@user).should == false
     end
@@ -87,7 +87,7 @@ describe ApiV1::MembershipsController do
       
       lambda {
         put :destroy, :organization_id => @organization.permalink, :id => @admin.member_for(@organization).id
-        response.status.should == '401 Unauthorized'
+        response.status.should == 401
       }.should_not change(Membership, :count)
     end
     
@@ -105,7 +105,7 @@ describe ApiV1::MembershipsController do
       
       lambda {
         put :destroy, :organization_id => @organization.permalink, :id => @observer.member_for(@organization).id
-        response.status.should == '401 Unauthorized'
+        response.status.should == 401
       }.should_not change(Membership, :count)
     end
   end

@@ -1,5 +1,5 @@
 %h2= t('.title')
 
-- form_for [@current_project,@task_list], :html => {:class => 'app_form'} do |f|
+= form_for [@current_project,@task_list], :html => {:class => 'app_form'} do |f|
   = task_list_fields(f,@current_project,@task_list)
   = f.submit t('.submit')

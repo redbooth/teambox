@@ -1,9 +1,6 @@
-.filter_box
-  %p= t('task_lists.filter.by_name')
-  %input#filter_tasks_by_name{ :type => 'search' }
-
-  %p= t('task_lists.filter.assigned_to')
-  = filter_assigned_dropdown(project)
-
-  %p= t('task_lists.filter.due_date')
-  = filter_due_date_dropdown(project)
+.filters
+  %strong= t('.filter_tasks') + ": "
+  %input#filter_tasks_by_name{ :type => 'search', :placeholder => t('.by_name') }
+  = filter_assigned_dropdown(@current_project)
+  = filter_due_date_dropdown(@current_project)
+  =# link_to t('.hide'), "", :class => 'closeThis'

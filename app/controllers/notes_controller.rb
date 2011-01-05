@@ -27,10 +27,10 @@ class NotesController < ApplicationController
       if !@note.new_record?
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @note, true)
       else
-        f.js
+        f.js   { render :layout => false }
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
         handle_api_error(f, @note)
@@ -50,7 +50,7 @@ class NotesController < ApplicationController
     authorize! :update, @page
     respond_to do |f|
       f.m
-      f.js
+      f.js   { render :layout => false }
     end
   end
   
@@ -62,14 +62,14 @@ class NotesController < ApplicationController
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @note)
       end
     else
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @note)
       end
     end
@@ -83,14 +83,14 @@ class NotesController < ApplicationController
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_page }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @note)
       end
     else
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_page }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @note)
       end
     end
@@ -115,7 +115,7 @@ class NotesController < ApplicationController
         @note = @page.notes.find(params[:id])
       rescue
         respond_to do |f|
-          f.js
+          f.js   { render :layout => false }
           handle_api_error(f, @note)
         end
       end

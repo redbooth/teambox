@@ -8,9 +8,9 @@ class ApiV1::TaskListsController < ApiV1::APIController
              :include => [:user, :project]}
     
     @task_lists = if @current_project
-      @current_project.task_lists.scoped(api_scope).all(query)
+      @current_project.task_lists.where(api_scope).all(query)
     else
-      TaskList.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      TaskList.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @task_lists, :include => [:user, :project], :references => [:user, :project]
@@ -54,7 +54,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   
   def archive
     authorize! :update, @task_list
-    if request.method == :put and !@task_list.archived
+    unless @task_list.archived
       # Prototype for comment
       comment_attrs = {:comment_body => params[:message]}
       comment_attrs[:body] ||= "Archived task list"
@@ -84,7 +84,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   
   def unarchive
     authorize! :update, @task_list
-    if request.method == :put and @task_list.editable?(current_user) and @task_list.archived
+    if @task_list.archived
       @task_list.archived = false
       @saved = @task_list.save
     end
@@ -121,7 +121,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
     end
-    {:conditions => conditions}
+    conditions
   end
   
   def api_include

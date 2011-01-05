@@ -9,9 +9,9 @@ class ApiV1::UploadsController < ApiV1::APIController
              :include => [:page, :user]}
     
     @uploads = if target
-      target.uploads.scoped(api_scope).all(query)
+      target.uploads.where(api_scope).all(query)
     else
-      Upload.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      Upload.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
     api_respond @uploads, :references => [:page, :user]
@@ -62,7 +62,7 @@ class ApiV1::UploadsController < ApiV1::APIController
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
     end
-    {:conditions => conditions}
+    conditions
   end
   
   def load_upload

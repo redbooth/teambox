@@ -5,14 +5,14 @@
 
 - if !@invitation and @user.email and User.find_by_email(@user.email)
   %p{ :style => 'margin: 80px 10px; padding: 10px; border: 1px rgb(220,220,150) solid; background-color: rgb(255,255,200)' }
-    = t('.you_already_have_an_account', :email => @user.email, :login_link => login_path, :reset_password_link => forgot_password_path)
+    = t('.you_already_have_an_account_html', :email => @user.email, :login_link => login_path, :reset_password_link => forgot_password_path)
 
 - else
   - if !Teambox.config.community or @invitation
-    %p= t('.existing_user', :login_url => login_path, :forgot_url => forgot_password_path)
+    %p= t('.existing_user_html', :login_url => login_path, :forgot_url => forgot_password_path)
 
   - secure_url = Teambox.config.secure_logins ? users_url(:protocol => 'https') : nil
-  - form_for @user, :url => secure_url do |f|
+  = form_for @user, :url => secure_url do |f|
     = render 'users/form/new', :f => f, :user => f.object
     .submit
       .submit_button

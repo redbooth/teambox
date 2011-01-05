@@ -2,15 +2,16 @@ require 'spec_helper'
 
 describe HooksController do
   it "should route to hooks controller" do
-    params_from(:post, '/hooks/email').should == {
-      :action => "create", :hook_name => "email", :controller => "hooks"
-    }
+    { :post => '/hooks/email' }.should route_to(:action => "create", 
+                                                :hook_name => "email", 
+                                                :controller => "hooks")
   end
-  
+
   it "should route to hooks controller scoped under project" do
-    params_from(:post, '/projects/12/hooks/pivotal').should == {
-      :action => "create", :hook_name => "pivotal", :controller => "hooks", :project_id => "12"
-    }
+    { :post => '/projects/12/hooks/pivotal' }.should route_to(:action => "create", 
+                                                              :hook_name => "pivotal", 
+                                                              :controller => "hooks", 
+                                                              :project_id => "12")
   end
 
   describe "#create" do
@@ -42,7 +43,7 @@ describe HooksController do
         conversation.name.should == 'Hey, check this awesome file!'
         conversation.comments.last.body.should == 'Lorem ipsum dolor sit amet, ...'
         conversation.comments.last.uploads.count.should == 2
-        conversation.comments.last.uploads.first(:order => 'id asc').asset_file_name.should == 'tb-space.jpg'
+        conversation.comments.last.uploads.first.asset_file_name.should == 'tb-space.jpg'
       end
       
       it "handles encoded headers" do
@@ -165,8 +166,8 @@ describe HooksController do
       end
       
       def check_bounce_message(options, &block)
-        Emailer.should_receive(:deliver_bounce_message).with(
-          kind_of(Array), kind_of(String)
+        Emailer.should_receive(:send_with_language).with(
+          :bounce_message, :en, kind_of(Array), kind_of(String)
         ).once
         
         lambda do

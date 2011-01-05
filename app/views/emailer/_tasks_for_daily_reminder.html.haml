@@ -1,0 +1,19 @@
+%table{ :style => "border-spacing: 5px 0"}
+  %thead
+    %th{ :colspan => "2", :style => "text-align: left"}= header_text
+  %tbody
+    - tasks.each do |task|
+      %tr
+        %td{ :style => "width:30px"}
+          %span{ :style => task_status_style(task) }= task.comments_count
+        %td{ :style => "width:570px"}
+          - if task.due_on
+            %span{ :style => task_due_on_style(task) }
+              = due_on(task)
+          = link_to h(task.name), project_task_url(task.project, task)
+          == [#{link_to h(task.project), project_url(task.project)}]
+          - comment = task.comments.first
+          - if comment
+            .span{ :style => email_text(:normal) + 'border-bottom: 1px #555' }
+              ~raw comment.body_html
+

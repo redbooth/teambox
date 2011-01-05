@@ -1,4 +1,5 @@
 class Conversation < RoleRecord
+  include Immortal
 
   # needed for `truncate`
   include ActionView::Helpers::TextHelper
@@ -24,13 +25,17 @@ class Conversation < RoleRecord
   
   validate :check_comments_presence, :on => :create, :unless => :is_importing
 
-  named_scope :only_simple, :conditions => { :simple => true }
-  named_scope :not_simple, :conditions => { :simple => false }
-  named_scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
+  scope :only_simple, :conditions => { :simple => true }
+  scope :not_simple, :conditions => { :simple => false }
+  scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
 
   before_save :set_comments_author, :if => :updating_user
+  before_update :set_simple
+  after_create :log_create
+  after_destroy :clear_targets
+  
 
-  def before_update
+  def set_simple
     self.simple = false if simple? and name_changed? and !name.nil?
     true
   end
@@ -61,11 +66,11 @@ class Conversation < RoleRecord
     return text
   end
 
-  def after_create
+  def log_create
     project.log_activity(self,'create')
   end
 
-  def after_destroy
+  def clear_targets
     Activity.destroy_all :target_id => self.id, :target_type => self.class.to_s
   end
 
@@ -134,7 +139,7 @@ class Conversation < RoleRecord
   end
 
   define_index do
-    where "`conversations`.`deleted_at` IS NULL"
+    where "`conversations`.`deleted` = 0"
 
     indexes name, :sortable => true
 

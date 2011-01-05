@@ -96,7 +96,11 @@ document.on('ajax:success', 'form.new_conversation', function(e, form) {
 
 // "Show N previous comments" action in threads
 document.on('ajax:success', '.thread .comments .more_comments', function(e, el) {
-  el.up('.comments').update(e.memo.responseText).highlight({ duration: 2 })
+  el.up('.comments').update(e.memo.responseText).blindDown({ duration: 0.5 })
+})
+
+document.on('click', '.thread .comments .more_comments a', function(e, el) {
+  el.update("<img src='/images/loading.gif'/>")
 })
 
 // insert new comment into thread after posting
@@ -109,8 +113,10 @@ document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, fo
 })
 
 document.on('ajax:failure', 'form.new_conversation, .thread form:not(.not-new-comment)', function(e, form) {
-  var message = e.memo.responseJSON.first()[1]
-  form.down('div.text_area').insertOrUpdate('p.error', message)
+  var message = $H(e.memo.responseJSON)
+	message.each( function(error) {
+		form.down('div.text_area').insertOrUpdate('p.error', error.value)
+	})
 })
 
 // update edited comment

@@ -62,7 +62,7 @@ class PeopleController < ApplicationController
       users = @project.users
       
       invited_ids = @current_project.invitations.find(:all, :select => 'invited_user_id').map(&:invited_user_id).compact
-      users = users.scoped(:conditions => ['users.id NOT IN (?)', invited_ids]) if invited_ids.any?
+      users = users.where(['users.id NOT IN (?)', invited_ids]) if invited_ids.any?
       
       @contacts = users.all
       @contacts -= @current_project.users

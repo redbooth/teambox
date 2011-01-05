@@ -2,7 +2,7 @@ class PageSlot < ActiveRecord::Base
   belongs_to :page
   belongs_to :rel_object, :polymorphic => true
   
-  named_scope :with_widgets, :include => [:rel_object]
+  scope :with_widgets, :include => [:rel_object]
   
   def to_xml(options = {})
     options[:indent] ||= 2

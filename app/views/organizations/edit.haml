@@ -1,6 +1,6 @@
 %h2=h @organization
 
-%p= t('.public_site', :link => link_to(public_url_for_organization(@organization), public_url_for_organization(@organization)))
+%p= t('.public_site', :link => link_to(public_url_for_organization(@organization), public_url_for_organization(@organization))).html_safe
 
 - if can?(:admin, @organization)
   %p
@@ -9,7 +9,7 @@
     = t('common.and')
     = link_to t('.number_of_projects', :count => @organization.projects.count), projects_organization_path(@organization)
 
-  - form_for @organization, :html => { :multipart => true } do |f|
+  = form_for @organization, :html => { :multipart => true } do |f|
     = f.error_messages
     = render 'organizations/fields', :f => f
     .submit
@@ -17,5 +17,3 @@
 
 - else
   %p= t('organizations.you_are_not_admin')
-
-= render 'organizations/column'

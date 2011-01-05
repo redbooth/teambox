@@ -1,4 +1,5 @@
 class TaskList < RoleRecord
+  include Immortal
 
   include Watchable
 
@@ -41,11 +42,11 @@ class TaskList < RoleRecord
   end
 
   def user
-    User.find_with_deleted(user_id)
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
 
   define_index do
-    where "`task_lists`.`deleted_at` IS NULL"
+    where "`task_lists`.`deleted` = 0"
 
     indexes name, :sortable => true
     has project_id, created_at, updated_at

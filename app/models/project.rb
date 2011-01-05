@@ -2,7 +2,7 @@
 # A Person model describes the relationship of a User that follows a Project.
 
 class Project < ActiveRecord::Base
-  acts_as_paranoid
+  include Immortal
 
   concerned_with :validation,
                  :initializers,
@@ -20,7 +20,7 @@ class Project < ActiveRecord::Base
   attr_accessor :import_activities
   
   def self.find_by_id_or_permalink(param)
-    if param =~ /^\d+$/
+    if param.to_s =~ /^\d+$/
       find(param)
     else
       find_by_permalink(param)

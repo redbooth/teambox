@@ -97,6 +97,7 @@ module CalendarsHelper
       end
     end
     cal << print_next_month_days(first_weekday,last_weekday,week_tally,week_count,last,total_tally,total_sum)
+    cal.html_safe
   end
 
   def build_weektable(year, month)
@@ -122,6 +123,7 @@ module CalendarsHelper
 
     wk << '</td></tr><tr>'
     wk << '</tr></table>' 
+    wk.html_safe
   end
 
   private
@@ -132,7 +134,7 @@ module CalendarsHelper
     if cur.wday == last_weekday
       cal << "</tr><tr>"
     end
-    cal
+    cal.html_safe
   end
 
   def day_names(first_weekday)
@@ -170,7 +172,7 @@ module CalendarsHelper
       cal << " weekendDay" if weekend?(d)
       cal << %("><div class=\"cd\">#{d.day}</div></td>)
     end unless first.wday == first_weekday
-    cal
+    cal.html_safe
   end
 
   def print_next_month_days(first_weekday,last_weekday,week_tally,week_count,last,total_tally,total_sum)
@@ -182,6 +184,7 @@ module CalendarsHelper
     end unless last.wday == last_weekday
     cal << "</tr>"
     cal << "</table>"
+    cal.html_safe
   end
 
   def first_day_of_week(day)
@@ -226,7 +229,7 @@ module CalendarsHelper
       month -= 1
     end
     url = project ? project_hours_by_month_url(project,year,month) : hours_by_month_url(year,month)
-    link_to "&larr; #{I18n.t('common.prev')}", url
+    link_to "&larr; #{I18n.t('common.prev')}".html_safe, url
   end
 
   def link_to_next_month(project,year,month)
@@ -237,7 +240,7 @@ module CalendarsHelper
       month += 1
     end
     url = project ? project_hours_by_month_url(project,year,month) : hours_by_month_url(year,month)
-    link_to "#{I18n.t('common.next')} &rarr;", url
+    link_to "#{I18n.t('common.next')} &rarr;".html_safe, url
   end
 
   def hours_js(year, month, comments)

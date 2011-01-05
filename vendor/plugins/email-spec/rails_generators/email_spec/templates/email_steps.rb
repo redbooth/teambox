@@ -56,13 +56,12 @@ Then /^(?:I|they|"([^"]*?)") should have (an|no|\d+) emails?$/ do |address, amou
   mailbox_for(address).size.should == parse_email_count(amount)
 end
 
-# DEPRECATED
-# The following methods are left in for backwards compatibility and
-# should be removed by version 0.4.0
-Then /^(?:I|they|"([^"]*?)") should not receive an email$/ do |address|
-  email_spec_deprecate "The step 'I/they/[email] should not receive an email' is no longer supported.
-                      Please use 'I/they/[email] should receive no emails' instead."
-  unread_emails_for(address).size.should == 0
+Then /^(?:I|they|"([^"]*?)") should receive (an|no|\d+) emails? with subject "([^"]*?)"$/ do |address, amount, subject|
+  unread_emails_for(address).select { |m| m.subject =~ Regexp.new(Regexp.escape(subject)) }.size.should == parse_email_count(amount)
+end
+
+Then /^(?:I|they|"([^"]*?)") should receive an email with the following body:$/ do |address, expected_body|
+  open_email(address, :with_text => expected_body)
 end
 
 #
@@ -87,25 +86,65 @@ end
 #
 
 Then /^(?:I|they) should see "([^"]*?)" in the email subject$/ do |text|
+  current_email.should have_subject(text)
+end
+
+Then /^(?:I|they) should see \/([^"]*?)\/ in the email subject$/ do |text|
   current_email.should have_subject(Regexp.new(text))
 end
 
 Then /^(?:I|they) should see "([^"]*?)" in the email body$/ do |text|
+  current_email.body.should include(text)
+end
+
+Then /^(?:I|they) should see \/([^"]*?)\/ in the email body$/ do |text|
   current_email.body.should =~ Regexp.new(text)
 end
 
-# DEPRECATED
-# The following methods are left in for backwards compatibility and
-# should be removed by version 0.4.0.
-Then /^(?:I|they) should see "([^"]*?)" in the subject$/ do |text|
-  email_spec_deprecate "The step 'I/they should see [text] in the subject' is no longer supported.
-                      Please use 'I/they should see [text] in the email subject' instead."
-  current_email.should have_subject(Regexp.new(text))
+Then /^(?:I|they) should see the email delivered from "([^"]*?)"$/ do |text|
+  current_email.should be_delivered_from(text)
 end
-Then /^(?:I|they) should see "([^"]*?)" in the email$/ do |text|
-  email_spec_deprecate "The step 'I/they should see [text] in the email' is no longer supported.
-                      Please use 'I/they should see [text] in the email body' instead."
-  current_email.body.should =~ Regexp.new(text)
+
+Then /^(?:I|they) should see "([^\"]*)" in the email "([^"]*?)" header$/ do |text, name|
+  current_email.should have_header(name, text)
+end
+
+Then /^(?:I|they) should see \/([^\"]*)\/ in the email "([^"]*?)" header$/ do |text, name|
+  current_email.should have_header(name, Regexp.new(text))
+end
+
+#
+# Inspect the Email Attachments
+#
+
+Then /^(?:I|they) should see (an|no|\d+) attachments? with the email$/ do |amount|
+  current_email_attachments.size.should == parse_email_count(amount)
+end
+
+Then /^there should be (an|no|\d+) attachments? named "([^"]*?)"$/ do |amount, filename|
+  current_email_attachments.select { |a| a.original_filename == filename }.size.should == parse_email_count(amount)
+end
+
+Then /^attachment (\d+) should be named "([^"]*?)"$/ do |index, filename|
+  current_email_attachments[(index.to_i - 1)].original_filename.should == filename
+end
+
+Then /^there should be (an|no|\d+) attachments? of type "([^"]*?)"$/ do |amount, content_type|
+  current_email_attachments.select { |a| a.content_type == content_type }.size.should == parse_email_count(amount)
+end
+
+Then /^attachment (\d+) should be of type "([^"]*?)"$/ do |index, content_type|
+  current_email_attachments[(index.to_i - 1)].content_type.should == content_type
+end
+
+Then /^all attachments should not be blank$/ do
+  current_email_attachments.each do |attachment|
+    attachment.size.should_not == 0
+  end
+end
+
+Then /^show me a list of email attachments$/ do
+  EmailSpec::EmailViewer::save_and_open_email_attachments_list(current_email)
 end
 
 #
@@ -120,3 +159,24 @@ When /^(?:I|they) click the first link in the email$/ do
   click_first_link_in_email
 end
 
+#
+# Debugging
+# These only work with Rails and OSx ATM since EmailViewer uses RAILS_ROOT and OSx's 'open' command.
+# Patches accepted. ;)
+#
+
+Then /^save and open current email$/ do
+  EmailSpec::EmailViewer::save_and_open_email(current_email)
+end
+
+Then /^save and open all text emails$/ do
+  EmailSpec::EmailViewer::save_and_open_all_text_emails
+end
+
+Then /^save and open all html emails$/ do
+  EmailSpec::EmailViewer::save_and_open_all_html_emails
+end
+
+Then /^save and open all raw emails$/ do
+  EmailSpec::EmailViewer::save_and_open_all_raw_emails
+end

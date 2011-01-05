@@ -78,8 +78,7 @@ class UploadsController < ApplicationController
           render :new
         elsif @upload.page
           if iframe?
-            template = self.view_paths.find_template(default_template_name(action_name), :js)
-            code = render_to_string :template => template
+            code = render_to_string 'create.js.rjs', :layout => false
             render :template => 'shared/iframe_rjs', :layout => false, :locals => { :code => code }
           else
             redirect_to [@current_project, @upload.page]
@@ -96,17 +95,18 @@ class UploadsController < ApplicationController
     @upload.update_attributes(params[:upload])
 
     respond_to do |format|
-      format.js
+      format.js   { render :layout => false }
       format.html { redirect_to project_uploads_path(@current_project) }
     end
   end
 
   def destroy
     authorize! :destroy, @upload
+    @slot_id = @upload.page_slot.try(:id)
     @upload.try(:destroy)
 
     respond_to do |f|
-      f.js
+      f.js   { render :layout => false }
       f.html do
         flash[:success] = t('deleted.upload', :name => @upload.to_s)
         redirect_to project_uploads_path(@current_project)
@@ -117,7 +117,7 @@ class UploadsController < ApplicationController
   private
     
     def find_upload
-      if params[:id].match /^\d+$/
+      if params[:id].to_s.match /^\d+$/
         @upload = @current_project.uploads.find(params[:id])
       else
         @upload = @current_project.uploads.find_by_asset_file_name(params[:id])

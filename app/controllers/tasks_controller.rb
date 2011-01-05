@@ -10,7 +10,6 @@ class TasksController < ApplicationController
   def show
     respond_to do |f|
       f.html
-      f.frag { render :layout => false }
       f.js {
         @show_part = params[:part]
         render :template => 'tasks/reload'
@@ -58,7 +57,7 @@ class TasksController < ApplicationController
     authorize! :update, @task
     respond_to do |f|
       f.html
-      f.js
+      f.js { render :layout => false }
     end
   end
 
@@ -71,8 +70,7 @@ class TasksController < ApplicationController
       f.html {
         if request.xhr? or iframe?
           if @task.comment_created?
-            comment = @task.comments.last(:order => 'id')
-
+            comment = @task.comments(true).first
             response.headers['X-JSON'] = @task.to_json(:include => :assigned)
 
             render :partial => 'comments/comment',
@@ -105,7 +103,7 @@ class TasksController < ApplicationController
         flash[:success] = t('deleted.task', :name => @task.to_s)
         redirect_to [@current_project, @task_list]
       }
-      f.js
+      f.js { render :layout => false }
       handle_api_success(f, @task)
     end
   end
@@ -132,14 +130,14 @@ class TasksController < ApplicationController
     authorize! :watch, @task
     @task.add_watcher(current_user)
     respond_to do |f|
-      f.js
+      f.js { render :layout => false }
     end
   end
 
   def unwatch
     @task.remove_watcher(current_user)
     respond_to do |f|
-      f.js
+      f.js { render :layout => false }
     end
   end
 

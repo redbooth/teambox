@@ -42,12 +42,14 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   protected
   
   def load_organization
-    @organization = if params[:id].match(API_NONNUMERIC)
-      current_user.organizations.find_by_permalink(params[:id])
-    else
-      current_user.organizations.find_by_id(params[:id])
+    organization_id ||= params[:id]
+    
+    if organization_id
+      @organization = Organization.find_by_id_or_permalink(organization_id)
+      unless @organization and @organization.is_user?(current_user)
+        api_status(:not_found)
+      end
     end
-    api_status(:not_found) unless @organization
   end
   
   def api_include

@@ -105,7 +105,7 @@ class UsersController < ApplicationController
     if params.has_key?(:sub_action)
       @sub_action = params[:sub_action]
     else
-      render :file => "#{RAILS_ROOT}/public/404.html", :status => 404
+      render :file => "#{Rails.root}/public/404.html", :status => 404
     end
   end
 
@@ -152,7 +152,7 @@ class UsersController < ApplicationController
           self.current_user = @user
         end
       else
-        flash[:error] = t('users.activation.invalid')
+        flash[:error] = t('users.activation.invalid_html')
       end
     else
       flash[:error] = t('users.activation.invalid_user')
@@ -230,7 +230,7 @@ class UsersController < ApplicationController
     def can_users_signup?
       unless @invitation || signups_enabled?
         flash[:error] = t('users.new.no_public_signup')
-        return redirect_to root_path
+        return redirect_to Teambox.config.community ? login_path : root_path
       end
     end
 end

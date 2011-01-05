@@ -1,18 +1,10 @@
-%ol.global_navigation
-  %li
-    = link_to_unless_current current_user.login, current_user
-    - my_task_count = current_user.assigned_tasks.count
-    - if my_task_count > 0
-      == (#{ link_to_unless_current(t('common.tasks', :count => my_task_count), task_lists_path(:assigned_to => :mine)) })
-      
-  %li
-    = link_to_unless_current t('.settings'), account_settings_path
-    
-  - if current_user.invitations.pending_projects.count > 0
-    %li= link_to_unless_current t('.project_invitations', :count => current_user.invitations.count),
-      user_invitations_path(:user_id => current_user.id)
-
-  %li
-    = link_to t('.help'), "http://guide.teambox.com##{controller_name}", :target => "_blank"
-
-  %li= link_to t('.logout'), logout_path
+#user_utilities
+  %ol.global_navigation
+    /= micro_avatar(current_user)
+    %li= link_to current_user.login, current_user
+    %li= link_to t('.settings'), account_settings_path
+    - if current_user.invitations.pending_projects.count > 0
+      %li= link_to_unless_current t('.project_invitations', :count => current_user.invitations.count),
+        user_invitations_path(:user_id => current_user.id)
+    %li= link_to t('.help'), "http://guide.teambox.com##{controller_name}", :target => "_blank"
+    %li= link_to t('.logout'), logout_path

@@ -1,17 +1,18 @@
 class TeamboxData < ActiveRecord::Base
+  include Immortal
+
   belongs_to :user
   concerned_with :serialization, :attributes, :teambox, :basecamp
   
   attr_accessible :project_ids, :type_name, :import_data, :user_map, :target_organization, :service
   
-  before_validation_on_create :set_service
+  before_validation :set_service, :on => :create
   before_create :check_state
   after_create  :post_check_state
   after_update  :post_check_state
   before_update :check_state
   before_destroy :clear_import_data
   
-  acts_as_paranoid
   has_attached_file :processed_data,
     :url  => "/exports/:id/:basename.:extension",
     :path => Teambox.config.amazon_s3 ?
@@ -159,10 +160,12 @@ class TeamboxData < ActiveRecord::Base
   def do_export
     self.processed_at = Time.now
     @data = serialize(organizations_to_export, projects, users_to_export)
-    upload = ActionController::UploadedStringIO.new
-    upload.write(@data.to_json)
-    upload.seek(0)
-    upload.original_path = "#{user.login}-export.json"
+    upload_data = Tempfile.new("#{user.login}-export")
+    upload_data.write(@data.to_json)
+    upload_data.seek(0)
+    upload = ActionDispatch::Http::UploadedFile.new(:type => 'application/json',
+                                                    :filename => "#{user.login}-export.json",
+                                                    :tempfile => upload_data)
     self.processed_data = upload
     self.status_name = :exported
     @dispatch_notification = true

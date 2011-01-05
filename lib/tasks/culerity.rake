@@ -4,7 +4,7 @@ namespace 'culerity' do
     task :start => :environment do
       port = ENV['PORT'] || 3001
       environment = 'culerity_development'
-      pid_file = RAILS_ROOT + "/tmp/culerity_rails_server.pid"
+      pid_file = Rails.root + "/tmp/culerity_rails_server.pid"
       if File.exists?(pid_file)
         puts "culerity rails server already running; if not, delete tmp/culerity_rails_server.pid and try again"
         exit 1
@@ -15,7 +15,7 @@ namespace 'culerity' do
 
     desc "Stops the running rails server for cucumber/culerity tests"
     task :stop => :environment do
-      pid_file = RAILS_ROOT + "/tmp/culerity_rails_server.pid"
+      pid_file = Rails.root + "/tmp/culerity_rails_server.pid"
       if File.exists?(pid_file)
         pid = File.read(pid_file).to_i
         Process.kill(6, pid)

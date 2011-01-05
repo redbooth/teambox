@@ -1,4 +1,5 @@
 class Page < RoleRecord
+  include Immortal
   has_many :notes, :dependent => :destroy
   has_many :dividers, :dependent => :destroy
   has_many :uploads, :dependent => :destroy
@@ -13,6 +14,9 @@ class Page < RoleRecord
   validates_length_of :name, :minimum => 1
   
   default_scope :order => 'position ASC, created_at DESC, id DESC'
+  
+  after_create :log_create
+  after_update :log_update
   
   def build_note(note = {})
     self.notes.build(note) do |note|
@@ -96,11 +100,11 @@ class Page < RoleRecord
     groups
   end
   
-  def after_create
+  def log_create
     project.log_activity(self,'create')
   end
   
-  def after_update
+  def log_update
     project.log_activity(self, 'edit') unless @suppress_activity
   end
   
@@ -113,7 +117,7 @@ class Page < RoleRecord
   end
   
   def user
-    User.find_with_deleted(user_id)
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
   
   def refs_objects
@@ -169,7 +173,7 @@ class Page < RoleRecord
   end
 
   define_index do
-    where "`pages`.`deleted_at` IS NULL"
+    where "`pages`.`deleted` = 0"
 
     indexes name, :sortable => true
     indexes description

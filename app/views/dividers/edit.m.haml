@@ -1,11 +1,11 @@
-- form_for [@divider.project,@divider.page,@divider] do |f|
+= form_for [@divider.project,@divider.page,@divider] do |f|
   = divider_fields(f)
   .submit{ :id => "divider_submit_#{@divider.id}" }
     = f.submit t('.submit')
     = t('common.or')
     = link_to t('common.cancel'), project_page_path(@divider.project, @divider.page)
 
-- form_for [@divider.project,@divider.page,@divider], :html => {:id => "divider_destroy_#{@divider.id}", :method => :delete} do |f|
+= form_for [@divider.project,@divider.page,@divider], :html => {:id => "divider_destroy_#{@divider.id}", :method => :delete} do |f|
   .destruct_submit
     = t('common.or')
     = f.submit t('common.delete')

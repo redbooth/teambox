@@ -5,7 +5,7 @@
       =h comment.user
       %span== Posted #{time_ago_in_words(comment.updated_at)} ago
     .textilized
-      ~ comment.body_html
+      ~raw comment.body_html
   
     - if comment.uploads.any?
       - if comment.uploads.all? { |upload| upload.image? }

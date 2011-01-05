@@ -3,7 +3,7 @@
 
 %h2= t('.title')
 
-- form_for @data, :html => {:multipart => true} do |f|
+= form_for @data, :html => {:multipart => true} do |f|
   = hidden_field_tag 'teambox_data[type_name]', 'import'
   = fields_for_teambox_import(f, @data)
   .submit

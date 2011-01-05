@@ -14,7 +14,7 @@ Feature: Making project pages
     Then I should see "Cool page"
     And I should see "Text"
     And I should see "Divider"
-    And I should see "Upload"
+    And I should see "Image or file"
     And I should see "Edit"
     And I should see "Delete"
   

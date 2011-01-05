@@ -1,3 +1,5 @@
+require 'oauth'
+
 class GoogleDocs
   class ConfigurationError; end
   class RetrievalError < StandardError

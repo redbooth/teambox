@@ -80,7 +80,7 @@ describe Task do
     
       it "doesn't transition from closed to open" do
         @task.status_name = :resolved
-        @task.save(false)
+        @task.save(:validate => false)
         @task.assign_to @user
         @task.status_name.should == :resolved
       end
@@ -98,7 +98,7 @@ describe Task do
       
       @task.assigned = person
       @task.should_not be_valid
-      @task.errors.on(:assigned).should == "Assigned user doesn't belong to the project"
+      @task.errors_on(:assigned).should == ["Assigned user doesn't belong to the project"]
     end
   end
   
@@ -123,8 +123,8 @@ describe Task do
     end
     
     it "gets correct tasks" do
-      tasks = Task.active.assigned_to(@user).all(:order => 'tasks.id')
-      tasks.map(&:name).should == ["Feed the cat", "Feed the dog"]
+      tasks = Task.active.assigned_to(@user).order('name').all
+      tasks.map(&:name).should == ["Feed the dog", "Feed the cat"]
     end
   end
   
@@ -173,7 +173,7 @@ describe Task do
       task.update_attributes(:comments_attributes => {"0" => {:human_hours => "30m"}})
       task.update_attributes(:comments_attributes => {"0" => {:hours => "0.2"}})
       task.should have(3).comments
-      task.total_hours.should be_close(1.2, 0.001)
+      task.total_hours.should be_within(0.001).of(1.2)
     end
     
     it "saves status transitions" do
@@ -262,10 +262,13 @@ describe Task do
     end
 
     it "displays assigned users even when they are destroyed" do
+      # Require with_deleted relationship port in immortal
       user = Factory(:mislav)
       project = Factory(:project)
       person = Factory(:person, :project => project, :user => user)
-      task = Factory(:task, :assigned => person, :project => project)
+      task = Factory(:task, :project => project)
+      task.assigned = person
+      task.save!
       person.destroy_without_callbacks # We don't use destroy because we want to avoid the nullify from Person#tasks association
       task.reload.assigned.user.name.should == "Mislav Marohnić"
     end

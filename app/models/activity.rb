@@ -1,25 +1,26 @@
 class Activity < ActiveRecord::Base
-  belongs_to :target, :polymorphic => true, :with_deleted => true
-  belongs_to :comment_target, :polymorphic => true, :with_deleted => true
+  include Immortal
+
+  belongs_to :target, :polymorphic => true
+  belongs_to :comment_target, :polymorphic => true
   belongs_to :user
   belongs_to :project
-  acts_as_paranoid
 
-  named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_target_type = 'TaskList' || comment_target_type = 'Task'"
-  named_scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_target_type = 'Conversation'"
-  named_scope :for_tasks, :conditions => "target_type = 'Task' || comment_target_type = 'Task'"
-  named_scope :in_targets, lambda {|targets| {:conditions => ["target_id IN (?) OR comment_target_id IN (?)", *(Array(targets).collect(&:id)*2)]}}
+  scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_target_type = 'TaskList' || comment_target_type = 'Task'"
+  scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_target_type = 'Conversation'"
+  scope :for_tasks, :conditions => "target_type = 'Task' || comment_target_type = 'Task'"
+  scope :in_targets, lambda {|targets| {:conditions => ["target_id IN (?) OR comment_target_id IN (?)", *(Array(targets).collect(&:id)*2)]}}
 
-  named_scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
+  scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
 
-  named_scope :in_projects, lambda { |projects| { :conditions => ["project_id IN (?)", Array(projects).collect(&:id) ] } }
-  named_scope :limit_per_page, :limit => Teambox.config.activities_per_page
-  named_scope :by_id, :order => 'id DESC'
-  named_scope :by_updated, :order => 'updated_at desc'
-  named_scope :threads, :conditions => "target_type != 'Comment'"
-  named_scope :before, lambda { |activity_id| { :conditions => ["id < ?", activity_id ] } }
-  named_scope :after, lambda { |activity_id| { :conditions => ["id > ?", activity_id ] } }
-  named_scope :from_user, lambda { |user| { :conditions => { :user_id => user.id } } }
+  scope :in_projects, lambda { |projects| { :conditions => ["project_id IN (?)", Array(projects).collect(&:id) ] } }
+  scope :limit_per_page, :limit => Teambox.config.activities_per_page
+  scope :by_id, :order => 'id DESC'
+  scope :by_updated, :order => 'updated_at desc'
+  scope :threads, :conditions => "target_type != 'Comment'"
+  scope :before, lambda { |activity_id| { :conditions => ["id < ?", activity_id ] } }
+  scope :after, lambda { |activity_id| { :conditions => ["id > ?", activity_id ] } }
+  scope :from_user, lambda { |user| { :conditions => { :user_id => user.id } } }
 
   def self.log(project,target,action,creator_id)
     project_id = project.try(:id)
@@ -58,7 +59,7 @@ class Activity < ActiveRecord::Base
       [comment_target,
        comment_target.first_comment,
        comment_target.user,
-       comment_target.first_comment.user] + 
+       comment_target.first_comment.try(:user)] + 
        comment_target.recent_comments + 
        comment_target.recent_comments.map(&:user)
     else
@@ -84,6 +85,14 @@ class Activity < ActiveRecord::Base
     i == current_type
   end
   
+  def target
+    @target ||= target_id ? Kernel.const_get(target_type).find_with_deleted(target_id) : nil
+  end
+  
+  def comment_target
+    @comment_target ||= comment_target_id ? Kernel.const_get(comment_target_type).find_with_deleted(comment_target_id) : nil
+  end
+  
   def user
     target.user
   end
@@ -92,16 +101,12 @@ class Activity < ActiveRecord::Base
     target.created_at
   end
 
-  def deleted_date
-    target.deleted_at
-  end
-
   def downcase_type
     target.type.to_s.downcase
   end
 
   def user
-    @user ||= User.find_with_deleted(user_id)
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
 
   def thread

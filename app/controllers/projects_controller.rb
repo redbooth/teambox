@@ -17,7 +17,6 @@ class ProjectsController < ApplicationController
     @activities = Activity.for_projects(@projects)
     @threads = @activities.threads.all(:include => [:project, :target])
     @last_activity = @threads.last
-    @archived_projects = @current_user.projects.archived
 
     respond_to do |f|
       f.html
@@ -125,7 +124,10 @@ class ProjectsController < ApplicationController
     authorize! :destroy, @current_project
     @current_project.destroy
     respond_to do |f|
-      f.html { redirect_to projects_path }
+      f.html {
+        flash[:success] = t('projects.edit.deleted')
+        redirect_to projects_path
+      }
     end
   end
 
@@ -145,6 +147,25 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def list
+    @people = current_user.people
+    @roles = {  Person::ROLES[:observer] =>    t('roles.observer'),
+                Person::ROLES[:commenter] =>   t('roles.commenter'),
+                Person::ROLES[:participant] => t('roles.participant'),
+                Person::ROLES[:admin] =>       t('roles.admin') }
+
+
+    current_user = User.first ###############
+    organization_ids = current_user.projects.sort {|a,b| a.name <=> b.name}.group_by(&:organization_id)
+    @organizations = organization_ids.collect do |k,v|
+      r = {}
+      r[:organization] = Organization.find(k)
+      r[:active_projects] = v.reject(&:archived)
+      r[:archived_projects] = v.select(&:archived)
+      r
+    end.sort {|a,b| a[:organization].name <=> b[:organization].name}
+  end
+
   protected
   
     def load_task_lists
@@ -152,15 +173,7 @@ class ProjectsController < ApplicationController
     end
   
     def load_projects
-      if params.has_key?(:sub_action)
-        @sub_action = params[:sub_action]
-        if @sub_action == 'archived'
-          @projects = current_user.projects.archived
-        end  
-      else
-        @sub_action = 'all'
-        @projects = current_user.projects.unarchived
-      end
+      @projects = current_user.projects.unarchived
     end
 
     def load_pending_projects

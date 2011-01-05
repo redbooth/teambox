@@ -1,3 +1,4 @@
+@javascript
 Feature: Delete Project
 
   Background: 
@@ -8,7 +9,8 @@ Feature: Delete Project
   Scenario: Mislav deletes a project
     Given I follow "Project Archiving/Deletion"
     And I should see "Archive/Delete Project" in the title
-    And I should see "Archive this project" as a button
-    And I should see "Delete this project forever" as a button
-    When I follow "Delete this project forever"
+    And I should see "Archive this project"
+    And I should see "Delete this project forever"
+    When I follow "Delete this project forever" confirming with OK
+    Then I should see "You deleted the project"
 

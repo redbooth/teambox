@@ -233,10 +233,12 @@ var TaskList = {
     if (active) {
       $('reorder_task_lists_link').swapVisibility('done_reordering_task_lists_link')
       Filter.showAllTaskLists()
+      $$('.filters').invoke('hide')
       TaskList.makeSortable()
     } else {
       $('done_reordering_task_lists_link').swapVisibility('reorder_task_lists_link')
       Filter.updateFilters()
+      $$('.filters').invoke('show')
       TaskList.destroySortable()
     }
   },

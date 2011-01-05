@@ -1,4 +1,4 @@
-set :output, "#{RAILS_ROOT}/log/cron.log"
+set :output, "#{Rails.root}/log/cron.log"
 
 every 1.hour do
   rake "mail:reminders", :environment => :production

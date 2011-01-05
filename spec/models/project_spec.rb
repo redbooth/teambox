@@ -49,7 +49,7 @@ describe Project do
 
     it "should allow existent projects to have a name between 3 and 5 chars if they don't change it" do
       project = Factory.build(:project, :user => @owner, :name => "abcd", :permalink => "abcdefg")
-      project.save(false)
+      project.save(:validate => false)
       project.should be_valid
       project.permalink = "#{project.permalink}2"
       project.should be_valid
@@ -155,7 +155,7 @@ describe Project do
       @user.add_recent_project(@project)
       @user.recent_projects.should include(@project)
       @project.remove_user(@user)
-      @project.people.each do |person|
+      @project.people(true).each do |person|
         person.user.recent_projects.should_not include(@project)
       end
     end
