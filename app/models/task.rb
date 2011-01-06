@@ -22,7 +22,7 @@ class Task < RoleRecord
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
   accepts_nested_attributes_for :comments, :allow_destroy => false,
-    :reject_if => lambda { |comment| %w[body hours human_hours uploads_attributes].all? { |k| comment[k].blank? } }
+    :reject_if => lambda { |comment| %w[body hours human_hours uploads_attributes google_docs_attributes].all? { |k| comment[k].blank? } }
 
   attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes
 
