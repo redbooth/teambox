@@ -69,7 +69,7 @@ class TasksController < ApplicationController
     elsif can? :comment, @task
       success = @task.update_attributes(:comments_attributes => params['task']['comments_attributes'])
     else
-      Authorize! :comment, @task
+      authorize! :comment, @task
     end
 
     respond_to do |f|
