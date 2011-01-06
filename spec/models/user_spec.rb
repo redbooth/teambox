@@ -427,6 +427,14 @@ describe User do
       user = Factory.create(:user, :locale => 'xy')
       user.locale.should == 'en'
     end
+
+    it "should allow special name formatting for foreign locales" do
+      user = Factory :user, :first_name => '保', :last_name => '鎌田'
+      I18n.locale = 'ja' # where name is in the format 'last_name first_name さん'
+      user.name.should == '鎌田 保 さん'
+      I18n.locale = I18n.default_locale # where name is in the format 'first_name last_name'
+      user.name.should == '保 鎌田'
+    end
   end
 
   context 'attributes' do
