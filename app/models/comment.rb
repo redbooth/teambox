@@ -38,13 +38,15 @@ class Comment < ActiveRecord::Base
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
                   :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes
 
+  attr_accessor :is_importing
+
   scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
   scope :latest, :order => 'id DESC'
 
   # TODO: investigate how we can enable this and not break nested attributes
   # validates_presence_of :target_id, :user_id, :project_id
   
-  validate :check_duplicate, :if => lambda { |c| c.target_id? and not c.hours? }, :on => :create
+  validate :check_duplicate, :if => lambda { |c| !@is_importing and c.target_id? and not c.hours? }, :on => :create
   validates_presence_of :body, :unless => lambda { |c| c.task_comment? or c.uploads.to_a.any? or c.google_docs.any? }
 
   # was before_create, but must happen before format_attributes

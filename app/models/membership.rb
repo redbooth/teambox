@@ -35,7 +35,6 @@ class Membership < ActiveRecord::Base
     base = {
       :id => id,
       :user_id => user_id,
-      :user => user.to_api_hash,
       :organization_id => organization_id,
       :role => role,
       :created_at => created_at.to_s(:api_time),
