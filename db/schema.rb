@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101220141905) do
+ActiveRecord::Schema.define(:version => 20110107120943) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "comment_target_id"
-    t.boolean  "deleted"
+    t.boolean  "deleted",             :default => false, :null => false
   end
 
   add_index "activities", ["created_at"], :name => "index_activities_on_created_at"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.date     "due_on"
     t.date     "previous_due_on"
     t.integer  "uploads_count",        :default => 0
-    t.boolean  "deleted"
+    t.boolean  "deleted",              :default => false, :null => false
   end
 
   add_index "comments", ["deleted"], :name => "index_comments_on_deleted"
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "simple",          :default => false
-    t.boolean  "deleted"
+    t.boolean  "deleted",         :default => false, :null => false
   end
 
   add_index "conversations", ["deleted"], :name => "index_conversations_on_deleted"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted"
+    t.boolean  "deleted",    :default => false, :null => false
   end
 
   add_index "dividers", ["deleted"], :name => "index_dividers_on_deleted"
@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.string   "acl_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted"
+    t.boolean  "deleted",       :default => false, :null => false
   end
 
   add_index "google_docs", ["comment_id"], :name => "index_google_docs_on_comment_id"
@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "membership",      :default => 10
-    t.boolean  "deleted"
+    t.boolean  "deleted",         :default => false, :null => false
   end
 
   add_index "invitations", ["deleted"], :name => "index_invitations_on_deleted"
@@ -211,7 +211,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.integer  "last_comment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted"
+    t.boolean  "deleted",         :default => false, :null => false
   end
 
   add_index "notes", ["deleted"], :name => "index_notes_on_deleted"
@@ -230,7 +230,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "settings"
-    t.boolean  "deleted"
+    t.boolean  "deleted",           :default => false,                        :null => false
   end
 
   add_index "organizations", ["deleted"], :name => "index_organizations_on_deleted"
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.datetime "updated_at"
     t.integer  "position"
     t.string   "permalink"
-    t.boolean  "deleted"
+    t.boolean  "deleted",         :default => false, :null => false
   end
 
   add_index "pages", ["deleted"], :name => "index_pages_on_deleted"
@@ -269,7 +269,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.integer  "role",           :default => 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted"
+    t.boolean  "deleted",        :default => false, :null => false
   end
 
   add_index "people", ["deleted"], :name => "index_people_on_deleted"
@@ -295,7 +295,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.datetime "updated_at"
     t.boolean  "public"
     t.integer  "organization_id"
-    t.boolean  "deleted"
+    t.boolean  "deleted",         :default => false, :null => false
   end
 
   add_index "projects", ["deleted"], :name => "index_projects_on_deleted"
@@ -343,7 +343,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.date     "finish_on"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted"
+    t.boolean  "deleted",              :default => false, :null => false
   end
 
   add_index "task_lists", ["deleted"], :name => "index_task_lists_on_deleted"
@@ -356,7 +356,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "position"
-    t.integer  "comments_count",  :default => 0, :null => false
+    t.integer  "comments_count",  :default => 0,     :null => false
     t.integer  "last_comment_id"
     t.text     "watchers_ids"
     t.integer  "assigned_id"
@@ -365,7 +365,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted"
+    t.boolean  "deleted",         :default => false, :null => false
   end
 
   add_index "tasks", ["deleted"], :name => "index_tasks_on_deleted"
@@ -386,7 +386,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.text     "processed_objects"
     t.string   "service"
     t.integer  "status",                      :default => 0
-    t.boolean  "deleted"
+    t.boolean  "deleted",                     :default => false, :null => false
   end
 
   add_index "teambox_datas", ["deleted"], :name => "index_teambox_datas_on_deleted"
@@ -402,7 +402,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.integer  "asset_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted"
+    t.boolean  "deleted",            :default => false, :null => false
   end
 
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
@@ -449,7 +449,7 @@ ActiveRecord::Schema.define(:version => 20101220141905) do
     t.boolean  "splash_screen",                            :default => false
     t.integer  "assigned_tasks_count"
     t.integer  "completed_tasks_count"
-    t.boolean  "deleted"
+    t.boolean  "deleted",                                  :default => false,                        :null => false
   end
 
   add_index "users", ["deleted"], :name => "index_users_on_deleted"
