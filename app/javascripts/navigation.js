@@ -64,6 +64,12 @@ document.on("dom:loaded", function() {
   }
 })
 
+document.on('click', 'a#open_my_tasks', function(e,el) {
+  if (e.isMiddleClick()) return
+  e.stop()
+  window.location = el.readAttribute("href")
+})
+
 document.on('click', '.nav_links .el', function(e,el) {
   if (e.isMiddleClick()) return
   NavigationBar.toggleElement(el, true) && e.stop()

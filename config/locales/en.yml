@@ -1153,6 +1153,7 @@ en:
       settings: Settings
       people: "People & Permissions"
       my_tasks: My Tasks
+      open_my_tasks: Open all my tasks
       show_all_tasks: View all tasks in my projects...
       organizations: Organizations
       show_all_organizations: "Manage organizations..."
