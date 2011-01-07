@@ -203,7 +203,7 @@ class TeamboxData
     comments.each do |comment_data|
       comment = unpack_object(@project.comments.build, comment_data)
       comment.is_importing = true
-      comment.assigned_id = resolve_person(comment_data['assigned_id']).id if data['assigned_id']
+      comment.assigned_id = resolve_person(comment_data['assigned_id']).try(:id) if data['assigned_id']
       comment.target = obj
       comment.save!
       import_log(comment)
@@ -216,7 +216,7 @@ class TeamboxData
     comments.each do |comment_data|
       comment = unpack_object(task.comments.build, comment_data)
       comment.is_importing = true
-      comment.assigned_id = resolve_person(comment_data['assigned_id']).id if data['assigned_id']
+      comment.assigned_id = resolve_person(comment_data['assigned_id']).try(:id) if data['assigned_id']
       task.updating_user = comment.user
       task.updating_date = comment.created_at
       task.save!
