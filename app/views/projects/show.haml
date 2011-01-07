@@ -1,3 +1,5 @@
+%h2= t('.title', :project => @current_project)
+
 - if @pending_projects.any?
   .invitations
     = list_pending_invites(@pending_projects)

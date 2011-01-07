@@ -348,6 +348,7 @@ en:
       item5_html: "<b>Share information</b> with easily editable Pages for each project."
       footer: "Projects are a centralized way of collaborating, so you'll never need to email your team again."
     show:
+      title: Recent activity for %{project}
       update_your_status: "Update your status..."
       text_styling: Formatting help
       new_task_list_link: New Task List
@@ -432,10 +433,10 @@ en:
       not_allowed: "You can't create any more projects with your current account."
       sending: Creating the project…
     edit:
-      title_settings: General Settings
-      title_picture: Project Logo
-      title_deletion: Archive/Delete Project
-      title_ownership: Ownership
+      title_settings: General Settings for %{project}
+      title_picture: Project Logo for %{project}
+      title_deletion: Archive or Delete project %{project}
+      title_ownership: Ownership of %{project}
       submit: Save Changes
       change_owner: Change owner
       transferred: "Project ownership has been transferred."
@@ -466,6 +467,7 @@ en:
       billing: Plans and Billing
       delete: Delete this organization...
     edit:
+      title: Settings for %{organization}
       there_are: "There are"
       number_of_users: "%{count} users"
       public_site: "Your organization's public site is %{link}"
@@ -474,6 +476,7 @@ en:
       saved: Changes saved
       invalid: Invalid organization
     appearance:
+      title: Appearance for %{organization}
       submit: Save changes
     external_view:
       create_your_own_org_html: "However, you can <a href='%{link}'>create your own organization</a> for your projects."
@@ -547,7 +550,7 @@ en:
         other: %{count} projects
       more_users: "and %{count} more users"
     projects:
-      title: "'%{name}' organization"
+      title: Projects in %{organization}
       new_project: New project
       instructions_html: "These are the projects for this organization. If you're an admin, you can transfer a project to <a href='%{organizations_link}'>other organizations</a> by opening the project's settings."
     active_projects:
@@ -570,7 +573,7 @@ en:
       deleted: You deleted the organization
   memberships:
     index:
-      title: "'%{name}' organization"
+      title: Users in %{name}
       admins:
         title: Admins
         explain: "Can access any project and manage the organization's settings."
@@ -659,6 +662,7 @@ en:
     edit:
       submit: 'Update Conversation'
     index:
+      title: Conversations in %{project}
       new_conversation: "New Conversation"
       view_single: Read more
       rss:
@@ -798,7 +802,9 @@ en:
       submit: Update
   pages:
     index:
-      pages_in_this_project: Pages in this project
+      title: Pages in %{project}
+      new_page: New Page
+      cant_create: You don't have permission to create pages in this project
       rss:
         title: "%{name} pages"
         description: "Pages in project %{name}"
@@ -841,8 +847,6 @@ en:
     slots:
       insert_here: Insert Here
     column:
-      new_page: New Page
-      cant_create: You don't have permission to create pages in this project
       all_pages: All Pages
       reorder: Reorder
       reorder_done: Done
@@ -902,7 +906,7 @@ en:
       empty: No tasks in this category!
       tasks_for_all_projects: Tasks across all projects
       tasks_for_all_projects_explain: "Displaying all tasks. In order to manage task lists and reorder tasks, open each project's tasks."
-      tasks_for_project: Task lists for this project
+      tasks_for_project: Task lists for %{project}
       other_views: Other views
       gantt_view: Project Gantt and calendar
       rss:
@@ -1068,15 +1072,16 @@ en:
       select_a_file: Select a file to upload to Teambox
       uploading: Uploading...
     index:
+      title: Files in %{project}
       new_file: Upload a File
       cant_create: You don't have permission to upload files to this project
-      max_upload_size: "Max upload size is %{mb} Mb"
     form:
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed %{mb} MB"
       select_file: Select file
       description_html: Title <i>(optional)</i>
       upload: Upload file
+      max_upload_size: "Max upload size is %{mb} Mb"
     primer:
       empty: This project doesn't have any files yet.
       create_first: Upload the first file to this project!

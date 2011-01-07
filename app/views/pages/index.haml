@@ -1,5 +1,13 @@
 = page_column(@current_project, @pages)
 
+.text_actions
+  - if can? :make_pages, @current_project
+    = new_page_link(@current_project)
+  - else
+    %p= t('.cant_create')
+
+%h2= t('.title', :project => @current_project)
+
 - if @pages.any?
   #pages
     = list_pages_with_toc(@pages)

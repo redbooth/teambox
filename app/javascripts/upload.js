@@ -1,7 +1,7 @@
-document.on('click', '.index_uploads #column .add_button', function(e, button) {
+document.on('click', '#upload_file_button', function(e, button) {
   if (!e.isMiddleClick()) {
     e.preventDefault()
-    button.next('form').show()
+    $('upload_file_form').show()
     button.hide()
   }
 })
