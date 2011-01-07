@@ -4,7 +4,7 @@
   = page_fields(f)
 
   .submit
-    = f.submit t('.submit')
+    = f.submit t('.submit'), :'data-disable-with' => t('.sending')
     = t('common.or')
     = link_to t('common.cancel'), project_pages_path(@current_project)
   
