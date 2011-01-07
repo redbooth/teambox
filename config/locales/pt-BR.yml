@@ -1314,11 +1314,6 @@ pt-BR:
     new: 
       submit: Adicionar
       title: "Nova lista de tarefas"
-    overview_box: 
-      ends_on: "Termina a:"
-      starts_on: "Inicia em:"
-      this_list: "Esta lista de tarefas"
-      undefined: Indefinido
     primer: 
       create_first: "Cria a primeira lista de tarefas!"
       define_html: "Usa tareas para <b>planificar</b>, <b>ver qué se ha hecho</b> y <b>no olvidar ideas futuras</b>.<br/><i>¿Qué? ¿Quién? ¿Cuándo?</i> Las tareas pueden tener un estado, un responsable y una fecha límite."

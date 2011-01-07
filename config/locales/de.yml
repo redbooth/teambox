@@ -1269,11 +1269,6 @@ de:
     new: 
       submit: "Aufgabenliste hinzufügen"
       title: "Neue Aufgabenliste"
-    overview_box: 
-      ends_on: "Endet am:"
-      starts_on: "Startet am:"
-      this_list: "Diese Aufgabenliste"
-      undefined: "Nicht definiert"
     primer: 
       create_first: "Erstellen Sie die erste Aufgabenliste in diesem Projekt!"
       define_html: "Nutzen Sie Aufgaben, um <b>vorauszuplanen</b>, <b>Fortschritte zu erfassen</b> und <b>nachzuvollziehen, was gemacht worden ist</b>.<br/><i>Was? Wer? Wann?</i> Aufgaben können einen Status haben, eine zugeordnete Person und ein Fälligkeitsdatum."

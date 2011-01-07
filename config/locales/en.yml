@@ -921,11 +921,6 @@ en:
       item4_html: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
       footer1_html: "Tasks are a simple and agile way to <b>get things done</b> and let others know."
       footer2_html: "It's time to forget about Excel planning sheets and complex Gantt charts!"
-    overview_box:
-      this_list: "This task list"
-      starts_on: "Starts on:"
-      ends_on: "Ends on:"
-      undefined: "Undefined"
     new:
       title: New Task List
       submit: Add Task List

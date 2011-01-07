@@ -1408,11 +1408,6 @@ ca:
     new: 
       submit: Crear
       title: "Nova llista de tasques"
-    overview_box: 
-      ends_on: "Acaba el:"
-      starts_on: "Comença el:"
-      this_list: "Aquesta llista de tasques"
-      undefined: "Sense definir"
     primer: 
       create_first: "Crea la primera llista de tasques!"
       define_html: "Fes servir tasques per a <b>planificar</b>, <b>veure que s'ha fet</b> i <b>no oblidar ides futures</b>.<br/><i>Què? Qui? Quan?</i> Les tasques poden tenir un estat, un responsable i una data límit."
