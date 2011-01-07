@@ -4,11 +4,13 @@
   .el= link_to t('.recent_activity'), root_path, :class => 'recent_activity ajax'
 
   -# All Projects
+  - show_only_recent = current_user.people.size > 3
+  - projects_to_show = show_only_recent ? current_user.recent_projects : current_user.projects.unarchived
   .el
     = link_to t('.all_projects'), projects_path, :class => 'home'
-    %span= current_user.projects.unarchived.count
+    %span= current_user.projects.unarchived.size
   .contained
-    - for project in current_user.recent_projects
+    - for project in projects_to_show
       .el= link_to project, project, :class => 'project'
       .contained
         .el= link_to t('.recent_activity'), project_path(project), :class => 'recent_activity ajax'
@@ -20,7 +22,7 @@
           .el= link_to t('.settings'), project_settings_path(project), :class => 'settings ajax'
         - if can?(:admin, project)
           .el= link_to t('.people'), project_people_path(project), :class => 'people ajax'
-    - if current_user.people.count > 3
+    - if show_only_recent
       .el= link_to t('.show_all_projects'), all_projects_path, :class => 'more ajax'
     - if !Teambox.config.community || (@community_organization && @community_role)
       .el= link_to t('.new_project'), new_project_path, :class => 'more ajax'
