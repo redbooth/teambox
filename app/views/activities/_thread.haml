@@ -32,6 +32,6 @@
 
   - else
     - action = url_for([thread.project, thread, thread.comments.build])
-    = form_for [thread.project, thread], :url => action, :html => {:multipart => true, :id => nil, :class => 'new_comment edit_conversation', :'data-project-id' => thread.project_id, :'data-remote' => true, :method => 'post'} do |form|
+    = form_for [thread.project, thread], :url => action, :html => {:multipart => true, :id => nil, :class => 'new_comment edit_conversation', :'data-project-id' => thread.project_id, :'data-remote' => true} do |form|
       = fields_for :comment, thread.comments.build do |comment_fields|
         = render 'comments/fields', :f => comment_fields, :conversation_form => form, :placeholder => t("comments.new.#{thread_class}"), :project => thread.project
