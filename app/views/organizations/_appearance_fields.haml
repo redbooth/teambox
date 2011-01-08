@@ -2,7 +2,7 @@
   %legend=t('.colours')
 
   - Organization.default_settings['colours'].keys.each do |field|
-    .text_field
+    .text_field.color_field
       %label
         = t(".#{field}_colour")
       = custom_organization_colour_field(f, @organization, field)

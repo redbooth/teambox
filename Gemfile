@@ -10,6 +10,7 @@ group :rails do
   gem 'text-format', '>= 0.6.3', :require => 'text/format'
 end
 
+gem 'nokogiri'
 gem 'SystemTimer', '~> 1.2.0', :require => 'system_timer'
 gem 'whenever', '~> 0.4.1', :require => nil
 gem 'icalendar', '~> 1.1.3'
@@ -25,12 +26,8 @@ gem 'json'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'tilt'
 gem 'choices', :git => "git://github.com/teambox/choices.git"
-gem 'nokogiri'
 
-group :plugins do
-  gem 'will_paginate', '~> 2.3.14'
-end
-
+gem 'will_paginate', '~> 2.3.14'
 gem 'thinking-sphinx', '2.0.1', :require => 'thinking_sphinx'
 gem 'sprockets-rails', '~> 0.0.1'
 gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_versions'

@@ -7,9 +7,6 @@
     %h2= link_to h(@task_list), [@task_list.project, @task_list]
     = sidebar_tasks(@task_list.tasks.unarchived)
 
-  - when 'show_task_lists'
-    = task_list_overview_box(@task_list)
-
   - when 'index_task_lists'
 
 %h2= t('.other_views')

@@ -1,4 +1,4 @@
-%h2=h @organization
+%h2= t('.title', :organization => @organization)
 
 %p= t('.public_site', :link => link_to(public_url_for_organization(@organization), public_url_for_organization(@organization))).html_safe
 

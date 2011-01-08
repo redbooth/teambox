@@ -16,6 +16,15 @@
       padding: 2px 4px
       font-size: 11px
       +rounded(3px)
+      &.clickable
+        padding: 0
+        margin: 0
+        &:hover
+          background-color: #333
+          a
+            color: white
+        a
+          padding: 2px 4px
     &.selected, &.selected:hover
       background: lighten($navbar, 20)
     &:hover
@@ -23,8 +32,6 @@
     &.expanded
       a
         font-weight: bold
-      span
-        display: none
 
   .contained
     .el
@@ -90,3 +97,4 @@
 
 .more_links
   margin-left: -15px
+

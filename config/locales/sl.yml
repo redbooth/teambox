@@ -964,11 +964,6 @@ sl:
     new: 
       submit: "Dodaj seznam opravil"
       title: "Nov seznam opravil"
-    overview_box: 
-      ends_on: "Rok:"
-      starts_on: "Začne se:"
-      this_list: "Ta seznam opravil"
-      undefined: Nedoločeno
     primer: 
       create_first: "Ustvari prvi seznam opravil v tem projektu!"
       empty: "Ta projekt je še brez seznama opravil."

@@ -272,10 +272,6 @@ module TaskListsHelper
     render 'task_lists/tasks_for_all_projects', :tasks => tasks
   end
 
-  def task_list_overview_box(task_list)
-    render 'task_lists/overview_box', :task_list => task_list
-  end
-  
   def task_list_archive_box(project,task_list)
     render 'task_lists/archive_box', :project => project, :task_list => task_list
   end

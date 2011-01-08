@@ -7,7 +7,7 @@
       - if can? :make_task_lists, @current_project
         = task_list_link(@current_project)
 
-    %h2= t('.tasks_for_project')
+    %h2= t('.tasks_for_project', :project => @current_project)
 
   = filter_task_lists
 

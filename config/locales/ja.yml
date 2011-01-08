@@ -1459,11 +1459,6 @@ ja:
     new: 
       submit: タスクリストを追加
       title: 新規タスクリスト
-    overview_box: 
-      ends_on: 終了
-      starts_on: 開始
-      this_list: このタスクリスト
-      undefined: 未定義
     primer: 
       create_first: 最初のタスクリストを作成しましょう!
       define_html: "タスクを使って<b>先の計画を立てたり</b>、<b>進捗を把握したり</b>、<b>作業のレビュー</b>をしたりします。<br/><i>何を? 誰が? いつやるの?</i> タスクには状態と割当て、そして期限を設定することができます。"

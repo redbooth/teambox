@@ -1464,11 +1464,6 @@ fr:
     new: 
       submit: Créer
       title: "Nouvelle liste de tâches"
-    overview_box: 
-      ends_on: "Se termine le :"
-      starts_on: "Démarre le :"
-      this_list: "Cette liste de tâches"
-      undefined: "Non défini"
     primer: 
       create_first: "Créez la première liste de tâches!"
       define_html: "Utilisez les tâches pour <b>planifier</b>, <b>voir ce qui a été fait</b> et <b>ne pas oublier des idées pour le futur</b>.<br/><i>Quoi ? Qui ? Quand ?</i> Les tâches peuvent avoir un statut, un responsable et une échéance."

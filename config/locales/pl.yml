@@ -1457,11 +1457,6 @@ pl:
     new: 
       submit: "Dodaj listę zadań"
       title: "Nowa lista zadań"
-    overview_box: 
-      ends_on: "Kończy się:"
-      starts_on: "Rozpoczyna się:"
-      this_list: "Ta lista zadań"
-      undefined: Niezdefiniowane
     primer: 
       create_first: "Stwórz pierwsze zadanie w tym projekcie"
       define_html: "Używaj zadań do <b>planowania prac</b>, <b>śledzenia zmian</b> oraz <b> sprawdzania co zostało już zrobione</b>. <br/><i>Co? Kto? Kiedy?</i> Zadania mogą być oznaczone statusem, wykonawcą oraz terminem realizacji"

@@ -1,10 +1,5 @@
 - content_for :column do
 
-  - if can? :make_pages, project
-    = new_page_link(project)
-  - else
-    %p= t('.cant_create')
-
   - if pages.any?
     #column_pages.pages{:reorder_url => resort_project_pages_path(@current_project)}
       %h2

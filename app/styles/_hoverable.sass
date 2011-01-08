@@ -1,6 +1,7 @@
 .hoverbox
   position: relative
   display: inline
+  z-index: 10000
   &:hover
     .panel, .arrow
       display: inline-block
@@ -29,3 +30,8 @@
     border: 4px solid transparent
     border-bottom-color: rgb(175,175,175)
     border-bottom-color: rgba(0,0,0,0.7)
+  &.left
+    .panel
+      left: auto
+      right: -15px
+    
