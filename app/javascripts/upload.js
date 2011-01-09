@@ -17,6 +17,16 @@ document.on('change', '.upload_area input[type=file]', function(e, input) {
     type: 'file',
     name: input.name.incrementLastNumber()
   })
-  
   input.insert({ after: newInput })
+})
+
+document.on('click', '.uploads .upload .header', function(e, el) {
+  e.stop()
+  var reference = el.up('.upload').down('.reference')
+  if (reference.visible()) {
+    reference.hide()
+  } else {
+    $$('.uploads .upload .reference').invoke('hide')
+    reference.show()
+  }
 })

@@ -40,15 +40,8 @@ class UploadsController < ApplicationController
   end
   
   def index
-    @uploads = @current_project.uploads
+    @uploads = @current_project.uploads.order('updated_at DESC')
     @upload ||= @current_project.uploads.new
-
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml     => @uploads.to_xml({:root => 'files'}) }
-      format.json { render :as_json => @uploads.to_xml({:root => 'files'}) }
-      format.yaml { render :as_yaml => @uploads.to_xml({:root => 'files'}) }
-    end
   end
 
   def show
