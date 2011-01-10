@@ -10,11 +10,9 @@
   %h2= t('hours.report')
   %select#report_list
     = list_hour_reports
-  = observe_hour_reports
   %h2= t('hours.filter_by')
   #user_filter
     = list_hour_filters(@current_project)
-  = observe_hour_filter
 
   - pathname = @current_project ? project_hours_by_month_path(@current_project, :month => @month, :year => @year, :format => 'csv') : hours_by_month_path(:month => @month, :year => @year, :format => 'csv')
   

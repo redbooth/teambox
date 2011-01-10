@@ -26,15 +26,15 @@ class HoursController < ApplicationController
     
     conditions = if @current_project
       ['project_id = ? AND created_at >= ? AND created_at < ? AND hours > 0', 
-        @current_project.id, @start_month, @end_month]
+        @current_project.id, @start_date, @end_date]
     else
       ['project_id IN (?) AND created_at >= ? AND created_at < ? AND hours > 0',
-        current_user.project_ids, @start_month, @end_month]
+        current_user.project_ids, @start_date, @end_date]
     end
     @comments = Comment.find(:all, :conditions => conditions, :include => [:project, :user, :target])
     
     respond_to do |format|
-      format.html { handle_redirect }
+      format.html { }
       format.csv { send_data serialize_comments(@comments), :type => 'text/csv',
                           :filename => "hours-#{@year}-#{@month}.csv" }
     end
@@ -120,12 +120,12 @@ private
     @month = month
     
     begin
-      @start_month = Date.civil(@year, @month, 1)
+      @start_date = Date.civil(@year, @month, 1)
     rescue
       return false
     end
   
-    @end_month = @start_month + 1.month
+    @end_date = @start_date + 1.month
     true
   end
 end  

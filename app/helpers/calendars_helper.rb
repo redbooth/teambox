@@ -8,22 +8,6 @@ module CalendarsHelper
     render 'hours/report_list'
   end
   
-  def observe_hour_filter
-  end
-
-  def observe_hour_reports
-    update_page_tag do |page|
-      page['report_list'].observe('change') { |page| page.apply_report_list }
-    end
-  end
-
-  def apply_report_list
-    page << "Hours.currentReport = this.getValue(); Hours.update();"
-  end
-
-  def apply_user_filter
-  end
-
   def day_hours(comments)
     @users_displayed ||= comments.map(&:user)
     comments.group_by { |c| c.created_at.mday }
@@ -34,9 +18,6 @@ module CalendarsHelper
     @class_names ||= {}
     @class_names[user.to_s] ||= (@current_class_name += 1)
     "#{text}_#{@class_names[user.to_s]} hour_#{user} hour"
-  end
-
-  def week_hours
   end
 
   def build_small_calendar(comments,year,month)
@@ -275,17 +256,17 @@ module CalendarsHelper
  
     start_date = start_of_calendar(year, month)
     start = "new Date(#{start_date.year}, #{start_date.month-1}, #{start_date.day})"
+    
     javascript_tag <<-EOS
-    document.observe('dom:loaded', function(e){
-      Hours.init(#{start});
-     Hours.addHours([#{args.join(',')}]);
-     Hours.userMap = #{usermap.to_json};
-     Hours.userNameMap = #{usernamemap.to_json};
-     Hours.taskMap = #{taskmap.to_json};
-     Hours.projectMap = #{projectmap.to_json};
-     Hours.organizationMap = #{organizationmap.to_json};
-     Hours.update();
-    });
+      HOURS_DATA = {
+        start: #{start},
+        hours: [#{args.join(',')}],
+        userMap: #{usermap.to_json},
+        userNameMap: #{usernamemap.to_json},
+        taskMap: #{taskmap.to_json},
+        projectMap: #{projectmap.to_json},
+        organizationMap: #{organizationmap.to_json}
+      }
     EOS
   end
 
