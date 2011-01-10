@@ -112,7 +112,7 @@ describe HooksController do
                         '',
                         'I would say something about this conversation'
 
-        comment = @conversation.comments(true).last(:order => 'id asc')
+        comment = @conversation.comments(true).except(:order).last(:order => 'ID ASC')
         comment.body.should == 'I would say something about this conversation'
         comment.uploads.count.should == 2
       end
