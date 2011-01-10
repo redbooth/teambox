@@ -27,13 +27,13 @@ class Conversation < RoleRecord
     text = description_for_github_push(payload)
     
     self.create!(:body => "<div class='hook_github'>#{text}</div>", :simple => true) do |conversation|
-      conversation.user = conversation.project.user if conversation.project
+      conversation.user = conversation.project.users.detect { |u| u.name == payload['commits'][0]['author']['name'] } if payload['commits'].size > 0
       yield conversation if block_given?
     end
   end
   
   def self.description_for_github_push(payload)
-    text = "<h3>New code on <a href='%s'>%s</a> %s</h3>\n\n" % [
+    text = "<b>New code on <a href='%s'>%s</a> %s</b>\n\n" % [
       payload['repository']['url'], payload['repository']['name'], payload['ref']
     ]
     
