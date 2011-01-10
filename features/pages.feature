@@ -7,7 +7,7 @@ Feature: Making project pages
   
   Scenario: I create a page
     When I go to the pages of the "Ruby Rockstars" project
-      And I follow "New Page" within "#column"
+      And I follow "New Page" within ".text_actions"
       And I fill in "Name" with "Cool page"
       And I fill in "Description" with "A cool page indeed"
       And I press "Create"
