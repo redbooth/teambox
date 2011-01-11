@@ -6,7 +6,7 @@
   -# All Projects
   - show_only_recent = current_user.people.size > 3
   - projects_to_show = show_only_recent ? current_user.recent_projects : current_user.projects.unarchived
-  .el
+  .el#my_projects
     = link_to t('.all_projects'), projects_path, :class => 'home'
     %span= current_user.projects.unarchived.size
   .contained
@@ -42,7 +42,7 @@
       = link_to t('.show_all_tasks'), task_lists_path, :class => 'more'
 
   -# Organizations
-  .el= link_to t('.organizations'), organizations_path, :class => 'people'
+  .el#my_organizations= link_to t('.organizations'), organizations_path, :class => 'people'
   .contained
     - for organization in current_user.organizations
       - next if organization.new_record?
