@@ -70,7 +70,7 @@ ar:
         name: الموقع
     errors: 
       full_messages: 
-        format: "{{attribute}} {{message}}"
+        format: "%{attribute} %{message}"
       messages: 
         accepted: "يجب الموافقة"
         blank: "لا يمكن تركه خاليا"
