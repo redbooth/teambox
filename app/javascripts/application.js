@@ -7,6 +7,7 @@
 //= require <dragdrop>
 //= require <sound>
 //= require <mustache>
+//= require <history>
 
 //= require <calendar_date_select>
 //= require <facebox>
