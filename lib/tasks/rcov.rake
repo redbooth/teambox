@@ -9,7 +9,6 @@ namespace :rcov do
   end
 
   RSpec::Core::RakeTask.new(:rspec_run) do |t|
-    t.spec_opts = ['--options', "\"#{Rails.root}/spec/spec.opts\""]
     t.pattern = 'spec/**/*_spec.rb'
     t.rcov = true
     t.rcov_opts = %w{--rails --exclude osx\/objc,gems\/,spec\/,features\/ --aggregate coverage.data}
