@@ -210,7 +210,7 @@ class Emailer < ActionMailer::Base
     end
 
     def daily_task_reminder
-      user = User.first
+      user = User.find_by_login 'frank'
       ::Emailer.daily_task_reminder(user.id)
     end
 
