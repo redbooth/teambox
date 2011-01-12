@@ -24,6 +24,7 @@ require 'action_view/helpers/text_helper'
 
 module Emailer::Incoming
   include ActionView::Helpers::TextHelper
+  ACTION_MATCH = /^\s*#(\w+)/
 
   def self.fetch(settings)
     type = settings[:type].to_s.downcase
@@ -77,13 +78,13 @@ module Emailer::Incoming
   def receive(email)
     email = ParamsMail.new(email) if Hash === email
     
-    # TODO: cleanup this convoluted logic and ease a bit on the ivars pls
+    # TODO: ease a bit on the ivars pls
     process_incoming email
     get_target email
-    get_action if @target.is_a?(Task)
     
     case @type
-    when :project then create_conversation
+    when :project
+      create_conversation
     when :conversation
       if @target then post_to(@target)
       else create_conversation
@@ -91,8 +92,10 @@ module Emailer::Incoming
     when :task
       unless @target
         @target = create_task
-        get_action
       end
+      
+      get_action
+      @body = extract_action
       post_to(@target)
     end
   end
@@ -180,8 +183,6 @@ module Emailer::Incoming
   class TargetNotFoundError < Error; end
 
   # accepts params in Sendgrid's format: http://wiki.sendgrid.com/doku.php?id=parse_api
-  # RAILS3 renamed from process as was conflicting with ActionMailer::Base#process
-  # RAILS3 check where used
   def process_incoming(email)
     raise MissingInfo, "Invalid mail body" if email.body.blank?
     
@@ -254,7 +255,7 @@ module Emailer::Incoming
   # Determines the #action
   # The commands are #resolve / #resolved, #username, #reject / #rejected and #hold.
   def get_action
-    if @body =~ /^\s*#(\w+)/
+    if @body =~ ACTION_MATCH
       tag = $1.downcase
       
       @target_action = case tag
@@ -269,6 +270,11 @@ module Emailer::Incoming
         end
       end
     end
+  end
+  
+  def extract_action
+    get_action
+    @body.sub(ACTION_MATCH, '').strip
   end
   
   def post_to(target)

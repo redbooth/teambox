@@ -245,6 +245,16 @@ describe Emailer do
       comment.previous_status.should == Task::STATUSES[:new]
     end
     
+    it "should extract actions from emails" do
+      @email_template.to = "#{@project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}"
+      @email_template.body = "\n\n  \n\n \n\n#hold\nPeople like newlines too. So lets implement that!"
+      Emailer.receive(@email_template.to_s)
+      
+      @task.reload
+      comment = @task.comments.last
+      comment.body.should == "People like newlines too. So lets implement that!"
+    end
+    
     it "should post a comment to a project if no subject is given" do
       @email_template.to = "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}"
       @email_template.body = "Yes i agree completely!"
