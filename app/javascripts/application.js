@@ -6,6 +6,7 @@
 //= require <controls>
 //= require <dragdrop>
 //= require <sound>
+//= require <mustache>
 
 //= require <calendar_date_select>
 //= require <facebox>
