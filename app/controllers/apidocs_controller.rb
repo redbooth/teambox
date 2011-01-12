@@ -175,7 +175,11 @@ class ApidocsController < ApplicationController
 
     def load_api_routes
       @routes = ActionController::Routing::Routes.routes.select do |route|
-        route.defaults[:controller].starts_with? 'api_v1'
+        unless route.defaults[:controller].nil?
+          route.defaults[:controller].starts_with? 'api_v1'
+        else
+          false
+        end
       end.collect do |route|
         { :controller => route.defaults[:controller].split('/').second,
           :action => route.defaults[:action],

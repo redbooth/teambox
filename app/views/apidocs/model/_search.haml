@@ -1,9 +1,9 @@
-%p= "Searches are performed using Search. A search is technically not a model, instead it acts like a specialized interface for querying objects in Teambox."
-%p= "Current models returned by the search are #{link_to_doc_model(:conversation)}s, #{link_to_doc_model(:task)}s, and #{link_to_doc_model(:page)}s."
+%p=raw "Searches are performed using Search. A search is technically not a model, instead it acts like a specialized interface for querying objects in Teambox."
+%p=raw "Current models returned by the search are #{link_to_doc_model(:conversation)}s, #{link_to_doc_model(:task)}s, and #{link_to_doc_model(:page)}s."
 
 - doc_for :index, 
           :example => example_api_wrap(@comment, :emit_type => true, :references => []),
           :parameters => {:q => 'ideas'} do
-  %p= "Returns the first set of objects which match the search query. Either the current project or the current users projects will be used to filter the search, depending on the route used."
-  %p= "<tt>q</tt> is the actual search term used."
-  %p= "The type of each object will be returned in the <tt>type</tt> key."
+  %p=raw "Returns the first set of objects which match the search query. Either the current project or the current users projects will be used to filter the search, depending on the route used."
+  %p=raw "<tt>q</tt> is the actual search term used."
+  %p=raw "The type of each object will be returned in the <tt>type</tt> key."

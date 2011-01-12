@@ -1,23 +1,27 @@
-%p= "A membership links a #{link_to_doc_model(:user)} to an #{link_to_doc_model(:organization)}."
-%p= "To add people to an organization, make an #{link_to_doc_model(:invitation)}."
+%p=raw "A membership links a #{link_to_doc_model(:user)} to an #{link_to_doc_model(:organization)}."
+%p=raw "To add people to an organization, make an #{link_to_doc_model(:invitation)}."
 
-- doc_for :index, :example => example_api_wrap([@membership], :references => [:organization, :user]) do
-  %p= "Returns the most recent people in the project."
+- doc_for :index,
+          :example => example_api_wrap([@membership], :references => [:organization, :user]) do
+  %p=raw "Returns the most recent people in the project."
 
 - ignore_doc_for :create
 
-- doc_for :show, :example => @membership.to_api_hash(:include => [:user]) do
-  %p= "Returns the data for a person in the project"
+- doc_for :show,
+          :example => @membership.to_api_hash(:include => [:user]) do
+  %p=raw "Returns the data for a person in the project"
 
-- doc_for :update, :parameters => {:role => 30 },
-                   :status => :updated,
-                   :role => :admin do
-  %p= "Updates a membership in the project. You need to be an administrator in the organization for this to work."
-  %p= "Roles are as follows:"
+- doc_for :update,
+          :parameters => {:role => 30 },
+          :status => :updated,
+          :role => :admin do
+  %p=raw "Updates a membership in the project. You need to be an administrator in the organization for this to work."
+  %p=raw "Roles are as follows:"
   %ul
     - [:external, :participant, :admin].each do |key|
       %li= "<tt>#{Membership::ROLES[key]}</tt> #{key.to_s.capitalize}"
 
-- doc_for :destroy, :status => :deleted,
-                    :role => [:admin, :owner] do
-  %p= "Destroys a member in the organization. You need to be an administrator in the organization for this to work."
+- doc_for :destroy,
+          :status => :deleted,
+          :role => [:admin, :owner] do
+  %p=raw "Destroys a member in the organization. You need to be an administrator in the organization for this to work."

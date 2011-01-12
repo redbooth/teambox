@@ -1,23 +1,28 @@
-%p= "A divider is a heading placed on a #{link_to_doc_model(:page)}."
-%p= "Dividers belong in slots, which can be reordered using page#reorder."
+%p=raw "A divider is a heading placed on a #{link_to_doc_model(:page)}."
+%p=raw "Dividers belong in slots, which can be reordered using page#reorder."
 
-- doc_for :index, :example => example_api_wrap(@divider, :references => [:page]) do
-  %p= "Returns the most recent dividers on a page."
+- doc_for :index,
+          :example => example_api_wrap(@divider, :references => [:page]) do
+  %p=raw "Returns the most recent dividers on a page."
 
-- doc_for :show,  :example => @divider.to_api_hash(:include => [:page_slot]) do
-  %p= "Returns the data for a divider."
+- doc_for :show,
+          :example => @divider.to_api_hash(:include => [:page_slot]) do
+  %p=raw "Returns the data for a divider."
   
-- doc_for :create, :parameters => {:name => 'Name', :project_id => 123, :page_id => 123 },
-                   :example => @divider.to_api_hash,
-                   :status => :created,
-                   :role => :participant do
-  %p= "Creates a new divider."
+- doc_for :create,
+          :parameters => {:name => 'Name', :project_id => 123, :page_id => 123 },
+          :example => @divider.to_api_hash,
+          :status => :created,
+          :role => :participant do
+  %p=raw "Creates a new divider."
 
-- doc_for :update, :parameters => {:name => @divider.name },
-                   :status => :updated,
-                   :role => :participant do
-  %p= "Updates the name of a divider."
+- doc_for :update,
+          :parameters => {:name => @divider.name },
+          :status => :updated,
+          :role => :participant do
+  %p=raw "Updates the name of a divider."
 
-- doc_for :destroy, :status => :deleted,
-                    :role => :participant do
-  %p= "Destroys a divider."
+- doc_for :destroy,
+          :status => :deleted,
+          :role => :participant do
+  %p=raw "Destroys a divider."
