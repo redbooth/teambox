@@ -1594,7 +1594,7 @@ pl:
       tasks_for_today: "Zadania na dziś"
       tasks_for_tomorrow: "Zadania na jutro"
       tasks_without_a_due_date: "Zadania bez daty"
-      you_receive_this_message: "Otrzymałeś tę wiadomość ponieważ się na nią zapisałeś. Możesz ją wyłączyć na %{link}."
+      you_receive_this_message_html: "Otrzymałeś tę wiadomość ponieważ się na nią zapisałeś. Możesz ją wyłączyć na %{link}."
     edit: 
       submit: "Aktualizuj konto"
       title_delete: "Usuń konto"

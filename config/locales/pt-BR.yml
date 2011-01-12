@@ -1447,7 +1447,7 @@ pt-BR:
       tasks_for_today: "Tarefas para hoje"
       tasks_for_tomorrow: "Tarefas para amanhã"
       tasks_without_a_due_date: "Sem data fixa"
-      you_receive_this_message: "Podes desativar estas notificaçẽs desde %{link}"
+      you_receive_this_message_html: "Podes desativar estas notificaçẽs desde %{link}"
     edit: 
       submit: Atualizar
       title_delete: "Eliminar Conta"

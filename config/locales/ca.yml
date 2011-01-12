@@ -1545,7 +1545,7 @@ ca:
       tasks_for_today: "Las teves tasques per avui"
       tasks_for_tomorrow: "Tasques per a demà"
       tasks_without_a_due_date: "Sense data"
-      you_receive_this_message: "Has rebut aquest missatge perquè ho vas configurar així. Pots deshabilitar aquest recordatori a la teva %{link}"
+      you_receive_this_message_html: "Has rebut aquest missatge perquè ho vas configurar així. Pots deshabilitar aquest recordatori a la teva %{link}"
     edit: 
       submit: Actualitzar
       title_delete: "Esborra el compte"

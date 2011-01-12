@@ -1405,7 +1405,7 @@ ko:
       tasks_for_today: "오늘의 테스크들"
       tasks_for_tomorrow: "내일의 테스크들"
       tasks_without_a_due_date: "기한이 없는 테스크들"
-      you_receive_this_message: "허락을 하셨기 때문에 이 메세지를 받으셨습니다. %{link}에서 취소하실 수 있습니다."
+      you_receive_this_message_html: "허락을 하셨기 때문에 이 메세지를 받으셨습니다. %{link}에서 취소하실 수 있습니다."
     edit: 
       submit: "계정 업데이트"
       title_delete: "계정 삭제"

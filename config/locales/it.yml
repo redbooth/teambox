@@ -1114,7 +1114,7 @@ it:
       tasks_for_today: "Compiti per oggi"
       tasks_for_tomorrow: "Compiti per domani"
       tasks_without_a_due_date: "Compiti senza scadenza"
-      you_receive_this_message: "You receive this message because you signed up for it. You can disable it on your %{link}"
+      you_receive_this_message_html: "You receive this message because you signed up for it. You can disable it on your %{link}"
     edit: 
       submit: Aggiorna
       title_deletion: "Eliminare o archiviare un progetto"

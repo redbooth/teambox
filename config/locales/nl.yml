@@ -1127,7 +1127,7 @@ nl:
       tasks_for_today: "Taken voor vandaag"
       tasks_for_tomorrow: "Taken voor morgen"
       tasks_without_a_due_date: "Taken zonder vervaldatum"
-      you_receive_this_message: "U ontvangen omdat u er zich voor heeft aangemeld. U kan het uitschakelen op uw %{link}"
+      you_receive_this_message_html: "U ontvangen omdat u er zich voor heeft aangemeld. U kan het uitschakelen op uw %{link}"
     edit: 
       submit: "Account updaten"
       title_deletion: "Project Archivering/Verwijdering"

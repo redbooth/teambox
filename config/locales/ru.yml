@@ -1821,7 +1821,7 @@ ru:
       tasks_for_today: "Задачи на сегодня"
       tasks_for_tomorrow: "Задачи на завтра"
       tasks_without_a_due_date: "Задачи без срока"
-      you_receive_this_message: "Вы получили это сообщение, потому что подписались на него. Можете отключить его тут %{link}"
+      you_receive_this_message_html: "Вы получили это сообщение, потому что подписались на него. Можете отключить его тут %{link}"
     edit: 
       submit: Сохранить
       title_delete: "Удалить аккаунт"

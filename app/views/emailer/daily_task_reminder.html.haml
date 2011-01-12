@@ -9,4 +9,4 @@
     = tasks_for_daily_reminder(@tasks[:no_due_date], @user, i18n.t(:tasks_without_a_due_date))
 
   .footer{ :style => email_text(:small) }
-    %p= i18n.t(:you_receive_this_message, :link => link_to(i18n.t(:settings_page), account_notifications_url))
+    %p= i18n.t(:you_receive_this_message_html, :link => link_to(i18n.t(:settings_page), account_notifications_url))

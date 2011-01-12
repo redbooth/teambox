@@ -1708,7 +1708,7 @@ es:
       tasks_for_today: "Tareas para hoy"
       tasks_for_tomorrow: "Tareas para mañana"
       tasks_without_a_due_date: "Sin fecha fija"
-      you_receive_this_message: "Puedes desactivar estas notificaciones en %{link}"
+      you_receive_this_message_html: "Puedes desactivar estas notificaciones en %{link}"
     edit: 
       submit: Actualizar
       title_delete: "Borrar cuenta"

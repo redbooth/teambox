@@ -1596,7 +1596,7 @@ ja:
       tasks_for_today: 今日のタスク
       tasks_for_tomorrow: 明日のタスク
       tasks_without_a_due_date: 期限のないタスク
-      you_receive_this_message: "このメッセージはあなたが送信設定をしたので送られています。この機能は%{link}"
+      you_receive_this_message_html: "このメッセージはあなたが送信設定をしたので送られています。この機能は%{link}"
     edit: 
       submit: アカウントの更新
       title_delete: アカウントを削除

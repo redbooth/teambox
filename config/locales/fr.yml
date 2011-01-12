@@ -1601,7 +1601,7 @@ fr:
       tasks_for_today: "Tâches pour aujourd’hui"
       tasks_for_tomorrow: "Tâches pour demain"
       tasks_without_a_due_date: "Tâches sans échéance"
-      you_receive_this_message: "Vous recevez ce message parce que vous vous y êtes inscrit. Vous pouvez désactiver cette fonctionnalité depuis votre %{link}"
+      you_receive_this_message_html: "Vous recevez ce message parce que vous vous y êtes inscrit. Vous pouvez désactiver cette fonctionnalité depuis votre %{link}"
     edit: 
       submit: Sauvegarder
       title_delete: "Supprimer le compte"
