@@ -21,8 +21,11 @@
 //= require <banner>
 //= require <colorPicker>
 //= require <comment>
+//= require <compact_mode>
 //= require <conversation>
 //= require <datas>
+//= require <datetime>
+//= require <expand_comment>
 //= require <facebox>
 //= require <filter>
 //= require <forms>
@@ -40,13 +43,14 @@
 //= require <organizations>
 //= require <pages>
 //= require <pagination>
+//= require <panes>
 //= require <params>
 //= require <person>
 //= require <preview>
 //= require <projects>
+//= require <search>
 //= require <sessions>
 //= require <splash>
-//= require <strftime>
 //= require <task>
 //= require <task_list>
 //= require <tasks_inline>
@@ -54,7 +58,5 @@
 //= require <timeago>
 //= require <upload>
 //= require <yahoo.color>
-//= require <expand_comment>
-//= require <compact_mode>
 //= require <watchers>
 //= require <watch_list>

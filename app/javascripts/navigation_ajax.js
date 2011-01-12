@@ -38,6 +38,7 @@ document.on('click', '.nav_links a.ajax', function(e,a) {
       format_posted_date()
       Task.insertAssignableUsers()
       disableConversationHttpMethodField()
+      Pane.clear()
 
       // Display the AJAX route in the navigation bar
       pushHistoryState(a.readAttribute('href'))
