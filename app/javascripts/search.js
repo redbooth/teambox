@@ -20,7 +20,8 @@ Search = {
     Search.lastQueryTyped = query;
 
     // Perform an API call to fetch search results
-    new Ajax.Request("/api/1/search/?q="+query, { // escape utf!!!!!!!!!!
+    var url = "/api/1/search/?q="+escape(query);
+    new Ajax.Request(url, {
       method: "get",
       onLoading: function(r) {
         // Save content pane if we are going to show the search pane
@@ -112,6 +113,10 @@ document.on('click', 'a.closePane', function(e, el) {
 });
 
 // [x] Hitting enter shouldn't take you to a new page
-// [ ] Should save the URL in the top bar
+// [x] Should save the URL in the top bar
 // [x] Should return back to content mode when closing search and turn back the URL
-
+// [ ] Relative times
+// [x] Current search page should go ajax
+// [ ] Clean up search.sass, search/index, search/result, translations, controller
+// [ ] Pagination of results
+// [x] Escape parameters in search/index from ruby
