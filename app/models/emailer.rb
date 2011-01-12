@@ -201,17 +201,17 @@ class Emailer < ActionMailer::Base
   class Preview < MailView
     def notify_task
       task = Task.find_by_name "Contact area businesses for banner exchange"
-      Emailer.notify_task(task.user.id, task.project.id, task.id)
+      ::Emailer.notify_task(task.user.id, task.project.id, task.id)
     end
 
     def notify_conversation
       conversation = Conversation.find_by_name "Seth Godin's 'What matters now'"
-      Emailer.notify_conversation(conversation.user.id, conversation.project.id, conversation.id)
+      ::Emailer.notify_conversation(conversation.user.id, conversation.project.id, conversation.id)
     end
 
     def daily_task_reminder
       user = User.first
-      Emailer.daily_task_reminder(user.id)
+      ::Emailer.daily_task_reminder(user.id)
     end
 
     def signup_invitation
@@ -221,21 +221,22 @@ class Emailer < ActionMailer::Base
         i.user = User.first
         i.project = Project.first
       end
-      invitation.save!
-      Emailer.signup_invitation(invitation.id)
+      invitation.save!(false)
+      ::Emailer.signup_invitation(invitation.id)
     end
 
     def reset_password
       user = User.first
-      Emailer.reset_password(user.id)
+      ::Emailer.reset_password(user.id)
     end
 
     def forgot_password
-      password_reset = ResetPassword.new do |passwd|
+      password_reset = ResetPassword.create! do |passwd|
+        passwd.email = "reset#{ActiveSupport::SecureRandom.hex(20)}@example.com"
         passwd.user = User.first
         passwd.reset_code = ActiveSupport::SecureRandom.hex(20)
       end
-      Emailer.forgot_password(password_reset.id)
+      ::Emailer.forgot_password(password_reset.id)
     end
 
     def project_membership_notification
@@ -244,8 +245,8 @@ class Emailer < ActionMailer::Base
         i.invited_user = User.last
         i.project = Project.first
       end
-      invitation.save!
-      Emailer.project_membership_notification(invitation.id)
+      invitation.save!(false)
+      ::Emailer.project_membership_notification(invitation.id)
     end
 
     def project_invitation
@@ -255,13 +256,14 @@ class Emailer < ActionMailer::Base
         i.invited_user = User.last
         i.project = Project.first
       end
-      invitation.save!
-      Emailer.project_invitation(invitation.id)
+      invitation.is_silent = true
+      invitation.save!(false)
+      ::Emailer.project_invitation(invitation.id)
     end
 
     def confirm_email
       user = User.first
-      Emailer.confirm_email(user.id)
+      ::Emailer.confirm_email(user.id)
     end
   end
 
