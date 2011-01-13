@@ -248,4 +248,16 @@ module ApplicationHelper
       t('comments.preview.preview')
     end
   end
+
+  def upload_form_html_options(page, upload)
+    id = upload.new_record? ? 'new_upload' : 'upload_file_form'
+    form_classes = %w(upload_form app_form) 
+    form_classes << 'form_error' unless upload.errors.empty?
+    form_classes << 'new_upload' if upload.new_record?
+
+    hidden = page || (action_name == 'index' && upload.errors.empty?)
+    form_style = hidden ? 'display: none' : nil
+
+    {:html => { :multipart => true, :id => id, :style => form_style, :class => form_classes}}
+  end
 end
