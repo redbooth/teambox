@@ -57,12 +57,12 @@ Search = {
         return p.type == "Project" && p.id == r.project_id;
       });
       r.link = "/projects/"+r.project.permalink+"/"+r.type.underscore()+"s/"+r.id;
+      r.timeago = Date.timeAgo(r.updated_at);
     });
-    console.log(response);
-    var html;
-    html  = '<p>Got '+response.objects.length+' results</p>';
-    html += Mustache.to_html(Search.template, response);
-    $('search_results').update(html);
+    response.length = response.objects.length;
+    $('search_results').update(
+      Mustache.to_html(Search.template, response)
+    );
   },
   icons: {
     "Conversation": 'comment_icon',
@@ -77,6 +77,7 @@ Search = {
     "</div>"+
     "<p><a class='closePane' href='#'>Close search</a></p>",
   template:
+    "<p>Got {{length}} results</p>"+
     "<div id='results'>"+
     "{{#objects}}"+
     "  <div class='result'>"+
@@ -85,7 +86,7 @@ Search = {
     "      <a href='/projects/{{permalink}}'>{{name}}</a>"+
     "    {{/project}} &rarr;"+
     "    <a href='{{link}}'>{{name}}</a>"+
-    "    <span class='time'>many days ago!!</span>"+
+    "    <span class='time'>{{timeago}}</span>"+
     "  </div>"+
     "{{/objects}}"+
     "</div>"
@@ -115,8 +116,11 @@ document.on('click', 'a.closePane', function(e, el) {
 // [x] Hitting enter shouldn't take you to a new page
 // [x] Should save the URL in the top bar
 // [x] Should return back to content mode when closing search and turn back the URL
-// [ ] Relative times
+// [x] Relative times
 // [x] Current search page should go ajax
-// [ ] Clean up search.sass, search/index, search/result, translations, controller
+// [ ] Clean up translations, controller
 // [ ] Pagination of results
 // [x] Escape parameters in search/index from ruby
+// [ ] Text and translations for search
+// [ ] Specs
+// [ ] Cucumbers

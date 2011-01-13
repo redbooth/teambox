@@ -23,7 +23,7 @@ InlineTasks = {
           new Effect.BlindDown(block_id, {duration: 0.5})
           new Effect.Appear(task.down('.expanded_actions'), {duration: 0.5})
           task.addClassName('expanded')
-          format_posted_date()
+          Date.format_posted_dates()
           Task.insertAssignableUsers()
         },
         onFailure: function(r) {

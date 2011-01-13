@@ -35,7 +35,7 @@ document.on('click', '.nav_links a.ajax', function(e,a) {
       document.body.className = parts.body_classes
       $('content').update(parts.content)
       $$('.view_sidebar').first().update(parts.column)
-      format_posted_date()
+      Date.format_posted_dates()
       Task.insertAssignableUsers()
       disableConversationHttpMethodField()
       Pane.clear()

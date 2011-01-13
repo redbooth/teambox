@@ -46,11 +46,3 @@ date_yesterday = '<%=raw escape_javascript I18n.t('date.yesterday') %> ';
 
 task_unassigned = '<%=raw escape_javascript I18n.t('comments.new.assigned_to_nobody') %>'
 
-document.on("dom:loaded", function() {
-  format_posted_date();
-  new PeriodicalExecuter(format_posted_date, 30);
-});
-
-document.on("ajax:success", function() {
-  format_posted_date.defer();
-});
