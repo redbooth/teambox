@@ -382,4 +382,7 @@ Teambox::Application.routes.draw do
     mount Emailer::Preview => 'mail_view'
   end
 
+  match 'trimmer/:locale/templates.js' => 'trimmer#templates', :as => :trimmer_templates
+  match 'trimmer/:locale/translations.js' => 'trimmer#translations', :as => :trimmer_translations
+  match 'trimmer/:locale.js' => 'trimmer#resources', :as => :trimmer_resources
 end
