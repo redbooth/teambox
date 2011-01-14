@@ -121,7 +121,7 @@ end
 Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   with_scope(selector) do
     if Capybara.current_driver == Capybara.javascript_driver
-      page.has_xpath?(XPath::HTML.content(text), :visible => true)
+      assert page.has_xpath?(XPath::HTML.content(text), :visible => true)
     elsif page.respond_to? :should
       page.should have_content(text)
     else
@@ -151,7 +151,7 @@ end
 Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   with_scope(selector) do
     if Capybara.current_driver == Capybara.javascript_driver
-      page.has_no_xpath?(XPath::HTML.content(text), :visible => true)
+      assert page.has_no_xpath?(XPath::HTML.content(text), :visible => true)
     elsif page.respond_to? :should
       page.should have_no_content(text)
     else
