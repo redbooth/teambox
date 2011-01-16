@@ -1563,6 +1563,7 @@ en:
   datetime:
     time_ago: "%{time_ago_in_words} ago"
     distance_in_words:
+      now: "now"
       half_a_minute: "half a minute"
       less_than_x_seconds:
         one:   "now"
@@ -1574,7 +1575,7 @@ en:
         one:   "now"
         other: "less than %{count} minutes"
       x_minutes:
-        one:   "1 minute"
+        one:   "one minute"
         other: "%{count} minutes"
       about_x_hours:
         one:   "about 1 hour"
@@ -1758,7 +1759,7 @@ en:
   time:
     formats:
       default: "%a, %d %b %Y %H:%M:%S %z"
-      short: "%I:%M %p"
+      short: "%i:%M %p"
       long: "%B %d, %Y %H:%M"
     am: "am"
     pm: "pm"

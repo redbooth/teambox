@@ -18,7 +18,6 @@
     = javascript_tag do
       = yield :js_templates
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env} controller_#{controller.controller_name}", :reload_url => reload_url}
-    = javascript_include_tag '/i18n/environment'
     = load_my_avatar_for_new_comments
     = load_javascript_user_data
     = archived_project_strip(@current_project)

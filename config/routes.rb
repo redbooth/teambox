@@ -62,8 +62,6 @@ Teambox::Application.routes.draw do
       get :search, :on => :collection
     end
 
-    match '/i18n/environment.js' => 'javascripts#environment', :as => :javascript_environment
-
     #RAILS 3 Useless resource?
     resources :reset_passwords
     resource :session

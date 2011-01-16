@@ -57,7 +57,7 @@ Search = {
         return p.type == "Project" && p.id == r.project_id;
       });
       r.link = "/projects/"+r.project.permalink+"/"+r.type.underscore()+"s/"+r.id;
-      r.timeago = Date.timeAgo(r.updated_at);
+      r.timeago = (new Date(r.updated_at)).timeAgo();
     });
     response.length = response.objects.length;
     $('search_results').update(

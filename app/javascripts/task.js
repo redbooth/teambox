@@ -121,7 +121,7 @@ Task = {
       $$('form.new_comment.edit_task .task_actions select#task_assigned_id, form.new_comment.edit_conversation .conversation_actions select#conversation_assigned_id, #new_task select#task_assigned_id').each(function(select) {
         var project_id = select.up('form').readAttribute('data-project-id')
         if (!select.descendants().any()) {
-          select.insert(new Element('option').insert(task_unassigned))
+          select.insert(new Element('option').insert(I18n.translations.comments.new.assigned_to_nobody))
         }
         if (typeof _people[project_id] == "object") {
           _people[project_id].each(function(person) {
