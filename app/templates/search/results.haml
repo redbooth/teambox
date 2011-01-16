@@ -1,0 +1,17 @@
+%p=raw t('search.found_results', :length => '{{length}}')
+
+#results
+
+  {{#objects}}
+  .result
+    %div{ :class => '{{icon_class}}' }
+    {{#project}}
+    %a{ :href => '/projects/{{permalink}}' }
+      {{name}}
+    {{/project}}
+    &rarr;
+    %a{ :href => '{{link}}' }
+      {{name}}
+    %span{ :class => 'time' }
+      {{timeago}}
+  {{/objects}}

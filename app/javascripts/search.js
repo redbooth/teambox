@@ -30,7 +30,7 @@ Search = {
         Search.lastQuerySent = r.request.url;
         // Display a placeholder for search
         Pane.replace(
-          Mustache.to_html(Search.loading, { query: query }),
+          Mustache.to_html(Templates.search.loading, { query: query }),
           "/search/?q="+escape(query)
         );
         $('content').addClassName('search_results');
@@ -61,7 +61,7 @@ Search = {
     });
     response.length = response.objects.length;
     $('search_results').update(
-      Mustache.to_html(Search.template, response)
+      Mustache.to_html(Templates.search.results, response)
     );
   },
   icons: {
@@ -69,27 +69,7 @@ Search = {
     "TaskList": 'task_icon',
     "Task": 'task_icon',
     "Page": 'page_icon'
-  },
-  loading:
-    "<h2>Results for <strong>{{query}}</strong></h2>"+
-    "<div id='search_results'>"+
-    "  <p class='loading'><img src='/images/loading.gif'/> Loading...</p>"+
-    "</div>"+
-    "<p><a class='closePane' href='#'>Close search</a></p>",
-  template:
-    "<p>Got {{length}} results</p>"+
-    "<div id='results'>"+
-    "{{#objects}}"+
-    "  <div class='result'>"+
-    "    <div class='{{icon_class}}'></div>"+
-    "    {{#project}}"+
-    "      <a href='/projects/{{permalink}}'>{{name}}</a>"+
-    "    {{/project}} &rarr;"+
-    "    <a href='{{link}}'>{{name}}</a>"+
-    "    <span class='time'>{{timeago}}</span>"+
-    "  </div>"+
-    "{{/objects}}"+
-    "</div>"
+  }
 };
 
 document.on('keydown', 'input#searchbox', function(e,el) {
@@ -118,9 +98,9 @@ document.on('click', 'a.closePane', function(e, el) {
 // [x] Should return back to content mode when closing search and turn back the URL
 // [x] Relative times
 // [x] Current search page should go ajax
-// [ ] Clean up translations, controller
+// [x] Clean up translations, controller
 // [ ] Pagination of results
 // [x] Escape parameters in search/index from ruby
-// [ ] Text and translations for search
+// [x] Text and translations for search
 // [ ] Specs
 // [ ] Cucumbers
