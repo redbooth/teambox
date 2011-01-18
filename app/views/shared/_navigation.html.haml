@@ -41,7 +41,7 @@
   .contained
     - for task in current_user.pending_tasks
       .el.task{ :id => "my_task_#{task.id}"}
-        = link_to task, project_task_path(task.project_id, task), :class => ''
+        = link_to task, [task.project, task], :class => ''
         = render_due_on(task,current_user)
     .el
       = link_to t('.show_all_tasks'), task_lists_path, :class => 'more'
