@@ -28,11 +28,11 @@ var Hours = {
     }
     
     this.currentReport = 'user'
-    
+
     // Link in filter checkboxes
-    document.on('change', '#user_filters select', Hours.userFilterHandler)
-    document.on('change', '#project_filters select', Hours.projectFilterHandler)
-    document.on('change', '#organization_filters select', Hours.organizationFilterHandler)
+    document.on('change', '#hours_user_filter_assigned', Hours.userFilterHandler)
+    document.on('change', '#hours_project_filter_assigned', Hours.projectFilterHandler)
+    document.on('change', '#hours_organization_filter_assigned', Hours.organizationFilterHandler)
 
 
     this.setProjectFilter(0, true)
