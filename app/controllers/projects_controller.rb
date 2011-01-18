@@ -155,7 +155,6 @@ class ProjectsController < ApplicationController
                 Person::ROLES[:admin] =>       t('roles.admin') }
 
 
-    current_user = User.first ###############
     organization_ids = current_user.projects.sort {|a,b| a.name <=> b.name}.group_by(&:organization_id)
     @organizations = organization_ids.collect do |k,v|
       r = {}
