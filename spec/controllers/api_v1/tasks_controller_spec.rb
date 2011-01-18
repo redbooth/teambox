@@ -102,6 +102,28 @@ describe ApiV1::TasksController do
       
       JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@other_task.id]
     end
+    
+    it "returns references for linked objects" do
+      login_as @user
+      
+      @task.comments.create_by_user(@user, {:body => 'TEST'}).save!
+      
+      get :index, :project_id => @project.permalink
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      activities = data['objects']
+      
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{@task.user_id}_User").should == true
+      references.include?("#{@task.first_comment.user_id}_User").should == true
+      references.include?("#{@task.first_comment.id}_Comment").should == true
+      @task.recent_comments.each do |comment|
+        references.include?("#{comment.id}_Comment").should == true
+        references.include?("#{comment.user_id}_User").should == true
+      end
+    end
   end
   
   describe "#show" do
