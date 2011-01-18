@@ -5,7 +5,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     query = {:conditions => api_range,
              :limit => api_limit,
              :order => 'id DESC',
-             :include => [:user, :project]}
+             :include => [:user, :project, {:first_comment => :user}, {:recent_comments => :user}]}
     
     @conversations = if @current_project
       @current_project.conversations.where(api_scope).all(query)
@@ -13,7 +13,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
       Conversation.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
-    api_respond @conversations, :references => [:user, :project]
+    api_respond @conversations, :references => [:user, :project, :refs_comments]
   end
 
   def show
