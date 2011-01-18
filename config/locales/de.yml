@@ -1127,7 +1127,7 @@ de:
       subscribe_to_feeds: "Abonnieren Sie Nachrichtenfeeds..."
     navigation: 
       all_projects: "Alle Projekte"
-      new_project: +
+      new_project: + Neues Projekt
       welcome: Willkommen
     project_navigation: 
       all_conversations: "Alle Konversationen"

@@ -1401,7 +1401,7 @@ es:
       subscribe_to_feeds: "Suscribirme a las actividades..."
     navigation: 
       all_projects: Proyectos
-      new_project: +
+      new_project: + Nuevo Proyecto
       welcome: Bienvenido
     project_navigation: 
       affiliate_area: "Area de Afiliados"

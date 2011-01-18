@@ -1260,7 +1260,7 @@ ca:
       subscribe_to_feeds: "Subscriure als feeds"
     navigation: 
       all_projects: Projectes
-      new_project: +
+      new_project: + Nou Projecte
       welcome: Benvingut
     project_navigation: 
       all_conversations: "Les meves converses"
