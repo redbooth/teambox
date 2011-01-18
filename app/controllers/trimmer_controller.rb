@@ -79,7 +79,7 @@ class TrimmerController < ActionController::Base
     render :text => templates_to_js(:locale => params[:locale]), :content_type => 'text/javascript'
   end
 
-  KEYS = ["*.date", "*.datetime", "*.calendar", "*.time", "*.comments.new.assigned_to_nobody"]
+  KEYS = ["*.date", "*.datetime", "*.calendar", "*.time", "*.comments.new.assigned_to_nobody", "*.roles"]
 
   def translations
     render :text => translations_to_js(:locale => params[:locale], :only => KEYS), :content_type => 'text/javascript'

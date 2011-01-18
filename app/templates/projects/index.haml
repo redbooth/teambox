@@ -1,0 +1,40 @@
+%h2= t('projects.index.projects')
+
+.projects_pane
+  {{#organizations}}
+  %h4
+    %a{ :href => "/organizations/{{permalink}}" }
+      {{name}}
+
+  .projects
+    {{#active_projects}}
+    %p.project
+      %a{ :href => "/projects/{{permalink}}" }
+        {{name}}
+      %span.status
+        {{my_role}}
+        {{#admin}}
+        %a{ :href => "/projects/{{permalink}}/settings" }
+          == (#{t 'organizations.active_projects.settings' })
+        {{/admin}}
+    {{/active_projects}}
+    {{^active_projects}}
+    %p.none= t('organizations.active_projects.no_active_projects')
+    {{/active_projects}}
+
+    {{#has_archived_projects}}
+    %p
+      %a.show_archived{ :href => '#' }
+        Show {{count}} archived projects
+    .archived_projects{ :style => 'display: none' }
+      {{#projects}}
+      %p.project
+        %a{ :href => "/projects/{{permalink}}" }
+          {{name}}
+      {{/projects}}
+    {{/has_archived_projects}}
+
+  {{/organizations}}
+
+  %p
+    %a.closePane{ :href => '#' }=t 'projects.index.close_pane'

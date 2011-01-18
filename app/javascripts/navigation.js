@@ -95,14 +95,8 @@ document.on('click', '.nav_links .el', function(e,el) {
   NavigationBar.toggleElement(el, true) && e.stop()
 })
 
-document.on('click', '.nav_links .el .show_more', function(e,el) {
+document.on('click', '.nav_links .el#show_all_projects', function(e,el) {
+  if (e.isMiddleClick()) return
   e.stop()
-  $$('.el#show_more').invoke('hide')
-  $$('.el.extra').invoke('show')
-})
-
-document.on('click', '.nav_links .el .show_less', function(e,el) {
-  e.stop()
-  $$('.el#show_more').invoke('show')
-  $$('.el.extra').invoke('hide')
+  Projects.showAllProjects()
 })

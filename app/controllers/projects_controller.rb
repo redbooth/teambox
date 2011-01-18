@@ -170,21 +170,7 @@ class ProjectsController < ApplicationController
   end
 
   def list
-    @people = current_user.people
-    @roles = {  Person::ROLES[:observer] =>    t('roles.observer'),
-                Person::ROLES[:commenter] =>   t('roles.commenter'),
-                Person::ROLES[:participant] => t('roles.participant'),
-                Person::ROLES[:admin] =>       t('roles.admin') }
-
-
-    organization_ids = current_user.projects.sort {|a,b| a.name <=> b.name}.group_by(&:organization_id)
-    @organizations = organization_ids.collect do |k,v|
-      r = {}
-      r[:organization] = Organization.find(k)
-      r[:active_projects] = v.reject(&:archived)
-      r[:archived_projects] = v.select(&:archived)
-      r
-    end.sort {|a,b| a[:organization].name <=> b[:organization].name}
+    # TODO: sort by organization name and then by project name
   end
 
   protected

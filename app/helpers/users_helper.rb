@@ -41,9 +41,10 @@ module UsersHelper
   
   def load_javascript_user_data
     javascript_tag %(
-      my_user = #{json_user}
-      my_projects = #{json_people}
-      current_project = #{@current_project ? @current_project.id : 'null'}
+      my_user = #{json_user};
+      my_projects = #{json_projects};
+      my_organizations = #{json_organizations};
+      current_project = #{@current_project ? @current_project.id : 'null'};
     )
   end
   
@@ -174,15 +175,25 @@ module UsersHelper
       }.to_json
     end
 
-    def json_people
+    def json_projects
       projects = {}
-      current_user.people.all(:include => :project).collect do |p|
+      current_user.people.all(:include => :project).each do |p|
         projects[p.project.id] = {
           :permalink => p.project.permalink,
           :role => p.role,
+          :organization_id => p.project.organization_id,
+          :archived => p.project.archived,
           :name => h(p.project.name) }
       end
       projects.to_json
+    end
+
+    def json_organizations
+      Organization.find(current_user.projects.collect(&:organization_id)).collect do |org| {
+        :id => org.id,
+        :name => org.name,
+        :permalink => org.permalink }
+      end.to_json
     end
 
 end
