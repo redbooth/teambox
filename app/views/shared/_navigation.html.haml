@@ -21,7 +21,12 @@
         .el= link_to t('.pages'), project_pages_path(project), :class => 'pages ajax'
         .el= link_to t('.files'), project_uploads_path(project), :class => 'files ajax'
         - if can?(:update, project)
-          .el= link_to t('.settings'), project_settings_path(project), :class => 'settings ajax'
+          .el= link_to t('.settings'), project_settings_path(project), :class => 'settings'
+          .contained
+            .el= link_to t('shared.project_settings_navigation.general'), project_settings_path(project.permalink), :class => 'general_settings ajax'
+            .el= link_to t('shared.project_settings_navigation.deletion'), project_deletion_path(project.permalink, :sub_action => 'deletion'), :class => 'deletion ajax'
+            - if project.owner?(current_user)
+              .el= link_to t('shared.project_settings_navigation.ownership'), project_ownership_path(project.permalink, :sub_action => 'ownership'), :class => 'ownership ajax'
         - if can?(:admin, project)
           .el= link_to t('.people'), project_people_path(project), :class => 'people ajax'
     - if show_only_recent

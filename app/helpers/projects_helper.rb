@@ -26,10 +26,6 @@ module ProjectsHelper
     javascript_tag "$('project_permalink').observe('keyup', function(e) { Project.valid_url(); })"    
   end
 
-  def project_settings_navigation
-    render 'shared/project_settings_navigation'
-  end
-
   def list_users_statuses(users)
     render :partial => 'users/status', :collection => users, :as => :user
   end
