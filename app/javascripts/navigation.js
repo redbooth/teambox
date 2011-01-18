@@ -2,18 +2,19 @@
 
 NavigationBar = {
   detectSelectedSection: function() {
-    var link = $$('.nav_links a').detect(function(e) {
-      return e.getAttribute('href') == window.location.pathname
-    })
+    var link = $$('.nav_links a').select(function(e) {
+				return e.getAttribute('href') == window.location.pathname
+			}).last()
     if(link) return link.up('.el')
   },
 
   showContainers: function(current) {
     var container = current.up('.contained')
     if (container) {
-      container.show()
-      prev_container = container.up('.contained')
-      prev_container && prev_container.show()
+      container.show().previous('.el').addClassName('expanded')
+      while (container = container.up('.contained')) {
+				container.show().previous('.el').addClassName('expanded')
+			}
     }
   },
 
