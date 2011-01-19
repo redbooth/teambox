@@ -102,7 +102,7 @@ end
 Then /^I should( not)? see the task called "([^\"]*)" in the "([^\"]*)" task list$/ do |negative, task_name, task_list_name|
   task_list = TaskList.find_by_name!(task_list_name)
   project = task_list.project
-  Then %(I should#{negative} see "#{task_name}" within "#project_#{project.id}_task_list_#{task_list.id}")
+  Then %(I should#{negative} see "#{task_name}" within "#project_#{project.id}_task_list_#{task_list.id}_the_main_tasks")
 end
 
 Then /^I should see the following tasks:$/ do |table|
