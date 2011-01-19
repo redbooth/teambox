@@ -1074,7 +1074,7 @@ en:
     index:
       title: Files in %{project}
       new_file: Upload a File
-      cant_create: You don't have permission to upload files to this project
+      cant_create: "You don't have permission to upload files to this project"
     form:
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed %{mb} MB"
