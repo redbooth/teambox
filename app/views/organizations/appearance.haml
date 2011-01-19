@@ -1,6 +1,3 @@
-- content_for :stylesheet_includes do
-  = stylesheet_link_tag 'colorpicker', :media => :screen
-
 %h2= t('.title', :organization => @organization)
 
 - if can?(:admin, @organization)
