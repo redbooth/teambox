@@ -27,6 +27,7 @@ en:
     not_allowed: You are not allowed to do that!
     calendar: Calendar
     gantt_chart: Gantt Chart
+    signup: Sign up
   confirm:
     delete_task_list: Are you sure you want to delete this task list?
     delete_task: Are you sure you want to delete this task?
