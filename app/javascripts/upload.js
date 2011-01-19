@@ -1,7 +1,7 @@
 document.on('click', '#upload_file_button', function(e, button) {
   if (!e.isMiddleClick()) {
     e.preventDefault()
-    $('upload_file_form').show()
+    $('new_upload').show()
     button.hide()
   }
 })
