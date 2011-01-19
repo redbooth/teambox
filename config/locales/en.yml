@@ -1158,6 +1158,7 @@ en:
       show_all_tasks: View all tasks in my projects...
       organizations: Organizations
       show_all_organizations: "Manage organizations..."
+      gantt_and_calendars: Gantts and calendars
     project_settings_navigation:
       general: General Settings
       picture: Project Picture
