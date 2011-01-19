@@ -1020,7 +1020,7 @@ es:
     auth_status: "Autenticación OAuth"
     auth_status_link: "Enlazar con tu cuenta"
     auth_status_linked: "Enlazado con el proveedor"
-    link_account: "Enlacar cuenta."
+    link_account: "Enlazar cuenta."
     logged_in: "Identificado correctamente"
     not_linked: "Este servicio no está enlazado a tu cuenta de Teambox."
     signup_for_a_new_account: "Haga clic aquí para suscribirse a una nueva cuenta"
