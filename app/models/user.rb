@@ -78,6 +78,7 @@ class User < ActiveRecord::Base
       self.invited_by = invitation.user
       invitation.user.update_attribute :invited_count, (invitation.user.invited_count + 1)
     end
+    self.card ||= build_card
     self.splash_screen = true
   end
 

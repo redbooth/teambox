@@ -480,4 +480,14 @@ describe User do
       lambda { @user.touch }.should_not change(@user, :visited_at)
     end
   end
+
+  describe "profile" do
+    before do |variable|
+      @user = Factory(:user)
+    end
+
+    it "should create a default card on creation" do
+      @user.card.should_not be nil
+    end
+  end
 end
