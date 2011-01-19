@@ -110,7 +110,13 @@ class ApplicationController < ActionController::Base
     end
 
     def set_locale
-      I18n.locale = logged_in? ? current_user.locale : user_agent_locale
+      I18n.locale = if logged_in?
+        current_user.locale
+      elsif I18n.available_locales.include? user_agent_locale.to_sym
+        user_agent_locale
+      else
+        I18n.default_locale
+      end
     end
     
     LOCALES_REGEX = /\b(#{ I18n.available_locales.join('|') })\b/
