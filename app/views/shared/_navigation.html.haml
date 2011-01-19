@@ -1,7 +1,7 @@
 .nav_links
 
   -# Recent Activity
-  .el= link_to t('.recent_activity'), root_path, :class => 'recent_activity ajax'
+  .el= link_to t('.recent_activity'), root_path, :class => 'recent_activity'
 
   -# All Projects
   - show_only_recent = current_user.people.size > 3
