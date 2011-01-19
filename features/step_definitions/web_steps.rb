@@ -119,12 +119,21 @@ Then /^(?:|I )should see JSON:$/ do |expected_json|
 end
 
 Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
-  with_scope(selector) do
-    if Capybara.current_driver == Capybara.javascript_driver
-      assert page.has_xpath?(XPath::HTML.content(text), :visible => true)
-    elsif page.respond_to? :should
-      page.should have_content(text)
+  if Capybara.current_driver == Capybara.javascript_driver
+    selector = selector.blank? ? nil : selector
+    scope = page.find(:css, selector) if selector
+    if scope
+      assert scope.has_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
     else
+      raise "Can't find selector '#{selector}' on page" if selector && !scope
+      assert page.has_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
+      page.should have_content(text)
+    end
+  else
+    with_scope(selector) do
       assert page.has_content?(text)
     end
   end
@@ -149,12 +158,21 @@ Then /^I should see "([^\"]*)" only once$/ do |text|
 end
 
 Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
-  with_scope(selector) do
-    if Capybara.current_driver == Capybara.javascript_driver
-      assert page.has_no_xpath?(XPath::HTML.content(text), :visible => true)
-    elsif page.respond_to? :should
-      page.should have_no_content(text)
+  if Capybara.current_driver == Capybara.javascript_driver
+    selector = selector.blank? ? nil : selector
+    scope = page.find(:css, selector) if selector
+    if scope
+      assert scope.has_no_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
     else
+      raise "Can't find selector '#{selector}' on page" if selector && !scope
+      assert page.has_no_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
+      page.should have_no_content(text)
+    end
+  else
+    with_scope(selector) do
       assert page.has_no_content?(text)
     end
   end
