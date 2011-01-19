@@ -86,7 +86,7 @@ module Teambox
 
       if allow_outgoing_email
         action_mailer.delivery_method = :smtp
-        action_mailer.smtp_settings = smtp_settings
+        action_mailer.smtp_settings = smtp_settings.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
       end
 
     end
