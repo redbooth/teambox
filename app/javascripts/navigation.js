@@ -2,9 +2,19 @@
 
 NavigationBar = {
   detectSelectedSection: function() {
-    var link = $$('.nav_links a').select(function(e) {
-				return e.getAttribute('href') == window.location.pathname
+    // Direct match
+		var link = $$('.nav_links a').select(function(e) {
+			return e.getAttribute('href') == window.location.pathname
+		}).last()
+		// Close enough
+		if (link == undefined) {
+			var link = $$('.nav_links a').sortBy(function(e) {
+				return e.getAttribute('href').length
+				}).select(function(e) {
+					return window.location.pathname.search(e.getAttribute('href')) > -1
 			}).last()
+		}
+
     if(link) return link.up('.el')
   },
 
