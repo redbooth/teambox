@@ -8,6 +8,7 @@ Feature: Delete Project
 
   Scenario: Mislav deletes a project
     Given I follow "Project Archiving/Deletion"
+    And I wait for 2 seconds
     And I should see "Archive or Delete project" in the title
     And I should see "Archive this project"
     And I should see "Delete this project forever"
