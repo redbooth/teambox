@@ -44,6 +44,13 @@ module Teambox
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
+    # Allowed tags are: a, abbr, acronym, address, b, big, blockquote, br, cite, code, dd, 
+    # del, dfn, dl, dt,  em, h1, h2, h3, h4, h5, h6, hr, i, img, ins, kbd, li, ol, p, pre,
+    # samp, small, span, strong, sub, sup, table, td, tr, tt, ul, var
+    config.after_initialize do
+      ActionView::Base.sanitized_allowed_tags.delete 'div'
+      ActionView::Base.sanitized_allowed_tags = ['table', 'tr', 'td']
+    end
 
     def config.from_file(file)
       self.skip_gem_plugins = []
