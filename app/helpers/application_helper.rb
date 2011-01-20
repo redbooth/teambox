@@ -196,8 +196,8 @@ module ApplicationHelper
   
   def configure_this_organization
     if Teambox.config.community && @community_role == :admin && @community_organization.description.blank? && params[:organization].nil?
-      message = if location_name != "edit_organizations"
-        link_to("Click here", organization_path(@community_organization)) + " to configure your organization"
+      message = if location_name != "appearance_organizations"
+        link_to("Click here", appearance_organization_path(@community_organization)) + " to configure your organization"
       else
         "Introduce some HTML code for your main site to configure your site"
       end
