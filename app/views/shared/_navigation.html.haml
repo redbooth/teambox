@@ -4,11 +4,13 @@
   .el= link_to t('.recent_activity'), root_path, :class => 'recent_activity'
 
   -# All Projects
+  - projects=current_user.projects
   - show_only_recent = current_user.people.size > 3
-  - projects_to_show = show_only_recent ? current_user.recent_projects : current_user.projects.unarchived
+  - projects_to_show = show_only_recent ? current_user.recent_projects : projects.select{|p| !p.archived}
+
   .el#my_projects
     = link_to t('.all_projects'), projects_path, :class => 'home'
-    %span= current_user.projects.unarchived.size
+    %span= projects.size
   .contained
     - for project in projects_to_show
       .el= link_to project, project, :class => 'project'
@@ -29,7 +31,7 @@
               .el= link_to t('shared.project_settings_navigation.ownership'), project_ownership_path(project.permalink, :sub_action => 'ownership'), :class => 'ownership ajax'
         - if can?(:admin, project)
           .el= link_to t('.people'), project_people_path(project), :class => 'people ajax'
-    - if show_only_recent
+    - if show_only_recent or projects.detect{|p| p.archived}
       .el= link_to t('.show_all_projects'), all_projects_path, :class => 'more ajax'
     - if !Teambox.config.community || (@community_organization && @community_role)
       .el= link_to t('.new_project'), new_project_path, :class => 'more ajax'
