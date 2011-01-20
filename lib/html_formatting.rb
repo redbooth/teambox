@@ -115,7 +115,7 @@ module HtmlFormatting
       text
     end
 
-    YoutubeLink = %r{http://(?:www\.)?youtu(?:be\.com/watch\?v=|\.be/)([\w-]+)(&(amp;)?(?:[\w\?=-]|\+)*)?}
+    YoutubeLink = /[^\(]http:\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w-]+)(&(amp;)?(?:[\w\?=-]|\+)*)?[^\)]/
     def format_youtube(text)
       text.gsub(YoutubeLink) do |link|
         "<iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/#{$1}\" frameborder=\"0\"></iframe>"
