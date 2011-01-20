@@ -18,4 +18,4 @@
     = form.fields_for :card do |card_form|
       - content_for :js_templates do
         - %w(phone_numbers email_addresses websites addresses ims social_networks).each do |field|
-          = "var #{field}='#{generate_template(card_form, field.to_sym)}'"
+          = "var #{field}='#{generate_template(card_form, field.to_sym)}'".html_safe
