@@ -35,6 +35,7 @@ NavigationBar = {
       if (el.hasClassName('expanded')) {
         // contract it if it's open
         el.removeClassName('expanded')
+        contained.setStyle({height: ''})
         contained.blindUp({ duration: 0.2 })
       } else {
         // contract others if open
@@ -43,6 +44,8 @@ NavigationBar = {
         el.up().select('.el').invoke('removeClassName', 'expanded')
         // expand the selected one
         el.addClassName('expanded')
+
+        contained.setStyle({height: ''})
         effect ? contained.blindDown({ duration: 0.2 }) : contained.show()
       }
       // Stop the event and don't follow the link
