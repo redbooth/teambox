@@ -37,7 +37,7 @@ module ActivitiesHelper
                       )
 
   def list_activities(activities)
-    activities.map { |activity| show_activity(activity) }.join('')
+    activities.map { |activity| show_activity(activity) }.join('').html_safe
   end
 
   def list_threads(activities)

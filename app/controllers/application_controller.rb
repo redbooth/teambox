@@ -78,7 +78,9 @@ class ApplicationController < ActionController::Base
           if [:rss, :ics].include? request.formats.map(&:symbol)
             render :nothing => true
           else
-            render 'projects/not_in_project', :status => :forbidden
+            respond_to do |f|
+              f.any(:html, :m) { render 'projects/not_in_project', :status => :forbidden }
+            end
           end
         end
       end
