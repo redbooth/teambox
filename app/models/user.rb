@@ -290,19 +290,20 @@ class User < ActiveRecord::Base
     login
   end
 
-  def pending_tasks
-    if people.any?
-      active_project_ids = projects.unarchived.collect(&:id)
-      people_ids = people.select do |person|
-        active_project_ids.include?(person.project_id)
-      end.collect(&:id)
+  def active_project_ids
+    @active_project_ids ||= Person.where(:user_id => id).joins(:project).where(:projects => { :archived => false }).collect(&:id)
+  end
 
-      Task.all(:conditions => { :assigned_id => people_ids,
-                                :status => Task::ACTIVE_STATUS_CODES}, :order => 'ID desc').
-           sort { |a,b| (a.due_on || 1.week.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
-    else
-      []
+  def pending_tasks
+    Rails.cache.fetch("pending_tasks.#{id}") do
+      active_project_ids.empty? ? [] :
+        Task.where(:status => Task::ACTIVE_STATUS_CODES).where(:assigned_id => active_project_ids).order('ID desc').includes(:project).
+             sort { |a,b| (a.due_on || 1.week.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
     end
+  end
+
+  def clear_pending_tasks!
+    Rails.cache.delete("pending_tasks.#{id}")
   end
 
   def tasks_counts_update
