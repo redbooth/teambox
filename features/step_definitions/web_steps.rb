@@ -13,6 +13,13 @@ module WithinHelpers
   def with_scope(locator)
     locator ? within(locator) { yield } : yield
   end
+
+  def with_css_scope(selector)
+    selector = selector.blank? ? nil : selector
+    scope = page.find(:css, selector) if selector
+    raise "Can't find selector '#{selector}' on page" if selector && !scope
+    scope ? yield(scope) : yield(page)
+  end
 end
 World(WithinHelpers)
 
@@ -82,8 +89,8 @@ When /^(?:|I )select "([^\"]*)" from "([^\"]*)"(?: within "([^\"]*)")?$/ do |val
 end
 
 When /^(?:|I )click the element that contain "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
-  with_scope(selector) do
-    find(:xpath,"//*[.='#{text}']").click
+  with_css_scope(selector) do |node|
+    node.find(:xpath,"//*[contains(text(), '#{text}')]").click
   end
 end
 
@@ -120,13 +127,8 @@ end
 
 Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   if Capybara.current_driver == Capybara.javascript_driver
-    selector = selector.blank? ? nil : selector
-    scope = page.find(:css, selector) if selector
-    if scope
+    with_css_scope(selector) do |scope|
       assert scope.has_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
-    else
-      raise "Can't find selector '#{selector}' on page" if selector && !scope
-      assert page.has_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
     end
   elsif page.respond_to? :should
     with_scope(selector) do
@@ -159,13 +161,8 @@ end
 
 Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   if Capybara.current_driver == Capybara.javascript_driver
-    selector = selector.blank? ? nil : selector
-    scope = page.find(:css, selector) if selector
-    if scope
+    with_css_scope(selector) do |scope|
       assert scope.has_no_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
-    else
-      raise "Can't find selector '#{selector}' on page" if selector && !scope
-      assert page.has_no_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
     end
   elsif page.respond_to? :should
     with_scope(selector) do
