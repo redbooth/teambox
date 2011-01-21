@@ -31,4 +31,4 @@
   = instructions_for_calendars
   = instructions_for_email(@current_project)
   = link_to t('.public_project'), public_project_path(@current_project), :class => :public_link if @current_project.public
-  = leave_project_link(@current_project)
+  = leave_project_link(@current_project) if @current_project.has_member?(@current_user)
