@@ -12,10 +12,12 @@ Feature: Search comments in projects
     Given I am in the project called "Space elevator"
     When I go to the projects page
     And I follow "Gold Digging"
+    And I wait for 2 seconds
     And I fill in the comment box with "I found a hunk of gold today in the mine!"
     And I press "Save"
     And I go to the projects page
     And I follow "Space elevator"
+    And I wait for 2 seconds
     And I fill in the comment box with "Let's finish this space elevator before Tuesday."
     And I press "Save"
     And I go to the projects page
