@@ -7,8 +7,8 @@ class PendingTasksObserver < ActiveRecord::Observer
       record.user.clear_pending_tasks!
     when Task
       if record.assigned_id_changed?
-        Person.find(record.assigned_id).user.clear_pending_tasks!
-        Person.find(record.assigned_id_was).user.clear_pending_tasks!
+        Person.find(record.assigned_id).user.clear_pending_tasks! if record.assigned_id
+        Person.find(record.assigned_id_was).user.clear_pending_tasks! if record.assigned_id_was
       end
     when Project
       if record.archived_changed?
@@ -24,7 +24,7 @@ class PendingTasksObserver < ActiveRecord::Observer
     when Person
       record.user.clear_pending_tasks!
     when Task
-      record.assigned.clear_pending_tasks! if record.assigned
+      Person.find(record.assigned_id).user.clear_pending_tasks! if record.assigned_id
     when Project
       record.people.each do |person|
         person.user.clear_pending_tasks!
