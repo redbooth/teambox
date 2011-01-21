@@ -112,17 +112,12 @@ class ApplicationController < ActionController::Base
     end
 
     def set_locale
-      I18n.locale = if logged_in?
-        current_user.locale
-      elsif I18n.available_locales.include? user_agent_locale.to_sym
-        user_agent_locale
-      else
-        I18n.default_locale
-      end
+      locale = logged_in? ? current_user.locale : (params[:locale] || user_agent_locale)
+      I18n.locale = (locale.present? && I18n.available_locales.include?(locale.to_sym)) ? locale : I18n.default_locale
     end
-    
+
     LOCALES_REGEX = /\b(#{ I18n.available_locales.join('|') })\b/
-    
+
     def user_agent_locale
       unless (Rails.env.test? || Rails.env.cucumber?)
         request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX && $&
