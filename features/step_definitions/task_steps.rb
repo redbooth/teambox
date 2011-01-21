@@ -156,3 +156,9 @@ end
 Then /^I should see "([^"]*)" within the task header$/ do |text|
   Then %(I should see "#{text}" within ".task_header h2")
 end
+
+When /^(?:|I )select "([^\"]*)" in the "([^\"]*)" calender?$/ do |number, calender|
+  with_css_scope("div[id$='_#{calender}_on']") do |node|
+    node.find(:css,"table div[contains(#{number})]").click
+  end
+end
