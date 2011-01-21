@@ -6,8 +6,8 @@ class PendingTasksObserver < ActiveRecord::Observer
     when Person
       record.user.clear_pending_tasks!
     when Task
-      assigned = Person.find(record.assigned_id) if record.assigned_id
-      assigned_was = Person.find(record.assigned_id_was) if record.assigned_id_changed? and record.assigned_id_was
+      assigned = Person.find_by_id(record.assigned_id) if record.assigned_id
+      assigned_was = Person.find_by_id(record.assigned_id_was) if record.assigned_id_changed? and record.assigned_id_was
 
       assigned.user.clear_pending_tasks! if assigned and assigned.user
       assigned_was.user.clear_pending_tasks! if assigned_was and assigned_was.user
