@@ -1,7 +1,7 @@
 Feature: Update Project
 
   Background: 
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And I go to project settings page
 

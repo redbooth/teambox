@@ -2,7 +2,7 @@
 Feature: Creating an organization
 
   Background: 
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
 
   Scenario: I can't create a project with a blank organization
     When I go to the new project page

@@ -15,7 +15,7 @@ Feature: Show archived tasks in task lists
       | Tell my friends        | This week | Market Teambox |
       | Tell the tech bloggers | This week | Market Teambox |
     And the task called "Tell my friends" is resolved
-    And I am logged in as balint
+    And I am logged in as @balint
 
   Scenario: See archived tasks
     When I go to the "Market Teambox" tasks page

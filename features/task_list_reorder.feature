@@ -2,7 +2,7 @@
 Feature: Reorder task within the task list view
 
   Background:
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am in the project called "Teambox"
     And the following task lists with associations exist:
       | name         | project |

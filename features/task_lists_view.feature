@@ -2,7 +2,7 @@
 Feature: List tasks in project broken down by task list
 
   Background: 
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am in the project called "teambox"
 
   Scenario: Task list index

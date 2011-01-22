@@ -5,7 +5,7 @@ Feature: Leaving a project
     Given the following confirmed users exist
       | login  | email                    | first_name | last_name |
       | pablo  | pablo@teambox.com        | Pablo      | Villalba  |
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And "pablo" is in the project called "Ruby Rockstars"
   
