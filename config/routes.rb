@@ -2,10 +2,10 @@ Teambox::Application.routes.draw do
 
   # If secure_logins is true, constrain matches to ssl requests
   class SSLConstraints
-    def self.matches?(request) 
+    def self.matches?(request)
       return true unless Teambox.config.secure_logins
       request.ssl?
-    end 
+    end
   end
 
   #Constrain all requests to the ssl constraint
@@ -203,6 +203,9 @@ Teambox::Application.routes.draw do
         end
       end
     end
+
+    match 'unwatch/task/:id' => 'task#unwatch', :as => :unwatch_task, :method => :get
+    match 'unwatch/conversation/:id' => 'conversation#unwatch', :as => :unwatch_conversation, :method => :get
 
     match '/public' => 'public/projects#index', :as => :public_projects
 
