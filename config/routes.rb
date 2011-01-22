@@ -160,6 +160,7 @@ Teambox::Application.routes.draw do
           member do
             put :watch
             put :unwatch
+            get :e_unwatch
           end
 
           resources :comments
@@ -179,6 +180,7 @@ Teambox::Application.routes.draw do
           put :convert_to_task
           put :watch
           put :unwatch
+          get :e_unwatch
         end
 
         resources :comments
@@ -203,9 +205,6 @@ Teambox::Application.routes.draw do
         end
       end
     end
-
-    match 'unwatch/task/:id' => 'task#unwatch', :as => :unwatch_task, :method => :get
-    match 'unwatch/conversation/:id' => 'conversation#unwatch', :as => :unwatch_conversation, :method => :get
 
     match '/public' => 'public/projects#index', :as => :public_projects
 

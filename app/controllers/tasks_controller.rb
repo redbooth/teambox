@@ -152,6 +152,10 @@ class TasksController < ApplicationController
     end
   end
 
+  def e_unwatch
+    unwatch
+  end
+
   private
 
     def load_task_list

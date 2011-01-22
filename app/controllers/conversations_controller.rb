@@ -1,7 +1,7 @@
 class ConversationsController < ApplicationController
   before_filter :load_conversation, :except => [:index, :new, :create]
   before_filter :set_page_title
-  
+
   rescue_from CanCan::AccessDenied do |exception|
     handle_cancan_error(exception)
   end
@@ -9,7 +9,7 @@ class ConversationsController < ApplicationController
   def new
     authorize! :converse, @current_project
     @conversation = @current_project.conversations.new
-    
+
     respond_to do |f|
       f.any(:html, :m) { }
     end
@@ -72,11 +72,11 @@ class ConversationsController < ApplicationController
   def update
     authorize! :update, @conversation
     success = @conversation.update_attributes(params[:conversation])
-    
+
     respond_to do |f|
       f.js   { head :ok }
       f.any(:html, :m) { redirect_to current_conversation }
-      
+
       if success
         handle_api_success(f, @conversation)
       else
@@ -88,7 +88,7 @@ class ConversationsController < ApplicationController
   def destroy
     authorize! :destroy, @conversation
     @conversation.destroy
-    
+
     respond_to do |f|
       f.any(:html, :m) do
         flash[:success] = t('deleted.conversation', :name => @conversation.to_s)
@@ -102,7 +102,7 @@ class ConversationsController < ApplicationController
   def watch
     authorize! :watch, @conversation
     @conversation.add_watcher(current_user)
-    
+
     respond_to do |f|
       f.js { render :layout => false }
       f.any(:html, :m) { redirect_to current_conversation }
@@ -111,13 +111,17 @@ class ConversationsController < ApplicationController
 
   def unwatch
     @conversation.remove_watcher(current_user)
-    
+
     respond_to do |f|
       f.js { render :layout => false }
       f.any(:html, :m) { redirect_to current_conversation }
     end
   end
-  
+
+  def e_unwatch
+    unwatch
+  end
+
   def convert_to_task
     authorize! :update, @conversation
 
@@ -154,11 +158,11 @@ class ConversationsController < ApplicationController
   end
 
   protected
-  
+
     def load_conversation
       @conversation = @current_project.conversations.find params[:id]
     end
-    
+
     def current_conversation
       [@current_project, @conversation]
     end
