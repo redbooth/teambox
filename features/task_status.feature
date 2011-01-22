@@ -2,7 +2,7 @@
 Feature: Changing Task Status from New
 
   Background: 
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And I have a task list called "Building Killer Dinobots"
     And I have a task called "Installing Megahyper drive"

@@ -2,7 +2,7 @@
 Feature: I navigate using the new sidebar
 
   Background:
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am in the project called "Earthworks Yoga"
     And the task list called "Stick your fingers there" belongs to the project called "Earthworks Yoga"
     And the task called "Stick your fingers here" is assigned to me

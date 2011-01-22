@@ -13,7 +13,7 @@ Feature: Invite a user to a project
 
 
   Scenario: Mislav invites some friends to a project
-    Given I am logged in as mislav
+    Given I am logged in as @mislav
     When I go to the people page of the "Ruby Rockstars" project
     Then I should see "Invite people to this project"
     And I should see "Mislav Marohnić"
@@ -30,7 +30,7 @@ Feature: Invite a user to a project
     And "ed_bloom@spectre.com" should receive an email
 
   Scenario: Mislav sends an invitation and tries to accept it while logged in
-    Given I am logged in as mislav
+    Given I am logged in as @mislav
     When I go to the people page of the "Ruby Rockstars" project
     When I fill in "invitation_user_or_email" with "ed_bloom@spectre.com"
     And I press "Invite"
@@ -58,8 +58,8 @@ Feature: Invite a user to a project
     And I should see "Mislav Marohnić"
 
   Scenario: Mislav is invited to a project by someone else
-    Given I am logged in as mislav
-    Given there is a project called "Teambox Roulette"
+    Given I am logged in as @mislav
+    And there is a project called "Teambox Roulette"
     When I go to the page of the "Teambox Roulette" project
     Then I should see "This is a private project and you're not authorized to access it."
     Given the owner of the project "Teambox Roulette" sent an invitation to "mislav"
@@ -68,7 +68,7 @@ Feature: Invite a user to a project
     Then I should see "Teambox Roulette"
 
   Scenario: Mislav invites a user who belongs to the project's organization
-    Given I am logged in as mislav
+    Given I am logged in as @mislav
     When I go to the people page of the "Ruby Rockstars" project
     And I fill in "invitation_user_or_email" with "pablo"
     And I press "Invite"
@@ -84,7 +84,7 @@ Feature: Invite a user to a project
   Scenario: Mislav resends invitation email
 
   Scenario: Mislav deletes an invitation that hasnt been accepted
-    Given I am logged in as mislav
+    Given I am logged in as @mislav
     When I go to the people page of the "Ruby Rockstars" project
     And I fill in "invitation_user_or_email" with "charles@teambox.com"
     And I press "Invite"

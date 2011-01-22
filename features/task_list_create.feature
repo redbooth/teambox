@@ -2,7 +2,7 @@
 Feature: Creating a task list
 
   Background: 
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
 
   Scenario: Mislav creates a valid task list on my project

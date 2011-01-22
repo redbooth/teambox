@@ -5,7 +5,7 @@ Feature: Search comments in projects
   I want to search for keywords
 
   Background: 
-    Given I am logged in as voodoo_prince
+    Given @voodoo_prince exists and is logged in
     And I am in the project called "Gold Digging"
 
   Scenario: Search all projects
@@ -61,4 +61,4 @@ Feature: Search comments in projects
     When the search index is reindexed
     And I search for "minerals"
     Then I should see "Minerals to watch for"
-    
+

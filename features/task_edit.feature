@@ -2,7 +2,7 @@
 Feature: Editing a task
 
   Background:
-    Given I am logged in as charles
+    Given @charles exists and is logged in
     And I am in the project called "Teambox"
     And the task list called "Bugs" belongs to the project called "Teambox"
     And the following task with associations exist:

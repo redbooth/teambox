@@ -63,9 +63,7 @@ Feature: Converting a conversation to a task
     And I should see "created a task" in the thread starter
 
   Scenario: Converting a simple conversation on the overview page and specifying additional task attributes
-    Given I log out
-    Given I am logged in as mislav
-    And the following confirmed users exist
+    Given the following confirmed users exist
     | login  | email                    | first_name | last_name |
     | pablos | pablo@teambox.com        | Pablo      | Villalba  |
     | saimon | saimon@teambox.com       | Saimon     | Moore     |
