@@ -19,7 +19,7 @@ document.on('keyup', '.task_header + .edit_task', function(e, form) {
 })
 
 document.on('ajax:failure', 'form.new_task.app_form', function(e, form) {
-  var message = e.memo.responseJSON.first()[1]
+  var message = e.memo.responseJSON.first()
   form.down('div.text_field').insertOrUpdate('p.error', message)
 })
 

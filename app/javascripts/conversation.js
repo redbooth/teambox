@@ -31,9 +31,8 @@ document.on('ajax:success', 'form.edit_conversation.convert-to-task', function(e
 });
 
 document.on('ajax:failure', 'form.edit_conversation.convert-to-task', function(e, form) {
-  var field_name = e.memo.responseJSON.first()[0],
-      message = e.memo.responseJSON.first()[1];
-  form.down('#conversation_' + field_name).insert({after: "<p class='error'>" + message + "</p>"});
+  var message = e.memo.responseJSON.first()
+  form.down('#conversation_name').insert({after: "<p class='error'>" + message + "</p>"})
 })
 
 

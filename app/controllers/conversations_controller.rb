@@ -37,7 +37,7 @@ class ConversationsController < ApplicationController
             output_errors_json(@conversation)
           else
             # TODO: display inline instead of flash
-            flash.now[:error] = @conversation.errors.to_a.first[1]
+            flash.now[:error] = @conversation.errors.to_a.first
             render :action => :new
           end
         }
@@ -146,7 +146,7 @@ class ConversationsController < ApplicationController
         output_errors_json(@conversation)
       else
         # TODO: display inline instead of flash
-        flash.now[:error] = @conversation.errors.to_a.first[1]
+        flash.now[:error] = @conversation.errors.to_a.first
         render :action => :new
       end
     end

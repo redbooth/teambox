@@ -14,13 +14,13 @@ Feature: Changing Task Status from New
     And I press "Save"
     And I wait for 0.2 second
     And I should see "I need to wait till the engine cools down"
-    And I should see "Status: new"
+    And I should not see "→"
 
   Scenario: Mislav changes task (new -> open:Mislav)
     When I fill in the comment box with "I fused the dino eggs to the engine"
     And I select "Mislav Marohnić" from "Assigned to"
     And I press "Save"
-    Then I should see "Status: open"
+    Then I should see "new → open"
     And I should see "Assigned to Mislav Marohnić"
 
   Scenario: Mislav changes task (new -> hold)
@@ -30,7 +30,6 @@ Feature: Changing Task Status from New
     And I wait for .2 seconds
     Then I should see "new → hold"
     And I should see "I need to wait till the engine cools down"
-    And I should see "Status: hold"
 
   # And I choose "comment_status_2"
   Scenario: Mislav changes task (new -> resolved)
@@ -40,7 +39,6 @@ Feature: Changing Task Status from New
     And I wait for .2 seconds
     Then I should see "new → resolved"
     And I should see "I need to wait till the engine cools down"
-    And I should see "Status: resolved"
 
   Scenario: Mislav changes task (new -> rejected)
     When I fill in the comment box with "I need to wait till the engine cools down"
@@ -49,12 +47,12 @@ Feature: Changing Task Status from New
     And I wait for .2 seconds
     Then I should see "new → rejected"
     And I should see "I need to wait till the engine cools down"
-    And I should see "Status: rejected"
 
   Scenario: Mislav shouldn't be able to change task (hold -> new)
 
   Scenario: Mislav doesn't change task (hold -> hold)
 
+  # FIXME Randomly fails
   Scenario: Mislav changes task (hold -> resolved)
     Given I have a task on hold
     When I fill in the comment box with "done!"
@@ -63,8 +61,8 @@ Feature: Changing Task Status from New
     And I wait for .2 seconds
     And I should see "hold → resolved"
     And I should see "done!"
-    And I should see "Status: resolved"
 
+  # FIXME Randomly fails
   Scenario: Mislav changes task (hold -> rejected)
     Given I have a task on hold
     When I fill in the comment box with "done!"
@@ -73,19 +71,12 @@ Feature: Changing Task Status from New
     And I wait for .2 seconds
     And I should see "hold → rejected"
     And I should see "done!"
-    And I should see "Status: rejected"
 
   Scenario: Mislav shouldn't be able to change task (rejected -> new)
 
   Scenario: Mislav doesn't change task (rejected -> rejected)
 
   Scenario: Mislav changes task (rejected -> open:Mislav)
-
-  Scenario: Mislav changes task (rejected -> hold)
-    Given I have a task on rejected
-    Then I should see "This task is closed and archived"
-    Then I should see "Reopen this task"
-    But I should not see ".comment_body"
 
   Scenario: Mislav shouldn't be able to change task (resolved -> new)
 
@@ -94,10 +85,4 @@ Feature: Changing Task Status from New
   Scenario: Mislav changes task (resolved -> hold)
 
   Scenario: Mislav doesn't change task (resolved -> resolved)
-
-  Scenario: Mislav changes task (resolved -> rejected)
-    Given I have a task on resolved
-    Then I should see "This task is closed and archived"
-    Then I should see "Reopen this task"
-    But I should not see ".comment_body"
 

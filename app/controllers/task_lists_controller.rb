@@ -28,7 +28,7 @@ class TaskListsController < ApplicationController
       }
       f.js {
         @show_part = params[:part]
-        render :template => 'task_lists/reload'
+        render 'task_lists/reload', :layout => false
       }
       f.print { render :layout => 'print' }
       f.xml   { render :xml     => @task_lists.to_xml(:include => :tasks, :root => 'task-lists') }
@@ -42,7 +42,7 @@ class TaskListsController < ApplicationController
 
     respond_to do |f|
       f.any(:html, :m)
-      f.js    { calc_onindex; @show_part = params[:part]; render :template => 'task_lists/reload' }
+      f.js    { calc_onindex; @show_part = params[:part]; render 'task_lists/reload', :layout => false }
       f.xml   { render :xml     => @task_list.to_xml(:include => [:tasks, :comments]) }
       f.json  { render :as_json => @task_list.to_xml(:include => [:tasks, :comments]) }
       f.yaml  { render :as_yaml => @task_list.to_xml(:include => [:tasks, :comments]) }
@@ -130,7 +130,7 @@ class TaskListsController < ApplicationController
     authorize! :update, @task_list
     calc_onindex
     
-    if request.method_symbol == :put and !@task_list.archived
+    if !@task_list.archived
       # Prototype for comment
       comment_attrs = {}
       comment_attrs[:status] = Task::STATUSES[:resolved]
@@ -168,19 +168,19 @@ class TaskListsController < ApplicationController
     authorize! :update, @task_list
     calc_onindex
     
-    if request.method_symbol == :put and @task_list.archived
+    if @task_list.archived
       @task_list.archived = false
       @saved = @task_list.save
     end
     
     if @saved
       respond_to do |f|
-        f.js { render :template => 'task_lists/update' }
+        f.js { render 'task_lists/update', :layout => false }
         handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
-        f.js { render :template => 'task_lists/update' }
+        f.js { render 'task_lists/update', :layout => false }
         handle_api_error(f, @task_list)
       end
     end
