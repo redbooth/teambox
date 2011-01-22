@@ -26,41 +26,41 @@ Feature: Search comments in projects
     And I fill in the search box with "the mine"
     And I submit the search
     Then I should see "1 result"
-    And I should see "Gold Digging"
-    And I should see "I found a hunk of gold"
-    But I should not see "finish this space elevator"
+    And I should see "Gold Digging" in the results
+    And I should see "I found a hunk of gold" in the results
+    But I should not see "finish this space elevator" in the results
 
   Scenario: Search for a conversation by title
     Given there is a conversation titled "Where are the cats?" in the project "Gold Digging"
     When the search index is reindexed
     And I search for "cats"
-    Then I should see "Where are the cats"
-    And I should see "Gold Digging"
+    Then I should see "Where are the cats" in the results
+    And I should see "Gold Digging" in the results
 
   Scenario: Search for a conversation by body
     Given there is a conversation with body "Oh my god I love cats LOL" in the project "Gold Digging"
     When the search index is reindexed
     And I search for "cats"
-    Then I should see "Oh my god I love cats LOL"
-    And I should see "Gold Digging"
+    Then I should see "Oh my god I love cats LOL" in the results
+    And I should see "Gold Digging" in the results
 
   Scenario: Search for a task
     Given there is a task titled "Feed the cats" in the project "Gold Digging"
     When the search index is reindexed
     And I search for "cats"
-    Then I should see "Feed the cats"
-    And I should see "Gold Digging"
+    Then I should see "Feed the cats" in the results
+    And I should see "Gold Digging" in the results
 
   Scenario: Search for a task list
     Given the task list called "Take care of the cats" belongs to the project called "Gold Digging"
     When the search index is reindexed
     And I search for "cats"
-    Then I should see "Take care of the cats"
-    And I should see "Gold Digging"
+    Then I should see "Take care of the cats" in the results
+    And I should see "Gold Digging" in the results
 
   Scenario: Search for a page
     Given the project page "Minerals to watch for" exists in "Gold Digging"
     When the search index is reindexed
     And I search for "minerals"
-    Then I should see "Minerals to watch for"
+    Then I should see "Minerals to watch for" in the results
 
