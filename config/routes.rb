@@ -2,13 +2,9 @@ Teambox::Application.routes.draw do
 
   # If secure_logins is true, constrain matches to ssl requests
   class SSLConstraints
-    def self.matches?(request) 
-      if Teambox.config.secure_logins
-        request.ssl?
-      else
-        true
-      end
-    end 
+    def self.matches?(request)
+      !Teambox.config.secure_logins || request.ssl?
+    end
   end
 
   #Constrain all requests to the ssl constraint
