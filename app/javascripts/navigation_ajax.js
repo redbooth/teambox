@@ -12,6 +12,10 @@ extractParts = function(responseText) {
   return response
 }
 
+postNavLinkCallback = function(el) {
+	el.fire('navigation:loaded')
+}
+
 // Load navigation elements on main view using AJAX
 document.on('click', '.nav_links a.ajax', function(e,a) {
   if (e.isMiddleClick()) return
@@ -35,6 +39,7 @@ document.on('click', '.nav_links a.ajax', function(e,a) {
 
       // Display the AJAX route in the navigation bar
       pushHistoryState(a.readAttribute('href'))
+      postNavLinkCallback.delay(0.1, a)
     },
     onFailure: function(r) {
       // Force redirect if the AJAX load failed

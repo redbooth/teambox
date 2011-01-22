@@ -6,7 +6,8 @@ class ApiV1::TasksController < ApiV1::APIController
     query = {:conditions => api_range,
              :limit => api_limit,
              :order => 'id DESC',
-             :include => [:task_list, :project, :user, :assigned]}
+             :include => [:task_list, :project, :user, :assigned,
+                         {:first_comment => :user}, {:recent_comments => :user}]}
     
     if @current_project
       @tasks = (@task_list || @current_project).tasks.where(api_scope).all(query)
@@ -14,7 +15,7 @@ class ApiV1::TasksController < ApiV1::APIController
       @tasks = Task.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
-    api_respond @tasks, :references => [:task_list, :project, :user, :assigned]
+    api_respond @tasks, :references => [:task_list, :project, :user, :assigned, :refs_comments]
   end
 
   def show

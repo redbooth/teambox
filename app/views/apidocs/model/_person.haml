@@ -1,23 +1,27 @@
-%p= "A person links a #{link_to_doc_model(:user)} to a #{link_to_doc_model(:project)}."
-%p= "To add people to a project, make an #{link_to_doc_model(:invitation)}."
+%p=raw "A person links a #{link_to_doc_model(:user)} to a #{link_to_doc_model(:project)}."
+%p=raw "To add people to a project, make an #{link_to_doc_model(:invitation)}."
 
-- doc_for :index, :example => example_api_wrap([@person], :references => [:project, :user]) do
-  %p= "Returns the most recent people in the project."
+- doc_for :index,
+          :example => example_api_wrap([@person], :references => [:project, :user]) do
+  %p=raw "Returns the most recent people in the project."
 
 - ignore_doc_for :create
 
-- doc_for :show, :example => @person.to_api_hash(:include => [:user]) do
-  %p= "Returns the data for a person in the project"
+- doc_for :show,
+          :example => @person.to_api_hash(:include => [:user]) do
+  %p=raw "Returns the data for a person in the project"
 
-- doc_for :update, :parameters => {:role => 3 },
-                   :status => :updated,
-                   :role => :admin do
-  %p= "Updates a person in the project. You need to be an administrator in the project for this to work."
-  %p= "Roles are as follows:"
+- doc_for :update,
+          :parameters => {:role => 3 },
+          :status => :updated,
+          :role => :admin do
+  %p=raw "Updates a person in the project. You need to be an administrator in the project for this to work."
+  %p=raw "Roles are as follows:"
   %ul
     - [:observer, :commenter, :participant, :admin].each do |key|
       %li= "<tt>#{Person::ROLES[key]}</tt> #{key.to_s.capitalize}"
 
-- doc_for :destroy, :status => :deleted,
-                    :role => [:admin, :owner] do
-  %p= "Destroys a person in the project. You need to be an administrator in the project for this to work."
+- doc_for :destroy,
+          :status => :deleted,
+          :role => [:admin, :owner] do
+  %p=raw "Destroys a person in the project. You need to be an administrator in the project for this to work."

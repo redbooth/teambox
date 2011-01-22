@@ -27,6 +27,7 @@ en:
     not_allowed: You are not allowed to do that!
     calendar: Calendar
     gantt_chart: Gantt Chart
+    signup: Sign up
   confirm:
     delete_task_list: Are you sure you want to delete this task list?
     delete_task: Are you sure you want to delete this task?
@@ -291,7 +292,7 @@ en:
       tasks_for_tomorrow: "Tasks for tomorrow"
       tasks_for_next_two_weeks: "Tasks for next two weeks"
       tasks_without_a_due_date: "Tasks without a due date"
-      you_receive_this_message: "You received this message because you opted for it. You can disable it on your %{link}"
+      you_receive_this_message_html: "You received this message because you opted for it. You can disable it on your %{link}"
       settings_page: "settings page"
     text_styles:
       block_of_code: Paste your code indented (4 spaces or tabs) to paste it as a block of code.
@@ -386,8 +387,8 @@ en:
       archived_html: "Archive this Project <em>This will keep it accessible for its members, but not writable anymore.</em>"
       confirm_delete: "Are you sure you want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you'd rather keep it, use Archive Project instead."
       settings:
-        you_cant_unarchive: "You have {{active}} active projects, and your current plan only allows {{max}} projects"
-        upgrade_html: "In order to <b>unarchive this project</b> and be able to edit it, you must <a href='{{link}}'>upgrade your account and get more storage and features</a> or archive other projects."
+        you_cant_unarchive: "You have %{active} active projects, and your current plan only allows %{max} projects"
+        upgrade_html: "In order to <b>unarchive this project</b> and be able to edit it, you must <a href='%{link}'>upgrade your account and get more storage and features</a> or archive other projects."
       extra_options: "More options"
       organization: Organization
       new:
@@ -421,13 +422,13 @@ en:
       active_projects:
         zero: You have no active projects.
         one: You have one active project.
-        other: "You have {{count}} active projects."
+        other: "You have %{count} active projects."
       you_can_create_more:
-        zero_html: "You can't create any more projects.<br/>The maximum of projects with your current plan is {{max}}."
+        zero_html: "You can't create any more projects.<br/>The maximum of projects with your current plan is %{max}."
         one: You can create one more project with your current plan.
-        other: "You can create {{count}} more projects with your current plan."
+        other: "You can create %{count} more projects with your current plan."
       upgrade:
-        to_2_html: "<a href='{{link}}'>Upgrade your account now</a> to create <b>up to {{projects}} projects</b>, store up to <b>{{storage}} Gb</b> of files and use the <b>search bar across all projects</b>."
+        to_2_html: "<a href='%{link}'>Upgrade your account now</a> to create <b>up to %{projects} projects</b>, store up to <b>%{storage} Gb</b> of files and use the <b>search bar across all projects</b>."
       invite_people: Invite people to the project
       invite_by_email: Invite users by entering their email addresses
       not_allowed: "You can't create any more projects with your current account."
@@ -454,10 +455,10 @@ en:
       welcome: You're now part of this project
     list:
       archived: Archived
-      archived_at: archived at {{date}}
+      archived_at: archived at %{date}
       show_archived:
         one: Show one archived project
-        other: Show {{count}} archived projects
+        other: Show %{count} archived projects
   organizations:
     column:
       general_settings: General settings
@@ -1074,7 +1075,7 @@ en:
     index:
       title: Files in %{project}
       new_file: Upload a File
-      cant_create: You don't have permission to upload files to this project
+      cant_create: "You don't have permission to upload files to this project"
     form:
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed %{mb} MB"
@@ -1119,20 +1120,20 @@ en:
       you_can_now_create: "You can now create up to %{projects} projects."
     show:
       plan: Teambox plans
-      current_plan_html: "Your current plan is <strong>{{name}}</strong>."
-      max_projects: "You can have up to {{max}} projects."
-      max_storage: "You can store up to {{max}}."
+      current_plan_html: "Your current plan is <strong>%{name}</strong>."
+      max_projects: "You can have up to %{max} projects."
+      max_storage: "You can store up to %{max}."
       branding:
-        configure_html: "Your plan supports custom branding and domain names. <a href='{{link}}'>Configure your branding here</a>."
+        configure_html: "Your plan supports custom branding and domain names. <a href='%{link}'>Configure your branding here</a>."
         not_available_html: "Your plan doesn't support <strong>custom branding</strong>. Upgrade to a higher account to get it."
     copies:
-      copy1_html: "Liking Teambox? We're full-time workers! <a href='{{link}}'>Upgrade now</a> to support our development!"
-      copy2_html: "<a href='{{link}}'>Upgrade now</a> to get more projects, storage and search across all projects."
-      copy3_html: "<a href='{{link}}'>Get more done</a> with a premium account! Extra storage, up to 2000 projects."
-      copy4_html: "<a href='{{link}}'>Work better</a> with a premium account: Search bar across all projects."
-      copy5_html: "<a href='{{link}}'>Upgrade your Teambox account now</a> and enjoy professional collaboration!"
-      copy6_html: "Search bar across all projects could save you hours. <a href='{{link}}'>Upgrade now</a> to have it!"
-      copy7_html: "Your business matters! <a href='{{link}}'>Get the best support</a> for Teambox with our premium plans."
+      copy1_html: "Liking Teambox? We're full-time workers! <a href='%{link}'>Upgrade now</a> to support our development!"
+      copy2_html: "<a href='%{link}'>Upgrade now</a> to get more projects, storage and search across all projects."
+      copy3_html: "<a href='%{link}'>Get more done</a> with a premium account! Extra storage, up to 2000 projects."
+      copy4_html: "<a href='%{link}'>Work better</a> with a premium account: Search bar across all projects."
+      copy5_html: "<a href='%{link}'>Upgrade your Teambox account now</a> and enjoy professional collaboration!"
+      copy6_html: "Search bar across all projects could save you hours. <a href='%{link}'>Upgrade now</a> to have it!"
+      copy7_html: "Your business matters! <a href='%{link}'>Get the best support</a> for Teambox with our premium plans."
 
   shared:
     strip:
@@ -1148,6 +1149,7 @@ en:
       new_project: + New Project
       conversations: Conversations
       tasks: Tasks
+      time: Time tracking
       pages: Pages
       files: Files
       settings: Settings
@@ -1157,6 +1159,7 @@ en:
       show_all_tasks: View all tasks in my projects...
       organizations: Organizations
       show_all_organizations: "Manage organizations..."
+      gantt_and_calendars: Gantts and calendars
     project_settings_navigation:
       general: General Settings
       picture: Project Picture
@@ -1350,8 +1353,8 @@ en:
       subject: "Password retrieval for Teambox"
     notify:
       project: "Teambox Project:"
-      view_this_converation_online: "You can %{converation} to answer and attach files."
-      view_this_task_online: "You can %{link} to comment and attach files."
+      view_this_converation_online_html: "You can %{converation} to answer and attach files."
+      view_this_task_online_html: "You can %{link} to comment and attach files."
       converation: view this conversation online
       task_link: view this task online
       reply: "You can also reply to this email to post a reply in the conversation."
@@ -1362,9 +1365,9 @@ en:
       are_watching_task: 
         one: " is suscribed to this task, and will be notified of future replies."
         other: " are suscribed to this task, and will be notified of future replies."
-      stop_watching_link: "%{stop_watch} this thread to stop receiving email notifications."
+      stop_watching_link_html: "%{stop_watch} this thread to stop receiving email notifications."
       stop_watch: Stop watching
-      notification_settings_link: "You can change your %{settings_link} for further emails."
+      notification_settings_link_html: "You can change your %{settings_link} for further emails."
       settings_link: notification settings
       comment: "Comment on project's wall: "
       conversation: "Conversation:"

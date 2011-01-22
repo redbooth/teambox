@@ -19,7 +19,7 @@
   = emailer_list_comments(@conversation.comments)
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
-    %p= t('emailer.notify.view_this_converation_online', :converation => link_to(t('emailer.notify.converation'), project_conversation_url(@project, @conversation), :style => inline_organization_link_colour))
+    %p= t('emailer.notify.view_this_converation_online_html', :converation => link_to(t('emailer.notify.converation'), project_conversation_url(@project, @conversation), :style => inline_organization_link_colour))
     = emailer_answer_to_this_email
 
   .footer{ :style => email_text(:small) }
@@ -28,5 +28,5 @@
       = t('emailer.notify.are_watching', :count => @conversation.watchers.size)
 
     %p
-      = t('emailer.notify.stop_watching_link', :stop_watch => link_to(t('emailer.notify.stop_watch'), project_conversation_url(@project, @conversation), :style => inline_organization_link_colour) )
-      = t('emailer.notify.notification_settings_link', :settings_link => link_to(t('emailer.notify.settings_link'), account_notifications_url, :style => inline_organization_link_colour) )
+      = t('emailer.notify.stop_watching_link_html', :stop_watch => link_to(t('emailer.notify.stop_watch'), project_conversation_url(@project, @conversation), :style => inline_organization_link_colour) )
+      = t('emailer.notify.notification_settings_link_html', :settings_link => link_to(t('emailer.notify.settings_link'), account_notifications_url, :style => inline_organization_link_colour) )

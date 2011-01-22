@@ -11,8 +11,7 @@ class UsersController < ApplicationController
   def index
     # show current user
     respond_to do |f|
-      f.html  { redirect_to root_path }
-      f.m     { redirect_to root_path }
+      f.any(:html, :m)  { redirect_to root_path }
       f.xml   { render :xml     => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
       f.json  { render :as_json => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
       f.yaml  { render :as_yaml => @current_user.users_with_shared_projects.to_xml(:root => 'users')}
@@ -40,8 +39,10 @@ class UsersController < ApplicationController
         @user.email = @invitation.email if @invitation
       end
     end
-
-    render :layout => 'sessions'
+    
+    respond_to do |f|
+      f.any(:html, :m) { render :layout => 'sessions' }
+    end
   end
 
   def show
@@ -54,13 +55,12 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user != @current_user and (!@shares_invited_projects and @projects_shared.empty?)
-        format.html {
+        format.any(:html, :m) {
           flash[:error] = t('users.activation.invalid_user')
           redirect_to root_path
         }
       else
-        format.html
-        format.m
+        format.any(:html, :m)
         format.xml  { render :xml => @user.to_xml }
         format.json { render :as_json => @user.to_xml }
         format.yaml { render :as_yaml => @user.to_xml }
@@ -97,7 +97,9 @@ class UsersController < ApplicationController
 
       flash[:success] = t('users.create.thanks')
     else
-      render :action => :new, :layout => 'sessions'
+      respond_to do |f|
+        f.any(:html, :m) { render :action => :new, :layout => 'sessions' }
+      end
     end
   end
 

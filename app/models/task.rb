@@ -128,6 +128,11 @@ class Task < RoleRecord
   def to_s
     name
   end
+  
+  def refs_comments
+    [first_comment, first_comment.try(:user)] +
+     recent_comments + recent_comments.map(&:user)
+  end
 
   def user
     @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil

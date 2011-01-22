@@ -36,7 +36,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
   
   def get_target
     @target = if params[:project_id]
-      @current_project = @current_user.projects.find_by_permalink(params[:project_id])
+      @current_project
     else
       @current_user.projects.all
     end

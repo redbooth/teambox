@@ -1127,7 +1127,7 @@ de:
       subscribe_to_feeds: "Abonnieren Sie Nachrichtenfeeds..."
     navigation: 
       all_projects: "Alle Projekte"
-      new_project: +
+      new_project: + Neues Projekt
       welcome: Willkommen
     project_navigation: 
       all_conversations: "Alle Konversationen"
@@ -1402,7 +1402,7 @@ de:
       tasks_for_today: "Heutige Aufgaben"
       tasks_for_tomorrow: "Aufgaben für Morgen"
       tasks_without_a_due_date: "Aufgaben ohne Enddatum"
-      you_receive_this_message: "Sie sind für den Email Dienst von Teambox angemeldet. Konfigurieren Sie Email Benachrichtigungen über Ihre %{link}"
+      you_receive_this_message_html: "Sie sind für den Email Dienst von Teambox angemeldet. Konfigurieren Sie Email Benachrichtigungen über Ihre %{link}"
     edit: 
       submit: "Konto aktualisieren"
       title_delete: "Konto löschen"

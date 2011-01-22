@@ -73,6 +73,11 @@ class Conversation < RoleRecord
   def clear_targets
     Activity.destroy_all :target_id => self.id, :target_type => self.class.to_s
   end
+  
+  def refs_comments
+    [first_comment, first_comment.try(:user)] +
+     recent_comments + recent_comments.map(&:user)
+  end
 
   def owner?(u)
     user == u

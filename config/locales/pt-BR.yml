@@ -70,7 +70,7 @@ pt-BR:
         name: Endereço
     errors: 
       full_messages: 
-        format: "{{attribute}} {{message}}"
+        format: "%{attribute} %{message}"
       messages: 
         accepted: "debe ser aceito"
         blank: "não pode estar em branco"
@@ -1047,7 +1047,7 @@ pt-BR:
     new: 
       active_projects: 
         one: "Você tem um projeto ativo."
-        other: "Você tem {{count}} projetos ativos."
+        other: "Você tem %{count} projetos ativos."
         zero: "Você não tem projetos ativos."
       create_an_example_project: "Esta é tua primeira vez no Teambox? <a href='%{link}'>Crie um projeto de exemplo</a> para testar e aprender."
       created: "Foi criado o projeto!"
@@ -1060,8 +1060,8 @@ pt-BR:
       title: "Criar um projeto"
       you_can_create_more: 
         one: "Você pode criar um ou mais projetos com seu plano atual."
-        other: "Você pode criar {{count}} projetos mais com seu plano atual."
-        zero_html: "Você não pode criar mais projetos.<br/>O número máximo de projetos no seu plano é de {{max}}."
+        other: "Você pode criar %{count} projetos mais com seu plano atual."
+        zero_html: "Você não pode criar mais projetos.<br/>O número máximo de projetos no seu plano é de %{max}."
     new_primer: 
       define1_html: "Um projeto é um grupo compartilhado com teus colaboradores."
       define2_html: "No projeto, cada usuário pode:"
@@ -1447,7 +1447,7 @@ pt-BR:
       tasks_for_today: "Tarefas para hoje"
       tasks_for_tomorrow: "Tarefas para amanhã"
       tasks_without_a_due_date: "Sem data fixa"
-      you_receive_this_message: "Podes desativar estas notificaçẽs desde %{link}"
+      you_receive_this_message_html: "Podes desativar estas notificaçẽs desde %{link}"
     edit: 
       submit: Atualizar
       title_delete: "Eliminar Conta"

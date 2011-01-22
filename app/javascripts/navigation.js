@@ -2,18 +2,29 @@
 
 NavigationBar = {
   detectSelectedSection: function() {
-    var link = $$('.nav_links a').detect(function(e) {
-      return e.getAttribute('href') == window.location.pathname
-    })
+    // Direct match
+		var link = $$('.nav_links a').select(function(e) {
+			return e.getAttribute('href') == window.location.pathname
+		}).last()
+		// Close enough
+		if (link == undefined) {
+			var link = $$('.nav_links a').sortBy(function(e) {
+				return e.getAttribute('href').length
+				}).select(function(e) {
+					return window.location.pathname.search(e.getAttribute('href')) > -1
+			}).last()
+		}
+
     if(link) return link.up('.el')
   },
 
   showContainers: function(current) {
     var container = current.up('.contained')
     if (container) {
-      container.show()
-      prev_container = container.up('.contained')
-      prev_container && prev_container.show()
+      container.show().previous('.el').addClassName('expanded')
+      while (container = container.up('.contained')) {
+				container.show().previous('.el').addClassName('expanded')
+			}
     }
   },
 
@@ -24,6 +35,7 @@ NavigationBar = {
       if (el.hasClassName('expanded')) {
         // contract it if it's open
         el.removeClassName('expanded')
+        contained.setStyle({height: ''})
         contained.blindUp({ duration: 0.2 })
       } else {
         // contract others if open
@@ -32,6 +44,8 @@ NavigationBar = {
         el.up().select('.el').invoke('removeClassName', 'expanded')
         // expand the selected one
         el.addClassName('expanded')
+
+        contained.setStyle({height: ''})
         effect ? contained.blindDown({ duration: 0.2 }) : contained.show()
       }
       // Stop the event and don't follow the link

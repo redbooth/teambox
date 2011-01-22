@@ -7,8 +7,7 @@ class TaskListsController < ApplicationController
     # Can they even edit the project?
     if @task_list
       respond_to do |f|
-        f.html { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
-        f.m    { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+        f.any(:html, :m) { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
         f.js   {
           render :text => "alert(\"#{t('common.not_allowed')}\");", :status => :unprocessable_entity
         }
@@ -22,8 +21,7 @@ class TaskListsController < ApplicationController
   def index
     @on_index = true
     respond_to do |f|
-      f.html
-      f.m
+      f.any(:html, :m)
       f.rss {
         @activities = @current_project.activities.for_task_lists.latest
         render :layout => false
@@ -43,8 +41,7 @@ class TaskListsController < ApplicationController
     @comments = @task_list.comments
 
     respond_to do |f|
-      f.html
-      f.m
+      f.any(:html, :m)
       f.js    { calc_onindex; @show_part = params[:part]; render :template => 'task_lists/reload' }
       f.xml   { render :xml     => @task_list.to_xml(:include => [:tasks, :comments]) }
       f.json  { render :as_json => @task_list.to_xml(:include => [:tasks, :comments]) }
@@ -60,8 +57,7 @@ class TaskListsController < ApplicationController
     @on_index = true
     @task_list = @current_project.task_lists.new
     respond_to do |f|
-      f.html
-      f.m
+      f.any(:html, :m)
       f.js { render :layout => false }
     end
   end
@@ -94,8 +90,7 @@ class TaskListsController < ApplicationController
     calc_onindex
     
     respond_to do |f|
-      f.html
-      f.m
+      f.any(:html, :m)
       f.js { render :layout => false }
     end
   end
@@ -107,15 +102,13 @@ class TaskListsController < ApplicationController
     
     if @saved
       respond_to do |f|
-        f.html { non_js_list_redirect }
-        f.m    { non_js_list_redirect }
+        f.any(:html, :m) { non_js_list_redirect }
         f.js   { render :layout => false }
         handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
-        f.html { render :edit }
-        f.m    { render :edit }
+        f.any(:html, :m) { render :edit }
         f.js   { render :layout => false }
         handle_api_error(f, @task_list)
       end
@@ -158,15 +151,13 @@ class TaskListsController < ApplicationController
       @task_list.save!
       
       respond_to do |f|
-        f.html { non_js_list_redirect }
-        f.m    { non_js_list_redirect }
+        f.any(:html, :m) { non_js_list_redirect }
         f.js   { render :layout => false }
         handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
-        f.html { flash[:error] = "Not allowed!"; non_js_list_redirect }
-        f.m    { flash[:error] = "Not allowed!"; non_js_list_redirect }
+        f.any(:html, :m) { flash[:error] = "Not allowed!"; non_js_list_redirect }
         f.js   { render :text => 'alert("Not allowed!");'; }
         handle_api_error(f, @task_list)
       end
@@ -202,8 +193,9 @@ class TaskListsController < ApplicationController
     @task_list.try(:destroy)
 
     respond_to do |f|
-      f.html { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
-      f.m    { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
+      f.any(:html, :m) {
+        flash[:success] = t('deleted.task_list', :name => @task_list.to_s)
+        redirect_to_task_list }
       f.js   { render :layout => false }
       handle_api_success(f, @task_list)
     end

@@ -8,8 +8,8 @@ class UploadsController < ApplicationController
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
       error_message = "You are not allowed to do that!"
-      f.js   { render :text => "alert('#{error_message}')" }
-      f.html { render :text => "alert('#{error_message}')" }
+      f.js             { render :text => "alert('#{error_message}')" }
+      f.any(:html, :m) { render :text => "alert('#{error_message}')" }
     end
   end
 
@@ -40,15 +40,8 @@ class UploadsController < ApplicationController
   end
   
   def index
-    @uploads = @current_project.uploads
+    @uploads = @current_project.uploads.order('updated_at DESC')
     @upload ||= @current_project.uploads.new
-
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml     => @uploads.to_xml({:root => 'files'}) }
-      format.json { render :as_json => @uploads.to_xml({:root => 'files'}) }
-      format.yaml { render :as_yaml => @uploads.to_xml({:root => 'files'}) }
-    end
   end
 
   def show
@@ -72,7 +65,7 @@ class UploadsController < ApplicationController
     @upload.save
 
     respond_to do |wants|
-      wants.html {
+      wants.any(:html, :m) {
         if @upload.new_record?
           flash.now[:error] = "There was an error uploading the file"
           render :new
@@ -96,7 +89,7 @@ class UploadsController < ApplicationController
 
     respond_to do |format|
       format.js   { render :layout => false }
-      format.html { redirect_to project_uploads_path(@current_project) }
+      format.any(:html, :m)  { redirect_to project_uploads_path(@current_project) }
     end
   end
 
@@ -107,7 +100,7 @@ class UploadsController < ApplicationController
 
     respond_to do |f|
       f.js   { render :layout => false }
-      f.html do
+      f.any(:html, :m) do
         flash[:success] = t('deleted.upload', :name => @upload.to_s)
         redirect_to project_uploads_path(@current_project)
       end

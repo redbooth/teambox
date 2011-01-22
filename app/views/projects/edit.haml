@@ -1,6 +1,3 @@
-- content_for :column do
-  = project_settings_navigation
-
 %h2= t(".title_#{@sub_action}", :project => @current_project)
 
 - sub_params = @sub_action == 'ownership' ? transfer_project_path(@current_project) : nil

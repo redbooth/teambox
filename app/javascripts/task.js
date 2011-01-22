@@ -171,9 +171,11 @@ document.observe('jenny:cancel:edit_task', function(evt) {
 document.observe('dom:loaded', function(e) {
   if(typeof(my_user) == "undefined") return
 
-  if ($$('.tasks').length > 0) Task.make_all_sortable();
-  Task.highlight_my_tasks();
-  Filter.updateCounts(false);
-  Filter.updateFilters();
-  Task.insertAssignableUsers();
+  if ($$('.tasks').length > 0 && !$('tasks_for_all_projects')) {
+    Task.make_all_sortable()
+  }
+  Task.highlight_my_tasks()
+  Filter.updateCounts(false)
+  Filter.updateFilters()
+  Task.insertAssignableUsers()
 });

@@ -49,7 +49,7 @@ class NotesController < ApplicationController
   def edit
     authorize! :update, @page
     respond_to do |f|
-      f.m
+      f.any(:html, :m)
       f.js   { render :layout => false }
     end
   end
@@ -81,15 +81,13 @@ class NotesController < ApplicationController
     if can?(:destroy, @page)
       @note.destroy
       respond_to do |f|
-        f.html { reload_page }
-        f.m    { reload_page }
+        f.any(:html, :m) { reload_page }
         f.js   { render :layout => false }
         handle_api_success(f, @note)
       end
     else
       respond_to do |f|
-        f.html { reload_page }
-        f.m    { reload_page }
+        f.any(:html, :m) { reload_page }
         f.js   { render :layout => false }
         handle_api_error(f, @note)
       end

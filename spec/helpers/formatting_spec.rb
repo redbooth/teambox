@@ -12,6 +12,10 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
     should == "<p>Did you know trololo? <iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/iwGFalTRHDA\" frameborder=\"0\"></iframe> It's awesome.</p>"
   end
 
+  it "Did you know [trololo](http://youtube.com/watch?v=iwGFalTRHDA)? It's awesome." do
+    should == "<p>Did you know <a href=\"http://youtube.com/watch?v=iwGFalTRHDA\">trololo</a>? It's awesome.</p>"
+  end
+
   it "Did you know trololo? http://youtube.com/watch?v=iwGFalTRHDA It's awesome." do
     should == "<p>Did you know trololo? <iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/iwGFalTRHDA\" frameborder=\"0\"></iframe> It's awesome.</p>"
   end
@@ -22,6 +26,14 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
 
   it "Did you know trololo? http://www.youtube.com/watch?v=iwGFalTRHDA&feature=related It's awesome." do
     should == "<p>Did you know trololo? <iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/iwGFalTRHDA\" frameborder=\"0\"></iframe> It's awesome.</p>"
+  end
+
+  it "This is a table. <table><tr><td>Foo</td></tr></table> This is another regular paragraph." do
+    should == "<p>This is a table. <table><tr><td>Foo</td></tr></table> This is another regular paragraph.</p>"
+  end
+
+  it "should remove <div> block" do
+    should == "<p>should remove  block</p>"
   end
 
   it "some **bold** text" do

@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
     comment = target.comments.create_by_user current_user, params[:comment]
     
     respond_to do |wants|
-      wants.html {
+      wants.any(:html, :m)  {
         if request.xhr? or iframe?
           if comment.new_record?
             output_errors_json(comment)
@@ -29,7 +29,10 @@ class CommentsController < ApplicationController
   
   def edit
     authorize! :edit, @comment
-    render :layout => false if request.xhr?
+    
+    respond_to do |wants|
+      wants.any(:html, :m) { render :layout => false if request.xhr? }
+    end
   end
   
   def update
@@ -38,7 +41,7 @@ class CommentsController < ApplicationController
     @comment.update_attributes params[:comment]
     
     respond_to do |wants|
-      wants.html {
+      wants.any(:html, :m) {
         if request.xhr? or iframe?
           render :partial => 'comment', :locals => { :comment => @comment, :threaded => true }
         else

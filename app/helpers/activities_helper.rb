@@ -37,7 +37,7 @@ module ActivitiesHelper
                       )
 
   def list_activities(activities)
-    activities.map { |activity| show_activity(activity) }.join('')
+    activities.map { |activity| show_activity(activity) }.join('').html_safe
   end
 
   def list_threads(activities)
@@ -129,7 +129,7 @@ module ActivitiesHelper
       task = activity.target
       project_task_url(activity.project, task)
     elsif activity.comment_target_type == 'Task'
-      task = activity.target.target
+      task = activity.comment_target
       project_task_url(activity.project, task)
     elsif activity.target_type == 'TaskList'
       project_task_list_url(activity.project, activity.target)
@@ -140,7 +140,7 @@ module ActivitiesHelper
     elsif activity.target_type == 'Conversation'
       project_conversation_url(activity.project, activity.target)
     elsif activity.comment_target_type == 'Conversation'
-      project_conversation_url(activity.project, activity.target.target)
+      project_conversation_url(activity.project, activity.comment_target)
     else
       project_url(activity.project, :anchor => "activity_#{activity.id}")
     end

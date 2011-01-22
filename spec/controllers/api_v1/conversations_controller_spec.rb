@@ -119,6 +119,12 @@ describe ApiV1::ConversationsController do
       
       references.include?("#{@project.id}_Project").should == true
       references.include?("#{@conversation.user_id}_User").should == true
+      references.include?("#{@conversation.first_comment.user_id}_User").should == true
+      references.include?("#{@conversation.first_comment.id}_Comment").should == true
+      @conversation.recent_comments.each do |comment|
+        references.include?("#{comment.id}_Comment").should == true
+        references.include?("#{comment.user_id}_User").should == true
+      end
     end
   end
   

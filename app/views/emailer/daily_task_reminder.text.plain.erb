@@ -7,6 +7,6 @@
 <%= tasks_for_daily_reminder(@tasks[:for_next_two_weeks], @user, i18n.t(:tasks_for_next_two_weeks)) %>
 <%= tasks_for_daily_reminder(@tasks[:no_due_date], @user, i18n.t(:tasks_without_a_due_date)) %>
 
-<%= i18n.t(:you_receive_this_message, :link => i18n.t(:settings_page)) %>
+<%= i18n.t(:you_receive_this_message_html, :link => i18n.t(:settings_page)) %>
 <%= account_notifications_url %>
 <% end %>

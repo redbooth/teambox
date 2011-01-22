@@ -1185,7 +1185,7 @@ zh:
       tasks_for_today: 今日任务
       tasks_for_tomorrow: 明日任务
       tasks_without_a_due_date: 无截止日期任务
-      you_receive_this_message: "您收到此邮件是因为您设置了提醒选项。您可以通过%{link}不再收到这些邮件"
+      you_receive_this_message_html: "您收到此邮件是因为您设置了提醒选项。您可以通过%{link}不再收到这些邮件"
     edit: 
       submit: 更新帐号
       title_deletion: 项目存档/回收站

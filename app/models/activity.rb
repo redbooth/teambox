@@ -111,7 +111,7 @@ class Activity < ActiveRecord::Base
 
   def thread
     @thread ||= if target.is_a?(Comment)
-      target.target
+      comment_target
     else
       target
     end || project

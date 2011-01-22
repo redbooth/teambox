@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110107120943) do
+ActiveRecord::Schema.define(:version => 20110117211601) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -85,7 +85,10 @@ ActiveRecord::Schema.define(:version => 20110107120943) do
     t.boolean  "deleted",              :default => false, :null => false
   end
 
+  add_index "comments", ["created_at"], :name => "index_comments_on_created_at"
   add_index "comments", ["deleted"], :name => "index_comments_on_deleted"
+  add_index "comments", ["hours"], :name => "index_comments_on_hours"
+  add_index "comments", ["project_id"], :name => "index_comments_on_project_id"
   add_index "comments", ["target_type", "target_id", "user_id"], :name => "index_comments_on_target_type_and_target_id_and_user_id"
 
   create_table "comments_read", :force => true do |t|
@@ -192,6 +195,8 @@ ActiveRecord::Schema.define(:version => 20110107120943) do
   end
 
   add_index "invitations", ["deleted"], :name => "index_invitations_on_deleted"
+  add_index "invitations", ["project_id"], :name => "index_invitations_on_project_id"
+  add_index "invitations", ["user_id"], :name => "index_invitations_on_user_id"
 
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"

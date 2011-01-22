@@ -7,7 +7,7 @@ class GoogleDocs
     
     def initialize(response)
       @response = response
-      super("Response returned: #{response.code} #{response.message}")
+      super("Response returned: #{response.code} #{response.message}\r\n#{response.body}")
     end
   end
   

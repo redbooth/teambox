@@ -105,7 +105,7 @@ Filter = {
       Filter.showAllTasks();
     } else {
       Filter.showTasks(assigned, filter);
-      Filter.hideBySearchBox(name_match);
+      if (name_match!=el_name.readAttribute("placeholder")) Filter.hideBySearchBox(name_match);
       Filter.foldEmptyTaskLists();
     }
 

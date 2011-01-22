@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
       flash[:error] = t('common.not_allowed')
-      f.html { redirect_to projects_path }
+      f.any(:html, :m) { redirect_to projects_path }
       handle_api_error(f, @current_project)
     end
   end
@@ -38,8 +38,7 @@ class ProjectsController < ApplicationController
     @new_conversation = @current_project.conversations.new(:simple => true)
 
     respond_to do |f|
-      f.html
-      f.m
+      f.any(:html, :m)
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @current_project.to_xml }
       f.json  { render :as_json => @current_project.to_xml }
@@ -53,6 +52,10 @@ class ProjectsController < ApplicationController
     authorize! :create_project, current_user
     @project = Project.new
     @project.build_organization
+    
+    respond_to do |f|
+      f.any(:html, :m)
+    end
   end
 
   def create
@@ -62,12 +65,10 @@ class ProjectsController < ApplicationController
     respond_to do |f|
       if @project.save
         flash[:notice] = t('projects.new.created')
-        f.html { redirect_to @project }
-        f.m    { redirect_to @project }
+        f.any(:html, :m) { redirect_to @project }
       else
         flash.now[:error] = t('projects.new.invalid_project')
-        f.html { render :new }
-        f.m    { render :new }
+        f.any(:html, :m) { render :new }
       end
     end
   end
@@ -75,6 +76,10 @@ class ProjectsController < ApplicationController
   def edit
     authorize! :update, @current_project
     @sub_action = params[:sub_action] || 'settings'
+    
+    respond_to do |f|
+      f.any(:html, :m)
+    end
   end
   
   def update
@@ -88,8 +93,10 @@ class ProjectsController < ApplicationController
     else
       flash.now[:error] = t('projects.edit.error')
     end
-
-    render :edit
+    
+    respond_to do |f|
+      f.any(:html, :m) { render :edit }
+    end
   end
   
   def transfer
@@ -124,7 +131,7 @@ class ProjectsController < ApplicationController
     authorize! :destroy, @current_project
     @current_project.destroy
     respond_to do |f|
-      f.html {
+      f.any(:html, :m) {
         flash[:success] = t('projects.edit.deleted')
         redirect_to projects_path
       }
@@ -155,7 +162,6 @@ class ProjectsController < ApplicationController
                 Person::ROLES[:admin] =>       t('roles.admin') }
 
 
-    current_user = User.first ###############
     organization_ids = current_user.projects.sort {|a,b| a.name <=> b.name}.group_by(&:organization_id)
     @organizations = organization_ids.collect do |k,v|
       r = {}
