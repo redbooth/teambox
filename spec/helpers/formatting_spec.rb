@@ -84,6 +84,14 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
     should == "<p>This is a comment with an_underscored_word</p>"
   end
   
+  it "Why don't you\nhttp://www.google.co.uk/images/logos/ps_logo2.png\nIt?" do
+    should == "<p>Why don't you<br />\n<a href=\"http://www.google.co.uk/images/logos/ps_logo2.png\"><img class=\"comment-image\" src=\"http://www.google.co.uk/images/logos/ps_logo2.png\" alt=\"http://www.google.co.uk/images/logos/ps_logo2.png\" /></a><br />\nIt?</p>"
+  end
+  
+  it "Why don't you\nJust http://www.google.co.uk/images/logos/ps_logo2.png\nIt?" do
+    should == "<p>Why don't you<br />\nJust <a href=\"http://www.google.co.uk/images/logos/ps_logo2.png\">http://www.google.co.uk/images/logos/ps_logo2.png</a><br />\nIt?</p>"
+  end
+  
   context "Add http:// to links" do
     it "The internet is made of [lolcats](icanhascheezburger.com)" do
       should == "<p>The internet is made of <a href=\"http://icanhascheezburger.com\">lolcats</a></p>"

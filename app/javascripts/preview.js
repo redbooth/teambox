@@ -1,16 +1,23 @@
 var Preview = {
+  IMAGE_MATCH: /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)(\?)*(\d+)*$)/gim,
   init: function (textarea) {
     var box = new Element('div', { 'class': 'preview previewBox textilized invisible' })
     textarea.insert({ after: box })
 
     var formatter = new Showdown.converter;
     formatter.makeHtml = formatter.makeHtml.wrap(function(make) {
-      box.update(make(textarea.getValue()))
+      var value = textarea.getValue()
+      value = Preview.format_image(value)
+      box.update(make(value))
     })
 
     textarea.on('keyup', formatter.makeHtml.bind(formatter).throttle(300))
     formatter.makeHtml()
     return box
+  },
+  format_image: function(text) {
+     return text.replace(Preview.IMAGE_MATCH,
+                         "<img class=\"comment-image\" src=\"$1\" frameborder=\"0\"/>")
   },
   toggle: function(box, button) {
     box.toggleClassName('invisible')
