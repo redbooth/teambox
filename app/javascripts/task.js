@@ -73,7 +73,7 @@ Task = {
       constraint: 'vertical',
       containment: all_task_ids,
       // format: /.*task_(\d+)_task_task/,
-      handle: 'img.task_drag',
+      handle: 'task_drag',
       dropOnEmpty: true,
       // that makes the task disappear when it leaves its original task list
       // only:'task',
