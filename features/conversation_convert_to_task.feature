@@ -26,6 +26,13 @@ Feature: Converting a conversation to a task
     Then I should see "Politics" in the thread title
     And I should see "created a task"
 
+  Scenario: Converting a normal conversation when you are a commenter
+    Given I started a conversation named "Politics"
+    And I am a commenter in the project called "Ruby Rockstars"
+    When I go to the home page
+    And I click the conversation's comment box
+    Then I should not see "Convert to task"
+
   Scenario: Converting a normal conversation on the overview page and adding a comment
     Given I started a conversation named "Politics"
     When I go to the home page
