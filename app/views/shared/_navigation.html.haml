@@ -29,8 +29,7 @@
             .el= link_to t('shared.project_settings_navigation.deletion'), project_deletion_path(project.permalink, :sub_action => 'deletion'), :class => 'deletion ajax'
             - if project.owner?(current_user)
               .el= link_to t('shared.project_settings_navigation.ownership'), project_ownership_path(project.permalink, :sub_action => 'ownership'), :class => 'ownership ajax'
-        - if can?(:admin, project)
-          .el= link_to t('.people'), project_people_path(project), :class => 'people ajax'
+        .el= link_to t('.people'), project_people_path(project), :class => 'people ajax'
     - if show_only_recent or projects.detect{|p| p.archived}
       .el= link_to t('.show_all_projects'), all_projects_path, :class => 'more ajax'
     - if !Teambox.config.community || (@community_organization && @community_role)

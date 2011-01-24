@@ -22,7 +22,7 @@
     %p= t('people.column.only_admins_can_invite') 
     %p= t('people.column.contact_admins',
           :admins => @admins.collect { |user| link_to(h(user), user) }.to_sentence,
-          :count => @admins.size)
+          :count => @admins.size).html_safe
 
   - unless @current_project.owner?(current_user)
     - current_person = @people.find { |p| p.user == current_user }
