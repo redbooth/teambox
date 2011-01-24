@@ -71,6 +71,7 @@ class TasksController < ApplicationController
       @task.updating_user = current_user
       success = @task.update_attributes params[:task]
     elsif can? :comment, @task
+      @task.updating_user = current_user
       success = @task.update_attributes(:comments_attributes => params['task']['comments_attributes'])
     else
       authorize! :comment, @task
