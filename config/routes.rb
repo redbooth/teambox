@@ -7,10 +7,27 @@ Teambox::Application.routes.draw do
     end
   end
 
+  resources :sites, :only => [:show, :new, :create]
+
+  match '/public' => 'public/projects#index', :as => :public_projects
+
+  namespace :public do
+    match ':id' => 'projects#show', :as => :project
+    match ':project_id/conversations' => 'conversations#index', :as => :project_conversations
+    match ':project_id/conversations/:id' => 'conversations#show', :as => :project_conversation
+    match ':project_id/:id' => 'pages#show', :as => :project_page
+  end
+
+  match 'api' => 'apidocs#index', :as => :api
+  match 'api/concepts' => 'apidocs#concepts', :as => :api_concepts
+  match 'api/routes' => 'apidocs#routes', :as => :api_routes
+  match 'api/changes' => 'apidocs#changes', :as => :api_changes
+  match 'api/:model' => 'apidocs#model', :as => :api_model
+
+  resources :sprockets, :only => [:index, :show]
+
   #Constrain all requests to the ssl constraint
   scope :constraints => SSLConstraints do
-
-    resources :sprockets, :only => [:index, :show]
 
     match '/logout' => 'sessions#destroy', :as => :logout
     match '/login' => 'sessions#new', :as => :login
@@ -66,8 +83,6 @@ Teambox::Application.routes.draw do
         end
       end
     end
-
-    resources :sites, :only => [:show, :new, :create]
 
     match '/account/settings' => 'users#edit', :as => :account_settings, :sub_action => 'settings'
     match '/account/picture' => 'users#edit', :as => :account_picture, :sub_action => 'picture'
@@ -202,21 +217,6 @@ Teambox::Application.routes.draw do
         end
       end
     end
-
-    match '/public' => 'public/projects#index', :as => :public_projects
-
-    namespace :public do
-      match ':id' => 'projects#show', :as => :project
-      match ':project_id/conversations' => 'conversations#index', :as => :project_conversations
-      match ':project_id/conversations/:id' => 'conversations#show', :as => :project_conversation
-      match ':project_id/:id' => 'pages#show', :as => :project_page
-    end
-
-    match 'api' => 'apidocs#index', :as => :api
-    match 'api/concepts' => 'apidocs#concepts', :as => :api_concepts
-    match 'api/routes' => 'apidocs#routes', :as => :api_routes
-    match 'api/changes' => 'apidocs#changes', :as => :api_changes
-    match 'api/:model' => 'apidocs#model', :as => :api_model
 
     namespace :api_v1, :path => 'api/1' do
       resources :projects, :except => [:new, :edit] do
@@ -364,9 +364,9 @@ Teambox::Application.routes.draw do
 
     match '/my_projects' => 'projects#list', :as => :all_projects
 
-    root :to => 'projects#index'
-
     match 'assets/:id/:style/:filename' => 'uploads#download', :constraints => { :filename => /.*/ }, :via => :get
+
+    root :to => 'projects#index'
 
   end
 
