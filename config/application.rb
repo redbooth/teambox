@@ -46,10 +46,10 @@ module Teambox
 
     # Allowed tags are: a, abbr, acronym, address, b, big, blockquote, br, cite, code, dd, 
     # del, dfn, dl, dt,  em, h1, h2, h3, h4, h5, h6, hr, i, img, ins, kbd, li, ol, p, pre,
-    # samp, small, span, strong, sub, sup, table, td, tr, tt, ul, var
+    # samp, small, span, strong, sub, sup, table, td, tr, th, tt, ul, var
     config.after_initialize do
       ActionView::Base.sanitized_allowed_tags.delete 'div'
-      ActionView::Base.sanitized_allowed_tags = ['table', 'tr', 'td']
+      ActionView::Base.sanitized_allowed_tags = ['table', 'tr', 'td', 'th']
     end
 
     def config.from_file(file)
