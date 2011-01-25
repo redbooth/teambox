@@ -28,8 +28,7 @@ class HooksController < ApplicationController
     when 'github'
       @current_project.conversations.from_github JSON.parse(params[:payload])
     when 'email'
-      #Emailer.receive_params(params)
-      Comment.last.dup.save!
+      Emailer.receive_params(params)
     when 'pivotal'
       @current_project.task_lists.from_pivotal_tracker(params[:activity])
     else
