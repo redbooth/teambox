@@ -296,6 +296,10 @@ Then /^show me the page$/ do
   save_and_open_page
 end
 
+Then /^debugger/ do
+  debugger
+end
+
 When  /^(?:|I )drag "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
   with_scope(selector) do
     dragged_item = find(:xpath,"//*[.='#{dragged_item}']")

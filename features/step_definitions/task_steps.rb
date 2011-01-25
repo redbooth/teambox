@@ -140,7 +140,10 @@ Then /^I select the year "([^\"]*)" with the(?: ([^\"]*))? date picker$/ do |yea
 end
 
 Then /^I select the day "([^\"]*)" with the date picker$/ do |day|
-  Then %(I click the element that contain "#{day}" within "div[class='calendar_date_select']")
+  with_css_scope("div[class='calendar_date_select']") do |node|
+    element = node.all(:xpath,"//*[.='#{day}']").detect {|e| e.tag_name == 'td' && !e['innerHTML'].include?('other')}
+    element.try(:click)
+  end
 end
 
 Then /^I should see "([^\"]*)"(?: and "([^\"]*)")? within the last comment body$/ do |text1, text2|

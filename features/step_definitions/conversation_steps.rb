@@ -50,13 +50,25 @@ end
 
 When /^(?:|I )fill in the conversation's comment box with "([^\"]*)"(?: within "([^\"]*)")?$/ do |value, selector|
   with_scope(selector) do
-    find(:xpath, '//form[contains(@class,"edit_conversation")]//*[@id="conversation_comments_attributes_0_body"]').set(value)
+    find(:xpath, '//form[contains(@class,"edit_conversation")]//*[@name="comment[body]"]').set(value)
+  end
+end
+
+When /^(?:|I )fill in the new conversation comment box with "([^\"]*)"?$/ do |value, selector|
+  with_scope(selector) do
+    find(:xpath, '//form[contains(@class,"new_conversation")]//*[@name="conversation[comments_attributes][0][body]"]').set(value)
   end
 end
 
 When /^(?:|I )click the conversation's comment box(?: within "([^\"]*)")?$/ do |selector|
   with_scope(selector) do
     find(:xpath, '//form[contains(@class,"edit_conversation")]//*[@name="comment[body]"]').click
+  end
+end
+
+When /^(?:|I )click the new conversation comment box?$/ do |selector|
+  with_scope(selector) do
+    find(:xpath, '//form[contains(@class,"new_conversation")]//*[@name="conversation[comments_attributes][0][body]"]').click
   end
 end
 
