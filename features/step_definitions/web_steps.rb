@@ -141,6 +141,22 @@ Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   end
 end
 
+Then /^(?:|I )should see '([^\']*)'(?: within '([^\']*)')?$/ do |text, selector|
+  if Capybara.current_driver == Capybara.javascript_driver
+    with_css_scope(selector) do |scope|
+      assert scope.has_xpath?(XPath::HTML.content(text), :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
+      page.should have_content(text)
+    end
+  else
+    with_scope(selector) do
+      assert page.has_content?(text)
+    end
+  end
+end
+
 Then /^(?:|I )should see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, selector|
   with_scope(selector) do
     args = ['//*', {
@@ -175,6 +191,22 @@ Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selec
   end
 end
 
+Then /^(?:|I )should not see '([^\']*)'(?: within '([^\']*)')?$/ do |text, selector|
+  if Capybara.current_driver == Capybara.javascript_driver
+    with_css_scope(selector) do |scope|
+      assert scope.has_xpath?(XPath::HTML.content(text), :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
+      page.should have_no_content(text)
+    end
+  else
+    with_scope(selector) do
+      assert page.has_no_content?(text)
+    end
+  end
+end
+
 Then /^(?:|I )should not see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, selector|
   with_scope(selector) do
     args = ['//*', {
@@ -188,6 +220,9 @@ Then /^(?:|I )should not see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, s
     end
   end
 end
+
+
+
 
 Then /^the "([^\"]*)" field(?: within "([^\"]*)")? should contain "([^\"]*)"$/ do |field, selector, value|
   with_scope(selector) do
