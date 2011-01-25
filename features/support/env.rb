@@ -40,6 +40,14 @@ ActionController::Base.allow_rescue = false
 
 Cucumber::Rails::World.use_transactional_fixtures = true
 
+#Capybara.register_driver :selenium do |app|
+  #Capybara::Driver::Selenium
+  ##profile = Selenium::WebDriver::Firefox::Profile.new
+  ##profile.add_extension(File.expand_path("features/support/firebug-1.7X.0a7.xpi"))
+
+  #Capybara::Driver::Selenium.new(app, { :browser => :firefox, :profile => "selenium" })
+#end
+
 # How to clean your database when transactions are turned off. See
 # http://github.com/bmabey/database_cleaner for more info.
 if defined?(ActiveRecord::Base)
