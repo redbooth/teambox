@@ -16,7 +16,7 @@ class HooksController < ApplicationController
   end
   
   rescue_from 'ActiveRecord::RecordInvalid' do |exception|
-    if exception.include? "Duplicate comment"
+    if exception.message.include? "Duplicate comment"
       head :ok
     else
       raise exception
@@ -28,7 +28,8 @@ class HooksController < ApplicationController
     when 'github'
       @current_project.conversations.from_github JSON.parse(params[:payload])
     when 'email'
-      Emailer.receive_params(params)
+      #Emailer.receive_params(params)
+      Comment.last.dup.save!
     when 'pivotal'
       @current_project.task_lists.from_pivotal_tracker(params[:activity])
     else
