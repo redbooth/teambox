@@ -14,20 +14,13 @@ Feature: Changing Task Status from New
     And I press "Save"
     And I wait for 0.2 second
     And I should see "I need to wait till the engine cools down"
-<<<<<<< HEAD
     And I should not see "→"
-=======
->>>>>>> Fix task_status feature
 
   Scenario: Mislav changes task (new -> open:Mislav)
     When I fill in the comment box with "I fused the dino eggs to the engine"
     And I select "Mislav Marohnić" from "Assigned to"
     And I press "Save"
-<<<<<<< HEAD
-    Then I should see "new → open"
-=======
     Then I should see "new → open" status change
->>>>>>> Fix task_status feature
     And I should see "Assigned to Mislav Marohnić"
 
   Scenario: Mislav changes task (new -> hold)
