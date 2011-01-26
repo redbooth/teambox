@@ -68,6 +68,11 @@ document.on("dom:loaded", function() {
   var current = NavigationBar.detectSelectedSection()
   if (current) {
     current.addClassName('selected')
+    // If it's hidden in the "Show more" options
+    if(!current.visible()) {
+      $('show_more').insert({before: current})
+      current.show()
+    }
     NavigationBar.toggleElement(current)
     NavigationBar.showContainers(current)
   }
@@ -87,4 +92,16 @@ document.on('click', 'a#open_my_tasks', function(e,el) {
 document.on('click', '.nav_links .el', function(e,el) {
   if (e.isMiddleClick()) return
   NavigationBar.toggleElement(el, true) && e.stop()
+})
+
+document.on('click', '.nav_links .el .show_more', function(e,el) {
+  e.stop()
+  $$('.el#show_more').invoke('hide')
+  $$('.el.extra').invoke('show')
+})
+
+document.on('click', '.nav_links .el .show_less', function(e,el) {
+  e.stop()
+  $$('.el#show_more').invoke('show')
+  $$('.el.extra').invoke('hide')
 })
