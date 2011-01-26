@@ -47,4 +47,30 @@ describe Page do
     end
   end
 
+
+  describe "format" do
+    before do
+      @page=Factory.create(:page)
+      @note=@page.build_note({:name=>'A note',:body=> <<-STR
+<table border="1">
+<tr>
+<th></th>
+<th align="center"> heading 1 </th>
+<th>heading 2</th>
+<th>heading 3</th>
+<tr>
+</table>
+      STR
+      }).tap do |n|
+        n.updated_by = @page.user
+        n.save
+      end
+    end
+    it "should display the correct format" do
+      @note.body_html.should include('<tr>')
+      @note.body_html.should include('<table>')
+      @note.body_html.should include('<th>')
+    end
+  end
+
 end
