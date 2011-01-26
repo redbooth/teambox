@@ -366,9 +366,9 @@ Teambox::Application.routes.draw do
 
     match 'assets/:id/:style/:filename' => 'uploads#download', :constraints => { :filename => /.*/ }, :via => :get
 
-    root :to => 'projects#index'
-
   end
+
+  root :to => 'projects#index'
 
   if Rails.env.development?
     mount Emailer::Preview => 'mail_view'
