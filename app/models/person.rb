@@ -15,6 +15,7 @@ class Person < ActiveRecord::Base
 #  validates_uniqueness_of :user, :scope => :project
   validates_presence_of :user, :project   # Make sure they both exist and are set
   validates_inclusion_of :role, :in => 0..3
+  validates_uniqueness_of :project_id, :scope => :user_id
 
   serialize :permissions
 
