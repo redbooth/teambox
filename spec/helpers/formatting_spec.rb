@@ -28,8 +28,8 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
     should == "<p>Did you know trololo? <iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/iwGFalTRHDA\" frameborder=\"0\"></iframe> It's awesome.</p>"
   end
 
-  it "This is a table. <table><tr><td>Foo</td></tr></table> This is another regular paragraph." do
-    should == "<p>This is a table. <table><tr><td>Foo</td></tr></table> This is another regular paragraph.</p>"
+  it "This is a table. <table><tr><th>Foo</th></tr><tr><td>Bar</td></tr></table> This is another regular paragraph." do
+    should == "<p>This is a table. <table><tr><th>Foo</th></tr><tr><td>Bar</td></tr></table> This is another regular paragraph.</p>"
   end
 
   it "should remove <div> block" do
