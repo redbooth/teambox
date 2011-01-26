@@ -51,12 +51,14 @@ class Project < ActiveRecord::Base
   
   def add_user(user, params={})
     unless has_member?(user)
-      people.build.tap do |person|
-        person.user = user
-        person.role = params[:role] if params[:role]
-        person.source_user_id = params[:source_user].try(:id)
-        person.save
-      end
+      person = people.with_deleted.where(:user_id => user.id).first ?
+               people.with_deleted.where(:user_id => user.id).first : people.build
+
+      person.user = user
+      person.role = params[:role] if params[:role]
+      person.source_user_id = params[:source_user].try(:id)
+      person.deleted = false
+      person.save
     end
   end
 
