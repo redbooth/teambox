@@ -31,7 +31,7 @@ class ApiV1::PeopleController < ApiV1::APIController
   
   def load_person
     @person = @current_project.people.find params[:id]
-    api_status(:not_found) unless @person
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Person not found' unless @person
   end
   
 end

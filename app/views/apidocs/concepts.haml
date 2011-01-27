@@ -111,6 +111,32 @@
 
 %p For a single object, you will get a single JSON object containing the properties of the said object. In addition if you pass in one or more <tt>include[]</tt> parameters, additional referenced elements will be returned in the object, e.g. comments. Refer to the "Includes" section on a route for available includes.
 
+%h3 Errors
+
+%pre
+  \
+  {
+  \  "errors": {"message": "Something went wrong", "type": "SomethingWrongError"},
+  \  ...
+  }
+
+%p If an error occurred during a request, you will get the "errors" returned in a JSON object. In the case of POST or PUT requests, each key in "errors" corresponds to a field in the related object you are trying to create or modify.
+
+%p In all cases you will get at least two keys in "errors", i.e.
+%ul
+  %li type: The type of the error
+  %li message: Message to describe the error
+
+%p Note that there are currently only 3 error types that can be returned. They are:
+
+%ul
+  %li AuthorizationFailed: A login is required
+  %li InsufficientPermissions: You do not have the necessary permissions to perform this action
+  %li InvalidRecord: One of more fields in your object are invalid
+  %li ObjectNotFound: One or more specified objects were not found
+
+%p In all cases you will also get an equivalent HTTP Status code returned.
+
 %h3 JSONP requests
 
 %p For JSONP requests (using the "js" format), the response will be javascript of the following format:

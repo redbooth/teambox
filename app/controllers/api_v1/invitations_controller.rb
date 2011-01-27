@@ -27,7 +27,7 @@ class ApiV1::InvitationsController < ApiV1::APIController
       
       @invitations = @targets.map { |target| make_invitation(target, role) }
     else
-      return api_error(t('invitations.errors.invalid'), :unprocessable_entity)
+      return api_error(:unprocessable_entity, :type => 'InvalidRecord', :message => t('invitations.errors.invalid'))
     end
     
     if @saved_count > 0

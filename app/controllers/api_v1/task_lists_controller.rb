@@ -110,7 +110,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
     else
       TaskList.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
-    api_status(:not_found) if @task_list.nil?
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'TaskList not found' unless @task_list
   end
     
   def api_scope

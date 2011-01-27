@@ -63,7 +63,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
     
     if project_id
       @current_project = Project.find_by_id_or_permalink(project_id)
-      api_status(:not_found) unless @current_project
+      api_error 404, :type => 'ObjectNotFound', :message => 'Project not found' unless @current_project
     end
   end
   

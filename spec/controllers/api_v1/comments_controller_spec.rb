@@ -209,6 +209,7 @@ describe ApiV1::CommentsController do
       
       post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :body => 'Created!'
       response.status.should == 401
+      JSON.parse(response.body)['errors']['type'].should == 'InsufficientPermissions'
       
       conversation.reload.comments(true).length.should == 1
     end

@@ -67,7 +67,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     else
       Conversation.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
-    api_status(:not_found) unless @conversation
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Conversation not found' unless @conversation
   end
   
   def api_scope

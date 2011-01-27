@@ -19,7 +19,11 @@ class ApiV1::SearchController < ApiV1::APIController
 
     def permission_to_search
       unless user_can_search? or (@current_project and project_owner.can_search?)
-        Teambox.config.allow_search ? api_status(:forbidden) : api_status(:not_implemented)
+        if Teambox.config.allow_search
+          api_error :forbidden, :type => 'InsufficientPermissions', :message => 'You cannot search'
+        else
+          api_error :not_implemented, :type => 'ObjectNotFound', :message => 'Search is disabled'
+        end
       end
     end
     

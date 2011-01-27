@@ -9,10 +9,10 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_locale,
                 :rss_token,
-                :confirmed_user?, 
+                :set_client,
+                :confirmed_user?,
                 :load_project, 
                 :load_organizations,
-                :set_client,
                 :login_required, 
                 :touch_user,
                 :belongs_to_project?,
