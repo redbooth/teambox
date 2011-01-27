@@ -48,6 +48,18 @@ Then /^(@.+) should( not)? be watching the conversation "([^\"]*)"$/ do |users, 
   end
 end
 
+Then /^(?:|I )should not see any conversations$/ do
+  text = "This project doesn't have any conversations yet"
+
+  if Capybara.current_driver == Capybara.javascript_driver
+    assert page.has_xpath?(XPath::HTML.content(text), :visible => true)
+  elsif page.respond_to? :should
+    page.should have_content(text)
+  else
+    assert page.has_content?(text)
+  end
+end
+
 When /^(?:|I )fill in the conversation's comment box with "([^\"]*)"(?: within "([^\"]*)")?$/ do |value, selector|
   with_scope(selector) do
     find(:xpath, '//form[contains(@class,"edit_conversation")]//*[@name="comment[body]"]').set(value)
