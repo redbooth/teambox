@@ -11,7 +11,7 @@ NavigationBar = {
 			var link = $$('.nav_links a').sortBy(function(e) {
 				return e.getAttribute('href').length
 				}).select(function(e) {
-					return window.location.pathname.search(e.getAttribute('href')) > -1
+					return (window.location.pathname.search(e.getAttribute('href')) > -1 && e.getAttribute('href') != '/')
 			}).last()
 		}
 
