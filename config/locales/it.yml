@@ -607,7 +607,7 @@ it:
       hey: "Ciao, %{user_name}!"
       log_in: "Entra in Teambox ora!"
       plaintext_link: "Se il link sopra non funziona, copia e incolla il seguente link nella barra degli indirizzi del tuo browser:"
-      problems: "Se hai problemi, contattaci in %{support}"
+      problems_html: "Se hai problemi, contattaci in %{support}"
       report_abuse: "Hai ricevuto questo messaggio perchè ti sei registrato in Teambox con l'indirizzo %{email}"
     invitation: 
       accept_the_invitation: "Accetta l'invito per iniziare la collaborazione"
@@ -639,7 +639,7 @@ it:
       hey: "Ciao, %{user_name}!"
       log_in: "Entra in Teambox ora!"
       plaintext_link: "Se il link sopra non funziona, copia e incolla il seguente link nella barra degli indirizzi del tuo browser:"
-      problems: "Se hai problemi, contattaci in %{support}"
+      problems_html: "Se hai problemi, contattaci in %{support}"
       report_abuse: "Hai ricevuto questo messaggio perchè ti sei registrato in Teambox con l'indirizzo %{email}"
     upload: 
       file: "File:"
@@ -1169,7 +1169,7 @@ it:
     unconfirmed_email: 
       follow_the_link_html: "Per attivare il tuo account <b>apri questa mail e segui il link che trovi al suo interno</b>."
       invitation_sent_to_html: "Abbiamo inviato un invito a <i>%{email}</i>, per verificare il tuo indirizzo email."
-      problems: "Se hai ancora dei problemi, scrivici! %{support}"
+      problems_html: "Se hai ancora dei problemi, scrivici! %{support}"
       problems_title: Problemi?
       resend: "Non trovi la mail di conferma? Clicca <a href='%{link}'>qui</a> per reinviare la mail."
       spam: "Assicurati che la mail non si trovi nella cartella della posta indesiderata o nella spam."

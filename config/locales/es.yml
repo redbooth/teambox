@@ -810,7 +810,7 @@ es:
       hey: "Hola, %{user_name}!"
       log_in: "Entra a Teambox ahora!"
       plaintext_link: "Si el enlace de arriba no funciona, copia y pega lo siguiente en la barra de direcciones de tu navegador:"
-      problems: "Si tienes problemas, ponte en contacto con nosotros en %{support}"
+      problems_html: "Si tienes problemas, ponte en contacto con nosotros en %{support}"
       report_abuse: "Recibes este mensaje porque te has registado en Teambox con la dirección %{email}"
       subject: "Empieza a usar Teambox"
     forgot_password: 
@@ -847,7 +847,7 @@ es:
       hey: "Hola, %{user_name}!"
       log_in: "Entra a Teambox ahora!"
       plaintext_link: "Si el enlace de arriba no funciona, copia y pega lo siguiente en la barra de direcciones de tu navegador:"
-      problems: "Si tienes problemas, ponte en contacto con nosotros en %{support}"
+      problems_html: "Si tienes problemas, ponte en contacto con nosotros en %{support}"
       report_abuse: "Recibes este mensaje porque te has registado en Teambox con la dirección %{email}"
       subject: "Se ha restablecido tu contraseña"
       successfully_reset: "Su contraseña ha sido restablecida correctamente."
@@ -1832,7 +1832,7 @@ es:
     unconfirmed_email: 
       follow_the_link_html: "Así que <b>abre este email y sigue el enlace que hay en él</b> para activar tu cuenta."
       invitation_sent_to_html: "Hemos enviado una invitación a <i>%{email}</i>, para verificar tu dirección de email."
-      problems: "Si aún tienes problemas, escríbenos! %{support}"
+      problems_html: "Si aún tienes problemas, escríbenos! %{support}"
       problems_title: Problemas?
       resend: "¿No encuentras el email de confirmación? Pulsa <a href='%{link}'>aquí</a> para reenviar el correo."
       spam: "Asegúrate de que el email no se ha clasificado como correo no deseado."

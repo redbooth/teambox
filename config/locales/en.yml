@@ -284,7 +284,7 @@ en:
       resend_html: "Can't find the email? Press <a href='%{link}'>here</a> to re-send the activation email."
       spam: "Make sure the email wasn't classified as spam by your email client."
       wrong_address_html: "Wrong address? If you mistyped your email address, <a href='%{link}'>cancel the signup process</a> and re-create your account with a valid address."
-      problems: "If you're still having problems, please contact us at %{support}"
+      problems_html: "If you're still having problems, please contact us at %{support}"
     daily_task_reminder_email:
       daily_task_reminder: "Daily task reminder"
       daily_task_reminder_from_teambox: "This is the daily task reminder email from Teambox"
@@ -1341,7 +1341,7 @@ en:
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
-      problems: "If you have any problems, please contact us at %{support}"
+      problems_html: "If you have any problems, please contact us at %{support}"
     reset_password:
       subject: "Your password has successfully been reset"
       hey: "Hey, %{user_name}!"
@@ -1350,7 +1350,7 @@ en:
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
-      problems: "If you have any problems, please contact us at %{support}"
+      problems_html: "If you have any problems, please contact us at %{support}"
       successfully_reset: "Your password has been successfully reset." 
     forgot_password:
       subject: "Password retrieval for Teambox"

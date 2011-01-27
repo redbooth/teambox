@@ -785,7 +785,7 @@ pl:
       hey: "Hej, %{user_name}!"
       log_in: "Zaloguj się do Teambox teraz!"
       plaintext_link: "Jeśli to nie działa, skopiuj i wklej następujący link do pasku adresu przeglądarki:"
-      problems: "Jeśli masz jakieś problemy, skontaktuj się z nami na %{support}"
+      problems_html: "Jeśli masz jakieś problemy, skontaktuj się z nami na %{support}"
       report_abuse: "Otrzymałeś tę wiadomość ponieważ zarejestrowałeś się na Teambox pod następującym adresem email: %{email}"
       subject: "Zacznij z Teambox"
     forgot_password: 
@@ -826,7 +826,7 @@ pl:
       hey: "Cześć, %{user_name}!"
       log_in: "Zaloguj się do Teambox już teraz!"
       plaintext_link: "Jeśli to nie działa, skopiuj i wklej następujący link do paska adresu:"
-      problems: "Jeśli wystąpiły jakiekolwiek problemy, proszę się z nami skontaktować %{support}"
+      problems_html: "Jeśli wystąpiły jakiekolwiek problemy, proszę się z nami skontaktować %{support}"
       report_abuse: "Otrzymałeś tę wiadomość ponieważ zapisałeś się do Teambox za pomocą następującego adresu email:  %{email}"
       subject: "Twoje hasło zostało pomyślnie zmienione"
       successfully_reset: "Twoje hasło zostało zmienione"
@@ -1716,7 +1716,7 @@ pl:
     unconfirmed_email: 
       follow_the_link_html: "Proszę <b> otwórz ten email i kliknij na link </b> w celu aktywowania swojego konta."
       invitation_sent_to_html: "Email z zaproszeniem został wysłany na <i>%{email}</i>, w celu potwierdzenia twojego adresu email."
-      problems: "Jeśli nadal masz problemy, skontaktuj się z nami %{support}"
+      problems_html: "Jeśli nadal masz problemy, skontaktuj się z nami %{support}"
       problems_title: Problemy?
       resend: "Nie możesz znaleźć email'a? Naciśnij <a href='%{link}'>tu</a> by wysłać ponownie email aktywujący."
       spam: "Upewnij się czy email nie został uznany za spam przez twojego klienta poczty email"

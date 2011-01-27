@@ -779,7 +779,7 @@ ca:
       hey: "Hola, %{user_name}!"
       log_in: "Entra a Teambox ara!"
       plaintext_link: "Si l'enllaç de sobre no funciona, copia i enganxa el següent a la barra d'adreces del teu navegador:"
-      problems: "Si tens problemes, posat en contacte amb nosaltres a %{support}"
+      problems_html: "Si tens problemes, posat en contacte amb nosaltres a %{support}"
       report_abuse: "Has rebut aquest missatge perquè t'has registrat a Teambox amb l'adreça %{email}"
       subject: "Introducció a Teambox"
     forgot_password: 
@@ -820,7 +820,7 @@ ca:
       hey: "Hola, %{user_name}!"
       log_in: "Entra a Teambox ara!"
       plaintext_link: "Si l'enllaç de sobre no funciona, copia i enganxa el següent a la barra d'adreces del teu navegador:"
-      problems: "Si tens problemes, posat en contacte amb nosaltres a %{support}"
+      problems_html: "Si tens problemes, posat en contacte amb nosaltres a %{support}"
       report_abuse: "Has rebut aquest missatge perquè t'has registrat a Teambox amb l'adreça %{email}"
       subject: "La teva contrasenya ha estat restablerta amb èxit"
       successfully_reset: "La vostra contrassenya ha estat restablerta correctament"
@@ -1667,7 +1667,7 @@ ca:
     unconfirmed_email: 
       follow_the_link_html: "Així que <b>obre aquest correu i segueix l'enllaç que hi ha</b> per activar el teu compte."
       invitation_sent_to_html: "Hem enviat una invitació a <i>%{email}</i>, per verificar la teva adreça de correu."
-      problems: "Si encara tens problemes, escriu-nos! %{support}"
+      problems_html: "Si encara tens problemes, escriu-nos! %{support}"
       problems_title: "Cap problema?"
       resend: "¿No trobes el correu de confirmació? Pitja <a href='%{link}'>aquí</a> per reenviar el correu."
       spam: "Assegura't que el teu correu no s'ha classificat com a correu no desitjat."

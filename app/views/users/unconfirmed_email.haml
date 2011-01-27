@@ -10,5 +10,5 @@
   %li= t('.resend_html', :link => unconfirmed_email_user_path(current_user, :resend => true))
   %li= t('.spam')
   %li= t('.wrong_address_html', :link => logout_path)
-    
-%p= t('.problems', :support => link_to(Teambox.config.support, Teambox.config.support))
+
+%p= t('.problems_html', :support => link_to(Teambox.config.support, Teambox.config.support))

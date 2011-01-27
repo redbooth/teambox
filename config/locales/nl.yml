@@ -609,7 +609,7 @@ nl:
       hey: "Hey, %{user_name}!"
       log_in: "Log nu in op Teambox!"
       plaintext_link: "Als het niet werkt, kopiëer the volgende link in uw browser:"
-      problems: "Als u enkele problemen ondervindt, alstublieft neem contact met ons op, op %{support}"
+      problems_html: "Als u enkele problemen ondervindt, alstublieft neem contact met ons op, op %{support}"
       report_abuse: "U heeft dit bericht ontvangen, omdat u zich heeft ingeschreven voor een Teambox account met %{email}"
     invitation: 
       accept_the_invitation: "Accepteer de uitnodiging om de samenwerking te starten"
@@ -641,7 +641,7 @@ nl:
       hey: "Hey, %{user_name}!"
       log_in: "Log nu in op Teambox!"
       plaintext_link: "Als het niet werkt, kopiëer the volgende link in uw browser:"
-      problems: "Als u enkele problemen ondervindt, alstublieft neem contact met ons op, op %{support}"
+      problems_html: "Als u enkele problemen ondervindt, alstublieft neem contact met ons op, op %{support}"
       report_abuse: "U heeft dit bericht ontvangen, omdat u zich heeft ingeschreven voor een Teambox account met %{email}"
     upload: 
       file: "Bestand:"
@@ -1182,7 +1182,7 @@ nl:
     unconfirmed_email: 
       follow_the_link_html: "<b>open deze e-mail alstublief en volg de link erin</b> om uw account te activeren."
       invitation_sent_to_html: "Een e-mail uitnodiging is verzonden naar <i>%{email}</i>, om uw e-mail adres te verifiëren."
-      problems: "Als u nog steeds problemen heeft neem dan contact met ons op, op %{support}"
+      problems_html: "Als u nog steeds problemen heeft neem dan contact met ons op, op %{support}"
       problems_title: Problemen?
       resend: "Kan u de e-mail niet vinden? Klik <a href='%{link}'>hier</a> om de activatie e-mail nog een keer te verzenden."
       spam: "Zorg ervoor dat de e-mail niet is geclassificeerd als spam door uw e-mail client."
