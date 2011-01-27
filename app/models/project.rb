@@ -22,7 +22,7 @@ class Project < ActiveRecord::Base
   
   def self.find_by_id_or_permalink(param)
     if param.to_s =~ /^\d+$/
-      find(param)
+      find_by_id(param)
     else
       find_by_permalink(param)
     end
