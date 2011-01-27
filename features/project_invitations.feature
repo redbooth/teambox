@@ -25,8 +25,8 @@ Feature: Invite a user to a project
     Then I should see "Invalid usernames or email addresses"
     When I fill in "invitation_user_or_email" with "ed_bloom@spectre.com"
     And I press "Invite"
-    Then I should see "mislav invited ed_bloom@spectre.com to join the project"
-    And I should see "An email was sent to this user, but they still haven't confirmed"
+    Then I should see 'mislav invited ed_bloom@spectre.com to join the project'
+    And I should see the unconfirmed email message
     And "ed_bloom@spectre.com" should receive an email
 
   Scenario: Mislav sends an invitation and tries to accept it while logged in
