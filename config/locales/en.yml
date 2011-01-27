@@ -1107,7 +1107,7 @@ en:
       title: Login
       video: What's Teambox about?
       submit: Login
-      login_failed: "Couldn't log you in as %{login}"
+      login_failed: "Couldn't log you in as %{login}. Try inserting your email and password, or use Forgot your Password to set a new one."
   sites:
     show:
       submit: Login
