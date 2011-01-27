@@ -5,12 +5,13 @@
 
   -# All Projects
   - show_only_recent = current_user.people.size > 3
-  - projects_to_show = show_only_recent ? current_user.recent_projects : current_user.projects.select{|p| !p.archived}
+  - active_projects = current_user.projects.select{|p| !p.archived} #we select them in ruby because the query is done in the header already
+  - projects_to_show = show_only_recent ? current_user.recent_projects : active_projects
   - projects_archived = current_user.people.size - projects_to_show.size
 
   .el#my_projects
     = link_to t('.all_projects'), projects_path, :class => 'home'
-    %span= projects_to_show.size
+    %span= active_projects.size
   .contained
     - for project in projects_to_show
       .el= link_to project, project, :class => 'project'
