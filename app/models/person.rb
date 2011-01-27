@@ -75,7 +75,7 @@ class Person < ActiveRecord::Base
   def self.user_names_from_projects(projects, current_user = nil)
     project_ids = Array.wrap(projects).map(&:id)
     connection.select_rows(<<-SQL)
-      SELECT people.project_id, users.login, users.first_name, users.last_name, people.id
+      SELECT people.project_id, users.login, users.first_name, users.last_name, people.id, users.id
       FROM people
       INNER JOIN projects ON projects.id = people.project_id
       INNER JOIN users ON users.id = people.user_id
