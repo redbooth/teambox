@@ -61,7 +61,7 @@ Feature: Invite a user to a project
     Given I am logged in as @mislav
     And there is a project called "Teambox Roulette"
     When I go to the page of the "Teambox Roulette" project
-    Then I should see "This is a private project and you're not authorized to access it."
+    Then I should see the unauthorized private project message
     Given the owner of the project "Teambox Roulette" sent an invitation to "mislav"
     When I go to the page of the "Teambox Roulette" project
     And I press "Accept"
