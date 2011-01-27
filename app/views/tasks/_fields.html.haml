@@ -17,7 +17,7 @@
 
   .assigned_to.text_field
     = f.label :assigned_id, t('comments.new.assigned_to')
-    = f.select :assigned_id, people_from_project_for_select(project)
+    = f.select :assigned_id, []
 
   .pick_date
     = f.label :due_on, t('.due_on_html')
