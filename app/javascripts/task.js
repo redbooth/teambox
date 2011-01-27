@@ -150,6 +150,7 @@ document.on('click', 'a.show_archived_tasks_link', function(e, el) {
 
 document.on('ajax:success', '.new_task form', function(e){
   setTimeout(function(){
+    Task.highlight_my_tasks();
     Task.make_all_sortable();
     TaskList.saveColumn();
     TaskList.updatePage('column', TaskList.restoreColumn);
