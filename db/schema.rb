@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110117211601) do
+ActiveRecord::Schema.define(:version => 20110125200118) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -279,7 +279,7 @@ ActiveRecord::Schema.define(:version => 20110117211601) do
 
   add_index "people", ["deleted"], :name => "index_people_on_deleted"
   add_index "people", ["project_id"], :name => "index_people_on_project_id"
-  add_index "people", ["user_id", "project_id"], :name => "index_people_on_user_id_and_project_id"
+  add_index "people", ["user_id", "project_id"], :name => "index_people_on_user_id_and_project_id", :unique => true
   add_index "people", ["user_id"], :name => "index_people_on_user_id"
 
   create_table "phone_numbers", :force => true do |t|
