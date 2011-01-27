@@ -302,7 +302,7 @@ end
 
 When  /^(?:|I )drag "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
   with_scope(selector) do
-    dragged_item = find(:xpath,"//*[.='#{dragged_item}']")
+    dragged_item = find(:xpath,"//div[@class='taskName']/a[.='#{dragged_item}']/..//preceding-sibling::*/img[@class='task_drag']")
     dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
     dragged_item.drag_to dropped_item
   end
