@@ -1119,6 +1119,7 @@ en:
       title: Thank you for your support!
       explain: "By purchasing a premium account, you're contributing to Teambox's development and getting much more."
       you_can_now_create: "You can now create up to %{projects} projects."
+      reset_your_password: Please enter a new password and confirm it.
     show:
       plan: Teambox plans
       current_plan_html: "Your current plan is <strong>%{name}</strong>."

@@ -2,7 +2,7 @@
 
 = form_for(:user, :url => update_after_forgetting_path) do |f|
   %p.message
-    Please enter a new password and confirm it.
+    = t('.reset_your_password')
   - if flash[:notice]
     %p.reset_gone
       =h flash[:notice]
