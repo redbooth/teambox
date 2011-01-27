@@ -71,7 +71,7 @@ document.on('ajax:success', '.task_inline form', function(e, form) {
   // Show new assigned user name if there's an assigned user
   if (status == 1) {
     task.addClassName('user_'+task_data.assigned.user_id)
-    var short_name = task_data.assigned.user.last_name
+    var short_name = task_data.assigned.user.first_name[0]+". "+task_data.assigned.user.last_name
     task.down('a.name').insert({after: " <span class='assigned_user'>"+short_name+"</span> "})
   }
   
