@@ -93,6 +93,9 @@ class ApiV1::TasksController < ApiV1::APIController
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
     end
+    unless params[:assigned_id].nil?
+      conditions[:assigned_id] = params[:assigned_id].to_i
+    end
     conditions
   end
     

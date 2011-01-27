@@ -5,6 +5,8 @@
           :example => example_api_wrap(@task, :references => [:task_list, :project, :user, :assigned]) do
   %p=raw "Returns the most recent tasks in the #{link_to_doc_model(:task_list)}, #{link_to_doc_model(:project)}, or projects you belong to."
   %p=raw "Use the optional <tt>status</tt> parameter to filter tasks by their status id. For example, to only view new or open tasks, you would query <code>?status[]=0&status[]=1</code>."
+  %p=raw "You can also use the optional <tt>assigned_id</tt> parameter to filter tasks by their assigned #{link_to_doc_model(:person)}."
+  %p=raw "Similarly, the optional <tt>user_id</tt> parameter to filters tasks by the #{link_to_doc_model(:user)} who created them. "
 
 - doc_for :show,
           :example => @task.to_api_hash,
