@@ -21,7 +21,7 @@ Feature: Creating a task
     And I follow "+ Add Task"
     And I fill in "Task title" with ""
     And I press "Add Task"
-    Then I should see "must not be blank"
+    Then I should see 'must not be blank'
 
   Scenario Outline: Fails to create a valid task
     When I go to the "Awesome Ruby Yahh" task list page of the "Ruby Rockstars" project

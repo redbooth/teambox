@@ -7,6 +7,12 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git://github.com/teambox/activesupport-i18n-patch.git
+  revision: 2e835783c0ea7062ad280b71b04060bd9b89e1a4
+  specs:
+    activesupport-i18n-patch (0.0.1)
+
+GIT
   remote: git://github.com/teambox/choices.git
   revision: 675faa587554c08b0f060fc240974b33fcd3d24d
   specs:
@@ -233,6 +239,7 @@ PLATFORMS
 
 DEPENDENCIES
   SystemTimer (~> 1.2.0)
+  activesupport-i18n-patch!
   aws-s3 (~> 0.6.2)
   builder (~> 2.1.2)
   cancan (~> 1.4.1)

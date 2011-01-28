@@ -10,6 +10,9 @@ group :rails do
   gem 'text-format', '>= 0.6.3', :require => 'text/format'
 end
 
+#Temporary hack - Fix once this ticket: is resolved
+gem 'activesupport-i18n-patch', :git => 'git://github.com/teambox/activesupport-i18n-patch.git'
+
 gem 'nokogiri'
 gem 'SystemTimer', '~> 1.2.0', :require => 'system_timer'
 gem 'whenever', '~> 0.4.1', :require => nil
