@@ -166,17 +166,6 @@ class User < ActiveRecord::Base
     object.has_watcher? self
   end
 
-  def contacts_not_in_project(project)
-    user_ids_not_in_project = User.where(:people => {:project_id => self.projects}).
-      joins(:people).
-      select('users.id').
-      limit(300).map(&:id)
-    user_ids_in_project = project.user_ids
-    user_ids = user_ids_not_in_project.reject! { |u| user_ids_in_project.include?(u) }.uniq
-
-    User.where(:id => user_ids[0, 10]).order('updated_at DESC')
-  end
-
   def utc_offset
     @utc_offset ||= ActiveSupport::TimeZone[time_zone].try(:utc_offset) || 0
   end
