@@ -66,6 +66,9 @@ class ApiV1::CommentsController < ApiV1::APIController
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
     end
+    unless params[:target_type].nil?
+      conditions[:target_type] = params[:target_type]
+    end
     conditions
   end
 

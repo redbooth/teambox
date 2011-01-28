@@ -87,6 +87,21 @@ describe ApiV1::CommentsController do
       task_comments.map{|a| a['id'].to_i}.should == task.comment_ids.sort
     end
     
+    it "shows comments on tasks only when set" do
+      login_as @user
+      
+      conversation = Factory.create(:conversation, :project => @project)
+      task = Factory.create(:task, :project => @project)
+      comment = @project.new_comment(@user, task, {:body => 'Something happened!'})
+      comment.save!
+      
+      get :index, :project_id => @project.permalink, :target_type => 'Task'
+      response.should be_success
+      task_comments = JSON.parse(response.body)['objects']
+      
+      task_comments.map{|a| a['target_type']}.uniq.should == ['Task']
+    end
+    
     it "shows comments on conversations with the basic routes" do
       login_as @user
       conversation = Factory.create(:conversation, :project => @project)
