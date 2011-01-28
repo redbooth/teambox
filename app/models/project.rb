@@ -59,6 +59,7 @@ class Project < ActiveRecord::Base
       person.source_user_id = params[:source_user].try(:id)
       person.deleted = false
       person.save
+      person
     end
   end
 
