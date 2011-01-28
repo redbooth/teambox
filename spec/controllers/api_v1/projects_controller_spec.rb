@@ -131,7 +131,6 @@ describe ApiV1::ProjectsController do
       
       response.status.should == 404
       
-      JSON.parse(response.body)['id'].to_i.should == @project.id
       JSON.parse(response.body)['errors']['type'].should == 'ObjectNotFound'
     end
   end
