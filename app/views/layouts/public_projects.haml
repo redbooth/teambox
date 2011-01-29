@@ -5,7 +5,7 @@
     = csrf_meta_tag
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title= @title || h(@project).presence || "Teambox public projects"
-    = stylesheet_link_tag 'public_projects'
+    = include_stylesheets :public_projects
     = sprockets_include_tag
 
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
