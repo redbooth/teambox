@@ -56,6 +56,8 @@ GEM
       builder
       mime-types
       xml-simple
+    barista (1.0.0)
+      coffee-script (~> 2.1.1)
     builder (2.1.2)
     cancan (1.4.1)
     capybara (0.4.0)
@@ -72,6 +74,9 @@ GEM
     childprocess (0.1.6)
       ffi (~> 0.6.3)
     chronic (0.3.0)
+    coffee-script (2.1.1)
+      coffee-script-source
+    coffee-script-source (1.0.0)
     columnize (0.3.2)
     configuration (1.2.0)
     cucumber (0.10.0)
@@ -241,6 +246,7 @@ DEPENDENCIES
   SystemTimer (~> 1.2.0)
   activesupport-i18n-patch!
   aws-s3 (~> 0.6.2)
+  barista (~> 1.0)
   builder (~> 2.1.2)
   cancan (~> 1.4.1)
   capybara (~> 0.4.0)

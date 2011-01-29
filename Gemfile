@@ -33,6 +33,7 @@ gem 'choices', :git => "git://github.com/teambox/choices.git"
 gem 'will_paginate', '~> 2.3.14'
 gem 'thinking-sphinx', '2.0.1', :require => 'thinking_sphinx'
 gem 'sprockets-rails', '~> 0.0.1'
+gem 'barista', '~> 1.0'
 gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_versions'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
