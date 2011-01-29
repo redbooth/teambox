@@ -201,9 +201,9 @@ class ApplicationController < ActionController::Base
     def output_errors_json(record)
       if request.xhr?
         response.content_type = Mime::JSON
-        render :json => record.errors.to_a, :status => 400
+        render :json => record.errors.as_json, :status => 400
       elsif iframe?
-        render :template => 'shared/iframe_error', :layout => false, :locals => { :data => record.errors.to_a }
+        render :template => 'shared/iframe_error', :layout => false, :locals => { :data => record.errors.as_json }
       end
     end
     
