@@ -18,3 +18,9 @@ document.on('ajax:before', 'form', function(e, form) {
       });
   }
 });
+
+// Closes the parent node when clicking a .closeThis link
+document.on('click', 'a.closeThis', function(e, link) {
+  e.preventDefault()
+  $(link.parentNode).hide()
+})
