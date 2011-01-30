@@ -5,7 +5,7 @@
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title=h @organization
     = include_stylesheets :sites
-    = sprockets_include_tag
+    = sprockets_include_tag :public
 
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
     .container

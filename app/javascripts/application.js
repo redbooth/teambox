@@ -10,6 +10,7 @@
 //= require <calendar_date_select>
 //= require <facebox>
 //= require <showdown>
+//= require <modernizr>
 
 //= require <util>
 

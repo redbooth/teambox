@@ -6,10 +6,9 @@
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title Teambox
     = include_stylesheets :sessions
-    = sprockets_include_tag
+    = sprockets_include_tag :public
 
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
-    = javascript_include_tag 'modernizr'
     .container
       .navigation_wrap
         .navigation
