@@ -2,9 +2,13 @@ require 'spec_helper'
 
 describe 'Translations' do
 
-  before :all do
+  before do
     I18n.backend.store_translations :en, :test_number => "Test number %{number}"
     I18n.locale=:ca
+  end
+
+  after do
+    I18n.locale=:en
   end
 
   it "should fall back to the default locale when the key doesn't exist" do
