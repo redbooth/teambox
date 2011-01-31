@@ -5,7 +5,7 @@
 
 <%= emailer_list_comments(@conversation.comments) %>
 
-<%= t('emailer.notify.view_conversation_online', :view_converation => t('emailer.notify.view_converation')) %> <%= project_conversation_url(@project, @conversation) %>
+<%= t('emailer.notify.view_conversation_online', :view_conversation => t('emailer.notify.view_conversation')) %> <%= project_conversation_url(@project, @conversation) %>
 <%= emailer_answer_to_this_email %>
 
 <%= @conversation.watchers.collect {|u| h(u) }.to_sentence %> <%= t('emailer.notify.are_watching') %>

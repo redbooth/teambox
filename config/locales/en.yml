@@ -1358,9 +1358,9 @@ en:
       subject: "Password retrieval for Teambox"
     notify:
       project: "Teambox Project:"
-      view_this_converation_online_html: "You can %{converation} to answer and attach files."
+      view_this_conversation_online_html: "You can %{conversation} to answer and attach files."
       view_this_task_online_html: "You can %{link} to comment and attach files."
-      converation: view this conversation online
+      conversation: view this conversation online
       task_link: view this task online
       reply: "You can also reply to this email to post a reply in the conversation."
       task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
