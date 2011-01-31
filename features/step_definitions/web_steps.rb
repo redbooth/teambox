@@ -300,7 +300,15 @@ Then /^debugger/ do
   debugger
 end
 
-When  /^(?:|I )drag "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
+When  /^(?:|I )drag the task list "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
+  with_scope(selector) do
+    dragged_item = find(:xpath,"//div[@class='task_list']/div[@class='head']/a[.='#{dragged_item}']/..//preceding-sibling::img[@class='drag']")
+    dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
+    dragged_item.drag_to dropped_item
+  end
+end
+
+When  /^(?:|I )drag the task "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
   with_scope(selector) do
     dragged_item = find(:xpath,"//div[@class='taskName']/a[.='#{dragged_item}']/..//preceding-sibling::*/img[@class='task_drag']")
     dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
