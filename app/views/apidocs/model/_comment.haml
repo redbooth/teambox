@@ -4,7 +4,7 @@
 - doc_for :index,
           :example => example_api_wrap(@comment, :references => [:target, :user, :project]) do
   %p=raw "Returns the most recent comments in a the target."
-  %p=raw "Use the optional <tt>target_type</tt> parameter to filter tasks by their target type, which can be either "Conversation" or "Task". For example, to only view only comments belonging to conversations, you would query <code>?target_type=Conversation</code>."
+  %p=raw "Use the optional <tt>target_type</tt> parameter to filter tasks by their target type, which can be either #{link_to_doc_model(:conversation)} or #{link_to_doc_model(:task)}. For example, to only view only comments belonging to conversations, you would query <pre>?target_type=Conversation</pre>"
 
 - doc_for :show,
           :example => @comment.to_api_hash(:include => [:user]) do
