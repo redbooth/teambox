@@ -1205,7 +1205,7 @@ es:
     projects: 
       instructions: "Estos son los proyectos de esta organización. Si eres administrador, puedes transferir el proyecto a <a href='%{organizations_link}'>otras organizaciones</a> yendo a las preferencias del proyecto."
       new_project: "Nuevo proyecto"
-      title: "Organización '%{name}'"
+      title: "Organización '%{organization}'"
     usage: 
       active_projects: 
         explain: "Proyectos eliminados y archivados no cuentan para el límite."

@@ -1207,7 +1207,7 @@ ca:
     projects: 
       instructions: "Aquests són els projectes d'aquesta organització. Si tu ets un administrador, pots transferir un porjecte a  <a href='%{organizations_link}'>un altre organització</a> obrint la configuració dels projectes."
       new_project: "Nou projecte"
-      title: "'%{name}' organització"
+      title: "Organització '%{organization}'"
     usage: 
       active_projects: 
         explain: "projectes eliminats i arxivats no compten per al límit."
