@@ -10,7 +10,7 @@ describe InvitationsController do
       
       lambda {
         put :resend, :id => invitation.id, :project_id => invitation.project.permalink
-        response.should redirect_to('http://test.host/page')
+        response.should redirect_to("http://test.host/projects/#{invitation.project.permalink}/people")
       }.should change(all_emails, :size)
       
       last_email_sent.should deliver_to(invitation.email)
