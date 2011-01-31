@@ -164,6 +164,8 @@ ca:
     create_task_list: 
       create_task_list: "has creat la llista de tasques"
       title: "%{user} ha creat la llista de tasques %{task_list}"
+    create_teambox_data: 
+      title: "%{person} importats del projecte %{project}"
     create_upload: 
       title: "%{user} ha pujat el fitxer %{file}"
     delete_person: 
@@ -243,6 +245,14 @@ ca:
     show: 
       save: "Guardar els canvis"
   calendar: 
+    abbr_weekdays: 
+      - Dl
+      - Dm
+      - Dx
+      - Dj
+      - Dv
+      - Dx
+      - Dg
     clear: Netejar
     now: Ara
     ok: OK
@@ -281,6 +291,7 @@ ca:
       tooltip: Adjuntar
     comment: 
       cannot_edit: "El comentari no es podrà editar després de 15 minuts"
+      commented_in_project: "%{user} a %{project}"
       commented_on: "-"
       commented_on_a_task_list: "-"
       confirm_delete: "Segur que vols esborrar aquest comentari?"
@@ -315,7 +326,6 @@ ca:
     preview: 
       close: Tancar
       preview: "Vista prèvia"
-      showing: "..."
   common: 
     accept: Acceptar
     and: i
@@ -328,6 +338,7 @@ ca:
     decline: Rebutjar
     delete: Esborrar
     edit: Editar
+    format_name: "%{first_name} %{last_name} "
     gantt_chart: "Diagrama de Gantt"
     in_project: a
     next: Proper
@@ -362,9 +373,6 @@ ca:
     fields: 
       body: "Primer missatge"
       name: Títol
-      tooltips: 
-        body: "Pregunta alguna cosa, explica novetats, comença un debat."
-        name: "Tan curt com puguis, donat que apareixerà en el tìtol dels emails que s'enviïn."
     index: 
       new_conversation: "Nova conversa"
       rss: 
@@ -729,6 +737,8 @@ ca:
       - !ruby/symbol month
       - !ruby/symbol day
     yesterday: Ahir
+  date_picker: 
+    no_date_assigned: "Sense data assignada"
   datetime: 
     distance_in_words: 
       about_x_hours: 
@@ -772,7 +782,7 @@ ca:
       month: Mes
       second: Segons
       year: Any
-    time_ago: "Hace %{time_ago_in_words}"
+    time_ago: "Fa %{time_ago_in_words}"
   deleted: 
     conversation: "S'ha esborrat la conversa <b>%{name}</b>"
     left_project: "Has deixat el projecte"
@@ -790,6 +800,7 @@ ca:
       submit: Afegir
   emailer: 
     bounce: 
+      not_delivered: "La teva adreça de correu no pot ser processada per Teambox. Mira la nostre documentació per veure els tipus d'adreces acceptades: %{link} "
       not_project_member_error: "El remitent d'aquest missatge no és mebre del projecte especificat"
       project_not_found_error: "No es pot trobar el projecte especificat"
       subject: "El teu email no té la forma correcta"
@@ -799,6 +810,8 @@ ca:
       answer_above_this_line: "CONTESTA PER SOBRE D'AQUESTA LINIA PER RESPONDRE"
       do_not_answer: "No responguis a aquest email."
     confirm: 
+      complete: "Completa el teu registre"
+      follow_this_link: "Per tal de %{complete} per a Teambox, cal que entreu fent clic aquí:"
       hey: "Hola, %{user_name}!"
       log_in: "Entra a Teambox ara!"
       plaintext_link: "Si l'enllaç de sobre no funciona, copia i enganxa el següent a la barra d'adreces del teu navegador:"
@@ -820,41 +833,55 @@ ca:
       you_have_been_invited_to: "Has estat convidat al projecte <b>%{project}</b>"
     notify: 
       are_watching: " estan subscrits a la conversa, i seran notificats de les respostes futures."
+      are_watching_task: 
+        one: " is suscribed to this task, and will be notified of future replies."
+        other: " are suscribed to this task, and will be notified of future replies."
       assigned_to: "Asignada a <b>%{user}</b>"
       comment: "Comentari a la paret del projecte: "
       comments: "%{number} comentaris"
+      converation: "veure aquesta conversa online"
       conversation: "Conversa:"
       due_on: "Data límit: %{date}"
       my_tasks: "Altres tasques teves a %{project}"
-      notification_settings: "Pots canviar les teves <a href='%{url}'>preferències de notificació</a> per els següents emails."
+      notification_settings_link: " Pots canviar el teu %{settings_link} per a més missatges."
       project: "Projecte de Teambox:"
       reply: "També pots respondre a aquest email per publicar una resposta a la conversa."
+      settings_link: "configuració de les notificacions"
       status: "Estat: %{status}"
-      stop_watching: "<a href='%{stop_watching_url}'>Deixa de seguir</a> aquest element per a no rebre més emails sobre ell."
+      stop_watch: "Deixar de veure"
+      stop_watching_link: "%{stop_watch} aquest fil per deixar de rebre notificacions per email."
       task: "Tasca:"
       task_commands: "Escriu #resoldre, #rebutjar o #mantingui a la part superior de la seva resposta per canviar l'estat de la tasca. Escriu #%{username} per assignar-lo a @%{username}, etc."
+      task_link: "Veure aquesta tasca online"
       task_list: "Llista de tasques:"
-      view_online: "Pots <a href='%{link}'>entrar a Teambox</a> per respondre i adjuntar arxius."
+      view_this_converation_online: "Tu pots %{converation} per respondre i adjuntar arxius."
+      view_this_task_online: "Tu pots %{link} per comentar i adjuntar arxius"
+    project_membership_notification: 
+      project_link: "Fes clic a l'enllaç de sota per començar a col.laborar en %{project} ara"
+      subject: "%{user} ha compartit [%{project}] amb tu"
+      you_have_been_added_to: "Tu ets ara membre del projecte %{project}"
     reset_password: 
+      follow_this_link: "Per tal de %{new_password} per a Teambox, cal que facis clic en aquest enllaç:"
       hey: "Hola, %{user_name}!"
       log_in: "Entra a Teambox ara!"
+      new_password: "establir una nova contrasenya"
       plaintext_link: "Si l'enllaç de sobre no funciona, copia i enganxa el següent a la barra d'adreces del teu navegador:"
       problems_html: "Si tens problemes, posat en contacte amb nosaltres a %{support}"
       report_abuse: "Has rebut aquest missatge perquè t'has registrat a Teambox amb l'adreça %{email}"
       subject: "La teva contrasenya ha estat restablerta amb èxit"
       successfully_reset: "La vostra contrassenya ha estat restablerta correctament"
+    teamboxdata: 
+      data_export_failed: "Les teves dades no han estat exportades des de Teambox. Per provar-ho de nou, si us plau, fes clic en aquest enllaç:"
+      data_exported: "Les teves dades han estat exportades des de Teambox i estan disponibles per a baixar en el següent enllaç:"
+      data_import_failed: "Les teves dades no poden ser importades a Teambox. Si us plau, comprova que les dades que has carregat són vàlides. Per tornar a intentar-ho, fes clic en aquest enllaç:"
+      data_imported: "Les teves dades s'han importat correctament a Teambox. Per veure els detalls, si us plau, fes clic en aquest enllaç:"
+      export_failed: "Les teves dades no han pogut ser exportades"
+      exported: "Les teves dades estan a punt per descarregar"
+      hey: "Hey, %{user_name}!"
+      import_failed: "Les teves dades no s'han pogut importar"
+      imported: "Les teves dades s'han importat"
     upload: 
       file: "Arxiu:"
-  example_projects: 
-    new: 
-      create: "Crear el projecte tutorial"
-      error: "No s'ha pogut crear un exemple de projecte."
-      error_list: "No s'ha pogut crear un exemple de projecte. Els següents projectes no són vàlids: %{list}."
-      learn: "Projecte Tutorial"
-      line1: "Si es la teva primera vegada a Teambox, pots crear un projecte d'exemple amb alguns continguts."
-      line2: "Navegant per ells aprendràs com utilitzar els projectes, converses i tasques."
-      line3: "No oblidis <b>llegir les instruccions</b> i <b>experimentar</b> creant, editant i esborrant elements!"
-      line4: "En aquest projecte no podràs convidar a d'altres usuaris, però si pots fer tota la resta."
   form: 
     cancel: Cancel.lar
   hours: 
@@ -891,6 +918,9 @@ ca:
       invalid_code: "Codi d'invitació no vàlid"
     fields: 
       user_or_email: "Introdueix l´email o usuari del teu company:"
+    group_invitation: 
+      invited_email: "%{inviter} va convidar <b>%{email}</b> per unir-se al grup."
+      invited_user: "%{inviter} va convidar <b>%{invitee}</b> per unir-se al grup."
     index_user: 
       no_invitations: "No tens cap invitació pendent."
       title: "Invitacions pendents"
@@ -900,7 +930,7 @@ ca:
       invited_user_html: "%{inviter} ha convidat a <b>%{invitee}</b> al projecte."
       pending: "S'ha enviat un email en aquest usuari, pero encara no ho ha confirmat"
       resend: "Reenviar l'email d'invitació"
-      time_ago: "(hace %{time_ago_in_words})"
+      time_ago: "(fa %{time_ago_in_words})"
     invite_format: 
       enter_this: 
         title: "Introdueix això"
@@ -928,8 +958,54 @@ ca:
       email_sent: "<b>Hem enviat un email avisant l'usuari que accepti la teva invitació</b>. Si no poden trobar l'email, assegurat que no s´ha classificat com a spam. Si el problema persisteix, ens escrius un email."
   last_announcement_html: "<strong>Novetat</strong>: Guanya diners enviant usuaris a Teambox. Pots guanyar el 15% del que els usuaris que enviis a Teambox paguin. Llegeix més al <a href='http://blog.teambox.com'>nostre blog</a>."
   locales: 
+    af: Africà
+    ar: Àrab
+    bs: Bosnià
+    bt: Búlgar
     ca: Català
+    cz: Txec
+    da: Danès
+    de: Alemany
+    dsb: "Baix sòrab"
+    el: Grec
+    en: Anglès
     es: Castellà
+    et: Estonià
+    fa: Persa
+    fi: Finès
+    fr: Francès
+    he: Hebreu
+    hr: Croata
+    hsb: "Alt sòrab"
+    hu: Hongarès
+    id: Indonesi
+    is: Islandès
+    it: Italià
+    ja: Japonès
+    ko: Coreà
+    lo: Lao
+    lt: Lituà
+    lv: Letó
+    mk: Macedoni
+    nl: Holandès
+    ? "no"
+    : Noruec
+    pl: Polonès
+    pt-BR: "Portuguès (Brasil)"
+    pt-PT: "Portuguès (Portugal)"
+    ro: "Romanes "
+    ru: Rus
+    se: Suec
+    sk: Eslovac
+    sl: Eslovè
+    sr: Serbi
+    sw: Suahili
+    th: Tailandès
+    tr: Turc
+    uk: Cranià
+    vi: Vietnamita
+    zh: Xinès
+    zh-TW: "Xinès (Tradicional)"
   memberships: 
     index: 
       add_as_admin: "afegir com a administrador"
@@ -944,6 +1020,7 @@ ca:
       no_users: "No hi ha usuaris aquí"
       remove: "Eliminar d'aquesta organització"
       remove_admin: "Eliminar els drets d'administrador"
+      title: "'%{name}' organització"
       users: 
         explain: "Es pot crear projectes dins de l'organització, però només accedir als projectes en els que són convidats"
         title: Participants
@@ -953,6 +1030,7 @@ ca:
       participant: "Com a participant. Serà capaç de crear els seus propis projectes."
   not_found: 
     conversation: "Conversa %{id} no trobada en aquest projecte."
+    data: "Hi ha hagut un problema per localitzar les teves dades"
     page: "Aquesta pàgina %{id} no es troba en aquest projecte"
     project: "El projecte %{id} no existeix."
     task: "La tasca %{id} no es troba en aquest projecte."
@@ -983,6 +1061,7 @@ ca:
       separator: "."
     human: 
       format: 
+        delimiter: "-"
         precision: 1
       storage_units: 
         format: "%n %u"
@@ -994,6 +1073,12 @@ ca:
           kb: KB
           mb: MB
           tb: TB
+    percentage: 
+      format: 
+        delimiter: "-"
+    precision: 
+      format: 
+        delimiter: "-"
   oauth: 
     account_linked: "El vostre compte ha estat vinculat"
     already_linked_to_your_account: "Aquest servei ja ha estat vinculat al nostre compte. Podeu accedir-hi."
@@ -1010,10 +1095,36 @@ ca:
     unlink_account: "Compte no connectat"
     user_already_exists_by_email: "L'usuari %{email} ja disposa d'un compte a Teambox.<br/>accedeix amb aquest compte i vincula des de el panell de configuració."
     user_already_exists_by_login: "L'usuari %{login} ja disposa d'un compte a Teambox.<br/>Accedeix amb aquest compte i vincula des del panell de configuració."
+    user_exists: "Aquest %{provider} perfil no esta vincular a cap compte encara."
+    user_exists_instruction: "Si ja te una compte de Teambox, inicii sessió en el teu perfil %{provider}."
+    user_exists_is_not_yours: "Si no es el propietari de la conta '%{account}', %{signup_for_a_new_account}. "
     your_account_is_linked_html: "El vostre %{provider} perfil està <strong>connectat</strong> a Teambox."
     your_account_is_not_linked_html: "El vostre %{provider} perfil <strong>no està connectat</strong> a Teambox."
   organizations: 
+    active_projects: 
+      dont_belong: "No formes part d'aquest projecte"
+      no_active_projects: "No hi ha projectes actius en aquesta organització"
+      role: "Tu ets un <strong>%{role}</strong>"
+      settings: configuració
+      storage: "%{now} d'arxius"
+      title: "Projectes actius"
+    appearance: 
+      submit: "Desa els canvis"
+    appearance_fields: 
+      colours: "Colors del site"
+      description: "HTML es mostri a la pàgina d'entrada <a href = \"http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations\">Aprèn a utilitzar aquest recurs </ a>"
+      header_bar_colour: "color barra del header"
+      highlight_colour: "color de realçament"
+      link_hover_colour: "color predeterminat del hover"
+      links_colour: "color dels enllaços per defecte"
+      logo: "Logo <em> Idealment hauria de ser 134x36 píxels </ em>"
+      text_colour: "color del text per defecte"
+    archived_projects: 
+      last_activity: "última activitat a %{date}"
+      title: "Projectes arxivats"
     billing: 
+      billing_area: "Pot accedir a les seves factures, rebaixes o canvis en les opcions de facturació en qualsevol moment des de <a href='%{link}'> l'àrea de facturació</a>."
+      billing_email: "Facturació per e-mail <em>Li enviem las factures a aquesta adreça</em>"
       current_plan: "El vostre pla actual"
       downgrade: "Baixar un nivell"
       plan: Pla
@@ -1021,10 +1132,19 @@ ca:
       search: Cerca
       storage: Capacitat
       submit: "Actualització d'email de facturació"
+      suggested_upgrade: 
+        for_only: "Per $%{price} més al mes."
+        get_projects: "Fins a <b>%{number} projectes</b> "
+        get_storage: "Fins a <b>%{number}</b>"
+        upgrade_to: "Actualització a %{plan} "
       upgrade: "Puja de nivell ara!"
+      yearly_plans: 
+        save_with_yearly_plans: "<b>Estalvia un 20% </b>. També pot inscriure's e un plan anual i obtenir <b>dos mesos gratuïtament</b>."
+        signup_links: "Dona't d'alta anualment per <a href='%{corporate}'>Corporate ($2990)</a>, <a href='%{pro}'>Pro ($990)</a>, <a href='%{basic}'>Basic ($290)</a> o <a href='%{personal}'>Personal ($120)</a>."
     column: 
       admin_projects: "Gestionar projectes"
       admin_users: "Gestionar usuaris"
+      appearance: Aparença
       billing: "Plans i Facturació"
       delete: "Esborra aquesta organització"
       general_settings: "Configuració general"
@@ -1033,19 +1153,29 @@ ca:
       confirm: "Entenc que la supressió d'aquesta organització és irreversible i que tots els continguts relacionats amb aquesta organització es perdran"
       delete: "Esborra aquesta organització"
       deleted: "Has esborrat aquesta organització"
+      go_delete_some_projects: "Es necessari <a href='%{link}'>esborrar o transferir</a> tots els projectes d'aquesta organització abans d'esborrar-la."
+      go_downgrade_to_free_plan: "Necessites <a href='%{link}'>donar-te de baixa</a> del pla de pagament abans d'eliminar l'organització. Pots acollir-te al pla free des de la secció de <a href='%{link}'>facturació</a>."
       need_to_be_admin: "Has de ser un administrador per destruir aquesta organització"
       not_paid_plan: "No es pot eliminar una organització amb un pla de pagament."
       not_with_projects: "No es pot destruir aquesta organització perquè encara té projectes"
     edit: 
       invalid: "Organització no vàlida"
+      number_of_projects: "%{count} projectes"
+      number_of_users: "%{count} usuaris"
+      public_site: "El lloc públic de la teva organització es %{link} "
       saved: "Els canvis s'han guardat"
       submit: "Salvar els canvis"
       there_are: "Hi ha "
     external_view: 
+      create_your_own_org: "No obstant això, pots <a href='%{link}'>crear la teva pròpia organització</a> per als teus projectes."
+      request_permission: "Per accedir a aquesta organització ha de sol·licitar permís a algun dels administradors:"
+      title: "%{name} "
       you_cant_access: "Vostè no té permís d'accés o per editar aquesta organització."
     fields: 
+      domain: "Domini <em>Opcional. Vostè por fer servir el seu propi domini per la seva organització, visiti la <a href = título 'http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' = 'Com fer servir el seu propi domini per la seva empresa en Teambox'>documentació</a>. </ em>"
       name: "Nom de l'Organització"
       name_placeholder: "La vostra organització"
+      permalink: "Codi curt de l'organització <em> No es permeten espais. S'utilitzarà per a la direcció web. </ Em>"
     index: 
       about: 
         explain1: "Una organització que permet als projectes de grup i als usuaris establir-se sota un nom de marca."
@@ -1066,17 +1196,25 @@ ca:
     organization: 
       admin: admin
       external: "treballador extern"
+      more_users: "i %{count} més usuaris"
+      number_of_projects: 
+        one: "Un projecte"
+        other: "%{count} projectes"
       participant: participant
+      upgrade: "Actualitza el teu plan!"
+      you_are: "Hi ets al role <strong>%{role}</strong> d'aquesta organització"
+      your_plan_is: "El teu plan es %{plan}"
     projects: 
-      active_projects: "Projectes actius"
-      archived_projects: "Projectes arxivats"
+      instructions: "Aquests són els projectes d'aquesta organització. Si tu ets un administrador, pots transferir un porjecte a  <a href='%{organizations_link}'>un altre organització</a> obrint la configuració dels projectes."
       new_project: "Nou projecte"
-      settings: configuració
+      title: "'%{name}' organització"
     usage: 
       active_projects: 
         explain: "projectes eliminats i arxivats no compten per al límit."
+        title: "%{now} / %{max}projectes actius"
       storage: 
         explain: "S'adjunten arxius de la seva organització"
+        title: "%{now} / %{max} "
     you_are_not_admin: "No és un administrador d'aquesta organització. Només els administradors poden editar la seva configuració i gestió d'usuaris."
   page_title: 
     archived_task_lists: "Tasques arxivades"
@@ -1091,7 +1229,6 @@ ca:
     index_task_lists: "Les meves tasques"
     index_uploads: "Els meus arxius"
     new_conversations: "Nova Conversa"
-    new_example_projects: "Crear un projecte d'exemple"
     new_pages: "Nova pàgina"
     new_projects: "Nou projecte"
     new_users: "Crear compte"
@@ -1149,6 +1286,12 @@ ca:
       item4_html: "<b>Wiki</b>. Actuen com un wiki, donant tota la informació del teu projecte."
     slots: 
       insert_here: "Insertar Aquí"
+  password_strength: 
+    average: Mitja
+    strong: Fort
+    too_long: "Massa llarga"
+    too_short: "Massa curta"
+    weak: Feble
   people: 
     column: 
       confirm_delete: "Estàs segur que vols deixar aquest projecte?"
@@ -1198,9 +1341,11 @@ ca:
       copy7: "Els teus assumptes de negocis! <a href='%{link}'>Obté el millor suport</a> per a Teambox amb els nostres plans premium."
     show: 
       title: "Quina organització t'agradaria actualitzar?"
+      usage: "Pots crear <b>%{available_projects} més projectes </b> de la teva organització"
     thanks: 
       explain: "En comprar un compte premium, vostè està contribuint al desenvolupament Teambox i aconseguirà molt més."
       title: "Gràcies pel teu suport!"
+      you_can_now_create: "Ara pot crear un màxim de %{projects} projectes"
   projects: 
     edit: 
       change_owner: "Canviar propietari"
@@ -1222,9 +1367,15 @@ ca:
       name: "Nom <em>Utilitza un nom curt i desriptiu.</em>"
       name_example: "Nom de projecte"
       new: 
+        choose_organization: 
+          choose_org: "Organització <em> A quina organització pertany aquest projecte? </ Em>"
+          new_org_name: "Nom de l'organització <em> Més endavant pot afegir més projectes d'aquesta mateixa organització </ em>"
+          or_create_a_new_org: "o crear una <a href='%{link}'>nova organització</a> "
         time_tracking_docs: "Més informació."
       organization: Organització
       organizations: 
+        available_projects: "slots de projectes disponibles: %{number_of_projects}"
+        current_organization: "Organització concurrent"
         organization_has_too_many_project_in: "Aquesta organització té massa projectes per al seu pla."
         upgrade: actualització
         upgrade_organization: "Ara has d'actualitzar aquesta organització."
@@ -1236,12 +1387,10 @@ ca:
       select_an_organization: "Seleccionar una organització"
       settings: 
         manage_organizations: "Gestionar organitzacions"
-        upgrade_html: "Per <b>desarxivar aquest projecte</b> i poder modificar-lo, has <a href='%{link}'>d'actualitzar el teu compte i obtenir major capacitat d'emmagatzematge i característiques</a> o arxivar altres projectes."
-        you_cant_unarchive: "Tens %{active} projectes actius i el teu pla actual només  permet %{max} projectes"
-      tracks_time_html: "Habilita el tome tracking. <em> permetrà als usuaris el registre de temps per a les tasques. </ em>"
+      tracks_time_html: "Habilita el time tracking. <em> permetrà als usuaris el registre de temps per a les tasques. </ em>"
     index: 
       archived: "Veure %{count} projectes arxivats..."
-      new_project: "Cap Projecte"
+      new_project: "Nou Projecte"
       projects: "Els meus projectes"
       rss: 
         description: "Activitat en tots els teus projectes"
@@ -1254,7 +1403,6 @@ ca:
         one: "Tu tens un projecte actiu."
         other: "Tu tens %{count} projectes actius."
         zero: "No tens actius projectes."
-      create_an_example_project: "És la teva primera vegada a Teambox? <a href='%{link}'>Crea un projecte d'exemple</a> per experimentar i aprendre."
       created: "S´ha creat el projecte!"
       invalid_project: "Projecte no vàlid, corregeix els errors i intenta-ho de nou."
       invite_by_email: "Convida usuaris introduint la seva adreça de correu electrònic"
@@ -1262,6 +1410,7 @@ ca:
       new_project: "Nou projecte..."
       not_allowed: "No es poden crear més projectes amb el compte actual."
       select_an_organization: "Has de seleccionar una organització per al teu projecte"
+      sending: "Creant el projecte..."
       submit: "Crear projecte i començar a col·laborar"
       title: "Crear un projecte"
       upgrade: 
@@ -1284,8 +1433,11 @@ ca:
       limited: "És un compte gratuït, només pots pujar fins a 50 Mb d'arxius per projecte."
       upgrade: "Aconsegueix un compte premium ara!"
     not_in_project: 
+      explain_admin: "Per poder veure aquest projecte, t'has d'unir a ell. Això et donarà accés al seu mur de conversa, les tasques, les pàgines i arxius. Ho pots fer perquè ets un administrador de  <b>%{organization}</b> l'organització."
+      explain_public: "Per poder veure aquest projecte ha d'unir-se. Això li donarà accés al mur de conversa, tasques, planes i fitxers. Ho pot fer perquè es un projecte <b>públic</b>."
       join: "Afegir-se a aquest projecte"
       not_allowed: "Aquest és un projecte privat i no esteu autoritzat a accedir-hi"
+      title: "Unir-se al projecte '%{project}'?"
     people_list: 
       invite_people: "Convidar persones... "
       pending_invitations: 
@@ -1333,8 +1485,10 @@ ca:
       submit: "Reinicia el meu password"
       title: "Ja pots reiniciar el teu password"
     sent: 
+      change_password_now: "Benvingut de nou. Ara és el moment d' b>escollir una nova contrasenya</b> que no oblidaràs"
       follow_the_link_html: "Segueix l'enllaç del correu electrònic per accedir a Teambox.Si no ho trobes, assegura't de que no hi és a la carpeta de correo no desitjat"
       login_link_sent: "T'hem enviat un correu electrònic a %{email} per poder canviar la contrasenya."
+      not_found: "El correu electrònic <b>%{email}</b> no pertany a cap usuari de Teambox. Potser ho vas escriure malament."
       title: "Restablir contrasenya"
   roles: 
     admin: admin
@@ -1343,6 +1497,9 @@ ca:
     participant: participant
   search: 
     index: 
+      no_results: 
+        explain: "Intenta utilitzar termes de cerca més específics per trobar més resultats."
+        title: "No hem trobat cap resultat per a '%{term}', ho sentim!"
       report: "%{count} resultats per la cerca \"%{term}\""
       search_again: "Torna a cercar"
       title: "Cercant a tots els projectes"
@@ -1364,13 +1521,17 @@ ca:
   shared: 
     archived_projects: 
       archived_projects: "Projectes arxivats"
+    chrome_frame: 
+      enhance: "Millora la teva experiència de Teambox amb Google Chrome Frame. Clic <a href=\"%{link}\" target=\\\"_blank\\\">aquí</a> per configurar-lo."
     footer: 
+      feedback: Feedback
       help: "Ajuda i Suport"
       mobile: "Versió mòbil"
       support: "Problemes? ¡Fes arribar feedback!"
     gantt_banner_primer: 
       title: "No hi ha llistes de tasques que mostrar al diagrama"
     global_navigation: 
+      help: Ajuda
       home: Home
       login: Login
       logout: Sortir
@@ -1456,6 +1617,7 @@ ca:
       plans_and_billing: "Plans i Facturació"
       profile_information: "Informació de Contacte"
       profile_picture: Imatge
+      your_data: Importació/Exportació
     watchers: 
       nobody_watching: "Ningú segueix els canvis d'aquest element"
       people_watching: "Seguint aquest element: "
@@ -1518,6 +1680,7 @@ ca:
       anybody: Ningú
       anytime: "En qualsevol moment"
       assigned_to: "Mostrar les tasques asignades a..."
+      by_name: "Filtra tasques per nom"
       due_date: "Mostrar les tasques amb data de venciment..."
       late_tasks: "Tasques finals"
       month: "Dins d'un mes"
@@ -1552,6 +1715,11 @@ ca:
     new: 
       submit: Crear
       title: "Nova llista de tasques"
+    overview_box: 
+      ends_on: "Acaba el:"
+      starts_on: "Comença el:"
+      this_list: "Aquesta llista de tasques"
+      undefined: "Sense definir"
     primer: 
       create_first: "Crea la primera llista de tasques!"
       define_html: "Fes servir tasques per a <b>planificar</b>, <b>veure que s'ha fet</b> i <b>no oblidar ides futures</b>.<br/><i>Què? Qui? Quan?</i> Les tasques poden tenir un estat, un responsable i una data límit."
@@ -1574,6 +1742,7 @@ ca:
     assigned: 
       assigned_to: "Responsable: %{user}"
       myself: "Assignat a mi mateix (%{user})"
+      unassigned: "Restablert l'usuari asignat"
     create: "Afegir Tasca"
     destroy_message: 
       deleted_html: "La tasca <b>%{name}</b> s'ha esborrat"
@@ -1581,7 +1750,9 @@ ca:
       due_on: Data
       today: Avui
       tomorrow: Demà
+      undefined: "Sense data de venciment"
     edit: 
+      sending: "Actualitzant la tasca..."
       submit: "Actualitzar tasca"
     errors: 
       name: 
@@ -1608,6 +1779,7 @@ ca:
       back: "Tornar  a la Visió general"
       tasks: "Les meves tasques"
     new: 
+      sending: "Creant la tasca..."
       submit: Crear
       title: "Nova tasca"
     overdue: "%{days} dies tard"
@@ -1626,6 +1798,46 @@ ca:
       reopen: "Reobrir aquesta tasca"
       task_is_closed: "Aquesta tasca està tancada i arxivada"
       unarchive: "Recuperar com una tasca activa"
+  teambox_datas: 
+    column: 
+      description: "Aquí pots moure les dades a dins i fora de Teambox"
+    data: 
+      confirm_delete: "Estàs segur de voler esborrar aquestes dades?"
+      incomplete: "Més informació requerida"
+      processed_at: "Processat a %{processed_at}"
+      processing: "Actualment en procés..."
+      remove: Treure
+    export_fields: 
+      description: "Si us plau, selecciona quins projectes vols exportar."
+    import_fields: 
+      in_organization: "Poseu tots els projectes en aquesta organització"
+      please_supply_user_map: "Hem detectat els següents usuaris en la teva importació. Si us plau, confirma quins usuaris corresponen als usuaris a Teambox."
+      select_file: "Si us plau, tria els arxius que continguin les teves dades."
+      service: "Des de quin servei s'han exportat les teves dades? "
+      teambox_user: "Usuari de Teambox"
+      user: Usuari
+    index: 
+      exports: "Exporta els teus projectes"
+      imports: "Importa dades des d'un fitxer"
+      imports_explain: "Pots importar arxius de còpia de seguretat de Teambox, o projectes de Basecamp."
+      no_exports: "No hi ha exportacions recents."
+      no_imports: "No hi ha importacions recents."
+      title: "Importa o exporta les teves dades"
+    new_export: 
+      submit: "Exporta dades"
+      title: "Exporta dades"
+    new_import: 
+      submit: "Importa dades"
+      title: "Importa dades"
+    show_export: 
+      download: "Descarrega l'exportació"
+      projects: "Projectes exportats:"
+      title: Importar/Exportar
+    show_import: 
+      import_error: "S'ha produït un error en carregar la teva importació. Torna a provar de nou."
+      projects: "Projectes importats"
+      submit: Importar
+      title: "Importar dades"
   time: 
     am: am
     formats: 
@@ -1635,6 +1847,9 @@ ca:
     pm: pm
   uploads: 
     comment_upload_link: Adjunto
+    errors: 
+      exceeded_storage_plan_limit: "Has excedit la teva capacitat per a %{organization_name}. Per augmentar el teu límit de capacitat, <a href='%{url}'>actualitza el teu pla ara</a>."
+      general: "Hi ha hagut un error pujant el fitxer"
     form: 
       description_html: "Descripció <i>(opcional)</i>"
       max_size: "El tamany màxim d'arxiu són %{mb}"
@@ -1643,10 +1858,13 @@ ca:
       upload: "Pujar arxiu"
     index: 
       cant_create: "You don't have permission to upload files to this project"
+      current_storage_size: "Pots pujar %{bytes} més a l'organització %{organization_name}.<br/><br/><a href='%{url}'>Actualitza</a> el teu pla per desar més documents."
       max_upload_size: "El tamany màxim d'arxiu és de %{mb} Mb"
       new_file: "Pujar un arxiu"
+      no_storage_left: "Has arribat a la capacitat límit de la teva organització.<br/><br/><a href='%{url}'>Actualitza</a> el teu pla ara."
     new: 
       select_a_file: "Selecciona un arxiu"
+      storage_remaining: "Pots pujar fins a %{bytes} més amb el teu pla actual. <a href='%{url}'>Actualitza</a> per a obtenir més capacitat."
       uploading: Pujant...
     primer: 
       create_first: "Puja el primer arxiu!"
@@ -1722,6 +1940,7 @@ ca:
       title: "Sincronitza els teus feeds d'activitat"
       your_feeds: "Els vostres feeds de notícies"
     form: 
+      agreement: "Al registrar-se, voste està acceptant els nostres %{terms} i condicions de %{privacy}."
       betatester: "Utilitzar les funcions beta (menys estables) abans de que s'alliberin a la comunitat"
       biography: Biografía
       change_password: "Canviar contrasenya"
@@ -1734,17 +1953,6 @@ ca:
         steps_before_2: "Això assegurarà que cap altre usuari perdrà les dades sobre els seus projectes en eliminar el compte."
         steps_before_3: "Deixa o esborra els teus projectes actuals i després torna a aquesta pàgina per eliminar el compte."
         what_will_happen: "Després d'esborrar el vostre compte, el vostre perfil de Teambox no podrà ser accesible mai més."
-      picture: 
-        destroy: "Esborrar l'avatar"
-        field: "La teva icona"
-        gravatar_in_use_html: "No tenim una fota teva, així que estem utilitzant  %{gravatar}:"
-        max_size: "L'arxiu no pot ser més gran de %{mb}"
-        presence: "No pots pujar un fitxer buit"
-        upload_here_or_at_gravatar_html: "Pots pujar un nou avatar a Teambox, o crear un %{gravatar} que pots utilitzar a Teambox i d'altres webs."
-        we_have_this_avatar_html: "Aquesta es la imatge que tenim de tu:"
-      biography: Biografía
-      change_password: "Canviar contrasenya"
-      confirm_password: "Confirmar contrasenya"
       email: Email
       first_day_of_week: "Setmana comença"
       first_name: Nom
@@ -1754,14 +1962,20 @@ ca:
       login: "Nom d'usuari"
       monday: Dilluns
       new: 
+        account: 
+          choose_username: "Tria un nom d'usuari per a que la gent et pugui trobar. Es el que es farà servir per entrar."
+          title: "El teu compte Teambox"
+          validations: "Ha d'estar tot en minúscules i sense espais. Pots fer servir guions."
         use_this_email: "Has estat convidat a Teambox amb aquesta adreça de correu. Si vols accedir als projectes de qui et va convidar, no canviïs l'adreça de correu. Podràs canviar el teu correu una vegada estiguis donat d'alta."
+      newsletter: "Notificam noves característiques i consell!"
       notifications: 
         clarification: |-
-            Quan algú et menciona (as '@%{login}' or '@all') a una conversa o tasca, 
+            Quan algú et menciona (com '@%{login}' o '@all') a una conversa o tasca, 
             es notificarà i s'agregarà com a seguidor d'aquest element.
         notify_conversations: "Notificarme les converses que segueixo"
         notify_tasks: "Notificarme els comentaris a tasques que segueixo"
         wants_task_reminder: "Rebre un correu diari amb les meves tasques"
+      old_password: "Password antic"
       password: Contrasenya
       password_confirmation: "Confirmar Contrasenya"
       phone: "Número de telèfon"
@@ -1774,15 +1988,18 @@ ca:
         presence: "No pots pujar un fitxer buit"
         upload_here_or_at_gravatar: "Pots pujar un nou avatar a Teambox, o crear un %{gravatar} que pots utilitzar a Teambox i d'altres webs."
         we_have_this_avatar: "Aquesta es la imatge que tenim de tu:"
+      privacy: provacitat
+      subscription: 
+        card_expiration: "Caducitat en "
+        card_number: "Número de targeta"
+        coupon: "Codi de la promoció"
+        coupon_question: "Tens algun codi de promoció?"
+        info_price: "Vostè rebrà mensualment %{price}."
+        info_unsubscribe: "Pots cancel·lar la teva subscripció en qualsevol moment. "
+        new_org_name: "Nom de la Organització"
       sunday: Diumenge
+      terms: "Condicions de us"
       time_zone: "Zona horària"
-      tooltips: 
-        email: "Fes servir la teva adreça de correu real. En cas contrari, els teus companys no podran contactar-te."
-        first_name: "Fins a 20 caràcters."
-        last_name: "Fins a 20 caràcters."
-        login: "Pots utilitzar un nom d'usuari curt per entrar. Ha de ser en minuscules i sense espais. Pots utilitzar _."
-        password: "Combinar lletres, números, majúscules i minúscules és bona idea."
-        phone: "Preferentment telèfon mòbil. Introduïu el número sencer inclós el codi de país, e.g. +1 (415) 1234-567"
     new: 
       existing_user_html: "Si ja tens un compte, <a href='%{login_url}'>identifíca't</a> o <a href='%{forgot_url}'>restableix la teva contrasenya</a>."
       no_public_signup: "Només es permeten registres per invitació."
@@ -1843,23 +2060,6 @@ ca:
     user: 
       formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: "Esborrar del projecte"
-    welcome: 
-      get_started: "Ja ets a Teambox!"
-      intro1: "Ets el nostre convidat més recent¡ Aprén com Teambox pot ser el punt d'inici del tu día."
-      intro2: "I ara què? Crea un projecte per a <b>colaborar</b>."
-      projects: 
-        create_your_first_project: "Un esdeveniment, un disseny, un producte..?  <a href='%{link}'>Crea el teu primer projecte</a> ara!"
-        share_and_collaborate: "Comparteix i col·labora amb el teu equip! Comentaris, converses, tasques, pàgines i arxius."
-        title: Projectes
-      spread: 
-        facebook: Facebook
-        help: "Pots <b>ajudarnos</b> explicant als teus amics com fas servir Teambox a"
-        in_your_site: "a la teva web o blog!"
-        reasons: "Hem treballat a Teambox durant anys, esperant ajudar amb la teva organització.<br/>Som gent com tú, desenvolupadors motivats amb ganes de fer bé les coses."
-        tell_us: "Utilitzes Teambox tots els dies? Explica'ns <a href='mailto:%{address}'>com ho utilitzes</a> en un correu!"
-        title: "¡Volem ser útils per tu!"
-        twitter: "Twitter,"
-      stop_welcome: "Ocultar la pàgina de benvinguda"
   weakling: 
     average: normal
     default: "Ha de tenir almenys 5 caràcters"
