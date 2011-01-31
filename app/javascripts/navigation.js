@@ -6,6 +6,7 @@ NavigationBar = {
 		var link = $$('.nav_links a').select(function(e) {
 			return e.getAttribute('href') == window.location.pathname
 		}).last()
+		if (link) link.up('.el').addClassName('selected')
 		// Close enough
 		if (link == undefined) {
 			var link = $$('.nav_links a').sortBy(function(e) {
@@ -13,6 +14,7 @@ NavigationBar = {
 				}).select(function(e) {
 					return (window.location.pathname.search(e.getAttribute('href')) > -1 && e.getAttribute('href') != '/')
 			}).last()
+			if (link) link.up('.el').addClassName('children-selected')
 		}
 
     if(link) return link.up('.el')
@@ -56,7 +58,7 @@ NavigationBar = {
   },
 
   selectElement: function(el) {
-    $$('.nav_links .el.selected').invoke('removeClassName', 'selected')
+    $$('.nav_links .el.selected').invoke('removeClassName', 'selected').invoke('removeClassName', 'children-selected')
     el.addClassName('selected')
   }
 }
@@ -67,7 +69,6 @@ document.on("dom:loaded", function() {
   // Select and expand the current element
   var current = NavigationBar.detectSelectedSection()
   if (current) {
-    current.addClassName('selected')
     // If it's hidden in the "Show more" options
     if(!current.visible()) {
       $('show_more').insert({before: current})
