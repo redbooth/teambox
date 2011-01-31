@@ -135,6 +135,7 @@ en:
     reset:
       title: You can now reset your password
       submit: Reset my password
+      reset_your_password: Please enter a new password and confirm it.
   cards:
     card:
       phone_numbers: Phone Numbers
