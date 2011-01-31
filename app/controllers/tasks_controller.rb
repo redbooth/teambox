@@ -35,22 +35,23 @@ class TasksController < ApplicationController
     
     respond_to do |f|
       f.any(:html, :m) {
-        if @task.new_record?
-          render :new
+        if request.xhr?
+          if @task.new_record?
+            output_errors_json(@task)
+          else
+            render :partial => 'tasks/task', :locals => {
+              :project => @current_project,
+              :task_list => @task_list,
+              :task => @task.reload,
+              :editable => true
+            }
+          end
         else
-          redirect_to_task
-        end
-      }
-      f.js {
-        if @task.new_record?
-          output_errors_json(@task)
-        else
-          render(:partial => 'tasks/task', :locals => {
-            :project => @current_project,
-            :task_list => @task_list,
-            :task => @task.reload,
-            :editable => true
-          })
+          if @task.new_record?
+            render :new
+          else
+            redirect_to_task
+          end
         end
       }
     end

@@ -380,6 +380,5 @@ document.on('keyup', '.task_list .new_task form', function(e, form) {
 })
 
 document.on('ajax:success', '.task_list .new_task form', function(e, form) {
-  resetCommentsForm(form)
-  Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(e.memo.responseText.unescapeHTML())
+  Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(e.memo.responseText)
 })
