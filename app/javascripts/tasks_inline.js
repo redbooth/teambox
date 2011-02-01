@@ -55,15 +55,12 @@ document.on('ajax:success', '.task_inline form', function(e, form) {
   var status_name = $w("new open hold resolved rejected")[status]
 
   var person = task_data.assigned_id
-  var is_assigned_to_me = (status == 1) && my_projects[person]
 
   // Cleanup the current status of the task
   task.className = task.className.replace(/(^|\s+)user_(.+?)(\s+|$)/, ' ').strip()
   task.className = task.className.replace(/(^|\s+)status_(.+?)(\s+|$)/, ' ').strip()
   task.down('.assigned_user') && task.down('.assigned_user').remove()
 
-  // Mark as mine if it's assigned to me
-  is_assigned_to_me ? task.addClassName('mine') : task.removeClassName('mine')
 
   // Update the status of the task
   task.addClassName('status_'+status_name)

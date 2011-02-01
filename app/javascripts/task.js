@@ -183,3 +183,25 @@ document.observe('dom:loaded', function(e) {
   Filter.updateFilters()
   Task.insertAssignableUsers()
 });
+
+document.on('ajax:success', 'form.edit_task, form.new_task', function(e, form) {
+  var person = form['task[assigned_id]'].value, status = form['task[status]'].value,
+      task = form.up('.thread')
+
+  var task_count = Number($('open_my_tasks').innerText),
+      is_assigned_to_me = (status == 1) && my_projects[person]
+      was_assigned_to_me = form.readAttribute('data-mine')
+
+  form.writeAttribute('data-mine', is_assigned_to_me)
+
+  if (is_assigned_to_me != was_assigned_to_me) {
+    if (is_assigned_to_me) {
+      task_count += 1
+    } else {
+      task_count -= 1
+    }
+    task.toggleClassName('mine')
+  }
+
+  $('open_my_tasks').update(task_count)
+})
