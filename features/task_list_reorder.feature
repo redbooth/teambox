@@ -6,8 +6,8 @@ Feature: Reorder task within the task list view
     And I am in the project called "Teambox"
     And the following task lists with associations exist:
       | name         | project |
-      | Next release | Teambox |
       | Bugfixes     | Teambox |
+      | Next release | Teambox |
     And I go to the "teambox" tasks page
 
   Scenario: Reorder task list

@@ -303,8 +303,12 @@ end
 When  /^(?:|I )drag the task list "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
   with_scope(selector) do
     dragged_item = find(:xpath,"//div[@class='task_list']/div[@class='head']/a[.='#{dragged_item}']/..//preceding-sibling::img[@class='drag']")
-    dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
-    dragged_item.drag_to dropped_item
+    dropped_item = find(:xpath,"//*[.='#{dropped_item}']/..//preceding-sibling::img[@class='drag']")
+    l1 = dragged_item.native.location
+    l2 = dropped_item.native.location
+    right = l2.x - l1.x
+    down = l2.y - l1.y
+    dragged_item.native.drag_and_drop_by right, down - 10
   end
 end
 
