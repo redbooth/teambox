@@ -44,18 +44,21 @@ describe ApiV1::SearchController do
     end
     
     it "searches in a single project" do
-      @results = mock('results', {:map => [@comment.to_api_hash], :each => true})
+      person = Factory.create :person, :user => @user
+      project = person.project
+      comment = Factory.create :comment, :project => project
+
+      @results = mock('results', {:map => [comment.to_api_hash], :each => true})
       controller.stub!(:user_can_search?).and_return(false)
       
-      Factory.create :person, :user => @user, :project => @project
-      owner = @project.user
+      owner = project.user
       owner.stub!(:can_search?).and_return(true)
       controller.stub!(:project_owner).and_return(owner)
       
       ThinkingSphinx.should_receive(:search).
-        with(*search_params(@project.id)).and_return(@results)
+        with(*search_params(project.id)).and_return(@results)
       
-      get :index, :q => 'important', :project_id => @project.permalink
+      get :index, :q => 'important', :project_id => project.permalink
       response.should be_success
       JSON.parse(response.body)['objects'].length.should == 1
     end
