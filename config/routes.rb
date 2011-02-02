@@ -147,6 +147,9 @@ Teambox::Application.routes.draw do
       resources :uploads
       match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
 
+      match 'invite_people' => 'projects#invite_people', :as => :invite_people, :via => :get
+      match 'invite_people' => 'projects#send_invites', :as => :send_invites, :via => :post
+
       resources :tasks do
         member do
           put :reorder

@@ -64,8 +64,8 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       if @project.save
-        flash[:notice] = t('projects.new.created')
-        f.any(:html, :m) { redirect_to @project }
+        f.html { redirect_to project_invite_people_path(@project) }
+        f.m { redirect_to @project }
       else
         flash.now[:error] = t('projects.new.invalid_project')
         f.any(:html, :m) { render :new }
@@ -98,7 +98,20 @@ class ProjectsController < ApplicationController
       f.any(:html, :m) { render :edit }
     end
   end
-  
+ 
+  # Gets called from Project#create
+  def invite_people
+  end
+
+  # POST action for invite_people
+  def send_invites
+    authorize! :admin, @current_project
+    @current_project.invite_users = params[:project][:invite_users]
+    @current_project.invite_emails = params[:project][:invite_emails]
+    @current_project.send_invitations!
+    redirect_to @current_project
+  end
+
   def transfer
     authorize! :transfer, @current_project
     

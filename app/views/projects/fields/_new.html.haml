@@ -1,6 +1,6 @@
 .name.text_field
   = f.label :name, t('projects.fields.name_html')
-  = f.text_field :name, :placeholder => t('projects.fields.name_example')
+  = f.text_field :name, :placeholder => t('projects.fields.name_example'), :autofocus => 'true'
   = errors_for project, :name
 
 .organization.text_field

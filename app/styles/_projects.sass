@@ -201,31 +201,20 @@ form#new_project
   .errors_for
     font-size: 12px
   .text_field
-    margin-bottom: 20px
+    margin-bottom: 30px
   .check_box
     padding-left: 10px
-  .invite_contacts
-    margin-top: 30px
-    font-size: 12px
-    h3
-      font-size: 14px
-      margin:
-        top: 7px
-        bottom: 10px
-    .users
-      margin-left: 10px
-      .user
-        float: left
-        width: 190px
-    p
-      margin: 15px 0 5px
-    textarea
-      width: 550px
-      height: 40px
-      font-size: 12px
-      margin: 0
   .submit
     margin-top: 20px
+  em
+    font-style: normal
+    font-size: 10px
+    color: #777
+  label
+    a
+      font-size: 10px
+  label, h3
+    font-weight: normal
 
 form#new_project, form.edit_project
   padding:
@@ -262,7 +251,7 @@ form#new_project, form.edit_project
   p.invite_by_email
     padding-left: 10px
 
-.new_projects,.create_projects
+.new_projects, .create_projects
   #project_organization_id
     max-width: 200px
   .preview
@@ -281,6 +270,32 @@ form#new_project, form.edit_project
       margin-top: 5px
       li
         margin-bottom: 3px
+
+form#invite_contacts
+  margin-top: 30px
+  font-size: 12px
+  h3
+    font-size: 14px
+    margin:
+      top: 20px
+      bottom: 10px
+    font-weight: normal
+  .users
+    margin-left: 10px
+    .user
+      float: left
+      width: 190px
+  p
+    margin: 15px 0 5px
+  textarea
+    width: 550px
+    height: 40px
+    font-size: 12px
+    margin: 0 0 0 10px
+  .previewBox
+    display: none
+  .submit
+    margin-top: 20px
 
 .show_projects span.in_project
   display: none
