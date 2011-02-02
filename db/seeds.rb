@@ -7,14 +7,17 @@ SEED_OPTS = {
   :projects => 5,
   :users => 20,
   :external_users => 10,
-  :activities => 100,
+  :activities => 80,
   :time_step => 2.minutes
 }
 
 class Project
-  def make_task_list(user, name)
-    task_lists.new.tap do |task_list|
-      task_list.user = user
+  attr_accessor :last_task
+  attr_accessor :made_task_comment
+  
+  def make_task_list(user, name, opts={})
+    task_lists.build_by_user(user, opts) do |task_list|
+      task_list.project = self
       task_list.created_at = fake_time
       task_list.name = name
       task_list.save!
@@ -22,16 +25,19 @@ class Project
   end
 
   def make_task(user, name)
-    task_lists.first.tasks.new(:name => name) do |task|
+    tasks.build_by_user(user, :name => name) do |task|
       task.project = self
-      task.user = user
+      task.task_list = task_lists.first
       task.created_at = fake_time
       task.save!
+      @last_task = task
+      @made_task_comment = false
     end
   end
 
   def make_comment(user, body, target=nil, status=nil, assigned=nil)
-    comments.new_by_user (user, :body => body).tap do |comment|
+    comments.build_by_user(user, :body => body) do |comment|
+    comment.project = self
       comment.target = target
       if assigned && status
         comment.status = status
@@ -43,32 +49,47 @@ class Project
   end
 
   def make_conversation(user, name, body, target=nil)
-    conversations.new(:name => name).tap do |conversation|
-      conversation.user = user
-      conversation.body = body
-      conversation.created_at = fake_time
-      conversation.simple = name.nil?
-      conversation.save!
-      conversation.comments.first.update_attribute(:created_at, fake_time)
+    conversation = conversations.build_by_user(user, :name => name) do |c|
+      c.project = self
+      c.body = body
+      c.created_at = fake_time
+      c.simple = name.nil?
+      c.project = self
+      c.save!
     end
+    
+    # Need to fix first comment time
+    conversation.comments.first.update_attribute :created_at, conversation.created_at
+    Activity.last.update_attribute :created_at, conversation.created_at
   end
 
   def reply(user, body, target=nil)
     make_comment(user, body, target || conversations.first)
   end
 
-  def status_update(user, body, params={})
-    task = tasks.last(:order => :id)
-    comment = task.comments.build_by_user user, params
-    comment.body = body
-    comment.created_at = fake_time
-    comment.save
+  def status_update(user, body, params={}, comment_params={})
+    task = last_task 
+    
+    # Grab 
+    if params.has_key? :assigned_user
+      params[:assigned_id] = people.find_by_user_id(params.delete(:assigned_user).id).id
+    end
+    params[:status] = Task::STATUSES[params[:status]] if params[:status].is_a? Symbol
+    params[:status] ||= 1
+    comment_params[:body] = body
+    
+    task.updating_user = user
+    task.updating_date = fake_time
+    task.update_attributes(params.merge(:comments_attributes => {"0" => comment_params}))
+    @made_task_comment = true
+    @last_task = Task.find_by_id(task.id) # i.e. reset *_changed?
+    task
   end
 
   def make_page(user, name, description)
     time = fake_time
-    pages.new(:name => name, :description => description).tap do |p|
-      p.user = user
+    pages.build_by_user(user, :name => name, :description => description) do |p|
+      p.project = self
       p.created_at = time
       p.save!
     end
@@ -76,22 +97,22 @@ class Project
 
   def make_note(user, name, body)
     time = fake_time
-    pages.last(:order => :id).notes.new(:name => name, :body => body) do |note|
-      note.user = user
+    notes.build_by_user(user, :name => name, :body => body) do |note|
       note.updated_by = user # if this is left undefined, note fails. note should validate updated_by
-      note.project_id = self.id # this should not be needed, since notes should know who they belong to
+      note.project = self
       note.created_at = time
+      note.page = pages.first(:order => 'id DESC')
       note.save!
     end
   end
   
-  def make_divider(user, name, body)
+  def make_divider(user, name)
     time = fake_time
-    pages.last(:order => :id).dividers.new(:name => name, :body => body) do |divider|
-      divider.user = user
+    dividers.build_by_user(user, :name => name) do |divider|
       divider.updated_by = user
-      divider.project_id = self.id
+      divider.project = self
       divider.created_at = time
+      divider.page = pages.first(:order => 'id DESC')
       divider.save!
     end
   end
@@ -188,7 +209,7 @@ def seed_data
 
   earthworks.make_task_list(tomas, "Site Setup")
   earthworks.make_task(tomas, "Register all EarthworksYoga TLDs")
-  earthworks.status_update(tomas, "@maya Please register all top level domains surrounding EarthworksYoga. (.com, .net, .info, .us) and create redirect links to the .com URL.", {:due_on => (fake_time + 1.day), :assigned => maya})
+  earthworks.status_update(tomas, "@maya Please register all top level domains surrounding EarthworksYoga. (.com, .net, .info, .us) and create redirect links to the .com URL.", {:due_on => (fake_time + 1.day), :assigned_user => maya})
   earthworks.status_update(maya, "I registered EarthworksYoga.com, EarthworksYoga.net, EarthworksYoga.info and EarthworksYoga.us. You can re-open the task if you’d like me to register the .org.", {:status => :resolved})
 
   earthworks.make_task(frank, "Set up AdWords campaign")
@@ -197,7 +218,7 @@ def seed_data
 
   earthworks.make_task_list(frank, "Design")
   earthworks.make_task(corrina, "Create Flash banners")
-  earthworks.status_update(corrina, "Based on the Earthworks Yoga logo assets I uploaded to files, create 3 Flash banners in the Skyscraper sizes as determined by the IAB guidelines (http://bit.ly/6cWKxh).", {:assigned => maya})
+  earthworks.status_update(corrina, "Based on the Earthworks Yoga logo assets I uploaded to files, create 3 Flash banners in the Skyscraper sizes as determined by the IAB guidelines (http://bit.ly/6cWKxh).", {:assigned_user => maya})
   earthworks.status_update(maya, "My Flash isn’t the greatest. I’ve done a rough job of something decent and uploaded it to Files. What do you think?")
   earthworks.status_update(corrina, "Hmm. Those are pretty rough, but I can make ‘em pretty. Come over around 3pm if you wanna look over my shoulder. I’ll put this task on Hold for now.", { :status => :hold})
 
@@ -209,34 +230,34 @@ def seed_data
   earthworks.make_note(marco, "Contact Us", "The answers to most questions will be found in the FAQ page. A lot of the information will be found in the different pages of this site.\n\nFor comments and suggestions regarding this web site, please e-mail Webmaster@earthworksyoga.com\n\nFor schedule and other local information, please contact Marco [link to email].")
 
   earthworks.make_task(frank, "Collect collateral for online marketing design")
-  earthworks.status_update(frank, "The online marketing collateral should include ads in all the common online sizes as determined by the IAB guidelines (http://bit.ly/6cWKxh). Let me know if you have any questions.", {:assigned => corrina})
-  earthworks.status_update(corrina, "It's done!", {:assigned => frank})
-  earthworks.status_update(frank, "Please install and configure the WordPress plugin called “All in One SEO Pack”.", {:assigned => tomas})
+  earthworks.status_update(frank, "The online marketing collateral should include ads in all the common online sizes as determined by the IAB guidelines (http://bit.ly/6cWKxh). Let me know if you have any questions.", {:assigned_user => corrina})
+  earthworks.status_update(corrina, "It's done!", {:assigned_user => frank})
+  earthworks.status_update(frank, "Please install and configure the WordPress plugin called “All in One SEO Pack”.", {:assigned_user => tomas})
 
   earthworks.make_page(frank, "Staff bios", " I know it's cheesy to do these 3rd-person things, but it's the norm and it would be goof for our clients to know JUST HOW COOL WE ARE!")
   earthworks.make_note(tomas, "Tom's bio", "Tomas has been building websites since 1991, when he and Al Gore invented the internet together. Since then, he’s been involved with the development of websites and microsites for such conglomerates as Nike, the North Face, Cabela’s, Visa, and Toys’R’Us. In his free time, Tomas enjoys the music of the Kinks and the beers of Brooklyn Brewery.")
 
   earthworks.make_task(corrina, "Earthworks images for site")
-  earthworks.status_update(corrina, "Please upload images to the Files tab here. Images should include those of the Earthworks Yoga studio and any other images you want incorporated into site design. Thanks!", {:due_on => (fake_time + 1.day), :assigned => marco})
+  earthworks.status_update(corrina, "Please upload images to the Files tab here. Images should include those of the Earthworks Yoga studio and any other images you want incorporated into site design. Thanks!", {:due_on => (fake_time + 1.day), :assigned_user => marco})
   earthworks.status_update(marco, "My photographer’s coming next Monday. I should have you these by Thursday.")
-  earthworks.status_update(marco, "I uploaded the images to the Teambox Files tab on Thursday. Let me know if/when you’ve reviewed them and how they look.", { :due_on => (fake_time + 3.day), :assigned => corrina})
+  earthworks.status_update(marco, "I uploaded the images to the Teambox Files tab on Thursday. Let me know if/when you’ve reviewed them and how they look.", { :due_on => (fake_time + 3.day), :assigned_user => corrina})
 
   earthworks.make_task(frank, "Contact area businesses for banner exchange")
-  earthworks.status_update(frank, "Please contact Green Earth Cafe, Nellie’s Tacos, Fenton’s, ROOZ, and Cato’s about a banner exchange with EarthworksYoga.com. Verbiage for your email can be found here in Teambox on the Pages tab.", {:due_on => (fake_time + 1.day), :assigned => maya})
+  earthworks.status_update(frank, "Please contact Green Earth Cafe, Nellie’s Tacos, Fenton’s, ROOZ, and Cato’s about a banner exchange with EarthworksYoga.com. Verbiage for your email can be found here in Teambox on the Pages tab.", {:due_on => (fake_time + 1.day), :assigned_user => maya})
 
   earthworks.make_note(corrina, "Corrina's bio", "Corrina is a self-proclaimed design dork. After finishing cum laude from RISD in 2000, she went on to get a MFA at the Tisch School in New york City. Aside from her graphic design work , Corrina teaches two classes at the California College of Arts and Crafts in Oakland, California. Corrina loves Oakland and lives with her two cats. When she’s not at her desk in Photoshop, she’s running around Lake Merritt and enjoying yoga classes at Earthworks Yoga.")
 
   earthworks.make_conversation(corrina, nil, "I found a yoga website that I really love. It’s a dumb name for a studio, but the website design is flawless: Let’s Get Bent: http://bit.ly/8p0gmf")
 
   puts <<-EOS
-  Things that should be added to seed data:
-    - Bio and cards
-    - Add dates to some tasks and task lists for Gantt charts and Calendar testing
-    - Upload files inside and outside comments
-    - Build another project to test overview for all tasks
-    - The last comment by Corrina doesn't have a reply field
+Things that should be added to seed data:
+  - Bio and cards
+  - Add dates to some tasks and task lists for Gantt charts and Calendar testing
+  - Upload files inside and outside comments
+  - Build another project to test overview for all tasks
+  - The last comment by Corrina doesn't have a reply field
 
-  You can now log in as "frank" or others with the password "papapa"
+You can now log in as "frank" or others with the password "papapa"
 EOS
 end
 
@@ -246,6 +267,8 @@ def seed_random_demo_data(opts={})
   generated_projects = []
   project_roles = [:commenter, :participant, :admin]
   organization_roles = [:participant, :admin]
+  status_values_undue = [:hold, :resolved, :rejected]
+  
   user_login_match = /[^0-9A-Za-z0-9_]/
   
   organizations = num_organizations.times.map do
@@ -326,8 +349,8 @@ def seed_random_demo_data(opts={})
     
     types << :task if project.task_lists.count > 0
     types << :reply if project.conversations.count > 0
-    types << :status if project.tasks.count > 0
-    if project.notes.count > 0
+    types << :status if project.last_task
+    if project.pages.count > 0
       types << :note
       types << :divider
     end
@@ -336,23 +359,60 @@ def seed_random_demo_data(opts={})
     user = project.users.sample
     
     case type
-    when :conversation  
+    when :conversation
       if rand(100)>80
         project.make_conversation(user, Faker::Company.bs.capitalize, Faker::Lorem.paragraph)
       else
         project.make_conversation(user, nil, Faker::Lorem.paragraph)
       end
     when :task
-      project.make_task(user, Faker::Company.bs.capitalize)
+      # Either makes a new task or randomly closes the old task
+      if project.last_task
+        if rand(100)>30
+          project.status_update(user, Faker::Lorem.paragraph, {:status => Task::STATUSES[status_values_undue.sample]})
+        else
+          project.last_task = nil
+        end
+      end
+      
+      if project.last_task
+        project.last_task = nil
+        project.made_task_comment = false
+      else
+        project.last_task = project.make_task(user, Faker::Company.bs.capitalize)
+        project.made_task_comment = false
+      end
     when :task_list
-      project.make_task_list(user, Faker::Company.bs.capitalize)
-    when :status
-      stat_opts = {}
+      # Task list, start_on and finish_on are set randomly to test the calendar view
+      list_opts = {}
       if rand(100)>40
+        list_opts[:start_on] = fake_time+(rand(64).days)
+        list_opts[:finish_on] = list_opts[:start_on] + rand(64).days
+      end
+      project.make_task_list(user, Faker::Company.bs.capitalize, list_opts)
+    when :status
+      # Makes a new task comment, randomly setting due_on and assigned.
+      # status will randomly switch to hold unless due_on is set
+      stat_opts = {}
+      project.last_task.reload
+      stat_opts[:due_on] = project.last_task.due_on
+      stat_opts[:assigned_id] = project.last_task.assigned_id
+      if rand(100)>50
         stat_opts[:due_on] = fake_time+(rand(64).days) if rand(100)>80
-        stat_opts[:assigned] = project.people.sample if stat_opts[:due_on] or rand(100)>80
+        stat_opts[:assigned_id] = project.people.sample.id if stat_opts[:due_on] or rand(100)>80
+        
+        unless project.made_task_comment
+          if stat_opts.has_key?(:due_on)
+            stat_opts[:status] = Task::STATUSES[:open] unless project.last_task.status_name == :open
+          elsif rand(100)>80
+            stat_opts[:status] = Task::STATUSES[:hold]
+          else
+            stat_opts[:status] = Task::STATUSES[:open] unless project.last_task.status_name == :open
+          end
+        end
       end
       project.status_update(user, Faker::Lorem.paragraph, stat_opts)
+      project.made_task_comment = true
     when :reply
       project.reply(user, Faker::Lorem.paragraph)
     when :page
@@ -360,12 +420,14 @@ def seed_random_demo_data(opts={})
     when :note
       project.make_note(user, Faker::Lorem.words.join(' ').capitalize, Faker::Lorem.paragraphs.join("\n"))
     when :divider
-      project.make_divider(user, Faker::Lorem.words.join(' ').capitalize, Faker::Lorem.words)
+      project.make_divider(user, Faker::Lorem.words.join(' ').capitalize)
     end
+    
+    print '.'
   end
   
-  puts 'Done.'
-  puts "#{Project.count} projects generated in #{Organization.count} organizations totalling #{User.count} users."
+  puts "\nDone."
+  puts "#{Activity.count} pointless activities generated in #{Project.count} projects in #{Organization.count} organizations totalling #{User.count} users."
 end
 
 if ENV['BOXSEED_RANDOM']
