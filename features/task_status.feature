@@ -57,8 +57,9 @@ Feature: Changing Task Status from New
     Given I have a task on hold
     When I fill in the comment box with "done!"
     And I select "resolved" from "Status"
+    And I wait for 1 second
     And I press "Save"
-    And I wait for .2 seconds
+    And I wait for 1 second
     And I should see "hold → resolved" status change
     And I should see "done!"
 
