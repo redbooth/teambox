@@ -307,7 +307,6 @@ document.observe('jenny:loaded:new_task_list', function(evt) {
     Task.make_all_sortable();
     TaskList.updatePrimer();
     TaskList.saveColumn();
-    TaskList.updatePage('column', TaskList.restoreColumn);
   }, 0);
 });
 
@@ -381,5 +380,11 @@ document.on('keyup', '.task_list .new_task form', function(e, form) {
 })
 
 document.on('ajax:success', '.task_list .new_task form', function(e, form) {
-  Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(e.memo.responseText)
+  if (e.memo.transport) {
+    var response = e.memo.responseText
+  } else {
+    var response = e.memo.responseText.unescapeHTML()
+    resetCommentsForm(form)
+  }
+  Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(response)
 })

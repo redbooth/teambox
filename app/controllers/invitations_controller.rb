@@ -90,7 +90,11 @@ class InvitationsController < ApplicationController
     respond_to do |wants|
       wants.any(:html, :m) {
         flash[:notice] = t('invitations.resend.resent', :recipient => @invitation.email)
-        redirect_back_or_to root_path
+        if @invitation.project
+          redirect_to project_people_path(@invitation.project)
+        else
+          redirect_back_or_to root_path
+        end
       }
       wants.js
     end

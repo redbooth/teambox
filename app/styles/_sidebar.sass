@@ -25,7 +25,7 @@
             color: white
         a
           padding: 2px 4px
-    &.selected, &.selected:hover
+    &.selected, &.children-selected, &.selected:hover, &.children-selected:hover
       background: lighten($navbar, 20)
     &:hover
       background: lighten($navbar, 30)
@@ -41,8 +41,8 @@
         padding-left: 30px
     .contained
       .el
-        width: 274px
-        padding-left: 36px
+        width: 254px
+        padding-left: 56px
 
   .space
     height: 20px
@@ -90,12 +90,13 @@
       background-image: url(/famfamfam/feed.png)
     &.calendar
       background-image: url(/famfamfam/date.png)
-    &.affiliate
-      background-image: url(/famfamfam/money_dollar.png)
     &.settings
       background-image: url(/famfamfam/cog.png)
     &.loading
       background-image: url(/images/loading.gif)
+    &.show_more, &.show_less
+      font-size: 10px
+      color: #777
 
 .more_links
   margin-left: -15px

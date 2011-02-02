@@ -52,10 +52,6 @@ module ApplicationHelper
     render 'shared/footer'
   end
 
-  def javascripts
-    render 'shared/javascripts'
-  end
-
   def location_name?(names)
     Array(names).any?{ |name| name == location_name }
   end
@@ -247,5 +243,17 @@ module ApplicationHelper
     content_tag(:button, :'data-alternate' => t('comments.preview.close'), :class => :preview) do
       t('comments.preview.preview')
     end
+  end
+
+  def upload_form_html_options(page, upload)
+    id = upload.new_record? ? 'new_upload' : 'upload_file_form'
+    form_classes = %w(upload_form app_form) 
+    form_classes << 'form_error' unless upload.errors.empty?
+    form_classes << 'new_upload' if upload.new_record?
+
+    hidden = page || (action_name == 'index' && upload.errors.empty?)
+    form_style = hidden ? 'display: none' : nil
+
+    {:html => { :multipart => true, :id => id, :style => form_style, :class => form_classes}}
   end
 end

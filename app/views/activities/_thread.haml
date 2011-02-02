@@ -26,7 +26,7 @@
     = render 'activities/thread_comments', :comments => comments, :thread => thread
 
   - if thread.is_a? Task
-    = form_for [thread.project, thread], :html => {:multipart => true, :id => nil, :class => 'new_comment edit_task', :'data-project-id' => thread.project_id, :'data-remote' => true} do |form|
+    = form_for [thread.project, thread], :html => {:multipart => true, :id => nil, :class => 'new_comment edit_task', :'data-project-id' => thread.project_id, :'data-remote' => true, :'data-mine' => (thread.open? and thread.assigned_to?(current_user))} do |form|
       = form.fields_for :comments, thread.comments.build do |comment_fields|
         = render 'comments/fields', :f => comment_fields, :task_form => form, :placeholder => t("comments.new.#{thread_class}")
 

@@ -4,13 +4,14 @@
   .el= link_to t('.recent_activity'), root_path, :class => 'recent_activity'
 
   -# All Projects
-  - projects=current_user.projects
   - show_only_recent = current_user.people.size > 3
-  - projects_to_show = show_only_recent ? current_user.recent_projects : projects.select{|p| !p.archived}
+  - active_projects = current_user.projects.select{|p| !p.archived} #we select them in ruby because the query is done in the header already
+  - projects_to_show = show_only_recent ? current_user.recent_projects : active_projects
+  - projects_archived = current_user.people.size - projects_to_show.size
 
   .el#my_projects
     = link_to t('.all_projects'), projects_path, :class => 'home'
-    %span= projects.size
+    %span= active_projects.size
   .contained
     - for project in projects_to_show
       .el= link_to project, project, :class => 'project'
@@ -29,9 +30,8 @@
             .el= link_to t('shared.project_settings_navigation.deletion'), project_deletion_path(project.permalink, :sub_action => 'deletion'), :class => 'deletion ajax'
             - if project.owner?(current_user)
               .el= link_to t('shared.project_settings_navigation.ownership'), project_ownership_path(project.permalink, :sub_action => 'ownership'), :class => 'ownership ajax'
-        - if can?(:admin, project)
-          .el= link_to t('.people'), project_people_path(project), :class => 'people ajax'
-    - if show_only_recent or projects.detect{|p| p.archived}
+        .el= link_to t('.people'), project_people_path(project), :class => 'people ajax'
+    - if projects_archived > 0
       .el= link_to t('.show_all_projects'), all_projects_path, :class => 'more ajax'
     - if !Teambox.config.community || (@community_organization && @community_role)
       .el= link_to t('.new_project'), new_project_path, :class => 'more ajax'
@@ -64,3 +64,7 @@
           .el= link_to t('organizations.column.delete'), delete_organization_path(organization), :class => 'ajax'
     - unless Teambox.config.community
       .el= link_to t('.show_all_organizations'), organizations_path, :class => 'more ajax'
+
+  -# More options
+  .el#show_more= link_to t('.show_more'), "#", :class => 'show_more'
+  .el.extra{ :style => 'display: none' }= link_to t('.time'), time_path, :class => 'ajax time'

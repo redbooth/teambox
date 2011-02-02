@@ -13,6 +13,13 @@ module WithinHelpers
   def with_scope(locator)
     locator ? within(locator) { yield } : yield
   end
+
+  def with_css_scope(selector)
+    selector = selector.blank? ? nil : selector
+    scope = page.find(:css, selector) if selector
+    raise "Can't find selector '#{selector}' on page" if selector && !scope
+    scope ? yield(scope) : yield(page)
+  end
 end
 World(WithinHelpers)
 
@@ -82,8 +89,8 @@ When /^(?:|I )select "([^\"]*)" from "([^\"]*)"(?: within "([^\"]*)")?$/ do |val
 end
 
 When /^(?:|I )click the element that contain "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
-  with_scope(selector) do
-    find(:xpath,"//*[.='#{text}']").click
+  with_css_scope(selector) do |node|
+    node.find(:xpath,"//*[.='#{text}']").click
   end
 end
 
@@ -119,12 +126,32 @@ Then /^(?:|I )should see JSON:$/ do |expected_json|
 end
 
 Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
-  with_scope(selector) do
-    if Capybara.current_driver == Capybara.javascript_driver
-      assert page.has_xpath?(XPath::HTML.content(text), :visible => true)
-    elsif page.respond_to? :should
+  if Capybara.current_driver == Capybara.javascript_driver
+    with_css_scope(selector) do |scope|
+      assert scope.has_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
       page.should have_content(text)
-    else
+    end
+  else
+    with_scope(selector) do
+      assert page.has_content?(text)
+    end
+  end
+end
+
+Then /^(?:|I )should see '([^\']*)'(?: within '([^\']*)')?$/ do |text, selector|
+  if Capybara.current_driver == Capybara.javascript_driver
+    with_scope(selector) do
+      assert page.has_xpath?(XPath::HTML.content(text), :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
+      page.should have_content(text)
+    end
+  else
+    with_scope(selector) do
       assert page.has_content?(text)
     end
   end
@@ -149,12 +176,32 @@ Then /^I should see "([^\"]*)" only once$/ do |text|
 end
 
 Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
-  with_scope(selector) do
-    if Capybara.current_driver == Capybara.javascript_driver
-      assert page.has_no_xpath?(XPath::HTML.content(text), :visible => true)
-    elsif page.respond_to? :should
+  if Capybara.current_driver == Capybara.javascript_driver
+    with_css_scope(selector) do |scope|
+      assert scope.has_no_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
       page.should have_no_content(text)
-    else
+    end
+  else
+    with_scope(selector) do
+      assert page.has_no_content?(text)
+    end
+  end
+end
+
+Then /^(?:|I )should not see '([^\']*)'(?: within '([^\']*)')?$/ do |text, selector|
+  if Capybara.current_driver == Capybara.javascript_driver
+    with_css_scope(selector) do |scope|
+      assert scope.has_xpath?(XPath::HTML.content(text), :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
+      page.should have_no_content(text)
+    end
+  else
+    with_scope(selector) do
       assert page.has_no_content?(text)
     end
   end
@@ -173,6 +220,9 @@ Then /^(?:|I )should not see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, s
     end
   end
 end
+
+
+
 
 Then /^the "([^\"]*)" field(?: within "([^\"]*)")? should contain "([^\"]*)"$/ do |field, selector, value|
   with_scope(selector) do
@@ -246,9 +296,25 @@ Then /^show me the page$/ do
   save_and_open_page
 end
 
-When  /^(?:|I )drag "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
+Then /^debugger/ do
+  debugger
+end
+
+When  /^(?:|I )drag the task list "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
   with_scope(selector) do
-    dragged_item = find(:xpath,"//*[.='#{dragged_item}']")
+    dragged_item = find(:xpath,"//div[@class='task_list']/div[@class='head']/a[.='#{dragged_item}']/..//preceding-sibling::img[@class='drag']")
+    dropped_item = find(:xpath,"//*[.='#{dropped_item}']/..//preceding-sibling::img[@class='drag']")
+    l1 = dragged_item.native.location
+    l2 = dropped_item.native.location
+    right = l2.x - l1.x
+    down = l2.y - l1.y
+    dragged_item.native.drag_and_drop_by right, down - 10
+  end
+end
+
+When  /^(?:|I )drag the task "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
+  with_scope(selector) do
+    dragged_item = find(:xpath,"//div[@class='taskName']/a[.='#{dragged_item}']/..//preceding-sibling::*/img[@class='task_drag']")
     dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
     dragged_item.drag_to dropped_item
   end

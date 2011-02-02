@@ -71,5 +71,12 @@ describe ApiV1::UsersController do
       
       JSON.parse(response.body)['id'].to_i.should == @fred.id
     end
+    
+    it "fails if you are not logged in" do
+      get :current
+      response.status.should == 401
+      
+      JSON.parse(response.body)['errors']['type'].should == 'AuthorizationFailed'
+    end
   end
 end

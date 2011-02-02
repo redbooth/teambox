@@ -1,8 +1,6 @@
-- hidden = page || (action_name == 'index' && upload.errors.empty?)
 - is_valid = upload.asset.errors.empty? && upload.errors.empty?
 
-
-= form_for [project, upload], :html => { :multipart => true, :id => 'upload_file_form', :style => hidden ? 'display: none' : nil, :class => "upload_form app_form #{'form_error' unless upload.errors.empty?}" } do |f|
+= form_for [project, upload], upload_form_html_options(page,upload) do |f|
   .description.text_field
     = f.label :description, t('.description_html')
     = f.text_field :description

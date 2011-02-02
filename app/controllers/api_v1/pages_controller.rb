@@ -90,7 +90,7 @@ class ApiV1::PagesController < ApiV1::APIController
     else
       Page.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
-    api_status(:not_found) if @page.nil?
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Page not found' unless @page
   end
   
   def api_scope

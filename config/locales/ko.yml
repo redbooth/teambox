@@ -714,7 +714,7 @@ ko:
       hey: "%{user_name}님 안녕하세요!"
       log_in: "팀박스에 로그인 하세요!"
       plaintext_link: "만약 제대로 동작하지 않는다면 다음 링크 주소를 복사해서 웹브라우저의 주소창에 붙여넣으시기 바랍니다:"
-      problems: "만약 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
+      problems_html: "만약 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
       report_abuse: "팀박스에 %{email}과 같은 메일로 회원가입을 하셔서 이 메세지를 받으셨습니다."
       subject: "팀박스 시작하기"
     forgot_password: 
@@ -754,7 +754,7 @@ ko:
       hey: "%{user_name}님 안녕하세요!"
       log_in: "팀박스에 로그인하세요!"
       plaintext_link: "만약 제대로 동작하지 않는다면 다음 링크 주소를 복사해서 웹브라우저의 주소창에 붙여넣으시기 바랍니다:"
-      problems: "만약 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
+      problems_html: "만약 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
       report_abuse: "팀박스에 %{email}과 같은 메일로 회원가입을 하셔서 이 메세지를 받으셨습니다."
       subject: "패스워드가 성공적으로 리셋되었습니다."
     upload: 
@@ -1495,7 +1495,7 @@ ko:
     unconfirmed_email: 
       follow_the_link_html: "계정 활성화를 위해 <b>이메일을 확인하시고 링크를 클릭</b>해 주시기 바랍니다."
       invitation_sent_to_html: "이메일 주소 확인을 위해 초대장이 <i>%{email}</i>로 발송되었습니다."
-      problems: "만약 아직도 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
+      problems_html: "만약 아직도 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
       problems_title: "문제가 있으신가요?"
       resend: "이메일을 찾으실 수 없으십니까? <a href='%{link}'>이곳</a>을 클릭해서 초대장을 다시 발송해 보세요."
       spam: "혹시 초대장이 스팸함으로 분류되었는지 확인해보시기 바랍니다."

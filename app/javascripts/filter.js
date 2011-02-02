@@ -168,7 +168,33 @@ Filter = {
       var filter = option.value == 'all' ? null : option.value;
       option.text = count_due_date[i] + ' (' + Filter.countTasks(assigned, filter) + ')';
     }
+  },
+
+  populatePeopleForTaskFilter: function() {
+    if ((typeof _people == "object") && (select = $('filter_assigned'))) {
+      select.insert(new Element('option', { 'value': 'divider', 'disabled': true}).insert('--------'))
+      var users = []
+      var user_ids = []
+      if (project_id = select.readAttribute('data-project-id') && project_id != 0) {
+        users = _people[project_id].collect(function (e) { return [e[3],e[2]] })
+      }
+      else {
+        (new Hash(_people)).values().each(function (project) {
+          project.each(function(person) {
+            if (!user_ids.include(person[3])) {
+              users.push([person[3],person[2]])
+              user_ids.push(person[3])
+            }
+          })
+        })
+      }
+      users.sortBy(function(e) { return e[1] }).each(function(user) {
+        var option = new Element('option', { 'value': 'user_' + user[0]}).insert(user[1])
+        select.insert(option)
+      })
+    }
   }
+
 };
 
 document.on('keyup', '#filter_tasks_by_name', function(evt,el) {

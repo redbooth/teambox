@@ -102,7 +102,7 @@ end
 Then /^I should( not)? see the task called "([^\"]*)" in the "([^\"]*)" task list$/ do |negative, task_name, task_list_name|
   task_list = TaskList.find_by_name!(task_list_name)
   project = task_list.project
-  Then %(I should#{negative} see "#{task_name}" within "#project_#{project.id}_task_list_#{task_list.id}")
+  Then %(I should#{negative} see "#{task_name}" within "#project_#{project.id}_task_list_#{task_list.id}_the_main_tasks")
 end
 
 Then /^I should see the following tasks:$/ do |table|
@@ -140,7 +140,10 @@ Then /^I select the year "([^\"]*)" with the(?: ([^\"]*))? date picker$/ do |yea
 end
 
 Then /^I select the day "([^\"]*)" with the date picker$/ do |day|
-  Then %(I click the element that contain "#{day}" within "div[class='calendar_date_select']")
+  with_css_scope("div[class='calendar_date_select']") do |node|
+    element = node.all(:xpath,"//*[.='#{day}']").detect {|e| e.tag_name == 'td' && !e['innerHTML'].include?('other')}
+    element.try(:click)
+  end
 end
 
 Then /^I should see "([^\"]*)"(?: and "([^\"]*)")? within the last comment body$/ do |text1, text2|
@@ -155,4 +158,20 @@ end
 
 Then /^I should see "([^"]*)" within the task header$/ do |text|
   Then %(I should see "#{text}" within ".task_header h2")
+end
+
+When /^(?:|I )select "([^\"]*)" in the "([^\"]*)" calender?$/ do |number, calender|
+  with_css_scope("div[id$='_#{calender}_on']") do |node|
+    node.find(:css,"table div[contains(#{number})]").click
+  end
+end
+
+Then /^(?:|I )should see "([^\"]*)" status change?$/ do |text|
+  if Capybara.current_driver == Capybara.javascript_driver
+    assert page.has_xpath?(XPath::HTML.content(text), :visible => true)
+  elsif page.respond_to? :should
+    page.should have_content(text)
+  else
+    assert page.has_content?(text)
+  end
 end

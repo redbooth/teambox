@@ -620,7 +620,7 @@ zh:
       hey: "您好, %{user_name}!"
       log_in: 现在就登录Teambox！
       plaintext_link: 如果出现问题，复制并粘贴以下链接到您的浏览器地址栏：
-      problems: "如果您有任何问题，请通过%{support}联系我们"
+      problems_html: "如果您有任何问题，请通过%{support}联系我们"
       report_abuse: "您收到此邮件是因为您使用了%{email}注册了一个Teambox帐号"
     invitation: 
       accept_the_invitation: 接受邀请开始协作
@@ -654,7 +654,7 @@ zh:
       hey: "您好, %{user_name}!"
       log_in: 现在就登录Teambox！
       plaintext_link: 如果出现问题，复制并粘贴以下链接到您的浏览器地址栏：
-      problems: "如果您有任何问题，请通过%{support}联系我们"
+      problems_html: "如果您有任何问题，请通过%{support}联系我们"
       report_abuse: "您收到此邮件是因为您使用了%{email}注册了一个Teambox帐号"
     upload: 
       file: "文件:"
@@ -1242,7 +1242,7 @@ zh:
     unconfirmed_email: 
       follow_the_link_html: 请<b>打开此邮件并点击邮件中的链接</b>，以激活您的帐号。
       invitation_sent_to_html: "已经向<i>%{email}</i>发出一封邮件邀请，以确认您的邮件地址。"
-      problems: "如果还有其它问题，请通过%{support}联系我们"
+      problems_html: "如果还有其它问题，请通过%{support}联系我们"
       problems_title: 问题？
       resend: "没有收到邮件？请点击<a href='%{link}'>这里</a>重新发布激活邮件。"
       spam: 请确保在您的邮件客户端程序中，此邮件没有被标识为垃圾邮件。

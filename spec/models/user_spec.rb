@@ -299,34 +299,6 @@ describe User do
     end
   end
 
-  describe "contacts not in project" do
-    before do
-      @me = Factory(:user)
-      @project = Factory(:project)
-      @project.add_user(@me)
-      @me.reload
-    end
-    it "does not return a user that is already in the project" do
-      user = Factory(:user)
-      @project.add_user(user)
-      @me.contacts_not_in_project(@project).should_not include(user)
-    end
-
-    it "does not return a user that does not belong to any of my projects" do
-      user = Factory(:user)
-      @me.contacts_not_in_project(@project).should_not include(user)
-    end
-
-    it "returns a user that is not in this project but in one of my other ones" do
-      user = Factory(:user)
-      other_project = Factory(:project)
-      other_project.add_user(@me)
-      other_project.add_user(user)
-      @me.reload; user.reload
-      @me.contacts_not_in_project(@project).should include(user)
-    end
-  end
-  
   describe "users for user map" do
     before do
       @org = Factory.create(:organization)
@@ -506,6 +478,16 @@ describe User do
 
     it "should not change when updating the user" do
       lambda { @user.touch }.should_not change(@user, :visited_at)
+    end
+  end
+
+  describe "profile" do
+    before do |variable|
+      @user = Factory(:user)
+    end
+
+    it "should create a default card on creation" do
+      @user.card.should_not be nil
     end
   end
 end

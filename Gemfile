@@ -10,6 +10,9 @@ group :rails do
   gem 'text-format', '>= 0.6.3', :require => 'text/format'
 end
 
+#Temporary hack - Fix once this ticket: is resolved
+gem 'activesupport-i18n-patch', :git => 'git://github.com/teambox/activesupport-i18n-patch.git'
+
 gem 'nokogiri'
 gem 'SystemTimer', '~> 1.2.0', :require => 'system_timer'
 gem 'whenever', '~> 0.4.1', :require => nil
@@ -27,15 +30,17 @@ gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'tilt'
 gem 'choices', :git => "git://github.com/teambox/choices.git"
 
-gem 'will_paginate', '~> 2.3.14'
+gem "will_paginate", :git=>"git://github.com/mislav/will_paginate.git", :branch=>"rails3"
 gem 'thinking-sphinx', '2.0.1', :require => 'thinking_sphinx'
 gem 'sprockets-rails', '~> 0.0.1'
+gem 'barista', '~> 1.0'
 gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_versions'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.4.1'
 gem 'immortal'
 gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer' 
+gem 'jammit'
 
 group :development do
   gem 'sqlite3-ruby', '~> 1.2.5', :require => nil

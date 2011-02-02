@@ -16,6 +16,6 @@
 
   .footer{ :style => email_text(:small) }
     %p= t('emailer.confirm.report_abuse', :email => @user.email)
-    %p= t('emailer.confirm.problems', :support => Teambox.config.support)
+    %p= t('emailer.confirm.problems_html', :support => Teambox.config.support)
     
 

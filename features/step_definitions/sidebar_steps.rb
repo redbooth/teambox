@@ -9,3 +9,7 @@ end
 Then /^I should see the organization "([^\"]*)" in the sidebar$/ do |organization_name|
   Then %(I should see "#{organization_name}" within "#my_organizations")
 end
+
+When /^I follow "([^\"]*)" in the sidebar$/ do |link|
+  When %(I follow "#{link}" within "#column")
+end

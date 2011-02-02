@@ -63,7 +63,7 @@ class ApiV1::DividersController < ApiV1::APIController
     else
       Divider.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
-    api_status(:not_found) unless @divider
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Divider not found' unless @divider
   end
   
 end

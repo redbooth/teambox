@@ -19,8 +19,10 @@ document.on('keyup', '.task_header + .edit_task', function(e, form) {
 })
 
 document.on('ajax:failure', 'form.new_task.app_form', function(e, form) {
-  var message = e.memo.responseJSON.first()
-  form.down('div.text_field').insertOrUpdate('p.error', message)
+  var message = $H(e.memo.responseJSON)
+	message.each( function(error) {
+		form.down('div.text_field').insertOrUpdate('p.error', error.value)
+	})
 })
 
 document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
@@ -73,7 +75,7 @@ Task = {
       constraint: 'vertical',
       containment: all_task_ids,
       // format: /.*task_(\d+)_task_task/,
-      handle: 'img.task_drag',
+      handle: 'task_drag',
       dropOnEmpty: true,
       // that makes the task disappear when it leaves its original task list
       // only:'task',
@@ -116,7 +118,7 @@ Task = {
 
   insertAssignableUsers: function() {
     if (typeof _people == "object") {
-      $$('form.new_comment.edit_task .task_actions select#task_assigned_id, form.new_comment.edit_conversation .conversation_actions select#conversation_assigned_id').each(function(select) {
+      $$('form.new_comment.edit_task .task_actions select#task_assigned_id, form.new_comment.edit_conversation .conversation_actions select#conversation_assigned_id, #new_task select#task_assigned_id').each(function(select) {
         var project_id = select.up('form').readAttribute('data-project-id')
         if (!select.descendants().any()) {
           select.insert(new Element('option').insert(task_unassigned))
@@ -150,6 +152,7 @@ document.on('click', 'a.show_archived_tasks_link', function(e, el) {
 
 document.on('ajax:success', '.new_task form', function(e){
   setTimeout(function(){
+    Task.highlight_my_tasks();
     Task.make_all_sortable();
     TaskList.saveColumn();
     TaskList.updatePage('column', TaskList.restoreColumn);
@@ -175,7 +178,30 @@ document.observe('dom:loaded', function(e) {
     Task.make_all_sortable()
   }
   Task.highlight_my_tasks()
+  Filter.populatePeopleForTaskFilter()
   Filter.updateCounts(false)
   Filter.updateFilters()
   Task.insertAssignableUsers()
 });
+
+document.on('ajax:success', 'form.edit_task, form.new_task', function(e, form) {
+  var person = form['task[assigned_id]'].value, status = form['task[status]'].value,
+      task = form.up('.thread')
+
+  var task_count = Number($('open_my_tasks').innerText),
+      is_assigned_to_me = (status == 1) && my_projects[person]
+      was_assigned_to_me = form.readAttribute('data-mine')
+
+  form.writeAttribute('data-mine', is_assigned_to_me)
+
+  if (is_assigned_to_me != was_assigned_to_me) {
+    if (is_assigned_to_me) {
+      task_count += 1
+    } else {
+      task_count -= 1
+    }
+    task.toggleClassName('mine')
+  }
+
+  $('open_my_tasks').update(task_count)
+})

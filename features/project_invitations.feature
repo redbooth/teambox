@@ -25,8 +25,8 @@ Feature: Invite a user to a project
     Then I should see "Invalid usernames or email addresses"
     When I fill in "invitation_user_or_email" with "ed_bloom@spectre.com"
     And I press "Invite"
-    Then I should see "mislav invited ed_bloom@spectre.com to join the project"
-    And I should see "An email was sent to this user, but they still haven't confirmed"
+    Then I should see 'mislav invited ed_bloom@spectre.com to join the project'
+    And I should see the unconfirmed email message
     And "ed_bloom@spectre.com" should receive an email
 
   Scenario: Mislav sends an invitation and tries to accept it while logged in
@@ -61,7 +61,7 @@ Feature: Invite a user to a project
     Given I am logged in as @mislav
     And there is a project called "Teambox Roulette"
     When I go to the page of the "Teambox Roulette" project
-    Then I should see "This is a private project and you're not authorized to access it."
+    Then I should see the unauthorized private project message
     Given the owner of the project "Teambox Roulette" sent an invitation to "mislav"
     When I go to the page of the "Teambox Roulette" project
     And I press "Accept"

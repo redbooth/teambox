@@ -78,6 +78,7 @@ class User < ActiveRecord::Base
       self.invited_by = invitation.user
       invitation.user.update_attribute :invited_count, (invitation.user.invited_count + 1)
     end
+    self.card ||= build_card
     self.splash_screen = true
   end
 
@@ -164,17 +165,6 @@ class User < ActiveRecord::Base
   
   def watching?(object)
     object.has_watcher? self
-  end
-
-  def contacts_not_in_project(project)
-    user_ids_not_in_project = User.where(:people => {:project_id => self.projects}).
-      joins(:people).
-      select('users.id').
-      limit(300).map(&:id)
-    user_ids_in_project = project.user_ids
-    user_ids = user_ids_not_in_project.reject! { |u| user_ids_in_project.include?(u) }.uniq
-
-    User.where(:id => user_ids[0, 10]).order('updated_at DESC')
   end
 
   def utc_offset

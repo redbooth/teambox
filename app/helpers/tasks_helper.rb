@@ -117,18 +117,6 @@ module TasksHelper
       [task_list.name, task_list.id]
     end << ['Inbox', '']
   end
-  
-  def people_from_project_for_select(project)
-    people = project.people(:include => :user).to_a
-    current_person = people.detect { |p| p.user_id == current_user.id }
-    people.delete(current_person)
-    
-    options = [
-      [t('comments.new.assigned_to_nobody'), nil],
-      [current_user.name, current_person.id]
-    ]
-    options.concat people.map { |p| [p.name, p.id] }.compact.sort_by(&:first)
-  end
 
   def time_tracking_doc
     link_to(t('projects.fields.new.time_tracking_docs'), "http://help.teambox.com/faqs/advanced-features/time-tracking", :target => '_blank')

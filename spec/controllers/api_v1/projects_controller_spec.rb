@@ -120,6 +120,18 @@ describe ApiV1::ProjectsController do
       
       get :show, :id => @project.permalink
       response.status.should == 401
+      
+      JSON.parse(response.body)['errors']['type'].should == 'InsufficientPermissions'
+    end
+    
+    it "should not show a project which does not exist" do
+      login_as @user
+      
+      get :show, :id => 'omgffffuuuuu'
+      
+      response.status.should == 404
+      
+      JSON.parse(response.body)['errors']['type'].should == 'ObjectNotFound'
     end
   end
   

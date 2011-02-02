@@ -58,13 +58,16 @@ class ApiV1::CommentsController < ApiV1::APIController
     else
       Comment.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
-    api_status(:not_found) unless @comment
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Comment not found' unless @comment
   end
   
   def api_scope
     conditions = {}
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
+    end
+    unless params[:target_type].nil?
+      conditions[:target_type] = params[:target_type]
     end
     conditions
   end

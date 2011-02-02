@@ -25,6 +25,7 @@ module UsersHelper
     user.avatar_or_gravatar_path(size, request.ssl?).tap do |url|
       unless url.starts_with? 'http'
         url.replace(root_url.chomp('/') + url)
+        url.sub! 'http:', 'https:' if request.ssl?
       end
     end
   end
@@ -69,13 +70,13 @@ module UsersHelper
     var StrengthMessages = (#{strength_messages.to_json})
     var FieldErrors = {
       add: function(input, message) {
-        input.up('div').addClassName('fieldWithErrors')
+        input.up('div').addClassName('field_with_errors')
         input.up('.text_field').down('.errors_for').innerHTML = message
         this.setSuccess(input, false)
       },
       clear: function(input) {
-        if (input.up('.fieldWithErrors'))
-          input.up('.fieldWithErrors').removeClassName('fieldWithErrors')
+        if (input.up('.field_with_errors'))
+          input.up('.field_with_errors').removeClassName('field_with_errors')
         input.up('.text_field').down('.errors_for').innerHTML = ""
         this.setSuccess(input, true)
       },

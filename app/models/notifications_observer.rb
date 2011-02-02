@@ -1,8 +1,11 @@
 class NotificationsObserver < ActiveRecord::Observer
 
   observe :comment
-  
-  def after_create(obj)
+
+
+  method_name = %w(cucumber test).any? {|env| Rails.env == env} ? 'after_create' : 'after_commit'
+
+  define_method(method_name) do |obj|
     return if obj.try(:project).try(:is_importing)
     case obj
     when Comment

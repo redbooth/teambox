@@ -4,8 +4,8 @@
     %meta{ 'http-equiv' => "content-type", :content => "text/html;charset=utf-8" }
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title=h @organization
-    = stylesheet_link_tag 'sessions', 'sites'
-    = sprockets_include_tag
+    = include_stylesheets :sites
+    = sprockets_include_tag :public
 
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
     .container
@@ -20,4 +20,4 @@
         %p.copyright
           Powered by
           = link_to "Teambox Project Collaboration", "http://www.teambox.com"
-      = javascripts
+

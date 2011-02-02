@@ -17,7 +17,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     if @activity
       api_respond @activity, :include => [:project, :target, :user, :thread_comments]
     else
-      api_status :not_found
+      api_error :not_found, :type => 'ObjectNotFound', :message => 'Not found'
     end
   end
 
@@ -42,7 +42,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     end
     
     unless @target
-      api_status :not_found
+      api_error :not_found, :type => 'ObjectNotFound', :message => 'Target not found'
     end
   end
 end

@@ -30,3 +30,19 @@ Feature: Creating a project
     And I select "ACME" from "Organization"
     And I press "Create project"
     Then I should see "Your project has been created"
+
+
+  Scenario: I ought to have already joined the project I created, not another random project
+    Given I am an administrator in the organization called "ACME"
+    And I go to the new project page
+    When I fill in "Name" with "ACME Awesome Project"
+    And I select "ACME" from "Organization"
+    And I press "Create project"
+    Then I should see "Your project has been created"
+    And I should not see "Join"
+    And I go to the new project page                      #We do this two times because we have to make sure that it's the correct (our) project we are added to
+    And I fill in "Name" with "ACME Awesome Project #2"
+    And I select "ACME" from "Organization"
+    And I press "Create project"
+    And I should see "Your project has been created"
+    And I should not see "Join"

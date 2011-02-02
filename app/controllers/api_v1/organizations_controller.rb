@@ -47,7 +47,7 @@ class ApiV1::OrganizationsController < ApiV1::APIController
     if organization_id
       @organization = Organization.find_by_id_or_permalink(organization_id)
       unless @organization and @organization.is_user?(current_user)
-        api_status(:not_found)
+        api_error :not_found, :type => 'ObjectNotFound', :message => 'Organization not found'
       end
     end
   end

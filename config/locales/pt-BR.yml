@@ -730,7 +730,7 @@ pt-BR:
       hey: "Olá, %{user_name}!"
       log_in: "Entrar no Teambox agora!"
       plaintext_link: "Se o link acima não funcionar, copie-o e cole na barra de endereços no seu navegador:"
-      problems: "Se tiver problemas, entre em contato conosco: %{support}"
+      problems_html: "Se tiver problemas, entre em contato conosco: %{support}"
       report_abuse: "Você está recebendo esta mensagem porque esta registrado no Teambox com o seguinte endereço: %{email}"
       subject: "Inicie no mundo do Teambox!"
     forgot_password: 
@@ -771,7 +771,7 @@ pt-BR:
       hey: "Olá, %{user_name}!"
       log_in: "Entrar no Teambox agora!"
       plaintext_link: "Se o link acima não funcionar, copie-o e cole na barra de endereços no seu navegador:"
-      problems: "Se tiver problemas, entre em contato conosco: %{support}"
+      problems_html: "Se tiver problemas, entre em contato conosco: %{support}"
       report_abuse: "Você está recebendo esta mensagem porque esta registrado no Teambox com o seguinte endereço: %{email}"
       subject: "Sua senha foi corretamente alterada"
       successfully_reset: "Sua senha foi corretamente modificada"
@@ -1556,7 +1556,7 @@ pt-BR:
     unconfirmed_email: 
       follow_the_link_html: "<b>Abre este email e segue o link que tem dentro</b> para ativar tua conta."
       invitation_sent_to_html: "Temos enviado um convite para <i>%{email}</i>, verifica teu endereço de correio."
-      problems: "Se ainda tem problemas, nos envie um email! %{support}"
+      problems_html: "Se ainda tem problemas, nos envie um email! %{support}"
       problems_title: Problemas?
       resend: "¿Não encuentras o email de confirmação? Faz clique <a href='%{link}'>aquí</a> para reenviar o correio."
       spam: "Tenha certeça que o email não foi classificado como correio indesejado ou spam."

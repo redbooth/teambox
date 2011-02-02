@@ -82,7 +82,7 @@ class ApiV1::TasksController < ApiV1::APIController
     else
       Task.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
-    api_status(:not_found) unless @task
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Task not found' unless @task
   end
   
   def api_scope
@@ -92,6 +92,9 @@ class ApiV1::TasksController < ApiV1::APIController
     end
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
+    end
+    unless params[:assigned_id].nil?
+      conditions[:assigned_id] = params[:assigned_id].to_i
     end
     conditions
   end

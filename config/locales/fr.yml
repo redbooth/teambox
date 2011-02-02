@@ -787,7 +787,7 @@ fr:
       hey: "Bonjour %{user_name}!"
       log_in: "Entrez dans Teambox maintenant!"
       plaintext_link: "Si le lien ci‑dessus ne fonctionne pas, copiez et collez le lien suivant dans la barre d’adresses de votre navigateur internet:"
-      problems: "Si vous rencontrez un problème, n’hésitez pas à nous contacter %{support}"
+      problems_html: "Si vous rencontrez un problème, n’hésitez pas à nous contacter %{support}"
       report_abuse: "Vous recevez ce message car vous vous êtes enregistré dans Teambox avec l’adresse courriel %{email}"
       subject: "Démarrez avec Teambox!"
     forgot_password: 
@@ -828,7 +828,7 @@ fr:
       hey: "Bonjour %{user_name}!"
       log_in: "Entrez maintenant dans Teambox!"
       plaintext_link: "Si le lien ci‑dessus ne fonctionne pas, copiez et collez le lien suivant dans la barre d’adresses de votre navigateur internet:"
-      problems: "Si avez un problème, n’hésitez pas à nous contacter %{support}"
+      problems_html: "Si avez un problème, n’hésitez pas à nous contacter %{support}"
       report_abuse: "Vous recevez ce message car vous vous êtes enregistré dans Teambox avec l’adresse %{email}"
       subject: "Votre mot de passe a été réinitialisé avec succès"
       successfully_reset: "Votre mot de passe a bien été réinitialisé."
@@ -1713,7 +1713,7 @@ fr:
     unconfirmed_email: 
       follow_the_link_html: "<b>Cliquez sur le lien qui se trouve dans ce courriel</b> pour activer votre compte."
       invitation_sent_to_html: "Nous avons envoyé une invitation à l’adresse <i>%{email}</i> afin de vérifier qu’il n’y a pas d’erreur dans l’adresse courriel."
-      problems: "Si le problème persiste, n’hésitez pas à nous contacter! %{support}"
+      problems_html: "Si le problème persiste, n’hésitez pas à nous contacter! %{support}"
       problems_title: "Un problème?"
       resend: "Pas de courriel de confirmation? Cliquez <a href='%{link}'>ici</a> pour recevoir un nouveau courriel de confirmation."
       spam: "Assurez‑vous que ce courriel n’ait pas été classé avec le courrier indésirable."

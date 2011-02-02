@@ -71,7 +71,7 @@ class ApiV1::UploadsController < ApiV1::APIController
     else
       Upload.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
-    api_status(:not_found) unless @upload
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Upload not found' unless @upload
   end
   
 end

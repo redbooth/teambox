@@ -1,5 +1,4 @@
 class Activity < ActiveRecord::Base
-  include Immortal
 
   belongs_to :target, :polymorphic => true
   belongs_to :comment_target, :polymorphic => true

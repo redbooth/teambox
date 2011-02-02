@@ -47,6 +47,23 @@ form.new_task, form.edit_task, .task_list_form
     text-align: right
     input
       float: none
+  div.attach
+    display: inline
+  .actions
+    display: inline-block
+    span
+      font-size: 12px
+      margin-right: 5px
+    .attach_icon
+      text-indent: -9999em
+      margin-right: 5px
+      top: 2px
+      *:first-child+html &
+        text-indent: 16px
+        overflow: hidden
+        top: -2px
+    *:first-child+html & .attach_icon
+      margin-left: -16px
 
 .archive
   background: rgb(255,255,200)

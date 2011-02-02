@@ -25,7 +25,7 @@ document.on('ajax:create', 'form.new_conversation, .thread form', function(e) {
 })
 
 // async file uploads in comments via iframe
-document.on('ajax:before', 'form.new_conversation, .thread form, #facebox form.edit_comment', function(e, form) {
+document.on('ajax:before', 'form.new_conversation, form.new_task, .thread form, #facebox form.edit_comment', function(e, form) {
   if (form.hasFileUploads()) {
     e.stop()
     

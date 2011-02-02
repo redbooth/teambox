@@ -30,9 +30,11 @@ class User
   end
 
   def avatar_or_gravatar_path(size, secure = false)
-    avatar?? avatar.url(size) : gravatar(size, secure)
+    (avatar? ? avatar.url(size) : gravatar(size, secure)).tap do |avatar_url|
+      avatar_url.sub! 'http:', 'https:' if secure
+    end
   end
-  
+
   def avatar_or_gravatar_url(size = :thumb, secure = false)
     avatar_or_gravatar_path(size, secure).tap do |url|
       if url.starts_with? 'http'

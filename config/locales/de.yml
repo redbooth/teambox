@@ -701,7 +701,7 @@ de:
       hey: "Hallo %{user_name}!"
       log_in: "Jetzt bei Teambox anmelden!"
       plaintext_link: "Wenn das nicht funktioniert, kopieren Sie den folgenden Link und fügen Sie ihn in die Adresszeile Ihres Browsers ein:"
-      problems: "Wenn Sie irgendwelche Probleme haben, kontaktieren Sie uns unter %{support}"
+      problems_html: "Wenn Sie irgendwelche Probleme haben, kontaktieren Sie uns unter %{support}"
       report_abuse: "Sie erhalten diese Email, weil Sie sich mit der Adresse %{email} für ein Teambox-Benutzerkonto registriert haben."
       subject: "Starten Sie mit Teambox"
     forgot_password: 
@@ -741,7 +741,7 @@ de:
       hey: "Hallo %{user_name}!"
       log_in: "Melden Sie sich jetzt bei Teambox an!"
       plaintext_link: "Wenn dieses nicht funktioniert, kopieren Sie den folgenden Link und fügen Sie ihn in die Adresszeile Ihres Browsers ein:"
-      problems: "Wenn Sie irgendwelche Probleme haben, kontaktieren Sie uns unter %{support}"
+      problems_html: "Wenn Sie irgendwelche Probleme haben, kontaktieren Sie uns unter %{support}"
       report_abuse: "Sie erhalten dieses Email, weil Sie sichr für ein Teambox-Benutzerkonto registriert haben mit %{email}"
       subject: "Ihr Passwort wurde erfolgreich zurückgesetzt"
     upload: 
@@ -1491,7 +1491,7 @@ de:
     unconfirmed_email: 
       follow_the_link_html: "Bitte <b>öffnen Sie diese Email und folgen Sie dem enthaltenen Link</b>, um Ihr Benutzerkonto zu aktvieren."
       invitation_sent_to_html: "Eine Email-Einladung wurde an <i>%{email}</i> gesendet, damit Sie Ihre Email Adresse bestätigen können."
-      problems: "Wenn immer noch Probleme auftreten, kontaktieren Sie uns über %{support}"
+      problems_html: "Wenn immer noch Probleme auftreten, kontaktieren Sie uns über %{support}"
       problems_title: Probleme?
       resend: "Sie finden die Email nicht? Klicken Sie <a href='%{link}'>hier</a>, um die Aktivierungs-Email erneut zu versenden."
       spam: "Prüfen Sie, dass die Email nicht durch Ihr Mail-Programm als Spam eingestuft wurde."

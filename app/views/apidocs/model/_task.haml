@@ -5,21 +5,23 @@
           :example => example_api_wrap(@task, :references => [:task_list, :project, :user, :assigned]) do
   %p=raw "Returns the most recent tasks in the #{link_to_doc_model(:task_list)}, #{link_to_doc_model(:project)}, or projects you belong to."
   %p=raw "Use the optional <tt>status</tt> parameter to filter tasks by their status id. For example, to only view new or open tasks, you would query <code>?status[]=0&status[]=1</code>."
+  %p=raw "You can also use the optional <tt>assigned_id</tt> parameter to filter tasks by their assigned #{link_to_doc_model(:person)}."
+  %p=raw "Similarly, the optional <tt>user_id</tt> parameter to filters tasks by the #{link_to_doc_model(:user)} who created them. "
 
 - doc_for :show,
           :example => @task.to_api_hash,
           :includes => [:comments, :user, :assigned] do
   %p=raw "Returns the data for a task."
-  
+
 - doc_for :create,
-          :parameters => {:name => 'Task', :start_on => '2010-01-01', :finish_on => '2010-02-01', :project_id => 123, :task_list_id => 456},
+          :parameters => {:name => 'Task', :due_on => '2010-01-01', :project_id => 123, :assigned_id => "<person id>", :status => "0...4|[0,1,2,3,4]", :task_list_id => 456},
           :example => @task.to_api_hash,
           :status => :created,
           :role => :participant do
   %p=raw "Creates a new task."
 
 - doc_for :update,
-          :parameters => {:name => @task.name, :due_on => @task.due_on, :assigned_id => @task.assigned_id, :status => @task.status },
+          :parameters => {:name => @task.name, :due_on => "2010-01-02", :assigned_id => "<person id>", :status => "0...4|[0,1,2,3,4]" },
           :status => :updated,
           :role => :participant do
   %p=raw "Updates the name, due date, assigned #{link_to_doc_model(:person)}, and status of a task."

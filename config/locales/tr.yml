@@ -775,7 +775,7 @@ tr:
       hey: "Selam, %{user_name}!"
       log_in: "Teambox'a şimdi giriş yapın!"
       plaintext_link: "Bu işlem işe yaramıyorsa, aşağıdaki linki kopyalayın ve tarayıcınızın çubuğuna yapıştırın:"
-      problems: "Herhangi bir probleminiz olması halinde, %{support} üzerinden bizimle iletişime geçin."
+      problems_html: "Herhangi bir probleminiz olması halinde, %{support} üzerinden bizimle iletişime geçin."
       report_abuse: "Bu mesajı almanızın sebebi, %{email} adresi ile bir Teambox hesabı açmış olmanızdır."
       subject: "Teambox'a giriş"
     forgot_password: 
@@ -817,7 +817,7 @@ tr:
       hey: "Merhaba, %{user_name}!"
       log_in: "Teambox'a şimdi giriş yapın!"
       plaintext_link: "Bu işe yaramıyorsa, aşağıdaki bağlantıyı kopyalayın ve tarayıcınızın adres çubuğuna yapıştırın:"
-      problems: "Herhangi bir probleminiz olması halinde, %{support} adresinden destek birimimize ulaşabilirsiniz."
+      problems_html: "Herhangi bir probleminiz olması halinde, %{support} adresinden destek birimimize ulaşabilirsiniz."
       report_abuse: "Bu mesajı %{email} e-posta hesabınızla Teambox'a kayıt olduğunuz için almaktasınız"
       subject: "Parolanız sırılandı"
       successfully_reset: "Parolanız sıfırlandı."

@@ -28,8 +28,8 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
     should == "<p>Did you know trololo? <iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/iwGFalTRHDA\" frameborder=\"0\"></iframe> It's awesome.</p>"
   end
 
-  it "This is a table. <table><tr><td>Foo</td></tr></table> This is another regular paragraph." do
-    should == "<p>This is a table. <table><tr><td>Foo</td></tr></table> This is another regular paragraph.</p>"
+  it "This is a table. <table><tr><th>Foo</th></tr><tr><td>Bar</td></tr></table> This is another regular paragraph." do
+    should == "<p>This is a table. <table><tr><th>Foo</th></tr><tr><td>Bar</td></tr></table> This is another regular paragraph.</p>"
   end
 
   it "should remove <div> block" do
@@ -82,6 +82,14 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
 
   it "This is a comment with an_underscored_word" do
     should == "<p>This is a comment with an_underscored_word</p>"
+  end
+  
+  it "Why don't you\nhttp://www.google.co.uk/images/logos/ps_logo2.png\nIt?" do
+    should == "<p>Why don't you<br />\n<a href=\"http://www.google.co.uk/images/logos/ps_logo2.png\"><img class=\"comment-image\" src=\"http://www.google.co.uk/images/logos/ps_logo2.png\" alt=\"http://www.google.co.uk/images/logos/ps_logo2.png\" /></a><br />\nIt?</p>"
+  end
+  
+  it "Why don't you\nJust http://www.google.co.uk/images/logos/ps_logo2.png\nIt?" do
+    should == "<p>Why don't you<br />\nJust <a href=\"http://www.google.co.uk/images/logos/ps_logo2.png\">http://www.google.co.uk/images/logos/ps_logo2.png</a><br />\nIt?</p>"
   end
   
   context "Add http:// to links" do

@@ -780,7 +780,7 @@ ja:
       hey: "こんにちは、 %{user_name}!"
       log_in: Teamboxにログインしてください!
       plaintext_link: "リンクが正常に動作しないときは、以下のリンクをブラウザのアドレスバーにコピー&ペーストしてください。:"
-      problems: "もし問題がありましたら、%{support}に連絡してください。"
+      problems_html: "もし問題がありましたら、%{support}に連絡してください。"
       report_abuse: "このメールは、あなたが%{email}でTeamboxにサインアップしたために送付されています。"
       subject: Teamboxを始めましょう
     forgot_password: 
@@ -821,7 +821,7 @@ ja:
       hey: "こんにちは、%{user_name}!"
       log_in: Teamboxにログインしてください!
       plaintext_link: "これが正常に動作しないときは、以下のリンクをブラウザのアドレスバーにコピー&ペーストしてください。:"
-      problems: "もし問題がありましたら、%{support}に連絡してください。"
+      problems_html: "もし問題がありましたら、%{support}に連絡してください。"
       report_abuse: "このメールは、あなたが%{email}でTeamboxにサインアップしたために送付されています。"
       subject: パスワードのリセット完了
       successfully_reset: パスワードはリセットされました。
@@ -1718,9 +1718,9 @@ ja:
     unconfirmed_email: 
       follow_the_link_html: <b>メールをご覧頂き、リンクをクリックして</b>アカウントを活性化して下さい。
       invitation_sent_to_html: "あなたのメールアドレスを確認するため、招待状が<i>%{email}</i>に送られました。"
-      problems: "問題が未解決の場合、%{support} までご連絡願います。"
-      problems_title: 問題がありますか？
-      resend: "メールが見つかりませんか？こちら<a href='%{link}'>再送</a>をクリックする事により、再度活性化のためのメールをお送りします。"
+      problems_html: "問題が解決されない場合、お手数ですが%{support} までご連絡願います。"
+      problems_title: 認証メールが届いていませんか？
+      resend: "メールが見つかりませんか？こちら<a href='%{link}'>こちら再送</a>をクリックする事により、認証メールを再送します。"
       spam: メールがスパムメールとして分類されていないか確認してください。
       title: メールを確認
       wrong_address_html: "メールアドレスが間違っていませんか？もしタイプミスの場合、<a href='%{link}'>登録を中止</a>し、新しいアカウントを有効なメールアドレスにて作成してください。 "

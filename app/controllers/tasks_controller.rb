@@ -35,23 +35,22 @@ class TasksController < ApplicationController
     
     respond_to do |f|
       f.any(:html, :m) {
-        if request.xhr?
-          if @task.new_record?
-            output_errors_json(@task)
-          else
-            render :partial => 'tasks/task', :locals => {
-              :project => @current_project,
-              :task_list => @task_list,
-              :task => @task.reload,
-              :editable => true
-            }
-          end
+        if @task.new_record?
+          render :new
         else
-          if @task.new_record?
-            render :new
-          else
-            redirect_to_task
-          end
+          redirect_to_task
+        end
+      }
+      f.js {
+        if @task.new_record?
+          output_errors_json(@task)
+        else
+          render(:partial => 'tasks/task', :locals => {
+            :project => @current_project,
+            :task_list => @task_list,
+            :task => @task.reload,
+            :editable => true
+          })
         end
       }
     end
@@ -71,6 +70,7 @@ class TasksController < ApplicationController
       @task.updating_user = current_user
       success = @task.update_attributes params[:task]
     elsif can? :comment, @task
+      @task.updating_user = current_user
       success = @task.update_attributes(:comments_attributes => params['task']['comments_attributes'])
     else
       authorize! :comment, @task
