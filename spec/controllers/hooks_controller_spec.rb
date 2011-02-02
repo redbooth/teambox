@@ -288,14 +288,13 @@ describe HooksController do
         conversation.name.should be_nil
         
         expected = (<<-HTML).strip
-        <div class='hook_github'><h3>New code on <a href='http://github.com/defunkt/github'>github</a> refs/heads/master</h3>
+        New code on <a href='http://github.com/defunkt/github'>github</a> refs/heads/master
 
 Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59'>okay i give in</a><br>
 Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0'>update pricing a tad</a><br>
-</div>
         HTML
         
-        conversation.comments.first.body.should == expected
+        conversation.comments.first.body.strip.should == expected.strip
       end
     end
   end
