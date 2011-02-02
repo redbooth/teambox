@@ -52,10 +52,6 @@ module ApplicationHelper
     render 'shared/footer'
   end
 
-  def javascripts
-    render 'shared/javascripts'
-  end
-
   def location_name?(names)
     Array(names).any?{ |name| name == location_name }
   end
