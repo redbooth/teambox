@@ -30,7 +30,7 @@ gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'tilt'
 gem 'choices', :git => "git://github.com/teambox/choices.git"
 
-gem 'will_paginate', '~> 2.3.14'
+gem "will_paginate", :git=>"git://github.com/mislav/will_paginate.git", :branch=>"rails3"
 gem 'thinking-sphinx', '2.0.1', :require => 'thinking_sphinx'
 gem 'sprockets-rails', '~> 0.0.1'
 gem 'barista', '~> 1.0'
