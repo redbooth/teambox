@@ -60,6 +60,7 @@ var toggleConvertToTaskForm = function(e, el, recurse) {
       target = form.down('span.convert_to_task a'),
       panel = form.down('div.convert_to_task'),
       submit = form.down('.submit', 1),
+      google_docs = form.down('.google_docs_attachment');
       attach = form.down('.attach');
   panel.select('select,input').each(function(e) {e.disabled = !e.disabled;});
 
@@ -103,7 +104,7 @@ var toggleConvertToTaskForm = function(e, el, recurse) {
     form.action = form.action + '/convert_to_task';
   }
 
-  [target,panel,submit,attach].invoke('toggle');
+  [target,panel,submit,attach,google_docs].invoke('toggle');
 };
 
 document.on('click', 'span.convert_to_task a', toggleConvertToTaskForm);
