@@ -261,7 +261,10 @@ var TaskList = {
         json.objects.each(function(taskList) {
           select.options.add(new Option(taskList.name, taskList.id));
         });
-        select.options.add(new Option("Inbox", ''));
+
+        if (!select.childElements().any(function(option) {return option.text == 'Inbox';})) {
+          select.options.add(new Option("Inbox", ''));
+        }
       },
       onFailure: function() {
         alert('Error loading page! Please reload.');
