@@ -21,6 +21,14 @@ document.on('ajax:success', 'form.edit_conversation:not(.convert-to-task)', func
 });
 
 document.on('ajax:success', 'form.edit_conversation.convert-to-task', function(e, form) {
+  var person = form['conversation[assigned_id]'].getValue();
+  var task_count = Number($('open_my_tasks').innerHTML)
+  var is_assigned_to_me = my_projects[person]
+
+  if (is_assigned_to_me) {
+    task_count += 1
+    $('open_my_tasks').update(task_count)
+  }
   if ($$('.conversation_header').length == 1) {
     document.location.href = e.memo.responseText;
   }
