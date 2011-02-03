@@ -402,24 +402,12 @@ en:
       settings:
         you_cant_transfer_this_project_html: "This project belongs to the <b>%{organization}</b> organization. You don't have the rights to transfer it."
         manage_organizations: Manage organizations.
-    new_primer:
-      define1_html: A project is a shared group with your teammates.
-      define2_html: "Inside a project, each team member can:"
-      feature1_html: Post status updates.
-      feature2_html: Start conversations or reply.
-      feature3_html: Send attachments.
-      feature4_html: Assign and review tasks.
-      feature5_html: Comment on tasks.
-      feature6_html: Track hours spent on each item.
-      feature7_html: "Create, edit and view pages."
-      footer: This project will belong to you. You can transfer this project to other contacts at any time.
-      limited: "As a free account, you can only upload up to 50 Mb of attachments to this project."
-      upgrade: Upgrade your account now!
     new:
       title: Create a Project
-      submit: Create project and start collaborating
+      explain1_html: A project is a shared group with your teammates. Use it to post Conversations, Tasks and Files.
+      explain2_html: "You can create a project for each area: Development, Sales, your client projects, etc."
+      submit: Create project and invite members
       new_project: New Project...
-      created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
       active_projects:
         zero: You have no active projects.
@@ -431,10 +419,15 @@ en:
         other: "You can create %{count} more projects with your current plan."
       upgrade:
         to_2_html: "<a href='%{link}'>Upgrade your account now</a> to create <b>up to %{projects} projects</b>, store up to <b>%{storage} Gb</b> of files and use the <b>search bar across all projects</b>."
-      invite_people: Invite people to the project
-      invite_by_email: Invite users by entering their email addresses
       not_allowed: "You can't create any more projects with your current account."
       sending: Creating the project…
+    invite_people:
+      title: Invite people to %{project}
+      invite_from_this_organization: Invite users already in the %{organization} organization
+      invite_by_email: Invite users by entering their email addresses
+      explain_invitations: Choose who will have access to this project. You can add or remove people later.
+      submit: Send invitations and start collaborating
+      sending: Sending invitations...
     edit:
       title_settings: General Settings for %{project}
       title_picture: Project Logo for %{project}

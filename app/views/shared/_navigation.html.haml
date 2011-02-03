@@ -14,6 +14,7 @@
     %span= active_projects.size
   .contained
     - for project in projects_to_show
+      - next if project.new_record?
       .el= link_to project, project, :class => 'project'
       .contained
         .el= link_to t('.recent_activity'), project_path(project), :class => 'recent_activity ajax'

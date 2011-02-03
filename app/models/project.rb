@@ -140,10 +140,16 @@ class Project < ActiveRecord::Base
             summary task.name
           end
           if host
-            port_in_url = (port == 80) ? '' : ":#{port}"
-            url         "http://#{host}#{port_in_url}/projects/#{task.project.permalink}/tasks/#{task.id}"
+            base_url = if port == 80
+              "http://#{host}"
+            elsif port == 443
+              "https://#{host}"
+            else
+              "http://#{host}:#{port}"
+            end
+            url         "#{base_url}/#{task.project.permalink}/tasks/#{task.id}"
           end
-          klass         task.project.name
+          klass         "PRIVATE"
           dtstamp       DateTime.civil(created_date.year,created_date.month,created_date.day,created_date.hour,created_date.min,created_date.sec,created_date.offset)
           uid           "tb-#{task.project.id}-#{task.id}"
         end
