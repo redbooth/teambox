@@ -95,7 +95,7 @@ Feature: When I use Teambox community version, there is only one organization
     When I go to the home page
     And I follow "+ New Project"
     And I fill in "Name" with "Another project"
-    And I press "Create project and start collaborating"
+    And I press "Create project and invite members"
     Then I should see "Another project" within "#column"
 
   Scenario: I create a second project in the organization as a participant
@@ -105,7 +105,7 @@ Feature: When I use Teambox community version, there is only one organization
     When I go to the home page
     And I follow "+ New Project"
     And I fill in "Name" with "Another project"
-    And I press "Create project and start collaborating"
+    And I press "Create project and invite members"
     Then I should see "Another project" within "#column"
 
   Scenario: I can't create a project if I'm not part of the organization
