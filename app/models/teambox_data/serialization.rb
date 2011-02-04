@@ -37,10 +37,14 @@ class TeamboxData
     @metadata ||= if service == 'basecamp'
       # Calculate basic metadata from basecamp
       metadata_basecamp(false)
-    else
+    elsif !data['account'].nil?
       {'users' => data['account']['users'],
         'projects' => data['account']['projects'],
         'organizations' => data['account']['organizations']}
+    else
+      {'users' => [],
+        'projects' => [],
+        'organizations' => []}
     end
   end
   
