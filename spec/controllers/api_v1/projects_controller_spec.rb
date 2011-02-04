@@ -33,7 +33,7 @@ describe ApiV1::ProjectsController do
   end
   
   describe "#create" do
-    it "creates a project with invitations" do
+    it "creates a project" do
       login_as @user
       
       @user2 = Factory.create(:user)
@@ -52,8 +52,6 @@ describe ApiV1::ProjectsController do
       }.should change(Project, :count)
       
       JSON.parse(response.body)['organization_id'].to_i.should == @org.id
-      project = Project.last(:order => 'id')
-      project.should have(2).invitations
     end
   end
   
