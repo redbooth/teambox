@@ -1,5 +1,5 @@
 class ApiV1::ConversationsController < ApiV1::APIController
-  before_filter :load_conversation, :only => [:show,:update,:destroy,:watch,:unwatch]
+  before_filter :load_conversation, :except => [:index, :create]
   
   def index
     query = {:conditions => api_range,
@@ -45,6 +45,26 @@ class ApiV1::ConversationsController < ApiV1::APIController
     authorize! :destroy, @conversation
     @conversation.destroy
     handle_api_success(@conversation)
+  end
+  
+  def convert_to_task
+    authorize! :update, @conversation
+
+    @conversation.attributes = params[:conversation]
+    @conversation.updating_user = current_user
+    @conversation.comments_attributes = {"0" => params[:comment]} if params[:comment]
+
+    success = @conversation.save
+    if success
+      @task = @conversation.convert_to_task!
+      success = @task && @task.errors.empty?
+    end
+
+    if success
+      handle_api_success(@task, :is_new => true, :include => [:comments])
+    else
+      handle_api_error(@task||@conversation)
+    end
   end
   
   def watch

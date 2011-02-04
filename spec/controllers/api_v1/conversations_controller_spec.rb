@@ -171,6 +171,19 @@ describe ApiV1::ConversationsController do
       @conversation.reload.name.should == 'Modified'
     end
     
+    it "should allow participants to convert a conversation to a task" do
+      login_as @user
+      
+      post :convert_to_task, :project_id => @project.permalink,
+                             :id => @another_conversation.id,
+                             :conversation => {:name => 'Tasked', :comment => 'Converted!'}
+      
+      response.should be_success
+      data = JSON.parse(response.body)
+      data['name'].should == 'Tasked'
+      Task.find_by_id(data['id'].to_i).name.should == 'Tasked'
+    end
+    
     it "should not allow observers to modify a conversation" do
       login_as @observer
       

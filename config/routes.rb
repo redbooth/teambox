@@ -237,6 +237,7 @@ Teambox::Application.routes.draw do
           member do
             put :watch
             put :unwatch
+            post :convert_to_task
           end
 
           resources :comments, :except => [:new, :edit]
