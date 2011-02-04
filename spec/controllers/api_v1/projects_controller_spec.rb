@@ -35,14 +35,10 @@ describe ApiV1::ProjectsController do
   describe "#create" do
     it "creates a project" do
       login_as @user
-      
-      @user2 = Factory.create(:user)
+
       @org = Factory.create(:organization)
-      @org.add_member(@user)
-      
+
       project_attributes = Factory.attributes_for(:project,
-        :invite_users => [@user2.id],
-        :invite_emails => "richard.roe@law.uni",
         :organization_id => @org.id
       )
 
@@ -50,7 +46,7 @@ describe ApiV1::ProjectsController do
         post :create, project_attributes
         response.status.should == 201
       }.should change(Project, :count)
-      
+
       JSON.parse(response.body)['organization_id'].to_i.should == @org.id
     end
   end
