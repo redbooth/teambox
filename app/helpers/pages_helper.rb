@@ -20,33 +20,9 @@ module PagesHelper
   def page_fields(f)
     render 'pages/fields', :f => f
   end
-  
-  def list_pages(pages,current_target)
-    render :partial => 'pages/page_sidebar',
-      :collection => pages,
-      :as => :page,
-      :locals => {
-        :current_target => current_target }
-  end
 
   def list_pages_with_toc(pages)
     render pages
-  end
-
-  def page_link(page)
-    link_to h(page), project_page_path(page.project,page)
-  end
-  
-  def edit_page_link(project,page)
-    link_to t('common.edit'), edit_project_page_path(project,page)
-  end
-  
-  def rename_page_link(project,page)
-    link_to t('common.rename'), edit_project_page_path(project,page)
-  end
-  
-  def edit_mobile_page_link(project,page)
-    link_to t('common.edit'), edit_project_page_path(project,page, :edit_part => 'page')
   end
 
   def delete_page_link(project,page)
