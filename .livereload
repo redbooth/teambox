@@ -16,5 +16,5 @@ config.exts << 'sass'
 # reload the whole page when .css changes
 #config.apply_css_live = false
 
-# wait 100ms for more changes before reloading a page
-#config.grace_period = 0.1
+# wait 300ms for more changes before reloading a page
+config.grace_period = 0.3
