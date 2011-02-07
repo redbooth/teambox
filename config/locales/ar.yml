@@ -194,3 +194,35 @@ ar:
       send_invites: "دعوة إلى Teambox."
       send_money: "وسنرسل لك النقود التي حصلت عليها."
       sent_invites_to: "يستم إرسال الدعولة إلى عناوين البريد الإلكتروني التالية:"
+  number: 
+    currency: 
+      format: 
+        delimiter: ","
+        format: "%u%n"
+        precision: 2
+        separator: "."
+        unit: $
+    format: 
+      delimiter: ","
+      precision: 3
+      separator: "."
+    human: 
+      format: 
+        delimiter: "-"
+        precision: 1
+      storage_units: 
+        format: "%n %u"
+        units: 
+          byte: 
+            one: byte
+            other: bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage: 
+      format: 
+        delimiter: "-"
+    precision: 
+      format: 
+        delimiter: "-"
