@@ -263,6 +263,8 @@ EOS
 end
 
 def seed_random_demo_data(opts={})
+  require 'faker'
+  I18n.reload!
   num_organizations = opts[:organizations]
   generated_users = []
   generated_projects = []

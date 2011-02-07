@@ -52,7 +52,7 @@ group :test, :development do
   gem 'rspec-rails', '~> 2.3.1'
   gem 'webrat'
   gem 'fuubar'
-  gem 'faker'
+  gem 'faker', :require => nil
 end
 
 # we don't call the group :test because we don't want them auto-required
