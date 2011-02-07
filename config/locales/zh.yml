@@ -85,15 +85,8 @@ zh:
         too_short: "过短（最短为 %{count} 个字符）"
         wrong_length: "长度非法（必须为 %{count} 个字符）"
       models: 
-        comment: 
-          attributes: 
-            body: 
-              no_body_generic: 请在下面的输入框写下您完成的工作。
-              no_body_task: 请在下面的输入框写下这个任务中您完成的工作。
         conversation: 
           attributes: 
-            body: 
-              no_body_generic: 请写一个评论以开始这个话题。
             name: 
               no_title: 请为这个话题指定一个标题。
     models: 
@@ -631,8 +624,6 @@ zh:
       report_abuse: 此邮件应您的朋友要求而发送给您。如有滥用请及时报告。
       teambox_is_a_pm_platform: Teambox是一个用于真实世界协作的项目管理平台。
       you_have_been_invited_to: "您已经被邀请加入项目<b>%{project}</b>"
-    invitation_group: 
-      you_have_been_invited_to: "您已被邀请加入小组<b>%{group}</b>"
     notify: 
       are_watching: 已经订阅了此话题，将能够收到回复的提醒。
       assigned_to: "分配给<b>%{user}</b>"
@@ -643,7 +634,6 @@ zh:
       my_tasks: "分配给您的更多%{project}中的任务"
       notification_settings: "您可以通过<a href='%{url}'>提醒设置</a>修改更多邮件相关设置。"
       project: "Teambox项目:"
-      recent_conversations: "%{project}的近期话题"
       reply: 您也可以通过回复此邮件来发表您对这个话题的答复。
       status: "状态: %{status}"
       stop_watching: "<a href='%{stop_watching_url}'>停止订阅</a>这一话题将中止收到邮件提醒。"
@@ -658,7 +648,6 @@ zh:
       report_abuse: "您收到此邮件是因为您使用了%{email}注册了一个Teambox帐号"
     upload: 
       file: "文件:"
-      uploaded_by: 上传者：
   example_projects: 
     new: 
       create: 创建一个样例项目
@@ -703,9 +692,7 @@ zh:
       time_ago: "(%{time_ago_in_words}以前)"
     pending: 
       invited_to_join: "%{by}已邀请您加入项目%{project}."
-      invited_to_join_group: "%{by}已邀请您加入小组%{group}."
       to_access_or: 访问项目或者
-      to_access_or_group: 访问小组或者
     recent: 
       invite: "邀请 %{username}"
     resend: 
@@ -725,7 +712,6 @@ zh:
     zh: 中文
   not_found: 
     conversation: "在这个项目中找不到话题%{id}。"
-    group: "小组%{id}不存在。"
     page: "在这个项目中找不到页面%{id}。"
     project: "项目%{id}不存在。"
     task: "在这个项目中找不到任务%{id}。"
@@ -752,6 +738,7 @@ zh:
     format: 
       delimiter: ","
       separator: "."
+      precision: 2
     human: 
       storage_units: 
         format: "%n %u"
@@ -1211,13 +1198,18 @@ zh:
       last_name: 名
       login: 用户名
       monday: 周一
-      notifications:
+      notifications: 
         notify_conversations: 在我关注的话题变化时通知我
-        notify_mentions: "在消息中提及我时通知我。例如：“你好，@%{login}!”您将收到一封提醒的电子邮件"
         notify_tasks: 在我关注的任务变化时通知我
         wants_task_reminder: 发送我的任务每日情况报告
       password: 密码
       password_confirmation: 确认密码
+      picture: 
+        field: 您的头像
+        max_size: "文件大小不能超过%{mb}"
+        presence: 您不能上传空文件
+        upload_here_or_at_gravatar: "您可以在这里上传新的头像，或上传到%{gravatar}作为一个通用的头像，用于Teambox或其它网站。"
+        we_have_this_avatar: 当前您的头像：
       sunday: 周日
       time_zone: 时区
       tooltips: 
@@ -1230,7 +1222,6 @@ zh:
       existing_user_html: "如果您已经有一个帐号，请<a href='%{login_url}'>登录</a>或者<a href='%{forgot_url}'>找回密码</a>。"
       no_public_signup: 此系统不允许公共注册。
       submit: 创建帐号
-      use_this_email: 您已经被邀请使用此电子邮件地址共享使用项目。如果您希望使用这些项目，请不要修改此邮件地址。在您完成注册过程后，您可以修改您的邮件地址。
       title: 创建新帐号
       you_already_have_an_account_html: "您已经有一个使用了地址%{email}的Teambox帐号。<a href='%{login_link}'>使用此邮箱登录</a>或<a href='%{reset_password_link}'>重置密码</a>，如果您已经忘记密码。"
       you_are_logged_in: 您已经有一个帐号。请先注销，并使用另一个帐号登录。

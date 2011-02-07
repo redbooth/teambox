@@ -628,7 +628,6 @@ it:
       my_tasks: "Altri tuoi compiti in %{project}"
       notification_settings: "Puoi cambiare le tue <a href='%{url}'>impostazioni di notifica</a> per le emails successive."
       project: "Progetto di Teambox:"
-      recent_conversations: "Conversazioni recenti nel %{project}"
       reply: "Puoi anche rispondere a questa mail per pubblicare la risposta."
       status: "Stato: %{status}"
       stop_watching: "<a href='%{stop_watching_url}'>Non seguire più</a> questo elemento per non ricevere più emails su di esso."
@@ -643,7 +642,6 @@ it:
       report_abuse: "Hai ricevuto questo messaggio perchè ti sei registrato in Teambox con l'indirizzo %{email}"
     upload: 
       file: "File:"
-      uploaded_by: "caricato da"
   example_projects: 
     new: 
       create: "Crea il progetto tutorial"
@@ -706,6 +704,7 @@ it:
     format: 
       delimiter: ","
       separator: "."
+      precision: 2
     human: 
       storage_units: 
         format: "%n %u"
@@ -1140,13 +1139,18 @@ it:
       last_name: Cognome
       login: "Nome utente"
       monday: Lunedì
-      notifications:
+      notifications: 
         notify_conversations: "Mandami una notifica delle conversazioni che seguo"
-        notify_mentions: "Mandami una notifica quando mi nominano in un commento, per esempio: Ciao @%{login}!"
         notify_tasks: "Mandami una notifica dei commenti nei compiti che seguo"
         wants_task_reminder: "Voglio ricevere una mail giornaliera dei miei compiti"
       password: Password
       password_confirmation: "Conferma password"
+      picture: 
+        field: "La tua icona"
+        max_size: "Il file non può essere superiore di %{mb}"
+        presence: "Non puoi caricare un file vuoto"
+        upload_here_or_at_gravatar: "Puoi caricare un nuovo avatar in Teambox, o creare un %{gravatar} che puoi usare in Teambox o in altri siti web."
+        we_have_this_avatar: "Questa è la tua immagine:"
       sunday: Domenica
       time_zone: "Fuso orario"
       tooltips: 
@@ -1159,7 +1163,6 @@ it:
       existing_user_html: "Se hai già un account, <a href='%{login_url}'>entra</a> o <a href='%{forgot_url}'>reimposta la tua password</a>."
       submit: "Crea account"
       title: "Crea un account"
-      use_this_email: "Sei stato invitato in Teambox con questo indirizzo email. Se vuoi accedere ai progetti di chi ti ha invitato, non cambiare l'inidirzzo emal. Potrai cambiare la tua mail una volta che avrai terminato il processo d'iscrizione."
       you_are_logged_in: "Hai già un account di Teambox. Se voi entrare con un'altro utente, esci e riprova l'accesso."
     show: 
       pending_invite: "%{name} currently has a pending invitation to one of your projects. You will not be able to access any more information until this invitation has been accepted."

@@ -93,15 +93,8 @@ fr:
         too_short: "est trop court (au moins %{count} caractères)"
         wrong_length: "ne fait pas la bonne longueur (doit comporter %{count} caractères)"
       models: 
-        comment: 
-          attributes: 
-            body: 
-              no_body_generic: "S’il vous plaît écrivez à propos de ce que vous avez fait dans la case ci‑dessus."
-              no_body_task: "S’il vous plaît écrivez à propos de ce que vous avez fait pour cette tâche dans la case ci‑dessus."
         conversation: 
           attributes: 
-            body: 
-              no_body_generic: "S’il vous plaît écrivez un commentaire pour entamer la conversation."
             name: 
               no_title: "S’il vous plaît donnez un titre de cette conversation"
       template: 
@@ -237,6 +230,19 @@ fr:
       upload: Envoyer
     show: 
       save: "Enregistrer les changements"
+  calendar: 
+    abbr_weekdays: 
+      - D
+      - L
+      - Ma
+      - Me
+      - J
+      - V
+      - S
+    clear: Effacer
+    now: Maintenant
+    ok: OK
+    today: Aujourd'hui
   cards: 
     card: 
       addresses: Adresses
@@ -728,12 +734,12 @@ fr:
         other: "près de %{count} ans"
       half_a_minute: "30 secondes"
       less_than_x_minutes: 
-        one: "moins d’une minute"
+        one: mainteant
         other: "moins de %{count} minutes"
         zero: "moins d'une minute"
       less_than_x_seconds: 
-        one: "moins d’une seconde"
-        other: "moins de %{count} secondes"
+        one: mainteant
+        other: mainteant
         zero: "moins d'une seconde"
       over_x_years: 
         one: "plus d’un an"
@@ -748,8 +754,8 @@ fr:
         one: "1 mois"
         other: "%{count} mois"
       x_seconds: 
-        one: "1 seconde"
-        other: "%{count} secondes"
+        one: mainteant
+        other: mainteant
     prompts: 
       day: Day
       hour: Hour
@@ -758,12 +764,6 @@ fr:
       second: Seconds
       year: Year
     time_ago: "Il y a %{time_ago_in_words}"
-  calendar:
-    abbr_weekdays: [D, L, Ma, Me, J, V, S]
-    ok: OK
-    now: Maintenant
-    today: Aujourd'hui
-    clear: Effacer
   deleted: 
     conversation: "La conversation <b>%{name}</b> a été effacée"
     left_project: "Vous avez quitté le project"
@@ -803,9 +803,6 @@ fr:
       subject_without_project: "%{name} vous ont invité sur Teambox"
       teambox_is_a_pm_platform: "Teambox est une plateforme de gestion de projets pensée pour le monde réel."
       you_have_been_invited_to: "Vous avez été invité(e) à rejoindre le projet <b>%{project}</b>"
-    invitation_group: 
-      subject: "%{user} a partagé le groupe [%{group}] avec vous"
-      you_have_been_invited_to: "Vous avez été invité(e) à rejoindre le projet <b>%{group}</b>"
     notify: 
       are_watching: "ont choisi de suivre la conversation, et seront alertés lors de nouvelles réponses."
       assigned_to: "Assignée à <b>%{user}</b>"
@@ -834,7 +831,6 @@ fr:
       successfully_reset: "Votre mot de passe a bien été réinitialisé."
     upload: 
       file: "Fichier:"
-      uploaded_by: "ajouté par"
   example_projects: 
     new: 
       create: "Créer le projet‑exemple"
@@ -897,9 +893,7 @@ fr:
         title: Pour inviter
     pending: 
       invited_to_join: "%{by} vous a invité à rejoindre le projet %{project}."
-      invited_to_join_group: "%{by} vous a invité à rejoindre le groupe %{group}."
       to_access_or: "pour accéder au projet ou"
-      to_access_or_group: "pour accéder au groupe ou"
     recent: 
       invite: "Inviter %{username}"
     resend: 
@@ -924,6 +918,7 @@ fr:
     cz: Tchèque
     da: Danois
     de: Allemand
+    dsb: Haut-Sorabe
     el: Grec
     en: Anglais
     es: Espagnol
@@ -933,6 +928,7 @@ fr:
     fr: Français
     he: Israélite
     hr: Croate
+    hsb: Bas-Sorabe
     hu: Hongrois
     id: Indonésien
     is: Icelandais
@@ -964,7 +960,6 @@ fr:
     zh-TW: "Chinois (traditionnel)"
   not_found: 
     conversation: "La conversation %{id} n’a pas été trouvée dans ce projet."
-    group: "Le group %{id} n’existe pas."
     page: "La page %{id} n’a pas été trouvée dans ce projet."
     project: "Le projet %{id} n’existe pas."
     task: "La tâche %{id} n’a pas été trouvée dans ce projet."
@@ -995,6 +990,7 @@ fr:
       separator: "."
     human: 
       format: 
+        delimiter: "."
         precision: 1
       storage_units: 
         format: "%n %u"
@@ -1006,6 +1002,9 @@ fr:
           kb: ko
           mb: Mo
           tb: To
+    percentage: 
+      format: 
+        delimiter: "."
     precision: 
       format: 
         delimiter: "."
@@ -1028,7 +1027,7 @@ fr:
     user_already_exists_by_email: "Associer '%{email}' avec votre compte Teambox"
     user_already_exists_by_login: "Le nom d'utilisateur '%{login}' est déjà utilisé"
     user_exists_instruction: Si vous avez déjà un compte Teambox, connectez vous pour l'associer automatiquement avec votre profil %{provider}.'
-    user_exists_is_not_yours: "Si le compte '%{account}' ne vous appartient pas, %{signup_for_a_new_account}."
+    user_exists_is_not_yours_html: "Si le compte '%{account}' ne vous appartient pas, %{signup_for_a_new_account}."
     signup_for_a_new_account: cliquer ici pour vous inscrire
   page_title: 
     archived_task_lists: "Tâches archivées"
@@ -1141,18 +1140,10 @@ fr:
       copy1: "Vous aimez Teambox? Nous travaillons à plein-temps! <a href='%{link}'>Passez premium</a> et soutenez notre développement!"
       copy2: "<a href='%{link}'>Abonnez-vous</a> pour obtenir plus de projets, stockages et recherches à travers tous les projets."
       copy3: "<a href='%{link}'>Obtenez plus</a> avec un compte premium! Stockage pour plus de 2000 projets."
-      copy4: "<a href='%{link}'>Travaillez mieux</a> avec un compte premium: Barre de recherche à travers tous vos projets."
-      copy5: "<a href='%{link}'>Abonnez-vous à Teambox maintenant</a> et passez à la collaboration professionnelle!"
-      copy6: "La barre de recherche vous faire gagner du temps. <a href='%{link}'>Abonnez-vous pour l'avoir!<a/>"
-      copy7: "Vous êtes en affaires? <a href='%{link}'>Obtenez le meilleur support</a> de Teambox avec nos plans premium."
-    show: 
-      branding:
-        configure: "Votre plan vous permet de personaliser la page d'acceuil et d'utilisé un noms de domaines pour votre organisation. <a href='%{link}'>Personalisez votre page d'acceuil</a>."
-        not_available: "Le plan de votre organisation ne supporte pas de <strong>page d'acceuil personaliser</strong>. Abonnez-vous à un plan supérieur pour l'obtenir."
-      current_plan: "Votre plan actuel est <strong>%{name}</strong>."
-      max_projects: "Vous pouvez avoir jusqu'à %{max} projets."
-      max_storage: "Vous pouvez stocker jusqu'à %{max}."
-      plan: "Votre plan Teambox"
+      copy4: "<a href='%{link}'>Travaillez mieux</a> avec un compte premium: Barre de recherche à travers tous les projets."
+      copy5: "<a href='%{link}'>Améliorez votre compte Teambox maintenant</a> et profitez de la collaboration professionnelle!"
+      copy6: "La barre de recherche pour tous vos projets peut vous faire gagner du temps. <a href='%{link}'>S'améliorez maintenant pour l'avoir!"
+      copy7: "Vos affaires! <a href='%{link}'>Obtenez le meilleur support</a> de Teambox avec nos plans premium."
   projects: 
     edit: 
       change_owner: "Transferer le project à un nouveau propriétaire"
@@ -1629,8 +1620,8 @@ fr:
       title: "Synchroniser vos flux de nouvelles"
       your_feeds: "Vos flux de nouvelles"
     form: 
-      account_deletion: 
-        account_deleted: "Votre compte a été supprimé. Vous allez nous manquer!"
+      delete: 
+        account_deleted: "Votre compte a été supprimé. Vous allez nous manquer !"
         couldnt_delete_account: "Nous ne pouvons pas supprimer votre compte car vous avez toujours des projets actifs ou archivés."
         delete_my_account: "Supprimer mon compte"
         steps_before_1: "Pour supprimer votre compte Teambox, vous devez d'abord quitter, transferer, ou supprimer tous vos projets en cours."
@@ -1656,9 +1647,10 @@ fr:
       last_name: Nom
       login: "Nom d’utilisateur"
       monday: Lundi
-      notifications:
+      new: 
+        use_this_email: "Vous avez été invité(e) à utiliser Teambox avec cette adresse email. Si vous voulez accéder aux projets de la personne qui vous a invité(e), ne changez pas l’adresse email. Vous pourrez changer d’adresse email par la suite, une fois enregistré(e) dans Teambox."
+      notifications: 
         notify_conversations: "Envoyez‑moi une notification lorsque je regarde une conversation"
-        notify_mentions: "Envoyez‑moi une notification lorsque je suis mentionné, par exemple Bonjour @%{login}! Vous recevrez un courriel!"
         notify_tasks: "Envoyez‑moi une notification lorsque je regarde une tâche"
         wants_task_reminder: "Envoyez‑moi une notification journalière de mes tâches"
       password: "Mot de passe"
@@ -1674,8 +1666,6 @@ fr:
         login: "Vous pouvez utiliser un nom d’utilisateur court pour vous connecter. Il doit être en minuscules et sans espace. Vous pouvez utiliser _."
         password: "Combiner des lettres, des chiffres, des majuscules et des minuscules est une bonne idée."
         phone: "De préférence un téléphone portable. A entrer en ajouter le code pays, par exemple +33 1 23 45 67 89"
-      new:
-        use_this_email: "Vous avez été invité(e) à utiliser Teambox avec cette adresse courriel. Si vous voulez accéder aux projets de la personne qui vous a invité(e), ne changez pas l’adresse courriel. Vous pourrez changer d’adresse courriel par la suite, une fois enregistré(e) dans Teambox."
     new: 
       existing_user_html: "Si vous avez déjà un compte, <a href='%{login_url}'>identifiez‑vous</a> ou <a href='%{forgot_url}'>réinitialisé votre mot de passe</a>."
       no_public_signup: "Le publique n’est pas autorisé à s’inscrire sur ce système."
@@ -1689,6 +1679,7 @@ fr:
       projects: Projets
       recent_activity_for: "Activitées récente de %{user_name}"
     text_styles: 
+      block_of_code: "Coller le code indenté avec 4 espaces ou tabs retourne un bloc de code html"
       enter_this: 
         bold_text: "en gras"
         header: En-tête
@@ -1709,7 +1700,14 @@ fr:
         image_html: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
         italic_text_html: "<i>italics</i> text"
         link_html: "<a href=\"http://www.teambox.com\">Un lien</a>"
+        ordered_list: |-
+            <li>liste numérotée</li>
+            <li>ligne blanche</li>
+        smaller_header: "<h4 style=\"font-size:14px\">Titre plus petit</h4> "
         title_html: "Pour le voir"
+        unordered_list: |-
+            <li>liste à puce</li>
+            <li>ligne blanche</li>
     unconfirmed_email: 
       follow_the_link_html: "<b>Cliquez sur le lien qui se trouve dans ce courriel</b> pour activer votre compte."
       invitation_sent_to_html: "Nous avons envoyé une invitation à l’adresse <i>%{email}</i> afin de vérifier qu’il n’y a pas d’erreur dans l’adresse courriel."

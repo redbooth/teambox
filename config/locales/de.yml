@@ -87,15 +87,8 @@ de:
         too_short: "ist zu kurz (Minimum ist %{count} Zeichen)"
         wrong_length: "hat die falsche Länge (sollte %{count} Zeichen sein)"
       models: 
-        comment: 
-          attributes: 
-            body: 
-              no_body_generic: "Bitte geben Sie Ihren Arbeitsfortschritt in der Box ein."
-              no_body_task: "Bitte geben Sie Ihren Arbeitsfortschritt für die Aufgabe in die Box ein."
         conversation: 
           attributes: 
-            body: 
-              no_body_generic: "Schreiben Sie bitte einen Kommentar, um die Konversation zu beginnen."
             name: 
               no_title: "Bitte vergeben Sie einen Titel für die Konversation"
       template: 
@@ -172,6 +165,19 @@ de:
       upload: Hochladen
     show: 
       save: "Änderungen speichern"
+  calendar: 
+    abbr_weekdays: 
+      - So
+      - Mo
+      - Di
+      - Mi
+      - Do
+      - Fr
+      - Sa
+    clear: Löschen
+    now: Jetzt
+    ok: Ok
+    today: Heute
   cards: 
     card: 
       addresses: Adressen
@@ -624,9 +630,9 @@ de:
       - November
       - Dezember
     order: 
-      - !ruby/symbol Jahr
-      - !ruby/symbol Monat
-      - !ruby/symbol Tag
+      - !ruby/symbol year
+      - !ruby/symbol month
+      - !ruby/symbol day
     yesterday: Gestern
   datetime: 
     distance_in_words: 
@@ -672,12 +678,6 @@ de:
       second: Sekunde
       year: Jahr
     time_ago: "%{time_ago_in_words} vorher"
-  calendar:
-    abbr_weekdays: [So, Mo, Di, Mi, Do, Fr, Sa]
-    ok: Ok
-    now: Jetzt
-    today: Heute
-    clear: Löschen
   deleted: 
     conversation: "Konversation <b>%{name}</b> gelöscht"
     left_project: "Sie haben dieses Projekt verlassen"
@@ -716,9 +716,6 @@ de:
       subject: "%{user} teilt das Projekt [%{project}] mit Ihnen "
       teambox_is_a_pm_platform: "Teambox ist eine Projekt Management Plattform, die für die Echtzeit Zusammenarbeit entwickelt wurde."
       you_have_been_invited_to: "Sie sind zu dem Projekt <b>%{project}</b> eingeladen worden!"
-    invitation_group: 
-      subject: "%{user} teilt die Gruppe [%{group}] mit Ihnen"
-      you_have_been_invited_to: "Sie wurden zu der Gruppe <b>%{group}</b> eingeladen"
     notify: 
       are_watching: " haben diese Konversation abonniert und werden über zukünftige Antworten benachrichtigt."
       assigned_to: "Zugeordnet zu <b>%{user}</b>"
@@ -729,7 +726,6 @@ de:
       my_tasks: "Mehr Aufgaben, die Ihnen zugeordnet sind in %{project}"
       notification_settings: "Sie können Ihre <a href='%{url}'>Benachrichtigungseinstellungen hier</a> für weitere Emails ändern."
       project: "Teambox Projekt:"
-      recent_conversations: "Kürzliche Konversationen für %{project}"
       reply: "Sie können auch eine Email senden um auf die Konversation zu antworten."
       status: "Status: %{status}"
       stop_watching: "<a href='%{stop_watching_url}'>Abbestellen</a> der Email Benachrichtigungen für diesen Baum."
@@ -746,7 +742,6 @@ de:
       subject: "Ihr Passwort wurde erfolgreich zurückgesetzt"
     upload: 
       file: "Datei:"
-      uploaded_by: "hochgeladen von"
   example_projects: 
     new: 
       create: "Erstellen Sie ein Beispiel-Projekt"
@@ -797,9 +792,7 @@ de:
       time_ago: "(%{time_ago_in_words} vorher)"
     pending: 
       invited_to_join: "%{by} hat Sie eingeladen an dem Projekt %{project} teilzunehmen."
-      invited_to_join_group: "%{by} hat Sie eingeladen, der Gruppe %{group} beizutreten."
       to_access_or: "um das Projekt aufzurufen oder"
-      to_access_or_group: "um zur Gruppe zu gelangen"
     recent: 
       invite: "Einladen von %{username}"
     resend: 
@@ -819,7 +812,6 @@ de:
     de: Deutsch
   not_found: 
     conversation: "Konversation %{id} wurde nicht im Projekt gefunden."
-    group: "Gruppe %{id} existiert nicht."
     page: "Seite %{id} wurde nicht im Projekt gefunden."
     project: "Projekt %{id} existiert nicht."
     task: "Aufgabe %{id} wurde nicht im Projekt gefunden."
@@ -988,14 +980,6 @@ de:
       copy5: "<a href='%{link}'>Stufen Sie Ihren Teamboxtarif jetzt hoch</a> und genießen Sie professionelle Zusammenarbeit! "
       copy6: "Die Suchleiste über alle Projekte kann Ihnen viele Stunden Suche ersparen. <a href='%{link}'>Stufen sie jetzt hoch</a>, um sie zu nutzen! "
       copy7: "Ihr Geschäft ist wichtig! <a href='%{link}'>Erhalten Sie den besten Support</a> für Teambox mit unseren Premium Tarifen. "
-    show: 
-      branding: 
-        configure: "Ihr Tarif unterstützt ein eigenes Layout und Domänen-Namen. <a href='%{link}'>Bearbeiten Sie die Einstellungen hier</a>. "
-        not_available: "Ihr Tarif unterstützt kein <strong>eigenes Layout</strong>. Stufen Sie Ihren Tarif hoch für ein eigenes Layout. "
-      current_plan: "Ihr aktueller Tarif ist <strong>%{name}</strong>. "
-      max_projects: "Sie können bis zu %{max} Projekte anlegen. "
-      max_storage: "Ihr Speicherplatz beträgt bis zu %{max}. "
-      plan: "Ihr Teambox Tarif"
   projects: 
     edit: 
       change_owner: "Besitzer ändern"
@@ -1457,15 +1441,22 @@ de:
       last_name: Nachname
       login: Benutzername
       monday: Montag
-      notifications:
+      notifications: 
         notify_conversations: "Benachrichtigen Sie mich, wenn ich eine Konversation verfolge"
-        notify_mentions: "Benachrichtigen Sie mich, wenn ich angesprochen werde z.B. Hallo @%{login}! Sie haben eine neue Email!"
         notify_tasks: "Benachrichtigen Sie mich, wenn ich eine Aufgabe verfolge"
         wants_task_reminder: "Senden Sie mir täglich eine Email mit meinen Aufgaben"
       password: Passwort
       password_confirmation: "Passwort bestätigen"
       phone: Telefnonnummer
       phone_for_integration: "Optional. Für zukünftige SMS-Integration"
+      picture: 
+        destroy: "Avatar löschen"
+        field: "Ihr Avatar"
+        gravatar_in_use: "Wir haben kein Bild von Ihnen, daher benutzen wir %{gravatar}: "
+        max_size: "Die Datei ist größer als %{mb}"
+        presence: "Sie können keine leere Datei hochladen"
+        upload_here_or_at_gravatar: "Sie können hier einen neuen Avator hochladen, oder laden Sie ihren globalen Avatar zu der Adresse %{gravatar}, um ihn für Teambox und für viele andere Webseiten zu benutzen."
+        we_have_this_avatar: "Dies ist ihr momentaner Avatar: "
       sunday: Sonntag
       time_zone: Zeitzone
       tooltips: 
@@ -1479,7 +1470,6 @@ de:
       existing_user_html: "Wenn Sie bereits ein Benutzerkonto haben, <a href='%{login_url}'> melden Sie sich an</a> oder <a href='%{forgot_url}'>lassen Sie sich Ihr Passwort zusenden</a>."
       no_public_signup: "Public signup wird vom System leider nicht unterstützt."
       submit: "Benutzerkonto erstellen"
-      use_this_email: "Sie haben für diese Email Einladungen zur Teilnahme an Projekten. Wenn Sie an den Projekten teilnehmen wollen, ändern Sie diese Email Adresse nicht. Sie können sie ändern, nachdem sie die Anmeldung abgeschlossen haben."
       title: "Erstellen eines Benutzerkontos"
       you_already_have_an_account_html: "Sie haben schon ein Teambox-Konto für die Adresse %{email}. <a href='%{login_link}'>Melden Sie sich mit dieser Email an</a> oder <a href='%{reset_password_link}'>setzen Sie Ihr Passwort zurück</a>, wenn Sie es nicht mehr kennen. "
       you_are_logged_in: "Sie haben bereits ein Benutzerkonto. Melden Sie sich ab, um sich als anderer Benutzer anzumelden."

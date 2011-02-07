@@ -93,15 +93,8 @@ pt-BR:
         too_short: "é muito curto (%{count} caracteres no mínimo)"
         wrong_length: "não tem o tamanho correto (%{count} caracteres exatos)"
       models: 
-        comment: 
-          attributes: 
-            body: 
-              no_body_generic: "Escreva sobre o que tem feito na caixa de texto."
-              no_body_task: "Escreva sobre o que tem feito nessa tarefa."
         conversation: 
           attributes: 
-            body: 
-              no_body_generic: "Digite um texto para iniciar a conversa."
             name: 
               no_title: "Esta conversa precisa de um título"
       template: 
@@ -181,21 +174,53 @@ pt-BR:
         other: "%{count} comentários anteriores"
       on_task_list: em
   affiliate: 
+    area: "Área de afiliados"
     index: 
       addresses: endereço
       credits_earned: "Crédito que você ganhou\n"
+      desc_1: "Com as ferramentas de nossos parceiros, você pode ganhar <strong>meses de graça</strong> para usar o Teambox ou ganhar <strong>dinheiro real</strong> indicando para outros."
+      desc_2: "Traga novos usuários para o Teambox, e ganhe <strong>%{percent}% da receita</strong> que seus usuários indicados gerarem, <strong>para sempre</strong>."
       facebook: Facebook
+      get_in_touch: "entre em contato com a gente"
+      idea1: "Crie um site sobre como usar o Teambox, com guias para iniciantes."
+      idea2: "Poste um link para o Teambox no seu blog e conte como ele lhe ajudou."
+      idea3: "Organize um evento sobre Projetos Colaborativos e indique seus participantes."
+      idea4: "Simplesmente envie convites por email para novos usuários."
+      ideas: "Algumas idéias para tirar o máximo proveito do Teambox"
       learn_more: "Aprenda mais..."
+      no_referred_users: "Você ainda não possui nenhum usuário indicado."
       option_1: "Opção 1: Compartilhe este enlace"
       option_2: "Opção 2: Convide outros usuários pelo e-mail"
       option_3: "Opção 3: Convide seus contatos importando um arquivo CSV"
+      over_200: "Quando você tiver acima de $200,"
       plan_for: "plano para"
       premium_plan: "conta premium"
+      refer_info: "Indique %{users} usuários nas contas %{plan}, ganhe $%{credit} a cada mês."
+      referred_users: "Seus usuários indicados"
       send_invites: "Convidar ao Teambox"
+      send_money: "e nós iremos enviar para você o dinheiro que você ganhou."
       sent_invites_to: "O convite foi enviado para o seguinte endereço:"
       sent_number_of_invites: "O convite foi enviado para"
+      tracking1: "Quando você indica usuários para o Teambox, eles devem se cadastrar em uma página com um código especial."
+      tracking2: "Este código é único para você, e permite a nós manter um controle sobre seus usuários."
+      tracking3: "Uma vez que o usuário acessar este link, ele será identificado como sendo indicado por você."
+      tracking4: "Mesmo que eles saiam da página e voltem mais tarde, nós guardaremos este dado, assim, quando eles se cadastrarem, nós ainda iremos lembrar que eles vieram indicados por você."
+      tracking5: "Sua página especial para cadastro é"
+      tracking6: "Publique este link no Facebook, Twitter, no seu próprio site, ou envie-o por email para um amigo. Depois que eles se cadastrarem, você irá receber uma confirmação por email."
       twitter: Twitter
+      twitter_link: "Experimente+Teambox+para+trabalhar+em+grupo,+cadastre-se+gratuitamente+em+%{link}"
+      use_money: "Você pode usar este dinheiro para ter um"
+      use_money_cash: "ou para ganhar dinheiro vivo."
+      use_tracking_code: "Você deve usar um código de rastreamento, para que nós possamos saber quais usuários vieram através de você."
       website: "Compartilhe isto no seu site,"
+    notification: 
+      accepted_subscription: "%{name} (%{email}) se cadastrou recentemente no Teambox usando seu código de indicação."
+      check_your_earnings: "Verifique seus ganhos com indicações no Teambox"
+      check_your_referrals: "Verifique seus usuários indicados no Teambox"
+      new_signup: "Um usuário se cadastrou no Teambox usando seu código de indicação!"
+      new_subscription: "Um usuário incrementou sua conta no Teambox usando seu código de indicação!"
+      upgraded_subscription: "%{name} (%{email}) incrementou recentemente sua conta no Teambox, e você recebeu $%{price} em créditos"
+      wait: "A transação foi processada, mas talvez leve algum tempo para que assim apareça na sua área de parceiros do Teambox"
   avatars: 
     edit: 
       upload: "Subir a imagem"
@@ -255,6 +280,7 @@ pt-BR:
     hours: 
       add_hours: Horas
       hours: "Quantas horas tem trabalhado nesta tarefa?"
+      time_tracking_docs: "Aprenda como usar rastreamento por tempo"
       tooltip: "Adicionar horas nesta tarefa"
     new: 
       assigned_to: "Atribuído para:"
@@ -383,6 +409,7 @@ pt-BR:
     BM: Bermudas
     BN: Brunei
     BO: Bolívia
+    BQ: "Território Antártico Britânico"
     BR: Brasil
     BS: Bahamas
     BT: Butão
@@ -405,11 +432,13 @@ pt-BR:
     CP: "Ilha de Clipperton"
     CR: "Costa Rica"
     CS: "Sérvia e Montenegro"
+    CT: "Ilhas Canton e Enderbury"
     CU: Cuba
     CV: "Cabo Verde"
     CX: "Ilhas Natal"
     CY: Chipre
     CZ: "República Tcheca"
+    DD: "Leste da Alemanha"
     DE: Alemanha
     DG: "Diego Garcia"
     DJ: Djibuti
@@ -431,7 +460,9 @@ pt-BR:
     FK: "Ilhas Malvinas"
     FM: Micronésia
     FO: "Ilhas Faroe"
+    FQ: "Territórios Austrais e Antárticos da França"
     FR: França
+    FX: "França Metropolitana"
     GA: Gabão
     GB: "Reino Unido"
     GD: Granada
@@ -472,6 +503,7 @@ pt-BR:
     JM: Jamaica
     JO: Jordânia
     JP: Japão
+    JT: "Ilha Johnston"
     KE: Quênia
     KG: Quirguistão
     KH: Camboja
@@ -501,6 +533,7 @@ pt-BR:
     MF: "São Martinho"
     MG: Madagascar
     MH: "Ilhas Marshall"
+    MI: "Ilhas Midway"
     MK: "Macedônia [Antiga República Iugoslava da Macedônia - ARIM]"
     ML: Mali
     MM: "Mianmar [Birmânia]"
@@ -527,11 +560,14 @@ pt-BR:
     ? "NO"
     : Noruega
     NP: Nepal
+    NQ: "Território Antártico Norueguês"
     NR: Nauru
+    NT: "Zona Neutra"
     NU: Niue
     NZ: "Nova Zelândia"
     OM: Omã
     PA: Panamá
+    PC: "Ilhas do Pacífico (Território das Nações Unidas)"
     PE: Peru
     PF: "Polinésia Francesa"
     PG: "Papua-Nova Guiné"
@@ -543,8 +579,10 @@ pt-BR:
     PR: "Porto Rico"
     PS: "Territórios palestinos"
     PT: Portugal
+    PU: "Ilhas do Pacífico Mistas dos Estados Unidos"
     PW: Palau
     PY: Paraguai
+    PZ: "Zona do Canal do Panamá"
     QA: Catar
     QO: "Oceania Remota"
     RE: Reunião
@@ -568,6 +606,7 @@ pt-BR:
     SO: Somália
     SR: Suriname
     ST: "São Tomé e Príncipe"
+    SU: "União das Repúblicas Socialistas Soviéticas"
     SV: "El Salvador"
     SY: Síria
     SZ: Suazilândia
@@ -596,13 +635,16 @@ pt-BR:
     UZ: Uzbequistão
     VA: Vaticano
     VC: "São Vicente e Granadinas"
+    VD: "Vietname do Norte"
     VE: Venezuela
     VG: "Ilhas Virgens Britânicas"
     VI: "Ilhas Virgens dos EUA"
     VN: Vietnã
     VU: Vanuatu
     WF: "Wallis e Futuna"
+    WK: "Ilha Wake"
     WS: Samoa
+    YD: "República Democrática Popular do Iêmen"
     YE: Iêmen
     YT: Mayotte
     ZA: "África do Sul"
@@ -746,9 +788,6 @@ pt-BR:
       subject_without_project: "%{name} convidou você ao Teambox"
       teambox_is_a_pm_platform: "Teambox é uma plataforma de gestão de projetos planejada para o mundo real."
       you_have_been_invited_to: "Você foi convidado para o projeto <b>%{project}</b>"
-    invitation_group: 
-      subject: "%{user} compartilho com você o grupo %{group}"
-      you_have_been_invited_to: "Você foi convidado ao grupo <b>%{group}</b>"
     notify: 
       are_watching: " estão inscritos na conversa, e serão notificados das respostas futuras."
       assigned_to: "Assinada para <b>%{user}</b>"
@@ -759,7 +798,6 @@ pt-BR:
       my_tasks: "Outras tarefas suas no %{project}"
       notification_settings: "Pode mudar suas <a href='%{url}'>opções de notificação</a> para os seguintes emails."
       project: "Projeto:"
-      recent_conversations: "Conversas recentes em %{project}"
       reply: "Você também pode responder esta mensagem para publicar uma resposta."
       status: "Estado: %{status}"
       stop_watching: "<a href='%{stop_watching_url}'>Deixe de seguir</a> este elemento para não receber mais emails sobre ele."
@@ -777,7 +815,6 @@ pt-BR:
       successfully_reset: "Sua senha foi corretamente modificada"
     upload: 
       file: "Arquivo:"
-      uploaded_by: "enviado por"
   example_projects: 
     new: 
       create: "Criar um projeto de exemplo"
@@ -834,14 +871,13 @@ pt-BR:
     invite_format: 
       enter_this: 
         title: "Ingresse isto"
+      title: "No quadro nome de usuário/email, use ou uma lista de nomes de usuário ou endereços de email. Por exemplo:"
       to_invite: 
         not_example_html: "(NÃO <span class=\"mention\">@fred</span> ou <span class=\"mention\">@lisa</span>)"
         title: "Para convidar"
     pending: 
       invited_to_join: "%{by} enviou um convite para unir-se no projeto %{project}."
-      invited_to_join_group: "%{by} enviou um convite para unir-se no grupo %{group}."
       to_access_or: "para acessar ao projeto ou"
-      to_access_or_group: "para acessar ao grupo ou"
     recent: 
       invite: "Convidar á %{username}"
     resend: 
@@ -859,13 +895,55 @@ pt-BR:
       email_sent: "<b>Temos enviado um email avisando o usuário para que aceite o convite</b>. Se não achar o email, verifica que não esteja classificado como SPAM."
   last_announcement_html: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   locales: 
+    ar: Arábico
+    bs: Bósnio
+    bt: Búlgaro
+    ca: Catalão
+    cz: Tcheco
+    da: Dinamarquês
+    de: Alemão
+    dsb: "Baixo Sórbio"
+    el: Grego
     en: Inglês
     es: Espanhol
+    et: Estôniano
+    fa: Persa
+    fi: Finlandês
+    fr: Francês
+    he: Hebreu
+    hr: Croata
+    hsb: "Alto Sórbio"
+    hu: Húngaro
+    id: Indonésio
+    is: Islândico
+    it: Italiano
+    ja: Japonês
+    ko: Coreano
+    lo: Lao
+    lt: Lituânio
+    lv: Látvio
+    mk: Macedônio
+    nl: Holandês
+    ? "no"
+    : Norueguês
+    pl: Polonês
     pt-BR: "Português (Brasil)"
     pt-PT: "Português (Portugal)"
+    ro: Romêno
+    ru: Russo
+    se: Suéco
+    sk: Eslovaco
+    sl: Eslavo
+    sr: Sérvio
+    sw: Swaili
+    th: Tailandês
+    tr: Turco
+    uk: Ucraniâno
+    vi: Vietnamita
+    zh: Chinês
+    zh-TW: "Chinês (Tradicional)"
   not_found: 
     conversation: "A conversação %{id} não foi encontrada neste projeto."
-    group: "O grupo %{id} não existe."
     page: "A página %{id} não foi encontrada neste projeto."
     project: "O projeto %{id} não existe."
     task: "A tarefa %{id} não foi encontrada neste projeto."
@@ -895,6 +973,8 @@ pt-BR:
       precision: 3
       separator: "."
     human: 
+      format: 
+        precision: 1
       storage_units: 
         format: "%n %u"
         units: 
@@ -906,8 +986,22 @@ pt-BR:
           mb: MB
           tb: TB
   oauth: 
+    account_linked: "Sua conta foi conectada."
+    already_linked_to_your_account: "Este serviço já está conectado a sua conta. Você pode logar com ele."
+    already_taken_by_other_account: "Este serviço já está conectado a outra conta no sistema. Tente deslogar e logar com ele. Para conectar ele a uma conta diferente, você irá precisar desconectá-lo da atual."
+    app_unlinked: "Aplicativo desconectado"
     auth_status: "Autorização OAuth"
+    auth_status_link: "Conecte com sua conta"
+    auth_status_linked: "Conecte com o provedor"
+    link_account: "Conectar conta."
     logged_in: "Conectado corretamente"
+    not_linked: "Aquele serviço não está conectado a sua conta do Teambox."
+    this_account_will_be_linked_to: "Esta conta será conectada com %{provider}"
+    unlink_account: "Desconectar conta."
+    user_already_exists_by_email: "O usuário %{email} já possui uma conta do Teambox.<br/>Logue-se com esta conta e conecte-a do seu painel de Configurações."
+    user_already_exists_by_login: "O usuário %{login} já possui uma conta do Teambox.<br/>Logue-se com esta conta e conecte-a do seu painel de Configurações."
+    your_account_is_linked: "Seu %{provider} perfil <strong>está conectado</strong> ao Teambox."
+    your_account_is_not_linked: "Seu %{provider} perfil <strong>não está conectado</strong> ao Teambox."
   page_title: 
     archived_task_lists: "Tarefas arquivadas"
     create_uploads: "Subir arquivo"
@@ -939,6 +1033,7 @@ pt-BR:
       all_pages: "Todas as páginas"
       cant_create: "Não tem permissão para criar páginas em este projeto."
       new_page: "Nova página"
+      reorder: Reordenar
       reorder_done: Feito
     edit: 
       submit: Atualizar
@@ -980,6 +1075,7 @@ pt-BR:
   people: 
     column: 
       confirm_delete: "Tem certeza que quer deixar este projeto?"
+      contact_admins: "Neste projeto, somente %{admins} podem convidar outros membros."
       inviting: "Convidar outros usuários"
       leave_project: "Deixar este projeto"
       leaving: "Deixar o projeto"
@@ -1010,9 +1106,17 @@ pt-BR:
       transfer: "Transferir o projeto"
     link: 
       edit: Editar
+    update: 
+      success: "Você alterou a permissão de %{name}"
   plans: 
-    show: 
-      plan: "Seu plano de Teambox"
+    copies: 
+      copy1: "Gostando do Teambox? Nós trabalhamos full-time! <a href='{{link}}'>Faça o upgrade agora</a> para apoiar nosso desenvolvimento!"
+      copy2: "<a href='{{link}}'>Faça o upgrade agora</a> para ter mais projetos, espaço em disco e pesquisar em todos os projetos."
+      copy3: "<a href='{{link}}'>Faça mais</a> com uma conta premium! Mais espaço em disco, até 2000 projetos."
+      copy4: "<a href='{{link}}'>Trabalhe melhor</a> com uma conta premium: Barra de pesquisa para todos os projetos."
+      copy5: "<a href='{{link}}'>Faça o upgrade de sua conta no Teambox agora</a> e desfrute de colaboração profissional!"
+      copy6: "Barra de pesquisa para todos os projetos pode te economizar muito tempo. <a href='{{link}}'>Faça o upgrade agora</a> para tê-la!"
+      copy7: "Seu negócio é importante! <a href='{{link}}'>Tenha o melhor suporte</a> para o Teambox com nossos planos premium."
   projects: 
     edit: 
       change_owner: "Mudar propietário"
@@ -1035,6 +1139,7 @@ pt-BR:
       owner_description: "O propietário é o máximo responsável de um projeto. Não pode ser explusado do projeto, a não ser que tenha outro usuário como dono."
       permalink_html: URL
       permalink_description: "Isto ira ser o endereço web do projeto. Não são permitidos os espaços."
+      public_project: "Projeto público. <em>Qualquer um pode acessar e participar na <a href='/public'>seção de projetos públicos</a>.</em>"
       tracks_time_html: "Ativar time tracking (registro de horas)"
     index: 
       archived: "Mostrar %{count} projetos arquivados..."
@@ -1058,6 +1163,8 @@ pt-BR:
       not_allowed: "Não pode criar projetos com teu tipo de conta."
       submit: "Criar projeto e convidar usuários"
       title: "Criar um projeto"
+      upgrade: 
+        to_2: "<a href='{{link}}'>Faça o upgrade da sua conta agora</a> para criar <b>até  {{projects}} projetos</b>, arquivar até <b>{{storage}} Gb</b> de arquivos e usar a <b>barra de pesquisa para todos os projetos</b>."
       you_can_create_more: 
         one: "Você pode criar um ou mais projetos com seu plano atual."
         other: "Você pode criar %{count} projetos mais com seu plano atual."
@@ -1163,6 +1270,9 @@ pt-BR:
       send_email: "Escreva um novo comentário por email..."
       send_email_conversations: "Envie uma nova conversa por email"
       send_email_help_conversation_html: "Para publicar um novo comentário nesta conversa envie um email para <a href=\"mailto:%{email}\">%{email}</a>. Apenas membros deste projeto podem publicar comentários na conversa."
+      send_email_help_conversations: "Para criar uma nova discussão envie um email para <a href=\"mailto:%{email}\">%{email}</a> com Assunto para o título e Corpo para o comentário. Somente membros do projeto podem criar uma nova discussão."
+      send_email_help_project: "Para postar um novo comentário no muro de atividades deste projeto envie um email para <a href=\"mailto:%{email}\">%{email}</a>. Somente membros do projeto podem postar no muro de atividades."
+      send_email_help_task: "Para postar um novo comentário para esta tarefa envie um email para <a href=\"mailto:%{email}\">%{email}</a>. Somente membros do projeto podem comentar a tarefa."
       subscribe_to_calendars: "Assinar aos calendários..."
       subscribe_to_feeds: "Assinar ao feed de noticias..."
     navigation: 
@@ -1224,6 +1334,7 @@ pt-BR:
     user_navigation: 
       account_settings: "Conta e opções"
       delete_account: "Eliminar Conta..."
+      linked_accounts: "Contas conectadas"
       notifications: Notificações
       plans_and_billing: "Planos e Pagamentos"
       profile_information: "Informação de contato"
@@ -1428,11 +1539,15 @@ pt-BR:
       resent: "Foi re-enviado o e-mail de ativação. Dê uma olhada em sua caixa de entrada!"
     calendars: 
       clients: 
+        body: "Refira-se a <a href='%{link}'>base de conhecimento</a> para instruções sobre como configurar o Google Calendar, iCal da Apple, Outlook, Blackberry e outros."
         title: Instruções
       how_to: 
+        body: "Basicamente, você pode importar os links abaixo no seu software de calendário. Visite nossa <a href='%{link}'>base de conhecimento</a> para aprender como usá-los com seu software de calendário."
         title: "Como sincronizar seus calendários"
+      possible_clients: "Você pode sincronizar seu Google Calendar, seu iCal da Apple, Outlook, Blackberry e outros."
       subscribe_to_all: "Todos os Projetos:"
       subscribe_to_project: "Projeto %{project}:"
+      tasks_can_be_synced: "As tarefas do Teambox podem ser sincronizadas com seus calendários usuais para que assim você não se esqueça do que está por vir."
       title: "Sincronizar seus calendários"
       your_calendars: "Seus Calendários"
     create: 
@@ -1452,18 +1567,24 @@ pt-BR:
       submit: Atualizar
       title_delete: "Eliminar Conta"
       title_deletion: "Eliminar ou arquivar o projeto"
+      title_linked_accounts: "Contas de aplicativos conectadas"
       title_notifications: Notificações
       title_picture: "Imagem do perfil"
       title_profile: "Informação do perfil"
       title_settings: Preferências
     feeds: 
+      configure: "Você pode configurar seu leitor de feeds (RSS) para alertá-lo toda vez que algo novo acontecer no Teambox, mesmo que ele não esteja aberto no browser."
       feed_reader: 
+        body: "Refira-se a <a href='%{link}'>base de conhecimento</a> para isto."
         title: "Qual leitor posso utilizar?"
+      follow_activities: "Você pode acompanhar as atividades do Teambox do seu leitor de News (Desktop ou Celular)."
       import: 
+        body: "Abaixo você tem uma lista de feeds (RSS) que você pode assinar. Para importá-los em seu leitor de News você deve <strong>clicar com o botão direito no link</strong> e selecionar <strong>copiar o endereço do link</strong>. Em seguida, vá ao seu leitor de News, adicione um novo Feed e cole o endereço daquele feed."
         title: "Como importar o feed de noticias"
       more_tips: 
         body_html: "Aprenda <a href='%{link}'>mais formas de acessar no Teambox</a>."
         title: "Mais dicas"
+      receive_notifications: "Usando um leitor de News no seu computador ou dispositivo móvel, você irá receber notificações das atividades em seus projetos."
       subscribe_to_all: "Atividade para Todos os Projetos"
       subscribe_to_project: "Atividade para %{project}"
       title: "Sincronize a atividade de seu feed."
@@ -1483,6 +1604,9 @@ pt-BR:
       biography: Biografía
       change_password: "Cambiar contraseña"
       confirm_password: "Confirmar contraseña"
+      delete: 
+        account_deleted: "Sua conta foi eliminada. Iremos ter saudades de você. "
+        delete_my_account: "Eliminar minha conta agora"
       email: Email
       first_day_of_week: "Semana empieza en"
       first_name: Nome
@@ -1491,14 +1615,24 @@ pt-BR:
       last_name: Sobrenome
       login: "Nome de usuário"
       monday: Segunda-feira
-      notifications:
+      new: 
+        use_this_email: "Você foi convidado ao Teambox com este endereço de correio. Se quiser acessar nos projetos nos que foi convidado, não mude este e-mail. Você irá conseguir mudar o email após ter criado a conta."
+      notifications: 
         notify_conversations: "Notificarme de conversaciones que sigo"
-        notify_mentions: "Notificarme cuando me mencionen en un comentario, por ejemplo: Hola @%{login}!"
         notify_tasks: "Notificarme de comentarios en tareas que sigo"
         wants_task_reminder: "Recibir un email diario con mis tareas"
       password: Senha
       password_confirmation: "Confirmar contraseña"
       phone: Telefone
+      phone_for_integration: "Opcional. Para integração futura com SMS"
+      picture: 
+        destroy: "Eliminar avatar"
+        field: "Novo avatar"
+        gravatar_in_use: "Não temos nenhuma foto sua, então iremos utilizar %{gravatar}:"
+        max_size: "O arquivo não pode ser maior de %{mb}"
+        presence: "Você não pode subir um arquivo vazio"
+        upload_here_or_at_gravatar: "Você pode subir uma foto aqui, ou configurar uma em %{gravatar}."
+        we_have_this_avatar: "Esta é a imagem que você tem neste momento:"
       sunday: Domingo
       time_zone: "Zona horaria"
       tooltips: 
@@ -1508,8 +1642,6 @@ pt-BR:
         login: "Você necessita de um nome de usuário para acessar. As pessõas irão conseguir achar você pelo nome de usuário. Tem que ser em minúsculas, sem espaços. Você pode utlizar traço baixo (_)."
         password: "Combinando letras, números, letras maiúsculas e minúsculas é uma boa idéia."
         phone: "O número de telefóne do trabalho estará visível para os companheiros. Inseri-lo na íntegra, ex. +55 (11) 1234-5678"
-      new:
-        use_this_email: "Você foi convidado ao Teambox com este endereço de correio. Se quiser acessar nos projetos nos que foi convidado, não mude este e-mail. Você irá conseguir mudar o email após ter criado a conta."
     new: 
       existing_user_html: "Se já tem uma conta, <a href='%{login_url}'>ingressa</a> ou <a href='%{forgot_url}'>redefine tua senha</a>."
       no_public_signup: "Não está permitido criar contas sem um convite"
@@ -1523,6 +1655,7 @@ pt-BR:
       projects: Projetos
       recent_activity_for: "Atividade recente de %{user_name}"
     text_styles: 
+      block_of_code: "Cole seu código identado (4 espaços ou tabulações) para colá-lo como um bloco de código."
       enter_this: 
         bold_text: "texto em **negrito**"
         header: |-

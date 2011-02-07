@@ -2,6 +2,12 @@
 nl: 
   activerecord: 
     attributes: 
+      address: 
+        city: Stad
+        country: Land
+        state: Provonsie
+        street: Straat
+        zip: Kode
       card: 
         city: Stad
         country: Land
@@ -84,6 +90,11 @@ nl:
         too_long: "is te lang (maximum is %{count} tekens)"
         too_short: "is te kort (minimum is %{count} tekens)"
         wrong_length: "is de verkeerde lengte (moet %{count} tekens zijn)"
+      models: 
+        conversation: 
+          attributes: 
+            name: 
+              no_title: "Gee hierdie gesprek 'n naam"
       template: 
         body: "Controleer alstublieft de volgende velden:"
         header: 
@@ -108,6 +119,15 @@ nl:
       upload: Upload
       website: Web
   activities: 
+    create_comment: 
+      create_comment: "het die kommentaar geskryf"
+      title: "%{user} het kommentaar gelewer op %{target}"
+    create_comment_conversation: 
+      title: "%{user} het opgevolg op die %{target} gesprek"
+    create_comment_project: 
+      title: "%{user} het saamgesels in %{target}"
+    create_comment_task: 
+      title: "%{user} het op die volgende taak kommentaar gelewer %{target}"
     create_conversation: 
       create_conversation: "Conversie is gestart"
     create_page: 
@@ -630,7 +650,6 @@ nl:
       my_tasks: "Meer taken toegewezen aan u in %{project}"
       notification_settings: "U kunt uw <a href='%{url}'>aanmelding instellingen</a> veranderen voor verdere emails."
       project: "Teambox Project:"
-      recent_conversations: "Recente conversaties voor %{project}"
       reply: "U kunt ook antwoorden op deze e-mail om een antwoord te geven op de conversatie."
       status: "Status: %{status}"
       stop_watching: "<a href='%{stop_watching_url}'>Uitschrijven</a> van email berichten voor deze thread."
@@ -645,7 +664,6 @@ nl:
       report_abuse: "U heeft dit bericht ontvangen, omdat u zich heeft ingeschreven voor een Teambox account met %{email}"
     upload: 
       file: "Bestand:"
-      uploaded_by: "geupload door"
   example_projects: 
     new: 
       create: "Maak een voorbeeldproject aan"
@@ -708,6 +726,7 @@ nl:
     format: 
       delimiter: ","
       separator: "."
+      precision: 2
     human: 
       storage_units: 
         format: "%n %u"
@@ -1153,13 +1172,18 @@ nl:
       last_name: Achternaam
       login: Gebruikersnaam
       monday: Maandag
-      notifications:
+      notifications: 
         notify_conversations: "Laat me weten wanneer ik een conversatie volg"
-        notify_mentions: "Laat me weten wanneer ik ben vermeld bijv. Howdy @%{login}! U heeft een nieuwe e-mail!"
         notify_tasks: "Laat me weten wanneer ik een taak volg"
         wants_task_reminder: "Stuur me een dagelijkse e-mail van mij taken"
       password: Wachtwoord
       password_confirmation: "Wachtwoord bevestigen"
+      picture: 
+        field: "Uw avatar"
+        max_size: "Bestandsgrootte mag niet meer zijn dan %{mb}"
+        presence: "U kunt geen leeg bestand uploaden"
+        upload_here_or_at_gravatar: "U kunt hier een nieuwe avatar uploaden, of upload het naar %{gravatar} voor een globale avatar die u kunt gebruiken bij Teambox en vele andere websites."
+        we_have_this_avatar: "Dit is uw tijdelijke avatar:"
       sunday: Zondag
       time_zone: Tijdzone
       tooltips: 
