@@ -68,6 +68,16 @@ Factory.define :ruby_rockstars, :class => 'Project' do |project|
   project.association(:organization, :name => "ACME")
 end
 
+Factory.define :procial_network, :class => 'Project' do |project|
+  project.name "Procial Network"
+  project.permalink "procial_network"
+  project.public true
+  project.user_id do
+    (User.find_by_login('mislav') || Factory(:mislav)).id
+  end
+  project.association(:organization, :name => "ACME")
+end
+
 Factory.define :archived_project, :parent => :project do |project|
   project.archived true
 end
