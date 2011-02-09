@@ -8,7 +8,6 @@ Feature: Public projects
   Scenario: User visits a public project
     Given I am currently in the project procial_network
     And I go to the public project page
-    Then show me the page
     Then I should see "Procial Network"
     Then I should not see "Not a public project"
     Then I should see "Join the project"
