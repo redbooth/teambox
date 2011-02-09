@@ -63,14 +63,12 @@ class ActivitiesController < ApplicationController
     target = params[:thread_type].constantize.find params[:id]
 
     @comments = target.comments
-    # TODO: ask why
-    @comments.pop if target.is_a?(Conversation) and target.simple?
     
     respond_to do |format|
       format.html {
         if request.xhr?
           render :partial => 'comments/comment',
-            :collection => @comments.reverse, # regular chronological order
+            :collection => @comments.reverse,
             :locals => { :threaded => true }
         end
       }

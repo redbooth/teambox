@@ -101,7 +101,9 @@ en:
       title: "%{person} imported the project %{project}"
       
     thread:
-      on_task_list: "on"
+      conversation_with_title_html: "%{conversation} on %{project} project"
+      conversation_without_title_html: "Conversation on %{project} project"
+      task_on_task_list_html: "%{task} on %{task_list} task list"
       more_comments:
         one: "Show one previous comment"
         other: "Show %{count} previous comments"
