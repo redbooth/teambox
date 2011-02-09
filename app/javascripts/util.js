@@ -2,7 +2,8 @@
 // once in the given interval. Example: function().throttle(200) for 200ms.
 // Useful, for example, to avoid constant processing while typing in a live search box.
 Function.prototype.throttle = function(t) {
-  var timeout, scope, args, fn = this, tick = function() {
+  var timeout, fn = this, tick = function() {
+    var scope = this, args = arguments
     fn.apply(scope, args)
     timeout = null
   }
