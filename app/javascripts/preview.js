@@ -21,8 +21,8 @@ var Preview = {
   },
   toggle: function(box, button) {
     box.toggleClassName('invisible')
-    var text = button.innerHTML
     if (button) {
+      var text = button.innerHTML
       button.update(button.readAttribute('data-alternate')).writeAttribute('data-alternate', text)
     }
   }
