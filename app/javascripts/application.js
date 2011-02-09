@@ -49,3 +49,4 @@
 //= require <timeago>
 //= require <upload>
 //= require <yahoo.color>
+//= require <expand_comment>

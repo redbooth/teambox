@@ -30,3 +30,26 @@ $comments_bkg: #fafafa
     background-color: $comments_bkg
     margin: 0
     padding: 2px 0 5px 6px
+
+.expand_comment
+  a
+    position: absolute
+    bottom: 20px
+    right: -11px
+    font-size: 12px
+    color: #333
+    background-color: lighten($navbar, 30)
+    padding: 4px 10px
+    -webkit-box-shadow: -2px 2px 2px #777
+    &:hover
+      text-decoration: none
+      background-color: lighten($navbar, 10)
+  span
+    position: absolute
+    bottom: 10px
+    right: -10px
+    font-size: 0px
+    line-height: 0%
+    width: 0px
+    border-top: 10px solid $navbar
+    border-right: 10px solid transparent
