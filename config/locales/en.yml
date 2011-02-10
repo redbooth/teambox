@@ -643,6 +643,8 @@ en:
       resend: Re-send invitation email
       pending: "An email was sent to this user, but they still haven't confirmed."
       discard: Discard invitation
+    new:
+      also_invite_to_organization: "Invite also to the organization '%{organization}'"
     sent:
       email_sent: "Email invitation has been sent"
     pending:
