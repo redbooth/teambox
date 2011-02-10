@@ -197,6 +197,15 @@ class Emailer < ActionMailer::Base
     )
   end
 
+  def simple_message(user_id, subject, message)
+    @user = User.find(user_id)
+    @message = message
+    mail({
+      :to => @user.email,
+      :subject => subject
+    })
+  end
+
   # requires data from rake db:seed
   class Preview < MailView
     def notify_task
