@@ -3,7 +3,7 @@
 - thread_id = "#{thread_class}_#{thread.id}"
 - comments = thread.comments
 
-.thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}" }
+.thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}", :'data-project-id' => thread.project.id }
   -# Title of the element
   .comment.comment_header
     %span.time= posted_date(comments.first ? comments.first.created_at : thread.created_at)

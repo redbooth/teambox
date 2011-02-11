@@ -51,3 +51,4 @@
 //= require <yahoo.color>
 //= require <expand_comment>
 //= require <compact_mode>
+//= require <watchers>
