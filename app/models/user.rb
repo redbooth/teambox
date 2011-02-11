@@ -21,6 +21,9 @@ class User < ActiveRecord::Base
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
+  has_many :conversations
+  has_many :task_lists
+  has_many :pages
   has_many :people
   has_many :projects, :through => :people, :order => 'name ASC'
   has_many :invitations, :foreign_key => 'invited_user_id'

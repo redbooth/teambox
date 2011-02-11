@@ -18,17 +18,24 @@ form.new_comment, form.edit_comment
   margin-bottom: 30px
   .micro_avatar
     +rounded(3px)
-    margin-top: 2px
+    position: absolute
+    top: 1px
+    left: 0
   .field
-    margin: 5px 0
+    position: relative
+    margin: 3px 0 6px
     label
       font-weight: normal !important
-    textarea
-      width: 590px
+    .textarea
+      display: block
+      margin-left: 38px
       margin-bottom: 0px
+    textarea
+      width: 95%
+      display: block
       font-size: 13px
       height: 1.4em
-      color: rgb(0, 0, 0)
+      color: black
       #facebox &
         width: 575px
   .text_field.hours_field
@@ -130,17 +137,18 @@ form .upload_area
     display: block
     margin-bottom: .7em
 
-div.thread
+.thread
   form.edit_comment
     .body
       textarea
         width: 538px
 
 .comment
-  padding: 15px 0 5px
+  padding: 5px 0
+  min-height: 24px
+  position: relative
   border:
-    top: 1px solid white
-    bottom: 1px solid white
+    bottom: 2px solid white
   p.actions
     visibility: hidden
     position: relative
@@ -154,11 +162,11 @@ div.thread
       height: 40px
       text-align: right
   .info
-    width: 70px
-    padding-right: 10px
-    float: left
-    .thumb_avatar
-      float: right
+    position: absolute
+    top: 5px
+    left: 5px
+    .micro_avatar
+      +rounded(3px)
   span.hours
     font-size: 11px
     font-weight: bold
@@ -173,8 +181,9 @@ div.thread
   span.arr
     color: rgb(140, 140, 140)
   .block
-    width: 560px
-    float: right
+    padding-left: 45px
+    margin-top: 0
+    margin-right: 5px
     .date
       float: right
       font-size: 10px
@@ -189,6 +198,7 @@ div.thread
         display: inline
       p
         margin: 8px 0
+      overflow: hidden
   .mention
     padding: 0 3px
     background-color: #eee

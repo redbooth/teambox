@@ -20,9 +20,11 @@ var Preview = {
                          "<img class=\"comment-image\" src=\"$1\" frameborder=\"0\"/>")
   },
   toggle: function(box, button) {
-    box.toggleClassName('invisible')
-    var text = button.innerHTML
-    button.update(button.readAttribute('data-alternate')).writeAttribute('data-alternate', text)
+    box.toggleClassName('invisible');
+    if (button) {
+      var text = button.innerHTML;
+      button.update(button.readAttribute('data-alternate')).writeAttribute('data-alternate', text);
+    }
   }
 }
 

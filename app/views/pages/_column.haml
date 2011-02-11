@@ -7,4 +7,11 @@
         - if can? :make_pages, project
           %a#page_reorder{:href => '#'}= t('.reorder')
           %a#page_reorder_done{:href => '#', :style => 'display:none'}= t('.reorder_done')
-      = list_pages(pages,current_target)
+      - for page in pages
+        .page{ :id => "sidebar_page_#{page.id}", :class => "#{ 'active' if current_target == page }" }
+          .title
+            = drag_image
+            = link_to page, project_page_path(@current_project, page)
+      .page
+        .title
+          = link_to t('pages.index.new_page'), new_project_page_path, :class => 'new'

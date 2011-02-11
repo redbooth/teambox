@@ -79,6 +79,10 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
   it "This is a comment\nwith multiple lines\n\nJordi." do
     should == "<p>This is a comment<br />\nwith multiple lines</p>\n\n<p>Jordi.</p>"
   end
+  
+  it "Can somebody spec and fix this?\n\nA comment line \"**text**\ntext\" should return a line break with a br tag." do
+    should == "<p>Can somebody spec and fix this?</p>\n\n<p>A comment line \"<strong>text</strong><br />\ntext\" should return a line break with a br tag.</p>"
+  end
 
   it "This is a comment with an_underscored_word" do
     should == "<p>This is a comment with an_underscored_word</p>"

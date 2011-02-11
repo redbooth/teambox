@@ -93,15 +93,8 @@ pl:
         too_short: "jest za krótkie (minimum to %{count} znaków)"
         wrong_length: "ma złą długość (powinno mieć %{count} znaków)"
       models: 
-        comment: 
-          attributes: 
-            body: 
-              no_body_generic: "Proszę napisać co zrobiłeś w box'ie powyżej."
-              no_body_task: "Proszę napisać co zrobiłeś w tym zadaniu w box'ie powyżej."
         conversation: 
           attributes: 
-            body: 
-              no_body_generic: "Proszę napisać komentarz aby rozpocząć dyskusję."
             name: 
               no_title: "Proszę nadać tytuł tej dyskusji."
       template: 
@@ -237,6 +230,19 @@ pl:
       upload: Wyślij
     show: 
       save: "Zapisz zmiany"
+  calendar: 
+    abbr_weekdays: 
+      - "N"
+      - P
+      - W
+      - Ś
+      - C
+      - P
+      - S
+    clear: Oczyścić
+    now: Teraz
+    ok: OK
+    today: Dziś
   cards: 
     card: 
       addresses: Adresy
@@ -708,9 +714,9 @@ pl:
       - Listopad
       - Grudzień
     order: 
-      - !ruby/symbol rok
-      - ":miesiąc"
-      - ":dzień"
+      - !ruby/symbol year
+      - !ruby/symbol month
+      - !ruby/symbol day
     yesterday: Wczoraj
   datetime: 
     distance_in_words: 
@@ -756,12 +762,6 @@ pl:
       second: Sekunda
       year: Rok
     time_ago: "%{time_ago_in_words} temu"
-  calendar: 
-    abbr_weekdays: [N, P, W, Ś, C, P, S]
-    ok: OK
-    now: Teraz
-    today: Dziś
-    clear: Oczyścić
   deleted: 
     conversation: "Usunięto dyskusję <b>%{name}</b>"
     left_project: "Nie uczestniczysz już w tym projekcie"
@@ -801,9 +801,6 @@ pl:
       subject_without_project: "%{name} zaprosił Cię do Teambox"
       teambox_is_a_pm_platform: "Teambox jest platformą do współpracy w czasie rzeczywistym."
       you_have_been_invited_to: "Zostałeś zaproszony do projektu <b>%{project}</b>"
-    invitation_group: 
-      subject: "%{user} udostępnił ci grupę [%{group}]"
-      you_have_been_invited_to: "Zostałeś zaproszony do grupy <b>%{group}</b>"
     notify: 
       are_watching: "subskrybują tę dyskusję i będą otrzymywać przyszłe komentarze. "
       assigned_to: "Przypisz do <b>%{user}</b>"
@@ -814,7 +811,6 @@ pl:
       my_tasks: "Więcej zadań przypisanych do Ciebie w %{project}"
       notification_settings: "Możesz zmienić <a href='%{url}'>ustawienia powiadomień</a> dla przyszłych email'i"
       project: "Projekt Teambox:"
-      recent_conversations: "Ostatnie dyskusje dla %{project}"
       reply: "Możesz również odpisać na ten email w celu odpowiedzi do dyskusji"
       status: "Status: %{status}"
       stop_watching: "<a href='%{stop_watching_url}'>Przestań obserwować</a> ten temat by przestać otrzymywać powiadomienia email."
@@ -832,7 +828,6 @@ pl:
       successfully_reset: "Twoje hasło zostało zmienione"
     upload: 
       file: "Plik:"
-      uploaded_by: "wysłany przez"
   example_projects: 
     new: 
       create: "Stwórz przykładowy projekt"
@@ -895,9 +890,7 @@ pl:
         title: "Aby zaprosić"
     pending: 
       invited_to_join: "%{by} zaprosił Cię do projektu %{project}.\n"
-      invited_to_join_group: "%{by} zaprosił Cię do grupy %{group}.\n"
       to_access_or: "by uzyskać dostęp do projektu lub"
-      to_access_or_group: "by uzyskać dostęp do grupy lub"
     recent: 
       invite: "Zaproś  %{username}"
     resend: 
@@ -964,7 +957,6 @@ pl:
     zh-TW: "Chiński (tradycyjny)"
   not_found: 
     conversation: "Dyskusja %{id} nie została znaleziona w tym projekcie."
-    group: "Ta grupa %{id} nie istnieje."
     page: "Strona %{id} nie została znaleziona w tym projekcie."
     project: "Projekt %{id} nie istnieje."
     task: "Zadanie %{id} nie zostało znalezione w tym projekcie."
@@ -1138,14 +1130,6 @@ pl:
       copy5: "<a href='%{link}'>Uaktualnij swoje konto Teambox teraz</a> i ciesz się profesjonalną współpracą!"
       copy6: "Wyszukiwarka obejmująca wszystkie projekty może zaoszczędzić godziny. <a href='%{link}'>Uaktualnij teraz</a> by ją mieć!"
       copy7: "Twój biznes coś znaczy! <a href='%{link}'>Zdobądź najlepszą pomoc</a> dla Teambox z naszym planem premium."
-    show: 
-      branding: 
-        configure: "Twój plan wspiera indywidualny branding i nazwy. <a href='%{link}'>Skonfiguruj swój branding tu</a>."
-        not_available: "Twój program nie wspiera <strong>indywidualnego brandingu</strong>. Uaktualnij do wyższego planu by go zdobyć."
-      current_plan: "Twój obecny plan to <strong>%{name}</strong>."
-      max_projects: "Możesz prowadzić do %{max} projektów."
-      max_storage: "Możesz gromadzić do %{max}."
-      plan: "Twój Teambox Plan"
   projects: 
     edit: 
       change_owner: "Zmień właściciela"
@@ -1649,15 +1633,24 @@ pl:
       last_name: Nazwisko
       login: "Nazwa użytkownika"
       monday: Poniedziałek
-      notifications:
+      new: 
+        use_this_email: "Masz zaproszenia do dzielenia się projektami dla tego adresu email. Jeśli chcesz uzyskać do nich dostęp nie zmieniaj adresu email. Możesz zmienić go dopiero po zakończeniu procesu rejestracji."
+      notifications: 
         notify_conversations: "Powiadom mnie gdy obserwuję dyskusje"
-        notify_mentions: "Powiadom mnie kiedy zostanę wspomniany np. Cześć @%{login}! Dostałeś email!"
         notify_tasks: "Powiadom mnie gdy obserwuję zadanie"
         wants_task_reminder: "Przysyłaj mi codziennie email przypominający o moich zadaniach"
       password: Hasło
       password_confirmation: "Potwierdź Hasło"
       phone: "Numer telefonu"
       phone_for_integration: "Opcjonalne. Dla przyszłej integracji SMS"
+      picture: 
+        destroy: "Usuń avatar"
+        field: "Nowy avatar"
+        gravatar_in_use: "Nie mamy twojego zdjęcia, więc używamy  %{gravatar}:"
+        max_size: "Wielkość pliku nie może przekroczyć  %{mb}"
+        presence: "Nie możesz wysłać pustego zdjęcia"
+        upload_here_or_at_gravatar: "Możesz wysłać swoje zdjęcie lub ustawić je na  %{gravatar}."
+        we_have_this_avatar: "To twoje zdjęcie które posiadamy:"
       sunday: Niedziela
       time_zone: "Strefa czasowa"
       tooltips: 
@@ -1667,8 +1660,6 @@ pl:
         login: "Potrzebujesz nazwy użytkownika w celu zalogowania. Inni użytkownicy będą Cię mogli znaleźć dzięki nazwie użytkownika. Nazwa musi się składać z małych liter, bez spacji. Możesz używać podkreślnika."
         password: "Łączenie liter,  cyfr, dużych i małych znaków to dobry pomysł"
         phone: "Najlepiej numer komórkowy. Wprowadź go poprzedzając kodem kraju, +48 dla Polski."
-      new:
-        use_this_email: "Masz zaproszenia do dzielenia się projektami dla tego adresu email. Jeśli chcesz uzyskać do nich dostęp nie zmieniaj adresu email. Możesz zmienić go dopiero po zakończeniu procesu rejestracji."
     new: 
       existing_user_html: "Jeśli posiadasz już kontot, <a href='%{login_url}'>zaloguj się</a> lub <a href='%{forgot_url}'>odzyskaj swoje hasło</a>."
       no_public_signup: "Publiczne zapisy są niedostępne w tym systemie."

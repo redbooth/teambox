@@ -151,7 +151,7 @@ Filter = {
             var filter = option.value == 'all' ? 'task' : option.value;
             var count = Filter.countTasks(filter, null);
             if (i < 3 || count > 0 || filter == current_assigned) {
-                el.options[idx] = (new Option(option.text + ' (' + count + ')', filter));
+                el.options[idx] = (new Option(option.text + ' (' + count + ')', option.value));
                 idx += 1;
             }
         }

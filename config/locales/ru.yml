@@ -1095,7 +1095,7 @@ ru:
     user_already_exists_by_login: "Такое имя пользователя '%{login}' уже занято"
     user_exists: "Этот профиль %{provider} еще не связан с каким-либо аккаунтом."
     user_exists_instruction: "Если у вас уже есть аккаунт Teambox, войдите, чтобы связать его автоматически с вашим профилем %{provider}"
-    user_exists_is_not_yours: "Если вы не владелец '%{account}', %{signup_for_a_new_account}."
+    user_exists_is_not_yours_html: "Если вы не владелец '%{account}', %{signup_for_a_new_account}."
     your_account_is_linked_html: "Ваш профиль %{provider} <strong>связан</strong> с Teambox."
     your_account_is_not_linked_html: "Ваш профиль %{provider} <strong>не связан</strong> с Teambox."
   organizations: 
@@ -1188,7 +1188,7 @@ ru:
       new_project: "Новый проект"
       role_html: "вы <strong>%{role}</strong>"
       settings: настройки
-      title: "организация '%{name}'"
+      title: "организация '%{organization}'"
     usage: 
       active_projects: 
         explain: "Удаленные и заархивированные проекты не учитываются при подсчете предельного количества."

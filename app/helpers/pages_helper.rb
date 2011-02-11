@@ -20,14 +20,6 @@ module PagesHelper
   def page_fields(f)
     render 'pages/fields', :f => f
   end
-  
-  def list_pages(pages,current_target)
-    render :partial => 'pages/page_sidebar',
-      :collection => pages,
-      :as => :page,
-      :locals => {
-        :current_target => current_target }
-  end
 
   def list_pages_with_toc(pages)
     render pages

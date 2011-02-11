@@ -93,15 +93,8 @@ tr:
         too_short: "çok kısa (minimum %{count} karakter olabilir)"
         wrong_length: "yanlış uzunluk (%{count} karakter olmalı)"
       models: 
-        comment: 
-          attributes: 
-            body: 
-              no_body_generic: "Yukarıdaki kutuya yaptıklarınızı yazın."
-              no_body_task: "Yukarıdaki kutuya bu görev ile ilgili yaptıklarınızı yazın."
         conversation: 
           attributes: 
-            body: 
-              no_body_generic: "Sohbeti başlatmak için bir yorum yazın."
             name: 
               no_title: "Bu sohbete bir başlık verin."
       template: 
@@ -118,8 +111,8 @@ tr:
       email_address: E-posta
       im: IM
       invitation: Davet
-      note: "Metin"
-      page: "Sayfa"
+      note: Metin
+      page: Sayfa
       phone_number: Telefon
       project: Proje
       social_network: "Sosyal ağ"
@@ -147,7 +140,7 @@ tr:
       create_page: "sayfayı oluşturdu"
       title: "%{user}, %{page} sayfasını oluşturdu"
     create_person: 
-      by: "tarafından"
+      by: tarafından
       create_person: "projeye katıldı"
       title: "%{person}, %{project} projesine katıldı"
     create_project: 
@@ -162,7 +155,7 @@ tr:
     create_upload: 
       title: "%{user}, %{file} dosyasını yükledi"
     delete_person: 
-      by: "tarafından"
+      by: tarafından
       delete_person: "projeden ayrıldı"
       left: "projeden ayrıldı"
       title: "%{person}, %{project} projesinnden ayrıldı"
@@ -182,7 +175,7 @@ tr:
   affiliate: 
     area: "İş ortakları Alanı"
     index: 
-      addresses: "adresler"
+      addresses: adresler
       credits_earned: "Kazandığınız krediler"
       desc_1_html: "Ortaklarımız için geliştirdiğimiz araçlarla, başka kişilere Teambox'ı önerdiğinizde, <strong>ücretsiz aylık kullanımlar</strong> veya <stong>gerçek para</strong> kazanabilirsiniz."
       desc_2_html: "Yeni kullanıcıları Teambox ile tanıştırın ve tanıştırdığınız kişilerden elde edilen gelir üzerinden <strong>%{percent}% komisyon kazanın</strong>, hem de <strong>sürekli olarak</strong>."
@@ -370,11 +363,11 @@ tr:
       item4_html: "<b>Gelen kutusundan işlem yapma?</b> Bir sohbete, e-postanızdan cevap yazabilirsiniz."
     short_conversation: 
       comment: yorum
-      comments: "yorum"
+      comments: yorum
     show: 
       edit: "Başlığı güncelle"
       message: mesaj
-      messages: "mesaj"
+      messages: mesaj
       started_by: Başlatan
     watcher_fields: 
       add_suscribers: "Bu sohbeti kimler izleyecek?"
@@ -705,7 +698,10 @@ tr:
       - Ekim
       - Kasım
       - Aralık
-    order: [ :day, :month, :year ]
+    order: 
+      - !ruby/symbol day
+      - !ruby/symbol month
+      - !ruby/symbol year
     yesterday: Dün
   datetime: 
     distance_in_words: 
@@ -791,9 +787,6 @@ tr:
       subject_without_project: "%{name} sizi Teambox'a davet etti"
       teambox_is_a_pm_platform: "Teambox, gerçek hayatta işbirliği yapma amaçlı bir proje yönetim platformudur."
       you_have_been_invited_to: "<b>%{project}</b> projesine davet edildiniz"
-    invitation_group: 
-      subject: "%{user}sizinle  [%{group}] grubunu paylaştı"
-      you_have_been_invited_to: "<b>%{group}</b> grubuna davet edildiniz"
     notify: 
       are_watching: "bu sohbete abone oldular ve gelecekteki cevaplardan haberdar olacaklar."
       assigned_to: "<b>%{user}</b> kullanıcısına atandı"
@@ -804,7 +797,6 @@ tr:
       my_tasks: "%{project} projesinde size atanan diğer görevler"
       notification_settings: "İleride alacağınız e-postalar için <a href='%{url}'>bildirim ayarlarınızı</a> değiştirebilirsiniz."
       project: "Teambox Projesi:"
-      recent_conversations: "%{project} projesinin güncel sohbetleri"
       reply: "Bu e-postayı cevaplayarak, sohbete cevap yazabilirsiniz."
       status: "Durum: %{status}"
       stop_watching: "E-posta bildirimleri almak istemiyorsanız bu konu başlığını<a href='%{stop_watching_url}'>İzlemeyi durdur</a>abilirsiniz."
@@ -823,7 +815,6 @@ tr:
       successfully_reset: "Parolanız sıfırlandı."
     upload: 
       file: "Dosya:"
-      uploaded_by: yükleyen
   example_projects: 
     new: 
       create: "Örnek proje oluştur"
@@ -883,7 +874,6 @@ tr:
       title: "Kullanıcı adı / e-posta kutusunda, kullanıcı adları listesi veya e-posta adresleri listesi kullanın. Örn:"
     pending: 
       invited_to_join: "%{by} sizi %{project} adlı projeye davet etti."
-      invited_to_join_group: "%{by} sizi %{group} adlı gruba davet etti."
     recent: 
       invite: "%{username} adlı kişiyi davet et"
     resend: 
@@ -948,7 +938,6 @@ tr:
     zh-TW: "Çince (Geleneksel)"
   not_found: 
     conversation: "Bu projede sohbet %{id} bulunamadı."
-    group: "Grup %{id} bulunamadı."
     page: "Bu projede sayfa %{id} bulunamadı."
     project: "Proje %{id} mevcut değil."
     task: "Bu projede görev %{id} bulunamadı."
@@ -972,7 +961,7 @@ tr:
         format: "%u%n"
         precision: 2
         separator: ","
-        unit: "TL"
+        unit: TL
     format: 
       delimiter: "."
       precision: 3
@@ -1120,10 +1109,3 @@ tr:
       copy5: "<a href='%{link}'>Teambox üyeliğinizi bir üst plan yükseltin</a> ve profesyonel işbirliğinin tadını çıkartın!"
       copy6: "Tüm projelerde tek noktadan arama yapmak size saatler kazandırabilir. Bu özelliğe sahip olmak için <a href='%{link}'>Teambox üyeliğinizi bir üst plan yükseltin</a>!"
       copy7: "İşiniz çok önemlidir! Premium planlarımızla Teambox'tan <a href='%{link}'>En iyi desteği alın</a>."
-    show: 
-      branding: 
-        configure: "Planınız, kendi özel kurumsal kimliğinizi ve alan adlarınızı kullanmanızı destekliyor. <a href='%{link}'>Kurumsal kimliğinizi buradan düzenleyin.</a>."
-        not_available: "Planınız <strong>kurumsal kimliğininizi</strong> kullanmanızı desteklemiyor. Bu özelliği kullanmak için bir üst pakete geçmelisiniz."
-      current_plan: "Geçerli planınız <strong>%{name}</strong>."
-      max_projects: "En fazla %{max} projeniz olabilir."
-      max_storage: "En fazla %{max} depolayabilirsiniz."

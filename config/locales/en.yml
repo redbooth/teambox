@@ -101,7 +101,9 @@ en:
       title: "%{person} imported the project %{project}"
       
     thread:
-      on_task_list: "on"
+      conversation_with_title_html: "%{conversation} on %{project} project"
+      conversation_without_title_html: "Conversation on %{project} project"
+      task_on_task_list_html: "%{task} on %{task_list} task list"
       more_comments:
         one: "Show one previous comment"
         other: "Show %{count} previous comments"
@@ -180,6 +182,18 @@ en:
       first_day_of_week: Week starts on
       change_password: Change password
       confirm_password: Confirm password
+      newsletter: Notify me about new features and tips!
+      agreement_html: "By signing up, you're accepting our %{terms} and %{privacy} conditions."
+      terms: terms of use
+      privacy: privacy
+      subscription:
+        new_org_name: Organization name
+        card_number: Card number
+        card_expiration: Expires on
+        coupon: Coupon code
+        info_price: You are going to be charged monthly %{price}.
+        info_unsubscribe: You can cancel your subscription at any moment.
+        coupon_question: Do you have a coupon code?
       notifications:
         clarification: |
           When someone mentions you (as '@%{login}' or '@all') in conversation or a task,
@@ -393,6 +407,13 @@ en:
         upgrade_html: "In order to <b>unarchive this project</b> and be able to edit it, you must <a href='%{link}'>upgrade your account and get more storage and features</a> or archive other projects."
       extra_options: "More options"
       organization: Organization
+      select_an_organization: "Select an organization"
+      organizations:
+        available_projects: "project slots available: %{number_of_projects}"
+        current_organization: current organization
+        organization_has_too_many_project_in: "This organization has too many projects for its plan."
+        upgrade_organization: "You should now upgrade this organization."
+        upgrade: upgrade
       new:
         time_tracking_docs: Learn more.
         choose_organization:
@@ -420,6 +441,7 @@ en:
       upgrade:
         to_2_html: "<a href='%{link}'>Upgrade your account now</a> to create <b>up to %{projects} projects</b>, store up to <b>%{storage} Gb</b> of files and use the <b>search bar across all projects</b>."
       not_allowed: "You can't create any more projects with your current account."
+      select_an_organization: "You need to select an organization for your project"
       sending: Creating the project…
     invite_people:
       title: Invite people to %{project}
@@ -461,6 +483,7 @@ en:
       admin_users: Manage users
       admin_projects: Manage projects
       billing: Plans and Billing
+      invoices: Invoices
       delete: Delete this organization...
     edit:
       title: Settings for %{organization}
@@ -486,6 +509,20 @@ en:
       storage:
         title: "%{now} / %{max}"
         explain: Attached files on your organization.
+    invoices:
+      invoices: Your Invoices
+      update_billing_details: Update your billing address
+      no_invoices: You don't have any invoice
+      company_name: Company name
+      vat: VAT Code
+      invoice: Teambox invoice
+      print: Print
+      date: Date
+      amount: Amount
+      company: Company
+      name: Name
+      address: Address
+      optional: Optional data for the invoice
     billing:
       billing_email_html: Billing e-mail <em>We will send invoices to this address</em>
       submit: Update billing e-mail
@@ -496,6 +533,7 @@ en:
       upgrade: Upgrade now!
       current_plan: Your current plan
       downgrade: Downgrade
+      cancel: Cancel subscription
       billing_area_html: "You can access your invoices, downgrade or change your billing options at any time from the <a href='%{link}'>billing area</a>."
       suggested_upgrade:
         upgrade_to: "Upgrade to %{plan}"
@@ -545,6 +583,8 @@ en:
         one: One project
         other: %{count} projects
       more_users: "and %{count} more users"
+      your_plan_is: "Your plan is %{plan}"
+      upgrade: "Upgrade your plan!"
     projects:
       title: Projects in %{organization}
       new_project: New project
@@ -552,6 +592,7 @@ en:
     active_projects:
       title: Active projects
       role_html: "you're an <strong>%{role}</strong>"
+      storage: "%{now} of files"
       settings: settings
       no_active_projects: There are no active projects in this organization.
       dont_belong: You're not part of this project
@@ -563,6 +604,8 @@ en:
       need_to_be_admin: You need to be an administrator to destroy this organization
       not_with_projects: You can't destroy this organization because it still has projects
       go_delete_some_projects_html: "You can't delete an organization while it still has projects inside. Please <a href='%{link}'>delete or transfer</a> all the projects from this organization before deleting it."
+      not_paid_plan: You can't delete an organization with a paid plan.
+      go_downgrade_to_free_plan: "You need to <a href='%{link}'>unsubscribe</a> from the paid plan before deleting the organization. You can downgrade your account to the free plan from the <a href='%{link}'>billing</a> section."
       delete: Delete this organization
       clarification: "If you delete this organization, all the information that's attached to it organization will be lost forever. The users that belong to this organization will still be able to login to Teambox and work with their other organizations."
       confirm: I understand that deleting this organization is irreversible and I all the content related to this organization will be lost.
@@ -600,6 +643,8 @@ en:
       resend: Re-send invitation email
       pending: "An email was sent to this user, but they still haven't confirmed."
       discard: Discard invitation
+    new:
+      also_invite_to_organization: "Invite also to the organization '%{organization}'"
     sent:
       email_sent: "Email invitation has been sent"
     pending:
@@ -1066,11 +1111,15 @@ en:
     comment_upload_link: Attachment
     new:
       select_a_file: Select a file to upload to Teambox
+      storage_remaining: "You can upload up to %{bytes} more with your current plan. <a href='%{url}'>Upgrade</a> for more storage."
       uploading: Uploading...
     index:
       title: Files in %{project}
       new_file: Upload a File
       cant_create: "You don't have permission to upload files to this project"
+      max_upload_size: "Max upload size is %{mb} Mb"
+      current_storage_size: "You can upload %{bytes} more in the organization %{organization_name}.<br/><br/><a href='%{url}'>Upgrade</a> your plan to store more documents."
+      no_storage_left: "You have reached the storage limit for your organization.<br/><br/><a href='%{url}'>Upgrade</a> your plan now."
     form:
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed %{mb} MB"
@@ -1091,6 +1140,9 @@ en:
       uploaded_by: Uploaded by
       remove: Delete
       on_: "on"
+    errors:
+      exceeded_storage_plan_limit: "You have exceeded your storage quota for %{organization_name}. To increase your storage limits, <a href='%{url}'>upgrade your plan now</a>."
+      general:  "There was an error uploading the file"
   sessions:
     fields:
       username_or_email: Email or Username
@@ -1115,6 +1167,8 @@ en:
       you_can_now_create: "You can now create up to %{projects} projects."
       reset_your_password: Please enter a new password and confirm it.
     show:
+      title: Which organization would you like to upgrade?
+      usage: "You can create <b>%{available_projects} more projects</b> on this organization"
       plan: Teambox plans
       current_plan_html: "Your current plan is <strong>%{name}</strong>."
       max_projects: "You can have up to %{max} projects."
@@ -1158,6 +1212,7 @@ en:
       gantt_and_calendars: Gantts and calendars
       show_more: Show more
       show_less: Show less
+      affiliate: Affiliate area
     project_settings_navigation:
       general: General Settings
       picture: Project Picture
@@ -1220,7 +1275,8 @@ en:
     footer:
       support: Feedback and bugs
       mobile: Mobile version
-      help: Help and Support
+      feedback: Feedback
+      help: Support
     watchers:
       unwatch: Unwatch
       watch: Watch
@@ -1268,7 +1324,7 @@ en:
       premium_plan: "premium account"
       use_money_cash: "or to earn real cash."
       plan_for: "plan for"
-      over_200: "Whenever you have over $200,"
+      over_100: "Whenever you have over $100,"
       send_money: "and we will send you the money you've earned."
       get_in_touch: "get in touch with us"
       ideas: "Some ideas to make the most out of Teambox"
@@ -1729,7 +1785,7 @@ en:
     user_already_exists_by_email: "Link '%{email}' to your Teambox account"
     user_already_exists_by_login: "The username '%{login}' is already taken"
     user_exists_instruction: If you already have a Teambox account, log in to link it automatically to your %{provider} profile.
-    user_exists_is_not_yours: If you don't own the account '%{account}', %{signup_for_a_new_account}.
+    user_exists_is_not_yours_html: If you don't own the account '%{account}', %{signup_for_a_new_account}.
     signup_for_a_new_account: click here to sign up for a new account
     
   google_docs:

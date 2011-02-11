@@ -2,7 +2,8 @@
 
 .field.text_area
   %a.micro_avatar.my_avatar{ :href => '#' }
-  = f.text_area :body, :placeholder => local_assigns[:placeholder], :id => nil, :style => request.xhr? ? 'max-height: 300px' : nil
+  .textarea
+    = f.text_area :body, :placeholder => local_assigns[:placeholder], :id => nil, :style => request.xhr? ? 'max-height: 300px' : nil
 
 .extra
   - if task_form
@@ -60,5 +61,5 @@
 
   .submit
     %span.help= formatting_documentation_link
-    = preview_button
+    = #preview_button
     = f.submit t('comments.new.submit'), :'data-disable-with' => t('comments.new.sending')

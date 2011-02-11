@@ -29,7 +29,7 @@ installing Teambox.
 
 [teambox]: http://teambox.com
 [tour]: http://teambox.com/tour
-[preview]: http://teambox.com/images/marketing/tour/1-overview.jpg
+[preview]: https://teambox.com/images/marketing/screenshot.png
 [license]: http://www.gnu.org/licenses/agpl-3.0.html
 
 Thanks to the many Ruby projects we're using and the Famfamfam icon collection.

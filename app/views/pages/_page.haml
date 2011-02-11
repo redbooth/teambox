@@ -1,6 +1,6 @@
 .page
-  %h3= page_link(page)
-  %p=h page.description
+  %h3= link_to page, project_page_path(@current_project, page)
+  %p= page.description
   - if page.slots.any?
     - groups = page.divided_slots
     - groups.each do |group|
