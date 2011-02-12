@@ -6,10 +6,11 @@
 .thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}" }
   -# Title of the element
   .comment.comment_header
+    %span.time= posted_date comments.first.created_at
     .info
       - icon = { "Conversation" => "comment", "Task" => "tick" }[thread.class.to_s]
       %img{ :src => "/famfamfam/#{icon}.png", :style => 'padding: 4px' }
-    .block.textilized
+    .block
       - case thread
       - when Conversation
         - if thread.to_s.present?

@@ -5,6 +5,8 @@ require 'digest/sha1'
 
 class User < ActiveRecord::Base
   include Immortal
+  include Metadata
+  extend Metadata::Defaults
 
   include Rails.application.routes.url_helpers
 

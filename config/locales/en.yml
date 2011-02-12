@@ -1189,6 +1189,8 @@ en:
   shared:
     strip:
       archived_html: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
+    collapsed_mode: View threads collapsed
+    expanded_mode: View threads expanded
     gantt_banner_primer:
       title: There are no task lists due to show
     upcoming_events_primer:

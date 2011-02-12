@@ -110,3 +110,11 @@ Then /^(?:|I )should see the unauthorized private project message/ do
   end
 end
 
+Given /^there is a project with a conversation$/ do
+  @current_project = @current_user.projects.first || Factory(:project)
+  Factory(:conversation,
+          :user => @current_user, 
+          :project => @current_project,
+          :name => "Conversation title",
+          :body => "Conversation body")
+end

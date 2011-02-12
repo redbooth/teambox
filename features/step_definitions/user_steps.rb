@@ -109,3 +109,13 @@ end
 Given /^I have the daily task reminders turned off$/ do
   @current_user.update_attribute(:wants_task_reminder, false)
 end
+
+Given /^I set my preference to collapsed threads$/ do
+  visit collapse_activities_path 
+  @current_user.reload.settings["collapse_activities"].should be_true
+end
+
+Given /^I set my preference to expanded threads$/ do
+  visit expand_activities_path 
+  @current_user.reload.settings["collapse_activities"].should be_false
+end

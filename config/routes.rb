@@ -91,6 +91,8 @@ Teambox::Application.routes.draw do
     match '/account/notifications' => 'users#edit', :as => :account_notifications, :sub_action => 'notifications'
     match '/account/delete' => 'users#edit', :as => :account_delete, :sub_action => 'delete'
     match '/account/destroy' => 'users#destroy', :as => :destroy_user
+    match '/account/activity_feed_mode/collapsed' => 'users#change_activities_mode', :as => :collapse_activities, :collapsed => true
+    match '/account/activity_feed_mode/expanded' => 'users#change_activities_mode', :as => :expand_activities, :collapsed => false
 
     resources :teambox_datas, :path => '/datas'
 
