@@ -2,7 +2,7 @@ class Task
   
   before_create :init_task
   after_create :log_create
-  before_save :set_watchers
+  after_save :set_watchers
   after_destroy :clear_targets
 
   def init_task

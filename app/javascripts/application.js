@@ -52,3 +52,4 @@
 //= require <expand_comment>
 //= require <compact_mode>
 //= require <watchers>
+//= require <watch_list>

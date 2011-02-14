@@ -17,7 +17,7 @@ describe Task do
     end
     
     it "should add the task creator as a watcher" do
-      @task.watchers.should include(@task.user)
+      @task.reload.watchers.should include(@task.user)
     end
 
     it "should be created with a new status" do
@@ -70,7 +70,7 @@ describe Task do
       it "should add the assigned user as a watcher" do
         @task.assign_to @user
         @task.should be_assigned_to(@user)
-        @task.watchers.should include(@user)
+        @task.reload.has_watcher?(@user).should be_true
       end
     
       it "transitions from new to open" do

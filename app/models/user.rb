@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   has_many :app_links, :dependent => :destroy
   has_many :memberships
   has_many :teambox_datas
+  has_many :watchers, :dependent => :destroy
 
   has_many :organizations, :through => :memberships
   has_many :admin_organizations, :through => :memberships, :source => :organization, :conditions => {'memberships.role' => Membership::ROLES[:admin]}
