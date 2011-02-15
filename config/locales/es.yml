@@ -911,8 +911,8 @@ es:
     template: 
       body: "Hubo problemas con los siguientes campos:"
       header: 
-        otro: "%{count} errores prohibieron que este %{model} fuera guardado"
-        uno: "1 error prohibió que este %{model} fuera guardado"
+        other: "%{count} errores prohibieron que este %{model} fuera guardado"
+        one: "1 error prohibió que este %{model} fuera guardado"
   form: 
     cancel: Cancelar
   google_docs: 
