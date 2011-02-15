@@ -706,6 +706,7 @@ en:
       title: Conversations in %{project}
       new_conversation: "New Conversation"
       view_single: Read more
+      cant_create: "You don't have permissions to create a conversation in this project"
       rss:
         title: "%{name} conversations"
         description: "Conversations for project %{name}"
