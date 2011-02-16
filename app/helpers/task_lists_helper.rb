@@ -33,7 +33,23 @@ module TaskListsHelper
 
   def task_list_link(project,task_list=nil)
     task_list ||= project.task_lists.new
-    unobtrusive_app_link(project,task_list)
+    return unless task_list.editable?(current_user)
+    
+    if task_list.new_record?
+      action = 'new'
+      list_link = new_task_list_url(project, task_list)
+    else
+      action = 'edit'
+      list_link = edit_task_list_url(project, task_list)
+    end
+    
+    singular_name = task_list.class.to_s.underscore
+    plural_name = task_list.class.to_s.tableize
+
+    link_to content_tag(:span,t("#{plural_name}.link.#{action}")),
+      list_link,
+      {:class => "jennyaction #{action}_#{singular_name}_link",
+      :id => js_id("#{action}_link",project, task_list)}.merge(show_task_list(project, task_list))
   end
   
   def task_list_index_header(project,task_list)
@@ -41,14 +57,31 @@ module TaskListsHelper
   end
 
   def task_list_form_for(project,task_list,&proc)
-    unobtrusive_app_form_for(project,task_list,&proc)
+    raise ArgumentError, "Missing block" unless block_given?
+    
+    action = task_list.new_record? ? 'new' : 'edit'
+    
+    form_for([project, task_list],
+      :html => {
+        :id => js_id("#{action}_form",project, task_list),
+        :class => "task_list_form jenny_form app_form",
+        :jennybase => js_id("", project, task_list),
+        :jennytype => "#{action}_task_list",
+        :style => 'display: none',
+        # params for jenny to cancel
+        :new_record => task_list.new_record? ? 1 : 0,
+        :header_id => js_id("#{action}_header",project, task_list),
+        :link_id => js_id("#{action}_link",project, task_list),
+        :form_id => js_id("#{action}_form",project, task_list)},
+        &proc)
   end
 
   def task_list_submit(project,task_list)
-    unobtrusive_app_submit(project,task_list)
+    action = task_list.new_record? ? 'new' : 'edit'
+    submit_id = js_id("#{action}_submit",project, task_list)
+    loading_id = js_id("#{action}_loading",project, task_list)
+    submit_or_cancel task_list, t("task_lists.#{action}.submit"), submit_id, loading_id
   end
-  
-  # Jenny helpers
   
   def new_task_list_url(project,task_list)
     new_project_task_list_path(project)
@@ -57,18 +90,18 @@ module TaskListsHelper
   def edit_task_list_url(project,task_list)
     edit_project_task_list_path(project, task_list)
   end
-  
-  def hide_task_list(project,task_list)
-    unobtrusive_app_toggle(project,task_list)
-  end
 
   def show_task_list(project,task_list)
-    unobtrusive_app_toggle(project,task_list)
+    action = task_list.new_record? ? 'new' : 'edit'
+    {:new_record => task_list.new_record? ? 1 : 0,
+     :header_id => js_id("#{action}_header", project, task_list),
+     :link_id => js_id("#{action}_link", project, task_list),
+     :form_id => js_id("#{action}_form", project, task_list)}
   end
   
   def show_new_task_list(project,task_list=nil)
     task_list ||= project.task_lists.new
-    unobtrusive_app_toggle(project,task_list)
+    show_task_list(project, task_list)
   end
   
   #

@@ -256,4 +256,49 @@ module ApplicationHelper
 
     {:html => { :multipart => true, :id => id, :style => form_style, :class => form_classes}}
   end
+  
+  ##
+  ##  eg. js_id(:edit_header,@project,@tasklist) => project_21_task_list_12_edit_header
+  ##  eg. js_id(:new_header,@project,Task.new) => project_21_task_list_new_header
+  ##  eg. js_id(@project,Task.new) => project_21_task_list
+  def js_id(*args)
+    if args.is_a?(Array)
+      element = args[0].is_a?(String) || args[0].is_a?(Symbol) ? args[0] : nil
+      models = args.slice(1,args.size-1)
+      raise ArgumentError unless models.all?{|a|a.is_a?(ActiveRecord::Base)}
+    elsif args.is_a?(ActiveRecord::Base)
+      models = [args]
+    else
+      raise ArgumentError
+    end
+    generate_js_path(element,models)
+  end
+
+  def generate_js_path(element,models)
+    path = []
+    models.each do |model|
+      path << model.class.to_s.underscore
+      path << model.id unless model.new_record?
+    end
+    path << element unless element.nil?
+    path.join('_')
+  end
+
+  def show_form_errors(target,form_id)
+    page.select("##{form_id} .error").each do |e|
+      e.remove
+    end
+    target.errors.each do |field,message|
+    errors = <<BLOCK
+      var e = $('#{form_id}').down('.#{field}');
+      if (e) {
+      if(e.down('.error'))
+        e.down('.error').insert({bottom: "<br /><span>'#{message}'</span>"})
+      else
+        e.insert({ bottom: "<p class='error'><span>#{message}</span></p>"})
+      }
+BLOCK
+      page << errors
+    end
+  end
 end

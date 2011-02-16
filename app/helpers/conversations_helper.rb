@@ -4,32 +4,6 @@ module ConversationsHelper
     conversation ||= project.conversations.new
     js_id(element,project,conversation)
   end
-
-  def conversation_form_for(project,conversation,&proc)
-    unobtrusive_app_form_for(project,conversation,&proc)
-  end
-
-  def conversation_submit(project,conversation)
-    unobtrusive_app_submit(project,conversation)
-  end
-  
-  # Jenny helpers
-
-  def new_conversation_url(project,conversation)
-    new_project_task_list_path(project)
-  end
-  
-  def edit_conversation_url(project,conversation)
-    edit_project_conversation_path(project, conversation)
-  end
-  
-  def show_conversation(project,conversation)
-    unobtrusive_app_toggle(project,conversation)
-  end  
-
-  def hide_conversation(project,conversation)
-    unobtrusive_app_toggle(project,conversation)
-  end
   
   #
 
