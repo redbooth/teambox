@@ -3,25 +3,20 @@ class NotificationsObserver < ActiveRecord::Observer
   observe :comment
 
 
-  method_args = %w(cucumber test).any? {|env| Rails.env == env} ? ['after_create']: ['after_commit', {:on => :create}]
+  method_name = %w(cucumber test).any? {|env| Rails.env == env} ? 'after_create' : 'after_commit'
 
-  define_method(*method_args) do |obj|
+  define_method(method_name) do |obj|
+    return if obj.try(:project).try(:is_importing)
     case obj
-      when Comment
-        notify_watchers_on_new_comment(obj)
+    when Comment
+      case target = obj.target
+      when Conversation then conversation_new_comment(target, obj)
+      when Task then task_new_comment(target, obj)
+      end
     end
   end
 
   protected
-
-    def notify_watchers_on_new_comment(comment)
-      return if comment.try(:project).try(:is_importing)
-
-      case target = comment.target
-        when Conversation then conversation_new_comment(target, comment)
-        when Task then task_new_comment(target, comment)
-      end
-    end
 
     def conversation_new_comment(target, comment)
       (target.watchers - [comment.user]).each do |user|
