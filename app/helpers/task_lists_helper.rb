@@ -48,7 +48,7 @@ module TaskListsHelper
 
     link_to content_tag(:span,t("#{plural_name}.link.#{action}")),
       list_link,
-      {:class => "jennyaction #{action}_#{singular_name}_link",
+      {:class => "toggleformaction #{action}_#{singular_name}_link",
       :id => js_id("#{action}_link",project, task_list)}.merge(show_task_list(project, task_list))
   end
   
@@ -64,11 +64,11 @@ module TaskListsHelper
     form_for([project, task_list],
       :html => {
         :id => js_id("#{action}_form",project, task_list),
-        :class => "task_list_form jenny_form app_form",
-        :jennybase => js_id("", project, task_list),
-        :jennytype => "#{action}_task_list",
+        :class => "task_list_form toggleform_form app_form",
+        :toggleformbase => js_id("", project, task_list),
+        :toggleformtype => "#{action}_task_list",
         :style => 'display: none',
-        # params for jenny to cancel
+        # params for toggleform to cancel
         :new_record => task_list.new_record? ? 1 : 0,
         :header_id => js_id("#{action}_header",project, task_list),
         :link_id => js_id("#{action}_link",project, task_list),

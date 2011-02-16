@@ -29,7 +29,7 @@
 //= require <hours>
 //= require <hoverable>
 //= require <invitation>
-//= require <jenny>
+//= require <toggleform>
 //= require <navigation>
 //= require <navigation_ajax>
 //= require <navigation_tasks>
