@@ -35,6 +35,7 @@ class Organization < ActiveRecord::Base
   has_attached_file :logo, 
     :url  => "/logos/:id/:style.png",
     :path => (Teambox.config.amazon_s3 ? "logos/:id/:style.png" : ":rails_root/public/logos/:id/:style.png"),
+    :s3_protocol => (Teambox.config.secure_logins ? 'https' : 'http'),
     :styles => LogoSizes.each_with_object({}) { |(name, size), all|
         all[name] = ["%dx%d>" % [size[0], size[1]], :png]
       }
