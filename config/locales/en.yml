@@ -1410,7 +1410,7 @@ en:
       subject: "Password retrieval for Teambox"
     notify:
       project: "Teambox Project:"
-      view_this_conversation_online_html: "You can %{conversation} to answer and attach files."
+      view_this_conversation_online_html: "You can click on %{conversation} to answer and attach files."
       view_this_task_online_html: "You can %{link} to comment and attach files."
       conversation: view this conversation online
       task_link: view this task online
