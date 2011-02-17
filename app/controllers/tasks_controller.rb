@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+
+  around_filter :set_time_zone, :only => [:show]
   before_filter :load_task, :except => [:new, :create]
   before_filter :load_task_list, :only => [:new, :create]
   before_filter :set_page_title

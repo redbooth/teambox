@@ -102,11 +102,11 @@ class Task < RoleRecord
   end
 
   def overdue
-    (Time.now.to_date - due_on).to_i
+    (Time.current.to_date - due_on).to_i
   end
 
   def overdue?
-    !archived? && due_on && (Time.now.to_date > due_on)
+    !archived? && due_on && (Time.current.to_date > due_on)
   end
 
   def due_today?
@@ -271,7 +271,7 @@ class Task < RoleRecord
 
   def save_completed_at
     if [:resolved, :rejected].include? self.status_name
-      self.completed_at = Time.now
+      self.completed_at = Time.current
     else
       self.completed_at = nil
     end if status_changed? or self.new_record?

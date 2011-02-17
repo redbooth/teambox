@@ -54,6 +54,7 @@ group :test, :development do
   gem 'webrat'
   gem 'fuubar'
   gem 'faker', :require => nil
+  gem 'timecop', :require => 'timecop'
 end
 
 # we don't call the group :test because we don't want them auto-required

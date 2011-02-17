@@ -86,6 +86,12 @@ Given /^(@.+) (?:has|have) (?:his|her|their) locale set to (.+)$/ do |users, nam
   end
 end
 
+Given /^(@.+) (?:has|have) (?:his|her|their) time zone set to (.+)$/ do |users, zone|
+  each_user(users) do |user|
+    user.update_attribute :time_zone, zone
+  end
+end
+
 Given /I am the user (.*)$/ do |login|
   @current_user ||= Factory(login.to_sym)
 end
