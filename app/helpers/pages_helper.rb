@@ -24,10 +24,6 @@ module PagesHelper
   def list_pages_with_toc(pages)
     render pages
   end
-
-  def page_link(page)
-    link_to h(page), project_page_path(page.project,page)
-  end
   
   def edit_page_link(project,page)
     link_to t('common.edit'), edit_project_page_path(project,page)
@@ -46,22 +42,6 @@ module PagesHelper
       :method => :delete,
       :class => 'remove',
       :confirm => t('confirm.delete_page')
-  end
-  
-  def notes_sortable_tag(page)
-    url = project_page_path(page.project,page)
-    update_page_tag do |page|
-      page.notes_sortable(url)
-    end
-  end
-  
-  def notes_sortable(url)
-    page.sortable('notes', {
-      :tag => 'div',
-      :handle => 'img.drag',
-      :url => url,
-      :method => :put
-    })
   end
   
   def page_action_links(project,page)

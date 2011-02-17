@@ -15,12 +15,6 @@ module TasksHelper
     end.join(' ')
   end
 
-  def my_tasks(tasks)
-    if tasks.any?
-      render 'tasks/my_tasks', :tasks => tasks
-    end
-  end
-
   def sidebar_tasks(tasks)
     render :partial => 'tasks/task_sidebar',
       :as => :task,
@@ -90,16 +84,6 @@ module TasksHelper
       :task_list => task_list,
       :editable => editable
   end
-  
-  def insert_task_options(project,task_list,task,editable=true)
-    {:partial => 'tasks/task',
-    :locals => {
-      :task => task,
-      :project => project,
-      :task_list => task_list,
-      :current_target => nil,
-      :editable => editable}}
-  end
 
   def localized_status_name(task_or_status)
     task_or_status = task_or_status.status_name if task_or_status.respond_to? :status_name
@@ -110,12 +94,6 @@ module TasksHelper
     Task::STATUS_NAMES.each_with_index.map { |name, code|
       [localized_status_name(name), code]
     }
-  end
-
-  def task_lists_for_select(project)
-    project.task_lists.collect do |task_list|
-      [task_list.name, task_list.id]
-    end << ['Inbox', '']
   end
 
   def time_tracking_doc

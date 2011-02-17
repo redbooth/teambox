@@ -1,16 +1,5 @@
 module ConversationsHelper
   
-  def conversation_id(element,project,conversation=nil)
-    conversation ||= project.conversations.new
-    js_id(element,project,conversation)
-  end
-  
-  #
-
-  def conversation_form(project,conversation)
-    render 'conversations/form', :project => project, :conversation => conversation
-  end
-  
   def conversations_primer(project)
     if project.editable?(current_user)
       render 'conversations/primer', :project => project
@@ -34,10 +23,6 @@ module ConversationsHelper
   
   def conversation_comments_count(conversation)
     pluralize(conversation.comments.size, t('.message'), t('.messages'))
-  end
-  
-  def conversation_comments_link(project,conversation)
-    link_to conversation_comments_count(conversation), project_conversation_path(project,conversation)
   end
   
   def conversation_column(project,conversations,options={})
