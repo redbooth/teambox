@@ -49,6 +49,7 @@ group :development do
 end
 
 group :test, :development do
+  gem 'thin'
   gem 'rspec-rails', '~> 2.3.1'
   gem 'webrat'
   gem 'fuubar'
