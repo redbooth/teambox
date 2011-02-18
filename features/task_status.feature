@@ -52,9 +52,9 @@ Feature: Changing Task Status from New
     Then I should see "new → rejected" status change
     And I should see "I need to wait till the engine cools down"
 
-  Scenario: Mislav shouldn't be able to change task (hold -> new)
+  #Scenario: Mislav shouldn't be able to change task (hold -> new)
 
-  Scenario: Mislav doesn't change task (hold -> hold)
+  #Scenario: Mislav doesn't change task (hold -> hold)
 
   Scenario: Mislav changes task (hold -> resolved)
     Given the task called "Installing Megahyper drive" is holded
@@ -76,17 +76,17 @@ Feature: Changing Task Status from New
     And I should see "hold → rejected" status change
     And I should see "done!"
 
-  Scenario: Mislav shouldn't be able to change task (rejected -> new)
+  #Scenario: Mislav shouldn't be able to change task (rejected -> new)
 
-  Scenario: Mislav doesn't change task (rejected -> rejected)
+  #Scenario: Mislav doesn't change task (rejected -> rejected)
 
-  Scenario: Mislav changes task (rejected -> open:Mislav)
+  #Scenario: Mislav changes task (rejected -> open:Mislav)
 
-  Scenario: Mislav shouldn't be able to change task (resolved -> new)
+  #Scenario: Mislav shouldn't be able to change task (resolved -> new)
 
-  Scenario: Mislav changes task (resolved -> open:Mislav)
+  #Scenario: Mislav changes task (resolved -> open:Mislav)
 
-  Scenario: Mislav changes task (resolved -> hold)
+  #Scenario: Mislav changes task (resolved -> hold)
 
-  Scenario: Mislav doesn't change task (resolved -> resolved)
+  #Scenario: Mislav doesn't change task (resolved -> resolved)
 
