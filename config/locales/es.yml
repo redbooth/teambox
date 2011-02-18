@@ -911,8 +911,8 @@ es:
     template: 
       body: "Hubo problemas con los siguientes campos:"
       header: 
-        other: "%{count} errores prohibieron que este %{model} fuera guardado"
         one: "1 error prohibió que este %{model} fuera guardado"
+        other: "%{count} errores prohibieron que este %{model} fuera guardado"
   form: 
     cancel: Cancelar
   google_docs: 
@@ -2033,7 +2033,7 @@ es:
       title: "Sincroniza tus actividades"
       your_feeds: "Tus feeds de noticias"
     form: 
-      agreement_html: "Registrándote, aceptas nuestros %{terms} i condiciones de %{privacy}"
+      agreement_html: "Registrándote, aceptas nuestros %{terms} y condiciones de %{privacy}"
       betatester: "Utilizar las funciones beta (menos estables) antes de que sean liberadas a la comunidad"
       biography: Biografía
       change_password: "Cambiar contraseña"
