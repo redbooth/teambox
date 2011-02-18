@@ -218,7 +218,7 @@ var TaskList = {
   },
 
   setTitle: function(element, visible) {
-    var title = $(element.readAttribute('jennybase') + 'title');
+    var title = $(element.readAttribute('toggleformbase') + 'title');
     if (title == null)
       return;
     if (visible)
@@ -286,7 +286,7 @@ document.on('click', '#done_reordering_task_lists_link', function(e, element){
   TaskList.setReorder(false);
 });
 
-document.observe('jenny:loaded:edit_task_list', function(evt) {
+document.observe('toggleform:loaded:edit_task_list', function(evt) {
   // Reload sort
   if (TaskList.in_sort) {
     setTimeout(function(){
@@ -298,7 +298,7 @@ document.observe('jenny:loaded:edit_task_list', function(evt) {
   TaskList.updatePage('column', TaskList.restoreColumn);
 });
 
-document.observe('jenny:loaded:new_task_list', function(evt) {
+document.observe('toggleform:loaded:new_task_list', function(evt) {
   // Reload sort
   if (TaskList.in_sort) {
 	setTimeout(function(){
@@ -313,7 +313,7 @@ document.observe('jenny:loaded:new_task_list', function(evt) {
   }, 0);
 });
 
-document.observe('jenny:cancel:edit_task_list', function(evt) {
+document.observe('toggleform:cancel:edit_task_list', function(evt) {
   // Only do this on the index
   if (evt.memo.form.up('.task_list_container'))
   {
@@ -348,12 +348,12 @@ document.on('click', 'a.taskListResolve', function(e, el) {
 
 document.on('click', 'a.create_first_task_list_link', function(e, el) {
   e.stop();
-  Jenny.toggleElement(el); // edit form on task list show
+  ToggleForm.toggleElement(el); // edit form on task list show
 });
 
 document.on('click', 'a.edit_task_list_link', function(e, el) {
   e.stop();
-  Jenny.toggleElement(el); // edit form on task list show
+  ToggleForm.toggleElement(el); // edit form on task list show
 });
 
 document.on('click', 'a.unarchive_task_list_link', function(e, el) {

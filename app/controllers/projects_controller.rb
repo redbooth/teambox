@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  around_filter :set_time_zone, :only => [:index, :show]
   before_filter :load_projects, :only => [:index]
   before_filter :set_page_title
   before_filter :disallow_for_community, :only => [:new, :create]

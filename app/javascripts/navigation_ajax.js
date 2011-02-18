@@ -36,6 +36,8 @@ document.on('click', '.nav_links a.ajax', function(e,a) {
       $('content').update(parts.content)
       $$('.view_sidebar').first().update(parts.column)
       format_posted_date()
+      Task.insertAssignableUsers()
+      disableConversationHttpMethodField()
 
       // Display the AJAX route in the navigation bar
       pushHistoryState(a.readAttribute('href'))

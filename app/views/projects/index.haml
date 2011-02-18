@@ -26,3 +26,5 @@
   .more_links
     .el= link_to t('shared.instructions.subscribe_to_feeds'), feeds_path, :class => 'feeds'
     .el= link_to t('shared.instructions.subscribe_to_calendars'), calendars_path, :class => 'calendar'
+    .el= link_to t('shared.collapsed_mode'), "#", :class => 'collapsed_mode'
+    .el{ :style => 'display: none' }= link_to t('shared.expanded_mode'), "#", :class => 'expanded_mode'

@@ -13,7 +13,7 @@ Feature: Converting a conversation to a task
     And I press "Convert"
     And I wait for 1 second
     Then I should see "Politics" in the page title
-    And I should see 'created a task'
+    And I should see "Politics" in the task thread title
 
   Scenario: Converting a normal conversation on the overview page
     Given I started a conversation named "Politics"
@@ -23,8 +23,7 @@ Feature: Converting a conversation to a task
     And I wait for 2 seconds
     And I press "Convert"
     And I wait for 1 second
-    Then I should see "Politics" in the thread title
-    And I should see 'created a task'
+    Then I should see "Politics" in the task thread title
 
   Scenario: Converting a normal conversation when you are a commenter
     Given I started a conversation named "Politics"
@@ -43,9 +42,8 @@ Feature: Converting a conversation to a task
     And I fill in "conversation_name" with "An exciting task for you"
     And I press "Convert"
     And I wait for 3 seconds
-    Then I should see "An exciting task for you" in the thread title
+    Then I should see "An exciting task for you" in the task thread title
     And I should see 'Do this now'
-    And I should see 'created a task'
 
   Scenario: Converting a simple conversation on the overview page without specifying a task name
     Given I started a simple conversation
@@ -66,8 +64,7 @@ Feature: Converting a conversation to a task
     And I fill in "conversation_name" with "An exciting task for you"
     And I press "Convert"
     And I wait for 1 second
-    Then I should see "An exciting task for you" in the thread title
-    And I should see "created a task" in the thread starter
+    Then I should see "An exciting task for you" in the task thread title
 
   Scenario: Converting a simple conversation on the overview page and specifying additional task attributes
     Given the following confirmed users exist
@@ -94,9 +91,8 @@ Feature: Converting a conversation to a task
     And I select the day "29" with the date picker
     When I press "Convert"
     And I wait for 1 second
-    Then I should see "Give git course" in the thread title
+    Then I should see "Give git course" in the task thread title
     And I should see 'new → hold'
-    And I should see "created a task" in the thread starter
     And I should see 'Dec 29' within 'span.assigned_date'
     And I should see 'Assigned to Saimon Moore' within 'p.assigned_transition'
 

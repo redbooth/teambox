@@ -201,6 +201,12 @@ class UsersController < ApplicationController
     head :ok
   end
 
+  def change_activities_mode
+    @current_user.settings = { :collapse_activities => params[:collapsed] }
+    @current_user.save!
+    render :text => "activities are now #{params[:collapsed] ? 'collapsed' : 'expanded'}"
+  end
+
   private
     def find_user
       unless @user = ( User.find_by_login(params[:id]) || User.find_by_id(params[:id]) )

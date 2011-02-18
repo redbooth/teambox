@@ -3,24 +3,25 @@
 - thread_id = "#{thread_class}_#{thread.id}"
 - comments = thread.comments
 
-.thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}" }
+.thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}", :'data-project-id' => thread.project.id }
   -# Title of the element
   .comment.comment_header
+    %span.time= posted_date(comments.first ? comments.first.created_at : thread.created_at)
     .info
       - icon = { "Conversation" => "comment", "Task" => "tick" }[thread.class.to_s]
       %img{ :src => "/famfamfam/#{icon}.png", :style => 'padding: 4px' }
-    .block.textilized
+    .block
       - case thread
       - when Conversation
         - if thread.to_s.present?
-          %p= t(".conversation_with_title_html",
+          %p.thread_title= t(".conversation_with_title_html",
               :conversation => link_to(thread, [thread.project, thread]),
               :project => link_to(thread.project, thread.project))
         - else
           %p= t(".conversation_without_title_html",
               :project => link_to(thread.project, thread.project))
       - when Task
-        %p= t(".task_on_task_list_html",
+        %p.thread_title= t(".task_on_task_list_html",
             :task => link_to(thread, [thread.project, thread]),
             :task_list => link_to(thread.task_list, [thread.task_list.project, thread.task_list]))
         %p= link_to thread.project, thread.project

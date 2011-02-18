@@ -47,12 +47,13 @@ form.new_comment, form.edit_comment
       font-size: 14px
       padding: 2px 4px
       margin-right: 1em
+
   .actions
     display: inline-block
     span
       font-size: 12px
       margin-right: 5px
-    .add_hours_icon, .attach_icon
+    .add_hours_icon, .attach_icon, .add_watchers
       text-indent: -9999em
       margin-right: 5px
       top: 2px
@@ -71,7 +72,8 @@ form.new_comment, form.edit_comment
       select[name="task[assigned_id]"]
         width: 130px
     div.attach
-      display: inline
+      display: inline-block
+      margin-right: 10px
     div.convert_to_task
       top: 8px
       width: 600px
@@ -116,6 +118,11 @@ form.new_comment, form.edit_comment
         display: none
       span
         margin-left: 10px
+    span.new
+      font-size: 10px
+      position: relative
+      top: -2px
+      color: #777
   .submit
     float: right
     display: inline-block
@@ -162,7 +169,7 @@ form .upload_area
       height: 40px
       text-align: right
   .info
-    position: absolute
+    position: relative
     top: 5px
     left: 5px
     .micro_avatar

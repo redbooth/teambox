@@ -1,25 +1,24 @@
-// Jenny
+// ToggleForm
 //
 // Callbacks:
-//   jenny:toggle:action_class
-//   jenny:loading:action_class
-//   jenny:failed:action_class
-//   jenny:loaded:action_class
-//   jenny:cancel:action_class
+//   toggleform:toggle:action_class
+//   toggleform:loading:action_class
+//   toggleform:failed:action_class
+//   toggleform:loaded:action_class
+//   toggleform:cancel:action_class
 //
-// TODO: need post-request callbacks
 
-var Jenny = {
+var ToggleForm = {
 	debug: false,
 	
 	toggleElement: function(el) {
-		Jenny.toggle(parseInt(el.readAttribute('new_record')),
+		ToggleForm.toggle(parseInt(el.readAttribute('new_record')),
 		             el.readAttribute('header_id'),
 		             el.readAttribute('link_id'),
 		             el.readAttribute('form_id'));
 	},
 	
-	// Handles typical jenny toggles
+	// Handles typical toggleform toggles
 	toggle: function(new_record, header_id, link_id, form_id) {
 		var header = $(header_id);
 		var link = $(link_id);
@@ -65,16 +64,16 @@ var Jenny = {
 			form.focusFirstElement();
 		
 		var formClass = "";
-		document.fire("jenny:toggle:" + formClass, {form:form});
+		document.fire("toggleform:toggle:" + formClass, {form:form});
 	},
 	
-	// Handles a typical jenny app_form
+	// Handles a typical toggleform app_form
 	handleForm: function(form) {
 		var url = form.readAttribute('action');
-		var formClass = form.readAttribute('jennytype');
+		var formClass = form.readAttribute('toggleformtype');
 		
-		if (Jenny.debug)
-			console.log('JENNY:CB:' + formClass + ' -> ' + url);
+		if (ToggleForm.debug)
+			console.log('TOGGLE:CB:' + formClass + ' -> ' + url);
 		
 	    new Ajax.Request(url, {
 	      asynchronous: true,
@@ -84,46 +83,46 @@ var Jenny = {
 	      onLoading: function() {
 		  	form.down('.submit').hide();
 		  	form.down('img.loading').show();
-			document.fire("jenny:loading:" + formClass, {form:form});
+			document.fire("toggleform:loading:" + formClass, {form:form});
 	      },
 	      onFailure: function(response) {	
 		  	form.down('.submit').show();
 		  	form.down('img.loading').hide();
-			document.fire("jenny:failed:" + formClass, {form:form});
+			document.fire("toggleform:failed:" + formClass, {form:form});
 	      },
 	      onSuccess: function(response){
 		    // Handled in the RJS
-			document.fire("jenny:loaded:" + formClass, {form:form});
+			document.fire("toggleform:loaded:" + formClass, {form:form});
 	      }
 	   });
     },
 
     handleCancelForm: function(form) {
-		var formClass = form.readAttribute('jennytype');
-		Jenny.toggleElement(form);
-		document.fire("jenny:cancel:" + formClass, {form:form});
+		var formClass = form.readAttribute('toggleformtype');
+		ToggleForm.toggleElement(form);
+		document.fire("toggleform:cancel:" + formClass, {form:form});
 	}
 };
 
-// Generic jenny form
-document.on('submit', 'form.jenny_form', function(e, el) {
+// Generic toggleform form
+document.on('submit', 'form.toggleform_form', function(e, el) {
   e.stop();
-  Jenny.handleForm(el);
+  ToggleForm.handleForm(el);
 });
 
 document.on('click', 'a.new_task_list_link', function(e, el) {
   e.stop();
-  Jenny.toggleElement(el);
+  ToggleForm.toggleElement(el);
 });
 
-// Jenny cancel on create
+// toggleform cancel on create
 document.on('click', 'a.inline_form_create_cancel', function(e, el) {
   e.stop();
-  Jenny.handleCancelForm(el.up('form')); // hide form
+  ToggleForm.handleCancelForm(el.up('form')); // hide form
 });
 
-// Jenny cancel on update
+// toggleform cancel on update
 document.on('click', 'a.inline_form_update_cancel', function(e, el) {
   e.stop();
-  Jenny.handleCancelForm(el.up('form')); // hide form
+  ToggleForm.handleCancelForm(el.up('form')); // hide form
 });

@@ -326,4 +326,14 @@ class ApplicationController < ActionController::Base
       request.user_agent =~ /chromeframe/
     end
     helper_method :chrome_frame?
+
+    def set_time_zone
+      if logged_in?
+        Time.use_zone(current_user.time_zone) do
+          yield
+        end
+      else
+        yield
+      end
+    end
 end

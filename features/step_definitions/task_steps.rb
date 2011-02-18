@@ -10,12 +10,6 @@ end
 
 ## FIXME: it's better for 'givens' to set tasks up directly in the db:
 
-Given /^I have a task on (open|hold|resolved|rejected)$/ do |status|
-  When %(I select "#{status}" from "Status")
-  When 'I press "Save"'
-  When 'I wait for 0.3 seconds'
-end
-
 Given /^the following tasks? with associations exists?:?$/ do |table|
   table.hashes.each do |hash|
     Factory(:task,
@@ -95,7 +89,7 @@ Given /^I have no tasks assigned to me$/ do
   @current_user.assigned_tasks.destroy_all
 end
 
-Given /^the task called "([^\"]*)" is (new|hold|open|resolved|rejected)$/ do |name, status|
+Given /^the task called "([^\"]*)" is (new|hold|open|resolved|rejected)(?:ed)?$/ do |name, status|
   Task.find_by_name(name).update_attribute(:status, Task::STATUSES[status.to_sym])
 end
 
@@ -174,4 +168,13 @@ Then /^(?:|I )should see "([^\"]*)" status change?$/ do |text|
   else
     assert page.has_content?(text)
   end
+end
+
+Then /^I should see "([^\"]+)" in the task thread title$/ do |msg|
+  link = false
+  wait_until do
+    link = find(".thread[data-class=task] p.thread_title a")
+  end
+  comment = link.text
+  comment.should match(/#{msg}/)
 end

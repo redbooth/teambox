@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe JennyHelper do
+describe ApplicationHelper do
   before do
     @owner = Factory.create(:user)
     @project = Factory.create(:project, :user_id => @owner.id)
@@ -14,10 +14,6 @@ describe JennyHelper do
     it 'js_id(:new_header,@project,TaskList.new) => project_21_task_list_new_header' do
       helper.js_id(:new_header,@project,TaskList.new).should == "project_#{@project.id}_task_list_new_header"
     end
-    # NOTE: this does not work... should it work? [need to check existing code]
-    #it 'js_id(@project,TaskList.new) => project_21_task_list' do
-    #  helper.js_id(@project,TaskList.new).should == "project_#{@project.id}_task_list"
-    #end
     it 'js_id(nil,@project,TaskList.new) => project_21_task_list' do
       helper.js_id(nil,@project,TaskList.new).should == "project_#{@project.id}_task_list"
     end

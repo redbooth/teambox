@@ -86,6 +86,12 @@ Given /^(@.+) (?:has|have) (?:his|her|their) locale set to (.+)$/ do |users, nam
   end
 end
 
+Given /^(@.+) (?:has|have) (?:his|her|their) time zone set to (.+)$/ do |users, zone|
+  each_user(users) do |user|
+    user.update_attribute :time_zone, zone
+  end
+end
+
 Given /I am the user (.*)$/ do |login|
   @current_user ||= Factory(login.to_sym)
 end
@@ -102,4 +108,14 @@ end
 
 Given /^I have the daily task reminders turned off$/ do
   @current_user.update_attribute(:wants_task_reminder, false)
+end
+
+Given /^I set my preference to collapsed threads$/ do
+  visit collapse_activities_path 
+  @current_user.reload.settings["collapse_activities"].should be_true
+end
+
+Given /^I set my preference to expanded threads$/ do
+  visit expand_activities_path 
+  @current_user.reload.settings["collapse_activities"].should be_false
 end

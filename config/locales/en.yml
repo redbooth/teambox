@@ -706,6 +706,7 @@ en:
       title: Conversations in %{project}
       new_conversation: "New Conversation"
       view_single: Read more
+      cant_create: "You don't have permissions to create a conversation in this project"
       rss:
         title: "%{name} conversations"
         description: "Conversations for project %{name}"
@@ -1066,6 +1067,9 @@ en:
     preview:
       close: Hide preview
       preview: Preview
+    watchers:
+      explain: "Click on users to @mention them in your comment. Mentioned users will receive email notifications for your message and others after it."
+      popup_note_html: "Select <b>Notify people</b> to send notifications for this conversation."
   teambox_datas:
     new_import:
       title: "Import data"
@@ -1188,6 +1192,8 @@ en:
   shared:
     strip:
       archived_html: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
+    collapsed_mode: View threads collapsed
+    expanded_mode: View threads expanded
     gantt_banner_primer:
       title: There are no task lists due to show
     upcoming_events_primer:
@@ -1407,7 +1413,7 @@ en:
       subject: "Password retrieval for Teambox"
     notify:
       project: "Teambox Project:"
-      view_this_conversation_online_html: "You can %{conversation} to answer and attach files."
+      view_this_conversation_online_html: "You can click on %{conversation} to answer and attach files."
       view_this_task_online_html: "You can %{link} to comment and attach files."
       conversation: view this conversation online
       task_link: view this task online

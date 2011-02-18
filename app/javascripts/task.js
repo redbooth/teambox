@@ -159,17 +159,6 @@ document.on('ajax:success', '.new_task form', function(e){
   }, 0);
 })
 
-document.observe('jenny:loaded:edit_task', function(evt) {
-  setTimeout(function(){
-    Task.make_all_sortable();
-    TaskList.updatePage('column', TaskList.restoreColumn);
-  }, 0);
-});
-
-document.observe('jenny:cancel:edit_task', function(evt) {
-  $('show_task').down(".task_header").show();
-});
-
 // Enable task sort on load and highlight my tasks
 document.observe('dom:loaded', function(e) {
   if(typeof(my_user) == "undefined") return

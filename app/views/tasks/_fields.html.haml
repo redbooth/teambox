@@ -24,7 +24,7 @@
         .attach
           %span= t('comments.fields.attach') + ": "
           = link_to t('uploads.comment_upload_link'), '#uploads', :class => 'attach_icon hoverable', :title => "Attach a file"
-        = render 'google_docs/form', :f => comment_fields
+          = render 'google_docs/form', :f => comment_fields
 
   .assigned_to.text_field
     = f.label :assigned_id, t('comments.new.assigned_to')

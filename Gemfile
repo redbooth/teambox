@@ -49,10 +49,12 @@ group :development do
 end
 
 group :test, :development do
+  gem 'thin'
   gem 'rspec-rails', '~> 2.3.1'
   gem 'webrat'
   gem 'fuubar'
   gem 'faker', :require => nil
+  gem 'timecop', :require => 'timecop'
 end
 
 # we don't call the group :test because we don't want them auto-required

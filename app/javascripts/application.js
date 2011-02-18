@@ -29,7 +29,7 @@
 //= require <hours>
 //= require <hoverable>
 //= require <invitation>
-//= require <jenny>
+//= require <toggleform>
 //= require <navigation>
 //= require <navigation_ajax>
 //= require <navigation_tasks>
@@ -50,3 +50,5 @@
 //= require <upload>
 //= require <yahoo.color>
 //= require <expand_comment>
+//= require <compact_mode>
+//= require <watchers>
