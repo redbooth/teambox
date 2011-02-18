@@ -14,3 +14,4 @@ end
 page << "Task.insertAssignableUsers();"
 page << "disableConversationHttpMethodField();"
 page << "contractComments();"
+page << "if (my_user.collapse_activities) { ActivityFeed.collapseAll(); }"
