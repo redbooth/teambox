@@ -16,9 +16,6 @@ class TasksController < ApplicationController
         @show_part = params[:part]
         render :template => 'tasks/reload'
       }
-      f.xml  { render :xml     => @task.to_xml }
-      f.json { render :as_json => @task.to_xml }
-      f.yaml { render :as_yaml => @task.to_xml }
     end
   end
 
@@ -116,7 +113,6 @@ class TasksController < ApplicationController
         redirect_to [@current_project, @task_list]
       }
       f.js { render :layout => false }
-      handle_api_success(f, @task)
     end
   end
 

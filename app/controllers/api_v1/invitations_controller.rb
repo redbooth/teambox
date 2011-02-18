@@ -34,9 +34,7 @@ class ApiV1::InvitationsController < ApiV1::APIController
       handle_api_success(f, @invitations, :is_new => true)
     else
       message = @invitations.length == 1 ? @invitations.first.errors.full_messages.first : t('people.errors.users_or_emails')
-      respond_do do |f|
-        f.json { render :as_json => {'error' => message}, :status => :unprocessable_entity }
-      end
+      return api_error(:unprocessable_entity, :type => 'InvalidRecord', :message => message)
     end
   end
   

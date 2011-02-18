@@ -9,7 +9,6 @@ class ProjectsController < ApplicationController
     respond_to do |f|
       flash[:error] = t('common.not_allowed')
       f.any(:html, :m) { redirect_to projects_path }
-      handle_api_error(f, @current_project)
     end
   end
   
@@ -23,9 +22,6 @@ class ProjectsController < ApplicationController
       f.html
       f.m     { redirect_to activities_path if request.path == '/' }
       f.rss   { render :layout  => false }
-      f.xml   { render :xml     => @projects.to_xml }
-      f.json  { render :as_json => @projects.to_xml }
-      f.yaml  { render :as_yaml => @projects.to_xml }
       f.ics   { render :text    => Project.to_ical(@projects, params[:filter] == 'mine' ? current_user : nil, request.host, request.port) }
       f.print { render :layout  => 'print' }
     end
@@ -41,9 +37,6 @@ class ProjectsController < ApplicationController
     respond_to do |f|
       f.any(:html, :m)
       f.rss   { render :layout  => false }
-      f.xml   { render :xml     => @current_project.to_xml }
-      f.json  { render :as_json => @current_project.to_xml }
-      f.yaml  { render :as_yaml => @current_project.to_xml }
       f.ics   { render :text    => @current_project.to_ical(params[:filter] == 'mine' ? current_user : nil) }
       f.print { render :layout  => 'print' }
     end
@@ -131,13 +124,11 @@ class ProjectsController < ApplicationController
       respond_to do |f|
         flash[:notice] = I18n.t('projects.edit.transferred')
         f.html { redirect_to project_path(@current_project) }
-        handle_api_success(f, @current_project)
       end
     else
       respond_to do |f|
         flash[:error] = I18n.t('projects.edit.invalid_transferred')
         f.html { redirect_to project_path(@current_project) }
-        handle_api_error(f, @current_project)
       end
     end
   end

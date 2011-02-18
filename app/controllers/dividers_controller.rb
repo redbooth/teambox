@@ -28,22 +28,16 @@ class DividersController < ApplicationController
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
         f.js   { render :layout => false }
-        handle_api_success(f, @divider, true)
       else
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
         f.js   { render :layout => false }
-        handle_api_error(f, @divider)
       end
     end
   end
   
   def show
-    respond_to do |f|
-      f.xml { render :xml => @divider.to_xml }
-      f.json{ render :as_json => @divider.to_xml }
-      f.yaml{ render :as_yaml => @divider.to_xml }
-    end
+    render :text => ''
   end
   
   def edit
@@ -63,14 +57,12 @@ class DividersController < ApplicationController
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
         f.js   { render :layout => false }
-        handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
         f.js   { render :layout => false }
-        handle_api_error(f, @divider)
       end
     end
   end
@@ -83,13 +75,11 @@ class DividersController < ApplicationController
       respond_to do |f|
         f.any(:html, :m)  { reload_page }
         f.js   { render :layout => false }
-        handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
         f.any(:html, :m) { reload_page }
         f.js   { render :layout => false }
-        handle_api_error(f, @divider)
       end
     end
   end
@@ -115,7 +105,6 @@ class DividersController < ApplicationController
       rescue
         respond_to do |f|
           f.js   { render :layout => false }
-          handle_api_error(f, @divider)
         end
       end
     end

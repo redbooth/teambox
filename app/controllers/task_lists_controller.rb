@@ -12,7 +12,6 @@ class TaskListsController < ApplicationController
         f.js   {
           render :text => "alert(\"#{t('common.not_allowed')}\");", :status => :unprocessable_entity
         }
-        handle_api_error(f, @task_list)
       end
     else
       handle_cancan_error(exception)
@@ -32,9 +31,6 @@ class TaskListsController < ApplicationController
         render 'task_lists/reload', :layout => false
       }
       f.print { render :layout => 'print' }
-      f.xml   { render :xml     => @task_lists.to_xml(:include => :tasks, :root => 'task-lists') }
-      f.json  { render :as_json => @task_lists.to_xml(:include => :tasks, :root => 'task-lists') }
-      f.yaml  { render :as_yaml => @task_lists.to_xml(:include => :tasks, :root => 'task-lists') }
     end
   end
 
@@ -44,9 +40,6 @@ class TaskListsController < ApplicationController
     respond_to do |f|
       f.any(:html, :m)
       f.js    { calc_onindex; @show_part = params[:part]; render 'task_lists/reload', :layout => false }
-      f.xml   { render :xml     => @task_list.to_xml(:include => [:tasks, :comments]) }
-      f.json  { render :as_json => @task_list.to_xml(:include => [:tasks, :comments]) }
-      f.yaml  { render :as_yaml => @task_list.to_xml(:include => [:tasks, :comments]) }
     end
     #   Use this snippet to test the notification emails that we send:
     # @project = @current_project
@@ -73,14 +66,12 @@ class TaskListsController < ApplicationController
         f.html { redirect_to_task_list @task_list }
         f.m    { redirect_to_task_list }
         f.js   { render :layout => false }
-        handle_api_success(f, @task_list, true)
       end
     else
       respond_to do |f|
         f.html { render :new }
         f.m    { render :new }
         f.js   { render :layout => false }
-        handle_api_error(f, @task_list)
       end
     end
   end
@@ -105,13 +96,11 @@ class TaskListsController < ApplicationController
       respond_to do |f|
         f.any(:html, :m) { non_js_list_redirect }
         f.js   { render :layout => false }
-        handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
         f.any(:html, :m) { render :edit }
         f.js   { render :layout => false }
-        handle_api_error(f, @task_list)
       end
     end
   end
@@ -154,13 +143,11 @@ class TaskListsController < ApplicationController
       respond_to do |f|
         f.any(:html, :m) { non_js_list_redirect }
         f.js   { render :layout => false }
-        handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
         f.any(:html, :m) { flash[:error] = "Not allowed!"; non_js_list_redirect }
         f.js   { render :text => 'alert("Not allowed!");'; }
-        handle_api_error(f, @task_list)
       end
     end
   end
@@ -177,12 +164,10 @@ class TaskListsController < ApplicationController
     if @saved
       respond_to do |f|
         f.js { render 'task_lists/update', :layout => false }
-        handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
         f.js { render 'task_lists/update', :layout => false }
-        handle_api_error(f, @task_list)
       end
     end
   end
@@ -198,7 +183,6 @@ class TaskListsController < ApplicationController
         flash[:success] = t('deleted.task_list', :name => @task_list.to_s)
         redirect_to_task_list }
       f.js   { render :layout => false }
-      handle_api_success(f, @task_list)
     end
   end
 
@@ -251,19 +235,11 @@ class TaskListsController < ApplicationController
         @task_lists = @current_project.task_lists(:include => [:project])
       else
         @projects = current_user.projects.unarchived
-        
-        if [:xml, :json, :as_yaml].include? request.format.to_sym
-          @task_lists = TaskList.find(:all,
-                                      :include => [:project],
-                                      :conditions => {:project_id => @projects.map(&:id)})
-          @tasks = []
-        else
-          @task_lists = []
-          conditions = { :project_id => Array(@projects).map(&:id),
-                         :status => Task::ACTIVE_STATUS_CODES }
-          @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user, :project]).
-                    sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
-        end
+        @task_lists = []
+        conditions = { :project_id => Array(@projects).map(&:id),
+                       :status => Task::ACTIVE_STATUS_CODES }
+        @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user, :project]).
+                  sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
       end
       
       @task_lists_archived = @task_lists.reject {|t| !t.archived?}

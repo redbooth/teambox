@@ -28,22 +28,16 @@ class NotesController < ApplicationController
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
         f.js   { render :layout => false }
-        handle_api_success(f, @note, true)
       else
         f.js   { render :layout => false }
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        handle_api_error(f, @note)
       end
     end
   end
   
   def show
-    respond_to do |f|
-      f.xml { render :xml => @note.to_xml }
-      f.json{ render :as_json => @note.to_xml }
-      f.yaml{ render :as_yaml => @note.to_xml }
-    end
+    render :text => ''
   end
   
   def edit
@@ -63,14 +57,12 @@ class NotesController < ApplicationController
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
         f.js   { render :layout => false }
-        handle_api_success(f, @note)
       end
     else
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
         f.js   { render :layout => false }
-        handle_api_error(f, @note)
       end
     end
   end
@@ -83,13 +75,11 @@ class NotesController < ApplicationController
       respond_to do |f|
         f.any(:html, :m) { reload_page }
         f.js   { render :layout => false }
-        handle_api_success(f, @note)
       end
     else
       respond_to do |f|
         f.any(:html, :m) { reload_page }
         f.js   { render :layout => false }
-        handle_api_error(f, @note)
       end
     end
   end
@@ -114,7 +104,6 @@ class NotesController < ApplicationController
       rescue
         respond_to do |f|
           f.js   { render :layout => false }
-          handle_api_error(f, @note)
         end
       end
     end

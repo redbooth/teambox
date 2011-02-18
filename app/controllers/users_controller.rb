@@ -12,9 +12,6 @@ class UsersController < ApplicationController
     # show current user
     respond_to do |f|
       f.any(:html, :m)  { redirect_to root_path }
-      f.xml   { render :xml     => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
-      f.json  { render :as_json => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
-      f.yaml  { render :as_yaml => @current_user.users_with_shared_projects.to_xml(:root => 'users')}
     end
   end
   
@@ -61,9 +58,6 @@ class UsersController < ApplicationController
         }
       else
         format.any(:html, :m)
-        format.xml  { render :xml => @user.to_xml }
-        format.json { render :as_json => @user.to_xml }
-        format.yaml { render :as_yaml => @user.to_xml }
       end
     end
   end

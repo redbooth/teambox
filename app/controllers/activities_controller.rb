@@ -20,9 +20,6 @@ class ActivitiesController < ApplicationController
         end
       end
       format.m
-      format.xml  { render :xml     => @activities.to_xml }
-      format.json { render :as_json => @activities.to_xml }
-      format.yaml { render :as_yaml => @activities.to_xml }
     end
   end
 
@@ -38,9 +35,6 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to projects_path }
       format.js   { render :layout  => false }
-      format.xml  { render :xml     => @activities.to_xml }
-      format.json { render :as_json => @activities.to_xml }
-      format.yaml { render :as_yaml => @activities.to_xml }
     end
   end
 
@@ -52,9 +46,6 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to projects_path }
       format.js { render :layout => false }
-      format.xml  { render :xml     => @activities.to_xml }
-      format.json { render :as_json => @activities.to_xml }
-      format.yaml { render :as_yaml => @activities.to_xml }
     end
   end
 
@@ -72,9 +63,6 @@ class ActivitiesController < ApplicationController
             :locals => { :threaded => true }
         end
       }
-      format.xml  { render :xml     => @comments.to_xml }
-      format.json { render :as_json => @comments.to_xml }
-      format.yaml { render :as_yaml => @comments.to_xml }
     end
   end
 
