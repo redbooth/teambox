@@ -178,4 +178,9 @@ module ProjectsHelper
   end
   memoize :commentable_projects
 
+  def project_link_with_overlay(project)
+    content_tag :div, :class => :project_overlay do
+      link_to project, project, :'data-project-id' => project.id 
+    end
+  end
 end

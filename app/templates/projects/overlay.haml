@@ -1,0 +1,25 @@
+{{#project}}
+.overlay
+  %p.title
+    %a{ :href => "/projects/{{permalink}}" }
+      {{name}}
+  .sections
+    %p
+      %a.recent_activity{ :href => "/projects/{{permalink}}" }
+        = t('shared.navigation.recent_activity')
+    %p
+      %a.conversations{ :href => "/projects/{{permalink}}/conversations" }
+        = t('shared.navigation.conversations')
+    %p
+      %a.tasks{ :href => "/projects/{{permalink}}/tasks" }
+        = t('shared.navigation.tasks')
+    %p
+      %a.pages{ :href => "/projects/{{permalink}}/pages" }
+        = t('shared.navigation.pages')
+    %p
+      %a.files{ :href => "/projects/{{permalink}}/files" }
+        = t('shared.navigation.files')
+    %p
+      %a.people{ :href => "/projects/{{permalink}}/people" }
+        = t('shared.navigation.people')
+{{/project}}

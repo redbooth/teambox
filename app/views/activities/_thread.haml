@@ -14,18 +14,18 @@
       - case thread
       - when Conversation
         - if thread.to_s.present?
-          %p.thread_title= t(".conversation_with_title_html",
+          .thread_title= t(".conversation_with_title_html",
               :conversation => link_to(thread, [thread.project, thread]),
-              :project => link_to(thread.project, thread.project))
+              :project => project_link_with_overlay(thread.project))
         - else
-          %p= t(".conversation_without_title_html",
+          .thread_title= t(".conversation_without_title_html",
               :conversation_url => project_conversation_path(thread.project, thread),
-              :project => link_to(thread.project, thread.project))
+              :project => project_link_with_overlay(thread.project))
       - when Task
-        %p.thread_title= t(".task_on_task_list_html",
+        .thread_title= t(".task_on_task_list_html",
             :task => link_to(thread, [thread.project, thread]),
             :task_list => link_to(thread.task_list, [thread.task_list.project, thread.task_list]))
-        %p= link_to thread.project, thread.project
+        = project_link_with_overlay thread.project
     .clear
 
   .comments

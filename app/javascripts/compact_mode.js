@@ -36,8 +36,11 @@ document.on("click", "#activities .comment_header", function(e,el) {
 });
 
 document.on("click", "#activities .comment_header a", function(e,el) {
-  e.stop();
-  window.location = el.readAttribute("href");
+  ActivityFeed.toggle(el.up('.thread'));
+  if (!el.up('.project_overlay')) {
+    e.stop();
+    window.location = el.readAttribute("href");
+  }
 });
 
 document.on("dom:loaded", function() {
