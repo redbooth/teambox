@@ -36,7 +36,6 @@ document.on("click", "#activities .comment_header", function(e,el) {
 });
 
 document.on("click", "#activities .comment_header a", function(e,el) {
-  if (!ActivityFeed.collapsed) { return; }
   e.stop();
   window.location = el.readAttribute("href");
 });
