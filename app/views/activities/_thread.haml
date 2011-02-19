@@ -19,6 +19,7 @@
               :project => link_to(thread.project, thread.project))
         - else
           %p= t(".conversation_without_title_html",
+              :conversation_url => project_conversation_path(thread.project, thread),
               :project => link_to(thread.project, thread.project))
       - when Task
         %p.thread_title= t(".task_on_task_list_html",
