@@ -1,57 +1,49 @@
 module Watchable
-
-  extend ActiveSupport::Memoizable
-  
   def self.included(model)
+    model.after_save :update_watchers
     model.attr_accessible :watchers_ids
-    model.serialize :watchers_ids
-    model.before_create :add_owner_as_watcher, :if => :user_id?
+    model.send :attr_writer, :watchers_ids
+    model.has_many :watcher_tags, :as => :watchable, :class_name => 'Watcher'
+    model.has_many :watchers, :through => :watcher_tags, :source => :user
   end
-  
-  def watchers_ids=(ids)
-    self[:watchers_ids] = ids.map(&:to_i)
-  end
-  
+
   def watchers_ids
-    self[:watchers_ids] ||= []
+    warn "[DEPRECATION] `watcher_ids` is deprecated.  Please use `watcher_ids` instead."
+    watcher_ids
   end
-  
+
   def add_watcher(user, persist = !new_record?)
-    unless has_watcher?(user)
-      watchers_ids << user.id
-      flush_cache :watchers # memoize
-      save(:validate => false) if persist
+    unless has_watcher?(user) or !project.has_member?(user)
+      watcher = Watcher.new(:user_id => user[:id], :project_id => self.project_id,
+                            :watchable_id => self.id, :watchable_type => self.class)
+      true if watcher.save
     end
   end
   
   def add_watchers(users, persist = !new_record?)
-    Array(users).each do |user|
-      add_watcher(user, false)
+    users.each do |user|
+      add_watcher(user)
     end
-    save(:validate => false) if persist
   end
   
   def has_watcher?(user)
-    watchers_ids.include? user.id
+    watcher_ids.include? user.id
   end
 
   def remove_watcher(user, persist = !new_record?)
-    if watchers_ids.delete user.id
-      flush_cache :watchers # memoize
-      save(:validate => false) if persist
+    if has_watcher?(user)
+      watchers = Watcher.where(:watchable_id => self[:id], :watchable_type => self.class, :user_id => user[:id])
+      true if watchers.destroy_all
     end
   end
   
-  def watchers
-    project.users.confirmed.find_all_by_id(watchers_ids)
-  end
-  memoize :watchers
   
   protected
   
-  def add_owner_as_watcher # before_create
-    unless watchers_ids.include? user_id
-      watchers_ids << user_id
+  def update_watchers
+    add_watcher(user) if user_id and new_record?
+    if @watchers_ids
+      add_watchers(project.users.where(:id => @watchers_ids))
     end
     true
   end

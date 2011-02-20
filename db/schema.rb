@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110125200118) do
+ActiveRecord::Schema.define(:version => 20110211173002) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -106,7 +106,6 @@ ActiveRecord::Schema.define(:version => 20110125200118) do
     t.string   "name"
     t.integer  "last_comment_id"
     t.integer  "comments_count",  :default => 0,     :null => false
-    t.text     "watchers_ids"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "simple",          :default => false
@@ -339,7 +338,6 @@ ActiveRecord::Schema.define(:version => 20110125200118) do
     t.integer  "position"
     t.integer  "last_comment_id"
     t.integer  "comments_count",       :default => 0,     :null => false
-    t.text     "watchers_ids"
     t.boolean  "archived",             :default => false
     t.integer  "archived_tasks_count", :default => 0,     :null => false
     t.integer  "tasks_count",          :default => 0,     :null => false
@@ -363,7 +361,6 @@ ActiveRecord::Schema.define(:version => 20110125200118) do
     t.integer  "position"
     t.integer  "comments_count",  :default => 0,     :null => false
     t.integer  "last_comment_id"
-    t.text     "watchers_ids"
     t.integer  "assigned_id"
     t.integer  "status",          :default => 0
     t.date     "due_on"
@@ -479,6 +476,19 @@ ActiveRecord::Schema.define(:version => 20110125200118) do
   add_index "versions", ["user_id", "user_type"], :name => "index_versions_on_user_id_and_user_type"
   add_index "versions", ["user_name"], :name => "index_versions_on_user_name"
   add_index "versions", ["versioned_id", "versioned_type"], :name => "index_versions_on_versioned_id_and_versioned_type"
+
+  create_table "watchers", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.integer  "watchable_id"
+    t.string   "watchable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "watchers", ["user_id"], :name => "index_watchers_on_user_id"
+  add_index "watchers", ["watchable_id"], :name => "index_watchers_on_watchable_id"
+  add_index "watchers", ["watchable_type"], :name => "index_watchers_on_watchable_type"
 
   create_table "websites", :force => true do |t|
     t.integer "card_id"
