@@ -1,12 +1,12 @@
 contractComments = function() {
   $$('.comment').each(function(comment) {
-    if (comment.measure("height") > 400) {
+    if (comment.measure("height") > 500) {
       if (!comment.down(".expand_comment")) {
         comment.down(".block").insert({
           bottom: "<div class='expand_comment'><a href='#'>This comment is too long to be displayed. Click for the full view.</a><span></span></div>"
         });
         comment.down(".block .body").setStyle({
-          "height": "300px",
+          "height": "500px",
           "overflow-y": "hidden" });
       }
     }
