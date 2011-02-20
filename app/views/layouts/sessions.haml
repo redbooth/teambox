@@ -10,10 +10,6 @@
 
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
     .container
-      .navigation_wrap
-        .navigation
-          %ul
-            %li= link_to 'Home', root_path
       .wrapper
         .content
           - show_flash
