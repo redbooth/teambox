@@ -50,3 +50,4 @@
 //= require <upload>
 //= require <yahoo.color>
 //= require <expand_comment>
+//= require <watch_list>

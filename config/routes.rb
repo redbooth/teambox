@@ -91,6 +91,8 @@ Teambox::Application.routes.draw do
     match '/account/notifications' => 'users#edit', :as => :account_notifications, :sub_action => 'notifications'
     match '/account/delete' => 'users#edit', :as => :account_delete, :sub_action => 'delete'
     match '/account/destroy' => 'users#destroy', :as => :destroy_user
+    match '/account/watch_list' => 'watchers#index', :as => :watch_list
+    post  '/account/watch_list/unwatch/:watch_id' => 'watchers#unwatch', :as => :unwatch
 
     resources :teambox_datas, :path => '/datas'
 

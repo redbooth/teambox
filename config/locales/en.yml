@@ -162,6 +162,11 @@ en:
       add_addresses: Add Address
       add_ims: Add IM
       add_social_networks: Add Social Network
+  watchers:
+    index:
+      title: Your watch list
+    watcher:
+      remove: remove
   users:
     form:
       login: Username
