@@ -6,4 +6,4 @@
         = link_to t(:'oauth.unlink_account'), unlink_app_path(provider[:provider])
       - else
         = t(:'oauth.your_account_is_not_linked', :provider => provider[:provider].titleize)
-        = link_to t(:'oauth.link_account'), "https://teambox.com/auth/#{provider[:provider]}"
+        = link_to t(:'oauth.link_account'), "#{OmniAuth.config.path_prefix}/#{provider[:provider]}"

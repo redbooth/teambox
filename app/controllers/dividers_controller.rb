@@ -1,9 +1,13 @@
 class DividersController < ApplicationController
   before_filter :load_page
   before_filter :load_divider, :only => [:show, :edit, :update, :destroy]
-  before_filter :check_permissions
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    handle_cancan_error(exception)
+  end
   
   def new
+    authorize! :update, @page
     @divider = @page.build_divider(params[:divider])
     
     respond_to do |f|
@@ -13,6 +17,7 @@ class DividersController < ApplicationController
   end
   
   def create
+    authorize! :update, @page
     @divider = @page.build_divider(params[:divider])
     @divider.updated_by = current_user
     calculate_position(@divider)
@@ -42,6 +47,7 @@ class DividersController < ApplicationController
   end
   
   def edit
+    authorize! :update, @page
     respond_to do |f|
       f.m
       f.js
@@ -49,6 +55,7 @@ class DividersController < ApplicationController
   end
   
   def update
+    authorize! :update, @page
     @divider.updated_by = current_user
     
     if @divider.editable?(current_user) and @divider.update_attributes(params[:divider])
@@ -71,7 +78,7 @@ class DividersController < ApplicationController
   def destroy
     @slot_id = @divider.page_slot.id
     
-    if @divider.editable?(current_user)
+    if can?(:destroy, @page)
       @divider.destroy
       respond_to do |f|
         f.html { reload_page }
@@ -90,6 +97,7 @@ class DividersController < ApplicationController
   end
   
   private
+    
     def load_page
       page_id = params[:page_id]
       @page = @current_project.pages.find_by_permalink(page_id) || @current_project.pages.find_by_id(page_id)

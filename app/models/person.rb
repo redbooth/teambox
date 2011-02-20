@@ -28,6 +28,9 @@ class Person < ActiveRecord::Base
   named_scope :by_login, lambda { |login|
     {:include => :user, :conditions => {'users.login' => login}}
   }
+
+  named_scope :in_alphabetical_order, :include => :user, :order => 'users.first_name ASC'
+
   
   attr_accessible :role, :permissions
 
@@ -67,16 +70,16 @@ class Person < ActiveRecord::Base
     User.find(:all, :conditions => {:id => user_ids}, :select => 'id, login, first_name, last_name').sort_by(&:name)
   end
   
-  def self.user_names_from_projects(projects)
+  def self.user_names_from_projects(projects, current_user = nil)
     project_ids = Array.wrap(projects).map(&:id)
     connection.select_rows(<<-SQL)
-      SELECT people.project_id, users.login, users.first_name, users.last_name
+      SELECT people.project_id, users.login, users.first_name, users.last_name, people.id
       FROM people
       INNER JOIN projects ON projects.id = people.project_id
       INNER JOIN users ON users.id = people.user_id
       WHERE people.project_id IN (#{project_ids.join(',')})
         AND people.deleted_at IS NULL
-      ORDER BY users.login
+      ORDER BY users.id = #{current_user.try(:id).to_i} DESC,users.login
     SQL
   end
   
@@ -129,5 +132,6 @@ class Person < ActiveRecord::Base
   
   def cleanup_after
     user.remove_recent_project(project)
+    user.tasks_counts_update
   end
 end

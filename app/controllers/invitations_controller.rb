@@ -1,8 +1,20 @@
 class InvitationsController < ApplicationController
   skip_before_filter :load_project
   before_filter :load_target_project, :except => [:invite_format]
-  before_filter :admins_target?, :except => [:index, :accept, :decline, :invite_format]
   before_filter :set_page_title
+  before_filter :load_user_invitation, :only => [ :accept, :decline ]
+  skip_before_filter :belongs_to_project?, :only => [ :accept, :decline ]
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |f|
+      message = t('common.not_allowed')
+      f.html {
+        flash[:error] = message
+        redirect_to project_path(@current_project)
+      }
+      f.js { render :text => "alert('#{message}')" }
+    end
+  end
   
   def index
     if @invite_target
@@ -34,10 +46,12 @@ class InvitationsController < ApplicationController
   end
 
   def new
+    authorize! :admin, @invite_target
     @invitation = @invite_target.invitations.new
   end
   
   def create
+    authorize! :admin, @invite_target
     if params[:invitation]
       user_or_email = params[:invitation][:user_or_email]
       params[:invitation][:role] ||= Person::ROLES[:participant]
@@ -66,7 +80,8 @@ class InvitationsController < ApplicationController
   end
   
   def resend
-    @invitation = Invitation.find params[:id]
+    authorize! :admin, @invite_target
+    @invitation = Invitation.find_by_id params[:id]
     @invitation.send(:send_email)
     
     respond_to do |wants|
@@ -79,11 +94,8 @@ class InvitationsController < ApplicationController
   end
   
   def destroy
-    begin
-      @invitation = Invitation.find params[:id]
-      @invitation.destroy
-    rescue
-    end
+    @invitation = Invitation.find_by_id params[:id]
+    authorize! :destroy, @invitation
     
     respond_to do |wants|
       wants.html {
@@ -93,9 +105,6 @@ class InvitationsController < ApplicationController
       wants.js
     end
   end
-  
-  before_filter :load_user_invitation, :only => [ :accept, :decline ]
-  skip_before_filter :belongs_to_project?, :only => [ :accept, :decline ]
   
   def accept
     @invitation.accept(current_user)
@@ -146,19 +155,4 @@ class InvitationsController < ApplicationController
       invitation
     end
 
-    def admins_target?
-      if !(@invite_target.owner?(current_user) or @invite_target.admin?(current_user))
-          respond_to do |f|
-            message = t('common.not_allowed')
-            f.html {
-              flash[:error] = message
-              redirect_to project_path(@current_project)
-            }
-            f.js { render :text => "alert('#{message}')" }
-          end
-        return false
-      end
-      
-      true
-    end
 end

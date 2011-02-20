@@ -52,7 +52,8 @@ en:
     left_project: "You are no longer in this project"
   activities:
     create_upload:
-      title: "%{user} uploaded file %{file}"
+      title: "%{user} uploaded a file: %{file}"
+      title_with_page: "%{user} uploaded a file to %{page}:"
     create_conversation:
       create_conversation: started the conversation
       title: "%{user} started a conversation: %{conversation}"
@@ -95,6 +96,8 @@ en:
     create_project:
       left: created the project
       title: "%{person} created the project %{project}"
+    create_teambox_data:
+      title: "%{person} imported the project %{project}"
       
     thread:
       on_task_list: "on"
@@ -368,6 +371,9 @@ en:
       view_all: View all conversations
       new: "+ New conversation"
       first: "+ Create the first conversation"
+    pages:
+      title: Pages
+      new: "+ New page"
     fields:
       tracks_time: "Enable time tracking. <em>Will allow users to log time for tasks.</em>"
       public_project: "Public project. <em>Anybody will be able to access it and join it at the <a href='/public'>public projects section</a>.</em>"
@@ -450,6 +456,7 @@ en:
   organizations:
     column:
       general_settings: General settings
+      appearance: Appearance
       admin_users: Manage users
       admin_projects: Manage projects
       billing: Plans and Billing
@@ -462,6 +469,8 @@ en:
       submit: Save changes
       saved: Changes saved
       invalid: Invalid organization
+    appearance:
+      submit: Save changes
     external_view:
       create_your_own_org: "However, you can <a href='%{link}'>create your own organization</a> for your projects."
       request_permission: "To access this organization, you must request permission to some of the administrators:"
@@ -494,11 +503,18 @@ en:
         save_with_yearly_plans: <b>Save 20%</b>. You can also sign up for any plan yearly and <b>get two months free</b>.
         signup_links: "Sign up yearly for <a href='%{corporate}'>Corporate ($2990)</a>, <a href='%{pro}'>Pro ($990)</a>, <a href='%{basic}'>Basic ($290)</a> or <a href='%{personal}'>Personal ($120)</a>."
     fields:
-      logo: Logo <em>Ideally should be 134x36 pixels</em>
       name: "Organization name"
       name_placeholder: Your organization
       permalink: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
       domain: "Domain <em>You can use your own domain for your organization, check the <a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='How to use your own domain for your organization in Teambox'>documentation</a>.</em>"
+    appearance_fields:
+      colours: Site colors
+      logo: Logo <em>Ideally should be 134x36 pixels</em>
+      links_colour: default link color
+      highlight_colour: highlight color
+      link_hover_colour: default link hover color
+      text_colour: default text color
+      header_bar_colour: header bar color
       description: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
     index:
       about:
@@ -621,6 +637,10 @@ en:
   conversations:
     actions:
       confirm_delete: Are you sure you to delete this conversation?
+    convert_form:
+      name: "Name this task"
+      task_list: "Create task in"
+      status: "Status"
     link:
       edit: Edit
     fields:
@@ -965,6 +985,9 @@ en:
       attach: Attach
     attach:
       tooltip: Attach
+    conversations:
+      convert_to_task: "Convert to task"
+      task_name: "eg. Upload Logo Proposal"
     comment:
       commented_on: "-"
       commented_on_a_task_list: "-"
@@ -1005,7 +1028,6 @@ en:
     preview:
       close: Hide preview
       preview: Preview
-      showing: "..."
   teambox_datas:
     new_import:
       title: "Import data"
@@ -1050,7 +1072,7 @@ en:
     tooltip: Upload a file
     comment_upload_link: Attachment
     new:
-      select_a_file: Select a file
+      select_a_file: Select a file to upload to Teambox
       uploading: Uploading...
     index:
       new_file: Upload a File
@@ -1327,10 +1349,17 @@ en:
     notify:
       project: "Teambox Project:"
       view_this_converation_online: "You can %{converation} to answer and attach files."
+      view_this_task_online: "You can %{link} to comment and attach files."
       converation: view this conversation online
+      task_link: view this task online
       reply: "You can also reply to this email to post a reply in the conversation."
       task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
-      are_watching: " are suscribed to this conversation, and will be notified of future replies."
+      are_watching: 
+        one: " is suscribed to this conversation, and will be notified of future replies."
+        other: " are suscribed to this conversation, and will be notified of future replies."
+      are_watching_task: 
+        one: " is suscribed to this task, and will be notified of future replies."
+        other: " are suscribed to this task, and will be notified of future replies."
       stop_watching_link: "%{stop_watch} this thread to stop receiving email notifications."
       stop_watch: Stop watching
       notification_settings_link: "You can change your %{settings_link} for further emails."
@@ -1699,3 +1728,13 @@ en:
     user_exists_instruction: If you already have a Teambox account, log in to link it automatically to your %{provider} profile.
     user_exists_is_not_yours: If you don't own the account '%{account}', %{signup_for_a_new_account}.
     signup_for_a_new_account: click here to sign up for a new account
+    
+  google_docs:
+    authorization_required: In order to use Google Docs you must first authorize Teambox to use your google account.
+    authorize_link: Authorize Google Docs
+    create_new: Create a New Blank Document
+    create: Create
+    creating: Creating...
+    attach: Attach a Google Document
+    search_placeholder: Search Google documents
+    new_document_placeholder: New document title

@@ -47,19 +47,68 @@ describe Emailer do
           end.should raise_error
         end.should change(Task, :count).by(0)
       end
-      
-      it "should set the body as the task name if there is no subject" do
+
+     it "should set the truncated body as the task name if there is no subject" do
         @email_template.subject = ""
-        
+        @email_template.body = "b" * 500
+
         lambda do
           Emailer.receive(@email_template.to_s)
         end.should change(Task, :count).by(1)
-        
+
         task = Task.last(:order => 'tasks.id')
-        task.name.should == @email_template.body
+        task.name.should == @email_template.body[0,252] + "..."
         task.status_name.should == :new
       end
-    
+
+     it "should strip any html tags from the body" do
+        @email_template.subject = ""
+        @email_template.body = "<b>Bold</b> no more!  <a href='more.html'>See more here</a>..."
+
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should change(Task, :count).by(1)
+
+        task = Task.last(:order => 'tasks.id')
+        task.name.should == "Bold no more!  See more here..."
+        task.status_name.should == :new
+      end
+
+     it "should strip any html tags from the body" do
+        @email_template.subject = ""
+        @email_template.body = <<-EMAIL
+          Get things done:
+          <ul>
+           <li>Cook</li>
+           <li>Clean</li>
+           <li>Play</li>
+          </ul>
+          On 19 August 2010 13:48, User <proj+conversation+22245@app.teambox.com<proj%2Bconversation%2B22245@app.teambox.com>> wrote:"
+          #{Emailer::ANSWER_LINE}
+          <div class="email">
+          <div class="people">
+          John, Rob, Jennifer
+          </div>
+          <div class="message">
+          This message is supposed to shrink with the browser.
+          </div>
+          <div class="date">
+          4:15 pm 12/05/07
+          </div>
+          </div>
+        EMAIL
+
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should change(Task, :count).by(1)
+
+        task = Task.last(:order => 'tasks.id')
+        task.name.should == "Get things done:\n          \n           Cook\n           Clean\n           Play"
+        task.status_name.should == :new
+      end
+
+
+
       it "should add the Inbox list if it exists" do
         list = @project.task_lists.create(:user => @owner, :name => 'Inbox')
         

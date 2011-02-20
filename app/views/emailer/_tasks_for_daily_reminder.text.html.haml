@@ -12,3 +12,8 @@
               = due_on(task)
           = link_to h(task.name), project_task_url(task.project, task)
           == [#{link_to h(task.project), project_url(task.project)}]
+          - comment = task.comments.first
+          - if comment
+            .span{ :style => email_text(:normal) + 'border-bottom: 1px #555' }
+              ~ comment.body_html
+

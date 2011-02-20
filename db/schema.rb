@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101115162241) do
+ActiveRecord::Schema.define(:version => 20101208193430) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20101115162241) do
   add_index "activities", ["created_at"], :name => "index_activities_on_created_at"
   add_index "activities", ["deleted_at"], :name => "index_activities_on_deleted_at"
   add_index "activities", ["project_id"], :name => "index_activities_on_project_id"
+  add_index "activities", ["target_id"], :name => "index_activities_on_target_id"
+  add_index "activities", ["target_type"], :name => "index_activities_on_target_type"
 
   create_table "addresses", :force => true do |t|
     t.integer "card_id"
@@ -50,6 +52,8 @@ ActiveRecord::Schema.define(:version => 20101115162241) do
     t.text     "custom_attributes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "access_token"
+    t.string   "access_secret"
   end
 
   add_index "app_links", ["user_id"], :name => "index_app_links_on_user_id"
@@ -77,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20101115162241) do
     t.datetime "updated_at"
     t.date     "due_on"
     t.date     "previous_due_on"
+    t.integer  "uploads_count",        :default => 0
   end
 
   add_index "comments", ["deleted_at"], :name => "index_comments_on_deleted_at"
@@ -144,6 +149,25 @@ ActiveRecord::Schema.define(:version => 20101115162241) do
     t.datetime "created_on"
   end
 
+  create_table "google_docs", :force => true do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.string   "title"
+    t.string   "document_id"
+    t.string   "document_type"
+    t.string   "url"
+    t.string   "edit_url"
+    t.string   "acl_url"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "google_docs", ["comment_id"], :name => "index_google_docs_on_comment_id"
+  add_index "google_docs", ["project_id"], :name => "index_google_docs_on_project_id"
+  add_index "google_docs", ["user_id"], :name => "index_google_docs_on_user_id"
+
   create_table "ims", :force => true do |t|
     t.integer "card_id"
     t.string  "name"
@@ -201,6 +225,7 @@ ActiveRecord::Schema.define(:version => 20101115162241) do
     t.integer  "logo_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "settings"
   end
 
   add_index "organizations", ["domain"], :name => "index_organizations_on_domain"
@@ -241,7 +266,10 @@ ActiveRecord::Schema.define(:version => 20101115162241) do
     t.datetime "updated_at"
   end
 
+  add_index "people", ["deleted_at"], :name => "index_people_on_deleted_at"
+  add_index "people", ["project_id"], :name => "index_people_on_project_id"
   add_index "people", ["user_id", "project_id"], :name => "index_people_on_user_id_and_project_id"
+  add_index "people", ["user_id"], :name => "index_people_on_user_id"
 
   create_table "phone_numbers", :force => true do |t|
     t.integer "card_id"
@@ -352,6 +380,7 @@ ActiveRecord::Schema.define(:version => 20101115162241) do
     t.text     "processed_objects"
     t.string   "service"
     t.integer  "status",                      :default => 0
+    t.datetime "deleted_at"
   end
 
   create_table "uploads", :force => true do |t|
@@ -410,6 +439,8 @@ ActiveRecord::Schema.define(:version => 20101115162241) do
     t.datetime "visited_at"
     t.boolean  "betatester",                               :default => false
     t.boolean  "splash_screen",                            :default => false
+    t.integer  "assigned_tasks_count"
+    t.integer  "completed_tasks_count"
   end
 
   add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"

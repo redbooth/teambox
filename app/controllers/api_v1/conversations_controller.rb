@@ -2,7 +2,10 @@ class ApiV1::ConversationsController < ApiV1::APIController
   before_filter :load_conversation, :only => [:show,:update,:destroy,:watch,:unwatch]
   
   def index
-    query = {:conditions => api_range, :limit => api_limit, :include => [:user, :project]}
+    query = {:conditions => api_range,
+             :limit => api_limit,
+             :order => 'id DESC',
+             :include => [:user, :project]}
     
     @conversations = if @current_project
       @current_project.conversations.scoped(api_scope).all(query)

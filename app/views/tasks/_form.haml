@@ -7,4 +7,5 @@
   .submit
     - unless shown
       = link_to t('common.cancel'), '#cancel'
+    = preview_button
     = form.submit t(:submit, :scope => i18n_scope), :'data-disable-with' => t(:sending, :scope => i18n_scope)

@@ -52,4 +52,9 @@
         - else
           .upload_list
             = list_uploads_inline(comment.uploads)
+      
+      - if comment.google_docs.any?
+        %ul.google_docs_list
+          = render :partial => 'google_docs/file', :collection => comment.google_docs, :as => :google_doc
+          
     .clear

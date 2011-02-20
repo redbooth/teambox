@@ -67,9 +67,13 @@
     .project_link
       margin: 10px 5px
 
-  .recent_conversations
+  .recent_conversations, .project_pages
     a.conversation
       background: url(/images/comment.gif) no-repeat left
+      margin-left: 10px
+      padding-left: 25px
+    a.page
+      background: url(/images/page.png) no-repeat left
       margin-left: 10px
       padding-left: 25px
     a
@@ -324,7 +328,9 @@ form#new_project, form.edit_project
 #show_more_button
   margin-top: 40px
   width: 620px
+  text-align: center
   .activity_paginate_link
-    width: 100%
     text-align: center
- 
+
+img#activity_paginate_loading
+  margin-left: 300px

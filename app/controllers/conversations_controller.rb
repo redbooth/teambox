@@ -1,6 +1,10 @@
 class ConversationsController < ApplicationController
   before_filter :load_conversation, :except => [:index, :new, :create]
   before_filter :set_page_title
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    handle_cancan_error(exception)
+  end
 
   def new
     authorize! :converse, @current_project
@@ -92,6 +96,7 @@ class ConversationsController < ApplicationController
   end
 
   def watch
+    authorize! :watch, @conversation
     @conversation.add_watcher(current_user)
     
     respond_to do |f|
@@ -107,6 +112,41 @@ class ConversationsController < ApplicationController
       f.js
       f.html { redirect_to current_conversation }
     end
+  end
+  
+  def convert_to_task
+    authorize! :update, @conversation
+
+    @conversation.attributes = params[:conversation]
+    @conversation.updating_user = current_user
+    @conversation.comments_attributes = {"0" => params[:comment]} if params[:comment]
+
+    success = @conversation.save
+    if success
+      @task = @conversation.convert_to_task!
+      success = @task && @task.errors.empty?
+    end
+
+    if success
+      if request.xhr? or iframe?
+        if request.referer.ends_with?(project_conversation_path(@current_project, @conversation))
+          render :text => project_task_path(@current_project, @task)
+        else
+          render :partial => 'activities/thread', :locals => {:thread => @task}
+        end
+      else
+        redirect_to current_conversation
+      end
+    else
+      if request.xhr? or iframe?
+        output_errors_json(@conversation)
+      else
+        # TODO: display inline instead of flash
+        flash.now[:error] = @conversation.errors.to_a.first[1]
+        render :action => :new
+      end
+    end
+
   end
 
   protected

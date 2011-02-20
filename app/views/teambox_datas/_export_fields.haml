@@ -2,7 +2,7 @@
   %p= t('.description')
 
   .projects
-    - for organization in current_user.organizations
+    - for organization in current_user.admin_organizations
       - if organization.projects.any?
         %h3= h(organization.name)
         - for project in organization.projects

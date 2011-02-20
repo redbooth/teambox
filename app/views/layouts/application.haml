@@ -2,7 +2,6 @@
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang'=>"en", :lang=>"en" }
   %head
     %meta{ 'http-equiv' => "content-type", :content => "text/html;charset=utf-8" }
-    = current_user_tag if current_user
     = csrf_meta_tag
     = auto_discovery_link_by_context(current_user, @current_project)
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
@@ -10,6 +9,8 @@
     = stylesheet_link_tag 'application', :media => :screen
     = #stylesheet_link_tag 'custom', :media => :screen
     = stylesheet_link_tag 'print', :media => :print
+    = yield :stylesheet_includes
+    = organization_link_colour
     = sprockets_include_tag
     = yield :js_includes
     - javascript_tag do
@@ -33,4 +34,5 @@
             .column#column= content_for_column
       = footer
     = autocomplete_projects_people_data
+    = projects_people_data
     = javascripts

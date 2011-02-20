@@ -59,7 +59,6 @@ Scenario: Mislav imports another historic project
     | Stevie Hobs (@steve)                  |  Frodo Baggins (@frodo)    |
     | Put all projects in this organization | Teambox Data               |
   And I press "Import"
-  Then show me the page
   Then I should see "Imported projects"
   And I should see "Hobo Pro"
   And @mislav should receive 1 email

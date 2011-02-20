@@ -129,8 +129,10 @@ Feature: When I use Teambox community version, there is only one organization
     Then I should see "configure your organization"
     When I follow "Click here"
     Then I should see "Introduce some HTML code for your main site to configure your site"
+    And I follow "Appearance"
     When I fill in "organization_description" with "<h1>TITLE</h1>"
     And I press "Save changes"
+    And I follow "General settings"
     Then I should not see "Introduce some HTML code for your main site to configure your site"
     When I log out
     And I go to the login page

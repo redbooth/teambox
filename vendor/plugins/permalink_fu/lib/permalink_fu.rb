@@ -4,7 +4,6 @@ rescue Object
   puts "no iconv, you might want to look into it."
 end
 
-require 'digest/sha1'
 module PermalinkFu
   class << self
     attr_accessor :translation_to
@@ -13,19 +12,19 @@ module PermalinkFu
     # This method does the actual permalink escaping.
     def escape(string, klass)
       result = ((translation_to && translation_from) ? Iconv.iconv(translation_to, translation_from, string) : string).to_s
-      result.gsub!(/[^\x00-\x7F]+/, '') # Remove anything non-ASCII entirely (e.g. diacritics).
+      result = Iconv.iconv('ascii//ignore//translit', 'utf-8', result).to_s
       result.gsub!(/[^\w_ \-]+/i,   '') # Remove unwanted chars.
       result.gsub!(/[ \-]+/i,      '-') # No more than one of the separator in a row.
       result.gsub!(/^\-|\-$/i,      '') # Remove leading/trailing separator.
       result.downcase!
       result = "#{klass}-#{result}" if Integer(result) rescue result
-      result.size.zero? ? random_permalink(string) : result
+      result.size.zero? ? random_permalink : result
     rescue
-      random_permalink(string)
+      random_permalink
     end
-    
-    def random_permalink(seed = nil)
-      Digest::SHA1.hexdigest("#{seed}#{Time.now.to_s.split(//).sort_by {rand}}")
+
+    def random_permalink
+      rand(Time.now.to_i**2).to_s(36)
     end
   end
 

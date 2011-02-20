@@ -1,5 +1,5 @@
 = loading_image(task_list_id('delete_loading',project,task_list))
-- if task_list.editable?(current_user)
+- if can? :update, task_list
   .text_actions{ :id => task_list_id('edit_actions',project,task_list) }
     = task_list_link(project,task_list)
     = t('common.or')

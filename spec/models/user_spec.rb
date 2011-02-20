@@ -94,7 +94,7 @@ describe User do
 
     describe "activation email" do
       it "should send an activation email" do
-        Emailer.should_receive(:deliver_confirm_email).with(@user).once
+        Emailer.should_receive(:deliver_confirm_email).with(@user.id).once
         @user.send_activation_email
       end
 
@@ -470,6 +470,26 @@ describe User do
       @user.pending_tasks.should be_empty
     end
   end
+
+  describe "#assigned_tasks_count" do
+    before do
+      @user = Factory.create(:user)
+      @participant = Factory.create(:user)
+      @task = Factory.create(:task, :status => 0)
+      @task.project.add_user @user
+    end
+    it "should return assigned tasks count" do
+      @task.assign_to(@user)
+
+      @user.reload
+      @user.assigned_tasks_count.should == 1
+
+      @task.assign_to(@participant)
+      @user.reload
+      @user.assigned_tasks_count.should == 0
+    end
+  end
+
 
   describe "last visit tracking" do
     before do

@@ -10,6 +10,9 @@ class Task < RoleRecord
   ACTIVE_STATUS_CODES = [:new, :open].map { |name| STATUSES[name] }
 
   concerned_with :scopes, :callbacks
+  
+  has_one  :first_comment, :class_name => 'Comment', :as => :target, :order => 'created_at ASC'
+  has_many :recent_comments, :class_name => 'Comment', :as => :target, :order => 'created_at DESC', :limit => 2
 
   belongs_to :task_list, :counter_cache => true
   belongs_to :page
@@ -30,7 +33,8 @@ class Task < RoleRecord
   # set by controller to indicate user that's doing task updating
   attr_accessor :updating_user
   attr_accessor :updating_date
-  
+
+  after_save :update_tasks_counts
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_save :set_comments_author, :if => :updating_user
   before_save :transition_from_new_to_open, :if => :assigned_id?
@@ -171,8 +175,15 @@ class Task < RoleRecord
     else
       "#{activity[:description]} #PT"
     end
-    
-    self.comments_attributes = [{ :body => comment }]
+
+    #If this is a new_record, use #save_changes_to_comment callback
+    if track_changes?
+      comments << Comment.new(:body => comment)
+    else
+      #use nested attributes
+      self.comments_attributes = [{ :body => comment }]
+    end
+
     save!
   end
 
@@ -227,6 +238,14 @@ class Task < RoleRecord
       base[:assigned] = assigned.to_api_hash(:include => :user) if assigned
     end
     
+    if Array(options[:include]).include? :thread_comments
+      base[:first_comment] = first_comment.to_api_hash(options)  if first_comment
+      base[:recent_comments] = recent_comments.map{|c|c.to_api_hash(options)}
+    elsif !Array(options[:include]).include?(:comments)
+      base[:first_comment_id] = first_comment.try(:id)
+      base[:recent_comment_ids] = recent_comments.map{|c|c.id}
+    end
+    
     if Array(options[:include]).include? :user
       base[:user] = {
         :username => user.login,
@@ -272,8 +291,12 @@ class Task < RoleRecord
   end
 
   def save_changes_to_comment # before_save
+    # We should only ever execute this method once per callback cycle
+    return if @saved_changes_to_comment
+
     comment = comments.detect(&:new_record?) || comments.build_by_user(updating_user)
     
+    comment.project = project
     comment.created_at = @updating_date if @updating_date
     
     if status_changed? or self.new_record?
@@ -289,6 +312,19 @@ class Task < RoleRecord
     if due_on_changed? or self.new_record?
       comment.due_on = self.due_on
       comment.previous_due_on = self.due_on_was if due_on_changed?
+    end
+
+    @saved_changes_to_comment = true
+    true
+  end
+
+  def update_tasks_counts # after_save
+    if assigned_id_changed? or status_changed? or self.new_record?
+      [self.assigned_id, self.assigned_id_was].compact.each do |person_id|
+        if person = Person.find_by_id(person_id)
+          person.user.tasks_counts_update
+        end
+      end
     end
     true
   end

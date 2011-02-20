@@ -1,0 +1,9 @@
+.activity
+  = thumb_avatar(activity.user)
+  .container
+    %span.user=h activity.user.short_name
+    = t(".title", :person => link_to(activity.target.user, user_path(activity.target.user)), :project => link_to(activity.project, project_path(activity.project)))
+    = activity_project_link(activity.project)
+    .date
+      = posted_date activity.posted_date
+  .clear

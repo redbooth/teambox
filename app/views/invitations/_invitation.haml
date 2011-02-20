@@ -12,7 +12,7 @@
       = t('.time_ago', :time_ago_in_words => time_ago_in_words(invitation.updated_at))
     - else
       = t('.just_now')
-  - if invitation.editable?(current_user)
+  - if can? :update, invitation
     .links
       = link_to t('invitations.invitation.resend'), polymorphic_path([:resend, invitation.target, invitation])
       = loading('resend_invitation', invitation.id)

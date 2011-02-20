@@ -9,4 +9,5 @@
   = render 'watcher_fields', :f => f, :project => @current_project
   .submit
     %span.help= formatting_documentation_link
+    = preview_button
     = f.submit t('.submit')

@@ -364,9 +364,9 @@ describe Comment do
         :body => "Can't touch this"
       Comment.update_all({:updated_at => 15.minutes.ago}, :id => comment.id)
 
-      comment.reload.updated_at.should be_close(15.minutes.ago, 1)
+      comment.reload.updated_at.should be_close(15.minutes.ago, 5)
       upload.reload.destroy
-      comment.reload.updated_at.should be_close(Time.now, 1)
+      comment.reload.updated_at.should be_close(Time.now, 5)
     end
   end
   

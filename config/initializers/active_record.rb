@@ -15,6 +15,31 @@ ActiveRecord::Associations::AssociationCollection.class_eval do
 end
 
 class ActiveRecord::Base
+
+  def update_record_without_timestamping
+    class << self
+      def record_timestamps; false; end
+    end
+
+    save
+
+    class << self
+      remove_method :record_timestamps
+    end
+  end
+
+  def update_record_without_timestamping!
+    class << self
+      def record_timestamps; false; end
+    end
+
+    save!
+
+    class << self
+      remove_method :record_timestamps
+    end
+  end
+
   def to_json(options = {})
     respond_to?(:to_api_hash) ? to_api_hash(options).to_json : super(options)
   end

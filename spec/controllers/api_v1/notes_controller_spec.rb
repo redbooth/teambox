@@ -23,6 +23,15 @@ describe ApiV1::NotesController do
       JSON.parse(response.body)['objects'].length.should == 1
     end
     
+    it "shows all dividers without a page or project" do
+      login_as @user
+      
+      get :index
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 1
+    end
+    
     it "returns references for linked objects" do
       login_as @user
       
@@ -42,6 +51,15 @@ describe ApiV1::NotesController do
       login_as @user
       
       get :show, :project_id => @project.permalink, :page_id => @page.id, :id => @note.id
+      response.should be_success
+      
+      JSON.parse(response.body)['id'].to_i.should == @note.id
+    end
+    
+    it "shows a note without a page or project id" do
+      login_as @user
+      
+      get :show, :id => @note.id
       response.should be_success
       
       JSON.parse(response.body)['id'].to_i.should == @note.id

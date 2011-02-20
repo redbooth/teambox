@@ -43,21 +43,26 @@ class ApiV1::APIController < ApplicationController
     end
   end
   
-  def check_permissions
-    unless @current_project.editable?(current_user)
-      api_error "You don't have permission to edit/update/delete within \"#{@current_project}\" project", :unauthorized
-    end
-  end
-  
   def load_task_list
-    if @current_project && params[:task_list_id]
-      @task_list = @current_project.task_lists.find(params[:task_list_id])
+    if params[:task_list_id]
+      @task_list = if @current_project
+        @current_project.task_lists.find(params[:task_list_id])
+      else
+        TaskList.find_by_id(params[:task_list_id], :conditions => {:project_id => current_user.project_ids})
+      end
+      api_status(:not_found) unless @task_list
     end
   end
   
   def load_page
-    @page = @current_project.pages.find params[:page_id]
-    api_status(:not_found) unless @page
+    if params[:page_id]
+      @page = if @current_project
+        @current_project.pages.find(params[:page_id])
+      else
+        Page.find_by_id(params[:page_id], :conditions => {:project_id => current_user.project_ids})
+      end
+      api_status(:not_found) unless @page
+    end
   end
 
   # Common api helpers
@@ -77,17 +82,40 @@ class ApiV1::APIController < ApplicationController
   end
   
   def api_wrap(object, options={})
-    objects = if object.is_a? Enumerable
+    objects = if object.respond_to? :each
       object.map{|o| o.to_api_hash(options) }
     else
       object.to_api_hash(options)
     end
     
-    if options[:references]
-      { :references => Array(object).map{ |obj|  
-          options[:references].map{|ref| obj.send(ref)}
-        }.flatten.compact.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))},
-        :objects => objects }
+    if options[:references] || options[:reference_collections]
+      { :objects => objects }.tap do |wrap|
+        # List of messages to send to the object to get referenced objects
+        if options[:references]
+          wrap[:references] = Array(object).map do |obj|
+            options[:references].map{|ref| obj.send(ref) }.flatten.compact
+          end.flatten.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
+        end
+        
+        # List of messages to send to the object to get referenced objects as [:class, id]
+        if options[:reference_collections]
+          query = {}
+          Array(object).each do |obj|
+            options[:reference_collections].each do |ref|
+              obj_query = obj.send(ref)
+              if obj_query
+                query[obj_query[0]] ||= []
+                query[obj_query[0]] << obj_query[1]
+              end
+            end
+          end
+          
+          wrap[:references] = (wrap[:references]||[]) + (query.map do |query_class, values|
+            objects = Kernel.const_get(query_class).find(:all, :conditions => {:id => values.uniq})
+            objects.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
+          end.flatten)
+        end
+      end
     else
       objects
     end

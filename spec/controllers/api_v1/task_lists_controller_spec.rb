@@ -220,8 +220,17 @@ describe ApiV1::TaskListsController do
   end
   
   describe "#destroy" do
-    it "should allow participants to destroy a task list" do
-      login_as @user
+    it "should allow the creator to destroy a task list" do
+      login_as @task_list.user
+      
+      put :destroy, :project_id => @project.permalink, :id => @task_list.id
+      response.should be_success
+      
+      @project.task_lists(true).length.should == 1
+    end
+    
+    it "should allow an admin to destroy a task list" do
+      login_as @admin
       
       put :destroy, :project_id => @project.permalink, :id => @task_list.id
       response.should be_success

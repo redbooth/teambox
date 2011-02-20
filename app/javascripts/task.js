@@ -32,9 +32,9 @@ document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
 
 // update task counter
 document.on('ajax:success', 'form.edit_task', function(e, form) {
-	var task_data = e.memo.headerJSON
-	counter = $$('.task_counter[data-task-id='+ task_data.id +']').first()
-  counter.update(parseInt(counter.innerHTML) + 1)
+  var task_data = e.memo.headerJSON
+  var counter = $$('.task_counter[data-task-id='+ task_data.id +']').first()
+  if (counter) counter.update(parseInt(counter.innerHTML) + 1)
 })
 
 document.on('click', '.date_picker', function(e, element) {
@@ -112,7 +112,28 @@ Task = {
     var container = archived ? $(task_list_id + '_the_closed_tasks') : $(task_list_id + '_the_main_tasks');
     container.innerHTML = html;
     TaskList.updateList(task_list_id);
+  },
+
+  insertAssignableUsers: function() {
+    if (typeof _people == "object") {
+      $$('form.new_comment.edit_task .task_actions select#task_assigned_id, form.new_comment.edit_conversation .conversation_actions select#conversation_assigned_id').each(function(select) {
+        var project_id = select.up('form').readAttribute('data-project-id')
+        if (!select.descendants().any()) {
+          select.insert(new Element('option').insert(task_unassigned))
+        }
+        if (typeof _people[project_id] == "object") {
+          _people[project_id].each(function(person) {
+            if (!select.select('[value=' + person[0] + ']').any()) {
+              var option = new Element('option', { 'value': person[0] }).insert(person[2])
+              if (select.readAttribute('data-assigned') == person[0]) option.selected = true
+              select.insert(option)
+            }
+          })
+        }
+      })
+    }
   }
+
 }
 
 document.on('click', 'a.show_archived_tasks_link', function(e, el) {
@@ -154,4 +175,5 @@ document.observe('dom:loaded', function(e) {
   Task.highlight_my_tasks();
   Filter.updateCounts(false);
   Filter.updateFilters();
+  Task.insertAssignableUsers();
 });

@@ -25,6 +25,9 @@ defaults: &defaults
   # Automatically true on Heroku.
   # See "config/amazon_s3.yml" for info about credentials.
   amazon_s3: false
+  # Upload expiration for public URL, in minutes
+  # Take fragment caching into consideration when setting this value
+  amazon_s3_expiration: 157680000
 
   asset_max_file_size: 50 # in megabytes
 
@@ -115,6 +118,7 @@ defaults: &defaults
 development:
   <<: *defaults
   app_domain: localhost:3000
+  asset_max_file_size: 1
   allow_outgoing_email: false
   autorefresh_interval: 20 # in seconds
 

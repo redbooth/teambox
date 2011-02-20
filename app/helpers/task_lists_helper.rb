@@ -102,7 +102,7 @@ module TaskListsHelper
   end
 
   def task_list_editable?(task_list,user)
-    task_list.editable?(user)
+    can? :update, task_list
   end
 
   def date_range_for_task_list(task_list)
@@ -192,7 +192,7 @@ module TaskListsHelper
   end
 
   def task_list_primer(project,hidden=false)
-    if project.editable?(current_user)
+    if can? :make_task_lists, project
       render 'task_lists/primer', :project => project, :primer_hidden => hidden
     end
   end

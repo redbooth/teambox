@@ -2,7 +2,7 @@
   - if @current_project
     %h2= t('.tasks_for_project')
     
-    - if @current_project.editable?(current_user)
+    - if can? :make_task_lists, @current_project
       = task_list_form(@current_project,TaskList.new)
     
     #task_lists

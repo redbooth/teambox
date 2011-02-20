@@ -1,12 +1,15 @@
 class Activity < ActiveRecord::Base
-  belongs_to :target, :polymorphic => true
+  belongs_to :target, :polymorphic => true, :with_deleted => true
+  belongs_to :comment_target, :polymorphic => true, :with_deleted => true
   belongs_to :user
   belongs_to :project
   acts_as_paranoid
 
   named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_target_type = 'TaskList' || comment_target_type = 'Task'"
   named_scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_target_type = 'Conversation'"
-  
+  named_scope :for_tasks, :conditions => "target_type = 'Task' || comment_target_type = 'Task'"
+  named_scope :in_targets, lambda {|targets| {:conditions => ["target_id IN (?) OR comment_target_id IN (?)", *(Array(targets).collect(&:id)*2)]}}
+
   named_scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
 
   named_scope :in_projects, lambda { |projects| { :conditions => ["project_id IN (?)", Array(projects).collect(&:id) ] } }
@@ -20,6 +23,7 @@ class Activity < ActiveRecord::Base
 
   def self.log(project,target,action,creator_id)
     project_id = project.try(:id)
+    return if project.try(:is_importing)
 
     if target.is_a? Comment
       comment_target_type = target.target_type
@@ -27,7 +31,7 @@ class Activity < ActiveRecord::Base
       # touch activity related to that comment's thread
       Activity.last(:conditions => ["target_type = ? AND target_id = ?", comment_target_type, comment_target_id]).try(:touch)
     end
-        
+    
     activity = Activity.new(
       :project_id => project_id,
       :target => target,
@@ -39,6 +43,27 @@ class Activity < ActiveRecord::Base
     activity.save
     
     activity
+  end
+  
+  def refs_thread_comments
+    if target.respond_to? :first_comment
+      [target.first_comment] + target.recent_comments
+    else
+      []
+    end
+  end
+  
+  def refs_comment_target
+    if comment_target.respond_to? :first_comment
+      [comment_target,
+       comment_target.first_comment,
+       comment_target.user,
+       comment_target.first_comment.user] + 
+       comment_target.recent_comments + 
+       comment_target.recent_comments.map(&:user)
+    else
+      [comment_target]
+    end
   end
 
   def action_comment_type
@@ -73,21 +98,6 @@ class Activity < ActiveRecord::Base
 
   def downcase_type
     target.type.to_s.downcase
-  end
-
-  def target
-    case target_type
-    when 'Person'       then begin; Person.find_with_deleted(target_id); rescue; nil; end
-    when 'Comment'      then begin; Comment.find_with_deleted(target_id); rescue; nil; end
-    when 'Conversation' then begin; Conversation.find_with_deleted(target_id); rescue; nil; end
-    when 'TaskList'     then begin; TaskList.find_with_deleted(target_id); rescue; nil; end
-    when 'Task'         then begin; Task.find_with_deleted(target_id); rescue; nil; end
-    when 'Page'         then begin; Page.find_with_deleted(target_id); rescue; nil; end
-    when 'Note'         then begin; Note.find_with_deleted(target_id); rescue; nil; end
-    when 'Divider'      then begin; Divider.find_with_deleted(target_id); rescue; nil; end
-    when 'Upload'       then begin; Upload.find_with_deleted(target_id); rescue; nil; end
-    when 'Project'      then begin; Project.find_with_deleted(target_id); rescue; nil; end
-    end
   end
 
   def user

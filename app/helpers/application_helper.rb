@@ -1,10 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  def current_user_tag
-    %(<meta name='current-username' content='#{current_user.login}'/>)
-  end
-
   def csrf_meta_tag
     if protect_against_forgery?
       out = %(<meta name="csrf-param" content="%s"/>\n)
@@ -235,6 +231,34 @@ module ApplicationHelper
     if Teambox.config.tracking_enabled and Rails.env.production?
       fake_img = "http://teambox.com/logo.png/#{request.host}"
       %(<div style="background-image: url(#{fake_img})"></div>)
+    end
+  end
+
+  def organization_link_colour
+    "".tap do |html|
+      html << '<style type="text/css">'
+      html << "a { color: ##{@organization ? @organization.settings['colours']['links'] : ''};}"
+      html << "a:hover { color: ##{@organization ? @organization.settings['colours']['link_hover'] : ''};}"
+      html << "body { font-color: ##{@organization ? @organization.settings['colours']['text'] : ''};}"
+      html << '</style>'
+    end
+  end
+
+  def organization_header_bar_colour
+    "background: ##{@organization ? @organization.settings['colours']['header_bar'] : ''};"
+  end
+
+  def custom_organization_colour_field(f, organization, field)
+    colour = organization.settings['colours'][field]
+    "".tap do |html|
+      html << f.hidden_field(:settings, :id => "organization_settings_colours_#{field}", :name => "organization[settings][colours][#{field}]", :value => colour)
+      html << content_tag('button', '', :id => "organization_settings_colours_#{field}_swatch", :class => 'colorbox', :style=>"width: 56px; height: 56px; border: 1px outset #666; cursor: crosshair;")
+    end
+  end
+
+  def preview_button
+    content_tag(:button, :'data-alternate' => t('comments.preview.close'), :class => :preview) do
+      t('comments.preview.preview')
     end
   end
 end

@@ -191,7 +191,11 @@ describe Task do
       comment.status.should == 1
       comment.assigned_id.should be_nil
       
-      task.reload
+      # We use find rather than reload because the #save_changes_to_comment
+      # callback set's an ivar to impede reexecution
+      task = Task.find(task.id)
+      task.updating_user = user
+
       task.update_attributes(:status => "2", :comments_attributes => [{:body => ""}])
       task.status_name.should == :hold
       task.should have(2).comments
@@ -241,7 +245,11 @@ describe Task do
       comment.previous_assigned_id.should be_nil
       comment.assigned_id.should == person2.id
       
-      task.reload
+      # We use find rather than reload because the #save_changes_to_comment
+      # callback set's an ivar to impede reexecution
+      task = Task.find(task.id)
+      task.updating_user = user
+
       task.update_attributes(:assigned_id => person3.id, :comments_attributes => [{:body => ""}])
       task.should be_assigned_to(user3)
       task.should have(2).comments

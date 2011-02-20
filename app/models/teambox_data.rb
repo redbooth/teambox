@@ -11,6 +11,7 @@ class TeamboxData < ActiveRecord::Base
   before_update :check_state
   before_destroy :clear_import_data
   
+  acts_as_paranoid
   has_attached_file :processed_data,
     :url  => "/exports/:id/:basename.:extension",
     :path => Teambox.config.amazon_s3 ?
@@ -32,7 +33,7 @@ class TeamboxData < ActiveRecord::Base
       
       user_map.each do |login,dest_login|
         if !users.include?(dest_login)
-          @errors.add "user_map_#{login}", "#{dest_login} Not known to user #{users.inspect} [#{user_map.inspect}]"
+          @errors.add "user_map_#{login}", "#{dest_login} Not known to user"
         end
       end
     end
@@ -116,10 +117,11 @@ class TeamboxData < ActiveRecord::Base
   
   def post_check_state
     if type_name == :export
-      Emailer.send_with_language(:notify_export, user.locale, self) if @dispatch_notification
+      Emailer.send_with_language(:notify_export, user.locale, self.id) if @dispatch_notification
       TeamboxData.send_later(:delayed_export, self.id) if @dispatch_export
     elsif type_name == :import
       store_import_data if @do_store_import_data
+      Emailer.send_with_language(:notify_import, user.locale, self.id) if @dispatch_notification
     end
   end
   
@@ -142,16 +144,16 @@ class TeamboxData < ActiveRecord::Base
       end
     rescue Exception => e
       # Something went wrong?!
-      Rails.logger.warn "#{user} imported an invalid dump (#{self.id})"
+      Rails.logger.warn "#{user} imported an invalid dump (#{self.id}) #{e.inspect}"
       self.processed_at = nil
       next_status = :uploading
     end
     
     self.status_name = next_status
     clear_import_data
-    save unless new_record? or @check_state
+    @dispatch_notification = true
     
-    Emailer.send_with_language(:notify_import, user.locale, self)
+    save unless new_record? or @check_state
   end
   
   def do_export
@@ -193,27 +195,26 @@ class TeamboxData < ActiveRecord::Base
     (imported? or exported?) and processed_at.nil?
   end
   
-  def project_ids=(value)
-    write_attribute :project_ids, Array(value).map(&:to_i).compact
-  end
-  
-  def projects
-    if user
-      Project.find(:all, :conditions => {:id => project_ids, :organization_id => user.admin_organization_ids})
-    else
-      Project.find(:all, :conditions => {:id => project_ids})
-    end
-  end
-  
-  def organizations_to_export
-    if user
-      Organization.find(:all, :conditions => {:projects => {:id => project_ids, :organization_id => user.admin_organization_ids}}, :joins => [:projects])
-    else
-      Organization.find(:all, :conditions => {:projects => {:id => project_ids}}, :joins => [:projects])
-    end
-  end
-  
   def users_to_export
     organizations_to_export.map{|o| o.users + o.users_in_projects }.flatten.compact
+  end
+  
+  def to_api_hash(options = {})
+    base = {
+      :id => id,
+      :data_type => type_name,
+      :service => service,
+      :status => status_name,
+      :user_id => user_id,
+      :processed_at => processed_at,
+      :created_at => created_at.to_s(:api_time)
+    }
+    
+    base[:processed_at] = processed_at.to_s(:api_time) if processed_at
+    base[:target_organization] = target_organization if target_organization
+    base[:project_ids] = project_ids if project_ids
+    base[:type] = self.class.to_s if options[:emit_type]
+    
+    base
   end
 end

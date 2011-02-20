@@ -4,7 +4,7 @@ Feature: Making project pages
     Given a project exists with name: "Ruby Rockstars"
     And I am logged in as mislav
     And I am in the project called "Ruby Rockstars"
-
+  
   Scenario: I create a page
     When I go to the pages of the "Ruby Rockstars" project
       And I follow "New Page" within "#column"
@@ -15,6 +15,8 @@ Feature: Making project pages
     And I should see "Text"
     And I should see "Divider"
     And I should see "Upload"
+    And I should see "Edit"
+    And I should see "Delete"
   
   Scenario: I create a simple page
     Given the project page "Conferences to Attend" exists in "Ruby Rockstars"

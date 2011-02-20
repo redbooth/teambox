@@ -11,7 +11,13 @@ module OrganizationsHelper
         t.links_to organization_path(@organization)
         t.highlights_on :controller => :organizations, :action => :show
         t.highlights_on :controller => :organizations, :action => :edit
-        t.highlights_on :controller => :organizations, :action => :update
+        t.highlights_on :controller => :organizations, :action => :update if request.referer =~ /edit/
+      end
+      add_tab do |t|
+        t.named t('.appearance')
+        t.links_to appearance_organization_path(@organization)
+        t.highlights_on :controller => :organizations, :action => :appearance
+        t.highlights_on :controller => :organizations, :action => :update if request.referer =~ /appearance/
       end
       add_tab do |t|
         t.named t('.admin_users')

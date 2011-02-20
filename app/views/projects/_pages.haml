@@ -1,0 +1,5 @@
+.project_pages
+  %h2= t('.title')
+  - for page in pages
+    = link_to h(page), project_page_path(project,page), :class => 'page'
+  = link_to t('.new'), new_project_page_path(project), :class => 'new'

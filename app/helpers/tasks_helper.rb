@@ -111,6 +111,12 @@ module TasksHelper
       [localized_status_name(name), code]
     }
   end
+
+  def task_lists_for_select(project)
+    project.task_lists.collect do |task_list|
+      [task_list.name, task_list.id]
+    end << ['Inbox', '']
+  end
   
   def people_from_project_for_select(project)
     people = project.people(:include => :user).to_a
@@ -128,12 +134,12 @@ module TasksHelper
     link_to(t('projects.fields.new.time_tracking_docs'), "http://help.teambox.com/faqs/advanced-features/time-tracking", :target => '_blank')
   end
 
-  def date_picker(f, field, embedded = false)
+  def date_picker(f, field, embedded = false, html_options = {})
     date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>"
     div_id = "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}"
     content_tag :div, :class => "date_picker #{'embedded' if embedded}" do
       image_tag('/images/calendar_date_select/calendar.gif', :class => 'calendar_date_select_popup_icon') <<
-      f.hidden_field(field) << content_tag(:span, date_field, :class => 'localized_date')
+      f.hidden_field(field, html_options) << content_tag(:span, date_field, :class => 'localized_date')
     end
   end
   

@@ -30,4 +30,16 @@ module ApidocsHelper
       objects
     end
   end
+  
+  def routes_for_model(modelname)
+    mpath = modelname.underscore
+    reject_actions = ['edit', 'new']
+    [].tap do |list|
+      @consolidated_routes.each do |route|
+        next unless route[:controller].singularize == mpath
+        next if reject_actions.include? route[:action]
+        list << route
+      end
+    end.sort_by {|r| r[:action]}
+  end
 end

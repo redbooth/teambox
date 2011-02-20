@@ -28,12 +28,14 @@ ActionController::Routing::Routes.draw do |map|
   map.auth_failure   '/auth/failure', :controller => 'auth', :action => 'failure'
   map.complete_signup '/complete_signup',          :controller => 'users', :action => 'complete_signup'
   map.unlink_app      '/auth/:provider/unlink',   :controller => 'users', :action => 'unlink_app'
-
+  map.authorize_google_docs '/auth/google', :controller => 'auth', :provider => 'google'
+  map.resources :google_docs, :collection => [:search]
+  
   map.javascript_environment '/i18n/environment.js', :controller => 'javascripts', :action => 'environment'
 
   map.resources :reset_passwords
   map.resource :session
-  map.resources :organizations, :member => [:projects, :external_view, :delete] do |org|
+  map.resources :organizations, :member => [:projects, :external_view, :delete, :appearance] do |org|
     org.resources :memberships, :member => [:change_role, :add, :remove]
   end
 
@@ -107,10 +109,11 @@ ActionController::Routing::Routes.draw do |map|
 
     project.contacts 'contacts', :controller => :people, :action => :contacts, :method => :get
     project.resources :people, :member => { :destroy => :get }
-    project.resources :conversations, :has_many => [:comments], :member => { :watch => :put, :unwatch => :put }
+    project.resources :conversations, :has_many => [:comments], :member => { :watch => :put, :unwatch => :put, :convert_to_task => :put }
     project.resources :pages, :has_many => [:notes,:dividers,:task_list,:uploads], :member => { :reorder => :post }, :collection => { :resort => :post }
     
     project.search 'search', :controller => 'search'
+    project.resources :google_docs, :collection => [:search]
   end
   
   map.public_projects '/public', :controller => 'public/projects', :action => :index

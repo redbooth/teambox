@@ -16,7 +16,7 @@ class AuthController < ApplicationController
         elsif AppLink.find_by_provider_and_app_user_id(provider, auth_hash[:uid])
           flash[:error] = t(:'oauth.already_taken_by_other_account')
         else
-          current_user.link_to_app(provider, auth_hash[:uid])
+          current_user.link_to_app(provider, auth_hash[:uid], auth_hash[:credentials])
           flash[:success] = t(:'oauth.account_linked')
         end
         return redirect_to(account_linked_accounts_path)
@@ -29,7 +29,10 @@ class AuthController < ApplicationController
             session[:profile] = @profile
             app_link = AppLink.create!(:provider => provider, 
                                        :app_user_id => auth_hash[:uid],
-                                       :custom_attributes => auth_hash)
+                                       :custom_attributes => auth_hash,
+                                       :access_token => auth_hash[:credentials] ? auth_hash[:credentials][:token] : nil,
+                                       :access_secret => auth_hash[:credentials] ? auth_hash[:credentials][:secret] : nil
+                                        )
             session[:app_link] = app_link.id
             if conflict?
               return redirect_to login_path
