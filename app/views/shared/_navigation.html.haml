@@ -34,7 +34,7 @@
         .el= link_to t('.people'), project_people_path(project), :class => 'people ajax'
     - if projects_archived > 0
       .el= link_to t('.show_all_projects'), all_projects_path, :class => 'more ajax'
-    - if !Teambox.config.community || (@community_organization && @community_role)
+    - if !Teambox.config.community || (Teambox.config.community && !@community_organization) || (@community_organization && @community_role)
       .el= link_to t('.new_project'), new_project_path, :class => 'more ajax'
 
   -# My Tasks
