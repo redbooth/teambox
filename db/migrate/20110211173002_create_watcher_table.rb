@@ -16,26 +16,29 @@ class CreateWatcherTable < ActiveRecord::Migration
     [Conversation, Task].each do |klass|
       klass.find_in_batches do |entries|
         entries.each do |entry|
-          user_ids = YAML::load(entry[:whatchers_ids])
-          entry.add_watchers( User.where(:id => user_ids) )
+          unless entry[:whatchers_ids].nil?
+            user_ids = YAML::load(entry[:whatchers_ids])
+            entry.add_watchers( User.where(:id => user_ids) )
+          end
         end
       end
     end
 
     [Conversation, Task, TaskList, Page].each do |klass|
-      remove_column klass.table_name.to_sym, :watchers_ids
+      remove_column klass.table_name.to_sym, :watchers_ids if klass.column_names.include? 'watchers_ids'
     end
   end
 
   def self.down
     [Conversation, Task].each do |klass|
       add_column klass.table_name.to_sym, :watchers_ids, :text
+      klass.reset_column_information
 
       klass.find_in_batches do |entries|
         entries.each do |entry|
           user_ids = Watcher.where(:watchable_type => klass, :watchable_id => entry.id).map(&:user_id)
           entry[:watchers_ids] = user_ids.to_yaml
-          entry.save
+          entry.save(false)
         end
       end
     end
