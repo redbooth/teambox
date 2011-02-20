@@ -1,18 +1,22 @@
-%p= "Organizations group together #{link_to_doc_model(:project)}s and users (via #{link_to_doc_model(:membership)})."
+%p=raw "Organizations group together #{link_to_doc_model(:project)}s and users (via #{link_to_doc_model(:membership)})."
 
-- doc_for :index, :example => example_api_wrap(@organization, :references => []) do
-  %p= "Returns the most recent organizations you own or belong to."
+- doc_for :index,
+          :example => example_api_wrap(@organization, :references => []) do
+  %p=raw "Returns the most recent organizations you own or belong to."
 
-- doc_for :show, :example => @organization.to_api_hash,
-                 :includes => [:projects, :members] do
-  %p= "Returns the data for a given organization"
+- doc_for :show, 
+          :example => @organization.to_api_hash,
+          :includes => [:projects, :members] do
+  %p=raw "Returns the data for a given organization"
   
-- doc_for :create, :parameters => {:name => 'Name', :permalink => 'organization' },
-                   :example => @organization.to_api_hash,
-                   :status => :created do
-  %p= "Creates a new organization"
+- doc_for :create,
+          :parameters => {:name => 'Name', :permalink => 'organization' },
+          :example => @organization.to_api_hash,
+          :status => :created do
+  %p=raw "Creates a new organization"
 
-- doc_for :update, :parameters => {:name => @organization.name, :permalink => @organization.permalink },
-                   :status => :updated,
-                   :role => [:admin, :owner] do
-  %p= "Updates an organization"
+- doc_for :update,
+          :parameters => {:name => @organization.name, :permalink => @organization.permalink },
+          :status => :updated,
+          :role => [:admin, :owner] do
+  %p=raw "Updates an organization"

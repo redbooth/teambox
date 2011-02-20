@@ -11,6 +11,8 @@ module PageWidget
     else
       @slot_insert[:element] = @slot_insert[:id] == 0 ? nil : "page_slot_#{@slot_insert[:id]}"
     end
+    
+    true
   end
   
   def clear_slot

@@ -21,7 +21,7 @@ describe TaskList do
       task_list = Factory.create(:task_list, :name => "Be an excellent Rails dev.")
       nice_task = Factory.create(:task, :name => "Go to RailsConf", :task_list => task_list)
       task_list.destroy
-      lambda { nice_task.reload }.should raise_error(ActiveRecord::RecordNotFound)
+      lambda { Task.find(nice_task.id) }.should raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

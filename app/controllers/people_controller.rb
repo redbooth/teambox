@@ -12,8 +12,7 @@ class PeopleController < ApplicationController
     @invitations = @current_project.invitations
     
     respond_to do |f|
-      f.html
-      f.m
+      f.any(:html, :m)
       f.xml   { render :xml     => @people.to_xml(:root => 'people') }
       f.json  { render :as_json => @people.to_xml(:root => 'people') }
       f.yaml  { render :as_yaml => @people.to_xml(:root => 'people') }
@@ -62,7 +61,7 @@ class PeopleController < ApplicationController
       users = @project.users
       
       invited_ids = @current_project.invitations.find(:all, :select => 'invited_user_id').map(&:invited_user_id).compact
-      users = users.scoped(:conditions => ['users.id NOT IN (?)', invited_ids]) if invited_ids.any?
+      users = users.where(['users.id NOT IN (?)', invited_ids]) if invited_ids.any?
       
       @contacts = users.all
       @contacts -= @current_project.users

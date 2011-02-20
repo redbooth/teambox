@@ -2,15 +2,16 @@ require 'spec_helper'
 
 describe HooksController do
   it "should route to hooks controller" do
-    params_from(:post, '/hooks/email').should == {
-      :action => "create", :hook_name => "email", :controller => "hooks"
-    }
+    { :post => '/hooks/email' }.should route_to(:action => "create", 
+                                                :hook_name => "email", 
+                                                :controller => "hooks")
   end
-  
+
   it "should route to hooks controller scoped under project" do
-    params_from(:post, '/projects/12/hooks/pivotal').should == {
-      :action => "create", :hook_name => "pivotal", :controller => "hooks", :project_id => "12"
-    }
+    { :post => '/projects/12/hooks/pivotal' }.should route_to(:action => "create", 
+                                                              :hook_name => "pivotal", 
+                                                              :controller => "hooks", 
+                                                              :project_id => "12")
   end
 
   describe "#create" do
@@ -42,7 +43,7 @@ describe HooksController do
         conversation.name.should == 'Hey, check this awesome file!'
         conversation.comments.last.body.should == 'Lorem ipsum dolor sit amet, ...'
         conversation.comments.last.uploads.count.should == 2
-        conversation.comments.last.uploads.first(:order => 'id asc').asset_file_name.should == 'tb-space.jpg'
+        conversation.comments.last.uploads.first.asset_file_name.should == 'tb-space.jpg'
       end
       
       it "handles encoded headers" do
@@ -111,7 +112,7 @@ describe HooksController do
                         '',
                         'I would say something about this conversation'
 
-        comment = @conversation.comments(true).last(:order => 'id asc')
+        comment = @conversation.comments(true).except(:order).last(:order => 'ID ASC')
         comment.body.should == 'I would say something about this conversation'
         comment.uploads.count.should == 2
       end
@@ -165,8 +166,8 @@ describe HooksController do
       end
       
       def check_bounce_message(options, &block)
-        Emailer.should_receive(:deliver_bounce_message).with(
-          kind_of(Array), kind_of(String)
+        Emailer.should_receive(:send_with_language).with(
+          :bounce_message, :en, kind_of(Array), kind_of(String)
         ).once
         
         lambda do
@@ -287,14 +288,13 @@ describe HooksController do
         conversation.name.should be_nil
         
         expected = (<<-HTML).strip
-        <div class='hook_github'><h3>New code on <a href='http://github.com/defunkt/github'>github</a> refs/heads/master</h3>
+        New code on <a href='http://github.com/defunkt/github'>github</a> refs/heads/master
 
 Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59'>okay i give in</a><br>
 Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0'>update pricing a tad</a><br>
-</div>
         HTML
         
-        conversation.comments.first.body.should == expected
+        conversation.comments.first.body.strip.should == expected.strip
       end
     end
   end

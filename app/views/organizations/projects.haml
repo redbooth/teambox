@@ -1,11 +1,9 @@
-%h2= t('.title', :name => h(@organization))
+%h2= t('.title', :organization => @organization)
 
 - unless Teambox.config.community
-  %p= t('.instructions', :organizations_link => organizations_path)
+  %p= t('.instructions_html', :organizations_link => organizations_path)
 
 %p.new_project= link_to t('.new_project'), new_project_path, :class => :add_button
 
 = render 'active_projects'
 = render 'archived_projects'
-
-= render 'organizations/column'

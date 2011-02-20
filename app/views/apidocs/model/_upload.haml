@@ -1,20 +1,24 @@
-%p= "An upload is a file which belongs to a #{link_to_doc_model(:project)} or #{link_to_doc_model(:page)}."
-%p= "In the case of a page, uploads belong in slots which can be reordered using page#reorder."
+%p=raw "An upload is a file which belongs to a #{link_to_doc_model(:project)} or #{link_to_doc_model(:page)}."
+%p=raw "In the case of a page, uploads belong in slots which can be reordered using page#reorder."
 
-- doc_for :index, :example => example_api_wrap(@upload, :references => [:page, :user]) do
-  %p= "Returns the most recent dividers on a page."
+- doc_for :index,
+          :example => example_api_wrap(@upload, :references => [:page, :user]) do
+  %p=raw "Returns the most recent dividers on a page."
 
-- doc_for :show,  :example => @upload.to_api_hash do
-  %p= "Returns the data for a divider."
+- doc_for :show,
+          :example => @upload.to_api_hash do
+  %p=raw "Returns the data for a divider."
   
-- doc_for :create, :parameters => {:name => 'Name', :asset => '<File Data>', :project_id => 123, :page_id => 456},
-                   :example => @upload.to_api_hash,
-                   :status => :created,
-                   :role => :participant do
-  %p= "Creates a new upload. Note that you will need to post an upload using form encoding for this to work."
+- doc_for :create,
+          :parameters => {:name => 'Name', :asset => '<File Data>', :project_id => 123, :page_id => 456},
+          :example => @upload.to_api_hash,
+          :status => :created,
+          :role => :participant do
+  %p=raw "Creates a new upload. Note that you will need to post an upload using form encoding for this to work."
 
 - ignore_doc_for :update
 
-- doc_for :destroy, :status => :deleted,
-                    :role => :participant do
-  %p= "Destroys an upload."
+- doc_for :destroy,
+          :status => :deleted,
+          :role => :participant do
+  %p=raw "Destroys an upload."

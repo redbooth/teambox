@@ -16,7 +16,7 @@ class HooksController < ApplicationController
   end
   
   rescue_from 'ActiveRecord::RecordInvalid' do |exception|
-    if exception.message == "Validation failed: Body Duplicate comment"
+    if exception.message.include? "Duplicate comment"
       head :ok
     else
       raise exception

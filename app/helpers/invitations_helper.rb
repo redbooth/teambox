@@ -31,8 +31,4 @@ module InvitationsHelper
   def invite_user(project,user)
     link_to t('.invite', :username => h(user.name)), '#', :class => 'invite_user', :login => user.login
   end
-  
-  def invitation_id(element,project,user)
-    js_id(element,project,user)
-  end
 end

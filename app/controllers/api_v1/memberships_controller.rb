@@ -29,7 +29,7 @@ class ApiV1::MembershipsController < ApiV1::APIController
       @membership.destroy
       handle_api_success(@membership)
     else
-      api_error(t('common.not_allowed'), :unauthorized)
+      api_error(:unauthorized, :type => 'InsufficientPermissions', :message => t('common.not_allowed'))
     end
   end
 
@@ -37,7 +37,7 @@ class ApiV1::MembershipsController < ApiV1::APIController
   
   def load_membership
     @membership = @organization.memberships.find_by_id(params[:id])
-    api_status(:not_found) unless @membership
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Membership not found' unless @membership
   end
   
 end

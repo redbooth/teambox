@@ -8,15 +8,15 @@ Feature: Creating a project
     When I fill in the following:
       | Name         | <name>   |
       | Organization | ACME     |
-    And I press "Create project and start collaborating"
+    And I press "Create project and invite members"
     Then I should see "<response>"
     And I should see "<flash>"
 
     Examples: 
-      | name                  | response          | flash                          |
-      | Title with ()_+&-     | Title with ()_+&- | Your project has been created! |
-      | Ruby Rockstars        | Ruby Rockstars    | Your project has been created! |
-      | Mine                  | Invalid project   | Invalid project                |
+      | name                  | response          | flash           |
+      | Title with ()_+&-     | Title with ()_+&- | Invite people   |
+      | Ruby Rockstars        | Ruby Rockstars    | Invite people   |
+      | Mine                  | Invalid project   | Invalid project |
 
   Scenario: I don't fill in an organization name
     When I fill in "Name" with "Some project"
@@ -29,4 +29,20 @@ Feature: Creating a project
     When I fill in "Name" with "ACME Awesome Project"
     And I select "ACME" from "Organization"
     And I press "Create project"
-    Then I should see "Your project has been created"
+    Then I should see "Invite people"
+
+
+  Scenario: I ought to have already joined the project I created, not another random project
+    Given I am an administrator in the organization called "ACME"
+    And I go to the new project page
+    When I fill in "Name" with "ACME Awesome Project"
+    And I select "ACME" from "Organization"
+    And I press "Create project"
+    Then I should see "Invite people"
+    And I should not see "Join"
+    And I go to the new project page                      #We do this two times because we have to make sure that it's the correct (our) project we are added to
+    And I fill in "Name" with "ACME Awesome Project #2"
+    And I select "ACME" from "Organization"
+    And I press "Create project"
+    And I go to the projects page
+    And I should not see "Join"

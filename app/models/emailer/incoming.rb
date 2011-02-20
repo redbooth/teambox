@@ -24,6 +24,7 @@ require 'action_view/helpers/text_helper'
 
 module Emailer::Incoming
   include ActionView::Helpers::TextHelper
+  ACTION_MATCH = /^\s*#(\w+)/
 
   def self.fetch(settings)
     type = settings[:type].to_s.downcase
@@ -77,13 +78,13 @@ module Emailer::Incoming
   def receive(email)
     email = ParamsMail.new(email) if Hash === email
     
-    # TODO: cleanup this convoluted logic and ease a bit on the ivars pls
-    process email
+    # TODO: ease a bit on the ivars pls
+    process_incoming email
     get_target email
-    get_action if @target.is_a?(Task)
     
     case @type
-    when :project then create_conversation
+    when :project
+      create_conversation
     when :conversation
       if @target then post_to(@target)
       else create_conversation
@@ -91,8 +92,10 @@ module Emailer::Incoming
     when :task
       unless @target
         @target = create_task
-        get_action
       end
+      
+      get_action
+      @body = extract_action
       post_to(@target)
     end
   end
@@ -139,8 +142,9 @@ module Emailer::Incoming
     def field_to_addr(field)
       value = @params[field.to_sym]
       return if value.blank?
-      header = TMail::AddressHeader.new(field.to_s, value)
-      header.addrs.map &:spec
+      # RAILS3 report bug, this doesn't parse with a newline char at the end
+      header = Mail::Field.new(field.to_s, value.strip)
+      header.addrs.map &:address
     end
     
     def field_to_utf8(field)
@@ -179,7 +183,7 @@ module Emailer::Incoming
   class TargetNotFoundError < Error; end
 
   # accepts params in Sendgrid's format: http://wiki.sendgrid.com/doku.php?id=parse_api
-  def process(email)
+  def process_incoming(email)
     raise MissingInfo, "Invalid mail body" if email.body.blank?
     
     from = Array(email.from).first
@@ -199,8 +203,8 @@ module Emailer::Incoming
     raise NotProjectMemberError.new(email, "User does not belong to project") unless @user.projects.include? @project
     
     #strip any remaining html tags (after strip_responses) from the body
-    @body    = strip_responses(email.body).strip_tags.strip
-    @subject = email.subject.gsub(REPLY_REGEX, "").strip
+    @body    = strip_responses(email.body).strip_tags.to_s.strip
+    @subject = email.subject.to_s.gsub(REPLY_REGEX, "").strip
     @files   = email.attachments || []
     
     Rails.logger.info "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
@@ -213,7 +217,7 @@ module Emailer::Incoming
   # finally strip any whitespace
   def strip_responses(body)
     # For GMail. Matches "On 19 August 2010 13:48, User <proj+conversation+22245@app.teambox.com<proj%2Bconversation%2B22245@app.teambox.com>> wrote:"
-    body.strip.
+    body.to_s.strip.
       gsub(/\n[^\r\n]*\d{2,4}.*\+.*\d@app.teambox.com.*:.*\z/m, '').
       split(Emailer::ANSWER_LINE).first.
       split("<div class='email'").first.
@@ -251,7 +255,7 @@ module Emailer::Incoming
   # Determines the #action
   # The commands are #resolve / #resolved, #username, #reject / #rejected and #hold.
   def get_action
-    if @body =~ /^\s*#(\w+)/
+    if @body =~ ACTION_MATCH
       tag = $1.downcase
       
       @target_action = case tag
@@ -266,6 +270,11 @@ module Emailer::Incoming
         end
       end
     end
+  end
+  
+  def extract_action
+    get_action
+    @body.sub(ACTION_MATCH, '').strip
   end
   
   def post_to(target)

@@ -3,11 +3,5 @@
     - for project in @projects
       .project
         = link_to h(project), project_path(project)
-    - if @sub_action == 'archived'
-      .project
-        = link_to "Show Active Projects", projects_path, :style => 'color: #999'
-    - elsif @archived_projects.any?
-      .project
-        = link_to "Show #{@archived_projects.size} Archived Projects", project_archived_path, :style => 'color: #999'
     .project
-      = link_to "New Project", new_project_path, :class => 'new'
+      = link_to t('.new_project'), new_project_path, :class => 'new'

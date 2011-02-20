@@ -1,4 +1,14 @@
+%h2= t('.title', :project => @current_project)
+
 = conversation_column(@current_project,@conversations, :show_conversation_settings => true)
+
+.create_bar
+  - if can? :converse, @current_project
+    = new_conversation_link(@current_project)
+    = t('common.or')
+    = instructions_for_email(@current_project)
+  - else
+    = t('.cant_create')
 
 - if @conversations.any?
   #conversations

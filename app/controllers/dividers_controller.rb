@@ -27,12 +27,12 @@ class DividersController < ApplicationController
       if !@divider.new_record?
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @divider, true)
       else
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @divider)
       end
     end
@@ -49,8 +49,8 @@ class DividersController < ApplicationController
   def edit
     authorize! :update, @page
     respond_to do |f|
-      f.m
-      f.js
+      f.any(:html, :m)
+      f.js   { render :layout => false }
     end
   end
   
@@ -62,14 +62,14 @@ class DividersController < ApplicationController
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @divider)
       end
     end
@@ -81,16 +81,14 @@ class DividersController < ApplicationController
     if can?(:destroy, @page)
       @divider.destroy
       respond_to do |f|
-        f.html { reload_page }
-        f.m    { reload_page }
-        f.js
+        f.any(:html, :m)  { reload_page }
+        f.js   { render :layout => false }
         handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
-        f.html { reload_page }
-        f.m    { reload_page }
-        f.js
+        f.any(:html, :m) { reload_page }
+        f.js   { render :layout => false }
         handle_api_error(f, @divider)
       end
     end
@@ -116,7 +114,7 @@ class DividersController < ApplicationController
         @divider = @page.dividers.find(params[:id])
       rescue
         respond_to do |f|
-          f.js
+          f.js   { render :layout => false }
           handle_api_error(f, @divider)
         end
       end

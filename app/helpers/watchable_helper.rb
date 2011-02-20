@@ -3,7 +3,7 @@ module WatchableHelper
   def watch_link(project, user, target)
     action = user.watching?(target) ? :unwatch : :watch
     
-    link_to "<span>#{t(".#{action}")}</span>", [action, project, target],
+    link_to "<span>#{t(".#{action}")}</span>".html_safe, [action, project, target],
       :id => 'watch_link', :class => 'button', :'data-method' => 'put', :'data-remote' => true
   end
 

@@ -46,6 +46,22 @@ Feature: Resetting passwords
     Then I should see an error message: "New password is not valid. Try again."
     And I should see "Please enter a new password and confirm it"
 
+  Scenario: A user who still didn't confirm his account reset passwords and confirms his account by doing so
+    Given I am on the login page
+    And I am the user mislav
+    And I have never confirmed my email
+    When I follow "Forgot your password?"
+    When I fill in "Email" with "mislav@fuckingawesome.com"
+    And I press "Send me a link to reset my password"
+    And "mislav@fuckingawesome.com" should receive an email
+    When I open the email
+    When I follow "Log into Teambox now!" in the email
+    When I fill in "Password" with "thirstycups"
+    And I fill in "Password confirmation" with "thirstycups"
+    And I press "Reset my password"
+    Then I should see "Password was successfully updated."
+    And I should see "All Projects"
+
   Scenario: Deleted user tries to reset password
     Given the user with login: "pablo" is deleted
     And I am on the forgot password page

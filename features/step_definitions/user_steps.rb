@@ -3,7 +3,6 @@ Given /^I am currently "([^\"]*)"$/ do |login|
                     (login == "mislav" ?
                       Factory(:mislav) : # Mislav has a first and last name, is not a generic user
                       Factory(:confirmed_user, :login => login, :email => "#{login}@example.com"))
-  @user = @current_user
 end
 
 Given /^(?:I am|I'm) logged in as @(\w+)$/ do |username|
@@ -81,14 +80,20 @@ Given /^(@.+) (?:has|have) (?:his|her|their) locale set to (.+)$/ do |users, nam
   else
     raise ArgumentError, "don't know locale #{name}"
   end
-  
+
   each_user(users) do |user|
     user.update_attribute :locale, locale
   end
 end
 
+Given /^(@.+) (?:has|have) (?:his|her|their) time zone set to (.+)$/ do |users, zone|
+  each_user(users) do |user|
+    user.update_attribute :time_zone, zone
+  end
+end
+
 Given /I am the user (.*)$/ do |login|
-  @user ||= Factory(login.to_sym)
+  @current_user ||= Factory(login.to_sym)
 end
 
 Then /^I should not see missing avatar image within "([^\"]*)"$/ do |selector|
@@ -103,4 +108,14 @@ end
 
 Given /^I have the daily task reminders turned off$/ do
   @current_user.update_attribute(:wants_task_reminder, false)
+end
+
+Given /^I set my preference to collapsed threads$/ do
+  visit collapse_activities_path 
+  @current_user.reload.settings["collapse_activities"].should be_true
+end
+
+Given /^I set my preference to expanded threads$/ do
+  visit expand_activities_path 
+  @current_user.reload.settings["collapse_activities"].should be_false
 end

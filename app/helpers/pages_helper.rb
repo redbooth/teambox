@@ -20,21 +20,9 @@ module PagesHelper
   def page_fields(f)
     render 'pages/fields', :f => f
   end
-  
-  def list_pages(pages,current_target)
-    render :partial => 'pages/page_sidebar',
-      :collection => pages,
-      :as => :page,
-      :locals => {
-        :current_target => current_target }
-  end
 
   def list_pages_with_toc(pages)
     render pages
-  end
-
-  def page_link(page)
-    link_to h(page), project_page_path(page.project,page)
   end
   
   def edit_page_link(project,page)
@@ -56,30 +44,10 @@ module PagesHelper
       :confirm => t('confirm.delete_page')
   end
   
-  def notes_sortable_tag(page)
-    url = project_page_path(page.project,page)
-    update_page_tag do |page|
-      page.notes_sortable(url)
-    end
-  end
-  
-  def notes_sortable(url)
-    page.sortable('notes', {
-      :tag => 'div',
-      :handle => 'img.drag',
-      :url => url,
-      :method => :put
-    })
-  end
-  
   def page_action_links(project,page)
     if can? :update, page
       render 'pages/actions', :project => project, :page => page
     end
-  end
-  
-  def pages_tab_list(project,pages)
-    render 'shared/pages_dropdown', :project => project, :pages => pages
   end
   
   def page_slot_fields(slot = 0, before = 0)

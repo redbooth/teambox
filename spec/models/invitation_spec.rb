@@ -54,7 +54,7 @@ describe Invitation do
     it "should send an Invitation email to existing users" do
       user = Factory.create(:user)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_receive(:deliver_project_invitation).once
+      Emailer.should_receive(:send_with_language).once
       invitation.save
       user.invitations.length.should == 1
     end
@@ -63,7 +63,7 @@ describe Invitation do
       user = Factory.create(:user)
       @project.organization.add_member(user, :participant)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_receive(:deliver_project_membership_notification).once
+      Emailer.should_receive(:send_with_language).once
       invitation.save
       user.invitations.length.should == 0
     end
@@ -76,14 +76,14 @@ describe Invitation do
       invitation.deleted?.should == true
       user.invitations.length.should == 0
       
-      Emailer.send_email(:project_membership_notification, invitation.id) rescue assert(false)
+      Emailer.send_email(:project_membership_notification, invitation.id)# rescue assert(false)
     end
 
     it "should not send an Invitation email to users in the inviter's organization" do
       user = Factory.create(:user)
       @project.organization.add_member(user, :participant)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_not_receive(:deliver_project_invitation)
+      Emailer.should_not_receive(:send_with_language).with(:project_invitation)
       invitation.save
     end
 
@@ -106,7 +106,7 @@ describe Invitation do
       user = Factory.create(:user)
       @project.organization.add_member(user, :participant)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_receive(:deliver_project_membership_notification).once
+      Emailer.should_receive(:send_with_language).once
       invitation.save
       user.invitations.length.should == 0
       invitation.should be_frozen
@@ -121,7 +121,7 @@ describe Invitation do
     
     it "should send a Signup and Invitation email to non-existing users" do
       invitation = @project.new_invitation(@inviter, :user_or_email => "carl.jung@hotmail.ch")
-      Emailer.should_receive(:deliver_signup_invitation).once
+      Emailer.should_receive(:send_with_language).once
       invitation.save
     end
     
@@ -190,13 +190,13 @@ describe Invitation do
     it "can resend an email to an already invited user with an account who hasn't accepted" do
       user = Factory.create(:user)
       invitation = @project.new_invitation(@project.user, :user_or_email => user.login)
-      Emailer.should_receive(:deliver_project_invitation).once
+      Emailer.should_receive(:send_with_language).once
       invitation.save!
     end
 
     it "can resend an email to an already invited user without an account who hasn't accepted" do
       invitation = @project.new_invitation(@project.user, :user_or_email => "carl.jung@hotmail.ch")
-      Emailer.should_receive(:deliver_signup_invitation).once
+      Emailer.should_receive(:send_with_language).once
       invitation.save!
     end
   end

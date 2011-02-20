@@ -1,0 +1,38 @@
+.email{ :style =>  "#{email_global }#{inline_organization_text_colour}"}
+  .header
+    %h1
+      = link_to logo_image, projects_path(@project)
+  .navigation{ :style=> email_navigation}
+
+  = answer_instructions
+  %p{ :style => email_text(:normal)}
+    = t('emailer.notify.project')
+    = link_to(h(@project.name), project_url(@project), :style => inline_organization_link_colour) + '. '
+    = t('emailer.notify.task_list')
+    = link_to(h(@task_list.name), project_task_list_url(@project, @task_list), :style => inline_organization_link_colour)
+
+  .box{ :style => email_box(@task)}
+    %h2{ :style => email_text(:big) }
+      = t('emailer.notify.task')
+      = link_to h(@task.name), project_task_url(@project, @task), :style => inline_organization_link_colour
+    - if @task.assigned
+      %p= t('emailer.notify.assigned_to_html', :user => h(@task.assigned.user.name))
+    %p= t('emailer.notify.status', :status => localized_status_name(@task))
+    - if @task.due_on
+      %p= t('emailer.notify.due_on', :date => due_on(@task))
+
+  = emailer_list_comments(@task.comments)
+  = emailer_recent_tasks(@project, @recipient)
+
+  .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
+    %p= t('emailer.notify.view_this_task_online_html', :link => link_to(t('emailer.notify.task_link'), project_task_url(@project, @task), :style => inline_organization_link_colour))
+    = emailer_answer_to_this_email
+
+  .footer{ :style => email_text(:small) }
+    %p
+      = @task.watchers.collect {|u| h(u) }.to_sentence
+      = t('emailer.notify.are_watching_task', :count => @task.watchers.size)
+    = emailer_commands_for_tasks(@recipient)
+    %p
+      = t('emailer.notify.stop_watching_link_html', :stop_watch => link_to(t('emailer.notify.stop_watch'), project_task_url(@project, @task), :style => inline_organization_link_colour) )
+      = t('emailer.notify.notification_settings_link_html', :settings_link => link_to(t('emailer.notify.settings_link'), account_notifications_url, :style => inline_organization_link_colour) )

@@ -6,15 +6,16 @@ class ApiV1::TasksController < ApiV1::APIController
     query = {:conditions => api_range,
              :limit => api_limit,
              :order => 'id DESC',
-             :include => [:task_list, :project, :user, :assigned]}
+             :include => [:task_list, :project, :user, :assigned,
+                         {:first_comment => :user}, {:recent_comments => :user}]}
     
     if @current_project
-      @tasks = (@task_list || @current_project).tasks.scoped(api_scope).all(query)
+      @tasks = (@task_list || @current_project).tasks.where(api_scope).all(query)
     else
-      @tasks = Task.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      @tasks = Task.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
-    api_respond @tasks, :references => [:task_list, :project, :user, :assigned]
+    api_respond @tasks, :references => [:task_list, :project, :user, :assigned, :refs_comments]
   end
 
   def show
@@ -81,7 +82,7 @@ class ApiV1::TasksController < ApiV1::APIController
     else
       Task.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
-    api_status(:not_found) unless @task
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Task not found' unless @task
   end
   
   def api_scope
@@ -92,7 +93,10 @@ class ApiV1::TasksController < ApiV1::APIController
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
     end
-    {:conditions => conditions}
+    unless params[:assigned_id].nil?
+      conditions[:assigned_id] = params[:assigned_id].to_i
+    end
+    conditions
   end
     
   def api_include

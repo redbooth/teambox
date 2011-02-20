@@ -75,3 +75,10 @@ Then /"([^\"]*)" should not belong to the organization "([^\"]*)"$/ do |login, o
   organization.memberships.find_by_user_id(user.id).should be_nil
 end
 
+Then /^I fill in the organization description with "([^"]*)"$/ do |text|
+  Then %(I fill in "organization_description" with "#{text}")
+end
+
+Then /I should see "([^"]*)" within custom html/ do |text|
+  Then %(I should see "#{text}" within ".custom_html")
+end

@@ -133,7 +133,7 @@ describe ApiV1::NotesController do
       login_as @observer
       
       post :create, :project_id => @project.permalink, :page_id => @page.id, :name => 'Important!'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @page.notes(true).length.should == 1
     end
@@ -153,7 +153,7 @@ describe ApiV1::NotesController do
       login_as @observer
       
       put :update, :project_id => @project.permalink, :page_id => @page.id, :id => @note.id, :name => 'Modified'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @note.reload.name.should_not == 'Modified'
     end
@@ -173,7 +173,7 @@ describe ApiV1::NotesController do
       login_as @observer
       
       put :destroy, :project_id => @project.permalink, :page_id => @page.id, :id => @note.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @page.notes(true).length.should == 1
     end

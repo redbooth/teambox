@@ -18,3 +18,4 @@ end
 
 page[loading_id].hide
 page[submit_id].show
+page << "Task.insertAssignableUsers();"

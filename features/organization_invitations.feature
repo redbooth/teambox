@@ -2,7 +2,7 @@
 Feature: Joining organizations
 
   Background: 
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And the following confirmed users exist
       | login  | email                    | first_name | last_name |
       | pablo  | pablo@teambox.com        | Pablo      | Villalba  |

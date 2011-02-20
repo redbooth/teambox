@@ -7,9 +7,9 @@
         %p.project
           = link_to h(project), project
           %span.status
-            = t('.role', :role => @roles[role])
+            = t('.role_html', :role => @roles[role])
             - if @roles[role] == 'admin'
-              = "(" + link_to(t('.settings'), edit_project_path(project)) + ")"
+              =raw "(" + link_to(t('.settings'), edit_project_path(project)) + ")"
       - elsif can?(:admin, @organization)
         %p.project
           = link_to h(project), project

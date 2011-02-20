@@ -94,7 +94,7 @@ describe User do
 
     describe "activation email" do
       it "should send an activation email" do
-        Emailer.should_receive(:deliver_confirm_email).with(@user.id).once
+        Emailer.should_receive(:send_with_language).with(:confirm_email, :en, @user.id).once
         @user.send_activation_email
       end
 
@@ -220,13 +220,13 @@ describe User do
 
     it "should send an activation email when signing up without an invitation" do
       @user = Factory.build(:unconfirmed_user)
-      Emailer.should_receive(:deliver_confirm_email).once
+      Emailer.should_receive(:send_with_language).once
       @user.save
     end
 
     it "should not send an activation email if the user is active when created, for example, when invited" do
       @user = Factory.build(:user, :confirmed_user => true)
-      Emailer.should_not_receive(:deliver_confirm_email)
+      Emailer.should_not_receive(:send_with_language)
       @user.save
     end
 
@@ -299,34 +299,6 @@ describe User do
     end
   end
 
-  describe "contacts not in project" do
-    before do
-      @me = Factory(:user)
-      @project = Factory(:project)
-      @project.add_user(@me)
-      @me.reload
-    end
-    it "does not return a user that is already in the project" do
-      user = Factory(:user)
-      @project.add_user(user)
-      @me.contacts_not_in_project(@project).should_not include(user)
-    end
-
-    it "does not return a user that does not belong to any of my projects" do
-      user = Factory(:user)
-      @me.contacts_not_in_project(@project).should_not include(user)
-    end
-
-    it "returns a user that is not in this project but in one of my other ones" do
-      user = Factory(:user)
-      other_project = Factory(:project)
-      other_project.add_user(@me)
-      other_project.add_user(user)
-      @me.reload; user.reload
-      @me.contacts_not_in_project(@project).should include(user)
-    end
-  end
-  
   describe "users for user map" do
     before do
       @org = Factory.create(:organization)
@@ -427,6 +399,14 @@ describe User do
       user = Factory.create(:user, :locale => 'xy')
       user.locale.should == 'en'
     end
+
+    it "should allow special name formatting for foreign locales" do
+      user = Factory :user, :first_name => '保', :last_name => '鎌田'
+      I18n.locale = 'ja' # where name is in the format 'last_name first_name さん'
+      user.name.should == '鎌田 保 さん'
+      I18n.locale = I18n.default_locale # where name is in the format 'first_name last_name'
+      user.name.should == '保 鎌田'
+    end
   end
 
   context 'attributes' do
@@ -460,7 +440,7 @@ describe User do
       [:resolved, :hold, :rejected].each do |status|
         @task.assign_to @user
         @task.status_name = status
-        @task.save(false)
+        @task.save(:validate => false)
         @user.pending_tasks.should be_empty
       end
     end
@@ -498,6 +478,16 @@ describe User do
 
     it "should not change when updating the user" do
       lambda { @user.touch }.should_not change(@user, :visited_at)
+    end
+  end
+
+  describe "profile" do
+    before do |variable|
+      @user = Factory(:user)
+    end
+
+    it "should create a default card on creation" do
+      @user.card.should_not be nil
     end
   end
 end

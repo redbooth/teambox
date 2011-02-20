@@ -1,6 +1,6 @@
 %h2= t('.title')
 
-- form_for [@current_project,@page] do |f|
+= form_for [@current_project,@page] do |f|
   = page_fields(f)
 
   .submit
@@ -9,12 +9,12 @@
     = link_to t('common.cancel'), project_page_path(@current_project, @page)
   
 - content_for :column do
-  %p= t 'pages.new.define1'
-  %p= t 'pages.new.define2'
+  %p= t 'pages.new.define1_html'
+  %p= t 'pages.new.define2_html'
   %ul
-    %li= t 'pages.new.feature1'
-    %li= t 'pages.new.feature2'
-    %li= t 'pages.new.feature3'
-    %li= t 'pages.new.feature4'
-  %p= t 'pages.new.footer1'
-  %p= t 'pages.new.footer2'
+    %li= t 'pages.new.feature1_html'
+    %li= t 'pages.new.feature2_html'
+    %li= t 'pages.new.feature3_html'
+    %li= t 'pages.new.feature4_html'
+  %p= t 'pages.new.footer1_html'
+  %p= t 'pages.new.footer2_html'

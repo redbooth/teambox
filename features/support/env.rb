@@ -5,51 +5,22 @@
 # files.
 
 ENV["RAILS_ENV"] ||= "cucumber"
-require File.expand_path('../../../config/environment', __FILE__)
+require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
 
-require 'cucumber/formatter/unicode' # Remove if you don't want Cucumber Unicode support
+require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
 require 'cucumber/rails/rspec'
 require 'cucumber/rails/world'
-require 'cucumber/rails/active_record'
 require 'cucumber/web/tableish'
-
-require 'spec/stubs/cucumber'
-require 'email_spec/cucumber'
 
 require 'capybara/rails'
 require 'capybara/cucumber'
 require 'capybara/session'
-# Lets you click links with onclick javascript handlers without using @culerity or @javascript
-require 'cucumber/rails/capybara_javascript_emulation'
+require 'cucumber/rails/active_record'
+require 'cucumber/rspec/doubles'
 
-Capybara::Driver::Selenium.class_eval do
-  class << self
-    alias old_driver driver
-    if false
-      # override firefox driver in favor of selenium
-      def driver
-        @driver ||= begin
-          driver = Selenium::WebDriver.for :chrome
-          at_exit { driver.quit }
-          driver
-        end
-      end
-    else
-      # fix running Firefox while offline
-      # http://groups.google.com/group/ruby-capybara/browse_thread/thread/c012c73aa3ee86
-      def driver
-        @driver ||= begin
-          profile = Selenium::WebDriver::Firefox::Profile.new 
-          profile['network.manage-offline-status'] = false
-          driver = Selenium::WebDriver.for :firefox, :profile => profile
-          at_exit { driver.quit }
-          driver
-        end
-      end
-    end
-  end
-end
+require 'email_spec/cucumber'
 
+#require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links with onclick javascript handlers without using @culerity or @javascript
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
 # prefer to use XPath just remove this line and adjust any selectors in your
@@ -67,19 +38,15 @@ Capybara.default_selector = :css
 # of your scenarios, as this makes it hard to discover errors in your application.
 ActionController::Base.allow_rescue = false
 
-# If you set this to true, each scenario will run in a database transaction.
-# You can still turn off transactions on a per-scenario basis, simply tagging 
-# a feature or scenario with the @no-txn tag. If you are using Capybara,
-# tagging with @culerity or @javascript will also turn transactions off.
-#
-# If you set this to false, transactions will be off for all scenarios,
-# regardless of whether you use @no-txn or not.
-#
-# Beware that turning transactions off will leave data in your database 
-# after each scenario, which can lead to hard-to-debug failures in 
-# subsequent scenarios. If you do this, we recommend you create a Before
-# block that will explicitly put your database in a known state.
 Cucumber::Rails::World.use_transactional_fixtures = true
+
+#Capybara.register_driver :selenium do |app|
+  #Capybara::Driver::Selenium
+  ##profile = Selenium::WebDriver::Firefox::Profile.new
+  ##profile.add_extension(File.expand_path("features/support/firebug-1.7X.0a7.xpi"))
+
+  #Capybara::Driver::Selenium.new(app, { :browser => :firefox, :profile => "selenium" })
+#end
 
 # How to clean your database when transactions are turned off. See
 # http://github.com/bmabey/database_cleaner for more info.
@@ -88,22 +55,8 @@ if defined?(ActiveRecord::Base)
   DatabaseCleaner.strategy = :truncation
 end
 
-require 'rack/test' 
+require 'rack/test'	
 require 'rack/test/cookie_jar'
-
-# quick fix for Rails 2.3.6+
-# http://groups.google.com/group/ruby-capybara/browse_thread/thread/3889bda967163eb6
-Rack::Test::CookieJar.class_eval do 
-  def merge(raw_cookies, uri = nil) 
-    return unless raw_cookies 
-    raw_cookies = raw_cookies.split("\n") if raw_cookies.is_a? String 
-    raw_cookies.reject! {|raw_cookie| raw_cookie.blank?} 
-    raw_cookies.each do |raw_cookie| 
-      cookie = ::Rack::Test::Cookie.new(raw_cookie, uri, @default_host) 
-      self << cookie if cookie.valid?(uri) 
-    end 
-  end 
-end
 
 Before do
   # Tests are written to target non-community version, except where noted (I am using the community version)

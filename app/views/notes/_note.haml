@@ -3,4 +3,4 @@
     = render 'notes/actions', :note => note
   %h3=h note.name
   .textilized
-    ~ note.body_html
+    ~raw note.body_html

@@ -11,7 +11,7 @@ class ApiV1::UsersController < ApiV1::APIController
     shares_invited_projects = projects_shared.empty? && @user.shares_invited_projects_with?(@current_user)
     
     if @user != @current_user and (!shares_invited_projects and projects_shared.empty?)
-      api_error(t('users.activation.invalid_user'), :unauthorized)
+      api_error(:unauthorized, :type => 'InsufficientPermissions', :message => t('users.activation.invalid_user'))
     else
       api_respond @user
     end
@@ -25,7 +25,7 @@ class ApiV1::UsersController < ApiV1::APIController
   
   def find_user
     unless @user = (User.find_by_login(params[:id]) || User.find_by_id(params[:id]))
-      api_error(t('not_found.user'), :not_found)
+      api_error(:not_found, :type => 'ObjectNotFound', :message => t('not_found.user'))
     end
   end
   

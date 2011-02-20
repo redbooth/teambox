@@ -119,6 +119,12 @@ describe ApiV1::ConversationsController do
       
       references.include?("#{@project.id}_Project").should == true
       references.include?("#{@conversation.user_id}_User").should == true
+      references.include?("#{@conversation.first_comment.user_id}_User").should == true
+      references.include?("#{@conversation.first_comment.id}_Comment").should == true
+      @conversation.recent_comments.each do |comment|
+        references.include?("#{comment.id}_Comment").should == true
+        references.include?("#{comment.user_id}_User").should == true
+      end
     end
   end
   
@@ -149,7 +155,7 @@ describe ApiV1::ConversationsController do
       login_as @observer
       
       post :create, :project_id => @project.permalink, :name => 'Created!', :body => 'Discuss...'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.conversations(true).length.should == 2
     end
@@ -165,11 +171,24 @@ describe ApiV1::ConversationsController do
       @conversation.reload.name.should == 'Modified'
     end
     
+    it "should allow participants to convert a conversation to a task" do
+      login_as @user
+      
+      post :convert_to_task, :project_id => @project.permalink,
+                             :id => @another_conversation.id,
+                             :conversation => {:name => 'Tasked', :comment => 'Converted!'}
+      
+      response.should be_success
+      data = JSON.parse(response.body)
+      data['name'].should == 'Tasked'
+      Task.find_by_id(data['id'].to_i).name.should == 'Tasked'
+    end
+    
     it "should not allow observers to modify a conversation" do
       login_as @observer
       
       put :update, :project_id => @project.permalink, :id => @conversation.id, :name => 'Modified'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @conversation.reload.name.should_not == 'Modified'
     end
@@ -198,7 +217,7 @@ describe ApiV1::ConversationsController do
       login_as @user
       
       put :destroy, :project_id => @project.permalink, :id => @conversation.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.conversations(true).length.should == 2
     end

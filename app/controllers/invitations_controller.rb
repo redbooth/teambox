@@ -30,7 +30,7 @@ class InvitationsController < ApplicationController
       end
       
       respond_to do |f|
-        f.html { 
+        f.any(:html, :m) {
           if @invitation
             render :action => 'index_project'
           else
@@ -40,7 +40,7 @@ class InvitationsController < ApplicationController
     else
       @invitations = current_user.invitations.pending_projects
       respond_to do |f|
-        f.html { render :action => 'index_user' }
+        f.any(:html, :m) { render :action => 'index_user' }
       end
     end
   end
@@ -48,6 +48,10 @@ class InvitationsController < ApplicationController
   def new
     authorize! :admin, @invite_target
     @invitation = @invite_target.invitations.new
+    
+    respond_to do |f|
+      f.any(:html, :m)
+    end
   end
   
   def create
@@ -69,12 +73,11 @@ class InvitationsController < ApplicationController
     
     respond_to do |f|
       if @invitations and @saved_count.to_i > 0
-        f.html { redirect_to target_people_path }
-        f.m    { redirect_to target_people_path }
+        f.any(:html, :m) { redirect_to target_people_path }
       else
-        message = @invitations.length == 1 ? @invitations.first.errors.full_messages.first : t('people.errors.users_or_emails')
-        f.html { flash[:error] = message; redirect_to target_people_path }
-        f.m    { flash[:error] = message; redirect_to target_people_path }
+        message = @invitations.length == 1 ? @invitations.first.errors.full_messages.first : 
+                                             t('people.errors.users_or_emails')
+        f.any(:html, :m) { flash[:error] = message; redirect_to target_people_path }
       end
     end
   end
@@ -85,9 +88,13 @@ class InvitationsController < ApplicationController
     @invitation.send(:send_email)
     
     respond_to do |wants|
-      wants.html {
+      wants.any(:html, :m) {
         flash[:notice] = t('invitations.resend.resent', :recipient => @invitation.email)
-        redirect_back_or_to root_path
+        if @invitation.project
+          redirect_to project_people_path(@invitation.project)
+        else
+          redirect_back_or_to root_path
+        end
       }
       wants.js
     end
@@ -96,13 +103,13 @@ class InvitationsController < ApplicationController
   def destroy
     @invitation = Invitation.find_by_id params[:id]
     authorize! :destroy, @invitation
-    
-    respond_to do |wants|
-      wants.html {
-        flash[:notice] = t('invitations.destroy.discarded', :user => @invitation.email)
-        redirect_back_or_to root_path
-      }
-      wants.js
+
+    @invitation.destroy
+
+    if request.xhr?
+      head :ok
+    else
+      redirect_back_or_to root_path
     end
   end
   

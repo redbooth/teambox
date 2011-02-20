@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  around_filter :set_time_zone, :only => [:index, :show]
   before_filter :load_projects, :only => [:index]
   before_filter :set_page_title
   before_filter :disallow_for_community, :only => [:new, :create]
@@ -7,7 +8,7 @@ class ProjectsController < ApplicationController
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
       flash[:error] = t('common.not_allowed')
-      f.html { redirect_to projects_path }
+      f.any(:html, :m) { redirect_to projects_path }
       handle_api_error(f, @current_project)
     end
   end
@@ -17,7 +18,6 @@ class ProjectsController < ApplicationController
     @activities = Activity.for_projects(@projects)
     @threads = @activities.threads.all(:include => [:project, :target])
     @last_activity = @threads.last
-    @archived_projects = @current_user.projects.archived
 
     respond_to do |f|
       f.html
@@ -39,8 +39,7 @@ class ProjectsController < ApplicationController
     @new_conversation = @current_project.conversations.new(:simple => true)
 
     respond_to do |f|
-      f.html
-      f.m
+      f.any(:html, :m)
       f.rss   { render :layout  => false }
       f.xml   { render :xml     => @current_project.to_xml }
       f.json  { render :as_json => @current_project.to_xml }
@@ -54,6 +53,10 @@ class ProjectsController < ApplicationController
     authorize! :create_project, current_user
     @project = Project.new
     @project.build_organization
+    
+    respond_to do |f|
+      f.any(:html, :m)
+    end
   end
 
   def create
@@ -62,13 +65,11 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       if @project.save
-        flash[:notice] = t('projects.new.created')
-        f.html { redirect_to @project }
-        f.m    { redirect_to @project }
+        f.html { redirect_to project_invite_people_path(@project) }
+        f.m { redirect_to @project }
       else
         flash.now[:error] = t('projects.new.invalid_project')
-        f.html { render :new }
-        f.m    { render :new }
+        f.any(:html, :m) { render :new }
       end
     end
   end
@@ -76,6 +77,10 @@ class ProjectsController < ApplicationController
   def edit
     authorize! :update, @current_project
     @sub_action = params[:sub_action] || 'settings'
+    
+    respond_to do |f|
+      f.any(:html, :m)
+    end
   end
   
   def update
@@ -89,10 +94,25 @@ class ProjectsController < ApplicationController
     else
       flash.now[:error] = t('projects.edit.error')
     end
-
-    render :edit
+    
+    respond_to do |f|
+      f.any(:html, :m) { render :edit }
+    end
   end
-  
+ 
+  # Gets called from Project#create
+  def invite_people
+  end
+
+  # POST action for invite_people
+  def send_invites
+    authorize! :admin, @current_project
+    @current_project.invite_users = params[:project][:invite_users]
+    @current_project.invite_emails = params[:project][:invite_emails]
+    @current_project.send_invitations!
+    redirect_to @current_project
+  end
+
   def transfer
     authorize! :transfer, @current_project
     
@@ -125,7 +145,10 @@ class ProjectsController < ApplicationController
     authorize! :destroy, @current_project
     @current_project.destroy
     respond_to do |f|
-      f.html { redirect_to projects_path }
+      f.any(:html, :m) {
+        flash[:success] = t('projects.edit.deleted')
+        redirect_to projects_path
+      }
     end
   end
 
@@ -145,6 +168,24 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def list
+    @people = current_user.people
+    @roles = {  Person::ROLES[:observer] =>    t('roles.observer'),
+                Person::ROLES[:commenter] =>   t('roles.commenter'),
+                Person::ROLES[:participant] => t('roles.participant'),
+                Person::ROLES[:admin] =>       t('roles.admin') }
+
+
+    organization_ids = current_user.projects.sort {|a,b| a.name <=> b.name}.group_by(&:organization_id)
+    @organizations = organization_ids.collect do |k,v|
+      r = {}
+      r[:organization] = Organization.find(k)
+      r[:active_projects] = v.reject(&:archived)
+      r[:archived_projects] = v.select(&:archived)
+      r
+    end.sort {|a,b| a[:organization].name <=> b[:organization].name}
+  end
+
   protected
   
     def load_task_lists
@@ -152,15 +193,7 @@ class ProjectsController < ApplicationController
     end
   
     def load_projects
-      if params.has_key?(:sub_action)
-        @sub_action = params[:sub_action]
-        if @sub_action == 'archived'
-          @projects = current_user.projects.archived
-        end  
-      else
-        @sub_action = 'all'
-        @projects = current_user.projects.unarchived
-      end
+      @projects = current_user.projects.unarchived
     end
 
     def load_pending_projects

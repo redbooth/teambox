@@ -1,40 +1,49 @@
-%p= "A task tracks tasks which need to be completed in a #{link_to_doc_model(:task_list)}, contained in a #{link_to_doc_model(:project)}."
+%p=raw "A task tracks tasks which need to be completed in a #{link_to_doc_model(:task_list)}, contained in a #{link_to_doc_model(:project)}."
 
 - doc_for :index,
           :parameters => {:status => "0...4|[0,1,2,3,4]"},
           :example => example_api_wrap(@task, :references => [:task_list, :project, :user, :assigned]) do
-  %p= "Returns the most recent tasks in the #{link_to_doc_model(:task_list)}, #{link_to_doc_model(:project)}, or projects you belong to."
-  %p= "Use the optional <tt>status</tt> parameter to filter tasks by their status id. For example, to only view new or open tasks, you would query <code>?status[]=0&status[]=1</code>."
+  %p=raw "Returns the most recent tasks in the #{link_to_doc_model(:task_list)}, #{link_to_doc_model(:project)}, or projects you belong to."
+  %p=raw "Use the optional <tt>status</tt> parameter to filter tasks by their status id. For example, to only view new or open tasks, you would query <code>?status[]=0&status[]=1</code>."
+  %p=raw "You can also use the optional <tt>assigned_id</tt> parameter to filter tasks by their assigned #{link_to_doc_model(:person)}."
+  %p=raw "Similarly, the optional <tt>user_id</tt> parameter to filters tasks by the #{link_to_doc_model(:user)} who created them. "
 
-- doc_for :show,  :example => @task.to_api_hash,
-                  :includes => [:comments, :user, :assigned] do
-  %p= "Returns the data for a task."
-  
-- doc_for :create, :parameters => {:name => 'Task', :start_on => '2010-01-01', :finish_on => '2010-02-01', :project_id => 123, :task_list_id => 456},
-                   :example => @task.to_api_hash,
-                   :status => :created,
-                   :role => :participant do
-  %p= "Creates a new task."
+- doc_for :show,
+          :example => @task.to_api_hash,
+          :includes => [:comments, :user, :assigned] do
+  %p=raw "Returns the data for a task."
 
-- doc_for :update, :parameters => {:name => @task.name, :due_on => @task.due_on, :assigned_id => @task.assigned_id, :status => @task.status },
-                   :status => :updated,
-                   :role => :participant do
-  %p= "Updates the name, due date, assigned #{link_to_doc_model(:person)}, and status of a task."
+- doc_for :create,
+          :parameters => {:name => 'Task', :due_on => '2010-01-01', :project_id => 123, :assigned_id => "<person id>", :status => "0...4|[0,1,2,3,4]", :task_list_id => 456},
+          :example => @task.to_api_hash,
+          :status => :created,
+          :role => :participant do
+  %p=raw "Creates a new task."
 
-- doc_for :reorder, :status => :updated,
-                    :parameters => { :tasks => [1,2,3] },
-                    :role => :participant do
-  %p= "Reorders the tasks in a task list according to the order each task id is presented in <tt>tasks</tt>."
+- doc_for :update,
+          :parameters => {:name => @task.name, :due_on => "2010-01-02", :assigned_id => "<person id>", :status => "0...4|[0,1,2,3,4]" },
+          :status => :updated,
+          :role => :participant do
+  %p=raw "Updates the name, due date, assigned #{link_to_doc_model(:person)}, and status of a task."
 
-- doc_for :watch, :status => :updated,
-                  :role => :participant do
-  %p= "Adds the current user to the watchers list of the task."
+- doc_for :reorder,
+          :status => :updated,
+          :parameters => { :tasks => [1,2,3] },
+          :role => :participant do
+  %p=raw "Reorders the tasks in a task list according to the order each task id is presented in <tt>tasks</tt>."
 
-- doc_for :unwatch, :status => :updated,
-                    :role => :participant do
-  %p= "Removes the current user from the watchers list of the task."
+- doc_for :watch,
+          :status => :updated,
+          :role => :participant do
+  %p=raw "Adds the current user to the watchers list of the task."
 
-- doc_for :destroy, :status => :deleted,
-                    :role => :participant do
-  %p= "Destroys a task."
+- doc_for :unwatch,
+          :status => :updated,
+          :role => :participant do
+  %p=raw "Removes the current user from the watchers list of the task."
+
+- doc_for :destroy,
+          :status => :deleted,
+          :role => :participant do
+  %p=raw "Destroys a task."
 

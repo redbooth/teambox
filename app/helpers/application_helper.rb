@@ -1,14 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-
-  def csrf_meta_tag
-    if protect_against_forgery?
-      out = %(<meta name="csrf-param" content="%s"/>\n)
-      out << %(<meta name="csrf-token" content="%s"/>)
-      out % [ Rack::Utils.escape_html(request_forgery_protection_token),
-              Rack::Utils.escape_html(form_authenticity_token) ]
-    end
-  end
   
   def content_for(*args)
     super unless args.first.to_sym == :column and mobile?
@@ -41,16 +32,12 @@ module ApplicationHelper
       end
     end
   end
-
+  
   def navigation(project,projects,recent_projects)
-    render 'shared/navigation',
-      :project => project,
-      :projects => projects,
-      :recent_projects => recent_projects
-  end
-
-  def project_navigation(project)
-    render 'shared/project_navigation', :project => project
+      render 'shared/navigation',
+        :project => project,
+        :projects => projects,
+        :recent_projects => recent_projects
   end
 
   def search_bar
@@ -63,10 +50,6 @@ module ApplicationHelper
 
   def footer
     render 'shared/footer'
-  end
-
-  def javascripts
-    render 'shared/javascripts'
   end
 
   def location_name?(names)
@@ -151,7 +134,7 @@ module ApplicationHelper
     when Array then errors.first
     when String then errors
     end
-    "<div class='errors_for'>#{error}</div>"
+    "<div class='errors_for'>#{error}</div>".html_safe
   end
 
   def formatting_documentation_link
@@ -197,7 +180,7 @@ module ApplicationHelper
   end
   
   def time_tracking_enabled?
-    APP_CONFIG['allow_time_tracking'] || false
+    Teambox.config.allow_time_tracking || false
   end
   
   def auto_discovery_link_by_context(user, project)
@@ -209,14 +192,14 @@ module ApplicationHelper
   
   def configure_this_organization
     if Teambox.config.community && @community_role == :admin && @community_organization.description.blank? && params[:organization].nil?
-      message = if location_name != "edit_organizations"
-        link_to("Click here", organization_path(@community_organization)) + " to configure your organization"
+      message = if location_name != "appearance_organizations"
+        link_to("Click here", appearance_organization_path(@community_organization)) + " to configure your organization"
       else
         "Introduce some HTML code for your main site to configure your site"
       end
       %(<div style="background-color: rgb(255,255,220); border-bottom: 1px solid rgb(200,200,150); width: 100%; display: block; font-size: 12px; padding: 10px 0; text-align: center">
         #{message}
-      </div>)
+      </div>).html_safe
     end
   end
   
@@ -230,7 +213,7 @@ module ApplicationHelper
   def tracking_code
     if Teambox.config.tracking_enabled and Rails.env.production?
       fake_img = "http://teambox.com/logo.png/#{request.host}"
-      %(<div style="background-image: url(#{fake_img})"></div>)
+      %(<div style="background-image: url(#{fake_img})"></div>).html_safe
     end
   end
 
@@ -241,7 +224,7 @@ module ApplicationHelper
       html << "a:hover { color: ##{@organization ? @organization.settings['colours']['link_hover'] : ''};}"
       html << "body { font-color: ##{@organization ? @organization.settings['colours']['text'] : ''};}"
       html << '</style>'
-    end
+    end.html_safe
   end
 
   def organization_header_bar_colour
@@ -251,14 +234,71 @@ module ApplicationHelper
   def custom_organization_colour_field(f, organization, field)
     colour = organization.settings['colours'][field]
     "".tap do |html|
-      html << f.hidden_field(:settings, :id => "organization_settings_colours_#{field}", :name => "organization[settings][colours][#{field}]", :value => colour)
-      html << content_tag('button', '', :id => "organization_settings_colours_#{field}_swatch", :class => 'colorbox', :style=>"width: 56px; height: 56px; border: 1px outset #666; cursor: crosshair;")
-    end
+      html << f.hidden_field(:settings, :id => "organization_settings_colours_#{field}", :'data-default-color' => Organization.default_settings['colours'][field].upcase, :name => "organization[settings][colours][#{field}]", :value => colour)
+      html << content_tag('button', '', :id => "organization_settings_colours_#{field}_swatch", :class => 'colorbox')
+    end.html_safe
   end
 
   def preview_button
     content_tag(:button, :'data-alternate' => t('comments.preview.close'), :class => :preview) do
       t('comments.preview.preview')
+    end
+  end
+
+  def upload_form_html_options(page, upload)
+    id = upload.new_record? ? 'new_upload' : 'upload_file_form'
+    form_classes = %w(upload_form app_form) 
+    form_classes << 'form_error' unless upload.errors.empty?
+    form_classes << 'new_upload' if upload.new_record?
+
+    hidden = page || (action_name == 'index' && upload.errors.empty?)
+    form_style = hidden ? 'display: none' : nil
+
+    {:html => { :multipart => true, :id => id, :style => form_style, :class => form_classes}}
+  end
+  
+  ##
+  ##  eg. js_id(:edit_header,@project,@tasklist) => project_21_task_list_12_edit_header
+  ##  eg. js_id(:new_header,@project,Task.new) => project_21_task_list_new_header
+  ##  eg. js_id(@project,Task.new) => project_21_task_list
+  def js_id(*args)
+    if args.is_a?(Array)
+      element = args[0].is_a?(String) || args[0].is_a?(Symbol) ? args[0] : nil
+      models = args.slice(1,args.size-1)
+      raise ArgumentError unless models.all?{|a|a.is_a?(ActiveRecord::Base)}
+    elsif args.is_a?(ActiveRecord::Base)
+      models = [args]
+    else
+      raise ArgumentError
+    end
+    generate_js_path(element,models)
+  end
+
+  def generate_js_path(element,models)
+    path = []
+    models.each do |model|
+      path << model.class.to_s.underscore
+      path << model.id unless model.new_record?
+    end
+    path << element unless element.nil?
+    path.join('_')
+  end
+
+  def show_form_errors(target,form_id)
+    page.select("##{form_id} .error").each do |e|
+      e.remove
+    end
+    target.errors.each do |field,message|
+    errors = <<BLOCK
+      var e = $('#{form_id}').down('.#{field}');
+      if (e) {
+      if(e.down('.error'))
+        e.down('.error').insert({bottom: "<br /><span>'#{message}'</span>"})
+      else
+        e.insert({ bottom: "<p class='error'><span>#{message}</span></p>"})
+      }
+BLOCK
+      page << errors
     end
   end
 end

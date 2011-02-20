@@ -23,7 +23,7 @@ Given /^the conversation "([^\"]+)" is watched by (@.+)$/ do |name, users|
     conversation.add_watcher(user, false)
   end
   
-  conversation.save(false)
+  conversation.save(:validate => false)
 end
 
 Given /^(@.+) stops? watching the conversation "([^\"]*)"$/ do |users, name|
@@ -33,7 +33,7 @@ Given /^(@.+) stops? watching the conversation "([^\"]*)"$/ do |users, name|
     conversation.remove_watcher(user, false)
   end
   
-  conversation.save(false)
+  conversation.save(:validate => false)
 end
 
 Then /^(@.+) should( not)? be watching the conversation "([^\"]*)"$/ do |users, negate, name|
@@ -48,17 +48,39 @@ Then /^(@.+) should( not)? be watching the conversation "([^\"]*)"$/ do |users, 
   end
 end
 
+Then /^(?:|I )should not see any conversations$/ do
+  text = "This project doesn't have any conversations yet"
+
+  if Capybara.current_driver == Capybara.javascript_driver
+    assert page.has_xpath?(XPath::HTML.content(text), :visible => true)
+  elsif page.respond_to? :should
+    page.should have_content(text)
+  else
+    assert page.has_content?(text)
+  end
+end
+
 When /^(?:|I )fill in the conversation's comment box with "([^\"]*)"(?: within "([^\"]*)")?$/ do |value, selector|
   with_scope(selector) do
-    xpath = Capybara::XPath.append('//form[contains(@class,"edit_conversation")]//*[@id="conversation_comments_attributes_0_body"]')
-    locate(:xpath, xpath, "cannot fill in: no conversation comment textarea found").set(value)
+    find(:xpath, '//form[contains(@class,"edit_conversation")]//*[@name="comment[body]"]').set(value)
+  end
+end
+
+When /^(?:|I )fill in the new conversation comment box with "([^\"]*)"?$/ do |value, selector|
+  with_scope(selector) do
+    find(:xpath, '//form[contains(@class,"new_conversation")]//*[@name="conversation[comments_attributes][0][body]"]').set(value)
   end
 end
 
 When /^(?:|I )click the conversation's comment box(?: within "([^\"]*)")?$/ do |selector|
   with_scope(selector) do
-    xpath = Capybara::XPath.append('//form[contains(@class,"edit_conversation")]//*[@id="comment_body"]')
-    locate(:xpath, xpath, "cannot click: no conversation comment textarea found").click
+    find(:xpath, '//form[contains(@class,"edit_conversation")]//*[@name="comment[body]"]').click
+  end
+end
+
+When /^(?:|I )click the new conversation comment box?$/ do |selector|
+  with_scope(selector) do
+    find(:xpath, '//form[contains(@class,"new_conversation")]//*[@name="conversation[comments_attributes][0][body]"]').click
   end
 end
 

@@ -2,7 +2,7 @@
 Feature: Reorder task within the task list view
 
   Background:
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am in the project called "Teambox"
     And the following task lists with associations exist:
       | name      | project |
@@ -18,12 +18,12 @@ Feature: Reorder task within the task list view
 
   Scenario: Reorder task within a task list
     When I follow "This week"
-    And I drag "Fix a drag and drop bug" above "Write more test"
+    And I drag the task "Fix a drag and drop bug" above "Write more test"
     And I wait for 1 second
     Then I should see the task "Fix a drag and drop bug" before "Write more test"
 
   Scenario: Reorder task to another task list
-    When I drag "Write a blog post" above "Write more test"
+    When I drag the task "Write a blog post" above "Write more test"
     And I wait for 1 second
     Then I should see the task "Write a blog post" before "Write more test"
     And I should see the task called "Write a blog post" in the "This week" task list
@@ -35,6 +35,6 @@ Feature: Reorder task within the task list view
     And I press "Add Task"
     And I wait for 1 second
     And I follow "This week"
-    And I drag "Fix IE7" above "Write more test"
+    And I drag the task "Fix IE7" above "Write more test"
     And I wait for 1 second
     Then I should see the task "Fix IE7" before "Write more test"

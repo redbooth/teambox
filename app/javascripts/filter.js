@@ -27,7 +27,7 @@ Filter = {
     $$(".tasks.closed div.task").invoke('hide')
   },
   showTasks: function(by, filter) {
-    $$("div.task."+by).each(function(e){
+    $$(".tasks div.task."+by).each(function(e){
       if (filter == null || e.hasClassName(filter))
         e.show();
       else
@@ -35,7 +35,7 @@ Filter = {
     });
   },
   countTasks: function(by, date_filter) {
-    return $$("div.task." + by).select(function(e){
+    return $$(".tasks div.task." + by).select(function(e){
       return (date_filter == null || e.hasClassName(date_filter))
     }).length
   },
@@ -100,12 +100,12 @@ Filter = {
     Filter.showAllTaskLists();
     Filter.hideAllTasks();
 
-    if (name_match == "" && assigned == 'task' && filter == null)
+    if ((name_match == "" || name_match == el_name.readAttribute('placeholder')) && assigned == 'task' && filter == null)
     {
       Filter.showAllTasks();
     } else {
       Filter.showTasks(assigned, filter);
-      Filter.hideBySearchBox(name_match);
+      if (name_match!=el_name.readAttribute("placeholder")) Filter.hideBySearchBox(name_match);
       Filter.foldEmptyTaskLists();
     }
 
@@ -151,7 +151,7 @@ Filter = {
             var filter = option.value == 'all' ? 'task' : option.value;
             var count = Filter.countTasks(filter, null);
             if (i < 3 || count > 0 || filter == current_assigned) {
-                el.options[idx] = (new Option(option.text + ' (' + count + ')', filter));
+                el.options[idx] = (new Option(option.text + ' (' + count + ')', option.value));
                 idx += 1;
             }
         }
@@ -168,7 +168,33 @@ Filter = {
       var filter = option.value == 'all' ? null : option.value;
       option.text = count_due_date[i] + ' (' + Filter.countTasks(assigned, filter) + ')';
     }
+  },
+
+  populatePeopleForTaskFilter: function() {
+    if ((typeof _people == "object") && (select = $('filter_assigned'))) {
+      select.insert(new Element('option', { 'value': 'divider', 'disabled': true}).insert('--------'))
+      var users = []
+      var user_ids = []
+      if (project_id = select.readAttribute('data-project-id') && project_id != 0) {
+        users = _people[project_id].collect(function (e) { return [e[3],e[2]] })
+      }
+      else {
+        (new Hash(_people)).values().each(function (project) {
+          project.each(function(person) {
+            if (!user_ids.include(person[3])) {
+              users.push([person[3],person[2]])
+              user_ids.push(person[3])
+            }
+          })
+        })
+      }
+      users.sortBy(function(e) { return e[1] }).each(function(user) {
+        var option = new Element('option', { 'value': 'user_' + user[0]}).insert(user[1])
+        select.insert(option)
+      })
+    }
   }
+
 };
 
 document.on('keyup', '#filter_tasks_by_name', function(evt,el) {

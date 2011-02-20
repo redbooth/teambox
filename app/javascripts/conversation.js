@@ -21,6 +21,14 @@ document.on('ajax:success', 'form.edit_conversation:not(.convert-to-task)', func
 });
 
 document.on('ajax:success', 'form.edit_conversation.convert-to-task', function(e, form) {
+  var person = form['conversation[assigned_id]'].getValue();
+  var task_count = Number($('open_my_tasks').innerHTML)
+  var is_assigned_to_me = my_projects[person]
+
+  if (is_assigned_to_me) {
+    task_count += 1
+    $('open_my_tasks').update(task_count)
+  }
   if ($$('.conversation_header').length == 1) {
     document.location.href = e.memo.responseText;
   }
@@ -31,9 +39,10 @@ document.on('ajax:success', 'form.edit_conversation.convert-to-task', function(e
 });
 
 document.on('ajax:failure', 'form.edit_conversation.convert-to-task', function(e, form) {
-  var field_name = e.memo.responseJSON.first()[0],
-      message = e.memo.responseJSON.first()[1];
-  form.down('#conversation_' + field_name).insert({after: "<p class='error'>" + message + "</p>"});
+  var message = $H(e.memo.responseJSON)
+	message.each( function(error) {
+    form.down('#conversation_name').insert({after: "<p class='error'>" + message + "</p>"})
+	})
 })
 
 
@@ -59,6 +68,7 @@ var toggleConvertToTaskForm = function(e, el, recurse) {
       target = form.down('span.convert_to_task a'),
       panel = form.down('div.convert_to_task'),
       submit = form.down('.submit', 1),
+      google_docs = form.down('.google_docs_attachment');
       attach = form.down('.attach');
   panel.select('select,input').each(function(e) {e.disabled = !e.disabled;});
 
@@ -102,7 +112,7 @@ var toggleConvertToTaskForm = function(e, el, recurse) {
     form.action = form.action + '/convert_to_task';
   }
 
-  [target,panel,submit,attach].invoke('toggle');
+  [target,panel,submit,attach,google_docs].invoke('toggle');
 };
 
 document.on('click', 'span.convert_to_task a', toggleConvertToTaskForm);

@@ -144,6 +144,19 @@ sl:
       upload: Naloži
     show: 
       save: "Shrani spremembe"
+  calendar: 
+    abbr_weekdays: 
+      - Ne
+      - Po
+      - Ut
+      - St
+      - Št
+      - Pi
+      - So
+    clear: Vymazať
+    now: Teraz
+    ok: OK
+    today: Dnes
   cards: 
     card: 
       addresses: Naslovi
@@ -598,12 +611,6 @@ sl:
       second: "Sekunda "
       year: Leto
     time_ago: "%{time_ago_in_words} pred"
-  calendar: 
-    abbr_weekdays: [Ne, Po, Ut, St, Št, Pi, So]
-    ok: OK
-    now: Teraz
-    today: Dnes
-    clear: Vymazať
   deleted: 
     conversation: "Odstrani pogovor <b>%{name}</b>"
     page: "Odstrani stran <b>%{name}</b>"
@@ -630,7 +637,6 @@ sl:
       conversation: "Pogovori:"
       due_on: "Rok %{date}"
       my_tasks: "Več opravil določenih v  %{project}"
-      recent_conversations: "Nedavni pogovori v projektu %{project}"
       status: "Posodobitev: %{status}"
       stop_watching: "<a href='%{stop_watching_url}'>Nehaj spremljati</a>ta pogovor."
       task: "Opravilo:"
@@ -639,48 +645,12 @@ sl:
       hey: "Živjo, %{user_name}!"
     upload: 
       file: Datoteka
-      uploaded_by: "naložil "
   example_projects: 
     new: 
       create: "Ustvari primer projekta"
       learn: "Nauči se s primera"
   form: 
     cancel: Prekliči
-  groups: 
-    column_group: 
-      projects: Projekti
-      your_groups: "Tvoje skupine"
-    edit: 
-      submit: Posodobi
-    fields: 
-      description: Opis
-      name: Ime
-      permalink: Povezava
-    header: 
-      leave: Zapusti
-      remove: Odstrani
-    index: 
-      remove_project: Odstrani
-      submit_project: Dodaj
-      title: Skupine
-      whats_this: "Kaj je to?"
-    logo_fields: 
-      current: "Trenutni Logotip"
-      delete: Odstrani
-      upload: Datoteke
-    new: 
-      invalid_group: "Napačna skupina"
-      submit: Ustvari
-      title: "Ustvari skupino"
-    primer: 
-      create_group: "Ustvari skupino"
-    search: 
-      invite: Povabi
-      invite_people: "Povabi osebe v skupino"
-      username_or_email: "Uporabniško ime ali email"
-    show: 
-      add_project: "Dodaj projekt"
-      edit: Uredi
   hours: 
     all_tasks: "Vsa opravila"
     all_users: "Vsi uporabniki"
@@ -736,6 +706,7 @@ sl:
     format: 
       delimiter: ","
       separator: "."
+      precision: 2
     human: 
       storage_units: 
         format: "%n %u"
@@ -829,7 +800,7 @@ sl:
       new: 
         time_tracking_docs: "Izvedi več"
       owner: Lastnik
-      tracks_time: "Omogoči sledenje času. <em>To bo omogočilo, da uporabniki vnesejo čas ki so ga porabili za opravilo.</em>"
+      tracks_time_html: "Omogoči sledenje času. <em>To bo omogočilo, da uporabniki vnesejo čas ki so ga porabili za opravilo.</em>"
     index: 
       new_project: "Nov Projekt"
       projects: "Moji Projekti"
@@ -840,12 +811,12 @@ sl:
       new_project: "Nov Projekt"
       title: "Ustvari projekt"
     new_primer: 
-      feature1: "Objavi posodobitev statusa"
-      feature2: "Začni pogovr ali odgovori"
-      feature3: "Pošlji priponke"
-      feature4: "Dodeli ali preglej opravila"
-      feature5: "Komentiraj opravila"
-      feature7: "Dodaj, uredi in poglej strani."
+      feature1_html: "Objavi posodobitev statusa"
+      feature2_html: "Začni pogovr ali odgovori"
+      feature3_html: "Pošlji priponke"
+      feature4_html: "Dodeli ali preglej opravila"
+      feature5_html: "Komentiraj opravila"
+      feature7_html: "Dodaj, uredi in poglej strani."
     primer: 
       create_first: "Ustvari svoj prvi projekt"
     show: 
@@ -896,7 +867,6 @@ sl:
       all_task_lists: "Vse naloge"
       conversations: Pogovori
       files: Priponke
-      groups: "Skupine Projekta"
       invitations: Povabila
       login: Prijava
       overview: Pregled
@@ -1000,15 +970,10 @@ sl:
     new: 
       submit: "Dodaj seznam opravil"
       title: "Nov seznam opravil"
-    overview_box: 
-      ends_on: "Rok:"
-      starts_on: "Začne se:"
-      this_list: "Ta seznam opravil"
-      undefined: Nedoločeno
     primer: 
       create_first: "Ustvari prvi seznam opravil v tem projektu!"
       empty: "Ta projekt je še brez seznama opravil."
-      item3: "<b>Sledi</b>. Prejmi obvestila, za dodeljena opravila"
+      item3_html: "<b>Sledi</b>. Prejmi obvestila, za dodeljena opravila"
     show: 
       title: "Seznam Opravil: %{name}"
   tasks: 
@@ -1017,12 +982,12 @@ sl:
       reopen: "Ponovno odpri to opravilo"
       you_are_done: "Kot kaže si končal s tem opravilom!"
     archive_message: 
-      archived: "Opravilo <b>%{name}</b> je bilo uspešno arhivirano!"
+      archived_html: "Opravilo <b>%{name}</b> je bilo uspešno arhivirano!"
     assigned: 
       assigned_to: "Dodeljeno %{user}"
     create: "Dodaj opravilo"
     destroy_message: 
-      deleted: "Opravilo <b>%{name}</b> je bilo uspešno izbrisano!"
+      deleted_html: "Opravilo <b>%{name}</b> je bilo uspešno izbrisano!"
     due_on: 
       due_on: Rok
       today: Danes
@@ -1075,7 +1040,7 @@ sl:
   uploads: 
     comment_upload_link: Priponka
     form: 
-      description: Naslov<i>(opcijsko)</i>
+      description_html: Naslov<i>(opcijsko)</i>
       select_file: "Izberi datoteko"
       upload: "Naloži datoteko"
     index: 
@@ -1122,9 +1087,6 @@ sl:
     form: 
       delete: 
         delete_my_account: "Odstrani moj račun zdaj"
-      picture: 
-        destroy: "Odstrani avatar"
-        field: "Nov avatar"
       biography: "Kratek opis"
       change_password: "Spremeni geslo"
       confirm_password: "Potrdi geslo"
@@ -1135,14 +1097,16 @@ sl:
       last_name: Priimek
       login: "Uporabniško ime"
       monday: Ponedeljkom
-      notifications:
+      notifications: 
         notify_conversations: "Obvesti me, ko nekdo posodobi pogovor, ki ga spremljam."
-        notify_mentions: "Obvesti me, ko me nekdo omeni recimo: Živjo @%{login}! V tem primeru boš prejel/a poštol!"
         notify_tasks: "Obvesti me, ko nekdo posodobi opravilo, ki ga spremljam."
       password: Geslo
       password_confirmation: "Potrdi geslo"
       phone: "Telefonska številka"
       phone_for_integration: "Opcijsko, v prihodnosti za SMS obvestila."
+      picture: 
+        destroy: "Odstrani avatar"
+        field: "Nov avatar"
       sunday: Nedeljo
       time_zone: "Časovni pas"
       tooltips: 

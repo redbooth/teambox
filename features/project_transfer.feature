@@ -6,7 +6,7 @@ Feature: Transfer Project
       | balint | balint.erdi@gmail.com    | Balint     | Erdi      |
       | pablo  | pablo@teambox.com        | Pablo      | Villalba  |
       | james  | james.urquhart@gmail.com | James      | Urquhart  |
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And I go to project settings page
     Given "balint" is in the project called "Ruby Rockstars"
@@ -23,7 +23,7 @@ Feature: Transfer Project
     Then I should not see "Ownership"
     Then the user called "balint" should administrate the project called "Ruby Rockstars"
     Given I log out
-    And I am logged in as balint
+    And I am logged in as @balint
     And I go to project settings page
     Then I should see "Ownership"
 

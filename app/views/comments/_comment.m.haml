@@ -5,7 +5,7 @@
     = activity_title(comment, true, true)
     - comment_task_status(comment) if comment.task_comment?
     = activity_project_link(comment.project) unless comment.target.class == Project
-    ~ comment.body_html
+    ~raw comment.body_html
 
     - if comment.uploads.any?
       - if comment.uploads.all? { |upload| upload.image? }

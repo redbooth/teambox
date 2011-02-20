@@ -13,7 +13,7 @@ InlineTasks = {
         task.down('span.task_status').insert({ before: "<div class='loading_icon'> </div>" })
         task.down('span.task_status').hide()
       }
-      new Ajax.Request(task.down('a.name').readAttribute('href')+".frag", {
+      new Ajax.Request(task.down('a.name').readAttribute('href')+".html?nolayout=1", {
         method: "get",
         onSuccess: function(r) {
           task.down('.loading_icon').remove()
@@ -55,15 +55,12 @@ document.on('ajax:success', '.task_inline form', function(e, form) {
   var status_name = $w("new open hold resolved rejected")[status]
 
   var person = task_data.assigned_id
-  var is_assigned_to_me = (status == 1) && my_projects[person]
 
   // Cleanup the current status of the task
   task.className = task.className.replace(/(^|\s+)user_(.+?)(\s+|$)/, ' ').strip()
   task.className = task.className.replace(/(^|\s+)status_(.+?)(\s+|$)/, ' ').strip()
   task.down('.assigned_user') && task.down('.assigned_user').remove()
 
-  // Mark as mine if it's assigned to me
-  is_assigned_to_me ? task.addClassName('mine') : task.removeClassName('mine')
 
   // Update the status of the task
   task.addClassName('status_'+status_name)
@@ -71,7 +68,7 @@ document.on('ajax:success', '.task_inline form', function(e, form) {
   // Show new assigned user name if there's an assigned user
   if (status == 1) {
     task.addClassName('user_'+task_data.assigned.user_id)
-    var short_name = task_data.assigned.user.last_name
+    var short_name = task_data.assigned.user.first_name[0]+". "+task_data.assigned.user.last_name
     task.down('a.name').insert({after: " <span class='assigned_user'>"+short_name+"</span> "})
   }
   

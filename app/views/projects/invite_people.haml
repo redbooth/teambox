@@ -1,0 +1,22 @@
+%h2=t '.title', :project => @current_project
+
+= form_for @current_project, :url => project_send_invites_path(@current_project), :html => { :id => :invite_contacts, :method => :post } do |f|
+
+  %p=t '.explain_invitations'
+
+  %h3.invite_by_email=t '.invite_by_email'
+  = f.text_area :invite_emails, :placeholder => "john@galt.com, francisco@danconia.com"
+
+  - contacts = @current_project.organization.users_in_projects - [current_user]
+  - if contacts.any?
+    %h3=t '.invite_from_this_organization', :organization => @current_project.organization
+    .users
+      - for user in contacts[0,60]
+        %label.user
+          = check_box_tag 'project[invite_users][]', user.id
+          = user.name
+    .clear
+
+  .submit
+    = f.submit t('.submit'), :'data-disable-with' => t('.sending')
+

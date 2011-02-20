@@ -2,7 +2,7 @@
 Feature: Commenting on a task
 
   Background:
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am in the project called "Teambox"
     And the task list called "This week" belongs to the project called "Teambox"
     And the following task with associations exist:

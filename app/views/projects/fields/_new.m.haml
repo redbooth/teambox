@@ -1,18 +1,18 @@
 .name.text_field
-  = f.label :name, t('projects.fields.name')
+  = f.label :name, t('projects.fields.name_html')
   = errors_for project, :name
   = f.text_field :name, :placeholder => t('projects.fields.name_example')
 
 .organization.text_field
   - if current_user.organizations.empty?
-    - f.fields_for :organization do |org_fields|
-      = org_fields.label :name, t('.choose_organization.new_org_name')
+    = f.fields_for :organization do |org_fields|
+      = org_fields.label :name, t('.choose_organization.new_org_name_html')
       = org_fields.text_field :name, :placeholder => t('organizations.fields.name_placeholder')
       = errors_for(project.organization, :name) || errors_for(project.organization, :permalink)
   - else
     - if Teambox.config.community # single organization
       = f.hidden_field :organization_id, :value => Organization.last.id
     - else
-      = f.label :organization_id, t('.choose_organization.choose_org')
+      = f.label :organization_id, t('.choose_organization.choose_org_html')
       = f.select :organization_id, options_for_organizations(current_user.organizations)
       = errors_for project, :organization_id

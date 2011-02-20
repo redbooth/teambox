@@ -1,23 +1,28 @@
-%p= "A note is a piece of text with a title placed on a #{link_to_doc_model(:page)}."
-%p= "Note belong in slots, which can be reordered using page#reorder."
+%p=raw "A note is a piece of text with a title placed on a #{link_to_doc_model(:page)}."
+%p=raw "Note belong in slots, which can be reordered using page#reorder."
 
-- doc_for :index, :example => example_api_wrap(@note, :references => [:page]) do
-  %p= "Returns the most recent notes on a page."
+- doc_for :index,
+          :example => example_api_wrap(@note, :references => [:page]) do
+  %p=raw "Returns the most recent notes on a page."
 
-- doc_for :show,  :example => @note.to_api_hash(:include => [:page_slot]) do
-  %p= "Returns the data for a note."
+- doc_for :show,
+          :example => @note.to_api_hash(:include => [:page_slot]) do
+  %p=raw "Returns the data for a note."
   
-- doc_for :create, :parameters => {:name => 'Name', :body => 'Body', :project_id => 123, :page_id => 123 },
-                   :example => @note.to_api_hash,
-                   :status => :created,
-                   :role => :participant do
-  %p= "Creates a new note."
+- doc_for :create,
+          :parameters => {:name => 'Name', :body => 'Body', :project_id => 123, :page_id => 123 },
+          :example => @note.to_api_hash,
+          :status => :created,
+          :role => :participant do
+  %p=raw "Creates a new note."
 
-- doc_for :update, :parameters => {:name => @note.name, :body => @note.body },
-                   :status => :updated,
-                   :role => :participant do
-  %p= "Updates the name and body of a note."
+- doc_for :update,
+          :parameters => {:name => @note.name, :body => @note.body },
+          :status => :updated,
+          :role => :participant do
+  %p=raw "Updates the name and body of a note."
 
-- doc_for :destroy, :status => :deleted,
-                    :role => :participant do
-  %p= "Destroys a note."
+- doc_for :destroy,
+          :status => :deleted,
+          :role => :participant do
+  %p=raw "Destroys a note."

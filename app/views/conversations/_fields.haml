@@ -4,7 +4,17 @@
   = errors_for f.object, :name
 
 - if f.object.new_record?
-  - f.object.comments.build
-  - f.fields_for :comments do |fields|
+  = f.fields_for :comments, f.object.comments.build do |comment_fields|
     .field.text_area
-      = fields.text_area :body, :placeholder => t('comments.new.conversation')
+      = comment_fields.text_area :body, :placeholder => t("comments.new.conversation")
+    .extra
+      .upload_area
+        %p= t('uploads.new.select_a_file')
+        - comment_fields.object.uploads.build
+        = comment_fields.fields_for :uploads do |uploads|
+          = uploads.file_field :asset, :id => 'upload_file'
+      .actions
+        .attach
+          %span= t('comments.fields.attach') + ": "
+          = link_to t('uploads.comment_upload_link'), '#uploads', :class => 'attach_icon hoverable', :title => "Attach a file"
+        = render 'google_docs/form', :f => comment_fields

@@ -1,4 +1,5 @@
 class Upload < RoleRecord
+  include Immortal
 
   ICONS = %w(aac ai aiff avi bmp c cpp css dat dmg doc dotx dwg dxf eps exe flv gif h hpp html ics iso java jpg key mid mp3 mp4 mpg odf ods odt otp ots ott pdf php png ppt psd py qt rar rb rtf sql tga tgz tiff txt wav xls xlsx xml yml zip)
     
@@ -13,8 +14,7 @@ class Upload < RoleRecord
   after_destroy  :cleanup_activities
 
   before_create :copy_ownership_from_comment
-
-  default_scope :order => 'id DESC'
+  after_create  :log_create
 
   attr_accessible :asset,
                   :page_id,
@@ -79,7 +79,7 @@ class Upload < RoleRecord
     'uploads/upload_slot'
   end
 
-  def after_create
+  def log_create
     save_slot if page
     project.log_activity(self, 'create', user_id) unless comment
   end
@@ -105,7 +105,7 @@ class Upload < RoleRecord
   end
   
   def user
-    User.find_with_deleted(user_id)
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
 
   def to_xml(options = {})
@@ -156,7 +156,7 @@ class Upload < RoleRecord
   end
   
   def update_comment_to_show_delete
-    if self.comment && self.comment.body.blank? && self.comment.uploads.size == 1
+    if self.comment && self.comment.body.blank? && self.comment.uploads.count == 1
       self.comment.update_attributes(:body => "File deleted")
     end
   end

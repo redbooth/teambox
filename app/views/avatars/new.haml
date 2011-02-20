@@ -1,5 +1,5 @@
 .form_user_wrap
-  - form_for :avatar, @avatar, :url => user_avatar_path(@user), :html => { :class => 'new_avatar', :multipart => true } do |f|
+  = form_for :avatar, @avatar, :url => user_avatar_path(@user), :html => { :class => 'new_avatar', :multipart => true } do |f|
     .image_file
       %label{ :for => 'image_file'}= t('.title')
       = f.file_field :file

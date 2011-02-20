@@ -1,0 +1,21 @@
+.email{ :style => email_global }
+
+  = dont_answer
+
+  %p= t('emailer.confirm.hey', :user_name => h(@user.name))
+
+  .box{ :style => email_box }  
+    %p=raw t('emailer.confirm.follow_this_link', :complete => content_tag(:b, t('emailer.confirm.complete')) )
+    %h2{ :style => email_text(:big) }
+      = link_to t('emailer.confirm.log_in'), @login_link
+
+  %p{ :style => email_text(:small) }
+    = t('emailer.confirm.plaintext_link')
+    %br
+    = link_to @login_link, @login_link
+
+  .footer{ :style => email_text(:small) }
+    %p= t('emailer.confirm.report_abuse', :email => @user.email)
+    %p= t('emailer.confirm.problems_html', :support => Teambox.config.support)
+    
+

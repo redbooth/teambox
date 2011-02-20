@@ -1,12 +1,12 @@
 %h3= t('.title')
 %p= t('.task_list')
 .name.text_field
-  = f.label :name, t('.name')
+  = f.label :name, t('.name_html')
   = f.text_field :name, :autofocus => true
 %p.optional= t('.optional')
 .pick_date
-  = f.label :start_on, t('.start_on')
+  = f.label :start_on, t('.start_on_html')
   = date_picker(f, :start_on)
 .pick_date
-  = f.label :finish_on, t('.finish_on')
+  = f.label :finish_on, t('.finish_on_html')
   = date_picker(f, :finish_on)

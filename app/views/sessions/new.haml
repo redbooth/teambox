@@ -3,13 +3,8 @@
 - if @conflict
   .box= render 'sessions/user_exists', :provider => @profile[:provider]
 
-- form_tag session_path, :class => 'new_session', :id => 'new_session' do
+= form_tag session_path, :class => 'new_session', :id => 'new_session' do
   = upgrade_browser
   = chrome_frame
   = render 'sessions/fields'
   = submit_tag t('.submit')
-
-- unless @conflict
-  = render 'sessions/oauth_login'
-  - content_for :column do
-    = latest_announcement

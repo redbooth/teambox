@@ -11,4 +11,7 @@ if @activities.any?
   page.insert_html :after, :activities, show_more_button
 end
 
-page << "Task.insertAssignableUsers()"
+page << "Task.insertAssignableUsers();"
+page << "disableConversationHttpMethodField();"
+page << "contractComments();"
+page << "if (my_user.collapse_activities) { ActivityFeed.collapseAll(); }"

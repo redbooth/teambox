@@ -1,0 +1,20 @@
+embed_assets: on
+package_path: jammit
+
+stylesheets:
+  apidocs:
+    - public/stylesheets/apidocs.css
+  application:
+    - public/stylesheets/application.css
+  mobile:
+    - public/stylesheets/mobile.css
+  print:
+    - public/stylesheets/print.css
+  public_projects:
+    - public/stylesheets/public_projects.css
+  sessions:
+    - public/stylesheets/sessions.css
+  sites:
+    - public/stylesheets/sessions.css
+    - public/stylesheets/public.css
+    - public/stylesheets/sites.css

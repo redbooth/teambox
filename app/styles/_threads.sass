@@ -1,69 +1,109 @@
 .thread
-  +rounded(3px)
-  margin-bottom: 20px
-  .title
-    display: block
-    padding: 15px 0 5px
-    font-size: 0.8em
-    border:
-      top: 1px solid white
-      bottom: 1px solid white
-    +rounded(3px)
-    +clearing
-    .info
-      .thumb_avatar
-        margin: 0 20px 0 10px
-    p.starter
-      a
-        font-weight: bold
-      margin-top: 0
-    .date
-      float: right
-      font-size: 0.8em
-      color: #9da3a7
-    p.thread_title
-      margin-bottom: 0
-      overflow-x: hidden
-      a
-        padding-left: 20px
-        font-weight: bold
-        &.conversation, &.task
-          padding-left: 23px
-        &.conversation
-          background: url(/images/comment.gif) no-repeat left
-        &.task
-          background: url(/images/task_list.png) no-repeat left
-        &.task_list
-          padding-left: 0
+  margin: 20px 0 35px
   .comments
-    border-left: 4px solid #eee
-    margin: 1px 0 0 20px
-    background-color: #fafafa
+    border-left: 4px solid $comments_left_border
+    background-color: $comments_bkg
+  .comment_header
+    border-left: 4px solid $comments_left_border
+    background-color: $comments_left_border
+    +gradient($comments_left_border, $comments_bkg)
+    .info
+      position: absolute
     .block
-      width: 475px
-      padding-right: 10px
-      .body
-        margin-top: 0
-    .more_comments
-      padding: 10px 10px 10px 54px
+      a
+        font-weight: bold
+        text-decoration: none
+        color: black
+        &:hover
+          color: $link_hover
+      p
+        margin: 4px 0 8px
+  span.time
+    position: relative
+    float: right
+    padding: 4px 4px 0 0
+    font-size: 11px
+    color: #999
+    display: none
+  .more_comments
+    display: block
+    font-size: 12px
+    background-color: #ffe
+    +gradient(#ffe, #ffd)
+    a
+      color: #333
       display: block
-      font-size: 12px
-    .comment
-      padding: 5px 0
-      .info
-        width: 24px
-        margin-left: 10px
-        .micro_avatar
-          +rounded(3px)
-      .block
-        width: 552px
+      padding: 10px 10px 10px 44px
+      height: 16px
   form.new_comment
     border-left: 4px solid #eee
-    background-color: #fafafa
-    margin: 0 0 0 20px
-    padding: 2px 0 5px 10px
-    .field textarea
-      margin-left: 8px
-      width: 540px
-    .micro_avatar
-      margin-top: 2px
+    background-color: $comments_bkg
+    margin: 0
+    padding: 2px 0 5px 6px
+
+.expand_comment
+  a
+    position: absolute
+    bottom: 20px
+    right: -11px
+    font-size: 12px
+    color: #333
+    background-color: lighten($navbar, 30)
+    padding: 4px 10px
+    -webkit-box-shadow: -2px 2px 2px #777
+    &:hover
+      text-decoration: none
+      background-color: lighten($navbar, 10)
+  span
+    position: absolute
+    bottom: 10px
+    right: -10px
+    font-size: 0px
+    line-height: 0%
+    width: 0px
+    border-top: 10px solid $navbar
+    border-right: 10px solid transparent
+    font-weight: bold
+    font-size: 10px
+
+.thread.collapsed
+  span.time
+    display: inline-block
+  .comments, form
+    display: none
+
+#activities
+  .comment_header
+    cursor: pointer
+    &:hover
+      border-left-color: $navbar
+      +gradient($comments_left_border - #111, $comments_bkg - #111)
+
+#activities.collapsed
+  .thread
+    margin: 0 0 20px
+  .thread.collapsed
+    margin: 0
+
+.add_watchers_box
+  margin-left: 45px
+  padding: 5px 0 20px
+  max-height: 200px
+  overflow-y: auto
+  p
+    font-size: 11px
+    font-weight: bold
+  .watcher
+    display: inline-block
+    width: 140px
+    margin: 2px 0
+    a
+      font-size: 12px
+      color: black
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+      border-bottom: 1px dashed #ccc
+      &:hover
+        color: $link_hover
+        text-decoration: none

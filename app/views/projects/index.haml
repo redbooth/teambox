@@ -1,39 +1,30 @@
-- if @sub_action == 'archived'
-  = list_archived_projects(@archived_projects)
+- if @pending_projects.any?
+  .invitations
+    = list_pending_invites(@pending_projects)
+
+- if commentable_projects.any?
+  - form_for @new_conversation, :html => { :multipart => true, :class => 'new_conversation new_comment', :'data-remote' => true } do |form|
+    .project_select
+      = label_tag :project_id, t('comments.new.comment_on_project')
+      = select_tag :project_id, options_for_projects_by_organization(commentable_projects)
+    
+    = form.hidden_field :simple
+    
+    - form.object.comments.build
+    - form.fields_for :comments do |fields|
+      = render 'comments/fields', :f => fields, :placeholder => t('comments.new.project')
+
+- if current_user.projects.any?
+  #activities
+    = list_threads(@threads)
+    = show_more_button
+  = #javascript_tag autorefresh(@activities)
 - else
-  - if @pending_projects.any?
-    .invitations
-      = list_pending_invites(@pending_projects)
-
-  - if commentable_projects.any?
-    - form_for @new_conversation, :html => { :multipart => true, :class => 'new_conversation new_comment', :'data-remote' => true } do |form|
-      .project_select
-        = label_tag :project_id, t('comments.new.comment_on_project')
-        = select_tag :project_id, options_for_projects_by_organization(commentable_projects)
-      
-      = form.hidden_field :simple
-      
-      - form.object.comments.build
-      - form.fields_for :comments do |fields|
-        = render 'comments/fields', :f => fields, :placeholder => t('comments.new.project')
-
-  - if current_user.projects.any?
-    #activities
-      = list_threads(@threads)
-      = show_more_button
-    = #javascript_tag autorefresh(@activities)
-  - else
-    = render 'projects/primer'
+  = render 'projects/primer'
 
 - content_for :column do
-  %p= new_project_link
-
-  - if @sub_action == 'archived'
-    = list_projects(@projects)
-
-  - else
-    = render 'tasks/my_tasks_listing'
-    = instructions_for_feeds
-    = instructions_for_calendars
-    - if @archived_projects.any?
-      = link_to t('.archived', :count => @archived_projects.size), project_archived_path, :id => 'project_archived_link'
+  .more_links
+    .el= link_to t('shared.instructions.subscribe_to_feeds'), feeds_path, :class => 'feeds'
+    .el= link_to t('shared.instructions.subscribe_to_calendars'), calendars_path, :class => 'calendar'
+    .el= link_to t('shared.collapsed_mode'), "#", :class => 'collapsed_mode'
+    .el{ :style => 'display: none' }= link_to t('shared.expanded_mode'), "#", :class => 'expanded_mode'

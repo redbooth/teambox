@@ -190,7 +190,7 @@ class TeamboxData
         obj.user_id = resolve_user(data['user_id']).id if data['user_id']
       end
       if obj.respond_to? :assigned_id
-        obj.assigned_id = resolve_person(data['assigned_id']).id if data['assigned_id']
+        obj.assigned_id = resolve_person(data['assigned_id']).try(:id) if data['assigned_id']
       end
       obj.watchers_ids = data['watchers'].map{|u| @imported_users[u].try(:id)}.compact if data['watchers']
       obj.created_at = data['created_at'] if data['created_at']
@@ -202,7 +202,8 @@ class TeamboxData
     return if comments.nil?
     comments.each do |comment_data|
       comment = unpack_object(@project.comments.build, comment_data)
-      comment.assigned_id = resolve_person(comment_data['assigned_id']).id if data['assigned_id']
+      comment.is_importing = true
+      comment.assigned_id = resolve_person(comment_data['assigned_id']).try(:id) if data['assigned_id']
       comment.target = obj
       comment.save!
       import_log(comment)
@@ -214,7 +215,8 @@ class TeamboxData
     return if comments.nil?
     comments.each do |comment_data|
       comment = unpack_object(task.comments.build, comment_data)
-      comment.assigned_id = resolve_person(comment_data['assigned_id']).id if data['assigned_id']
+      comment.is_importing = true
+      comment.assigned_id = resolve_person(comment_data['assigned_id']).try(:id) if data['assigned_id']
       task.updating_user = comment.user
       task.updating_date = comment.created_at
       task.save!

@@ -3,35 +3,40 @@
 - thread_id = "#{thread_class}_#{thread.id}"
 - comments = thread.comments
 
-.thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}" }
-  - if thread.is_a?(Conversation) and thread.simple and comments.size > 0
-    = render comments.pop, :simpleconv => true
-  - else
-    .title
-      .info
-        = thumb_avatar(thread.user) if thread.user
-      %div.date
-        = posted_date(thread.created_at)
-      %p.starter
-        = link_to(h(thread.user.name), thread.user) if thread.user
-        = t("activities.thread.created.#{thread_class}", :project => h(thread.project.name))
-        = activity_project_link(thread.project)
-      %p.thread_title
-        = link_to h(thread), [thread.project, thread], :class => thread_class
-        - if thread.is_a?(Task)
-          = t('.on_task_list')
-          = link_to h(thread.task_list), [thread.task_list.project, thread.task_list], :class => :task_list
+.thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}", :'data-project-id' => thread.project.id }
+  -# Title of the element
+  .comment.comment_header
+    %span.time= posted_date(comments.first ? comments.first.created_at : thread.created_at)
+    .info
+      - icon = { "Conversation" => "comment", "Task" => "tick" }[thread.class.to_s]
+      %img{ :src => "/famfamfam/#{icon}.png", :style => 'padding: 4px' }
+    .block
+      - case thread
+      - when Conversation
+        - if thread.to_s.present?
+          %p.thread_title= t(".conversation_with_title_html",
+              :conversation => link_to(thread, [thread.project, thread]),
+              :project => link_to(thread.project, thread.project))
+        - else
+          %p= t(".conversation_without_title_html",
+              :conversation_url => project_conversation_path(thread.project, thread),
+              :project => link_to(thread.project, thread.project))
+      - when Task
+        %p.thread_title= t(".task_on_task_list_html",
+            :task => link_to(thread, [thread.project, thread]),
+            :task_list => link_to(thread.task_list, [thread.task_list.project, thread.task_list]))
+        %p= link_to thread.project, thread.project
+    .clear
 
   .comments
     = render 'activities/thread_comments', :comments => comments, :thread => thread
 
   - if thread.is_a? Task
-    - form_for [thread.project, thread], :html => {:multipart => true, :id => nil, :class => 'new_comment edit_task', :'data-project-id' => thread.project_id, :'data-remote' => true} do |form|
-      - form.fields_for :comments, thread.comments.build do |comment_fields|
+    = form_for [thread.project, thread], :html => {:multipart => true, :id => nil, :class => 'new_comment edit_task', :'data-project-id' => thread.project_id, :'data-remote' => true, :'data-mine' => (thread.open? and thread.assigned_to?(current_user))} do |form|
+      = form.fields_for :comments, thread.comments.build do |comment_fields|
         = render 'comments/fields', :f => comment_fields, :task_form => form, :placeholder => t("comments.new.#{thread_class}")
-
   - else
     - action = url_for([thread.project, thread, thread.comments.build])
-    - form_for [thread.project, thread], :url => action, :html => {:multipart => true, :id => nil, :class => 'new_comment edit_conversation', :'data-project-id' => thread.project_id, :'data-remote' => true} do |form|
-      - fields_for :comment, thread.comments.build do |comment_fields|
+    = form_for [thread.project, thread], :url => action, :html => {:multipart => true, :id => nil, :class => 'new_comment edit_conversation', :'data-project-id' => thread.project_id, :'data-remote' => true} do |form|
+      = fields_for :comment, thread.comments.build do |comment_fields|
         = render 'comments/fields', :f => comment_fields, :conversation_form => form, :placeholder => t("comments.new.#{thread_class}"), :project => thread.project

@@ -1,0 +1,32 @@
+.email{ :style =>  "#{email_global }#{inline_organization_text_colour}"}
+  .header
+    %h1
+      = link_to logo_image, projects_path(@project)
+  .navigation{ :style=> email_navigation}
+
+  = answer_instructions
+  %p{ :style => email_text(:normal) }
+    = t('emailer.notify.project')
+    = link_to h(@project.name), project_url(@project), :style => inline_organization_link_colour
+
+  %h2{ :style => email_text(:big) }
+    - if @conversation.name.blank?
+      = link_to t('emailer.notify.conversation'), project_conversation_url(@project, @conversation), :style => inline_organization_link_colour
+    - else
+      = t('emailer.notify.conversation')
+      = link_to h(@conversation.name), project_conversation_url(@project, @conversation), :style => inline_organization_link_colour
+
+  = emailer_list_comments(@conversation.comments)
+
+  .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }
+    %p= t('emailer.notify.view_this_conversation_online_html', :conversation => link_to(t('emailer.notify.conversation'), project_conversation_url(@project, @conversation), :style => inline_organization_link_colour))
+    = emailer_answer_to_this_email
+
+  .footer{ :style => email_text(:small) }
+    %p
+      = @conversation.watchers.collect {|u| h(u) }.to_sentence
+      = t('emailer.notify.are_watching', :count => @conversation.watchers.size)
+
+    %p
+      = t('emailer.notify.stop_watching_link_html', :stop_watch => link_to(t('emailer.notify.stop_watch'), project_conversation_url(@project, @conversation), :style => inline_organization_link_colour) )
+      = t('emailer.notify.notification_settings_link_html', :settings_link => link_to(t('emailer.notify.settings_link'), account_notifications_url, :style => inline_organization_link_colour) )

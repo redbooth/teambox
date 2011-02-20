@@ -25,5 +25,4 @@
     %h3= t('.projects_in_common_with', :user_name => h(@user.name))
     #common_projects
       - @projects_shared.each do |project|
-        .project_link
-          = project_link(project)
+        .project_link= link_to project, project

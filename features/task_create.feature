@@ -3,7 +3,7 @@ Feature: Creating a task
 
   Background: 
     Given a project exists with name: "Ruby Rockstars"
-    And I am logged in as mislav
+    And @mislav exists and is logged in
     And I am in the project called "Ruby Rockstars"
     And the task list called "Awesome Ruby Yahh" belongs to the project called "Ruby Rockstars"
 
@@ -14,14 +14,24 @@ Feature: Creating a task
     And I press "Add Task"
     And I wait for 1 second
     Then I should see "mislav"
-    And I should see "Ohhh ya" as a task in the task list
+    And I should see "Ohhh ya" as a task name
+
+  Scenario: Mislav creates a valid task with an upload
+    When I go to the "Awesome Ruby Yahh" task list page of the "Ruby Rockstars" project
+    When I follow "+ Add Task"
+    And I fill in "Task title" with "Ohhh upload"
+    And I follow "Attachment"
+    When I attach the file "features/support/sample_files/dragon.jpg" to "upload_file"
+    And I press "Add Task"
+    And I wait for 1 second
+    And I should see "Ohhh upload" as a task name
 
   Scenario: Fails to create a task without a title
     When I go to the "Awesome Ruby Yahh" task list page of the "Ruby Rockstars" project
     And I follow "+ Add Task"
     And I fill in "Task title" with ""
     And I press "Add Task"
-    Then I should see "must not be blank"
+    Then I should see 'must not be blank'
 
   Scenario Outline: Fails to create a valid task
     When I go to the "Awesome Ruby Yahh" task list page of the "Ruby Rockstars" project

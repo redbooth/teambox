@@ -1,10 +1,8 @@
 %h2=h @organization
 
 - if @organization.projects.any?
-  %p= t 'organizations.delete.go_delete_some_projects', :link => projects_organization_path(@organization)
+  %p=raw t 'organizations.delete.go_delete_some_projects_html', :link => projects_organization_path(@organization)
 - else
   .danger
     %p= t('.clarification')
     = link_to t('.delete'), organization_path(@organization), :method => :delete, :class => 'button', :confirm => t('.confirm')
-
-= render 'organizations/column'

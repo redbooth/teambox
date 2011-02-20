@@ -70,7 +70,7 @@ module GanttChart
         html << "<div class='date #{major}' style='left: #{five_spaces}px;'>#{date_day}</div>"
         html << "<div class='mark' style='left: #{ten_spaces}px;'></div>"
       end
-      "<div class='ruler'>#{html}</div>"
+      "<div class='ruler'>#{html}</div>".html_safe
     end
 
     def to_html(day_width=30, margin=50, expanded=true)
@@ -79,7 +79,7 @@ module GanttChart
       return if !@rows or @rows.empty?
       html = ruler_to_html(@final-@start,day_width)
       html << list_rows(@start,@final,day_width)
-      html
+      html.html_safe
     end
 
     def process(start=1,final=10)
@@ -124,7 +124,7 @@ module GanttChart
           html << list_periods(row,start,day_width)
           html << "</div>"
           html
-        end
+        end.html_safe
       end
 
       def list_periods(row,start,day_width)
@@ -135,7 +135,7 @@ module GanttChart
           html << %(<a href="#{task_list.link}">#{task_list}</a>)
           html << %(</div>)
           html
-        end
+        end.html_safe
       end
       
       def add_to_rows(task_list)

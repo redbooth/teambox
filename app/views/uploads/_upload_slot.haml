@@ -1,25 +1,27 @@
-.upload{ :id => "upload_#{upload_slot.id}", :class => upload_slot.image? ? 'image' : nil }
-  = page_upload_actions_link(page,upload_slot)
-  - if upload_slot.image?
+.upload{ :id => "upload_#{upload.id}", :class => upload.image? ? 'image' : nil }
+  = page_upload_actions_link(page,upload)
+  - if upload.image?
     .thumb
-      %a{:href => upload_slot.url}
-        %img{:src => upload_slot.url}
+      %a{:href => upload.url}
+        %img{:src => upload.url}
   - else
     .info
-      = link_to h(upload_slot.file_type), upload_slot.url, :class => upload_slot.file_type, :rel => (upload_slot.image? ? 'facebox' : '')
+      - icon_name = Upload::ICONS.include?(upload.file_type.downcase) ? upload.file_type : '_blank'
+      - icon_path = "file_icons/48px/#{icon_name}.png"
+      = link_to image_tag(icon_path), upload.url, :class => upload.file_type, :rel => (upload.image? ? 'facebox' : '')
   .block
     .filename.show_details
       .body
         .file
-          = link_to_upload(upload_slot, upload_slot.file_name)
-          == (#{number_to_human_size(upload_slot.size)})
-        - unless upload_slot.description.blank?
+          = link_to_upload(upload, upload.file_name)
+          == (#{number_to_human_size(upload.size)})
+        - unless upload.description.blank?
           .description
-            =h upload_slot.description
+            =h upload.description
         .reference
           = t('uploads.upload.uploaded_by')
-          = user_link(upload_slot.user)
-          = activity_comment_target_link(upload_slot.comment, t('uploads.upload.on_')) if upload_slot.comment
+          = user_link(upload.user)
+          = activity_comment_target_link(upload.comment, t('uploads.upload.on_')) if upload.comment
           .date
-            = posted_date upload_slot.created_at
+            = posted_date upload.created_at
   .clear

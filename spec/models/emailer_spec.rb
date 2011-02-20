@@ -12,15 +12,15 @@ describe Emailer do
   
     it "should set Reply-to" do
       allow_incoming_mail do
-        email = Emailer.create_notify_conversation(@user.id, @conversation.project.id, @conversation.id)
-        email.from_addrs.first.decoded.should == @full_address
+        email = Emailer.notify_conversation(@user.id, @conversation.project.id, @conversation.id)
+        email[:from].decoded.should == @full_address
         email.reply_to.should == [@address]
       end
     end
   
     it "should not set Reply-to for no-reply" do
       allow_incoming_mail(false) do
-        email = Emailer.create_notify_conversation(@user.id, @conversation.project.id, @conversation.id)
+        email = Emailer.notify_conversation(@user.id, @conversation.project.id, @conversation.id)
         email.from.should == ['no-reply@domain.com']
         email.reply_to.should be_nil
       end
@@ -39,7 +39,7 @@ describe Emailer do
         Factory(:comment, :target => @task)
 
         with_locale(locale) do
-          lambda { Emailer.create_notify_task(@user.id, @task.project.id, @task.id) }.should_not raise_error
+          lambda { Emailer.notify_task(@user.id, @task.project.id, @task.id) }.should_not raise_error
         end
       end
 
@@ -48,7 +48,7 @@ describe Emailer do
         Factory(:comment, :target => @conversation)
 
         with_locale(locale) do
-          lambda { Emailer.create_notify_conversation(@user.id, @conversation.project.id, @conversation.id) }.should_not raise_error
+          lambda { Emailer.notify_conversation(@user.id, @conversation.project.id, @conversation.id) }.should_not raise_error
         end
       end
 
@@ -60,7 +60,7 @@ describe Emailer do
         Factory(:comment, :target => @task, :due_on => Time.now + 1.day)
 
         with_locale(locale) do
-          lambda { Emailer.create_daily_task_reminder(@user.id) }.should_not raise_error
+          lambda { Emailer.daily_task_reminder(@user.id) }.should_not raise_error
         end
       end
 
@@ -68,13 +68,13 @@ describe Emailer do
         @invitation = Factory(:invitation)
 
         with_locale(locale) do
-          lambda { Emailer.create_signup_invitation(@invitation.id) }.should_not raise_error
+          lambda { Emailer.signup_invitation(@invitation.id) }.should_not raise_error
         end
       end
 
       it "should render valid reset password for #{locale}" do
         with_locale(locale) do
-          lambda { Emailer.create_reset_password(@user.id) }.should_not raise_error
+          lambda { Emailer.reset_password(@user.id) }.should_not raise_error
         end
       end
 
@@ -82,7 +82,7 @@ describe Emailer do
         @password_reset = Factory(:reset_password)
 
         with_locale(locale) do
-          lambda { Emailer.create_forgot_password(@password_reset.id) }.should_not raise_error
+          lambda { Emailer.forgot_password(@password_reset.id) }.should_not raise_error
         end
       end
 
@@ -92,20 +92,20 @@ describe Emailer do
         @invitation.save
 
         with_locale(locale) do
-          lambda { Emailer.create_project_membership_notification(@invitation.id) }.should_not raise_error
+          lambda { Emailer.project_membership_notification(@invitation.id) }.should_not raise_error
         end
       end
 
       it "should render valid project invitation for #{locale}" do
         @invitation = Factory(:invitation)
         with_locale(locale) do
-          lambda { Emailer.create_project_invitation(@invitation.id) }.should_not raise_error
+          lambda { Emailer.project_invitation(@invitation.id) }.should_not raise_error
         end
       end
 
       it "should render valid email confirmation for #{locale}" do
         with_locale(locale) do
-          lambda { Emailer.create_confirm_email(@user.id) }.should_not raise_error
+          lambda { Emailer.confirm_email(@user.id) }.should_not raise_error
         end
       end
     end

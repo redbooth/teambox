@@ -1,6 +1,6 @@
 %h2= t('.title')
 
-- form_for [@current_project,@page] do |f|
+= form_for [@current_project,@page] do |f|
   = page_fields(f)
 
   .submit
@@ -8,7 +8,7 @@
     = t('common.or')
     = link_to t('common.cancel'), project_page_path(@current_project, @page)
 
-- form_for [@current_project,@page], :html => {:id => "page_destroy_#{@page.id}", :method => :delete} do |f|
+= form_for [@current_project,@page], :html => {:id => "page_destroy_#{@page.id}", :method => :delete} do |f|
   .destruct_submit
     = t('common.or')
     = f.submit t('common.delete')

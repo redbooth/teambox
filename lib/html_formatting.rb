@@ -27,6 +27,7 @@ module HtmlFormatting
         self["#{attr}_html"] = if text.blank?
           nil
         else
+          text = format_image(text)
           text = format_markdown_links(text)
           text = format_gfm(text)
           text = format_text(text)
@@ -115,10 +116,17 @@ module HtmlFormatting
       text
     end
 
-    YoutubeLink = %r{http://(?:www\.)?youtu(?:be\.com/watch\?v=|\.be/)([\w-]+)(&(amp;)?(?:[\w\?=-]|\+)*)?}
+    YoutubeLink = /([^\"]|\A)http:\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w-]+)(&(amp;)?(?:[\w\?=-]|\+)*)?([^\"]|\z)/
     def format_youtube(text)
       text.gsub(YoutubeLink) do |link|
-        "<iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/#{$1}\" frameborder=\"0\"></iframe>"
+        "#{$1}<iframe class=\"youtube-player\" type=\"text/html\" width=\"480\" height=\"385\" src=\"http://www.youtube.com/embed/#{$2}\" frameborder=\"0\"></iframe>#{$5}"
+      end
+    end
+    
+    ImageLink = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)(\?)*(\d+)*$)/i;
+    def format_image(text)
+      text.gsub(ImageLink) do |link|
+        "<a href=\"#{$1}\"><img class=\"comment-image\" src=\"#{$1}\" frameborder=\"0\" alt=\"#{$1}\"/></a>"
       end
     end
 

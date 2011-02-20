@@ -1,30 +1,37 @@
-%p= "A comment is the core model for communication in Teambox. "
-%p= "Comments can belong to a #{link_to_doc_model(:project)}, a #{link_to_doc_model(:conversation)}, or #{link_to_doc_model(:task)}."
+%p=raw "A comment is the core model for communication in Teambox. "
+%p=raw "Comments can belong to a #{link_to_doc_model(:project)}, a #{link_to_doc_model(:conversation)}, or #{link_to_doc_model(:task)}."
 
-- doc_for :index, :example => example_api_wrap(@comment, :references => [:target, :user, :project]) do
-  %p= "Returns the most recent comments in a the target."
+- doc_for :index,
+          :example => example_api_wrap(@comment, :references => [:target, :user, :project]) do
+  %p=raw "Returns the most recent comments in a the target."
+  %p=raw "Use the optional <tt>target_type</tt> parameter to filter tasks by their target type, which can be either #{link_to_doc_model(:conversation)} or #{link_to_doc_model(:task)}. For example, to only view only comments belonging to conversations, you would query <pre>?target_type=Conversation</pre>"
 
-- doc_for :show,  :example => @comment.to_api_hash(:include => [:user]) do
-  %p= "Returns the data for an comment."
+- doc_for :show,
+          :example => @comment.to_api_hash(:include => [:user]) do
+  %p=raw "Returns the data for an comment."
   
-- doc_for :create, :parameters => {:body => 'Comment', :hours => 1, :project_id => 123},
-                   :example => @comment.to_api_hash,
-                   :status => :created,
-                   :role => :commenter do
-  %p= "Creates a new comment. You can specify the target of the comment using one of the appropriate routes."
-  %p= "For time tracking, simply pass in time taken using the <tt>hours</tt> parameter. Acceptable values are the same as on the web frontend - e.g. 12h, 1.4, 13m, 2:15."
+- doc_for :create,
+          :parameters => {:body => 'Comment', :hours => 1, :project_id => 123},
+          :example => @comment.to_api_hash,
+          :status => :created,
+          :role => :commenter do
+  %p=raw "Creates a new comment. You can specify the target of the comment using one of the appropriate routes."
+  %p=raw "For time tracking, simply pass in time taken using the <tt>hours</tt> parameter. Acceptable values are the same as on the web frontend - e.g. 12h, 1.4, 13m, 2:15."
 
-- doc_for :update, :parameters => {:body => @comment.body, :name => @comment.hours },
-                   :status => :updated,
-                   :role => :commenter do
-  %p= "Updates the content of a comment. You can no longer update comments 15 minutes after they have been created."
+- doc_for :update,
+          :parameters => {:body => @comment.body, :name => @comment.hours },
+          :status => :updated,
+          :role => :commenter do
+  %p=raw "Updates the content of a comment. You can no longer update comments 15 minutes after they have been created."
 
-- doc_for :convert, :status => :updated,
-                    :parameters => { :task => {:name => @converted_comment.name}, :task_list_id => 'TASK_LIST_ID'},
-                    :example => @converted_comment.to_api_hash,
-                    :role => :commenter do
-  %p= "Converts a comment to a task. The task will be put into the task list specified by <tt>task_list_id</tt>."
+- doc_for :convert,
+          :status => :updated,
+          :parameters => { :task => {:name => @converted_comment.name}, :task_list_id => 'TASK_LIST_ID'},
+          :example => @converted_comment.to_api_hash,
+          :role => :commenter do
+  %p=raw "Converts a comment to a task. The task will be put into the task list specified by <tt>task_list_id</tt>."
 
-- doc_for :destroy, :status => :deleted,
-                    :role => :commenter do
-  %p= "Destroys a comment. You need to be either the owner of the comment, or an administrator of the target project for this to work."
+- doc_for :destroy,
+          :status => :deleted,
+          :role => :commenter do
+  %p=raw "Destroys a comment. You need to be either the owner of the comment, or an administrator of the target project for this to work."

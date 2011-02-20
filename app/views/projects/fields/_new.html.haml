@@ -1,28 +1,28 @@
 .name.text_field
-  = f.label :name, t('projects.fields.name')
-  = f.text_field :name, :placeholder => t('projects.fields.name_example')
+  = f.label :name, t('projects.fields.name_html')
+  = f.text_field :name, :placeholder => t('projects.fields.name_example'), :autofocus => 'true'
   = errors_for project, :name
 
 .organization.text_field
   - if current_user.organizations.empty?
-    - f.fields_for :organization do |org_fields|
-      = org_fields.label :name, t('.choose_organization.new_org_name')
+    = f.fields_for :organization do |org_fields|
+      = org_fields.label :name, t('.choose_organization.new_org_name_html')
       = org_fields.text_field :name, :placeholder => t('organizations.fields.name_placeholder')
       = errors_for(project.organization, :name) || errors_for(project.organization, :permalink)
   - else
     - if Teambox.config.community # single organization
       = f.hidden_field :organization_id, :value => current_user.organizations.first.id
     - else
-      = f.label :organization_id, t('.choose_organization.choose_org')
+      = f.label :organization_id, t('.choose_organization.choose_org_html')
       = f.select :organization_id, options_for_organizations(current_user.organizations)
-      %p.inline= t('.choose_organization.or_create_a_new_org', :link => new_organization_path)
+      %p.inline= t('.choose_organization.or_create_a_new_org_html', :link => new_organization_path)
       = errors_for project, :organization_id
 
 %h3= t('projects.fields.extra_options')
 - if time_tracking_enabled?
   .check_box.archived
     = f.check_box :tracks_time
-    = f.label :tracks_time, t('projects.fields.tracks_time') + " " + time_tracking_doc
+    = f.label :tracks_time, (t('projects.fields.tracks_time_html') + " " + time_tracking_doc).html_safe
 .check_box.archived
   = f.check_box :public
-  = f.label :public, t('projects.fields.public_project')
+  = f.label :public, t('projects.fields.public_project_html')

@@ -19,35 +19,15 @@ module ProjectsHelper
   def permalink_example(permalink)
     out = host_with_protocol + projects_path + '/'
     out << content_tag(:span, permalink, :id => 'handle', :class => 'good')
-    content_tag(:div, out, :id => 'preview')
+    content_tag(:div, out.html_safe, :id => 'preview')
   end
 
   def watch_permalink_example
     javascript_tag "$('project_permalink').observe('keyup', function(e) { Project.valid_url(); })"    
   end
 
-  def project_settings_navigation
-    render 'shared/project_settings_navigation'
-  end
-
   def list_users_statuses(users)
     render :partial => 'users/status', :collection => users, :as => :user
-  end
-  
-  def list_projects(projects)
-    if projects.any?
-      render 'shared/projects', :projects => projects
-    end
-  end
-
-  def list_archived_projects(projects)
-    if projects.any?
-      render 'shared/archived_projects', :projects => projects
-    end
-  end
-  
-  def project_link(project)
-    link_to h(project.name), project_path(project)
   end
   
   def new_project_link
@@ -57,10 +37,6 @@ module ProjectsHelper
     end
   end
   
-  def projects_tab_list(projects)
-    render 'shared/projects_dropdown', :projects => projects
-  end
-
   def project_fields(f,project,sub_action='new')
     render "projects/fields/#{sub_action}",  :f => f, :project => project
   end
@@ -89,43 +65,43 @@ module ProjectsHelper
     suffix = ''
     case location_name
       when 'show_projects' #project@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_project', :email => "#{project.permalink}@#{Teambox.config.smtp_settings[:domain]}")
+        email_help = t('shared.instructions.send_email_help_project_html', :email => "#{project.permalink}@#{Teambox.config.smtp_settings[:domain]}")
       when 'show_tasks' #project+task+12@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_task', :email => "#{project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}")
+        email_help = t('shared.instructions.send_email_help_task_html', :email => "#{project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}")
       when 'index_conversations' #project+conversation@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_conversations', :email => "#{project.permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}")
+        email_help = t('shared.instructions.send_email_help_conversations_html', :email => "#{project.permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}")
         suffix = '_conversations'
       when 'new_conversations' #project+conversation@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_conversations', :email => "#{project.permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}")
+        email_help = t('shared.instructions.send_email_help_conversations_html', :email => "#{project.permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}")
         suffix = '_conversations'
       when 'show_conversations' #project+conversation+5@app.teambox.com
-        email_help = t('shared.instructions.send_email_help_conversation', :email => "#{project.permalink}+conversation+#{@conversation.id}@#{Teambox.config.smtp_settings[:domain]}")
+        email_help = t('shared.instructions.send_email_help_conversation_html', :email => "#{project.permalink}+conversation+#{@conversation.id}@#{Teambox.config.smtp_settings[:domain]}")
     end
 
     if email_help
       span = content_tag(:span, :id => 'email_help', :style => 'display:none') do
-        %(<p>#{email_help}</p><a href='#' class='closeThis'>#{t('common.close')}</a>)
+        %(<p>#{email_help}</p><a href='#' class='closeThis'>#{t('common.close')}</a>).html_safe
       end
       link_to_function(t('shared.instructions.send_email' + suffix),
-        ("$('email_help').toggle()"), :class => :email_link) + span
+        ("$('email_help').toggle()".html_safe), :class => :email_link) + span
     end
   end
 
   def subscribe_to_all_calendars_link
     content_tag(:div,
-      t('.subscribe_to_all') +
+      (t('.subscribe_to_all') +
       link_to(t('shared.task_navigation.all_tasks'), user_rss_token(projects_path(:format => :ics))) +
       ' ' + t('common.or') + ' ' +
-      link_to(t('shared.task_navigation.my_assigned_tasks'), user_rss_token(projects_path(:format => :ics), 'mine')),
+      link_to(t('shared.task_navigation.my_assigned_tasks'), user_rss_token(projects_path(:format => :ics), 'mine'))).html_safe,
       :class => 'calendar_links_all')
   end
 
   def subscribe_to_calendar_link(project)
     content_tag(:div,
-      t('.subscribe_to_project', :project => h(project)) +
+      (t('.subscribe_to_project', :project => h(project)) +
       link_to(t('shared.task_navigation.all_tasks'), user_rss_token(project_path(project, :format => :ics))) +
       ' ' + t('common.or') + ' ' +
-      link_to(t('shared.task_navigation.my_assigned_tasks'), user_rss_token(project_path(project, :format => :ics), 'mine')),
+      link_to(t('shared.task_navigation.my_assigned_tasks'), user_rss_token(project_path(project, :format => :ics), 'mine'))).html_safe,
       :class => :calendar_links)
   end
 
@@ -135,18 +111,6 @@ module ProjectsHelper
         project_person_path(project, current_user.people.detect { |p| p.project_id == project.id }),
         :method => :delete, :confirm => t('people.column.confirm_delete'), :class => :leave_link
     end
-  end
-
-  def quicklink_conversations(project)
-    link_to '', project_conversations_path(project), :class => :comment_icon
-  end
-  
-  def quicklink_tasks(project)
-    link_to '', project_task_lists_path(project), :class => :task_icon
-  end
-
-  def quicklink_pages(project)
-    link_to '', project_pages_path(project), :class => :page_icon
   end
 
   def reset_autorefresh
@@ -162,7 +126,7 @@ module ProjectsHelper
       remote_function(:url => show_new_path(first_id))
     end
 
-    interval = APP_CONFIG['autorefresh_interval']*1000
+    interval = Teambox.config.autorefresh_interval*1000
 
     "autorefresh = setInterval(\"#{ajax_request}\", #{interval})"
   end
@@ -202,9 +166,9 @@ module ProjectsHelper
     return nil if projects.empty?
     data = {}
     rows = Person.user_names_from_projects(projects, current_user)
-    rows.each do |project_id, login, first_name, last_name, person_id|
+    rows.each do |project_id, login, first_name, last_name, person_id, user_id|
       data[project_id] ||= []
-      data[project_id] << [person_id.to_s, login, "#{h first_name} #{h last_name}"]
+      data[project_id] << [person_id.to_s, login, "#{h first_name} #{h last_name}", user_id]
     end
     javascript_tag "_people = #{data.to_json}"
   end

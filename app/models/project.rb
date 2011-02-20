@@ -2,7 +2,7 @@
 # A Person model describes the relationship of a User that follows a Project.
 
 class Project < ActiveRecord::Base
-  acts_as_paranoid
+  include Immortal
 
   concerned_with :validation,
                  :initializers,
@@ -11,7 +11,8 @@ class Project < ActiveRecord::Base
                  :callbacks,
                  :archival,
                  :permalink,
-                 :invitations
+                 :invitations,
+                 :conversions
 
   attr_accessible :name, :permalink, :archived, :tracks_time, :public, :organization_attributes, :organization_id
   has_many :google_docs
@@ -20,8 +21,8 @@ class Project < ActiveRecord::Base
   attr_accessor :import_activities
   
   def self.find_by_id_or_permalink(param)
-    if param =~ /^\d+$/
-      find(param)
+    if param.to_s =~ /^\d+$/
+      find_by_id(param)
     else
       find_by_permalink(param)
     end
@@ -50,12 +51,15 @@ class Project < ActiveRecord::Base
   
   def add_user(user, params={})
     unless has_member?(user)
-      people.build.tap do |person|
-        person.user = user
-        person.role = params[:role] if params[:role]
-        person.source_user_id = params[:source_user].try(:id)
-        person.save
-      end
+      person = Person.with_deleted.where(:project_id => self.id, :user_id => user.id).first
+      person ||= people.build
+      
+      person.user = user
+      person.role = params[:role] if params[:role]
+      person.source_user_id = params[:source_user].try(:id)
+      person.deleted = false
+      person.save
+      person
     end
   end
 
@@ -94,67 +98,6 @@ class Project < ActiveRecord::Base
 
   def to_param
     permalink
-  end
-
-  def to_xml(options = {})
-    options[:indent] ||= 2
-    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
-    xml.instruct! unless options[:skip_instruct]
-    xml.project :id => id do
-      xml.tag! 'name', name
-      xml.tag! 'permalink', permalink
-      xml.tag! 'created-at', created_at.to_s(:db)
-      xml.tag! 'updated-at', updated_at.to_s(:db)
-      xml.tag! 'archived', archived
-      xml.tag! 'owner-user-id', user_id
-      xml.people :count => people.size do
-        for person in people
-          person.to_xml(options.merge({ :skip_instruct => true, :root => :person }))
-        end
-      end
-    end
-  end
-  
-  def to_api_hash(options = {})
-    base = {
-      :id => id,
-      :organization_id => organization_id,
-      :name => name,
-      :permalink => permalink,
-      :archived => archived,
-      :created_at => created_at.to_s(:api_time),
-      :updated_at => updated_at.to_s(:api_time),
-      :archived => archived,
-      :owner_user_id => user_id
-    }
-    
-    base[:type] = self.class.to_s if options[:emit_type]
-    
-    if Array(options[:include]).include? :people
-      base[:people] = people.map {|p| p.to_api_hash(options)}
-    end
-    
-    if Array(options[:include]).include? :task_lists
-      base[:task_lists] = task_lists.map {|p| p.to_api_hash(options)}
-    end
-    
-    if Array(options[:include]).include? :invitations
-      base[:invitations] = invitations.map {|p| p.to_api_hash(options)}
-    end
-    
-    if Array(options[:include]).include? :pages
-      base[:pages] = pages.map {|p| p.to_api_hash(options)}
-    end
-    
-    if Array(options[:include]).include? :uploads
-      base[:uploads] = uploads.map {|p| p.to_api_hash(options)}
-    end
-    
-    if Array(options[:include]).include? :conversations
-      base[:conversations] = conversations.map {|p| p.to_api_hash(options)}
-    end
-    
-    base
   end
 
   def to_ical(filter_user = nil)
@@ -197,10 +140,16 @@ class Project < ActiveRecord::Base
             summary task.name
           end
           if host
-            port_in_url = (port == 80) ? '' : ":#{port}"
-            url         "http://#{host}#{port_in_url}/projects/#{task.project.permalink}/tasks/#{task.id}"
+            base_url = if port == 80
+              "http://#{host}"
+            elsif port == 443
+              "https://#{host}"
+            else
+              "http://#{host}:#{port}"
+            end
+            url         "#{base_url}/#{task.project.permalink}/tasks/#{task.id}"
           end
-          klass         task.project.name
+          klass         "PRIVATE"
           dtstamp       DateTime.civil(created_date.year,created_date.month,created_date.day,created_date.hour,created_date.min,created_date.sec,created_date.offset)
           uid           "tb-#{task.project.id}-#{task.id}"
         end

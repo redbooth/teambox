@@ -1,23 +1,9 @@
-%h2= t('.title')
+%h2=t '.title'
 
-- form_for @project do |f|
+%p=t '.explain1_html'
+%p=t '.explain2_html'
+
+= form_for @project do |f|
   = project_fields(f,@project)
-  - contacts = current_user.contacts
-  .invite_contacts
-    %h3= t('.invite_people')
-    - if contacts.any?
-      .users
-        - for user in contacts[0,60]
-          %label.user
-            = check_box_tag 'project[invite_users][]', user.id
-            =h user.name
-    .clear
-    %p.invite_by_email
-      = t('.invite_by_email')
-      = f.text_area :invite_emails, :placeholder => "john@galt.com, francisco@danconia.com"
-  
   .submit
     = f.submit t('.submit'), :'data-disable-with' => t('.sending')
-  
-- content_for :column do
-  = render 'projects/new_primer'

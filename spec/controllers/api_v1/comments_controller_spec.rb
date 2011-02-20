@@ -87,6 +87,21 @@ describe ApiV1::CommentsController do
       task_comments.map{|a| a['id'].to_i}.should == task.comment_ids.sort
     end
     
+    it "shows comments on tasks only when set" do
+      login_as @user
+      
+      conversation = Factory.create(:conversation, :project => @project)
+      task = Factory.create(:task, :project => @project)
+      comment = @project.new_comment(@user, task, {:body => 'Something happened!'})
+      comment.save!
+      
+      get :index, :project_id => @project.permalink, :target_type => 'Task'
+      response.should be_success
+      task_comments = JSON.parse(response.body)['objects']
+      
+      task_comments.map{|a| a['target_type']}.uniq.should == ['Task']
+    end
+    
     it "shows comments on conversations with the basic routes" do
       login_as @user
       conversation = Factory.create(:conversation, :project => @project)
@@ -208,7 +223,8 @@ describe ApiV1::CommentsController do
       conversation.comments.length.should == 1
       
       post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :body => 'Created!'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
+      JSON.parse(response.body)['errors']['type'].should == 'InsufficientPermissions'
       
       conversation.reload.comments(true).length.should == 1
     end
@@ -225,14 +241,14 @@ describe ApiV1::CommentsController do
       @comment.update_attribute(:created_at, Time.now - 16.minutes)
       
       put :update, :project_id => @project.permalink, :id => @comment.id, :body => 'Updated FAIL!'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
     end
     
     it "should not allow anyone else to modify another comment" do
       login_as @project.user
       
       put :update, :project_id => @project.permalink, :id => @comment.id, :body => 'Updated!'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
     end
   end
   
@@ -259,7 +275,7 @@ describe ApiV1::CommentsController do
       login_as @observer
       
       put :destroy, :project_id => @project.permalink, :id => @comment.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.comments(true).length.should == 1
     end

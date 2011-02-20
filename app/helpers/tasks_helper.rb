@@ -15,12 +15,6 @@ module TasksHelper
     end.join(' ')
   end
 
-  def my_tasks(tasks)
-    if tasks.any?
-      render 'tasks/my_tasks', :tasks => tasks
-    end
-  end
-
   def sidebar_tasks(tasks)
     render :partial => 'tasks/task_sidebar',
       :as => :task,
@@ -45,10 +39,10 @@ module TasksHelper
       [].tap { |out|
         if comment.status_transition?
           out << task_status_badge(comment.previous_status_name)
-          out << content_tag(:span, '&rarr;', :class => "arr status_arr")
+          out << content_tag(:span, '&rarr;'.html_safe, :class => "arr status_arr")
         end
         out << task_status_badge(comment.status_name)
-      }.join(' ')
+      }.join(' ').html_safe
     end
   end
 
@@ -57,10 +51,10 @@ module TasksHelper
       [].tap { |out|
         if comment.due_on_transition?
           out << span_for_due_date(comment.previous_due_on)
-          out << content_tag(:span, '&rarr;', :class => "arr due_on_arr")
+          out << content_tag(:span, '&rarr;'.html_safe, :class => "arr due_on_arr")
         end
         out << span_for_due_date(comment.due_on)
-      }.join(' ')
+      }.join(' ').html_safe
     end
   end
 
@@ -73,7 +67,7 @@ module TasksHelper
     when :header  then localized_status_name(task)
     end
     out << %(</span>)
-    out
+    out.html_safe
   end
 
   def due_on(task)
@@ -90,16 +84,6 @@ module TasksHelper
       :task_list => task_list,
       :editable => editable
   end
-  
-  def insert_task_options(project,task_list,task,editable=true)
-    {:partial => 'tasks/task',
-    :locals => {
-      :task => task,
-      :project => project,
-      :task_list => task_list,
-      :current_target => nil,
-      :editable => editable}}
-  end
 
   def localized_status_name(task_or_status)
     task_or_status = task_or_status.status_name if task_or_status.respond_to? :status_name
@@ -112,30 +96,12 @@ module TasksHelper
     }
   end
 
-  def task_lists_for_select(project)
-    project.task_lists.collect do |task_list|
-      [task_list.name, task_list.id]
-    end << ['Inbox', '']
-  end
-  
-  def people_from_project_for_select(project)
-    people = project.people(:include => :user).to_a
-    current_person = people.detect { |p| p.user_id == current_user.id }
-    people.delete(current_person)
-    
-    options = [
-      [t('comments.new.assigned_to_nobody'), nil],
-      [current_user.name, current_person.id]
-    ]
-    options.concat people.map { |p| [p.name, p.id] }.compact.sort_by(&:first)
-  end
-
   def time_tracking_doc
     link_to(t('projects.fields.new.time_tracking_docs'), "http://help.teambox.com/faqs/advanced-features/time-tracking", :target => '_blank')
   end
 
   def date_picker(f, field, embedded = false, html_options = {})
-    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>"
+    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>".html_safe
     div_id = "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}"
     content_tag :div, :class => "date_picker #{'embedded' if embedded}" do
       image_tag('/images/calendar_date_select/calendar.gif', :class => 'calendar_date_select_popup_icon') <<
@@ -144,7 +110,7 @@ module TasksHelper
   end
   
   def embedded_date_picker(f, field)
-    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>"
+    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>".html_safe
     div_id = "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}"
     content_tag :div, :class => "date_picker_embedded", :id => div_id do
       f.hidden_field(field) << content_tag(:span, date_field, :class => 'localized_date', :style => 'display: none') <<

@@ -1,9 +1,11 @@
 .search_bar
-  float: right
+  float: left
   padding-top: 6px
-  margin-right: 1.5em
+  margin
+    right: 1.5em
   form.search
-    margin: 0
+    margin:
+      left: 20px
     padding: 0
     background: transparent
     border: none
@@ -11,13 +13,21 @@
       display: none
     .no-inputsearch &
       input[type=search]
+        width: 10em
         border: 1px solid silver
+    .no-inputsearch.borderradius &
+      input[type=search]
         padding: 3px 1em 2px 1em
         +rounded(10px)
-        width: 10em
         +box-shadow(inset rgba(0,0,0,.2) 0px 1px 2px)
+    .no-inputsearch.no-borderradius &
+      input[type=search]
+        padding: 2px
+
 
 .index_search
+  .search_bar
+    visibility: hidden
   #report
     +light-box
     margin: 10px 0

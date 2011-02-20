@@ -4,7 +4,7 @@
 %h2= t('.title')
 
 - if @data.need_data?
-  - form_for @data, :html => {:multipart => true} do |f|
+  = form_for @data, :html => {:multipart => true} do |f|
     = fields_for_teambox_import(f, @data)
     .submit
       = f.submit t('.submit')

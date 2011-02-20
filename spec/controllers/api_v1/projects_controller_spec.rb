@@ -33,27 +33,21 @@ describe ApiV1::ProjectsController do
   end
   
   describe "#create" do
-    it "creates a project with invitations" do
+    it "creates a project" do
       login_as @user
-      
-      @user2 = Factory.create(:user)
+
       @org = Factory.create(:organization)
-      @org.add_member(@user)
-      
+
       project_attributes = Factory.attributes_for(:project,
-        :invite_users => [@user2.id],
-        :invite_emails => "richard.roe@law.uni",
         :organization_id => @org.id
       )
 
       lambda {
         post :create, project_attributes
-        response.status.should == '201 Created'
+        response.status.should == 201
       }.should change(Project, :count)
-      
+
       JSON.parse(response.body)['organization_id'].to_i.should == @org.id
-      project = Project.last(:order => 'id')
-      project.should have(2).invitations
     end
   end
   
@@ -71,7 +65,7 @@ describe ApiV1::ProjectsController do
       login_as @user
       
       put :update, :id => @project.permalink, :permalink => 'ffffuuuuuu'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.reload.permalink.should_not == 'ffffuuuuuu'
     end
@@ -91,7 +85,7 @@ describe ApiV1::ProjectsController do
       login_as @user
       
       put :transfer, :id => @project.permalink, :user_id => @user.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.reload.user.should == @owner
     end
@@ -119,7 +113,19 @@ describe ApiV1::ProjectsController do
       login_as @user2
       
       get :show, :id => @project.permalink
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
+      
+      JSON.parse(response.body)['errors']['type'].should == 'InsufficientPermissions'
+    end
+    
+    it "should not show a project which does not exist" do
+      login_as @user
+      
+      get :show, :id => 'omgffffuuuuu'
+      
+      response.status.should == 404
+      
+      JSON.parse(response.body)['errors']['type'].should == 'ObjectNotFound'
     end
   end
   
@@ -138,7 +144,7 @@ describe ApiV1::ProjectsController do
       
       Project.count.should == 1
       put :destroy, :id => @project.permalink
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       Project.count.should == 1
     end
   end

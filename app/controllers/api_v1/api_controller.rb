@@ -1,44 +1,40 @@
 class ApiV1::APIController < ApplicationController
-  skip_before_filter :load_organization
-  skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token
+  skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token, :add_chrome_frame_header
 
   API_LIMIT = 50
-  API_NONNUMERIC = /[^0-9]+/
 
   protected
   
   rescue_from CanCan::AccessDenied do |exception|
-    api_status(:unauthorized)
+    api_error(:unauthorized, :type => 'InsufficientPermissions', :message => 'Insufficient permissions')
+  end
+  
+  def access_denied
+    api_error(:unauthorized, :type => 'AuthorizationFailed', :message => 'Login required')
   end
   
   def load_project
     project_id ||= params[:project_id]
     
     if project_id
-      @current_project = if project_id.match(API_NONNUMERIC)
-        Project.find_by_permalink(project_id)
-      else
-        Project.find_by_id(project_id)
-      end
-      api_status(:not_found) unless @current_project
+      @current_project = Project.find_by_id_or_permalink(project_id)
+      api_error :not_found, :type => 'ObjectNotFound', :message => 'Project not found' unless @current_project
     end
   end
   
   def load_organization
-    if params[:organization_id]
-      @organization = if params[:organization_id].match(API_NONNUMERIC)
-        current_user.organizations.find_by_permalink(params[:organization_id])
-      else
-        current_user.organizations.find_by_id(params[:organization_id])
-      end
+    organization_id ||= params[:organization_id]
+    
+    if organization_id
+      @organization = Organization.find_by_id_or_permalink(organization_id)
+      api_error :not_found, :type => 'ObjectNotFound', :message => 'Organization not found' unless @organization
     end
-    api_status(:not_found) if params[:organization_id] and @organization.nil?
   end
   
   def belongs_to_project?
     if @current_project
       unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-        api_error t('common.not_allowed'), :unauthorized
+        api_error(:unauthorized, :type => 'InsufficientPermissions', :message => t('common.not_allowed'))
       end
     end
   end
@@ -50,7 +46,7 @@ class ApiV1::APIController < ApplicationController
       else
         TaskList.find_by_id(params[:task_list_id], :conditions => {:project_id => current_user.project_ids})
       end
-      api_status(:not_found) unless @task_list
+      api_error :not_found, :type => 'ObjectNotFound', :message => 'TaskList not found' unless @task_list
     end
   end
   
@@ -61,7 +57,7 @@ class ApiV1::APIController < ApplicationController
       else
         Page.find_by_id(params[:page_id], :conditions => {:project_id => current_user.project_ids})
       end
-      api_status(:not_found) unless @page
+      api_error :not_found, :type => 'ObjectNotFound', :message => 'Page not found' unless @page
     end
   end
 
@@ -76,7 +72,7 @@ class ApiV1::APIController < ApplicationController
   
   def api_status(status)
     respond_to do |f|
-      f.json { head status }
+      f.json { render :json => {:status => status}.to_json, :status => status }
       f.js   { render :json => {:status => status}.to_json, :status => status, :callback => params[:callback] }
     end
   end
@@ -121,19 +117,23 @@ class ApiV1::APIController < ApplicationController
     end
   end
   
-  def api_error(message, status)
-    error = {'message' => message}
+  def api_error(status_code, opts={})
+    errors = {}
+    errors[:type] = opts[:type] if opts[:type]
+    errors[:message] = opts[:message] if opts[:message]
     respond_to do |f|
-      f.json { render :as_json => error.to_xml(:root => 'error'), :status => status }
-      f.js { render :json => error.to_xml(:root => 'error'), :status => status, :callback => params[:callback] }
+      f.json { render :json => {:errors => errors}.to_json, :status => status_code }
+      f.js { render :json => {:errors => errors}.to_json, :status => status_code, :callback => params[:callback] }
     end
   end
   
   def handle_api_error(object,options={})
-    error_list = object.nil? ? [] : object.errors
+    errors = object.try(:errors)||{}
+    errors[:type] = 'InvalidRecord'
+    errors[:message] = 'One or more fields were invalid'
     respond_to do |f|
-      f.json { render :as_json => error_list.to_xml, :status => options.delete(:status) || :unprocessable_entity }
-      f.js   { render :json => error_list.to_xml, :status => options.delete(:status) || :unprocessable_entity, :callback => params[:callback] }
+      f.json { render :json => {:errors => errors}.to_json, :status => options.delete(:status) || :unprocessable_entity }
+      f.js   { render :json => {:errors => errors}.to_json, :status => options.delete(:status) || :unprocessable_entity, :callback => params[:callback] }
     end
   end
   

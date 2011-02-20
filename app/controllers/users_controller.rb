@@ -11,8 +11,7 @@ class UsersController < ApplicationController
   def index
     # show current user
     respond_to do |f|
-      f.html  { redirect_to root_path }
-      f.m     { redirect_to root_path }
+      f.any(:html, :m)  { redirect_to root_path }
       f.xml   { render :xml     => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
       f.json  { render :as_json => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
       f.yaml  { render :as_yaml => @current_user.users_with_shared_projects.to_xml(:root => 'users')}
@@ -40,8 +39,10 @@ class UsersController < ApplicationController
         @user.email = @invitation.email if @invitation
       end
     end
-
-    render :layout => 'sessions'
+    
+    respond_to do |f|
+      f.any(:html, :m) { render :layout => 'sessions' }
+    end
   end
 
   def show
@@ -54,13 +55,12 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user != @current_user and (!@shares_invited_projects and @projects_shared.empty?)
-        format.html {
+        format.any(:html, :m) {
           flash[:error] = t('users.activation.invalid_user')
           redirect_to root_path
         }
       else
-        format.html
-        format.m
+        format.any(:html, :m)
         format.xml  { render :xml => @user.to_xml }
         format.json { render :as_json => @user.to_xml }
         format.yaml { render :as_yaml => @user.to_xml }
@@ -97,7 +97,9 @@ class UsersController < ApplicationController
 
       flash[:success] = t('users.create.thanks')
     else
-      render :action => :new, :layout => 'sessions'
+      respond_to do |f|
+        f.any(:html, :m) { render :action => :new, :layout => 'sessions' }
+      end
     end
   end
 
@@ -105,7 +107,7 @@ class UsersController < ApplicationController
     if params.has_key?(:sub_action)
       @sub_action = params[:sub_action]
     else
-      render :file => "#{RAILS_ROOT}/public/404.html", :status => 404
+      render :file => "#{Rails.root}/public/404.html", :status => 404
     end
   end
 
@@ -152,7 +154,7 @@ class UsersController < ApplicationController
           self.current_user = @user
         end
       else
-        flash[:error] = t('users.activation.invalid')
+        flash[:error] = t('users.activation.invalid_html')
       end
     else
       flash[:error] = t('users.activation.invalid_user')
@@ -199,6 +201,12 @@ class UsersController < ApplicationController
     head :ok
   end
 
+  def change_activities_mode
+    @current_user.settings = { :collapse_activities => params[:collapsed] }
+    @current_user.save!
+    render :text => "activities are now #{params[:collapsed] ? 'collapsed' : 'expanded'}"
+  end
+
   private
     def find_user
       unless @user = ( User.find_by_login(params[:id]) || User.find_by_id(params[:id]) )
@@ -230,7 +238,7 @@ class UsersController < ApplicationController
     def can_users_signup?
       unless @invitation || signups_enabled?
         flash[:error] = t('users.new.no_public_signup')
-        return redirect_to root_path
+        return redirect_to Teambox.config.community ? login_path : root_path
       end
     end
 end

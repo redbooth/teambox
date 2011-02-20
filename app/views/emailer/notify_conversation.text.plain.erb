@@ -5,10 +5,10 @@
 
 <%= emailer_list_comments(@conversation.comments) %>
 
-<%= t('emailer.notify.view_conversation_online', :view_converation => t('emailer.notify.view_converation')) %> <%= project_conversation_url(@project, @conversation) %>
+<%= t('emailer.notify.view_conversation_online', :view_conversation => t('emailer.notify.view_conversation')) %> <%= project_conversation_url(@project, @conversation) %>
 <%= emailer_answer_to_this_email %>
 
 <%= @conversation.watchers.collect {|u| h(u) }.to_sentence %> <%= t('emailer.notify.are_watching') %>
 
-<%= t('emailer.notify.stop_watching_link', :stop_watch => t('emailer.notify.stop_watch')) -%> <%= project_conversation_url(@project, @conversation) %>
-<%= t('emailer.notify.notification_settings_link', :settings_link => t('emailer.notify.settings_link')) -%> <%= account_notifications_url %>
+<%= t('emailer.notify.stop_watching_link_html', :stop_watch => t('emailer.notify.stop_watch')) -%> <%= project_conversation_url(@project, @conversation) %>
+<%= t('emailer.notify.notification_settings_link_html', :settings_link => t('emailer.notify.settings_link')) -%> <%= account_notifications_url %>

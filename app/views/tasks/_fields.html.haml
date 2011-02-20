@@ -3,22 +3,33 @@
   %p= t('.task')
 
 .name.text_field
-  = f.label :name, t('.name')
+  = f.label :name, t('.name_html')
   = f.text_field :name, :autofocus => %w[new edit].include?(action_name) || nil
   
 - if f.object.new_record?
   %p.optional= t('.optional')
-  
-  - f.object.comments.build
-  - f.fields_for :comments do |comment_fields|
+
+  - f.object.comments.build unless f.object.comments.any?
+  = f.fields_for :comments do |comment_fields|
     .body.text_field
-      = comment_fields.label :body, t('.body')
+      = comment_fields.label :body, t('.body_html')
       = comment_fields.text_area :body, :rows => 3
+    .extra
+      .upload_area
+        %p= t('uploads.new.select_a_file')
+        - comment_fields.object.uploads.build unless comment_fields.object.uploads.any?
+        = comment_fields.fields_for :uploads do |uploads|
+          = uploads.file_field :asset, :id => 'upload_file'
+      .actions
+        .attach
+          %span= t('comments.fields.attach') + ": "
+          = link_to t('uploads.comment_upload_link'), '#uploads', :class => 'attach_icon hoverable', :title => "Attach a file"
+          = render 'google_docs/form', :f => comment_fields
 
   .assigned_to.text_field
     = f.label :assigned_id, t('comments.new.assigned_to')
-    = f.select :assigned_id, people_from_project_for_select(project)
+    = f.select :assigned_id, []
 
   .pick_date
-    = f.label :due_on, t('.due_on')
+    = f.label :due_on, t('.due_on_html')
     = date_picker(f, :due_on)

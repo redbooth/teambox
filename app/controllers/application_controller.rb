@@ -6,22 +6,29 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
   include AuthenticatedSystem
-  include SslHelper
-
-  filter_parameter_logging :password
 
   before_filter :set_locale,
                 :rss_token,
-                :confirmed_user?, 
+                :set_client,
+                :confirmed_user?,
                 :load_project, 
                 :load_organizations,
                 :login_required, 
-                :touch_user, 
+                :touch_user,
                 :belongs_to_project?,
                 :load_community_organization,
-                :set_client,
                 :add_chrome_frame_header
-  
+
+  # If the parameter ?nolayout=1 is passed, then we will render without a layout
+  # If the parameter ?extractparts=1 is passed, then we will render blocks for content and sidebar
+  layout proc { |controller|
+    if controller.params[:nolayout]
+      nil
+    else
+      controller.params[:extractparts] ? "parts" : "application"
+    end
+  }
+
   private
 
     def check_permissions
@@ -68,10 +75,12 @@ class ApplicationController < ActionController::Base
           redirect_to project_invitations_path(@current_project)
         else
           # sorry, no dice
-          if [:rss, :ics].include? request.template_format.to_sym
+          if [:rss, :ics].include? request.formats.map(&:symbol)
             render :nothing => true
           else
-            render 'projects/not_in_project', :status => :forbidden
+            respond_to do |f|
+              f.any(:html, :m) { render 'projects/not_in_project', :status => :forbidden }
+            end
           end
         end
       end
@@ -103,14 +112,17 @@ class ApplicationController < ActionController::Base
     end
 
     def set_locale
-      I18n.locale = logged_in? ? current_user.locale : user_agent_locale
+      locale = logged_in? ? current_user.locale : (params[:locale] || user_agent_locale)
+      I18n.locale = (locale.present? && I18n.available_locales.include?(locale.to_sym)) ? locale : I18n.default_locale
     end
-    
+
     LOCALES_REGEX = /\b(#{ I18n.available_locales.join('|') })\b/
-    
+
     def user_agent_locale
-      unless RAILS_ENV == 'test'
+      unless (Rails.env.test? || Rails.env.cucumber?)
         request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX && $&
+      else
+        :en
       end
     end
     
@@ -164,7 +176,7 @@ class ApplicationController < ActionController::Base
     MobileClients = /(iPhone|iPod|Android|Opera mini|Blackberry|Palm|Windows CE|Opera mobi|iemobile|webOS)/i
 
     def set_client
-      if [:html, :m].include?(request.format.to_sym) and session[:format]
+      if [:html, :m].include?(request.format.try(:to_sym)) and session[:format]
         # Format has been forced by Sessions#change_format
         request.format = session[:format].to_sym
       else
@@ -189,9 +201,9 @@ class ApplicationController < ActionController::Base
     def output_errors_json(record)
       if request.xhr?
         response.content_type = Mime::JSON
-        render :json => record.errors, :status => 400
+        render :json => record.errors.as_json, :status => 400
       elsif iframe?
-        render :template => 'shared/iframe_error', :layout => false, :locals => { :data => record.errors }
+        render :template => 'shared/iframe_error', :layout => false, :locals => { :data => record.errors.as_json }
       end
     end
     
@@ -281,7 +293,7 @@ class ApplicationController < ActionController::Base
     end
 
     def time_tracking_enabled?
-      APP_CONFIG['allow_time_tracking'] || false
+      Teambox.config.allow_time_tracking || false
     end
 
     def load_community_organization
@@ -314,4 +326,14 @@ class ApplicationController < ActionController::Base
       request.user_agent =~ /chromeframe/
     end
     helper_method :chrome_frame?
+
+    def set_time_zone
+      if logged_in?
+        Time.use_zone(current_user.time_zone) do
+          yield
+        end
+      else
+        yield
+      end
+    end
 end

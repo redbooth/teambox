@@ -2,7 +2,7 @@
   %h3
     = link_to h(organization.name), organization
     - role = current_user.memberships.find_by_organization_id(organization.id).role_name
-    %span= t('.you_are', :role => t(".#{role}"))
+    %span= t('.you_are_html', :role => t(".#{role}"))
   %img.logo{ :src => organization.logo.url(:square) }
   .details
     %p= t('.number_of_projects', :count => organization.projects.count)

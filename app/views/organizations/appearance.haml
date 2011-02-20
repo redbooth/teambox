@@ -1,10 +1,7 @@
-- content_for :stylesheet_includes do
-  = stylesheet_link_tag 'colorpicker', :media => :screen
-
-%h2=h @organization
+%h2= t('.title', :organization => @organization)
 
 - if can?(:admin, @organization)
-  - form_for @organization, :html => { :multipart => true } do |f|
+  = form_for @organization, :html => { :multipart => true } do |f|
     = f.error_messages
     = render 'organizations/appearance_fields', :f => f
     .submit
@@ -12,5 +9,3 @@
 
 - else
   %p= t('organizations.you_are_not_admin')
-
-= render 'organizations/column'
