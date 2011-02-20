@@ -13,17 +13,20 @@ class CreateWatcherTable < ActiveRecord::Migration
     add_index :watchers, [:user_id, :watchable_id, :watchable_type], :name => 'uniqueness_index', :unique => true
     
 
-    [Conversation, Task, TaskList].each do |klass|
+    [Conversation, Task].each do |klass|
       klass.all do |entry|
-        entry.add_watchers(YAML::load(entry[:whatchers_ids]))
+        user_ids = YAML::load(entry[:whatchers_ids])
+        entry.add_watchers( User.where(:id => user_ids) )
       end
+    end
 
+    [Conversation, Task, TaskList, Page].each do |klass|
       remove_column klass.table_name.to_sym, :watchers_ids
     end
   end
 
   def self.down
-    [Conversation, Task, TaskList].each do |klass|
+    [Conversation, Task].each do |klass|
       add_column klass.table_name.to_sym, :watchers_ids, :text
 
       klass.all do |entry|

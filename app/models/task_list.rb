@@ -1,8 +1,6 @@
 class TaskList < RoleRecord
   include Immortal
 
-  include Watchable
-
   attr_accessible :name, :start_on, :finish_on
 
   concerned_with :validation,

@@ -254,7 +254,6 @@ ActiveRecord::Schema.define(:version => 20110211173002) do
     t.string   "name"
     t.text     "description"
     t.integer  "last_comment_id"
-    t.text     "watchers_ids"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
@@ -486,6 +485,7 @@ ActiveRecord::Schema.define(:version => 20110211173002) do
     t.datetime "updated_at"
   end
 
+  add_index "watchers", ["user_id", "watchable_id", "watchable_type"], :name => "uniqueness_index", :unique => true
   add_index "watchers", ["user_id"], :name => "index_watchers_on_user_id"
   add_index "watchers", ["watchable_id"], :name => "index_watchers_on_watchable_id"
   add_index "watchers", ["watchable_type"], :name => "index_watchers_on_watchable_type"
