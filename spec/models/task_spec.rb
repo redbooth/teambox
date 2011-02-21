@@ -12,12 +12,14 @@ describe Task do
 
   describe "a new task" do
     before do
-      @task = Factory(:task)
-      @task.project.add_user(@task.user)
+      @project = Factory(:project)
+      @user = Factory(:user)
+      @project.add_user(@user)
+      @task = Factory(:task, :project => @project, :user => @user)
     end
     
     it "should add the task creator as a watcher" do
-      @task.reload.watchers.should include(@task.user)
+      @task.reload.watchers.should include(@user)
     end
 
     it "should be created with a new status" do
