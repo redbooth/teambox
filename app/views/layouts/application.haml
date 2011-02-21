@@ -9,8 +9,8 @@
     %title= "#{@page_title} Teambox"
     = include_stylesheets :application, :media => :screen
     = include_stylesheets :print, :media => :print
-    = stylesheet_link_tag 'cucumber', :media => :screen if Rails.env.cucumber?
     = yield :stylesheet_includes
+    = stylesheet_link_tag 'cucumber', :media => :screen if Rails.env.cucumber?
     = organization_link_colour
     = sprockets_include_tag
     = yield :js_includes
