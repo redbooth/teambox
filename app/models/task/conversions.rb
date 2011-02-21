@@ -15,7 +15,7 @@ class Task
       xml.tag! 'created-at',      created_at.to_s(:db)
       xml.tag! 'updated-at',      updated_at.to_s(:db)
       xml.tag! 'completed-at',    completed_at.to_s(:db) if completed_at
-      xml.tag! 'watchers',        Array.wrap(watchers_ids).join(',')
+      xml.tag! 'watchers',        Array.wrap(watcher_ids).join(',')
       unless Array(options[:include]).include? :tasks
         task_list.to_xml(options.merge({ :skip_instruct => true }))
       end
@@ -35,7 +35,7 @@ class Task
       :status => status,
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
-      :watchers => Array.wrap(watchers_ids)
+      :watchers => Array.wrap(watcher_ids)
     }
     
     base[:type] = self.class.to_s if options[:emit_type]

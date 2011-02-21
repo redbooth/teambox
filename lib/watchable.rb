@@ -8,7 +8,7 @@ module Watchable
   end
 
   def watchers_ids
-    warn "[DEPRECATION] `watcher_ids` is deprecated.  Please use `watcher_ids` instead."
+    warn "[DEPRECIATION] `watchers_ids` is deprecated.  Please use `watcher_ids` instead."
     watcher_ids
   end
 

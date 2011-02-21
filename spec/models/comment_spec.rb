@@ -121,16 +121,16 @@ describe Comment do
 
       it "on a conversation" do
         conversation = Factory(:conversation, :project => @project, :user => @project.user)
-        conversation.watchers_ids.should_not include(@pablo.id)
+        conversation.watcher_ids.should_not include(@pablo.id)
         comment = Factory(:comment, :project => @project, :user => @pablo, :target => conversation)
-        conversation.reload.watchers_ids.should include(@pablo.id)
+        conversation.reload.watcher_ids.should include(@pablo.id)
       end
 
       it "on a task" do
         @task = Factory(:task, :project => @project, :user => @project.user)
-        @task.watchers_ids.should_not include(@pablo.id)
+        @task.watcher_ids.should_not include(@pablo.id)
         comment = Factory(:comment, :project => @project, :user => @pablo, :target => @task)
-        @task.reload.watchers_ids.should include(@pablo.id)
+        @task.reload.watcher_ids.should include(@pablo.id)
       end
     end
     

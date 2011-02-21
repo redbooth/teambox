@@ -9,7 +9,7 @@ class Conversation
       xml.tag! 'name',            name
       xml.tag! 'created-at',      created_at.to_s(:db)
       xml.tag! 'updated-at',      updated_at.to_s(:db)
-      xml.tag! 'watchers',        watchers_ids.join(',')
+      xml.tag! 'watchers',        watcher_ids.join(',')
       if Array(options[:include]).include? :comments
         comments.to_xml(options.merge({ :skip_instruct => true }))
       end
@@ -25,7 +25,7 @@ class Conversation
       :simple => simple,
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
-      :watchers => Array.wrap(watchers_ids),
+      :watchers => Array.wrap(watcher_ids),
       :comments_count => comments_count,
     }
     

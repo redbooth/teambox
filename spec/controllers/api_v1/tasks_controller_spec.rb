@@ -201,7 +201,7 @@ describe ApiV1::TasksController do
       put :watch, :project_id => @project.permalink, :id => @task.id
       response.should be_success
       
-      @task.reload.watchers_ids.include?(@user.id).should == true
+      @task.reload.watcher_ids.include?(@user.id).should == true
     end
     
     it "should not allow observers to watch a task" do
@@ -210,7 +210,7 @@ describe ApiV1::TasksController do
       put :watch, :project_id => @project.permalink, :id => @task.id
       response.status.should == 401
       
-      @task.reload.watchers_ids.include?(@observer.id).should_not == true
+      @task.reload.watcher_ids.include?(@observer.id).should_not == true
     end
   end
   
@@ -221,7 +221,7 @@ describe ApiV1::TasksController do
       put :unwatch, :project_id => @project.permalink, :id => @task.id
       response.should be_success
       
-      @task.reload.watchers_ids.include?(@owner.id).should_not == true
+      @task.reload.watcher_ids.include?(@owner.id).should_not == true
     end
   end
   
