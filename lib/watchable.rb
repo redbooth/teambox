@@ -3,7 +3,7 @@ module Watchable
     model.after_save :update_watchers
     model.attr_accessible :watchers_ids
     model.send :attr_writer, :watchers_ids
-    model.has_many :watcher_tags, :as => :watchable, :class_name => 'Watcher'
+    model.has_many :watcher_tags, :as => :watchable, :class_name => 'Watcher', :dependent => :destroy
     model.has_many :watchers, :through => :watcher_tags, :source => :user
   end
 
@@ -36,7 +36,6 @@ module Watchable
       true if watchers.destroy_all
     end
   end
-  
   
   protected
   

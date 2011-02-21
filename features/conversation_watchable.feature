@@ -14,7 +14,7 @@ Feature: Watchers for conversations
     And I should see "Andrew Wiggin"
     When I follow "All users"
     And I press "Save"
-    And I wait for 1 second
+    And I wait for 2 second
     Then @balint, @pablo and @james should receive 1 emails
 
   Scenario: New conversation watchers

@@ -135,5 +135,6 @@ class Person < ActiveRecord::Base
   def cleanup_after
     user.remove_recent_project(project)
     user.tasks_counts_update
+    user.watchers.where(:project_id => project_id).destroy_all
   end
 end
