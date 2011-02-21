@@ -11,14 +11,31 @@ class CreateWatcherTable < ActiveRecord::Migration
     add_index :watchers, [:watchable_id]
     add_index :watchers, [:watchable_type]
     add_index :watchers, [:user_id, :watchable_id, :watchable_type], :name => 'uniqueness_index', :unique => true
-    
 
     [Conversation, Task].each do |klass|
       klass.find_in_batches do |entries|
-        entries.each do |entry|
-          unless entry[:watchers_ids].nil?
-            user_ids = YAML::load(entry[:watchers_ids])
-            entry.add_watchers( User.where(:id => user_ids) )
+        if ActiveRecord::Base.configurations[Rails.env]['adapter'] =~ /(mysql)/i
+            inserts = []
+            entries.each do |entry|
+
+              unless entry[:watchers_ids].nil?
+                user_ids = YAML::load(entry[:watchers_ids])
+                user_ids.each do |user_id|
+                  inserts.push "(#{user_id}, #{entry.project_id}, #{entry.id}, \"#{klass}\", NOW(), NOW())"
+                end
+              end
+
+            end
+            values = inserts.join(", ")
+            sql = " INSERT INTO watchers (`user_id`, `project_id`, `watchable_id`, `watchable_type`, `updated_at`, `created_at`) VALUES " + values
+            klass.connection.execute sql
+
+        else
+          entries.each do |entry|
+            unless entry[:watchers_ids].nil?
+              user_ids = YAML::load(entry[:watchers_ids])
+              entry.add_watchers( User.where(:id => user_ids) )
+            end
           end
         end
       end
