@@ -627,7 +627,7 @@ en:
         explain: "Can create projects inside the organization, but only access the projects they're invited to."
       in_projects_but_not_in_the_organization:
         title: External people
-        explain: Can access only the projects they are invited to. Can't create projects inside the organization.
+        explain: "Can access only the projects they are invited to. Can't create projects inside the organization."
       no_users: No users here
       add_to_the_org: Add to the organization as a participant
       add_as_admin: add as an admin
@@ -635,10 +635,12 @@ en:
       remove_admin: Remove admin rights
       remove: remove from this organization
     roles:
-      external: Don't invite. User won't be able to create projects in this organization.
+      external: "Don't invite. User won't be able to create projects in this organization."
       participant: As a participant. Will be able to create his own projects.
       admin: As an administrator. Will be able to add new users and manage the organization.
   invitations:
+    select_language:
+      invitations_will_be_sent_in_language_html: The invitations will be sent in %{language}
     fields:
       user_or_email: "Enter your teammate's username or email:"
     invitation:
