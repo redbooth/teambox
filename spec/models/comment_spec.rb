@@ -160,17 +160,6 @@ describe Comment do
         comment.mentioned.to_a.should == [@user]
         @task.reload.watchers.should include(@user)
       end
-
-      it "should add him to task list" do
-        @task_list = Factory(:task_list, :project => @project, :user => @project.user)
-        @task_list.watchers.should_not include(@user)
-
-        body = "I would like to add @existing to this, but not @unexisting."
-        comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @task_list)
-        
-        comment.mentioned.to_a.should == [@user]
-        @task_list.reload.watchers.should include(@user)
-      end
     end
 
     it "should not link to users page when mentioning @existing if they are not in the project" do
