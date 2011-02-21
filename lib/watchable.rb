@@ -40,7 +40,7 @@ module Watchable
   protected
   
   def update_watchers
-    add_watcher(user) if user_id and new_record?
+    add_watcher(user) if user_id_changed?
     if @watchers_ids
       add_watchers(project.users.where(:id => @watchers_ids))
     end
