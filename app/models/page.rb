@@ -135,7 +135,6 @@ class Page < RoleRecord
       xml.tag! 'description',     description
       xml.tag! 'created-at',      created_at.to_s(:db)
       xml.tag! 'updated-at',      updated_at.to_s(:db)
-      xml.tag! 'watchers',        Array(watchers_ids).join(',')
       if Array(options[:include]).include? :slots
         slots.to_xml(options.merge({ :skip_instruct => true, :root => 'slots' }))
       end
@@ -155,8 +154,7 @@ class Page < RoleRecord
       :name => name,
       :description => description,
       :created_at => created_at.to_s(:api_time),
-      :updated_at => updated_at.to_s(:api_time),
-      :watchers => Array.wrap(watchers_ids)
+      :updated_at => updated_at.to_s(:api_time)
     }
     
     base[:type] = self.class.to_s if options[:emit_type]

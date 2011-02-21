@@ -14,7 +14,6 @@ class TaskList
       xml.tag! 'created-at',      created_at.to_s(:db)
       xml.tag! 'updated-at',      updated_at.to_s(:db)
       xml.tag! 'completed-at',    completed_at.to_s(:db) if completed_at
-      xml.tag! 'watchers',        Array(watchers_ids).join(',')
       if Array(options[:include]).include? :tasks
         tasks.to_xml(options.merge({ :skip_instruct => true }))
       end
@@ -34,7 +33,6 @@ class TaskList
       :archived => archived,
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
-      :watchers => Array.wrap(watchers_ids),
       :comments_count => comments_count,
     }
     
