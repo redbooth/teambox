@@ -6,6 +6,7 @@
 
   %h3.invite_by_email=t '.invite_by_email'
   = f.text_area :invite_emails, :placeholder => "john@galt.com, francisco@danconia.com"
+  = render "invitations/select_language"
 
   - contacts = @current_project.organization.users_in_projects - [current_user]
   - if contacts.any?
