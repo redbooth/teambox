@@ -107,13 +107,13 @@ class Invitation < RoleRecord
     return if @is_silent
     if invited_user
       if belongs_to_organization?
-        Emailer.send_email :project_membership_notification, self.id
+        Emailer.send_with_language :project_membership_notification, invited_user.locale, self.id
         self.destroy
       else
-        Emailer.send_email :project_invitation, self.id
+        Emailer.send_with_language :project_invitation, invited_user.locale , self.id
       end
     else
-      Emailer.send_email :signup_invitation, self.id
+      Emailer.send_with_language :signup_invitation, (self.locale || user.locale), self.id
     end
   end
   
