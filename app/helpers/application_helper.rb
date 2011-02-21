@@ -212,7 +212,7 @@ module ApplicationHelper
   # collecting stats about Teambox installations
   def tracking_code
     if Teambox.config.tracking_enabled and Rails.env.production?
-      fake_img = "http://teambox.com/logo.png/#{request.host}"
+      fake_img = "https://teambox.com/logo.png/#{request.host}"
       %(<div style="background-image: url(#{fake_img})"></div>).html_safe
     end
   end
