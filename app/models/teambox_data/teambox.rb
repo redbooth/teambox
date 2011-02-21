@@ -192,7 +192,7 @@ class TeamboxData
       if obj.respond_to? :assigned_id
         obj.assigned_id = resolve_person(data['assigned_id']).try(:id) if data['assigned_id']
       end
-      obj.watchers_ids = data['watchers'].map{|u| @imported_users[u].try(:id)}.compact if data['watchers']
+      obj.watchers_ids = data['watchers'].map{|u| @imported_users[u].try(:id)}.compact if data['watchers'] and obj.respond_to?(:watchers_ids)
       obj.created_at = data['created_at'] if data['created_at']
       obj.updated_at = data['updated_at'] if data['updated_at']
     end
