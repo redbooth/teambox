@@ -91,6 +91,8 @@ module NavigationHelpers
       time_path
     when /the results page for "(.+)"/
       search_path :q => $1
+    when /my watch list/
+      watch_list_path
     else
       begin
         page_name =~ /the (.*) page/
