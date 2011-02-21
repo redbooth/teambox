@@ -73,6 +73,11 @@
     display: none
 
 #activities
+  .thread.selected
+    .comment_header
+      border-left-color: $navbar
+      +gradient($comments_left_border - #111, $comments_bkg - #111)
+
   .comment_header
     cursor: pointer
     &:hover

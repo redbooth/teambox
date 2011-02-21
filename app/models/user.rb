@@ -62,9 +62,10 @@ class User < ActiveRecord::Base
                   :notify_conversations,
                   :notify_tasks,
                   :splash_screen,
-                  :wants_task_reminder
+                  :wants_task_reminder,
+                  :keyboard_shortcuts
 
-  attr_accessor   :activate, :old_password
+  attr_accessor   :activate, :old_password, :keyboard_shortcuts
 
   before_validation :sanitize_name
   before_destroy :rename_as_deleted
@@ -263,6 +264,14 @@ class User < ActiveRecord::Base
 
   def users_for_user_map
     @users_for_user_map ||= self.organizations.map{|o| o.users + o.users_in_projects }.flatten.uniq
+  end
+
+  def keyboard_shortcuts
+    !!settings['keyboard_shortcuts']
+  end
+
+  def keyboard_shortcuts=(v)
+    self.settings = { 'keyboard_shortcuts' => v == "1" }
   end
 
   protected

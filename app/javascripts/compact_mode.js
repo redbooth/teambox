@@ -41,9 +41,10 @@ document.on("click", "#activities .comment_header a", function(e,el) {
 });
 
 document.on("dom:loaded", function() {
-  if (my_user.collapse_activities) {
+  if (my_user.collapse_activities && $$('a.collapsed_mode').any()) {
     ActivityFeed.collapseAll();
-    $$('a.collapsed_mode')[0].up('.el').toggle();
-    $$('a.expanded_mode')[0].up('.el').toggle();
+    $$('a.collapsed_mode').first().up('.el').toggle();
+    $$('a.expanded_mode').first().up('.el').toggle();
   }
 });
+

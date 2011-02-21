@@ -26,9 +26,11 @@
 //= require <forms>
 //= require <google_docs>
 //= require <history>
+//= require <hotkeys>
 //= require <hours>
 //= require <hoverable>
 //= require <invitation>
+//= require <keyboard>
 //= require <toggleform>
 //= require <navigation>
 //= require <navigation_ajax>
@@ -46,6 +48,7 @@
 //= require <task>
 //= require <task_list>
 //= require <tasks_inline>
+//= require <threads>
 //= require <timeago>
 //= require <upload>
 //= require <yahoo.color>

@@ -172,6 +172,10 @@
     }
   });
 
+  document.on('pseudo:click', 'a[data-remote]', function(event, link) {
+    handleRemote(link);
+  });
+
   document.on("click", "form input[type=submit], form button[type=submit], form button:not([type])", function(event, button) {
     // register the pressed submit button
     event.findElement('form').store('rails:submit-button', button.name || false);
