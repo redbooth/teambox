@@ -16,8 +16,8 @@ class CreateWatcherTable < ActiveRecord::Migration
     [Conversation, Task].each do |klass|
       klass.find_in_batches do |entries|
         entries.each do |entry|
-          unless entry[:whatchers_ids].nil?
-            user_ids = YAML::load(entry[:whatchers_ids])
+          unless entry[:watchers_ids].nil?
+            user_ids = YAML::load(entry[:watchers_ids])
             entry.add_watchers( User.where(:id => user_ids) )
           end
         end
