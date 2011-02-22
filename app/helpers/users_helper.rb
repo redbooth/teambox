@@ -190,7 +190,8 @@ module UsersHelper
         },
         :first_steps => current_user.show_first_steps,
         :badges => current_user.badges,
-        :show_badges => current_user.show_badges
+        :show_badges => current_user.show_badges,
+        :authentication_token => current_user.authentication_token
       }.to_json
     end
 

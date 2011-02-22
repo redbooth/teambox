@@ -536,8 +536,10 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.boolean  "default_watch_new_task",                         :default => false
     t.boolean  "default_watch_new_conversation",                 :default => false
     t.boolean  "default_watch_new_page",                         :default => false
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], :name => "index_users_on_auth_token", :unique => true
   add_index "users", ["deleted"], :name => "index_users_on_deleted"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 

@@ -9,14 +9,9 @@ document.on('dom:loaded', function() {
   });
 
 
-  if (window.my_projects) {
-    var projects = $H(window.my_projects);
-
-    projects.each(function(e) {
-      var project = e[1];
-      Teambox.pushServer.subscribe("/projects/" + project.permalink, function(data){
-        console.log("Got data: ", data);
-      });
+  if (window.my_user) {
+    Teambox.pushServer.subscribe("/users/" + my_user.authentication_token, function(data){
+      console.log("Got data: ", data);
     });
   }
 });
