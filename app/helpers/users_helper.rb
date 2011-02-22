@@ -189,7 +189,7 @@ module UsersHelper
     end
 
     def json_organizations
-      Organization.find(current_user.projects.collect(&:organization_id)).collect do |org| {
+      Organization.find(current_user.projects.collect(&:organization_id).compact).collect do |org| {
         :id => org.id,
         :name => org.name,
         :permalink => org.permalink }
