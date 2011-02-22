@@ -105,7 +105,7 @@ Feature: Managing organizations
   Scenario: I can't access organizations as an external user
     Given I am logged in as @jordi
     And I go to the organizations page
-    Then I should not see "ACME"
+    Then I should not see "ACME" within ".organizations"
     When I go to the participant page for the "ACME" organization
     Then I should see "You don't have permission to access or edit this organization."
 
