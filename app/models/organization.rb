@@ -101,8 +101,13 @@ class Organization < ActiveRecord::Base
     !!logo.original_filename
   end
   
+
   def references
     {}
+  end
+
+  def has_synced_files?
+    self.settings['nomadesk'] && self.settings['nomadesk']['bucket_name']
   end
   
   def to_api_hash(options = {})

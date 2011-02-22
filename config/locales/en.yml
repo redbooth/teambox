@@ -227,6 +227,8 @@ en:
         digest_option_instant: Instant
         digest_option_none: No email
       invalid_login: "use only letters, numbers and underscores"
+      storage:
+        password_label: Storage password
       delete:
         steps_before_1: "To delete your Teambox account, you first need to leave or delete all your current projects."
         steps_before_2: "This will ensure that no other users will lose data on their projects when you delete your account."
@@ -265,6 +267,7 @@ en:
       title_picture: Your Profile Picture
       title_notifications: Your Notifications
       title_linked_accounts: Linked Application Accounts
+      title_storage: Your Storage
       title_deletion: Project Archiving/Deletion
       title_delete: Delete Account
       submit: Update account
@@ -523,6 +526,7 @@ en:
       billing: Plans and Billing
       invoices: Invoices
       delete: Delete this organization...
+      storage_options: Storage Options
     edit:
       title: Settings for %{organization}
       there_are: "There are"
@@ -535,6 +539,12 @@ en:
     appearance:
       title: Appearance for %{organization}
       submit: Save changes
+    storage_options:
+      title: Storage options for %{organization}
+      create: Create Syncronized Storage Bucket
+      details: There is no bucket currently associated with this organization. More info about how great they are to go here.
+      currently_attached: "You currently have a Nomadesk Bucket (%{bucket_name}) linked to your account."
+      account_needed_first: "You cannot create any storage options until you register your account. Click <a href='%{url}'>here</a> to configure your account."
     external_view:
       create_your_own_org_html: "However, you can <a href='%{link}'>create your own organization</a> for your projects."
       request_permission: "To access this organization, you must request permission to some of the administrators:"
@@ -1222,6 +1232,32 @@ en:
     errors:
       exceeded_storage_plan_limit: "You have exceeded your storage quota for %{organization_name}. To increase your storage limits, <a href='%{url}'>upgrade your plan now</a>."
       general:  "There was an error uploading the file"
+  synced_files:
+    index:
+      title: Synchronized Files in %{project}
+      folder: Folder
+      new_file: New File
+      no_files: There are currently no files being sycronized for this project. You may wish to install the Nomadesk client on your desktop.
+      sync_info: "These files are synchronized with your computer and can be accessed by members of the Design projects organization: %{users}."
+      revoke_access: "To add or revoke access to this project, including its files, visit the <a href='%{url}'>organization's people page</a>."
+    bucket_missing:
+      title: No Storage for this Organization
+      info: "There is no Nomadesk Fileserver associated with your organization. Click <a href='%{url}'>here</a> to associate one."
+    account_missing:
+      title: No Nomadesk Account for this User
+      info: "There is no Nomadesk account associated with your account. Nomadesk is a great way to keep your files syncronised with all your collegues and we have support baked right into Teambox!"
+      create_header: Create a new Nomadesk Account
+      enter_password: Enter a password for your account your account email address will be used to create a new account
+      existing_header: Or use and existing account
+      existing_link: Click <a href='%{url}'>here</a> to add an existing Nomadesk account to your account.
+      admin_only: Only an admin can link synchronized files to you account. Once your organization has enabled syncronized files you may come back and setup synchronized files for yourself.
+    permission_missing: "An error occured attempting to give you permission to access this bucket. You should check with the creator of this bucket (%{creator}) they may be able to grant you permission manually via Nomadesk. %{error_message}"
+    file:
+      open: Open
+      download: Download
+      download_compressed: Zipped
+      delete: Delete
+      delete_confirmation: Are you sure you wish to delete this file? It will be deleted from all computers that sync this folder.
   sessions:
     fields:
       username_or_email: Email or Username
@@ -1287,6 +1323,7 @@ en:
       time: Time tracking
       pages: Pages
       files: Files
+      nomadesk_files: Synced Files
       settings: Settings
       people: "People & Permissions"
       my_tasks: My Tasks
@@ -1343,6 +1380,7 @@ en:
       profile_information: Profile Information
       profile_picture: Profile Picture
       linked_accounts: Linked Accounts
+      storage: Synced Storage
       notifications: Notifications
       plans_and_billing: Plans and Billing
       delete_account: Delete Account...

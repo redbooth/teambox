@@ -3,7 +3,7 @@
 
 %h2= t(".title_#{@sub_action}")
 
-- secure_post = @sub_action == 'settings' && Teambox.config.secure_logins
+- secure_post = ['settings', 'storage'].include?(@sub_action) && Teambox.config.secure_logins
 - secure_url = secure_post ? polymorphic_url(current_user, :protocol => 'https') : nil
 
 = form_for current_user, :url => secure_url, :html => { :multipart => true } do |form|

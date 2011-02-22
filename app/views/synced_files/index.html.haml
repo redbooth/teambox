@@ -1,0 +1,21 @@
+%h2= t('.title', :project => @current_project)
+
+- if @folders.any?
+  %p.breadcrumbs
+    %b= "#{t('.folder')}:"
+    = @folders.join(" &rarr; ").html_safe
+
+.uploads
+  = render :partial => 'parent_link'
+  
+  - @files.each_with_index do |file, index|
+    = render :partial => 'file', :locals => { :file => file, :index => index }
+    
+  - if @files.empty?
+    %p= t('.no_files')
+
+.synced_files_access_details
+  %p
+    = t('.sync_info', :users => to_sentence(@organization.users))
+  %p
+    = raw t('.revoke_access', :url => organization_memberships_path(@organization))

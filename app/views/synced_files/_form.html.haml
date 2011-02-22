@@ -1,0 +1,9 @@
+- form_tag @upload_url do
+  = @upload_url.inspect
+  = hidden_field_tag :url, project_synced_files_url(@project)
+  
+  = label_tag 'file[]', 'File'
+  = file_field_tag 'file[]'
+  
+  = submit_tag 'Upload'
+  

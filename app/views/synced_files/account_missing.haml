@@ -1,0 +1,18 @@
+%h2= t('.title', :project => @current_project)
+
+%p= raw t('.info')
+
+#nomadesk_account_missing
+  - if can?(:admin, @organization) || @organization.has_synced_files?
+    %h3= t('.create_header')
+    %p= t('.enter_password')
+    = form_for :nomadesk, :url => create_account_organization_synced_files_path(@organization) do |f|
+      = f.label :password
+      = f.password_field :password
+      = f.submit "Submit", :disable_with => 'Submiting...'
+      %p.warning Warning: Due to the API we use we cannot encrypt your password at present and it will be stored in plaintext in our database so we suggest you choose a random string here.
+
+    %h3= t('.existing_header')
+    %p= raw t('.existing_link', :url => account_storage_path)
+  - else
+    %p= t('.admin_only')

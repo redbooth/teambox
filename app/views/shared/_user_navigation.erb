@@ -25,6 +25,12 @@ render_tabnav :user do
         t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'linked_accounts'
       end
     end
+    
+    add_tab do |t|
+      t.named t('.storage')
+      t.links_to account_storage_path
+      t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'storage'
+    end
 
     add_tab do |t|
       t.named t('.linked_apps')

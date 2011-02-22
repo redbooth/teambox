@@ -29,7 +29,9 @@ module UploadsHelper
   end
   
   def file_icon_image(upload,size='48px')
-    extension = File.extname(upload.file_name)
+    filename = upload.is_a?(String) ? upload : upload.file_name
+    
+    extension = File.extname(filename)
     if extension.length > 0
       extension = extension[1,10]
     end

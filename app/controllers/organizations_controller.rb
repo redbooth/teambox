@@ -47,6 +47,10 @@ class OrganizationsController < ApplicationController
 
   def appearance
   end
+  
+  def storage_options
+    @bucket_name = @organization.settings['nomadesk'].try(:[], 'bucket_name')
+  end
 
   def update
     if @organization.update_attributes(params[:organization])

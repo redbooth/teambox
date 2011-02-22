@@ -1,0 +1,14 @@
+%h2= t('.title', :organization => @organization)
+
+- if can?(:admin, @organization)
+  - if @bucket_name
+    %p= t('.currently_attached', :bucket_name => @bucket_name)
+  - elsif current_user.nomadesk_password.blank?
+    %p= raw t('.account_needed_first', :url => organization_synced_files_path(@organization))
+  - else
+    %p= t('.details')
+    .create
+      = link_to t('.create'), create_bucket_organization_synced_files_path(@organization), :method => :post
+
+- else
+  %p= t('organizations.you_are_not_admin')

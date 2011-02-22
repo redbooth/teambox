@@ -1,0 +1,2 @@
+module SyncedFilesHelper
+end
