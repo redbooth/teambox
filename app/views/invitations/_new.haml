@@ -6,6 +6,7 @@
   .text_field
     = f.label :user_or_email, t('invitations.search.username_or_email')
     = f.text_field :user_or_email
+  = render "invitations/select_language"
   .text_field
     = f.label :role, t('invitations.search.role')
     = f.select :role, options_from_person_roles

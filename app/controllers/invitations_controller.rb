@@ -64,7 +64,7 @@ class InvitationsController < ApplicationController
       @targets = user_or_email.extract_emails
       @targets = user_or_email.split if @targets.empty?
       
-      @invitations = @targets.map { |target| make_invitation(target, params[:invitation]) }
+      @invitations = @targets.map { |target| make_invitation(target, params[:invitation], params[:invitations_locale]) }
     else
       flash[:error] = t('invitations.errors.invalid')
       redirect_to target_people_path
@@ -154,8 +154,9 @@ class InvitationsController < ApplicationController
       project_people_path(@current_project)
     end
     
-    def make_invitation(user_or_email, params)
+    def make_invitation(user_or_email, params, locale)
       invitation = @invite_target.invitations.new(params.merge({:user_or_email => user_or_email.strip}))
+      invitation.locale = locale
       invitation.user = current_user
       @saved_count ||= 0
       @saved_count += 1 if invitation.save
