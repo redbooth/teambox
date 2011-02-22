@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="charset" content="utf-8">
+  <title>Juggernaut</title>
+  <script src="json.js" type="text/javascript" charset="utf-8"></script>
+  <script src="socket_io.js" type="text/javascript" charset="utf-8"></script>
+  <script src="juggernaut.js" type="text/javascript" charset="utf-8"></script>
+  
+  <style type="text/css" media="screen">
+    h1 {
+      margin: 1em 0;
+    }
+    
+    #log {
+      padding: 5px;
+      background: #CCC;
+      height: 500px;
+      width: 400px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Juggernaut - Hello World!</h1>
+  
+  <textarea id="log" readonly></textarea>
+  
+  <script type="text/javascript" charset="utf-8">
+    var logElement = document.getElementById("log");
+    logElement.value = "";
+    var log = function(data){
+      logElement.value += (data + "\n");
+    };
+    
+    var jug = new Juggernaut();
+    
+    jug.on("connect", function(){ log("Connected") });
+    jug.on("disconnect", function(){ log("Disconnected") });
+    jug.on("reconnect", function(){ log("Reconnecting") });
+    
+    log("Subscribing to channel1");
+    
+    jug.subscribe("channel1", function(data){
+      log("Got data: " + data);
+    });
+    
+    // Expose for debugging
+    window.jug = jug;
+  </script>
+</body>
+</html>
