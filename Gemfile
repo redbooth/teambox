@@ -41,6 +41,8 @@ gem 'cancan', '~> 1.4.1'
 gem 'immortal', :git=>"git://github.com/teambox/immortal.git"
 gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer' 
 gem 'jammit'
+gem 'redis-store', '~> 1.0.0.beta4'
+gem 'juggernaut'
 
 group :development do
   gem 'sqlite3-ruby', '~> 1.2.5', :require => nil

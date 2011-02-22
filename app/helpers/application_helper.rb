@@ -305,4 +305,25 @@ BLOCK
       page << errors
     end
   end
+
+  def include_juggernaught(project_ids=[])
+    juggernaut_path = "http://#{request.host}:#{Teambox.config.juggernaught.port}/juggernaut.js"
+
+    javascript_include_tag(juggernaut_path).tap do |html|
+      html << javascript_tag(<<-JS) 
+        window.WEB_SOCKET_SWF_LOCATION = "http://#{request.host}/WebSocketMain.swf"
+        if ( typeof( window['Teambox'] ) == "undefined" ) {
+          window.Teambox = {};
+        }
+
+        var sessionId = Cookie.read('_teambox-2_session');
+        Teambox.pushServer = new Juggernaut({
+          port: #{Teambox.config.juggernaught.port},
+          meta: {
+            teambox_session_id: sessionId
+          }
+        });
+      JS
+    end
+  end
 end

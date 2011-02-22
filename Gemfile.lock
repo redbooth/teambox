@@ -136,6 +136,8 @@ GEM
       yui-compressor (>= 0.9.1)
     json (1.4.6)
     json_pure (1.4.6)
+    juggernaut (2.0.1)
+      redis
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
@@ -201,6 +203,10 @@ GEM
     rake (0.8.7)
     rcov (0.9.9)
     rdiscount (1.6.5)
+    redis (2.1.1)
+    redis-store (1.0.0.beta4)
+      redis (>= 2.0.0)
+      redis (>= 2.0.0)
     riddle (1.2.2)
     rspec (2.3.0)
       rspec-core (~> 2.3.0)
@@ -287,6 +293,7 @@ DEPENDENCIES
   immortal!
   jammit
   json
+  juggernaut
   launchy (~> 0.3.7)
   libxml-ruby (= 1.1.3)
   memcache-client (>= 1.7.4)
@@ -301,6 +308,7 @@ DEPENDENCIES
   rails (~> 3.0.3)
   rcov
   rdiscount (~> 1.6.3)
+  redis-store (~> 1.0.0.beta4)
   rspec-rails (~> 2.3.1)
   ruby-debug (~> 0.10.3)
   sprockets-rails (~> 0.0.1)

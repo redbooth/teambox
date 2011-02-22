@@ -8,6 +8,7 @@
 //= require <sound>
 //= require <mustache>
 //= require <history>
+//= require <cookie>
 
 //= require <calendar_date_select>
 //= require <facebox>
@@ -60,3 +61,4 @@
 //= require <yahoo.color>
 //= require <watchers>
 //= require <watch_list>
+//= require <push>

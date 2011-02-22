@@ -13,7 +13,9 @@
     = stylesheet_link_tag 'cucumber', :media => :screen if Rails.env.cucumber?
     = organization_link_colour
     = trimmer_include_tag
+    = javascript_include_tag "http://cdn.socket.io/stable/socket.io.js"
     = sprockets_include_tag
+    = include_juggernaught
     = yield :js_includes
     = javascript_tag do
       = yield :js_templates
