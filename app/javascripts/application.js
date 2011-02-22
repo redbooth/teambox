@@ -14,6 +14,7 @@
 //= require <controls>
 //= require <dragdrop>
 //= require <hackz>
+//= require <cookie>
 
 //= require <teambox>
 
@@ -114,3 +115,4 @@
 //= require <threads>
 //= require <upload>
 //= require <watchers>
+//= require <push>
