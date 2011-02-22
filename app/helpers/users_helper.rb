@@ -171,7 +171,8 @@ module UsersHelper
         :splash_screen => current_user.splash_screen,
         :collapse_activities => !!current_user.settings["collapse_activities"],
         :keyboard_shortcuts => !!current_user.settings["keyboard_shortcuts"],
-        :first_day_of_week => current_user.first_day_of_week
+        :first_day_of_week => current_user.first_day_of_week,
+        :authentication_token => current_user.authentication_token
       }.to_json
     end
 

@@ -453,8 +453,10 @@ ActiveRecord::Schema.define(:version => 20110228211014) do
     t.integer  "completed_tasks_count"
     t.boolean  "deleted",                                  :default => false,                        :null => false
     t.text     "settings"
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], :name => "index_users_on_auth_token", :unique => true
   add_index "users", ["deleted"], :name => "index_users_on_deleted"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 

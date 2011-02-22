@@ -20,7 +20,12 @@ class NotificationsObserver < ActiveRecord::Observer
 
     def push_on_create(activity)
       activity_hash = activity.to_api_hash(:include => [:project, :target, :user])
-      Juggernaut.publish("/projects/#{activity_hash[:project][:permalink]}", activity_hash.to_json)
+
+      if activity.project
+        activity.project.users.each do |user|
+          Juggernaut.publish("/users/#{user.authentication_token}", activity_hash.to_json)
+        end
+      end
     end
 
     def notify_watchers_on_new_comment(comment)
