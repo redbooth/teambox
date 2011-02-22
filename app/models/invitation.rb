@@ -10,8 +10,8 @@ class Invitation < RoleRecord
   validate :email_valid?
   
   attr_reader :user_or_email
-  attr_accessor :is_silent
-  attr_accessible :user_or_email, :role, :membership, :invited_user
+  attr_accessor :is_silent, :locale
+  attr_accessible :user_or_email, :role, :membership, :invited_user, :locale
 
   before_create :generate_token
   before_save :copy_user_email, :if => :invited_user

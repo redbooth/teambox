@@ -6,6 +6,7 @@ class Project
   attr_accessor :invite_users
   # string with email addresses
   attr_accessor :invite_emails
+  attr_accessor :invitations_locale
 
   # if any of the invitation parameters are defined, send invitations
   def invite_people?
@@ -24,7 +25,7 @@ class Project
     end
 
     for email in emails_to_invite
-      create_invitation(self.user, :user_or_email => email)
+      create_invitation(self.user, :user_or_email => email, :locale => invitations_locale)
     end
   end
 
