@@ -2,12 +2,12 @@
 
 Date.months = I18n.translations.date.month_names.compact();
 Date.weekdays = I18n.translations.calendar.abbr_weekdays;
-Date.first_day_of_week = "sunday";
+Date.firstDayOfWeek = "sunday";
 
 document.on("dom:loaded", function() {
   if(!my_user) { return; }
-  Date.first_day_of_week = my_user.first_day_of_week;
-  if(Date.first_day_of_week == "monday") {
+  Date.firstDayOfWeek = my_user.first_day_of_week;
+  if(Date.firstDayOfWeek == "monday") {
     Date.weekdays.push(Date.weekdays.shift());
   }
 });
