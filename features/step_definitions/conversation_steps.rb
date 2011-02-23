@@ -20,7 +20,7 @@ Given /^the conversation "([^\"]+)" is watched by (@.+)$/ do |name, users|
   conversation = Conversation.find_by_name(name)
   
   each_user(users) do |user|
-    conversation.add_watcher(user, false)
+    conversation.add_watcher(user)
   end
   
   conversation.save(:validate => false)
