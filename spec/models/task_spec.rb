@@ -125,8 +125,8 @@ describe Task do
     end
     
     it "gets correct tasks" do
-      tasks = Task.active.assigned_to(@user).order('name').all
-      tasks.map(&:name).should == ["Feed the dog", "Feed the cat"]
+      tasks = Task.active.assigned_to(@user).except(:order).order('name').all
+      tasks.map(&:name).should == ["Feed the cat", "Feed the dog"]
     end
   end
   
