@@ -11,7 +11,7 @@ Feature: Converting a conversation to a task
     And I follow "Convert to task"
     And I wait for 2 seconds
     And I press "Convert"
-    And I wait for 1 second
+    And I wait for 3 seconds
     Then I should see "Politics" in the page title
     And I should see "Politics" in the task thread title
 
@@ -22,7 +22,7 @@ Feature: Converting a conversation to a task
     And I follow "Convert to task"
     And I wait for 2 seconds
     And I press "Convert"
-    And I wait for 1 second
+    And I wait for 3 second
     Then I should see "Politics" in the task thread title
 
   Scenario: Converting a normal conversation when you are a commenter
@@ -52,7 +52,7 @@ Feature: Converting a conversation to a task
     And I follow "Convert to task"
     And I wait for 2 seconds
     And I press "Convert"
-    And I wait for 1 second
+    And I wait for 3 seconds
     Then I should see the error "must not be blank" within ".conversation_actions"
 
   Scenario: Converting a simple conversation on the overview page specifying the task name
@@ -63,7 +63,7 @@ Feature: Converting a conversation to a task
     And I wait for 2 seconds
     And I fill in "conversation_name" with "An exciting task for you"
     And I press "Convert"
-    And I wait for 1 second
+    And I wait for 3 seconds
     Then I should see "An exciting task for you" in the task thread title
 
   Scenario: Converting a simple conversation on the overview page and specifying additional task attributes
@@ -90,7 +90,7 @@ Feature: Converting a conversation to a task
     And I select the year "2010" with the conversation date picker
     And I select the day "29" with the date picker
     When I press "Convert"
-    And I wait for 1 second
+    And I wait for 3 seconds
     Then I should see "Give git course" in the task thread title
     And I should see 'new → hold'
     And I should see 'Dec 29' within 'span.assigned_date'
