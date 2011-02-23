@@ -179,7 +179,6 @@ ca:
       more_comments: 
         one: "1 comentari previ"
         other: "%{count} comentaris previs"
-      on_task_list: a
   affiliate: 
     area: "Àrea d'afiliats"
     index: 
@@ -829,7 +828,6 @@ ca:
         other: " are suscribed to this task, and will be notified of future replies."
       comment: "Comentari a la paret del projecte: "
       comments: "%{number} comentaris"
-      converation: "veure aquesta conversa online"
       conversation: "Conversa:"
       due_on: "Data límit: %{date}"
       my_tasks: "Altres tasques teves a %{project}"
@@ -925,8 +923,6 @@ ca:
     week_num: "Setmana %{num}"
     week_total: Total
   invitations: 
-    new:
-      also_invite_to_organization: "Convidar també a l'organització %{organization}"
     destroy: 
       discarded: "La invitació a %{user} ha estat descartada"
     errors: 
@@ -1405,10 +1401,7 @@ ca:
         one: "Tu tens un projecte actiu."
         other: "Tens %{count} projectes actius."
         zero: "No tens actius projectes."
-      created: "S´ha creat el projecte!"
       invalid_project: "Projecte no vàlid, corregeix els errors i intenta-ho de nou."
-      invite_by_email: "Convida usuaris introduint la seva adreça de correu electrònic"
-      invite_people: "Convidar persones al projecte"
       new_project: "Nou projecte..."
       not_allowed: "No es poden crear més projectes amb el compte actual."
       select_an_organization: "Has de seleccionar una organització per al teu projecte"
@@ -1421,19 +1414,6 @@ ca:
         one: "Tu pots crear un projecte més amb el teu pla actual."
         other: "Pots crear %{count} projectes més amb el teu pla actual."
         zero_html: "No pots crear cap més projecte.<br/>El màxim de projectes amb el teu pla es de %{max}."
-    new_primer: 
-      define1_html: "Un projecte és un grup compartit amb els teus contactes."
-      define2_html: "Dins de cada projecte, cadascun dels membres pot:"
-      feature1_html: "Publicar que fa ara mateix."
-      feature2_html: "Començar converses o respondre."
-      feature3_html: "Adjuntar arxius."
-      feature4_html: "Asignar i planificar."
-      feature5_html: "Comentar les tasques."
-      feature6_html: "Fer <i>time-tracking</i>."
-      feature7_html: "Crear i editar pàgines compartides."
-      footer: "Aquest projecte et pertany només a tu. Pots transferir-lo als teus contactes en qualsevol moment."
-      limited: "És un compte gratuït, només pots pujar fins a 50 Mb d'arxius per projecte."
-      upgrade: "Aconsegueix un compte premium ara!"
     not_in_project: 
       join: "Afegir-se a aquest projecte"
       not_allowed: "Aquest és un projecte privat i no esteu autoritzat a accedir-hi"
@@ -1909,7 +1889,6 @@ ca:
       title: "Sincronitza els teus feeds d'activitat"
       your_feeds: "Els vostres feeds de notícies"
     form: 
-      agreement: "Al registrar-se, voste està acceptant els nostres %{terms} i condicions de %{privacy}."
       betatester: "Utilitzar les funcions beta (menys estables) abans de que s'alliberin a la comunitat"
       biography: Biografía
       change_password: "Canviar contrasenya"
