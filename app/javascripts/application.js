@@ -56,7 +56,6 @@
 //= require <task_list>
 //= require <tasks_inline>
 //= require <threads>
-//= require <timeago>
 //= require <upload>
 //= require <yahoo.color>
 //= require <watchers>
