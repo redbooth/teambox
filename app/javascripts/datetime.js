@@ -12,8 +12,9 @@ document.on("dom:loaded", function() {
   }
 });
 
-_translations = $w("OK Now Today Clear").collect(function(w) {
-  return I18n.translations.calendar[w.toLowerCase()];
+_translations = $w("OK Now Today Clear").inject({}, function(h, w) {
+  h[w] = I18n.translations.calendar[w.toLowerCase()];
+  return h;
 });
 
 Object.extend(Date.prototype, {
