@@ -3,6 +3,10 @@
   .thread_title
     margin: 4px 0 8px
     font-size: 12px
+  .task_summary
+    font-size: 11px
+    color: #333
+    display: inline-block
   .comments
     border-left: 4px solid $comments_left_border
     background-color: $comments_bkg
@@ -21,6 +25,13 @@
           color: $link_hover
       p
         margin: 4px 0 8px
+        &.excerpt
+          display: none
+          color: #999
+          overflow: hidden
+          height: 14px
+          font-size: 11px
+          margin-top: 8px
   span.time
     position: relative
     float: right
@@ -74,6 +85,8 @@
     display: inline-block
   .comments, form
     display: none
+  p.excerpt
+    display: block !important
 
 #activities
   .thread.selected

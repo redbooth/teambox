@@ -2,6 +2,7 @@
 - thread_class = thread.class.name.underscore
 - thread_id = "#{thread_class}_#{thread.id}"
 - comments = thread.comments
+- last_comment = comments.first
 
 .thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}", :'data-project-id' => thread.project.id }
   -# Title of the element
@@ -26,6 +27,16 @@
             :task => link_to(thread, [thread.project, thread]),
             :task_list => link_to(thread.task_list, [thread.task_list.project, thread.task_list]))
         = project_link_with_overlay thread.project
+        - if last_comment
+          .task_summary
+            = task_status_badge(thread.status_name)
+            = span_for_due_date(thread.due_on) if thread.due_on && thread.open?
+            - if thread.assigned_id? && thread.open?
+              = t('tasks.assigned.assigned_to', :user => thread.assigned.user.name)
+      - if last_comment
+        %p.excerpt
+          %strong= last_comment.user.name
+          = strip_tags last_comment.body_html
     .clear
 
   .comments
