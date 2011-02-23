@@ -14,7 +14,7 @@ class Task
   end
 
   def set_watchers
-    add_watcher(assigned.user, false) if assigned
+    add_watcher(assigned.user) if assigned
     true
   end
 

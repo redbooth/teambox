@@ -12,26 +12,26 @@ module Watchable
     watcher_ids
   end
 
-  def add_watcher(user, reload=false)
-    unless has_watcher?(user, reload) or !project.has_member?(user)
+  def add_watcher(user)
+    unless has_watcher?(user) or !project.has_member?(user)
       watcher = Watcher.new(:user_id => user[:id], :project_id => self.project_id,
                             :watchable_id => self.id, :watchable_type => self.class)
       true if watcher.save
     end
   end
   
-  def add_watchers(users, reload=false)
+  def add_watchers(users)
     users.each do |user|
-      add_watcher(user, reload)
+      add_watcher(user)
     end
   end
   
-  def has_watcher?(user, reload=false)
-    watchers(reload).include? user
+  def has_watcher?(user)
+    watchers(true).include? user
   end
 
-  def remove_watcher(user, reload=false)
-    if has_watcher?(user, reload)
+  def remove_watcher(user)
+    if has_watcher?(user)
       watchers = Watcher.where(:watchable_id => self[:id], :watchable_type => self.class, :user_id => user[:id])
       true if watchers.destroy_all
     end
@@ -40,7 +40,7 @@ module Watchable
   protected
 
   def update_watchers
-    add_watcher(user, true) if user_id_changed?
+    add_watcher(user) if user_id_changed?
     if @watchers_ids
       add_watchers(project.users.where(:id => @watchers_ids))
     end
