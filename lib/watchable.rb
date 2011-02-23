@@ -1,7 +1,7 @@
 module Watchable
   def self.included(model)
     model.after_save :update_watchers
-    model.attr_accessible :watchers_ids
+    model.attr_accessible :watchers_ids, :watcher_ids
     model.send :attr_writer, :watchers_ids
     model.has_many :watcher_tags, :as => :watchable, :class_name => 'Watcher', :dependent => :destroy
     model.has_many :watchers, :through => :watcher_tags, :source => :user
@@ -38,9 +38,13 @@ module Watchable
   end
   
   protected
+
+  def user_has_changed?
+    user_id_changed? && user_id_change.first
+  end
   
   def update_watchers
-    add_watcher(user) if user_id_changed?
+    add_watcher(user) if user_has_changed?
     if @watchers_ids
       add_watchers(project.users.where(:id => @watchers_ids))
     end
