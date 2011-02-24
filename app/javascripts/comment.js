@@ -34,7 +34,16 @@ document.on('ajax:before', 'form.new_conversation, form.new_task, .thread form, 
     $(document.body).insert(iframe)
     form.target = iframeID
     form.insert(new Element('input', { type: 'hidden', name: 'iframe', value: 'true' }))
-    
+
+    var authToken = $$('meta[name=csrf-token]').first().readAttribute('content'),
+    authParam = $$('meta[name=csrf-param]').first().readAttribute('content')
+    if (form[authParam]) {
+      form[authParam].value = authToken }
+    else {
+      var token = new Element('input', { type: 'hidden', name: authParam, value: authToken }).hide()
+      form.insert(token)
+    }
+
     var callback = function() {
       // contentDocument doesn't work in IE (7)
       var iframeBody = (iframe.contentDocument || iframe.contentWindow.document).body
