@@ -11,6 +11,9 @@
     .info
       - icon = { "Conversation" => "comment", "Task" => "tick" }[thread.class.to_s]
       %img{ :src => "/famfamfam/#{icon}.png", :style => 'padding: 4px' }
+      - if thread.comments_count > 1
+        .comment_count
+          %span= thread.comments_count
     .block
       - case thread
       - when Conversation

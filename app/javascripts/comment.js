@@ -115,9 +115,9 @@ document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, fo
 // remove status, date and assigned person from the excerpt in collapsed threads
 document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, form) {
   var task_summary = form.up('.thread').down('.task_summary');
-  if (task_summary) {
-    task_summary.remove();
-  }
+  if (task_summary) { task_summary.remove(); }
+  var comment_count = form.up('.thread').down('.comment_count');
+  if (comment_count) { comment_count.remove(); }
 })
 
 document.on('ajax:failure', 'form.new_conversation, .thread form:not(.not-new-comment)', function(e, form) {

@@ -16,6 +16,17 @@
     +gradient($comments_left_border, $comments_bkg)
     .info
       position: absolute
+      .comment_count
+        display: none
+        text-align: center
+        span
+          display: inline-block
+          padding: 2px 5px
+          font-size: 11px
+          background-color: #aaa
+          color: white
+          font-weight: bold
+          +rounded(5px)
     .block
       a
         font-weight: bold
@@ -85,7 +96,7 @@
     display: inline-block
   .comments, form
     display: none
-  p.excerpt
+  p.excerpt, .comment_count
     display: block !important
 
 #activities
