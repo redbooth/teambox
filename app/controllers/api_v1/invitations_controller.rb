@@ -1,6 +1,6 @@
 class ApiV1::InvitationsController < ApiV1::APIController
   before_filter :load_target
-  before_filter :load_invite, :except => [:index]
+  before_filter :load_invite, :except => [:index, :create]
   
   def index
     authorize! :admin, @target
