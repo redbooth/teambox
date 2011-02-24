@@ -114,8 +114,10 @@ class Comment < ActiveRecord::Base
   # they hijack `target` in a before_save callback
   def check_duplicate
     last_comment = target.comments.by_user(self.user_id).latest.first
-    
-    if last_comment and last_comment.duplicate_of? self
+
+    last_uploads = last_comment.uploads.map {|x| x.asset_file_name + '_' + x.asset_file_size.to_s }.sort
+    current_uploads = self.uploads.map {|x| x.asset_file_name + '_' + x.asset_file_size.to_s }.sort
+    if last_comment and last_comment.duplicate_of? self and current_uploads == last_uploads
       errors.add :body, :duplicate
     end
   end
