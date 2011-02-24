@@ -18,13 +18,6 @@ document.on('keyup', '.task_header + .edit_task', function(e, form) {
   if (e.keyCode == Event.KEY_ESC) hideEditTaskFormAndShowHeader(form)
 })
 
-document.on('ajax:failure', 'form.new_task.app_form', function(e, form) {
-  var message = $H(e.memo.responseJSON)
-	message.each( function(error) {
-		form.down('div.text_field').insertOrUpdate('p.error', error.value)
-	})
-})
-
 document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
   var name = form.down('input[name="task[name]"]').getValue()
   form.up('.content').select('.task_header h2, .task .thread_title a.task').invoke('update', name)
@@ -193,3 +186,31 @@ document.on('ajax:success', 'form.edit_task', function(e, form) {
 
 })
 
+
+document.on('ajax:failure', 'form.new_task.app_form', function(e, form) {
+  var message = $H(e.memo.responseJSON)
+	message.keys().each( function(k) {
+		field = form.down('#task_'+k)
+		if (field) field.parentNode.insertOrUpdate('span.error', message.get(k))
+	})
+})
+
+document.on('ajax:before', 'form.new_task.app_form', function(e, form) {
+  form.select('span.error').invoke('remove')
+})
+
+document.on('ajax:success', '.task_list form.new_task', function(e, form) {
+  var person = form['task[assigned_id]'].getValue()
+  var task_count = Number($('open_my_tasks').innerHTML)
+  var is_assigned_to_me = my_projects[person]
+
+  var response = e.memo.responseText
+  resetCommentsForm(form)
+
+  if (is_assigned_to_me) {
+    task_count += 1
+    $('open_my_tasks').update(task_count)
+  }
+
+  Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(response)
+})

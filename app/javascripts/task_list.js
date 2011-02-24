@@ -381,22 +381,3 @@ document.on('click', '.task_list .new_task form a[href="#cancel"]', function(e, 
 document.on('keyup', '.task_list .new_task form', function(e, form) {
   if (e.keyCode == Event.KEY_ESC) hideTaskFormAndShowLink(form)
 })
-
-document.on('ajax:success', '.task_list form.new_task', function(e, form) {
-  var person = form['task[assigned_id]'].getValue();
-  var task_count = Number($('open_my_tasks').innerHTML)
-  var is_assigned_to_me = my_projects[person]
-
-  if (e.memo.transport) {
-    var response = e.memo.responseText
-  } else {
-    var response = e.memo.responseText.unescapeHTML()
-    resetCommentsForm(form)
-  }
-
-  if (is_assigned_to_me) {
-    task_count += 1
-    $('open_my_tasks').update(task_count)
-  }
-  Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(response)
-})
