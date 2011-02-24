@@ -203,6 +203,7 @@ class ApplicationController < ActionController::Base
         response.content_type = Mime::JSON
         render :json => record.errors.as_json, :status => 400
       elsif iframe?
+        response.content_type = Mime::HTML
         render :template => 'shared/iframe_error', :layout => false, :locals => { :data => record.errors.as_json }
       end
     end

@@ -44,6 +44,7 @@ class TasksController < ApplicationController
         if @task.new_record?
           output_errors_json(@task)
         else
+          response.content_type = Mime::HTML
           render(:partial => 'tasks/task', :locals => {
             :project => @current_project,
             :task_list => @task_list,
