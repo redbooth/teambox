@@ -17,7 +17,7 @@ document.on('change', '.upload_area input[type=file]', function(e, input) {
     type: 'file',
     name: input.name.incrementLastNumber()
   })
-  if (input.value != '') input.insert({ after: newInput })
+  if (input.form.hasEmptyFileUploads() == false) input.insert({ after: newInput })
 })
 
 document.on('click', '.uploads .upload .header', function(e, el) {

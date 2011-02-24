@@ -6,6 +6,11 @@ Element.addMethods('form', {
       return input.getValue()
     })
   },
+  hasEmptyFileUploads: function(form) {
+    return $(form).select('input[type=file]').any(function(input) {
+      return input.value == ''
+    })
+  },
   isDirty: function(form) {
     form = $(form)
     return form.hasFileUploads() ||
