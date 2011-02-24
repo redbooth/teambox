@@ -9,7 +9,6 @@ defaults: &defaults
 
   # How many activities should activity feeds display?
   activities_per_page: 25
-  autorefresh_interval: 60 # in seconds
 
   # Hour of the day at which daily reminders will be sent
   daily_task_reminder_email_time: 6
@@ -120,7 +119,6 @@ development:
   app_domain: localhost:3000
   asset_max_file_size: 1
   allow_outgoing_email: false
-  autorefresh_interval: 20 # in seconds
 
 production:
   <<: *defaults

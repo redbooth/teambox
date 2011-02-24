@@ -38,17 +38,6 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  def show_new
-    @activities = Activity.for_projects(@target).after(params[:id])
-    @threads = @activities.threads
-    @last_activity = @threads.all.last
-
-    respond_to do |format|
-      format.html { redirect_to projects_path }
-      format.js { render :layout => false }
-    end
-  end
-
   def show_thread
     # FIXME: insecure!
     target = params[:thread_type].constantize.find params[:id]

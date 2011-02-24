@@ -17,8 +17,6 @@
   = list_threads(@threads)
   = show_more_button
 
-=# javascript_tag autorefresh(@activities, @current_project)
-
 - content_for :column do
   = render 'recent_conversations', :project => @current_project, :recent_conversations => @recent_conversations
   = render 'pages', :project => @current_project, :pages => @current_project.pages

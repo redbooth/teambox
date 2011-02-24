@@ -113,24 +113,6 @@ module ProjectsHelper
     end
   end
 
-  def reset_autorefresh
-    "clearInterval(autorefresh)"
-  end
-
-  def autorefresh(activities, project = nil)
-    first_id = Array(activities).first.id
-    
-    ajax_request = if project
-      remote_function(:url => project_show_new_path(project, first_id))
-    else
-      remote_function(:url => show_new_path(first_id))
-    end
-
-    interval = Teambox.config.autorefresh_interval*1000
-
-    "autorefresh = setInterval(\"#{ajax_request}\", #{interval})"
-  end
-
   def options_for_owner(people)
     people.map {|person| [ person.name, person.user_id ]}
   end

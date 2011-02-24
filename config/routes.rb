@@ -111,7 +111,6 @@ Teambox::Application.routes.draw do
     end
 
     match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
-    match 'activities/:id/show_new(.:format)' => 'activities#show_new', :as => :show_new, :method => :get
     match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
     match 'activities/:id/show_thread(.:format)' => 'activities#show_thread', :as => :show_thread, :method => :get
 
@@ -144,7 +143,6 @@ Teambox::Application.routes.draw do
       end
 
       match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
-      match 'activities/:id/show_new(.:format)' => 'activities#show_new', :as => :show_new, :method => :get
       match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
       resources :uploads
       match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
