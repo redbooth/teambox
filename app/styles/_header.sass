@@ -40,3 +40,28 @@ div.header
         a
           color: #333
           padding: 5px
+  #header_icons
+    display: inline-block
+    float: right
+    ul
+      display: inline-block
+      margin: 10px 10px 0 0
+      padding: 0
+      li
+        display: inline-block
+        &.notifications_icon
+          margin-right: 10px
+        a
+          text-indent: -9000px
+          background: url(/images/icons/tips_news_icons.png) top left no-repeat
+          display: block
+          width: 16px
+          height: 16px
+          margin-left: -1px
+        &.notifications_icon a
+          background-position: 0 -32px
+          opacity: 0.2
+          &.active, &:hover
+            opacity: 1
+            background-position: 0 -48px
+
