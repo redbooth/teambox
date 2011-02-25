@@ -28,7 +28,19 @@
 
 :javascript
   // Autodetect browser's timezone
-  var offset = -new Date().getTimezoneOffset() / 60 - 1
+  function timezoneOffset() {
+    var january_offset = - (new Date(2011, 0, 1, 0, 0, 0, 0).getTimezoneOffset())
+    var june_offset =    - (new Date(2011, 5, 1, 0, 0, 0, 0).getTimezoneOffset())
+    var diff = january_offset - june_offset
+
+    if (diff <= 0) {
+      return january_offset / 60
+    }
+    else {
+      return june_offset / 60
+    }
+  }
+  var offset = timezoneOffset()
   var local_tz = (offset < 0 ? "-" : "+") + offset.abs().toPaddedString(2)
   var select = $('user_time_zone')
   $A(select.options).find(function(option) {
