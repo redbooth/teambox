@@ -5,7 +5,7 @@
     = formatting_invitations_link
   .text_field
     = f.label :user_or_email, t('invitations.search.username_or_email')
-    = f.text_field :user_or_email
+    = f.text_field :user_or_email, :autocomplete => false
   = render "invitations/select_language"
   .text_field
     = f.label :role, t('invitations.search.role')

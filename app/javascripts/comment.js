@@ -222,3 +222,20 @@ document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
     }
   }
 })
+
+document.on('focusin', 'form#new_invitation input#invitation_user_or_email', function(e, input) {
+  var form = e.findElement('form')
+  var people = (new Hash(_people_autocomplete)).values().flatten().uniq().reject(function(e) { return e.match('@all') }),
+    autocompleter = input.retrieve('autocompleter')
+
+  if (autocompleter) {
+    // update options array in case the projects selector changed value
+    autocompleter.options.array = people
+  } else {
+    var container = new Element('div', { 'class': 'autocomplete' }).hide()
+    input.insert({ after: container })
+    autocompleter = new Autocompleter.Local(input, container, people, { tokens:[' '] })
+    input.store('autocompleter', autocompleter)
+  }
+})
+

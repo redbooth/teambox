@@ -145,7 +145,7 @@ module ProjectsHelper
 
   # FIXME eventually migrate that to just use the plain json from projects_people_data
   def autocomplete_projects_people_data
-    projects = @current_project ? [@current_project] : current_user.projects.reject{ |p| p.new_record? }
+    projects = current_user.projects.reject{ |p| p.new_record? }
     return nil if projects.empty?
     
     format = '@%s <span class="informal">%s</span>'
