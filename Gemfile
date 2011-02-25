@@ -43,6 +43,7 @@ gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
 gem 'jammit'
 gem 'redis-store', '~> 1.0.0.beta4'
 gem 'juggernaut'
+gem 'sentient_user'
 
 group :development do
   gem 'sqlite3-ruby', '~> 1.2.5', :require => nil
