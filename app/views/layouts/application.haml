@@ -13,7 +13,6 @@
     = stylesheet_link_tag 'cucumber', :media => :screen if Rails.env.cucumber?
     = organization_link_colour
     = trimmer_include_tag
-    = javascript_include_tag "http://cdn.socket.io/stable/socket.io.js"
     = sprockets_include_tag
     = yield :js_includes
     = javascript_tag do
@@ -41,7 +40,5 @@
     = autocomplete_projects_people_data
     = projects_people_data
     #show_new_content{:style => 'display:none'}
-      .actions
-        %a{:href=>'#'} Show
       %ul.notifications
 

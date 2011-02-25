@@ -4,6 +4,10 @@ class ActivityRenderer < TemplateRenderer
     case activity.target.class.name
     when *%w(Conversation TaskList Task Page Upload)
       url_for([ activity.project, activity.target ], :only_path => path)
+    when *%w(Comment)
+      url_for([ activity.project, activity.comment_target ], :only_path => path)
+    when *%w(Note Divider)
+      url_for(activity.project, :only_path => path)
     else
       url_for(activity.target, :only_path => path)
     end

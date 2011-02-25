@@ -1,3 +1,4 @@
+//= require <socket.io>
 //= require <prototype>
 //= require <rails>
 //= require <html5>
@@ -6,7 +7,8 @@
 //= require <controls>
 //= require <dragdrop>
 //= require <sound>
-//= require <mustache>
+//= require <handlebars>
+//= require <handlebars-helpers>
 //= require <history>
 //= require <cookie>
 

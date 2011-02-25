@@ -37,7 +37,7 @@ class TemplateRenderer
       @controller.request.host = Teambox.config.app_domain
       @controller.send("current_user=", User.current)
 
-      @template = ActionView::Base.new(ActionController::Base.view_paths, {}, @controller)
+      @template = ActionView::Base.new(ActionController::Base.view_paths, {}, @controller, [:html])
       @template.extend ApplicationController._helpers
       @template.class_eval do
         include Rails.application.routes.url_helpers

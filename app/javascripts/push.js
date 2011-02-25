@@ -2,16 +2,19 @@ if ( typeof( window['Teambox'] ) == "undefined" ) {
   window.Teambox = {};
 }
 
-Teambox.Notification = function(action) {
+Teambox.Notification = function(data, action) {
+  this.data = data;
   this.action = action;
 };
 
-Teambox.Notification.prototype.notify = function() {
+Teambox.Notification.prototype.notify = function(callback) {
   this.action();
+  callback();
 };
 
 Teambox.NotificationsBuffer = function() {
   this.notifications = [];
+  this.windowEntryTemplate = Handlebars.compile(Templates.notifications.entry);
 };
 
 Teambox.NotificationsBuffer.prototype.toggleNotificationsIcon = function() {
@@ -29,13 +32,14 @@ Teambox.NotificationsBuffer.prototype.toggleNotificationsIcon = function() {
 Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(force) {
   if (this.notificationsWindow) {
     if (!this.notificationsWindow.visible()) {
-      if (this.notifications.length === 0) {
+      if (this.notifications.length > 0) {
         this.notificationsWindow.toggle();
         this.toggleNotificationsIcon();
+        var self = this;
         if (!force) {
-          setTimeout(1000*10, function() {
-            this.notificationsWindow.toggle();
-          });
+          setTimeout(function() {
+            self.notificationsWindow.toggle();
+          }, 1000*10);
         }
       }
     }
@@ -46,9 +50,21 @@ Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(force)
 };
 
 //Add notification but flush if we reach 5 unread notifications
+Teambox.NotificationsBuffer.prototype.addNotificationWindowEntry = function(notification) {
+  if (notification.data) {
+    var markup = this.windowEntryTemplate({ activity: notification.data });
+    this.notificationsWindow.down('ul').insert({bottom: markup});
+  }
+};
+
+Teambox.NotificationsBuffer.prototype.clearNotificationWindow = function() {
+  this.notificationsWindow.down('ul').childElements().each(function(e) {e.remove();});
+};
+
 Teambox.NotificationsBuffer.prototype.addNotification = function(notification) {
   if (this.notifications.length < 5) {
     this.notifications.push(notification);
+    this.addNotificationWindowEntry(notification);
     this.toggleNotificationWindow();
   }
   else {
@@ -56,32 +72,39 @@ Teambox.NotificationsBuffer.prototype.addNotification = function(notification) {
   }
 };
 
-Teambox.NotificationsBuffer.prototype.flushAll = function(nonotify) {
+Teambox.NotificationsBuffer.prototype.flushAll = function(nonotify, scrollToId) {
   var flushBuffer = this.notifications.clone();
   this.notifications.clear();
   for (var i = 0; i < flushBuffer.length; i++) {
     var notification = flushBuffer.shift();
     if (!nonotify) {
-      notification.notify();
+      notification.notify(function() {
+        if (scrollToId && $(scrollToId)) {
+          Effect.ScrollTo(scrollToId, {duration: 0.2, offset: -100});
+          new Effect.Highlight(scrollToId, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
+        }
+      });
     }
   };
   this.toggleNotificationWindow(true);
+  this.clearNotificationWindow();
   this.toggleNotificationsIcon();
+
 };
 
 Teambox.Notifications = new Teambox.NotificationsBuffer();
 
 Teambox.ActivityNotifier = {
   notificationForComments: function(activity) {
-    return new Teambox.Notification(function() {
-      var thread = $("thread_" + activity.comment_target_type + '_' + activity.comment_target_id);
+    return new Teambox.Notification(activity, function() {
+      var thread = $("thread_" + activity.comment_target_type.toLowerCase() + '_' + activity.comment_target_id);
       if (thread) {
-        var comment = thread.down('comment' + activity.target_id);
+        var comment = thread.down('#comment' + activity.target_id);
 
         if (activity.action === 'create') {
           var comments = thread.down('.comments');
           if (comments) {
-            comments.insert(activity.markup, {position: 'top'});
+            comments.insert({bottom: activity.markup});
           }
         }
         else if (comment) {
@@ -96,9 +119,9 @@ Teambox.ActivityNotifier = {
     });
   },
   notificationForThreads: function(activity) {
-    return new Teambox.Notification(function() {
+    return new Teambox.Notification(activity, function() {
       var threads = $('activities'),
-          thread = $("thread_" + activity.target_type + '_' + activity.target_id);
+          thread = $("thread_" + activity.target_type.toLowerCase() + '_' + activity.target_id);
 
       if (thread) {
         if (activity.action === 'delete') {
@@ -110,13 +133,13 @@ Teambox.ActivityNotifier = {
       }
       else {
         if (activity.action === 'create') {
-          threads.insert(activity.markup, {position: 'top'});
+          threads.insert({top: activity.markup});
         }
       }
     });
   },
   notificationForOthers: function(activity) {
-    return new Teambox.Notification(function() {
+    return new Teambox.Notification(activity, function() {
       var threads = $('activities');
 
       if (thread) {
@@ -129,7 +152,7 @@ Teambox.ActivityNotifier = {
       }
       else {
         if (activity.action === 'create') {
-          threads.insert(activity.markup, {position: 'top'});
+          threads.insert({top: activity.markup});
         }
       }
     });
@@ -148,10 +171,28 @@ Teambox.ActivityNotifier = {
     }
 
     if (notification) {
-      Teambox.Notifications.add(notification);
+      Teambox.Notifications.addNotification(notification);
     }
   }
 };
+
+document.on('click', '#show_new_content a', function(e) {
+  e.preventDefault();
+
+  var target = e.target,
+      element_id = false;
+
+  if (target) {
+    element_id = target.readAttribute('data-activity-id');
+  }
+
+  Teambox.Notifications.flushAll(false, element_id);
+});
+
+document.on('click','#header_icons li.notifications_icon a', function(e) {
+  e.preventDefault();
+  Teambox.Notifications.toggleNotificationWindow();
+});
 
 document.on('dom:loaded', function() {
 
@@ -159,10 +200,6 @@ document.on('dom:loaded', function() {
   Teambox.Notifications.notificationsIcon = $(document.body).down('#header_icons li.notifications_icon a');
 
   if (Teambox.Notifications.notificationsIcon) {
-    document.on('#header_icons .notifications_icon:click', function(e) {
-      event.preventDefault();
-      Teambox.Notifications.toggleNotificationWindow(true);
-    });
   }
 
   Teambox.pushServer.on('connect', function() {
@@ -175,9 +212,17 @@ document.on('dom:loaded', function() {
 
 
   if (window.my_user) {
-    Teambox.pushServer.subscribe("/users/" + my_user.authentication_token, function(activity){
-      console.log("Got activity: ", activity);
-      Teambox.ActivityNotifier.notifyActivity(activity);
+    Teambox.pushServer.subscribe("/users/" + my_user.authentication_token, function(message){
+      try {
+        var activity = JSON.parse(message);
+        console.log("Received activity: ", activity);
+        if (activity.user_id != my_user.id) {
+          Teambox.ActivityNotifier.notifyActivity(activity);
+        }
+      }
+      catch(err) {
+        console.log('[Push Error]'  + err + ' parsing: ', message);
+      }
     });
   }
 });
