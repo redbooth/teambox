@@ -153,6 +153,18 @@ class Activity < ActiveRecord::Base
     end
   end
   
+  def to_push_data(options={})
+    data = to_api_hash(options)
+    markup = to_markup
+    data[:markup] = markup unless markup.blank?
+    data[:path] = ActivityRenderer.target_url(self, true)
+    data
+  end
+
+  def to_markup
+    ActivityRenderer.render_activity(self)
+  end
+
   def to_api_hash(options = {})
     base = {
       :id => id,
@@ -162,7 +174,8 @@ class Activity < ActiveRecord::Base
       :user_id => user_id,
       :project_id => project_id,
       :target_id => target_id,
-      :target_type => target_type
+      :target_type => target_type,
+      :action_type => action_type
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
@@ -186,5 +199,4 @@ class Activity < ActiveRecord::Base
     
     base
   end
-
 end

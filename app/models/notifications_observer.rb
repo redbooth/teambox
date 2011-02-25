@@ -19,8 +19,9 @@ class NotificationsObserver < ActiveRecord::Observer
   protected
 
     def push_on_create(activity)
-      activity_hash = activity.to_api_hash(:include => [:project, :target, :user])
+      activity_hash = activity.to_push_data(:include => [:project, :target, :user])
 
+      #TODO: Also send none project-related activities
       if activity.project
         activity.project.users.each do |user|
           Juggernaut.publish("/users/#{user.authentication_token}", activity_hash.to_json)
