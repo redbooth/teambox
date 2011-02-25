@@ -302,11 +302,18 @@ BLOCK
         }
 
         var sessionId = Cookie.read('_teambox-2_session');
+        var meta = {
+          teambox_session_id: sessionId,
+        };
+        if (my_user && my_user.authentication_token) {
+          meta['auth_token'] = my_user.authentication_token;
+        }
+        if (my_user && my_user.username) {
+          meta['login'] = my_user.username;
+        }
         Teambox.pushServer = new Juggernaut({
           port: #{Teambox.config.juggernaught.port},
-          meta: {
-            teambox_session_id: sessionId
-          }
+          meta: meta
         });
       JS
     end
