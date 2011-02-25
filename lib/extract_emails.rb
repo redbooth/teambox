@@ -13,4 +13,9 @@ class String
   def extract_emails
     scan(EmailRegex)
   end
+
+  def extract_emails!
+    gsub!(EmailRegex).to_a
+  end
 end
+
