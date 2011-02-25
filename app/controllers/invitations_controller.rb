@@ -60,10 +60,11 @@ class InvitationsController < ApplicationController
       user_or_email = params[:invitation][:user_or_email]
       params[:invitation][:role] ||= Person::ROLES[:participant]
       params[:invitation][:membership] ||= Membership::ROLES[:external]
-      
-      @targets = user_or_email.extract_emails
-      @targets = user_or_email.split if @targets.empty?
-      
+
+      mentions = user_or_email.gsub!(/(?:^|\W)@(\w+)/).collect{ |u| u.strip.delete('@') }
+      emails = user_or_email.extract_emails!
+      @targets = user_or_email.split + mentions + emails
+
       @invitations = @targets.map { |target| make_invitation(target, params[:invitation], params[:invitations_locale]) }
     else
       flash[:error] = t('invitations.errors.invalid')

@@ -7,9 +7,11 @@ Feature: Invite a user to a project
     And the project "Ruby Rockstars" belongs to "ACME" organization
     And a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić", email: "mislav@teambox.com"
     And a confirmed user exists with login: "pablo", first_name: "Pablo", last_name: "Villalba", email: "pablo@teambox.com"
+    And a confirmed user exists with login: "jordi", first_name: "Jordi", last_name: "Romero", email: "jordi@teambox.com"
     And "mislav" is the owner of the project "Ruby Rockstars"
     And "mislav" is an administrator in the organization called "ACME"
     And "pablo" is a participant in the organization called "ACME"
+    And "jordi" is a participant in the organization called "ACME"
 
 
   Scenario: Mislav invites some friends to a project
@@ -78,7 +80,20 @@ Feature: Invite a user to a project
     And I should see "Ruby Rockstars" in the email body
 
   Scenario: Mislav invites existing teambox users to a project
+    Given I am logged in as @mislav
+    When I go to the people page of the "Ruby Rockstars" project
+    And I fill in "invitation_user_or_email" with "pablo jordi"
+    And I press "Invite"
+    Then "pablo@teambox.com" should receive an email
+    And  "jordi@teambox.com" should receive an email
 
+  Scenario: Mislav invites existing teambox users to a project using mentions
+    Given I am logged in as @mislav
+    When I go to the people page of the "Ruby Rockstars" project
+    And I fill in "invitation_user_or_email" with "@pablo @jordi"
+    And I press "Invite"
+    Then "pablo@teambox.com" should receive an email
+    And  "jordi@teambox.com" should receive an email
   Scenario: Mislav leaves a project
 
   Scenario: Mislav resends invitation email
