@@ -175,6 +175,7 @@ class Activity < ActiveRecord::Base
       :project_id => project_id,
       :target_id => target_id,
       :target_type => target_type,
+      :action_type => action_type,
       :comment_target_id => comment_target_id,
       :comment_target_type => comment_target_type
     }

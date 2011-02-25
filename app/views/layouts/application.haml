@@ -12,7 +12,6 @@
     = yield :stylesheet_includes
     = stylesheet_link_tag 'cucumber', :media => :screen if Rails.env.cucumber?
     = trimmer_include_tag
-    = javascript_include_tag "http://cdn.socket.io/stable/socket.io.js"
     = sprockets_include_tag
     = javascript_include_tag 'development' if Rails.env.development?
     = include_juggernaught
