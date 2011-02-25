@@ -42,13 +42,13 @@ class Conversation < RoleRecord
 
   def self.from_github(payload)
     text = description_for_github_push(payload)
-    
+
     self.create!(:body => text, :simple => true) do |conversation|
-      conversation.user = conversation.project.user if conversation.project
+      conversation.user = conversation.project.users.detect { |u| u.name == payload['commits'][0]['author']['name'] } || conversation.project.user if conversation.project && payload['commits'].any?
       yield conversation if block_given?
     end
   end
-  
+
   def self.description_for_github_push(payload)
     text = "New code on <a href='%s'>%s</a> %s\n\n" % [
       payload['repository']['url'], payload['repository']['name'], payload['ref']
