@@ -93,7 +93,9 @@ Teambox::Application.routes.draw do
     match '/account/activity_feed_mode/expanded' => 'users#change_activities_mode', :as => :expand_activities, :collapsed => false
     match '/account/watch_list' => 'watchers#index', :as => :watch_list
     post  '/account/watch_list/unwatch/:watch_id' => 'watchers#unwatch', :as => :unwatch
-    match '/account/stats/:stat/inc' => 'users#increment_stat'
+    post  '/account/stats/:stat/inc' => 'users#increment_stat'
+    post  '/account/badge/:badge/grant' => 'users#grant_badge'
+    post  '/account/first_steps/hide' => 'users#hide_first_steps'
 
     resources :teambox_datas, :path => '/datas'
 

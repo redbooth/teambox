@@ -31,7 +31,7 @@ class Conversation < RoleRecord
 
   before_save :set_comments_author, :if => :updating_user
   before_update :set_simple
-  after_create :log_create
+  after_create :log_create, :update_user_stats
   after_destroy :clear_targets
   
 
@@ -123,4 +123,9 @@ class Conversation < RoleRecord
     end
     true
   end
+
+  def update_user_stats
+    user.increment_stat 'conversations' if user
+  end
+
 end

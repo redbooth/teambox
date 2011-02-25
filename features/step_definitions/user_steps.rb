@@ -119,3 +119,13 @@ Given /^I set my preference to expanded threads$/ do
   visit expand_activities_path 
   @current_user.reload.settings["collapse_activities"].should be_false
 end
+
+Given /^I have badges enabled$/ do
+  @current_user.write_setting 'show_badges', true
+  @current_user.reload.settings["show_badges"].should be_true
+end
+
+Given /^I have first steps enabled$/ do
+  @current_user.write_setting 'show_first_steps', true
+  @current_user.reload.settings["show_first_steps"].should be_true
+end

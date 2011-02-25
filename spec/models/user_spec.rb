@@ -491,6 +491,32 @@ describe User do
     end
   end
 
+  describe "badges" do
+    before do
+      @user = Factory(:user)
+    end
+
+    it "should have no badges for a new user" do
+      @user.badges.should == []
+    end
+
+    it "should grant badges" do
+      @user.grant_badge('shakespeare')
+      @user.badges.should == ['shakespeare']
+      @user.reload
+      @user.badges.should == ['shakespeare']
+    end
+
+    it "should grant multiple badges" do
+      @user.grant_badge('terminator')
+      @user.grant_badge('robocop')
+      @user.grant_badge('terminator')
+      @user.badges.should == %w(terminator robocop) 
+      @user.reload
+      @user.badges.should == %w(terminator robocop) 
+    end
+  end
+
   describe "stats" do
     before do
       @user = Factory(:user)

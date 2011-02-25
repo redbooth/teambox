@@ -18,6 +18,7 @@
 
 //= require <actions>
 //= require <autoresize>
+//= require <badges>
 //= require <banner>
 //= require <colorPicker>
 //= require <comment>
@@ -28,6 +29,7 @@
 //= require <expand_comment>
 //= require <facebox>
 //= require <filter>
+//= require <first_steps>
 //= require <forms>
 //= require <google_docs>
 //= require <history>

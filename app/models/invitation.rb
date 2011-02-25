@@ -15,7 +15,7 @@ class Invitation < RoleRecord
 
   before_create :generate_token
   before_save :copy_user_email, :if => :invited_user
-  after_create :auto_accept, :send_email
+  after_create :auto_accept, :send_email, :update_user_stats
 
   scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
 
@@ -133,6 +133,10 @@ class Invitation < RoleRecord
 
     def valid_email?(value)
       EmailValidator.check_address(value)
+    end
+
+    def update_user_stats
+      user.increment_stat 'invites' if user
     end
 
 end

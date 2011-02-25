@@ -20,7 +20,8 @@ class User < ActiveRecord::Base
                   :scopes,
                   :validation,
                   :task_reminders,
-                  :stats
+                  :stats,
+                  :badges
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments

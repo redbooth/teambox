@@ -15,7 +15,7 @@ class Page < RoleRecord
   
   default_scope :order => 'position ASC, created_at DESC, id DESC'
   
-  after_create :log_create
+  after_create :log_create, :update_user_stats
   after_update :log_update
   
   def build_note(note = {})
@@ -146,6 +146,10 @@ class Page < RoleRecord
     end
   end
   
+  def update_user_stats
+    user.increment_stat 'pages' if user
+  end
+
   def to_api_hash(options = {})
     base = {
       :id => id,

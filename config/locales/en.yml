@@ -187,6 +187,7 @@ en:
       monday: Monday
       betatester: Use beta features (less stable) before they're released.
       keyboard_shortcuts: Enable keyboard shortcuts. Press 'h' for help when enabled.
+      badges: Enable Badges and Achievements
       first_day_of_week: Week starts on
       change_password: Change password
       confirm_password: Confirm password

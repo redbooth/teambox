@@ -104,6 +104,9 @@ document.on('ajax:success', 'form.new_conversation', function(e, form) {
   $('activities').insert({top: e.memo.responseText}).down('.thread').highlight({ duration: 1 });
   Task.insertAssignableUsers();
 
+  my_user.stats.conversations++;
+  document.fire("stats:update");
+
   //disable _method input field for conversation forms on inserting simple conversations
   disableConversationHttpMethodField();
 })
@@ -124,6 +127,8 @@ document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, fo
     form.up('.thread').down('.comments').insert(e.memo.responseText).
       down('.comment:last-child').highlight({ duration: 1 })
   }
+  my_user.stats.conversations++;
+  document.fire("stats:update");
 })
 
 // remove status, date and assigned person from the excerpt in collapsed threads

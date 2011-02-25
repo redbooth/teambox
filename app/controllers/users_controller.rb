@@ -207,6 +207,16 @@ class UsersController < ApplicationController
     render :text => @current_user.get_stat(key)
   end
 
+  def grant_badge
+    @current_user.grant_badge params[:badge]
+    head :ok
+  end
+
+  def hide_first_steps
+    @current_user.write_setting 'show_first_steps', false
+    head :ok
+  end
+
   private
     def find_user
       unless @user = ( User.find_by_login(params[:id]) || User.find_by_id(params[:id]) )

@@ -1,6 +1,6 @@
 class Project
   
-  after_create :log_create
+  after_create :log_create, :update_user_stats
   after_destroy :remove_from_recent_projects
   after_save :remove_recent_unless_archived
   
@@ -24,6 +24,10 @@ class Project
       users.each do |u|
         u.remove_recent_project(self)
       end
+    end
+
+    def update_user_stats
+      user.increment_stat 'projects' if user
     end
 
 end

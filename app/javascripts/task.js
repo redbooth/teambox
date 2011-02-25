@@ -149,6 +149,8 @@ document.on('ajax:success', '.new_task form', function(e){
     Task.make_all_sortable();
     TaskList.saveColumn();
     TaskList.updatePage('column', TaskList.restoreColumn);
+    my_user.stats.tasks++;
+    document.fire("stats:update");
   }, 0);
 })
 
