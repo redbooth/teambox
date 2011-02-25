@@ -5,7 +5,8 @@ class User
   include Authentication::ByCookieToken
 
   before_save :ensure_authentication_token
-  after_save :write_auth_token_to_store
+  after_save :register_with_kv_store
+  after_destroy :unregister_with_kv_store
   
   attr_accessor :current_token
   
@@ -23,10 +24,17 @@ class User
     true
   end
 
-  def write_auth_token_to_store
+  def register_with_kv_store
     if $redis && @write_auth_token
       $redis.set("teambox/users/#{self.authentication_token}", self.login) 
       @write_auth_token = false
+    end
+    true
+  end
+
+  def unregister_with_kv_store
+    if $redis
+      $redis.del("teambox/users/#{self.authentication_token}") 
     end
     true
   end
