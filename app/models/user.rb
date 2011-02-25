@@ -4,6 +4,7 @@ require 'digest/sha1'
 # A Person model describes the relationship of a User that follows a Project.
 
 class User < ActiveRecord::Base
+  include SentientUser
   include Immortal
   include Metadata
   extend Metadata::Defaults

@@ -249,6 +249,7 @@ GEM
       ffi (~> 0.6.3)
       json_pure
       rubyzip
+    sentient_user (0.3.2)
     sprockets (1.0.2)
     sprockets-rails (0.0.1)
       sprockets (>= 1.0.2)
@@ -330,6 +331,7 @@ DEPENDENCIES
   redis-store (~> 1.0.0.beta4)
   rspec-rails (~> 2.3.1)
   ruby-debug (~> 0.10.3)
+  sentient_user
   sprockets-rails (~> 0.0.1)
   sqlite3-ruby (~> 1.2.5)
   teambox-permalink_fu
