@@ -145,7 +145,8 @@ Teambox.ActivityNotifier = {
   },
   notificationForOthers: function(activity) {
     return new Teambox.Notification(activity, function() {
-      var threads = $('activities');
+      var threads = $('activities'),
+          thread = $("activity_" + activity.target_type.toLowerCase() + '_' + activity.target_id);
 
       if (thread) {
         if (activity.action === 'delete') {
