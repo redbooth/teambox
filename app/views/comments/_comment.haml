@@ -1,13 +1,9 @@
-- threaded = false unless local_assigns[:threaded]
 - simpleconv = false unless local_assigns[:simpleconv]
 
-- cache_comment(comment, threaded, simpleconv) do
+- cache_comment(comment, simpleconv) do
   %div[comment]{ comment_data(comment) }
     .info
-      - if threaded
-        = micro_avatar(comment.user)
-      - else
-        = thumb_avatar(comment.user)
+      = micro_avatar(comment.user)
     .block
       - unless rss?
         .actions_menu
@@ -42,7 +38,7 @@
               = t('tasks.assigned.assigned_to', :user => comment.assigned.user.name)
             - else
               = t('tasks.assigned.unassigned')
-        
+
         ~raw comment.body_html
 
       - if comment.uploads.any?
@@ -52,9 +48,9 @@
         - else
           .upload_list
             = list_uploads_inline(comment.uploads)
-      
+
       - if comment.google_docs.any?
         %ul.google_docs_list
           = render :partial => 'google_docs/file', :collection => comment.google_docs, :as => :google_doc
-          
+
     .clear

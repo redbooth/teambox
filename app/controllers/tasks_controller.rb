@@ -84,7 +84,7 @@ class TasksController < ApplicationController
             response.headers['X-JSON'] = @task.to_json(:include => :assigned)
 
             render :partial => 'comments/comment',
-              :locals => { :comment => comment, :threaded => true }
+              :locals => { :comment => comment }
           else
             render :nothing => true
           end

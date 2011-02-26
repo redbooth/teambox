@@ -48,8 +48,7 @@ class ActivitiesController < ApplicationController
       format.html {
         if request.xhr?
           render :partial => 'comments/comment',
-            :collection => @comments.reverse,
-            :locals => { :threaded => true }
+            :collection => @comments.reverse
         end
       }
     end
