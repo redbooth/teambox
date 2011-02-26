@@ -29,7 +29,7 @@ Teambox.NotificationsBuffer.prototype.toggleNotificationsIcon = function() {
   }
 };
 
-Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(force) {
+Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(notification, force) {
   if (this.notificationsWindow) {
     if (!this.notificationsWindow.visible()) {
       if (this.notifications.length > 0) {
@@ -44,7 +44,9 @@ Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(force)
       }
     }
     else {
-      this.notificationsWindow.toggle();
+      if (!notification) {
+        this.notificationsWindow.toggle();
+      }
     }
   }
 };
@@ -65,7 +67,7 @@ Teambox.NotificationsBuffer.prototype.addNotification = function(notification) {
   if (this.notifications.length < 5) {
     this.notifications.push(notification);
     this.addNotificationWindowEntry(notification);
-    this.toggleNotificationWindow();
+    this.toggleNotificationWindow(true);
   }
   else {
     this.flushAll(true);
@@ -86,9 +88,9 @@ Teambox.NotificationsBuffer.prototype.flushAll = function(nonotify, scrollToId) 
       });
     }
   };
-  this.toggleNotificationWindow(true);
   this.clearNotificationWindow();
   this.toggleNotificationsIcon();
+  this.toggleNotificationWindow(false, true);
 
 };
 
@@ -191,7 +193,7 @@ document.on('click', '#show_new_content a', function(e) {
 
 document.on('click','#header_icons li.notifications_icon a', function(e) {
   e.preventDefault();
-  Teambox.Notifications.toggleNotificationWindow();
+  Teambox.Notifications.toggleNotificationWindow(true);
 });
 
 document.on('dom:loaded', function() {
