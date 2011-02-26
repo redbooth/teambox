@@ -164,6 +164,15 @@ class Activity < ActiveRecord::Base
     end
   end
   
+  def to_push_data(options={})
+    data = to_api_hash(options)
+    data
+  end
+
+  def is_first_comment?
+    comment_target && comment_target.respond_to?(:first_comment) && comment_target.first_comment == target
+  end
+
   def to_api_hash(options = {})
     base = {
       :id => id,
