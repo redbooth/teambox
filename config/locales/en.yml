@@ -1069,7 +1069,6 @@ en:
     errors:
       cannot_update: You do not have permission to update this comment
     actions:
-      conversation_url: Conversation page
       confirm_delete: Are you sure you want to delete this comment?
       convert_task: Convert to task
       edit: Edit comment
