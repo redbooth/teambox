@@ -1045,7 +1045,6 @@ en:
       hours_with_minutes: "%{hours}h %{minutes}m"
       cannot_edit: "Comment cannot be edited after 15 minutes"
       loading: "Loading..."
-      commented_in_project: "%{user} in %{project}"
     hours:
       add_hours: Hours
       tooltip: Add hours to this task

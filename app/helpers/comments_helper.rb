@@ -1,9 +1,8 @@
 module CommentsHelper
 
-  def cache_comment(comment, simpleconv, &block)
+  def cache_comment(comment, &block)
     cache(comment.cache_key.tap { |key|
       key << "-#{comment.user.avatar_updated_at.to_i}-#{comment.project.permalink}"
-      key << '-simpleconv' if simpleconv
       key << ".#{request.format.to_sym}" if request.format.to_sym.to_s =~ /^\w+$/
     }, &block)
   end
