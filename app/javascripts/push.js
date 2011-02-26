@@ -37,8 +37,11 @@ Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(notifi
         this.toggleNotificationsIcon();
         var self = this;
         if (!force) {
-          setTimeout(function() {
-            self.notificationsWindow.toggle();
+          if (self.windowTimeout) {
+            clearTimeout(self.windowTimeout);
+          }
+          self.windowTimeout = setTimeout(function() {
+              self.notificationsWindow.toggle();
           }, 1000*10);
         }
       }
