@@ -165,6 +165,10 @@ class Activity < ActiveRecord::Base
     ActivityRenderer.render_activity(self)
   end
 
+  def is_first_comment?
+    comment_target && comment_target.respond_to?(:first_comment) && comment_target.first_comment == target
+  end
+
   def to_api_hash(options = {})
     base = {
       :id => id,

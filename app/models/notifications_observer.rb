@@ -22,7 +22,7 @@ class NotificationsObserver < ActiveRecord::Observer
       activity_hash = activity.to_push_data(:include => [:project, :target, :user])
 
       #TODO: Also send none project-related activities
-      if activity.project
+      if activity.project && !activity.is_first_comment?
         activity.project.users.each do |user|
           Juggernaut.publish("/users/#{user.authentication_token}", activity_hash.to_json)
         end
