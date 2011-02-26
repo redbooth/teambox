@@ -14,7 +14,7 @@ module ActivitiesHelper
   end
   
   def activity_section(activity)
-    haml_tag 'div', :class => "activity #{activity.action_type}" do
+    haml_tag 'div', :id => "activity_#{activity.target_type.downcase}_#{activity.target_id}", :class => "activity #{activity.action_type}" do
       haml_concat micro_avatar(activity.user)
       haml_tag 'div', :class => :activity_block do
         haml_tag 'div', posted_date(activity.created_at), :class => :date unless rss?
