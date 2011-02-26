@@ -107,7 +107,7 @@ class TrimmerController < ActionController::Base
     def get_templates_from(base_path)
       templates = {}
       entries = Dir.entries(base_path)
-      entries.shift(2)
+      entries.reject! { |e| ['.', '..'].include? e }
       entries.each do |entry|
         path = File.join(base_path, entry)
         if File.directory? path
