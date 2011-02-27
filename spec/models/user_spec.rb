@@ -490,4 +490,35 @@ describe User do
       @user.card.should_not be nil
     end
   end
+
+  describe "stats" do
+    before do
+      @user = Factory(:user)
+    end
+
+    it "shouldn't have any stats when they haven't been set" do
+      @user.stats.should == {}
+      @user.stats['undefined_stat'].should be_nil
+    end
+
+    it "should increment a stat" do
+      @user.increment_stat 'conversations'
+      @user.reload.stats['conversations'].should == 1
+      @user.increment_stat 'conversations'
+      @user.reload.stats['conversations'].should == 2
+    end
+
+    it "should set a stat" do
+      @user.set_stat 'tasks', 5
+      @user.reload.stats['tasks'].should == 5
+      @user.increment_stat 'tasks'
+      @user.reload.stats['tasks'].should == 6
+    end
+
+    it "should get a stat, defaulting to 0" do
+      @user.get_stat('pages').should == 0
+      @user.increment_stat 'pages'
+      @user.reload.get_stat('pages').should == 1
+    end
+  end
 end

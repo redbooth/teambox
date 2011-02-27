@@ -19,7 +19,8 @@ class User < ActiveRecord::Base
                   :rss,
                   :scopes,
                   :validation,
-                  :task_reminders
+                  :task_reminders,
+                  :stats
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments

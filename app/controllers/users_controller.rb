@@ -201,6 +201,12 @@ class UsersController < ApplicationController
     render :text => "activities are now #{params[:collapsed] ? 'collapsed' : 'expanded'}"
   end
 
+  def increment_stat
+    key = params[:stat].to_s
+    @current_user.increment_stat(key)
+    render :text => @current_user.get_stat(key)
+  end
+
   private
     def find_user
       unless @user = ( User.find_by_login(params[:id]) || User.find_by_id(params[:id]) )
