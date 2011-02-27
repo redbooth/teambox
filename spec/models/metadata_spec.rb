@@ -42,6 +42,23 @@ describe Metadata do
       @organization.settings.should == {'foo' => 'bar'}
     end
 
+    it "should set a key with a given value" do
+      @organization.set_setting('people', 5)
+      @organization.reload
+      @organization.settings['people'].should be_nil
+      @organization.set_setting('people', 5)
+      @organization.save!
+      @organization.reload
+      @organization.settings['people'].should == 5
+    end
+
+    it "should write a key with a given value to the DB" do
+      @organization.write_setting('credit', 50)
+      @organization.settings['credit'].should == 50
+      @organization.reload
+      @organization.settings['credit'].should == 50
+    end
+
     it "should encode data as json in the db" do
       @organization.settings = {'foo' => 'bang', 'baz' => 'biff'}
       ActiveSupport::JSON.decode(@organization.read_attribute('settings')).should == {'foo' => 'bang', 'baz' => 'biff'}
