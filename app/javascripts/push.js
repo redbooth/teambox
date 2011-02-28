@@ -63,7 +63,13 @@ Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(notifi
 //Add notification but flush if we reach 5 unread notifications
 Teambox.NotificationsBuffer.prototype.addNotificationWindowEntry = function(notification) {
   if (notification.data) {
-    var markup = this.windowEntryTemplate({ activity: notification.data });
+    var is_assigned_to_me = false;
+
+    if (my_user) {
+      is_assigned_to_me = notification.data.target.assigned_id && notification.data.target.assigned_id === my_user.id
+    }
+
+    var markup = this.windowEntryTemplate({ activity: notification.data, assigned_to_you: is_assigned_to_me });
     this.notificationsWindow.down('ul').insert({bottom: markup});
   }
 };

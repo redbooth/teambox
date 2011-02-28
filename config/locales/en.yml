@@ -1814,3 +1814,7 @@ en:
     attach: Attach a Google Document
     search_placeholder: Search Google documents
     new_document_placeholder: New document title
+  notifications:
+    entry:
+      new_thread_html: New %{thread_url} by %{user_url}
+      assigned_to_you_html: You have been assigned a new %{thread_url} by %{user_url}

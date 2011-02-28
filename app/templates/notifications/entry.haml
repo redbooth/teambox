@@ -1,5 +1,8 @@
 %li
-  New 
-  %a{:href => "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"} {{activity/target_type}}
-  by
-  %a{:href => "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"} @{{activity/user/username}}
+  {{#assigned_to_you}}
+  = t("notifications.entry.assigned_to_you_html", :thread_url => link_to("{{activity/target_type}}", "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
+  {{/assigned_to_you}}
+  {{^assigned_to_you}}
+  = t("notifications.entry.new_thread_html", :thread_url => link_to("{{activity/target_type}}", "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
+  {{/assigned_to_you}}
+
