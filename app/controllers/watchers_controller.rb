@@ -2,7 +2,7 @@ class WatchersController < ApplicationController
   skip_before_filter :load_project
 
   def index
-    @watch_list_by_project = current_user.watchers.group_by { |t| t.project.name }
+    @watch_list_by_project = current_user.watchers.includes(:watchable).group_by { |t| t.project.name }
   end
 
   def unwatch
