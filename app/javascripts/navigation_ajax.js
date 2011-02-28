@@ -26,11 +26,13 @@ document.on('click', '.nav_links a.ajax', function(e,a) {
     onLoading: function(r) { a.addClassName('loading') },
     onComplete: function(r) { a.removeClassName('loading') },
     onSuccess: function(r) {
-      // Mark the new element as selected
-      NavigationBar.selectElement(a.up('.el'))
-
       // Insert the content, and update posted dates if necessary
       var parts = extractParts(r.responseText)
+      if (!parts.content)
+        return this.onFailure(r);
+      
+      // Mark the new element as selected
+      NavigationBar.selectElement(a.up('.el'))
 
       document.body.className = parts.body_classes
       $('content').update(parts.content)
