@@ -116,8 +116,22 @@ class Activity < ActiveRecord::Base
     end || project
   end
 
+  def thread?
+    %w(Conversation Task).include?(target_type)
+  end
+
   def thread_id
     target_type == 'Comment' ? "#{comment_target_type}_#{comment_target_id}" : "#{target_type}_#{target_id}"
+  end
+
+  def activity_id
+    if target_type == 'Comment'
+      "#{target_type.downcase}_#{comment_target_id}"
+    elsif thread?
+      "thread_#{target_type.downcase}_#{target_id}"
+    else
+      "activity_#{target_type.downcase}_#{target_id}"
+    end
   end
 
   def self.for_projects(projects)
@@ -181,7 +195,8 @@ class Activity < ActiveRecord::Base
       :target_type => target_type,
       :action_type => action_type,
       :comment_target_id => comment_target_id,
-      :comment_target_type => comment_target_type
+      :comment_target_type => comment_target_type,
+      :activity_id => activity_id
     }
     
     base[:type] = self.class.to_s if options[:emit_type]

@@ -1,5 +1,5 @@
 %li
   New 
-  %a{:href => "{{activity/path}}", :"data-activity-id" => "{{downcase activity/target_type}}_{{activity/target_id}}"} {{activity/target_type}}
+  %a{:href => "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"} {{activity/target_type}}
   by
-  %a{:href => "/users/{{activity/user/username}}", :"data-activity-id" => "{{downcase activity/target_type}}_{{activity/target_id}}"} @{{activity/user/username}}
+  %a{:href => "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"} @{{activity/user/username}}
