@@ -39,7 +39,6 @@ Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(notifi
     if (!this.notificationsWindow.visible()) {
       if (this.notifications.length > 0) {
         Effect.toggle(this.notificationsWindow.id, 'blind', { duration: 0.5 });
-        this.toggleNotificationsIcon();
         var self = this;
         if (!force) {
           if (self.windowTimeout) {
@@ -78,6 +77,7 @@ Teambox.NotificationsBuffer.prototype.addNotification = function(notification) {
     this.notifications.push(notification);
     this.addNotificationWindowEntry(notification);
     this.toggleNotificationWindow(true);
+    this.toggleNotificationsIcon();
   }
   else {
     this.flushAll(true);
