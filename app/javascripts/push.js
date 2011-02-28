@@ -98,6 +98,10 @@ Teambox.NotificationsBuffer.prototype.flushAll = function(nonotify, scrollToId) 
       });
     }
   };
+
+  Task.insertAssignableUsers();
+  disableConversationHttpMethodField();
+
   this.toggleNotificationWindow(false, true);
   this.toggleNotificationsIcon();
   this.clearNotificationWindow();
