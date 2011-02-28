@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110212184746) do
+ActiveRecord::Schema.define(:version => 20110228182657) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -486,7 +486,7 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
     t.datetime "updated_at"
   end
 
-  add_index "watchers", ["user_id", "watchable_id", "watchable_type"], :name => "uniqueness_index", :unique => true
+  add_index "watchers", ["user_id", "watchable_id", "watchable_type"], :name => "watchers_uniqueness_index", :unique => true
   add_index "watchers", ["user_id"], :name => "index_watchers_on_user_id"
   add_index "watchers", ["watchable_id"], :name => "index_watchers_on_watchable_id"
   add_index "watchers", ["watchable_type"], :name => "index_watchers_on_watchable_type"
