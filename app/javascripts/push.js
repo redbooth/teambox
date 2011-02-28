@@ -38,7 +38,7 @@ Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(notifi
   if (this.notificationsWindow) {
     if (!this.notificationsWindow.visible()) {
       if (this.notifications.length > 0) {
-        this.notificationsWindow.toggle();
+        Effect.toggle(this.notificationsWindow.id, 'blind', { duration: 0.5 });
         this.toggleNotificationsIcon();
         var self = this;
         if (!force) {
@@ -46,14 +46,16 @@ Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(notifi
             clearTimeout(self.windowTimeout);
           }
           self.windowTimeout = setTimeout(function() {
-              self.notificationsWindow.toggle();
-          }, 1000*10);
+            if (self.notificationsWindow.visible()) {
+              Effect.toggle(self.notificationsWindow.id, 'blind', { duration: 0.5 });
+            }
+          }, 1000*20);
         }
       }
     }
     else {
       if (!notification) {
-        this.notificationsWindow.toggle();
+        Effect.toggle(this.notificationsWindow.id, 'blind', { duration: 0.5 });
       }
     }
   }
@@ -96,9 +98,9 @@ Teambox.NotificationsBuffer.prototype.flushAll = function(nonotify, scrollToId) 
       });
     }
   };
-  this.clearNotificationWindow();
-  this.toggleNotificationsIcon();
   this.toggleNotificationWindow(false, true);
+  this.toggleNotificationsIcon();
+  this.clearNotificationWindow();
 
 };
 
