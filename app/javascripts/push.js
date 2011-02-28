@@ -8,8 +8,13 @@ Teambox.Notification = function(data, action) {
 };
 
 Teambox.Notification.prototype.notify = function(callback) {
-  this.action();
-  callback();
+  if (this.action) {
+    this.action();
+  }
+
+  if (callback) {
+    callback();
+  }
 };
 
 Teambox.NotificationsBuffer = function() {
