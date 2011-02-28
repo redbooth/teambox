@@ -7,6 +7,7 @@ Date.firstDayOfWeek = "sunday";
 document.on("dom:loaded", function() {
   if(!my_user) { return; }
   Date.firstDayOfWeek = my_user.first_day_of_week;
+  Date.first_day_of_week = my_user.first_day_of_week == 'sunday' ? 0 : 1;
   if(Date.firstDayOfWeek == "monday") {
     Date.weekdays.push(Date.weekdays.shift());
   }
