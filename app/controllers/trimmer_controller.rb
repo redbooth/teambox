@@ -127,6 +127,13 @@ class TrimmerController < ActionController::Base
     # :only. If specified, will dump only keys that match the pattern. "*.date"
     def translations_to_js(options = {})
       "if(typeof(I18n) == 'undefined') { I18n = {}; };\n" +
-      "I18n.translations = (#{I18n.to_hash(options).to_json});"
+      "I18n.translations = (#{locale_with_fallback(options).to_json});"
+    end
+
+
+    def locale_with_fallback options
+      original_translation = I18n.to_hash(options)
+      fallback_translation = I18n.to_hash(options.merge(:locale => I18n.default_locale))
+      fallback_translation.deep_merge original_translation
     end
 end
