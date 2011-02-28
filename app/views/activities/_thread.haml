@@ -1,7 +1,7 @@
 - thread ||= activity.thread # you can pass :thread or :activity into the partial
 - thread_class = thread.class.name.underscore
 - thread_id = "#{thread_class}_#{thread.id}"
-- comments = thread.comments
+- comments = thread.comments.reject {|c|c.new_record?}
 - last_comment = comments.first
 
 .thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}", :'data-project-id' => thread.project.id }
