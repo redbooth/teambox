@@ -19,7 +19,7 @@ class CreateWatcherTable < ActiveRecord::Migration
             entries.each do |entry|
 
               unless entry[:watchers_ids].nil?
-                user_ids = YAML::load(entry[:watchers_ids])
+                user_ids = YAML::load(entry[:watchers_ids]).uniq
                 user_ids.each do |user_id|
                   inserts.push "(#{user_id}, #{entry.project_id}, #{entry.id}, \"#{klass}\", NOW(), NOW())"
                 end
