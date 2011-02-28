@@ -127,6 +127,9 @@ Teambox.ActivityNotifier = {
             Element.replace(comment, activity.markup);
           }
         }
+        if (thread.hasClassName('collapsed')) {
+          thread.removeClassName('collapsed');
+        }
       }
     });
   },
