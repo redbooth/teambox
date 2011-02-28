@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110228182657) do
+ActiveRecord::Schema.define(:version => 20110228211014) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -409,6 +409,7 @@ ActiveRecord::Schema.define(:version => 20110228182657) do
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
   add_index "uploads", ["deleted"], :name => "index_uploads_on_deleted"
   add_index "uploads", ["page_id"], :name => "index_uploads_on_page_id"
+  add_index "uploads", ["project_id", "deleted", "updated_at"], :name => "index_uploads_on_project_id_and_deleted_and_updated_at"
 
   create_table "users", :force => true do |t|
     t.string   "login",                     :limit => 40

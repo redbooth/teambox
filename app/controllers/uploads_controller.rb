@@ -40,7 +40,7 @@ class UploadsController < ApplicationController
   end
   
   def index
-    @uploads = @current_project.uploads.order('updated_at DESC')
+    @uploads = @current_project.uploads.includes(:user).order('updated_at DESC')
     @upload ||= @current_project.uploads.new
   end
 
