@@ -13,11 +13,7 @@ Threads = {
     var btn = $('activity_paginate_link')
     if (sel && next) {
       Threads.select(next)
-      var offsetTop = next.viewportOffset().top
-      if ( offsetTop < 0 || offsetTop + next.getHeight() > document.viewport.getHeight() )
-      {
-        Effect.ScrollTo(next, { duration: '0.4', offset: -40 })
-      }
+      Threads.ensureVisible(next)
     }
     else if (!next && direction == 'next' && btn && btn.visible())
     {
@@ -28,6 +24,13 @@ Threads = {
   select: function(element) {
     $$('.thread.selected').invoke('removeClassName','selected')
     element.addClassName('selected')
+  },
+  ensureVisible: function(element) {
+      var offsetTop = element.viewportOffset().top
+      if ( offsetTop < 0 || offsetTop + element.getHeight() > document.viewport.getHeight() )
+      {
+        Effect.ScrollTo(element, { duration: '0.4', offset: -40 })
+      }
   },
   toggleSelected: function() {
     ActivityFeed.toggle($$('.thread.selected').first())
