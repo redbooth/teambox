@@ -108,7 +108,14 @@ class ConversationsController < ApplicationController
 
     @conversation.attributes = params[:conversation]
     @conversation.updating_user = current_user
-    @conversation.comments_attributes = {"0" => params[:comment]} if params[:comment]
+    comments_attribs = params[:comment].dup
+
+    if Teambox.config.push_new_activities?
+      @conversation.dont_push! 
+      comments_attribs.merge!("dont_push" => true) if comments_attribs
+    end
+
+    @conversation.comments_attributes = {"0" => comments_attribs} if comments_attribs
 
     success = @conversation.save
     if success

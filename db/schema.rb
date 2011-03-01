@@ -434,15 +434,17 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "position"
-    t.integer  "comments_count",  :default => 0,     :null => false
+    t.integer  "comments_count",         :default => 0,     :null => false
     t.integer  "last_comment_id"
     t.integer  "assigned_id"
-    t.integer  "status",          :default => 0
+    t.integer  "status",                 :default => 0
     t.date     "due_on"
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted",         :default => false, :null => false
+    t.boolean  "deleted",                :default => false, :null => false
+    t.integer  "record_conversion_id"
+    t.string   "record_conversion_type"
   end
 
   add_index "tasks", ["assigned_id"], :name => "index_tasks_on_assigned_id"

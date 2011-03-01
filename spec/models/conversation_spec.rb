@@ -256,6 +256,15 @@ describe Conversation do
       task = conversation.convert_to_task!
       lambda {Conversation.find(conversation.id)}.should raise_error(ActiveRecord::RecordNotFound)
     end
+
+    it "and when converted to a task, the task should record the conversion" do
+      conversation = Factory.create(:conversation, 
+                                    :simple => false)
+
+      task = conversation.convert_to_task!
+      task.should_not be_nil
+      task.record_conversion.should == conversation
+    end
   end
 end
 

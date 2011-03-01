@@ -20,6 +20,7 @@ class Task < RoleRecord
 
   belongs_to :assigned, :class_name => 'Person'
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
+  belongs_to :record_conversion, :polymorphic => true
 
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| %w[body hours human_hours uploads_attributes google_docs_attributes].all? { |k| comment[k].blank? } }

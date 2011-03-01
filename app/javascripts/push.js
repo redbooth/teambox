@@ -18,6 +18,76 @@ Teambox.NotificationsBuffer = function() {
   this.notifications = [];
 };
 
+Teambox.NotificationsBuffer.prototype.toggleNotificationsIcon = function() {
+  if (this.notificationsIcon) {
+    var icon = this.notificationsIcon;
+    if (icon.getStyle('opacity') === 1) {
+      icon.removeClassName('active');
+    }
+    else {
+      icon.addClassName('active');
+    }
+  }
+};
+
+Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(notification, force) {
+  if (this.notificationsWindow) {
+    if (!this.notificationsWindow.visible()) {
+      if (this.notifications.length > 0) {
+        Effect.toggle(this.notificationsWindow.id, 'blind', { duration: 0.5 });
+        var self = this;
+        if (!force) {
+          if (self.windowTimeout) {
+            clearTimeout(self.windowTimeout);
+          }
+          self.windowTimeout = setTimeout(function() {
+            if (self.notificationsWindow.visible()) {
+              Effect.toggle(self.notificationsWindow.id, 'blind', { duration: 0.5 });
+            }
+          }, 1000*20);
+        }
+      }
+    }
+    else {
+      if (!notification) {
+        Effect.toggle(this.notificationsWindow.id, 'blind', { duration: 0.5 });
+      }
+    }
+  }
+};
+
+//Add notification but flush if we reach 5 unread notifications
+Teambox.NotificationsBuffer.prototype.addNotificationWindowEntry = function(notification) {
+  if (notification.data) {
+    var is_assigned_to_me = false,
+        converted_to_task = false;
+
+    converted_to_task = notification.data.target.record_conversion_id ? true : false;
+    if (my_user) {
+      is_assigned_to_me = notification.data.target.assigned_id && notification.data.target.assigned_id === my_user.id
+    }
+
+    var opts = { activity: notification.data};
+    if (is_assigned_to_me && !converted_to_task) {
+      opts.assigned_to_you = is_assigned_to_me;
+    }
+    else if (converted_to_task) {
+      opts.converted_to_task = converted_to_task;
+    }
+    else {
+      opts.generic_case = true;
+    }
+
+    var markup = this.windowEntryTemplate(opts);
+    this.notificationsWindow.down('ul').insert({bottom: markup});
+  }
+};
+
+Teambox.NotificationsBuffer.prototype.clearNotificationWindow = function() {
+  this.notificationsWindow.down('ul').childElements().each(function(e) {e.remove();});
+>>>>>>> 63ab913... Handle convert to task
+};
+
 Teambox.NotificationsBuffer.prototype.addNotification = function(notification) {
   if (this.notifications.length < 5) {
     this.notifications.push(notification);
@@ -34,6 +104,7 @@ Teambox.NotificationsBuffer.prototype.flushAll = function(nonotify, scrollToId) 
     var notification = flushBuffer.shift();
     if (!nonotify) {
       notification.notify(function() {
+        //Do something
       });
     }
   };

@@ -10,7 +10,7 @@ class NotificationsObserver < ActiveRecord::Observer
 
     case obj
       when Activity
-        push_on_create(obj)
+        push_on_create(obj) unless Rails.env == 'test'
       when Comment
         notify_watchers_on_new_comment(obj)
     end
@@ -19,10 +19,11 @@ class NotificationsObserver < ActiveRecord::Observer
   protected
 
     def push_on_create(activity)
-      activity_hash = activity.to_api_hash(:include => [:project, :target, :user])
 
       #TODO: Also send none project-related activities
-      if activity.project && !activity.is_first_comment?
+      if activity.project && !activity.is_first_comment? && activity.push?
+        activity_hash = activity.to_push_data(:include => [:project, :target, :user])
+
         activity.project.users.each do |user|
           Juggernaut.publish("/users/#{user.authentication_token}", activity_hash.to_json)
         end

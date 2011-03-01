@@ -130,6 +130,16 @@ class Activity < ActiveRecord::Base
     target_type == 'Comment' ? "#{comment_target_type}_#{comment_target_id}" : "#{target_type}_#{target_id}"
   end
 
+  def activity_id
+    if target_type == 'Comment'
+      "#{target_type.downcase}_#{target_id}"
+    elsif thread?
+      "thread_#{target_type.downcase}_#{target_id}"
+    else
+      "activity_#{target_type.downcase}_#{target_id}"
+    end
+  end
+
   def self.for_projects(projects)
     in_projects(projects).limit_per_page.by_thread
   end
@@ -171,6 +181,14 @@ class Activity < ActiveRecord::Base
 
   def is_first_comment?
     comment_target && comment_target.respond_to?(:first_comment) && comment_target.first_comment == target
+  end
+
+  def is_converted_comment?
+    comment_target ? comment_target.respond_to?(:record_conversion) && comment_target.record_conversion : false
+  end
+
+  def push?
+    target && target.respond_to?(:dont_push) ? !target.dont_push : true
   end
 
   def to_api_hash(options = {})

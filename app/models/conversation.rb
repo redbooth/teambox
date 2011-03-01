@@ -15,6 +15,7 @@ class Conversation < RoleRecord
   
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
+  has_one :converted_task, :as => :record_conversion, :class_name => 'Task'
   
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| comment['body'].blank? }
@@ -69,8 +70,8 @@ class Conversation < RoleRecord
     return text
   end
 
-  def log_create
-    project.log_activity(self,'create')
+  def log_create(creator_id = nil)
+    project.log_activity(self,'create', creator_id)
   end
 
   def clear_targets
