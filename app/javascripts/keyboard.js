@@ -11,6 +11,5 @@ Keyboard = {
 }
 
 document.on('dom:loaded', function() {
-  $('keyboard_shortcuts').hide()
   Hotkeys.key('h', function() { Keyboard.showHelp()} )
 })
