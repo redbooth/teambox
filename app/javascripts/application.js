@@ -1,4 +1,4 @@
-//= require <socket.io>
+//= require <juggernaut>
 //= require <prototype>
 //= require <rails>
 //= require <html5>
