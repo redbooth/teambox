@@ -9,8 +9,8 @@ class Task
     self.position ||= task_list.tasks.last ? task_list.tasks.last.position + 1 : 0
   end
 
-  def log_create
-    project.log_activity(self, 'create')
+  def log_create(creator_id = nil)
+    project.log_activity(self, 'create', creator_id) unless Teambox.config.push_new_activities? && dont_push
   end
 
   def set_watchers

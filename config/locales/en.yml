@@ -1818,3 +1818,4 @@ en:
     entry:
       new_thread_html: New %{thread_url} by %{user_url}
       assigned_to_you_html: You have been assigned a new %{thread_url} by %{user_url}
+      converted_to_task_html: %{record_conversion_url} has been converted to %{thread_url} by %{user_url}

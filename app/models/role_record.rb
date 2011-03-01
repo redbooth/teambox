@@ -6,6 +6,9 @@ class RoleRecord < ActiveRecord::Base
   
   belongs_to :project
   belongs_to :user
+
+  attr_accessor :dont_push
+  attr_accessible :dont_push
   
   def owner?(u)
     user == u
@@ -17,6 +20,10 @@ class RoleRecord < ActiveRecord::Base
 
   def editable?(user)
     project.editable?(user)
+  end
+
+  def dont_push!
+    @dont_push = true
   end
     
 end

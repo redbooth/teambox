@@ -1,8 +1,11 @@
 %li
+  {{#generic_case}}
+  = t("notifications.entry.new_thread_html", :thread_url => link_to("{{activity/target_type}}", "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
+  {{/generic_case}}
   {{#assigned_to_you}}
   = t("notifications.entry.assigned_to_you_html", :thread_url => link_to("{{activity/target_type}}", "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
   {{/assigned_to_you}}
-  {{^assigned_to_you}}
-  = t("notifications.entry.new_thread_html", :thread_url => link_to("{{activity/target_type}}", "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
-  {{/assigned_to_you}}
+  {{#converted_to_task}}
+  = t("notifications.entry.converted_to_task_html", :record_conversion_url => link_to("{{activity/target/record_conversion_type}}", "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), :thread_url => link_to("{{activity/target_type}}", "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
+  {{/converted_to_task}}
 

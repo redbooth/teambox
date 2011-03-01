@@ -16,6 +16,7 @@ class Conversation
       t.task_list = task_list
       t.assigned = assigned_person
       t.created_at = created_at
+      t.dont_push = true if Teambox.config.push_new_activities?
     end
 
     task.errors.each {|attr,msg| errors.add(attr, msg)}
@@ -41,14 +42,20 @@ class Conversation
           activity.comment_target_id = task.id
         end
         if activity.target == task && activity.action == 'create'
-          activity.save
+          Teambox.config.push_new_activities? ? activity.destroy : activity.save
         else
           activity.update_record_without_timestamping
         end
       end
 
+      task.record_conversion = self
       task.save
       self.reload.destroy
+
+      if Teambox.config.push_new_activities?
+        task.dont_push = false
+        task.log_create(User.current ? User.current.id : nil)
+      end
     end
     task
   end

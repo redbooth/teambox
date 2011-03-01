@@ -20,7 +20,12 @@ class ActivityRenderer < TemplateRenderer
       when "Comment"
         render_template(:partial => 'comments/comment', :locals => {:comment => activity.target})
       when *%w(Task Conversation)
-        render_template(:partial =>'activities/thread', :locals => {:activity=> activity})
+        markup = render_template(:partial =>'activities/thread', :locals => {:activity=> activity})
+
+        #cleanup after rendering
+        activity.target.comments.reject!(&:new_record?)
+
+        markup
       else
         render_template(:partial => "activities/#{activity.action_type}", :locals => {
           :activity => activity,

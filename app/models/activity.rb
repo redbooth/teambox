@@ -126,7 +126,7 @@ class Activity < ActiveRecord::Base
 
   def activity_id
     if target_type == 'Comment'
-      "#{target_type.downcase}_#{comment_target_id}"
+      "#{target_type.downcase}_#{target_id}"
     elsif thread?
       "thread_#{target_type.downcase}_#{target_id}"
     else
@@ -181,6 +181,14 @@ class Activity < ActiveRecord::Base
 
   def is_first_comment?
     comment_target && comment_target.respond_to?(:first_comment) && comment_target.first_comment == target
+  end
+
+  def is_converted_comment?
+    comment_target ? comment_target.respond_to?(:record_conversion) && comment_target.record_conversion : false
+  end
+
+  def push?
+    target && target.respond_to?(:dont_push) ? !target.dont_push : true
   end
 
   def to_api_hash(options = {})

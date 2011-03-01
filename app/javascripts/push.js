@@ -63,13 +63,26 @@ Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(notifi
 //Add notification but flush if we reach 5 unread notifications
 Teambox.NotificationsBuffer.prototype.addNotificationWindowEntry = function(notification) {
   if (notification.data) {
-    var is_assigned_to_me = false;
+    var is_assigned_to_me = false,
+        converted_to_task = false;
 
+    converted_to_task = notification.data.target.record_conversion_id ? true : false;
     if (my_user) {
       is_assigned_to_me = notification.data.target.assigned_id && notification.data.target.assigned_id === my_user.id
     }
 
-    var markup = this.windowEntryTemplate({ activity: notification.data, assigned_to_you: is_assigned_to_me });
+    var opts = { activity: notification.data};
+    if (is_assigned_to_me && !converted_to_task) {
+      opts.assigned_to_you = is_assigned_to_me;
+    }
+    else if (converted_to_task) {
+      opts.converted_to_task = converted_to_task;
+    }
+    else {
+      opts.generic_case = true;
+    }
+
+    var markup = this.windowEntryTemplate(opts);
     this.notificationsWindow.down('ul').insert({bottom: markup});
   }
 };
@@ -99,7 +112,13 @@ Teambox.NotificationsBuffer.prototype.flushAll = function(nonotify, scrollToId) 
       notification.notify(function() {
         if (scrollToId && $(scrollToId)) {
           Effect.ScrollTo(scrollToId, {duration: 0.2, offset: -100});
-          new Effect.Highlight(scrollToId, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
+          var comments = $(scrollToId).down('.comments');
+          if (comments) {
+            new Effect.Highlight(comments, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
+          }
+          else {
+            new Effect.Highlight(scrollToId, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
+          }
         }
       });
     }
@@ -158,7 +177,19 @@ Teambox.ActivityNotifier = {
       }
       else {
         if (activity.action === 'create') {
-          threads.insert({top: activity.markup});
+
+          if (activity.target_type === 'Task' && activity.target.record_conversion_id) {
+            var old_conversion_thread = $("thread_" + activity.target.record_conversion_type.toLowerCase() + '_' + activity.target.record_conversion_id);
+            if (old_conversion_thread) {
+              Element.replace(old_conversion_thread, activity.markup);
+            }
+            else {
+              threads.insert({top: activity.markup});
+            }
+          }
+          else {
+            threads.insert({top: activity.markup});
+          }
         }
       }
     });

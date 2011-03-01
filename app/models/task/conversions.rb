@@ -35,7 +35,9 @@ class Task
       :status => status,
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
-      :watchers => Array.wrap(watcher_ids)
+      :watchers => Array.wrap(watcher_ids),
+      :record_conversion_id => record_conversion_id,
+      :record_conversion_type => record_conversion_type
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
