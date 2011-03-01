@@ -2,6 +2,18 @@ if ( typeof( window['Teambox'] ) == "undefined" ) {
   window.Teambox = {};
 }
 
+if ( typeof( window['console'] ) == "undefined" ) {
+  window.console = {
+    messages: [],
+    log: function() {
+      var args = Array.prototype.slice.call(arguments);
+      this.messages.push(args.join(' '));
+    }
+  };
+}
+
+Teambox.User = {};
+
 Teambox.Notification = function(data, action) {
   this.data = data;
   this.action = action;
@@ -110,16 +122,27 @@ Teambox.NotificationsBuffer.prototype.flushAll = function(nonotify, scrollToId) 
     var notification = flushBuffer.shift();
     if (!nonotify) {
       notification.notify(function() {
-        if (scrollToId && $(scrollToId)) {
-          Effect.ScrollTo(scrollToId, {duration: 0.2, offset: -100});
-          var comments = $(scrollToId).down('.comments');
-          if (comments) {
-            new Effect.Highlight(comments, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
+          var scrollTarget = $(scrollToId),
+              focussed_input = Teambox.User.currently_focussed_element;
+
+          if (focussed_input && !focussed_input.value.empty()) {
+            Effect.ScrollTo(focussed_input, {duration: 0.2, offset: -100});
+            new Effect.Highlight(focussed_input, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
+            setTimeout(2000, function() {
+              focussed_input.focus();
+            });
           }
-          else {
-            new Effect.Highlight(scrollToId, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
+          else if (scrollTarget) {
+            Effect.ScrollTo(scrollTarget, {duration: 0.2, offset: -100});
+
+            var comments = scrollTarget.down('.comments');
+            if (comments) {
+              new Effect.Highlight(comments, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
+            }
+            else {
+              new Effect.Highlight(scrollTarget, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
+            }
           }
-        }
       });
     }
   };
@@ -164,8 +187,12 @@ Teambox.ActivityNotifier = {
   },
   notificationForThreads: function(activity) {
     return new Teambox.Notification(activity, function() {
+      var find_thread = function() {
+        return $("thread_" + activity.target_type.toLowerCase() + '_' + activity.target_id);
+      };
+
       var threads = $('activities'),
-          thread = $("thread_" + activity.target_type.toLowerCase() + '_' + activity.target_id);
+          thread = find_thread();
 
       if (thread) {
         if (activity.action === 'delete') {
@@ -179,9 +206,38 @@ Teambox.ActivityNotifier = {
         if (activity.action === 'create') {
 
           if (activity.target_type === 'Task' && activity.target.record_conversion_id) {
+
+            //Handle convert-to-task
             var old_conversion_thread = $("thread_" + activity.target.record_conversion_type.toLowerCase() + '_' + activity.target.record_conversion_id);
             if (old_conversion_thread) {
-              Element.replace(old_conversion_thread, activity.markup);
+
+              focussed_element = Teambox.User.currently_focussed_element;
+              if (focussed_element) {
+                var parentThread = focussed_element.up('.thread');
+                if (parentThread && parentThread.id === old_conversion_thread.id) {
+                  //get current tet user has typed
+                  var currentValue = focussed_element.value;
+
+                  //replace thread
+                  Element.replace(old_conversion_thread, activity.markup);
+
+                  //find new thread and readd text user typed to new textarea
+                  var newThread = find_thread();
+                  if (newThread) {
+                    var newInput = newThread.down('textarea');
+                    if (newInput) {
+                      newInput.value = currentValue;
+                      Teambox.User.currently_focussed_element = newInput;
+                    }
+                  }
+                }
+                else {
+                  Element.replace(old_conversion_thread, activity.markup);
+                }
+              }
+              else {
+                Element.replace(old_conversion_thread, activity.markup);
+              }
             }
             else {
               threads.insert({top: activity.markup});
@@ -250,6 +306,23 @@ document.on('click','#header_icons li.notifications_icon a', function(e) {
   e.preventDefault();
   Teambox.Notifications.toggleNotificationWindow(true);
 });
+
+Teambox.User.handleFocusEvent = function(e) {
+  var event = e || window.event,
+      target = event.target || event.srcElement;
+  if (target && ['INPUT','TEXTAREA'].indexOf(target.tagName) != -1) {
+    Teambox.User.currently_focussed_element = target;
+  }
+};
+
+// IE
+document.onfocusin = Teambox.User.handleFocusEvent;
+document.onfocusout = Teambox.User.handleFocusEvent;
+
+if (document.addEventListener) {
+  document.addEventListener('focus',Teambox.User.handleFocusEvent,true);
+}
+
 
 document.on('dom:loaded', function() {
 
