@@ -8,6 +8,8 @@ class ActivityRenderer < TemplateRenderer
       url_for([ activity.project, activity.comment_target ], :only_path => path)
     when *%w(Note Divider)
       url_for(activity.project, :only_path => path)
+    when *%w(Person)
+      url_for(activity.target.user, :only_path => path)
     else
       url_for(activity.target, :only_path => path)
     end
