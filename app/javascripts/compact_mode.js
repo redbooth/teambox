@@ -11,6 +11,7 @@ ActivityFeed = {
   },
   toggle: function(el) {
     el.toggleClassName("collapsed");
+    Threads.select(el);
   },
   collapsed: false
 };

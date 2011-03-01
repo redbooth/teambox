@@ -12,8 +12,7 @@ Threads = {
     var next = sel[direction]('.thread')
     var btn = $('activity_paginate_link')
     if (sel && next) {
-      $$('.thread.selected').invoke('removeClassName','selected')
-      next.addClassName('selected')
+      Threads.select(next)
       var offsetTop = next.viewportOffset().top
       if ( offsetTop < 0 || offsetTop + next.getHeight() > document.viewport.getHeight() )
       {
@@ -25,6 +24,10 @@ Threads = {
       btn.fire('pseudo:click')
     }
 
+  },
+  select: function(element) {
+    $$('.thread.selected').invoke('removeClassName','selected')
+    element.addClassName('selected')
   },
   toggleSelected: function() {
     ActivityFeed.toggle($$('.thread.selected').first())
