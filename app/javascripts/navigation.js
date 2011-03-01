@@ -112,10 +112,10 @@ document.on('click', '.nav_links .el', function(e,el) {
   var clicked = Event.element(e)
   if (clicked.id == 'open_my_tasks') {
     window.location = clicked.readAttribute("href")
+    e.stop()
   } else {
-    NavigationBar.toggleElement(el, true)
+    NavigationBar.toggleElement(el, true) && e.stop()
   }
-  e.stop()
 })
 
 document.on('click', '.nav_links .el#show_all_projects', function(e,el) {
