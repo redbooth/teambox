@@ -179,7 +179,17 @@ document.on('dom:loaded', function() {
         var activity = JSON.parse(message);
         console.log("Received activity: ", activity);
         if (activity.user_id != my_user.id) {
-          Teambox.ActivityNotifier.notifyActivity(activity);
+          if ([/^\/$/,/^\/projects\/?$/, /^\/projects\/[^\/]+\/?$/, /#!\/projects\/[^\/]+\/?$/].any(function(r){ return (r.exec(window.location.hash) || r.exec(window.location.pathname) || []).length > 0})) {
+
+            var project_level_matches = /#!\/projects\/([^\/]+)\/?$/.exec(window.location.hash) || /^\/projects\/([^\/]+)\/?$/.exec(window.location.pathname);
+
+            if (project_level_matches && (project_level_matches[1] === activity.project.permalink)) {
+              Teambox.ActivityNotifier.notifyActivity(activity);
+            }
+            else if (!project_level_matches) {
+              Teambox.ActivityNotifier.notifyActivity(activity);
+            }
+          }
         }
       }
       catch(err) {
