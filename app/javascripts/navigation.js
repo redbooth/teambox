@@ -100,3 +100,15 @@ document.on('click', '.nav_links .el#show_all_projects', function(e,el) {
   e.stop()
   Projects.showAllProjects()
 })
+
+document.on('click', '.nav_links .el .show_more', function(e,el) {
+  e.stop()
+  $$('.el#show_more').invoke('hide')
+  $$('.el.extra').invoke('show')
+})
+ 
+document.on('click', '.nav_links .el .show_less', function(e,el) {
+  e.stop()
+  $$('.el#show_more').invoke('show')
+  $$('.el.extra').invoke('hide')
+})
