@@ -746,6 +746,7 @@ en:
       comment: comment
       comments: comments
   hours:
+    download: Download
     comments: Time Entries
     filter_by: Filter by
     report: Report

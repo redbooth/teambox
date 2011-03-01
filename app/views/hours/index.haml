@@ -11,7 +11,7 @@
 - content_for :column do
   - pathname = @current_project ? project_hours_by_month_path(@current_project, :month => @month, :year => @year, :format => 'csv') : hours_by_month_path(:month => @month, :year => @year, :format => 'csv')
   
-  %h2= "Download"
+  %h2= t('hours.download')
   = link_to t("common.download_as_csv"), pathname, :class => 'csv_link'
 
 %h2= t('hours.comments')
