@@ -3,6 +3,7 @@
 //= require <lib/underscore.date>
 //= require <lib/underscore.string>
 //= require <socket.io>
+//= require <juggernaut>
 //= require <lib/jquery>
 //= require <lib/backbone-prototype>
 //= require <lib/handlebars>
