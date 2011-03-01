@@ -27,6 +27,13 @@ class NotificationsObserver < ActiveRecord::Observer
         activity.project.users.each do |user|
           Juggernaut.publish("/users/#{user.authentication_token}", activity_hash.to_json)
         end
+
+        #Publish project activities to project users and organization admins
+        if activity.target_type == 'Project'
+          activity.project.organization.admins.each do |admin|
+            Juggernaut.publish("/users/#{admin.authentication_token}", activity_hash.to_json)
+          end
+        end
       end
     end
 
