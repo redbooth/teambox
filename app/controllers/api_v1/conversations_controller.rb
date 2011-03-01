@@ -50,7 +50,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
   def convert_to_task
     authorize! :update, @conversation
 
-    @conversation.attributes = params[:conversation]
+    @conversation.attributes = params
     @conversation.updating_user = current_user
     @conversation.comments_attributes = {"0" => params[:comment]} if params[:comment]
 
