@@ -15,7 +15,7 @@ module Watchable
   def add_watcher(user)
     unless has_watcher?(user) or !project.has_member?(user)
       watcher = Watcher.new(:user_id => user[:id], :project_id => self.project_id,
-                            :watchable_id => self.id, :watchable_type => self.class)
+                            :watchable_id => self.id, :watchable_type => self.class.to_s)
       true if watcher.save
     end
   end

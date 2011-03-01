@@ -38,7 +38,7 @@ class ThreadsObserver < ActiveRecord::Observer
     end
 
     def expire_all_with_locales(project)
-      project.activities.select([:target_id, :target_type]).where(:target_type => [Conversation, Task]).map(&:thread_id).uniq.each do |thread_id| 
+      project.activities.select([:target_id, :target_type]).where(:target_type => ['Conversation', 'Task']).map(&:thread_id).uniq.each do |thread_id|
         expire_with_locales(thread_id)
       end
     end
