@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
                   :wants_task_reminder,
                   :keyboard_shortcuts
 
-  attr_accessor   :activate, :old_password, :keyboard_shortcuts
+  attr_accessor   :activate, :old_password
 
   before_validation :sanitize_name
   before_destroy :rename_as_deleted
