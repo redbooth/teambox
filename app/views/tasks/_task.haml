@@ -11,11 +11,8 @@
       %a.full{ :href => project_task_path(project, task) } Full view
       %a.hide{ :href => '#' } Hide comments
     = link_to h(task), [project, task], :class => :name
-    - unless task.closed?
-      - if task.due_on
-        %span.assigned_date= due_on(task)
-      - if task.assigned
-        %span.assigned_user= link_to h(task.assigned.short_name), user_path(task.assigned.user)
+    %span.assigned_date= task.due_on ? due_on(task) : ''
+    %span.assigned_user= task.assigned ? link_to(h(task.assigned.short_name), user_path(task.assigned.user)) : ''
     - unless @current_project
       .extended
         %span.project

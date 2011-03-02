@@ -11,7 +11,9 @@ module TasksHelper
       classes << 'overdue' if task.overdue?
       classes << 'unassigned_date' if task.due_on.nil?
       classes << "status_#{task.status_name}"
-      classes << (task.assigned.nil? ? 'unassigned' : "user_#{task.assigned.user_id}")
+      classes << 'due_on' unless task.due_on.nil? or task.closed?
+      classes << (task.assigned.nil? ? 'unassigned' : 'assigned') unless task.closed?
+      classes << "user_#{task.assigned.user_id}" unless task.assigned.nil?
     end.join(' ')
   end
 
