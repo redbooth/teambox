@@ -140,13 +140,4 @@ class Organization < ActiveRecord::Base
 
 end
 
-Organization.default_settings = {
-    'colours' => {
-      'header_bar' => '78ACD7',
-      'links' => '259BAD',
-      'highlight' => 'fff9da',
-      'text' => '333',
-      'link_hover' => 'df5249'
-    }
-  }
-
+Organization.default_settings = { }

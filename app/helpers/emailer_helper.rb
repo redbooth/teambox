@@ -107,15 +107,7 @@ module EmailerHelper
   end
 
   def email_navigation
-    "#{organization_header_bar_colour}order-bottom-left-radius: 5px 5px; border-bottom-right-radius: 5px 5px; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px;padding: 4px 10px;"
-  end
-
-  def inline_organization_link_colour
-    "color: ##{@organization ? @organization.settings['colours']['links'] : ''}"
-  end
-
-  def inline_organization_text_colour
-    "font-color: ##{@organization ? @organization.settings['colours']['text'] : ''}"
+    "order-bottom-left-radius: 5px 5px; border-bottom-right-radius: 5px 5px; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px;padding: 4px 10px;"
   end
 
 end

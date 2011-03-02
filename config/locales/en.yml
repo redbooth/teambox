@@ -559,13 +559,7 @@ en:
       permalink_html: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
       domain_html: "Domain <em>You can use your own domain for your organization, check the <a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='How to use your own domain for your organization in Teambox'>documentation</a>.</em>"
     appearance_fields:
-      colours: Site colors
       logo_html: Logo <em>Ideally should be 134x36 pixels</em>
-      links_colour: default link color
-      highlight_colour: highlight color
-      link_hover_colour: default link hover color
-      text_colour: default text color
-      header_bar_colour: header bar color
       description_html: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
     index:
       about:

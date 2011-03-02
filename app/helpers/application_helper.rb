@@ -221,28 +221,6 @@ module ApplicationHelper
     end
   end
 
-  def organization_link_colour
-    "".tap do |html|
-      html << '<style type="text/css">'
-      html << "a { color: ##{@organization ? @organization.settings['colours']['links'] : ''};}"
-      html << "a:hover { color: ##{@organization ? @organization.settings['colours']['link_hover'] : ''};}"
-      html << "body { font-color: ##{@organization ? @organization.settings['colours']['text'] : ''};}"
-      html << '</style>'
-    end.html_safe
-  end
-
-  def organization_header_bar_colour
-    "background: ##{@organization ? @organization.settings['colours']['header_bar'] : ''};"
-  end
-
-  def custom_organization_colour_field(f, organization, field)
-    colour = organization.settings['colours'][field]
-    "".tap do |html|
-      html << f.hidden_field(:settings, :id => "organization_settings_colours_#{field}", :'data-default-color' => Organization.default_settings['colours'][field].upcase, :name => "organization[settings][colours][#{field}]", :value => colour)
-      html << content_tag('button', '', :id => "organization_settings_colours_#{field}_swatch", :class => 'colorbox')
-    end.html_safe
-  end
-
   def preview_button
     content_tag(:button, :'data-alternate' => t('comments.preview.close'), :class => :preview) do
       t('comments.preview.preview')

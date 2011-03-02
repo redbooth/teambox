@@ -11,7 +11,6 @@
     = include_stylesheets :print, :media => :print
     = yield :stylesheet_includes
     = stylesheet_link_tag 'cucumber', :media => :screen if Rails.env.cucumber?
-    = organization_link_colour
     = trimmer_include_tag
     = sprockets_include_tag
     = yield :js_includes
