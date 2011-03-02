@@ -25,6 +25,7 @@
 //= require <compact_mode>
 //= require <conversation>
 //= require <datas>
+//= require <i18n>
 //= require <datetime>
 //= require <expand_comment>
 //= require <facebox>

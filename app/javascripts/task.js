@@ -25,13 +25,6 @@ document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
   hideEditTaskFormAndShowHeader(form)
 })
 
-// update task counter
-document.on('ajax:success', 'form.edit_task', function(e, form) {
-  var task_data = e.memo.headerJSON
-  var counter = $$('.task_counter[data-task-id='+ task_data.id +']').first()
-  if (counter) counter.update(parseInt(counter.innerHTML) + 1)
-})
-
 document.on('click', '.date_picker', function(e, element) {
   new CalendarDateSelect(element.down('input'), element.down('span'), {
     buttons: true,
@@ -127,8 +120,59 @@ Task = {
         }
       })
     }
-  }
+  },
 
+  classesForListed: function(task) {
+    var classes = ['task']
+    var due_date = task.due_on ? new Date(Date.parse(task.due_on)) : null
+    if (due_date) {
+      if (due_date.is_today())
+        classes.push('due_today')
+      if (due_date.is_tomorrow())
+        classes.push('due_tomorrow')
+      if (due_date.is_within(due_date.add_weeks(2)))
+        classes.push('due_2weeks')
+      if (due_date.is_within(due_date.add_weeks(3)))
+        classes.push('due_3weeks')
+      if (due_date.is_within(due_date.add_months(1)))
+        classes.push('due_month')
+      if ((new Date()).beginning_of_day() >= due_date.beginning_of_day())
+        classes.push('overdue');
+    }
+    if (!task.due_on)
+      classes.push('unassigned_date')
+    classes.push('status_' + Task.statusName(task))
+    if (task.due_on && !task.completed_at && !(status == 3 || status == 4))
+      classes.push('due_on')
+    if (!task.completed_at)
+      classes.push((task.assigned_id != 0) ? 'assigned' : 'unassigned')
+    classes.push('user_' + task.assigned_id)
+    return classes.join(' ')
+  },
+
+  nameForAssigned: function(task) {
+    if (!task.assigned)
+      return ''
+    return I18n.t(I18n.translations.common.format_name_short, {
+      first_name: task.assigned.user.first_name, last_name: task.assigned.user.last_name,
+      first_name_first_character: task.assigned.user.first_name.substr(0,1),
+      last_name_first_character: task.assigned.user.last_name.substr(0,1)
+    })
+  },
+
+  dateForDueOn: function(task) {
+    var due_date = task.due_on ? new Date(Date.parse(task.due_on)) : null
+    if (!due_date)
+      return ''
+    if (due_date < (new Date()) && due_date.days_since() <= 5)
+      return I18n.t(I18n.translations.tasks.overdue, {days: due_date.days_since()})
+    else
+      return due_date.strftime('%b %d')
+  },
+
+  statusName: function(task) {
+    return ['new', 'open', 'hold', 'resolved', 'rejected'][task.status]
+  }
 }
 
 document.on('click', 'a.show_archived_tasks_link', function(e, el) {
@@ -168,24 +212,54 @@ document.observe('dom:loaded', function(e) {
   Task.insertAssignableUsers()
 });
 
+// main task update callback
+document.on('task:updated', function(e, doc){
+  var task_data = e.memo
+
+  // update task counter
+  var counter = $$('.task_counter[data-task-id='+ task_data.id +']').first()
+  if (counter) counter.update(parseInt(counter.innerHTML) + 1)
+
+  // task in task list
+  var task = $('task_' + task_data.id)
+  if (task) {
+    var due_on = task.down('.assigned_date')
+    var assigned_user = task.down('.assigned_user')
+    due_on.innerHTML = Task.dateForDueOn(task_data)
+    assigned_user.innerHTML = Task.nameForAssigned(task_data)
+    task.writeAttribute('class', Task.classesForListed(task_data))
+  }
+
+  // task in sidebar
+  var task_sidebar = $('my_task_' + task_data.id);
+  if (task_sidebar) {
+  }
+})
+
 document.on('ajax:success', 'form.edit_task', function(e, form) {
-  var person = form['task[assigned_id]'].value
-  var status = form['task[status]'] && form['task[status]'].value
-  var task = form.up('.thread')
+  var task_data = e.memo.headerJSON
+  if (!task_data)
+    return
+
+  document.fire('task:updated', task_data)
+
+  // Update form and task count
+  var assigned_user_id = task_data.assigned ? task_data.assigned.user_id : 0
   var task_count = Number($('open_my_tasks').innerHTML),
-      is_assigned_to_me = (status == 1) && my_projects[person]
+      is_assigned_to_me = (status == 1) && assigned_user_id == my_user.id,
       was_assigned_to_me = form.readAttribute('data-mine')
 
   form.writeAttribute('data-mine', String(Boolean(is_assigned_to_me)))
 
   if (is_assigned_to_me && !(was_assigned_to_me=='true')){
-      task_count += 1
+    task_count += 1
   }
-  if ((was_assigned_to_me=='true') && !is_assigned_to_me){
-      task_count -= 1
-  }
-  $('open_my_tasks').update(task_count)
 
+  if ((was_assigned_to_me=='true') && !is_assigned_to_me){
+    task_count -= 1
+  }
+  
+  $('open_my_tasks').update(task_count)
 })
 
 

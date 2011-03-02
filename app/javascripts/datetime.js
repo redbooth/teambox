@@ -26,6 +26,43 @@ Object.extend(Date.prototype, {
     date.setSeconds(0);
     return date;
   },
+
+  add_days: function(interval) {
+    return new Date(this).setDate(this.getDate() + 1)
+  },
+
+  add_weeks: function(interval) {
+    return this.add_days(7)
+  },
+
+  add_months: function(interval) {
+    return new Date(this).setMonth(this.getMonth() + 1)
+  },
+
+  is_today: function() {
+    var now = new Date()
+    var today = now.beginning_of_day()
+    var tomorrow = now.add_days(today, 1)
+    return (this >= today && this < tomorrow)
+  },
+
+  is_tomorrow: function() {
+    var now = new Date()
+    var tomorrow = now.add_days(now.beginning_of_day(), 2)
+    var day_after = now.add_days(tomorrow, 2)
+    return (this >= tomorrow && this < day_after)
+  },
+
+  is_within: function(other_date) {
+    var now = new Date()
+    var extent = new Date(other_date).beginning_of_day()
+    return (this >= now && this < other_date)
+  },
+
+  days_since: function() {
+    return Math.ceil(((new Date()).beginning_of_day() - this.beginning_of_day()) / 8640000.0)
+  },
+
   // Renders date with custom formatting, similar to Ruby's strftime
   strftime: function(format) {
     var minutes = this.getMinutes(),
