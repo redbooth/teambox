@@ -32,6 +32,7 @@ NavigationBar = {
 
   scroll: function() {
     var sidebar = $('column')
+    var column = sidebar.up('.column_wrap')
     if (document.viewport.getHeight() > sidebar.getHeight() && document.viewport.getScrollOffsets()[1] >= NavigationBar.initial_offset) {
       sidebar.style.position = 'fixed'
       sidebar.style.top = 0
@@ -40,7 +41,9 @@ NavigationBar = {
     {
       sidebar.style.position = 'absolute'
       sidebar.style.top = 'auto'
+      column.style.height=sidebar.getHeight()+'px'
     }
+
   },
 
   scrollToTopIfNeeded: function() {
@@ -87,7 +90,8 @@ NavigationBar = {
 
 document.on("dom:loaded", function() {
   $$('.nav_links .contained').invoke('hide')
-  NavigationBar.initial_offset = window.$('column').viewportOffset().top
+  window.$('column').style.position='absolute'
+  NavigationBar.initial_offset = document.viewport.getScrollOffsets()[1] + window.$('column').viewportOffset().top
 
   // Select and expand the current element
   var current = NavigationBar.detectSelectedSection()
