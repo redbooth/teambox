@@ -8,7 +8,18 @@ module GoogleDocsHelper
       'data-edit-url' => item[:edit_url],
       'data-acl-url' => item[:acl_url]
   end
-  
+
+  def google_docs_enabled?
+    Teambox.config.providers? and
+    Teambox.config.providers.detect { |p| p.provider == 'google' }
+  end
+
+  def hide_google_docs_if_not_configured
+    %(<style type='text/css'>
+        form .google_docs_attachment { display: none }
+      </style>).html_safe unless google_docs_enabled?
+  end
+
   def google_docs_image(document_type)
     image_tag "/images/google_docs/icon_6_#{document_type}.gif"
   end
