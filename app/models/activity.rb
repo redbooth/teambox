@@ -121,7 +121,7 @@ class Activity < ActiveRecord::Base
   end
 
   def self.for_projects(projects)
-    in_projects(projects).limit_per_page.by_updated
+    in_projects(projects).limit_per_page.by_updated.order('id desc')
   end
 
   def to_xml(options = {})
