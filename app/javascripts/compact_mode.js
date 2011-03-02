@@ -39,6 +39,7 @@ document.on("click", "#activities .comment_header", function(e,el) {
 
 document.on("click", "#activities .comment_header a", function(e,el) {
   ActivityFeed.toggle(el.up('.thread'));
+  if (e.isMiddleClick()) { return; }
   if (!el.up('.project_overlay')) {
     e.stop();
     window.location = el.readAttribute("href");
