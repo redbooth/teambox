@@ -18,6 +18,8 @@
   = show_more_button
 
 - content_for :column do
+  .more_links
+    = render "shared/collapse"
   = render 'recent_conversations', :project => @current_project, :recent_conversations => @recent_conversations
   = render 'pages', :project => @current_project, :pages => @current_project.pages
 
