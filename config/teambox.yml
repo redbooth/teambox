@@ -101,17 +101,34 @@ defaults: &defaults
   # You can configure standard oauth provider here, or any supported omni-auth provider
   # in the omni-auth initializer.
   #
-  #  providers:
-  #  - :provider: github
-  #    :key: 
-  #    :secret: 
-  #  - :provider: twitter
-  #    :key: 
-  #    :secret: 
-  #  - :provider: facebook
-  #    :key: 
-  #    :secret: 
-  
+  # providers:
+  # Register your own domain at http://github.com/account/applications
+  # Allows login through Github
+  # - :provider: github
+  #   :key: 
+  #   :secret: 
+  # Register your own domain at http://dev.twitter.com/apps/new
+  # Allows login through Twitter
+  # - :provider: twitter
+  #   :key: 
+  #   :secret: 
+  # Register your own domain at http://www.facebook.com/developers
+  # Allows login through Facebook
+  # - :provider: facebook
+  #   :key: 
+  #   :secret: 
+  # Register your own domain at https://www.google.com/accounts/NewAccount
+  # Allows Google Docs integration
+  # - :provider: google
+  #   :key: 
+  #   :secret: 
+  # - :provider: google_apps
+  # Register your own domain at https://www.linkedin.com/secure/developer
+  # Allows login through LinkedIn
+  # - :provider: linked_in
+  #   :key: 
+  #   :secret: 
+
   heroku: <%= !!ENV['HEROKU_TYPE'] %>
 
 development:
