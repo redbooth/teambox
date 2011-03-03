@@ -130,6 +130,7 @@ Teambox.NotificationsBuffer.prototype.clearNotificationWindow = function() {
 // * when 6th notitification comes in, add it to buffer and flush (render) all notifications 
 Teambox.NotificationsBuffer.prototype.addNotification = function(notification) {
   this.notifications.push(notification);
+  Event.fire(document, 'notification:received', notification, true);
 
   if (this.notifications.length < 5) {
     this.addNotificationWindowEntry(notification);
@@ -144,10 +145,13 @@ Teambox.NotificationsBuffer.prototype.addNotification = function(notification) {
 Teambox.NotificationsBuffer.prototype.flushAll = function(nonotify, scrollToId) {
   var flushBuffer = this.notifications.clone();
   this.notifications.clear();
+
   for (var i = 0; i < flushBuffer.length; i++) {
     var notification = flushBuffer.shift();
     if (!nonotify) {
       notification.notify(function() {
+          Event.fire(document, 'notification:notified', notification, true);
+
           var scrollTarget = $(scrollToId),
               focussed_input = Teambox.User.currently_focussed_element;
 
