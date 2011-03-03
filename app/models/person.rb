@@ -133,6 +133,7 @@ class Person < ActiveRecord::Base
   
   def log_delete
     project.log_activity(self, 'delete')
+    project.destroy_activity(self, 'create')
   end
   
   def cleanup_after

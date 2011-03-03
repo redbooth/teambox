@@ -44,7 +44,12 @@ class Activity < ActiveRecord::Base
     
     activity
   end
-  
+
+  def self.remove_log(project,target,action)
+    activity = where(:project_id => project.id, :target_id => target.id, :target_type => target.class.name, :action => action).first
+    activity.destroy if activity
+  end
+
   def refs_thread_comments
     if target.respond_to? :first_comment
       [target.first_comment] + target.recent_comments

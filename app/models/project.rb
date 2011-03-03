@@ -33,7 +33,11 @@ class Project < ActiveRecord::Base
     return log_later(target, action, creator_id) if self.is_importing
     Activity.log(self, target, action, creator_id)
   end
-  
+
+  def destroy_activity(target, action)
+    Activity.remove_log(self, target, action)
+  end
+
   def log_later(target, action, creator_id)
     @import_activities ||= []
     base = {:date => target.try(:created_at) || nil,

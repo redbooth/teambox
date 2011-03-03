@@ -49,7 +49,9 @@ describe Person do
     project.add_user(user)
     lambda {
       project.remove_user(user)
-    }.should change(Activity, :count).by(1)
+      activity = Activity.last
+      activity.action_type.should == 'delete_person'
+    }.should change(Activity, :count).by(0)
   end
 
   it "should create a person_create activity when a person is readded to a project" do
@@ -60,6 +62,22 @@ describe Person do
     lambda {
       project.add_user(user)
     }.should change(Activity, :count).by(1)
+  end
+
+  it "should destroy the person_create activity when a person is removed from a project" do
+    project = Factory :project
+    user = Factory :user
+    project.add_user(user)
+    activity = Activity.last
+    activity.action_type.should == 'create_person'
+
+    lambda {
+      project.remove_user(user)
+    }.should change(Activity, :count).by(0)
+
+    lambda {
+      activity.reload
+    }.should raise_error(ActiveRecord::RecordNotFound)
   end
 
   it "should be created" do
