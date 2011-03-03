@@ -1,4 +1,4 @@
-.task{ :class => task_classes(task) }
+.task{ :class => task_classes(task), :id => "task_list_task_#{task.id}" }
   %span.taskStatus
     = task_status(task, :content)
   = render_due_on(task, current_user)

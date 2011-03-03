@@ -2,13 +2,24 @@ div.column
   span.overdue
     color: red
 
-  span.task_status
-    margin:
-      right: 5px
-      bottom: 3px
-    padding: 2px 5px
-    font-size: 10px
-    float: none
+  .task
+    span.task_status
+      margin:
+        right: 5px
+        bottom: 3px
+      padding: 2px 5px
+      font-size: 10px
+      float: none
+    span.due_on
+      display: none
+
+  .task.overdue
+    span.due_on
+      color: red
+
+  .task.due_on
+    span.due_on
+      display: inline-block
 
 form.new_task, form.edit_task, .task_list_form
   margin-bottom: 10px

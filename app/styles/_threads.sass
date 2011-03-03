@@ -7,6 +7,20 @@
     font-size: 11px
     color: #333
     display: inline-block
+    span.assigned_date, span.assigned_to
+      display: none
+  .task_summary.due_on
+    span.assigned_date
+      display: inline-block
+  .task_summary.assigned
+    span.assigned_to
+      display: inline-block
+  .task_summary.status_notopen
+    span.assigned_to
+      display: none
+  .task_summary.overdue
+    span.assigned_date
+      color: red
   .comments
     border-left: 4px solid $comments_left_border
     background-color: $comments_bkg

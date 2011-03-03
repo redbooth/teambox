@@ -11,6 +11,7 @@ module TasksHelper
       classes << 'overdue' if task.overdue?
       classes << 'unassigned_date' if task.due_on.nil?
       classes << "status_#{task.status_name}"
+      classes << 'status_notopen' if !task.open?
       classes << 'due_on' unless task.due_on.nil? or task.closed?
       classes << (task.assigned.nil? ? 'unassigned' : 'assigned') unless task.closed?
       classes << "user_#{task.assigned.user_id}" unless task.assigned.nil?
@@ -25,7 +26,7 @@ module TasksHelper
   end
 
   def render_due_on(task,user)
-    render 'tasks/due_on', :task => task, :user => user
+    content_tag(:span, due_on(task), :class => 'due_on')
   end
 
   def render_assignment(task,user)
@@ -76,7 +77,20 @@ module TasksHelper
     if task.overdue? && task.overdue <= 5
       t('tasks.overdue', :days => task.overdue)
     else
-      I18n.l(task.due_on, :format => '%b %d')
+      task_due_on(task.due_on)
+    end
+  end
+  
+  def task_due_on(due_on)
+    now = Time.current.to_date
+    if due_on == now
+      t('tasks.due_on.today')
+    elsif due_on == now+1
+      t('tasks.due_on.tomorrow')
+    elsif due_on
+      I18n.l(due_on, :format => '%b %d')
+    else
+      ''
     end
   end
 
@@ -127,9 +141,12 @@ module TasksHelper
   protected
 
     def span_for_due_date(due_date)
-      content_tag(:span, due_date ?
-          localize(due_date, :format => :short) :
-          t('tasks.due_on.undefined'),
+      content_tag(:span, task_due_on(due_date),
+        :class => "assigned_date")
+    end
+    
+    def span_for_thread_due_date(task)
+      content_tag(:span, due_on(task),
         :class => "assigned_date")
     end
 end
