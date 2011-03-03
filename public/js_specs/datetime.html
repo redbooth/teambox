@@ -3,8 +3,9 @@
   <head> 
     <meta charset='UTF-8'> 
     <style type="text/css">a { color: #259BAD;}a:hover { color: #df5249;}body { font-color: #333;}</style> 
-    <script src="/trimmer/en.js" type="text/javascript"></script> 
-    <script src="/sprockets.js" type="text/javascript"></script> 
+    <script src="/trimmer/en.js" type="text/javascript"></script>
+    <script src="/sprockets.js" type="text/javascript"></script>
+    <script src="/js_specs/test_core.js" type="text/javascript"></script>
   </head> 
   <body> 
     <style type="text/css">
@@ -24,24 +25,14 @@
 
     <script type="text/javascript"> 
     //<![CDATA[
-    String.prototype.assertEquals = function(given,expected) {
-      var text;
-      if (given == expected) {
-        text = "Test passed";
-      } else {
-        text = "<span style='color: red'>Test FAILED:</span> "+this+"<br/>"+
-               "Expected: "+expected+"<br/>"+
-               "Got: &nbsp;&nbsp;&nbsp;&nbsp; "+given;
-      }
-      text = "<p>"+text+"</p>";
-      $('testResults').insert({ bottom: text });
-    }
-
     var now = new Date();
     var midday = new Date(1986,1,7,14,0,0);
+    var midday_tomorrow = new Date(1986,1,8,14,0,0);
 
     "date.beginning_of_day returns current day at midnight".
       assertEquals(midday.beginning_of_day() - 0, midday - 14*60*60*1000);
+    "date.beginning_of_next_day returns next day at midnight".
+      assertEquals(midday.beginning_of_next_day() - 0, midday_tomorrow - 14*60*60*1000);
 
     "date.strftime renders %a".assertEquals(midday.strftime("%a"), "Fri");
     "date.strftime renders %A".assertEquals(midday.strftime("%A"), "Friday");
@@ -80,6 +71,37 @@
     "date.timeAgo for a time in the future".
       assertEquals((new Date(midday - 0 + 60*60*1000)).timeAgo(midday), "February 7, 1986");
 
+    "date.add_days adds days".
+      assertEquals(midday.add_days(2) - 0, (midday - -(86400000*2)));
+
+	"date.add_weeks adds weeks".
+      assertEquals(midday.add_weeks(2) - 0, (midday - -(86400000*14)));
+
+  	"date.add_months adds months".
+      assertEquals(midday.add_months(1) - 0, (midday - -(86400000*28)));
+
+	"date.is_today returns true if today".
+      assertEquals(now.is_today(), true);
+
+	"date.is_today returns false if tomorrow".
+      assertEquals(now.add_days(1).is_today(), false);
+
+	"date.is_tomorrow returns false if today".
+      assertEquals(now.is_tomorrow(), false);
+
+	"date.is_tomorrow returns true if tomorrow".
+      assertEquals(now.add_days(1).is_tomorrow(), true);
+
+    var dates = [now, now.add_days(1), now.add_days(2), now.add_days(3), now.add_days(-1)]
+    var end_date = now.add_days(3)
+	"date.is_within returns true for the valid range".
+      assertEqualsArray(dates.map(function(d){ return d.is_within(end_date) }), [true, true, true, false, false]);
+
+	"date.days_since returns 0 days since now".
+      assertEquals(now.days_since(), 0);
+
+	"date.days_since returns days since date".
+      assertEquals(now.add_days(-3).days_since(), 3);
     //]]>
     </script>
 

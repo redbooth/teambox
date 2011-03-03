@@ -1,0 +1,129 @@
+<!DOCTYPE html> 
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'> 
+  <head> 
+    <meta charset='UTF-8'> 
+    <style type="text/css">a { color: #259BAD;}a:hover { color: #df5249;}body { font-color: #333;}</style> 
+    <script src="/trimmer/en.js" type="text/javascript"></script>
+    <script src="/sprockets.js" type="text/javascript"></script>
+    <script src="/js_specs/test_core.js" type="text/javascript"></script>
+  </head> 
+  <body> 
+    <style type="text/css">
+      #testResults {
+        font-family: Monaco, "Courier New", monospace;
+        font-size: 12px; }
+    </style>
+    <script type="text/javascript"> 
+    //<![CDATA[
+    my_user = {"first_day_of_week":"sunday","username":"frank","id":1,"splash_screen":true}
+    my_projects = {"1":{"name":"Earthworks Yoga","permalink":"earthworks","role":3}}
+    current_project = null
+    //]]>
+    </script>
+
+    <div id="testResults"></div>
+
+    <script type="text/javascript"> 
+    //<![CDATA[
+
+    function make_task(properties) {
+      return $H({"name":"Test","position":0,"recent_comment_ids":[219,218],"assigned_id":1,"due_on":"2011-02-01","first_comment_id":56,"created_at":"2011-03-02 14:15:24 +0000","updated_at":"2011-03-03 19:12:42 +0000","watchers":[1,2,4,5,3],"project_id":1,"task_list_id":2,"id":8,"assigned":{"source_user_id":null,"role":3,"id":1,"user_id":1,"user":{"avatar_url":"http://www.gravatar.com/avatar/85ebbad6d49ffba12ada85b98baca888?size=48&default=identicon","username":"frank","last_name":"Kramer","first_name":"Frank"}},"user_id":1,"comments_count":145,"status":1}).merge(properties).toObject();
+    }
+
+    var task_data = make_task({});
+    var task;
+
+    // Names
+    "nameForAssigned should be valid".
+      assertEquals(Task.nameForAssigned(task_data), "F. Kramer");
+
+    "fullNameForAssigned should be valid".
+      assertEquals(Task.fullNameForAssigned(task_data), "Frank Kramer");
+
+    // Due dates
+    "due date should be valid".
+      assertEquals(Task.dateForDueOn(task_data), "Feb 01");
+
+    task = make_task({due_on: new Date()})
+    "due date should be today".
+      assertEquals(Task.dateForDueOn(task), "Today");
+
+    task = make_task({due_on: (new Date()).add_days(1)})
+    "due date should be tomorrow".
+      assertEquals(Task.dateForDueOn(task), "Tomorrow");
+
+	task = make_task({due_on: (new Date()).add_days(5)})
+    "due date should be %b %d".
+      assertEquals(Task.dateForDueOn(task), (new Date()).add_days(5).strftime("%b %D"));
+
+   	task = make_task({due_on: (new Date()).add_days(-3)})
+    "due date should be 3 days late".
+      assertEquals(Task.dateForDueOn(task), "3 days late");
+
+   // Classes
+   "classNames should be valid".
+     assertEquals(Task.classesForListed(task_data), "overdue status_open due_on assigned user_1");
+
+   task = make_task({assigned:null, assigned_id:0});
+   "classNames should be valid (not assigned)".
+     assertEquals(Task.classesForListed(task), "overdue status_open due_on unassigned");
+
+   task = make_task({due_on: null});
+   "classNames should be valid (not due)".
+     assertEquals(Task.classesForListed(task), "unassigned_date status_open assigned user_1");
+
+   task = make_task({due_on: new Date()});
+   "classNames should be valid (due today)".
+     assertEquals(Task.classesForListed(task), "due_today due_week due_2weeks due_3weeks due_month status_open due_on assigned user_1");
+
+   task = make_task({due_on: (new Date()).add_days(1)});
+   "classNames should be valid (due tomorrow)".
+     assertEquals(Task.classesForListed(task), "due_tomorrow due_week due_2weeks due_3weeks due_month status_open due_on assigned user_1");
+
+   task = make_task({due_on: (new Date()).add_weeks(1)});
+   "classNames should be valid (due in 1 week)".
+     assertEquals(Task.classesForListed(task), "due_2weeks due_3weeks due_month status_open due_on assigned user_1");
+
+   task = make_task({due_on: (new Date()).add_weeks(2)});
+   "classNames should be valid (due in 2 weeks)".
+     assertEquals(Task.classesForListed(task), "due_3weeks due_month status_open due_on assigned user_1");
+
+   task = make_task({due_on: (new Date()).add_weeks(3)});
+   "classNames should be valid (due in 3 weeks)".
+     assertEquals(Task.classesForListed(task), "due_month status_open due_on assigned user_1");
+
+   task = make_task({due_on: (new Date()).add_months(1)});
+   "classNames should be valid (due in 1 month)".
+     assertEquals(Task.classesForListed(task), "status_open due_on assigned user_1");
+
+   task = make_task({status: 2})
+   "classNames should be valid (hold)".
+     assertEquals(Task.classesForListed(task), "overdue status_hold status_notopen due_on assigned user_1");
+
+   task = make_task({status: 3})
+   "classNames should be valid (resolved)".
+     assertEquals(Task.classesForListed(task), "overdue status_resolved status_notopen user_1");
+
+   task = make_task({status: 4})
+   "classNames should be valid (rejected)".
+     assertEquals(Task.classesForListed(task), "overdue status_rejected status_notopen user_1");
+
+    // Statuses
+    var count = 0;
+    ['new', 'open', 'hold', 'resolved', 'rejected'].each(function(status_name){
+      task_data.status = count;
+      "Status should be valid".
+        assertEquals(Task.statusName(task_data), status_name);
+      count += 1;
+    })
+    task_data.status = 1;
+
+    // Rendering
+    /*"Template should render correctly".
+      assertEquals(Task.renderMyTask(task_data).strip(), "<div class='el task overdue status_open due_on assigned user_1' id='my_task_8'>\n  <a href='/projects/1/tasks/8'>Test</a>\n  <span class='due_on'>Feb 01</span>\n</div>");*/
+    //]]>
+    </script>
+
+  </body> 
+</html> 
+

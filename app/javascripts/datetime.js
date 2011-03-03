@@ -29,7 +29,7 @@ Object.extend(Date.prototype, {
   },
 
   beginning_of_next_day: function() {
-    var date = new Date(this + 8640000)
+    var date = this.add_days(1)
     date.setHours(0)
     date.setMinutes(0)
     date.setSeconds(0)
@@ -44,7 +44,7 @@ Object.extend(Date.prototype, {
   },
 
   add_weeks: function(interval) {
-    return this.add_days(7)
+    return this.add_days(interval*7)
   },
 
   add_months: function(interval) {
@@ -68,9 +68,9 @@ Object.extend(Date.prototype, {
   },
 
   is_within: function(other_date) {
-    var now = new Date()
+    var now = (new Date()).beginning_of_day()
     var extent = new Date(other_date).beginning_of_day()
-    return (this >= now && this < other_date)
+    return (this >= now && this < extent)
   },
 
   days_since: function() {

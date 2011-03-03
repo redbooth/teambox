@@ -125,16 +125,19 @@ Task = {
   classesForListed: function(task) {
     var classes = []
     var due_date = task.due_on ? new Date(Date.parse(task.due_on)) : null
+    var now = new Date()
     if (due_date) {
       if (due_date.is_today())
         classes.push('due_today')
       if (due_date.is_tomorrow())
         classes.push('due_tomorrow')
-      if (due_date.is_within(due_date.add_weeks(2)))
+      if (due_date.is_within(now.add_weeks(1)))
+        classes.push('due_week')
+      if (due_date.is_within(now.add_weeks(2)))
         classes.push('due_2weeks')
-      if (due_date.is_within(due_date.add_weeks(3)))
+      if (due_date.is_within(now.add_weeks(3)))
         classes.push('due_3weeks')
-      if (due_date.is_within(due_date.add_months(1)))
+      if (due_date.is_within(now.add_months(1)))
         classes.push('due_month')
       if (due_date - ((new Date()).beginning_of_day()) < 0)
         classes.push('overdue')
@@ -144,11 +147,12 @@ Task = {
     classes.push('status_' + Task.statusName(task))
     if (task.status != 1) // !open?
       classes.push('status_notopen')
-    if (task.due_on && !task.completed_at && !(task.status == 3 || task.status == 4)) // !(hold||resolved)
+    if (task.due_on && !(task.status == 3 || task.status == 4)) // !(rejected||resolved)
       classes.push('due_on')
-    if (!task.completed_at)
+    if (!(task.status == 3 || task.status == 4))
       classes.push((task.assigned_id != 0) ? 'assigned' : 'unassigned')
-    classes.push('user_' + task.assigned_id)
+    if (task.assigned)
+      classes.push('user_' + task.assigned.user_id)
     return classes.join(' ')
   },
 
