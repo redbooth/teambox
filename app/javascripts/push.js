@@ -125,8 +125,9 @@ Teambox.NotificationsBuffer.prototype.clearNotificationWindow = function() {
 };
 
 Teambox.NotificationsBuffer.prototype.addNotification = function(notification) {
+  this.notifications.push(notification);
+
   if (this.notifications.length < 5) {
-    this.notifications.push(notification);
     this.addNotificationWindowEntry(notification);
     this.toggleNotificationWindow(true);
     this.toggleNotificationsIcon();
