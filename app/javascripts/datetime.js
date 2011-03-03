@@ -24,11 +24,23 @@ Object.extend(Date.prototype, {
     date.setHours(0);
     date.setMinutes(0);
     date.setSeconds(0);
+    date.setMilliseconds(0);
     return date;
   },
 
+  beginning_of_next_day: function() {
+    var date = new Date(this + 8640000)
+    date.setHours(0)
+    date.setMinutes(0)
+    date.setSeconds(0)
+    date.setMilliseconds(0)
+    return date
+  },
+
   add_days: function(interval) {
-    return new Date(this).setDate(this.getDate() + 1)
+    var date = new Date(this)
+    date.setDate(this.getDate() + interval)
+    return date
   },
 
   add_weeks: function(interval) {
@@ -36,20 +48,22 @@ Object.extend(Date.prototype, {
   },
 
   add_months: function(interval) {
-    return new Date(this).setMonth(this.getMonth() + 1)
+    var date = new Date(this)
+    date.setMonth(this.getMonth() + interval)
+    return date
   },
 
   is_today: function() {
     var now = new Date()
     var today = now.beginning_of_day()
-    var tomorrow = now.add_days(today, 1)
+    var tomorrow = new Date(today).add_days(1)
     return (this >= today && this < tomorrow)
   },
 
   is_tomorrow: function() {
     var now = new Date()
-    var tomorrow = now.add_days(now.beginning_of_day(), 2)
-    var day_after = now.add_days(tomorrow, 2)
+    var tomorrow = now.beginning_of_day().add_days(1)
+    var day_after = new Date(tomorrow).add_days(1)
     return (this >= tomorrow && this < day_after)
   },
 
@@ -60,7 +74,7 @@ Object.extend(Date.prototype, {
   },
 
   days_since: function() {
-    return Math.ceil(((new Date()).beginning_of_day() - this.beginning_of_day()) / 8640000.0)
+    return Math.floor(((new Date()).beginning_of_day() - this.beginning_of_day()) / 86400000.0)
   },
 
   // Renders date with custom formatting, similar to Ruby's strftime

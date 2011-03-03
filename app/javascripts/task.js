@@ -123,7 +123,7 @@ Task = {
   },
 
   classesForListed: function(task) {
-    var classes = ['task']
+    var classes = []
     var due_date = task.due_on ? new Date(Date.parse(task.due_on)) : null
     if (due_date) {
       if (due_date.is_today())
@@ -136,13 +136,15 @@ Task = {
         classes.push('due_3weeks')
       if (due_date.is_within(due_date.add_months(1)))
         classes.push('due_month')
-      if ((new Date()).beginning_of_day() >= due_date.beginning_of_day())
-        classes.push('overdue');
+      if (due_date - ((new Date()).beginning_of_day()) < 0)
+        classes.push('overdue')
     }
     if (!task.due_on)
       classes.push('unassigned_date')
     classes.push('status_' + Task.statusName(task))
-    if (task.due_on && !task.completed_at && !(status == 3 || status == 4))
+    if (task.status != 1) // !open?
+      classes.push('status_notopen')
+    if (task.due_on && !task.completed_at && !(task.status == 3 || task.status == 4)) // !(hold||resolved)
       classes.push('due_on')
     if (!task.completed_at)
       classes.push((task.assigned_id != 0) ? 'assigned' : 'unassigned')
@@ -160,14 +162,28 @@ Task = {
     })
   },
 
+  fullNameForAssigned: function(task) {
+    if (!task.assigned)
+      return ''
+    return I18n.t(I18n.translations.common.format_name, {
+      first_name: task.assigned.user.first_name, last_name: task.assigned.user.last_name
+    })
+  },
+
   dateForDueOn: function(task) {
     var due_date = task.due_on ? new Date(Date.parse(task.due_on)) : null
     if (!due_date)
       return ''
-    if (due_date < (new Date()) && due_date.days_since() <= 5)
+    if (due_date - (new Date().beginning_of_day()) < 0 && due_date.days_since() <= 5)
       return I18n.t(I18n.translations.tasks.overdue, {days: due_date.days_since()})
-    else
-      return due_date.strftime('%b %d')
+    else {
+      if (due_date.is_today())
+        return I18n.t(I18n.translations.tasks.due_on.today)
+      else if (due_date.is_tomorrow())
+        return I18n.t(I18n.translations.tasks.due_on.tomorrow)
+      else
+        return due_date.strftime('%b %D')
+    }
   },
 
   statusName: function(task) {
@@ -222,17 +238,41 @@ document.on('task:updated', function(e, doc){
 
   // task in task list
   var task = $('task_' + task_data.id)
+  var task_classes = Task.classesForListed(task_data)
   if (task) {
     var due_on = task.down('.assigned_date')
     var assigned_user = task.down('.assigned_user')
     due_on.innerHTML = Task.dateForDueOn(task_data)
     assigned_user.innerHTML = Task.nameForAssigned(task_data)
-    task.writeAttribute('class', Task.classesForListed(task_data))
+    task.writeAttribute('class', 'task ' + task_classes)
   }
 
-  // task in sidebar
+  // task in thread
+  task = $('thread_task_' + task_data.id)
+  if (task) {
+    var summary = task.down('.task_summary')
+    summary.writeAttribute('class', 'task_summary ' + task_classes)
+    summary.down('.task_status').writeAttribute('class', 'task_status task_status_' + Task.statusName(task_data))
+    summary.down('.task_status').innerHTML = Task.statusName(task_data)
+    summary.down('.assigned_date').innerHTML = Task.dateForDueOn(task_data)
+    summary.down('.assigned_to').innerHTML = task_data.assigned ? I18n.t(I18n.translations.tasks.assigned.assigned_to, {user: Task.fullNameForAssigned(task_data)}) : ''
+    
+    var counter = task.down('.comment_header').down('.comment_count').down()
+    if (counter) counter.update(parseInt(counter.innerHTML) + 1)
+  }
+
+  // task in my tasks sidebar
   var task_sidebar = $('my_task_' + task_data.id);
   if (task_sidebar) {
+    task_sidebar.writeAttribute('class', 'el task ' + task_classes)
+    task_sidebar.down('.due_on').innerHTML = Task.dateForDueOn(task_data)
+  }
+
+  // task in sidebar (viewing single task)
+  task_sidebar = $('task_list_task_' + task_data.id);
+  if (task_sidebar) {
+    task_sidebar.writeAttribute('class', 'task ' + task_classes)
+    task_sidebar.down('.due_on').innerHTML = Task.dateForDueOn(task_data)
   }
 })
 

@@ -123,20 +123,22 @@ document.on('click', '.thread .comments .more_comments a', function(e, el) {
 // insert new comment into thread after posting
 document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, form) {
   resetCommentsForm(form)
+  var comment_data = e.memo.responseText
   if (!e.memo.responseText.blank()) {
-    form.up('.thread').down('.comments').insert(e.memo.responseText).
-      down('.comment:last-child').highlight({ duration: 1 })
+    var thread = form.up('.thread')
+    var new_comment = thread.down('.comments').insert(e.memo.responseText).down('.comment:last-child')
+    new_comment.highlight({ duration: 1 })
+
+    // update excerpt in collapsed threads
+    var body = new_comment.down('.body'),
+        start = (body.down('.assigned_transition') || body.down('.before')),
+        excerpt = start.nextSiblings().map(function(e){return e.innerHTML}).join(' ').stripTags()
+    thread.down('.comment_header').
+           down('.excerpt').
+           update('<strong>' + body.down('.before').down('.user').innerHTML + '</strong> ' + excerpt)
   }
   my_user.stats.conversations++;
   document.fire("stats:update");
-})
-
-// remove status, date and assigned person from the excerpt in collapsed threads
-document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, form) {
-  var task_summary = form.up('.thread').down('.task_summary');
-  if (task_summary) { task_summary.remove(); }
-  var comment_count = form.up('.thread').down('.comment_count');
-  if (comment_count) { comment_count.remove(); }
 })
 
 document.on('ajax:failure', 'form.new_conversation, .thread form:not(.not-new-comment)', function(e, form) {
