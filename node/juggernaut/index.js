@@ -1,7 +1,8 @@
-require("fs").readdirSync("./vendor").forEach(function(name){
-  require.paths.unshift("./vendor/" + name + "/lib");  
+path = process.cwd() + "/node/juggernaut/";
+require("fs").readdirSync(path + "vendor").forEach(function(name){
+  require.paths.unshift(path + "vendor/" + name + "/lib");
 });
 
-require.paths.unshift("./lib");
-module.exports = require("./lib/juggernaut");
+require.paths.unshift(path + "lib");
+module.exports = require(path + "lib/juggernaut");
 
