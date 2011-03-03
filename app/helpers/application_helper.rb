@@ -310,7 +310,8 @@ BLOCK
       }
       Teambox.pushServer = new Juggernaut({
         port: #{Teambox.config.juggernaught.port},
-        meta: meta
+        meta: meta,
+        secure: ('https:' == document.location.protocol)
       });
     JS
   end
