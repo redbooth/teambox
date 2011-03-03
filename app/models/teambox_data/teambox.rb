@@ -166,6 +166,8 @@ class TeamboxData
           :comment_target_id => activity[:comment_target_id])
         act.created_at = activity[:date]
         act.updated_at = activity[:date]
+
+        act.dont_push = true if Teambox.config.push_new_activities?
         act.save!
       end
       
