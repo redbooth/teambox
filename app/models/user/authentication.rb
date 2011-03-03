@@ -37,4 +37,12 @@ class User
     true
   end
 
+  def self.select_auth_tokens(assoc)
+    connection.select_rows assoc.except(:select).select("users.authentication_token,users.login").to_sql
+  end
+
+  def to_auth_token
+    attributes.select {|k,v| %w(authentication_token login).include?(k)}.map {|e| e[1]}
+  end
+
 end

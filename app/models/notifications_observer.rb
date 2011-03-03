@@ -24,15 +24,21 @@ class NotificationsObserver < ActiveRecord::Observer
       if activity.project && !activity.is_first_comment? && activity.push?
         activity_hash = activity.to_push_data(:include => [:project, :target, :user])
 
-        activity.project.users.each do |user|
-          Juggernaut.publish("/users/#{user.authentication_token}", activity_hash.to_json)
+        users = User.select_auth_tokens activity.project.users
+
+        #Publish activities to:
+        # * project users
+        # * organization admins if project/person activity
+        # * activity user if person activity
+        if %w(Project Person).include? activity.target_type
+          users = users.concat User.select_auth_tokens activity.project.organization.admins
+          if activity.target_type == 'Person'
+            users << activity.target.user.to_auth_token
+          end
         end
 
-        #Publish project activities to project users and organization admins
-        if activity.target_type == 'Project'
-          activity.project.organization.admins.each do |admin|
-            Juggernaut.publish("/users/#{admin.authentication_token}", activity_hash.to_json)
-          end
+        users.uniq.each do |user|
+          Juggernaut.publish("/users/#{user[0]}", activity_hash.to_json)
         end
       end
     end
