@@ -17,7 +17,7 @@ class ActivityRenderer < TemplateRenderer
 
 
   def self.render_activity(activity)
-    if %w(create edit).include? activity.action
+    if %w(create edit delete).include? activity.action
       case activity.target.class.name
       when "Comment"
         render_template(:partial => 'comments/comment', :locals => {:comment => activity.target})
