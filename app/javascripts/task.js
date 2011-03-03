@@ -188,6 +188,16 @@ Task = {
 
   statusName: function(task) {
     return ['new', 'open', 'hold', 'resolved', 'rejected'][task.status]
+  },
+
+  renderMyTask: function(task) {
+    return Mustache.to_html(Templates.tasks.my_task, {
+      task_id: task.id,
+      task_classes: Task.classesForListed(task),
+      task_url: '/projects/' + task.project_id + '/tasks/' + task.id,
+      task_name: task.name,
+      task_due: Task.dateForDueOn(task)
+    })
   }
 }
 
@@ -231,6 +241,7 @@ document.observe('dom:loaded', function(e) {
 // main task update callback
 document.on('task:updated', function(e, doc){
   var task_data = e.memo
+  var is_assigned_to_me = (task_data.status == 1) && task_data.assigned && task_data.assigned.user_id == my_user.id
 
   // update task counter
   var counter = $$('.task_counter[data-task-id='+ task_data.id +']').first()
@@ -264,9 +275,17 @@ document.on('task:updated', function(e, doc){
   // task in my tasks sidebar
   var task_sidebar = $('my_task_' + task_data.id);
   if (task_sidebar) {
-    task_sidebar.writeAttribute('class', 'el task ' + task_classes)
-    task_sidebar.down('.due_on').innerHTML = Task.dateForDueOn(task_data)
+    if (is_assigned_to_me) {
+      task_sidebar.writeAttribute('class', 'el task ' + task_classes)
+      task_sidebar.down('.due_on').innerHTML = Task.dateForDueOn(task_data)
+    } else {
+      task_sidebar.remove()
+    }
+  } else if (is_assigned_to_me) {
+    $('my_tasks').next().insert({top:Task.renderMyTask(task_data)})
   }
+
+  $('open_my_tasks').update($('my_tasks').next().getElementsBySelector('.el.task').length)
 
   // task in sidebar (viewing single task)
   task_sidebar = $('task_list_task_' + task_data.id);
@@ -285,21 +304,9 @@ document.on('ajax:success', 'form.edit_task', function(e, form) {
 
   // Update form and task count
   var assigned_user_id = task_data.assigned ? task_data.assigned.user_id : 0
-  var task_count = Number($('open_my_tasks').innerHTML),
-      is_assigned_to_me = (status == 1) && assigned_user_id == my_user.id,
-      was_assigned_to_me = form.readAttribute('data-mine')
+  var is_assigned_to_me = (task_data.status == 1) && assigned_user_id == my_user.id
 
   form.writeAttribute('data-mine', String(Boolean(is_assigned_to_me)))
-
-  if (is_assigned_to_me && !(was_assigned_to_me=='true')){
-    task_count += 1
-  }
-
-  if ((was_assigned_to_me=='true') && !is_assigned_to_me){
-    task_count -= 1
-  }
-  
-  $('open_my_tasks').update(task_count)
 })
 
 
