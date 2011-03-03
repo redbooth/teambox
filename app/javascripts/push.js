@@ -124,6 +124,10 @@ Teambox.NotificationsBuffer.prototype.clearNotificationWindow = function() {
   this.notificationsWindow.down('ul').childElements().each(function(e) {e.remove();});
 };
 
+//When a notification comes in: 
+// * add to buffer
+// * only show first 5 in notification window.
+// * when 6th notitification comes in, add it to buffer and flush (render) all notifications 
 Teambox.NotificationsBuffer.prototype.addNotification = function(notification) {
   this.notifications.push(notification);
 
