@@ -76,11 +76,13 @@ Teambox.NotificationsBuffer.prototype.toggleNotificationWindow = function(notifi
 Teambox.NotificationsBuffer.prototype.addNotificationWindowEntry = function(notification) {
   if (notification.data) {
     var is_assigned_to_me = false,
+        is_me,
         converted_to_task = false;
 
     converted_to_task = notification.data.target.record_conversion_id ? true : false;
     if (my_user) {
       is_assigned_to_me = notification.data.target.assigned_id && notification.data.target.assigned_id === my_user.id
+      is_me = notification.data.user_id === my_user.id
     }
 
     var opts = { activity: notification.data};
@@ -89,6 +91,25 @@ Teambox.NotificationsBuffer.prototype.addNotificationWindowEntry = function(noti
     }
     else if (converted_to_task) {
       opts.converted_to_task = converted_to_task;
+    }
+    else if (notification.data.action_type === 'create_teambox_data'){
+      opts.import = true
+    }
+    else if (notification.data.action_type === 'create_person'){
+      if (is_me) {
+        opts.i_joined_project = true
+      }
+      else {
+        opts.joined_project = true
+      }
+    }
+    else if (notification.data.action_type === 'delete_person'){
+      if (is_me) {
+        opts.i_left_project = true
+      }
+      else {
+        opts.left_project = true
+      }
     }
     else {
       opts.generic_case = true;
@@ -346,7 +367,7 @@ document.on('dom:loaded', function() {
       try {
         var activity = JSON.parse(message);
         console.log("Received activity: ", activity);
-        if (activity.user_id != my_user.id) {
+        if (activity.target_type == 'Person' || activity.user_id != my_user.id) {
           if ([/^\/$/,/^\/projects\/?$/, /^\/projects\/[^\/]+\/?$/, /#!\/projects\/[^\/]+\/?$/].any(function(r){ return (r.exec(window.location.hash) || r.exec(window.location.pathname) || []).length > 0})) {
 
             var project_level_matches = /#!\/projects\/([^\/]+)\/?$/.exec(window.location.hash) || /^\/projects\/([^\/]+)\/?$/.exec(window.location.pathname);
