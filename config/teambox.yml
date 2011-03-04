@@ -144,6 +144,10 @@ development:
 production:
   <<: *defaults
 
+staging:
+  <<: *defaults
+  push_new_activities: true
+
 test: &test
   <<: *defaults
   app_domain: 127.0.0.1
