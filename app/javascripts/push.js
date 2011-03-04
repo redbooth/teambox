@@ -158,9 +158,9 @@ Teambox.NotificationsBuffer.prototype.flushAll = function(nonotify, scrollToId) 
           if (focussed_input && !focussed_input.value.empty()) {
             Effect.ScrollTo(focussed_input, {duration: 0.2, offset: -100});
             new Effect.Highlight(focussed_input, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
-            setTimeout(2000, function() {
+            setTimeout(function() {
               focussed_input.focus();
-            });
+            }, 2000);
           }
           else if (scrollTarget) {
             Effect.ScrollTo(scrollTarget, {duration: 0.2, offset: -100});
@@ -199,6 +199,43 @@ Teambox.ActivityNotifier = {
           var comments = thread.down('.comments');
           if (comments) {
             comments.insert({bottom: activity.markup});
+            if (activity.target.previous_status || 
+                activity.target.previous_assigned_id || 
+                    activity.target.previous_due_on) {
+              var taskForm = thread.down('form.edit_task');
+              if (taskForm) {
+                if (activity.target.previous_status) {
+                  var statusSelect = taskForm.down('select[name=task[status]]');
+                  if (statusSelect) {
+                    statusSelect.selectedIndex = activity.target.status;
+                  }
+                }
+
+                if (activity.target.previous_assigned_id) {
+                  var assignSelect = taskForm.down('select[name=task[assigned_id]]');
+                  if (assignSelect) {
+                    assignSelect.setValue(activity.target.assigned_id);
+                    assignSelect.setAttribute('data-assigned', activity.target.assigned_id);
+                  }
+                }
+
+                if (activity.target.previous_due_on) {
+                  var dueOnInput = taskForm.down('input[name=task[due_on]]');
+                  var dueOnSpan = taskForm.down('.localized_date');
+                  if (dueOnInput) {
+                    //2011-03-17
+                    dueOnInput.value = activity.target.due_on;
+                    if (dueOnSpan) {
+                      var newDate = Date.parseFormattedString(activity.target.due_on);
+                      if (newDate && I18n.translations) {
+                        dueOnSpan.update(newDate.strftime(I18n.translations.date.formats.long));
+                      }
+                    }
+                  }
+                }
+
+              }
+            }
           }
         }
         else if (comment) {
