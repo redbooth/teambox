@@ -202,21 +202,21 @@ form.new_task, form.edit_task, .task_list_form
           color: rgb(0,0,0)
       .extended, span.status, span.project, span.task_list
         display: none
-  .task.due_on
-    .taskName
-      span.assigned_date
-        display: inline-block
-  .task.assigned
-    .taskName
-      span.assigned_user
-        display: inline-block
-  .task.overdue
-    .taskName
-      a.name
-        color: rgb(200,0,0)
-        font-weight: bold
-      span.assigned_date, span.assigned_user
-        color: rgb(200,0,0)
+    &.due_on
+      .taskName
+        span.assigned_date
+          display: inline-block
+    &.assigned
+      .taskName
+        span.assigned_user
+          display: inline-block
+    &.overdue
+      .taskName
+        a.name
+          color: rgb(200,0,0)
+          font-weight: bold
+        span.assigned_date, span.assigned_user
+          color: rgb(200,0,0)
   .task.status_open.mine
     background: rgb(255,255,210)
     .taskName
