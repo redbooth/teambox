@@ -382,55 +382,57 @@ Teambox.User.handleFocusEvent = function(e) {
   }
 };
 
-// IE
-document.onfocusin = Teambox.User.handleFocusEvent;
-document.onfocusout = Teambox.User.handleFocusEvent;
-
-if (document.addEventListener) {
-  document.addEventListener('focus',Teambox.User.handleFocusEvent,true);
-}
-
-
 document.on('dom:loaded', function() {
 
-  Teambox.Notifications.notificationsWindow = $(document.body).down('#show_new_content');
-  Teambox.Notifications.notificationsIcon = $(document.body).down('#header_icons li.notifications_icon a');
+  if (Teambox && Teambox.pushServer) {
 
-  if (Teambox.Notifications.notificationsIcon) {
-  }
+    // IE
+    document.onfocusin = Teambox.User.handleFocusEvent;
+    document.onfocusout = Teambox.User.handleFocusEvent;
 
-  Teambox.pushServer.on('connect', function() {
-    console.log("connected: ", this.socket.transport.sessionid);
-  });
+    if (document.addEventListener) {
+      document.addEventListener('focus',Teambox.User.handleFocusEvent,true);
+    }
 
-  Teambox.pushServer.on('disconnect', function() {
-    console.log("disconnected: ");
-  });
+    Teambox.Notifications.notificationsWindow = $(document.body).down('#show_new_content');
+    Teambox.Notifications.notificationsIcon = $(document.body).down('#header_icons li.notifications_icon a');
+
+    if (Teambox.Notifications.notificationsIcon) {
+    }
+
+    Teambox.pushServer.on('connect', function() {
+      console.log("connected: ", this.socket.transport.sessionid);
+    });
+
+    Teambox.pushServer.on('disconnect', function() {
+      console.log("disconnected: ");
+    });
 
 
-  if (window.my_user) {
-    Teambox.pushServer.subscribe("/users/" + my_user.authentication_token, function(message){
-      try {
-        var activity = JSON.parse(message);
-        console.log("Received activity: ", activity);
-        if (activity.target_type == 'Person' || activity.user_id != my_user.id) {
-          if ([/^\/$/,/^\/projects\/?$/, /^\/projects\/[^\/]+\/?$/, /#!\/projects\/[^\/]+\/?$/].any(function(r){ return (r.exec(window.location.hash) || r.exec(window.location.pathname) || []).length > 0})) {
+    if (window.my_user) {
+      Teambox.pushServer.subscribe("/users/" + my_user.authentication_token, function(message){
+        try {
+          var activity = JSON.parse(message);
+          console.log("Received activity: ", activity);
+          if (activity.target_type == 'Person' || activity.user_id != my_user.id) {
+            if ([/^\/$/,/^\/projects\/?$/, /^\/projects\/[^\/]+\/?$/, /#!\/projects\/[^\/]+\/?$/].any(function(r){ return (r.exec(window.location.hash) || r.exec(window.location.pathname) || []).length > 0})) {
 
-            var project_level_matches = /#!\/projects\/([^\/]+)\/?$/.exec(window.location.hash) || /^\/projects\/([^\/]+)\/?$/.exec(window.location.pathname);
+              var project_level_matches = /#!\/projects\/([^\/]+)\/?$/.exec(window.location.hash) || /^\/projects\/([^\/]+)\/?$/.exec(window.location.pathname);
 
-            if (project_level_matches && (project_level_matches[1] === activity.project.permalink)) {
-              Teambox.ActivityNotifier.notifyActivity(activity);
-            }
-            else if (!project_level_matches) {
-              Teambox.ActivityNotifier.notifyActivity(activity);
+              if (project_level_matches && (project_level_matches[1] === activity.project.permalink)) {
+                Teambox.ActivityNotifier.notifyActivity(activity);
+              }
+              else if (!project_level_matches) {
+                Teambox.ActivityNotifier.notifyActivity(activity);
+              }
             }
           }
         }
-      }
-      catch(err) {
-        console.log('[Push Error]'  + err + ' parsing: ', message);
-      }
-    });
+        catch(err) {
+          console.log('[Push Error]'  + err + ' parsing: ', message);
+        }
+      });
+    }
   }
 });
 

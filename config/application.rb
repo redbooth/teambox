@@ -71,8 +71,11 @@ module Teambox
 
       if %w[test].include? Rails.env
         self.push_new_activities = false
-      else
-        self.push_new_activities = true
+      end
+
+      #Activate redis if push is active
+      if self.push_new_activities
+        self.redis = true
       end
 
       self.amazon_s3 = true if heroku?

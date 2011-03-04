@@ -1,5 +1,3 @@
-if Rails.env == 'production' or Rails.env == 'staging'
+if Teambox.config.redis
   $redis = Redis.new(Teambox.config.redis_config)
-else
-  $redis = Redis.new
 end
