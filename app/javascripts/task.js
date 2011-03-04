@@ -163,7 +163,13 @@ Task = {
       first_name: task.assigned.user.first_name, last_name: task.assigned.user.last_name,
       first_name_first_character: task.assigned.user.first_name.substr(0,1),
       last_name_first_character: task.assigned.user.last_name.substr(0,1)
-    })
+    }).escapeHTML()
+  },
+
+  linkToNameForAssigned: function(task) {
+    if (!task.assigned)
+      return ''
+    return '<a href="/users/' + task.assigned.user.username + '">' + Task.nameForAssigned(task) + '</a>';
   },
 
   fullNameForAssigned: function(task) {
@@ -171,7 +177,7 @@ Task = {
       return ''
     return I18n.t(I18n.translations.common.format_name, {
       first_name: task.assigned.user.first_name, last_name: task.assigned.user.last_name
-    })
+    }).escapeHTML()
   },
 
   dateForDueOn: function(task) {
@@ -257,8 +263,8 @@ document.on('task:updated', function(e, doc){
   if (task) {
     var due_on = task.down('.assigned_date')
     var assigned_user = task.down('.assigned_user')
-    due_on.innerHTML = Task.dateForDueOn(task_data)
-    assigned_user.innerHTML = Task.nameForAssigned(task_data)
+    due_on.update(Task.dateForDueOn(task_data))
+    assigned_user.update(Task.linkToNameForAssigned(task_data))
     task.writeAttribute('class', 'task ' + task_classes)
   }
 
@@ -268,9 +274,9 @@ document.on('task:updated', function(e, doc){
     var summary = task.down('.task_summary')
     summary.writeAttribute('class', 'task_summary ' + task_classes)
     summary.down('.task_status').writeAttribute('class', 'task_status task_status_' + Task.statusName(task_data))
-    summary.down('.task_status').innerHTML = Task.statusName(task_data)
-    summary.down('.assigned_date').innerHTML = Task.dateForDueOn(task_data)
-    summary.down('.assigned_to').innerHTML = task_data.assigned ? I18n.t(I18n.translations.tasks.assigned.assigned_to, {user: Task.fullNameForAssigned(task_data)}) : ''
+    summary.down('.task_status').update(Task.statusName(task_data))
+    summary.down('.assigned_date').update(Task.dateForDueOn(task_data))
+    summary.down('.assigned_to').update(task_data.assigned ? I18n.t(I18n.translations.tasks.assigned.assigned_to, {user: Task.fullNameForAssigned(task_data)}) : '')
     
     var counter = task.down('.comment_header').down('.comment_count').down()
     if (counter) counter.update(parseInt(counter.innerHTML) + 1)
@@ -281,7 +287,7 @@ document.on('task:updated', function(e, doc){
   if (task_sidebar) {
     if (is_assigned_to_me) {
       task_sidebar.writeAttribute('class', 'el task ' + task_classes)
-      task_sidebar.down('.due_on').innerHTML = Task.dateForDueOn(task_data)
+      task_sidebar.down('.due_on').update(Task.dateForDueOn(task_data))
     } else {
       task_sidebar.remove()
     }
@@ -295,7 +301,7 @@ document.on('task:updated', function(e, doc){
   task_sidebar = $('task_list_task_' + task_data.id);
   if (task_sidebar) {
     task_sidebar.writeAttribute('class', 'task ' + task_classes)
-    task_sidebar.down('.due_on').innerHTML = Task.dateForDueOn(task_data)
+    task_sidebar.down('.due_on').update(Task.dateForDueOn(task_data))
   }
 })
 
