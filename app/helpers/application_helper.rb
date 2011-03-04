@@ -291,7 +291,8 @@ BLOCK
     @current_project.organization.is_admin?(current_user)
   end
 
-  def include_juggernaught(project_ids=[])
+  def include_push_server(project_ids=[])
+    return "" unless Teambox.config.push_new_activities
     javascript_tag(<<-JS) 
       window.WEB_SOCKET_SWF_LOCATION = "http://#{request.host}/WebSocketMain.swf"
       if ( typeof( window['Teambox'] ) == "undefined" ) {
@@ -309,7 +310,7 @@ BLOCK
         meta['login'] = my_user.username;
       }
       Teambox.pushServer = new Juggernaut({
-        port: #{Teambox.config.juggernaught.port},
+        port: #{Teambox.config.juggernaut.port},
         meta: meta,
         secure: ('https:' == document.location.protocol)
       });
