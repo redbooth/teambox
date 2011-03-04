@@ -73,11 +73,6 @@ module Teambox
         self.push_new_activities = false
       end
 
-      #Activate redis if push is active
-      if self.push_new_activities
-        self.redis = true
-      end
-
       self.amazon_s3 = true if heroku?
       self.i18n.default_locale = default_locale
       self.action_mailer.default_url_options = { :host => app_domain }

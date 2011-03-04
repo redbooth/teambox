@@ -130,13 +130,7 @@ defaults: &defaults
   #   :secret: 
 
   heroku: <%= !!ENV['HEROKU_TYPE'] %>
-  redis: false
-  redis_config:
-    url: redis://127.0.0.1:6379/0
-    #host: 127.0.0.1
-    #port: 6379
-    #password: papapa
-    #path: /tmp/redis.sock
+  only_https_hosts:
   juggernaut:
     port: 8080
   push_new_activities: false
