@@ -112,9 +112,10 @@ Teambox.NotificationsBuffer.prototype.addNotificationWindowEntry = function(noti
       }
     }
     else {
-      opts.generic_case = true;
+      opts['new_' + notification.data.target_type.toLowerCase()] = true;
     }
 
+    console.log("rendering opts: ", opts, Templates.notifications.entry);
     var markup = this.windowEntryTemplate(opts);
     this.notificationsWindow.down('ul').insert({bottom: markup});
   }

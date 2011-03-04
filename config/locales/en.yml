@@ -1817,7 +1817,7 @@ en:
   notifications:
     entry:
       new_thread_html: New %{thread_url} by %{user_url}
-      assigned_to_you_html: You have been assigned a new %{thread_url} by %{user_url}
+      assigned_to_you_html: You have been assigned a %{thread_url} by %{user_url}
       joined_project_html: %{user_url} joined the project %{thread_url}
       i_joined_project_html: You have joined the project %{thread_url}
       left_project_html: %{user_url} left the project %{thread_url}

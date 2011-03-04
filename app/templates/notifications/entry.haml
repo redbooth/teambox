@@ -1,28 +1,61 @@
 %li
-  {{#generic_case}}
-  = t("notifications.entry.new_thread_html", :thread_url => link_to("{{activity/target_type}}", "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
-  {{/generic_case}}
+  {{#new_comment}}
+  = t("notifications.entry.new_thread_html", |
+    :thread_url => link_to(t('activerecord.models.comment'), "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), |
+    :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}")) |
+  {{/new_comment}}
+
+  {{#new_task}}
+  = t("notifications.entry.new_thread_html", |
+    :thread_url => link_to(t('activerecord.models.task'), "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), |
+    :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}")) |
+  {{/new_task}}
+
+  {{#new_conversation}}
+  = t("notifications.entry.new_thread_html", |
+    :thread_url => link_to(t('activerecord.models.conversation'), "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), |
+    :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}")) |
+  {{/new_conversation}}
+
   {{#joined_project}}
-  = t("notifications.entry.joined_project_html", :thread_url => link_to("{{activity/project/name}}", "/projects/{{activity/project/permalink}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
+  = t("notifications.entry.joined_project_html", |
+    :thread_url => link_to("{{activity/project/name}}", "/projects/{{activity/project/permalink}}", :"data-activity-id" => "{{activity/activity_id}}"), |
+    :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}")) |
   {{/joined_project}}
+
   {{#left_project}}
-  = t("notifications.entry.left_project_html", :thread_url => link_to("{{activity/project/name}}", "/projects/{{activity/project/permalink}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
+  = t("notifications.entry.left_project_html", |
+    :thread_url => link_to("{{activity/project/name}}", "/projects/{{activity/project/permalink}}", :"data-activity-id" => "{{activity/activity_id}}"), |
+    :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}")) |
   {{/left_project}}
+
   {{#i_joined_project}}
-  = t("notifications.entry.i_joined_project_html", :thread_url => link_to("{{activity/project/name}}", "/projects/{{activity/project/permalink}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
+  = t("notifications.entry.i_joined_project_html", |
+    :thread_url => link_to("{{activity/project/name}}", "/projects/{{activity/project/permalink}}", :"data-activity-id" => "{{activity/activity_id}}"), |
+    :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}")) |
   {{/i_joined_project}}
+
   {{#i_left_project}}
-  = t("notifications.entry.i_left_project_html", :thread_url => link_to("{{activity/project/name}}", "/projects/{{activity/project/permalink}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
+  = t("notifications.entry.i_left_project_html", |
+    :thread_url => link_to("{{activity/project/name}}", "/projects/{{activity/project/permalink}}", :"data-activity-id" => "{{activity/activity_id}}"), |
+    :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}")) |
   {{/i_left_project}}
 
   {{#import}}
-  = t("notifications.entry.import_html", :thread_url => link_to("{{activity/target_type}}", "/projects", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
+  = t("notifications.entry.import_html", |
+    :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
   {{/import}}
 
   {{#assigned_to_you}}
-  = t("notifications.entry.assigned_to_you_html", :thread_url => link_to("{{activity/target_type}}", "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
+  = t("notifications.entry.assigned_to_you_html", |
+    :thread_url => link_to(t('activerecord.models.task'), "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), |
+    :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}")) |
   {{/assigned_to_you}}
+
   {{#converted_to_task}}
-  = t("notifications.entry.converted_to_task_html", :record_conversion_url => link_to("{{activity/target/record_conversion_type}}", "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), :thread_url => link_to("{{activity/target_type}}", "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}"))
+  = t("notifications.entry.converted_to_task_html", |
+    :record_conversion_url => link_to(t('activerecord.models.conversation'), "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), |
+    :thread_url => link_to(t('activerecord.models.task'), "{{activity/path}}", :"data-activity-id" => "{{activity/activity_id}}"), |
+    :user_url => link_to("@{{activity/user/username}}", "/users/{{activity/user/username}}", :"data-activity-id" => "{{activity/activity_id}}")) |
   {{/converted_to_task}}
 
