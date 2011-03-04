@@ -252,6 +252,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def nearest_pending_tasks
+    pending_tasks.reject { |t| t.due_on && t.due_on > 2.weeks.from_now.to_datetime }
+  end
+
   def clear_pending_tasks!
     Rails.cache.delete("pending_tasks.#{id}")
   end
