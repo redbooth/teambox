@@ -132,7 +132,7 @@ defaults: &defaults
   heroku: <%= !!ENV['HEROKU_TYPE'] %>
   only_https_hosts:
   juggernaut:
-    port: 8080
+    port: 8090
   push_new_activities: false
 
 development:
