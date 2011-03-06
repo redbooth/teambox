@@ -36,7 +36,15 @@ module Watchable
       true if watchers.destroy_all
     end
   end
-  
+
+  def people_watching
+    Person.where(:user_id => watcher_ids, :project_id => project)
+  end
+
+  def people_ids_watching
+    people_watching.select(:id).map(&:id)
+  end
+
   protected
 
   def update_watchers
