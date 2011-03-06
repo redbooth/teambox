@@ -221,6 +221,21 @@ ActiveRecord::Schema.define(:version => 20110303172637) do
   add_index "notes", ["deleted"], :name => "index_notes_on_deleted"
   add_index "notes", ["page_id"], :name => "index_notes_on_page_id"
 
+  create_table "notifications", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.integer  "target_id"
+    t.string   "target_type"
+    t.boolean  "sent",        :default => false
+    t.boolean  "read",        :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["person_id", "sent"], :name => "index_notifications_on_person_id_and_sent"
+  add_index "notifications", ["user_id", "read"], :name => "index_notifications_on_user_id_and_read"
+
   create_table "organizations", :force => true do |t|
     t.string   "name"
     t.string   "permalink",                                                   :null => false
@@ -269,10 +284,13 @@ ActiveRecord::Schema.define(:version => 20110303172637) do
     t.integer  "project_id"
     t.integer  "source_user_id"
     t.string   "permissions"
-    t.integer  "role",           :default => 2
+    t.integer  "role",                 :default => 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted",        :default => false, :null => false
+    t.boolean  "deleted",              :default => false, :null => false
+    t.integer  "digest",               :default => 0
+    t.datetime "last_digest_delivery"
+    t.datetime "next_digest_delivery"
   end
 
   add_index "people", ["deleted"], :name => "index_people_on_deleted"
@@ -454,6 +472,7 @@ ActiveRecord::Schema.define(:version => 20110303172637) do
     t.integer  "completed_tasks_count"
     t.boolean  "deleted",                                  :default => false,                        :null => false
     t.text     "settings"
+    t.integer  "digest_delivery_hour",                     :default => 9
   end
 
   add_index "users", ["deleted"], :name => "index_users_on_deleted"
