@@ -24,7 +24,7 @@ module EmailerHelper
       end
     else
       'background-color: rgb(255,255,200); border: 1px rgb(220,220,150) solid;'
-    end + 'margin: 10px; padding: 10px'
+    end + 'padding: 10px'
   end
 
   def email_text(size)
@@ -47,8 +47,9 @@ module EmailerHelper
     render 'emailer/dont_answer'
   end
 
-  def emailer_list_comments(comments)
-    render :partial => 'emailer/comment', :collection => comments, :locals => { :unread => comments.first }
+  def emailer_list_comments(comments, unread = nil )
+    unread ||= comments.first
+    render :partial => 'emailer/comment', :collection => comments, :locals => { :unread => unread }
   end
 
   def emailer_recent_tasks(project, user)
