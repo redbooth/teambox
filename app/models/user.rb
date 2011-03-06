@@ -44,7 +44,9 @@ class User < ActiveRecord::Base
   belongs_to :invited_by, :class_name => 'User'
 
   has_one :card
+  accepts_nested_attributes_for :people, :update_only => true, :reject_if => proc { |attributes| (attributes.keys - %w(id digest)).any? }
   accepts_nested_attributes_for :card
+
   default_scope :order => 'users.updated_at DESC'
   scope :in_alphabetical_order, :order => 'users.first_name ASC'
 
@@ -65,7 +67,9 @@ class User < ActiveRecord::Base
                   :notify_tasks,
                   :splash_screen,
                   :wants_task_reminder,
-                  :keyboard_shortcuts
+                  :keyboard_shortcuts,
+                  :digest_delivery_hour,
+                  :people_attributes
 
   attr_accessor   :activate, :old_password
 

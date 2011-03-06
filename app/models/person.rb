@@ -4,10 +4,13 @@
 class Person < ActiveRecord::Base
   include Immortal
 
+  concerned_with :digest
+
   belongs_to :user
   belongs_to :project
   belongs_to :source_user, :class_name => 'User'
   has_many :tasks, :foreign_key => 'assigned_id', :dependent => :nullify
+  has_many :notifications, :dependent => :delete_all
   
   after_create :log_create
   after_destroy :log_delete, :cleanup_after
@@ -34,7 +37,7 @@ class Person < ActiveRecord::Base
   scope :in_alphabetical_order, :include => :user, :order => 'users.first_name ASC'
 
   
-  attr_accessible :role, :permissions
+  attr_accessible :role, :permissions, :digest
 
   def owner?
     project.owner?(user)
