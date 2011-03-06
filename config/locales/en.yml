@@ -210,6 +210,12 @@ en:
         notify_conversations: Notify me of updates to conversations I'm watching
         notify_tasks: Notify me of updates to tasks I'm watching
         wants_task_reminder: Send me a daily reminder of tasks assigned to me that are due soon
+        email_delivery_options: Email delivery options
+        digest_delivery_time: "Send task reminder and digest at"
+        digest: "Email delivery for project '%{project}'"
+        digest_option_daily: Daily digest
+        digest_option_weekly: Weekly digest
+        digest_option_instant: Instant notification
       invalid_login: "use only letters, numbers and underscores"
       delete:
         steps_before_1: "To delete your Teambox account, you first need to leave or delete all your current projects."
@@ -1452,6 +1458,10 @@ en:
       project_not_found_error: "There is no project on Teambox corresponding to this email address."
       target_not_found_error: "We couldn't find the item where you are trying to post your comment."
       not_delivered: "Your email couldn't be processed by Teambox. View our documentation to learn which types of email we accept: %{link}"
+    digest:
+      title:
+        weekly: "[%{project}] Weekly digest"
+        daily:  "[%{project}] Daily digest"
 
   weakling:
     default: Must be at least 5 characters
