@@ -18,27 +18,33 @@ class NotificationsObserver < ActiveRecord::Observer
 
     def notify_watchers_on_new_comment(comment)
       return if comment.try(:project).try(:is_importing)
+      return unless %w(Conversation Task).any? {|target_type| comment.target_type == target_type}
 
-      case target = comment.target
-        when Conversation then conversation_new_comment(target, comment)
-        when Task then task_new_comment(target, comment)
-      end
-    end
+      target = comment.target
 
-    def conversation_new_comment(target, comment)
-      (target.watchers - [comment.user]).each do |user|
-        if user.notify_conversations
-          Emailer.send_with_language(:notify_conversation, user.locale, user.id, comment.project.id, target.id) # deliver_notify_conversation
+      target.people_watching.each do |person|
+        next if person.user == comment.user
+
+        if person.user.send("notify_#{target.class.to_s.downcase.pluralize}".to_sym)
+          notification = person.notifications.new(:comment => comment, :target => target)
+
+          if person.digest_type == :instant
+            instant_delivery(target, comment, person.user)
+            notification.sent = true
+          else
+            person.update_next_delivery_time!
+          end
+
+          # Set all the notification as read until we have a nice UI for it
+          # Todo, remove once we have a UI for it
+          notification.read = true
+
+          notification.save
         end
       end
     end
 
-    def task_new_comment(target, comment)
-      (target.watchers - [comment.user]).each do |user|
-        if user.notify_tasks
-          Emailer.send_with_language(:notify_task, user.locale, user.id, comment.project.id, target.id) # deliver_notify_task
-        end
-      end
+    def instant_delivery(target, comment, user)
+      Emailer.send_with_language("notify_#{target.class.to_s.downcase}".to_sym, user.locale, user.id, comment.project.id, target.id)
     end
-
 end
