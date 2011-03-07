@@ -6,6 +6,19 @@
   .check_box.notify
     = f.check_box :notify_tasks
     = f.label :notify_tasks, t('.notify_tasks')
+
+%br
+%h3= t('.watch_options')
+.check_boxes.notifications
+  %p= t('.clarification_watch_new_task_or_conversation', :login => user.login)
+  = f.fields_for :people do |person|
+    .check_box.notify
+      = person.check_box :watch_new_task
+      = person.label :watch_new_task, t('.watch_new_task', :project => person.object.project.name)
+    .check_box.notify
+      = person.check_box :watch_new_conversation
+      = person.label :watch_new_conversation, t('.watch_new_conversation', :project => person.object.project.name)
+
 %br
 %h3= t('.email_delivery_options')
 .notifications.many_fields

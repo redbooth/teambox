@@ -1,6 +1,7 @@
 module Watchable
   def self.included(model)
     model.after_save :update_watchers
+    model.after_create :create_watchers
     model.attr_accessible :watchers_ids, :watcher_ids
     model.send :attr_writer, :watchers_ids
     model.has_many :watcher_tags, :as => :watchable, :class_name => 'Watcher', :dependent => :destroy
@@ -55,4 +56,8 @@ module Watchable
     true
   end
 
+  def create_watchers
+    users = project.people.where("watch_new_#{self.class.to_s.downcase}".to_sym => true).map(&:user)
+    add_watchers(users)
+  end
 end
