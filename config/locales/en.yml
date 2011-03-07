@@ -1446,12 +1446,13 @@ en:
       task: "Task:"
       task_list: "Task List:"
       comments: "%{number} comments"
-      assigned_to_html: "Assigned to <b>%{user}</b>"
+      assigned_to: "Assigned to %{user}"
       due_on: "Due on %{date}"
       status: "Status: %{status}"
       my_tasks: "More tasks assigned to you in %{project}"
       click_here: click here
-      digest_reply_html: %{click_here_link} to reply online or click %{click_here_email} to reply by email
+      digest_reply_html: "%{click_here_link} to reply online or click %{click_here_email} to reply by email."
+      digest_reply_text: "Go to %{link} to reply online or reply to %{email}."
     upload:
       file: "File:"
     bounce:
