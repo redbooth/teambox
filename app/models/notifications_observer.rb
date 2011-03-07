@@ -24,12 +24,12 @@ class NotificationsObserver < ActiveRecord::Observer
 
       target.people_watching.each do |person|
         next if person.user == comment.user
-
-        if person.user.send("notify_#{target.class.to_s.downcase.pluralize}".to_sym)
+        user = person.user
+        if user.send("notify_#{target.class.to_s.downcase.pluralize}".to_sym)
           notification = person.notifications.new(:comment => comment, :target => target)
 
-          if person.digest_type == :instant
-            instant_delivery(target, comment, person.user)
+          if person.digest_type == :instant or (comment.mentioned.to_a.include? user and user.instant_notification_on_mention?)
+            instant_delivery(target, comment, user)
             notification.sent = true
           else
             person.update_next_delivery_time!

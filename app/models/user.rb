@@ -69,6 +69,7 @@ class User < ActiveRecord::Base
                   :wants_task_reminder,
                   :keyboard_shortcuts,
                   :digest_delivery_hour,
+                  :instant_notification_on_mention,
                   :people_attributes
 
   attr_accessor   :activate, :old_password

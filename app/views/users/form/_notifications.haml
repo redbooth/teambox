@@ -12,7 +12,6 @@
   .notify
     = f.label :digest_delivery_hour, t('.digest_delivery_time')
     = f.select :digest_delivery_hour, (0..24).collect {|i| [ l(Time.now.at_midnight + i.hours, :format => :short), i ] }
-
   = f.fields_for :people do |person|
     .notify
       = person.label :digest, t('.digest', :project => person.object.project.name), :class => 'digest'
@@ -20,3 +19,6 @@
   .check_box.notify
     = f.check_box :wants_task_reminder
     = f.label :wants_task_reminder, t('.wants_task_reminder')
+  .check_box.notify
+    = f.check_box :instant_notification_on_mention
+    = f.label :instant_notification_on_mention, t('.notify_on_mention')
