@@ -1,0 +1,29 @@
+<%= t('emailer.common.do_not_answer')%>
+
+<%= t('emailer.notify.project') %> <%= h(@project.name) %>
+
+
+<% @targets.each do |target| %>
+<% if target.class == Task -%>
+<%= t('emailer.notify.task') %> <%= h(target.name) %> <%= t('emailer.notify.assigned_to', :user => h(target.assigned.user.name)) if target.assigned -%><%= t('emailer.notify.status', :status => localized_status_name(target)) -%> <%= t('emailer.notify.due_on', :date => due_on(target)) if target.due_on %>
+<% elsif target.class == Conversation -%>
+<% conversation_title = target.name.blank? ? truncate( sanitize( target.comments.try(:first).try(:body), :tags => [nil]), :length => 80) : target.name -%>
+<%= t('emailer.notify.conversation') %> <%= h(conversation_title) %>
+<% end -%>
+<%= emailer_list_comments(target.comments, @comments) -%>
+<%
+if target.class == Task
+  email = "#{@project.permalink}+task+#{target.id}@#{Rails.configuration[:app_domain]}" 
+  link = project_task_url(@project, target)
+elsif target.class == Conversation
+  link = project_conversation_url(@project, target)
+  email = "#{@project.permalink}+conversation+#{target.id}@#{Rails.configuration[:app_domain]}"
+end
+-%>
+
+<%= t('emailer.notify.digest_reply_text', :link => link, :email => email) %>
+<%= t('emailer.notify.stop_watching_link_html', :stop_watch => t('emailer.notify.stop_watch')) -%> <%= link %>
+
+
+
+<% end %>

@@ -39,6 +39,7 @@
         - elsif target.class == Conversation
           - email = link_to t('emailer.notify.click_here'), "#{@project.permalink}+conversation+#{target.id}@#{Rails.configuration[:app_domain]}"
         = t('emailer.notify.digest_reply_html', :click_here_link => link, :click_here_email => email)
+        = t('emailer.notify.stop_watching_link_html', :stop_watch => link_to(t('emailer.notify.stop_watch'), [@project, target]) )
 
   .footer{ :style => email_text(:small) }
     %p
