@@ -1,4 +1,4 @@
-.email{ :style =>  "#{email_global }#{inline_organization_text_colour}"}
+.email{ :style =>  "#{email_global}"}
   .header
     %h1
       = link_to logo_image, projects_path(@project)
@@ -9,14 +9,14 @@
 
   %p{ :style => email_text(:normal)}
     = t('emailer.notify.project')
-    = link_to(h(@project.name), project_url(@project), :style => inline_organization_link_colour) + '. '
+    = link_to(h(@project.name), project_url(@project)) + '. '
 
   - @targets.each do |target|
     - if target.class == Task
       .box{ :style => email_box(target)}
         %h2{ :style => email_text(:big) }
           = t('emailer.notify.task')
-          = link_to h(target.name), project_task_url(@project, target), :style => inline_organization_link_colour
+          = link_to h(target.name), project_task_url(@project, target)
         %p
           - if target.assigned
             %span{ :style => 'margin-right: 15px' }= t('emailer.notify.assigned_to_html', :user => h(target.assigned.user.name))
@@ -28,18 +28,17 @@
         %h2{ :style => email_text(:big) }
           - conversation_title = target.name.blank? ? truncate( sanitize( target.comments.try(:first).try(:body), :tags => [nil]), :length => 80) : target.name
           = t('emailer.notify.conversation')
-          = link_to h(conversation_title), [@project, target], :style => inline_organization_link_colour
+          = link_to h(conversation_title), [@project, target]
       
     = emailer_list_comments(target.comments, @comments)
     .actions{ :style => 'color: rgb(100,100,100)' }
       %p
         - if target.class == Task
-          = t('emailer.notify.view_this_task_online_html', :link => link_to(t('emailer.notify.task_link'), project_task_url(@project, target), :style => inline_organization_link_colour))
+          = t('emailer.notify.view_this_task_online_html', :link => link_to(t('emailer.notify.task_link'), project_task_url(@project, target)))
         - elsif target.class == Conversation
-          = t('emailer.notify.view_this_conversation_online_html', :conversation => link_to(conversation_title, [@project, target], :style => inline_organization_link_colour))
-        = t('emailer.notify.stop_watching_link_html', :stop_watch => link_to(t('emailer.notify.stop_watch'), [@project, target], :style => inline_organization_link_colour) )
-      
+          = t('emailer.notify.view_this_conversation_online_html', :conversation => link_to(conversation_title, [@project, target]))
+        = t('emailer.notify.stop_watching_link_html', :stop_watch => link_to(t('emailer.notify.stop_watch'), [@project, target]) )
 
   .footer{ :style => email_text(:small) }
     %p
-      = t('emailer.notify.notification_settings_link_html', :settings_link => link_to(t('emailer.notify.settings_link'), account_notifications_url, :style => inline_organization_link_colour) )
+      = t('emailer.notify.notification_settings_link_html', :settings_link => link_to(t('emailer.notify.settings_link'), account_notifications_url) )
