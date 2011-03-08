@@ -10,7 +10,7 @@
 <%= project_task_url(@project, @task) %>
 
 <%- if @task.assigned %>
-<%= t('emailer.notify.assigned_to_html', :user => h(@task.assigned.user.name)) %>
+<%= t('emailer.notify.assigned_to', :user => h(@task.assigned.user.name)) %>
 <%= t('emailer.notify.status', :status => localized_status_name(@task)) %> <%= t('emailer.notify.due_on', :date => due_on(@task)) if @task.due_on %>
 <%- end %>
 

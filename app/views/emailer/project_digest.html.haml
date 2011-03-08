@@ -19,7 +19,7 @@
           = link_to h(target.name), project_task_url(@project, target)
         %p
           - if target.assigned
-            %span{ :style => 'margin-right: 15px' }= t('emailer.notify.assigned_to_html', :user => h(target.assigned.user.name))
+            %span{ :style => 'margin-right: 15px' }= t('emailer.notify.assigned_to', :user => content_tag(:b,h(target.assigned.user.name))).html_safe
           %span{ :style => 'margin-right: 15px' }= t('emailer.notify.status', :status => content_tag(:b, localized_status_name(target))).html_safe
           - if target.due_on
             %span{ :style => 'margin-right: 15px' }= t('emailer.notify.due_on', :date => content_tag(:b, due_on(target)) ).html_safe
