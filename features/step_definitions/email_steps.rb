@@ -109,11 +109,37 @@ Then /^(?:I|they|he|she) should see "([^"]*?)" in the email subject$/ do |text|
 end
 
 Then /^(?:I|they|he|she) should see "([^"]*?)" in the email body$/ do |text|
-  current_email.body.should =~ Regexp.new(text)
+  if current_email.multipart?
+    Then %(I should see "#{text}" in the html part of the email body)
+    Then %(I should see "#{text}" in the text part of the email body)
+  else
+    current_email.body.should =~ Regexp.new(text)
+  end
+end
+
+Then /^(?:I|they|he|she) should see "([^"]*?)" in the html part of the email body$/ do |text|
+  current_email.html_part.body.should =~ Regexp.new(text)
+end
+
+Then /^(?:I|they|he|she) should see "([^"]*?)" in the text part of the email body$/ do |text|
+  current_email.text_part.body.should =~ Regexp.new(text)
 end
 
 Then /^(?:I|they|he|she) should not see "([^"]*?)" in the email body$/ do |text|
-  current_email.body.should_not =~ Regexp.new(text)
+  if current_email.multipart?
+    Then %(I should not see "#{text}" in the html part of the email body)
+    Then %(I should not see "#{text}" in the text part of the email body)
+  else
+    current_email.body.should_not =~ Regexp.new(text)
+  end
+end
+
+Then /^(?:I|they|he|she) should not see "([^"]*?)" in the html part of the email body$/ do |text|
+  current_email.html_part.body.should_not =~ Regexp.new(text)
+end
+
+Then /^(?:I|they|he|she) should not see "([^"]*?)" in the text part of the email body$/ do |text|
+  current_email.text_part.body.should_not =~ Regexp.new(text)
 end
 
 # DEPRECATED
