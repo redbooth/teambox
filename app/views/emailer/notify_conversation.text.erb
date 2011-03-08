@@ -1,7 +1,7 @@
 <%= answer_instructions %>
 
 <%= t('emailer.notify.project') %> <%= h(@project.name) %>
-<%= t('emailer.notify.conversation') %> <%= h(@conversation.name) %>
+<%= t('emailer.notify.conversation') %>: <%= h(@conversation.name) %>
 
 <%= emailer_list_comments(@conversation.comments) %>
 
