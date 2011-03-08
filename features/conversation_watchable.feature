@@ -4,6 +4,7 @@ Feature: Watchers for conversations
   Background: 
     Given a project with users @mislav, @balint, @pablo and @james
     And I am logged in as @mislav
+    And no emails have been sent
 
   Scenario: Adding watchers to an untitled conversation
     Given I go to the projects page
