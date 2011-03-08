@@ -19,6 +19,12 @@ class ApplicationController < ActionController::Base
                 :load_community_organization,
                 :add_chrome_frame_header
 
+  # Revert behavior to rails < 3.0.4 where an invalid request (aka without csrf token)
+  # won't destroy the session but just raise an invalid authenticity token exception.
+  def handle_unverified_request
+    raise(ActionController::InvalidAuthenticityToken)
+  end
+
   # If the parameter ?nolayout=1 is passed, then we will render without a layout
   # If the parameter ?extractparts=1 is passed, then we will render blocks for content and sidebar
   layout proc { |controller|
