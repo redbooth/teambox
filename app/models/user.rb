@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   has_many :task_lists
   has_many :pages
   has_many :people
+  has_many :notifications, :dependent => :destroy
   has_many :projects, :through => :people, :order => 'name ASC'
   has_many :invitations, :foreign_key => 'invited_user_id'
   has_many :activities
