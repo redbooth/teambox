@@ -79,6 +79,7 @@ describe ApiV1::CommentsController do
       task = Factory.create(:task, :project => @project)
       comment = @project.new_comment(@user, task, {:body => 'Something happened!'})
       comment.save!
+      task.reload
       
       get :index, :project_id => @project.permalink, :task_id => task.id
       response.should be_success
@@ -118,6 +119,7 @@ describe ApiV1::CommentsController do
       task = Factory.create(:task, :project => @project)
       comment = @project.new_comment(@user, task, {:body => 'Something happened!'})
       comment.save!
+      task.reload
       
       get :index, :task_id => task.id
       response.should be_success

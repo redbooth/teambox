@@ -20,7 +20,8 @@ class Conversation < RoleRecord
     :reject_if => lambda { |comment| comment['body'].blank? }
 
   attr_accessible :name, :simple, :body, :comments_attributes
-
+  
+  validates_presence_of :user
   validates_presence_of :name, :message => :no_title, :unless => :simple?
   
   validate :check_comments_presence, :on => :create, :unless => :is_importing
@@ -29,7 +30,8 @@ class Conversation < RoleRecord
   scope :not_simple, :conditions => { :simple => false }
   scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
 
-  before_save :set_comments_author, :if => :updating_user
+  before_validation :set_comments_target
+  before_validation :set_comments_author, :if => :updating_user
   before_update :set_simple
   after_create :log_create, :update_user_stats
   after_destroy :clear_targets
@@ -118,11 +120,15 @@ class Conversation < RoleRecord
     end
   end
 
-  def set_comments_author # before_save
+  def set_comments_author # before_validation
     comments.select(&:new_record?).each do |comment|
       comment.user = updating_user
     end
     true
+  end
+  
+  def set_comments_target
+    comments.each{|c|c.target = self if c.target.nil?}
   end
 
   def update_user_stats

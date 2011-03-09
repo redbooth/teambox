@@ -5,12 +5,13 @@ class Page < RoleRecord
   has_many :uploads, :dependent => :destroy
   
   has_many :slots, :class_name => 'PageSlot', :order => 'position ASC', :dependent => :delete_all
-
+  
   has_permalink :name, :scope => :project_id
-
+  
   attr_accessible :name, :description, :note_attributes
   attr_accessor :suppress_activity
-
+  
+  validates_presence_of :user
   validates_length_of :name, :minimum => 1
   
   default_scope :order => 'position ASC, created_at DESC, id DESC'

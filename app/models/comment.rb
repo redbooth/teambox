@@ -50,7 +50,7 @@ class Comment < ActiveRecord::Base
   validates_presence_of :body, :unless => lambda { |c| c.task_comment? or c.uploads.to_a.any? or c.google_docs.any? }
 
   # was before_create, but must happen before format_attributes
-  before_save   :copy_ownership_from_target, :if => lambda { |c| c.new_record? and c.target_id? }
+  before_validation   :copy_ownership_from_target, :on => :create, :if => lambda { |c| c.target }
   after_create  :trigger_target_callbacks
   after_destroy :cleanup_activities, :cleanup_conversation
 
@@ -127,6 +127,7 @@ class Comment < ActiveRecord::Base
   def copy_ownership_from_target # before_create
     self.user_id ||= target.user_id
     self.project_id ||= target.project_id
+    true
   end
 
   def trigger_target_callbacks # after_create

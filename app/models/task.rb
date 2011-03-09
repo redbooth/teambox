@@ -26,6 +26,7 @@ class Task < RoleRecord
 
   attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes
 
+  validates_presence_of :user
   validates_presence_of :name, :message => I18n.t('tasks.errors.name.cant_be_blank')
   validates_length_of   :name, :maximum => 255, :message => I18n.t('tasks.errors.name.too_long')
   validates_inclusion_of :status, :in => STATUSES.values, :message => "is not a valid status"
@@ -37,8 +38,9 @@ class Task < RoleRecord
   attr_accessor :updating_date
 
   after_save :update_tasks_counts
+  before_validation :set_comments_target
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
-  before_save :set_comments_author, :if => :updating_user
+  before_validation :set_comments_author, :if => :updating_user
   before_save :transition_from_new_to_open, :if => :assigned_id?
   before_save :save_changes_to_comment, :if => :track_changes?
   before_save :save_completed_at
@@ -228,6 +230,10 @@ class Task < RoleRecord
   def remember_comment_created # before_update
     @comment_created = comments.any?(&:new_record?)
     true
+  end
+  
+  def set_comments_target
+    comments.each{|c|c.target = self if c.target.nil?}
   end
 
   def save_changes_to_comment # before_save
