@@ -4,11 +4,12 @@ Feature: Notifications of comment mentions
   I want to be notified when I'm mentioned
 
   Background: 
-    Given a project with users @balint, @pablo, @charles, @jordi and @james
+    Given a project with users @balint, @saimon, @pablo, @charles, @jordi and @james
     And @balint has his locale set to Italian
     And @pablo has his locale set to Spanish
     And @charles has his locale set to French
     And @jordi has his locale set to Catalan
+    And @saimon want to watch new conversation
 
   Scenario: Mention several users
     Given I am logged in as @balint
@@ -23,6 +24,7 @@ Feature: Notifications of comment mentions
     Then he should see "Conversa:" in the email body
     When @james opens the email
     Then he should see "Conversation:" in the email body
+    And @saimon should receive an email
 
   Scenario: Mention all users by using @all in conversation
     Given I am logged in as @balint

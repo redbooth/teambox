@@ -92,6 +92,12 @@ Given /^(@.+) (?:has|have) (?:his|her|their) time zone set to (.+)$/ do |users, 
   end
 end
 
+Given /^(@.+) want to watch new conversation$/ do |users|
+  each_user(users) do |user|
+    user.people.where(:project_id => @current_project.id).first.update_attribute :watch_new_conversation, true
+  end
+end
+
 Given /I am the user (.*)$/ do |login|
   @current_user ||= Factory(login.to_sym)
 end
