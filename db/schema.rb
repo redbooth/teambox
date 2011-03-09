@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110307204107) do
+ActiveRecord::Schema.define(:version => 20110308160737) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -347,6 +347,15 @@ ActiveRecord::Schema.define(:version => 20110307204107) do
     t.string  "name"
     t.integer "account_network_type", :default => 0
     t.integer "account_type",         :default => 0
+  end
+
+  create_table "task_list_templates", :force => true do |t|
+    t.string   "name"
+    t.integer  "organization_id"
+    t.integer  "position"
+    t.text     "raw_tasks"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "task_lists", :force => true do |t|

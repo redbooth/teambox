@@ -81,6 +81,11 @@ Teambox::Application.routes.draw do
           get :remove
         end
       end
+      resources :task_list_templates do
+        collection do
+          put :reorder
+        end
+      end
     end
 
     match '/account/settings' => 'users#edit', :as => :account_settings, :sub_action => 'settings'

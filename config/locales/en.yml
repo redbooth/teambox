@@ -17,6 +17,7 @@ en:
     cancel: Cancel
     close: Close
     save: Save
+    saving: Saving
     show_more: Show more
     print: Print this page
     prev: Previous
@@ -503,6 +504,7 @@ en:
       appearance: Appearance
       admin_users: Manage users
       admin_projects: Manage projects
+      task_list_templates: Task List Templates
       billing: Plans and Billing
       invoices: Invoices
       delete: Delete this organization...
@@ -1827,3 +1829,17 @@ en:
     attach: Attach a Google Document
     search_placeholder: Search Google documents
     new_document_placeholder: New document title
+  task_list_templates:
+    title: Task List Template
+    name: Template name
+    task_name: Task name
+    description: Description
+    tasks: Tasks
+    task: Task
+    explanation: A task list template is a set of common tasks you can repeatedly create task lists from.
+    index:
+      title: Task List Templates for %{name}
+      new: New Task List Template
+    form:
+      name_html: Template name <i>eg. Design process</i>
+

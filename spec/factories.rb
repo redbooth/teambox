@@ -95,6 +95,16 @@ Factory.define :simple_conversation, :parent => :conversation do |conversation|
   conversation.simple true
 end
 
+Factory.define :task_list_template do |template|
+  template.association(:organization)
+  template.name 'I will come up with a better name later'
+  template.tasks [['First task'],['Second task'],['Third task']]
+end
+
+Factory.define :complete_task_list_template, :parent => :task_list_template do |template|
+  template.tasks [['First task', 'Bla bla bla'],['Second task','You motherfucker'],['Third task','Booh yah.']]
+end
+
 Factory.define :task_list do |task_list|
   task_list.name 'Buy Groceries'
   task_list.association(:user)

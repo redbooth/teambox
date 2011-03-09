@@ -11,6 +11,8 @@ class Organization < ActiveRecord::Base
   has_many :admins, :through => :memberships, :source => :user, :conditions => {'memberships.role' => Membership::ROLES[:admin]}
   has_many :participants, :through => :memberships, :source => :user, :conditions => {'memberships.role' => Membership::ROLES[:participant]}
 
+  has_many :task_list_templates
+
   validates_length_of     :name, :minimum => 4
 
   validates_presence_of   :permalink

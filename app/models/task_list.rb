@@ -1,6 +1,7 @@
 class TaskList < RoleRecord
   include Immortal
 
+  attr_accessor :template
   attr_accessible :name, :start_on, :finish_on
 
   concerned_with :validation,

@@ -74,6 +74,8 @@ module NavigationHelpers
       organizations_path
     when /the admin users page for the for "([^\"]*)" organization/
       organization_memberships_path(Organization.find_by_name($1))
+    when /the task list templates page for the "([^\"]*)" organization/
+      organization_task_list_templates_path(Organization.find_by_name($1))
     when /the new organization page/
       new_organization_path
     when /the participant page for the "([^\"]*)" organization/

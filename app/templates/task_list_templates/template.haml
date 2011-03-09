@@ -1,0 +1,15 @@
+.task_list_templates{ 'data-id' => '{{id}}', 'data-organization' => '{{organization}}', 'id' => 'task_list_template_{{id}}'}
+  .data
+    .actions
+      %a.trash_icon{ :href => '#' }
+      %a.edit_icon{ :href => '#' }
+    = image_tag('drag.png', :class => 'drag')
+    %span.name {{name}}
+    %ul
+      {{#tasks}}
+      %li
+        == #{t('task_list_templates.task')}:
+        %span.title {{title}}
+        .desc {{desc}}
+      {{/tasks}}
+

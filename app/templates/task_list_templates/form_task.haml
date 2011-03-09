@@ -1,0 +1,5 @@
+%li
+  .text_field
+    = image_tag('drag.png', :class => 'drag')
+    %input{ :type => 'text', :name => 'task_list_template[titles][]', :value => '{{title}}', :placeholder => "#{t('task_list_templates.task_name')}"}
+    %input{ :type => 'text', :name => 'task_list_template[descs][]', :value => '{{desc}}', :placeholder => "#{t('task_list_templates.description')}" }

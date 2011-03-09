@@ -1,0 +1,17 @@
+%h2= t '.title', :name => @organization
+
+%a.new_task_list_template{ :href => '#' }
+  %span= t('.new')
+
+#task_list_templates
+
+:javascript
+  _task_list_templates_organization = #{@organization.permalink.to_json}
+  _task_list_templates = #{@task_list_templates.collect(&:to_json).to_json}
+  document.on('dom:loaded', function() {
+    TaskListTemplates.loadPage()
+  })
+  document.on('navigation:loaded', function() {
+    TaskListTemplates.loadPage()
+  })
+

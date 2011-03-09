@@ -1,0 +1,20 @@
+%form{ :action => '{{path}}', :class => '{{action}}_task_list_template task_list_template_form app_form', :'data-remote' => 'true', :method => 'post' }
+  %h3= t('task_list_templates.title')
+  %p= t('task_list_templates.explanation')
+  %input{ :type => 'hidden', :name => '_method', :value => '{{verb}}' }
+  .name.text_field
+    %label{ :for => 'task_list_template[name]' }
+      = t 'task_list_templates.form.name_html'
+    %input{ :type => 'text', :name => 'task_list_template[name]', :value => '{{name}}' }
+  %h4= t 'task_list_templates.tasks'
+  %ul#template_tasks
+    {{#tasks}}
+    %li
+      .text_field
+        = image_tag('drag.png', :class => 'drag')
+        %input{ :type => 'text', :name => 'task_list_template[titles][]', :value => '{{title}}', :placeholder => "#{t('task_list_templates.task_name')}"}
+        %input{ :type => 'text', :name => 'task_list_template[descs][]', :value => '{{desc}}', :placeholder => "#{t('task_list_templates.description')}" }
+    {{/tasks}}
+  %input{ :type => 'submit', :value => "#{t('common.save')}", :'data-disable-with' => "#{t('common.saving')}"}
+  %a.cancel{ :href => '#' }= t 'common.cancel'
+

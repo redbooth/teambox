@@ -59,9 +59,15 @@ class TaskListsController < ApplicationController
   def create
     authorize! :make_task_lists, @current_project
     @on_index = true
-    @task_list = @current_project.create_task_list(current_user,params[:task_list])
-    
-    if !@task_list.new_record?
+    if params[:task_list][:template]
+      if template = @current_project.organization.task_list_templates.find(params[:task_list][:template])
+        @task_list = template.create_task_list(@current_project, current_user)
+      end
+    else
+      @task_list = @current_project.create_task_list(current_user,params[:task_list])
+    end
+
+    if @task_list and !@task_list.new_record?
       respond_to do |f|
         f.html { redirect_to_task_list @task_list }
         f.m    { redirect_to_task_list }

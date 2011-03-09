@@ -273,8 +273,28 @@ var TaskList = {
         }
       }
     });
+  },
+
+  switchToTemplate: function() {
+    $('traditional_task_list_form').hide()
+    $('template_task_list_form').show()
+  },
+
+  switchFromTemplate: function() {
+    $('template_task_list_form').hide()
+    $('traditional_task_list_form').show()
   }
 };
+
+document.on('click', '#traditional_task_list_form a.create_from_template', function(e, el) {
+  TaskList.switchToTemplate()
+  e.stop()
+})
+
+document.on('click', '#template_task_list_form a.create_traditional', function(e, el) {
+  TaskList.switchFromTemplate()
+  e.stop()
+})
 
 document.on('click', '#reorder_task_lists_link', function(e, element){
   e.stop()
