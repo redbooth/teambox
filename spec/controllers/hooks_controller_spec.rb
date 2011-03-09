@@ -296,6 +296,37 @@ Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee1
         
         conversation.comments.first.body.strip.should == expected.strip
       end
+      
+      it "accepts hooks without commits" do
+        payload = <<-JSON
+          {
+            "before": "5aef35982fb2d34e9d9d4502f6ede1072793222d",
+            "repository": {
+              "url": "http://github.com/defunkt/github",
+              "name": "github",
+              "description": "You're lookin' at it.",
+              "watchers": 5, "forks": 2, "private": 1,
+              "owner": { "email": "chris@ozmm.org", "name": "defunkt" }
+            },
+            "commits": [],
+            "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
+            "ref": "refs/heads/master"
+          }
+        JSON
+        
+        post :create, :payload => payload, :hook_name => 'github', :project_id => @project.id
+        
+        conversation = @project.conversations.first
+        conversation.user.should_not == nil
+        conversation.should be_simple
+        conversation.name.should be_nil
+        
+        expected = (<<-HTML).strip
+        New code on <a href='http://github.com/defunkt/github'>github</a> refs/heads/master
+        HTML
+        
+        conversation.comments.first.body.strip.should == expected.strip
+      end
     end
   end
 end

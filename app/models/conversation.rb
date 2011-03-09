@@ -44,7 +44,8 @@ class Conversation < RoleRecord
     text = description_for_github_push(payload)
 
     self.create!(:body => text, :simple => true) do |conversation|
-      conversation.user = conversation.project.users.detect { |u| u.name == payload['commits'][0]['author']['name'] } || conversation.project.user if conversation.project && payload['commits'].any?
+      author = payload['commits'].any? ? conversation.project.users.detect { |u| u.name == payload['commits'][0]['author']['name'] } : nil
+      conversation.user = author || conversation.project.user
       yield conversation if block_given?
     end
   end
