@@ -38,17 +38,21 @@ describe Comment do
     end
     
     it "doesn't happen when updating" do
+      new_user = Factory.create(:user)
+      new_project = Factory.create(:project, :user => new_user)
+      
       @comment.save
       @comment.should_not be_new_record
-      @comment.user = @comment.project = nil
+      @comment.user = new_user
+      @comment.project = new_project
       @comment.save!
       @comment.reload
-      @comment.user_id.should be_nil
-      @comment.project_id.should be_nil
+      @comment.user_id.should == new_user.id
+      @comment.project_id.should == new_project.id
       @comment.body = "I am anonymous"
       @comment.save
-      @comment.reload.user.should be_nil
-      @comment.project.should be_nil
+      @comment.reload.user.should == new_user
+      @comment.project.should == new_project
     end
   end
   

@@ -3,7 +3,9 @@ require 'spec_helper'
 describe HtmlFormatting, 'Should apply our special Markdown' do
   
   subject do
+    user = Factory.create(:user)
     comment = Comment.new :body => description
+    comment.user = user
     comment.save!
     comment.body_html.strip
   end
