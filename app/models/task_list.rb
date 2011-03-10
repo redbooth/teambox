@@ -45,7 +45,7 @@ class TaskList < RoleRecord
   end
 
   define_index do
-    where "`task_lists`.`deleted` = 0"
+    where '"task_lists"."deleted" = FALSE'
 
     indexes name, :sortable => true
     has project_id, created_at, updated_at
