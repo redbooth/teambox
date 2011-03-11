@@ -58,6 +58,7 @@ Search = {
       });
       r.link = "/projects/"+r.project.permalink+"/"+r.type.underscore()+"s/"+r.id;
       r.timeago = Date.parseFormattedString(r.updated_at).timeAgo();
+      r.name = (r.name || r.first_comment).truncate(65);
     });
     response.length = response.objects.length;
     $('search_results').update(

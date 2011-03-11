@@ -1,4 +1,5 @@
 class ApiV1::CommentsController < ApiV1::APIController
+  before_filter :load_target
   before_filter :load_comment, :only => [:update, :convert, :show, :destroy]
   
   def index
@@ -7,8 +8,8 @@ class ApiV1::CommentsController < ApiV1::APIController
              :order => 'id DESC',
              :include => [:target, :user]}
     
-    @comments = if target
-      target.comments.where(api_scope).all(query)
+    @comments = if @target
+      @target.comments.where(api_scope).all(query)
     else
       Comment.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
@@ -22,9 +23,9 @@ class ApiV1::CommentsController < ApiV1::APIController
   
   def create
     # pass the project as extra parameter so target.project doesn't reload it
-    authorize! :comment, target, @current_project
+    authorize! :comment, @target, @current_project
     
-    @comment = target.comments.create_by_user current_user, params
+    @comment = @target.comments.create_by_user current_user, params
     
     if @comment.save
       handle_api_success(@comment, :is_new => true)
@@ -53,8 +54,8 @@ class ApiV1::CommentsController < ApiV1::APIController
   protected
 
   def load_comment
-    @comment = if target
-      target.comments.find params[:id]
+    @comment = if @target
+      @target.comments.find params[:id]
     else
       Comment.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
@@ -72,16 +73,20 @@ class ApiV1::CommentsController < ApiV1::APIController
     conditions
   end
 
-  def target
+  def load_target
     # can't use `memoize` because it freezes the object
-    @target ||= if params[:conversation_id]
-      Conversation.find_by_id params[:conversation_id],
-                              :conditions => {:project_id => @current_project.try(:id)||current_user.project_ids}
-    elsif params[:task_id]
-      Task.find_by_id params[:task_id],
-                      :conditions => {:project_id => @current_project.try(:id)||current_user.project_ids}
-    else
-      @current_project
+    begin
+      @target ||= if params[:conversation_id]
+        Conversation.find params[:conversation_id],
+                                :conditions => {:project_id => @current_project.try(:id)||current_user.project_ids}
+      elsif params[:task_id]
+        Task.find params[:task_id],
+                        :conditions => {:project_id => @current_project.try(:id)||current_user.project_ids}
+      else
+        @current_project
+      end
+    rescue ActiveRecord::RecordNotFound
+      api_error :not_found, :type => 'ObjectNotFound', :message => 'Comment not found'
     end
   end
   
