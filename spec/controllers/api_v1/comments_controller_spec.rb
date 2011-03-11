@@ -133,8 +133,6 @@ describe ApiV1::CommentsController do
       
       get :index, :conversation_id => 123
       response.status.should == 404
-      
-      p response.inspect
     end
     
     it "limits comments" do
