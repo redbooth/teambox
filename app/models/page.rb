@@ -176,7 +176,7 @@ class Page < RoleRecord
   end
 
   define_index do
-    where "`pages`.`deleted` = 0"
+    where Page.undeleted_clause_sql
 
     indexes name, :sortable => true
     indexes description
