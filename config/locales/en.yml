@@ -210,7 +210,7 @@ en:
         notify_conversations: Notify me of updates to conversations I'm watching
         notify_tasks: Notify me of updates to tasks I'm watching
         wants_task_reminder: Send me a daily reminder of tasks assigned to me that are due soon
-        notify_on_mention: Alway send email instantly when someone @mention me
+        notify_on_mention: Always send email instantly when someone @mentions me
         watch_options: Watch new tasks and conversations
         clarification_watch_new_task_or_conversation: "If enabled, you will be added as a watcher for any new task or conversation."
         watch_new_task: "Watch new tasks on project '%{project}'"
