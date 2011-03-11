@@ -128,6 +128,15 @@ describe ApiV1::CommentsController do
       task_comments.map{|a| a['id'].to_i}.should == task.comment_ids.sort
     end
     
+    it "shows returns 404's for ficticious targets" do
+      login_as @user
+      
+      get :index, :conversation_id => 123
+      response.status.should == 404
+      
+      p response.inspect
+    end
+    
     it "limits comments" do
       login_as @user
       
