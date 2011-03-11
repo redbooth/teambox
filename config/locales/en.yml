@@ -1265,6 +1265,7 @@ en:
       logout: Logout
       login: Login
       project_invitations: "Invitations (%{count})"
+      notifications: "Notifications %{count}"
       settings: Settings
       help: Help
     public_navigation:
@@ -1501,6 +1502,22 @@ en:
     new_conversations: New Conversation
     results_search: Search
     show_plans: Plans
+
+  notifications:
+    index:
+      mark_all_as_read: Mark all as read
+      delete: Delete
+      mark_as_read: Mark as read
+      mark_as_unread: Mark as unread
+      select_all: Select all
+      loading:
+        delete: Deleting...
+      subactions:
+        commits:
+          read: Mark selection as read
+          unread: Mark selection as unread
+          delete: Delete selection
+        updating: Updating selection...
 
   search:
     placeholder: Search all projects

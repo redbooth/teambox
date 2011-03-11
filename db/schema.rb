@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110307204107) do
+ActiveRecord::Schema.define(:version => 20110309182808) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -476,6 +476,7 @@ ActiveRecord::Schema.define(:version => 20110307204107) do
     t.text     "settings"
     t.integer  "digest_delivery_hour",                           :default => 9
     t.boolean  "instant_notification_on_mention",                :default => true
+    t.integer  "unread_notifications_count",                     :default => 0
   end
 
   add_index "users", ["deleted"], :name => "index_users_on_deleted"

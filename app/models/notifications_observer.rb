@@ -26,7 +26,10 @@ class NotificationsObserver < ActiveRecord::Observer
         next if person.user == comment.user
         user = person.user
         if user.send("notify_#{target.class.to_s.downcase.pluralize}".to_sym)
-          notification = person.notifications.new(:comment => comment, :target => target, :user => user)
+          notification = person.notifications.new
+          notification.comment = comment
+          notification.target = target
+          notification.user = user
 
           if person.digest_type == :instant or (comment.mentioned.to_a.include? user and user.instant_notification_on_mention?)
             instant_delivery(target, comment, user)
@@ -35,11 +38,8 @@ class NotificationsObserver < ActiveRecord::Observer
             person.update_next_delivery_time!
           end
 
-          # Set all the notification as read until we have a nice UI for it
-          # Todo, remove once we have a UI for it
-          notification.read = true
-
           notification.save
+          user.increment!(:unread_notifications_count)
         end
       end
     end

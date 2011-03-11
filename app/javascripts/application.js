@@ -62,3 +62,4 @@
 //= require <yahoo.color>
 //= require <watchers>
 //= require <watch_list>
+//= require <notification.js>

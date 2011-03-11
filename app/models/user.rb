@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   has_many :pages
   has_many :people
   has_many :notifications, :dependent => :destroy
+  has_many :unread_notifications, :class_name => 'Notification', :foreign_key => 'user_id', :conditions => {:read => false}
   has_many :projects, :through => :people, :order => 'name ASC'
   has_many :invitations, :foreign_key => 'invited_user_id'
   has_many :activities

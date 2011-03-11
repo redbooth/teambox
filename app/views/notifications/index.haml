@@ -1,0 +1,30 @@
+- if @notifications.any?
+  #notifications
+    %span.all-read= link_to t('.mark_all_as_read'), all_read_notifications_path, :method => :post
+    %span.select-all
+      = label_tag 'select-all', t('.select_all')
+      = check_box_tag 'select-all', 'Select all'
+    = form_tag notifications_path do
+      - for action in @subactions
+        = submit_tag t(".subactions.commits.#{action}"), :name => action
+      - for notification in @notifications
+        .notification
+          .actions
+            .select{:style => "float: right; padding: 5px;"}
+              = check_box_tag 'ids[]', notification.id
+            .toggle{:style => "float: right; padding: 5px;"}
+              = toggle_notification_read_status_link(notification)
+            .delete{:style => "float: right; padding: 5px;"}
+              = delete_notification_link(notification)
+          .title
+            Target title: 
+            = notification.id
+            = notification.target.name || "Conversation"
+          .content
+            Comment body: 
+            = notification.comment.body
+          .status
+            Notification read status: 
+            = notification.read? ? 'read' : 'unread'
+          %hr
+  = will_paginate @notifications

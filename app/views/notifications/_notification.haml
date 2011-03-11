@@ -1,0 +1,7 @@
+.notification
+  .target
+    = link_to notification.target.project.name, notification.target.project
+    &rarr;
+    = link_to notification.target.name || t(".#{notification.target.class.to_s.downcase}"), [notification.target.project, notification.target]
+  .comment
+    = render 'comment', :comment => notification.comment, :read => notification.read
