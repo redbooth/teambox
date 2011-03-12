@@ -49,6 +49,8 @@ class Comment < ActiveRecord::Base
   validate :check_duplicate, :if => lambda { |c| !@is_importing and c.target_id? and not c.hours? }, :on => :create
   validates_presence_of :body, :unless => lambda { |c| c.task_comment? or c.uploads.to_a.any? or c.google_docs.any? }
 
+  validates_presence_of :user
+
   # was before_create, but must happen before format_attributes
   before_validation   :copy_ownership_from_target, :on => :create, :if => lambda { |c| c.target }
   after_create  :trigger_target_callbacks

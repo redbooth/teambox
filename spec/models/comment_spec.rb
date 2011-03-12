@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Comment do
 
+  it { should validate_presence_of :user }
+
   describe "factories" do
     it "should generate a valid comment" do
       @project = Factory(:project)
