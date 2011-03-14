@@ -625,7 +625,7 @@ en:
       go_downgrade_to_free_plan: "You need to <a href='%{link}'>unsubscribe</a> from the paid plan before deleting the organization. You can downgrade your account to the free plan from the <a href='%{link}'>billing</a> section."
       delete: Delete this organization
       clarification: "If you delete this organization, all the information that's attached to it organization will be lost forever. The users that belong to this organization will still be able to login to Teambox and work with their other organizations."
-      confirm: I understand that deleting this organization is irreversible and I all the content related to this organization will be lost.
+      confirm: I understand that deleting this organization is irreversible and all the content related to this organization will be lost.
       deleted: You deleted the organization
   memberships:
     index:
