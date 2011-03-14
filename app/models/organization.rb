@@ -77,7 +77,7 @@ class Organization < ActiveRecord::Base
   end
 
   def users_in_projects
-    User.find(:all, :joins => :people, :conditions => {:people => {:project_id => project_ids}}).uniq
+    User.joins(:people).select("distinct users.*").where({:people => {:project_id => project_ids}}).all
   end
 
   # External users are simply involved in some project of the organization

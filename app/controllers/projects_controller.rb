@@ -95,6 +95,7 @@ class ProjectsController < ApplicationController
  
   # Gets called from Project#create
   def invite_people
+    @contacts = @current_project.organization.users_in_projects - [current_user]
   end
 
   # POST action for invite_people
