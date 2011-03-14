@@ -55,7 +55,7 @@ class Person
   def update_digest_delivery_time
     if digest_changed? or deleted_changed? or new_record?
       if last_digest_delivery.nil?
-        self.last_digest_delivery = self.next_delivery_time = Time.now
+        self.last_digest_delivery = self.next_digest_delivery = Time.now
       end
     end
   end
