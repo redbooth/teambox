@@ -1,13 +1,19 @@
 ActivityFeed = {
   collapseAll: function() {
-    $$('#activities .activity, #activities .thread').invoke("addClassName", "collapsed");
-    $('activities').addClassName("collapsed");
-    this.collapsed = true;
+    var activities = $('activities');
+    if (activities) {
+      $$('#activities .activity, #activities .thread').invoke("addClassName", "collapsed");
+      activities.addClassName("collapsed");
+      this.collapsed = true;
+    }
   },
   expandAll: function() {
-    $$('#activities .activity, #activities .thread').invoke("removeClassName", "collapsed");
-    $('activities').removeClassName("collapsed");
-    this.collapsed = false;
+    var activities = $('activities');
+    if (activities) {
+      $$('#activities .activity, #activities .thread').invoke("removeClassName", "collapsed");
+      activities.removeClassName("collapsed");
+      this.collapsed = false;
+    }
   },
   toggle: function(el) {
     el.toggleClassName("collapsed");
