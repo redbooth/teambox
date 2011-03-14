@@ -1,0 +1,5 @@
+%h2
+  = t('.title')
+  = raw('(' + link_to( t(".all"), notifications_path ) + ')') if params[:filter]
+- for filter in @filters
+  .filter= link_to t(".#{filter}"), notifications_path(:filter => filter)

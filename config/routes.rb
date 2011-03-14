@@ -66,12 +66,12 @@ Teambox::Application.routes.draw do
     resources :reset_passwords
     resource :session
 
-    resources :notifications, :except => [:new, :edit, :update, :index] do
+    get '/notifications(/filter/:filter)(/page/:page)' => 'notifications#index', :as => :notifications
+    resources :notifications, :only => [:show] do
       member do
         post :toggle
       end
       collection do
-        get '(/page/:page)' => 'notifications#index', :as => :notifications
         post :update
         post :all_read
       end

@@ -1,10 +1,13 @@
+- content_for :column do
+  = render 'filters'
+
 - if @notifications.any?
   #notifications
     %span.all-read= link_to t('.mark_all_as_read'), all_read_notifications_path, :method => :post
     %span.select-all
       = label_tag 'select-all', t('.select_all')
       = check_box_tag 'select-all', 'Select all'
-    = form_tag notifications_path do
+    = form_tag notifications_path(@form_params) do
       - for action in @subactions
         = submit_tag t(".subactions.commits.#{action}"), :name => action
       - for notification in @notifications
@@ -17,7 +20,7 @@
             .delete{:style => "float: right; padding: 5px;"}
               = delete_notification_link(notification)
           .title
-            Target title: 
+            = "#{notification.target_type}:"
             = notification.id
             = notification.target.name || "Conversation"
           .content

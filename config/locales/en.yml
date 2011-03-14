@@ -1518,6 +1518,11 @@ en:
           unread: Mark selection as unread
           delete: Delete selection
         updating: Updating selection...
+    filters:
+      title: Filter
+      all: show all
+      conversations: Conversation
+      tasks: Task
 
   search:
     placeholder: Search all projects

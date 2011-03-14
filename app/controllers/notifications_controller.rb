@@ -3,14 +3,22 @@ class NotificationsController < ApplicationController
   before_filter :find_notification, :except => [:index, :update]
 
   def index
-    @notifications = current_user.notifications.includes(:comment).paginate :page => params[:page]
     @subactions = %w(read unread delete)
+    @filters    = %w(conversations tasks)
+
+    @notifications = current_user.notifications.includes(:comment)
+
+    if params[:filter] and @filters.include? params[:filter]
+      @notifications = @notifications.where(:target_type => params[:filter].singularize.capitalize)
+    end
+
+    @notifications = @notifications.paginate :page => params[:page], :per_page => 5
   end
 
   def show
     target = @notification.target
 
-    if notifications = current_user.notifications.where(:target => target)
+    if notifications = current_user.notifications.where(:target_id => target.id, :target_type => target.class.to_s)
       notifications.update_all(:read => true)
       update_unread_notification_count
     end
@@ -19,13 +27,13 @@ class NotificationsController < ApplicationController
   end
 
   def destroy
-    #@notification.destroy
-    redirect_to :action => :index
+    @notification.destroy
+    head :ok
   end
 
   def toggle
     @notification.toggle!(:read)
-    redirect_to :action => :index
+    head :ok
   end
 
   def update
@@ -47,7 +55,7 @@ class NotificationsController < ApplicationController
       # Empty/Invalid selection
     end
 
-    redirect_to :action => :index
+    redirect_to :back
   end
 
   def all_read
