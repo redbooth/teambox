@@ -81,19 +81,3 @@ Feature: Creating an organization
     And I follow "Pentagon"
     And I follow "Manage projects"
     And I should see "Spy the president"
-
-  Scenario: I shouldn't be able to create two organizations with the same domain
-    Given I am an administrator in the organization called "ACME" with domain "teambox.acme.com"
-    Given I am an administrator in the organization called "OZME"
-    When I go to the organizations page
-    And I follow "+ Create a new Organization"
-    And I fill in "organization_name" with "A company manufacturing everything"
-    And I fill in "organization_permalink" with "ACME-2"
-    And I fill in "organization_domain" with "teambox.acme.com"
-    And I press "Create Organization"
-    Then I should see "has already been taken"
-    When I go to the organizations page
-    And I follow "OZME"
-    And I fill in "organization_domain" with "teambox.acme.com"
-    And I press "Save changes"
-    Then I should see "has already been taken"
