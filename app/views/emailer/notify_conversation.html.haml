@@ -9,13 +9,7 @@
     = t('emailer.notify.project')
     = link_to @project.name, project_url(@project)
 
-  %h2{ :style => email_text(:big) }
-    - if @conversation.name.blank?
-      = link_to t('emailer.notify.conversation'), project_conversation_url(@project, @conversation)
-    - else
-      = t('emailer.notify.conversation')
-      = link_to h(@conversation.name), project_conversation_url(@project, @conversation)
-
+  = render 'conversation', :conversation => @conversation
   = emailer_list_comments(@conversation.comments)
 
   .actions{ :style => 'font-size: 14px; color: rgb(100,100,100); padding: 15px' }

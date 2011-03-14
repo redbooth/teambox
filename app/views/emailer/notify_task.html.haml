@@ -11,16 +11,7 @@
     = t('emailer.notify.task_list')
     = link_to(h(@task_list.name), project_task_list_url(@project, @task_list))
 
-  .box{ :style => email_box(@task)}
-    %h2{ :style => email_text(:big) }
-      = t('emailer.notify.task')
-      = link_to h(@task.name), project_task_url(@project, @task)
-    - if @task.assigned
-      %p= t('emailer.notify.assigned_to', :user => content_tag(:b,h(@task.assigned.user.name))).html_safe
-    %p= t('emailer.notify.status', :status => localized_status_name(@task))
-    - if @task.due_on
-      %p= t('emailer.notify.due_on', :date => due_on(@task))
-
+  = render 'task', :task => @task
   = emailer_list_comments(@task.comments)
   = emailer_recent_tasks(@project, @recipient)
 

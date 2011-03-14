@@ -9,23 +9,9 @@
 
   - @targets.each do |target|
     - if target.is_a? Task
-      .box{ :style => email_box(target)+"margin: 80px 0 0 0" }
-        %h2{ :style => email_text(:big) }
-          = t('emailer.notify.task')
-          = link_to h(target.name), project_task_url(@project, target)
-        %p
-          - if target.assigned
-            %span{ :style => 'margin-right: 15px' }= t('emailer.notify.assigned_to', :user => content_tag(:b,h(target.assigned.user.name))).html_safe
-          %span{ :style => 'margin-right: 15px' }= t('emailer.notify.status', :status => content_tag(:b, localized_status_name(target))).html_safe
-          - if target.due_on
-            %span{ :style => 'margin-right: 15px' }= t('emailer.notify.due_on', :date => content_tag(:b, due_on(target)) ).html_safe
+      = render 'task', :task => target
     - elsif target.is_a? Conversation
-      .box{ :style => email_box(target)+"margin: 80px 0 0 0" }
-        %h2{ :style => email_text(:big) }
-          - conversation_title = target.name.blank? ? truncate( sanitize( target.comments.try(:first).try(:body), :tags => [nil]), :length => 80) : target.name
-          = t('emailer.notify.conversation')
-          = link_to h(conversation_title), [@project, target]
-      
+      = render 'conversation', :conversation => target
     = emailer_list_comments(target.comments, @comments)
     .actions{ :style => 'color: rgb(100,100,100)' }
       %p

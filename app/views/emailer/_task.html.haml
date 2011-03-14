@@ -1,0 +1,10 @@
+.box{ :style => email_box(task)+"margin: 80px 0 0 0" }
+  %h2{ :style => email_text(:big) }
+    = t('emailer.notify.task')
+    = link_to h(task.name), project_task_url(@project, task)
+  %p
+    - if task.assigned
+      %span{ :style => 'margin-right: 15px' }= t('emailer.notify.assigned_to', :user => content_tag(:b,h(task.assigned.user.name))).html_safe
+    %span{ :style => 'margin-right: 15px' }= t('emailer.notify.status', :status => content_tag(:b, localized_status_name(task))).html_safe
+    - if task.due_on
+      %span{ :style => 'margin-right: 15px' }= t('emailer.notify.due_on', :date => content_tag(:b, due_on(task)) ).html_safe
