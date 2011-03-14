@@ -2001,7 +2001,7 @@ es:
       thanks: "¡Gracias por registrarte!"
     daily_task_reminder_email: 
       daily_task_reminder: "Recordatorio de tareas diarias"
-      daily_task_reminder_from_teambox: "Este es tu recordatio de tareas en Teambox"
+      daily_task_reminder_from_teambox: "Este es tu recordatorio de tareas en Teambox"
       late_tasks: Retrasadas
       settings_page: "tu página de usuario"
       tasks_for_next_two_weeks: "En las próximas dos semanas"
