@@ -858,6 +858,7 @@ es:
       task_commands: "Escribe #resolve, #reject o #hold al principio de tu respuesta para cambiar el estado de la tarea. Escribe #%{username} para asignarla a @%{username}, etc."
       task_link: "ver esta tarea online"
       task_list: "Lista de tareas:"
+      view_conversation_online: "ver esta conversación online"
       view_this_conversation_online_html: "Puedes %{conversation} para contestar y añadir archivos"
       view_this_task_online_html: "Puedes %{link} para comentar y adjuntar archivos."
     project_membership_notification: 
