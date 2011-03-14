@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
             render :nothing => true
           else
             respond_to do |f|
-              f.any(:html, :m) { render 'projects/not_in_project', :status => :forbidden }
+              f.any(:html, :m, :print) { render 'projects/not_in_project', :status => :forbidden }
             end
           end
         end
