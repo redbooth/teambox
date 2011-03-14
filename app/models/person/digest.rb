@@ -46,7 +46,7 @@ class Person
   end
 
   def self.send_all_digest
-    Person.where(['last_digest_delivery < next_digest_delivery and next_digest_delivery <= ?', Time.now]).find_each do |person|
+    Person.where(['last_digest_delivery < next_digest_delivery and next_digest_delivery <= ? and digest > ?', Time.now, Person::DIGEST[:instant]]).find_each do |person|
       person.send_digest
     end
   end
@@ -57,6 +57,10 @@ class Person
       if last_digest_delivery.nil?
         self.last_digest_delivery = self.next_digest_delivery = Time.now
       end
+    end
+
+    if digest_changed? and digest_type == :instant
+      self.notifications.where(:sent => false).update_all(:sent => true)
     end
   end
 
