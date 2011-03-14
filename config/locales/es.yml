@@ -864,7 +864,7 @@ es:
     project_membership_notification: 
       project_link: "Haz click en el siguiente para empezar a colaborar en %{project} ahora"
       subject: "%{user} comparte [%{project}] contigo"
-      you_have_been_added_to: "Tu eres ahora un miembro del rpoyecto %{project}"
+      you_have_been_added_to: "Tu eres ahora un miembro del proyecto %{project}"
     reset_password: 
       follow_this_link: "con el fin de %{new_password} para Teambox, es necesario que inicies sesión en el siguiente link:"
       hey: "¡Hola, %{user_name}!"
