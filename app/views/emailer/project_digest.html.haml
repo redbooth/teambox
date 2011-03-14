@@ -1,19 +1,15 @@
-.email{ :style =>  "#{email_global}"}
-  .header
-    %h1
-      = link_to logo_image, projects_path(@project)
-  .navigation{ :style=> email_navigation}
+.email{ :style =>  "#{email_global}" }
+  %h1= link_to logo_image, projects_path(@project)
+  %h2{ :style => email_text(:normal) }
+    - project_link =  link_to(@project.name, project_url(@project))
+    = t('emailer.notify.digest_title_html', :project_link => project_link)
 
   %p{ :style => email_text(:small) }
     = t('emailer.common.do_not_answer')
 
-  %p{ :style => email_text(:normal)}
-    = t('emailer.notify.project')
-    = link_to(h(@project.name), project_url(@project)) + '. '
-
   - @targets.each do |target|
-    - if target.class == Task
-      .box{ :style => email_box(target)}
+    - if target.is_a? Task
+      .box{ :style => email_box(target)+"margin: 80px 0 0 0" }
         %h2{ :style => email_text(:big) }
           = t('emailer.notify.task')
           = link_to h(target.name), project_task_url(@project, target)
@@ -23,8 +19,8 @@
           %span{ :style => 'margin-right: 15px' }= t('emailer.notify.status', :status => content_tag(:b, localized_status_name(target))).html_safe
           - if target.due_on
             %span{ :style => 'margin-right: 15px' }= t('emailer.notify.due_on', :date => content_tag(:b, due_on(target)) ).html_safe
-    - elsif target.class == Conversation
-      .box{ :style => email_box(target)}
+    - elsif target.is_a? Conversation
+      .box{ :style => email_box(target)+"margin: 80px 0 0 0" }
         %h2{ :style => email_text(:big) }
           - conversation_title = target.name.blank? ? truncate( sanitize( target.comments.try(:first).try(:body), :tags => [nil]), :length => 80) : target.name
           = t('emailer.notify.conversation')
@@ -33,14 +29,16 @@
     = emailer_list_comments(target.comments, @comments)
     .actions{ :style => 'color: rgb(100,100,100)' }
       %p
-        - link = link_to t('emailer.notify.click_here'), [@project, target]
-        - if target.class == Task
-          - email = link_to t('emailer.notify.click_here'), "#{@project.permalink}+task+#{target.id}@#{Rails.configuration[:app_domain]}"
-        - elsif target.class == Conversation
-          - email = link_to t('emailer.notify.click_here'), "#{@project.permalink}+conversation+#{target.id}@#{Rails.configuration[:app_domain]}"
-        = t('emailer.notify.digest_reply_html', :click_here_link => link, :click_here_email => email)
+        - case target
+        - when Task
+          - email = "#{@project.permalink}+task+#{target.id}@#{Rails.configuration[:app_domain]}" 
+        - when Conversation
+          - email = "#{@project.permalink}+conversation+#{target.id}@#{Rails.configuration[:app_domain]}"
+        = link_to t('emailer.notify.reply_online'), [@project, target], :style => email_button
+        - if Teambox.config.allow_incoming_email
+          = link_to t('emailer.notify.reply_by_email'), "mailto:#{email}", :style => email_button
         = t('emailer.notify.stop_watching_link_html', :stop_watch => link_to(t('emailer.notify.stop_watch'), [@project, target]) )
 
-  .footer{ :style => email_text(:small) }
+  .footer{ :style => email_text(:small)+"; margin: 40px 0" }
     %p
       = t('emailer.notify.notification_settings_link_html', :settings_link => link_to(t('emailer.notify.settings_link'), account_notifications_url) )

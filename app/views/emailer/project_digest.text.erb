@@ -21,9 +21,7 @@ elsif target.class == Conversation
 end
 -%>
 
-<%= t('emailer.notify.digest_reply_text', :link => link, :email => email) %>
+<%= t('emailer.notify.digest_reply_text', :reply_online => link, :email => email) %>
 <%= t('emailer.notify.stop_watching_link_html', :stop_watch => t('emailer.notify.stop_watch')) -%> <%= link %>
-
-
 
 <% end %>
