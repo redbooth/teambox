@@ -23,6 +23,10 @@ class Invitation < RoleRecord
   def target
     project
   end
+  
+  def user
+    @user ||= user_id ? User.find_with_deleted(user_id) : nil
+  end
 
   def user_or_email=(value)
     self.invited_user = User.find_by_username_or_email(value)
