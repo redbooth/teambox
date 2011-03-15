@@ -59,9 +59,9 @@
     "date.timeAgo for 5 minutes".
       assertEquals((new Date(now - 5*60*1000)).timeAgo(now), "5 minutes ago");
     "date.timeAgo for 60 minutes before 14:00".
-      assertEquals((new Date(midday - 60*60*1000)).timeAgo(midday), "1:00 pm");
+      assertEquals((new Date(midday - 60*60*1000)).timeAgo(midday), "01:00 pm");
     "date.timeAgo for 1 day before".
-      assertEquals((new Date(midday - 24*60*60*1000)).timeAgo(midday), "Yesterday 2:00 pm");
+      assertEquals((new Date(midday - 24*60*60*1000)).timeAgo(midday), "Yesterday 02:00 pm");
     "date.timeAgo for 4 days before".
       assertEquals((new Date(midday - 4*24*60*60*1000)).timeAgo(midday), "Mon Feb 3");
     "date.timeAgo for 15 days before".
