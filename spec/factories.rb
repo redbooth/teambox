@@ -186,3 +186,14 @@ end
 Factory.define :email_bounce do |f|
   f.email { Factory.next(:email) }
 end
+
+Factory.define :google_doc do |d|
+  d.title "Very interesting spreadsheet"
+  d.url "https://google.com/document/1234"
+  d.document_type "spreadsheet"
+
+  d.association :user
+  d.association :project
+  d.association :comment
+end
+
