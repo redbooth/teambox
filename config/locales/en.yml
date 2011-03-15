@@ -938,6 +938,10 @@ en:
       optional: "If you set starting and ending dates, this task will be displayed in the Gantt chart"
       start_on_html: Starts on... <i>optional</i>
       finish_on_html: End on... <i>optional</i>
+      or_from_template: or create a Task List from a template
+      no_templates_yet_html: You didn't create a task list template yet. Go to your organization's %{link}
+      task_list_templates_page: Task List Templates page
+      or_from_scratch: or create a Task List from scratch
     filter:
       filter_tasks: Filter tasks
       by_name: By name...

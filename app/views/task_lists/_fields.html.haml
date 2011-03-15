@@ -5,7 +5,7 @@
     = f.label :name, t('.name_html')
     = f.text_field :name, :autofocus => true
     %a.template_link.create_from_template{ :href => '#' }
-      or create a Task List from a template
+      = t '.or_from_template'
   %p.optional= t('.optional')
   .pick_date
     = f.label :start_on, t('.start_on_html')
@@ -20,9 +20,7 @@
       = f.select :template, project.organization.task_list_templates.collect { |t| [t.name, t.id] }
     - else
       %p
-        You didn't create a task list template yet.
-        Go to your organization's
-        = link_to 'Task List Templates page', organization_task_list_templates_path(project.organization)
+        = t '.no_templates_yet_html', :link => link_to(t('.task_list_templates_page'), organization_task_list_templates_path(project.organization))
     %a.template_link.create_traditional{ :href => '#' }
-      or create a Task List from scratch
+      = t '.or_from_scratch'
 
