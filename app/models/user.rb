@@ -21,7 +21,8 @@ class User < ActiveRecord::Base
                   :validation,
                   :task_reminders,
                   :stats,
-                  :badges
+                  :badges,
+                  :oauth
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments

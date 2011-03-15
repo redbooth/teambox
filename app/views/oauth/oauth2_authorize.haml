@@ -1,0 +1,18 @@
+%h2= t('.title')
+
+%p
+  Would you like to authorize
+  = link_to @client_application.name,@client_application.url
+  (
+  = link_to @client_application.url,@client_application.url
+  ) to access your account?
+- form_tag authorize_url do
+  = hidden_field_tag "response_type", params[:response_type]
+  = hidden_field_tag "client_id", params[:client_id]
+  = hidden_field_tag "redirect_url", params[:redirect_url]
+  = hidden_field_tag "state", params[:state]
+  = hidden_field_tag "scope", params[:scope]
+  = check_box_tag 'authorize'
+  authorize access
+  %p
+    = submit_tag

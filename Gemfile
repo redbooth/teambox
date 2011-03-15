@@ -67,3 +67,5 @@ group :testing do
   gem 'capybara', '~> 0.4.0'
   gem 'launchy', '~> 0.3.7'
 end
+
+gem "oauth-plugin", ">=0.4.0.pre4"

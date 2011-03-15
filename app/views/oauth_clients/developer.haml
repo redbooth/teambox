@@ -1,0 +1,16 @@
+- content_for :column do
+  = render 'shared/user_navigation'
+
+%h3 OAuth Applications
+
+= new_oauth_client_link
+
+- if @client_applications.empty?
+  %p
+    Do you have an application you would like to register for use with us using the <a href="http://oauth.net">OAuth</a> standard?
+    You must register your web application before it can make OAuth requests to this service
+- else
+  %p
+    You have the following client applications registered:
+  #oauth_clients
+    = render :partial => 'client', :collection => @client_applications

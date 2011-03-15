@@ -1,4 +1,7 @@
 class ApiV1::APIController < ApplicationController
+  include OAuth::Controllers::ApplicationControllerMethods
+  Oauth2Token = ::Oauth2Token
+  
   skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token, :add_chrome_frame_header
 
   API_LIMIT = 50
@@ -9,8 +12,21 @@ class ApiV1::APIController < ApplicationController
     api_error(:unauthorized, :type => 'InsufficientPermissions', :message => 'Insufficient permissions')
   end
   
+  def current_user
+    @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie || login_from_oauth) unless @current_user == false
+  end
+  
+  def login_from_oauth
+    Authenticator.new(self,[:token]).allow? ? current_token.user : nil
+  end
+  
   def access_denied
-    api_error(:unauthorized, :type => 'AuthorizationFailed', :message => 'Login required')
+    api_error(:unauthorized, :type => 'AuthorizationFailed', :message => @access_denied_message || 'Login required')
+  end
+  
+  def invalid_oauth_response(code=401,message="Invalid OAuth Request")
+    @access_denied_message = message
+    false
   end
   
   def load_project

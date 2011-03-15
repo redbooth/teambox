@@ -1,0 +1,34 @@
+- content_for :column do
+  = render 'shared/user_navigation'
+
+.oauth_client_header
+  .text_actions
+    = link_to 'Edit', edit_oauth_client_path(@client_application)
+    = t('common.or')
+    = link_to 'Back', developer_oauth_clients_path
+  %h2
+    = @client_application.name
+
+%h3 Consumer Key
+%pre=@client_application.key
+
+%h3 Consumer Secret
+%pre=@client_application.secret
+
+%h3 Request Token URL
+%pre
+  ="http#{'s' if request.ssl?}://#{request.host_with_port}#{@client_application.oauth_server.request_token_path}"
+
+%h3 Access Token URL
+%pre
+  ="http#{'s' if request.ssl?}://#{request.host_with_port}#{@client_application.oauth_server.access_token_path}"
+
+%h3 Authorize URL
+%pre
+  ="http#{'s' if request.ssl?}://#{request.host_with_port}#{@client_application.oauth_server.authorize_path}"
+%p
+  We support hmac-sha1 (recommended) as well as plain text in ssl mode.
+
+%h3 Access level
+%p "Something here"
+

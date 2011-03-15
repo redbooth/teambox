@@ -1,0 +1,5 @@
+.oauth_client[client]
+  .name
+    %h2= link_to client.name, :action => :show, :id => client.id
+  .actions
+    = link_to 'Edit', edit_oauth_client_path(client)

@@ -1,0 +1,8 @@
+- content_for :column do
+  = render 'shared/user_navigation'
+
+%h1 Register a new application
+
+- form_for :client_application, :url => { :action => :create }, :html => {:id => 'new_oauth_clients'} do |f|
+  = render :partial => "form", :locals => { :f => f }
+  = submit_tag "Register"

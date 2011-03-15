@@ -1,0 +1,10 @@
+- content_for :column do
+  = render 'shared/user_navigation'
+
+%h1 Edit your application
+- form_for :client_application, :html => {:id => 'edit_oauth_clients'} do |f|
+  = render :partial => "form", :locals => { :f => f }
+  = submit_tag "Edit"
+  = link_to 'Delete', oauth_client_path(@client_application), :confirm => "Are you sure?", :method => :delete
+  = t('common.or')
+  = link_to 'Cancel', oauth_client_path(@client_application)

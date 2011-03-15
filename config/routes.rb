@@ -386,7 +386,24 @@ Teambox::Application.routes.draw do
   if Rails.env.development?
     mount Emailer::Preview => 'mail_view'
   end
-
+  
+  # Oauth provider
+  # Oauth-server
+  
+  match '/oauth',:controller=>'oauth',:action=>'index', :as => :oauth
+  match '/oauth/authorize',:controller=>'oauth',:action=>'authorize', :as => :authorize
+  match '/oauth/revoke',:controller=>'oauth',:action=>'revoke', :as => :revoke
+  match '/oauth/request_token',:controller=>'oauth',:action=>'request_token', :as => :request_token
+  match '/oauth/access_token',:controller=>'oauth',:action=>'access_token', :as => :access_token
+  match '/oauth/token',:controller=>'oauth',:action=>'token', :as => :token
+  match '/oauth/test_request',:controller=>'oauth',:action=>'test_request', :as => :test_request
+  
+  resources :oauth_clients do
+    collection do
+      get :developer
+    end
+  end
+  
   match 'trimmer/:locale/templates.js' => 'trimmer#templates', :as => :trimmer_templates
   match 'trimmer/:locale/translations.js' => 'trimmer#translations', :as => :trimmer_translations
   match 'trimmer/:locale.js' => 'trimmer#resources', :as => :trimmer_resources
