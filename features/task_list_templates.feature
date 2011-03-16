@@ -28,3 +28,31 @@ Feature: Create task list tempates and convert them to tasks
     Then I should see "Hiring process" within ".task_list"
     And I should see "Hiring process" within ".head"
 
+  Scenario: I create a regular task list with templates in the organization
+    Given I have a task list template called "Hiring process"
+    When I go to the task lists page
+    And I follow "New Task List"
+    And I fill in "task_list_name" with "Just a regular task list"
+    And I press "Add Task List"
+    Then I should see "Just a regular task list" within ".task_list"
+    And I should not see "Hiring process"
+
+  Scenario: I start creating a regular task list but end up with a template Task List
+    Given I have a task list template called "Hiring process"
+    When I go to the task lists page
+    And I follow "New Task List"
+    And I fill in "task_list_name" with "Just a regular task list"
+    And I follow "create a Task List from a template"
+    And I select "Hiring process" from "template"
+    And I press "Add Task List"
+    Then I should see "Hiring process" within ".task_list"
+    And I should not see "Just a regular task list"
+
+  Scenario: I try to create task list without title but I have templates on the organization
+    Given I have a task list template called "Hiring process"
+    When I go to the task lists page
+    And I follow "New Task List"
+    And I press "Add Task List"
+    Then I should not see "Just a regular task list"
+    And I should see "Name must not be blank"
+

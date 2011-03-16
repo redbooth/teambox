@@ -277,6 +277,7 @@ var TaskList = {
 
   switchToTemplate: function() {
     $('traditional_task_list_form').hide()
+    $('task_list_name').value = ""
     $('template_task_list_form').show()
   },
 

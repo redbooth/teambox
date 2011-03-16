@@ -17,7 +17,7 @@
   .template.text_field
     = f.label :template, 'Create a task list from a template'
     - if project.organization.task_list_templates.any?
-      = f.select :template, project.organization.task_list_templates.collect { |t| [t.name, t.id] }
+      = f.select :template, project.organization.task_list_templates.collect { |t| [t.name, t.id] }, :include_blank => true
     - else
       %p
         = t '.no_templates_yet_html', :link => link_to(t('.task_list_templates_page'), organization_task_list_templates_path(project.organization))
