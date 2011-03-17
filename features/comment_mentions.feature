@@ -9,7 +9,7 @@ Feature: Notifications of comment mentions
     And @pablo has his locale set to Spanish
     And @charles has his locale set to French
     And @jordi has his locale set to Catalan
-    And @saimon want to watch new conversation
+    And @saimon wants to watch new conversations
 
   Scenario: Mention several users
     Given I am logged in as @balint
@@ -55,3 +55,16 @@ Feature: Notifications of comment mentions
     And I press "Pubblica"
     Then @pablo, @charles and @jordi should receive an email
     And @james should receive no emails
+
+  Scenario: Create simple conversation when already watching new conversations
+    Given @pablo wants to watch new conversations
+    Given @jordi wants to watch new conversations
+    Given I am logged in as @saimon
+    When I go to the project page
+    And I fill in the comment box with "Hey! Look! No uniqueness exception!"
+    And I press "Save"
+    Then I should see "Hey! Look! No uniqueness exception!"
+    Then @saimon should receive no emails
+    Then @pablo and @jordi should receive an email
+    And @balint, @charles and @james should receive no emails
+

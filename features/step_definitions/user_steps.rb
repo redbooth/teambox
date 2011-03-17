@@ -92,7 +92,7 @@ Given /^(@.+) (?:has|have) (?:his|her|their) time zone set to (.+)$/ do |users, 
   end
 end
 
-Given /^(@.+) want to watch new conversation$/ do |users|
+Given /^(@.+) wants to watch new conversations$/ do |users|
   each_user(users) do |user|
     user.people.where(:project_id => @current_project.id).first.update_attribute :watch_new_conversation, true
   end

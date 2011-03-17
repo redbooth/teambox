@@ -1,11 +1,14 @@
 module Watchable
   def self.included(model)
+    model.before_save :before_save_collection_association
     model.after_save :update_watchers
-    model.after_create :create_watchers
+    model.after_update :autosave_associated_records_for_watchers
+    model.after_create :create_watchers, :autosave_associated_records_for_watchers
     model.attr_accessible :watchers_ids, :watcher_ids
     model.send :attr_writer, :watchers_ids
     model.has_many :watcher_tags, :as => :watchable, :class_name => 'Watcher', :dependent => :destroy
-    model.has_many :watchers, :through => :watcher_tags, :source => :user
+    #Make it obvious that autosave is acting here
+    model.has_many :watchers, :through => :watcher_tags, :source => :user, :autosave => true
   end
 
   def watchers_ids
@@ -59,5 +62,24 @@ module Watchable
   def create_watchers
     users = project.people.where("watch_new_#{self.class.to_s.downcase}".to_sym => true).map(&:user)
     add_watchers(users)
+  end
+
+  # Override to rescue uniqueness errors from db
+  # Note: Rather than just removing update_watchers
+  # (which also checks for user changes)
+  # we rescue StatementInvalid uniqueness errors
+  def autosave_associated_records_for_watchers
+    reflection = self.class.reflect_on_association(:watchers)
+    begin
+      save_collection_association(reflection)
+    rescue ActiveRecord::StatementInvalid => sie
+      raise sie unless duplicate_watchers?
+    end
+  end
+
+  def duplicate_watchers?
+    watcher_ids.any? do |watcher_id|
+      Watcher.where(:watchable_type => self.class.name, :watchable_id => self.id, :user_id => watcher_id).count > 0
+    end
   end
 end
