@@ -30,7 +30,6 @@ module OAuthControllerSpecHelper
   end
 
   def login_as_application_owner
-    puts "LOGINASOWNER"
     @user = current_client_application.user
     login_as @user
   end

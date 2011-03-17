@@ -1,5 +1,6 @@
 class OauthClientsController < ApplicationController
   before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
+  skip_before_filter :load_project
 
   def index
     @tokens = current_user.tokens.find :all, :conditions => 'oauth_tokens.invalidated_at is null and oauth_tokens.authorized_at is not null'
@@ -45,10 +46,11 @@ class OauthClientsController < ApplicationController
   end
 
   private
+  
   def get_client_application
     unless @client_application = current_user.client_applications.find(params[:id])
       flash.now[:error] = "Wrong application id"
-      raise ActiveRecord::RecordNotFound
+      redirect_to oauth_clients_path
     end
   end
 end
