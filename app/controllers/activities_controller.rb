@@ -25,9 +25,9 @@ class ActivitiesController < ApplicationController
 
   def show_more
     @activities = if @user
-      Activity.for_projects(@target).before(params[:id]).from_user(@user)
+      Activity.for_projects(@target).before(Activity.find(params[:id])).from_user(@user)
     else
-      Activity.for_projects(@target).before(params[:id])
+      Activity.for_projects(@target).before(Activity.find(params[:id]))
     end
     @threads = @activities.threads
     @last_activity = @threads.all.last

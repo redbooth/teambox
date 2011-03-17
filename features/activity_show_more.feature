@@ -30,3 +30,17 @@ Feature: Show more comment on activity pages
     And I follow "Show more"
     Then I should see "What do you think about redis" only once
     And I should see "Should we use A/B testing" only once
+
+  Scenario: Activities are not swallowed by a thread
+    Given I started a simple conversation in the "Teambox" project
+    And   I started a conversation named "Very important stuff" in the "Teambox" project
+    And   I started a conversation named "Really critical things" in the "Teambox" project
+    And   I wait for 1 second
+    And   I add a comment to the last conversation in the "Teambox" project
+    And   I wait for 2 seconds
+    When  I create 24 pages in the "Teambox" project
+    And   I go to the projects page
+    And   I follow "Show more"
+    Then  I should see "Very important stuff"
+    And   I should see "Really critical things"
+
