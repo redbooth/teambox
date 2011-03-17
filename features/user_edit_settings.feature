@@ -34,3 +34,19 @@ Feature: Edit user settings
       | all      |
       | ALL      |
 
+  Scenario: User changes a new conversation notification setting
+    Given I am logged in as balint
+    And "balint" is in the project called "Ruby Rockstars"
+    When I go to my notification settings page
+    And I check "Watch new conversations on project 'Ruby Rockstars'"
+    And I press "Update account"
+    Then the "Watch new conversations on project 'Ruby Rockstars'" checkbox should be checked
+
+  Scenario: User changes a new task notification setting
+    Given I am logged in as balint
+    And "balint" is in the project called "Ruby Rockstars"
+    When I go to my notification settings page
+    And I check "Watch new tasks on project 'Ruby Rockstars'"
+    And I press "Update account"
+    Then the "Watch new tasks on project 'Ruby Rockstars'" checkbox should be checked
+

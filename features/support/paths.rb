@@ -13,6 +13,8 @@ module NavigationHelpers
       new_project_path
     when /the account settings page/
       account_settings_path
+    when /the account notifications page/
+      account_notifications_path
     when /the login page/
       login_path
     when /the forgot password page/
@@ -80,6 +82,8 @@ module NavigationHelpers
       user_path(user)
     when /my settings page/
       account_settings_path
+    when /my notification settings page/
+      account_notifications_path
     when /the signup page/
       signup_path
     when /the public projects page/
