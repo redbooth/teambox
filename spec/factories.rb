@@ -197,3 +197,15 @@ Factory.define :google_doc do |d|
   d.association :comment
 end
 
+Factory.define :client_application do |f|
+  f.association(:user)
+  f.name "MyString"
+  f.url "http://test.com"
+  f.support_url "http://test.com/support"
+  f.callback_url "http://test.com/callback"
+  f.key "one_key"
+  f.secret "MyString"
+  f.created_at Time.parse("2007-11-17 16:56:51")
+  f.updated_at Time.parse("2007-11-17 16:56:51")
+end
+

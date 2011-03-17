@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe RequestToken do
-  fixtures :client_applications, :users, :oauth_tokens
+  fixtures :oauth_tokens
   before(:each) do
-    @token = RequestToken.create :client_application => client_applications(:one)
+    @token = RequestToken.create :client_application => Factory.create(:client_application), :user => Factory.create(:mislav)
   end
 
   it "should be valid" do
@@ -55,7 +55,7 @@ describe RequestToken do
 
       describe "authorize request" do
         before(:each) do
-          @token.authorize!(users(:quentin))
+          @token.authorize!(User.find_by_login('mislav'))
         end
 
         it "should be authorized" do
@@ -67,7 +67,7 @@ describe RequestToken do
         end
 
         it "should have user set" do
-          @token.user.should == users(:quentin)
+          @token.user.login.should == 'mislav'
         end
 
         it "should have verifier" do
@@ -94,7 +94,7 @@ describe RequestToken do
           end
 
           it "should set user on access token" do
-            @access.user.should == users(:quentin)
+            @access.user.login.should == 'mislav'
           end
 
           it "should authorize accesstoken" do
@@ -155,7 +155,7 @@ describe RequestToken do
 
       describe "authorize request" do
         before(:each) do
-          @token.authorize!(users(:quentin))
+          @token.authorize!(User.find_by_login('mislav'))
         end
 
         it "should be authorized" do
@@ -167,7 +167,7 @@ describe RequestToken do
         end
 
         it "should have user set" do
-          @token.user.should == users(:quentin)
+          @token.user.login.should == 'mislav'
         end
 
         it "should have verifier" do
@@ -186,7 +186,7 @@ describe RequestToken do
           end
 
           it "should set user on access token" do
-            @access.user.should == users(:quentin)
+            @access.user.login.should == 'mislav'
           end
 
           it "should authorize accesstoken" do
@@ -245,7 +245,7 @@ describe RequestToken do
 
       describe "authorize request" do
         before(:each) do
-          @token.authorize!(users(:quentin))
+          @token.authorize!(Factory.create(:mislav))
         end
 
         it "should be authorized" do
@@ -257,7 +257,7 @@ describe RequestToken do
         end
 
         it "should have user set" do
-          @token.user.should == users(:quentin)
+          @token.user.login.should == 'mislav'
         end
 
         it "should not have verifier" do
@@ -275,7 +275,7 @@ describe RequestToken do
           end
 
           it "should set user on access token" do
-            @access.user.should == users(:quentin)
+            @access.user.login.should == 'mislav'
           end
 
           it "should authorize accesstoken" do

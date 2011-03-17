@@ -189,7 +189,7 @@ describe HooksController do
            :subject => subject,
            :attachments => attachments ? '2' : nil,
            :attachment1 => upload_file("#{Rails.root}/spec/fixtures/tb-space.jpg", 'image/jpg'),
-           :attachment2 => upload_file("#{Rails.root}/spec/fixtures/users.yml", 'text/plain')
+           :attachment2 => upload_file("#{Rails.root}/spec/fixtures/teamboxdump.json", 'text/plain')
          }
       end
       

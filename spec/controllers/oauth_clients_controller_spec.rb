@@ -3,32 +3,21 @@ require File.dirname(__FILE__) + '/oauth_controller_spec_helper'
 require 'oauth/client/action_controller_request'
 
 describe OauthClientsController do
-  if defined?(Devise)
-    include Devise::TestHelpers
-  end
   include OAuthControllerSpecHelper
-  fixtures :client_applications, :oauth_tokens, :users
+  fixtures :oauth_tokens
   before(:each) do
     login_as_application_owner
   end
 
   describe "index" do
-    before do
-      @client_applications = @user.client_applications
-    end
 
     def do_get
       get :index
     end
-
+    
     it "should be successful" do
       do_get
       response.should be_success
-    end
-
-    it "should assign client_applications" do
-      do_get
-      assigns[:client_applications].should==@client_applications
     end
 
     it "should render index template" do
@@ -36,15 +25,32 @@ describe OauthClientsController do
       response.should render_template('index')
     end
   end
+  
+  describe "developer" do
+
+    def do_get
+      get :developer
+    end
+    
+    before do
+      @client_applications = @user.client_applications
+    end
+
+    it "should assign client_applications" do
+      do_get
+      assigns[:client_applications].should==@client_applications
+    end
+  end
 
   describe "show" do
 
     def do_get
-      get :show, :id => '1'
+      get :show, :id => current_client_application.id
     end
 
     it "should be successful" do
       do_get
+      p response.body
       response.should be_success
     end
 
@@ -85,7 +91,7 @@ describe OauthClientsController do
 
   describe "edit" do
     def do_get
-      get :edit, :id => '1'
+      get :edit, :id => current_client_application.id
     end
 
     it "should be successful" do
@@ -131,7 +137,7 @@ describe OauthClientsController do
   describe "destroy" do
 
     def do_delete
-      delete :destroy, :id => '1'
+      delete :destroy, :id => current_client_application.id
     end
 
     it "should destroy client applications" do
@@ -150,22 +156,22 @@ describe OauthClientsController do
   describe "update" do
 
     def do_valid_update
-      put :update, :id => '1', 'client_application'=>{'name' => 'updated site'}
+      put :update, :id => current_client_application.id, 'client_application'=>{'name' => 'updated site'}
     end
 
     def do_invalid_update
-      put :update, :id => '1', 'client_application'=>{'name' => nil}
+      put :update, :id => current_client_application.id, 'client_application'=>{'name' => nil}
     end
 
     it "should redirect to show client_application" do
       do_valid_update
       response.should be_redirect
-      response.should redirect_to(:action => "show", :id => 1)
+      response.should redirect_to(:action => "show", :id => current_client_application.id)
     end
 
     it "should assign client_applications" do
       do_invalid_update
-      assigns[:client_application].should == ClientApplication.find(1)
+      assigns[:client_application].should == ClientApplication.find(current_client_application.id)
     end
 
     it "should render show template" do

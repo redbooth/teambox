@@ -2,11 +2,11 @@ require 'oauth/client/action_controller_request'
 module OAuthControllerSpecHelper
 
   def current_user
-    @user||=users(:aaron)
+    @user||=Factory.create(:user)
   end
 
   def current_client_application
-    @client_application||=client_applications(:one)
+    @client_application||=Factory.create(:client_application, :user => User.find_by_login('mislav')||Factory.create(:mislav))
   end
 
   def access_token
@@ -24,21 +24,15 @@ module OAuthControllerSpecHelper
   def consumer_access_token
     OAuth::AccessToken.new current_consumer,access_token.token,access_token.secret
   end
-
-  if defined?(Devise)
-    include Devise::TestHelpers
-    def login
-      sign_in :user, current_user
-    end
-  else
-    def login
-      controller.stub!(:current_user).and_return(current_user)
-    end
+  
+  def login
+    controller.stub!(:current_user).and_return(current_user)
   end
 
   def login_as_application_owner
-    @user = users(:quentin)
-    login
+    puts "LOGINASOWNER"
+    @user = current_client_application.user
+    login_as @user
   end
 
   def current_consumer
