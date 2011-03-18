@@ -368,14 +368,14 @@ describe OauthController do
     before(:each) do
       current_client_application
       @oauth2_token_count = Oauth2Token.count
-      post :token, :grant_type=>"password", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :username=>current_user.login, :password=>"password"
+      current_user.should_not == nil
+      post :token, :grant_type=>"password", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :username=>current_user.login, :password=>"dragons"
       @token = Oauth2Token.last
     end
 
-    subject { @token }
-
-    it { should_not be_nil }
-    it { should be_authorized }
+    it { @token.should_not be_nil }
+    it { @token.should be_authorized }
+    
     it "should set user to client_applications user" do
       @token.user.should==current_user
     end
@@ -408,7 +408,7 @@ describe OauthController do
     before(:each) do
       current_client_application
       @oauth2_token_count = Oauth2Token.count
-      post :token, :grant_type=>"password", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :username=>"non existent", :password=>"password"
+      post :token, :grant_type=>"password", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :username=>"non existent", :password=>"dragons"
     end
 
     it "should not have added a new token" do
