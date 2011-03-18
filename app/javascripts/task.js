@@ -265,7 +265,7 @@ document.on('task:updated', function(e, doc){
     var assigned_user = task.down('.assigned_user')
     due_on.update(Task.dateForDueOn(task_data))
     assigned_user.update(Task.linkToNameForAssigned(task_data))
-    task.writeAttribute('class', 'task ' + task_classes)
+    task.writeAttribute('class', 'task expanded ' + task_classes)
   }
 
   // task in thread
