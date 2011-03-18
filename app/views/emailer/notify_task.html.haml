@@ -1,7 +1,7 @@
 .email{ :style =>  "#{email_global }"}
   .header
     %h1
-      = link_to logo_image, projects_path(@project)
+      = link_to logo_image, projects_url(@project)
   .navigation{ :style=> email_navigation}
 
   = answer_instructions

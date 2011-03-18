@@ -1,5 +1,5 @@
 .email{ :style =>  "#{email_global}" }
-  %h1= link_to logo_image, projects_path(@project)
+  %h1= link_to logo_image, projects_url(@project)
   %h2{ :style => email_text(:normal) }
     - project_link =  link_to(@project.name, project_url(@project))
     = t('emailer.notify.digest_title_html', :project_link => project_link)
@@ -18,12 +18,14 @@
         - case target
         - when Task
           - email = "#{@project.permalink}+task+#{target.id}@#{Rails.configuration[:app_domain]}" 
+          - stop_watch = link_to t('emailer.notify.stop_watch'), project_task_url(@project, target)
         - when Conversation
           - email = "#{@project.permalink}+conversation+#{target.id}@#{Rails.configuration[:app_domain]}"
-        = link_to t('emailer.notify.reply_online'), [@project, target], :style => email_button
+          - stop_watch = link_to t('emailer.notify.stop_watch'), project_conversation_url(@project, target)
+        = link_to t('emailer.notify.reply_online'), project_conversation_url(@project, target), :style => email_button
         - if Teambox.config.allow_incoming_email
           = link_to t('emailer.notify.reply_by_email'), "mailto:#{email}", :style => email_button
-        = t('emailer.notify.stop_watching_link_html', :stop_watch => link_to(t('emailer.notify.stop_watch'), [@project, target]) )
+        = t('emailer.notify.stop_watching_link_html', :stop_watch => stop_watch )
 
   .footer{ :style => email_text(:small)+"; margin: 40px 0" }
     %p
