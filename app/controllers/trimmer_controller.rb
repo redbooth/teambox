@@ -132,7 +132,7 @@ class TrimmerController < ActionController::Base
 
 
     def locale_with_fallback options
-      original_translation = I18n.to_hash(options)
+      original_translation = I18n.to_hash(options) || {}
       fallback_translation = I18n.to_hash(options.merge(:locale => I18n.default_locale))
       fallback_translation.deep_merge original_translation
     end
