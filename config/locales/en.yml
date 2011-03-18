@@ -1132,6 +1132,32 @@ en:
       import_error: "There was an error loading your import. Please try again."
     column:
       description: "Here you can move your data in and out of Teambox."
+  oauth_clients:
+    client_token:
+      revoke: Revoke access
+      authorized_at: "Authorized on %{time}"
+    client:
+      edit: Edit
+    form:
+      name: Name
+      url: Client URL
+      callback_url: Callback URL
+      support_url: Support URL
+    new:
+      title: Register a new application
+      submit: Register application
+    edit:
+      confirm_delete: Are you sure you want to delete this application?
+      submit: Update
+    index:
+      title: Linked applications
+      register_app: Register a new app
+      developers_register_html: "<strong>Developers:</strong> Register your apps <a href='%{url}'>Here</a>"
+      authorized_applications: "The following applications are authorized to access your Teambox account."
+    developer:
+      title: Third-party applications
+      no_registered_applications_html: "Do you have an application you would like to register for use with us using the <a href='http://oauth.net'>OAuth</a> standard? You must register your web application before it can make OAuth requests to this service."
+      registered_applications_html: "You have the following client applications registered."
   uploads:
     tooltip: Upload a file
     comment_upload_link: Attachment
@@ -1291,6 +1317,7 @@ en:
       plans_and_billing: Plans and Billing
       delete_account: Delete Account...
       your_data: Import / Export
+      linked_apps: Linked Apps
     task_navigation:
       all_tasks: "All Tasks"
       unarchived_tasks: "Unarchived Tasks"
