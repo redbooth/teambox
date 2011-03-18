@@ -25,7 +25,7 @@
 
         - if comment.task_comment? and comment.assigned_transition?
           %p.assigned_transition
-            - if comment.assigned_id?
+            - if comment.assigned and comment.assigned.user
               = t('tasks.assigned.assigned_to', :user => comment.assigned.user.name)
             - else
               = t('tasks.assigned.unassigned')
