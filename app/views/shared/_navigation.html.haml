@@ -7,7 +7,7 @@
   - show_only_recent = current_user.people.size > 3
   - active_projects = current_user.projects.select{|p| !p.archived} #we select them in ruby because the query is done in the header already
   - projects_to_show = show_only_recent ? current_user.recent_projects : active_projects
-  - projects_to_show << @current_project if @current_project && logged_in? && @current_project.organization.is_admin?(current_user)
+  - projects_to_show << @current_project if can_access_as_org_admin?(projects_to_show)
   - projects_archived = current_user.people.size - projects_to_show.size
 
   .el#my_projects
