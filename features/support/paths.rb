@@ -25,6 +25,8 @@ module NavigationHelpers
       developer_oauth_clients_path
     when /the pages of the "([^\"]*)" project/
       project_pages_path(Project.find_by_name($1))
+    when /the new page page/
+      new_project_page_path(@current_project)
     when /the page named "([^\"]*)"/
         project_page_path(@current_project, Page.find_by_name($1))
     when /the project page/
@@ -39,13 +41,21 @@ module NavigationHelpers
       new_project_conversation_path(@current_project)
     when /the task lists page$/
       project_task_lists_path(@current_project)
+    when /the new task list page$/
+      new_project_task_list_path(@current_project)
     when /the page of the "([^\"]*)" conversation/
       conv = Conversation.find_by_name($1)
       project_conversation_path(conv.project, conv)
     when /the uploads page$/
       project_uploads_path(@current_project)
+    when /the new upload page$/
+      new_project_upload_path(@current_project)
     when /the people page of the "([^\"]*)" project$/
       project_people_path(Project.find_by_name($1))
+    when /the invite people page of the "([^\"]*)" project$/
+      project_invite_people_path(Project.find_by_name($1))
+    when /the settings page of the "([^\"]*)" project$/
+      edit_project_path(Project.find_by_name($1))
     when /the uploads page of the "([^\"]*)" project$/
       project = Project.find_by_name($1)
       project_uploads_path(project)
@@ -91,6 +101,9 @@ module NavigationHelpers
     when /the appearance page for the "([^\"]*)" organization/
       organization = Organization.find_by_name($1)
       appearance_organization_path(organization)
+    when /the manage projects page for the "([^\"]*)" organization/
+      organization = Organization.find_by_name($1)
+      projects_organization_path(organization)
     when /the apidocs page/
       '/api'
     when /time tracking/

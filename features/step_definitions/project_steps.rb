@@ -51,6 +51,13 @@ Given /I am currently in the project (.*)$/ do |project_type|
   visit(projects_path(@current_project))
 end
 
+Given /(@.+) is currently in the project (.*)$/ do |usernames, project_type|
+  @current_project ||= Factory(project_type.to_sym)
+  usernames.scan(/(?:^|\W)@(\w+)/).flatten.each do |name|
+    @current_project.add_user User.find_by_login(name)
+  end
+end
+
 Given /I have recently managed the project "([^\"]*)"$/ do |name|
   @current_project ||= Project.find_by_name(name)
 end

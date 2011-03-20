@@ -16,6 +16,11 @@ Given /^I started a simple conversation(?: in the "([^\"]*)" project)?$/ do |pro
   Factory(:conversation, :user => @current_user, :project => (project_name ? Project.find_by_name(project_name) : @current_project), :name => nil, :simple => true)
 end
 
+Given /^(@.+) started a conversation named "([^\"]+)"(?: in the "([^\"]*)" project)?$/ do |user_name, conversation_name, project_name|
+  user = User.find_by_login(user_name.gsub('@',''))
+  Factory(:conversation, :user => user, :project => (project_name ? Project.find_by_name(project_name) : @current_project), :name => conversation_name)
+end
+
 Given /^the conversation "([^\"]+)" is watched by (@.+)$/ do |name, users|
   conversation = Conversation.find_by_name(name)
   

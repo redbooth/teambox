@@ -79,6 +79,8 @@ class ApplicationController < ActionController::Base
         elsif @current_project.invitations.exists?(:invited_user_id => current_user)
           # there is an invitation pending for accept
           redirect_to project_invitations_path(@current_project)
+        elsif @current_project.organization.is_admin?(current_user)
+          return
         else
           # sorry, no dice
           if [:rss, :ics].include? request.formats.map(&:symbol)

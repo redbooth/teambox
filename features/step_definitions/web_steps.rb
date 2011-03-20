@@ -37,6 +37,13 @@ When /^(?:|I )press "([^\"]*)"(?: within "([^\"]*)")?$/ do |button, selector|
   end
 end
 
+When /^(?:|I )press the last "([^\"]*)"(?: within "([^\"]*)")?$/ do |button, selector|
+  with_scope(selector) do
+    all(:xpath, XPath::HTML.button(button)).last.click
+  end
+end
+
+
 When /^(?:|I )follow "([^\"]*)"(?: within "([^\"]*)")?$/ do |link, selector|
   with_scope(selector) do
     click_link(link)
@@ -139,7 +146,7 @@ end
 Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   if Capybara.current_driver == Capybara.javascript_driver
     with_css_scope(selector) do |scope|
-      assert scope.has_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
+      assert scope.has_xpath?("//*[contains(text(), \"#{text}\")]", :visible => true)
     end
   elsif page.respond_to? :should
     with_scope(selector) do
