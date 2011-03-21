@@ -86,7 +86,7 @@ class InvitationsController < ApplicationController
   def resend
     authorize! :admin, @invite_target
     @invitation = Invitation.find_by_id params[:id]
-    @invitation.send(:send_email)
+    @invitation.send_email
     
     respond_to do |wants|
       wants.any(:html, :m) {
