@@ -128,7 +128,7 @@ class ApiV1::APIController < ApplicationController
   end
   
   def handle_api_error(object,options={})
-    errors = object.try(:errors)||{}
+    errors = (object.try(:errors)||{}).to_hash
     errors[:type] = 'InvalidRecord'
     errors[:message] = 'One or more fields were invalid'
     respond_to do |f|
