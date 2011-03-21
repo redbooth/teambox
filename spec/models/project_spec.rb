@@ -107,7 +107,8 @@ describe Project do
       
       @project = Factory.create(:project,
         :invite_users => [@user1.id, @user2.id],
-        :invite_emails => "#{@user2.email} #{@user3.email} richard.roe@law.uni"
+        :invite_emails => "#{@user2.email} #{@user3.email} richard.roe@law.uni",
+        :invite_role => Person::ROLES[:admin]
       )
     end
     
@@ -123,6 +124,10 @@ describe Project do
     it "invites non-existing user" do
       to_richard = @project.invitations.find_by_email 'richard.roe@law.uni'
       to_richard.invited_user.should be_nil
+    end
+    
+    it "invites using the correct role" do
+      @project.invitations.each{|i| i.role.should == Person::ROLES[:admin]}
     end
   end
 
