@@ -237,6 +237,33 @@ describe ApiV1::CommentsController do
       
       conversation.reload.comments(true).length.should == 1
     end
+    
+    it "should not allow oauth users without :write_objects to post a comment" do
+      login_as_with_oauth_scope @project.user, []
+      
+      conversation = Factory.create(:conversation, :project => @project)
+      conversation.comments.length.should == 1
+      
+      post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :body => 'Created!',
+                    :access_token => @project.user.current_token.token
+      response.status.should == 401
+      JSON.parse(response.body)['errors']['type'].should == 'InsufficientPermissions'
+      
+      conversation.reload.comments.length.should == 1
+    end
+    
+    it "should allow oauth users with :write_objects to post a comment" do
+      login_as_with_oauth_scope @project.user, [:write_objects]
+      
+      conversation = Factory.create(:conversation, :project => @project)
+      conversation.comments.length.should == 1
+      
+      post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :body => 'Created!',
+                    :access_token => @project.user.current_token.token
+      response.should be_success
+      
+      conversation.reload.comments.length.should == 2
+    end
   end
   
   

@@ -4,6 +4,15 @@ class OauthToken < ActiveRecord::Base
   validates_uniqueness_of :token
   validates_presence_of :client_application, :token
   before_validation :generate_keys, :on => :create
+  serialize :scope
+  
+  def scope=(value)
+    if value.is_a? String
+      self[:scope] = value.split(',').map(&:to_sym)
+    else
+      self[:scope] = value
+    end
+  end
 
   def invalidated?
     invalidated_at != nil

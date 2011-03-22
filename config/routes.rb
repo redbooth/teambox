@@ -393,6 +393,7 @@ Teambox::Application.routes.draw do
   match '/oauth',:controller=>'oauth',:action=>'index', :as => :oauth
   match '/oauth/authorize',:controller=>'oauth',:action=>'authorize', :as => :authorize
   match '/oauth/invalidate',:controller=>'oauth',:action=>'invalidate', :as => :invalidate
+  match '/oauth/capabilities',:controller=>'oauth',:action=>'capabilities', :as => :capabilities
   match '/oauth/revoke',:controller=>'oauth',:action=>'revoke', :as => :revoke
   match '/oauth/request_token',:controller=>'oauth',:action=>'request_token', :as => :request_token
   match '/oauth/access_token',:controller=>'oauth',:action=>'access_token', :as => :access_token

@@ -17,7 +17,9 @@ class ApiV1::APIController < ApplicationController
   end
   
   def login_from_oauth
-    Authenticator.new(self,[:token]).allow? ? current_token.user : nil
+    user = Authenticator.new(self,[:token]).allow? ? current_token.user : nil
+    user.current_token = current_token if user
+    user
   end
   
   def access_denied
