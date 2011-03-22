@@ -65,6 +65,9 @@ GEM
       activesupport (= 3.0.5)
     activesupport (3.0.5)
     addressable (2.2.2)
+    akephalos (0.2.5)
+      capybara (~> 0.4.0)
+      jruby-jars
     arel (2.0.9)
     aws-s3 (0.6.2)
       builder
@@ -134,6 +137,7 @@ GEM
     jammit (0.5.4)
       closure-compiler (>= 0.1.0)
       yui-compressor (>= 0.9.1)
+    jruby-jars (1.6.0)
     json (1.4.6)
     json_pure (1.4.6)
     launchy (0.3.7)
@@ -269,6 +273,7 @@ PLATFORMS
 DEPENDENCIES
   SystemTimer (~> 1.2.0)
   activesupport-i18n-patch!
+  akephalos
   aws-s3 (~> 0.6.2)
   barista (~> 1.0)
   builder (~> 2.1.2)

@@ -20,6 +20,8 @@ require 'cucumber/rspec/doubles'
 
 require 'email_spec/cucumber'
 
+require 'akephalos'
+
 #require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links with onclick javascript handlers without using @culerity or @javascript
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
@@ -47,6 +49,9 @@ Cucumber::Rails::World.use_transactional_fixtures = true
 
   #Capybara::Driver::Selenium.new(app, { :browser => :firefox, :profile => "selenium" })
 #end
+#
+
+Capybara.javascript_driver = :akephalos
 
 # How to clean your database when transactions are turned off. See
 # http://github.com/bmabey/database_cleaner for more info.

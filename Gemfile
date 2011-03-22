@@ -66,4 +66,5 @@ group :testing do
   gem 'cucumber-rails', '~> 0.3.2', :require => nil
   gem 'capybara', '~> 0.4.0'
   gem 'launchy', '~> 0.3.7'
+  gem 'akephalos'
 end
