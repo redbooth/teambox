@@ -100,12 +100,15 @@ class SyncedFilesController < ApplicationController
         creator = User.find(@organization.settings['nomadesk']['created_by'])
         creator_account = Nomadesk.new(:host => NOMADESK_HOST, :user => creator.nomadesk_email, :pass => creator.nomadesk_password)
         bucket = creator_account.get_bucket(@organization.settings['nomadesk']['bucket_name'])
-        bucket.invite_email(current_user.nomadesk_email, true, :read_write)
+        # TODO: the second arg on the next line should be set to true so that we skip confirm
+        bucket.invite_email(current_user.nomadesk_email, false, :read_write)
         
         index
         render :index
       rescue => e
-        render :text => t('synced_files.permission_missing', :creator => creator || "creator missing", :error_message => e.message), :layout => :default
+        render :text => "Sorry for now you have to accept the invite in your inbox - there's a bug with autoconfirm"
+        # TODO: re-enable the line below once authconfirm bug is sorted
+        # render :text => t('synced_files.permission_missing', :creator => creator || "creator missing", :error_message => e.message), :layout => :default
       end
     end
     
