@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   has_many :notifications, :dependent => :destroy
   has_many :projects, :through => :people, :order => 'name ASC'
   has_many :invitations, :foreign_key => 'invited_user_id'
+  has_many :sent_invitations, :class_name => 'Invitation', :foreign_key => :user_id
   has_many :activities
   has_many :uploads
   has_many :app_links, :dependent => :destroy
