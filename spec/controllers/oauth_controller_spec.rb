@@ -143,7 +143,7 @@ describe OauthController do
 
     describe "authorize redirect" do
       before(:each) do
-        get :authorize, :response_type=>"code",:client_id=>current_client_application.key, :redirect_url=>"http://application/callback"
+        get :authorize, :response_type=>"code",:client_id=>current_client_application.key, :redirect_uri=>"http://application/callback"
       end
 
       it "should render authorize" do
@@ -157,7 +157,7 @@ describe OauthController do
 
     describe "authorize" do
       before(:each) do
-        post :authorize, :response_type=>"code",:client_id=>current_client_application.key, :redirect_url=>"http://application/callback",:authorize=>"1"
+        post :authorize, :response_type=>"code",:client_id=>current_client_application.key, :redirect_uri=>"http://application/callback",:authorize=>"1"
         @verification_token = Oauth2Verifier.last
         @oauth2_token_count= Oauth2Token.count
       end
@@ -179,7 +179,7 @@ describe OauthController do
 
       describe "get token" do
         before(:each) do
-          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_url=>"http://application/callback",:code=>@verification_token.code
+          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_uri=>"http://application/callback",:code=>@verification_token.code
           @token = Oauth2Token.last
         end
 
@@ -202,7 +202,7 @@ describe OauthController do
 
       describe "get token with wrong secret" do
         before(:each) do
-          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>"fake", :redirect_url=>"http://application/callback",:code=>@verification_token.code
+          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>"fake", :redirect_uri=>"http://application/callback",:code=>@verification_token.code
         end
 
         it "should not create token" do
@@ -216,7 +216,7 @@ describe OauthController do
 
       describe "get token with wrong code" do
         before(:each) do
-          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_url=>"http://application/callback",:code=>"fake"
+          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_uri=>"http://application/callback",:code=>"fake"
         end
 
         it "should not create token" do
@@ -230,7 +230,7 @@ describe OauthController do
 
       describe "get token with wrong redirect_url" do
         before(:each) do
-          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_url=>"http://evil/callback",:code=>@verification_token.code
+          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_uri=>"http://evil/callback",:code=>@verification_token.code
         end
 
         it "should not create token" do
@@ -246,7 +246,7 @@ describe OauthController do
 
     describe "deny" do
       before(:each) do
-        post :authorize, :response_type=>"code", :client_id=>current_client_application.key, :redirect_url=>"http://application/callback",:authorize=>"0"
+        post :authorize, :response_type=>"code", :client_id=>current_client_application.key, :redirect_uri=>"http://application/callback",:authorize=>"0"
       end
 
       it { Oauth2Verifier.last.should be_nil }
@@ -269,7 +269,7 @@ describe OauthController do
 
     describe "authorize redirect" do
       before(:each) do
-        get :authorize, :response_type=>"token",:client_id=>current_client_application.key, :redirect_url=>"http://application/callback"
+        get :authorize, :response_type=>"token",:client_id=>current_client_application.key, :redirect_uri=>"http://application/callback"
       end
 
       it "should render authorize" do
@@ -283,13 +283,13 @@ describe OauthController do
 
     describe "authorize" do
       before(:each) do
-        post :authorize, :response_type=>"token",:client_id=>current_client_application.key, :redirect_url=>"http://application/callback",:authorize=>"1"
+        post :authorize, :response_type=>"token",:client_id=>current_client_application.key, :redirect_uri=>"http://application/callback",:authorize=>"1"
         @token = Oauth2Token.last
       end
       subject { @token }
       it "should redirect to default callback" do
         response.should be_redirect
-        response.should redirect_to("http://application/callback?access_token=#{@token.token}")
+        response.should redirect_to("http://application/callback#access_token=#{@token.token}")
       end
 
       it "should not have a scope" do
@@ -309,7 +309,7 @@ describe OauthController do
 
     describe "deny" do
       before(:each) do
-        post :authorize, :response_type=>"token", :client_id=>current_client_application.key, :redirect_url=>"http://application/callback",:authorize=>"0"
+        post :authorize, :response_type=>"token", :client_id=>current_client_application.key, :redirect_uri=>"http://application/callback",:authorize=>"0"
       end
 
       it { Oauth2Verifier.last.should be_nil }

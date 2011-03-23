@@ -1,5 +1,5 @@
 class ApiV1::APIController < ApplicationController
-  include OAuth::Controllers::ApplicationControllerMethods
+  include Oauth::Controllers::ApplicationControllerMethods
   Oauth2Token = ::Oauth2Token
   
   skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token, :add_chrome_frame_header
