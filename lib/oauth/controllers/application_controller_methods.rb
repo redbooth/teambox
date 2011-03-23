@@ -84,47 +84,9 @@ module Oauth
           end
           @oauth2_token!=nil
         end
-
-        def oauth10_token
-          if using_rack_filter?
-            if env["oauth.token"]
-              @oauth_token = env["oauth.token"]
-              controller.send :current_token=, @oauth_token
-              true
-            else
-              false
-            end
-          else  
-            begin
-              if ClientApplication.verify_request(request) do |request_proxy|
-                  @oauth_token = ClientApplication.find_token(request_proxy.token)
-                  if @oauth_token.respond_to?(:provided_oauth_verifier=)
-                    @oauth_token.provided_oauth_verifier=request_proxy.oauth_verifier 
-                  end
-                  # return the token secret and the consumer secret
-                  [(@oauth_token.nil? ? nil : @oauth_token.secret), (@oauth_token.client_application.nil? ? nil : @oauth_token.client_application.secret)]
-                end
-                controller.send :current_token=, @oauth_token
-                true
-              else
-                false
-              end
-            rescue
-              false
-            end
-          end
-        end
-
-        def oauth10_request_token
-          oauth10_token && @oauth_token.is_a?(::RequestToken)
-        end
-
-        def oauth10_access_token
-          oauth10_token && @oauth_token.is_a?(::AccessToken)
-        end
         
         def token
-          oauth20_token || oauth10_access_token
+          oauth20_token
         end
         
         def two_legged
@@ -189,16 +151,6 @@ module Oauth
       
       def oauth?
         current_token!=nil
-      end
-      
-      # use in a before_filter. Note this is for compatibility purposes. Better to use oauthenticate now
-      def oauth_required
-        Authenticator.new(self,[:oauth10_access_token]).allow?
-      end
-      
-      # use in before_filter. Note this is for compatibility purposes. Better to use oauthenticate now
-      def login_or_oauth_required
-        Authenticator.new(self,[:oauth10_access_token,:interactive]).allow?
       end
       
       def invalid_oauth_response(code=401,message="Invalid OAuth Request")

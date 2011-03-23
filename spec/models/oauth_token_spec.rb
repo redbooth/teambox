@@ -45,10 +45,6 @@ describe RequestToken do
         @token.callback_url="http://test.com/callback"
       end
 
-      it "should not be oauth10" do
-        @token.should_not be_oauth10
-      end
-
       it "should not be oob" do
         @token.should_not be_oob
       end
@@ -145,10 +141,6 @@ describe RequestToken do
         @token.callback_url='oob'
       end
 
-      it "should not be oauth10" do
-        @token.should_not be_oauth10
-      end
-
       it "should be oob" do
         @token.should be_oob
       end
@@ -234,10 +226,6 @@ describe RequestToken do
 
   if defined? OAUTH_10_SUPPORT && OAUTH_10_SUPPORT
     describe "OAuth 1.0" do
-
-      it "should be oauth10" do
-        @token.should be_oauth10
-      end
 
       it "should not be oob" do
         @token.should_not be_oob

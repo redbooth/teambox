@@ -6,29 +6,10 @@ class OauthController < ApplicationController
   
   before_filter :login_required, :only => [:authorize,:revoke]
   oauthenticate :only => [:test_request]
-  oauthenticate :strategies => :token, :interactive => false, :only => [:invalidate,:capabilities]
+  oauthenticate :strategies => :token, :interactive => false, :only => [:capabilities]
   oauthenticate :strategies => :two_legged, :interactive => false, :only => [:request_token]
-  oauthenticate :strategies => :oauth10_request_token, :interactive => false, :only => [:access_token]
-  skip_before_filter :verify_authenticity_token, :only=>[:request_token, :access_token, :invalidate, :test_request]
+  skip_before_filter :verify_authenticity_token, :only=>[:test_request]
   
-  def request_token
-    @token = current_client_application.create_request_token params
-    if @token
-      render :text => @token.to_query
-    else
-      render :nothing => true, :status => 401
-    end
-  end 
-
-  def access_token
-    @token = current_token && current_token.exchange!
-    if @token
-      render :text => @token.to_query
-    else
-      render :nothing => true, :status => 401
-    end
-  end
-
   def token
     @client_application = ClientApplication.find_by_key params[:client_id]
     if @client_application.secret != params[:client_secret]
@@ -47,10 +28,7 @@ class OauthController < ApplicationController
   end
 
   def authorize
-    if params[:oauth_token]
-      @token = ::RequestToken.find_by_token params[:oauth_token]
-      oauth1_authorize
-    elsif ["code","token"].include?(params[:response_type]) # pick flow
+    if ["code","token"].include?(params[:response_type]) # pick flow
       send "oauth2_authorize_#{params[:response_type]}"
     end
   end
@@ -62,12 +40,6 @@ class OauthController < ApplicationController
       flash[:notice] = "You've revoked the token for #{@token.client_application.name}"
     end
     redirect_to oauth_clients_url
-  end
-  
-  # Invalidate current token
-  def invalidate
-    current_token.invalidate!
-    head :status=>410
   end
   
   # Capabilities of current_token
@@ -85,36 +57,6 @@ class OauthController < ApplicationController
   end
 
   protected
-  
-  def oauth1_authorize
-    unless @token
-      render :action=>"authorize_failure"
-      return
-    end
-
-    unless @token.invalidated?    
-      if request.post? 
-        if user_authorizes_token?
-          @token.authorize!(current_user)
-          @redirect_url = URI.parse(@token.oob? ? @token.client_application.callback_url : @token.callback_url)
-
-          unless @redirect_url.to_s.blank?
-            @redirect_url.query = @redirect_url.query.blank? ?
-                                  "oauth_token=#{@token.token}&oauth_verifier=#{@token.verifier}" :
-                                  @redirect_url.query + "&oauth_token=#{@token.token}&oauth_verifier=#{@token.verifier}"
-            redirect_to @redirect_url.to_s
-          else
-            render :action => "authorize_success"
-          end
-        else
-          @token.invalidate!
-          render :action => "authorize_failure"
-        end
-      end
-    else
-      render :action => "authorize_failure"
-    end
-  end
 
   def oauth2_authorize_code
     @client_application = ClientApplication.find_by_key params[:client_id]
