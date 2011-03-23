@@ -30,7 +30,7 @@ render_tabnav :user do
       t.named t('.storage')
       t.links_to account_storage_path
       t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'storage'
-    end
+    end if current_user.admin?
 
     add_tab do |t|
       t.named t('.linked_apps')
