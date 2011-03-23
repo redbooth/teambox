@@ -15,7 +15,7 @@ class OauthToken < ActiveRecord::Base
   end
 
   def invalidated?
-    invalidated_at != nil
+    invalidated_at != nil && (valid_to == nil || valid_to > Time.now)
   end
 
   def invalidate!

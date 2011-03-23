@@ -5,6 +5,7 @@ class Oauth2Verifier < OauthToken
     OauthToken.transaction do
       token = Oauth2Token.create! :user=>user,:client_application=>client_application
       invalidate!
+      destroy
       token
     end
   end

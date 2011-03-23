@@ -175,8 +175,9 @@ class OauthController < ApplicationController
   # http://tools.ietf.org/html/draft-ietf-oauth-v2-08#section-4.1.1
   def oauth2_token_authorization_code
     @verification_code =  @client_application.oauth2_verifiers.find_by_token params[:code]
-    unless @verification_code
+    unless @verification_code && @verification_code.authorized?
       oauth2_error
+      @verification_code.destroy if @verification_code
       return
     end
     if @verification_code.redirect_url != params[:redirect_uri]
@@ -215,6 +216,6 @@ class OauthController < ApplicationController
   end  
 
   def oauth2_error(error="invalid_grant")
-    render :json=>{:error=>error}.to_json
+    render :json=>{:error=>error}.to_json, :status => 401
   end
 end
