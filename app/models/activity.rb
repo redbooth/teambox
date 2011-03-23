@@ -44,7 +44,7 @@ class Activity < ActiveRecord::Base
       :user_id => creator_id,
       :comment_target_type => comment_target_type,
       :comment_target_id => comment_target_id)
-    activity.created_at = target.try(:created_at) || nil
+    activity.created_at = target.try(:updated_at) || target.try(:created_at)
     activity.save
     
     activity

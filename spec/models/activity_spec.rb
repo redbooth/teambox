@@ -31,6 +31,17 @@ describe Activity do
       
       Activity.all.any? { |a| a.target.nil? }.should == false
     end
+
+    it "should let the activity have its own timestamp" do
+      project = Factory :project, :created_at => 4.weeks.ago
+      u = Factory :user, :created_at => 4.weeks.ago
+      p = Factory :person, :user => u, :project => project, :created_at => 3.weeks.ago
+      p.destroy
+      activity = Activity.for_projects(project).first
+      activity.target.should == p
+      activity.action.should == 'delete'
+      activity.created_at.should be_within(10.seconds).of(Time.now)
+    end
   end
 
   describe "activities with threaded items" do
