@@ -84,7 +84,7 @@ class OauthController < ApplicationController
         end
       end
     else
-      render :action => "oauth2_authorize"
+      render :action => "authorize"
     end
   end
 
@@ -110,7 +110,7 @@ class OauthController < ApplicationController
         end
       end
     else
-      render :action => "oauth2_authorize"
+      render :action => "authorize"
     end
   end
 

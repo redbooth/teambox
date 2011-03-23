@@ -1851,6 +1851,10 @@ en:
     user_exists_instruction: If you already have a Teambox account, log in to link it automatically to your %{provider} profile.
     user_exists_is_not_yours_html: If you don't own the account '%{account}', %{signup_for_a_new_account}.
     signup_for_a_new_account: click here to sign up for a new account
+    authorize:
+      title: "Authorize Application"
+      authorize_access: "Allow this application to access my Teambox account"
+      submit: "Authorize"
     
   google_docs:
     authorization_required: In order to use Google Docs you must first authorize Teambox to use your google account.

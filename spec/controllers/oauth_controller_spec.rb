@@ -19,7 +19,7 @@ describe OauthController do
       end
 
       it "should render authorize" do
-        response.should render_template("oauth2_authorize")
+        response.should render_template("authorize")
       end
 
       it "should not create token" do
@@ -145,7 +145,7 @@ describe OauthController do
       end
 
       it "should render authorize" do
-        response.should render_template("oauth2_authorize")
+        response.should render_template("authorize")
       end
 
       it "should not create token" do
