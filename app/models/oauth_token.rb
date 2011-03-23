@@ -8,7 +8,7 @@ class OauthToken < ActiveRecord::Base
   
   def scope=(value)
     if value.is_a? String
-      self[:scope] = value.split(',').map(&:to_sym)
+      self[:scope] = value.split(' ').map(&:to_sym)
     else
       self[:scope] = value
     end
