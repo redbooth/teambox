@@ -118,6 +118,17 @@ When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"(?: within "([^\"]*)")?$/ 
   end
 end
 
+
+When /^(?:|I )bookmark the link "([^\"]*)"(?: within "([^\"]*)")?$/ do |link,selector|
+  with_scope(selector) do
+    @bookmarked_link = find_link(link)
+  end
+end
+
+When /^(?:|I )go to the bookmarked link$/ do
+  visit @bookmarked_link
+end
+
 Then /^(?:|I )should see JSON:$/ do |expected_json|
   require 'json'
   expected = JSON.pretty_generate(JSON.parse(expected_json))
