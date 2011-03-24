@@ -96,4 +96,15 @@ Feature: Converting a conversation to a task
     And I should see 'Dec 29' within 'span.assigned_date'
     And I should see 'Assigned to Saimon Moore' within 'p.assigned_transition'
 
-
+  Scenario: When I acccess the link from the converted conversation I should see the task
+    Given I started a conversation named "Yeehaw"
+    When I go to the home page
+    And I bookmark the link "Yeehaw"
+    And I click the conversation's comment box
+    And I follow "Convert to task"
+    And I wait for 2 seconds
+    And I fill in "conversation_name" with "An exciting task for you"
+    And I press "Convert"
+    And I wait for 3 seconds
+    And I am going to the bookmarked link
+    Then I should see "An exciting task for you" in the task thread title

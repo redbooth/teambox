@@ -121,11 +121,11 @@ end
 
 When /^(?:|I )bookmark the link "([^\"]*)"(?: within "([^\"]*)")?$/ do |link,selector|
   with_scope(selector) do
-    @bookmarked_link = find_link(link)
+    @bookmarked_link = find_link(link)['href']
   end
 end
 
-When /^(?:|I )go to the bookmarked link$/ do
+When /^(?:|I )am going to the bookmarked link$/ do
   visit @bookmarked_link
 end
 
