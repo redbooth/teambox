@@ -42,7 +42,11 @@ describe OauthController do
 
       it "should redirect to default callback" do
         response.should be_redirect
-        response.should redirect_to("http://application/callback?code=#{@verification_token.code}")
+        uri = URI.parse(response.redirect_url)
+        query = Rack::Utils.parse_query(uri.query)
+        uri.host.should == 'application'
+        uri.path.should == '/callback'
+        query['code'].should == @verification_token.code
       end
 
       describe "get token" do
@@ -149,6 +153,28 @@ describe OauthController do
 
     end
 
+    describe "scopes on authorize" do
+      def auth_with_scope(scope)
+        post :authorize, :response_type=>"code",:client_id=>current_client_application.key, :redirect_uri=>"http://application/callback",:authorize=>"1", :scope => scope
+        @verification_token = Oauth2Verifier.last
+      end
+      
+      it "should only allow OauthToken::ALLOWED_SCOPES" do
+        auth_with_scope("offline_access github")
+        post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_uri=>"http://application/callback",:code=>@verification_token.code
+        @token = Oauth2Token.last
+        @token.scope.should == [:offline_access]
+      end
+      
+      it "should allow the scope to be further restricted on token" do
+        auth_with_scope("offline_access read_projects")
+        post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_uri=>"http://application/callback",:code=>@verification_token.code, :scope => "read_projects write_projects"
+        @token = Oauth2Token.last
+        @token.scope.should == [:read_projects]
+      end
+      
+    end
+    
     describe "deny" do
       before(:each) do
         post :authorize, :response_type=>"code", :client_id=>current_client_application.key, :redirect_uri=>"http://application/callback",:authorize=>"0"
@@ -223,49 +249,6 @@ describe OauthController do
         response.should be_redirect
         response.should redirect_to("http://application/callback?error=user_denied")
       end
-    end
-  end
-
-  describe "oauth2 token for autonomous client_application" do
-    before(:each) do
-      current_client_application
-      @oauth2_token_count = Oauth2Token.count
-      post :token, :grant_type=>"none", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret
-      @token = Oauth2Token.last
-    end
-
-    subject { @token }
-
-    it { should_not be_nil }
-    it { should be_authorized }
-    it "should set user to client_applications user" do
-      @token.user.should==current_client_application.user
-    end
-    it "should have added a new token" do
-      Oauth2Token.count.should==@oauth2_token_count+1
-    end
-
-    it "should return json token" do
-      data = JSON.parse(response.body)
-      data["access_token"].should==@token.token
-    end
-  end
-
-  describe "oauth2 token for autonomous client_application with invalid client credentials" do
-    before(:each) do
-      current_client_application
-      @oauth2_token_count = Oauth2Token.count
-      post :token, :grant_type=>"none", :client_id=>current_client_application.key,:client_secret=>"bad"
-    end
-
-    subject { @token }
-
-    it "should not have added a new token" do
-      Oauth2Token.count.should==@oauth2_token_count
-    end
-
-    it "should return json token" do
-      JSON.parse(response.body).should=={"error"=>"invalid_client"}
     end
   end
 

@@ -12,9 +12,9 @@ class OauthToken < ActiveRecord::Base
   
   def scope=(value)
     if value.is_a? String
-      self[:scope] = value.split(' ').map(&:to_sym)
+      self[:scope] = value.split(' ').map(&:to_sym) & ALLOWED_SCOPES
     else
-      self[:scope] = value ? value.map(&:to_sym) : []
+      self[:scope] = (value ? value.map(&:to_sym) : []) & ALLOWED_SCOPES
     end
   end
 
@@ -29,9 +29,20 @@ class OauthToken < ActiveRecord::Base
   def authorized?
     authorized_at != nil && !invalidated?
   end
-
-  def to_query
-    "oauth_token=#{token}&oauth_token_secret=#{secret}"
+  
+  def as_json(options={})
+    base = {}
+    options[:include] ||= [:access_token]
+    
+    base[:access_token] = token if options[:include].include?(:access_token)
+    base[:code] = code if options[:include].include?(:code)
+    base[:expires_in] = expires_in if valid_to
+    base[:scope] = scope ? scope.join(' ') : ''
+    base
+  end
+  
+  def to_fragment_params(options={})
+    as_json(options).map{|k,v| "#{k}=#{CGI::escape(v.to_s)}"}.join('&')
   end
   
   def expires_in

@@ -129,11 +129,6 @@ describe RequestToken do
           @token.should_not be_invalidated
         end
       end
-
-      it "should return 1.0a style to_query" do
-        @token.to_query.should=="oauth_token=#{@token.token}&oauth_token_secret=#{@token.secret}&oauth_callback_confirmed=true"
-      end
-
     end
 
     describe "with oob callback" do
@@ -217,10 +212,6 @@ describe RequestToken do
           @token.should_not be_invalidated
         end
       end
-
-      it "should return 1.0 style to_query" do
-        @token.to_query.should=="oauth_token=#{@token.token}&oauth_token_secret=#{@token.secret}&oauth_callback_confirmed=true"
-      end
     end
   end
 
@@ -287,11 +278,6 @@ describe RequestToken do
           @token.should_not be_invalidated
         end
       end
-
-      it "should return 1.0 style to_query" do
-        @token.to_query.should=="oauth_token=#{@token.token}&oauth_token_secret=#{@token.secret}"
-      end
-
     end
   end
 end
