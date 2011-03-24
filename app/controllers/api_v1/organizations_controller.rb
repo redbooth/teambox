@@ -3,11 +3,13 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   before_filter :load_organization, :except => [:create, :index]
   
   def index
+    authorize! :show, current_user
     @organizations = current_user.organizations(:order => 'id DESC')
     api_respond current_user.organizations, :references => []
   end
 
   def show
+    authorize! :show, @organization
     api_respond @organization, :include => api_include
   end
   

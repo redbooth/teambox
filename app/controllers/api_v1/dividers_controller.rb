@@ -3,6 +3,8 @@ class ApiV1::DividersController < ApiV1::APIController
   before_filter :load_divider, :except => [:index,:create]
   
   def index
+    authorize! :show, target||current_user
+    
     query = {:conditions => api_range,
              :limit => api_limit,
              :order => 'id DESC',
@@ -18,6 +20,7 @@ class ApiV1::DividersController < ApiV1::APIController
   end
 
   def show
+    authorize! :show, @divider
     api_respond @divider, :include => [:page_slot]
   end
   

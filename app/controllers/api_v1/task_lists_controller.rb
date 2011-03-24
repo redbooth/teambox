@@ -2,6 +2,8 @@ class ApiV1::TaskListsController < ApiV1::APIController
   before_filter :load_task_list, :only => [:update,:show,:destroy,:archive,:unarchive]
   
   def index
+    authorize! :show, @current_project||current_user
+    
     query = {:conditions => api_range,
              :limit => api_limit,
              :order => 'id DESC',
@@ -17,6 +19,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
 
   def show
+    authorize! :show, @task_list
     api_respond @task_list, :include => api_include
   end
 

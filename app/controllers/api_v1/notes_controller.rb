@@ -3,6 +3,7 @@ class ApiV1::NotesController < ApiV1::APIController
   before_filter :load_note, :except => [:index,:create]
   
   def index
+    authorize! :show, target||current_user
     query = {:conditions => api_range,
              :limit => api_limit,
              :order => 'id DESC',
@@ -18,6 +19,7 @@ class ApiV1::NotesController < ApiV1::APIController
   end
 
   def show
+    authorize! :show, @note
     api_respond @note, :include => [:page_slot]
   end
   

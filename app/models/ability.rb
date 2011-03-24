@@ -2,7 +2,11 @@ class Ability
   include CanCan::Ability
   
   def api_write?(user)
-    user.current_token ? user.current_token.scope.include?(:write_objects) : true
+    user.current_token ? user.current_token.scope.include?(:write_projects) : true
+  end
+  
+  def api_read?(user)
+    user.current_token ? user.current_token.scope.include?(:read_projects) : true
   end
 
   def initialize(user)
@@ -123,5 +127,11 @@ class Ability
     can :observe, User do |the_user|
       user.observable?(the_user)
     end
+    
+    # OAuth :read_projects show permission
+    can :show, [Activity, Comment, Conversation, Divider, Invitation, Membership, Note, Organization, Page, Person, Project, Task, TaskList, Upload, User] do |object|
+      api_read?(user)
+    end
+    
   end
 end

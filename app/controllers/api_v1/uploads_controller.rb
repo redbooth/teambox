@@ -3,6 +3,8 @@ class ApiV1::UploadsController < ApiV1::APIController
   before_filter :load_upload, :only => [:update,:show,:destroy]
   
   def index
+    authorize! :show, target||current_user
+    
     query = {:conditions => api_range,
              :limit => api_limit,
              :order => 'id DESC',

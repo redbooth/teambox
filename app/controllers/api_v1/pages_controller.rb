@@ -2,6 +2,8 @@ class ApiV1::PagesController < ApiV1::APIController
   before_filter :load_page, :only => [:show, :update, :reorder, :destroy]
   
   def index
+    authorize! :show, @current_project||current_user
+    
     query = {:conditions => api_range,
              :limit => api_limit,
              :order => 'id DESC',
@@ -27,6 +29,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
     
   def show
+    authorize! :show, @page
     api_respond @page, :include => [:slots, :objects]
   end
   

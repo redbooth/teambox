@@ -3,6 +3,7 @@ class ApiV1::InvitationsController < ApiV1::APIController
   before_filter :load_invite, :except => [:index, :create]
   
   def index
+    authorize! :show, @target
     authorize! :admin, @target
     @invitations = @target.invitations.all(:conditions => api_range,
                                            :limit => api_limit,
@@ -12,6 +13,7 @@ class ApiV1::InvitationsController < ApiV1::APIController
   end
 
   def show
+    authorize! :show, @invitation
     authorize! :admin, @target
     api_respond @invitation, :include => [:project, :user]
   end

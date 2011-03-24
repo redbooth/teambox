@@ -3,6 +3,8 @@ class ApiV1::CommentsController < ApiV1::APIController
   before_filter :load_comment, :only => [:update, :convert, :show, :destroy]
   
   def index
+    authorize! :show, @target||current_user
+    
     query = {:conditions => api_range,
              :limit => api_limit,
              :order => 'id DESC',
@@ -18,6 +20,7 @@ class ApiV1::CommentsController < ApiV1::APIController
   end
 
   def show
+    authorize! :show, @comment
     api_respond @comment, :include => [:user]
   end
   

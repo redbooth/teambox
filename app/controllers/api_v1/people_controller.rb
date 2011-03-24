@@ -2,6 +2,7 @@ class ApiV1::PeopleController < ApiV1::APIController
   before_filter :load_person, :except => [:index]
   
   def index
+    authorize! :show, @current_project
     @people = @current_project.people(:include => [:project, :user],
                                       :order => 'id DESC')
     
@@ -9,6 +10,7 @@ class ApiV1::PeopleController < ApiV1::APIController
   end
 
   def show
+    authorize! :show, @person
     api_respond @person, :include => [:user]
   end
   

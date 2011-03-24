@@ -2,6 +2,8 @@ class ApiV1::ConversationsController < ApiV1::APIController
   before_filter :load_conversation, :except => [:index, :create]
   
   def index
+    authorize! :show, @current_project||current_user
+    
     query = {:conditions => api_range,
              :limit => api_limit,
              :order => 'id DESC',
@@ -17,6 +19,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
   end
 
   def show
+    authorize! :show, @conversation
     api_respond @conversation, :include => api_include
   end
   

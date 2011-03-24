@@ -2,6 +2,7 @@ class ApiV1::SearchController < ApiV1::APIController
   before_filter :permission_to_search, :only => :index
 
   def index
+    authorize! :show, current_user
     @search_terms = params[:q]
 
     unless @search_terms.blank?

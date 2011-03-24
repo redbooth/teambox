@@ -3,6 +3,8 @@ class ApiV1::ActivitiesController < ApiV1::APIController
   before_filter :get_target, :only => [:index]
 
   def index
+    authorize! :show, @current_project||current_user
+    
     @activities = Activity.where(api_scope).all(:conditions => api_range,
                         :order => 'id DESC',
                         :limit => api_limit,
@@ -13,7 +15,8 @@ class ApiV1::ActivitiesController < ApiV1::APIController
 
   def show
     @activity = Activity.find_by_id params[:id], :conditions => {:project_id => current_user.project_ids}
-    
+    authorize!(:show, @activity) if @activity
+      
     if @activity
       api_respond @activity, :include => [:project, :target, :user, :thread_comments]
     else

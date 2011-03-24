@@ -3,6 +3,8 @@ class ApiV1::TasksController < ApiV1::APIController
   before_filter :load_task, :except => [:index, :create, :reorder]
   
   def index
+    authorize! :show, @task_list||@current_project||current_user
+    
     query = {:conditions => api_range,
              :limit => api_limit,
              :order => 'id DESC',
@@ -19,6 +21,7 @@ class ApiV1::TasksController < ApiV1::APIController
   end
 
   def show
+    authorize! :show, @task
     api_respond @task, :include => api_include
   end
   
