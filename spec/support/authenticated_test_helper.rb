@@ -12,6 +12,7 @@ module AuthenticatedTestHelper
     app = ClientApplication.first || Factory.create(:client_application)
     user.current_token = OauthToken.find_by_user_id(user.id) || Oauth2Token.create!(:user=>user,:client_application=>app,:scope => scope)
     user.current_token.scope = scope
+    user.current_token.save
     user
   end
 

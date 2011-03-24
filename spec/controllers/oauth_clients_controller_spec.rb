@@ -1,9 +1,7 @@
-require File.dirname(__FILE__) + '/../spec_helper'
-require File.dirname(__FILE__) + '/oauth_controller_spec_helper'
+require 'spec_helper'
 require 'oauth/client/action_controller_request'
 
 describe OauthClientsController do
-  include OAuthControllerSpecHelper
   fixtures :oauth_tokens
   before(:each) do
     login_as_application_owner

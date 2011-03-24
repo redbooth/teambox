@@ -79,4 +79,23 @@ describe ApiV1::UsersController do
       JSON.parse(response.body)['errors']['type'].should == 'AuthorizationFailed'
     end
   end
+  
+  describe "#current" do
+    it "should get the current user for oauth requests" do
+      @token = access_token
+      
+      get :current, :access_token => @token.token
+      response.should be_success
+      
+      JSON.parse(response.body)['id'].to_i.should == @token.user_id
+    end
+    
+    it "should not get the current user for expired oauth requests" do
+      @token = access_token
+      @token.update_attribute(:valid_to, Time.now - 2.days)
+      
+      get :current, :access_token => @token.token
+      response.status.should == 401
+    end
+  end
 end

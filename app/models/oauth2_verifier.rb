@@ -3,7 +3,8 @@ class Oauth2Verifier < OauthToken
 
   def exchange!(params={})
     OauthToken.transaction do
-      token = Oauth2Token.create! :user=>user,:client_application=>client_application
+      Oauth2Token.where(:user_id => user_id, :client_application_id => client_application_id).all.each{|r|r.destroy}
+      token = Oauth2Token.create! :user=>user,:client_application=>client_application,:scope=>scope
       invalidate!
       destroy
       token

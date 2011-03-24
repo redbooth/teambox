@@ -1,11 +1,7 @@
-require File.dirname(__FILE__) + '/../spec_helper'
-require File.dirname(__FILE__) + '/oauth_controller_spec_helper'
+require 'spec_helper'
 require 'json'
+
 describe OauthController do
-  if defined?(Devise)
-    include Devise::TestHelpers
-  end
-  include OAuthControllerSpecHelper
   fixtures :oauth_tokens
 
   describe "2.0 authorization code flow" do
@@ -62,13 +58,50 @@ describe OauthController do
         it "should have added a new token" do
           Oauth2Token.count.should==@oauth2_token_count+1
         end
+        
+        it "should have cleared the verification token" do
+          Oauth2Verifier.find_by_token(@verification_token.token).should == nil
+        end
 
         it "should set user to current user" do
           @token.user.should==current_user
         end
 
         it "should return json token" do
-          JSON.parse(response.body).should=={"access_token"=>@token.token}
+          data = JSON.parse(response.body)
+          data["access_token"].should==@token.token
+        end
+      end
+      
+      describe "get token with the same verifier twice fails" do
+        before(:each) do
+          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_uri=>"http://application/callback",:code=>@verification_token.code
+          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_uri=>"http://application/callback",:code=>@verification_token.code
+        end
+
+        it "should return incorrect_client_credentials error" do
+          JSON.parse(response.body).should == {"error"=>"invalid_grant"}
+        end
+      end
+      
+      describe "get token twice destroys existing access tokens" do
+        before(:each) do
+          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_uri=>"http://application/callback",:code=>@verification_token.code
+          @token = Oauth2Token.last
+          post :authorize, :response_type=>"code",:client_id=>current_client_application.key, :redirect_uri=>"http://application/callback",:authorize=>"1"
+          @verification_token = Oauth2Verifier.last
+          post :token, :grant_type=>"authorization_code", :client_id=>current_client_application.key,:client_secret=>current_client_application.secret, :redirect_uri=>"http://application/callback",:code=>@verification_token.code
+          @new_token = Oauth2Token.last
+        end
+
+        it "should generate a new token" do
+          response.should be_success
+          @token.id.should_not == @new_token.id
+        end
+        
+        it "should destroy the old token" do
+          Oauth2Token.find_by_id(@token.id).should == nil
+          Oauth2Token.find_by_id(@new_token.id).should_not == nil
         end
       end
 
@@ -161,11 +194,11 @@ describe OauthController do
       subject { @token }
       it "should redirect to default callback" do
         response.should be_redirect
-        response.should redirect_to("http://application/callback#access_token=#{@token.token}")
+        response.should redirect_to("http://application/callback##{@token.to_fragment_params}")
       end
 
       it "should not have a scope" do
-        @token.scope.should be_nil
+        @token.scope.should be_empty
       end
       it { should_not be_nil }
       it { should be_authorized }
@@ -213,7 +246,8 @@ describe OauthController do
     end
 
     it "should return json token" do
-      JSON.parse(response.body).should=={"access_token"=>@token.token}
+      data = JSON.parse(response.body)
+      data["access_token"].should==@token.token
     end
   end
 
@@ -235,7 +269,6 @@ describe OauthController do
     end
   end
 
-
   describe "oauth2 token for basic credentials" do
     before(:each) do
       current_client_application
@@ -256,7 +289,8 @@ describe OauthController do
     end
 
     it "should return json token" do
-      JSON.parse(response.body).should=={"access_token"=>@token.token}
+      data = JSON.parse(response.body)
+      data["access_token"].should==@token.token
     end
   end
 

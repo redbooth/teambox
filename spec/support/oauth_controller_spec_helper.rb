@@ -1,5 +1,5 @@
 require 'oauth/client/action_controller_request'
-module OAuthControllerSpecHelper
+module OauthControllerSpecHelper
 
   def current_user
     @user||=Factory.create(:user)
@@ -10,7 +10,7 @@ module OAuthControllerSpecHelper
   end
 
   def access_token
-    @access_token||=AccessToken.create :user=>current_user,:client_application=>current_client_application
+    @access_token||=Oauth2Token.create :user=>current_user,:client_application=>current_client_application
   end
 
   def request_token

@@ -18,6 +18,7 @@ require 'csv'
 
 RSpec.configure do |config|
   config.include AuthenticatedTestHelper
+  config.include OauthControllerSpecHelper
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
   # config.include Rack::Test::Methods

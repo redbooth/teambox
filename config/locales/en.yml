@@ -1855,6 +1855,12 @@ en:
       title: "Authorize Application"
       authorize_access: "Allow this application to access my Teambox account"
       submit: "Authorize"
+      offline_access: Access the account at any time
+      offline_access_description: The application will be able to access your account until you revoke access.
+      read_projects: Access project data
+      read_projects_description: All project data, such as conversations, tasks, task lists, pages, and so on will be visible to the application.
+      write_projects: Create project data
+      write_projects_description: Create conversations, tasks, task lists, pages, etc.
     
   google_docs:
     authorization_required: In order to use Google Docs you must first authorize Teambox to use your google account.

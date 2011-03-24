@@ -80,6 +80,8 @@ module Oauth
             @oauth2_token = Oauth2Token.find_by_token(token)
             if @oauth2_token && @oauth2_token.authorized?
               controller.send :current_token=, @oauth2_token
+            else
+              @oauth2_token = nil
             end
           end
           @oauth2_token!=nil

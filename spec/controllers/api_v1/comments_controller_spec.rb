@@ -238,7 +238,7 @@ describe ApiV1::CommentsController do
       conversation.reload.comments(true).length.should == 1
     end
     
-    it "should not allow oauth users without :write_objects to post a comment" do
+    it "should not allow oauth users without :write_projects to post a comment" do
       login_as_with_oauth_scope @project.user, []
       
       conversation = Factory.create(:conversation, :project => @project)
@@ -252,8 +252,8 @@ describe ApiV1::CommentsController do
       conversation.reload.comments.length.should == 1
     end
     
-    it "should allow oauth users with :write_objects to post a comment" do
-      login_as_with_oauth_scope @project.user, [:write_objects]
+    it "should allow oauth users with :write_projects to post a comment" do
+      login_as_with_oauth_scope @project.user, [:write_projects]
       
       conversation = Factory.create(:conversation, :project => @project)
       conversation.comments.length.should == 1

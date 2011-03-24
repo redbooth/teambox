@@ -18,7 +18,7 @@ class OauthController < ApplicationController
     end
     if ["authorization_code","password","none"].include?(params[:grant_type])
       send "oauth2_token_#{params[:grant_type].underscore}"
-    else 
+    else
       oauth2_error "unsupported_grant_type"
     end
   end
@@ -60,10 +60,11 @@ class OauthController < ApplicationController
 
   def oauth2_authorize_code
     @client_application = ClientApplication.find_by_key params[:client_id]
+    @oauth_scopes = (params[:scope]||'').split(' ').map(&:to_sym) & OauthToken::ALLOWED_SCOPES
     if request.post?
       @redirect_url = URI.parse(params[:redirect_uri] || @client_application.callback_url)
       if user_authorizes_token?
-        @verification_code = Oauth2Verifier.create :client_application=>@client_application, :user=>current_user, :callback_url=>@redirect_url.to_s
+        @verification_code = Oauth2Verifier.create :client_application=>@client_application, :user=>current_user, :callback_url=>@redirect_url.to_s, :scope=>@oauth_scopes
 
         unless @redirect_url.to_s.blank?
           @redirect_url.query = @redirect_url.query.blank? ?
@@ -90,12 +91,13 @@ class OauthController < ApplicationController
 
   def oauth2_authorize_token
     @client_application = ClientApplication.find_by_key params[:client_id]
+    @oauth_scopes = (params[:scope]||'').split(' ').map(&:to_sym) & OauthToken::ALLOWED_SCOPES
     if request.post?
       @redirect_url = URI.parse(params[:redirect_uri] || @client_application.callback_url)
       if user_authorizes_token?
-        @token  = Oauth2Token.create :client_application=>@client_application, :user=>current_user, :scope=>params[:scope]
+        @token = Oauth2Token.create :client_application=>@client_application, :user=>current_user, :scope=>@oauth_scopes
         unless @redirect_url.to_s.blank?
-          redirect_to "#{@redirect_url.to_s}#access_token=#{@token.token}"
+          redirect_to "#{@redirect_url.to_s}##{@token.to_fragment_params}"
         else
           render :action => "authorize_success"
         end

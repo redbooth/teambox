@@ -120,6 +120,18 @@ describe ApiV1::ActivitiesController do
         end
       end
     end
+    
+    it "should not allow oauth users without :read_projects to view activities" do
+      login_as_with_oauth_scope @project.user, []
+      get :index, :access_token => @project.user.current_token.token
+      response.status.should == 401
+    end
+    
+    it "should allow oauth users with :read_projects to view activities" do
+      login_as_with_oauth_scope @project.user, [:read_projects]
+      get :index, :access_token => @project.user.current_token.token
+      response.should be_success
+    end
   end
   
   describe "#show" do
