@@ -19,6 +19,10 @@ module NavigationHelpers
       "/forgot"
     when /the your data page/
       teambox_datas_path
+    when /the your linked apps page/
+      oauth_clients_path
+    when /the your apps page/
+      developer_oauth_clients_path
     when /the pages of the "([^\"]*)" project/
       project_pages_path(Project.find_by_name($1))
     when /the page named "([^\"]*)"/

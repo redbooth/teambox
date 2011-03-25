@@ -209,3 +209,13 @@ Factory.define :client_application do |f|
   f.updated_at Time.parse("2007-11-17 16:56:51")
 end
 
+Factory.define :cucumber_ly, :parent => :client_application do |f|
+  f.association(:user)
+  f.name "Cucumber.ly"
+  f.url "http://cucumber.ly"
+  f.support_url "http://cucumber.ly/support"
+  f.callback_url "http://cucumber.ly/callback"
+  f.created_at Time.parse("2007-11-17 16:56:51")
+  f.updated_at Time.parse("2007-11-17 16:56:51")
+end
+

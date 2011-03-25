@@ -9,24 +9,24 @@
   %h2
     = @client_application.name
 
-%h3 Consumer Key
+%h3 App Key
 %pre=@client_application.key
 
-%h3 Consumer Secret
+%h3 App Secret
 %pre=@client_application.secret
 
-%h3 Request Token URL
-%pre
-  ="http#{'s' if request.ssl?}://#{request.host_with_port}#{@client_application.oauth_server.request_token_path}"
+%h3 Callback URI
+%pre=@client_application.callback_url
 
 %h3 Access Token URL
 %pre
-  ="http#{'s' if request.ssl?}://#{request.host_with_port}#{@client_application.oauth_server.access_token_path}"
+  ="http#{'s' if request.ssl?}://#{request.host_with_port}#{token_path}"
 
 %h3 Authorize URL
 %pre
-  ="http#{'s' if request.ssl?}://#{request.host_with_port}#{@client_application.oauth_server.authorize_path}"
-%p
-  We support hmac-sha1 (recommended) as well as plain text in ssl mode.
+  ="http#{'s' if request.ssl?}://#{request.host_with_port}#{authorize_path}"
 
+%p
+  For more details, please
+  = link_to 'read the Authentication section in the API Docs', api_auth_path
 

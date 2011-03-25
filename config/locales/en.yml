@@ -1135,13 +1135,14 @@ en:
   oauth_clients:
     client_token:
       revoke: Revoke access
+      confirm_revoke: Are you sure you want to revoke access to this application?
       authorized_at: "Authorized on %{time}"
     client:
       edit: Edit
     form:
       name: Name
       url: Client URL
-      callback_url: Callback URL
+      callback_url: Callback URI
       support_url: Support URL
     new:
       title: Register a new application
@@ -1154,6 +1155,7 @@ en:
       register_app: Register a new app
       developers_register_html: "<strong>Developers:</strong> Register your apps <a href='%{url}'>Here</a>"
       authorized_applications: "The following applications are authorized to access your Teambox account."
+      no_authorized_applications: "No applications are authorized to access your Teambox account."
     developer:
       title: Third-party applications
       no_registered_applications_html: "Do you have an application you would like to register for use with us using the <a href='http://oauth.net'>OAuth</a> standard? You must register your web application before it can make OAuth requests to this service."

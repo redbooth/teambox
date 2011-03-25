@@ -3,8 +3,8 @@
 
 .oauth_client_header
   .text_actions
-    = link_to 'Delete', oauth_client_path(@client_application),
-      'data-confirm' => t('oauth_clients.edit.confirm_delete'), 'data-method' => 'delete', 'data-remote' => true
+    = link_to t('common.delete'), oauth_client_path(@client_application),
+      'data-confirm' => t('oauth_clients.edit.confirm_delete'), 'data-method' => 'delete'
   %h2
     = @client_application.name
 

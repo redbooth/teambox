@@ -3,5 +3,6 @@
     %h2= link_to client_token.client_application.name, client_token.client_application.url
     %p= t('.authorized_at', :time => client_token.authorized_at.to_s)
   .actions
-    = link_to t('.revoke'), :controller => 'oauth', :action => 'revoke', :token => client_token.token, 
-      'data-confirm' => t('oauth_clients.client_token.confirm_delete'), 'data-method' => 'post', 'data-remote' => true
+    = link_to t('.revoke'), revoke_path(:token => client_token.token), 
+      'data-confirm' => t('.confirm_revoke'), 'data-method' => 'post', 'data-remote' => true,
+      :class => 'revoke'
