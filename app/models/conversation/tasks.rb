@@ -48,6 +48,9 @@ class Conversation
       end
 
       task.save
+      self.converted_to = task.id #we want to know which task has it been converted into
+
+      self.save(false) #saving the converted_to field, no callbacks called
       self.reload.destroy
     end
     task
