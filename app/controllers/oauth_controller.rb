@@ -63,7 +63,12 @@ class OauthController < ApplicationController
     @oauth_scopes = user_scope
     if request.post?
       @redirect_url = URI.parse(params[:redirect_uri] || @client_application.callback_url)
-      if user_authorizes_token?
+      if !user_authorizes_token?
+        token_authorize_failure('user_denied')
+      elsif redirect_uri_mismatch?(@redirect_url, URI.parse(@client_application.callback_url))
+        @redirect_url = URI.parse(@client_application.callback_url)
+        token_authorize_failure('redirect_uri_mismatch')
+      else
         @verification_code = Oauth2Verifier.create :client_application=>@client_application, :user=>current_user, :callback_url=>@redirect_url.to_s, :scope=>@oauth_scopes
 
         unless @redirect_url.to_s.blank?
@@ -73,15 +78,6 @@ class OauthController < ApplicationController
           redirect_to @redirect_url.to_s
         else
           render :action => "authorize_success"
-        end
-      else
-        unless @redirect_url.to_s.blank?
-          @redirect_url.query = @redirect_url.query.blank? ?
-                                "error=user_denied" :
-                                @redirect_url.query + "&error=user_denied"
-          redirect_to @redirect_url.to_s
-        else
-          render :action => "authorize_failure"
         end
       end
     else
@@ -94,21 +90,17 @@ class OauthController < ApplicationController
     @oauth_scopes = user_scope
     if request.post?
       @redirect_url = URI.parse(params[:redirect_uri] || @client_application.callback_url)
-      if user_authorizes_token?
+      if !user_authorizes_token?
+        token_authorize_failure('user_denied')
+      elsif redirect_uri_mismatch?(@redirect_url, URI.parse(@client_application.callback_url))
+        @redirect_url = URI.parse(@client_application.callback_url)
+        token_authorize_failure('redirect_uri_mismatch')
+      else
         @token = Oauth2Token.create :client_application=>@client_application, :user=>current_user, :scope=>@oauth_scopes
         unless @redirect_url.to_s.blank?
           redirect_to "#{@redirect_url.to_s}##{@token.to_fragment_params(:include => [:access_token])}"
         else
           render :action => "authorize_success"
-        end
-      else
-        unless @redirect_url.to_s.blank?
-          @redirect_url.query = @redirect_url.query.blank? ?
-                                "error=user_denied" :
-                                @redirect_url.query + "&error=user_denied"
-          redirect_to @redirect_url.to_s
-        else
-          render :action => "authorize_failure"
         end
       end
     else
@@ -156,7 +148,22 @@ class OauthController < ApplicationController
   # Override this to match your authorization page form
   def user_authorizes_token?
     params[:authorize] == '1'
-  end  
+  end
+  
+  def token_authorize_failure(error_type)
+    unless @redirect_url.to_s.blank?
+      @redirect_url.query = @redirect_url.query.blank? ?
+                            "error=#{error_type}" :
+                            @redirect_url.query + "&error=#{error_type}"
+      redirect_to @redirect_url.to_s
+    else
+      render :action => "authorize_failure"
+    end
+  end
+  
+  def redirect_uri_mismatch?(url, other_url)
+    return ((url.host != other_url.host) || url.port != other_url.port)
+  end
 
   def oauth2_error(error="invalid_grant")
     render :json=>{:error=>error}.to_json, :status => 401

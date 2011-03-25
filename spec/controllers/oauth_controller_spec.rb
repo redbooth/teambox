@@ -175,6 +175,28 @@ describe OauthController do
       
     end
     
+    describe "redirect_uri on authorize" do
+      def auth_with_redirect(url)
+        post :authorize, :response_type=>"code",:client_id=>current_client_application.key, :redirect_uri=>url,:authorize=>"1"
+        @verification_token = Oauth2Verifier.last
+      end
+      
+      it "should allow http://application/callback" do
+        auth_with_redirect("http://application/callback")
+        response.should be_redirect
+      end
+      
+      it "should not allow http://other-application/callback" do
+        auth_with_redirect("http://other-application/callback")
+        uri = URI.parse(response.redirect_url)
+        query = Rack::Utils.parse_query(uri.query)
+        uri.host.should == 'application'
+        uri.path.should == '/callback'
+        query['error'].should == 'redirect_uri_mismatch'
+      end
+      
+    end
+    
     describe "deny" do
       before(:each) do
         post :authorize, :response_type=>"code", :client_id=>current_client_application.key, :redirect_uri=>"http://application/callback",:authorize=>"0"

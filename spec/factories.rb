@@ -202,7 +202,7 @@ Factory.define :client_application do |f|
   f.name "MyString"
   f.url "http://test.com"
   f.support_url "http://test.com/support"
-  f.callback_url "http://test.com/callback"
+  f.callback_url "http://application/callback"
   f.key "one_key"
   f.secret "MyString"
   f.created_at Time.parse("2007-11-17 16:56:51")
