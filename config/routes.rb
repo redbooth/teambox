@@ -21,6 +21,7 @@ Teambox::Application.routes.draw do
   match 'api' => 'apidocs#index', :as => :api
   match 'api/concepts' => 'apidocs#concepts', :as => :api_concepts
   match 'api/routes' => 'apidocs#routes', :as => :api_routes
+  match 'api/auth' => 'apidocs#auth', :as => :api_auth
   match 'api/changes' => 'apidocs#changes', :as => :api_changes
   match 'api/:model' => 'apidocs#model', :as => :api_model
 
