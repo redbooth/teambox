@@ -65,7 +65,9 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       if @project.save
-        f.html { redirect_to project_invite_people_path(@project) }
+        redirect_path = redirect_to_invite_people? ? project_invite_people_path(@project) : @project
+
+        f.html { redirect_to redirect_path }
         f.m { redirect_to @project }
       else
         flash.now[:error] = t('projects.new.invalid_project')
@@ -205,6 +207,10 @@ class ProjectsController < ApplicationController
       if @community_organization && @community_role.nil?
         render :text => "You're not authorized to create projects on this organization."
       end
+    end
+
+    def redirect_to_invite_people?
+      Rails.env.cucumber? || Teambox.config.allow_outgoing_email?
     end
 
 end
