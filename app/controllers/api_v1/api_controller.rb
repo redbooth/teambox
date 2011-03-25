@@ -13,7 +13,10 @@ class ApiV1::APIController < ApplicationController
   end
   
   def current_user
-    @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie || login_from_oauth) unless @current_user == false
+    @current_user ||= (login_from_session ||
+                       login_from_basic_auth ||
+                       login_from_cookie ||
+                       login_from_oauth) unless @current_user == false
   end
   
   def login_from_oauth

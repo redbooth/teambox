@@ -16,14 +16,6 @@ module OauthControllerSpecHelper
   def request_token
     @request_token||=RequestToken.create :client_application=>current_client_application, :callback_url=>"http://application/callback"
   end
-
-  def consumer_request_token
-    OAuth::RequestToken.new current_consumer,request_token.token,request_token.secret
-  end
-
-  def consumer_access_token
-    OAuth::AccessToken.new current_consumer,access_token.token,access_token.secret
-  end
   
   def login
     controller.stub!(:current_user).and_return(current_user)

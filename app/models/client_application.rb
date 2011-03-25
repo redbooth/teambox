@@ -35,17 +35,8 @@ class ClientApplication < ActiveRecord::Base
     end
   end
 
-  def oauth_server
-    @oauth_server ||= OAuth::Server.new("http://your.site")
-  end
-
   def credentials
     @oauth_client ||= OAuth::Consumer.new(key, secret)
-  end
-
-  # If your application requires passing in extra parameters handle it here
-  def create_request_token(params={})
-    RequestToken.create :client_application => self, :callback_url=>self.token_callback_url
   end
 
 protected
