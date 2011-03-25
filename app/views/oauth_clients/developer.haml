@@ -6,7 +6,7 @@
 = new_oauth_client_link
 
 - if @client_applications.empty?
-  %p= %('.no_registered_applications_html')
+  %p= t('.no_registered_applications_html')
 - else
   %p= t('.registered_applications_html')
   #oauth_clients

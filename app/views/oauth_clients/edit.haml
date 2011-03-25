@@ -8,7 +8,7 @@
   %h2
     = @client_application.name
 
-- form_for :client_application, :html => {:id => 'edit_oauth_clients'} do |f|
+- form_for :client_application, :url => oauth_client_path(@client_application), :html => {:method => 'put', :id => 'edit_oauth_clients'} do |f|
   = render :partial => "form", :locals => { :f => f }
   = submit_tag t('.submit')
   = t('common.or')
