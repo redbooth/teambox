@@ -96,7 +96,7 @@ Feature: Converting a conversation to a task
     And I should see 'Dec 29' within 'span.assigned_date'
     And I should see 'Assigned to Saimon Moore' within 'p.assigned_transition'
 
-  Scenario: When I acccess the link from the converted conversation I should see the task
+  Scenario: When I access the link from the converted conversation I should see the task
     Given I started a conversation named "Yeehaw"
     When I go to the home page
     And I bookmark the link "Yeehaw"
