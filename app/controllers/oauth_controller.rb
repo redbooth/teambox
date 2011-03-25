@@ -62,7 +62,7 @@ class OauthController < ApplicationController
     @client_application = ClientApplication.find_by_key params[:client_id]
     @oauth_scopes = user_scope
     if request.post?
-      @redirect_url = URI.parse(params[:redirect_uri] || @client_application.callback_url)
+      @redirect_url = params[:redirect_uri] ? URI.parse(params[:redirect_uri]) : nil
       if !user_authorizes_token?
         token_authorize_failure('user_denied')
       elsif redirect_uri_mismatch?(@redirect_url, URI.parse(@client_application.callback_url))
@@ -89,7 +89,7 @@ class OauthController < ApplicationController
     @client_application = ClientApplication.find_by_key params[:client_id]
     @oauth_scopes = user_scope
     if request.post?
-      @redirect_url = URI.parse(params[:redirect_uri] || @client_application.callback_url)
+      @redirect_url = params[:redirect_uri] ? URI.parse(params[:redirect_uri]) : nil
       if !user_authorizes_token?
         token_authorize_failure('user_denied')
       elsif redirect_uri_mismatch?(@redirect_url, URI.parse(@client_application.callback_url))
@@ -162,7 +162,7 @@ class OauthController < ApplicationController
   end
   
   def redirect_uri_mismatch?(url, other_url)
-    return ((url.host != other_url.host) || url.port != other_url.port)
+    return url.nil? || ((url.host != other_url.host) || url.port != other_url.port)
   end
 
   def oauth2_error(error="invalid_grant")

@@ -181,6 +181,16 @@ describe OauthController do
         @verification_token = Oauth2Verifier.last
       end
       
+      it "should not allow a blank uri" do
+        post :authorize, :response_type=>"code",:client_id=>current_client_application.key, :authorize=>"1"
+        response.should be_redirect
+        uri = URI.parse(response.redirect_url)
+        query = Rack::Utils.parse_query(uri.query)
+        uri.host.should == 'application'
+        uri.path.should == '/callback'
+        query['error'].should == 'redirect_uri_mismatch'
+      end
+      
       it "should allow http://application/callback" do
         auth_with_redirect("http://application/callback")
         response.should be_redirect
