@@ -44,6 +44,7 @@ module UsersHelper
       my_user = #{json_user};
       my_projects = #{json_projects};
       my_organizations = #{json_organizations};
+      my_tasks = #{json_tasks};
       current_project = #{@current_project ? @current_project.id : 'null'};
     )
   end
@@ -167,6 +168,10 @@ module UsersHelper
   end
 
   protected
+
+    def json_tasks
+      current_user.nearest_pending_tasks.to_json
+    end
 
     def json_user
       {

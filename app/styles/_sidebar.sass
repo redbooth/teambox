@@ -5,17 +5,25 @@
 
   .el
     display: inline-block
-    width: 300px
+    width: $column_width - 10px
     padding-left: 10px
     position: relative
+    font-size: 11px
     span
       position: absolute
       right: 5px
       top: 4px
-      background-color: lighten($navbar, 30)
-      padding: 2px 4px
+      min-width: 8px
+      text-align: center
+      padding: 1px 4px
+      background-color: #8597BB
+      color: white
+      font-weight: bold
+      text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px
+      font-family: Helvetica, Arial, sans-serif
       font-size: 11px
-      +rounded(3px)
+      +rounded(10px)
+      +box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.5))
       &.clickable
         padding: 0
         margin: 0
@@ -27,6 +35,12 @@
           padding: 2px 4px
     &.selected, &.children-selected, &.selected:hover, &.children-selected:hover
       background: lighten($navbar, 20)
+      +gradient(#a0b0d0, #6f83ab)
+      text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px
+      -webkit-font-smoothing: antialiased
+      a
+        color: white
+        font-weight: bold
     &:hover
       background: lighten($navbar, 30)
     &.expanded
@@ -35,17 +49,10 @@
 
   .contained
     .el
-      width: 300px
+      width: $column_width - 10px
       font-size: 11px
       a
         padding-left: 30px
-    .contained
-      .el
-        width: 254px
-        padding-left: 56px
-
-  .space
-    height: 20px
 
   a
     padding: 5px
@@ -99,6 +106,8 @@
     &.show_more, &.show_less
       font-size: 10px
       color: #777
+    &.project, &.more
+      padding-left: 5px
 
 .more_links
   margin-left: -15px

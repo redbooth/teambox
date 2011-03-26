@@ -1,36 +1,37 @@
+$column_width: 220px 
+
 html, body
   margin: 0px
   padding: 0px
   background-color: white
+  overflow: hidden
 
-div.wrapper
-  clear: both
-  background: white
-  +clearing
+div.content_wrap, div.column_wrap
+  position: fixed
+  top: 68px
+  bottom: 0
+  overflow: hidden
 
+#column
+  width: $column_width
 div.content_wrap
-  float: left
-  width: 640px
-  padding: 10px
-    right: 0px
+  left: $column_width
+  right: 0
+  border-left: 1px solid #B7B7B7
+  overflow-y: auto
+  .content
+    margin: 10px
 div.column_wrap
-  float: right
-  width: 300px
   font-size: 12px
+  left: 0
+  width: $column_width
+  background: #e6edf5
+  overflow: hidden
   div.column
-    background: rgb(255, 255, 255)
-    padding: 10px
-      left: 0
-    border:
-      left: 1px solid #eee
     select
-      max-width: 280px
+      max-width: $column_width - 20px
     .view_sidebar
       margin-left: 15px
-
-div.container
-  width: 960px
-  margin: 0px auto
 
 // TODO: remove extra element and use +clearing
 div.clear
@@ -88,3 +89,32 @@ p.flash-notice
   width: 100%
   text-align: center
   background-color: white
+
+.separator
+  height: 20px
+  margin: 0
+  padding: 0 10px
+  line-height: 19px
+  background: #E7E7E7
+  background-image: -moz-linear-gradient(top,#F3F3F3,#D7D7D7)
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#F3F3F3),color-stop(1,#D7D7D7))
+  border:
+    bottom: 1px solid #B7B7B7
+    top: 1px solid #DDD
+  color: #777
+  text-shadow: white 0 1px 0
+  text-transform: uppercase
+  text-align: left
+  font-size: 11px
+  font-weight: bold
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -o-user-select: none
+  user-select: none
+  -webkit-background-clip: padding-box
+  &.with_margin
+    margin-top: 20px
+  .column_wrap &
+    +gradient(#D8DEE5, #C6D1DD)
+    border-top: 1px solid #A4ACB3

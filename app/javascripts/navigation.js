@@ -30,30 +30,6 @@ NavigationBar = {
     }
   },
 
-  scroll: function() {
-    var sidebar = $('column')
-    var column = sidebar.up('.column_wrap')
-    if (document.viewport.getHeight() > sidebar.getHeight() && document.viewport.getScrollOffsets()[1] >= NavigationBar.initial_offset) {
-      sidebar.style.position = 'fixed'
-      sidebar.style.top = 0
-    }
-    else
-    {
-      sidebar.style.position = 'absolute'
-      sidebar.style.top = 'auto'
-      column.style.height=sidebar.getHeight()+'px'
-    }
-
-  },
-
-  scrollToTopIfNeeded: function() {
-    var sidebar = $('column')
-    if (document.viewport.getHeight() < sidebar.getHeight()) {
-      NavigationBar.scroll()
-      Effect.ScrollTo('container', { duration: '0.4' })
-    }
-  },
-
   toggleElement: function(el, effect) {
     var contained = el.next()
     // if next element is an expanded area..
@@ -73,7 +49,6 @@ NavigationBar = {
 
         contained.setStyle({height: ''})
         effect ? contained.blindDown({ duration: 0.2 }) : contained.show()
-        setTimeout(function() { NavigationBar.scrollToTopIfNeeded() }, 100)
       }
       // Stop the event and don't follow the link
       return true
@@ -91,7 +66,6 @@ NavigationBar = {
 document.on("dom:loaded", function() {
   $$('.nav_links .contained').invoke('hide')
   window.$('column').style.position='absolute'
-  NavigationBar.initial_offset = document.viewport.getScrollOffsets()[1] + window.$('column').viewportOffset().top
 
   // Select and expand the current element
   var current = NavigationBar.detectSelectedSection()
@@ -139,6 +113,3 @@ document.on('click', '.nav_links .el .show_less', function(e,el) {
   $$('.el#show_more').invoke('show')
   $$('.el.extra').invoke('hide')
 })
-
-window.onscroll = function() { NavigationBar.scroll() }
-

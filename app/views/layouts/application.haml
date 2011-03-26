@@ -28,17 +28,22 @@
     #header_wrap
       = header
     = configure_this_organization
+    -# container and wrapper are useless with the current layout
+    -# i'm keeping them because we need to make sure it doesn't break the JS
     #container.container
       .wrapper
         - show_flash
         .content_wrap
+          .separator All Projects
           .content#content= yield
         .column_wrap
           .column#column
+            .separator My Activity
             = render 'shared/navigation'
+            .separator.with_margin Contextual
             .view_sidebar
               = yield :column
-      = footer
+      =# footer
     = autocomplete_projects_people_data
     = projects_people_data
     = hide_google_docs_if_not_configured

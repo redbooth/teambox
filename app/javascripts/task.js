@@ -347,3 +347,19 @@ document.on('ajax:success', '.task_list form.new_task', function(e, form) {
 
   Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(response)
 })
+
+//
+// Render tasks in the main view when clicking the sidebar
+//
+
+document.on('click', '#my_tasks a.tasks', function(e, el) {
+  e.stop();
+
+  var html = Mustache.to_html(Templates.tasks.index, {
+    tasks: my_tasks
+  });
+  Pane.replace(html);
+
+  NavigationBar.selectElement($('my_tasks'));
+  NavigationBar.toggleElement($('my_tasks'));
+});
