@@ -52,6 +52,7 @@
 //= require <person>
 //= require <preview>
 //= require <projects>
+//= require <quick_add_pane>
 //= require <search>
 //= require <sessions>
 //= require <splash>
