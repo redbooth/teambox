@@ -114,6 +114,17 @@ module ProjectsHelper
     end
   end
 
+  def join_project_link(project)
+    msg = ""
+    if project.organization.is_admin?(current_user)
+      msg = t('projects.not_in_project.explain_admin_html', :organization => h(@current_project.organization))
+      link_to t('projects.not_in_project.join'), join_project_path(project), :title => msg, :class => :join_link
+    elsif project.public
+      msg = t('projects.not_in_project.explain_public_html', :organization => h(@current_project.organization))
+      link_to t('projects.not_in_project.join'), join_project_path(project), :title => msg, :class => :public_link
+    end
+  end
+
   def options_for_owner(people)
     people.map {|person| [ person.name, person.user_id ]}
   end
