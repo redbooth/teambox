@@ -74,7 +74,7 @@ Object.extend(Date.prototype, {
   },
 
   days_since: function() {
-    return Math.floor(((new Date()).beginning_of_day() - this.beginning_of_day()) / 86400000.0)
+    return Math.round(((new Date()).beginning_of_day() - this.beginning_of_day()) / 86400000.0)
   },
 
   // Renders date with custom formatting, similar to Ruby's strftime
