@@ -1,4 +1,4 @@
-@organizations
+@javascript @organizations
 Feature: Public sites for organizations. Allow to view an entrance page and log in
   In order to discover what has been said about aall topics in my organization
   As an organization admin
@@ -29,7 +29,7 @@ Feature: Public sites for organizations. Allow to view an entrance page and log 
 
   Scenario: I can access the recent activity page for a project in my organization that I don't belong to
     When I follow "Ruby Rockstars"
-    Then I should see "Recent activity for Ruby Rockstars" in the title
+    Then I should see "Recent activity for Ruby Rockstars"
     And I should see "Ruby Rockstars" within "#column"
     And I should see the recent activity link for the "Ruby Rockstars" project within the sidebar
     And I should see the tasks link for the "Ruby Rockstars" project within the sidebar
@@ -97,7 +97,7 @@ Feature: Public sites for organizations. Allow to view an entrance page and log 
     When I go to the invite people page of the "Ruby Rockstars" project
     Then I should see "Invite people to Ruby Rockstars"
     When I fill in the invite by email box with "ucanthackthis@hammerti.me"
-    And I check "Saimon Moore"
+    And I check "Saimon Moore" within "#content .users"
     And I press "Send invitations and start collaborating"
     Then I should see "You are not allowed to do that!"
 
