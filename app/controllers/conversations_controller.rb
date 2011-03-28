@@ -141,10 +141,9 @@ class ConversationsController < ApplicationController
   protected
   
     def load_conversation
-      @conversation = @current_project.conversations.find params[:id]
-    rescue ActiveRecord::RecordNotFound
       @conversation = @current_project.conversations.with_deleted.find params[:id]
-      redirect_to project_task_path(@current_project.id,@conversation.converted_to)
+      redirect_to project_task_path(@current_project.id, @conversation.converted_to) if @conversation.deleted && @conversation.converted_to
+      raise ActiveRecord::RecordNotFound if @conversation.deleted && @conversation.converted_to.nil?
     end
     
     def current_conversation
