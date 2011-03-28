@@ -13,8 +13,8 @@ function format_posted_date() {
     		current_date_beginning_of_day.setMinutes(0)
     		current_date_beginning_of_day.setSeconds(0)
 
-    var minutes = Math.floor((current_date-posted_date) / (1000 * 60))
-    var days = Math.floor((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24))
+    var minutes = Math.round((current_date-posted_date) / (1000 * 60))
+    var days = Math.round((current_date_beginning_of_day-posted_date_beginning_of_day) / (1000 * 60 * 60 * 24))
     var today = ((current_date.getDay() === posted_date.getDay() && days < 2) ? true : false)
 
 		if (minutes < 0) return
