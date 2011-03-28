@@ -97,7 +97,7 @@ Feature: Public sites for organizations. Allow to view an entrance page and log 
     When I go to the invite people page of the "Ruby Rockstars" project
     Then I should see "Invite people to Ruby Rockstars"
     When I fill in the invite by email box with "ucanthackthis@hammerti.me"
-    And I check "Saimon Moore" within "#content .users"
+    And I check the checkbox "Saimon Moore" within "#content .users"
     And I press "Send invitations and start collaborating"
     Then I should see "You are not allowed to do that!"
 

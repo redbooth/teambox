@@ -87,3 +87,10 @@ end
 Then /I should see "([^"]*)" within custom html/ do |text|
   Then %(I should see "#{text}" within ".custom_html")
 end
+
+When /^(?:|I )check the checkbox "([^\"]*)"(?: within "([^\"]*)")?$/ do |locator, selector|
+  with_scope(selector) do
+    msg = "cannot check field, no checkbox with id, name, or label '#{locator}' found"
+    find(:xpath, ".//input[./@type = 'checkbox'][((./@id = '#{locator}' or ./@name = '#{locator}') or ./@id = //label[contains(./text(), '#{locator}')]/@for)] | .//label[contains(normalize-space(.), '#{locator}')]//.//input[./@type = 'checkbox']", :message => msg).set(true)
+  end
+end
