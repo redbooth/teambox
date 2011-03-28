@@ -25,6 +25,12 @@ class ApplicationController < ActionController::Base
     raise(ActionController::InvalidAuthenticityToken)
   end
 
+  def redirect_to(options = {}, response_status = {})
+    super(options, response_status)
+    self.location = self.location+'?extractparts=1' if params[:extractparts]
+    self.response_body
+  end
+
   # If the parameter ?nolayout=1 is passed, then we will render without a layout
   # If the parameter ?extractparts=1 is passed, then we will render blocks for content and sidebar
   layout proc { |controller|
