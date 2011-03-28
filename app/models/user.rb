@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   belongs_to :invited_by, :class_name => 'User'
 
   has_one :card
-  accepts_nested_attributes_for :people, :update_only => true, :reject_if => proc { |attributes| (attributes.keys - %w(id digest)).any? }
+  accepts_nested_attributes_for :people, :update_only => true, :reject_if => proc { |attributes| (attributes.keys - %w(id digest watch_new_conversation watch_new_task)).any? }
   accepts_nested_attributes_for :card
 
   default_scope :order => 'users.updated_at DESC'

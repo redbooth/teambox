@@ -547,4 +547,31 @@ describe User do
       @user.reload.get_stat('pages').should == 1
     end
   end
+
+  describe "people" do
+    before do
+      @user = Factory(:user)
+      @project = Factory(:project)
+      @person = @project.add_user(@user, :role => Person::ROLES[:admin])
+    end
+
+    it "should allow setting digest on person via nested attributes on user" do
+      #DIGEST = {:instant => 0, :daily => 1, :weekly => 2}
+      @user.people_attributes = [{:id => @person.id.to_s, :digest => Person::DIGEST[:instant] }]
+      @user.save.should be_true
+      @user.people.first.digest.should == Person::DIGEST[:instant]
+    end
+
+    it "should allow setting watch_new_task on person via nested attributes on user" do
+      @user.people_attributes = [{:id => @person.id.to_s, :watch_new_task => true }]
+      @user.save.should be_true
+      @user.people.first.watch_new_task.should == true
+    end
+
+    it "should allow setting watch_new_conversation on person via nested attributes on user" do
+      @user.people_attributes = [{:id => @person.id.to_s, :watch_new_conversation => true }]
+      @user.save.should be_true
+      @user.people.first.watch_new_conversation.should == true
+    end
+  end
 end
