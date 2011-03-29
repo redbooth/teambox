@@ -36,7 +36,6 @@ Badge = {
       duration: 2
     });
     badge.highlight({ duration: 3 });
-    Sound.play('/sounds/badge.mp3');
     this.showStars(badge);
     // Fire an event that can be captured by other components
     document.fire("badge:new_badge");
