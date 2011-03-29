@@ -90,7 +90,7 @@ module TasksHelper
     elsif due_on
       I18n.l(due_on, :format => '%b %d')
     else
-      ''
+      I18n.t('tasks.due_on.undefined')
     end
   end
 
