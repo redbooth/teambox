@@ -115,7 +115,7 @@ GEM
     faraday (0.5.4)
       addressable (~> 2.2.2)
       multipart-post (~> 1.0.1)
-      rack (>= 1.1.0, < 2)
+      rack (< 2, >= 1.1.0)
     fastthread (1.0.7)
     ffi (0.6.3)
       rake (>= 0.8.7)
