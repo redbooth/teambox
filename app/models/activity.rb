@@ -166,13 +166,16 @@ class Activity < ActiveRecord::Base
   def to_api_hash(options = {})
     base = {
       :id => id,
+      :last_activity_id => last_activity_id,
       :action => action,
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
       :user_id => user_id,
       :project_id => project_id,
       :target_id => target_id,
-      :target_type => target_type
+      :target_type => target_type,
+      :comment_target_id => comment_target_id,
+      :comment_target_type => comment_target_type
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
