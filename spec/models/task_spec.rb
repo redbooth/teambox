@@ -220,7 +220,7 @@ describe Task do
 
       task.update_attributes(:status => "4", :comments_attributes => [{:body => ""}])
       task.reload
-      task.completed_at.beginning_of_day.to_date.should == Time.now.beginning_of_day.to_date
+      task.completed_at.utc.beginning_of_day.to_date.should == Time.now.utc.beginning_of_day.to_date
 
       task.update_attributes(:status => "2", :comments_attributes => [{:body => ""}])
       task.reload
@@ -228,7 +228,7 @@ describe Task do
 
       task.update_attributes(:status => "3", :comments_attributes => [{:body => ""}])
       task.reload
-      task.completed_at.beginning_of_day.to_date.should == Time.now.beginning_of_day.to_date
+      task.completed_at.utc.beginning_of_day.to_date.should == Time.now.utc.beginning_of_day.to_date
     end
 
     it "saves assigned user transitions" do
