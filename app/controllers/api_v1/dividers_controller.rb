@@ -11,7 +11,8 @@ class ApiV1::DividersController < ApiV1::APIController
       Divider.where(:project_id => current_user.project_ids)
     end
     
-    @dividers = context.where(api_range('dividers')).
+    @dividers = context.except(:order).
+                        where(api_range('dividers')).
                         limit(api_limit).
                         order('dividers.id DESC').
                         includes([:project, :page])

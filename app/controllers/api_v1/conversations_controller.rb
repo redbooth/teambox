@@ -10,7 +10,8 @@ class ApiV1::ConversationsController < ApiV1::APIController
       Conversation.where(:project_id => current_user.project_ids).where(api_scope)
     end
     
-    @conversations = context.where(api_range('conversations')).
+    @conversations = context.except(:order).
+                             where(api_range('conversations')).
                              limit(api_limit).
                              order('conversations.id DESC').
                              includes([:user, :project, {:first_comment => :user}, {:recent_comments => :user}])

@@ -63,6 +63,40 @@ describe ApiV1::TasksController do
       JSON.parse(response.body)['objects'].length.should == 0
     end
     
+    it "shows tasks assigned to a person" do
+      login_as @user
+      
+      person = @project.people.find_by_user_id(@user)
+      task = Factory.create(:task, :project => @project, :user => @user)
+      task.comments_attributes = {'0' => {:user_id => @user.id, :body => 'TEST'}}
+      task.assigned_id = person.id
+      task.status = Task::STATUSES[:open]
+      task.save!
+      
+      get :index, :assigned_id => person.id
+      
+      objects = JSON.parse(response.body)['objects']
+      objects.length.should == 1
+      objects[0]['id'].to_i.should == task.id
+    end
+    
+    it "shows tasks assigned to a user" do
+      login_as @user
+      
+      person = @project.people.find_by_user_id(@user)
+      task = Factory.create(:task, :project => @project, :user => @user)
+      task.comments_attributes = {'0' => {:user_id => @user.id, :body => 'TEST'}}
+      task.assigned_id = person.id
+      task.status = Task::STATUSES[:open]
+      task.save!
+      
+      get :index, :assigned_user_id => @user.id
+      
+      objects = JSON.parse(response.body)['objects']
+      objects.length.should == 1
+      objects[0]['id'].to_i.should == task.id
+    end
+    
     it "shows tasks in all the users projects" do
       login_as @user
       

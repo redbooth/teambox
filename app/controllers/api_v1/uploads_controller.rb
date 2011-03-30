@@ -11,7 +11,8 @@ class ApiV1::UploadsController < ApiV1::APIController
       Upload.where(:project_id => current_user.project_ids).where(api_scope)
     end
     
-    @uploads = context.where(api_range('uploads')).
+    @uploads = context.except(:order).
+                       where(api_range('uploads')).
                        limit(api_limit).
                        order('uploads.id DESC').
                        includes([:page, :user])

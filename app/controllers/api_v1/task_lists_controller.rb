@@ -10,7 +10,8 @@ class ApiV1::TaskListsController < ApiV1::APIController
       TaskList.where(:project_id => current_user.project_ids).where(api_scope)
     end
     
-    @task_lists = context.where(api_range('task_lists')).
+    @task_lists = context.except(:order).
+                          where(api_range('task_lists')).
                           limit(api_limit).
                           order('task_lists.id DESC').
                           includes([:user, :project])

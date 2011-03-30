@@ -11,7 +11,8 @@ class ApiV1::NotesController < ApiV1::APIController
       Note.where(:project_id => current_user.project_ids)
     end
     
-    @notes = context.where(api_range('notes')).
+    @notes = context.except(:order).
+                     where(api_range('notes')).
                      limit(api_limit).
                      order('notes.id DESC').
                      includes([:project, :page])

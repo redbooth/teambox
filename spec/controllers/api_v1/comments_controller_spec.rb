@@ -159,6 +159,10 @@ describe ApiV1::CommentsController do
     it "returns references for linked objects" do
       login_as @user
       
+      person = @project.people.find_by_user_id(@user.id)
+      task = Factory.create(:task, :project => @project, :user => @user)
+      task.comments.create_by_user(@user, {:body => 'TEST', :assigned => person}).save!
+      
       get :index, :project_id => @project.permalink
       response.should be_success
       
@@ -168,6 +172,8 @@ describe ApiV1::CommentsController do
       
       references.include?("#{@project.id}_Project").should == true
       references.include?("#{@comment.user_id}_User").should == true
+      references.include?("#{@comment.user_id}_User").should == true
+      references.include?("#{person.id}_Person").should == true
     end
   end
   

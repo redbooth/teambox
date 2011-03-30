@@ -11,7 +11,8 @@ class ApiV1::TasksController < ApiV1::APIController
       Task.where(:project_id => current_user.project_ids).where(api_scope)
     end
     
-    @tasks = context.where(api_range('tasks')).
+    @tasks = context.except(:order).
+                     where(api_range('tasks')).
                      limit(api_limit).
                      order('tasks.id DESC').
                      includes([:task_list, :project, :user, :assigned,
@@ -98,6 +99,9 @@ class ApiV1::TasksController < ApiV1::APIController
     end
     unless params[:assigned_id].nil?
       conditions[:assigned_id] = params[:assigned_id].to_i
+    end
+    unless params[:assigned_user_id].nil?
+      conditions[:assigned_id] = Person.select('id').find_all_by_user_id(params[:assigned_user_id]).map(&:id)
     end
     conditions
   end

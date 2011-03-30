@@ -8,12 +8,13 @@ class ApiV1::CommentsController < ApiV1::APIController
     context = @target ?  @target.comments.where(api_scope) : 
                          Comment.where(:project_id => current_user.project_ids).where(api_scope)
     
-    @comments = context.where(api_range('comments')).
+    @comments = context.except(:order).
+                        where(api_range('comments')).
                         limit(api_limit).
                         order('comments.id DESC').
-                        includes([:target, :user])
+                        includes([:target, :assigned, :previous_assigned, :user])
     
-    api_respond @comments, :references => [:target, :user, :project]
+    api_respond @comments, :references => [:target, :user, :assigned, :previous_assigned, :project]
   end
 
   def show

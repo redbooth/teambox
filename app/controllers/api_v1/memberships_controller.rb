@@ -6,10 +6,11 @@ class ApiV1::MembershipsController < ApiV1::APIController
   def index
     authorize! :show, @organization
     
-    @memberships = @organization.memberships.where(api_range('memberships')).
-                                 limit(api_limit).
-                                 order('memberships.id DESC').
-                                 includes([:organization, :user])
+    @memberships = @organization.memberships.except(:order).
+                                             where(api_range('memberships')).
+                                             limit(api_limit).
+                                             order('memberships.id DESC').
+                                             includes([:organization, :user])
     
     api_respond @memberships, :references => [:organization, :user]
   end

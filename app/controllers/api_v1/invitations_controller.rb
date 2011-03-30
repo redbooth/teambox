@@ -6,7 +6,8 @@ class ApiV1::InvitationsController < ApiV1::APIController
     authorize! :show, @target
     authorize! :admin, @target
     
-    @invitations = @target.invitations.where(api_range('invitations')).
+    @invitations = @target.invitations.except(:order).
+                                       where(api_range('invitations')).
                                        limit(api_limit).
                                        order('invitations.id DESC')
     

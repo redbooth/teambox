@@ -10,7 +10,8 @@ class ApiV1::PagesController < ApiV1::APIController
       Page.where(:project_id => current_user.project_ids).where(api_scope)
     end
     
-    @pages = context.where(api_range('pages')).
+    @pages = context.except(:order).
+                     where(api_range('pages')).
                      limit(api_limit).
                      order('pages.id DESC').
                      includes([:project, :user])

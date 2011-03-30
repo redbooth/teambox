@@ -4,7 +4,8 @@ class ApiV1::ProjectsController < ApiV1::APIController
   def index
     authorize! :show, current_user
     
-    @projects = current_user.projects.where(api_range('projects')).
+    @projects = current_user.projects.except(:order).
+                             where(api_range('projects')).
                              limit(api_limit).
                              order('projects.id DESC').
                              includes([:organization, :user])

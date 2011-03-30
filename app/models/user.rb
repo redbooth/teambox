@@ -148,8 +148,8 @@ class User < ActiveRecord::Base
   end
   
   def users_with_shared_projects
-    ids = self.projects.map(&:user_ids).flatten
-    ids += Invitation.find(:all, :conditions => {:project_id => self.project_ids}, :select => 'user_id').map(&:user_id)
+    ids = self.projects.except(:order).order('id DESC').map(&:user_ids).flatten
+    ids += Invitation.where(:project_id => self.project_ids).select('user_id').map(&:user_id)
     
     User.where({:id => ids.uniq})
   end
