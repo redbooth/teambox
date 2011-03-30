@@ -5,10 +5,9 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   def index
     authorize! :show, current_user
     
-    @organizations = current_user.organizations.all({
-      :conditions => api_range('organizations'),
-      :limit => api_limit,
-      :order => 'organizations.id DESC'})
+    @organizations = current_user.organizations.where(api_range('organizations')).
+                                  limit(api_limit).
+                                  order('organizations.id DESC')
     
     api_respond @organizations, :references => []
   end

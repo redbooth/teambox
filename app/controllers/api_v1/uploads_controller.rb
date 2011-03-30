@@ -5,16 +5,16 @@ class ApiV1::UploadsController < ApiV1::APIController
   def index
     authorize! :show, target||current_user
     
-    query = {:conditions => api_range('uploads'),
-             :limit => api_limit,
-             :order => 'id DESC',
-             :include => [:page, :user]}
-    
-    @uploads = if target
-      target.uploads.where(api_scope).all(query)
+    context = if target
+      target.uploads.where(api_scope)
     else
-      Upload.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      Upload.where(:project_id => current_user.project_ids).where(api_scope)
     end
+    
+    @uploads = context.where(api_range('uploads')).
+                       limit(api_limit).
+                       order('uploads.id DESC').
+                       includes([:page, :user])
     
     api_respond @uploads, :references => [:page, :user]
   end
@@ -56,7 +56,9 @@ class ApiV1::UploadsController < ApiV1::APIController
   end
   
   def load_page
-    @page = @current_project.pages.find params[:page_id] if params[:page_id]
+    return unless params[:page_id]
+    @page = @current_project.pages.find_by_id(params[:page_id])
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Page not found' unless @page
   end
   
   def api_scope
@@ -71,7 +73,7 @@ class ApiV1::UploadsController < ApiV1::APIController
     @upload = if target
       target.uploads.find(params[:id])
     else
-      Upload.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+      Upload.where(:project_id => current_user.project_ids).find_by_id(params[:id])
     end
     api_error :not_found, :type => 'ObjectNotFound', :message => 'Upload not found' unless @upload
   end

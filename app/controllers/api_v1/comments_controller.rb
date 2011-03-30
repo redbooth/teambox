@@ -5,16 +5,13 @@ class ApiV1::CommentsController < ApiV1::APIController
   def index
     authorize! :show, @target||current_user
     
-    query = {:conditions => api_range('comments'),
-             :limit => api_limit,
-             :order => 'id DESC',
-             :include => [:target, :user]}
+    context = @target ?  @target.comments.where(api_scope) : 
+                         Comment.where(:project_id => current_user.project_ids).where(api_scope)
     
-    @comments = if @target
-      @target.comments.where(api_scope).all(query)
-    else
-      Comment.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
-    end
+    @comments = context.where(api_range('comments')).
+                        limit(api_limit).
+                        order('comments.id DESC').
+                        includes([:target, :user])
     
     api_respond @comments, :references => [:target, :user, :project]
   end
@@ -58,9 +55,9 @@ class ApiV1::CommentsController < ApiV1::APIController
 
   def load_comment
     @comment = if @target
-      @target.comments.find params[:id]
+      @target.comments.find_by_id(params[:id])
     else
-      Comment.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+      Comment.where({:project_id => current_user.project_ids}).find_by_id(params[:id])
     end
     api_error :not_found, :type => 'ObjectNotFound', :message => 'Comment not found' unless @comment
   end
@@ -80,11 +77,11 @@ class ApiV1::CommentsController < ApiV1::APIController
     # can't use `memoize` because it freezes the object
     begin
       @target ||= if params[:conversation_id]
-        Conversation.find params[:conversation_id],
-                                :conditions => {:project_id => @current_project.try(:id)||current_user.project_ids}
+        Conversation.where(:project_id => @current_project.try(:id)||current_user.project_ids).
+                     find(params[:conversation_id])
       elsif params[:task_id]
-        Task.find params[:task_id],
-                        :conditions => {:project_id => @current_project.try(:id)||current_user.project_ids}
+        Task.where(:project_id => @current_project.try(:id)||current_user.project_ids).
+             find(params[:task_id])
       else
         @current_project
       end

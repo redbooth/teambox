@@ -5,16 +5,18 @@ class ApiV1::ActivitiesController < ApiV1::APIController
   def index
     authorize! :show, @current_project||current_user
     
-    @activities = Activity.where(api_scope).all(:conditions => api_range('activities'),
-                        :order => 'id DESC',
-                        :limit => api_limit,
-                        :include => [:target, :project, :user, {:comment_target => [:user, {:recent_comments => :user}]}])
+    @activities = Activity.where(api_scope).
+      where(api_range('activities')).
+      order('activities.id DESC').
+      limit(api_limit).
+      includes([:target, :project, :user, {:comment_target => [:user, {:recent_comments => :user}]}])
+    
     api_respond @activities,
                 :references => [:target, :project, :user, :refs_thread_comments, :refs_comment_target]
   end
 
   def show
-    @activity = Activity.find_by_id params[:id], :conditions => {:project_id => current_user.project_ids}
+    @activity = Activity.where(:project_id => current_user.project_ids).find_by_id(params[:id])
     authorize!(:show, @activity) if @activity
       
     if @activity
@@ -38,13 +40,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
   end
   
   def get_target
-    @target = if params[:project_id]
-      @current_project
-    else
-      @current_user.projects.all
-    end
-    
-    unless @target
+    if params[:project_id] && @current_project.nil?
       api_error :not_found, :type => 'ObjectNotFound', :message => 'Target not found'
     end
   end

@@ -5,16 +5,16 @@ class ApiV1::NotesController < ApiV1::APIController
   def index
     authorize! :show, target||current_user
     
-    query = {:conditions => api_range('notes'),
-             :limit => api_limit,
-             :order => 'id DESC',
-             :include => [:project, :page]}
-    
-    @notes = if target
-      target.notes.all(query)
+    context = if target
+      target.notes
     else
-      Note.find_all_by_project_id(current_user.project_ids, query)
+      Note.where(:project_id => current_user.project_ids)
     end
+    
+    @notes = context.where(api_range('notes')).
+                     limit(api_limit).
+                     order('notes.id DESC').
+                     includes([:project, :page])
     
     api_respond @notes, :references => [:project, :page]
   end
@@ -62,9 +62,9 @@ class ApiV1::NotesController < ApiV1::APIController
   
   def load_note
     @note = if target
-      target.notes.find params[:id]
+      target.notes.find_by_id(params[:id])
     else
-      Note.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+      Note.where(:project_id => current_user.project_ids).find_by_id(params[:id])
     end
     api_error :not_found, :type => 'ObjectNotFound', :message => 'Note not found' unless @note
   end

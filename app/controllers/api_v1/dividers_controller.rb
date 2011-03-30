@@ -5,16 +5,16 @@ class ApiV1::DividersController < ApiV1::APIController
   def index
     authorize! :show, target||current_user
     
-    query = {:conditions => api_range('dividers'),
-             :limit => api_limit,
-             :order => 'id DESC',
-             :include => [:project, :page]}
-    
-    @dividers = if target
-      target.dividers.all(query)
+    context = if target
+      target.dividers
     else
-      Divider.find_all_by_project_id(current_user.project_ids, query)
+      Divider.where(:project_id => current_user.project_ids)
     end
+    
+    @dividers = context.where(api_range('dividers')).
+                        limit(api_limit).
+                        order('dividers.id DESC').
+                        includes([:project, :page])
     
     api_respond @dividers, :references => [:project, :page]
   end
@@ -62,9 +62,9 @@ class ApiV1::DividersController < ApiV1::APIController
   
   def load_divider
     @divider = if target
-      target.dividers.find params[:id]
+      target.dividers.find_by_id(params[:id])
     else
-      Divider.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+      Divider.where(:project_id => current_user.project_ids).find_by_id(params[:id])
     end
     api_error :not_found, :type => 'ObjectNotFound', :message => 'Divider not found' unless @divider
   end

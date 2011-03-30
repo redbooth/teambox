@@ -5,17 +5,17 @@ class ApiV1::TasksController < ApiV1::APIController
   def index
     authorize! :show, @task_list||@current_project||current_user
     
-    query = {:conditions => api_range('tasks'),
-             :limit => api_limit,
-             :order => 'id DESC',
-             :include => [:task_list, :project, :user, :assigned,
-                         {:first_comment => :user}, {:recent_comments => :user}]}
-    
-    if @current_project
-      @tasks = (@task_list || @current_project).tasks.where(api_scope).all(query)
+    context = if @current_project
+      (@task_list || @current_project).tasks.where(api_scope)
     else
-      @tasks = Task.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      Task.where(:project_id => current_user.project_ids).where(api_scope)
     end
+    
+    @tasks = context.where(api_range('tasks')).
+                     limit(api_limit).
+                     order('tasks.id DESC').
+                     includes([:task_list, :project, :user, :assigned,
+                              {:first_comment => :user}, {:recent_comments => :user}])
     
     api_respond @tasks, :references => [:task_list, :project, :user, :assigned, :refs_comments]
   end
@@ -81,9 +81,9 @@ class ApiV1::TasksController < ApiV1::APIController
   
   def load_task
     @task = if @current_project
-      (@task_list || @current_project).tasks.find(params[:id]) rescue nil
+      (@task_list || @current_project).tasks.find_by_id(params[:id]) rescue nil
     else
-      Task.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+      Task.where(:project_id => current_user.project_ids).find_by_id(params[:id])
     end
     api_error :not_found, :type => 'ObjectNotFound', :message => 'Task not found' unless @task
   end

@@ -4,11 +4,10 @@ class ApiV1::PeopleController < ApiV1::APIController
   def index
     authorize! :show, @current_project
     
-    @people = @current_project.people.all({
-      :conditions => api_range('people'),
-      :limit => api_limit,
-      :order => 'people.id DESC',
-      :include => [:project, :user]})
+    @people = @current_project.people.where(api_range('people')).
+                                      limit(api_limit).
+                                      order('people.id DESC').
+                                      includes([:project, :user])
     
     api_respond @people, :references => [:project, :user]
   end
@@ -36,7 +35,7 @@ class ApiV1::PeopleController < ApiV1::APIController
   protected
   
   def load_person
-    @person = @current_project.people.find params[:id]
+    @person = @current_project.people.find_by_id(params[:id])
     api_error :not_found, :type => 'ObjectNotFound', :message => 'Person not found' unless @person
   end
   

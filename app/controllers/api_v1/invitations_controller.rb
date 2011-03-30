@@ -6,9 +6,9 @@ class ApiV1::InvitationsController < ApiV1::APIController
     authorize! :show, @target
     authorize! :admin, @target
     
-    @invitations = @target.invitations.all(:conditions => api_range('invitations'),
-                                           :limit => api_limit,
-                                           :order => 'id DESC')
+    @invitations = @target.invitations.where(api_range('invitations')).
+                                       limit(api_limit).
+                                       order('invitations.id DESC')
     
     api_respond @invitations, :include => [:project, :user], :references => [:project, :user]
   end
@@ -65,7 +65,8 @@ class ApiV1::InvitationsController < ApiV1::APIController
   protected
 
   def load_invite
-    @invitation = @target.invitations.find params[:id]
+    @invitation = @target.invitations.find_by_id(params[:id])
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Invitation not found' unless @invitation
   end
   
   def load_target
