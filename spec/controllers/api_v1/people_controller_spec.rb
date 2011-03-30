@@ -23,6 +23,24 @@ describe ApiV1::PeopleController do
       
       JSON.parse(response.body)['objects'].length.should == 4
     end
+    
+    it "limits memberships" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 1
+    end
+    
+    it "limits and offsets people" do
+      login_as @user
+      
+      get :index, :project_id => @project.permalink, :since_id => @project.people[-2].id, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.people.last.id]
+    end
   end
   
   describe "#show" do

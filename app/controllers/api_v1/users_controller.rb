@@ -4,7 +4,13 @@ class ApiV1::UsersController < ApiV1::APIController
   
   def index
     authorize! :show, current_user
-    api_respond current_user.users_with_shared_projects, :references => []
+    
+    @users = current_user.users_with_shared_projects.
+      where(api_range('users')).
+      limit(api_limit).
+      order('id DESC')
+    
+    api_respond @users, :references => []
   end
 
   def show

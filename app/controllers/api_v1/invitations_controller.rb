@@ -5,7 +5,8 @@ class ApiV1::InvitationsController < ApiV1::APIController
   def index
     authorize! :show, @target
     authorize! :admin, @target
-    @invitations = @target.invitations.all(:conditions => api_range,
+    
+    @invitations = @target.invitations.all(:conditions => api_range('invitations'),
                                            :limit => api_limit,
                                            :order => 'id DESC')
     

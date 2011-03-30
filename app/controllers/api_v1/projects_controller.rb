@@ -3,8 +3,12 @@ class ApiV1::ProjectsController < ApiV1::APIController
   
   def index
     authorize! :show, current_user
-    @projects = current_user.projects(:include => [:organization, :user],
-                                      :order => 'id DESC')
+    
+    @projects = current_user.projects.all({
+      :conditions => api_range('projects'),
+      :limit => api_limit,
+      :order => 'id DESC',
+      :include => [:organization, :user]})
     
     api_respond @projects, :references => [:organization, :user]
   end

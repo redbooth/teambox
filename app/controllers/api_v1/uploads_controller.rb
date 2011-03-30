@@ -5,7 +5,7 @@ class ApiV1::UploadsController < ApiV1::APIController
   def index
     authorize! :show, target||current_user
     
-    query = {:conditions => api_range,
+    query = {:conditions => api_range('uploads'),
              :limit => api_limit,
              :order => 'id DESC',
              :include => [:page, :user]}

@@ -3,6 +3,9 @@ require 'spec_helper'
 describe ApiV1::OrganizationsController do
   before do
     make_a_typical_project
+    
+    @other_org = Organization.create!(:name => 'FOOOO', :permalink => 'foooo')
+    @other_org.add_member(@user)
   end
   
   describe "#index" do
@@ -11,7 +14,7 @@ describe ApiV1::OrganizationsController do
       
       get :index
       response.should be_success
-      JSON.parse(response.body)['objects'].length.should == 1
+      JSON.parse(response.body)['objects'].length.should == 2
     end
     
     it "does not show organizations the user doesn't belong to" do
@@ -30,6 +33,24 @@ describe ApiV1::OrganizationsController do
       
       data = JSON.parse(response.body)
       data['references'].should_not == nil
+    end
+    
+    it "limits organizations" do
+      login_as @user
+      
+      get :index, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 1
+    end
+    
+    it "limits and offsets organizations" do
+      login_as @user
+      
+      get :index, :since_id => @organization.id, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@other_org.id]
     end
   end
   

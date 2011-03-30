@@ -24,6 +24,26 @@ describe ApiV1::UsersController do
       users_found.include?(@owner.id).should == true
       users_found.include?(other_project.user.id).should_not == true
     end
+    
+    it "limits all users known to the current user" do
+      login_as @user
+      other_project = Factory.create(:project)
+      
+      get :index, :count => 1
+      response.should be_success
+
+      JSON.parse(response.body)['objects'].length.should == 1
+    end
+    
+    it "limits and offsets users known to the current user" do
+      login_as @user
+      other_project = Factory.create(:project)
+      
+      get :index, :count => 1, :since_id => @user.users_with_shared_projects.map(&:id)[0]
+      response.should be_success
+
+      JSON.parse(response.body)['objects'].map{|m|m['id'].to_i}.should == [@user.users_with_shared_projects.map(&:id)[1]]
+    end
   end
   
   describe "#show" do

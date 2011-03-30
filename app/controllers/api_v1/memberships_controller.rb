@@ -5,8 +5,14 @@ class ApiV1::MembershipsController < ApiV1::APIController
   
   def index
     authorize! :show, @organization
-    api_respond @organization.memberships(:include => [:organization, :user],
-                                          :order => 'id DESC'), :references => [:organization, :user]
+    
+    @memberships = @organization.memberships.all({
+      :conditions => api_range('memberships'),
+      :limit => api_limit,
+      :order => 'id DESC',
+      :include => [:organization, :user]})
+    
+    api_respond @memberships, :references => [:organization, :user]
   end
 
   def show

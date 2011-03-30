@@ -5,7 +5,7 @@ class ApiV1::TasksController < ApiV1::APIController
   def index
     authorize! :show, @task_list||@current_project||current_user
     
-    query = {:conditions => api_range,
+    query = {:conditions => api_range('tasks'),
              :limit => api_limit,
              :order => 'id DESC',
              :include => [:task_list, :project, :user, :assigned,

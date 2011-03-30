@@ -3,6 +3,9 @@ require 'spec_helper'
 describe ApiV1::MembershipsController do
   before do
     make_a_typical_project
+    
+    @other_user = Factory.create(:user)
+    @organization.add_member(@other_user)
   end
   
   describe "#index" do
@@ -36,6 +39,24 @@ describe ApiV1::MembershipsController do
       
       references.include?("#{@organization.id}_Organization").should == true
       references.include?("#{@organization.memberships.first.user_id}_User").should == true
+    end
+    
+    it "limits memberships" do
+      login_as @user
+      
+      get :index, :organization_id => @organization.permalink, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 1
+    end
+    
+    it "limits and offsets memberships" do
+      login_as @user
+      
+      get :index, :organization_id => @organization.permalink, :since_id => @organization.memberships.first.id, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@organization.memberships.last.id]
     end
   end
   

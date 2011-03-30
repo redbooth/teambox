@@ -5,7 +5,7 @@ class ApiV1::CommentsController < ApiV1::APIController
   def index
     authorize! :show, @target||current_user
     
-    query = {:conditions => api_range,
+    query = {:conditions => api_range('comments'),
              :limit => api_limit,
              :order => 'id DESC',
              :include => [:target, :user]}

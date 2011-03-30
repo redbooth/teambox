@@ -4,7 +4,7 @@ class ApiV1::PagesController < ApiV1::APIController
   def index
     authorize! :show, @current_project||current_user
     
-    query = {:conditions => api_range,
+    query = {:conditions => api_range('pages'),
              :limit => api_limit,
              :order => 'id DESC',
              :include => [:project, :user]}

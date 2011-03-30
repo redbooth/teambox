@@ -5,7 +5,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
   def index
     authorize! :show, @current_project||current_user
     
-    @activities = Activity.where(api_scope).all(:conditions => api_range,
+    @activities = Activity.where(api_scope).all(:conditions => api_range('activities'),
                         :order => 'id DESC',
                         :limit => api_limit,
                         :include => [:target, :project, :user, {:comment_target => [:user, {:recent_comments => :user}]}])

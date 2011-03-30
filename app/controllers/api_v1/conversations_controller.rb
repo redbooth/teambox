@@ -4,7 +4,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
   def index
     authorize! :show, @current_project||current_user
     
-    query = {:conditions => api_range,
+    query = {:conditions => api_range('conversations'),
              :limit => api_limit,
              :order => 'id DESC',
              :include => [:user, :project, {:first_comment => :user}, {:recent_comments => :user}]}

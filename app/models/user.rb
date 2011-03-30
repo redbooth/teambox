@@ -151,7 +151,7 @@ class User < ActiveRecord::Base
     ids = self.projects.map(&:user_ids).flatten
     ids += Invitation.find(:all, :conditions => {:project_id => self.project_ids}, :select => 'user_id').map(&:user_id)
     
-    User.find(:all, :conditions => {:id => ids.uniq})
+    User.where({:id => ids.uniq})
   end
 
   def new_comment(user,target,comment)

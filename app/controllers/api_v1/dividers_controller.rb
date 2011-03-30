@@ -5,7 +5,7 @@ class ApiV1::DividersController < ApiV1::APIController
   def index
     authorize! :show, target||current_user
     
-    query = {:conditions => api_range,
+    query = {:conditions => api_range('dividers'),
              :limit => api_limit,
              :order => 'id DESC',
              :include => [:project, :page]}

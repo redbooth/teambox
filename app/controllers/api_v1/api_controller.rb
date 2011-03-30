@@ -182,16 +182,16 @@ class ApiV1::APIController < ApplicationController
     end
   end
   
-  def api_range
+  def api_range(table_name)
     since_id = params[:since_id]
     max_id = params[:max_id]
     
     if since_id and max_id
-      ['id > ? AND id < ?', since_id, max_id]
+      ["#{table_name}.id > ? AND #{table_name}.id < ?", since_id, max_id]
     elsif since_id
-      ['id > ?', since_id]
+      ["#{table_name}.id > ?", since_id]
     elsif max_id
-      ['id < ?', max_id]
+      ["#{table_name}.id < ?", max_id]
     else
       []
     end
