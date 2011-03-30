@@ -48,7 +48,6 @@ describe OauthClientsController do
 
     it "should be successful" do
       do_get
-      p response.body
       response.should be_success
     end
 
