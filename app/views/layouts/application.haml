@@ -21,6 +21,10 @@
     = load_javascript_user_data
     = archived_project_strip(@current_project)
     = render 'shared/keyboard'
+    %div{ :style => "background-color:  #ffd; border-bottom:  1px solid #ccc; font-size: 12px; padding:  3px; text-align: center; " }
+      This is a beta preview of the next Teambox release, which could have bugs.
+      %a{ :href => "http://teambox.com", :style => "color:  black; text-decoration: underline;" }
+        Go back to normal Teambox.
     #header_wrap
       = header
     = configure_this_organization
