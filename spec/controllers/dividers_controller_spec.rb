@@ -83,4 +83,18 @@ describe DividersController do
       @page.dividers(true).length.should == 1
     end
   end
+  
+  describe "#edit" do
+    it "should redirect for html" do
+      login_as @owner
+      get :edit, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id
+      response.should be_redirect
+    end
+    
+    it "should render for m" do
+      login_as @owner
+      get :edit, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id, :format => 'm'
+      response.should render_template('dividers/edit')
+    end
+  end
 end

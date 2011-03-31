@@ -43,7 +43,8 @@ class NotesController < ApplicationController
   def edit
     authorize! :update, @page
     respond_to do |f|
-      f.any(:html, :m)
+      f.html { reload_page }
+      f.m
       f.js   { render :layout => false }
     end
   end
