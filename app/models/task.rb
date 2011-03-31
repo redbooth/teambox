@@ -38,6 +38,7 @@ class Task < RoleRecord
   attr_accessor :updating_date
 
   after_save :update_tasks_counts
+  before_validation :nilize_assigned_id
   before_validation :set_comments_target
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_validation :set_comments_author, :if => :updating_user
@@ -89,6 +90,11 @@ class Task < RoleRecord
   
   def unassigned?
     !assigned
+  end
+
+  #we can rely on assigned_id being nil
+  def assigned_id
+    self[:assigned_id] == 0 ? nil : self[:assigned_id]
   end
 
   def assigned_to?(user)
@@ -215,6 +221,12 @@ class Task < RoleRecord
   end
 
   protected
+
+  #don't store 0 when assigned_id was set by a string
+  def nilize_assigned_id
+    self[:assigned_id] = nil if assigned_id.to_i == 0
+  end
+
   def check_asignee_membership
     unless project.people.include?(assigned)
       errors.add :assigned, :doesnt_belong
