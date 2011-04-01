@@ -20,6 +20,7 @@
 //= require <autoresize>
 //= require <badges>
 //= require <banner>
+//= require <chat>
 //= require <colorPicker>
 //= require <comment>
 //= require <compact_mode>
