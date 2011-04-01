@@ -355,8 +355,16 @@ document.on('ajax:success', '.task_list form.new_task', function(e, form) {
 document.on('click', '#my_tasks a.tasks', function(e, el) {
   e.stop();
 
+  var tasks = 
+    my_tasks
+      .collect(function(obj) { return obj.task })
+      .collect(function(task) {
+        task.project = my_projects[task.project_id];
+        return task;
+      });
+
   var html = Mustache.to_html(Templates.tasks.index, {
-    tasks: my_tasks
+    tasks: tasks
   });
   Pane.replace(html);
 

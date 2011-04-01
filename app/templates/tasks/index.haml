@@ -1,8 +1,25 @@
-%h2 Tasks assigned to me
-
-.projects_pane
-  {{#tasks}}
-  {{#task}}
-  %p {{name}} 
-  {{/task}}
-  {{/tasks}}
+#tasks_for_all_projects
+  .task_list_container
+    .task_list
+      .tasks.open
+        {{#tasks}}
+        .assigned.task.mine.status_open{"data-task-id" => "{{id}}", :id => "task_{{id}}"}
+          .taskStatus
+            %span.task_status.task_counter{"data-task-id" => "{{id}}"} {{comments_count}}
+          .taskName
+            .expanded_actions{:style => "display: none"}
+              %a.full{:href => "/projects/{{project_id}}/tasks/{{id}}"} Full view
+              %a.hide{:href => "#"} Hide comments
+            %a.name{:href => "/projects/{{project_id}}/tasks/{{id}}"} {{name}}
+            %span.assigned_date
+            %span.assigned_user
+              %a{:href => "/users/frank"} Myself
+            .extended
+              %span.project
+                %a{:href => "/projects/{{project_id}}"}
+                  {{#project}}{{name}}{{/project}}
+                &rarr;
+              %span.task_list
+                %a{:href => "/projects/{{project_id}}/task_lists"} Task List Name
+          .clear
+        {{/tasks}}
