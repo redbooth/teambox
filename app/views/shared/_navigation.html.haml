@@ -1,3 +1,6 @@
+.separator
+  My Activity
+  %span.fold_sidebar= link_to "&larr;".html_safe, "#"
 .nav_links
 
   -# Recent Activity
@@ -9,7 +12,6 @@
     = link_to t('.my_tasks'), task_lists_path(:filter_assigned => 'mine'), :class => 'tasks'
     %span= pending_tasks.size
   .el= link_to t('.all_tasks'), task_lists_path, :class => ''
-
   .el= link_to t('.calendars'), calendars_path, :class => 'calendar ajax'
 
   -# All Projects

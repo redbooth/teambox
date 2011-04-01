@@ -33,16 +33,21 @@
     #container.container
       .wrapper
         - show_flash
-        .content_wrap
-          .separator All Projects
-          .content#content= yield
         .column_wrap
           .column#column
-            .separator My Activity
             = render 'shared/navigation'
-            .separator.with_margin Contextual
-            .view_sidebar
-              = yield :column
+        .content_wrap
+          .separator
+            %span.left.unfold_sidebar= link_to "&rarr;".html_safe, "#"
+            All Projects
+            %span.unfold_aux= link_to "&larr;".html_safe, "#"
+          .content#content= yield
+        .aux_wrap
+          .separator
+            Contextual
+            %span.fold_aux= link_to "&rarr;".html_safe, "#"
+          .view_sidebar
+            = yield :column
       =# footer
     = autocomplete_projects_people_data
     = projects_people_data

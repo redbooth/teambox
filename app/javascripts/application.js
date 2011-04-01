@@ -41,6 +41,7 @@
 //= require <hoverable>
 //= require <invitation>
 //= require <keyboard>
+//= require <layout>
 //= require <toggleform>
 //= require <navigation>
 //= require <navigation_ajax>
