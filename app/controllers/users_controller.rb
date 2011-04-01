@@ -159,6 +159,13 @@ class UsersController < ApplicationController
   def text_styles
     render :layout => false
   end
+  
+  def email_posts
+    @project_permalink = params[:project_permalink]||''
+    @target_type = params[:target_type]||''
+    @target_id = params[:target_id]||''
+    render :layout => false
+  end
 
   def calendars
   end

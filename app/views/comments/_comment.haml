@@ -12,6 +12,7 @@
             - if comment.target.is_a?(Conversation) or comment.target.is_a?(Task)
               = link_to t('comments.actions.edit'), [:edit, comment.project, comment.target, comment],
                   :rel => 'facebox', :'data-uneditable-message' => t('.cannot_edit'), :class => :edit
+              = link_to t('comments.actions.post_by_email'), email_posts_path(:target_type => comment.target_type, :target_id => comment.target_id, :project_permalink => comment.project.permalink), :rel => 'facebox' 
               = link_to t('common.delete'), [comment.project, comment.target, comment], :'data-method' => 'delete',
                   :'data-confirm' => t('.confirm_delete'), :'data-remote' => true, :class => :delete
       .body.textilized

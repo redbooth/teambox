@@ -40,6 +40,7 @@ Teambox::Application.routes.draw do
     match '/search' => 'search#index', :as => :search
 
     match '/text_styles' => 'users#text_styles', :as => :text_styles
+    match '/email_posts_path' => 'users#email_posts', :as => :email_posts
     match '/invite_format' => 'invitations#invite_format', :as => :invite_format
     match '/feeds' => 'users#feeds', :as => :feeds
     match '/calendars' => 'users#calendars', :as => :calendars
