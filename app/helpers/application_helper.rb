@@ -28,7 +28,7 @@ module ApplicationHelper
   def show_flash
     flash.each do |type, message|
       unless message.blank?
-        haml_tag :p, h(message), :class => "flash flash-#{type}"
+        haml_tag :p, h(message.html_safe), :class => "flash flash-#{type}"
       end
     end
   end
