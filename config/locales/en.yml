@@ -1873,7 +1873,7 @@ en:
       write_projects_description: Create conversations, tasks, task lists, pages, etc.
     
   google_docs:
-    authorization_required: In order to use Google Docs you must first authorize Teambox to use your google account.
+    authorization_required: In order to use Google Docs you must first authorize Teambox to use your Google account.
     authorize_link: Authorize Google Docs
     create_new: Create a New Blank Document
     create: Create
