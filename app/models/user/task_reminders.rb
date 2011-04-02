@@ -12,7 +12,7 @@ class User
     
     self.wants_task_reminder_email.in_time_zone(zones.map(&:name)).find_each do |user|
       if user.assigned_tasks.due_sooner_than_two_weeks.any?
-        Emailer.send_email :daily_task_reminder, user.id
+        Emailer.send_with_language :daily_task_reminder, user.locale.to_sym, user.id
       end
     end
   end
