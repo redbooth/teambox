@@ -61,7 +61,9 @@ class OauthController < ApplicationController
   def oauth2_authorize_code
     @client_application = ClientApplication.find_by_key params[:client_id]
     @oauth_scopes = user_scope
-    if request.post?
+    if @client_application.nil?
+      token_authorize_failure('invalid_client')
+    elsif request.post?
       @redirect_url = params[:redirect_uri] ? URI.parse(params[:redirect_uri]) : nil
       if !user_authorizes_token?
         token_authorize_failure('user_denied')
@@ -88,7 +90,9 @@ class OauthController < ApplicationController
   def oauth2_authorize_token
     @client_application = ClientApplication.find_by_key params[:client_id]
     @oauth_scopes = user_scope
-    if request.post?
+    if @client_application.nil?
+      token_authorize_failure('invalid_client')
+    elsif request.post?
       @redirect_url = params[:redirect_uri] ? URI.parse(params[:redirect_uri]) : nil
       if !user_authorizes_token?
         token_authorize_failure('user_denied')

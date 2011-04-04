@@ -22,6 +22,13 @@ describe OauthController do
         Oauth2Verifier.last.should be_nil
       end
     end
+    
+    describe "authorize invalid client" do
+      it "should render a failure page if an invalid client is used" do
+        get :authorize, :response_type=>"code",:client_id=>'000', :redirect_uri=>"http://application/callback"
+        response.should render_template("authorize_failure")
+      end
+    end
 
     describe "authorize" do
       before(:each) do
