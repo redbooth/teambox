@@ -73,6 +73,7 @@ class User < ActiveRecord::Base
                   :keyboard_shortcuts,
                   :digest_delivery_hour,
                   :instant_notification_on_mention,
+                  :default_digest, :default_watch_new_task, :default_watch_new_conversation,
                   :people_attributes
 
   attr_accessor   :activate, :old_password

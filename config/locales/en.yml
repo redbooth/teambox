@@ -212,16 +212,17 @@ en:
         notify_tasks: Notify me of updates to tasks I'm watching
         wants_task_reminder: Send me a daily reminder of tasks assigned to me that are due soon
         notify_on_mention: Send email instantly when someone @mentions me on a conversation or task I'm following
-        watch_options: Watch new tasks and conversations
-        clarification_watch_new_task_or_conversation: "If enabled, you will be added as a watcher for any new task or conversation."
-        watch_new_task: "Watch new tasks on project '%{project}'"
-        watch_new_conversation: "Watch new conversations on project '%{project}'"
-        email_delivery_options: Email delivery options
+        notification_options: Notification options
+        project_name: Project name
+        watch_new_task: "Watch new tasks"
+        watch_new_conversation: "Watch new conversations"
+        default: Default
         digest_delivery_time: "Send task reminder and digest at"
-        digest: "Email delivery for project '%{project}'"
+        digest: Email delivery mode
         digest_option_daily: Daily digest
         digest_option_weekly: Weekly digest
         digest_option_instant: Instant notification
+        digest_option_none: No email
       invalid_login: "use only letters, numbers and underscores"
       delete:
         steps_before_1: "To delete your Teambox account, you first need to leave or delete all your current projects."

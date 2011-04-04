@@ -8,27 +8,31 @@
     = f.label :notify_tasks, t('.notify_tasks')
 
 %br
-%h3= t('.watch_options')
-.check_boxes.notifications
-  %p= t('.clarification_watch_new_task_or_conversation', :login => user.login)
-  = f.fields_for :people do |person|
-    .check_box.notify
-      = person.check_box :watch_new_task
-      = person.label :watch_new_task, t('.watch_new_task', :project => person.object.project.name)
-    .check_box.notify
-      = person.check_box :watch_new_conversation
-      = person.label :watch_new_conversation, t('.watch_new_conversation', :project => person.object.project.name)
+%h3= t('.notification_options')
+%table.notifications
+  %tr
+    %th= t('.project_name')
+    %th= t('.watch_new_task')
+    %th= t('.watch_new_conversation')
+    %th= t('.digest')
+  %tr
+    %td
+      .project= t('.default')
+    %td= f.check_box :default_watch_new_task
+    %td= f.check_box :default_watch_new_conversation
+    %td= f.select :default_digest, digest_select_options
 
-%br
-%h3= t('.email_delivery_options')
+  = f.fields_for :people do |person|
+    %tr
+      %td= person.object.project.name
+      %td= person.check_box :watch_new_task
+      %td= person.check_box :watch_new_conversation
+      %td= person.select :digest, digest_select_options
+
 .notifications.many_fields
   .notify
     = f.label :digest_delivery_hour, t('.digest_delivery_time')
     = f.select :digest_delivery_hour, (0..24).collect {|i| [ l(Time.now.at_midnight + i.hours, :format => :short), i ] }
-  = f.fields_for :people do |person|
-    .notify
-      = person.label :digest, t('.digest', :project => person.object.project.name), :class => 'digest'
-      = person.select :digest, Person::DIGEST.collect {|option,index| [ t(".digest_option_#{option}"), index ] }
   .check_box.notify
     = f.check_box :wants_task_reminder
     = f.label :wants_task_reminder, t('.wants_task_reminder')

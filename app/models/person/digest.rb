@@ -2,7 +2,7 @@ class Person
   before_update :update_digest_delivery_time
   before_create :set_digest_default
 
-  DIGEST = {:instant => 0, :daily => 1, :weekly => 2}
+  DIGEST = {:instant => 0, :daily => 1, :weekly => 2, :none => 4}
 
   def digest_type
     DIGEST.index(digest)
@@ -70,6 +70,8 @@ class Person
 
   def set_digest_default
     self.last_digest_delivery = self.next_digest_delivery = Time.now
-    digest = project.public ? DIGEST[:weekly] : DIGEST[:instant]
+    self.digest = self.user.default_digest
+    self.watch_new_task = self.user.default_watch_new_task
+    self.watch_new_conversation = self.user.default_watch_new_conversation
   end  
 end

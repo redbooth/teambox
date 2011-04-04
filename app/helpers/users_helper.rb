@@ -162,6 +162,10 @@ module UsersHelper
     EOS
   end
 
+  def digest_select_options
+    Person::DIGEST.collect {|option,index| [ t(".digest_option_#{option}"), index ] }.to_a.sort_by {|k,v| v }
+  end
+
   protected
 
     def json_user

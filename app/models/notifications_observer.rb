@@ -31,7 +31,7 @@ class NotificationsObserver < ActiveRecord::Observer
           if person.digest_type == :instant or (comment.mentioned.to_a.include? user and user.instant_notification_on_mention?)
             instant_delivery(target, comment, user)
             notification.sent = true
-          else
+          elsif person.digest_type != :none
             person.update_next_delivery_time!
           end
 
