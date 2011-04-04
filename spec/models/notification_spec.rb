@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Notification do 
-  describe 'Notification and digest' do 
+  describe 'digest' do
     before do
       @charles = Factory.create(:user)
       @pablo = Factory.create(:user)
@@ -24,13 +24,13 @@ describe Notification do
     
     context 'Update on conversation or task' do
       it 'should create notification for conversation watchers, except commenter' do
-        @comments = Factory(:comment, :target => @conversation, :user => @charles)
-        Notification.where(:comment_id => @comments.id).count.should == 3
+        @comment = Factory(:comment, :target => @conversation, :user => @charles)
+        Notification.where(:comment_id => @comment.id).count.should == 3
       end
 
       it 'should create notification for task watchers, except commenter' do
-        @comments = Factory(:comment, :target => @task, :user => @charles)
-        Notification.where(:comment_id => @comments.id).count.should == 3
+        @comment = Factory(:comment, :target => @task, :user => @charles)
+        Notification.where(:comment_id => @comment.id).count.should == 3
       end
     end
 
@@ -59,8 +59,8 @@ describe Notification do
 
       it 'should send daily digest and respect delivery settings' do
         time_is_now(@midnight) do
-          @comments = Factory(:comment, :target => @conversation, :user => @pablo)
-          @comments = Factory(:comment, :target => @task, :user => @jordi)
+          Factory(:comment, :target => @conversation, :user => @pablo)
+          Factory(:comment, :target => @task, :user => @jordi)
 
 
           unread_emails_for(@james.email).size.should == 0
@@ -78,8 +78,8 @@ describe Notification do
 
       it 'should send weekly digest and respect delivery settings' do
         time_is_now(@tuesday) do
-          @comments = Factory(:comment, :target => @conversation, :user => @charles)
-          @comments = Factory(:comment, :target => @task, :user => @james)
+          Factory(:comment, :target => @conversation, :user => @charles)
+          Factory(:comment, :target => @task, :user => @james)
 
 
           unread_emails_for(@pablo.email).size.should == 0
@@ -95,25 +95,50 @@ describe Notification do
 
       it 'should mark notification as sent after delivery' do
         time_is_now(@tuesday) do
-          @comments = Factory(:comment, :target => @conversation, :user => @charles)
-
+          Factory(:comment, :target => @conversation, :user => @charles)
           unread_emails_for(@pablo.email).size.should == 0
         end
 
         time_is_now(@tuesday + 7.day) do
           Person.send_all_digest
-          unread_emails_for(@pablo.email).size.should == 1
+          @pablo.notifications.where(:sent => false).count.should == 0
+        end
+      end
+
+      it 'should not send notification if target comment is deleted' do
+        time_is_now(@tuesday) do
+          @comment = Factory(:comment, :target => @conversation, :user => @charles)
+          unread_emails_for(@pablo.email).size.should == 0
+        end
+
+        time_is_now(@tuesday + 7.day) do
+          @comment.destroy
+          Person.send_all_digest
+          unread_emails_for(@pablo.email).size.should == 0
+        end
+      end
+
+      it 'should not send notification if target is deleted' do
+        time_is_now(@tuesday) do
+          @comment = Factory(:comment, :target => @conversation, :user => @charles)
+          unread_emails_for(@pablo.email).size.should == 0
+        end
+
+        time_is_now(@tuesday + 7.day) do
+          @conversation.destroy
+          Person.send_all_digest
+          unread_emails_for(@pablo.email).size.should == 0
         end
       end
 
       it 'should send notification instantly when a user configure a project to email instantly' do
-        @comments = Factory(:comment, :target => @conversation, :user => @charles, :body => "Hey @all, have a look at this!")
+        Factory(:comment, :target => @conversation, :user => @charles, :body => "Hey @all, have a look at this!")
         unread_emails_for(@saimon.email).size.should == 1
       end
 
       it 'should send a notification email instantly on mentioned when user account is set to notify on mention' do
-        @comments = Factory(:comment, :target => @conversation, :user => @charles, :project => @project, :body => "Hey @all, have a look at this conversation!")
-        @comments = Factory(:comment, :target => @task, :user => @charles, :project => @project, :body => "Hey @all, have a look at this task!")
+        Factory(:comment, :target => @conversation, :user => @charles, :project => @project, :body => "Hey @all, have a look at this conversation!")
+        Factory(:comment, :target => @task, :user => @charles, :project => @project, :body => "Hey @all, have a look at this task!")
 
         unread_emails_for(@jordi.email).size.should == 2
         unread_emails_for(@pablo.email).size.should == 2
