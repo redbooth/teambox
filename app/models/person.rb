@@ -117,6 +117,7 @@ class Person < ActiveRecord::Base
         :username => user.login,
         :first_name => user.first_name,
         :last_name => user.last_name,
+        :micro_avatar_url => user.avatar_or_gravatar_url(:micro),
         :avatar_url => user.avatar_or_gravatar_url(:thumb)
       }
     end

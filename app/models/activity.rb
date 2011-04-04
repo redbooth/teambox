@@ -149,6 +149,7 @@ class Activity < ActiveRecord::Base
         xml.tag! 'first-name', user.first_name
         xml.tag! 'last-name',  user.last_name
         xml.tag! 'avatar-url', user.avatar_or_gravatar_url(:thumb)
+        xml.tag! 'micro-avatar-url', user.avatar_or_gravatar_url(:micro)
       end
 
       xml.project :id => project_id do
