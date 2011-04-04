@@ -10,7 +10,9 @@ class Comment < ActiveRecord::Base
   belongs_to :target, :polymorphic => true, :counter_cache => true
   belongs_to :assigned, :class_name => 'Person'
   belongs_to :previous_assigned, :class_name => 'Person'
-  
+
+  has_many :notifications, :dependent => :destroy
+
   def task_comment?
     self.target_type == "Task"
   end
