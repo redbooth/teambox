@@ -46,6 +46,11 @@ module UsersHelper
       my_organizations = #{json_organizations};
       my_tasks = #{json_tasks};
       current_project = #{@current_project ? @current_project.id : 'null'};
+
+      document.on("dom:loaded", function() {
+        window.user = new User(#{json_user});
+        window.user.render();
+      });
     )
   end
   

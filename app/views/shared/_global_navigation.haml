@@ -5,7 +5,7 @@
       = link_to "Quick add", "#", :class => 'quick_add_link'
       .pane{ :style => 'display: none' }
         = render 'tasks/form', :project => Project.first, :task_list => TaskList.first, :task => TaskList.first.tasks.build
-    %li= link_to current_user.login, current_user
+    %li#username
     %li= link_to t('.settings'), account_settings_path
     - if current_user.invitations.pending_projects.count > 0
       %li= link_to_unless_current t('.project_invitations', :count => current_user.invitations.count),
