@@ -1,0 +1,66 @@
+<div class="thread" data-class="{{downcase type}}" data-id="{{id}}"
+  data-project-id="{{project_id}}" id="thread_{{downcase type}}_{{id}}">
+  <div class="comment comment_header">
+    <span class="time">
+      <time class="timeago" data-msec="{{ms updated_at}}" pubdate="true">{{updated_at}}</time>
+    </span>
+    <div class="info">
+      {{#if assigned_id}}
+        <img src="/famfamfam/tick.png" style="padding: 4px">
+      {{else}}
+        <img src="/famfamfam/comment.png" style="padding: 4px">
+      {{/if}}
+      <div class="comment_count">
+        <span>{{comments_count}}</span>
+      </div>
+    </div>
+    <div class="block">
+      <div class="thread_title">
+        {{#if assigned_id}}
+          <a href="{{host}}/projects/{{project.permalink}}/tasks/{{id}}">{{name}}</a> on
+          {{#task_list}}
+          <a href="{{host}}/projects/{{project.permalink}}/task_lists/{{id}}">{{name}}</a>
+          {{/task_list}}
+          task list
+        {{else}}
+          <a href="{{host}}/projects/{{project.permalink}}/conversations/{{id}}">{{name}}</a>
+          conversation
+        {{/if}}
+      </div>
+      {{#project}}
+        <div class="project_overlay">
+          <a href="{{host}}/projects/{{permalink}}" data-project-id="{{id}}">{{name}}</a>
+        </div>
+      {{/project}}
+      {{#if assigned_id}}
+        <div class="task_summary">
+          {{status_transition}}
+          Assigned to {{full_name user}}
+        </div>
+      {{/if}}
+      <p class="excerpt">
+        <strong>{{full_name user}}</strong>
+        {{#last_comment}}
+          {{body}}
+        {{/last_comment}}
+      </p>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="comments">
+    {{#first_comment}}
+      {{> comment}}
+    {{/first_comment}}
+    {{#if hidden_comments_count}}
+    <span class="more_comments">
+      <a href="{{host}}/activities/{{id}}/show_thread?thread_type={{type}}" data-remote="true">
+        Show {{hidden_comments_count}} previous comment
+      </a>
+    </span>
+    {{/if}}
+    {{#recent_comments}}
+      {{> comment}}
+    {{/recent_comments}}
+  </div>
+  {{> comment_form}}
+</div>

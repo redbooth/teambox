@@ -11,8 +11,11 @@
 //= require <controls>
 //= require <dragdrop>
 //= require <sound>
-//= require <mustache>
+//= require <handlebars>
 //= require <history>
+
+// Remove me by substituting Mustache code for Handlebars
+//= require <mustache>
 
 //= require <calendar_date_select>
 //= require <facebox>
@@ -72,3 +75,6 @@
 //= require <yahoo.color>
 //= require <watchers>
 //= require <watch_list>
+
+//= require <teambox_api>
+//= require <teambox_client>
