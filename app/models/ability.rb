@@ -31,7 +31,7 @@ class Ability
       api_write?(user) && project.commentable?(user)
     end
     
-    can :watch, [Task, Conversation] do |object|
+    can :watch, [Task, Conversation, Page] do |object|
       api_write?(user) && object.project.commentable?(user)
     end
     

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :load_page, :only => [ :show, :edit, :update, :reorder, :destroy ]
+  before_filter :load_page, :only => [ :show, :edit, :update, :reorder, :destroy, :watch, :unwatch ]
   before_filter :set_page_title
   
   rescue_from CanCan::AccessDenied do |exception|
@@ -131,6 +131,21 @@ class PagesController < ApplicationController
         flash[:error] = t('common.not_allowed')
         f.any(:html, :m) { redirect_to project_page_path(@current_project,@page) }
       end
+    end
+  end
+
+  def watch
+    authorize! :watch, @page
+    @page.add_watcher(current_user)
+    respond_to do |f|
+      f.js { render :layout => false }
+    end
+  end
+
+  def unwatch
+    @page.remove_watcher(current_user)
+    respond_to do |f|
+      f.js { render :layout => false }
     end
   end
 

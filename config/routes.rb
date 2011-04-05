@@ -218,6 +218,8 @@ Teambox::Application.routes.draw do
         end
         member do
           post :reorder
+          put :watch
+          put :unwatch
         end
         # In rails 2, we have :pages, :has_many => :task_list ?!
         resources :notes,:dividers,:uploads
@@ -287,6 +289,8 @@ Teambox::Application.routes.draw do
 
           member do
             put :reorder
+            put :watch
+            put :unwatch
           end
         end
 
@@ -345,6 +349,8 @@ Teambox::Application.routes.draw do
         end
         member do
           put :reorder
+          put :watch
+          put :unwatch
         end
       end
 

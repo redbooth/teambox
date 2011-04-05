@@ -1,5 +1,7 @@
 class Page < RoleRecord
   include Immortal
+  include Watchable
+
   has_many :notes, :dependent => :destroy
   has_many :dividers, :dependent => :destroy
   has_many :uploads, :dependent => :destroy
