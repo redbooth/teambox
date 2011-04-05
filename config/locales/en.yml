@@ -214,14 +214,16 @@ en:
         notify_on_mention: Send email instantly when someone @mentions me on a conversation or task I'm following
         notification_options: Notification options
         project_name: Project name
-        watch_new_task: "Watch new tasks"
-        watch_new_conversation: "Watch new conversations"
+        watch_new_task: "Task"
+        watch_new_conversation: "Conversation"
+        watch_new_page: "Page"
+        watch_new_item: "Watch new item"
         default: Default
         digest_delivery_time: "Send task reminder and digest at"
         digest: Email delivery mode
         digest_option_daily: Daily digest
         digest_option_weekly: Weekly digest
-        digest_option_instant: Instant notification
+        digest_option_instant: Instant
         digest_option_none: No email
       invalid_login: "use only letters, numbers and underscores"
       delete:

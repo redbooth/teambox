@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110404210516) do
+ActiveRecord::Schema.define(:version => 20110404233401) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -339,6 +339,7 @@ ActiveRecord::Schema.define(:version => 20110404210516) do
     t.datetime "next_digest_delivery"
     t.boolean  "watch_new_task",         :default => false
     t.boolean  "watch_new_conversation", :default => false
+    t.boolean  "watch_new_page",         :default => false
   end
 
   add_index "people", ["deleted"], :name => "index_people_on_deleted"
@@ -534,6 +535,7 @@ ActiveRecord::Schema.define(:version => 20110404210516) do
     t.integer  "default_digest",                                 :default => 0
     t.boolean  "default_watch_new_task",                         :default => false
     t.boolean  "default_watch_new_conversation",                 :default => false
+    t.boolean  "default_watch_new_page",                         :default => false
   end
 
   add_index "users", ["deleted"], :name => "index_users_on_deleted"

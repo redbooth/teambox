@@ -73,5 +73,6 @@ class Person
     self.digest = self.user.default_digest
     self.watch_new_task = self.user.default_watch_new_task
     self.watch_new_conversation = self.user.default_watch_new_conversation
+    self.watch_new_page = self.user.default_watch_new_page
   end  
 end

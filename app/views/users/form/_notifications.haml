@@ -9,25 +9,28 @@
 
 %br
 %h3= t('.notification_options')
+.watch_new= t('.watch_new_item')
 %table.notifications
+  %tr.sub-header
+    %th.project= t('.project_name')
+    %th.digest= t('.digest')
+    %th.checkbox= t('.watch_new_task')
+    %th.checkbox= t('.watch_new_conversation')
+    %th.checkbox= t('.watch_new_page')
   %tr
-    %th= t('.project_name')
-    %th= t('.watch_new_task')
-    %th= t('.watch_new_conversation')
-    %th= t('.digest')
-  %tr
-    %td
-      .project= t('.default')
-    %td= f.check_box :default_watch_new_task
-    %td= f.check_box :default_watch_new_conversation
+    %td.project= t('.default')
     %td= f.select :default_digest, digest_select_options
+    %td.checkbox= f.check_box :default_watch_new_task
+    %td.checkbox= f.check_box :default_watch_new_conversation
+    %td.checkbox= f.check_box :default_watch_new_page
 
   = f.fields_for :people do |person|
     %tr
-      %td= person.object.project.name
-      %td= person.check_box :watch_new_task
-      %td= person.check_box :watch_new_conversation
+      %td.project= person.object.project.name
       %td= person.select :digest, digest_select_options
+      %td.checkbox= person.check_box :watch_new_task
+      %td.checkbox= person.check_box :watch_new_conversation
+      %td.checkbox= person.check_box :watch_new_page
 
 .notifications.many_fields
   .notify
