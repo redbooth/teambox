@@ -1,5 +1,9 @@
 //= require <prototype>
+//= require <jquery>
 //= require <backbone>
+
+//= require <clientside>
+
 //= require <rails>
 //= require <html5>
 //= require <builder>
@@ -16,8 +20,6 @@
 //= require <modernizr>
 
 //= require <util>
-
-//= require <clientside>
 
 //= require <actions>
 //= require <autoresize>

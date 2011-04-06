@@ -1,4 +1,61 @@
-User = Backbone.Model.extend({
+Teambox = {
+  Models: {},
+  Collections: {},
+  Views: {}
+};
+
+Teambox.Models.Task = Backbone.Model.extend({
+  initialize: function() {
+  },
+  render: function() {
+  },
+  url: function() {
+    return "/api/1/tasks/" + this.get('id');
+  }
+});
+
+Teambox.Collections.Tasks = Backbone.Collection.extend({
+  model: Teambox.Models.Task,
+  parse: function(response) {
+    return response.objects;
+  },
+  url: function() {
+    return "/api/1/tasks";
+  }
+});
+
+Teambox.Views.MyTasksCounter = Backbone.View.extend({
+  initialize: function() {
+    _.bindAll(this, 'render');
+    this.collection.bind('all', this.render);
+  },
+  render: function() {
+    $$('#my_tasks span').first().update(this.collection.length);
+  }
+});
+
+Teambox.Views.MyTasks = Backbone.View.extend({
+  initialize: function() {
+    _.bindAll(this, 'render');
+  },
+  render: function() {
+    $('content').update(Mustache.to_html(Templates.tasks.index, {tasks: this.collection.toJSON()}));
+  }
+});
+
+Teambox.Views.TaskView = Backbone.View.extend({
+  tagName: "div",
+  template: "lol",
+  initialize: function() {
+    _.bindAll(this, "render");
+  },
+  render: function() {
+    $(this.el).update("wowowow");
+    return this;
+  }
+});
+
+Teambox.Models.User = Backbone.Model.extend({
   initialize: function () {
     this.bind('change:username', this.onRename);
   },
@@ -12,6 +69,27 @@ User = Backbone.Model.extend({
     $('username').update(html);
 
     return this;
+  },
+  url: function() {
+    return "/api/1/account";
   }
+});
+
+document.on("dom:loaded", function() {
+  // Fetch current user
+  Teambox.my_user = new Teambox.Models.User();
+  Teambox.my_user.fetch();
+
+  // Fetch my tasks
+  Teambox.my_tasks = new Teambox.Collections.Tasks();
+  Teambox.my_tasks.fetch();
+
+  // Print my tasks
+  Teambox.my_tasks_counter_view = new Teambox.Views.MyTasksCounter({
+    collection: Teambox.my_tasks
+  });
+  Teambox.my_tasks_view = new Teambox.Views.MyTasks({
+    collection: Teambox.my_tasks
+  });
 });
 
