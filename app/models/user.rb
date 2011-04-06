@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   belongs_to :invited_by, :class_name => 'User'
 
   has_one :card
-  accepts_nested_attributes_for :people, :update_only => true, :reject_if => proc { |attributes| (attributes.keys - %w(id digest watch_new_conversation watch_new_task)).any? }
+  accepts_nested_attributes_for :people, :update_only => true, :reject_if => proc { |attributes| (attributes.keys - %w(id digest watch_new_conversation watch_new_task watch_new_page)).any? }
   accepts_nested_attributes_for :card
 
   default_scope :order => 'users.updated_at DESC'
@@ -68,12 +68,14 @@ class User < ActiveRecord::Base
                   :card_attributes,
                   :notify_conversations,
                   :notify_tasks,
+                  :notify_pages,
                   :splash_screen,
                   :wants_task_reminder,
                   :keyboard_shortcuts,
                   :digest_delivery_hour,
                   :instant_notification_on_mention,
-                  :default_digest, :default_watch_new_task, :default_watch_new_conversation,
+                  :default_digest, 
+                  :default_watch_new_task, :default_watch_new_conversation, :default_watch_new_page,
                   :people_attributes
 
   attr_accessor   :activate, :old_password

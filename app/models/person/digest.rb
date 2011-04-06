@@ -34,7 +34,7 @@ class Person
   def send_digest
     # Todo, once we have a UI for notificaitons, make sure we only send notification for unread notifications
     target_types_and_ids = notifications.where(:sent => false).map  do |notification|
-      if notification.target.present? and notification.comment.present?
+      if notification.target.present? and !(notification.target.respond_to? :comments and notification.comment.nil?)
         {:target_type => notification.target_type, :target_id => notification.target_id}
       end
     end.compact.uniq

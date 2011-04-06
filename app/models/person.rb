@@ -36,7 +36,7 @@ class Person < ActiveRecord::Base
 
   scope :in_alphabetical_order, :include => :user, :order => 'users.first_name ASC'
 
-  attr_accessible :role, :permissions, :digest, :watch_new_task, :watch_new_conversation
+  attr_accessible :role, :permissions, :digest, :watch_new_task, :watch_new_conversation, :watch_new_page
 
   def owner?
     project.owner?(user)

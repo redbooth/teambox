@@ -210,6 +210,7 @@ en:
           you will be notified and added as a watcher for that item.
         notify_conversations: Notify me of updates to conversations I'm watching
         notify_tasks: Notify me of updates to tasks I'm watching
+        notify_pages: Notify me of updates to pages I'm watching
         wants_task_reminder: Send me a daily reminder of tasks assigned to me that are due soon
         notify_on_mention: Send email instantly when someone @mentions me on a conversation or task I'm following
         notification_options: Notification options
@@ -1504,6 +1505,20 @@ en:
       reply_by_email: Reply by email
       digest_reply_text: "Go to %{reply_online}."
       digest_title_html: Activity digest for %{project_link}
+      activity:
+        title: Activity on %{project}
+        create_note:
+          subject: "%{name} created a note"
+          body: "%{name} created a note on the page %{page}."
+        create_page:
+          subject: "%{name} created a page"
+          body: "%{name} created the page %{page}."
+        edit_note:
+          subject: "%{name} edited a note"
+          body: "%{name} edited a note on the page %{page}."
+        edit_page:
+          subject: "%{name} edited a page"
+          body: "%{name} edited the page %{page}."
     upload:
       file: "File:"
     bounce:

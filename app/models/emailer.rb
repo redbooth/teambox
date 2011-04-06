@@ -163,6 +163,18 @@ class Emailer < ActionMailer::Base
     ))
   end
 
+  def notify_activity(user_id, project_id, activity_id)
+    @project      = Project.find(project_id)
+    @activity     = Activity.find(activity_id)
+    @recipient    = User.find(user_id)
+    @organization = @project.organization
+    mail({
+      :to            => @recipient.email,
+      :subject       => "[#{@project.permalink}] " +
+        I18n.t("emailer.notify.activity.#{@activity.action_type.downcase}.subject", :name => @activity.user.name)
+    })
+  end
+
   def project_membership_notification(invitation_id)
     @invitation = Invitation.find_with_deleted(invitation_id)
     @project    = @invitation.project
@@ -211,12 +223,7 @@ class Emailer < ActionMailer::Base
     @person        = Person.find(person_id)
     @project       = Project.find(project_id)
     @targets = target_types_and_ids.map do |target|
-      case target[:target_type]
-      when 'Conversation'
-        Conversation.find target[:target_id]
-      when 'Task'
-        Task.find target[:target_id]
-      end
+      target[:target_type].constantize.find target[:target_id]
     end
     @comments      = Comment.where(:id => comment_ids)
 
@@ -238,15 +245,32 @@ class Emailer < ActionMailer::Base
       ::Emailer.notify_conversation(conversation.user.id, conversation.project.id, conversation.id)
     end
 
+    def notify_activity_on_page
+      activity = Activity.where(:target_type => 'Page').first
+      ::Emailer.notify_activity(activity.user_id, activity.project_id, activity.id)
+    end
+
+    def notify_activity_on_note
+      activity = Activity.where(:target_type => 'Note').first
+      ::Emailer.notify_activity(activity.user_id, activity.project_id, activity.id)
+    end
+
     def project_digest
-      project_id = Project.first
-      person_id = Project.first.people.first.id
-      user_id = Project.first.users.first.id
+      project_id  = Project.first
+      person_id   = Project.first.people.first.id
+      user        = Project.first.users.first
+      user_id     = user.id
 
-      comments = Project.first.comments
-      comment_ids = comments.map(&:id).shuffle[0 .. (comments.size/3)]
+      target_types_and_ids = []
+      comment_ids = []
 
-      target_types_and_ids = comments.map {|c| {:target_type => c.target_type, :target_id => c.target_id}}.uniq
+      user.notifications.each do |notification|
+        target_types_and_ids << {:target_type => notification.target_type, :target_id => notification.target_id}
+        comment_ids << notification.comment_id unless notification.comment_id.nil?
+      end
+
+      target_types_and_ids.uniq!
+      comment_ids = comment_ids[ (comment_ids.size/3) .. (comment_ids.size)].uniq
 
       ::Emailer.project_digest(user_id, person_id, project_id, target_types_and_ids, comment_ids)
     end

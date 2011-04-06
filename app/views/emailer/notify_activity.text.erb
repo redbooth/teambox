@@ -1,0 +1,15 @@
+<%= t('emailer.common.do_not_answer') %>
+
+<%= t('emailer.notify.activity.title', :project => @project.name) %>
+
+
+<%= render 'activity', :activity => @activity %>
+
+<% 
+  link = case @activity 
+  when Page then project_page_url(@project, @target)
+  when Note then project_page_url(@project, @target.page)
+  end
+-%>
+
+<%= t('emailer.notify.stop_watching_link_html', :stop_watch => t('emailer.notify.stop_watch')) -%> <%= link %>

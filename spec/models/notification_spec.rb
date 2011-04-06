@@ -3,11 +3,11 @@ require 'spec_helper'
 describe Notification do 
   describe 'digest' do
     before do
-      @charles = Factory.create(:user)
-      @pablo = Factory.create(:user)
-      @james = Factory.create(:user)
-      @jordi = Factory.create(:user)
-      @saimon  = Factory.create(:user)
+      @charles = Factory.create(:user, :notify_pages => true)
+      @pablo = Factory.create(:user, :notify_pages => true)
+      @james = Factory.create(:user, :notify_pages => true)
+      @jordi = Factory.create(:user, :notify_pages => true)
+      @saimon  = Factory.create(:user, :notify_pages => true)
 
       @project = Factory.create(:project)
       
@@ -17,12 +17,14 @@ describe Notification do
 
       @task = Factory(:task, :user_id => @charles.id, :project_id => @project.id)
       @conversation = Factory(:conversation, :user_id => @charles.id, :project_id => @project.id)
+      @page = Factory(:page, :user_id => @charles.id, :project_id => @project.id)
 
       @conversation.add_watchers([@charles, @pablo, @james, @saimon])
       @task.add_watchers([@charles, @pablo, @james, @saimon])
+      @page.add_watchers([@charles, @pablo, @james, @saimon])
     end
     
-    context 'Update on conversation or task' do
+    context 'Notify watchers on conversation, task or page' do
       it 'should create notification for conversation watchers, except commenter' do
         @comment = Factory(:comment, :target => @conversation, :user => @charles)
         Notification.where(:comment_id => @comment.id).count.should == 3
@@ -32,9 +34,18 @@ describe Notification do
         @comment = Factory(:comment, :target => @task, :user => @charles)
         Notification.where(:comment_id => @comment.id).count.should == 3
       end
+
+      it 'should create notification for page watchers on update, except commenter' do
+        @note = @page.build_note({:name => 'List'}).tap do |n|
+          n.updated_by = @charles
+          n.save
+        end
+
+        Notification.where(:target_type => 'Activity').count.should == 3
+      end
     end
 
-    context 'should send Digest correct time, and only once' do
+    context 'should send digest at the correct time, and only once' do
       before do
         @midnight = Time.now.utc.at_midnight + 1.week
         @tuesday   = @midnight.monday + 1.day
@@ -61,6 +72,10 @@ describe Notification do
         time_is_now(@midnight) do
           Factory(:comment, :target => @conversation, :user => @pablo)
           Factory(:comment, :target => @task, :user => @jordi)
+          @page.build_note({:name => 'List'}).tap do |n|
+            n.updated_by = @jordi
+            n.save
+          end
 
 
           unread_emails_for(@james.email).size.should == 0

@@ -536,6 +536,7 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.boolean  "default_watch_new_task",                         :default => false
     t.boolean  "default_watch_new_conversation",                 :default => false
     t.boolean  "default_watch_new_page",                         :default => false
+    t.boolean  "notify_pages",                                   :default => false
   end
 
   add_index "users", ["deleted"], :name => "index_users_on_deleted"

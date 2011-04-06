@@ -24,6 +24,8 @@ module EmailerHelper
       end
     when Conversation
       'background-color: rgb(245,245,245); border-bottom: 2px rgb(200,200,200) solid;'
+    when Activity
+      'background-color: rgb(255,255,220); border-bottom: 2px rgb(200,200,200) solid;'
     else
       'background-color: rgb(255,255,220); border: 1px rgb(220,220,150) solid;'
     end + 'padding: 5px 10px; margin: 20px 0;'
