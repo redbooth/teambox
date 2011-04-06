@@ -86,6 +86,17 @@ class ApiV1::PagesController < ApiV1::APIController
     handle_api_success(@page)
   end
 
+  def watch
+    authorize! :watch, @page
+    @page.add_watcher(current_user)
+    handle_api_success(@page)
+  end
+
+  def unwatch
+    @page.remove_watcher(current_user)
+    handle_api_success(@page)
+  end
+
   protected
   
   def load_page
