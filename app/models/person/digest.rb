@@ -66,6 +66,7 @@ class Person
     if digest_changed? and digest_type == :instant
       self.notifications.where(:sent => false).update_all(:sent => true)
     end
+    true
   end
 
   def set_digest_default
@@ -74,5 +75,6 @@ class Person
     self.watch_new_task = self.user.default_watch_new_task
     self.watch_new_conversation = self.user.default_watch_new_conversation
     self.watch_new_page = self.user.default_watch_new_page
+    true
   end  
 end
