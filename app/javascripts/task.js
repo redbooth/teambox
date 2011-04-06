@@ -353,6 +353,7 @@ document.on('ajax:success', '.task_list form.new_task', function(e, form) {
 //
 
 document.on('click', '#my_tasks a.tasks', function(e, el) {
+  return; // Disabled because we're doing this from Backbone
   e.stop();
 
   var tasks = 
