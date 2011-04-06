@@ -97,6 +97,10 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
   it "Why don't you\nJust http://www.google.co.uk/images/logos/ps_logo2.png\nIt?" do
     should == "<p>Why don't you<br />\nJust <a href=\"http://www.google.co.uk/images/logos/ps_logo2.png\">http://www.google.co.uk/images/logos/ps_logo2.png</a><br />\nIt?</p>"
   end
+
+  it "Should not allow <script>alert(1)</script> tags or weird <a href=\"#\" onmouseover='alert(1)'>tricks</a>" do
+    should == "<p>Should not allow  tags or weird <a href=\"#\">tricks</a></p>"
+  end
   
   context "Add http:// to links" do
     it "The internet is made of [lolcats](icanhascheezburger.com)" do
