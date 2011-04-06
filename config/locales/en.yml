@@ -854,6 +854,9 @@ en:
     overview_box:
       title: "This task"
       status: "Status"
+    task:
+      full_view: Full view
+      hide_comments: Hide comments
   notes:
     actions:
       delete_confirm: Are you sure you want to delete this note?

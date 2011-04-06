@@ -5,6 +5,11 @@ Handlebars.registerHelper('downcase', function(str) {
 // Edit this to use other hosts, like https://l.teambox.com
 Handlebars.registerHelper('host', '');
 
+Handlebars.registerHelper('short_name', function(user) {
+  user = user || this;
+  return user.first_name[0] + ". " + user.last_name;
+});
+
 Handlebars.registerHelper('full_name', function(user) {
   user = user || this;
   return user.first_name + " " + user.last_name;
@@ -30,3 +35,4 @@ Handlebars.registerHelper('status_transition', function() {
 Handlebars.registerPartial("comment", Templates.partials.comment);
 Handlebars.registerPartial("thread", Templates.partials.thread);
 Handlebars.registerPartial("comment_form", Templates.partials.comment_form);
+Handlebars.registerPartial("task", Templates.partials.task);

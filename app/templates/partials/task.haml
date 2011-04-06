@@ -1,0 +1,18 @@
+.assigned.task.mine{"data-task-id" => "{{id}}", :id => "task_{{id}}", :class => 'status_{{status_name}}' }
+  .taskStatus
+    %span.task_status.task_counter{"data-task-id" => "{{id}}"} {{comments_count}}
+  .taskName
+    %a.name{:href => "/projects/{{project_id}}/tasks/{{id}}"} {{name}}
+    .expanded_actions{:style => "display: none"}
+      %a.full{:href => "/projects/{{project_id}}/tasks/{{id}}"}= t('tasks.task.full_view')
+      %a.hide{:href => "#"}= t('tasks.task.hide_comments')
+    %span.assigned_date
+    %span.assigned_user
+      %a{:href => "/users/frank"} {{short_name user}}
+    .extended
+      %span.project
+        %a{:href => "/projects/{{project_id}}"} {{project.name}}
+        &rarr;
+      %span.task_list
+        %a{:href => "/projects/{{project_id}}/task_lists"} {{task_list.name}}
+  .clear
