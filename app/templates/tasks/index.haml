@@ -1,9 +1,9 @@
 #tasks_for_all_projects
   .task_list_container
     .task_list
-      .tasks.open
+      .tasks
         {{#tasks}}
-        .assigned.task.mine.status_open{"data-task-id" => "{{id}}", :id => "task_{{id}}"}
+        .assigned.task.mine{"data-task-id" => "{{id}}", :id => "task_{{id}}", :class => 'status_{{status_name}}' }
           .taskStatus
             %span.task_status.task_counter{"data-task-id" => "{{id}}"} {{comments_count}}
           .taskName
@@ -13,13 +13,14 @@
             %a.name{:href => "/projects/{{project_id}}/tasks/{{id}}"} {{name}}
             %span.assigned_date
             %span.assigned_user
-              %a{:href => "/users/frank"} Myself
+              %a{:href => "/users/frank"} {{user.first_name}}
             .extended
               %span.project
                 %a{:href => "/projects/{{project_id}}"}
-                  {{#project}}{{name}}{{/project}}
+                  {{project.name}}
                 &rarr;
               %span.task_list
-                %a{:href => "/projects/{{project_id}}/task_lists"} Task List Name
+                %a{:href => "/projects/{{project_id}}/task_lists"}
+                  {{task_list.name}}
           .clear
         {{/tasks}}

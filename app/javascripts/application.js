@@ -2,8 +2,6 @@
 //= require <jquery>
 //= require <backbone>
 
-//= require <clientside>
-
 //= require <rails>
 //= require <html5>
 //= require <builder>
@@ -11,8 +9,26 @@
 //= require <controls>
 //= require <dragdrop>
 //= require <sound>
-//= require <handlebars>
 //= require <history>
+
+Teambox = {
+  Models: {},
+  Collections: {},
+  Controllers: {},
+  Views: {}
+};
+
+//= require <lib/handlebars>
+//= require <helpers/api>
+//= require <helpers/handlebars>
+//= require <controllers/app>
+// The next line should be broken into a controller
+//= require <teambox_client>
+//= require <models/task>
+//= require <models/user>
+//= require <collections/tasks>
+//= require <views/tasks>
+//= require <clientside>
 
 // Remove me by substituting Mustache code for Handlebars
 //= require <mustache>
@@ -75,6 +91,3 @@
 //= require <yahoo.color>
 //= require <watchers>
 //= require <watch_list>
-
-//= require <teambox_api>
-//= require <teambox_client>
