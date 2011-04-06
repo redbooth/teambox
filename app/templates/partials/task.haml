@@ -1,14 +1,21 @@
-.assigned.task.mine{"data-task-id" => "{{id}}", :id => "task_{{id}}", :class => 'status_{{status_name}}' }
+.task{"data-task-id" => "{{id}}", :id => "task_{{id}}", :class => 'status_{{status_name}}' }
   .taskStatus
+    <!-- <img src='drag.png' class='task_drag'/> if editable and !task.archived? -->
     %span.task_status.task_counter{"data-task-id" => "{{id}}"} {{comments_count}}
   .taskName
     %a.name{:href => "/projects/{{project_id}}/tasks/{{id}}"} {{name}}
     .expanded_actions{:style => "display: none"}
       %a.full{:href => "/projects/{{project_id}}/tasks/{{id}}"}= t('tasks.task.full_view')
       %a.hide{:href => "#"}= t('tasks.task.hide_comments')
-    %span.assigned_date
+    <!-- don't display due date if the task is closed -->
+    {{#if due_on}}
+    %span.assigned_date{ :style => 'display: inline-block' } {{date due_on}} 
+    {{/if}}
+    <!-- TODO: Use assigned user, display only for open tasks -->
+    {{#assigned}}
     %span.assigned_user
-      %a{:href => "/users/frank"} {{short_name user}}
+      %a{:href => "/users/{{username}}"} {{short_name}}
+    {{/assigned}}
     .extended
       %span.project
         %a{:href => "/projects/{{project_id}}"} {{project.name}}

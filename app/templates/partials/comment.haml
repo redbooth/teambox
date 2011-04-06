@@ -1,0 +1,24 @@
+.comment{ :'data-editable-before' => "{{ms updated_at}}", :id => "comment_{{id}}",
+    :'data-project' => "{{project_id}}", :'data-user' => "{{user_id}}" }
+  .info
+    %a.micro_avatar{ :href => "{{host}}/users/{{user.username}}",
+      :style => "background: url({{user.micro_avatar_url}}) no-repeat" }
+  .block
+    .actions_menu
+      %span.actiondate
+        %time.timeago{ :'data-msec' => "{{ms updated_at}}", :pubdate => "true" }
+          {{time_ago updated_at}}
+    .body.textilized
+      .before
+        %a.user{ :href => "{{host}}/users/{{user.username}}" }
+          {{full_name user}}
+        <!-- TODO: due on transition -->
+        <!-- TODO: hours logged for time tracking -->
+        {{status_transition}}
+      {{#assigned}}
+      %p.assigned_transition Assigned to {{full_name}}
+      {{/assigned}}
+      {{{body_html}}}
+      <!-- TODO: uploads -->
+      <!-- TODO: google docs -->
+  .clear

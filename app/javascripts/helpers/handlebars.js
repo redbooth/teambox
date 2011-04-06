@@ -16,7 +16,20 @@ Handlebars.registerHelper('full_name', function(user) {
 });
 
 Handlebars.registerHelper('ms', function(time) {
+  if(!time) { return; }
   return Date.parse(time);
+});
+
+Handlebars.registerHelper('date', function(time) {
+  if(!time) { return; }
+  var date = new Date(Date.parse(time));
+  return date && date.strftime("%b %d");
+});
+
+Handlebars.registerHelper('time_ago', function(time) {
+  if(!time) { return; }
+  var date = new Date(Date.parse(time));
+  return date && date.timeAgo();
 });
 
 // Render status transitions in comments

@@ -10,14 +10,14 @@
     .expanded_actions{ :style => 'display: none' }
       %a.full{ :href => project_task_path(project, task) }= t('.full_view')
       %a.hide{ :href => '#' }= t('.hide_comments')
-    = link_to h(task), [project, task], :class => :name
+    = link_to task, [project, task], :class => :name
     %span.assigned_date= task.due_on ? due_on(task) : ''
-    %span.assigned_user= task.assigned ? link_to(h(task.assigned.short_name), user_path(task.assigned.user)) : ''
+    %span.assigned_user= task.assigned ? link_to(task.assigned.short_name, user_path(task.assigned.user)) : ''
     - unless @current_project
       .extended
         %span.project
-          = link_to h(project), project
+          = link_to project, project
           &rarr;
         %span.task_list
-          = link_to h(task_list), project_task_lists_path(project)+"#project_#{project.id}_task_list_#{task.task_list_id}"
+          = link_to task_list, project_task_lists_path(project)+"#project_#{project.id}_task_list_#{task.task_list_id}"
   .clear
