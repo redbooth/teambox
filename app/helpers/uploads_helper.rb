@@ -5,7 +5,7 @@ module UploadsHelper
   end
   
   def link_to_upload(upload, text, attributes = {})
-    link_to(h(text), upload.url, {:rel => (upload.image? ? 'facebox' : '_blank')}.merge(attributes))
+    link_to(h(text), upload.url, {:rel => (upload.image? ? 'facebox' : nil)}.merge(attributes))
   end
   
   def upload_link_with_thumbnail(upload)
