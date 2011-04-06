@@ -201,9 +201,16 @@ module Emailer::Incoming
     @user = User.find_by_email from
     raise UserNotFoundError.new(email, "Invalid user '#{email.from.first}'") unless @user
     raise NotProjectMemberError.new(email, "User does not belong to project") unless @user.projects.include? @project
-    
+
+    # Get the body in multipart emails as well
+    if email.respond_to? :parts
+      parts = email.parts.select{|p| p.content_type.include?('text/')}
+      @body = parts.any? ? parts.collect(&:decoded).join("\n") : email.body
+    else
+      @body = email.body
+    end
     #strip any remaining html tags (after strip_responses) from the body
-    @body    = strip_responses(email.body).strip_tags.to_s.strip
+    @body    = strip_responses(@body).strip_tags.to_s.strip
     @subject = email.subject.to_s.gsub(REPLY_REGEX, "").strip
     @files   = email.attachments || []
     
