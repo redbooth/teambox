@@ -30,6 +30,8 @@ class OauthController < ApplicationController
   def authorize
     if ["code","token"].include?(params[:response_type]) # pick flow
       send "oauth2_authorize_#{params[:response_type]}"
+    else
+      render :text => 'Invalid request'
     end
   end
 
@@ -61,10 +63,10 @@ class OauthController < ApplicationController
   def oauth2_authorize_code
     @client_application = ClientApplication.find_by_key params[:client_id]
     @oauth_scopes = user_scope
+    @redirect_url = params[:redirect_uri] ? URI.parse(params[:redirect_uri]) : nil
     if @client_application.nil?
       token_authorize_failure('invalid_client')
     elsif request.post?
-      @redirect_url = params[:redirect_uri] ? URI.parse(params[:redirect_uri]) : nil
       if !user_authorizes_token?
         token_authorize_failure('user_denied')
       elsif redirect_uri_mismatch?(@redirect_url, URI.parse(@client_application.callback_url))
@@ -82,6 +84,8 @@ class OauthController < ApplicationController
           render :action => "authorize_success"
         end
       end
+    elsif redirect_uri_mismatch?(@redirect_url, URI.parse(@client_application.callback_url))
+      render :text => 'Invalid redirect URI'
     else
       render :action => "authorize"
     end
@@ -90,10 +94,10 @@ class OauthController < ApplicationController
   def oauth2_authorize_token
     @client_application = ClientApplication.find_by_key params[:client_id]
     @oauth_scopes = user_scope
+    @redirect_url = params[:redirect_uri] ? URI.parse(params[:redirect_uri]) : nil
     if @client_application.nil?
       token_authorize_failure('invalid_client')
     elsif request.post?
-      @redirect_url = params[:redirect_uri] ? URI.parse(params[:redirect_uri]) : nil
       if !user_authorizes_token?
         token_authorize_failure('user_denied')
       elsif redirect_uri_mismatch?(@redirect_url, URI.parse(@client_application.callback_url))
@@ -107,6 +111,8 @@ class OauthController < ApplicationController
           render :action => "authorize_success"
         end
       end
+    elsif redirect_uri_mismatch?(@redirect_url, URI.parse(@client_application.callback_url))
+      render :text => 'Invalid redirect URI'
     else
       render :action => "authorize"
     end

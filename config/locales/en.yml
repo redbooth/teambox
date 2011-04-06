@@ -1866,8 +1866,9 @@ en:
     signup_for_a_new_account: click here to sign up for a new account
     authorize:
       title: "Authorize Application"
-      authorize_access: "Allow this application to access my Teambox account"
-      submit: "Authorize"
+      authorize_access: "Allow this application access?"
+      allow: Allow
+      deny: Deny
       offline_access: Access the account at any time
       offline_access_description: The application will be able to access your account until you revoke access.
       read_projects: Access project data

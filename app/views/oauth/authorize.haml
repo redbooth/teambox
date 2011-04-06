@@ -10,19 +10,20 @@
     wants to authenticate with your Teambox account
   - else
     is requesting permission to do the following:
-- form_tag authorize_url do
+- form_tag authorize_url, :id => 'oauth_authorize_form' do
   = hidden_field_tag "response_type", params[:response_type]
   = hidden_field_tag "client_id", params[:client_id]
-  = hidden_field_tag "redirect_uri", params[:redirect_uri]
+  = hidden_field_tag "redirect_uri", @redirect_url.to_s
   = hidden_field_tag "state", params[:state]
   = hidden_field_tag "scope", params[:scope]
+  = hidden_field_tag "authorize", '0'
 
   #scopes
     - @oauth_scopes.each do |scope|
       .scope
         %h3= t(".#{scope}")
         %p= t(".#{scope}_description")
-  = check_box_tag 'authorize'
-  = t('.authorize_access')
+  .do_allow= t('.authorize_access')
   %p
-    = submit_tag t('.submit')
+    = link_to content_tag(:span,t('.deny')), '#', :class => 'button deny'
+    = link_to content_tag(:span,t('.allow')), '#', :class => 'button allow'
