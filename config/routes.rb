@@ -395,6 +395,10 @@ Teambox::Application.routes.draw do
     mount Emailer::Preview => 'mail_view'
   end
   
+  if Rails.env.test?
+    match '/oauth/dummy_auth', :as => 'oauth#dummy_auth'
+  end
+  
   # Oauth provider
   # Oauth-server
   
@@ -402,7 +406,6 @@ Teambox::Application.routes.draw do
   match '/oauth/authorize',:controller=>'oauth',:action=>'authorize', :as => :authorize
   match '/oauth/revoke',:controller=>'oauth',:action=>'revoke', :as => :revoke
   match '/oauth/token',:controller=>'oauth',:action=>'token', :as => :token
-  match '/oauth/test_request',:controller=>'oauth',:action=>'test_request', :as => :test_request
   
   resources :oauth_clients do
     collection do

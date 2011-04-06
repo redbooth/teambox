@@ -5,10 +5,7 @@ class OauthController < ApplicationController
   Oauth2Token = ::Oauth2Token
   
   before_filter :login_required, :only => [:authorize,:revoke]
-  oauthenticate :only => [:test_request]
-  oauthenticate :strategies => :token, :interactive => false, :only => [:capabilities]
   oauthenticate :strategies => :two_legged, :interactive => false, :only => [:request_token]
-  skip_before_filter :verify_authenticity_token, :only=>[:test_request]
   
   def token
     @client_application = ClientApplication.find_by_key params[:client_id]
@@ -23,15 +20,11 @@ class OauthController < ApplicationController
     end
   end
 
-  def test_request
-    render :text => params.collect{|k,v|"#{k}=#{v}"}.join("&")
-  end
-
   def authorize
     if ["code","token"].include?(params[:response_type]) # pick flow
       send "oauth2_authorize_#{params[:response_type]}"
     else
-      render :text => 'Invalid request'
+      render :text => 'Invalid Request'
     end
   end
 
@@ -44,18 +37,8 @@ class OauthController < ApplicationController
     redirect_to oauth_clients_url
   end
   
-  # Capabilities of current_token
-  def capabilities
-    if current_token.respond_to?(:capabilities)
-      @capabilities=current_token.capabilities
-    else
-      @capabilities={:invalidate=>url_for(:action=>:invalidate)}
-    end
-    
-    respond_to do |format|
-      format.json {render :json=>@capabilities}
-      format.xml {render :xml=>@capabilities}
-    end
+  def dummy_auth
+    render :text => params.map{|p,v| ERB::Util.html_escape("#{p} = #{v}") }.join('</br>')
   end
 
   protected
@@ -65,7 +48,7 @@ class OauthController < ApplicationController
     @oauth_scopes = user_scope
     @redirect_url = params[:redirect_uri] ? URI.parse(params[:redirect_uri]) : nil
     if @client_application.nil?
-      token_authorize_failure('invalid_client')
+      render :text => 'Invalid Application Key'
     elsif request.post?
       if !user_authorizes_token?
         token_authorize_failure('user_denied')
@@ -85,7 +68,7 @@ class OauthController < ApplicationController
         end
       end
     elsif redirect_uri_mismatch?(@redirect_url, URI.parse(@client_application.callback_url))
-      render :text => 'Invalid redirect URI'
+      render :text => 'Invalid Redirect URI'
     else
       render :action => "authorize"
     end
@@ -96,7 +79,7 @@ class OauthController < ApplicationController
     @oauth_scopes = user_scope
     @redirect_url = params[:redirect_uri] ? URI.parse(params[:redirect_uri]) : nil
     if @client_application.nil?
-      token_authorize_failure('invalid_client')
+      render :text => 'Invalid Application Key'
     elsif request.post?
       if !user_authorizes_token?
         token_authorize_failure('user_denied')
@@ -112,7 +95,7 @@ class OauthController < ApplicationController
         end
       end
     elsif redirect_uri_mismatch?(@redirect_url, URI.parse(@client_application.callback_url))
-      render :text => 'Invalid redirect URI'
+      render :text => 'Invalid Redirect URI'
     else
       render :action => "authorize"
     end
