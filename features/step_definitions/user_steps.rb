@@ -135,3 +135,11 @@ Given /^I have first steps enabled$/ do
   @current_user.write_setting 'show_first_steps', true
   @current_user.reload.settings["show_first_steps"].should be_true
 end
+
+When /^I check the (.+) column for the first project setting$/ do |setting|
+  check "user_people_attributes_0_watch_new_#{setting}"  
+end
+
+Then /^the checkbox on the (.+) column for the first project setting should be checked$/ do |setting|
+  find_field("user_people_attributes_0_watch_new_#{setting}")['checked'].should be_true
+end
