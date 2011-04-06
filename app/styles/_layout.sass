@@ -11,9 +11,22 @@ body
 
 div.content_wrap, div.column_wrap, div.aux_wrap
   position: absolute
-  top: 68px
+  top: 46px
   bottom: 0
   overflow: hidden
+// Beta notice on the top of the page
+body.production
+  .beta_notice
+    background-color:  #ffd
+    border-bottom: 1px solid #ccc
+    font-size: 12px
+    padding:  3px
+    text-align: center
+    a
+      color:  black
+      text-decoration: underline
+  div.content_wrap, div.column_wrap, div.aux_wrap
+    top: 68px
 
 #column
   width: $column_width
