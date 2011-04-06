@@ -396,7 +396,7 @@ Teambox::Application.routes.draw do
   end
   
   if Rails.env.test?
-    match '/oauth/dummy_auth', :as => 'oauth#dummy_auth'
+    match '/oauth/dummy_auth' => 'oauth#dummy_auth', :as => :dummy_auth
   end
   
   # Oauth provider
