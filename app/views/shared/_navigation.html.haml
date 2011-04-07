@@ -4,13 +4,11 @@
 .nav_links
 
   -# Recent Activity
-  .el= link_to t('.recent_activity'), '#!/'
+  .el= link_to t('.recent_activity'), '#!/', :class => 'recent_activity'
 
-  - pending_tasks = current_user.nearest_pending_tasks
+  -# pending_tasks = current_user.nearest_pending_tasks
   -# My Tasks
-  .el#my_tasks
-    = link_to t('.my_tasks'), '#!/my_tasks'
-    %span= pending_tasks.size
+  .el#my_tasks_link= link_to t('.my_tasks'), '#!/my_tasks', :class => 'tasks'
   .el= link_to t('.all_tasks'), '#!/all_tasks'
   .el= link_to t('.calendars'), calendars_path, :class => 'calendar ajax'
 
