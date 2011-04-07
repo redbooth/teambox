@@ -32,6 +32,10 @@ Handlebars.registerHelper('time_ago', function(time) {
   return date && date.timeAgo();
 });
 
+Handlebars.registerHelper('status_name', function() {
+  return $w('new open hold resolved rejected')[this.status];
+});
+
 // Render status transitions in comments
 Handlebars.registerHelper('status_transition', function() {
   var status = $w('new open hold resolved rejected')

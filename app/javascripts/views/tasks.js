@@ -16,10 +16,21 @@ Teambox.Views.MyTasks = Backbone.View.extend({
     _.bindAll(this, 'render');
   },
   render: function() {
-    // TODO: compile the template just once
-    Handlebars.registerHelper('status_name', function() {
-      return $w('new open hold resolved rejected')[this.status];
-    });
+    var template = Handlebars.compile(Templates.tasks.index);
+    $('content').update(
+      template({
+        // there's gotta be a better way of filtering collections
+        tasks: this.collection.mine().collect( function(t) { return t.attributes; } )
+      })
+    );
+  }
+});
+
+Teambox.Views.AllTasks = Backbone.View.extend({
+  initialize: function() {
+    _.bindAll(this, 'render');
+  },
+  render: function() {
     var template = Handlebars.compile(Templates.tasks.index);
     $('content').update(
       template({ tasks: this.collection.toJSON() })

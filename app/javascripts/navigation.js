@@ -87,6 +87,8 @@ document.on("dom:loaded", function() {
 
 document.on('click', '.nav_links .el', function(e,el) {
   if (e.isMiddleClick()) return
+  // Adding this to handle highlight for backboned links
+  if (el.down('a.backboned')) return
   var clicked = Event.element(e)
   if (clicked.id == 'open_my_tasks') {
     window.location = clicked.readAttribute("href")

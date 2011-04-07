@@ -10,7 +10,7 @@ Teambox.Controllers.AppController = Backbone.Controller.extend({
     TeamboxClient.fetchAndRenderActivities();
   },
   all_tasks: function() {
-    Teambox.my_tasks_view.render();
+    Teambox.all_tasks_view.render();
   },
   my_tasks: function() {
     Teambox.my_tasks_view.render();
