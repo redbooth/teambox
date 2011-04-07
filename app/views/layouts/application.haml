@@ -12,7 +12,6 @@
     = yield :stylesheet_includes
     = stylesheet_link_tag 'cucumber', :media => :screen if Rails.env.cucumber?
     = trimmer_include_tag
-    = javascript_include_tag 'underscore'
     = sprockets_include_tag
     = yield :js_includes
     = javascript_tag do

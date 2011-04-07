@@ -1,6 +1,8 @@
 //= require <prototype>
 //= require <jquery>
+//= require <underscore>
 //= require <backbone>
+//= require <handlebars>
 
 //= require <rails>
 //= require <html5>
@@ -11,18 +13,12 @@
 //= require <sound>
 //= require <history>
 
-Teambox = {
-  Models: {},
-  Collections: {},
-  Controllers: {},
-  Views: {}
-};
+//= require <teambox>
 
-//= require <lib/handlebars>
 //= require <helpers/api>
 //= require <helpers/handlebars>
 //= require <controllers/app>
-// The next line should be broken into a controller
+// The next line should be broken into a controller FIXME
 //= require <teambox_client>
 //= require <models/task>
 //= require <models/user>
@@ -30,7 +26,7 @@ Teambox = {
 //= require <views/tasks>
 //= require <clientside>
 
-// Remove me by substituting Mustache code for Handlebars
+// Remove me by substituting Mustache code for Handlebars FIXME
 //= require <mustache>
 
 //= require <calendar_date_select>
