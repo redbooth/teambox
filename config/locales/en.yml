@@ -434,7 +434,11 @@ en:
       permalink_html: "Permalink <em>Short identifier for the project</em>"
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
       archived_html: "Archive this Project <em>This will keep it accessible for its members, but not writable anymore.</em>"
-      confirm_delete: "Are you sure you want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you'd rather keep it, use Archive Project instead."
+      delete_this_project: Delete this project
+      delete_project:
+        title: "Are you sure you want to delete %{project}?"
+        body_html: "This will <strong>permanently</strong> delete all data in the project."
+        body_extra_html: "Deleting this project will not cancel your Teambox subscription. To cancel your subscription <a href='%{url}''>click here</a>."
       settings:
         you_cant_unarchive: "You have %{active} active projects, and your current plan only allows %{max} projects"
         upgrade_html: "In order to <b>unarchive this project</b> and be able to edit it, you must <a href='%{link}'>upgrade your account and get more storage and features</a> or archive other projects."
