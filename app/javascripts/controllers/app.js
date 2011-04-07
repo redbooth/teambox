@@ -1,8 +1,8 @@
 Teambox.Controllers.AppController = Backbone.Controller.extend({
   routes: {
-    '': 'index',
-    'all_tasks': 'all_tasks',
-    'my_tasks': 'my_tasks'
+    '!/': 'index',
+    '!/all_tasks': 'all_tasks',
+    '!/my_tasks': 'my_tasks'
   },
   index: function() {
     // Super hack!!! FIXME TODO BROKEN HORRIBLECODE

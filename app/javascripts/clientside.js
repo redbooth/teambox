@@ -1,4 +1,7 @@
 document.on("dom:loaded", function() {
+  if (window.location.hash === '') {
+    window.location.hash = '#!/';
+  }
   // Fetch current user
   Teambox.my_user = new Teambox.Models.User();
   Teambox.my_user.fetch();
