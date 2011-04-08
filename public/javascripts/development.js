@@ -8,6 +8,7 @@ JavascriptReloading = {
     var script = new Element('script', {src:'/sprockets.js?' + (+new Date())});
     script.onload = this.onreload;
     $$('head').first().appendChild(script);
+    Loader.init();
   },
 
   onreload: function() {

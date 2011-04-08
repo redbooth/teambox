@@ -1254,6 +1254,8 @@ en:
       copy7_html: "Your business matters! <a href='%{link}'>Get the best support</a> for Teambox with our premium plans."
 
   shared:
+    loading:
+      title: Loading Teambox
     strip:
       archived_html: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
     collapsed_mode: View threads collapsed

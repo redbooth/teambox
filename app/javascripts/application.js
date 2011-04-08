@@ -12,6 +12,7 @@
 //= require <dragdrop>
 //= require <sound>
 //= require <history>
+//= require <loader>
 
 //= require <teambox>
 

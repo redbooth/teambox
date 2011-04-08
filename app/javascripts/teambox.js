@@ -4,26 +4,24 @@ Teambox = {
   Controllers: {},
   Views: {},
   init: function() {
+    Loader.init();
+
     // Set the new root url
     if (window.location.hash === '') {
       window.location.hash = '#!/';
     }
 
-    var loaded = function(req) {
-      return function() { console.log("Loaded "+req); };
-    };
-
     // Fetch current user
     Teambox.my_user = new Teambox.Models.User();
-    Teambox.my_user.fetch({ success: loaded('user') });
+    Teambox.my_user.fetch({ success: Loader.loaded('user') });
 
     // Fetch my tasks
     Teambox.my_tasks = new Teambox.Collections.Tasks();
-    Teambox.my_tasks.fetch({ success: loaded('tasks') });
+    Teambox.my_tasks.fetch({ success: Loader.loaded('tasks') });
 
     // Fetch my threads
     Teambox.my_threads = new Teambox.Collections.Threads();
-    Teambox.my_threads.fetch({ success: loaded('activities') });
+    Teambox.my_threads.fetch({ success: Loader.loaded('activities') });
 
     // Print my tasks
     Teambox.my_tasks_counter_view = new Teambox.Views.MyTasksCounter({
