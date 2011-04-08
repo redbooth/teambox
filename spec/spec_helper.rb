@@ -122,6 +122,10 @@ def make_the_teambox_dump
   @task_list = Factory(:task_list, :project => @project)
   @conversation = Factory(:conversation, :project => @project)
   @task = Factory(:task, :task_list_id => @task_list.id, :project => @project)
+  
+  @project.add_user(@task_list.user)
+  @project.add_user(@conversation.user)
+  @project.add_user(@task.user)
 end
 
 def make_and_dump_the_teambox_dump
@@ -140,7 +144,7 @@ def decode_test_csv(body)
 end
 
 def dump_test_data
-  ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(TeamboxData.new.serialize(Organization.all, Project.all, User.all)))
+  ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(TeamboxData.new.serialize(Organization.all, Project.all)))
 end
 
 # Backwards compatibility fix: this way we can use it in subject blocks

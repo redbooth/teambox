@@ -73,6 +73,28 @@ describe TeamboxData do
       Project.count.should == old_project_count
     end
     
+    it "should not dump users associated with the organization when no organizations are dumped" do
+      make_the_teambox_dump
+      old_user_count = User.count
+      old_project_count = Project.count
+      extra_user = Factory(:user)
+      Organization.first.add_member(extra_user, Membership::ROLES[:admin])
+      
+      data = ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(TeamboxData.new.serialize(nil, Project.all)))
+      
+      User.destroy_all
+      Project.destroy_all
+      
+      User.count.should == 0
+      Project.count.should == 0
+      
+      org_map = { Organization.first.id => Organization.first }
+      TeamboxData.new.tap{|d| d.data = data }.unserialize({'Organization' => org_map}, {:create_users => true})
+      
+      User.count.should == old_user_count
+      Project.count.should == old_project_count
+    end
+    
     it "should rollback changes if an error occurs" do
       data = File.open("#{Rails.root}/spec/fixtures/teamboxdump_invalid.json", 'r') do |file|
         ActiveSupport::JSON.decode(file.read)
@@ -164,7 +186,7 @@ describe TeamboxData do
   describe "serialize" do
     it "should serialize data" do
       make_the_teambox_dump
-      encoded_data = ActiveSupport::JSON.encode TeamboxData.new.serialize(Organization.all, Project.all, User.all)
+      encoded_data = ActiveSupport::JSON.encode TeamboxData.new.serialize(Organization.all, Project.all)
       account_dump = ActiveSupport::JSON.decode(encoded_data)['account']
       account_dump['projects'].length.should == 1
       project_dump = account_dump['projects'][0]
@@ -334,7 +356,7 @@ describe TeamboxData do
   describe "export_to_file" do
     it "should export data to a file" do
       make_the_teambox_dump
-      TeamboxData.export_to_file(Project.all, User.all, Organization.all, "#{Rails.root}/tmp/test-export.json")
+      TeamboxData.export_to_file(Project.all, Organization.all, "#{Rails.root}/tmp/test-export.json")
     end
   end
   

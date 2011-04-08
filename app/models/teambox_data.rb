@@ -130,7 +130,7 @@ class TeamboxData < ActiveRecord::Base
     self.processed_at = Time.now
     next_status = :imported
     
-    begin
+    #begin
       org_map = {}
       organizations.each do |org|
         org_map[org['permalink']] = target_organization
@@ -159,7 +159,7 @@ class TeamboxData < ActiveRecord::Base
   
   def do_export
     self.processed_at = Time.now
-    @data = serialize(organizations_to_export, projects, users_to_export)
+    @data = serialize(organizations_to_export, projects)
     upload_data = Tempfile.new("#{user.login}-export")
     upload_data.write(@data.to_json)
     upload_data.seek(0)

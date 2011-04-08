@@ -30,7 +30,7 @@ class TeamboxData
       end.compact
       
       @processed_objects[:organization] = []
-      @organizations = dump['organizations'].map do |organization_data|
+      @organizations = (dump['organizations']||[]).map do |organization_data|
         organization_name = @organization_map[organization_data['permalink']] || organization_data['permalink']
         organization = Organization.find_by_permalink(organization_name)
         
@@ -51,13 +51,13 @@ class TeamboxData
         
         Array(organization_data['members']).each do |member_data|
           org_user = resolve_user(member_data['user_id'])
-          organization.add_member(org_user, member_data['role']) unless organization.is_user?(org_user)
+          organization.add_member(org_user, member_data['role']) if org_user && !organization.is_user?(org_user)
         end
       end
       
       @processed_objects[:project] = []
       @imported_people = {}
-      @projects = dump['projects'].map do |project_data|
+      @projects = (dump['projects']||[]).map do |project_data|
         @project = Project.find_by_permalink(project_data['permalink'])
         if @project
           project_data['permalink'] += "-#{rand}"

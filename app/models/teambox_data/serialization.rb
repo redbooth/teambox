@@ -1,10 +1,15 @@
 class TeamboxData
   attr_writer :data
   
-  def serialize(organizations, projects, users)
-    {
+  def serialize(organizations, projects)
+    users = []
+    base = {
       :account => {
-        :projects => projects.map{|p| p.to_api_hash(:include => [
+        :projects => projects.map{|p|
+          users += Person.with_deleted.where(:project_id => p.id).includes(:user).map(&:user)
+          users.compact!
+          
+          p.to_api_hash(:include => [
           :tasks,
           :task_lists,
           :comments,
@@ -14,11 +19,18 @@ class TeamboxData
           :people,
           :slots,
           :rel_object,
-          :uploads])},
-        :users => users.map{|u| u.to_api_hash(:include => [:email])},
-        :organizations => organizations.map{|o| o.to_api_hash(:include => [:members, :projects])}
+          :uploads])
+        }
       }
     }
+    
+    if organizations && !organizations.empty?
+      users += organizations.map{|o| o.memberships.includes(:user).map(&:user)}.flatten
+      base[:account][:organizations] = organizations.map{|o| o.to_api_hash(:include => [:members, :projects])}
+    end
+    base[:account][:users] = users.compact.map{|u| u.to_api_hash(:include => [:email])}
+    
+    base
   end
   
   def unserialize(object_maps, opts={})
@@ -103,8 +115,8 @@ class TeamboxData
     TeamboxData.new.tap{|d| d.service = opts[:format]||'teambox'; d.data = data}.unserialize(user_map, opts)
   end
   
-  def self.export_to_file(projects, users, organizations, name)
-    data = TeamboxData.new.serialize(organizations, projects, users)
+  def self.export_to_file(projects, organizations, name)
+    data = TeamboxData.new.serialize(organizations, projects)
     File.open(name, 'w') { |file| file.write data.to_json }
   end
 end
