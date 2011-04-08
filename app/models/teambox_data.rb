@@ -130,7 +130,7 @@ class TeamboxData < ActiveRecord::Base
     self.processed_at = Time.now
     next_status = :imported
     
-    #begin
+    begin
       org_map = {}
       organizations.each do |org|
         org_map[org['permalink']] = target_organization
