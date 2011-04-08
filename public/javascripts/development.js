@@ -16,7 +16,7 @@ JavascriptReloading = {
   },
 
   insertButton: function() {
-    var e = new Element('a', {id: 'reload_javascript', href: '#', style: 'position:absolute;left: 370px;top:15px;'}) .insert('Reload JS');
+    var e = new Element('a', {'class': 'button', id: 'reload_javascript', href: '#', style: 'position:absolute;left: 500px;top:10px;'}).insert('Reload JS');
     $$('body').first().insert({top: e});
 
     e.on('click', function(ev,el) {

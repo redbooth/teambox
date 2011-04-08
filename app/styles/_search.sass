@@ -1,9 +1,10 @@
 .search_bar
   float: left
-  padding-top: 6px
+  padding-top: 3px
   margin:
     right: 1.5em
   form.search
+    position: relative
     margin:
       left: 20px
     padding: 0
@@ -11,6 +12,18 @@
     border: none
     input[type=submit]
       display: none
+    input[type=text]
+      +rounded(4px)
+      border: 1px solid #CCC
+      padding: 4px
+      width: 250px
+      padding-left: 24px
+      font-size: 12px
+    img
+      position: absolute
+      top: 7px
+      left: 5px
+  .ignore
     .no-inputsearch &
       input[type=search]
         width: 10em
