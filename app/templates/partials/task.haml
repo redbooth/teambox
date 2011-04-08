@@ -23,3 +23,13 @@
       %span.task_list
         %a{:href => "/projects/{{project_id}}/task_lists"} {{task_list.name}}
   .clear
+  .thread{ :style => 'display: none' }
+    .comments
+      {{#first_comment}}{{> comment}}{{/first_comment}}
+      {{#if hidden_comments_count}}
+      .more_comments
+        %a{ :href => "{{host}}/activities/{{id}}/show_thread?thread_type={{type}}", :'data-remote' => "true" }
+        Show {{hidden_comments_count}} previous comments
+      {{/if}}
+      {{#recent_comments}}{{> comment}}{{/recent_comments}}
+    {{> comment_form}}

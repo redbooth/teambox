@@ -1,0 +1,49 @@
+.thread{ :'data-class' => "{{downcase type}}", :'data-id' => "{{id}}", :'data-project-id' => "{{project_id}}" }
+  .comment.comment_header
+    %span.time
+      %time.timeago{ :'data-msec' => "{{ms updated_at}}", :pubdate => "true" }
+        {{updated_at}}
+    .info
+      {{#if assigned_id}}
+      %img{ :src => "/famfamfam/tick.png", :style => "padding: 4px" }
+      {{else}}
+      %img{ :src => "/famfamfam/comment.png", :style => "padding: 4px" }
+      {{/if}}
+      .comment_count
+        %span {{comments_count}}
+    .block
+      .thread_title
+        {{#if assigned_id}}
+        <a href="{{host}}/projects/{{project.permalink}}/tasks/{{id}}">{{name}}</a> on
+        {{#task_list}}
+        <a href="{{host}}/projects/{{project.permalink}}/task_lists/{{id}}">{{name}}</a>
+        {{/task_list}}
+        task list
+        {{else}}
+        <a href="{{host}}/projects/{{project.permalink}}/conversations/{{id}}">{{name}}</a>
+        conversation
+        {{/if}}
+      {{#project}}
+      .project_overlay
+        <a href="{{host}}/projects/{{permalink}}" data-project-id="{{id}}">{{name}}</a>
+      {{/project}}
+      {{#if assigned_id}}
+      .task_summary
+        {{status_transition}}
+        Assigned to {{full_name user}}
+      {{/if}}
+      {{#last_comment}}
+      %p.excerpt
+        %strong {{full_name user}}
+        {{body}}
+      {{/last_comment}}
+    .clear
+  .comments
+    {{#first_comment}}{{> comment}}{{/first_comment}}
+    {{#if hidden_comments_count}}
+    .more_comments
+      %a{ :href => "{{host}}/activities/{{id}}/show_thread?thread_type={{type}}", :'data-remote' => "true" }
+      Show {{hidden_comments_count}} previous comments
+    {{/if}}
+    {{#recent_comments}}{{> comment}}{{/recent_comments}}
+  {{> comment_form}}

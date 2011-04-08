@@ -6,7 +6,7 @@ Teambox.Views.MyTasksCounter = Backbone.View.extend({
   render: function() {
     $$("#my_tasks_link span").invoke('remove');
     $("my_tasks_link").insert({
-        bottom: "<span>"+this.collection.length+"</span>"
+        bottom: "<span>"+this.collection.mine().length+"</span>"
     });
   }
 });

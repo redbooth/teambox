@@ -10,13 +10,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    respond_to do |f|
-      f.any(:html, :m)
-      f.js {
-        @show_part = params[:part]
-        render :template => 'tasks/reload'
-      }
-    end
   end
 
   def new
