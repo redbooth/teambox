@@ -5,9 +5,7 @@ Teambox.Controllers.AppController = Backbone.Controller.extend({
     '!/my_tasks': 'my_tasks'
   },
   index: function() {
-    // Super hack!!! FIXME TODO BROKEN HORRIBLECODE
-    $('content').update('<div id="activities"></div>');
-    TeamboxClient.fetchAndRenderActivities();
+    Teambox.activities_view.render();
   },
   all_tasks: function() {
     Teambox.all_tasks_view.render();

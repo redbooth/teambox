@@ -27,19 +27,10 @@ TeamboxClient = {
     var r = new Ajax.Request("/api/1/activities.js?callback=TeamboxClient.renderActivities", {
       method: 'get',
       requestHeaders: { Accept: 'application/json' },
-      onSuccess: function(r) {
-        console.log(r.responseJSON);
-      },
       onCreate: function(response) {
         $('content').insert({ 
           top: "<img src='/images/loading.gif'> Loading activities"
         });
-      },
-      onFailure: function(response) {
-        console.log("1: fail", response, response.responseJSON);
-      },
-      onComplete: function(response) {
-        console.log("1: complete", response, response.responseJSON);
       }
     });
   }

@@ -21,9 +21,12 @@
 // The next line should be broken into a controller FIXME
 //= require <teambox_client>
 //= require <models/task>
+//= require <models/thread>
 //= require <models/user>
 //= require <collections/tasks>
+//= require <collections/threads>
 //= require <views/tasks>
+//= require <views/threads>
 //= require <clientside>
 
 // Remove me by substituting Mustache code for Handlebars FIXME

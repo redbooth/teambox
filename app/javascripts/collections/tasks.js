@@ -5,6 +5,7 @@ Teambox.Collections.Tasks = Backbone.Collection.extend({
   },
   mine: function() {
     return this.filter( function(t) { 
+      // FIXME: Should be person id, not user id
       return t.get('assigned_id') == my_user.id;
     });
   },
