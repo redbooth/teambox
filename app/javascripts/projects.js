@@ -55,9 +55,9 @@ document.on('click', 'a.delete_project', function(e, el){
 	e.preventDefault()
 	Prototype.Facebox.open($('delete_project_html').innerHTML, 'html delete_project_box', {
 		buttons: [
+			{className: 'close', href:'#close', description: I18n.translations.common.cancel},
 			{className: 'confirm', href:el.readAttribute('href'), description: I18n.translations.projects.fields.delete_this_project,
-			 extra:"data-method='delete'"},
-			{className: 'close', href:'#close', description: I18n.translations.common.cancel}
+			 extra:"data-method='delete'"}
 		]
 	})
 })
