@@ -347,28 +347,3 @@ document.on('ajax:success', '.task_list form.new_task', function(e, form) {
 
   Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(response)
 })
-
-//
-// Render tasks in the main view when clicking the sidebar
-//
-
-document.on('click', '#my_tasks a.tasks', function(e, el) {
-  return; // Disabled because we're doing this from Backbone
-  e.stop();
-
-  var tasks = 
-    my_tasks
-      .collect(function(obj) { return obj.task })
-      .collect(function(task) {
-        task.project = my_projects[task.project_id];
-        return task;
-      });
-
-  var html = Mustache.to_html(Templates.tasks.index, {
-    tasks: tasks
-  });
-  Pane.replace(html);
-
-  NavigationBar.selectElement($('my_tasks'));
-  NavigationBar.toggleElement($('my_tasks'));
-});

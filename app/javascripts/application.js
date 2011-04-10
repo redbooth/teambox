@@ -85,7 +85,6 @@
 //= require <task>
 //= require <task_list>
 //= require <task_list_templates>
-//= require <tasks_inline>
 //= require <threads>
 //= require <upload>
 //= require <yahoo.color>
