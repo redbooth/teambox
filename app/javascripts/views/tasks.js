@@ -1,8 +1,11 @@
 Teambox.Views.MyTasks = Backbone.View.extend({
+
   initialize: function() {
     _.bindAll(this, 'render');
   },
+
   template: Handlebars.compile(Templates.tasks.index),
+
   render: function() {
     $('content').update( this.template() );
 
@@ -13,6 +16,7 @@ Teambox.Views.MyTasks = Backbone.View.extend({
       $$('.task_list .tasks')[0].insert({ bottom: view.render().el });
     });
   }
+
 });
 
 Teambox.Views.AllTasks = Backbone.View.extend({
@@ -37,12 +41,16 @@ Teambox.Views.AllTasks = Backbone.View.extend({
 Teambox.Views.TaskView = Backbone.View.extend({
 
   tagName: "div",
+
   //className: "task", FIXME: should use backbone's classname, not handlebar template's one
+
   template: Handlebars.compile(Templates.partials.task),
 
   events: {
     "click a.name": "expandComments",
-    "click a.edit": "editTitle"
+    "click a.edit": "editTitle",
+    "blur form.edit_title input": "updateTitle",
+    "keyup form.edit_title input": "keyupTitle"
   },
 
   initialize: function() {
@@ -77,6 +85,29 @@ Teambox.Views.TaskView = Backbone.View.extend({
 
   // Edit task's title inline
   editTitle: function(evt) {
+    $(this.el).select('a.name, form.edit_title').invoke('toggle');
+    $(this.el).down('form.edit_title input').focus();
+    return false;
+  },
+
+  // Save the edited title when pressing Enter
+  keyupTitle: function(evt) {
+    if (evt.keyCode == 13) {
+      this.updateTitle(evt);
+      return false;
+    }
+  },
+
+  // Start an AJAX request to update the task's title
+  updateTitle: function(evt) {
+    var old = $(this.el).down('a.name').innerHTML;
+    var now = $(this.el).down('form.edit_title input').value;
+
+    // Update only if the title is dirty
+    if( now != old ) {
+      $(this.el).down('a.name').update("Saving... (not implemented yet)");
+    }
+
     $(this.el).select('a.name, form.edit_title').invoke('toggle');
     return false;
   }

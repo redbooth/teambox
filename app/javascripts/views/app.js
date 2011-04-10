@@ -13,6 +13,7 @@ Teambox.Views.App = Backbone.View.extend({
     Teambox.my_tasks.bind('all', this.renderTaskCounter);
 
     // Fetch all data we're going to need
+    // Uses the Loader class, which updates the progress bar
     Teambox.my_user.fetch({ success: Loader.loaded('user') });
     Teambox.my_tasks.fetch({ success: Loader.loaded('tasks') });
     Teambox.my_threads.fetch({ success: Loader.loaded('activities') });
@@ -20,7 +21,6 @@ Teambox.Views.App = Backbone.View.extend({
 
   // Refresh dynamic elements
   render: function() {
-    this.renderUsername();
     this.renderTaskCounter();
   },
 

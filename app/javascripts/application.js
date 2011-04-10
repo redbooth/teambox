@@ -19,8 +19,6 @@
 //= require <helpers/api>
 //= require <helpers/handlebars>
 //= require <controllers/app>
-// The next line should be broken into a controller FIXME
-//= require <teambox_client>
 //= require <models/task>
 //= require <models/thread>
 //= require <models/user>
