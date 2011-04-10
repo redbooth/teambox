@@ -1,16 +1,3 @@
-Teambox.Views.MyTasksCounter = Backbone.View.extend({
-  initialize: function() {
-    _.bindAll(this, 'render');
-    this.collection.bind('all', this.render);
-  },
-  render: function() {
-    $$("#my_tasks_link span").invoke('remove');
-    $("my_tasks_link").insert({
-        bottom: "<span>"+this.collection.mine().length+"</span>"
-    });
-  }
-});
-
 Teambox.Views.MyTasks = Backbone.View.extend({
   initialize: function() {
     _.bindAll(this, 'render');

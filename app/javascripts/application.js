@@ -26,6 +26,7 @@
 //= require <models/user>
 //= require <collections/tasks>
 //= require <collections/threads>
+//= require <views/app>
 //= require <views/tasks>
 //= require <views/threads>
 //= require <clientside>
