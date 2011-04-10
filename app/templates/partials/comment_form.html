@@ -1,4 +1,4 @@
-<form accept-charset="UTF-8" {{#if assigned_id}}
+<form accept-charset="UTF-8" {{#if task_list}}
   action="/projects/{{project.permalink}}/tasks/{{id}}"
   class="new_comment edit_task"
   {{else}}
@@ -21,7 +21,7 @@
     </div>
   </div>
   <div class="extra" style="display: block">
-    {{#if assigned_id}}
+    {{#if task_list}}
     <div class="field text_field hours_field" style="display: none">
       <label>
         How many hours did you put into this task?

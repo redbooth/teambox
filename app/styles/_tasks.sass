@@ -1,26 +1,3 @@
-div.column
-  span.overdue
-    color: red
-
-  .task
-    span.task_status
-      margin:
-        right: 5px
-        bottom: 3px
-      padding: 2px 5px
-      font-size: 10px
-      float: none
-    span.due_on
-      display: none
-
-  .task.overdue
-    span.due_on
-      color: red
-
-  .task.due_on
-    span.due_on
-      display: inline-block
-
 form.new_task, form.edit_task, .task_list_form
   margin-bottom: 10px
   label
@@ -148,9 +125,18 @@ form.new_task, form.edit_task, .task_list_form
   .archive
     display: none
   .task
+    position: relative
+    +gradient(#fcfcfc, #eee)
+    border: 1px solid #DDD
+    border-radius: 5px
+    box-shadow: #EEE 1px 1px 1px
+    margin: 1px 0
     padding:
       top: 4px
       bottom: 2px
+      left: 10px
+      right: 10px
+
     .expanded_actions
       display: inline
       float: right
@@ -169,12 +155,24 @@ form.new_task, form.edit_task, .task_list_form
       padding-left: 22px
       padding-right: 5px
       line-height: 16px
+      display: none
       span
         display: inline-block
         vertical-align: top
         width: 23px
         padding: 0
         text-align: center
+    .status
+      position: absolute
+      left: 20px
+      top: 5px
+      width: 60px
+      font-size: 11px
+      overflow: hidden
+      text-align: right
+      font-weight: bold
+      color: #333
+
     &:hover .taskStatus
       width: 45px
       padding-left: 0
@@ -183,7 +181,7 @@ form.new_task, form.edit_task, .task_list_form
     .taskName
       min-height: 18px
       font-size: 12px
-      padding-left: 4px
+      padding-left: 90px
       span.assigned_date, span.assigned_user
         display: none
         color: rgb(100,100,100)
@@ -254,7 +252,6 @@ form.new_task, form.edit_task, .task_list_form
         display: inline
       .extended
         display: block
-        padding-left: 46px
         margin: 3px 0 5px
         font-size: 11px
         color: #555
@@ -394,7 +391,17 @@ p.view_for_all
 
 .task
   .thread
-    margin: 0 0 30px 50px
-    width: 590px
+    margin: 0 0px 20px 45px
     .comment_header
       display: none
+    .comments, .comment, form
+      background: transparent
+      border: none
+  form.edit_title
+    display: inline
+    input 
+      border: 1px solid #ccc
+      width: 300px
+      font-size: 12px
+      padding: 3px
+      margin: 0

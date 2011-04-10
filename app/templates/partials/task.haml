@@ -1,20 +1,22 @@
 .task{"data-task-id" => "{{id}}", :id => "task_{{id}}", :class => 'status_{{status_name}}' }
+  <!-- CLEANME: taskStatus is deprecated and hidden -->
   .taskStatus
     <!-- <img src='drag.png' class='task_drag'/> if editable and !task.archived? -->
     %span.task_status.task_counter{"data-task-id" => "{{id}}"} {{comments_count}}
+  .status {{status_text}}
   .taskName
     %a.name{:href => "/projects/{{project_id}}/tasks/{{id}}"} {{name}}
+    %form.edit_title{ :style => 'display: none' }
+      %input{ :value => '{{name}}' }
     .expanded_actions{:style => "display: none"}
       %a.full{:href => "/projects/{{project_id}}/tasks/{{id}}"}= t('tasks.task.full_view')
-      %a.hide{:href => "#"}= t('tasks.task.hide_comments')
-    <!-- don't display due date if the task is closed -->
+      %a.edit{:href => "#"}= t('tasks.task.edit')
     {{#if due_on}}
     %span.assigned_date{ :style => 'display: inline-block' } {{date due_on}} 
     {{/if}}
-    <!-- TODO: Use assigned user, display only for open tasks -->
     {{#assigned}}
     %span.assigned_user
-      %a{:href => "/users/{{username}}"} {{short_name}}
+      %a{:href => "/users/{{user.username}}"} {{short_name user}}
     {{/assigned}}
     .extended
       %span.project

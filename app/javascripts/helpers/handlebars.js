@@ -36,6 +36,14 @@ Handlebars.registerHelper('status_name', function() {
   return $w('new open hold resolved rejected')[this.status];
 });
 
+Handlebars.registerHelper('status_text', function() {
+  if(this.status == 1 && this.assigned) {
+    return this.assigned.user.first_name + " " + this.assigned.user.last_name[0];
+  } else {
+    return $w('new open hold resolved rejected')[this.status];
+  }
+});
+
 // Render status transitions in comments
 Handlebars.registerHelper('status_transition', function() {
   var status = $w('new open hold resolved rejected')

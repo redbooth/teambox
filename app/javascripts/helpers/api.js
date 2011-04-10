@@ -24,7 +24,13 @@ _.parseFromAPI = function(json) {
     e.user = collection.findRef(e.user_id, 'User');
     e.project = collection.findRef(e.project_id, 'Project');
     e.task_list = collection.findRef(e.task_list_id, 'TaskList');
-    e.assigned = collection.findRef(e.assigned_id, 'User');
+    e.assigned = collection.findRef(e.assigned_id, 'Person');
+
+    // Only 'new' and 'open' tasks have due dates and assignees
+    if(e.type == "Task" && e.status && e.status !== 0 && e.status !== 1) {
+      e.due_on = undefined;
+      e.assigned = undefined;
+    }
 
     // Fetch first_comment and recent_comments for thread elements
     if (e.first_comment_id) {
