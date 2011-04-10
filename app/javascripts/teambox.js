@@ -14,6 +14,7 @@ Teambox = {
     Teambox.my_tasks_view = new Teambox.Views.MyTasks({ collection: Teambox.my_tasks });
     Teambox.all_tasks_view = new Teambox.Views.AllTasks({ collection: Teambox.my_tasks });
     Teambox.activities_view = new Teambox.Views.Activities({ collection: Teambox.my_threads });
+    Teambox.search_view = new Teambox.Views.Search({ el: $('search') });
 
     // Initilize the app (will fetch the data)
     Teambox.app_view = new Teambox.Views.App();

@@ -25,6 +25,7 @@
 //= require <collections/tasks>
 //= require <collections/threads>
 //= require <views/app>
+//= require <views/search>
 //= require <views/tasks>
 //= require <views/threads>
 //= require <clientside>
@@ -78,7 +79,6 @@
 //= require <preview>
 //= require <projects>
 //= require <quick_add_pane>
-//= require <search>
 //= require <sessions>
 //= require <splash>
 //= require <task>

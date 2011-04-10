@@ -26,6 +26,20 @@ _.parseFromAPI = function(json) {
     e.task_list = collection.findRef(e.task_list_id, 'TaskList');
     e.assigned = collection.findRef(e.assigned_id, 'Person');
 
+    // Insert a method to generate URLs for this item
+    e.url = function() {
+      if (this.type === "Task") {
+        return "/projects/"+this.project.permalink+"/tasks/"+this.id;
+      } else if (this.type === "TaskList") {
+        return "/projects/"+this.project.permalink+"/task_lists/"+this.id;
+      } else if (this.type === "Conversation") {
+        return "/projects/"+this.project.permalink+"/conversations/"+this.id;
+      } else if (this.type === "Project") {
+        return "/projects/"+this.permalink;
+      }
+      return "/wip";
+    };
+
     // Only 'new' and 'open' tasks have due dates and assignees
     if(e.type == "Task" && e.status && e.status !== 0 && e.status !== 1) {
       e.due_on = undefined;
@@ -39,7 +53,8 @@ _.parseFromAPI = function(json) {
     if (e.recent_comment_ids) {
       e.recent_comments = e.recent_comment_ids.collect(function(id) {
         return collection.findRef(id, "Comment");
-      }).sortBy(function(c) {
+      // Using compact() in case there are no recent comments in references
+      }).compact().sortBy(function(c) {
         return c.id;
       }).reject(function(c) {
         return c.id == e.first_comment_id; });

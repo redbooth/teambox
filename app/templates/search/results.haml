@@ -2,16 +2,13 @@
 
 #results
 
-  {{#objects}}
+  {{#results}}
   .result
     %div{ :class => '{{icon_class}}' }
     {{#project}}
-    %a{ :href => '/projects/{{permalink}}' }
-      {{name}}
+    %a{ :href => '{{url}}' } {{name}}
     {{/project}}
     &rarr;
-    %a{ :href => '{{link}}' }
-      {{name}}
-    %span{ :class => 'time' }
-      {{timeago}}
-  {{/objects}}
+    %a{ :href => '{{url}}' } {{name}}
+    %span.time {{time_ago updated_at}}
+  {{/results}}

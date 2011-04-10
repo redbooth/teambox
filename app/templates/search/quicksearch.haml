@@ -1,0 +1,8 @@
+%ul#quicksearch_results
+  %li.selected
+    %a.submit_search{ :href => '#!/search/{{query}}' }
+      = t('search.quicksearch.search_all')
+  {{#results}}
+  %li
+    %a{ :href => "{{url}}" } {{type}}: {{name}}
+  {{/results}}

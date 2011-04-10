@@ -95,3 +95,30 @@
   .next_page
     margin-left: 1em
 
+ul#quicksearch_results
+  display: inline-block
+  width: 280px
+  padding: 0
+  border:
+    top: 1px solid #999
+  position: absolute
+  z-index: 1000
+  top: 22px
+  left: 211px
+  background: white
+  li
+    display: block
+    list-style-type: none
+    border: 1px solid #999
+      top: none
+    a
+      display: block
+      margin: 0
+      padding: 5px
+      color: #333
+      font-size: 12px
+    &:hover
+      background: $sidebar_bkg
+    &.selected
+      background: $sidebar_bkg
+      font-weight: bold

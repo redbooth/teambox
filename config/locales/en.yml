@@ -1566,6 +1566,8 @@ en:
       no_results:
         title: "We didn't find any results for '%{term}', sorry!"
         explain: "Try using more specific search terms to find more results."
+    quicksearch:
+      search_all: Search all results in Teambox...
 
   number:
     # Used in number_with_delimiter()

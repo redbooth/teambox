@@ -2,7 +2,8 @@ Teambox.Controllers.AppController = Backbone.Controller.extend({
   routes: {
     '!/': 'index',
     '!/all_tasks': 'all_tasks',
-    '!/my_tasks': 'my_tasks'
+    '!/my_tasks': 'my_tasks',
+    '!/search/:terms': 'search'
   },
   index: function() {
     Teambox.activities_view.render();
@@ -12,5 +13,8 @@ Teambox.Controllers.AppController = Backbone.Controller.extend({
   },
   my_tasks: function() {
     Teambox.my_tasks_view.render();
+  },
+  search: function(terms) {
+    Teambox.search_view.getResults(terms);
   }
 });
