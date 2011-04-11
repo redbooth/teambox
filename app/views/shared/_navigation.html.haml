@@ -1,15 +1,15 @@
 .separator
-  My Activity
+  Overview
   %span.fold_sidebar= link_to "&larr;".html_safe, "#"
 .nav_links
 
   -# Recent Activity
   .el= link_to t('.recent_activity'), '#!/', :class => 'recent_activity backboned'
 
-  -# pending_tasks = current_user.nearest_pending_tasks
   -# My Tasks
+  .el#today= link_to t('.today'), '#!/today', :class => 'today backboned'
   .el#my_tasks_link= link_to t('.my_tasks'), '#!/my_tasks', :class => 'tasks backboned'
-  .el= link_to t('.all_tasks'), '#!/all_tasks', :class => 'backboned'
+  .el= link_to t('.all_tasks'), '#!/all_tasks', :class => 'all_tasks backboned'
   .el= link_to t('.calendars'), calendars_path, :class => 'calendar ajax'
 
   -# All Projects

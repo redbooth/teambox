@@ -11,6 +11,7 @@ Teambox = {
     Teambox.my_tasks = new Teambox.Collections.Tasks();
     Teambox.my_threads = new Teambox.Collections.Threads();
 
+    Teambox.today_view = new Teambox.Views.Today({ collection: Teambox.my_tasks });
     Teambox.my_tasks_view = new Teambox.Views.MyTasks({ collection: Teambox.my_tasks });
     Teambox.all_tasks_view = new Teambox.Views.AllTasks({ collection: Teambox.my_tasks });
     Teambox.activities_view = new Teambox.Views.Activities({ collection: Teambox.my_threads });

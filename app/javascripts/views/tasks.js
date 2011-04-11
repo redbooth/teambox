@@ -1,3 +1,24 @@
+Teambox.Views.Today = Backbone.View.extend({
+
+  initialize: function() {
+    _.bindAll(this, 'render');
+  },
+
+  template: Handlebars.compile("<h2>What you need to do today</h2>"+Templates.tasks.index),
+
+  render: function() {
+    $('content').update( this.template() );
+
+    this.collection.mine().each( function(task) {
+      // WARNING: Am I creating a view each time the task is rendered? This is bad
+      // Maybe we should keep a reference to the view in the model
+      var view = new Teambox.Views.TaskView({ model: task });
+      $$('.task_list .tasks')[0].insert({ bottom: view.render().el });
+    });
+  }
+
+});
+
 Teambox.Views.MyTasks = Backbone.View.extend({
 
   initialize: function() {
