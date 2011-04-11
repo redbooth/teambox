@@ -1,25 +1,28 @@
 // Open navigation bar elements with AJAX
 
 extractParts = function(responseText) {
-  if (!$('_extractor')) $(document.body).insert({ bottom: "<div id='_extractor' style='display:none'></div>" })
-  var extractor = $('_extractor')
-  extractor.insert({ top: responseText })
+  if (!$('_extractor')) {
+    $(document.body).insert({ bottom:
+      "<div id='_extractor' style='display:none'></div>" });
+  }
+  var extractor = $('_extractor');
+  extractor.insert({ top: responseText });
   var response = {
     body_classes: extractor.down(".body_classes").innerHTML,
     content: extractor.down(".content_part"),
     column: extractor.down(".column_part")
-  }
-  return response
-}
+  };
+  return response;
+};
 
 postNavLinkCallback = function(el) {
-	el.fire('navigation:loaded')
-}
+  el.fire('navigation:loaded');
+};
 
 // Load navigation elements on main view using AJAX
 document.on('click', '.nav_links a.ajax', function(e,a) {
-  if (e.isMiddleClick()) return
-  e.stop()
+  if (e.isMiddleClick()) { return; }
+  e.stop();
   $$('.nav_links a').invoke('removeClassName', 'loading')
   new Ajax.Request(a.readAttribute('href')+"?extractparts=1", {
     method: "get",
@@ -32,7 +35,7 @@ document.on('click', '.nav_links a.ajax', function(e,a) {
         return this.onFailure(r);
       
       // Mark the new element as selected
-      NavigationBar.selectElement(a.up('.el'))
+      Teambox.sidebar_view.selectElement(a.up('.el'))
 
       document.body.className = parts.body_classes
       $('content').update(parts.content)

@@ -27,6 +27,6 @@ Teambox.Controllers.AppController = Backbone.Controller.extend({
   },
 
   highlightSidebar: function(id) {
-    NavigationBar.selectElement($(id), true);
+    Teambox.sidebar_view.selectElement($(id), true);
   }
 });

@@ -17,6 +17,7 @@ Teambox = {
     Teambox.all_tasks_view = new Teambox.Views.AllTasks({ collection: Teambox.my_tasks });
     Teambox.activities_view = new Teambox.Views.Activities({ collection: Teambox.my_threads });
     Teambox.search_view = new Teambox.Views.Search({ el: $('search') });
+    Teambox.sidebar_view = new Teambox.Views.Sidebar({ el: $('column') });
 
     // Initialize the app (will fetch the data)
     Teambox.app_view = new Teambox.Views.App();
@@ -31,3 +32,7 @@ Teambox = {
 
   }
 };
+
+document.on("dom:loaded", function() {
+  Teambox.init();
+});

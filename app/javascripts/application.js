@@ -26,9 +26,9 @@
 //= require <collections/threads>
 //= require <views/app>
 //= require <views/search>
+//= require <views/sidebar>
 //= require <views/tasks>
 //= require <views/threads>
-//= require <clientside>
 
 // Remove me by substituting Mustache code for Handlebars FIXME
 //= require <mustache>
@@ -67,9 +67,7 @@
 //= require <keyboard>
 //= require <layout>
 //= require <toggleform>
-//= require <navigation>
 //= require <navigation_ajax>
-//= require <navigation_tasks>
 //= require <overlays>
 //= require <pages>
 //= require <pagination>
