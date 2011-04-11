@@ -11,7 +11,7 @@ Hotkeys = {
   // })
   keys: function(options) {
     for(key in options) {
-      Hotkeys.key(key, options[key])
+      Hotkeys.key(key, options[key]);
     }
   },
 
@@ -20,23 +20,34 @@ Hotkeys = {
   // Hotkeys.key('i', '/some/url')
   key: function(key, value) {
     c = Hotkeys.special[key] == null ? key.charCodeAt(0) : Hotkeys.special[key];
-    Hotkeys.cache[c] = value
+    Hotkeys.cache[c] = value;
   }
-}
+};
 
 document.on('dom:loaded', function() {
   $$('a[hotkey]').each(function (a) {
-    Hotkeys.key(a.readAttribute('hotkey'), a.readAttribute('href'))
-  })
-})
+    Hotkeys.key(a.readAttribute('hotkey'), a.readAttribute('href'));
+  });
+});
 
-document.on('keydown', function(e) {
-  if (!my_user.keyboard_shortcuts) { return true }
-  if (e.target.match(":input")){ return true }
-  if (e.ctrlKey || e.altKey || e.metaKey) { return true }
-  var dest = Hotkeys.cache[e.keyCode + 32]
+// Captures all keystrokes and fires events for them
+document.on('keyup', function(e) {
+
+  // FIXME: Temporarily enabling shortcuts for all users
+  //if (!my_user.keyboard_shortcuts) { return true; }
+
+  // Ignore keystrokes on focused inputs (cause we're typing on it)
+  if (e.target.match(":input")){ return true; }
+
+  // Ignore combinations with key modifiers
+  if (e.ctrlKey || e.altKey || e.metaKey) { return true; }
+
+  var dest = Hotkeys.cache[e.keyCode + 32];
+  // Call the function or redirect to the given URL
   if (dest) {
-    Object.isFunction(dest) ? dest.call(this) : window.location = dest
+    Object.isFunction(dest) ? dest.call(this) : window.location = dest;
+    e.stop();
   }
-})
+
+});
 

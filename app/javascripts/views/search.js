@@ -29,6 +29,13 @@ Teambox.Views.Search = Backbone.View.extend({
       return false;
     }
 
+    // Close the search box when clicking Esc
+    if (evt.keyCode === 27) {
+      this.hideQuickResults();
+      $('searchbox').blur();
+      return false;
+    }
+
     // Prevent up/down cursor actions on the input
     if (evt.keyCode === 38) { return false; }
     if (evt.keyCode === 40) { return false; }
@@ -36,8 +43,9 @@ Teambox.Views.Search = Backbone.View.extend({
 
   // Display the 20 most recent matching results
   showQuickResults: function(evt) {
-    // Ignore Enter, since it's already handled on keydown
+    // Ignore Enter and Esc, since they are already handled on keydown
     if (evt.keyCode === 13) { return false; }
+    if (evt.keyCode === 27) { return false; }
 
     // Move highlighted element up or down, if possible
     if (evt.keyCode === 38) { this.moveHighlight(-1); return false; }
@@ -88,6 +96,12 @@ Teambox.Views.Search = Backbone.View.extend({
   // Fade out the quick results dialog
   hideQuickResults: function() {
     $$('#quicksearch_results').invoke('fade');
+  },
+
+  // Focus on the search box and select all
+  focus: function() {
+    $('searchbox').focus();
+    $('searchbox').select();
   },
 
   // Send the search query through the controller, and fetch results
