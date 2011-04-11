@@ -4,12 +4,12 @@
 .nav_links
 
   -# Recent Activity
-  .el= link_to t('.recent_activity'), '#!/', :class => 'recent_activity backboned'
+  .el#activity_link= link_to t('.recent_activity'), '#!/', :class => 'recent_activity backboned'
 
   -# My Tasks
-  .el#today= link_to t('.today'), '#!/today', :class => 'today backboned'
+  .el#today_link= link_to t('.today'), '#!/today', :class => 'today backboned'
   .el#my_tasks_link= link_to t('.my_tasks'), '#!/my_tasks', :class => 'tasks backboned'
-  .el= link_to t('.all_tasks'), '#!/all_tasks', :class => 'all_tasks backboned'
+  .el#all_tasks_link= link_to t('.all_tasks'), '#!/all_tasks', :class => 'all_tasks backboned'
   .el= link_to t('.calendars'), calendars_path, :class => 'calendar ajax'
 
   -# All Projects

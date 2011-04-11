@@ -11,7 +11,16 @@ Keyboard = {
 };
 
 document.on('dom:loaded', function() {
+  // Help menu
   Hotkeys.key('h', function() { Keyboard.showHelp(); });
+
+  // Map search
   Hotkeys.key('s', function() { Teambox.search_view.focus(); });
   Hotkeys.key('/', function() { Teambox.search_view.focus(); });
+
+  // Map navigation
+  Hotkeys.key('q', '#!/');
+  Hotkeys.key('w', '#!/today');
+  Hotkeys.key('e', '#!/my_tasks');
+  Hotkeys.key('r', '#!/all_tasks');
 });

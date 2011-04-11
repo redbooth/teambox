@@ -9,7 +9,7 @@ Teambox.Views.Today = Backbone.View.extend({
   render: function() {
     $('content').update( this.template() );
 
-    this.collection.mine().each( function(task) {
+    this.collection.today().each( function(task) {
       // WARNING: Am I creating a view each time the task is rendered? This is bad
       // Maybe we should keep a reference to the view in the model
       var view = new Teambox.Views.TaskView({ model: task });

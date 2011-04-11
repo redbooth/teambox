@@ -26,10 +26,21 @@ Teambox.Views.App = Backbone.View.extend({
 
   // Updates my tasks' counter
   renderTaskCounter: function() {
-    $$("#my_tasks_link span").invoke('remove');
-    $("my_tasks_link").insert({
-      bottom: "<span>"+Teambox.my_tasks.mine().length+"</span>"
-    });
+    $$("#my_tasks_link span, #today span").invoke('remove');
+
+    var mine = Teambox.my_tasks.mine();
+    var today = Teambox.my_tasks.today();
+    var late = Teambox.my_tasks.late();
+
+    if (mine) {
+      $("my_tasks_link").insert({ bottom: "<span>"+mine.length+"</span>" });
+    }
+    if (today) {
+      $("today_link").insert({ bottom: "<span>"+today.length+"</span>" });
+      if (Teambox.my_tasks.late()) {
+        $$("#today_link span")[0].addClassName('red');
+      }
+    }
   }
 
 });
