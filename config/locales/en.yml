@@ -1389,7 +1389,7 @@ en:
       option_1: "Option 1: Share this link"
       option_2: "Option 2: Invite your contacts by entering their email"
       option_3: "Option 3: Invite your contacts by importing contacts from a CSV file"
-      twitter_link: "Try+Teambox+to+collaborate+with+your+team,+sign+up+for+free+at+%{link}"
+      twitter_link: "Try%20Teambox%20to%20collaborate%20with%20your%20team,%20sign%20up%20for%20free%20at%20%{link}"
       referred_users: "Your referred users "
       no_referred_users: "You don't have any referred users yet."
       credits_earned: "Credit you've earned"

@@ -207,7 +207,7 @@ tr:
       tracking5: "Üyelik için size özel sayfamız"
       tracking6: "Bu linki Facebook'a, Twitter'a veya kendi sitenize yapıştırın veya arkadaşlarınıza e-posta ile gönderin. Arkadaşlarınız üye olduklarında, size e-posta ile haber verilir."
       twitter: Twitter
-      twitter_link: "Takım+arkadaşlarınızla+iletişim+kurmak+için+Teambox'ı+deneyin,+ücretsiz+hesap+açın+%{link}"
+      twitter_link: "Takım%20arkadaşlarınızla%20iletişim%20kurmak%20için%20Teambox'ı%20deneyin,%20ücretsiz%20hesap%20açın%20%{link}"
       use_money: "Bu parayı şunun için kullanabilir:"
       use_money_cash: "veya gerçek paraya çevirebilirsiniz."
       use_tracking_code: "Hangi kullanıcıların rizin referansınızla geldiklerini anlayabilmemiz için bir takip kodu kullanmalısınız."

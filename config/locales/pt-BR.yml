@@ -208,7 +208,7 @@ pt-BR:
       tracking5: "Sua página especial para cadastro é"
       tracking6: "Publique este link no Facebook, Twitter, no seu próprio site, ou envie-o por email para um amigo. Depois que eles se cadastrarem, você irá receber uma confirmação por email."
       twitter: Twitter
-      twitter_link: "Experimente+Teambox+para+trabalhar+em+grupo,+cadastre-se+gratuitamente+em+%{link}"
+      twitter_link: "Experimente%20Teambox%20para%20trabalhar%20em%20grupo,%20cadastre-se%20gratuitamente%20em%20%{link}"
       use_money: "Você pode usar este dinheiro para ter um"
       use_money_cash: "ou para ganhar dinheiro vivo."
       use_tracking_code: "Você deve usar um código de rastreamento, para que nós possamos saber quais usuários vieram através de você."

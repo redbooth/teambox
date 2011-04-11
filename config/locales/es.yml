@@ -218,7 +218,7 @@ es:
       tracking5: "Tu página especial para inscripción es"
       tracking6: "Publica este enlace en Facebook, Twitter, en tu propio sitio, o envialo por correo electrónico a un amigo. Después de registrarte recibirás un email de confirmación."
       twitter: Twitter
-      twitter_link: "Prueba+Teambox+para+colaborar+con+tu+equipo,+date+de+alta+gratis+en+%{link}"
+      twitter_link: "Prueba%20Teambox%20para%20colaborar%20con%20tu%20equipo,%20date%20de%20alta%20gratis%20en%20%{link}"
       use_money: "Puedes utilizar este dinero para obtener un "
       use_money_cash: "o para pagar dinero real"
       use_tracking_code: "Debes utilizar un código de seguimiento para que podamos saber qué usuarios están viniendo de ti."

@@ -213,7 +213,7 @@ ca:
       tracking5: "La teva pàgina especial per inscripció és"
       tracking6: "Escriu aquest link a Facebook, Twitter, o a la teva web, o envia'l per email a un amic. Després de inscriure's rebrran un email de confirmació."
       twitter: Twitter
-      twitter_link: "Prova+Teambox+per+col.laborar+amb+el+teu+equip,+registra't+gratis+a+%{link}"
+      twitter_link: "Prova%20Teambox%20per%20col.laborar%20amb%20el%20teu%20equip,%20registra't%20gratis%20a%20%{link}"
       use_money: "Pots utilitzar aquests diners per obtenir un"
       use_money_cash: "o per guanyar diners reals."
       use_tracking_code: "Ha d'utilitzar un codi de seguiment perquè puguem saber quins usuaris provenen de tu."

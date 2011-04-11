@@ -208,7 +208,7 @@ fr:
       tracking5: "Votre page spéciale pour enregistrer est"
       tracking6: "Postez ce lien sur Facebook, Twitter, sur votre propre site, ou envoyez par courriel à un ami. Une fois enregistré, vous recevez un courriel de confirmation."
       twitter: Twitter
-      twitter_link: "Essayez+Teambox+pour+collaborer+avec+votre+équipe,+s'enregistrer+gratuitement+%{link}"
+      twitter_link: "Essayez%20Teambox%20pour%20collaborer%20avec%20votre%20équipe,%20s'enregistrer%20gratuitement%20%{link}"
       use_money: "Vous pouvez utiliser cet argent pour avoir"
       use_money_cash: "ou pour gagner de l'argent réel."
       use_tracking_code: "Vous devez utiliser un code de tracking et nous saurons quel utilisateur vient de vous."
