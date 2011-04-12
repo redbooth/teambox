@@ -90,8 +90,12 @@ NavigationBar = {
 
 document.on("dom:loaded", function() {
   $$('.nav_links .contained').invoke('hide')
-  window.$('column').style.position='absolute'
-  NavigationBar.initial_offset = document.viewport.getScrollOffsets()[1] + window.$('column').viewportOffset().top
+  var column = window.$('column')
+  if (!column)
+    return
+
+  column.style.position='absolute'
+  NavigationBar.initial_offset = document.viewport.getScrollOffsets()[1] + column.viewportOffset().top
 
   // Select and expand the current element
   var current = NavigationBar.detectSelectedSection()
