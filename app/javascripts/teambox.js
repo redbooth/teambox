@@ -10,12 +10,14 @@ Teambox = {
     Teambox.my_user = new Teambox.Models.User();
     Teambox.my_tasks = new Teambox.Collections.Tasks();
     Teambox.my_threads = new Teambox.Collections.Threads();
+    Teambox.my_projects = new Teambox.Collections.Projects();
 
     // Initialize views
+    Teambox.activities_view = new Teambox.Views.Activities({ collection: Teambox.my_threads });
     Teambox.today_view = new Teambox.Views.Today({ collection: Teambox.my_tasks });
     Teambox.my_tasks_view = new Teambox.Views.MyTasks({ collection: Teambox.my_tasks });
     Teambox.all_tasks_view = new Teambox.Views.AllTasks({ collection: Teambox.my_tasks });
-    Teambox.activities_view = new Teambox.Views.Activities({ collection: Teambox.my_threads });
+    Teambox.projects_view = new Teambox.Views.Projects({ collection: Teambox.my_projects });
     Teambox.search_view = new Teambox.Views.Search({ el: $('search') });
     Teambox.sidebar_view = new Teambox.Views.Sidebar({ el: $('column') });
 

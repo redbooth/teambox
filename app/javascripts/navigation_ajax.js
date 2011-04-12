@@ -43,10 +43,7 @@ document.on('click', '.nav_links a.ajax', function(e,a) {
       Date.format_posted_dates()
       Task.insertAssignableUsers()
       disableConversationHttpMethodField()
-      Pane.clear()
 
-      // Display the AJAX route in the navigation bar
-      pushHistoryState(a.readAttribute('href'))
       postNavLinkCallback.delay(0.1, a)
     },
     onFailure: function(r) {

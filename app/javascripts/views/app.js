@@ -12,6 +12,7 @@ Teambox.Views.App = Backbone.View.extend({
     Teambox.my_user.fetch({ success: Loader.loaded('user') });
     Teambox.my_tasks.fetch({ success: Loader.loaded('tasks') });
     Teambox.my_threads.fetch({ success: Loader.loaded('activities') });
+    Teambox.my_projects.fetch({ success: Loader.loaded('projects') });
   }
 
 });

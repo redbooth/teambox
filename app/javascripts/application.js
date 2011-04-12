@@ -19,12 +19,15 @@
 //= require <helpers/api>
 //= require <helpers/handlebars>
 //= require <controllers/app>
+//= require <models/project>
 //= require <models/task>
 //= require <models/thread>
 //= require <models/user>
+//= require <collections/projects>
 //= require <collections/tasks>
 //= require <collections/threads>
 //= require <views/app>
+//= require <views/projects>
 //= require <views/search>
 //= require <views/sidebar>
 //= require <views/tasks>
@@ -59,7 +62,6 @@
 //= require <first_steps>
 //= require <forms>
 //= require <google_docs>
-//= require <history>
 //= require <hotkeys>
 //= require <hours>
 //= require <hoverable>
@@ -71,11 +73,9 @@
 //= require <overlays>
 //= require <pages>
 //= require <pagination>
-//= require <panes>
 //= require <params>
 //= require <person>
 //= require <preview>
-//= require <projects>
 //= require <quick_add_pane>
 //= require <sessions>
 //= require <splash>

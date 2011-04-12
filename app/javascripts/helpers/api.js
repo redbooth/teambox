@@ -25,6 +25,7 @@ _.parseFromAPI = function(json) {
     e.project = collection.findRef(e.project_id, 'Project');
     e.task_list = collection.findRef(e.task_list_id, 'TaskList');
     e.assigned = collection.findRef(e.assigned_id, 'Person');
+    e.organization = collection.findRef(e.organization_id, 'Organization');
 
     // Insert a method to generate URLs for this item
     e.url = function() {

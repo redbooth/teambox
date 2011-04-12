@@ -384,7 +384,6 @@ en:
         title: Teambox projects overview
         description: Overview of all projects in Teambox
       archived: "Show %{count} Archived Projects..."
-      close_pane: Close projects view
     primer:
       empty: You don't own or belong to any projects yet.
       create_first: Create your first project!
