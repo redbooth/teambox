@@ -104,40 +104,59 @@ class ApiV1::APIController < ApplicationController
     else
       object.to_api_hash(options.merge(:emit_type => true))
     end
-    
-    if options[:references] || options[:reference_collections]
+
+    if options[:references]
       { :type => 'List', :objects => objects }.tap do |wrap|
         # List of messages to send to the object to get referenced objects
-        if options[:references]
+
+        if options[:references] == true
+          objects_references = object.collect(&:references)
+          refs = objects_references.inject({}) do |m,e|
+            e.each { |v| m[v.first] = (Array(m[v.first]) + v.last).compact.uniq }
+            m
+          end
+          wrap[:references] = load_references(refs).collect { |o| o.to_api_hash(options.merge(:emit_type => true)) }
+        else # KILL ME
           wrap[:references] = Array(object).map do |obj|
             options[:references].map{|ref| obj.send(ref) }.flatten.compact
           end.flatten.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
-        end
-        
-        # List of messages to send to the object to get referenced objects as [:class, id]
-        if options[:reference_collections]
-          query = {}
-          Array(object).each do |obj|
-            options[:reference_collections].each do |ref|
-              obj_query = obj.send(ref)
-              if obj_query
-                query[obj_query[0]] ||= []
-                query[obj_query[0]] << obj_query[1]
-              end
-            end
-          end
-          
-          wrap[:references] = (wrap[:references]||[]) + (query.map do |query_class, values|
-            objects = Kernel.const_get(query_class).find(:all, :conditions => {:id => values.uniq})
-            objects.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
-          end.flatten)
         end
       end
     else
       objects
     end
   end
-  
+
+  # refs is a hash like: table => ids to load, e.g. { :comments => [1,2,3] }
+  def load_references(refs)
+    # Now let's load everything else but the users
+    user_ids = refs.delete(:users)
+    elements = refs.collect do |ref|
+      ref_class = ref.first.to_s.classify
+      case ref_class
+      when 'Comment'
+        Comment.where(:id => ref.last).includes(:target).all
+      when 'Note'
+        Note.where(:id => ref.last).includes(:page_slot).all
+      when 'Conversation'
+        convs = Conversation.where(:id => ref.last).includes(:first_comment).includes(:recent_comments).includes(:watchers).all
+        convs + convs.collect(&:first_comment) + convs.collect(&:recent_comments)
+      when 'Task'
+        tasks = Task.where(:id => ref.last).includes(:first_comment).includes(:recent_comments).includes(:watchers).all
+        tasks + tasks.collect(&:first_comment) + tasks.collect(&:recent_comments)
+      else
+        ref_class.constantize.where(:id => ref.last).all
+      end
+    end.flatten.uniq
+
+    # Finally load the users we referenced before plus the ones associated to elements previously loaded
+    user_ids = Array(user_ids) + elements.collect { |e| e.respond_to? :user_id and e.user_id }.compact
+    users = User.where(:id => user_ids.uniq).all
+
+    # elements contains everything but users
+    elements + users
+  end
+
   def api_error(status_code, opts={})
     errors = {}
     errors[:type] = opts[:type] if opts[:type]

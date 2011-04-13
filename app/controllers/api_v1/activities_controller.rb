@@ -8,11 +8,9 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     @activities = Activity.where(api_scope).
       where(api_range('activities')).
       order('activities.id DESC').
-      limit(api_limit).
-      includes([:target, :project, :user, {:comment_target => [:user, {:recent_comments => :user}]}])
-    
-    api_respond @activities,
-                :references => [:target, :project, :user, :refs_thread_comments, :refs_comment_target]
+      limit(api_limit)
+
+    api_respond @activities, :references => true
   end
 
   def show

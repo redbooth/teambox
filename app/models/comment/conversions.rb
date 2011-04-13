@@ -45,7 +45,7 @@ class Comment
     
     base[:type] = self.class.to_s if options[:emit_type]
     
-    if target.is_a? Task
+    if target_type == 'Task'
       base[:assigned_id] = assigned_id
       base[:previous_assigned_id] = previous_assigned_id
       base[:previous_status] = previous_status

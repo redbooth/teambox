@@ -17,9 +17,6 @@ class TaskList
       if Array(options[:include]).include? :tasks
         tasks.to_xml(options.merge({ :skip_instruct => true }))
       end
-      if Array(options[:include]).include? :comments
-        comments.to_xml(options.merge({ :skip_instruct => true }))
-      end
     end
   end
 
@@ -33,7 +30,6 @@ class TaskList
       :archived => archived,
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
-      :comments_count => comments_count,
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
@@ -43,18 +39,6 @@ class TaskList
     
     if Array(options[:include]).include? :tasks
       base[:tasks] = tasks.map {|t| t.to_api_hash(options)}
-    end
-    
-    if Array(options[:include]).include? :thread_comments
-      base[:first_comment] = first_comment.to_api_hash(options)  if first_comment
-      base[:recent_comments] = recent_comments.map{|c|c.to_api_hash(options)}
-    elsif !Array(options[:include]).include?(:comments)
-      base[:first_comment_id] = first_comment.try(:id)
-      base[:recent_comment_ids] = recent_comments.map{|c|c.id}
-    end
-    
-    if Array(options[:include]).include? :comments
-      base[:comments] = comments.map {|c| c.to_api_hash(options)}
     end
     
     base
