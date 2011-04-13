@@ -13,6 +13,12 @@ class Membership < ActiveRecord::Base
   
   before_validation :set_default_role, :on => :create
 
+  before_destroy :validate_presence_of_at_least_one_admin, :if => lambda { |membership|
+    membership.role_name == :admin and !membership.organization.marked_for_destruction?
+  }
+  before_update :validate_presence_of_at_least_one_admin, :if => lambda { |membership|
+    membership.role_changed? and membership.role_was == ROLES[:admin]
+  }
 
   attr_accessor :user_or_email
   
@@ -25,6 +31,13 @@ class Membership < ActiveRecord::Base
 
   def set_default_role
     self.role ||= ROLES[:admin]
+  end
+
+  def validate_presence_of_at_least_one_admin
+    if organization.admins.count == 1
+      errors.add(:base, "An organization need at least one administrator")
+      false
+    end
   end
 
   def role_name
