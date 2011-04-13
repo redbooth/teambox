@@ -97,10 +97,12 @@ describe Organization do
       @organization.is_participant?(project.user).should be_false
     end
     it "should list people in projects and the org as users" do
+      admin = Factory(:user)
+      @organization.add_member(admin, :admin)
       project = Factory(:project, :organization => @organization)
       @organization.add_member(project.user, :participant)
-      @organization.users.should == [project.user]
-      @organization.admins.should == []
+      @organization.users.should == [admin, project.user]
+      @organization.admins.should == [admin]
       @organization.participants.should == [project.user]
       @organization.external_users.should == []
       @organization.users_in_projects.should == [project.user]
