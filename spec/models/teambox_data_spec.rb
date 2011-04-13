@@ -38,7 +38,7 @@ describe TeamboxData do
       organization.add_member(user, Membership::ROLES[:admin])
       project = Factory(:project, :organization => organization, :user => user)
       
-      user_map = user_list.inject({}){|a,key| a[key] = user.login; a}
+      user_map = user_list.inject({}){|a,key| a[key] = "  #{user.login}   "; a}
       org_map = org_list.inject({}){|a,key| a[key] = organization.permalink; a}
       
       TeamboxData.new.tap{|d| d.data = data; d.user = user }.unserialize(
@@ -370,6 +370,30 @@ describe TeamboxData do
       dump.save
       
       dump.to_api_hash.should_not == nil
+    end
+  end
+  
+  describe "organizations_to_export" do
+    before do
+      @organization = Factory.create(:organization)
+      @other_organization = Factory.create(:organization)
+      
+      @project = Factory.create(:project, :organization => @organization)
+      @other_project = Factory.create(:project, :organization => @other_organization)
+      
+      @organization.add_member(@project.user, Membership::ROLES[:admin])
+    end
+    
+    it "should include organizations belonging to the projects if no user is specified" do
+      dump = TeamboxData.new.tap{|d|d.type_name='export'}
+      dump.project_ids = Project.all.map(&:id)
+      dump.organizations_to_export.map(&:id).sort.should == [@organization.id, @other_organization.id].sort
+    end
+    
+    it "should include organizations belonging to the projects which the user is an admin of if a user is specified" do
+      dump = TeamboxData.new.tap{|d|d.type_name='export';d.user=@project.user}
+      dump.project_ids = Project.all.map(&:id)
+      dump.organizations_to_export.map(&:id).should == [@organization.id]
     end
   end
 end

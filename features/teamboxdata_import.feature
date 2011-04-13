@@ -23,12 +23,13 @@ Scenario: Mislav imports an historic project
   And I should see "Andrew Wiggin (@gandhi_2)"
   And I should see "Andrew Wiggin (@gandhi_3)"
   And I should see "Andrew Wiggin (@gandhi_4)"
-  When I select the following:
-    | Andrew Wiggin (@gandhi_1)             |  Mislav Marohnić (@mislav) |
-    | Andrew Wiggin (@gandhi_2)             |  Mislav Marohnić (@mislav) |
-    | Andrew Wiggin (@gandhi_3)             |  Mislav Marohnić (@mislav) |
-    | Andrew Wiggin (@gandhi_4)             |  Mislav Marohnić (@mislav) |
-    | Put all projects in this organization | Teambox Data               |
+  When I fill in the following:
+    | Andrew Wiggin (@gandhi_1)             |  mislav      |
+    | Andrew Wiggin (@gandhi_2)             |  mislav      |
+    | Andrew Wiggin (@gandhi_3)             |  mislav      |
+    | Andrew Wiggin (@gandhi_4)             |  mislav      |
+  And I select the following:
+    | Put all projects in this organization | Teambox Data  |
   And I press "Import"
   Then I should see "Imported projects"
   And I should see "Teambox #1"
@@ -52,12 +53,13 @@ Scenario: Mislav imports another historic project
   And I choose "Teambox"
   And I attach the file "spec/fixtures/teamboxdump_problem.json" to "teambox_data_import_data"
   And I press "Import data"
-  When I select the following:
-    | Stevie Hobs (@steve_test2)            |  Mislav Marohnić (@mislav) |
-    | Test Test (@steve_testing)            |  Pablo Villalba (@pablo)   |
-    | Card Test (@stevecardtest)            |  Gandalf Grey (@gandalf)   |
-    | Stevie Hobs (@steve)                  |  Frodo Baggins (@frodo)    |
-    | Put all projects in this organization | Teambox Data               |
+  When I fill in the following:
+    | Stevie Hobs (@steve_test2)            |  mislav      |
+    | Test Test (@steve_testing)            |  pablo       |
+    | Card Test (@stevecardtest)            |  gandalf     |
+    | Stevie Hobs (@steve)                  |  frodo       |
+  And I select the following:
+    | Put all projects in this organization | Teambox Data  |
   And I press "Import"
   Then I should see "Imported projects"
   And I should see "Hobo Pro"
@@ -73,8 +75,9 @@ Scenario: Mislav gets fed up of Basecamp and moves to Teambox
   And I attach the file "spec/fixtures/campdump.xml" to "teambox_data_import_data"
   And I press "Import data"
   Then I should see "Frodo Baggins (@FrodoBaggins)"
-  When I select the following:
-    | Frodo Baggins                         |  Mislav Marohnić (@mislav) |
+  When I fill in the following:
+    | Frodo Baggins                         |  mislav                   |
+  And I select the following:
     | Put all projects in this organization | Teambox Data               |
   And I press "Import"
   Then I should see "Imported projects"
@@ -115,12 +118,13 @@ Scenario: Mislav imports data with invalid records
   And I should see "Andrew Wiggin (@gandhi_2)"
   And I should see "Andrew Wiggin (@gandhi_3)"
   And I should see "Andrew Wiggin (@gandhi_4)"
-  When I select the following:
-    | Andrew Wiggin (@gandhi_1)             |  Mislav Marohnić (@mislav) |
-    | Andrew Wiggin (@gandhi_2)             |  Mislav Marohnić (@mislav) |
-    | Andrew Wiggin (@gandhi_3)             |  Mislav Marohnić (@mislav) |
-    | Andrew Wiggin (@gandhi_4)             |  Mislav Marohnić (@mislav) |
-    | Put all projects in this organization | Teambox Data               |
+  When I fill in the following:
+    | Andrew Wiggin (@gandhi_1)             |  mislav     |
+    | Andrew Wiggin (@gandhi_2)             |  mislav     |
+    | Andrew Wiggin (@gandhi_3)             |  mislav     |
+    | Andrew Wiggin (@gandhi_4)             |  mislav     |
+  And I select the following:
+    | Put all projects in this organization | Teambox Data |
   And I press "Import"
   Then I should see "There were errors with the information you supplied!"
   And @mislav should receive 1 email

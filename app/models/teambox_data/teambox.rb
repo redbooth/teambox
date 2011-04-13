@@ -13,7 +13,7 @@ class TeamboxData
       @processed_objects[:user] = []
       
       @users = dump['users'].map do |udata|
-        user_name = @imported_users[udata['username']] || udata['username']
+        user_name = (@imported_users[udata['username']] || udata['username']).strip
         user = User.find_by_login(user_name)
         if user.nil? and opts[:create_users]
           user = User.new(udata)
@@ -22,7 +22,7 @@ class TeamboxData
           user.save!
         end
         
-        raise(Exception, "User #{user} could not be resolved") if user.nil?
+        raise(Exception, "User '#{user_name} #{udata.inspect}' could not be resolved") if user.nil?
         
         @imported_users[udata['id']] = user
         @processed_objects[:user] << user.id

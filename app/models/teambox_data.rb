@@ -33,7 +33,7 @@ class TeamboxData < ActiveRecord::Base
       users = user.users_for_user_map.map(&:login)
       
       user_map.each do |login,dest_login|
-        if !users.include?(dest_login)
+        if !users.include?(dest_login.strip)
           @errors.add "user_map_#{login}", "#{dest_login} Not known to user"
         end
       end
@@ -196,10 +196,6 @@ class TeamboxData < ActiveRecord::Base
   
   def error?
     (imported? or exported?) and processed_at.nil?
-  end
-  
-  def users_to_export
-    organizations_to_export.map{|o| o.users + o.users_in_projects }.flatten.compact
   end
   
   def to_api_hash(options = {})
