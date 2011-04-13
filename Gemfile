@@ -27,8 +27,10 @@ gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
 gem 'hpricot', '~> 0.8.2'
 gem 'json'
 gem 'oa-oauth', :require => 'omniauth/oauth'
-gem 'tilt'
+gem 'tilt', '~> 1.2.2'
 gem 'choices', :git => "git://github.com/teambox/choices.git"
+gem 'rack-staticifier', :git => "https://github.com/remi/rack-staticifier.git"
+gem 'trimmer', :git => "https://github.com/teambox/trimmer.git"
 
 gem "will_paginate", :git=>"git://github.com/mislav/will_paginate.git", :branch=>"rails3"
 gem 'thinking-sphinx', '2.0.1', :require => 'thinking_sphinx'
