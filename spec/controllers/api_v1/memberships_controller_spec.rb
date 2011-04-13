@@ -101,14 +101,13 @@ describe ApiV1::MembershipsController do
       }.should change(Membership, :count)
     end
     
-    it "should not allow an organization with no members" do
-      @organization.memberships.destroy_all
-      @organization.add_member(@admin, Membership::ROLES[:admin])
+    it "should not allow to delete the last admin" do
+      @organization.memberships.where(['user_id != ?', @admin]).destroy_all
       login_as @admin
-      
+
       lambda {
         put :destroy, :organization_id => @organization.permalink, :id => @admin.member_for(@organization).id
-        response.status.should == 401
+        response.status.should == 422
       }.should_not change(Membership, :count)
     end
     
