@@ -19,7 +19,7 @@ class ApiV1::CommentsController < ApiV1::APIController
 
   def show
     authorize! :show, @comment
-    api_respond @comment, :include => [:user]
+    api_respond @comment, :include => [:user, :uploads]
   end
   
   def create

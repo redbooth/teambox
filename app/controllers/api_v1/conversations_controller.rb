@@ -120,7 +120,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
   end
     
   def api_include
-    [:comments, :user] & (params[:include]||{}).map(&:to_sym)
+    [:comments, :user, :uploads] & (params[:include]||{}).map(&:to_sym)
   end
   
 end

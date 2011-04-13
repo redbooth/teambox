@@ -54,7 +54,7 @@ class Comment
       base[:previous_due_on] = previous_due_on
     end
     
-    if uploads.any?
+    if Array(options[:include]).include?(:uploads) && uploads.any?
       base[:uploads] = uploads.map {|u| u.to_api_hash(options)}
     end
     

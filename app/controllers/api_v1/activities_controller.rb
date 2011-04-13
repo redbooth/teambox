@@ -18,7 +18,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     authorize!(:show, @activity) if @activity
       
     if @activity
-      api_respond @activity, :include => [:project, :target, :user, :thread_comments]
+      api_respond @activity, :include => [:project, :target, :user, :thread_comments, :uploads]
     else
       api_error :not_found, :type => 'ObjectNotFound', :message => 'Not found'
     end

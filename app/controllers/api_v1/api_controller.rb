@@ -136,6 +136,8 @@ class ApiV1::APIController < ApplicationController
       case ref_class
       when 'Comment'
         Comment.where(:id => ref.last).includes(:target).all
+      when 'Upload'
+        Upload.where(:id => ref.last).includes(:page_slot).all
       when 'Note'
         Note.where(:id => ref.last).includes(:page_slot).all
       when 'Conversation'
