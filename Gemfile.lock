@@ -33,6 +33,21 @@ GIT
     immortal (0.1.6)
       activerecord (~> 3.0.5)
 
+GIT
+  remote: https://github.com/remi/rack-staticifier.git
+  revision: 642ca9f4d8634270be031725077a748a1c8f6397
+  specs:
+    rack-staticifier (0.1.6)
+
+GIT
+  remote: https://github.com/teambox/trimmer.git
+  revision: 3af71485b3b9475efa05eacfd4612172bba10efb
+  specs:
+    trimmer (0.0.1)
+      i18n (>= 0.5.0)
+      rack (>= 0.9.1)
+      tilt (>= 1.2.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -250,7 +265,7 @@ GEM
       activerecord (>= 3.0.3)
       riddle (>= 1.2.1)
     thor (0.14.6)
-    tilt (1.2.1)
+    tilt (1.2.2)
     timecop (0.3.5)
     tmail (1.2.7.1)
     treetop (1.4.9)
@@ -304,6 +319,7 @@ DEPENDENCIES
   pg (~> 0.9.0)
   pickle (~> 0.4.4)
   rack-ssl-enforcer
+  rack-staticifier!
   rails (~> 3.0.3)
   rcov
   rdiscount (~> 1.6.3)
@@ -315,9 +331,10 @@ DEPENDENCIES
   text-format (>= 0.6.3)
   thin
   thinking-sphinx (= 2.0.1)
-  tilt
+  tilt (~> 1.2.2)
   timecop
   tmail (~> 1.2.3)
+  trimmer!
   tzinfo (~> 0.3.12)
   vestal_versions (~> 1.2.2)!
   webrat

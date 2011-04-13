@@ -130,6 +130,18 @@ defaults: &defaults
   #   :secret: 
 
   heroku: <%= !!ENV['HEROKU_TYPE'] %>
+  trimmer_cache_dir: <%=(Rails.root + "public").to_s %>
+  trimmer_templates_dir: <%= (Rails.root + "app/templates").to_s %>
+  trimmer_allowed_keys: 
+  - "*.date"
+  - "*.datetime"
+  - "*.calendar"
+  - "*.time"
+  - "*.comments.new.assigned_to_nobody"
+  - "*.roles"
+  - "*.common"
+  - "*.tasks"
+  - "*.projects"
 
 development:
   <<: *defaults
