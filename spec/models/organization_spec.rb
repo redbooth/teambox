@@ -129,6 +129,25 @@ describe Organization do
       @organization.memberships.last.role.should == 30
       @organization.memberships.length.should == 1
     end
+    it "should not destroy or downgrade the last admin" do
+      user = Factory(:user)
+      @organization.add_member(user, 30).should be_true
+      member = @organization.memberships.last
+      member.role = 20
+      member.save.should be_false
+    end
+    it "should not destroy or downgrade the last admin" do
+      user = Factory(:user)
+      @organization.add_member(user, 30).should be_true
+      member = @organization.memberships.last
+      member.destroy.should be_false
+    end
+    it "should destroy organization even if there is only one admin" do
+      user = Factory(:user)
+      @organization.add_member(user, 30).should be_true
+      @organization.admins.count.should == 1
+      @organization.destroy.should be_true
+    end
   end
 
   describe "single organization mode" do
