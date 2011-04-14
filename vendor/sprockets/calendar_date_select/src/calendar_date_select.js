@@ -1,5 +1,4 @@
-// CalendarDateSelect version 1.15 - a prototype based date picker
-// Questions, comments, bugs? - see the project page: http://code.google.com/p/calendardateselect
+// CalendarDateSelect version 1.16.2 - a prototype based date picker
 
 Element.addMethods({
   purgeChildren: function(element) { $A(element.childNodes).each(function(e){$(e).remove();}); },
@@ -23,44 +22,32 @@ Date.one_day = 24*60*60*1000;
 Date.weekdays = $w("S M T W T F S");
 Date.first_day_of_week = 0;
 Date.months = $w("January February March April May June July August September October November December" );
-Date.padded2 = function(hour) { var padded2 = parseInt(hour, 10); if (hour < 10) padded2 = "0" + padded2; return padded2; }
+Date.padded2 = function(hour) { padded2 = hour.toString(); if ((parseInt(hour) < 10) || (parseInt(hour) == null)) padded2="0" + padded2; return padded2; }
 Date.prototype.getPaddedMinutes = function() { return Date.padded2(this.getMinutes()); }
-Date.prototype.getAMPMHour = function() { var hour = this.getHours(); return (hour == 0) ? 12 : (hour > 12 ? hour - 12 : hour ) }
-Date.prototype.getAMPM = function() { return (this.getHours() < 12) ? "AM" : "PM"; }
+Date.prototype.getAMPMHour = function() { hour=Date.padded2(this.getHours()); return (hour == null) ? 00 : (hour > 24 ? hour - 24 : hour ) }
+Date.prototype.getAMPM = function() { return (this.getHours() < 12) ? "" : ""; }
 Date.prototype.stripTime = function() { return new Date(this.getFullYear(), this.getMonth(), this.getDate());};
 Date.prototype.daysDistance = function(compare_date) { return Math.round((compare_date - this) / Date.one_day); };
-Date.prototype.toLocalizedString = function(include_time){
-  var hour, str;
-  str = Date.months[this.getMonth()] + " " + this.getDate() + ", " + this.getFullYear();
-  
-  if (include_time) { hour = this.getHours(); str += " " + this.getAMPMHour() + ":" + this.getPaddedMinutes() + " " + this.getAMPM() }
+Date.prototype.toFormattedString = function(include_time){
+  str = this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + Date.padded2(this.getDate());
+  if (include_time) { hour=this.getHours(); str += " " + this.getAMPMHour() + ":" + this.getPaddedMinutes() }
   return str;
 }
-Date.prototype.toFormattedString = function(include_time) {
-        var hour;
-    var str = this.getFullYear() + "-" + Date.padded2(this.getMonth() + 1) + "-" +Date.padded2(this.getDate());
-    if (include_time) {
-        hour = Date.padded2(this.getHours());
-        str += " " + hour + ":" + this.getPaddedMinutes();
-    }
-    return str;
-};
-
 Date.parseFormattedString = function (string) {
-   var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
-                "([T| ]([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
-                "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
-   var d = string.match(new RegExp(regexp));
-
-   var date = new Date(d[1], 0, 1);
-
-   if (d[3]) { date.setMonth(d[3] - 1); }
-   if (d[5]) { date.setDate(d[5]); }
-   if (d[7]) { date.setHours(d[7]); }
-   if (d[8]) { date.setMinutes(d[8]); }
-   return date;
-};
-
+  var regexp = '([0-9]{4})-(([0-9]{1,2})-(([0-9]{1,2})( ([0-9]{1,2}):([0-9]{2})? *)?)?)?';
+  var d = string.match(new RegExp(regexp, "i"));
+  if (d==null) return Date.parse(string); // at least give javascript a crack at it.
+  var offset = 0;
+  var date = new Date(d[1], 0, 1);
+  if (d[3]) { date.setMonth(d[3] - 1); }
+  if (d[5]) { date.setDate(d[5]); }
+  if (d[7]) {
+    date.setHours(parseInt(d[7], 10));    
+  }
+  if (d[8]) { date.setMinutes(d[8]); }
+  if (d[10]) { date.setSeconds(d[10]); }
+  return date;
+}
 Math.floor_to_interval = function(n, i) { return Math.floor(n/i) * i;}
 window.f_height = function() { return( [window.innerHeight ? window.innerHeight : null, document.documentElement ? document.documentElement.clientHeight : null, document.body ? document.body.clientHeight : null].select(function(x){return x>0}).first()||0); }
 window.f_scrollTop = function() { return ([window.pageYOffset ? window.pageYOffset : null, document.documentElement ? document.documentElement.scrollTop : null, document.body ? document.body.scrollTop : null].select(function(x){return x>0}).first()||0 ); }
@@ -91,10 +78,8 @@ SelectBox.prototype = {
 }
 CalendarDateSelect = Class.create();
 CalendarDateSelect.prototype = {
-  initialize: function(target_element, target_label, options) {
+  initialize: function(target_element, options) {
     this.target_element = $(target_element); // make sure it's an element, not a string
-    this.target_label = $(target_label);
-    this.target_scope = target_element.id;
     if (!this.target_element) { alert("Target element " + target_element + " not found!"); return false;}
     if (this.target_element.tagName != "INPUT") this.target_element = this.target_element.down("INPUT")
     
@@ -110,9 +95,22 @@ CalendarDateSelect.prototype = {
       year_range: 10,
       close_on_click: nil,
       minute_interval: 5,
-      popup_by: this.target_label,
+      popup_by: this.target_element,
       month_year: "dropdowns",
-      onchange: this.target_element.onchange,
+      onchange: function(target_element)
+      { return function()
+        { if(target_element.dispatchEvent)
+          { var event=document.createEvent('HTMLEvents');
+            event.initEvent('change', true, true);
+            target_element.dispatchEvent(event);
+          }
+          else
+          { var event=document.createEventObject();
+            event.type='onChange';
+            target_element.fireEvent('onChange', event);
+          }
+        }; 
+      }(this.target_element),
       valid_date_check: nil
     }).merge(options || {});
     this.use_time = this.options.get("time");
@@ -174,8 +172,8 @@ CalendarDateSelect.prototype = {
     this.prev_month_button = header_div.build("a", { innerHTML: "&lt;", href:"#", onclick:function () { this.navMonth(this.date.getMonth() - 1 ); return false; }.bindAsEventListener(this), className: "prev" });
     
     if (this.options.get("month_year")=="dropdowns") {
-      this.month_select = new SelectBox(header_div, $R(0,11).map(function(m){return [Date.months[m], m]}), {className: "month", id: this.target_scope + '_month', onchange: function () { this.navMonth(this.month_select.getValue()) }.bindAsEventListener(this)}); 
-      this.year_select = new SelectBox(header_div, [], {className: "year", id: this.target_scope + '_year', onchange: function () { this.navYear(this.year_select.getValue()) }.bindAsEventListener(this)}); 
+      this.month_select = new SelectBox(header_div, $R(0,11).map(function(m){return [Date.months[m], m]}), {className: "month", onchange: function () { this.navMonth(this.month_select.getValue()) }.bindAsEventListener(this)}); 
+      this.year_select = new SelectBox(header_div, [], {className: "year", onchange: function () { this.navYear(this.year_select.getValue()) }.bindAsEventListener(this)}); 
       this.populateYearRange();
     } else {
       this.month_year_label = header_div.build("span")
@@ -320,7 +318,7 @@ CalendarDateSelect.prototype = {
       this.year_select.setValue(y);
       
     } else {
-      this.month_year_label.update( Date.months[m] + " " + y.toString()  );
+      this.month_year_label.update().insert(Date.months[m] + " " + y.toString());
     }
   },
   populateYearRange: function() {
@@ -337,7 +335,7 @@ CalendarDateSelect.prototype = {
   validYear: function(year) { if (this.flexibleYearRange()) { return true;} else { return this.yearRange().include(year);}  },
   dayHover: function(element) {
     var hover_date = new Date(this.selected_date);
-    hover_date.setYear(element.year); hover_date.setMonth(element.month); hover_date.setDate(element.day);
+    hover_date.setFullYear(element.year, element.month, element.day);
     this.updateFooter(hover_date.toFormattedString(this.use_time));
   },
   dayHoverOut: function(element) { this.updateFooter(); },
@@ -354,15 +352,17 @@ CalendarDateSelect.prototype = {
   dateString: function() {
     return (this.selection_made) ? this.selected_date.toFormattedString(this.use_time) : "&#160;";
   },
-  dateLocalizedString: function() {
-    return (this.selection_made) ? this.selected_date.toLocalizedString(this.use_time) : "&#160;";
-  },
   parseDate: function()
   {
     var value = $F(this.target_element).strip()
-    this.selection_made = (value != "");
+    var default_time = this.options.get("default_time");
+    this.selection_made = (value != "" || default_time);
     this.date = value=="" ? NaN : Date.parseFormattedString(this.options.get("date") || value);
-    if (isNaN(this.date)) this.date = new Date();
+    if (isNaN(this.date) && !default_time)
+        this.date = new Date();
+    else if (isNaN(this.date) && default_time)
+        this.date = (Object.prototype.toString.apply(default_time) === '[object Function]') ? default_time() : default_time;
+
     if (!this.validYear(this.date.getFullYear())) this.date.setYear( (this.date.getFullYear() < this.yearRange().start) ? this.yearRange().start : this.yearRange().end);
     this.selected_date = new Date(this.date);
     this.use_time = /[0-9]:[0-9]{2}/.exec(value) ? true : false;
@@ -373,7 +373,6 @@ CalendarDateSelect.prototype = {
     if ((this.target_element.disabled || this.target_element.readOnly) && this.options.get("popup") != "force") return false;
     var last_value = this.target_element.value;
     this.target_element.value = "";
-    this.target_label.innerHTML = "<i>No date assigned</i>";
     this.clearSelectedClass();
     this.updateFooter('&#160;');
     if (last_value!=this.target_element.value) this.callback("onchange");
@@ -383,9 +382,7 @@ CalendarDateSelect.prototype = {
     if ((this.target_element.disabled || this.target_element.readOnly) && this.options.get("popup") != "force") return false;
     if (parts.get("day")) {
       var t_selected_date = this.selected_date, vdc = this.options.get("valid_date_check");
-      t_selected_date.setYear(parts.get("year"));
-      t_selected_date.setMonth(parts.get("month"));
-      t_selected_date.setDate(parts.get("day"));
+      t_selected_date.setFullYear(parts.get("year"), parts.get("month"), parts.get("day"));
       
       if (vdc && ! vdc(t_selected_date.stripTime())) { return false; }
       this.selected_date = t_selected_date;
@@ -441,7 +438,6 @@ CalendarDateSelect.prototype = {
   updateValue: function() {
     var last_value = this.target_element.value;
     this.target_element.value = this.dateString();
-		this.target_label.innerHTML = this.dateLocalizedString();
     if (last_value!=this.target_element.value) this.callback("onchange");
   },
   today: function(now) {

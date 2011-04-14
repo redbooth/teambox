@@ -2,7 +2,7 @@
 .date_fields
   .pick_date
     = f.label :start_on, t('task_lists.fields.start_on_html')
-    = embedded_date_picker(f, :start_on)
+    = date_picker(f, :start_on)
   .pick_date
     = f.label :finish_on, t('task_lists.fields.finish_on_html')
-    = embedded_date_picker(f, :finish_on)
+    = date_picker(f, :finish_on)
