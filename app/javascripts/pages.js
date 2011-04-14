@@ -248,7 +248,7 @@ var InsertHereFunc = function(evt){
 
 document.on('dom:loaded', function() {
   if ($$('body.show_pages').first()) {
-    Page.init(false, window.location.pathname);
+    Page.init($('slots').hasClassName('readonly'), window.location.pathname);
     Page.makeSortable();
   }
 })

@@ -67,4 +67,10 @@ module PagesHelper
   def insert_widget(widget_id, position, location, view_options={})
     page.call "Page.insertWidget", widget_id, position, location, render(view_options)
   end
+
+  def slots_classes
+    slots_classes = []
+    slots_classes << 'readonly' unless can? :update, @current_project
+    slots_classes.join(" ")
+  end
 end
