@@ -115,7 +115,7 @@ class ApiV1::APIController < ApplicationController
             e.each { |v| m[v.first] = (Array(m[v.first]) + v.last).compact.uniq }
             m
           end
-          wrap[:references] = load_references(refs).collect { |o| o.to_api_hash(options.merge(:emit_type => true)) }
+          wrap[:references] = load_references(refs).compact.collect { |o| o.to_api_hash(options.merge(:emit_type => true)) }
         else # KILL ME
           wrap[:references] = Array(object).map do |obj|
             options[:references].map{|ref| obj.send(ref) }.flatten.compact
