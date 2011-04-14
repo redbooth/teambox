@@ -126,7 +126,7 @@ class ApplicationController < ActionController::Base
 
     def user_agent_locale
       unless (Rails.env.test? || Rails.env.cucumber?)
-        user_agent_locale.first
+        user_agent_locales.first
       else
         :en
       end
