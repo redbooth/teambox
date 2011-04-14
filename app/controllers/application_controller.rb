@@ -124,13 +124,19 @@ class ApplicationController < ActionController::Base
       I18n.locale = (locale.present? && I18n.available_locales.include?(locale.to_sym)) ? locale : I18n.default_locale
     end
 
-    LOCALES_REGEX = /\b(#{ I18n.available_locales.join('|') })\b/
-
     def user_agent_locale
       unless (Rails.env.test? || Rails.env.cucumber?)
-        request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX && $&
+        user_agent_locale.first
       else
         :en
+      end
+    end
+
+    LOCALES_REGEX = /\b(#{ I18n.available_locales.join('|') })\b/
+
+    def user_agent_locales
+      request.headers['HTTP_ACCEPT_LANGUAGE'].to_s.split(",").map do |s|
+        s =~ LOCALES_REGEX && $&
       end
     end
     
