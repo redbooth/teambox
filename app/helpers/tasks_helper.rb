@@ -116,7 +116,7 @@ module TasksHelper
     link_to(t('projects.fields.new.time_tracking_docs'), "http://help.teambox.com/faqs/advanced-features/time-tracking", :target => '_blank')
   end
 
-  def date_picker(f, field, options)
+  def date_picker(f, field, options = {})
     selected_date = f.object.send(field.to_sym) ? localize(f.object.send(field.to_sym), :format => :long) : ''
 
     content_tag :div, :class => "date_picker" do
