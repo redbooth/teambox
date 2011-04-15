@@ -13,6 +13,8 @@ class ApiV1::TasksController < ApiV1::APIController
     
     @tasks = context.except(:order).
                      where(api_range('tasks')).
+                     where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                     joins(:watchers).
                      limit(api_limit).
                      order('tasks.id DESC')
     

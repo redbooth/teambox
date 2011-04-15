@@ -129,8 +129,12 @@ class Ability
     end
     
     # OAuth :read_projects show permission
-    can :show, [Activity, Comment, Conversation, Divider, Invitation, Membership, Note, Organization, Page, Person, Project, Task, TaskList, Upload, User] do |object|
+    can :show, [Activity, Comment, Divider, Invitation, Membership, Note, Organization, Page, Person, Project, TaskList, Upload, User] do |object|
       api_read?(user)
+    end
+    
+    can :show, [Conversation, Task] do |object|
+      api_read?(user) && (object.is_private ? object.watcher_ids.include?(user.id) : true)
     end
     
   end
