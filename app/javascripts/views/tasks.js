@@ -5,16 +5,22 @@ Teambox.Views.Today = Backbone.View.extend({
   },
 
   template: Handlebars.compile("<h2>What you need to do today</h2>"+Templates.tasks.index),
+  primer_template: Handlebars.compile(Templates.primers.today),
 
   render: function() {
-    $('content').update( this.template() );
+    var tasks = this.collection.today();
 
-    this.collection.today().each( function(task) {
-      // WARNING: Am I creating a view each time the task is rendered? This is bad
-      // Maybe we should keep a reference to the view in the model
-      var view = new Teambox.Views.TaskView({ model: task });
-      $$('.task_list .tasks')[0].insert({ bottom: view.render().el });
-    });
+    if (tasks.length > 0) {
+      $('content').update( this.template() );
+      tasks.each( function(task) {
+        // WARNING: Am I creating a view each time the task is rendered? This is bad
+        // Maybe we should keep a reference to the view in the model
+        var view = new Teambox.Views.TaskView({ model: task });
+        $$('.task_list .tasks')[0].insert({ bottom: view.render().el });
+      });
+    } else {
+      $('content').update( this.primer_template() );
+    }
   }
 
 });
