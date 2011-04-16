@@ -15,7 +15,7 @@ _.parseFromAPI = function(json) {
 
     // Load a utility method to find a reference object by id and type
     collection.findRef = function (id, type) {
-      return this.references.detect( function(i) {
+      return _(this.references).detect(function(i) { 
         return ((i.id == id) && (i.type == type));
       });
     };
@@ -30,15 +30,15 @@ _.parseFromAPI = function(json) {
     // Insert a method to generate URLs for this item
     e.url = function() {
       if (this.type === "Task") {
-        return "/projects/"+this.project.permalink+"/tasks/"+this.id;
+        return "#!/projects/"+this.project.permalink+"/tasks/"+this.id;
       } else if (this.type === "TaskList") {
-        return "/projects/"+this.project.permalink+"/task_lists/"+this.id;
+        return "#!/projects/"+this.project.permalink+"/task_lists/"+this.id;
       } else if (this.type === "Conversation") {
-        return "/projects/"+this.project.permalink+"/conversations/"+this.id;
+        return "#!/projects/"+this.project.permalink+"/conversations/"+this.id;
       } else if (this.type === "Project") {
-        return "/projects/"+this.permalink;
+        return "#!/projects/"+this.permalink;
       }
-      return "/wip";
+      return "#!/wip";
     };
 
     // Only 'new' and 'open' tasks have due dates and assignees
@@ -52,15 +52,14 @@ _.parseFromAPI = function(json) {
       e.first_comment = collection.findRef(e.first_comment_id, "Comment");
     }
     if (e.recent_comment_ids) {
-      e.recent_comments = e.recent_comment_ids.collect(function(id) {
-        return collection.findRef(id, "Comment");
-      // Using compact() in case there are no recent comments in references
-      }).compact().sortBy(function(c) {
-        return c.id;
-      }).reject(function(c) {
-        return c.id == e.first_comment_id; });
-      e.hidden_comments_count = [e.comments_count - 1 - e.recent_comments.length, 0].max();
-      e.last_comment = e.recent_comments.last();
+      e.recent_comments = _(e.recent_comment_ids).chain()
+        .map(function(id) { return collection.findRef(id, "Comment"); })
+        .compact() // In case there are no recent comments in references
+        .sortBy(function(c) { return c.id; })
+        .reject(function(c) { return c.id == e.first_comment_id; })
+        .value();
+      e.hidden_comments_count = _([e.comments_count - 1 - e.recent_comments.length, 0]).max();
+      e.last_comment = _(e.recent_comments).last();
     }
     if (e.target_id) {
       e.target = collection.findRef(e.target_id, e.target_type);
@@ -77,9 +76,9 @@ _.parseFromAPI = function(json) {
   });
 
   // Fetch targets and targets of targets from Activities
-  json.objects.each(function(o) {
+  _(json.objects).each(function(o) {
     fetchReferences(json, o);
-  }).uniq();
+  });
 
   return json.objects;
 };
