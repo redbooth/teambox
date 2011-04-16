@@ -1,3 +1,4 @@
+<!-- should comment using the API -->
 <form accept-charset="UTF-8" {{#if task_list}}
   action="/projects/{{project.permalink}}/tasks/{{id}}"
   class="new_comment edit_task"
@@ -12,7 +13,7 @@
     <input name="_method" type="hidden" value="put">
   </div>
   <div class="field text_area">
-    <a class="micro_avatar my_avatar" href="#"></a>
+    <a class="micro_avatar my_avatar"></a>
     <div class="textarea">
       <textarea cols="40" name="task[comments_attributes][0][body]"
         placeholder="Define what needs to be done, assign this task to somebody."

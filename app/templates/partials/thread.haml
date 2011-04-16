@@ -14,18 +14,18 @@
     .block
       .thread_title
         {{#if assigned_id}}
-        <a href="{{host}}/projects/{{project.permalink}}/tasks/{{id}}">{{name}}</a> on
+        <a href="{{url}}">{{name}}</a> on
         {{#task_list}}
-        <a href="{{host}}/projects/{{project.permalink}}/task_lists/{{id}}">{{name}}</a>
+        <a href="{{url}}">{{name}}</a>
         {{/task_list}}
         task list
         {{else}}
-        <a href="{{host}}/projects/{{project.permalink}}/conversations/{{id}}">{{name}}</a>
+        <a href="{{url}}">{{name}}</a>
         conversation
         {{/if}}
       {{#project}}
       .project_overlay
-        <a href="{{host}}/projects/{{permalink}}" data-project-id="{{id}}">{{name}}</a>
+        <a href="{{url}}" data-project-id="{{id}}">{{name}}</a>
       {{/project}}
       {{#if assigned_id}}
       .task_summary
@@ -42,7 +42,7 @@
     {{#first_comment}}{{> comment}}{{/first_comment}}
     {{#if hidden_comments_count}}
     .more_comments
-      %a{ :href => "{{host}}/activities/{{id}}/show_thread?thread_type={{type}}", :'data-remote' => "true" }
+      %a{ :href => "/activities/{{id}}/show_thread?thread_type={{type}}", :'data-remote' => "true" }
       Show {{hidden_comments_count}} previous comments
     {{/if}}
     {{#recent_comments}}{{> comment}}{{/recent_comments}}

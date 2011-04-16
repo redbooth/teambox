@@ -29,22 +29,34 @@ _.parseFromAPI = function(json) {
 
     // Insert a method to generate URLs for this item
     e.url = function() {
-      if (this.type === "Task") {
-        return "#!/projects/"+this.project.permalink+"/tasks/"+this.id;
-      } else if (this.type === "TaskList") {
-        return "#!/projects/"+this.project.permalink+"/task_lists/"+this.id;
-      } else if (this.type === "Conversation") {
-        return "#!/projects/"+this.project.permalink+"/conversations/"+this.id;
-      } else if (this.type === "Project") {
-        return "#!/projects/"+this.permalink;
+      switch(this.type) {
+        case "Conversation":
+          return "#!/projects/"+this.project.permalink+"/conversations/"+this.id;
+        case "Task":
+          return "#!/projects/"+this.project.permalink+"/tasks/"+this.id;
+        case "TaskList":
+          return "#!/projects/"+this.project.permalink+"/task_lists/"+this.id;
+        case "Page":
+          return "#!/projects/"+this.project.permalink+"/pages/"+this.id;
+        case "Project":
+          return "#!/projects/"+this.permalink;
+        case "User":
+          return "#!/users/"+this.username;
+        default:
+          console.log("Didn't implement URL for "+this.type+". Object: "+this);
+          return "#!/wip";
       }
-      return "#!/wip";
     };
 
     // Only 'new' and 'open' tasks have due dates and assignees
     if(e.type == "Task" && e.status && e.status !== 0 && e.status !== 1) {
       e.due_on = undefined;
       e.assigned = undefined;
+    }
+
+    // Give titles to untitled conversations
+    if(e.type == "Conversation" && e.simple) {
+      e.name = "Untitled";
     }
 
     // Fetch first_comment and recent_comments for thread elements

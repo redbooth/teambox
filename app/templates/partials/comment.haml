@@ -1,8 +1,10 @@
 .comment{ :'data-editable-before' => "{{ms updated_at}}", :id => "comment_{{id}}",
     :'data-project' => "{{project_id}}", :'data-user' => "{{user_id}}" }
   .info
-    %a.micro_avatar{ :href => "{{host}}/users/{{user.username}}",
-      :style => "background: url({{user.micro_avatar_url}}) no-repeat" }
+    {{#user}}
+    %a.micro_avatar{ :href => "{{url}}",
+      :style => "background: url({{micro_avatar_url}}) no-repeat" }
+    {{/user}}
   .block
     .actions_menu
       %span.actiondate
@@ -10,8 +12,10 @@
           {{time_ago updated_at}}
     .body.textilized
       .before
-        %a.user{ :href => "{{host}}/users/{{user.username}}" }
-          {{full_name user}}
+        {{#user}}
+        %a.user{ :href => "{{url}}" }
+          {{full_name}}
+        {{/user}}
         <!-- TODO: due on transition -->
         <!-- TODO: hours logged for time tracking -->
         {{status_transition}}

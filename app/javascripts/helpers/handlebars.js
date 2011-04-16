@@ -2,9 +2,6 @@ Handlebars.registerHelper('downcase', function(str) {
   return str.toLowerCase();
 });
 
-// Edit this to use other hosts, like https://l.teambox.com
-Handlebars.registerHelper('host', '');
-
 Handlebars.registerHelper('short_name', function(user) {
   user = user || this;
   return user.first_name[0] + ". " + user.last_name;
