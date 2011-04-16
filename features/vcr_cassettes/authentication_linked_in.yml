@@ -1,0 +1,103 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://api.linkedin.com:443/uas/oauth/requestToken
+    body: 
+    headers: 
+      user-agent: 
+      - OAuth gem v0.4.4
+      content-length: 
+      - "0"
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/plain
+      date: 
+      - Fri, 15 Apr 2011 19:44:45 GMT
+      server: 
+      - Apache-Coyote/1.1
+      content-length: 
+      - "236"
+      vary: 
+      - Accept-Encoding
+    body: oauth_token=oauth_token_xyz&oauth_token_secret=oauth_token_secret_xyz&oauth_callback_confirmed=true&xoauth_request_auth_url=https%3A%2F%2Fapi.linkedin.com%2Fuas%2Foauth%2Fauthorize&oauth_expires_in=599
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://api.linkedin.com:443/uas/oauth/accessToken
+    body: 
+    headers: 
+      user-agent: 
+      - OAuth gem v0.4.4
+      content-length: 
+      - "0"
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/plain
+      date: 
+      - Fri, 15 Apr 2011 19:44:53 GMT
+      server: 
+      - Apache-Coyote/1.1
+      content-length: 
+      - "156"
+      vary: 
+      - Accept-Encoding
+    body: oauth_token=oauth_token_xyz&oauth_token_secret=oauth_token_secret_xyz&oauth_expires_in=0&oauth_authorization_expires_in=0
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://api.linkedin.com:443/v1/people/~:(id,first-name,last-name,headline,member-url-resources,picture-url,location)
+    body: 
+    headers: 
+      user-agent: 
+      - OAuth gem v0.4.4
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/xml;charset=UTF-8
+      date: 
+      - Fri, 15 Apr 2011 19:44:54 GMT
+      server: 
+      - Apache-Coyote/1.1
+      x-li-format: 
+      - xml
+      vary: 
+      - x-li-format,Accept-Encoding
+      transfer-encoding: 
+      - chunked
+    body: |
+      <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+      <person>
+        <id>HbQXh0a0</id>
+        <first-name>Charles</first-name>
+        <last-name>Barbier</last-name>
+        <headline></headline>
+        <member-url-resources total="1">
+          <member-url>
+            <url>http://teambox.com</url>
+            <name>Teambox</name>
+          </member-url>
+        </member-url-resources>
+        <picture-url>http://media.linkedin.com/mpr/mprx/0_O-y3pn6YJvCOP537pzX0zBLm1</picture-url>
+        <location>
+          <name>Montreal, Canada Area</name>
+          <country>
+            <code>ca</code>
+          </country>
+        </location>
+      </person>
+
+    http_version: "1.1"

@@ -1,0 +1,67 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://graph.facebook.com:443/oauth/access_token
+    body: 
+    headers: 
+      content-type: 
+      - application/x-www-form-urlencoded
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      expires: 
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      content-type: 
+      - text/plain; charset=UTF-8
+      date: 
+      - Fri, 15 Apr 2011 19:47:14 GMT
+      content-length: 
+      - "94"
+      x-fb-server: 
+      - 10.32.40.107
+      x-fb-rev: 
+      - "366469"
+      cache-control: 
+      - private, no-cache, no-store, must-revalidate
+      pragma: 
+      - no-cache
+    body: access_token=oauth_token_secret_xyz
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://graph.facebook.com:443/me?access_token=oauth_token_secret_xyz
+    body: 
+    headers: 
+      accept-language: 
+      - en-us,en;
+      authorization: 
+      - Token token="oauth_token_secret_xyz"
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      etag: 
+      - "\"fded9db01ff3fee31a3f67b8db5a307f9694f386\""
+      expires: 
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      content-type: 
+      - text/javascript; charset=UTF-8
+      date: 
+      - Fri, 15 Apr 2011 19:47:15 GMT
+      content-length: 
+      - "565"
+      x-fb-server: 
+      - 10.32.42.123
+      x-fb-rev: 
+      - "366469"
+      cache-control: 
+      - private, no-cache, no-store, must-revalidate
+      pragma: 
+      - no-cache
+    body: "{\"id\":\"1111853297\",\"name\":\"Charles Barbier\",\"first_name\":\"Charles\",\"last_name\":\"Barbier\",\"link\":\"http:\\/\\/www.facebook.com\\/unixcharles\",\"username\":\"unixcharles\",\"hometown\":{\"id\":\"11260078755651\",\"name\":\"Montreal, Quebec\"},\"location\":{\"id\":\"10218449823699\",\"name\":\"Montreal, Quebec\"},\"bio\":\"koukouroukoukwikwi\",\"gender\":\"male\",\"email\":\"unixcharles\\u0040gmail.com\",\"timezone\":-7,\"locale\":\"fr_CA\",\"languages\":[{\"id\":\"112264595467201\",\"name\":\"Fran\\u00e7ais\"},{\"id\":\"106059522759137\",\"name\":\"English\"}],\"verified\":true,\"updated_time\":\"2011-04-15T19:47:09+0000\"}"
+    http_version: "1.1"

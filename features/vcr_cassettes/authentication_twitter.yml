@@ -1,0 +1,144 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://api.twitter.com:443/oauth/request_token
+    body: 
+    headers: 
+      user-agent: 
+      - OAuth gem v0.4.4
+      content-length: 
+      - "0"
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      etag: 
+      - "\"2b9b3357959ad9a5c2102413b55d5c90\""
+      expires: 
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      last-modified: 
+      - Fri, 15 Apr 2011 19:35:15 GMT
+      x-transaction: 
+      - 1302896115-30532-20762
+      content-type: 
+      - text/html; charset=utf-8
+      x-runtime: 
+      - "0.00928"
+      server: 
+      - hi
+      date: 
+      - Fri, 15 Apr 2011 19:35:15 GMT
+      content-length: 
+      - "148"
+      x-revision: 
+      - DEV
+      vary: 
+      - Accept-Encoding
+      cache-control: 
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      status: 
+      - 200 OK
+      pragma: 
+      - no-cache
+    body: oauth_token=oauth_token_xyz&oauth_token_secret=oauth_token_secret_xyz&oauth_callback_confirmed=true
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://api.twitter.com:443/oauth/access_token
+    body: 
+    headers: 
+      user-agent: 
+      - OAuth gem v0.4.4
+      content-length: 
+      - "0"
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      etag: 
+      - "\"393ec7020978474c5b793e928a0bb351\""
+      expires: 
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      last-modified: 
+      - Fri, 15 Apr 2011 19:35:20 GMT
+      x-transaction: 
+      - 1302896120-65078-61131
+      content-type: 
+      - text/html; charset=utf-8
+      x-runtime: 
+      - "0.06195"
+      server: 
+      - hi
+      date: 
+      - Fri, 15 Apr 2011 19:35:20 GMT
+      content-length: 
+      - "164"
+      x-revision: 
+      - DEV
+      vary: 
+      - Accept-Encoding
+      cache-control: 
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      status: 
+      - 200 OK
+      pragma: 
+      - no-cache
+    body: oauth_token=oauth_token_xyz&oauth_token_secret=oauth_token_secret_xyz&user_id=22099031&screen_name=unixcharles
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://api.twitter.com:443/1/account/verify_credentials.json
+    body: 
+    headers: 
+      user-agent: 
+      - OAuth gem v0.4.4
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      x-ratelimit-reset: 
+      - "1302899721"
+      etag: 
+      - "\"63f9afc31281426a36e2c5b2fb72c81a\""
+      expires: 
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      last-modified: 
+      - Fri, 15 Apr 2011 19:35:21 GMT
+      x-ratelimit-limit: 
+      - "350"
+      x-transaction: 
+      - 1302896121-17801-54664
+      content-type: 
+      - application/json; charset=utf-8
+      x-transaction-mask: 
+      - a6183ffa5f8ca943ff1b53b5644ef114
+      x-runtime: 
+      - "0.03078"
+      server: 
+      - hi
+      date: 
+      - Fri, 15 Apr 2011 19:35:21 GMT
+      x-ratelimit-class: 
+      - api_identified
+      content-length: 
+      - "1670"
+      x-ratelimit-remaining: 
+      - "349"
+      x-revision: 
+      - DEV
+      vary: 
+      - Accept-Encoding
+      cache-control: 
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      status: 
+      - 200 OK
+      pragma: 
+      - no-cache
+    body: "{\"is_translator\":false,\"statuses_count\":143,\"profile_background_tile\":false,\"friends_count\":69,\"profile_image_url\":\"http:\\/\\/a0.twimg.com\\/profile_images\\/1165696701\\/IMG_0040_normal.jpg\",\"listed_count\":7,\"verified\":false,\"favourites_count\":0,\"description\":\"When the going gets weird, the weird turn pro. \",\"status\":{\"favorited\":false,\"text\":\"@madmallards not in the next few week, but I still have a project that will require upgrade eventually.\",\"retweet_count\":0,\"in_reply_to_screen_name\":\"madmallards\",\"in_reply_to_status_id_str\":\"57285548125073408\",\"place\":null,\"contributors\":null,\"retweeted\":false,\"in_reply_to_user_id\":114960336,\"source\":\"web\",\"in_reply_to_user_id_str\":\"114960336\",\"coordinates\":null,\"in_reply_to_status_id\":57285548125073408,\"geo\":null,\"created_at\":\"Mon Apr 11 04:14:10 +0000 2011\",\"id_str\":\"57295351517945856\",\"truncated\":false,\"id\":57295351517945856},\"lang\":\"en\",\"profile_link_color\":\"0084B4\",\"url\":null,\"screen_name\":\"unixcharles\",\"profile_sidebar_border_color\":\"a8c7f7\",\"location\":\"Montreal\",\"default_profile_image\":false,\"profile_use_background_image\":true,\"profile_background_color\":\"022330\",\"following\":false,\"profile_background_image_url\":\"http:\\/\\/a2.twimg.com\\/a\\/1301681483\\/images\\/themes\\/theme15\\/bg.png\",\"protected\":false,\"show_all_inline_media\":false,\"follow_request_sent\":false,\"geo_enabled\":true,\"created_at\":\"Fri Feb 27 02:54:07 +0000 2009\",\"name\":\"Charles Barbier\",\"id_str\":\"22099031\",\"default_profile\":false,\"contributors_enabled\":false,\"notifications\":false,\"time_zone\":\"Eastern Time (US & Canada)\",\"profile_text_color\":\"333333\",\"id\":22099031,\"utc_offset\":-18000,\"profile_sidebar_fill_color\":\"C0DFEC\",\"followers_count\":53}"
+    http_version: "1.1"

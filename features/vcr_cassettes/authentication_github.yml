@@ -1,0 +1,69 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://github.com:443/login/oauth/access_token
+    body: 
+    headers: 
+      content-type: 
+      - application/x-www-form-urlencoded
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      strict-transport-security: 
+      - max-age=2592000
+      etag: 
+      - "\"8bd049d6ab3d7f4b1d7780201f64af8b\""
+      content-type: 
+      - text/html; charset=utf-8
+      x-runtime: 
+      - 41ms
+      date: 
+      - Fri, 15 Apr 2011 19:33:34 GMT
+      server: 
+      - nginx/0.7.67
+      content-length: 
+      - "71"
+      cache-control: 
+      - private, max-age=0, must-revalidate
+      status: 
+      - 200 OK
+    body: access_token=access_token_xyz&token_type=bearer
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://github.com:443/api/v2/json/user/show?access_token=access_token_xyz
+    body: 
+    headers: 
+      authorization: 
+      - Token token="access_token_xyz"
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      etag: 
+      - "\"bdbf3980815cba9823a3d3ff92e722e3\""
+      x-ratelimit-limit: 
+      - "60"
+      content-type: 
+      - application/json; charset=utf-8
+      x-runtime: 
+      - 33ms
+      date: 
+      - Fri, 15 Apr 2011 19:33:35 GMT
+      server: 
+      - nginx/0.7.67
+      content-length: 
+      - "596"
+      x-ratelimit-remaining: 
+      - "59"
+      cache-control: 
+      - private, max-age=0, must-revalidate
+      status: 
+      - 200 OK
+    body: "{\"user\":{\"plan\":{\"name\":\"free\",\"collaborators\":0,\"space\":307200,\"private_repos\":0},\"gravatar_id\":\"23e6178f295b9cb7473d44d9e501a2b3\",\"company\":\"Teambox\",\"name\":\"Charles Barbier\",\"created_at\":\"2009/04/27 12:17:00 -0700\",\"location\":\"Montreal\",\"disk_usage\":4152,\"collaborators\":0,\"public_repo_count\":14,\"public_gist_count\":8,\"blog\":\"\",\"following_count\":9,\"id\":78458,\"owned_private_repo_count\":0,\"private_gist_count\":13,\"type\":\"User\",\"permission\":null,\"total_private_repo_count\":0,\"followers_count\":15,\"login\":\"charles\",\"email\":\"charles@teambox.com\"}}"
+    http_version: "1.1"
