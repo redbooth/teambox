@@ -131,6 +131,7 @@ GEM
     factory_girl (1.3.2)
     faker (0.9.5)
       i18n (~> 0.4)
+    fakeweb (1.3.0)
     faraday (0.5.4)
       addressable (~> 2.2.2)
       multipart-post (~> 1.0.1)
@@ -271,6 +272,7 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.26)
+    vcr (1.9.0)
     webrat (0.7.2)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -300,6 +302,7 @@ DEPENDENCIES
   database_cleaner (~> 0.5.0)
   factory_girl (~> 1.3.2)
   faker
+  fakeweb (~> 1.3.0)
   fuubar
   haml (~> 3.0.0.beta1)
   hpricot (~> 0.8.2)
@@ -336,6 +339,7 @@ DEPENDENCIES
   tmail (~> 1.2.3)
   trimmer!
   tzinfo (~> 0.3.12)
+  vcr (~> 1.9.0)
   vestal_versions (~> 1.2.2)!
   webrat
   whenever (~> 0.4.1)
