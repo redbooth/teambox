@@ -1,0 +1,83 @@
+%div{ :style => "margin:0;padding:0;display:inline" }
+  <input name="utf8" type="hidden" value="✓">
+  <input name="_method" type="hidden" value="put">
+.field.text_area
+  %a.micro_avatar.my_avatar
+  .textarea
+    <textarea cols="40" name="task[comments_attributes][0][body]" placeholder="Define what needs to be done, assign this task to somebody." rows="20" autocomplete="off" style=""></textarea>
+    .autocomplete{ :style => "display: none" }
+.extra{ :style => "display: none" }
+  {{#if task_list}}
+  .field.text_field.hours_field{ :style => "display: none" }
+    %label
+      How many hours did you put into this task?
+      <input id="task_comments_attributes_0_human_hours" name="task[comments_attributes][0][human_hours]" size="30" type="text">
+    <a href="http://help.teambox.com/faqs/advanced-features/time-tracking" target="_blank">Learn more.</a>
+  {{/if}}
+  .upload_area{ :style => "display: none" }
+    <p>Select a file to upload to Teambox</p>
+    <input id="upload_file" name="task[comments_attributes][0][uploads_attributes][0][asset]" type="file">
+  .add_watchers_box{ :style => "display: none" }
+    <p>Click on users to @mention them in your comment. Mentioned users will receive email notifications for your message and others after it.</p>
+  .actions
+    .attach
+      <span>Attach:</span>
+      <a href="#uploads" class="attach_icon hoverable" title="Attach a file">Attachment</a>
+      .google_docs_attachment
+        %a{ :href => "/google_docs", :rel => "facebox" }
+          <img alt="Icon_6_document" class="google_docs_logo" src="/images/google_docs/icon_6_document.gif">
+        .google_docs_attachment_form_area{ :'data-object-name' => "task[comments_attributes][0]" }
+          .fields
+          %ul.file_list
+      {{#if assigned_id}}
+      <a href="#hours" class="add_hours_icon hoverable" title="Log hours">Add hours to this task</a>
+      {{/if}}
+      <a href="#watchers" class="add_watchers hoverable" title="Notify people">Watchers</a>
+    {{#if assigned_id}}
+    .task_actions
+      <label for="task_status">Status</label>
+      %select#task_status{ :name => "task[status]" }
+        <!-- TODO: Choose the right selected option -->
+        <option value="0">new</option>
+        <option value="1" selected="selected">open</option>
+        <option value="2">hold</option>
+        <option value="3">resolved</option>
+        <option value="4">rejected</option>
+      <label for="task_assigned_id">Assigned to:</label>
+      %select#task_assigned_id{ :'data-assigned' => "{{assigned_id}}", :name => "task[assigned_id]" }
+        <option>Unassigned</option>
+      <label for="task_due_on">Due date</label>
+      .date_picker
+        <img alt="Calendar" class="calendar_date_select_popup_icon" src="/images/calendar_date_select/calendar.gif">
+        <input id="task_due_on" name="task[due_on]" type="hidden">
+        <span class="localized_date"><i>No date assigned</i></span>
+    {{else}}
+    %span.convert_to_task
+      <a href="#convert_to_task">Convert to task</a>
+    .convert_to_task{ :style => "display:none" }
+      .conversation_actions
+        .fields
+          <label for="conversation_name">Name this task:</label>
+          <input class="required" disabled="disabled" error_message="must not be blank" id="conversation_name" name="conversation[name]" placeholder="eg. Upload Logo Proposal" size="30" type="text" value="Project Welcome">
+        .fields
+          <label for="conversation_task_list_id">Create task in:</label>
+          <select disabled="disabled" id="conversation_task_list_id" name="conversation[task_list_id]"> <option value="">Loading...</option> </select>
+        .fields
+          <label for="conversation_status">Status:</label>
+          <select disabled="disabled" id="conversation_status" name="conversation[status]"> <option value="0">new</option> <option value="1">open</option> <option value="2">hold</option> <option value="3">resolved</option> <option value="4">rejected</option> </select>
+          <select disabled="disabled" id="conversation_assigned_id" name="conversation[assigned_id]"> <option>Unassigned</option> <option value="1">Frank Kramer</option> <option value="2">Corrina Kottke</option> <option value="5">Marco Fizzulo</option> </select>
+        .fields
+          .date_picker
+            <img alt="Calendar" class="calendar_date_select_popup_icon" src="/images/calendar_date_select/calendar.gif">
+            <input disabled="disabled" id="conversation_due_on" name="conversation[due_on]" type="hidden">
+            <span class="localized_date"><i>No date assigned</i></span>
+      .submit
+        <a href="#cancel_conversion" class="cancel">Cancel</a>
+        <input data-disable-with="Sending…" disabled="disabled" id="comment_submit" name="commit" type="submit" value="Convert">
+    {{/if}}
+    %span.new{ :style => "display: none" }
+      ← &nbsp;&nbsp; Select <b>Notify people</b> to send notifications for this conversation.
+  .submit
+    %span.help
+      <a href="/text_styles" class="style_icon" rel="facebox" title="Formatting help"></a>
+    <input data-disable-with="Sending…" id="task[comments_attributes][0]_submit" name="commit" type="submit" value="Save">

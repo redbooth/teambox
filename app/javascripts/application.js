@@ -27,11 +27,14 @@
 //= require <collections/tasks>
 //= require <collections/threads>
 //= require <views/app>
+//= require <views/activities>
+//= require <views/comment_form>
 //= require <views/projects>
 //= require <views/search>
 //= require <views/sidebar>
 //= require <views/tasks>
-//= require <views/threads>
+//= require <views/task>
+//= require <views/thread>
 
 // Remove me by substituting Mustache code for Handlebars FIXME
 //= require <mustache>

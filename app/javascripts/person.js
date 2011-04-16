@@ -1,5 +1,3 @@
-hideBySelector('#people .edit_person')
-
 document.on('click', '#people a[href="#edit"]', function(e, link) {
   e.preventDefault()
   var parent = link.up('.person')

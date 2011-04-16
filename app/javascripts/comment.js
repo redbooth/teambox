@@ -168,40 +168,14 @@ document.on('ajax:success', 'div[data-class=conversation].thread .comment .actio
 	else e.findElement('.comment').remove()
 })
 
-// toggle between hidden upload area and a link to show it
-hideBySelector('form .upload_area')
-
-document.on('click', 'form .attach_icon', function(e, link) {
-  if (!e.isMiddleClick()) {
-    link.up('form').down('.upload_area').forceShow().highlight()
-    e.stop()
-  }
-})
-
-// toggle between hidden time tracking input and a link to show it
-hideBySelector('form .hours_field')
-
-document.on('click', 'form .add_hours_icon', function(e, link) {
-  link.up('form').down('.hours_field').forceShow().down('input').focus()
-  e.stop()
-})
-
 // Open links inside Comments and Notes textilized areas in new windows
 document.on('mouseover', '.textilized a', function(e, link) {
   link.writeAttribute("target", "_blank");
 });
 
-hideBySelector('#activities .thread form.new_comment .extra')
-
 document.on('focusin', '#activities .thread form.new_comment textarea', function(e, input) {
   input.up('form').down('.extra').forceShow()
 })
-
-// document.on('focusout', '.thread form.new_comment textarea', function(e, input) {
-//   if (input.getValue().empty()) {
-//     input.up('form').down('.extra').hide()
-//   }
-// })
 
 // enable username autocompletion for main textarea in comment forms
 document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
