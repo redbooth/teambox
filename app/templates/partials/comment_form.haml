@@ -17,11 +17,9 @@
   .upload_area{ :style => "display: none" }
     <p>Select a file to upload to Teambox</p>
     <input id="upload_file" name="task[comments_attributes][0][uploads_attributes][0][asset]" type="file">
-  .add_watchers_box{ :style => "display: none" }
-    <p>Click on users to @mention them in your comment. Mentioned users will receive email notifications for your message and others after it.</p>
   .actions
     .attach
-      <span>Attach:</span>
+      %span= t('comments.fields.attach')
       <a href="#uploads" class="attach_icon hoverable" title="Attach a file">Attachment</a>
       .google_docs_attachment
         %a{ :href => "/google_docs", :rel => "facebox" }

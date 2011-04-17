@@ -35,6 +35,7 @@
 //= require <views/tasks>
 //= require <views/task>
 //= require <views/thread>
+//= require <views/watchers>
 
 // Remove me by substituting Mustache code for Handlebars FIXME
 //= require <mustache>
@@ -89,4 +90,3 @@
 //= require <upload>
 //= require <yahoo.color>
 //= require <watchers>
-//= require <watch_list>

@@ -1105,6 +1105,7 @@ en:
     watchers:
       explain: "Click on users to @mention them in your comment. Mentioned users will receive email notifications for your message and others after it."
       popup_note_html: "Select <b>Notify people</b> to send notifications for this conversation."
+      all_users: All users
   teambox_datas:
     new_import:
       title: "Import data"

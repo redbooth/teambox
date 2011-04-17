@@ -173,10 +173,6 @@ document.on('mouseover', '.textilized a', function(e, link) {
   link.writeAttribute("target", "_blank");
 });
 
-document.on('focusin', '#activities .thread form.new_comment textarea', function(e, input) {
-  input.up('form').down('.extra').forceShow()
-})
-
 // enable username autocompletion for main textarea in comment forms
 document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
   var form = e.findElement('form'),

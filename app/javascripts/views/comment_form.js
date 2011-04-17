@@ -32,9 +32,10 @@ Teambox.Views.CommentForm = Backbone.View.extend({
   // Event handling
 
   events: {
-    "click a.attach_icon": "toggleAttach",
-    "click a.add_hours_icon": "toggleHours",
-    "focus textarea": "revealCommentArea"
+    "click a.attach_icon"     : "toggleAttach",
+    "click a.add_hours_icon"  : "toggleHours",
+    "click a.add_watchers"    : "toggleWatchers",
+    "focus textarea"          : "revealCommentArea"
   },
 
   // Toggle the attach files area
@@ -46,6 +47,20 @@ Teambox.Views.CommentForm = Backbone.View.extend({
   // Toggle the time tracking area
   toggleHours: function(evt) {
     $(this.el).down('.hours_field').toggle().down('input').focus();
+    return false;
+  },
+
+  // Toggle the "Add Watchers" area
+  toggleWatchers: function(evt) {
+    var watchers = $(this.el).down('.add_watchers_box');
+    if (watchers) {
+      // Remove the box if there is one already
+      watchers.remove();
+    } else {
+      // Render it if it's not there
+      watchers = new Teambox.Views.Watchers({ model: this.model });
+      $(this.el).down('.actions').insert({ before: watchers.render().el });
+    }
     return false;
   },
 
