@@ -5,6 +5,17 @@ Teambox.Views.Activities = Backbone.View.extend({
   },
 
   templates: {
+    note: {
+      create: Handlebars.compile(Templates.activities.note_create),
+      edit: Handlebars.compile(Templates.activities.note_edit)
+    },
+    page: {
+      create: Handlebars.compile(Templates.activities.page_create),
+      edit: Handlebars.compile(Templates.activities.page_edit)
+    },
+    tasklist: {
+      create: Handlebars.compile(Templates.activities.task_list_create)
+    },
     raw_activity: Handlebars.compile(
       "<div class='activity'>activity_{{id}} {{target_type}} {{action}} {{#target}}{{{body_html}}}{{/target}} </div>"
     )
@@ -24,7 +35,9 @@ Teambox.Views.Activities = Backbone.View.extend({
         var view = new Teambox.Views.Thread({ model: thread });
         $('content').insert({ bottom: view.render().el });
       } else {
-        template = self.templates.raw_activity;
+        var name = + "_" + thread.get('action');
+        template = (self.templates[thread.get('target_type').toLowerCase()] || {})[thread.get('action')] ||
+          self.templates.raw_activity;
         $('content').insert({ bottom: template(thread.toJSON()) });
       }
 

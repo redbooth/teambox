@@ -24,6 +24,7 @@ _.parseFromAPI = function(json) {
     e.user = collection.findRef(e.user_id, 'User');
     e.project = collection.findRef(e.project_id, 'Project');
     e.task_list = collection.findRef(e.task_list_id, 'TaskList');
+    e.page = collection.findRef(e.page_id, 'Page');
     e.assigned = collection.findRef(e.assigned_id, 'Person');
     e.organization = collection.findRef(e.organization_id, 'Organization');
 
