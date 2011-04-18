@@ -273,6 +273,7 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (0.3.26)
     vcr (1.9.0)
+    vcr-remote-controller (0.1.0)
     webrat (0.7.2)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -340,6 +341,7 @@ DEPENDENCIES
   trimmer!
   tzinfo (~> 0.3.12)
   vcr (~> 1.9.0)
+  vcr-remote-controller
   vestal_versions (~> 1.2.2)!
   webrat
   whenever (~> 0.4.1)

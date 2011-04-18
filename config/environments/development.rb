@@ -46,19 +46,17 @@ Teambox::Application.configure do
 
 end
 
-if ENV['VCR_CASSETTE']
+
+# To record new cassettes, set you cassettes directory with VCR=directory
+# Use the remote to manage your cassettes at /vcr-remote
+
+if ENV['VCR']
   VCR.config do |c|
-    c.cassette_library_dir = 'vcr_cassettes'
+    c.cassette_library_dir = ENV['VCR']
     c.stub_with :fakeweb
+    c.allow_http_connections_when_no_cassette = true
     c.default_cassette_options = {
       :record => :all
     }
   end
-
-  VCR.insert_cassette ENV['VCR_CASSETTE']
-  pp "Recording #{ENV['VCR_CASSETTE']}"
-
-  at_exit {
-    VCR.eject_cassette
-  }
 end
