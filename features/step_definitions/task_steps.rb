@@ -31,11 +31,14 @@ Given /^the following tasks? with hours exists?:?$/ do |table|
   end
 end
 
-Given /^the task called "([^\"]*)" belongs to the task list called "([^\"]*)"$/ do |task_name, task_list_name|
+Given /^the (p[a-z]+ )?task called "([^\"]*)" belongs to the task list called "([^\"]*)"$/ do |priv_type, task_name, task_list_name|
+  priv_type = (priv_type||'').strip == 'private'
   Given %(there is a task called "#{task_name}")
   Given %(there is a task list called "#{task_list_name}")
   task_list = TaskList.find_by_name(task_list_name)
-  Task.find_by_name(task_name).update_attribute(:task_list, task_list)
+  task = Task.find_by_name(task_name)
+  task.update_attribute(:task_list, task_list)
+  task.update_attribute(:is_private, priv_type)
 end
 
 Given /^the task called "([^\"]*)" belongs to the project called "([^\"]*)"$/ do |task_name, project_name|
@@ -178,3 +181,24 @@ Then /^I should see "([^\"]+)" in the task thread title$/ do |msg|
   comment = link.text
   comment.should match(/#{msg}/)
 end
+
+When /^I change watchers for the "([^"]*)" task to "([^"]*)"$/ do |name, watchers|
+  pending # TODO
+end
+
+When /^I make the "([^"]*)" task (p[a-z]+)$/ do |name, priv_type|
+  priv_type = (priv_type||'') == 'private'
+  pending # TODO: click elements
+end
+
+Given /^the task "([^\"]+)" is watched by (@.+)$/ do |name, users|
+  task = Task.find_by_name(name)
+  
+  each_user(users) do |user|
+    task.add_watcher(user)
+  end
+  
+  task.save(:validate => false)
+end
+
+

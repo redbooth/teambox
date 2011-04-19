@@ -19,7 +19,7 @@ class Conversation < RoleRecord
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| comment['body'].blank? }
 
-  attr_accessible :name, :simple, :body, :comments_attributes
+  attr_accessible :name, :simple, :body, :comments_attributes, :is_private
   
   validates_presence_of :user
   validates_presence_of :name, :message => :no_title, :unless => :simple?

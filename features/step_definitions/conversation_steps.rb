@@ -8,15 +8,17 @@ Given /^the following conversation? with associations exists?:?$/ do |table|
   end
 end
 
-Given /^I started a conversation named "([^\"]+)"(?: in the "([^\"]*)" project)?$/ do |name, project_name|
-  Factory(:conversation, :user => @current_user, :project => (project_name ? Project.find_by_name(project_name) : @current_project), :name => name)
+Given /^I started a (p[a-z]+ )?conversation named "([^\"]+)"(?: in the "([^\"]*)" project)?$/ do |priv_type, name, project_name|
+  is_private = (priv_type||'').strip == 'private'
+  Factory(:conversation, :user => @current_user, :is_private => is_private, :project => (project_name ? Project.find_by_name(project_name) : @current_project), :name => name)
 end
 
 Given /^I started a simple conversation(?: in the "([^\"]*)" project)?$/ do |project_name|
   Factory(:conversation, :user => @current_user, :project => (project_name ? Project.find_by_name(project_name) : @current_project), :name => nil, :simple => true)
 end
 
-Given /^(@.+) started a conversation named "([^\"]+)"(?: in the "([^\"]*)" project)?$/ do |user_name, conversation_name, project_name|
+Given /^(@.+) started a (p[a-z]+ )?conversation named "([^\"]+)"(?: in the "([^\"]*)" project)?$/ do |priv_type, user_name, conversation_name, project_name|
+  is_private = (priv_type||'').strip == 'private'
   user = User.find_by_login(user_name.gsub('@',''))
   Factory(:conversation, :user => user, :project => (project_name ? Project.find_by_name(project_name) : @current_project), :name => conversation_name)
 end
@@ -63,6 +65,10 @@ Then /^(?:|I )should not see any conversations$/ do
   else
     assert page.has_content?(text)
   end
+end
+
+When /^I change watchers for the "([^"]*)" conversation to "([^"]*)"$/ do |name, watchers|
+  pending # TODO
 end
 
 When /^(?:|I )fill in the conversation's comment box with "([^\"]*)"(?: within "([^\"]*)")?$/ do |value, selector|
