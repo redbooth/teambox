@@ -1,7 +1,7 @@
 class User
-  
+
   attr_accessor :performing_reset
-  
+
   def send_activation_email
     self.generate_login_code!
     Emailer.send_email :confirm_email, self.id
@@ -11,7 +11,7 @@ class User
     self.generate_login_code!
     Emailer.send_email :reset_password, self.id
   end
-  
+
   def is_active?
     Teambox.config.email_confirmation_require ? self.confirmed_user : true
   end

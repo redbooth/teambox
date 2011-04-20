@@ -1,0 +1,8 @@
+- if !@current_user.is_active?
+  .top_notice
+    %strong
+      = t('.go_to_your_email_to_confirm', :email => @current_user.email)
+    %a.button{ :href => unconfirmed_email_user_path(current_user, :resend => true) }
+      = t('.resend_email')
+    = t('common.or')
+    = link_to t('.change_email'), account_settings_path

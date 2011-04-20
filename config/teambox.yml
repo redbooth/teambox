@@ -13,7 +13,7 @@ defaults: &defaults
   # Hour of the day at which daily reminders will be sent
   daily_task_reminder_email_time: 6
   
-  # Email confirmaiton is require to login
+  # Email confirmation is required (will be asked on top of every inside page)
   email_confirmation_require: true
 
   # Gravatar fallback type in case a user doesn't have an avatar

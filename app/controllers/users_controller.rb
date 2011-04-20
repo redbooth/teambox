@@ -66,9 +66,10 @@ class UsersController < ApplicationController
     logout_keeping_session!
     @user = User.new(params[:user])
 
-    @user.confirmed_user = ((@invitation && @invitation.email == @user.email) or 
-                            (session[:profile] && session[:profile][:email] == @user.email) or
-                            Rails.env.development? or !Teambox.config.email_confirmation_require)
+    @user.confirmed_user = (
+      (@invitation && @invitation.email == @user.email) or
+      (session[:profile] && session[:profile][:email] == @user.email) or
+      !Teambox.config.email_confirmation_require)
 
     if @user && @user.save
       self.current_user = @user
@@ -132,7 +133,6 @@ class UsersController < ApplicationController
     end
 
     @email = current_user.email
-    render :layout => 'sessions'
   end
 
   def confirm_email
@@ -159,7 +159,7 @@ class UsersController < ApplicationController
   def text_styles
     render :layout => false
   end
-  
+
   def email_posts
     @project_permalink = params[:project_permalink]||''
     @target_type = params[:target_type]||''

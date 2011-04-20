@@ -323,7 +323,7 @@ en:
       problems_title: Problems?
       resend_html: "Can't find the email? Press <a href='%{link}'>here</a> to re-send the activation email."
       spam: "Make sure the email wasn't classified as spam by your email client."
-      wrong_address_html: "Wrong address? If you mistyped your email address, <a href='%{link}'>cancel the signup process</a> and re-create your account with a valid address."
+      wrong_email_html: "Wrong address? If you mistyped your email address, <a href='%{link}'>you can change it now</a>."
       problems_html: "If you're still having problems, please contact us at %{support}"
     daily_task_reminder_email:
       daily_task_reminder: "Daily task reminder"
@@ -1256,6 +1256,10 @@ en:
       copy7_html: "Your business matters! <a href='%{link}'>Get the best support</a> for Teambox with our premium plans."
 
   shared:
+    confirm_email:
+      go_to_your_email_to_confirm: Go to %{email} to confirm your account.
+      resend_email: Resend the instructions
+      change_email: use a different e-mail address
     strip:
       archived_html: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
     collapsed_mode: View threads collapsed
