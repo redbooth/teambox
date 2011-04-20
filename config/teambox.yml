@@ -154,6 +154,22 @@ production:
 
 test: &test
   <<: *defaults
+  providers:
+  - :provider: github
+    :key: aaaa
+    :secret: aaaa
+  - :provider: twitter
+    :key: aaaa
+    :secret: aaaa
+  - :provider: facebook
+    :key: aaaa
+    :secret: aaaa
+  - :provider: google
+    :key: teambox.com
+    :secret: aaaa
+  - :provider: linked_in
+    :key: aaaa
+    :secret: aaaa
   app_domain: 127.0.0.1
   allow_outgoing_email: false
   asset_max_file_size: 1
