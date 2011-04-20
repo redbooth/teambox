@@ -24,7 +24,7 @@
       - "236"
       vary: 
       - Accept-Encoding
-    body: oauth_token=oauth_token_xyz&oauth_token_secret=oauth_token_secret_xyz&oauth_callback_confirmed=true&xoauth_request_auth_url=https%3A%2F%2Fapi.linkedin.com%2Fuas%2Foauth%2Fauthorize&oauth_expires_in=599
+    body: oauth_token=<%= Digest::SHA1.hexdigest name + 'oauth_token' %>&oauth_token_secret=<%= Digest::SHA1.hexdigest name + 'oauth_token_secret' %>&oauth_callback_confirmed=true&xoauth_request_auth_url=https%3A%2F%2Fapi.linkedin.com%2Fuas%2Foauth%2Fauthorize&oauth_expires_in=599
     http_version: "1.1"
 - !ruby/struct:VCR::HTTPInteraction 
   request: !ruby/struct:VCR::Request 
@@ -51,7 +51,7 @@
       - "156"
       vary: 
       - Accept-Encoding
-    body: oauth_token=oauth_token_xyz&oauth_token_secret=oauth_token_secret_xyz&oauth_expires_in=0&oauth_authorization_expires_in=0
+    body: oauth_token=<%= Digest::SHA1.hexdigest name + 'oauth_token' %>&oauth_token_secret=<%= Digest::SHA1.hexdigest name + 'oauth_token_secret' %>&oauth_expires_in=0&oauth_authorization_expires_in=0
     http_version: "1.1"
 - !ruby/struct:VCR::HTTPInteraction 
   request: !ruby/struct:VCR::Request 
