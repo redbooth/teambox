@@ -27,6 +27,7 @@ gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
 gem 'hpricot', '~> 0.8.2'
 gem 'json'
 gem 'oa-oauth', :require => 'omniauth/oauth'
+gem 'hashie'
 gem 'tilt', '~> 1.2.2'
 gem 'choices', :git => "git://github.com/teambox/choices.git"
 gem 'rack-staticifier', :git => "https://github.com/remi/rack-staticifier.git"
