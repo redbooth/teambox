@@ -19,9 +19,9 @@ class AppLink < ActiveRecord::Base
       # We found something for this user
       if app_link
         # The user in trying to link a second account
-        return app_link if app_link.app_user_id == auth_hash.uid
+        return app_link unless app_link.app_user_id == auth_hash.uid
         # The user is trying to link an account already linked with another user
-        return app_link unless app_link.user == current_user
+        return app_link unless app_link.user.nil? or app_link.user == current_user
       end
     else
       # The user is trying to login or signup, look for this UID
@@ -32,6 +32,7 @@ class AppLink < ActiveRecord::Base
     app_link ||= self.new(:provider => provider, :app_user_id => auth_hash.uid, :user => current_user)
 
     # Update attribute everytime we can
+    app_link.user = current_user if current_user and app_link.user.nil?
     app_link.custom_attributes = auth_hash.to_hash
     app_link.credentials = auth_hash.credentials.to_hash
 
