@@ -28,8 +28,10 @@ class UsersController < ApplicationController
       return redirect_to projects_path
     else
       # Create an account from OAuth
-      if session[:profile] and session[:app_link]
-        signup_from_oauth(session[:profile], session[:app_link])
+      if session[:app_link_id] and app_link = AppLink.find_by_id(session[:app_link_id])
+        signup_from_oauth(app_link)
+        @conflict = true if app_link.sign_up_conflict?
+        @provider = app_link.provider.humanize
       # Regular invitation
       else
         @user = User.new
@@ -65,18 +67,21 @@ class UsersController < ApplicationController
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
+    if session[:app_link_id] and app_link = AppLink.find_by_id(session[:app_link_id])
+      app_link_email = app_link.detect_custom_attribute { |k,v| k == 'email' }
+    end
 
     @user.confirmed_user = (
       (@invitation && @invitation.email == @user.email) or
-      (session[:profile] && session[:profile][:email] == @user.email) or
+      (app_link_email && app_link_email == @user.email) or
       !Teambox.config.email_confirmation_require)
 
     if @user && @user.save
       self.current_user = @user
 
-      if applink = AppLink.find_by_id(session[:applink])
-        applink.user = @user
-        applink.save
+      if app_link
+        app_link.user = @user
+        app_link.save
       end
 
       if @invitation
@@ -239,17 +244,28 @@ class UsersController < ApplicationController
       end
     end
 
-    def signup_from_oauth(profile, app_link)
+    def signup_from_oauth(app_link)
+      app_link = AppLink.find_by_id session[:app_link_id]
       @user ||= User.new
-      @user.first_name    = @user.first_name.presence || profile[:first_name]
-      @user.last_name     = @user.last_name.presence  || profile[:last_name]
-      if profile[:login]
-        @user.login     ||= User.find_available_login(profile[:login])
+
+      @user.first_name    ||= app_link.detect_custom_attribute {|k,v| k == 'first_name' }
+      @user.last_name     ||= app_link.detect_custom_attribute {|k,v| k == 'last_name' }
+
+      if @user.first_name.blank? and @user.last_name.blank? and name = app_link.detect_custom_attribute {|k,v| k == 'name' and v.split(' ').size > 1 }
+        name = name.split(' ')
+        @user.first_name = name.first
+        @user.last_name = name.last
+      end
+      if login = app_link.detect_custom_attribute {|k,v| /(login|username|nickname)/.match(k) }
+        @user.login     ||= User.find_available_login(login)
+      end
+      if locale = app_link.detect_custom_attribute {|k,v| ['locale','lang','language'].include? k }
+        @user.locale = locale
       end
 
-      @user.email       ||= profile[:email] unless User.find_by_email(profile[:email])
-
-      @provider = profile[:provider]
+      if email = app_link.detect_custom_attribute {|k,v| k == 'email' }
+        @user.email     ||= email unless User.find_by_email(email)
+      end
     end
 
     def can_users_signup?

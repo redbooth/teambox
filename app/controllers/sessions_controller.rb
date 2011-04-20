@@ -10,8 +10,6 @@ class SessionsController < ApplicationController
   before_filter :community_version_check, :except => [:create, :backdoor]
 
   def new
-    clear_auth_session! unless @conflict = session[:conflict] and @profile = session[:profile]
-
     @signups_enabled = signups_enabled?
     respond_to do |format|
       format.html { redirect_to root_path if logged_in? }
@@ -33,11 +31,13 @@ class SessionsController < ApplicationController
       handle_remember_cookie! true
       flash[:error] = nil
 
-      if session[:app_link]
-        app_link = AppLink.find_by_id(session[:app_link])
-        app_link.user = user
-        app_link.save
-        clear_auth_session!
+      if session[:app_link_id]
+        if app_link = AppLink.find_by_id(session[:app_link_id])
+          app_link.user = user
+          app_link.save
+          session.delete :app_link_id
+          flash[:success] = t(:'oauth.account_linked')
+        end
       end
 
       respond_to do |format|
@@ -54,7 +54,6 @@ class SessionsController < ApplicationController
 
   def destroy
     logout_killing_session!
-    clear_auth_session!
     redirect_back_or_default root_path
   end
   
@@ -81,12 +80,6 @@ protected
   def note_failed_signin
     flash[:error] = t('sessions.new.login_failed', :login => params[:login])
     logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
-  end
-
-  def clear_auth_session!
-    session.delete :profile
-    session.delete :app_link
-    session.delete :conflict
   end
 
   def community_version_check

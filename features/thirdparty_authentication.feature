@@ -43,7 +43,6 @@ Feature: Authentication with third party service
   Scenario Outline: The user try to signup with a third party account, but he already has a Teambox account, not yet linked
     Given @charles exists
     When I authenticate on "<service>" with "Charles" account
-    And I wait for 20 seconds
     Then I should see "We already have an account on the system"
     And I go to the login page
     And I fill in "Email or Username" with "charles"

@@ -1867,6 +1867,7 @@ en:
     no_date_assigned: No date assigned
 
   oauth:
+    authentication_failure: Authentication failure, '%{message}'
     this_account_will_be_linked_to: "This account will be linked with %{provider}"
     account_linked: "Your account has been linked."
     app_unlinked: "App unlinked"
@@ -1881,11 +1882,7 @@ en:
     your_account_is_not_linked_html: "Your %{provider} profile is <strong>not linked</strong> to Teambox."
     link_account: Link account.
     unlink_account: Unlink account.
-    user_exists: This %{provider} profile is not linked with any account yet.
-    user_already_exists_by_email: "Link '%{email}' to your Teambox account"
-    user_already_exists_by_login: "The username '%{login}' is already taken"
-    user_exists_instruction: If you already have a Teambox account, log in to link it automatically to your %{provider} profile.
-    user_exists_is_not_yours_html: If you don't own the account '%{account}', %{signup_for_a_new_account}.
+    sign_up_conflict: We already have an account on the system with same username and/or email. If you already have an account you should login to your account instead of creating a new one.
     signup_for_a_new_account: click here to sign up for a new account
     authorize:
       title: "Authorize Application"
