@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
     @last_activity = @threads.last
 
     respond_to do |f|
-      f.html
+      f.html  { redirect_to new_project_path unless current_user.projects.any? }
       f.m     { redirect_to activities_path if request.path == '/' }
       f.rss   { render :layout  => false }
       f.ics   { render :text    => Project.to_ical(@projects, params[:filter] == 'mine' ? current_user : nil, request.host, request.port) }
