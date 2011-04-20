@@ -55,3 +55,13 @@ Feature: Authentication with third party service
       | Github   |
       | Twitter  |
       | Facebook |
+
+  Scenario: The user don't complete signup with a third-party and login to link is account.
+    Given @charles exists
+    When I authenticate on "Twitter" with "Charles" account
+    Then I should see "We already have an account on the system"
+    Then I go to the logout page
+    Then I am logged in as @charles
+    When I authenticate on "Twitter" with "Charles" account
+    Then I should not see 'This service is already linked to another account on the system.'
+    And I should see "Your account has been linked."

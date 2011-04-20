@@ -17,6 +17,8 @@ module NavigationHelpers
       account_notifications_path
     when /the login page/
       login_path
+    when /the logout page/
+      logout_path
     when /the forgot password page/
       "/forgot"
     when /the your data page/
