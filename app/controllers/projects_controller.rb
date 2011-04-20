@@ -19,7 +19,14 @@ class ProjectsController < ApplicationController
     @last_activity = @threads.last
 
     respond_to do |f|
-      f.html  { redirect_to new_project_path unless current_user.projects.any? }
+      f.html do
+        # If I can create a project and I don't have any, show me the create a project screen
+        if can?(:create_project, @current_user) and !current_user.projects.any?
+          @project = Project.new
+          @project.build_organization
+          render 'projects/new'
+        end
+      end
       f.m     { redirect_to activities_path if request.path == '/' }
       f.rss   { render :layout  => false }
       f.ics   { render :text    => Project.to_ical(@projects, params[:filter] == 'mine' ? current_user : nil, request.host, request.port) }
