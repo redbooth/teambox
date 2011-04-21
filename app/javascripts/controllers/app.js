@@ -1,11 +1,13 @@
 Teambox.Controllers.AppController = Backbone.Controller.extend({
   routes: {
-    '!/'                : 'index',
-    '!/today'           : 'today',
-    '!/my_tasks'        : 'my_tasks',
-    '!/all_tasks'       : 'all_tasks',
-    '!/projects'        : 'projects',
-    '!/search/:terms'   : 'search'
+    '!/'                  : 'index',
+    '!/today'             : 'today',
+    '!/my_tasks'          : 'my_tasks',
+    '!/all_tasks'         : 'all_tasks',
+    '!/projects'          : 'projects',
+    '!/search/:terms'     : 'search',
+    '!/conversations/new' : 'conversations_new',
+    '!/tasks/new'         : 'tasks_new'
   },
 
   index: function() {
@@ -36,6 +38,16 @@ Teambox.Controllers.AppController = Backbone.Controller.extend({
   search: function(terms) {
     Teambox.search_view.getResults(terms);
   },
+
+  conversations_new: function() {
+    $('content').update( Handlebars.compile(Templates.conversations['new'])() );
+  },
+
+  tasks_new: function() {
+    $('content').update( 'new task' );
+  },
+
+  // Utility methods
 
   highlightSidebar: function(id) {
     Teambox.sidebar_view.selectElement($(id), true);

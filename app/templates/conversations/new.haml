@@ -1,0 +1,32 @@
+%h2= t('conversations.new.title')
+
+%form.new_comment.new_conversation
+  %div{ :style => "margin:0;padding:0;display:inline" }
+    <input name="utf8" type="hidden" value="✓">
+    <input name="_method" type="hidden" value="put">
+  .field.text_area
+    %a.micro_avatar.my_avatar
+    .textarea
+      <textarea cols="40" name="task[comments_attributes][0][body]" placeholder="Define what needs to be done, assign this task to somebody." rows="20" autocomplete="off" style=""></textarea>
+      .autocomplete{ :style => "display: none" }
+  .extra{ :style => "display: none" }
+    .upload_area{ :style => "display: none" }
+      <p>Select a file to upload to Teambox</p>
+      <input id="upload_file" name="task[comments_attributes][0][uploads_attributes][0][asset]" type="file">
+    .actions
+      .attach
+        %span= t('comments.fields.attach')
+        <a href="#uploads" class="attach_icon hoverable" title="Attach a file">Attachment</a>
+        .google_docs_attachment
+          %a{ :href => "/google_docs", :rel => "facebox" }
+            <img alt="Icon_6_document" class="google_docs_logo" src="/images/google_docs/icon_6_document.gif">
+          .google_docs_attachment_form_area{ :'data-object-name' => "task[comments_attributes][0]" }
+            .fields
+            %ul.file_list
+        <a href="#watchers" class="add_watchers hoverable" title="Notify people">Watchers</a>
+      %span.new{ :style => "display: none" }
+        ← &nbsp;&nbsp; Select <b>Notify people</b> to send notifications for this conversation.
+    .submit
+      %span.help
+        <a href="/text_styles" class="style_icon" rel="facebox" title="Formatting help"></a>
+      <input data-disable-with="Sending…" id="task[comments_attributes][0]_submit" name="commit" type="submit" value="Save">

@@ -2,7 +2,8 @@
   %ol.global_navigation
     /= micro_avatar(current_user)
     %li.quick_add
-      = link_to "Quick add", "#", :class => 'quick_add_link'
+      = link_to "New conversation", "#!/conversations/new" #, :class => 'quick_add_link'
+      = link_to "New task", "#!/tasks/new" #, :class => 'quick_add_link'
       .pane{ :style => 'display: none' }
         = render 'tasks/form', :project => Project.first, :task_list => TaskList.first, :task => TaskList.first.tasks.build
     %li#username
