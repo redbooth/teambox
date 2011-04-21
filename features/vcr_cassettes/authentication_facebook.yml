@@ -1,7 +1,7 @@
 --- 
 - !ruby/struct:VCR::HTTPInteraction 
   request: !ruby/struct:VCR::Request 
-    method: :post
+    method: :get
     uri: https://graph.facebook.com:443/oauth/access_token
     body: 
     headers: 

@@ -1,7 +1,7 @@
 --- 
 - !ruby/struct:VCR::HTTPInteraction 
   request: !ruby/struct:VCR::Request 
-    method: :post
+    method: :get
     uri: https://github.com:443/login/oauth/access_token
     body: 
     headers: 

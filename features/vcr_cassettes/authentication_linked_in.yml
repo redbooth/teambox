@@ -56,7 +56,7 @@
 - !ruby/struct:VCR::HTTPInteraction 
   request: !ruby/struct:VCR::Request 
     method: :get
-    uri: https://api.linkedin.com:443/v1/people/~:(id,first-name,last-name,headline,member-url-resources,picture-url,location)
+    uri: https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,member-url-resources,picture-url,location,public-profile-url)
     body: 
     headers: 
       user-agent: 
