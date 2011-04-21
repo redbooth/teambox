@@ -8,7 +8,7 @@ end
 Then /the fields "([^"]*)" should contain "([^"]*)"$/ do |fields, values|
   field = fields.split(',')
   value = values.split(',')
-  (0..field.size).each do |i|
-    Then %(the "#{field[i]}" field should contain "#{value[i]}")
+  (0..field.size-1).each do |index|
+    Then %(the "#{field[index]}" field should contain "#{value[index]}")
   end
 end
