@@ -26,7 +26,7 @@ gem 'pg', '~> 0.9.0', :require => nil, :group => 'pg'
 gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
 gem 'hpricot', '~> 0.8.2'
 gem 'json'
-gem 'oa-oauth', :require => 'omniauth/oauth'
+gem 'oa-oauth', '= 0.2.3', :require => 'omniauth/oauth'
 gem 'hashie'
 gem 'tilt', '~> 1.2.2'
 gem 'choices', :git => "git://github.com/teambox/choices.git"
