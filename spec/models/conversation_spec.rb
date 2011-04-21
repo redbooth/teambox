@@ -256,6 +256,20 @@ describe Conversation do
       task = conversation.convert_to_task!
       lambda {Conversation.find(conversation.id)}.should raise_error(ActiveRecord::RecordNotFound)
     end
+    
+    it "should mark all related activities as private when created as private" do
+      conversation = Factory.create(:conversation, :is_private => true)
+      activities_for_thread(conversation) { |activity| activity.is_private.should == true }
+    end
+    
+    it "should update the private status of related activities each time its updated" do
+      conversation = Factory.create(:conversation, :is_private => true)
+      activities_for_thread(conversation) { |activity| activity.is_private.should == true }
+      conversation.update_attribute(:is_private, false)
+      activities_for_thread(conversation) { |activity| activity.is_private.should == false }
+      conversation.update_attribute(:is_private, true)
+      activities_for_thread(conversation) { |activity| activity.is_private.should == true }
+    end
   end
 end
 

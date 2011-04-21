@@ -9,6 +9,7 @@ module Watchable
     model.has_many :watcher_tags, :as => :watchable, :class_name => 'Watcher', :dependent => :destroy
     #Make it obvious that autosave is acting here
     model.has_many :watchers, :through => :watcher_tags, :source => :user, :autosave => true
+    model.after_save :update_private
   end
 
   def watchers_ids
@@ -49,11 +50,14 @@ module Watchable
     people_watching.select(:id).map(&:id)
   end
   
-  def set_private!(value)
-    self.is_private = value
-    Activity.where(:target_type => self.class.to_s, :target_id => self.id).each{|a| a.update_attribute(:is_private, value)}
-    Activity.where(:comment_target_type => self.class.to_s, :comment_target_id => self.id).each{|a| a.update_attribute(:is_private, value)}
-    save!
+  def update_private
+    return unless self.respond_to?(:is_private)
+    if !new_record? and is_private_changed?
+      Activity.where(:target_type => self.class.to_s, :target_id => self.id).each{|a| a.update_attribute(:is_private, is_private)}
+      Activity.where(:comment_target_type => self.class.to_s, :comment_target_id => self.id).each{|a| a.update_attribute(:is_private, is_private)}
+    end
+    
+    true
   end
 
   protected

@@ -147,6 +147,14 @@ def dump_test_data
   ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(TeamboxData.new.serialize(Organization.all, Project.all)))
 end
 
+def activities_for_thread(target, &block)
+  Activity.all.each do |activity|
+    if activity.comment_target == target or activity.target == target
+      yield activity
+    end
+  end
+end
+
 # Backwards compatibility fix: this way we can use it in subject blocks
 def description
   self.example.description

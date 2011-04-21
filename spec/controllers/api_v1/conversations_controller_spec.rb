@@ -129,7 +129,7 @@ describe ApiV1::ConversationsController do
     
     it "does not show unwatched private conversations in a project" do
       login_as @user
-      @conversation.set_private!(true)
+      @conversation.update_attribute(:is_private, true)
       
       get :index, :project_id => @project.permalink
       response.should be_success
@@ -161,7 +161,7 @@ describe ApiV1::ConversationsController do
     
     it "does not show private conversations unwatched by the user" do
       login_as @user
-      @conversation.set_private!(true)
+      @conversation.update_attribute(:is_private, true)
       
       get :show, :project_id => @project.permalink, :id => @conversation.id
       response.status.should == 401
@@ -170,7 +170,7 @@ describe ApiV1::ConversationsController do
     it "shows private conversations watched by the user" do
       login_as @user
       @conversation.add_watcher(@user)
-      @conversation.set_private!(true)
+      @conversation.update_attribute(:is_private, true)
       
       get :show, :project_id => @project.permalink, :id => @conversation.id
       response.should be_success

@@ -163,7 +163,7 @@ describe ApiV1::ActivitiesController do
       login_as @user
       
       conversation = Factory(:conversation, :project => @project)
-      conversation.set_private!(true)
+      conversation.update_attribute(:is_private, true)
       
       get :index
       response.should be_success
@@ -200,7 +200,7 @@ describe ApiV1::ActivitiesController do
       login_as @user
       
       conversation = Factory(:conversation, :project => @project)
-      conversation.set_private!(true)
+      conversation.update_attribute(:is_private, true)
       
       activity = @project.activities.where(:comment_target_type => 'Conversation').order('id DESC').first
       

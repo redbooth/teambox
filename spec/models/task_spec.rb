@@ -292,4 +292,18 @@ describe Task do
     end
   end
 
+  it "should mark all related activities as private when created as private" do
+    task = Factory.create(:task, :is_private => true)
+    activities_for_thread(task) { |activity| activity.is_private.should == true }
+  end
+  
+  it "should update the private status of related activities each time its updated" do
+    task = Factory.create(:task, :is_private => true)
+    activities_for_thread(task) { |activity| activity.is_private.should == true }
+    task.update_attribute(:is_private, false)
+    activities_for_thread(task) { |activity| activity.is_private.should == false }
+    task.update_attribute(:is_private, true)
+    activities_for_thread(task) { |activity| activity.is_private.should == true }
+  end
+
 end
