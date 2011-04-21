@@ -138,7 +138,7 @@ describe ApiV1::CommentsController do
     it "shows no comments for private objects" do
       login_as @observer
       conversation = Factory.create(:conversation, :project => @project)
-      conversation.update_attribute(:is_private, true)
+      conversation.set_private!(true)
       
       get :index, :conversation_id => conversation.id
       response.status.should == 401

@@ -161,7 +161,7 @@ describe ApiV1::TasksController do
     
     it "does not show unwatched private tasks in a project" do
       login_as @user
-      @task.update_attribute(:is_private, true)
+      @task.set_private!(true)
       
       get :index, :project_id => @project.permalink
       response.should be_success
@@ -211,7 +211,7 @@ describe ApiV1::TasksController do
     
     it "does not show private tasks unwatched by the user" do
       login_as @user
-      @task.update_attribute(:is_private, true)
+      @task.set_private!(true)
       
       get :show, :project_id => @project.permalink, :id => @task.id
       response.status.should == 401
@@ -220,7 +220,7 @@ describe ApiV1::TasksController do
     it "shows private tasks watched by the user" do
       login_as @user
       @task.add_watcher(@user)
-      @task.update_attribute(:is_private, true)
+      @task.set_private!(true)
       
       get :show, :project_id => @project.permalink, :id => @task.id
       response.should be_success

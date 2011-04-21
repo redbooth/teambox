@@ -26,7 +26,9 @@ class Conversation
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
       :watchers => Array.wrap(watcher_ids),
-      :comments_count => comments_count
+      :comments_count => comments_count,
+      :first_comment => first_comment ? first_comment.body : false,
+      :is_private => is_private
     }
     
     base[:type] = self.class.to_s if options[:emit_type]

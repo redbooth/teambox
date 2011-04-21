@@ -38,7 +38,7 @@ Given /^the (p[a-z]+ )?task called "([^\"]*)" belongs to the task list called "(
   task_list = TaskList.find_by_name(task_list_name)
   task = Task.find_by_name(task_name)
   task.update_attribute(:task_list, task_list)
-  task.update_attribute(:is_private, priv_type)
+  task.set_private!(priv_type)
 end
 
 Given /^the task called "([^\"]*)" belongs to the project called "([^\"]*)"$/ do |task_name, project_name|

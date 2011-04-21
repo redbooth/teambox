@@ -35,7 +35,8 @@ class Task
       :status => status,
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
-      :watchers => Array.wrap(watcher_ids)
+      :watchers => Array.wrap(watcher_ids),
+      :is_private => is_private
     }
     
     base[:type] = self.class.to_s if options[:emit_type]

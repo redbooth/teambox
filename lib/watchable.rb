@@ -48,6 +48,13 @@ module Watchable
   def people_ids_watching
     people_watching.select(:id).map(&:id)
   end
+  
+  def set_private!(value)
+    self.is_private = value
+    Activity.where(:target_type => self.class.to_s, :target_id => self.id).each{|a| a.update_attribute(:is_private, value)}
+    Activity.where(:comment_target_type => self.class.to_s, :comment_target_id => self.id).each{|a| a.update_attribute(:is_private, value)}
+    save!
+  end
 
   protected
 
