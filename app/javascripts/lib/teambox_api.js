@@ -31,6 +31,8 @@ _.parseFromAPI = function(json) {
     // Insert a method to generate URLs for this item
     e.url = function() {
       switch(this.type) {
+        case "Comment":
+          return this.target.url();
         case "Conversation":
           return "#!/projects/"+this.project.permalink+"/conversations/"+this.id;
         case "Task":
@@ -84,7 +86,7 @@ _.parseFromAPI = function(json) {
   };
 
   // Fetch targets and targets of targets from reference objects
-  json.references.each(function(r) {
+  _(json.references).each(function(r) {
     fetchReferences(json, r);
   });
 
