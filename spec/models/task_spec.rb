@@ -297,13 +297,16 @@ describe Task do
     activities_for_thread(task) { |activity| activity.is_private.should == true }
   end
   
-  it "should update the private status of related activities each time its updated" do
+  it "should update the private status of related activities and comments each time its updated" do
     task = Factory.create(:task, :is_private => true)
     activities_for_thread(task) { |activity| activity.is_private.should == true }
+    task.comments.reload.each{|c| c.is_private.should == true }
     task.update_attribute(:is_private, false)
     activities_for_thread(task) { |activity| activity.is_private.should == false }
+    task.comments.reload.each{|c| c.is_private.should == false }
     task.update_attribute(:is_private, true)
     activities_for_thread(task) { |activity| activity.is_private.should == true }
+    task.comments.reload.each{|c| c.is_private.should == true }
   end
     
     it "should not dispatch notification emails when private" do

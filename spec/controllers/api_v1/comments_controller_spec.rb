@@ -184,6 +184,16 @@ describe ApiV1::CommentsController do
       references.include?("#{@comment.user_id}_User").should == true
       references.include?("#{person.id}_Person").should == true
     end
+    
+    it "does not show unwatched private comments in a project" do
+      login_as @owner
+      @target.update_attribute(:is_private, true)
+      
+      get :index
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
   end
   
   describe "#show" do
@@ -219,6 +229,25 @@ describe ApiV1::CommentsController do
       
       get :show, :id => other_comment.id
       response.should_not be_success
+    end
+    
+    it "does not show private comments with targets unwatched by the user" do
+      login_as @owner
+      @target.update_attribute(:is_private, true)
+      
+      get :show, :project_id => @project.permalink, :id => @target.comment_ids.first
+      response.status.should == 401
+    end
+    
+    it "shows private private comments with targets watched by the user" do
+      login_as @owner
+      @target.add_watcher(@owner)
+      @target.update_attribute(:is_private, true)
+      
+      get :show, :project_id => @project.permalink, :id => @target.comment_ids.first
+      response.should be_success
+      
+      JSON.parse(response.body)['id'].to_i.should == @target.comment_ids.first
     end
   end
   

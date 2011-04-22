@@ -140,6 +140,7 @@ class Comment < ActiveRecord::Base
   def copy_ownership_from_target # before_create
     self.user_id ||= target.user_id
     self.project_id ||= target.project_id
+    self.is_private = target.is_private if target.respond_to?(:is_private)
     true
   end
 

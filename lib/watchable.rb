@@ -55,6 +55,7 @@ module Watchable
     if !new_record? and is_private_changed?
       Activity.where(:target_type => self.class.to_s, :target_id => self.id).each{|a| a.update_attribute(:is_private, is_private)}
       Activity.where(:comment_target_type => self.class.to_s, :comment_target_id => self.id).each{|a| a.update_attribute(:is_private, is_private)}
+      Comment.where(:target_type => self.class.to_s, :target_id => self.id).each{|a| a.update_attribute(:is_private, is_private)}
     end
     
     true
