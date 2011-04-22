@@ -270,6 +270,19 @@ describe Conversation do
       conversation.update_attribute(:is_private, true)
       activities_for_thread(conversation) { |activity| activity.is_private.should == true }
     end
+    
+    it "should not dispatch notification emails when private" do
+      watcher = Factory.create(:user)
+      Emailer.should_not_receive(:notify_conversation)
+      
+      conversation = Factory.create(:conversation, :is_private => true)
+      conversation.project.add_user(watcher)
+      conversation.add_watcher(watcher)
+      conversation.comments.create_by_user conversation.user, {:body => 'Nononotify'}
+      conversation.save
+      
+      Conversation.find(conversation.id).comments.length.should == 2
+    end
   end
 end
 
