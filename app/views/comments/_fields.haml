@@ -22,6 +22,14 @@
   .add_watchers_box{ :style => 'display: none' }
     %p= t('comments.watchers.explain') 
 
+  .private_options{ :style => 'display: none' }
+    %label.option.normal
+      %input{ :type => "radio", :name => "privacy", :value => "normal" }
+      = t('comments.private.public')
+    %label.option.private
+      %input{ :type => "radio", :name => "privacy", :value => "private" }
+      = t('comments.private.private')
+
   .actions
     .attach
       %span= t('.attach') + ": "
@@ -31,6 +39,7 @@
       - if task_form
         = link_to t('comments.hours.tooltip'), '#hours', :class => 'add_hours_icon hoverable', :title => "Log hours"
       = link_to "Watchers", '#watchers', :class => 'add_watchers hoverable', :title => "Notify people"
+      = link_to "Privacy", '#privacy', :class => 'private_switch hoverable', :title => "Control who can see this element"
 
     - if task_form
       .task_actions

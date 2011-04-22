@@ -1108,6 +1108,9 @@ en:
     watchers:
       explain: "Click on users to @mention them in your comment. Mentioned users will receive email notifications for your message and others after it."
       popup_note_html: "Select <b>Notify people</b> to send notifications for this conversation."
+    private:
+      public: This element is visible to everybody in this project
+      private: This element is only visible to people you specify...
   teambox_datas:
     new_import:
       title: "Import data"

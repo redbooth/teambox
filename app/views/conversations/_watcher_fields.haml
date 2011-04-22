@@ -15,7 +15,7 @@
           .user
             %label
               = check_box_tag 'conversation[watcher_ids][]', user.id, true, :id => nil
-              =h user.login
+              = user.name
           
       .clear
       %p= t('.subscribe_note_html')
