@@ -7,7 +7,7 @@ Teambox.Views.Sidebar = Backbone.View.extend({
     _.bindAll(this, 'renderTaskCounter');
 
     // TODO: bind only to change
-    Teambox.my_tasks.bind('change', this.renderTaskCounter);
+    Teambox.my_tasks.bind('all', this.renderTaskCounter);
 
     // Hide folded navigation bar elements
     $(this.el).select('.contained').invoke('hide');
