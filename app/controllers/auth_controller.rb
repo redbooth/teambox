@@ -29,7 +29,7 @@ class AuthController < ApplicationController
   end
 
   def failure
-    redirect_on_failure params[:message]
+    redirect_on_failure params[:message].humanize
   end
 
   protected
