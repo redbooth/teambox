@@ -1,5 +1,5 @@
 Then /^(?:|I )authenticate on "([^"]*)" with "([^"]*)" account$/ do |service, name|
-  VCR.use_cassette("authentication_#{service.underscore}", :erb => {:name => name.downcase} ) do
+  VCR.use_cassette("authentication_#{service.underscore}", :erb => {:name => name.downcase}, :match_requests_on => [:method, :path]) do
     visit("/auth/#{service.underscore}")
     visit("/auth/#{service.underscore}/callback")
   end
