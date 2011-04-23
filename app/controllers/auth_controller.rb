@@ -37,9 +37,9 @@ class AuthController < ApplicationController
     message ||= "communication error"
     flash[:error] = t('oauth.authentication_failure', :message => message)
     if logged_in?
-      return redirect_to login_url
-    else
       return redirect_to account_linked_accounts_url
+    else
+      return redirect_to login_url
     end
   end
 end
