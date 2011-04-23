@@ -34,7 +34,7 @@ class AppLink < ActiveRecord::Base
     # Update attribute everytime we can
     app_link.user = current_user if current_user and app_link.user.nil?
     app_link.custom_attributes = auth_hash.to_hash
-    app_link.credentials = auth_hash.credentials.to_hash
+    app_link.credentials = auth_hash.credentials.to_hash if auth_hash.credentials
 
     app_link.save!
     app_link
