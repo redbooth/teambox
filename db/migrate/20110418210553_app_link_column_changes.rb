@@ -4,7 +4,9 @@ class AppLinkColumnChanges < ActiveRecord::Migration
 
     # Serialize credentials, since they might be given in different format depending on the provider
     AppLink.find_each do |app_link|
-      credentials = {'token' => app_link[:access_token], 'secret' => app_link[:access_secret]}
+      credentials = {}
+      credentials['token'] = app_link[:access_token]  if app_link[:access_token]
+      credentials['secret'] = app_link[:access_secret] if app_link[:access_secret]
       app_link.credentials = credentials
       app_link.save
     end
@@ -18,9 +20,10 @@ class AppLinkColumnChanges < ActiveRecord::Migration
     add_column :app_links, :access_secret, :string
 
     AppLink.find_each do |app_link|
-      credentials = {'token' => app_link[:access_token], 'secret' => app_link[:access_secret]}
-      app_link[:access_token]  = app_link.credentials['token']
-      app_link[:access_secret] = app_link.credentials['secret']
+      if app_link.credentials
+        app_link[:access_token]  = app_link.credentials['token'] if app_link.credentials.has_key?('token')
+        app_link[:access_secret] = app_link.credentials['secret'] if app_link.credentials.has_key?('secret')
+      end
       app_link.save
     end
 
