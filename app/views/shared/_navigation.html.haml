@@ -49,7 +49,7 @@
       = link_to t('.today'), task_lists_path, :class => 'today'
       %span= today_tasks.length
     .contained
-      - for task in today_tasks
+      - for task in today_tasks.reverse
         .el.task{ :id => "my_task_#{task.id}", :class => task_classes(task) }
           = link_to task, [task.project, task], :class => ''
           = render_due_on(task,current_user)
