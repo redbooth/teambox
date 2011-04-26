@@ -1,5 +1,11 @@
 PrivateBox = {
 
+  redrawBox: function(form, project_id) {
+    var box = form.down('.private_options');
+    box.select('.private_users').invoke('remove');
+    box.insert({ bottom: this.peopleHTML(project_id) });
+  },
+
   peopleHTML: function(project_id) {
     var people = _people[project_id];
     var html = "";
@@ -16,17 +22,24 @@ PrivateBox = {
 
 document.on("click", "a.private_switch", function(e,el) {
   e.stop();
-  el.up('.thread').down('.private_options').toggle();
+  el.up('form').down('.private_options').toggle();
 });
 
 document.on("click", ".private_options .option.normal", function(e,el) {
-  var box = el.up('.thread').down('.private_options');
+  var box = el.up('form').down('.private_options');
   box.select('.private_users').invoke('remove');
 });
 
 document.on("click", ".private_options .option.private", function(e,el) {
-  var box = el.up('.thread').down('.private_options');
-  var project_id = el.up('.thread').readAttribute('data-project-id');
-  box.select('.private_users').invoke('remove');
-  box.insert({ bottom: PrivateBox.peopleHTML(project_id) });
+  var form = el.up('form');
+  var select = form.down('select#project_id');
+  var project_id = form.readAttribute('data-project-id') || select.select('option').find(function(ele){return !!ele.selected;}).value;
+  PrivateBox.redrawBox(form, project_id);
+});
+
+document.on("change", "select#project_id", function(e,el) {
+  var select = el;
+  var form = el.up("form");
+  var project_id = select.select('option').find(function(ele){return !!ele.selected;}).value;
+  PrivateBox.redrawBox(form, project_id);
 });

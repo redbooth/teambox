@@ -19,19 +19,22 @@
       - when Conversation
         - if thread.to_s.present?
           .thread_title
-            .lock_icon
+            - if thread.is_private
+              .lock_icon
             = t(".conversation_with_title_html",
               :conversation => link_to(thread, [thread.project, thread]),
               :project => project_link_with_overlay(thread.project))
         - else
           .thread_title
-            .lock_icon
+            - if thread.is_private
+              .lock_icon
             = t(".conversation_without_title_html",
               :conversation_url => project_conversation_path(thread.project, thread),
               :project => project_link_with_overlay(thread.project))
       - when Task
         .thread_title
-          .lock_icon
+          - if thread.is_private
+            .lock_icon
           = t(".task_on_task_list_html",
             :task => link_to(thread, [thread.project, thread]),
             :task_list => link_to(thread.task_list, [thread.task_list.project, thread.task_list]))
