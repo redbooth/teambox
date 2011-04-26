@@ -160,13 +160,63 @@ describe Notification do
         unread_emails_for(@james.email).size.should == 0
         unread_emails_for(@charles.email).size.should == 0
       end
+
+      it 'should skip deleted object' do
+        time_is_now(@tuesday) do
+          @note = @page.build_note({:name => 'List'}).tap do |n|
+            n.updated_by = @charles
+            n.save
+          end
+
+          @deleted_task = Factory(:task, :user_id => @charles.id, :project_id => @project.id)
+          @deleted_conversation = Factory(:conversation, :user_id => @charles.id, :project_id => @project.id)
+
+          @first_conversation_comment = Factory(:comment, :target => @conversation, :user => @charles,
+            :project => @project, :body => "Comment on conversation")
+          @second_task_comment        = Factory(:comment, :target => @task, :user => @charles,
+            :project => @project, :body => "Comment on task")
+
+          @deleted_comment_on_conversation = Factory(:comment, :target => @conversation, :user => @charles,
+            :project => @project, :body => "Deleted comment on conversation")
+          @deleted_comment_on_task         = Factory(:comment, :target => @task, :user => @charles,
+            :project => @project, :body => "Deleted comment on task")
+
+          @comment_on_deleted_conversation = Factory(:comment, :target => @deleted_conversation, :user => @charles,
+            :project => @project, :body => "Comment on deleted conversation")
+          @comment_on_deleted_task         = Factory(:comment, :target => @deleted_task, :user => @charles,
+            :project => @project, :body => "Comment on deleted task")
+        end
+
+        time_is_now(@tuesday + 10.days) do
+          @page.destroy
+          @deleted_comment_on_conversation.destroy
+          @deleted_comment_on_task.destroy
+          @deleted_task.destroy
+          @deleted_conversation.destroy
+
+          Person.send_all_digest
+
+          unread_emails_for(@pablo.email).size.should == 1
+
+          email_body = open_email(@pablo.email).html_part.body
+
+          email_body.should =~ Regexp.new("Comment on conversation")
+          email_body.should =~ Regexp.new("Comment on task")
+
+          email_body.should_not =~ Regexp.new("Deleted comment on conversation")
+          email_body.should_not =~ Regexp.new("Deleted comment on task")
+
+          email_body.should_not =~ Regexp.new("Comment on deleted conversation")
+          email_body.should_not =~ Regexp.new("Comment on deleted task")
+        end
+
+      end
     end
 
     def time_is_now(time)
-      now = Time.now
       Time.stub(:now).and_return(time)
       yield
-      Time.stub(:now).and_return(now)
+      Time.unstub(:now)
     end
 
   end

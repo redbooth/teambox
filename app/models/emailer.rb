@@ -223,8 +223,8 @@ class Emailer < ActionMailer::Base
     @person        = Person.find(person_id)
     @project       = Project.find(project_id)
     @targets = target_types_and_ids.map do |target|
-      target[:target_type].constantize.find target[:target_id]
-    end
+      target[:target_type].constantize.find_by_id target[:target_id]
+    end.compact.uniq
     @comments      = Comment.where(:id => comment_ids)
 
     mail({
