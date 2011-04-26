@@ -32,6 +32,14 @@
           .content#content= yield
         .column_wrap
           .column#column
+            - if @current_user.settings['show_tutorials']
+              .video_tutorials_box
+                = link_to "Watch the tutorial videos", guides_path, :class => 'view_videos'
+                if it's your first time here.
+                = link_to "(Hide this)", "#", :class => 'hide'
+                .close_me{ :style => 'display: none' }
+                  %p This will hide this box. You can access the tutorials and help with the link on top at any time.
+                  = link_to "Hide this box", "#"
             = render 'shared/navigation'
             .view_sidebar
               = yield :column

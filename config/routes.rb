@@ -39,6 +39,8 @@ Teambox::Application.routes.draw do
 
     match '/search' => 'search#index', :as => :search
 
+    match '/guides' => 'guides#index', :as => :guides
+
     match '/text_styles' => 'users#text_styles', :as => :text_styles
     match '/email_posts_path' => 'users#email_posts', :as => :email_posts
     match '/invite_format' => 'invitations#invite_format', :as => :invite_format
@@ -104,6 +106,7 @@ Teambox::Application.routes.draw do
     post  '/account/stats/:stat/inc' => 'users#increment_stat'
     post  '/account/badge/:badge/grant' => 'users#grant_badge'
     post  '/account/first_steps/hide' => 'users#hide_first_steps'
+    post  '/account/tutorials/hide' => 'users#hide_tutorials'
 
     resources :teambox_datas, :path => '/datas'
 
