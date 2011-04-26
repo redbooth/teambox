@@ -40,7 +40,19 @@
       .el= link_to t('.new_project'), new_project_path, :class => 'more ajax'
 
   -# My Tasks
-  - pending_tasks = current_user.nearest_pending_tasks
+  - near_tasks = current_user.nearest_pending_tasks
+  - today_tasks = near_tasks.select { |t| t.due_on && (t.due_on <= Time.now.to_date) }
+  - late_tasks = near_tasks.select { |t| t.due_on && (t.due_on < Time.now.to_date) }
+  - pending_tasks = near_tasks - today_tasks
+  - if today_tasks.any?
+    .el#today_tasks{ :class => late_tasks.any? ? 'late_tasks' : '' }
+      = link_to t('.today'), task_lists_path, :class => 'today'
+      %span= today_tasks.length
+    .contained
+      - for task in today_tasks
+        .el.task{ :id => "my_task_#{task.id}", :class => task_classes(task) }
+          = link_to task, [task.project, task], :class => ''
+          = render_due_on(task,current_user)
   .el#my_tasks
     = link_to t('.my_tasks'), task_lists_path, :class => 'tasks'
     %span.clickable= link_to pending_tasks.length, task_lists_path(:filter_assigned => 'mine'), :class => 'hoverable', :'data-hoverable-class' => 'left', :id => 'open_my_tasks', :title => t('.open_my_tasks')

@@ -25,6 +25,9 @@
             color: white
         a
           padding: 2px 4px
+    &.late_tasks span
+      font-weight: bold
+      color: red
     &.selected, &.children-selected, &.selected:hover, &.children-selected:hover
       background: lighten($navbar, 20)
     &:hover
@@ -68,6 +71,8 @@
       background-image: url(/famfamfam/newspaper.png)
     &.conversations
       background-image: url(/famfamfam/comment.png)
+    &.today
+      background-image: url(/famfamfam/weather_sun.png)
     &.tasks
       background-image: url(/famfamfam/tick.png)
     &.time
