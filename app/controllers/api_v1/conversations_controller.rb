@@ -13,7 +13,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     @conversations = context.except(:order).
                              where(api_range('conversations')).
                              where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
-                             joins("LEFT JOIN watchers ON conversations.id = watchers.watchable_id AND watchers.watchable_type = 'Conversation'").
+                             joins("LEFT JOIN watchers ON (conversations.id = watchers.watchable_id AND watchers.watchable_type = 'Conversation') AND watchers.user_id = #{current_user.id}").
                              limit(api_limit).
                              order('conversations.id DESC')
     

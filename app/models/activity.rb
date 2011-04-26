@@ -12,16 +12,16 @@ class Activity < ActiveRecord::Base
 
   scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
 
-  scope :in_projects, lambda { |projects| { :conditions => ["project_id IN (?)", Array(projects).collect(&:id) ] } }
+  scope :in_projects, lambda { |projects| { :conditions => ["activities.project_id IN (?)", Array(projects).collect(&:id) ] } }
   scope :limit_per_page, :limit => Teambox.config.activities_per_page
   scope :by_id, :order => 'id DESC'
   scope :by_updated, :order => 'updated_at desc'
 
   # COALESCE returns the first non null element and it's standard SQL
-  scope :by_thread, :order => "COALESCE(last_activity_id, id) desc"
+  scope :by_thread, :order => "COALESCE(last_activity_id, activities.id) desc"
   scope :threads, :conditions => "target_type != 'Comment'"
-  scope :before, lambda { |previous| { :conditions => ["id < ? AND (last_activity_id IS NULL OR last_activity_id < ?)", previous.last_id, previous.last_id] } }
-  scope :after, lambda { |activity_id| { :conditions => ["id > ?", activity_id ] } }
+  scope :before, lambda { |previous| { :conditions => ["activities.id < ? AND (last_activity_id IS NULL OR last_activity_id < ?)", previous.last_id, previous.last_id] } }
+  scope :after, lambda { |activity_id| { :conditions => ["activities.id > ?", activity_id ] } }
   scope :from_user, lambda { |user| { :conditions => { :user_id => user.id } } }
 
   # We have to update the activity of the thread if such is the case

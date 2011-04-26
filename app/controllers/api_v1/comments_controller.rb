@@ -11,7 +11,7 @@ class ApiV1::CommentsController < ApiV1::APIController
     @comments = context.except(:order).
                         where(api_range('comments')).
                         where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
-                        joins("LEFT JOIN watchers ON comments.target_id = watchers.watchable_id AND watchers.watchable_type = comments.target_type").     
+                        joins("LEFT JOIN watchers ON (comments.target_id = watchers.watchable_id AND watchers.watchable_type = comments.target_type) AND watchers.user_id = #{current_user.id}").     
                         limit(api_limit).
                         order('comments.id DESC').
                         includes([:target, :assigned, :previous_assigned, :user])

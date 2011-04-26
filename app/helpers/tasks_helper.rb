@@ -95,7 +95,9 @@ module TasksHelper
   end
 
   def list_tasks(task_list, tasks,editable=true)
-    render tasks,
+    render tasks.
+     where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+     joins("LEFT JOIN watchers ON tasks.id = watchers.watchable_id AND watchers.watchable_type = 'Task' AND watchers.user_id = #{current_user.id}"),
       :project => task_list && task_list.project,
       :task_list => task_list,
       :editable => editable

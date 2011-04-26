@@ -5,7 +5,10 @@ class ActivitiesController < ApplicationController
   before_filter :get_target
 
   def show # also handles #index, see routes.rb
-    @activities = Activity.for_projects(@target)
+    @activities = Activity.for_projects(@target).
+      where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+      joins("LEFT JOIN watchers ON  ((activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type)) AND watchers.user_id = #{current_user.id}")
+    
     @threads = @activities.threads
     @last_activity = @threads.all.last
 
@@ -28,7 +31,10 @@ class ActivitiesController < ApplicationController
       Activity.for_projects(@target).before(Activity.find(params[:id])).from_user(@user)
     else
       Activity.for_projects(@target).before(Activity.find(params[:id]))
-    end
+    end.
+      where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+      joins("LEFT JOIN watchers ON (activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type)) AND watchers.user_id = #{current_user.id}")
+    
     @threads = @activities.threads
     @last_activity = @threads.all.last
 
@@ -41,6 +47,7 @@ class ActivitiesController < ApplicationController
   def show_thread
     # FIXME: insecure!
     target = params[:thread_type].constantize.find params[:id]
+    authorize! :show, target
 
     @comments = target.comments
     
