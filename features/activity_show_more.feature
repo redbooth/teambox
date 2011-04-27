@@ -42,7 +42,6 @@ Feature: Show more comment on activity pages
     And   I go to the projects page
     And   I follow "Show more"
     And   I wait for 3 seconds
-    Then show me the page
     Then  I should see "Very important stuff"
     And   I should see "Really critical things"
 
