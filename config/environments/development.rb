@@ -53,7 +53,7 @@ end
 if ENV['VCR']
   VCR.config do |c|
     c.cassette_library_dir = ENV['VCR']
-    c.stub_with :fakeweb
+    c.stub_with :webmock
     c.allow_http_connections_when_no_cassette = true
     c.default_cassette_options = {
       :record => :all

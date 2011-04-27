@@ -60,7 +60,7 @@ group :test, :development do
   gem 'faker', :require => nil
   gem 'timecop', :require => 'timecop'
   gem 'vcr', '~> 1.9.0'
-  gem 'fakeweb', '~> 1.3.0'
+  gem 'webmock', '~> 1.6.2'
 end
 
 # we don't call the group :test because we don't want them auto-required
