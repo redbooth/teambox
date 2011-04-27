@@ -70,7 +70,7 @@ module PagesHelper
 
   def slots_classes
     slots_classes = []
-    slots_classes << 'readonly' unless can? :update, @current_project
+    slots_classes << 'readonly' unless can? :make_pages, @current_project
     slots_classes.join(" ")
   end
 end
