@@ -175,6 +175,10 @@ form.new_task, form.edit_task, .task_list_form
         width: 23px
         padding: 0
         text-align: center
+    &.private
+      .taskName
+        .lock_icon
+          display: inline-block
     &:hover .taskStatus
       width: 45px
       padding-left: 0
@@ -184,6 +188,8 @@ form.new_task, form.edit_task, .task_list_form
       min-height: 18px
       font-size: 12px
       padding-left: 4px
+      .lock_icon
+        display: none
       span.assigned_date, span.assigned_user
         display: none
         color: rgb(100,100,100)

@@ -143,6 +143,8 @@ Task = {
       classes.push((task.assigned_id != 0) ? 'assigned' : 'unassigned')
     if (task.assigned)
       classes.push('user_' + task.assigned.user_id)
+    if (task.is_private)
+      classes.push('private')
     return classes.join(' ')
   },
 

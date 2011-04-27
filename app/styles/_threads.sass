@@ -60,7 +60,7 @@
       .lock_icon
         position: relative
         top: 2px
-        display: inline-block
+        display: none
         margin-right: 10px
   span.time
     position: relative
@@ -84,6 +84,12 @@
     background-color: $comments_bkg
     margin: 0
     padding: 2px 0 5px 6px
+
+.thread.private
+  .comment_header
+    .block
+      .lock_icon
+        display: inline-block
 
 .expand_comment
   a

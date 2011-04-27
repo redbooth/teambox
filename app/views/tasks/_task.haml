@@ -10,6 +10,7 @@
     .expanded_actions{ :style => 'display: none' }
       %a.full{ :href => project_task_path(project, task) } Full view
       %a.hide{ :href => '#' } Hide comments
+    .lock_icon
     = link_to h(task), [project, task], :class => :name
     %span.assigned_date= task.due_on ? due_on(task) : ''
     %span.assigned_user= task.assigned ? link_to(h(task.assigned.short_name), user_path(task.assigned.user)) : ''

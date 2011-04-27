@@ -15,6 +15,7 @@ module TasksHelper
       classes << 'due_on' unless task.due_on.nil? or task.closed?
       classes << (task.assigned.nil? ? 'unassigned' : 'assigned') unless task.closed?
       classes << "user_#{task.assigned.user_id}" unless task.assigned.nil?
+      classes << 'private' if task.is_private
     end.join(' ')
   end
 
