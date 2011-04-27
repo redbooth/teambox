@@ -24,10 +24,10 @@
 
   .private_options{ :style => 'display: none' }
     %label.option.normal
-      %input{ :type => "radio", :name => "#{f.object.target_type.downcase}[is_private]", :value => "false", :checked => !f.object.is_private }
+      %input{ :type => "radio", :name => "#{f.object.target_type.downcase}[is_private]", :value => "false", :checked => !f.object.target.try(:is_private) }
       = t('comments.private.public')
     %label.option.private
-      %input{ :type => "radio", :name => "#{f.object.target_type.downcase}[is_private]", :value => "true", :checked => f.object.is_private }
+      %input{ :type => "radio", :name => "#{f.object.target_type.downcase}[is_private]", :value => "true", :checked => f.object.target.try(:is_private) }
       = t('comments.private.private')
 
   .actions
