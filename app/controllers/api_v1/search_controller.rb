@@ -13,7 +13,7 @@ class ApiV1::SearchController < ApiV1::APIController
           :page => params[:page],
           :classes => [Conversation, Task, TaskList, Page]
     end
-    api_respond(@results || [], :emit_type => true, :references => [:project])
+    api_respond(@results || [], :include => [:thread_comments], :references => [:project])
   end
 
   protected
