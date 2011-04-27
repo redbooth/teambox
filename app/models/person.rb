@@ -82,7 +82,7 @@ class Person < ActiveRecord::Base
       INNER JOIN projects ON projects.id = people.project_id
       INNER JOIN users ON users.id = people.user_id
       WHERE people.project_id IN (#{project_ids.join(',')})
-        AND (people.deleted IS NULL OR people.deleted IS FALSE)
+        AND (people.deleted IS NULL OR people.deleted = #{connection.quoted_false})
       ORDER BY users.id = #{current_user.try(:id).to_i} DESC, users.first_name, users.last_name
     SQL
   end
