@@ -28,6 +28,7 @@
 //= require <oauth>
 //= require <i18n>
 //= require <datetime>
+//= require <date_picker>
 //= require <expand_comment>
 //= require <facebox>
 //= require <filter>
