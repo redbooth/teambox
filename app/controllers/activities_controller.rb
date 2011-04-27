@@ -7,7 +7,7 @@ class ActivitiesController < ApplicationController
   def show # also handles #index, see routes.rb
     @activities = Activity.for_projects(@target).
       where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
-      joins("LEFT JOIN watchers ON  ((activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type)) AND watchers.user_id = #{current_user.id}")
+      joins("LEFT JOIN watchers ON  ((activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.target_id = watchers.watchable_id AND watchers.watchable_type = activities.target_type)) AND watchers.user_id = #{current_user.id}")
     
     @threads = @activities.threads
     @last_activity = @threads.all.last
@@ -33,7 +33,7 @@ class ActivitiesController < ApplicationController
       Activity.for_projects(@target).before(Activity.find(params[:id]))
     end.
       where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
-      joins("LEFT JOIN watchers ON (activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type)) AND watchers.user_id = #{current_user.id}")
+      joins("LEFT JOIN watchers ON (activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.target_id = watchers.watchable_id AND watchers.watchable_type = activities.target_type)) AND watchers.user_id = #{current_user.id}")
     
     @threads = @activities.threads
     @last_activity = @threads.all.last
