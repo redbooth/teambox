@@ -16,6 +16,17 @@ module Watchable
     warn "[DEPRECIATION] `watchers_ids` is deprecated.  Please use `watcher_ids` instead."
     watcher_ids
   end
+  
+  def set_private_watchers(new_ids)
+    new_ids_with_owner = (new_ids.map(&:to_i) + [self.user_id]).uniq
+    watchers_to_remove = watcher_ids - new_ids_with_owner
+    Watcher.where(:watchable_id => self.id, :watchable_type => self.class, :user_id => watchers_to_remove).destroy_all
+    (new_ids_with_owner-[self.user_id]).each do |user_id|
+      watcher = Watcher.new(:user_id => user_id, :project_id => self.project_id,
+                            :watchable_id => self.id, :watchable_type => self.class.to_s)
+      watcher.save
+    end
+  end
 
   def add_watcher(user)
     unless has_watcher?(user) or !project.has_member?(user)

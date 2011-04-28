@@ -149,5 +149,9 @@ class Ability
       end
     end
     
+    can :update_privacy, [Conversation, Task] do |object|
+      object.user_id == user.id
+    end
+    
   end
 end

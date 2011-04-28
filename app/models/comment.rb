@@ -38,9 +38,10 @@ class Comment < ActiveRecord::Base
     :reject_if => lambda { |google_docs| google_docs['title'].blank? || google_docs['url'].blank? }
   
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
-                  :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes
+                  :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes, :private_ids
 
   attr_accessor :is_importing
+  attr_accessor :private_ids
 
   scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
   scope :latest, :order => 'id DESC'
@@ -148,14 +149,27 @@ class Comment < ActiveRecord::Base
     @activity = project.log_activity(self, 'create') if project_id?
 
     if target.respond_to?(:add_watchers)
-      new_watchers = defined?(@mentioned) ? @mentioned.to_a : []
-      new_watchers << self.user if self.user
-      target.add_watchers new_watchers
+      can_mention_watchers = true
+      
+      # Allow the owner to change the privacy status
+      if target.respond_to?(:is_private) && !@is_private.nil?
+        can_change_private = self.user_id == target.user_id
+        target.is_private = can_change_private ? @is_private : target.is_private
+        target.set_private_watchers(@private_ids) if target.is_private && can_change_private && @private_ids 
+      end
+      
+      if !target.is_private
+        new_watchers = defined?(@mentioned) ? @mentioned.to_a : []
+        new_watchers << self.user if self.user
+        target.add_watchers new_watchers
+      end
     end
     
     if target.respond_to?(:updated_at)
-      target.update_attribute :updated_at, self.created_at
+      target.updated_at = self.created_at
     end
+    
+    target.save(:validate => false)
   end
   
   def cleanup_activities # after_destroy

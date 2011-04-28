@@ -13,8 +13,16 @@
         - comment_fields.object.uploads.build
         = comment_fields.fields_for :uploads do |uploads|
           = uploads.file_field :asset, :id => 'upload_file'
+      .private_options{ :style => 'display: none', 'object-prefix' => "conversation_new", 'object-type' => 'conversation' }
+        .option.normal
+          = f.radio_button :is_private, false, :checked => !f.object.target.try(:is_private), :id => "conversation_new_public", :disabled => true
+          %label{ :for => "conversation_new_public" }= t('comments.private.public')
+        .option.private
+          = f.radio_button :is_private, true, :checked => f.object.target.try(:is_private), :id => "conversation_new_private", :disabled => true
+          %label{ :for => "conversation_new_private" }= t('comments.private.private')
       .actions
         .attach
           %span= t('comments.fields.attach') + ": "
           = link_to t('uploads.comment_upload_link'), '#uploads', :class => 'attach_icon hoverable', :title => "Attach a file"
         = render 'google_docs/form', :f => comment_fields
+        = link_to "Privacy", '#privacy', :class => 'private_switch hoverable', :title => "Control who can see this element"

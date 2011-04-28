@@ -13,9 +13,8 @@
       - for user in project.users
         - unless user == current_user
           .user
-            %label
-              = check_box_tag 'conversation[watcher_ids][]', user.id, true, :id => nil
-              = user.name
+            = check_box_tag 'conversation[watcher_ids][]', user.id, true, :id => "conversation_watcher_#{user.id}"
+            %label{:for => "conversation_watcher_#{user.id}"}= user.name
           
       .clear
       %p= t('.subscribe_note_html')

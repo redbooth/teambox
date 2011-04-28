@@ -105,6 +105,10 @@ Then /^(?:|I )should see the unauthorized private project message/ do
   end
 end
 
+Given /^we are navigating the "([^\"]*)" project$/ do |project_name|
+  @current_project = Project.find_by_name(project_name)
+end
+
 Given /^there is a project with a conversation$/ do
   @current_project = @current_user.projects.first || Factory(:project)
   Factory(:conversation,

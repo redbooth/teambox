@@ -22,12 +22,12 @@
   .add_watchers_box{ :style => 'display: none' }
     %p= t('comments.watchers.explain') 
 
-  .private_options{ :style => 'display: none', 'object-prefix' => "#{f.object.target_type.downcase}_#{f.object.target_id}" }
+  .private_options{ :style => 'display: none', 'object-prefix' => "#{f.object.target_type.downcase}_#{f.object.target_id}", 'object-type' => f.object.target_type.downcase }
     .option.normal
-      %input{ :type => "radio", :name => "#{f.object.target_type.downcase}[is_private]", :value => "false", :checked => !f.object.target.try(:is_private), :id => "#{f.object.target_type.downcase}_#{f.object.target_id}_public" }
+      = f.radio_button :is_private, false, :checked => !f.object.target.try(:is_private), :id => "#{f.object.target_type.downcase}_#{f.object.target_id}_public", :disabled => true
       %label{ :for => "#{f.object.target_type.downcase}_#{f.object.target_id}_public" }= t('comments.private.public')
     .option.private
-      %input{ :type => "radio", :name => "#{f.object.target_type.downcase}[is_private]", :value => "true", :checked => f.object.target.try(:is_private), :id => "#{f.object.target_type.downcase}_#{f.object.target_id}_private" }
+      = f.radio_button :is_private, true, :checked => f.object.target.try(:is_private), :id => "#{f.object.target_type.downcase}_#{f.object.target_id}_private", :disabled => true
       %label{ :for => "#{f.object.target_type.downcase}_#{f.object.target_id}_private" }= t('comments.private.private')
 
   .actions
@@ -39,7 +39,8 @@
       - if task_form
         = link_to t('comments.hours.tooltip'), '#hours', :class => 'add_hours_icon hoverable', :title => "Log hours"
       = link_to "Watchers", '#watchers', :class => 'add_watchers hoverable', :title => "Notify people"
-      = link_to "Privacy", '#privacy', :class => 'private_switch hoverable', :title => "Control who can see this element"
+      - if f.object.target.nil? or f.object.target.new_record? or can?(:update_privacy, f.object.target)
+        = link_to "Privacy", '#privacy', :class => 'private_switch hoverable', :title => "Control who can see this element"
 
     - if task_form
       .task_actions
