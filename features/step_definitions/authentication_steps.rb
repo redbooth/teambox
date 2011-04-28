@@ -1,6 +1,8 @@
 Then /^(?:|I )authenticate on "([^"]*)" with "([^"]*)" account$/ do |service, name|
-  OmniAuth.config.test_mode = true
   auth_hash = YAML.load(File.open("features/fixtures/authentication_#{service.underscore}.yml").read)
+  auth_hash['user_info']['email'] = "#{name}@teambox.com"
+  auth_hash['uid']   = "#{service}-#{name}"
+
   OmniAuth.config.mock_auth[service.underscore.to_sym] = auth_hash
   visit("/auth/#{service.underscore}")
 end
