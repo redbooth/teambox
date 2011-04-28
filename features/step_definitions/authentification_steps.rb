@@ -1,8 +1,8 @@
 Then /^(?:|I )authenticate on "([^"]*)" with "([^"]*)" account$/ do |service, name|
-  VCR.use_cassette("authentication_#{service.underscore}", :erb => {:name => name.downcase}, :match_requests_on => [:method, :path]) do
-    visit("/auth/#{service.underscore}")
-    visit("/auth/#{service.underscore}/callback")
-  end
+  OmniAuth.config.test_mode = true
+  auth_hash = YAML.load(File.open("features/fixtures/authentication_#{service.underscore}.yml").read)
+  OmniAuth.config.mock_auth[service.underscore.to_sym] = auth_hash
+  visit("/auth/#{service.underscore}")
 end
 
 Then /the fields "([^"]*)" should contain "([^"]*)"$/ do |fields, values|

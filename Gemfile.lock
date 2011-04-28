@@ -113,7 +113,6 @@ GEM
     coffee-script-source (1.0.0)
     columnize (0.3.2)
     configuration (1.2.0)
-    crack (0.1.8)
     cucumber (0.10.0)
       builder (>= 2.1.2)
       diff-lcs (~> 1.1.2)
@@ -273,11 +272,6 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.26)
-    vcr (1.9.0)
-    vcr-remote-controller (0.1.0)
-    webmock (1.6.2)
-      addressable (>= 2.2.2)
-      crack (>= 0.1.7)
     webrat (0.7.2)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -344,10 +338,7 @@ DEPENDENCIES
   tmail (~> 1.2.3)
   trimmer!
   tzinfo (~> 0.3.12)
-  vcr (~> 1.9.0)
-  vcr-remote-controller
   vestal_versions (~> 1.2.2)!
-  webmock (~> 1.6.2)
   webrat
   whenever (~> 0.4.1)
   will_paginate!

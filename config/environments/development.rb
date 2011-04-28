@@ -45,18 +45,3 @@ Teambox::Application.configure do
   config.cache_store = UselessStore.new
 
 end
-
-
-# To record new cassettes, set you cassettes directory with VCR=directory
-# Use the remote to manage your cassettes at /vcr-remote
-
-if ENV['VCR']
-  VCR.config do |c|
-    c.cassette_library_dir = ENV['VCR']
-    c.stub_with :webmock
-    c.allow_http_connections_when_no_cassette = true
-    c.default_cassette_options = {
-      :record => :all
-    }
-  end
-end

@@ -49,7 +49,6 @@ group :development do
   gem 'sqlite3-ruby', '~> 1.2.5', :require => nil
   gem 'ruby-debug', '~> 0.10.3', :require => nil
   gem 'mongrel', '~> 1.1.5', :require => nil
-  gem 'vcr-remote-controller'
 end
 
 group :test, :development do
@@ -59,8 +58,6 @@ group :test, :development do
   gem 'fuubar'
   gem 'faker', :require => nil
   gem 'timecop', :require => 'timecop'
-  gem 'vcr', '~> 1.9.0'
-  gem 'webmock', '~> 1.6.2'
 end
 
 # we don't call the group :test because we don't want them auto-required
