@@ -35,11 +35,11 @@ document.on("click", "a.private_switch", function(e,el) {
   el.up('form').down('.private_options').toggle();
 });
 
-document.on("change", ".private_options .option.normal", function(e,el) {
+document.on("change", ".private_options .option.normal input", function(e,el) {
   PrivateBox.update(el);
 });
 
-document.on("change", ".private_options .option.private", function(e,el) {
+document.on("change", ".private_options .option.private input", function(e,el) {
   PrivateBox.update(el);
 });
 

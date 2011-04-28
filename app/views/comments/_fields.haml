@@ -23,12 +23,12 @@
     %p= t('comments.watchers.explain') 
 
   .private_options{ :style => 'display: none' }
-    %label.option.normal
-      %input{ :type => "radio", :name => "#{f.object.target_type.downcase}[is_private]", :value => "false", :checked => !f.object.target.try(:is_private) }
-      = t('comments.private.public')
-    %label.option.private
-      %input{ :type => "radio", :name => "#{f.object.target_type.downcase}[is_private]", :value => "true", :checked => f.object.target.try(:is_private) }
-      = t('comments.private.private')
+    .option.normal
+      %input{ :type => "radio", :name => "#{f.object.target_type.downcase}[is_private]", :value => "false", :checked => !f.object.target.try(:is_private), :id => "#{f.object.target_type.downcase}_#{f.object.target_id}_public" }
+      %label{ :for => "#{f.object.target_type.downcase}_#{f.object.target_id}_public" }= t('comments.private.public')
+    .option.private
+      %input{ :type => "radio", :name => "#{f.object.target_type.downcase}[is_private]", :value => "true", :checked => f.object.target.try(:is_private), :id => "#{f.object.target_type.downcase}_#{f.object.target_id}_private" }
+      %label{ :for => "#{f.object.target_type.downcase}_#{f.object.target_id}_private" }= t('comments.private.private')
 
   .actions
     .attach
