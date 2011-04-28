@@ -1,0 +1,189 @@
+--- 
+user_info: 
+  name: Charles Barbier
+  location: Montreal
+  urls: 
+    Website: 
+    Twitter: http://twitter.com/charles
+  nickname: charles
+  description: "When the going gets weird, the weird turn pro. "
+  image: http://a0.twimg.com/profile_images/1165696701/IMG_0040_normal.jpg
+uid: cbdb0cc7f3f5b4be81a75fa7242590e3e9882e1e
+credentials: 
+  token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+  secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+extra: 
+  user_hash: 
+    profile_sidebar_fill_color: C0DFEC
+    name: Charles Barbier
+    profile_sidebar_border_color: a8c7f7
+    profile_background_tile: false
+    created_at: Fri Feb 27 02:54:07 +0000 2009
+    location: Montreal
+    profile_image_url: http://a0.twimg.com/profile_images/1165696701/IMG_0040_normal.jpg
+    id_str: "22099031"
+    follow_request_sent: false
+    profile_link_color: 0084B4
+    is_translator: false
+    contributors_enabled: false
+    default_profile: false
+    url: 
+    favourites_count: 0
+    utc_offset: -18000
+    id: 22099031
+    profile_use_background_image: true
+    listed_count: 7
+    followers_count: 53
+    profile_text_color: "333333"
+    protected: false
+    lang: en
+    time_zone: Eastern Time (US & Canada)
+    notifications: false
+    geo_enabled: true
+    profile_background_color: "022330"
+    description: "When the going gets weird, the weird turn pro. "
+    verified: false
+    profile_background_image_url: http://a2.twimg.com/a/1301681483/images/themes/theme15/bg.png
+    default_profile_image: false
+    status: 
+      coordinates: 
+      truncated: false
+      created_at: Mon Apr 11 04:14:10 +0000 2011
+      favorited: false
+      id_str: "5795351517945856"
+      in_reply_to_user_id_str: "11496336"
+      contributors: 
+      text: "@rand not in the next few week, but eventually."
+      id: 5729535517945856
+      in_reply_to_status_id_str: "5728554825073408"
+      retweet_count: 0
+      geo: 
+      retweeted: false
+      in_reply_to_user_id: 114960336
+      source: web
+      place: 
+      in_reply_to_screen_name: rand
+      in_reply_to_status_id: 5728554812503408
+    friends_count: 69
+    statuses_count: 143
+    show_all_inline_media: false
+    following: false
+    screen_name: charles
+  access_token: !ruby/object:OAuth::AccessToken 
+    consumer: !ruby/object:OAuth::Consumer 
+      http: !ruby/object:Net::HTTP 
+        address: api.twitter.com
+        close_on_empty_response: false
+        curr_http_version: "1.1"
+        debug_output: 
+        newimpl: true
+        open_timeout: 30
+        port: 443
+        read_timeout: 30
+        seems_1_0_server: false
+        socket: !ruby/object:FakeWeb::StubSocket {}
+
+        ssl_context: !ruby/object:OpenSSL::SSL::SSLContext 
+          ca_file: 
+          ca_path: 
+          cert: 
+          cert_store: 
+          client_ca: 
+          client_cert_cb: 
+          extra_chain_cert: 
+          key: 
+          options: 
+          session_get_cb: 
+          session_id_context: 
+          session_new_cb: 
+          session_remove_cb: 
+          timeout: 
+          tmp_dh_callback: 
+          verify_callback: 
+          verify_depth: 
+          verify_mode: 0
+        started: false
+        use_ssl: true
+      http_method: :post
+      key: aaaa
+      options: 
+        :ssl: 
+          :ca_path: /etc/ssl/certs
+        :oauth_version: "1.0"
+        :proxy: 
+        :http_method: :post
+        :request_token_path: /oauth/request_token
+        :authorize_path: /oauth/authenticate
+        :scheme: :header
+        :signature_method: HMAC-SHA1
+        :site: https://api.twitter.com
+        :access_token_path: /oauth/access_token
+      secret: aaaa
+      uri: !ruby/object:URI::HTTPS 
+        fragment: 
+        host: api.twitter.com
+        opaque: 
+        password: 
+        path: ""
+        port: 443
+        query: 
+        registry: 
+        scheme: https
+        user: 
+    params: 
+      oauth_token_secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+      :oauth_token_secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+      :oauth_token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+      :screen_name: charles
+      user_id: cbdb0cc7f3f5b4be81a75fa7242590e3e9882e1e
+      :user_id: cbdb0cc7f3f5b4be81a75fa7242590e3e9882e1e
+      oauth_token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+      screen_name: charles
+    response: !ruby/object:Net::HTTPOK 
+      body: "{\"is_translator\":false,\"statuses_count\":143,\"profile_background_tile\":false,\"friends_count\":69,\"profile_image_url\":\"http:\\/\\/a0.twimg.com\\/profile_images\\/1165696701\\/IMG_0040_normal.jpg\",\"listed_count\":7,\"verified\":false,\"favourites_count\":0,\"description\":\"When the going gets weird, the weird turn pro. \",\"status\":{\"favorited\":false,\"text\":\"@rand not in the next few week, but eventually.\",\"retweet_count\":0,\"in_reply_to_screen_name\":\"rand\",\"in_reply_to_status_id_str\":\"5728554825073408\",\"place\":null,\"contributors\":null,\"retweeted\":false,\"in_reply_to_user_id\":114960336,\"source\":\"web\",\"in_reply_to_user_id_str\":\"11496336\",\"coordinates\":null,\"in_reply_to_status_id\":5728554812503408,\"geo\":null,\"created_at\":\"Mon Apr 11 04:14:10 +0000 2011\",\"id_str\":\"5795351517945856\",\"truncated\":false,\"id\":5729535517945856},\"lang\":\"en\",\"profile_link_color\":\"0084B4\",\"url\":null,\"screen_name\":\"charles\",\"profile_sidebar_border_color\":\"a8c7f7\",\"location\":\"Montreal\",\"default_profile_image\":false,\"profile_use_background_image\":true,\"profile_background_color\":\"022330\",\"following\":false,\"profile_background_image_url\":\"http:\\/\\/a2.twimg.com\\/a\\/1301681483\\/images\\/themes\\/theme15\\/bg.png\",\"protected\":false,\"show_all_inline_media\":false,\"follow_request_sent\":false,\"geo_enabled\":true,\"created_at\":\"Fri Feb 27 02:54:07 +0000 2009\",\"name\":\"Charles Barbier\",\"id_str\":\"22099031\",\"default_profile\":false,\"contributors_enabled\":false,\"notifications\":false,\"time_zone\":\"Eastern Time (US & Canada)\",\"profile_text_color\":\"333333\",\"id\":22099031,\"utc_offset\":-18000,\"profile_sidebar_fill_color\":\"C0DFEC\",\"followers_count\":53}"
+      code: "200"
+      header: 
+        etag: 
+        - "\"63f9afc31281426a36e2c5b2fb72c81a\""
+        x-ratelimit-reset: 
+        - "1302899721"
+        x-transaction: 
+        - 1302896121-17801-54664
+        x-ratelimit-limit: 
+        - "350"
+        last-modified: 
+        - Fri, 15 Apr 2011 19:35:21 GMT
+        expires: 
+        - Tue, 31 Mar 1981 05:00:00 GMT
+        content-type: 
+        - application/json; charset=utf-8
+        date: 
+        - Fri, 15 Apr 2011 19:35:21 GMT
+        server: 
+        - hi
+        x-runtime: 
+        - "0.03078"
+        x-transaction-mask: 
+        - a6183ffa5f8ca943ff1b53b5644ef114
+        x-ratelimit-remaining: 
+        - "349"
+        content-length: 
+        - "1670"
+        x-ratelimit-class: 
+        - api_identified
+        x-revision: 
+        - DEV
+        status: 
+        - 200 OK
+        cache-control: 
+        - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+        vary: 
+        - Accept-Encoding
+        pragma: 
+        - no-cache
+      http_version: "1.0"
+      message: OK
+      read: true
+    secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+    token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+provider: twitter
