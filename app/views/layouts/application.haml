@@ -14,7 +14,6 @@
     = trimmer_include_tag
     = sprockets_include_tag
     = javascript_include_tag 'development' if Rails.env.development?
-    = include_juggernaught
     = yield :js_includes
     = javascript_tag do
       = yield :js_templates
