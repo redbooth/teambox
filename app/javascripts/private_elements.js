@@ -4,8 +4,9 @@ PrivateBox = {
     var box = form.down('.private_options');
     box.select('.private_users').invoke('remove');
 
+    var object_id = box.readAttribute('object-prefix');
     if (box.down('.option.private input').checked)
-      box.insert({ bottom: this.peopleHTML(project_id) });
+      box.insert({ bottom: this.peopleHTML(object_id, project_id) });
   },
 
   update: function(el) {
@@ -15,13 +16,14 @@ PrivateBox = {
     PrivateBox.redrawBox(form, project_id);
   },
 
-  peopleHTML: function(project_id) {
+  peopleHTML: function(object_id, project_id) {
     var people = _people[project_id];
     var html = "";
     html = "<div class='private_users'>";
     html += people.collect(function(p) {
-      if (p[3] == my_user.id) { return null; }
-      return '<label><input checked="checked" name="private_ids[]" type="checkbox" value="'+p[3]+'">'+p[2]+'</label>';
+      if (p[3] == my_user.id) return null;
+      var ident = object_id +'_private_'+ p[3];
+      return '<div class="private_user"><input checked="checked" name="private_ids[]" type="checkbox" value="'+p[3]+'" id="'+ ident + '"/><label for="' + ident + '">'+p[2]+'</label></div>';
     }).compact().join("");
     html += "</div>";
     return html;
