@@ -31,9 +31,9 @@ PrivateBox = {
     var html = "";
     html = "<div class='private_users'>";
     html += people.collect(function(p) {
-      if (p[3] == my_user.id) return null;
+      if (p[3] == my_user.id) return '<input type="hidden" name="comment[private_ids][]" type="checkbox" value="'+p[3]+'"/>';
       var ident = object_id +'_private_'+ p[3];
-      return '<div class="private_user"><input checked="checked" name="'+object_type+'[private_ids][]" type="checkbox" value="'+p[3]+'" id="'+ ident + '"/><label for="' + ident + '">'+p[2]+'</label></div>';
+      return '<div class="private_user"><input checked="checked" name="comment[private_ids][]" type="checkbox" value="'+p[3]+'" id="'+ ident + '"/><label for="' + ident + '">'+p[2]+'</label></div>';
     }).compact().join("");
     html += "</div>";
     return html;

@@ -256,6 +256,9 @@ describe Conversation do
       task = conversation.convert_to_task!
       lambda {Conversation.find(conversation.id)}.should raise_error(ActiveRecord::RecordNotFound)
     end
+  end
+  
+  describe "private conversations" do
     
     it "should mark all related activities as private when created as private" do
       conversation = Factory.create(:conversation, :is_private => true)
@@ -285,6 +288,64 @@ describe Conversation do
       conversation.save
       
       Conversation.find(conversation.id).comments.length.should == 2
+    end
+    
+    it "only comments created by the owner can update is_private" do
+      watcher = Factory.create(:user)
+      conversation = Factory.create(:conversation, :is_private => true)
+      conversation.project.add_user(watcher)
+      conversation.add_watcher(watcher)
+      
+      conversation.comments.create_by_user watcher, {:body => 'shouldnotwork', :is_private => false}
+      conversation.save
+      conversation.reload.is_private.should == true
+      
+      conversation.comments.create_by_user conversation.user, {:body => 'shouldwork', :is_private => false}
+      conversation.save
+      conversation.reload.is_private.should == false
+      
+      conversation.comments.create_by_user watcher, {:body => 'doesntwork', :is_private => true}
+      conversation.save
+      conversation.reload.is_private.should == false
+      
+      conversation.comments.create_by_user conversation.user, {:body => 'reallydoeswork', :is_private => true}
+      conversation.save
+      conversation.reload.is_private.should == true
+    end
+    
+    it "only comments created by the owner can update private_ids" do
+      watcher = Factory.create(:user)
+      conversation = Factory.create(:conversation, :is_private => true)
+      conversation.project.add_user(watcher)
+      conversation.add_watcher(watcher)
+      current_watchers = Conversation.find_by_id(conversation.id).watcher_ids.sort
+      
+      conversation.comments.create_by_user watcher, {:body => 'shouldnotwork', :is_private => true, :private_ids => [conversation.user_id]}
+      conversation.save
+      Conversation.find_by_id(conversation.id).watcher_ids.should == current_watchers.sort
+      
+      conversation.comments.create_by_user conversation.user, {:body => 'shouldwork', :is_private => true, :private_ids => [conversation.user_id]}
+      conversation.save
+      Conversation.find_by_id(conversation.id).watcher_ids.should == [conversation.user_id]
+    end
+    
+    it "private_ids can only be changed when is_private is set" do
+      watcher = Factory.create(:user)
+      project = Factory.create(:project)
+      conversation = Factory.create(:conversation, :is_private => true, :project => project, :user => project.user)
+      conversation = Conversation.find_by_id(conversation.id)
+      conversation.project.add_user(watcher)
+      conversation.add_watcher(watcher)
+      conversation = Conversation.find_by_id(conversation.id)
+      current_watchers = conversation.watcher_ids.sort
+      
+      conversation.comments.create_by_user conversation.user, {:body => 'shouldnotwork', :private_ids => [conversation.user_id]}
+      conversation.save
+      Conversation.find_by_id(conversation.id).watcher_ids.sort.should == current_watchers.sort
+      
+      conversation.comments.create_by_user conversation.user, {:body => 'shouldreallynotwork', :is_private => true, :private_ids => [conversation.user_id]}
+      conversation.save
+      Conversation.find_by_id(conversation.id).watcher_ids.sort.should == [conversation.user_id]
     end
   end
 end

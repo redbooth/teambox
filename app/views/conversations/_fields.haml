@@ -15,10 +15,10 @@
           = uploads.file_field :asset, :id => 'upload_file'
       .private_options{ :style => 'display: none', 'object-prefix' => "conversation_new", 'object-type' => 'conversation' }
         .option.normal
-          = f.radio_button :is_private, false, :checked => !f.object.target.try(:is_private), :id => "conversation_new_public", :disabled => true
+          = f.radio_button :is_private, false, :checked => !f.object.is_private, :id => "conversation_new_public", :disabled => true
           %label{ :for => "conversation_new_public" }= t('comments.private.public')
         .option.private
-          = f.radio_button :is_private, true, :checked => f.object.target.try(:is_private), :id => "conversation_new_private", :disabled => true
+          = f.radio_button :is_private, true, :checked => f.object.is_private, :id => "conversation_new_private", :disabled => true
           %label{ :for => "conversation_new_private" }= t('comments.private.private')
       .actions
         .attach

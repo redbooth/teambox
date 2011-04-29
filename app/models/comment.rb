@@ -38,7 +38,7 @@ class Comment < ActiveRecord::Base
     :reject_if => lambda { |google_docs| google_docs['title'].blank? || google_docs['url'].blank? }
   
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
-                  :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes, :private_ids
+                  :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes, :private_ids, :is_private
 
   attr_accessor :is_importing
   attr_accessor :private_ids
@@ -141,8 +141,17 @@ class Comment < ActiveRecord::Base
   def copy_ownership_from_target # before_create
     self.user_id ||= target.user_id
     self.project_id ||= target.project_id
-    self.is_private = target.is_private if target.respond_to?(:is_private)
+    # Private field inherits from target UNLESS it is set and its being changed by the owner
+    can_change_private = self.user_id == target.user_id
+    if target.respond_to?(:is_private)
+      self[:is_private] = target.is_private unless can_change_private && @is_private_set
+    end
     true
+  end
+  
+  def is_private=(value)
+    self[:is_private] = value
+    @is_private_set = true
   end
 
   def trigger_target_callbacks # after_create
@@ -152,10 +161,14 @@ class Comment < ActiveRecord::Base
       can_mention_watchers = true
       
       # Allow the owner to change the privacy status
-      if target.respond_to?(:is_private) && !@is_private.nil?
+      if target.respond_to?(:is_private)
         can_change_private = self.user_id == target.user_id
-        target.is_private = can_change_private ? @is_private : target.is_private
-        target.set_private_watchers(@private_ids) if target.is_private && can_change_private && @private_ids 
+        target.is_private = self.is_private if can_change_private
+        if target.is_private && can_change_private && @private_ids && @is_private_set
+          target.set_private_watchers(@private_ids)
+        elsif target.is_private
+          target.add_watchers([target.user])
+        end
       end
       
       if !target.is_private
