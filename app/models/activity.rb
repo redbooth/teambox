@@ -214,7 +214,8 @@ class Activity < ActiveRecord::Base
       :action_type => action_type,
       :comment_target_id => comment_target_id,
       :comment_target_type => comment_target_type,
-      :activity_id => activity_id
+      :activity_id => activity_id,
+      :changes => target.previous_changes
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
