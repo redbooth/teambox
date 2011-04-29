@@ -4,7 +4,16 @@ Teambox = {
   Controllers: {},
   Views: {},
   init: function() {
-    Loader.init();
+    //Start application once everything has loaded.
+    Loader.init(function() {
+      // Set the new root url
+      if (window.location.hash === '') {
+        window.location.hash = '#!/';
+      }
+
+      Teambox.application = new Teambox.Controllers.AppController();
+      Backbone.history.start();
+    });
 
     // Initialize models and collections
     Teambox.my_user = new Teambox.Models.User();
@@ -23,15 +32,6 @@ Teambox = {
 
     // Initialize the app (will fetch the data)
     Teambox.app_view = new Teambox.Views.App();
-
-    // Set the new root url
-    if (window.location.hash === '') {
-      window.location.hash = '#!/';
-    }
-
-    app = new Teambox.Controllers.AppController();
-    Backbone.history.start();
-
   }
 };
 
