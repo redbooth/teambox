@@ -4,17 +4,56 @@ describe ProjectsController do
   render_views
   
   describe "#index" do
-    it "should show a project when using mobile views" do
+    before do
       @user = Factory(:confirmed_user)
       @project = Factory(:project)
       @project.add_user @user
-      
+    end
+    
+    it "should show a project when using mobile views" do
       login_as @user
       
       get :index, :format => 'm'
       
       response.should render_template('projects/index')
       response.body.match(/Use full Teambox/).should_not == nil
+    end
+    
+    it "should not shown private objects we cant see in feeds" do
+      login_as @user
+      
+      conversation = Factory.create(:conversation, :project => @project, :name => 'We screwed up', :body => 'PANIC!', :is_private => true)
+      task = Factory.create(:task, :project => @project, :name => 'Silence the critics', :comments_attributes => {'0' => {'body' => 'People are asking too many questions'} }, :is_private => true)
+      other_conversation = Factory.create(:conversation, :project => @project, :name => 'We deny everything', :body => 'Nothing wrong here')
+      
+      get :index, :format => 'rss'
+      response.body.match(/We screwed up/).should == nil
+      response.body.match(/PANIC!/).should == nil
+      response.body.match(/Silence the critics/).should == nil
+      response.body.match(/People are asking too many questions/).should == nil
+      response.body.match(/We deny everything/).should_not == nil
+      response.body.match(/Nothing wrong here/).should_not == nil
+    end
+  end
+  
+  describe "#show" do
+    it "should not shown private objects we cant see in feeds" do
+      @user = Factory(:confirmed_user)
+      @project = Factory(:project)
+      @project.add_user @user
+      login_as @user
+      
+      conversation = Factory.create(:conversation, :project => @project, :name => 'We screwed up', :body => 'PANIC!', :is_private => true)
+      task = Factory.create(:task, :project => @project, :name => 'Silence the critics', :comments_attributes => {'0' => {'body' => 'People are asking too many questions'} }, :is_private => true)
+      other_conversation = Factory.create(:conversation, :project => @project, :name => 'We deny everything', :body => 'Nothing wrong here')
+      
+      get :show, :id => @project.id, :format => 'rss'
+      response.body.match(/We screwed up/).should == nil
+      response.body.match(/PANIC!/).should == nil
+      response.body.match(/Silence the critics/).should == nil
+      response.body.match(/People are asking too many questions/).should == nil
+      response.body.match(/We deny everything/).should_not == nil
+      response.body.match(/Nothing wrong here/).should_not == nil
     end
   end
   
