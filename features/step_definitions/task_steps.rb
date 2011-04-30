@@ -41,6 +41,14 @@ Given /^the (p[a-z]+ )?task called "([^\"]*)" belongs to the task list called "(
   task.update_attribute(:is_private, priv_type)
 end
 
+Given /^(@.+) created a (p[a-z]+ )?task named "([^\"]+)" in the task list called "([^\"]*)"$/ do |user_name, priv_type, task_name, task_list_name|
+  is_private = (priv_type||'').strip == 'private'
+  user = User.find_by_login(user_name.gsub('@',''))
+  task_list = TaskList.find_by_name(task_list_name)
+  Factory(:task, :user => user, :is_private => is_private, :name => task_name, :task_list => task_list, :project => task_list.project)
+end
+
+
 Given /^the task called "([^\"]*)" belongs to the project called "([^\"]*)"$/ do |task_name, project_name|
   Given %(there is a task called "#{task_name}")
   Given %(there is a project called "#{project_name}")
@@ -180,15 +188,6 @@ Then /^I should see "([^\"]+)" in the task thread title$/ do |msg|
   end
   comment = link.text
   comment.should match(/#{msg}/)
-end
-
-When /^I change watchers for the "([^"]*)" task to "([^"]*)"$/ do |name, watchers|
-  pending # TODO
-end
-
-When /^I make the "([^"]*)" task (p[a-z]+)$/ do |name, priv_type|
-  priv_type = (priv_type||'') == 'private'
-  pending # TODO: click elements
 end
 
 Given /^the task "([^\"]+)" is watched by (@.+)$/ do |name, users|

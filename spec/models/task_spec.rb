@@ -291,35 +291,96 @@ describe Task do
       Task.due_today.should_not include(@for_tomorrow)
     end
   end
-
-  it "should mark all related activities as private when created as private" do
-    task = Factory.create(:task, :is_private => true)
-    activities_for_thread(task) { |activity| activity.is_private.should == true }
-  end
   
-  it "should update the private status of related activities and comments each time its updated" do
-    task = Factory.create(:task, :is_private => true)
-    activities_for_thread(task) { |activity| activity.is_private.should == true }
-    task.comments.reload.each{|c| c.is_private.should == true }
-    task.update_attribute(:is_private, false)
-    activities_for_thread(task) { |activity| activity.is_private.should == false }
-    task.comments.reload.each{|c| c.is_private.should == false }
-    task.update_attribute(:is_private, true)
-    activities_for_thread(task) { |activity| activity.is_private.should == true }
-    task.comments.reload.each{|c| c.is_private.should == true }
-  end
+  describe "private tasks" do
+    
+    it "should mark all related activities as private when created as private" do
+      task = Factory.create(:task, :is_private => true)
+      activities_for_thread(task) { |activity| activity.is_private.should == true }
+    end
+  
+    it "should update the private status of related activities and comments each time its updated" do
+      task = Factory.create(:task, :is_private => true)
+      activities_for_thread(task) { |activity| activity.is_private.should == true }
+      task.comments.reload.each{|c| c.is_private.should == true }
+      task.update_attribute(:is_private, false)
+      activities_for_thread(task) { |activity| activity.is_private.should == false }
+      task.comments.reload.each{|c| c.is_private.should == false }
+      task.update_attribute(:is_private, true)
+      activities_for_thread(task) { |activity| activity.is_private.should == true }
+      task.comments.reload.each{|c| c.is_private.should == true }
+    end
     
     it "should not dispatch notification emails when private" do
       watcher = Factory.create(:user)
       Emailer.should_not_receive(:notify_task)
       
-      conversation = Factory.create(:conversation, :is_private => true)
-      conversation.project.add_user(watcher)
-      conversation.add_watcher(watcher)
-      conversation.comments.create_by_user conversation.user, {:body => 'Nononotify'}
-      conversation.save
+      task = Factory.create(:task, :is_private => true)
+      task.project.add_user(watcher)
+      task.add_watcher(watcher)
+      task.comments.create_by_user task.user, {:body => 'Nononotify'}
+      task.save
       
-      Conversation.find(conversation.id).comments.length.should == 2
+      Task.find(task.id).comments.length.should == 1
     end
+    
+    it "only comments created by the owner can update is_private" do
+      watcher = Factory.create(:user)
+      task = Factory.create(:task, :is_private => true)
+      task.project.add_user(watcher)
+      task.add_watcher(watcher)
+      
+      task.comments.create_by_user watcher, {:body => 'shouldnotwork', :is_private => false}
+      task.save
+      task.reload.is_private.should == true
+      
+      task.comments.create_by_user task.user, {:body => 'shouldwork', :is_private => false}
+      task.save
+      task.reload.is_private.should == false
+      
+      task.comments.create_by_user watcher, {:body => 'doesntwork', :is_private => true}
+      task.save
+      task.reload.is_private.should == false
+      
+      task.comments.create_by_user task.user, {:body => 'reallydoeswork', :is_private => true}
+      task.save
+      task.reload.is_private.should == true
+    end
+    
+    it "only comments created by the owner can update private_ids" do
+      watcher = Factory.create(:user)
+      task = Factory.create(:task, :is_private => true)
+      task.project.add_user(watcher)
+      task.add_watcher(watcher)
+      current_watchers = Task.find_by_id(task.id).watcher_ids.sort
+      
+      task.comments.create_by_user watcher, {:body => 'shouldnotwork', :is_private => true, :private_ids => [task.user_id]}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.should == current_watchers.sort
+      
+      task.comments.create_by_user task.user, {:body => 'shouldwork', :is_private => true, :private_ids => [task.user_id]}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.should == [task.user_id]
+    end
+    
+    it "private_ids can only be changed when is_private is set" do
+      watcher = Factory.create(:user)
+      project = Factory.create(:project)
+      task = Factory.create(:task, :is_private => true, :project => project, :user => project.user)
+      task = Task.find_by_id(task.id)
+      task.project.add_user(watcher)
+      task.add_watcher(watcher)
+      task = Task.find_by_id(task.id)
+      current_watchers = task.watcher_ids.sort
+      
+      task.comments.create_by_user task.user, {:body => 'shouldnotwork', :private_ids => [task.user_id]}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.sort.should == current_watchers.sort
+      
+      task.comments.create_by_user task.user, {:body => 'shouldreallynotwork', :is_private => true, :private_ids => [task.user_id]}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.sort.should == [task.user_id]
+    end
+  end
 
 end

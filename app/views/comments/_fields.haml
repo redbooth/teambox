@@ -22,7 +22,7 @@
   .add_watchers_box{ :style => 'display: none' }
     %p= t('comments.watchers.explain') 
 
-  .private_options{ :style => 'display: none', 'object-prefix' => "#{f.object.target_type.downcase}_#{f.object.target_id}", 'object-type' => f.object.target_type.downcase }
+  .private_options{ :style => 'display: none', 'object-prefix' => "#{f.object.target_type.downcase}_#{f.object.target_id}", 'object-type' => f.object_name }
     .option.normal
       = f.radio_button :is_private, false, :checked => !f.object.target.try(:is_private), :id => "#{f.object.target_type.downcase}_#{f.object.target_id}_public", :disabled => true
       %label{ :for => "#{f.object.target_type.downcase}_#{f.object.target_id}_public" }= t('comments.private.public')

@@ -156,6 +156,7 @@ class Comment < ActiveRecord::Base
 
   def trigger_target_callbacks # after_create
     @activity = project.log_activity(self, 'create') if project_id?
+    return if target.nil?
 
     if target.respond_to?(:add_watchers)
       can_mention_watchers = true

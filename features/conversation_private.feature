@@ -51,6 +51,7 @@ Feature: Creating a private conversation
     Given I am logged in as @pablo
     When I go to the page of the "Roflcopter" conversation
     Then I should see "Roflcopter"
+    And I should not see "Privacy"
     Given I am logged in as @mislav
     And I go to the page of the "Roflcopter" conversation
     And I fill in the comment box with "Changing private status again"
@@ -64,9 +65,9 @@ Feature: Creating a private conversation
 
   Scenario: Private conversations can only be modified by the creator
     Given @mislav started a private conversation named "Roflcopter"
+    And the conversation "Roflcopter" is watched by @pablo
     When I go to the page of the "Roflcopter" conversation
     Then I should see "Privacy"
-    And the conversation "Roflcopter" is watched by @pablo
     Given I am logged in as @pablo
     When I go to the page of the "Roflcopter" conversation
     Then I should not see "Privacy"

@@ -10,6 +10,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    authorize! :show, @task
     respond_to do |f|
       f.any(:html, :m)
       f.js {
