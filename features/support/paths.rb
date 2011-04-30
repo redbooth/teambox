@@ -37,6 +37,8 @@ module NavigationHelpers
       project_path(@current_project)
     when /the public project page/
       public_project_path(@current_project)
+    when /the public project page for the "([^\"]*)" conversation/
+      public_project_conversation_path(@current_project, Conversation.find_by_name($1).id)
     when /the page of the "([^\"]*)" project/
       project_path(Project.find_by_name($1))
     when /the conversations page/

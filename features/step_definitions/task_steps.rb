@@ -45,6 +45,7 @@ Given /^(@.+) created a (p[a-z]+ )?task named "([^\"]+)" in the task list called
   is_private = (priv_type||'').strip == 'private'
   user = User.find_by_login(user_name.gsub('@',''))
   task_list = TaskList.find_by_name(task_list_name)
+  task_list ||= @current_project.task_lists.create(:name => task_list_name, :user => user)
   Factory(:task, :user => user, :is_private => is_private, :name => task_name, :task_list => task_list, :project => task_list.project)
 end
 
