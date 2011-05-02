@@ -31,7 +31,9 @@ class TasksController < ApplicationController
 
   def create
     authorize! :make_tasks, @current_project
-    @task = @task_list.tasks.create_by_user(current_user, params[:task])
+    @task = @task_list.tasks.build_by_user(current_user, params[:task])
+    @task.is_private = params[:task][:is_private] if params[:task]
+    @task.save
     
     respond_to do |f|
       f.any(:html, :m) {

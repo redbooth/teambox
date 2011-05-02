@@ -347,6 +347,14 @@ describe Conversation do
       conversation.save
       Conversation.find_by_id(conversation.id).watcher_ids.sort.should == [conversation.user_id]
     end
+    
+    it "is_private cannot be mass assigned" do
+      project = Factory.create(:project)
+      conversation = project.conversations.new_by_user(project.user, :name => 'Test', :is_private => true)
+      conversation.is_private.should == false
+      conversation.update_attributes(:is_private => false)
+      conversation.is_private.should == false
+    end
   end
 end
 

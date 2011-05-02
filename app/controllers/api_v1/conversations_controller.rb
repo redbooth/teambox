@@ -28,6 +28,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
   def create
     authorize! :converse, @current_project
     @conversation = @current_project.conversations.new_by_user(current_user, params)
+    @conversation.is_private = params[:conversation][:is_private] if params[:conversation]
     
     if @conversation.save
       handle_api_success(@conversation, :is_new => true, :include => [:comments])

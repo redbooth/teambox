@@ -381,6 +381,14 @@ describe Task do
       task.save
       Task.find_by_id(task.id).watcher_ids.sort.should == [task.user_id]
     end
+    
+    it "setting is_private only works on creation" do
+      task_list = Factory.create(:task_list)
+      task = task_list.project.create_task(task_list.user, task_list, :name => 'Test', :is_private => true)
+      task.is_private.should == false
+      task.update_attributes(:is_private => false)
+      task.is_private.should == false
+    end
   end
 
 end

@@ -23,7 +23,8 @@ Feature: Creating a private conversation
     When I fill in "Title" with "Top Secret"
     And I fill in the comment box with "@all @pablo we are in some serious trouble here!"
     When I follow "Privacy"
-    And I choose "This element is only visible to people you specify..."
+    Then the "This element is visible to everybody in this project" checkbox should be checked
+    When I choose "This element is only visible to people you specify..."
     And I uncheck "Jordi Romero"
     And I uncheck "Pablo Villalba"
     And I press "Create"
@@ -44,7 +45,8 @@ Feature: Creating a private conversation
     When I go to the page of the "Roflcopter" conversation
     And I fill in the comment box with "Changing private status"
     And I follow "Privacy"
-    And I choose "This element is only visible to people you specify..."
+    Then the "This element is only visible to people you specify..." checkbox should be checked
+    When I choose "This element is only visible to people you specify..."
     And I check "Pablo Villalba"
     And I uncheck "Jordi Romero"
     And I press "Save"
@@ -78,7 +80,8 @@ Feature: Creating a private conversation
     When I go to the page of the "Roflcopter" conversation
     And I fill in the comment box with "Making this public"
     And I follow "Privacy"
-    And I choose "This element is visible to everybody in this project"
+    Then the "This element is only visible to people you specify..." checkbox should be checked
+    When I choose "This element is visible to everybody in this project"
     And I press "Save"
     Given I am logged in as @pablo
     When I go to the conversations page

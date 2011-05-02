@@ -22,7 +22,8 @@ Feature: Creating a private task
     When I follow "+ Add Task"
     And I fill in "Task title" with "Post lolcats"
     When I follow "Privacy"
-    And I choose "This element is only visible to people you specify..."
+    Then the "This element is visible to everybody in this project" checkbox should be checked
+    When I choose "This element is only visible to people you specify..."
     And I uncheck "Pablo Villalba"
     And I press "Add Task"
     And I wait for 1 second
@@ -38,7 +39,8 @@ Feature: Creating a private task
     When I go to the page of the "Post lolcats" task
     And I fill in the comment box with "Just updating!"
     When I follow "Privacy"
-    And I choose "This element is only visible to people you specify..."
+    Then the "This element is only visible to people you specify..." checkbox should be checked
+    When I choose "This element is only visible to people you specify..."
     And I uncheck "Jordi Romero"
     And I check "Pablo Villalba"
     And I press "Save"
@@ -52,7 +54,8 @@ Feature: Creating a private task
     When I go to the page of the "Post lolcats" task
     And I fill in the comment box with "Just updating again!"
     When I follow "Privacy"
-    And I choose "This element is only visible to people you specify..."
+    Then the "This element is only visible to people you specify..." checkbox should be checked
+    When I choose "This element is only visible to people you specify..."
     And I uncheck "Pablo Villalba"
     And I press "Save"
     Given I am logged in as @pablo
@@ -73,9 +76,11 @@ Feature: Creating a private task
     When I go to the page of the "Post lolcats" task
     And I fill in the comment box with "Just updating!"
     When I follow "Privacy"
-    And I choose "This element is visible to everybody in this project"
+    Then the "This element is only visible to people you specify..." checkbox should be checked
+    When I choose "This element is visible to everybody in this project"
     And I press "Save"
     When I go to the task lists page
     Given I am logged in as @pablo
     When I go to the task lists page
     Then I should see "Post lolcats"
+

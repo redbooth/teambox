@@ -18,6 +18,7 @@ class ConversationsController < ApplicationController
   def create
     authorize! :converse, @current_project
     @conversation = @current_project.conversations.new_by_user(current_user, params[:conversation])
+    @conversation.is_private = params[:conversation][:is_private] if params[:conversation]
 
     if @conversation.save
       respond_to do |f|

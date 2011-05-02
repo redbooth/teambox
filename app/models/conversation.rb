@@ -19,7 +19,7 @@ class Conversation < RoleRecord
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| comment['body'].blank? }
 
-  attr_accessible :name, :simple, :body, :comments_attributes, :is_private
+  attr_accessible :name, :simple, :body, :comments_attributes
   
   validates_presence_of :user
   validates_presence_of :name, :message => :no_title, :unless => :simple?
@@ -130,7 +130,7 @@ class Conversation < RoleRecord
   end
   
   def set_comments_target
-    comments.each{|c| c.is_private = self.is_private; c.target = self if c.target.nil?}
+    comments.each{|c| c.target = self if c.target.nil?}
   end
 
   def update_user_stats
