@@ -10,6 +10,11 @@ Teambox.Views.Tasks = Backbone.View.extend({
     _.bindAll(this, 'render');
   },
 
+  title: {
+    today: "Your Tasks for today",
+    mine: "Tasks assigned to you",
+    all: "All tasks in your projects"
+  },
   template: {
     today: Handlebars.compile("<h2>What you need to do today</h2>"+Templates.tasks.index),
     mine: Handlebars.compile(Templates.tasks.index),
@@ -28,6 +33,8 @@ Teambox.Views.Tasks = Backbone.View.extend({
       case 'today' : tasks = this.collection.today(); break;
       default      : tasks = this.collection; break;
     }
+
+    $('view_title').update( this.title[this.tasks_filter] );
 
     if (tasks.length > 0) {
       $('content').update( this.template[this.tasks_filter]() );

@@ -28,12 +28,12 @@ Teambox.Views.Sidebar = Backbone.View.extend({
     var today = Teambox.my_tasks.today();
     var late = Teambox.my_tasks.late();
 
-    if (mine) {
+    if (mine && mine.length > 0) {
       $("my_tasks_link").insert({ bottom: "<span>"+mine.length+"</span>" });
     }
-    if (today) {
+    if (today && today.length > 0) {
       $("today_link").insert({ bottom: "<span>"+today.length+"</span>" });
-      if (Teambox.my_tasks.late()) {
+      if (Teambox.my_tasks.late().length > 0) {
         $$("#today_link span")[0].addClassName('red');
       }
     }

@@ -41,6 +41,8 @@ _.parseFromAPI = function(json) {
           return "#!/projects/"+this.project.permalink+"/task_lists/"+this.id;
         case "Page":
           return "#!/projects/"+this.project.permalink+"/pages/"+this.id;
+        case "Note":
+          return "#!/projects/"+this.project.permalink+"/pages/"+this.page.id;
         case "Project":
           return "#!/projects/"+this.permalink;
         case "User":

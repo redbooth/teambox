@@ -24,6 +24,7 @@ Teambox.Views.Activities = Backbone.View.extend({
   // Build the activity feed by rendering every thread
   render: function() {
     var self = this;
+    $('view_title').update('All your projects');
     $('content').update('');
 
     // Render each thread
