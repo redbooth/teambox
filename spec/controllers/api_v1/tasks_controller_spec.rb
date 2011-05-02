@@ -268,6 +268,14 @@ describe ApiV1::TasksController do
       
       @task.reload.name.should_not == 'Modified'
     end
+    
+    it "should not allow participants not watching to modify a private task" do
+      @task.update_attribute(:is_private, true)
+      login_as @user
+      
+      put :update, :project_id => @project.permalink, :id => @task.id, :name => 'Modified'
+      response.status.should == 401
+    end
   end
   
   describe "#watch" do
@@ -287,6 +295,14 @@ describe ApiV1::TasksController do
       response.status.should == 401
       
       @task.reload.watcher_ids.include?(@observer.id).should_not == true
+    end
+    
+    it "should not allow participants to watch private conversations" do
+      @task.update_attribute(:is_private, true)
+      login_as @user
+
+      put :watch, :project_id => @project.permalink, :id => @task.id
+      response.status.should == 401
     end
   end
   
@@ -327,6 +343,14 @@ describe ApiV1::TasksController do
       response.status.should == 401
       
       @task_list.tasks(true).length.should == 1
+    end
+    
+    it "should not allow admins not watching to modify a private task" do
+      @task.update_attribute(:is_private, true)
+      login_as @admin
+      
+      put :destroy, :project_id => @project.permalink, :id => @task.id
+      response.status.should == 401
     end
   end
 end

@@ -8,6 +8,10 @@ class Ability
   def api_read?(user)
     user.current_token ? user.current_token.scope.include?(:read_projects) : true
   end
+  
+  def private_access?(user, object)
+    (object && object.is_private) ? object.watcher_ids.include?(user.id) : true
+  end
 
   def initialize(user)
     
@@ -28,20 +32,42 @@ class Ability
     
     can :comment, [Task, Conversation] do |object, project|
       project ||= object.project
-      api_write?(user) && project.commentable?(user)
+      api_write?(user) && project.commentable?(user) && private_access?(user, object)
     end
     
-    can :watch, [Task, Conversation, Page] do |object|
+    can :watch, [Task, Conversation] do |object|
+      api_write?(user) && object.project.commentable?(user) && private_access?(user, object)
+    end
+    
+    can :watch, Page do |object|
       api_write?(user) && object.project.commentable?(user)
     end
     
     # Core object permissions
     
-    can :update, [Conversation, Task, TaskList, Page, Upload] do |object|
+    can :update, [Conversation, Task] do |object|
+      api_write?(user) && object.editable?(user) && private_access?(user, object)
+    end
+    
+    can :update, [TaskList, Page] do |object|
       api_write?(user) && object.editable?(user)
     end
     
-    can :destroy, [Conversation, Task, TaskList, Page, Upload] do |object|
+    can :update, Upload do |object|
+      target = object.try(:comment).try(:target)
+      api_write?(user) && object.editable?(user) && private_access?(user, target)
+    end
+    
+    can :destroy, [Conversation, Task] do |object|
+      api_write?(user) && (object.owner?(user) or object.project.admin?(user)) && private_access?(user, object)
+    end
+    
+    can :destroy, Upload do |object|
+      target = object.try(:comment).try(:target)
+      api_write?(user) && (object.owner?(user) or object.project.admin?(user)) && private_access?(user, target)
+    end
+    
+    can :destroy, [TaskList, Page] do |object|
       api_write?(user) && (object.owner?(user) or object.project.admin?(user))
     end
     
@@ -134,16 +160,16 @@ class Ability
     end
     
     can :show, [Conversation, Task] do |object|
-      api_read?(user) && (object.is_private ? object.watcher_ids.include?(user.id) : true)
+      api_read?(user) && private_access?(user, object)
     end
     
     can :show, Comment do |object|
-      api_read?(user) && (object.target.is_private ? object.target.watcher_ids.include?(user.id) : true)
+      api_read?(user) && private_access?(user, object.target)
     end
     
     can :show, Upload do |object|
       target = object.try(:comment).try(:target)
-      api_read?(user) && ((object.is_private && target) ? target.watcher_ids.include?(user.id) : true)
+      api_read?(user) && private_access?(user, target)
     end
     
     can :show, Activity do |object|

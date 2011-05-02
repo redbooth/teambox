@@ -235,6 +235,24 @@ describe ApiV1::ConversationsController do
       
       @conversation.reload.name.should_not == 'Modified'
     end
+    
+    it "should not allow participants not watching to modify a private conversation" do
+      @conversation.update_attribute(:is_private, true)
+      login_as @user
+      
+      put :update, :project_id => @project.permalink, :id => @conversation.id, :name => 'Modified'
+      response.status.should == 401
+    end
+  end
+  
+  describe "#watch" do
+    it "should not allow participants to watch private conversations" do
+      @conversation.update_attribute(:is_private, true)
+      login_as @user
+      
+      put :watch, :project_id => @project.permalink, :id => @conversation.id
+      response.status.should == 401
+    end
   end
   
   describe "#destroy" do
@@ -263,6 +281,14 @@ describe ApiV1::ConversationsController do
       response.status.should == 401
       
       @project.conversations(true).length.should == 2
+    end
+    
+    it "should not allow admins not watching to destroy a private conversation" do
+      @conversation.update_attribute(:is_private, true)
+      login_as @admin
+      
+      put :destroy, :project_id => @project.permalink, :id => @conversation.id
+      response.status.should == 401
     end
   end
 end
