@@ -40,11 +40,17 @@ class UploadsController < ApplicationController
   end
   
   def index
-    @uploads = @current_project.uploads.includes(:user).order('updated_at DESC')
+    @uploads = @current_project.uploads.
+                       where(['uploads.is_private = ? OR (uploads.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                       joins("LEFT JOIN comments ON comments.id = uploads.comment_id").
+                       joins("LEFT JOIN watchers ON (comments.target_id = watchers.watchable_id AND watchers.watchable_type = comments.target_type) AND watchers.user_id = #{current_user.id}").
+                       includes(:user).
+                       order('updated_at DESC')
     @upload ||= @current_project.uploads.new
   end
 
   def show
+    authorize! :show, @upload
     redirect_to @upload.url
   end
 

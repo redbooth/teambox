@@ -149,7 +149,7 @@ end
 
 def activities_for_thread(target, &block)
   Activity.all.each do |activity|
-    if activity.comment_target == target or activity.target == target
+    if activity.comment_target == target or activity.target == target or (activity.target_type == 'Upload' && activity.comment.target == target)
       yield activity
     end
   end

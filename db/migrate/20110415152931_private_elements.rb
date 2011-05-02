@@ -4,6 +4,7 @@ class PrivateElements < ActiveRecord::Migration
     add_column :comments, :is_private, :boolean, :default => false
     add_column :conversations, :is_private, :boolean, :default => false
     add_column :tasks, :is_private, :boolean, :default => false
+    add_column :uploads, :is_private, :boolean, :default => false
   end
 
   def self.down
@@ -11,5 +12,6 @@ class PrivateElements < ActiveRecord::Migration
     remove_column :comments, :is_private
     remove_column :conversations, :is_private
     remove_column :tasks, :is_private
+    remove_column :uploads, :is_private
   end
 end

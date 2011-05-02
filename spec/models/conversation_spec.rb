@@ -267,14 +267,19 @@ describe Conversation do
     
     it "should update the private status of related activities and comments each time its updated" do
       conversation = Factory.create(:conversation, :is_private => true)
+      comment = conversation.comments.create_by_user conversation.user, {:body => 'Test'}
+      upload = comment.uploads.build({:asset => mock_uploader('semicolons.js', 'application/javascript', "alert('what?!')")})
+      comment.uploads << upload
+      comment.save!
+      
       activities_for_thread(conversation) { |activity| activity.is_private.should == true }
-      conversation.comments.each{|c| c.is_private.should == true }
+      conversation.comments.each{|c| c.is_private.should == true; c.uploads.each{|upload| upload.is_private.should == true} }
       conversation.update_attribute(:is_private, false)
       activities_for_thread(conversation) { |activity| activity.is_private.should == false }
-      conversation.comments.reload.each{|c| c.is_private.should == false }
+      conversation.comments.reload.each{|c| c.is_private.should == false; c.uploads.each{|upload| upload.is_private.should == false} }
       conversation.update_attribute(:is_private, true)
       activities_for_thread(conversation) { |activity| activity.is_private.should == true }
-      conversation.comments.reload.each{|c| c.is_private.should == true }
+      conversation.comments.reload.each{|c| c.is_private.should == true; c.uploads.each{|upload| upload.is_private.should == true} }
     end
     
     it "should not dispatch notification emails when private" do

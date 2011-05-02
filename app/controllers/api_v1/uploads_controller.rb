@@ -13,6 +13,9 @@ class ApiV1::UploadsController < ApiV1::APIController
     
     @uploads = context.except(:order).
                        where(api_range('uploads')).
+                       where(['uploads.is_private = ? OR (uploads.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                       joins("LEFT JOIN comments ON comments.id = uploads.comment_id").
+                       joins("LEFT JOIN watchers ON (comments.target_id = watchers.watchable_id AND watchers.watchable_type = comments.target_type) AND watchers.user_id = #{current_user.id}"). 
                        limit(api_limit).
                        order('uploads.id DESC').
                        includes([:page, :user])
@@ -21,6 +24,7 @@ class ApiV1::UploadsController < ApiV1::APIController
   end
 
   def show
+    authorize! :show, @upload
     api_respond @upload, :references => true
   end
   

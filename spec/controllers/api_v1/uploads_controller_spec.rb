@@ -100,6 +100,36 @@ describe ApiV1::UploadsController do
       response.should be_success
       JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@project.upload_ids[2]]
     end
+    
+    describe "private uploads" do
+      before do
+        @conversation = Factory.create(:conversation, :is_private => true, :user => @project.user, :project => @project)
+        @upload.is_private = true
+        @upload.comment = @conversation.comments.first
+        @upload.save!
+      end
+      
+      it "does not show private uploads belonging to objects we aren't a target of" do
+        login_as @user
+      
+        get :index, :project_id => @project.permalink
+        response.should be_success
+      
+        objects = JSON.parse(response.body)['objects']
+        objects.map{|o| o['id']}.include?(@upload.id).should_not == true
+      end
+      
+      it "shows private uploads belonging to objects we are a watcher of" do
+        @conversation.add_watcher(@user)
+        login_as @user
+      
+        get :index, :project_id => @project.permalink
+        response.should be_success
+      
+        objects = JSON.parse(response.body)['objects']
+        objects.map{|o| o['id']}.include?(@upload.id).should == true
+      end
+    end
   end
   
   describe "#show" do
@@ -115,6 +145,18 @@ describe ApiV1::UploadsController do
       data['id'].to_i.should == @upload.id
       references.include?("#{@upload.user_id}_User").should == true
       references.include?("#{@upload.project_id}_Project").should == true
+    end
+    
+    it "does not show a private upload" do
+      @conversation = Factory.create(:conversation, :is_private => true, :user => @project.user, :project => @project)
+      @upload.is_private = true
+      @upload.comment = @conversation.comments.first
+      @upload.save!
+      
+      login_as @user
+      
+      get :show, :project_id => @project.permalink, :id => @upload.id
+      response.status.should == 401
     end
   end
   

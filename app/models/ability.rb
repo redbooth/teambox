@@ -129,7 +129,7 @@ class Ability
     end
     
     # OAuth :read_projects show permission
-    can :show, [Divider, Invitation, Membership, Note, Organization, Page, Person, Project, TaskList, Upload, User] do |object|
+    can :show, [Divider, Invitation, Membership, Note, Organization, Page, Person, Project, TaskList, User] do |object|
       api_read?(user)
     end
     
@@ -139,6 +139,11 @@ class Ability
     
     can :show, Comment do |object|
       api_read?(user) && (object.target.is_private ? object.target.watcher_ids.include?(user.id) : true)
+    end
+    
+    can :show, Upload do |object|
+      target = object.try(:comment).try(:target)
+      api_read?(user) && ((object.is_private && target) ? target.watcher_ids.include?(user.id) : true)
     end
     
     can :show, Activity do |object|
