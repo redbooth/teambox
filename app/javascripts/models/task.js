@@ -81,3 +81,4 @@
   Teambox.Models.Task = Backbone.Model.extend(Task, TaskStatic);
 
 }());
+

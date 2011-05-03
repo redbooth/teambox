@@ -1,4 +1,4 @@
-Teambox.Models.User = Backbone.Model.extend({
+Teambox.Models.User = Teambox.Models.Base.extend({
 
   // Listen for changes in the username field
   initialize: function () {

@@ -1,4 +1,4 @@
-Teambox.Models.Project = Backbone.Model.extend({
+Teambox.Models.Project = Teambox.Models.Base.extend({
   initialize: function() {
   },
   render: function() {

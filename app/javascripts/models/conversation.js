@@ -1,4 +1,4 @@
-Teambox.Models.Conversation = Backbone.Model.extend({
+Teambox.Models.Conversation = Teambox.Models.Base.extend({
 
   initialize: function() {
   },
