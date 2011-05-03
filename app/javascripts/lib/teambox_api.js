@@ -2,7 +2,6 @@
 // Utility methods for Teambox API
 //
 
-
 // Parses a Teambox API response object and modifies it, fetching each
 // reference object from the response.
 // Returns an array of objects with their referenced projects, comments, etc.
@@ -30,25 +29,25 @@ _.parseFromAPI = function(json) {
 
     // Insert a method to generate URLs for this item
     e.url = function() {
-      switch(this.type) {
+      switch(e.type) {
         case "Comment":
-          return this.target.url();
+          return e.target.url();
         case "Conversation":
-          return "#!/projects/"+this.project.permalink+"/conversations/"+this.id;
+          return "#!/projects/"+e.project.permalink+"/conversations/"+e.id;
         case "Task":
-          return "#!/projects/"+this.project.permalink+"/tasks/"+this.id;
+          return "#!/projects/"+e.project.permalink+"/tasks/"+e.id;
         case "TaskList":
-          return "#!/projects/"+this.project.permalink+"/task_lists/"+this.id;
+          return "#!/projects/"+e.project.permalink+"/task_lists/"+e.id;
         case "Page":
-          return "#!/projects/"+this.project.permalink+"/pages/"+this.id;
+          return "#!/projects/"+e.project.permalink+"/pages/"+e.id;
         case "Note":
-          return "#!/projects/"+this.project.permalink+"/pages/"+this.page.id;
+          return "#!/projects/"+e.project.permalink+"/pages/"+e.page.id;
         case "Project":
-          return "#!/projects/"+this.permalink;
+          return "#!/projects/"+e.permalink;
         case "User":
-          return "#!/users/"+this.username;
+          return "#!/users/"+e.username;
         default:
-          console.log("Didn't implement URL for "+this.type+". Object: "+this);
+          console.log("Didn't implement URL for "+e.type+". Object: "+e);
           return "#!/wip";
       }
     };
