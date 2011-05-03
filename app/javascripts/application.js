@@ -19,6 +19,7 @@
 //= require <lib/teambox_api>
 //= require <helpers/handlebars>
 //= require <controllers/app>
+//= require <models/conversation>
 //= require <models/project>
 //= require <models/task>
 //= require <models/thread>
@@ -29,6 +30,7 @@
 //= require <views/app>
 //= require <views/activities>
 //= require <views/comment_form>
+//= require <views/conversation>
 //= require <views/projects>
 //= require <views/search>
 //= require <views/sidebar>

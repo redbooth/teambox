@@ -64,8 +64,12 @@ Teambox.Controllers.AppController = Backbone.Controller.extend({
     $('content').update( Handlebars.compile(Templates.conversations['new'])() );
   },
 
-  conversations_show: function() {
-    $('content').update( 'show conv' );
+  // Display 'loading', fetch the conversation and display it
+  conversations_show: function(project, id) {
+    var model = new Teambox.Models.Conversation({ id: id });
+    var view = new Teambox.Views.Conversation({ model: model });
+    view.render();
+    model.fetch();
   },
 
   // Tasks
