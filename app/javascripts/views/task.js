@@ -101,18 +101,43 @@
     }
 
     // Start an AJAX request to update the task's title
-  , updateTitle: function (evt) {
-      var old = $(this.el).down('a.name').innerHTML
-        , now = $(this.el).down('form.edit_title input').value;
+  , updateTitle: function(evt) {
+      var self = this;
+      var element = $(this.el);
+      var title = element.down('a.name');
+      var old = element.down('a.name').innerHTML;
+      var input = element.down('form.edit_title input');
+      var now = input.value;
+
+      var toggleForm = function() {
+        element.select('a.name, form.edit_title').invoke('toggle');
+      };
 
       // Update only if the title is dirty
-      if (now !== old) {
-        $(this.el).down('a.name').update("Saving... (not implemented yet)");
-      }
+      if( now !== old ) {
+        toggleForm();
+        self.model.set({name: now});
 
-      $(this.el).select('a.name, form.edit_title').invoke('toggle');
+        title = element.down('a.name');
+        title.update(input.getAttribute('data-disable-with'));
+        title.addClassName('loading');
+
+        self.model.save(false, {
+          success: function() {
+            title.removeClassName('loading');
+            self.model.change();
+          },
+          error: function(){
+            title.removeClassName('loading');
+            toggleForm();
+          }
+        });
+      }
+      return false;
+    }
+  , disableFormSubmit: function(e) {
+      Event.stop(e);
       return false;
     }
   });
-
 }());

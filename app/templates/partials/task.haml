@@ -6,7 +6,7 @@
 .taskName
   %a.name{:href => "/projects/{{project.url}}/tasks/{{id}}"} {{name}}
   %form.edit_title{ :style => 'display: none' }
-    %input{ :value => '{{name}}' }
+    %input{ :"data-disable-with"=>"#{t('common.saving')}…", :value => '{{name}}' }
   .expanded_actions{:style => "display: none"}
     %a.full{:href => "/projects/{{project.url}}/tasks/{{id}}"}= t('tasks.task.full_view')
     %a.edit{:href => "#"}= t('tasks.task.edit')

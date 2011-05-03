@@ -257,6 +257,12 @@ form.new_task, form.edit_task, .task_list_form
         color: #555
         a
           color: #555
+      .taskName
+        a
+          background-repeat: no-repeat
+          padding-left: 20px
+          &.loading
+            background-image: url(/images/loading.gif)
 
 div.tasks
   padding-bottom: 5px
@@ -405,3 +411,4 @@ p.view_for_all
       font-size: 12px
       padding: 3px
       margin: 0
+
