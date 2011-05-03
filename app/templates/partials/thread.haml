@@ -3,7 +3,7 @@
     %time.timeago{ :'data-msec' => "{{ms updated_at}}", :pubdate => "true" }
       {{updated_at}}
   .info
-    {{#if assigned_id}}
+    {{#if is_task}}
     %img{ :src => "/famfamfam/tick.png", :style => "padding: 4px" }
     {{else}}
     %img{ :src => "/famfamfam/comment.png", :style => "padding: 4px" }
@@ -12,7 +12,7 @@
       %span {{comments_count}}
   .block
     .thread_title
-      {{#if assigned_id}}
+      {{#if is_task}}
       <a href="{{url}}">{{name}}</a> on
       {{#task_list}}
       <a href="{{url}}">{{name}}</a>
@@ -26,7 +26,7 @@
     .project_overlay
       <a href="{{url}}" data-project-id="{{id}}">{{name}}</a>
     {{/project}}
-    {{#if assigned_id}}
+    {{#if is_task}}
     .task_summary
       {{status_transition}}
       Assigned to {{full_name user}}

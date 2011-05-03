@@ -20,6 +20,9 @@ Teambox.Views.Thread = Backbone.View.extend({
       "data-project-id": this.model.get('project_id')
     });
 
+    // Introduce the is_task false attribute for thread rendering
+    this.model.attributes.is_task = this.model.get('type') == 'Task';
+
     // Prepare the thread DOM element
     $(this.el).update(
       this.template(this.model.toJSON())
