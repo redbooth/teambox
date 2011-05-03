@@ -150,6 +150,7 @@ GEM
     kgio (2.3.3)
     juggernaut (2.0.1)
       redis
+    kgio (2.3.3)
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
