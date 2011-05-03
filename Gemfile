@@ -47,6 +47,7 @@ group :development do
   gem 'ruby-debug', '~> 0.10.3', :require => nil
   gem 'mongrel', '~> 1.1.5', :require => nil
   gem 'jasmine'
+  gem 'unicorn', '~> 3.6.1', :require => nil
 end
 
 group :test, :development do

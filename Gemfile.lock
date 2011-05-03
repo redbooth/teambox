@@ -147,6 +147,7 @@ GEM
       selenium-rc (>= 2.1.0)
     json (1.4.6)
     json_pure (1.4.6)
+    kgio (2.3.3)
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
@@ -265,6 +266,9 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.24)
+    unicorn (3.6.1)
+      kgio (~> 2.3)
+      rack
     webrat (0.7.2)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -328,6 +332,7 @@ DEPENDENCIES
   timecop
   tmail (~> 1.2.3)
   tzinfo (~> 0.3.12)
+  unicorn (~> 3.6.1)
   vestal_versions (~> 1.2.2)!
   webrat
   whenever (~> 0.4.1)
