@@ -17,6 +17,7 @@
 //= require <dragdrop>
 //= require <hackz>
 //= require <cookie>
+//= require <hackz>
 
 //= require <teambox>
 
