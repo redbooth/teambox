@@ -13,6 +13,7 @@
 //= require <effects>
 //= require <controls>
 //= require <dragdrop>
+//= require <hackz>
 
 //= require <teambox>
 
