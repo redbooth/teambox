@@ -42,7 +42,7 @@
   - if current_user.people.any?
     .el#projects_link= link_to t('.show_all_projects'), '#!/projects', :class => 'more'
   - if !Teambox.config.community || (Teambox.config.community && !@community_organization) || (@community_organization && @community_role)
-    .el= link_to t('.new_project'), new_project_path, :class => 'more ajax'
+    .el#new_project_link= link_to t('.new_project'), new_project_path, :class => 'more ajax'
 
   .separator.with_margin More...
   -# Organizations

@@ -5,6 +5,9 @@ Teambox.Views.Activities = Backbone.View.extend({
   },
 
   templates: {
+    project: {
+      create: Handlebars.compile(Templates.activities.project_create)
+    },
     note: {
       create: Handlebars.compile(Templates.activities.note_create),
       edit: Handlebars.compile(Templates.activities.note_edit)

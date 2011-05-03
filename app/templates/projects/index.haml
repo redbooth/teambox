@@ -9,8 +9,7 @@
   .projects
     {{#active_projects}}
     %p.project
-      %a{ :href => "/projects/{{permalink}}" }
-        {{name}}
+      %a{ :href => "{{url}}" } {{name}}
       %span.status
         {{my_role}}
         {{#admin}}

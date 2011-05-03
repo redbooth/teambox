@@ -4,11 +4,23 @@ Teambox.Controllers.AppController = Backbone.Controller.extend({
     '!/today'             : 'today',
     '!/my_tasks'          : 'my_tasks',
     '!/all_tasks'         : 'all_tasks',
-    '!/projects'          : 'projects',
     '!/search/:terms'     : 'search',
-    '!/conversations/new' : 'conversations_new',
-    '!/tasks/new'         : 'tasks_new'
+    '!/users/:id'         : 'users_show',
+    // projects
+    '!/projects'                            : 'projects_index',
+    '!/projects/new'                        : 'projects_new',
+    '!/projects/:id'                        : 'projects_show',
+    '!/projects/:project/conversations'     : 'conversations_index',
+    '!/projects/:project/conversations/:id' : 'conversations_show',
+    '!/projects/:project/tasks'             : 'tasks_index',
+    '!/projects/:project/tasks/:id'         : 'tasks_show',
+    '!/projects/:project/pages'             : 'pages_index',
+    '!/projects/:project/pages/:id'         : 'pages_show',
+    '!/projects/:project/people'            : 'people_index',
+    '!/projects/:project/settings'          : 'project_edit'
   },
+
+  // Top level collections
 
   index: function() {
     this.highlightSidebar('activity_link');
@@ -30,21 +42,62 @@ Teambox.Controllers.AppController = Backbone.Controller.extend({
     Teambox.all_tasks_view.render();
   },
 
-  projects: function() {
+  search: function(terms) {
+    Teambox.search_view.getResults(terms);
+  },
+
+  // Projects
+
+  projects_index: function() {
     this.highlightSidebar('projects_link');
     Teambox.projects_view.render();
   },
 
-  search: function(terms) {
-    Teambox.search_view.getResults(terms);
+  projects_new: function() {
+    this.highlightSidebar('new_project_link');
+    $('content').update( 'new project' );
   },
+
+  // Conversations
 
   conversations_new: function() {
     $('content').update( Handlebars.compile(Templates.conversations['new'])() );
   },
 
+  conversations_show: function() {
+    $('content').update( 'show conv' );
+  },
+
+  // Tasks
+
   tasks_new: function() {
     $('content').update( 'new task' );
+  },
+
+  tasks_show: function() {
+    $('content').update( 'show task' );
+  },
+
+  // Pages
+
+  pages_new: function() {
+    $('content').update( 'new page' );
+  },
+
+  pages_show: function() {
+    $('content').update( 'show page' );
+  },
+
+  // Users
+
+  users_show: function() {
+    $('content').update( 'show user' );
+  },
+
+  // Projects
+
+  projects_show: function() {
+    $('content').update( 'show project' );
   },
 
   // Utility methods
