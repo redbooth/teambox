@@ -26,10 +26,6 @@ class TaskListsController < ApplicationController
         @activities = @current_project.activities.for_task_lists.latest
         render :layout => false
       }
-      f.js {
-        @show_part = params[:part]
-        render 'task_lists/reload', :layout => false
-      }
       f.print { render :layout => 'print' }
     end
   end
