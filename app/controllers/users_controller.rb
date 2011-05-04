@@ -32,11 +32,6 @@ class UsersController < ApplicationController
         signup_from_oauth(app_link)
         @conflict = true if app_link.sign_up_conflict?
         @provider = app_link.provider.humanize
-        # If we have all the data we need, sign the user up directly
-        if new_user = try_one_click_signup
-          self.current_user = new_user
-          return redirect_to projects_path
-        end
       # Regular invitation
       else
         @user = User.new
@@ -279,13 +274,6 @@ class UsersController < ApplicationController
       if email = app_link.detect_custom_attribute {|k,v| k == 'email' }
         @user.email     ||= email unless User.find_by_email(email)
       end
-    end
-
-    # We test if adding a password we have a valid user. If so, we create it
-    def try_one_click_signup
-      user = @user
-      user.password = user.password_confirmation = ActiveSupport::SecureRandom.hex(8)
-      user.save ? user : false
     end
 
     def can_users_signup?
