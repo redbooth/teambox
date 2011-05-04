@@ -1,7 +1,7 @@
 //= require <prototype>
-//= require <jquery>
 //= require <underscore>
-//= require <backbone>
+//= require <lib/jquery>
+//= require <lib/backbone-prototype>
 //= require <handlebars>
 
 //= require <rails>
