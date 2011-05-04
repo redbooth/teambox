@@ -14,12 +14,12 @@ class ApiV1::CommentsController < ApiV1::APIController
                         order('comments.id DESC').
                         includes([:target, :assigned, :previous_assigned, :user])
     
-    api_respond @comments, :references => [:target, :user, :assigned, :previous_assigned, :project]
+    api_respond @comments, :references => true
   end
 
   def show
     authorize! :show, @comment
-    api_respond @comment, :include => [:user, :uploads]
+    api_respond @comment, :references => true, :include => [:uploads]
   end
   
   def create

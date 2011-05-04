@@ -15,7 +15,14 @@ describe ApiV1::MembershipsController do
       get :index, :organization_id => @organization.permalink
       response.should be_success
       
-      JSON.parse(response.body)['objects'].length.should == @organization.memberships.length
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      data['objects'].length.should == @organization.memberships.length
+      references.include?("#{@organization.id}_Organization").should == true
+      @organization.memberships.each do |m|
+        references.include?("#{m.user_id}_User").should == true
+      end
     end
     
     it "shows members in the organization referenced by id" do
@@ -61,13 +68,18 @@ describe ApiV1::MembershipsController do
   end
   
   describe "#show" do
-    it "shows a member" do
+    it "shows a member with references" do
       login_as @admin
       
       get :show, :organization_id => @organization.permalink, :id => @organization.memberships.first.id
       response.should be_success
       
-      JSON.parse(response.body)['id'].to_i.should == @organization.memberships.first.id
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      data['id'].to_i.should == @organization.memberships.first.id
+      
+      references.include?("#{@organization.id}_Organization").should == true
+      references.include?("#{@organization.memberships.first.user_id}_User").should == true
     end
   end
   

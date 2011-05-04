@@ -111,6 +111,14 @@ class Page < RoleRecord
     project.log_activity(self, 'edit') unless @suppress_activity
   end
   
+  def references
+    refs = { :users => [user_id], :projects => [project_id] }
+    refs[:note] = note_ids
+    refs[:divider] = divider_ids
+    refs[:upload] = upload_ids
+    refs
+  end
+  
   def to_s
     name
   end
@@ -121,10 +129,6 @@ class Page < RoleRecord
   
   def user
     @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
-  end
-  
-  def refs_objects
-    notes+dividers+uploads
   end
   
   def to_xml(options = {})

@@ -39,6 +39,10 @@ class Membership < ActiveRecord::Base
       false
     end
   end
+  
+  def references
+    { :users => [user_id], :organization => [organization_id] }
+  end
 
   def role_name
     ROLES.index(role)

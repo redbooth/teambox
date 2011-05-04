@@ -17,12 +17,12 @@ class ApiV1::DividersController < ApiV1::APIController
                         order('dividers.id DESC').
                         includes([:project, :page])
     
-    api_respond @dividers, :references => [:project, :page]
+    api_respond @dividers, :references => true
   end
 
   def show
     authorize! :show, @divider
-    api_respond @divider, :include => [:page_slot]
+    api_respond @divider, :references => true
   end
   
   def create

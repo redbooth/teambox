@@ -178,13 +178,20 @@ describe ApiV1::CommentsController do
   end
   
   describe "#show" do
-    it "shows a comment" do
+    it "shows a comment with references" do
       login_as @user
       
       get :show, :project_id => @project.permalink, :id => @comment.id
       response.should be_success
       
-      JSON.parse(response.body)['id'].to_i.should == @comment.id
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      data['id'].to_i.should == @comment.id
+      
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{@comment.user_id}_User").should == true
+      references.include?("#{@target.id}_Conversation").should == true
     end
     
     it "shows a comment in any project" do

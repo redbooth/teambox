@@ -15,7 +15,12 @@ describe ApiV1::PagesController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body)['objects'].length.should == 1
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      data['objects'].length.should == 1
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{@page.user_id}_User").should == true
     end
     
     it "includes references" do
@@ -25,7 +30,6 @@ describe ApiV1::PagesController do
       response.should be_success
       
       refs = JSON.parse(response.body)['references']
-      refs.length.should == 2
       objtypes = refs.map {|r| r['type']}
       objtypes.include?('Project').should == true
       objtypes.include?('User').should == true
@@ -98,7 +102,7 @@ describe ApiV1::PagesController do
   end
   
   describe "#show" do
-    it "shows a page" do
+    it "shows a page with references" do
       login_as @user
       
       @note = @page.build_note({:name => 'Office Ettiquete'}).tap do |n|
@@ -113,6 +117,10 @@ describe ApiV1::PagesController do
       page['id'].to_i.should == @page.id
       page['objects'][0]['type'].should == 'Note'
       page['slots'][0]['rel_object_id'].should == @note.id
+      
+      references = page['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{@page.user_id}_User").should == true
     end
   end
   

@@ -19,7 +19,14 @@ describe ApiV1::UploadsController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body)['objects'].length.should == 2
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      data['objects'].length.should == 2
+      references.include?("#{@upload.user_id}_User").should == true
+      references.include?("#{@upload.project_id}_Project").should == true
+      references.include?("#{@page_upload.user_id}_User").should == true
+      references.include?("#{@page_upload.page_id}_Page").should == true
     end
     
     it "shows uploads with a JSONP callback" do
@@ -96,13 +103,18 @@ describe ApiV1::UploadsController do
   end
   
   describe "#show" do
-    it "shows an upload" do
+    it "shows an upload with references" do
       login_as @user
       
       get :show, :project_id => @project.permalink, :id => @upload.id
       response.should be_success
       
-      JSON.parse(response.body)['id'].to_i.should == @upload.id
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      data['id'].to_i.should == @upload.id
+      references.include?("#{@upload.user_id}_User").should == true
+      references.include?("#{@upload.project_id}_Project").should == true
     end
   end
   

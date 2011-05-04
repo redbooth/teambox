@@ -12,12 +12,12 @@ class ApiV1::MembershipsController < ApiV1::APIController
                                              order('memberships.id DESC').
                                              includes([:organization, :user])
     
-    api_respond @memberships, :references => [:organization, :user]
+    api_respond @memberships, :references => true
   end
 
   def show
     authorize! :show, @membership
-    api_respond @membership, :include => [:user]
+    api_respond @membership, :references => true
   end
   
   def update

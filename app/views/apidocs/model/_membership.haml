@@ -2,13 +2,13 @@
 %p=raw "To add people to an organization, make an #{link_to_doc_model(:invitation)}."
 
 - doc_for :index,
-          :example => example_api_wrap([@membership], :references => [:organization, :user]) do
+          :example => example_api_wrap([@membership], :references => true) do
   %p=raw "Returns the most recent people in the project."
 
 - ignore_doc_for :create
 
 - doc_for :show,
-          :example => @membership.to_api_hash(:include => [:user]) do
+          :example => example_api_wrap(@membership, :references => true) do
   %p=raw "Returns the data for a person in the project"
 
 - doc_for :update,

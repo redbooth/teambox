@@ -17,6 +17,12 @@ describe ApiV1::ProjectsController do
       list['type'].should == 'List'
       list['objects'].each {|o| o['type'].should == 'Project'}
       list['objects'].length.should == 2
+      
+      references = list['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      references.include?("#{@project.organization.id}_Organization").should == true
+      references.include?("#{@other_project.organization.id}_Organization").should == true
+      references.include?("#{@project.user_id}_User").should == true
+      references.include?("#{@other_project.user_id}_User").should == true
     end
     
     it "shows projects with a JSONP callback" do
@@ -115,15 +121,19 @@ describe ApiV1::ProjectsController do
   end
   
   describe "#show" do
-    it "shows a project" do
+    it "shows a project with references" do
       login_as @user
       
       get :show, :id => @project.permalink
       response.should be_success
       
-      object = JSON.parse(response.body)
-      object['type'].should == 'Project'
-      object['id'].to_i.should == @project.id
+      data = JSON.parse(response.body)
+      data['type'].should == 'Project'
+      data['id'].to_i.should == @project.id
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      references.include?("#{@project.organization.id}_Organization").should == true
+      references.include?("#{@project.user_id}_User").should == true
     end
     
     it "shows a project by id" do

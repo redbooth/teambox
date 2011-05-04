@@ -161,13 +161,26 @@ describe ApiV1::TasksController do
   end
   
   describe "#show" do
-    it "shows a task" do
+    it "shows a task with references" do
       login_as @user
+      
+      @task.update_attributes(:comments_attributes => {'0' => {:body => 'Nice task'}})
       
       get :show, :project_id => @project.permalink, :id => @task.id
       response.should be_success
       
-      JSON.parse(response.body)['id'].to_i.should == @task.id
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      data['id'].to_i.should == @task.id
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{@task.user_id}_User").should == true
+      references.include?("#{@task.first_comment.user_id}_User").should == true
+      references.include?("#{@task.first_comment.id}_Comment").should == true
+      @task.recent_comments.each do |comment|
+        references.include?("#{comment.id}_Comment").should == true
+        references.include?("#{comment.user_id}_User").should == true
+      end
     end
     
     it "shows a task in a task list" do

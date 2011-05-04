@@ -19,7 +19,13 @@ describe ApiV1::TaskListsController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body)['objects'].length.should == 2
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      data['objects'].length.should == 2
+      
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{@task_list.user_id}_User").should == true
+      references.include?("#{@other_task_list.user_id}_User").should == true
     end
     
     it "shows task lists with a JSONP callback" do
@@ -105,13 +111,19 @@ describe ApiV1::TaskListsController do
   end
   
   describe "#show" do
-    it "shows a task list" do
+    it "shows a task list with references" do
       login_as @user
       
       get :show, :project_id => @project.permalink, :id => @task_list.id
       response.should be_success
       
-      JSON.parse(response.body)['id'].to_i.should == @task_list.id
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      data['id'].to_i.should == @task_list.id
+      
+      references.include?("#{@task_list.project_id}_Project").should == true
+      references.include?("#{@task_list.user_id}_User").should == true
     end
   end
   

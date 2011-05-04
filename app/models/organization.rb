@@ -101,6 +101,10 @@ class Organization < ActiveRecord::Base
     !!logo.original_filename
   end
   
+  def references
+    {}
+  end
+  
   def to_api_hash(options = {})
     base = {
       :id => id,

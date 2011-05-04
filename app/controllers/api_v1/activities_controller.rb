@@ -16,9 +16,9 @@ class ApiV1::ActivitiesController < ApiV1::APIController
   def show
     @activity = Activity.where(:project_id => current_user.project_ids).find_by_id(params[:id])
     authorize!(:show, @activity) if @activity
-      
+    
     if @activity
-      api_respond @activity, :include => [:project, :target, :user, :thread_comments, :uploads]
+      api_respond @activity, :references => true, :include => [:uploads]
     else
       api_error :not_found, :type => 'ObjectNotFound', :message => 'Not found'
     end

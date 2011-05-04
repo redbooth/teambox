@@ -110,6 +110,15 @@ class Comment < ActiveRecord::Base
     "#{target_type}_#{target_id}"
   end
   
+  def references
+    refs = { :users => [user_id], :projects => [project_id] }
+    refs.merge!({ target_type.tableize.to_sym => [target_id] })
+    refs[:people] = []
+    refs[:people] << assigned_id if assigned_id
+    refs[:people] << previous_assigned_id if previous_assigned_id
+    refs
+  end
+  
   protected
 
   # don't allow two identical updates in a row

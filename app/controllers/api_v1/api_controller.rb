@@ -99,64 +99,71 @@ class ApiV1::APIController < ApplicationController
   end
   
   def api_wrap(object, options={})
-    objects = if object.respond_to? :each
-      object.map{|o| o.to_api_hash(options.merge(:emit_type => true)) }
-    else
-      object.to_api_hash(options.merge(:emit_type => true))
-    end
-
-    if options[:references]
-      { :type => 'List', :objects => objects }.tap do |wrap|
-        # List of messages to send to the object to get referenced objects
-
-        if options[:references] == true
-          objects_references = object.collect(&:references)
-          refs = objects_references.inject({}) do |m,e|
-            e.each { |v| m[v.first] = (Array(m[v.first]) + v.last).compact.uniq }
-            m
-          end
-          wrap[:references] = load_references(refs).compact.collect { |o| o.to_api_hash(options.merge(:emit_type => true)) }
-        else # KILL ME
-          wrap[:references] = Array(object).map do |obj|
-            options[:references].map{|ref| obj.send(ref) }.flatten.compact
-          end.flatten.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
-        end
+    references = if options[:references] == true
+      objects_references = object.respond_to?(:collect) ? object.collect(&:references) : [object.references]
+      refs = objects_references.inject({}) do |m,e|
+        e.each { |k,v| m[k] = (Array(m[k]) + v).compact.uniq }
+        m
       end
+      load_references(refs).compact.collect { |o| o.to_api_hash(options.merge(:emit_type => true)) }
+    elsif options[:references] # TODO: kill. only used in search
+      Array(object).map do |obj|
+        options[:references].map{|ref| obj.send(ref) }.flatten.compact
+      end.flatten.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
     else
-      objects
+      nil
+    end
+    
+    {}.tap do |api_response|
+      if object.respond_to? :each
+        api_response[:type] = 'List'
+        api_response[:objects] = object.map{|o| o.to_api_hash(options.merge(:emit_type => true)) }
+      else
+        api_response.merge!(object.to_api_hash(options.merge(:emit_type => true)))
+      end
+      
+      api_response[:references] = references if references
     end
   end
 
   # refs is a hash like: table => ids to load, e.g. { :comments => [1,2,3] }
   def load_references(refs)
     # Now let's load everything else but the users
-    user_ids = refs.delete(:users)
-    elements = refs.collect do |ref|
-      ref_class = ref.first.to_s.classify
+    user_ids = Array(refs.delete(:users))
+    people_ids = Array(refs.delete(:people))
+    
+    elements = refs.collect do |ref, values|
+      ref_class = ref.to_s.classify
       case ref_class
+      when 'Person'
+        people_ids += values
+        []
       when 'Comment'
-        Comment.where(:id => ref.last).includes(:target).all
+        Comment.where(:id => values).includes(:target).all
       when 'Upload'
-        Upload.where(:id => ref.last).includes(:page_slot).all
+        Upload.where(:id => values).includes(:page_slot).all
       when 'Note'
-        Note.where(:id => ref.last).includes(:page_slot).all
+        Note.where(:id => values).includes(:page_slot).all
       when 'Conversation'
-        convs = Conversation.where(:id => ref.last).includes(:first_comment).includes(:recent_comments).includes(:watchers).all
+        convs = Conversation.where(:id => values).includes(:first_comment).includes(:recent_comments).includes(:watchers).all
         convs + convs.collect(&:first_comment) + convs.collect(&:recent_comments)
       when 'Task'
-        tasks = Task.where(:id => ref.last).includes(:first_comment).includes(:recent_comments).includes(:watchers).all
+        tasks = Task.where(:id => values).includes(:first_comment).includes(:recent_comments).includes(:watchers).all
         tasks + tasks.collect(&:first_comment) + tasks.collect(&:recent_comments)
       else
-        ref_class.constantize.where(:id => ref.last).all
+        ref_class.constantize.where(:id => values).all
       end
     end.flatten.uniq
 
+    # Load all people
+    people = Person.where(:id => people_ids.uniq).all
+    
     # Finally load the users we referenced before plus the ones associated to elements previously loaded
-    user_ids = Array(user_ids) + elements.collect { |e| e.respond_to? :user_id and e.user_id }.compact
+    user_ids = user_ids + (people + elements).collect { |e| e.respond_to? :user_id and e.user_id }.compact
     users = User.where(:id => user_ids.uniq).all
 
     # elements contains everything but users
-    elements + users
+    elements + users + people
   end
 
   def api_error(status_code, opts={})

@@ -9,12 +9,12 @@ class ApiV1::PeopleController < ApiV1::APIController
                                       order('people.id DESC').
                                       includes([:project, :user])
     
-    api_respond @people, :references => [:project, :user]
+    api_respond @people, :references => true
   end
 
   def show
     authorize! :show, @person
-    api_respond @person, :include => [:user]
+    api_respond @person, :references => true
   end
   
   def update

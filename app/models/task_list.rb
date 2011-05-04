@@ -36,6 +36,11 @@ class TaskList < RoleRecord
     task.update_from_pivotal_tracker(author, activity)
     return task
   end
+  
+  def references
+    refs = { :users => [user_id], :projects => [project_id] }
+    refs
+  end
 
   def to_s
     name

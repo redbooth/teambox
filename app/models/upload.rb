@@ -107,6 +107,16 @@ class Upload < RoleRecord
   def user
     @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
+  
+  def references
+    refs = { :users => [user_id], :projects => [project_id] }
+    refs[:comment] = [comment_id] if comment_id
+    if page_id
+      refs[:page] = [page_id]
+      refs[:page_slot] = [page_slot.id] if page_slot
+    end
+    refs
+  end
 
   def to_xml(options = {})
     options[:indent] ||= 2

@@ -16,7 +16,7 @@ class ApiV1::PagesController < ApiV1::APIController
                      order('pages.id DESC').
                      includes([:project, :user])
     
-    api_respond @pages, :include => :slots, :references => [:project, :user]
+    api_respond @pages, :include => :slots, :references => true
   end
   
   def create
@@ -31,7 +31,7 @@ class ApiV1::PagesController < ApiV1::APIController
     
   def show
     authorize! :show, @page
-    api_respond @page, :include => [:slots, :objects]
+    api_respond @page, :references => true, :include => :slots
   end
   
   def update

@@ -90,6 +90,10 @@ class Person < ActiveRecord::Base
   def user
     @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
+  
+  def references
+    { :users => [user_id], :projects => [project_id] }
+  end
 
   def to_xml(options = {})
     options[:indent] ||= 2

@@ -20,7 +20,12 @@ describe ApiV1::DividersController do
       get :index, :project_id => @project.permalink, :page_id => @page.id
       response.should be_success
       
-      JSON.parse(response.body)['objects'].length.should == 1
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      data['objects'].length.should == 1
+      references.include?("#{@divider.project_id}_Project").should == true
+      references.include?("#{@divider.page_id}_Page").should == true
     end
     
     it "shows all dividers without a page or project" do
@@ -53,7 +58,12 @@ describe ApiV1::DividersController do
       get :show, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id
       response.should be_success
       
-      JSON.parse(response.body)['id'].to_i.should == @divider.id
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      data['id'].to_i.should == @divider.id
+      references.include?("#{@divider.project_id}_Project").should == true
+      references.include?("#{@divider.page_id}_Page").should == true
     end
     
     it "shows a divider without a page or project id" do

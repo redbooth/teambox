@@ -6,7 +6,7 @@
   %p=raw "Returns the most recent activities in the project. Related objects required to reconstruct a Teambox timeline are stored in <tt>references</tt>."
 
 - doc_for :show,
-          :example => @activity.to_api_hash(:include => [:project, :target, :user, :thread_comments]) do
+          :example => example_api_wrap(@activity, :references => true) do
   %p=raw "Returns the data for an activity in the project."
 
 - ignore_doc_for :create

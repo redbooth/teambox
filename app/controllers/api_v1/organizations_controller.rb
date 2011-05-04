@@ -10,7 +10,7 @@ class ApiV1::OrganizationsController < ApiV1::APIController
                                                 limit(api_limit).
                                                 order('organizations.id DESC')
     
-    api_respond @organizations, :references => []
+    api_respond @organizations, :references => true
   end
 
   def show

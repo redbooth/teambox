@@ -161,7 +161,7 @@ describe ApiV1::ActivitiesController do
   end
   
   describe "#show" do
-    it "shows an activity" do
+    it "shows an activity with references" do
       login_as @user
       
       activity = @project.activities.last
@@ -169,7 +169,13 @@ describe ApiV1::ActivitiesController do
       get :show, :project_id => @project.permalink, :id => activity.id
       response.should be_success
       
-      JSON.parse(response.body)['id'].to_i.should == activity.id
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      data['id'].to_i.should == activity.id
+      
+      references.include?("#{activity.target_id}_#{activity.target_type}").should == true
+      references.include?("#{activity.user_id}_User").should == true
+      references.include?("#{activity.project_id}_Project").should == true
     end
   end
 end

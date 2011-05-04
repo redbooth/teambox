@@ -91,7 +91,7 @@ describe ApiV1::OrganizationsController do
   end
   
   describe "#show" do
-    it "shows an organization" do
+    it "shows an organization with references" do
       login_as @user
       
       get :show, :id => @organization.permalink

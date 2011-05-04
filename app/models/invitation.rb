@@ -46,6 +46,11 @@ class Invitation < RoleRecord
   def editable?(user)
     project.admin?(user) or self.user_id == user.id or self.invited_user_id == user.id
   end
+  
+  def references
+    refs = { :users => [user_id, invited_user_id], :projects => [project_id] }
+    refs
+  end
 
   def to_api_hash(options = {})
     base = {

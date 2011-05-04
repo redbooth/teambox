@@ -17,12 +17,12 @@ class ApiV1::NotesController < ApiV1::APIController
                      order('notes.id DESC').
                      includes([:project, :page])
     
-    api_respond @notes, :references => [:project, :page]
+    api_respond @notes, :references => true
   end
 
   def show
     authorize! :show, @note
-    api_respond @note, :include => [:page_slot]
+    api_respond @note, :references => true
   end
   
   def create

@@ -136,11 +136,6 @@ class Task < RoleRecord
   def to_s
     name
   end
-  
-  def refs_comments
-    [first_comment, first_comment.try(:user)] +
-     recent_comments + recent_comments.map(&:user)
-  end
 
   def user
     @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
@@ -204,6 +199,13 @@ class Task < RoleRecord
     end
 
     save!
+  end
+  
+  def references
+    refs = { :users => [user_id], :projects => [project_id], :task_list => [task_list_id] }
+    refs[:people] = [assigned_id] if assigned_id
+    refs[:comment] = [first_comment.try(:id)] + recent_comment_ids
+    refs
   end
 
   define_index do

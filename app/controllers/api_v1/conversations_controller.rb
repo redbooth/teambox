@@ -13,15 +13,14 @@ class ApiV1::ConversationsController < ApiV1::APIController
     @conversations = context.except(:order).
                              where(api_range('conversations')).
                              limit(api_limit).
-                             order('conversations.id DESC').
-                             includes([:user, :project, {:first_comment => :user}, {:recent_comments => :user}])
+                             order('conversations.id DESC')
     
-    api_respond @conversations, :references => [:user, :project, :refs_comments]
+    api_respond @conversations, :references => true
   end
 
   def show
     authorize! :show, @conversation
-    api_respond @conversation, :include => api_include
+    api_respond @conversation, :include => api_include, :references => true
   end
   
   def create

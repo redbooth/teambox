@@ -13,15 +13,14 @@ class ApiV1::TaskListsController < ApiV1::APIController
     @task_lists = context.except(:order).
                           where(api_range('task_lists')).
                           limit(api_limit).
-                          order('task_lists.id DESC').
-                          includes([:user, :project])
+                          order('task_lists.id DESC')
     
-    api_respond @task_lists, :include => [:user, :project], :references => [:user, :project]
+    api_respond @task_lists, :references => true
   end
 
   def show
     authorize! :show, @task_list
-    api_respond @task_list, :include => api_include
+    api_respond @task_list, :references => true, :include => api_include
   end
 
   def create

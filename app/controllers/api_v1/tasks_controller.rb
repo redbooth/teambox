@@ -14,16 +14,14 @@ class ApiV1::TasksController < ApiV1::APIController
     @tasks = context.except(:order).
                      where(api_range('tasks')).
                      limit(api_limit).
-                     order('tasks.id DESC').
-                     includes([:task_list, :project, :user, :assigned,
-                              {:first_comment => :user}, {:recent_comments => :user}])
+                     order('tasks.id DESC')
     
-    api_respond @tasks, :references => [:task_list, :project, :user, :assigned, :refs_comments]
+    api_respond @tasks, :references => true
   end
 
   def show
     authorize! :show, @task
-    api_respond @task, :include => api_include
+    api_respond @task, :include => api_include, :references => true
   end
   
   def create

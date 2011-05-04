@@ -17,11 +17,11 @@ class ApiV1::UploadsController < ApiV1::APIController
                        order('uploads.id DESC').
                        includes([:page, :user])
     
-    api_respond @uploads, :references => [:page, :user]
+    api_respond @uploads, :references => true
   end
 
   def show
-    api_respond @upload, :include => [:page_slot]
+    api_respond @upload, :references => true
   end
   
   def create

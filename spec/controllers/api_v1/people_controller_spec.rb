@@ -12,7 +12,11 @@ describe ApiV1::PeopleController do
       get :index, :project_id => @project.permalink
       response.should be_success
       
-      JSON.parse(response.body)['objects'].length.should == 4
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      data['objects'].length.should == 4
+      
+      @project.user_ids.each{ |uid| references.include?("#{uid}_User").should == true }
     end
     
     it "shows people in the project referenced by id" do
@@ -44,13 +48,17 @@ describe ApiV1::PeopleController do
   end
   
   describe "#show" do
-    it "shows a person" do
+    it "shows a person with references" do
       login_as @admin
       
       get :show, :project_id => @project.permalink, :id => @project.people.first.id
       response.should be_success
       
-      JSON.parse(response.body)['id'].to_i.should == @project.people.first.id
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      data['id'].to_i.should == @project.people.first.id
+      
+      references.include?("#{@project.people.first.user_id}_User").should == true
     end
   end
   

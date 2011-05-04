@@ -129,13 +129,24 @@ describe ApiV1::ConversationsController do
   end
   
   describe "#show" do
-    it "shows a conversation" do
+    it "shows a conversation with references" do
       login_as @user
       
       get :show, :project_id => @project.permalink, :id => @conversation.id
       response.should be_success
       
-      JSON.parse(response.body)['id'].to_i.should == @conversation.id
+      data = JSON.parse(response.body)
+      data['id'].to_i.should == @conversation.id
+      
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{@conversation.user_id}_User").should == true
+      references.include?("#{@conversation.first_comment.user_id}_User").should == true
+      references.include?("#{@conversation.first_comment.id}_Comment").should == true
+      @conversation.recent_comments.each do |comment|
+        references.include?("#{comment.id}_Comment").should == true
+        references.include?("#{comment.user_id}_User").should == true
+      end
     end
   end
   

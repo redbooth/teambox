@@ -91,6 +91,10 @@ class Project < ActiveRecord::Base
                            :order => 'id DESC',
                            :limit => limit)
   end
+  
+  def references
+    { :users => [user_id], :organizations => [organization_id] }
+  end
 
   def to_s
     name
