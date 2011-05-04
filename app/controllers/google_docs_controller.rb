@@ -50,7 +50,7 @@ class GoogleDocsController < ApplicationController
       return false
     end
     
-    @docs = GoogleDocs.new(owner_link.access_token, owner_link.access_secret, @consumer)
+    @docs = GoogleDocs.new(owner_link.credentials['token'], owner_link.credentials['secret'], @consumer)
     res = @docs.add_permission(@google_doc.acl_url, @app_link.app_user_id, :user, :reader)
     
     redirect_to @google_doc.url
@@ -74,7 +74,7 @@ class GoogleDocsController < ApplicationController
         return false
       end
       
-      @docs = GoogleDocs.new(@app_link.access_token, @app_link.access_secret, @consumer)
+      @docs = GoogleDocs.new(@app_link.credentials['token'], @app_link.credentials['secret'], @consumer)
     end
     
     def get_auth_config
