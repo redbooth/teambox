@@ -19,9 +19,11 @@ class AppLink < ActiveRecord::Base
       # We found something for this user
       if app_link
         # The user in trying to link a second account
-        return app_link unless app_link.app_user_id == auth_hash.uid
-        # The user is trying to link an account already linked with another user
-        return app_link unless app_link.user.nil? or app_link.user == current_user
+        # or the user is trying to link an account already linked with another user
+        return app_link unless app_link.app_user_id == auth_hash.uid or
+               app_link.user == current_user or app_link.user.nil?
+        # Make sure the account is linked with current_user
+        app_link.user ||= current_user
       end
     else
       # The user is trying to login or signup, look for this UID
