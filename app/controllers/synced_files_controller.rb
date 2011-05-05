@@ -16,6 +16,8 @@ class SyncedFilesController < ApplicationController
       missing_permission
     when 4009 # payment issue
       render :text => 'Payment issue'
+    when 4039 # Address already in use
+      render :text => 'This email has already signed up for syncronized files'
     else
       raise exception
     end
@@ -44,29 +46,6 @@ class SyncedFilesController < ApplicationController
       flash[:notice] = "Bucket #{@organization.bucket_name} created"
       redirect_to :back
     end
-  end
-  
-  def create_account
-    email = current_user.email
-    
-    begin
-      @nomadesk = Nomadesk.create_account(
-        :host => NOMADESK_HOST,
-        :email => email,
-        :password => params[:nomadesk][:password],
-        :first_name => current_user.first_name,
-        :last_name => current_user.last_name,
-        :phone => '0000000000',
-        :skip_confirm => 'true'
-      )
-      
-      current_user.update_attributes!(:nomadesk_password => params[:nomadesk][:password])
-      flash[:notice] = "Account created"
-    rescue Nomadesk::ResponseError => e
-      flash[:error] = e.response_message
-    end
-    
-    redirect_to :back
   end
   
   protected
@@ -125,8 +104,7 @@ class SyncedFilesController < ApplicationController
       unless current_user.nomadesk_password.blank?
         @nomadesk = Nomadesk.new(:host => NOMADESK_HOST, :user => current_user.nomadesk_email, :pass => current_user.nomadesk_password)
       else
-        render :account_missing
-        return false
+        @nomadesk = current_user.create_nomadesk_account!(NOMADESK_HOST)
       end
     end
     

@@ -278,6 +278,24 @@ class User < ActiveRecord::Base
   def nomadesk_email
     self.email
   end
+  
+  def create_nomadesk_account!(host)
+    password = SecureRandom.hex(10)
+    
+    nomadesk = Nomadesk.create_account(
+      :host => host,
+      :email => self.nomadesk_email,
+      :password => password,
+      :first_name => self.first_name,
+      :last_name => self.last_name,
+      :phone => '0000000000',
+      :skip_confirm => 'true'
+    )
+    
+    self.update_attribute(:nomadesk_password, password)
+    
+    nomadesk
+  end
 
   def keyboard_shortcuts
     !!settings['keyboard_shortcuts']
