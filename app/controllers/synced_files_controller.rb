@@ -42,9 +42,9 @@ class SyncedFilesController < ApplicationController
     if @organization.has_synced_files?
       render :text => "Bucket already exists for organization (#{@organization.settings['nomadesk']['bucket_name']})"
     else
-      @organization.create_synced_storage!(@nomadesk, current_user)
+      @bucket = @organization.create_synced_storage!(@nomadesk, current_user)
       flash[:notice] = "Bucket #{@organization.bucket_name} created"
-      redirect_to :back
+      render :bucket_created
     end
   end
   

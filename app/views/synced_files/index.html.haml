@@ -12,9 +12,11 @@
     = render :partial => 'file', :locals => { :file => file, :index => index }
     
   - if @files.empty?
-    %p= t('.no_files')
+    %p.synced_files_notice= t('.no_files')
 
 .synced_files_access_details
+  %p
+    = raw t('.api_key', :api_key => current_user.nomadesk_password)
   %p
     = t('.sync_info', :users => to_sentence(@organization.users))
   %p

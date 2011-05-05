@@ -1,0 +1,11 @@
+%h2= t('.title', :organization => @current_project)
+
+%p= t('.bucket_created')
+%p= raw t('.client_details', :url => 'https://teambox.nomadeskdemo.com/downloads/?os=macosx')
+%p You will also need to download the certificate from #{link_to 'here',  'https://s3.amazonaws.com/teambox-assets/assets/120089/original/tbp-B05DBD4FBA08F29D00E7E3EDE57537009B43E9F0.cer?AWSAccessKeyId=AKIAIMHU3YNLTYXDDFFA&Expires=1462283662&Signature=zu%2BeZQuHWB7dBmi1GMsaewC%2FY5w%3D' } and install it to "/usr/share/.mono/certs/Trust/". This is only a temporary fix because the certificate is self signed.
+%p= raw t('.api_key', :api_key => current_user.nomadesk_password)
+
+- if @current_project
+  %p= raw t('.view_project_files', :url => project_synced_files_path(@current_project))
+- else
+  %p= raw t('.view_files')
