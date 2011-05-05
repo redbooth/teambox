@@ -14,6 +14,8 @@ class SyncedFilesController < ApplicationController
       missing_path
     when 4006 # User doesn't have persmission
       missing_permission
+    when 4009 # payment issue
+      render :text => 'Payment issue'
     else
       raise exception
     end
@@ -24,9 +26,9 @@ class SyncedFilesController < ApplicationController
   # TODO: Make sure only admins can create a Nomadesk bucket
   
   def index
-    if @organization.settings['nomadesk'] && @organization.settings['nomadesk']['bucket_name']
-      @bucket = @nomadesk.get_bucket(@organization.settings['nomadesk']['bucket_name'])
-      @files = @nomadesk.list(@bucket, @path)
+    if @organization.has_synced_files?
+      bucket = @organization.synced_storage_bucket(@nomadesk)
+      @files = bucket.list(@path)
     else
       # No bucket stored for the organisation redirect to new
       # render :bucket_missing
@@ -35,16 +37,11 @@ class SyncedFilesController < ApplicationController
   end
   
   def create_bucket
-    if @organization.settings['nomadesk'] && @organization.settings['nomadesk']['bucket_name']
+    if @organization.has_synced_files?
       render :text => "Bucket already exists for organization (#{@organization.settings['nomadesk']['bucket_name']})"
     else
-      title = "teambox-#{@organization.name.parameterize}-#{rand(1000)}"
-      bucket = @nomadesk.create_bucket(title)
-      
-      @organization.settings = {'nomadesk' => {'bucket_name' => bucket.name, 'created_by' => current_user.id}}
-      @organization.save!
-      
-      flash[:notice] = "Bucket #{title} created"
+      @organization.create_synced_storage!(@nomadesk, current_user)
+      flash[:notice] = "Bucket #{@organization.bucket_name} created"
       redirect_to :back
     end
   end
@@ -96,8 +93,14 @@ class SyncedFilesController < ApplicationController
     end
     
     def missing_permission
+      creator = User.find(@organization.settings['nomadesk']['created_by'])
+      
+      if current_user == creator
+        render :text => 'You do not have permission to access the bucket you created. This could be because you have altered permissions of because the bucket has expired'
+        return false
+      end
+      
       begin
-        creator = User.find(@organization.settings['nomadesk']['created_by'])
         creator_account = Nomadesk.new(:host => NOMADESK_HOST, :user => creator.nomadesk_email, :pass => creator.nomadesk_password)
         bucket = creator_account.get_bucket(@organization.settings['nomadesk']['bucket_name'])
         # TODO: the second arg on the next line should be set to true so that we skip confirm
@@ -119,7 +122,7 @@ class SyncedFilesController < ApplicationController
     end
     
     def get_nomadesk_details
-      if current_user.nomadesk_email && !current_user.nomadesk_password.blank?
+      unless current_user.nomadesk_password.blank?
         @nomadesk = Nomadesk.new(:host => NOMADESK_HOST, :user => current_user.nomadesk_email, :pass => current_user.nomadesk_password)
       else
         render :account_missing

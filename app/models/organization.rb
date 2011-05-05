@@ -110,6 +110,20 @@ class Organization < ActiveRecord::Base
     self.settings['nomadesk'] && self.settings['nomadesk']['bucket_name']
   end
   
+  def create_synced_storage!(nomadesk, creator)
+    bucket = nomadesk.create_bucket(self.bucket_name)
+    self.settings = {'nomadesk' => {'bucket_name' => bucket.name, 'created_by' => creator.id}}
+    self.save!
+  end
+  
+  def synced_storage_bucket(nomadesk)
+    nomadesk.get_bucket(self.settings['nomadesk']['bucket_name'])
+  end
+  
+  def bucket_name
+    "teambox-#{self.name.parameterize}-#{rand(1000)}"
+  end
+  
   def to_api_hash(options = {})
     base = {
       :id => id,
