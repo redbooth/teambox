@@ -112,8 +112,9 @@ class Organization < ActiveRecord::Base
   
   def create_synced_storage!(nomadesk, creator)
     bucket = nomadesk.create_bucket(self.bucket_name)
-    self.settings = {'nomadesk' => {'bucket_name' => bucket.name, 'created_by' => creator.id}}
+    self.settings = {'nomadesk' => {'bucket_name' => bucket.name, 'bucket_label' => bucket.label, 'created_by' => creator.id}}
     self.save!
+    bucket
   end
   
   def synced_storage_bucket(nomadesk)

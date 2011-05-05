@@ -50,6 +50,7 @@ class OrganizationsController < ApplicationController
   
   def storage_options
     @bucket_name = @organization.settings['nomadesk'].try(:[], 'bucket_name')
+    @bucket_label = @organization.settings['nomadesk'].try(:[], 'bucket_label')
   end
 
   def update

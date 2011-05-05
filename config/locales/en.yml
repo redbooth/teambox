@@ -543,7 +543,7 @@ en:
       title: Storage options for %{organization}
       create: Create Syncronized Storage Bucket
       details: There is no bucket currently associated with this organization. More info about how great they are to go here.
-      currently_attached: "You currently have a Nomadesk Bucket (%{bucket_name}) linked to your account."
+      currently_attached: "You currently have a Nomadesk Bucket %{bucket_label} (%{bucket_name}) linked to your account. This syncronizes all files and folders with the Teambox client software."
       account_needed_first: "You cannot create any storage options until you register your account. Click <a href='%{url}'>here</a> to configure your account."
     external_view:
       create_your_own_org_html: "However, you can <a href='%{link}'>create your own organization</a> for your projects."

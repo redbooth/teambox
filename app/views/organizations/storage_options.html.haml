@@ -2,7 +2,7 @@
 
 - if can?(:admin, @organization)
   - if @bucket_name
-    %p= t('.currently_attached', :bucket_name => @bucket_name)
+    %p= raw t('.currently_attached', :bucket_name => @bucket_name, :bucket_label => @bucket_label)
   - elsif current_user.nomadesk_password.blank?
     %p= raw t('.account_needed_first', :url => organization_synced_files_path(@organization))
   - else
