@@ -116,13 +116,13 @@ module TasksHelper
     link_to(t('projects.fields.new.time_tracking_docs'), "http://help.teambox.com/faqs/advanced-features/time-tracking", :target => '_blank')
   end
 
-  def date_picker(f, field, options = {})
+  def date_picker(f, field, options = {}, html_options = {})
     selected_date = f.object.send(field.to_sym) ? localize(f.object.send(field.to_sym), :format => :long) : ''
 
     content_tag :div, :class => "date_picker" do
       [ image_tag('/images/calendar_date_select/calendar.gif', :class => :calendar_date_select_popup_icon),
         content_tag(:span, selected_date.blank? ? t('date_picker.no_date_assigned') : selected_date, :class => 'localized_date'),
-        f.hidden_field(field, :class => :datepicker)
+        f.hidden_field(field, html_options.reverse_merge!(:class => :datepicker))
       ].join.html_safe
     end
   end
