@@ -33,8 +33,8 @@ class SyncedFilesController < ApplicationController
       @files = bucket.list(@path)
     else
       # No bucket stored for the organisation redirect to new
-      # render :bucket_missing
-      redirect_to storage_options_organization_path(@organization)
+      render 'organizations/storage_options'
+      # redirect_to storage_options_organization_path(@organization)
     end
   end
   
