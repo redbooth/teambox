@@ -1287,8 +1287,6 @@ en:
       organizations: Organizations
       show_all_organizations: "Manage organizations..."
       gantt_and_calendars: Gantts and calendars
-      show_more: Show more
-      show_less: Show less
       affiliate: Affiliate area
     project_settings_navigation:
       general: General Settings
