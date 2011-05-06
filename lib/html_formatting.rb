@@ -28,6 +28,7 @@ module HtmlFormatting
           nil
         else
           text = format_image(text)
+          text = format_objects(text)
           text = format_markdown_links(text)
           text = format_gfm(text)
           text = format_text(text)
@@ -127,6 +128,33 @@ module HtmlFormatting
     def format_image(text)
       text.gsub(ImageLink) do |link|
         "<a href=\"#{$1}\"><img class=\"comment-image\" src=\"#{$1}\" frameborder=\"0\" alt=\"#{$1}\"/></a>"
+      end
+    end
+    
+    #[[Task:123]]
+    ObjectLink = /\[\[([A-Z]+):([^\]]+)\]\]/i
+    def format_objects(text)
+      text.gsub(ObjectLink) do |link|
+        ident = $2
+        object_type = ($1||'').downcase.strip
+        conditions = ident.match(/^\d+$/) ? {:id => ident.to_i} : {:name => ident}
+        object = case object_type
+        when 'task'
+          Task.where(conditions)
+        when 'tasklist'
+          TaskList.where(conditions)
+        when 'page'
+          Page.where(conditions)
+        when 'conversation'
+          Conversation.where(conditions)
+        end
+        
+        object = object ? object.where(:project_id => self.project_id).first : nil
+        if object
+          "<a href=\"/projects/#{self.project.permalink}/#{object.class.to_s.tableize.pluralize}/#{object.id}\">#{h(object.name)}</a>"
+        else
+          $1
+        end
       end
     end
 

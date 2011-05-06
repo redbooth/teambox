@@ -4,9 +4,9 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
   
   subject do
     user = Factory.create(:user)
-    comment = Comment.new :body => description
-    comment.user = user
-    comment.save!
+    project = Factory(:project)
+    conversation = Factory(:conversation, :project => project, :name => 'Read this!')
+    comment = project.comments.create_by_user(user, :body => description)
     comment.body_html.strip
   end
 
@@ -100,6 +100,10 @@ describe HtmlFormatting, 'Should apply our special Markdown' do
 
   it "Should not allow <script>alert(1)</script> tags or weird <a href=\"#\" onmouseover='alert(1)'>tricks</a>" do
     should == "<p>Should not allow  tags or weird <a href=\"#\">tricks</a></p>"
+  end
+  
+  it "[[Conversation:Read this!]]" do
+    should == "<p><a href=\"/projects/teambox-47/conversations/24\">Read this!</a></p>"
   end
   
   context "Add http:// to links" do
