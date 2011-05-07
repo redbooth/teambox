@@ -114,11 +114,12 @@ describe ApiV1::PagesController do
       response.should be_success
       
       page = JSON.parse(response.body)
+      references = page['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
       page['id'].to_i.should == @page.id
-      page['objects'][0]['type'].should == 'Note'
+      references.include?("#{@note.id}_Note").should == true
       page['slots'][0]['rel_object_id'].should == @note.id
       
-      references = page['references'].map{|r| "#{r['id']}_#{r['type']}"}
       references.include?("#{@project.id}_Project").should == true
       references.include?("#{@page.user_id}_User").should == true
     end
