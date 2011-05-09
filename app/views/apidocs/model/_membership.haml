@@ -19,7 +19,9 @@
   %p=raw "Roles are as follows:"
   %ul
     - [:external, :participant, :admin].each do |key|
-      %li= "<tt>#{Membership::ROLES[key]}</tt> #{key.to_s.capitalize}"
+      %li
+        %tt= Membership::ROLES[key]
+        = key.to_s.capitalize
 
 - doc_for :destroy,
           :status => :deleted,

@@ -19,7 +19,9 @@
   %p=raw "Roles are as follows:"
   %ul
     - [:observer, :commenter, :participant, :admin].each do |key|
-      %li= "<tt>#{Person::ROLES[key]}</tt> #{key.to_s.capitalize}"
+      %li
+        %tt= Person::ROLES[key]
+        = key.to_s.capitalize
 
 - doc_for :destroy,
           :status => :deleted,
