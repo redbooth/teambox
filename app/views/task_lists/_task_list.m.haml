@@ -10,7 +10,7 @@
     - if show_the_lists
       %div{ :class => 'tasks open' }
         - if !task_list.archived
-          = list_tasks(task_list,task_list.tasks.unarchived,false)
+          = list_tasks_with_private(task_list,task_list.tasks.unarchived,false)
       - if task_list_editable?(task_list,current_user)
         .new_task
           = link_to t('tasks.link.new'), [:new, project, task_list, :task]

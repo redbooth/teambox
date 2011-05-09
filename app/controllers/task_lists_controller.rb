@@ -221,7 +221,10 @@ class TaskListsController < ApplicationController
                        :project_ids => Array(current_user.projects.unarchived).map(&:id),
                        :status => Task::ACTIVE_STATUS_CODES }]
       end
-      @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user, :project])
+      @tasks = Task.where(conditions).
+                    includes([:task_list, :user, :project]).
+                    where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                    joins("LEFT JOIN watchers ON (tasks.id = watchers.watchable_id AND watchers.watchable_type = 'Task') AND watchers.user_id = #{current_user.id}")
       @events = split_events_by_date(@tasks)
 
       @task_lists.each do |task_list|
@@ -244,8 +247,11 @@ class TaskListsController < ApplicationController
         @task_lists = []
         conditions = { :project_id => Array(@projects).map(&:id),
                        :status => Task::ACTIVE_STATUS_CODES }
-        @tasks = Task.find(:all, :conditions => conditions, :include => [:task_list, :user, :project]).
-                  sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
+        @tasks = Task.where(conditions).
+                      includes([:task_list, :user, :project]).
+                      where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                      joins("LEFT JOIN watchers ON (tasks.id = watchers.watchable_id AND watchers.watchable_type = 'Task') AND watchers.user_id = #{current_user.id}").
+                      sort { |a,b| (a.due_on || 1.year.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
       end
       
       @task_lists_archived = @task_lists.reject {|t| !t.archived?}
