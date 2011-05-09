@@ -1643,7 +1643,7 @@ ca:
       anybody: Ningú
       anytime: "En qualsevol moment"
       by_name: "Per nom..."
-      late_tasks: "Tasques finals"
+      late_tasks: "Tasques endarrerides"
       month: "Dins d'un mes"
       my_tasks: "Les meves tasques"
       no_date_assigned: "Sense data asignada"
@@ -1856,7 +1856,7 @@ ca:
     daily_task_reminder_email: 
       daily_task_reminder: "Recordatori de tasques"
       daily_task_reminder_from_teambox: "Aquest és el teu correu recordatori de tasquer per a Teambox"
-      late_tasks: "Amb retard"
+      late_tasks: "Tasques endarrerides"
       settings_page: "pàgina d'usuari"
       tasks_for_next_two_weeks: "Per a les properes dues setmanes"
       tasks_for_today: "Las teves tasques per avui"
