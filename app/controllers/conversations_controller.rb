@@ -45,7 +45,7 @@ class ConversationsController < ApplicationController
   end
 
   def index
-    @conversations = @current_project.conversations.not_simple
+    @conversations = @current_project.conversations
 
     respond_to do |f|
       f.any(:html, :m)
