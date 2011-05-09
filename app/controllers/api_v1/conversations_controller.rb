@@ -2,22 +2,28 @@ class ApiV1::ConversationsController < ApiV1::APIController
   before_filter :load_conversation, :except => [:index, :create]
   
   def index
-    query = {:conditions => api_range,
-             :limit => api_limit,
-             :order => 'id DESC',
-             :include => [:user, :project, {:first_comment => :user}, {:recent_comments => :user}]}
+    authorize! :show, @current_project||current_user
     
-    @conversations = if @current_project
-      @current_project.conversations.where(api_scope).all(query)
+    context = if @current_project
+      @current_project.conversations.where(api_scope)
     else
-      Conversation.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      Conversation.where(:project_id => current_user.project_ids).where(api_scope)
     end
+    
+    @conversations = context.except(:order).
+                             where(api_range('conversations')).
+                             limit(api_limit).
+                             order('conversations.id DESC').
+                             includes([:user, :project, {:first_comment => :user}, {:recent_comments => :user}])
     
     api_respond @conversations, :references => [:user, :project, :refs_comments]
   end
 
   def show
-    api_respond @conversation, :include => api_include
+    authorize! :show, @conversation
+    # I changed this, which should break the tests, so I can develop for Backbone
+    # TODO: Take a look at the changes I did here
+    api_respond [@conversation], :include => api_include, :references => [:user, :project, :refs_comments]
   end
   
   def create
@@ -50,7 +56,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
   def convert_to_task
     authorize! :update, @conversation
 
-    @conversation.attributes = params[:conversation]
+    @conversation.attributes = params
     @conversation.updating_user = current_user
     @conversation.comments_attributes = {"0" => params[:comment]} if params[:comment]
 
@@ -83,9 +89,9 @@ class ApiV1::ConversationsController < ApiV1::APIController
   
   def load_conversation
     @conversation = if @current_project
-      @current_project.conversations.find(params[:id])
+      @current_project.conversations.find_by_id(params[:id])
     else
-      Conversation.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+      Conversation.where(:project_id => current_user.project_ids).find_by_id(params[:id])
     end
     api_error :not_found, :type => 'ObjectNotFound', :message => 'Conversation not found' unless @conversation
   end

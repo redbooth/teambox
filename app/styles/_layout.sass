@@ -2,39 +2,67 @@ html, body
   margin: 0px
   padding: 0px
   background-color: white
-
-// For autoloading of scroll
-body.index_projects, body.show_projects, body.show_users
-  padding-bottom: 300px
-
-div.wrapper
-  clear: both
-  background: white
-  +clearing
-
-div.content_wrap
-  float: left
-  width: 640px
-  padding: 10px
-    right: 0px
-div.column_wrap
-  float: right
-  width: 300px
+  overflow: hidden
   font-size: 12px
+
+body
+  width: 100%
+  height: 100%
+
+div.content_wrap, div.column_wrap, div.aux_wrap
+  position: absolute
+  top: 46px
+  bottom: 0
+  overflow: hidden
+// Beta notice on the top of the page
+body.production
+  .beta_notice
+    background-color:  #ffd
+    border-bottom: 1px solid #ccc
+    font-size: 12px
+    padding:  3px
+    text-align: center
+    a
+      color:  black
+      text-decoration: underline
+  div.content_wrap, div.column_wrap, div.aux_wrap
+    top: 68px
+
+#column
+  width: $column_width
+div.column_wrap
+  font-size: 12px
+  left: 0
+  width: $column_width
+  background: $sidebar_bkg
+  overflow: hidden
   div.column
-    background: rgb(255, 255, 255)
-    padding: 10px
-      left: 0
-    border:
-      left: 1px solid #eee
     select
-      max-width: 280px
+      max-width: $column_width - 20px
     .view_sidebar
       margin-left: 15px
-
-div.container
-  width: 960px
-  margin: 0px auto
+div.content_wrap
+  left: $column_width
+  right: $aux_width
+  border-left: 1px solid #B7B7B7
+  .content
+    position: absolute
+    top: 23px
+    bottom: 0
+    left: 0
+    right: 0
+    overflow-y: auto
+    padding: 10px
+div.aux_wrap
+  width: $aux_width
+  right: 0
+  border-left: 1px solid #B7B7B7
+  background: $sidebar_bkg
+  overflow: hidden
+  a
+    color: black
+  .view_sidebar
+    padding: 5px
 
 // TODO: remove extra element and use +clearing
 div.clear
@@ -92,3 +120,83 @@ p.flash-notice
   width: 100%
   text-align: center
   background-color: white
+
+.separator
+  height: 20px
+  margin: 0
+  padding: 0
+    left: 10px
+  line-height: 19px
+  background: #E7E7E7
+  background-image: -moz-linear-gradient(top,#F3F3F3,#D7D7D7)
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#F3F3F3),color-stop(1,#D7D7D7))
+  border:
+    bottom: 1px solid #B7B7B7
+    top: 1px solid #DDD
+  &.with_margin
+    margin-top: 20px
+  span
+    position: absolute
+    right: 0
+    border-left: 1px solid #ddd
+    height: 19px
+    display: inline-block
+    &#view_title
+      right: none
+      left: 10px
+      border: none
+    a
+      display: inline-block
+      padding: 0 5px
+    &.left
+      position: relative
+      left: -11px
+      border-right: 1px solid #DDD
+  .column_wrap &
+    +gradient(#D8DEE5, #C6D1DD)
+    border-top: 1px solid #A4ACB3
+    span
+      border-left: 1px solid #a4acb3
+  a:hover
+    color: black
+    text-decoration: none
+.separator, .separator a
+  color: #777
+  text-shadow: white 0 1px 0
+  text-transform: uppercase
+  text-align: left
+  font-size: 11px
+  font-weight: bold
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -o-user-select: none
+  user-select: none
+  -webkit-background-clip: padding-box
+
+body
+  .unfold_sidebar, .unfold_aux
+    display: none
+  &.folded_aux
+    .aux_wrap
+      display: none
+    .content_wrap
+      right: 0
+    .unfold_aux
+      display: inline-block
+  &.folded_sidebar
+    .column_wrap
+      display: none
+    .content_wrap
+      left: 0
+    .unfold_sidebar
+      display: inline-block
+
+::-webkit-scrollbar
+  width: 9px
+  height: 9px
+::-webkit-scrollbar-thumb:vertical
+  height: 50px
+  background-color: #999
+  -webkit-border-radius: 8px
+  border-radius: 8px

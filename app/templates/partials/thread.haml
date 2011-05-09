@@ -1,0 +1,47 @@
+.comment.comment_header
+  %span.time
+    %time.timeago{ :'data-msec' => "{{ms updated_at}}", :pubdate => "true" }
+      {{updated_at}}
+  .info
+    {{#if is_task}}
+    %img{ :src => "/famfamfam/tick.png", :style => "padding: 4px" }
+    {{else}}
+    %img{ :src => "/famfamfam/comment.png", :style => "padding: 4px" }
+    {{/if}}
+    .comment_count
+      %span {{comments_count}}
+  .block
+    .thread_title
+      {{#if is_task}}
+      <a href="{{url}}">{{name}}</a> on
+      {{#task_list}}
+      <a href="{{url}}">{{name}}</a>
+      {{/task_list}}
+      task list
+      {{else}}
+      <a href="{{url}}">{{name}}</a>
+      conversation
+      {{/if}}
+    {{#project}}
+    .project_overlay
+      <a href="{{url}}" data-project-id="{{id}}">{{name}}</a>
+    {{/project}}
+    {{#if is_task}}
+    .task_summary
+      {{status_transition}}
+      Assigned to {{full_name user}}
+    {{/if}}
+    {{#last_comment}}
+    %p.excerpt
+      %strong {{full_name user}}
+      {{body}}
+    {{/last_comment}}
+  .clear
+.comments
+  {{#first_comment}}{{> comment}}{{/first_comment}}
+  {{#if hidden_comments_count}}
+  .more_comments
+    %a{ :href => "/activities/{{id}}/show_thread?thread_type={{type}}", :'data-remote' => "true" }
+    Show {{hidden_comments_count}} previous comments
+  {{/if}}
+  {{#recent_comments}}{{> comment}}{{/recent_comments}}

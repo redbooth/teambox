@@ -1,0 +1,10 @@
+%p= t('comments.watchers.explain')
+
+.watcher
+  %a{ :href => '#', :'data-login' => 'all' }
+    %strong= t('comments.watchers.all_users')
+
+{{#users}}
+.watcher
+  %a{ :href => '#', :'data-login' => '{{username}}' } {{full_name}}
+{{/users}}

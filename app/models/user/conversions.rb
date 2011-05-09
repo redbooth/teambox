@@ -11,6 +11,7 @@ class User
       :biography => biography,
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
+      :micro_avatar_url => avatar_or_gravatar_url(:micro),
       :avatar_url => avatar_or_gravatar_url(:thumb)
     }
     
@@ -46,6 +47,7 @@ class User
       xml.tag! 'created-at', created_at.to_s(:db)
       xml.tag! 'updated-at', updated_at.to_s(:db)
       xml.tag! 'avatar-url', avatar_or_gravatar_url(:thumb)
+      xml.tag! 'micro-avatar-url', avatar_or_gravatar_url(:micro)
     end
   end
 end

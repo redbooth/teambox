@@ -6,6 +6,11 @@ Element.addMethods('form', {
       return input.getValue()
     })
   },
+  hasEmptyFileUploads: function(form) {
+    return $(form).select('input[type=file]').any(function(input) {
+      return input.value == ''
+    })
+  },
   isDirty: function(form) {
     form = $(form)
     return form.hasFileUploads() ||
@@ -34,7 +39,16 @@ document.on('ajax:before', 'form.new_conversation, form.new_task, .thread form, 
     $(document.body).insert(iframe)
     form.target = iframeID
     form.insert(new Element('input', { type: 'hidden', name: 'iframe', value: 'true' }))
-    
+
+    var authToken = $$('meta[name=csrf-token]').first().readAttribute('content'),
+    authParam = $$('meta[name=csrf-param]').first().readAttribute('content')
+    if (form[authParam]) {
+      form[authParam].value = authToken }
+    else {
+      var token = new Element('input', { type: 'hidden', name: authParam, value: authToken }).hide()
+      form.insert(token)
+    }
+
     var callback = function() {
       // contentDocument doesn't work in IE (7)
       var iframeBody = (iframe.contentDocument || iframe.contentWindow.document).body
@@ -90,6 +104,9 @@ document.on('ajax:success', 'form.new_conversation', function(e, form) {
   $('activities').insert({top: e.memo.responseText}).down('.thread').highlight({ duration: 1 });
   Task.insertAssignableUsers();
 
+  my_user.stats.conversations++;
+  document.fire("stats:update");
+
   //disable _method input field for conversation forms on inserting simple conversations
   disableConversationHttpMethodField();
 })
@@ -106,10 +123,22 @@ document.on('click', '.thread .comments .more_comments a', function(e, el) {
 // insert new comment into thread after posting
 document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, form) {
   resetCommentsForm(form)
+  var comment_data = e.memo.responseText
   if (!e.memo.responseText.blank()) {
-    form.up('.thread').down('.comments').insert(e.memo.responseText).
-      down('.comment:last-child').highlight({ duration: 1 })
+    var thread = form.up('.thread')
+    var new_comment = thread.down('.comments').insert(e.memo.responseText).down('.comment:last-child')
+    new_comment.highlight({ duration: 1 })
+
+    // update excerpt in collapsed threads
+    var body = new_comment.down('.body'),
+        start = (body.down('.assigned_transition') || body.down('.before')),
+        excerpt = start.nextSiblings().map(function(e){return e.innerHTML}).join(' ').stripTags()
+    thread.down('.comment_header').
+           down('.excerpt').
+           update('<strong>' + body.down('.before').down('.user').innerHTML + '</strong> ' + excerpt)
   }
+  my_user.stats.conversations++;
+  document.fire("stats:update");
 })
 
 document.on('ajax:failure', 'form.new_conversation, .thread form:not(.not-new-comment)', function(e, form) {
@@ -139,40 +168,10 @@ document.on('ajax:success', 'div[data-class=conversation].thread .comment .actio
 	else e.findElement('.comment').remove()
 })
 
-// toggle between hidden upload area and a link to show it
-hideBySelector('form .upload_area')
-
-document.on('click', 'form .attach_icon', function(e, link) {
-  if (!e.isMiddleClick()) {
-    link.up('form').down('.upload_area').forceShow().highlight()
-    e.stop()
-  }
-})
-
-// toggle between hidden time tracking input and a link to show it
-hideBySelector('form .hours_field')
-
-document.on('click', 'form .add_hours_icon', function(e, link) {
-  link.up('form').down('.hours_field').forceShow().down('input').focus()
-  e.stop()
-})
-
 // Open links inside Comments and Notes textilized areas in new windows
 document.on('mouseover', '.textilized a', function(e, link) {
   link.writeAttribute("target", "_blank");
 });
-
-hideBySelector('#activities .thread form.new_comment .extra')
-
-document.on('focusin', '#activities .thread form.new_comment textarea', function(e, input) {
-  input.up('form').down('.extra').forceShow()
-})
-
-// document.on('focusout', '.thread form.new_comment textarea', function(e, input) {
-//   if (input.getValue().empty()) {
-//     input.up('form').down('.extra').hide()
-//   }
-// })
 
 // enable username autocompletion for main textarea in comment forms
 document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
@@ -200,3 +199,20 @@ document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
     }
   }
 })
+
+document.on('focusin', 'form#new_invitation input#invitation_user_or_email', function(e, input) {
+  var form = e.findElement('form')
+  var people = (new Hash(_people_autocomplete)).values().flatten().uniq().reject(function(e) { return e.match('@all') }),
+    autocompleter = input.retrieve('autocompleter')
+
+  if (autocompleter) {
+    // update options array in case the projects selector changed value
+    autocompleter.options.array = people
+  } else {
+    var container = new Element('div', { 'class': 'autocomplete' }).hide()
+    input.insert({ after: container })
+    autocompleter = new Autocompleter.Local(input, container, people, { tokens:[' '] })
+    input.store('autocompleter', autocompleter)
+  }
+})
+

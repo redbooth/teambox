@@ -2,21 +2,25 @@ class ApiV1::TaskListsController < ApiV1::APIController
   before_filter :load_task_list, :only => [:update,:show,:destroy,:archive,:unarchive]
   
   def index
-    query = {:conditions => api_range,
-             :limit => api_limit,
-             :order => 'id DESC',
-             :include => [:user, :project]}
+    authorize! :show, @current_project||current_user
     
-    @task_lists = if @current_project
-      @current_project.task_lists.where(api_scope).all(query)
+    context = if @current_project
+      @current_project.task_lists.where(api_scope)
     else
-      TaskList.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      TaskList.where(:project_id => current_user.project_ids).where(api_scope)
     end
+    
+    @task_lists = context.except(:order).
+                          where(api_range('task_lists')).
+                          limit(api_limit).
+                          order('task_lists.id DESC').
+                          includes([:user, :project])
     
     api_respond @task_lists, :include => [:user, :project], :references => [:user, :project]
   end
 
   def show
+    authorize! :show, @task_list
     api_respond @task_list, :include => api_include
   end
 
@@ -106,9 +110,9 @@ class ApiV1::TaskListsController < ApiV1::APIController
   
   def load_task_list
     @task_list = if @current_project
-      @current_project.task_lists.find(params[:id])
+      @current_project.task_lists.find_by_id(params[:id])
     else
-      TaskList.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+      TaskList.where(:project_id => current_user.project_ids).find_by_id(params[:id])
     end
     api_error :not_found, :type => 'ObjectNotFound', :message => 'TaskList not found' unless @task_list
   end

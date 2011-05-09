@@ -21,6 +21,7 @@ Teambox::Application.routes.draw do
   match 'api' => 'apidocs#index', :as => :api
   match 'api/concepts' => 'apidocs#concepts', :as => :api_concepts
   match 'api/routes' => 'apidocs#routes', :as => :api_routes
+  match 'api/auth' => 'apidocs#auth', :as => :api_auth
   match 'api/changes' => 'apidocs#changes', :as => :api_changes
   match 'api/:model' => 'apidocs#model', :as => :api_model
 
@@ -39,6 +40,7 @@ Teambox::Application.routes.draw do
     match '/search' => 'search#index', :as => :search
 
     match '/text_styles' => 'users#text_styles', :as => :text_styles
+    match '/email_posts_path' => 'users#email_posts', :as => :email_posts
     match '/invite_format' => 'invitations#invite_format', :as => :invite_format
     match '/feeds' => 'users#feeds', :as => :feeds
     match '/calendars' => 'users#calendars', :as => :calendars
@@ -62,8 +64,6 @@ Teambox::Application.routes.draw do
       get :search, :on => :collection
     end
 
-    match '/i18n/environment.js' => 'javascripts#environment', :as => :javascript_environment
-
     #RAILS 3 Useless resource?
     resources :reset_passwords
     resource :session
@@ -74,12 +74,18 @@ Teambox::Application.routes.draw do
         get :external_view
         get :delete
         get :appearance
+        put :update_appearance
       end
       resources :memberships do
         member do
           get :change_role
           get :add
           get :remove
+        end
+      end
+      resources :task_list_templates do
+        collection do
+          put :reorder
         end
       end
     end
@@ -93,6 +99,11 @@ Teambox::Application.routes.draw do
     match '/account/destroy' => 'users#destroy', :as => :destroy_user
     match '/account/activity_feed_mode/collapsed' => 'users#change_activities_mode', :as => :collapse_activities, :collapsed => true
     match '/account/activity_feed_mode/expanded' => 'users#change_activities_mode', :as => :expand_activities, :collapsed => false
+    match '/account/watch_list' => 'watchers#index', :as => :watch_list
+    post  '/account/watch_list/unwatch/:watch_id' => 'watchers#unwatch', :as => :unwatch
+    post  '/account/stats/:stat/inc' => 'users#increment_stat'
+    post  '/account/badge/:badge/grant' => 'users#grant_badge'
+    post  '/account/first_steps/hide' => 'users#hide_first_steps'
 
     resources :teambox_datas, :path => '/datas'
 
@@ -111,7 +122,6 @@ Teambox::Application.routes.draw do
     end
 
     match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
-    match 'activities/:id/show_new(.:format)' => 'activities#show_new', :as => :show_new, :method => :get
     match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
     match 'activities/:id/show_thread(.:format)' => 'activities#show_thread', :as => :show_thread, :method => :get
 
@@ -144,7 +154,6 @@ Teambox::Application.routes.draw do
       end
 
       match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
-      match 'activities/:id/show_new(.:format)' => 'activities#show_new', :as => :show_new, :method => :get
       match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
       resources :uploads
       match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
@@ -209,6 +218,8 @@ Teambox::Application.routes.draw do
         end
         member do
           post :reorder
+          put :watch
+          put :unwatch
         end
         # In rails 2, we have :pages, :has_many => :task_list ?!
         resources :notes,:dividers,:uploads
@@ -278,6 +289,8 @@ Teambox::Application.routes.draw do
 
           member do
             put :reorder
+            put :watch
+            put :unwatch
           end
         end
 
@@ -336,6 +349,8 @@ Teambox::Application.routes.draw do
         end
         member do
           put :reorder
+          put :watch
+          put :unwatch
         end
       end
 
@@ -379,5 +394,23 @@ Teambox::Application.routes.draw do
   if Rails.env.development?
     mount Emailer::Preview => 'mail_view'
   end
-
+  
+  # Oauth provider
+  # Oauth-server
+  
+  match '/oauth',:controller=>'oauth',:action=>'index', :as => :oauth
+  match '/oauth/authorize',:controller=>'oauth',:action=>'authorize', :as => :authorize
+  match '/oauth/revoke',:controller=>'oauth',:action=>'revoke', :as => :revoke
+  match '/oauth/token',:controller=>'oauth',:action=>'token', :as => :token
+  match '/oauth/test_request',:controller=>'oauth',:action=>'test_request', :as => :test_request
+  
+  resources :oauth_clients do
+    collection do
+      get :developer
+    end
+  end
+  
+  match 'trimmer/:locale/templates.js' => 'trimmer#templates', :as => :trimmer_templates
+  match 'trimmer/:locale/translations.js' => 'trimmer#translations', :as => :trimmer_translations
+  match 'trimmer/:locale.js' => 'trimmer#resources', :as => :trimmer_resources
 end

@@ -1,0 +1,59 @@
+.first_steps
+  %h2 Your first steps in Teambox
+  .steps
+    = image_tag 'badges/1-disabled.jpg', :'data-step' => 1, :'data-name' => 'first_project'
+    = image_tag 'badges/5-disabled.jpg', :'data-step' => 5, :'data-name' => 'first_invite'
+    = image_tag 'badges/2-disabled.jpg', :'data-step' => 2, :'data-name' => 'first_conversation'
+    = image_tag 'badges/3-disabled.jpg', :'data-step' => 3, :'data-name' => 'first_task'
+    = image_tag 'badges/4-disabled.jpg', :'data-step' => 4, :'data-name' => 'first_page'
+  .step.step1{ :style => 'display: none' }
+    %h3 Create your first project
+    %p Congratulations! You're our newest user.
+    %p It's time to create your first project and get things done.
+    %p To create a project, click on "New Project" in the sidebar.
+  .step.step1-complete{ :style => 'display: none' }
+    %h3 You already have your first project
+    %p You can create more projects at any time!
+  .step.step2{ :style => 'display: none' }
+    %h3 Post your first conversation
+    %p It's time to communicate with your team.
+    %p
+      In Teambox you can post a comment on any project
+      and your colleagues can read and reply.
+    %p Create a conversation in a project from your Recent Activity or Conversations.
+  .step.step2-complete{ :style => 'display: none' }
+    %h3 You already created your first conversation
+    %p Use conversations to discuss anything, anytime, with your team.
+  .step.step3{ :style => 'display: none' }
+    %h3 Create your first task
+    %p
+      You can create tasks for yourself and anyone on your team.
+      Tasks include due dates, time tracking and commenting.
+    %p Select tasks from any project and create a task list to get started.
+  .step.step3-complete{ :style => 'display: none' }
+    %h3 You already created some tasks
+    %p Use tasks to keep track of what needs to be done and focus on what you need to do next.
+  .step.step4{ :style => 'display: none' }
+    %h3 Create your first page
+    %p Each project has a space to document and share. It's called Pages, and you can build as many as you need.
+    %p Share reference information, phone numbers, notes, proposals.
+    %p Get started by going to a project's pages and creating one.
+  .step.step4-complete{ :style => 'display: none' }
+    %h3 You already created a Page
+    %p Use pages from now on to share and collaborate over reference information.
+  .step.step5{ :style => 'display: none' }
+    %h3 Invite your team to your projects
+    %p It's easy to invite your whole team to your projects.
+    %p You can create projects for each workgroup: Finance, Development, sub-contractors, client projects, etc.
+    %p To invite users, click on the project in the sidebar, go to People and enter your team member's emails.
+  .step.step5-complete{ :style => 'display: none' }
+    %h3 Your first invites have been sent
+    %p Only people you grant access will be able to access your projects.
+  .step.completed
+    %h3 Initiation complete!
+    %p You have completed all your first steps. For more tips, click on the little light bulb next to your user name at the top of the screen.
+    %p
+      %a{ :href => "http://twitter.com/teambox_app", :target => '_blank' } Follow us on Twitter
+    %p
+      %a.close_first_steps{ :href => '#' }
+        [ Close this first steps guide ]

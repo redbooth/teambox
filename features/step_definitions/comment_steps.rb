@@ -4,6 +4,12 @@ When /^(?:|I )fill in the comment box with "([^\"]*)"(?: within "([^\"]*)")?$/ d
   end
 end
 
+When /^(?:|I )fill in the last comment box with "([^\"]*)"(?: within "([^\"]*)")?$/ do |value, selector|
+  with_scope(selector) do
+    all(:xpath, '//textarea[contains(@name, \'[body]\')]').last.set(value)
+  end
+end
+
 When /^I fill in the comment box with line breaks$/ do
   text = "Text with\na break"
   find(:xpath, '//textarea[contains(@name, \'[body]\')]').set(text)

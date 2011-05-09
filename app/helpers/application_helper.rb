@@ -28,7 +28,7 @@ module ApplicationHelper
   def show_flash
     flash.each do |type, message|
       unless message.blank?
-        haml_tag :p, h(message), :class => "flash flash-#{type}"
+        haml_tag :p, h(message.html_safe), :class => "flash flash-#{type}"
       end
     end
   end
@@ -209,34 +209,16 @@ module ApplicationHelper
     }.sort_by(&:first)
   end
   
+  def current_locale_name
+    t(I18n.locale, :scope => :locales, :locale => I18n.locale)
+  end
+
   # collecting stats about Teambox installations
   def tracking_code
     if Teambox.config.tracking_enabled and Rails.env.production?
-      fake_img = "http://teambox.com/logo.png/#{request.host}"
+      fake_img = "https://teambox.com/logo.png/#{request.host}"
       %(<div style="background-image: url(#{fake_img})"></div>).html_safe
     end
-  end
-
-  def organization_link_colour
-    "".tap do |html|
-      html << '<style type="text/css">'
-      html << "a { color: ##{@organization ? @organization.settings['colours']['links'] : ''};}"
-      html << "a:hover { color: ##{@organization ? @organization.settings['colours']['link_hover'] : ''};}"
-      html << "body { font-color: ##{@organization ? @organization.settings['colours']['text'] : ''};}"
-      html << '</style>'
-    end.html_safe
-  end
-
-  def organization_header_bar_colour
-    "background: ##{@organization ? @organization.settings['colours']['header_bar'] : ''};"
-  end
-
-  def custom_organization_colour_field(f, organization, field)
-    colour = organization.settings['colours'][field]
-    "".tap do |html|
-      html << f.hidden_field(:settings, :id => "organization_settings_colours_#{field}", :'data-default-color' => Organization.default_settings['colours'][field].upcase, :name => "organization[settings][colours][#{field}]", :value => colour)
-      html << content_tag('button', '', :id => "organization_settings_colours_#{field}_swatch", :class => 'colorbox')
-    end.html_safe
   end
 
   def preview_button
@@ -300,5 +282,12 @@ module ApplicationHelper
 BLOCK
       page << errors
     end
+  end
+
+  def can_access_as_org_admin?(projects_to_show)
+    logged_in? && 
+    @current_project && 
+    !projects_to_show.include?(@current_project) && 
+    @current_project.organization.is_admin?(current_user)
   end
 end

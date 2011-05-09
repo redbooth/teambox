@@ -1,0 +1,54 @@
+%h2 Authentication
+
+%p
+  To authenticate with Teambox, it is recommended to use 
+  = link_to "OAuth 2", "http://tools.ietf.org/html/draft-ietf-oauth-v2-10"
+%p
+  Our implementation is currently based on draft 10. We currently support "code" and "token" for response types, and "authorization_code", "password" for grant types. refresh_tokens are not supported.
+
+%h3 Registering applications
+%p
+  All applications need to be registered. You can do this from the
+  = link_to 'Linked Apps', developer_oauth_clients_path
+  section in your user settings.
+
+%h3 Typical flow for an OAuth app
+
+%p Assuming you are using "code" for your response type.
+
+%p
+  1. Request authorization by visting in your browser
+%pre= authorize_url(:response_type => 'code', :client_id => 'YOUR_CLIENT_ID', :scope => 'read_projects', :redirect_uri => 'http://mysite.com/auth')
+%p
+  Teambox will redirect the user back to the url specified in <tt>redirect_uri</tt> returning a <tt>code</tt>.
+%p
+  %strong Note:
+  <tt>redirect_uri</tt> must have the same hostname and path as the callback url specified in your app settings.
+
+%p
+  2. From your app, request an access token by visiting
+%pre= token_url(:grant_type => 'authorization_code', :client_id => 'YOUR_CLIENT_ID', :client_secret => 'YOUR_CLIENT_SECRET', :code => 'RETURNED_CODE', :redirect_uri => 'http://mysite.com/auth')
+
+%p Teambox will return an access token in the response body, like this:
+%pre {"scope": "", "access_token":"urksAIU8RM0QWPVK7WxhK7RZ24PJ8fVeDSCdXAZG"}
+
+%p
+  3. Use the access token when performing requests. For example:
+%pre= api_v1_account_url(:access_token => 'urksAIU8RM0QWPVK7WxhK7RZ24PJ8fVeDSCdXAZG')
+
+%p Note that your access token may expire, either due to the time specified by <tt>expires_in</tt> being reached, or the user may revoke access. You will need to perform step <strong>1)</strong> again in such a case.
+
+%h3 Access scopes
+
+%p User data in teambox is protected by access scopes. By default you can only access basic information on the current user.
+
+%ul
+  %li <strong>read_projects</strong> - Can read users projects, conversations, tasks, task lists, pages, etc.
+  %li <strong>write_projects</strong> - Can create conversations, tasks, task lists, pages, etc in users projects.
+  %li <strong>offline_access</strong> - Access never expires unless user explicitly revokes the access token.
+
+%p Scopes are specified in the <tt>scope</tt> parameter when authorizing access. Each additional scope should be separated by a space. For example, if you wanted all scopes, you would visit the following url:
+
+%pre= authorize_url(:response_type => 'code', :scope => 'read_projects write_projects offline_access')
+
+= render 'apidocs/column'

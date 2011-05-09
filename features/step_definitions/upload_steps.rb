@@ -10,3 +10,8 @@ When /^(?:|I )attach a (\d+) ?MB file to "([^\"]*)"(?: within "([^\"]*)")?$/ do 
     attach_file(field, file.path)
   end
 end
+
+Given /^"([^\"]*)" has been uploaded to the "([^\"]*)" project$/ do |file_name, project_name|
+  project = Project.find_by_name(project_name)
+  Factory.create(:upload, :asset_file_name => file_name, :project => project)
+end

@@ -9,7 +9,6 @@ class ProjectsController < ApplicationController
     respond_to do |f|
       flash[:error] = t('common.not_allowed')
       f.any(:html, :m) { redirect_to projects_path }
-      handle_api_error(f, @current_project)
     end
   end
   
@@ -23,9 +22,6 @@ class ProjectsController < ApplicationController
       f.html
       f.m     { redirect_to activities_path if request.path == '/' }
       f.rss   { render :layout  => false }
-      f.xml   { render :xml     => @projects.to_xml }
-      f.json  { render :as_json => @projects.to_xml }
-      f.yaml  { render :as_yaml => @projects.to_xml }
       f.ics   { render :text    => Project.to_ical(@projects, params[:filter] == 'mine' ? current_user : nil, request.host, request.port) }
       f.print { render :layout  => 'print' }
     end
@@ -41,9 +37,6 @@ class ProjectsController < ApplicationController
     respond_to do |f|
       f.any(:html, :m)
       f.rss   { render :layout  => false }
-      f.xml   { render :xml     => @current_project.to_xml }
-      f.json  { render :as_json => @current_project.to_xml }
-      f.yaml  { render :as_yaml => @current_project.to_xml }
       f.ics   { render :text    => @current_project.to_ical(params[:filter] == 'mine' ? current_user : nil) }
       f.print { render :layout  => 'print' }
     end
@@ -104,6 +97,7 @@ class ProjectsController < ApplicationController
  
   # Gets called from Project#create
   def invite_people
+    @contacts = @current_project.organization.users_in_projects - [current_user]
   end
 
   # POST action for invite_people
@@ -111,6 +105,7 @@ class ProjectsController < ApplicationController
     authorize! :admin, @current_project
     @current_project.invite_users = params[:project][:invite_users]
     @current_project.invite_emails = params[:project][:invite_emails]
+    @current_project.invitations_locale = params[:invitations_locale]
     @current_project.send_invitations!
     redirect_to @current_project
   end
@@ -132,13 +127,11 @@ class ProjectsController < ApplicationController
       respond_to do |f|
         flash[:notice] = I18n.t('projects.edit.transferred')
         f.html { redirect_to project_path(@current_project) }
-        handle_api_success(f, @current_project)
       end
     else
       respond_to do |f|
         flash[:error] = I18n.t('projects.edit.invalid_transferred')
         f.html { redirect_to project_path(@current_project) }
-        handle_api_error(f, @current_project)
       end
     end
   end
@@ -171,21 +164,7 @@ class ProjectsController < ApplicationController
   end
 
   def list
-    @people = current_user.people
-    @roles = {  Person::ROLES[:observer] =>    t('roles.observer'),
-                Person::ROLES[:commenter] =>   t('roles.commenter'),
-                Person::ROLES[:participant] => t('roles.participant'),
-                Person::ROLES[:admin] =>       t('roles.admin') }
-
-
-    organization_ids = current_user.projects.sort {|a,b| a.name <=> b.name}.group_by(&:organization_id)
-    @organizations = organization_ids.collect do |k,v|
-      r = {}
-      r[:organization] = Organization.find(k)
-      r[:active_projects] = v.reject(&:archived)
-      r[:archived_projects] = v.select(&:archived)
-      r
-    end.sort {|a,b| a[:organization].name <=> b[:organization].name}
+    # TODO: sort by organization name and then by project name
   end
 
   protected

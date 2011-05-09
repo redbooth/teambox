@@ -25,12 +25,6 @@ $micro_size: 24px
   color: red
 
 .show_users
-  .comment, .upload
-    .info
-      display: none
-  .activity
-    .micro_avatar
-      display: none
   #common_projects
     .project_link
       margin-bottom: 5px
@@ -89,7 +83,35 @@ $micro_size: 24px
     label
       float: none
     .notify
-      padding-bottom: 7px
+      display: block
+  .watch_new
+    font-weight: bold
+    float: right
+    width: 362px
+    text-align: center
+    +gradient-top(#F0F0F0)
+    border-left: solid 1px rgb(230, 230, 230)
+    border-right: solid 1px rgb(230, 230, 230)
+    padding: 5px 0px
+  table.notifications
+    width: 100%
+    padding-top: 10px
+    tr.header
+      font-weight: bold
+    th.project, th.watch_new, th.digest
+      font-weight: bold
+    th.checkbox, td.checkbox
+      width: 120px
+      +gradient-top(#F0F0F0)
+      border-left: solid 1px rgb(230, 230, 230)
+      border-right: solid 1px rgb(230, 230, 230)
+    th
+      padding: 2px 0
+    td
+      padding: 4px 0
+      border-bottom: solid 1px rgb(230, 230, 230)
+    tr, th
+      text-align: center
   #change_password_link
     margin:
       top: 20px
@@ -128,10 +150,6 @@ $micro_size: 24px
       -webkit-border-radius: 4px
       padding: 6px
       margin-top: 4px
-  .content
-    .comment
-      span.author, span.project_arr
-        display: none
 
 .index_people
   .content
@@ -368,7 +386,7 @@ a.micro_avatar
     padding: 2px
     border: 1px solid #999
 
-.betatester
+.betatester, .keyboard_shortcuts, .show_badges
   display: block
   margin: 10px 0
   padding-left: 120px

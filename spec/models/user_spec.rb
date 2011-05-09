@@ -490,4 +490,88 @@ describe User do
       @user.card.should_not be nil
     end
   end
+
+  describe "badges" do
+    before do
+      @user = Factory(:user)
+    end
+
+    it "should have no badges for a new user" do
+      @user.badges.should == []
+    end
+
+    it "should grant badges" do
+      @user.grant_badge('shakespeare')
+      @user.badges.should == ['shakespeare']
+      @user.reload
+      @user.badges.should == ['shakespeare']
+    end
+
+    it "should grant multiple badges" do
+      @user.grant_badge('terminator')
+      @user.grant_badge('robocop')
+      @user.grant_badge('terminator')
+      @user.badges.should == %w(terminator robocop) 
+      @user.reload
+      @user.badges.should == %w(terminator robocop) 
+    end
+  end
+
+  describe "stats" do
+    before do
+      @user = Factory(:user)
+    end
+
+    it "shouldn't have any stats when they haven't been set" do
+      @user.stats.should == {}
+      @user.stats['undefined_stat'].should be_nil
+    end
+
+    it "should increment a stat" do
+      @user.increment_stat 'conversations'
+      @user.reload.stats['conversations'].should == 1
+      @user.increment_stat 'conversations'
+      @user.reload.stats['conversations'].should == 2
+    end
+
+    it "should set a stat" do
+      @user.set_stat 'tasks', 5
+      @user.reload.stats['tasks'].should == 5
+      @user.increment_stat 'tasks'
+      @user.reload.stats['tasks'].should == 6
+    end
+
+    it "should get a stat, defaulting to 0" do
+      @user.get_stat('pages').should == 0
+      @user.increment_stat 'pages'
+      @user.reload.get_stat('pages').should == 1
+    end
+  end
+
+  describe "people" do
+    before do
+      @user = Factory(:user)
+      @project = Factory(:project)
+      @person = @project.add_user(@user, :role => Person::ROLES[:admin])
+    end
+
+    it "should allow setting digest on person via nested attributes on user" do
+      #DIGEST = {:instant => 0, :daily => 1, :weekly => 2}
+      @user.people_attributes = [{:id => @person.id.to_s, :digest => Person::DIGEST[:instant] }]
+      @user.save.should be_true
+      @user.people.first.digest.should == Person::DIGEST[:instant]
+    end
+
+    it "should allow setting watch_new_task on person via nested attributes on user" do
+      @user.people_attributes = [{:id => @person.id.to_s, :watch_new_task => true }]
+      @user.save.should be_true
+      @user.people.first.watch_new_task.should == true
+    end
+
+    it "should allow setting watch_new_conversation on person via nested attributes on user" do
+      @user.people_attributes = [{:id => @person.id.to_s, :watch_new_conversation => true }]
+      @user.save.should be_true
+      @user.people.first.watch_new_conversation.should == true
+    end
+  end
 end

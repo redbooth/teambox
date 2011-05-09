@@ -1,0 +1,24 @@
+%style{:type => 'text/css'}
+  #facebox h1, #facebox h2, #facebox h3, #facebox h4, #facebox ul, #facebox ol { margin: 0; padding: 0; }
+  body #facebox , #facebox th, #facebox td, #facebox pre { font-size: 12px; font-family: Helvetica; }
+  #facebox pre { font-family: "Monaco", "Courier New", "Terminal", monospace; margin: 0; }
+  #facebox th { font-size: 14px; font-weight: bold; padding-bottom: 20px; }
+  #facebox td { padding-right: 50px; padding-bottom: 10px; }
+  #facebox ul { padding-left: 10px; }
+  #facebox ol { padding-left: 0px; }
+
+%div{:style => 'width: 600px'}
+  %h1= t('.title')
+  %p= t('.send_replies_with_this_email')
+  %p= link_to "#{@project_permalink}+#{@target_type.downcase}+#{@target_id}@#{Teambox.config.smtp_settings[:domain]}", "mailto:#{@project_permalink}+#{@target_type.downcase}+#{@target_id}@#{Teambox.config.smtp_settings[:domain]}"
+  %p= t('.teambox_magic_happens')
+
+  %p= t('.other_shortcuts_available')
+  %table{:style => 'width: 580px'}
+    %tr
+      %td= link_to "#{@project_permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}", "mailto:#{@project_permalink}+conversation@#{Teambox.config.smtp_settings[:domain]}"
+      %td= t('.will_create_conversation')
+    %tr
+      %td= link_to "#{@project_permalink}+task@#{Teambox.config.smtp_settings[:domain]}", "mailto:#{@project_permalink}+task@#{Teambox.config.smtp_settings[:domain]}"
+      %td= t('.will_create_task')
+

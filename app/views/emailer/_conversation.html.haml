@@ -1,0 +1,5 @@
+.box{ :style => email_box(conversation)+"margin: 80px 0 0 0" }
+  %h2{ :style => email_text(:big) }
+    - conversation_title = conversation.name.blank? ? truncate( sanitize( conversation.comments.try(:first).try(:body), :tags => [nil]), :length => 80) : conversation.name
+    = t('emailer.notify.conversation')
+    = link_to h(conversation_title), project_conversation_url(@project, conversation)

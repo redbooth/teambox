@@ -3,6 +3,8 @@ require 'spec_helper'
 describe ApiV1::ProjectsController do
   before do
     make_a_typical_project
+    
+    @other_project = Factory.create(:project, :user => @user)
   end
   
   describe "#index" do
@@ -11,7 +13,10 @@ describe ApiV1::ProjectsController do
       
       get :index
       response.should be_success
-      JSON.parse(response.body)['objects'].length.should == 1
+      list = JSON.parse(response.body)
+      list['type'].should == 'List'
+      list['objects'].each {|o| o['type'].should == 'Project'}
+      list['objects'].length.should == 2
     end
     
     it "shows projects with a JSONP callback" do
@@ -29,6 +34,24 @@ describe ApiV1::ProjectsController do
       get :index
       response.should be_success
       JSON.parse(response.body)['objects'].length.should == 0
+    end
+    
+    it "limits projects" do
+      login_as @user
+      
+      get :index, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 1
+    end
+    
+    it "limits and offsets projects" do
+      login_as @user
+      
+      get :index, :since_id => @user.projects.first.id, :count => 1
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.should == [@user.projects.last.id]
     end
   end
   
@@ -97,7 +120,10 @@ describe ApiV1::ProjectsController do
       
       get :show, :id => @project.permalink
       response.should be_success
-      JSON.parse(response.body)['id'].to_i.should == @project.id
+      
+      object = JSON.parse(response.body)
+      object['type'].should == 'Project'
+      object['id'].to_i.should == @project.id
     end
     
     it "shows a project by id" do
@@ -133,19 +159,19 @@ describe ApiV1::ProjectsController do
     it "should destroy a project" do
       login_as @owner
       
-      Project.count.should == 1
+      Project.count.should == 2
       put :destroy, :id => @project.permalink
       response.should be_success
-      Project.count.should == 0
+      Project.count.should == 1
     end
     
     it "should only allow the owner to destroy a project" do
       login_as @admin
       
-      Project.count.should == 1
+      Project.count.should == 2
       put :destroy, :id => @project.permalink
       response.status.should == 401
-      Project.count.should == 1
+      Project.count.should == 2
     end
   end
   

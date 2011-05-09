@@ -17,9 +17,9 @@
   = list_threads(@threads)
   = show_more_button
 
-=# javascript_tag autorefresh(@activities, @current_project)
-
 - content_for :column do
+  .more_links
+    = render "shared/collapse"
   = render 'recent_conversations', :project => @current_project, :recent_conversations => @recent_conversations
   = render 'pages', :project => @current_project, :pages => @current_project.pages
 
@@ -31,4 +31,5 @@
   = instructions_for_calendars
   = instructions_for_email(@current_project)
   = link_to t('.public_project'), public_project_path(@current_project), :class => :public_link if @current_project.public
+  = join_project_link(@current_project) unless @current_project.has_member?(@current_user)
   = leave_project_link(@current_project) if @current_project.has_member?(@current_user)

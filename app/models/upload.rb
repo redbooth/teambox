@@ -49,7 +49,7 @@ class Upload < RoleRecord
   end
   
   def image?
-    !(asset_content_type =~ /^image.*/).nil?
+    !(asset_content_type =~ /^image(?!.*photoshop.*)/).nil?
   end
 
   def url(style_name = nil, use_timestamp = false)

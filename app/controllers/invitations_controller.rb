@@ -60,11 +60,12 @@ class InvitationsController < ApplicationController
       user_or_email = params[:invitation][:user_or_email]
       params[:invitation][:role] ||= Person::ROLES[:participant]
       params[:invitation][:membership] ||= Membership::ROLES[:external]
-      
-      @targets = user_or_email.extract_emails
-      @targets = user_or_email.split if @targets.empty?
-      
-      @invitations = @targets.map { |target| make_invitation(target, params[:invitation]) }
+
+      mentions = user_or_email.gsub!(/(?:^|\W)@(\w+)/).collect{ |u| u.strip.delete('@') }
+      emails = user_or_email.extract_emails!
+      @targets = user_or_email.split + mentions + emails
+
+      @invitations = @targets.map { |target| make_invitation(target, params[:invitation], params[:invitations_locale]) }
     else
       flash[:error] = t('invitations.errors.invalid')
       redirect_to target_people_path
@@ -85,7 +86,7 @@ class InvitationsController < ApplicationController
   def resend
     authorize! :admin, @invite_target
     @invitation = Invitation.find_by_id params[:id]
-    @invitation.send(:send_email)
+    @invitation.send_email
     
     respond_to do |wants|
       wants.any(:html, :m) {
@@ -154,8 +155,9 @@ class InvitationsController < ApplicationController
       project_people_path(@current_project)
     end
     
-    def make_invitation(user_or_email, params)
+    def make_invitation(user_or_email, params, locale)
       invitation = @invite_target.invitations.new(params.merge({:user_or_email => user_or_email.strip}))
+      invitation.locale = locale
       invitation.user = current_user
       @saved_count ||= 0
       @saved_count += 1 if invitation.save

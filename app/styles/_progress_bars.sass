@@ -26,15 +26,20 @@
     padding: 0
     &.bar1
       height: 4px
-    &.bar2
+    &.bar2, &.bar3
       height: 6px
-    &.bar3
-      height: 6px
+  &.thin
+    .bar1
+      height: 2px !important
+    .bar2, .bar3
+      height: 3px !important
 
 .progressbar
   +progress_bar_colors(85deg)
 .progressbar.red
   +progress_bar_colors(0deg, 10%)
+.progressbar.orange
+  +progress_bar_colors(30deg, 20%)
 .progressbar.yellow
   +progress_bar_colors(60deg)
 .progressbar.blue

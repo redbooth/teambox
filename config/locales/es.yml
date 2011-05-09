@@ -858,12 +858,13 @@ es:
       task_commands: "Escribe #resolve, #reject o #hold al principio de tu respuesta para cambiar el estado de la tarea. Escribe #%{username} para asignarla a @%{username}, etc."
       task_link: "ver esta tarea online"
       task_list: "Lista de tareas:"
+      view_conversation_online: "ver esta conversación online"
       view_this_conversation_online_html: "Puedes %{conversation} para contestar y añadir archivos"
       view_this_task_online_html: "Puedes %{link} para comentar y adjuntar archivos."
     project_membership_notification: 
       project_link: "Haz click en el siguiente para empezar a colaborar en %{project} ahora"
       subject: "%{user} comparte [%{project}] contigo"
-      you_have_been_added_to: "Tu eres ahora un miembro del rpoyecto %{project}"
+      you_have_been_added_to: "Tu eres ahora un miembro del proyecto %{project}"
     reset_password: 
       follow_this_link: "con el fin de %{new_password} para Teambox, es necesario que inicies sesión en el siguiente link:"
       hey: "¡Hola, %{user_name}!"
@@ -1594,7 +1595,9 @@ es:
       title: "Buscando en todos los proyectos"
       title_in_project: "Buscando en el proyecto: %{project}"
     placeholder: "Búsqueda en todos los proyectos"
-    placeholder_in_project: "Búsqueda en un proyecto"
+    close_search: Cerrar búsqueda
+    results_for: Resultados para %{search_terms}
+    found_results: Hemos encontrado %{length} resultados
     submit: Buscar
   sessions: 
     fields: 
@@ -1998,7 +2001,7 @@ es:
       thanks: "¡Gracias por registrarte!"
     daily_task_reminder_email: 
       daily_task_reminder: "Recordatorio de tareas diarias"
-      daily_task_reminder_from_teambox: "Este es tu recordatio de tareas en Teambox"
+      daily_task_reminder_from_teambox: "Este es tu recordatorio de tareas en Teambox"
       late_tasks: Retrasadas
       settings_page: "tu página de usuario"
       tasks_for_next_two_weeks: "En las próximas dos semanas"

@@ -27,6 +27,12 @@ render_tabnav :user do
     end
 
     add_tab do |t|
+      t.named t('.linked_apps')
+      t.links_to oauth_clients_path
+      t.highlights_on :controller => 'oauth_clients'
+    end
+
+    add_tab do |t|
       t.named t('.notifications')
       t.links_to account_notifications_path
       t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'notifications'

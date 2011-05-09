@@ -1,4 +1,9 @@
 //= require <prototype>
+//= require <underscore>
+//= require <lib/jquery>
+//= require <lib/backbone-prototype>
+//= require <handlebars>
+
 //= require <rails>
 //= require <html5>
 //= require <builder>
@@ -6,6 +11,36 @@
 //= require <controls>
 //= require <dragdrop>
 //= require <sound>
+//= require <history>
+//= require <loader>
+
+//= require <teambox>
+
+//= require <lib/teambox_api>
+//= require <helpers/handlebars>
+//= require <controllers/app>
+//= require <models/conversation>
+//= require <models/project>
+//= require <models/task>
+//= require <models/thread>
+//= require <models/user>
+//= require <collections/projects>
+//= require <collections/tasks>
+//= require <collections/threads>
+//= require <views/app>
+//= require <views/activities>
+//= require <views/comment_form>
+//= require <views/conversation>
+//= require <views/projects>
+//= require <views/search>
+//= require <views/sidebar>
+//= require <views/tasks>
+//= require <views/task>
+//= require <views/thread>
+//= require <views/watchers>
+
+// Remove me by substituting Mustache code for Handlebars FIXME
+//= require <mustache>
 
 //= require <calendar_date_select>
 //= require <facebox>
@@ -16,39 +51,44 @@
 
 //= require <actions>
 //= require <autoresize>
+//= require <badges>
 //= require <banner>
+//= require <chat>
 //= require <colorPicker>
 //= require <comment>
+//= require <compact_mode>
 //= require <conversation>
 //= require <datas>
+//= require <oauth>
+//= require <i18n>
+//= require <datetime>
+//= require <expand_comment>
 //= require <facebox>
 //= require <filter>
+//= require <first_steps>
 //= require <forms>
 //= require <google_docs>
-//= require <history>
+//= require <hotkeys>
 //= require <hours>
 //= require <hoverable>
 //= require <invitation>
+//= require <keyboard>
+//= require <layout>
 //= require <toggleform>
-//= require <navigation>
 //= require <navigation_ajax>
-//= require <navigation_tasks>
-//= require <organizations>
+//= require <overlays>
 //= require <pages>
 //= require <pagination>
 //= require <params>
 //= require <person>
 //= require <preview>
-//= require <projects>
+//= require <quick_add_pane>
 //= require <sessions>
 //= require <splash>
-//= require <strftime>
 //= require <task>
 //= require <task_list>
-//= require <tasks_inline>
-//= require <timeago>
+//= require <task_list_templates>
+//= require <threads>
 //= require <upload>
 //= require <yahoo.color>
-//= require <expand_comment>
-//= require <compact_mode>
 //= require <watchers>

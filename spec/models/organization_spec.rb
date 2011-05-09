@@ -4,6 +4,7 @@ describe Organization do
 
   it { should have_many(:projects) }
   it { should have_many(:users) }
+  it { should have_many(:task_list_templates) }
 
   #it { should validate_presence_of(:permalink) }
   it { should validate_length_of(:name, :minimum => 4) }

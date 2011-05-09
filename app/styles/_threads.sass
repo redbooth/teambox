@@ -1,5 +1,26 @@
 .thread
   margin: 20px 0 35px
+  .thread_title
+    margin: 4px 0 8px
+    font-size: 12px
+  .task_summary
+    font-size: 11px
+    color: #333
+    display: inline-block
+    span.assigned_date, span.assigned_to
+      display: none
+    &.due_on
+      span.assigned_date
+        display: inline-block
+    &.assigned
+      span.assigned_to
+        display: inline-block
+    &.status_notopen
+      span.assigned_to
+        display: none
+    &.overdue
+      span.assigned_date
+        color: red
   .comments
     border-left: 4px solid $comments_left_border
     background-color: $comments_bkg
@@ -9,6 +30,17 @@
     +gradient($comments_left_border, $comments_bkg)
     .info
       position: absolute
+      .comment_count
+        display: none
+        text-align: center
+        span
+          display: inline-block
+          padding: 2px 5px
+          font-size: 9px
+          background-color: #aaa
+          color: white
+          font-weight: bold
+          +rounded(5px)
     .block
       a
         font-weight: bold
@@ -18,6 +50,13 @@
           color: $link_hover
       p
         margin: 4px 0 8px
+        &.excerpt
+          display: none
+          color: #999
+          overflow: hidden
+          height: 14px
+          font-size: 11px
+          margin-top: 8px
   span.time
     position: relative
     float: right
@@ -71,8 +110,15 @@
     display: inline-block
   .comments, form
     display: none
+  p.excerpt, .comment_count
+    display: block !important
 
 #activities
+  .thread.selected
+    .comment_header
+      border-left-color: $navbar
+      +gradient($comments_left_border - #111, $comments_bkg - #111)
+
   .comment_header
     cursor: pointer
     &:hover

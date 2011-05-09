@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Comment do
 
+  it { should validate_presence_of :user }
+
   describe "factories" do
     it "should generate a valid comment" do
       @project = Factory(:project)
@@ -38,17 +40,21 @@ describe Comment do
     end
     
     it "doesn't happen when updating" do
+      new_user = Factory.create(:user)
+      new_project = Factory.create(:project, :user => new_user)
+      
       @comment.save
       @comment.should_not be_new_record
-      @comment.user = @comment.project = nil
+      @comment.user = new_user
+      @comment.project = new_project
       @comment.save!
       @comment.reload
-      @comment.user_id.should be_nil
-      @comment.project_id.should be_nil
+      @comment.user_id.should == new_user.id
+      @comment.project_id.should == new_project.id
       @comment.body = "I am anonymous"
       @comment.save
-      @comment.reload.user.should be_nil
-      @comment.project.should be_nil
+      @comment.reload.user.should == new_user
+      @comment.project.should == new_project
     end
   end
   
@@ -121,16 +127,16 @@ describe Comment do
 
       it "on a conversation" do
         conversation = Factory(:conversation, :project => @project, :user => @project.user)
-        conversation.watchers_ids.should_not include(@pablo.id)
+        conversation.watcher_ids.should_not include(@pablo.id)
         comment = Factory(:comment, :project => @project, :user => @pablo, :target => conversation)
-        conversation.reload.watchers_ids.should include(@pablo.id)
+        conversation.reload.watcher_ids.should include(@pablo.id)
       end
 
       it "on a task" do
         @task = Factory(:task, :project => @project, :user => @project.user)
-        @task.watchers_ids.should_not include(@pablo.id)
+        @task.watcher_ids.should_not include(@pablo.id)
         comment = Factory(:comment, :project => @project, :user => @pablo, :target => @task)
-        @task.reload.watchers_ids.should include(@pablo.id)
+        @task.reload.watcher_ids.should include(@pablo.id)
       end
     end
     
@@ -159,17 +165,6 @@ describe Comment do
         
         comment.mentioned.to_a.should == [@user]
         @task.reload.watchers.should include(@user)
-      end
-
-      it "should add him to task list" do
-        @task_list = Factory(:task_list, :project => @project, :user => @project.user)
-        @task_list.watchers.should_not include(@user)
-
-        body = "I would like to add @existing to this, but not @unexisting."
-        comment = Factory(:comment, :body => body, :project => @project, :user => @project.user, :target => @task_list)
-        
-        comment.mentioned.to_a.should == [@user]
-        @task_list.reload.watchers.should include(@user)
       end
     end
 

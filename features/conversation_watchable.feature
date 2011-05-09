@@ -4,6 +4,7 @@ Feature: Watchers for conversations
   Background: 
     Given a project with users @mislav, @balint, @pablo and @james
     And I am logged in as @mislav
+    And no emails have been sent
 
   Scenario: Adding watchers to an untitled conversation
     Given I go to the projects page
@@ -14,7 +15,7 @@ Feature: Watchers for conversations
     And I should see "Andrew Wiggin"
     When I follow "All users"
     And I press "Save"
-    And I wait for 1 second
+    And I wait for 2 second
     Then @balint, @pablo and @james should receive 1 emails
 
   Scenario: New conversation watchers

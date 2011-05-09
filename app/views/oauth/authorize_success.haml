@@ -1,0 +1,6 @@
+%h1 You have allowed this request
+
+- if @token
+  %p= "Token: #{@token.token}. Verifier: #{@token.verifier}"
+- elsif @verification_code
+  %p= "Verification code: #{@verification_code.code}"

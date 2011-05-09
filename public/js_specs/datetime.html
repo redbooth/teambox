@@ -1,0 +1,110 @@
+<!DOCTYPE html> 
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'> 
+  <head> 
+    <meta charset='UTF-8'> 
+    <style type="text/css">a { color: #259BAD;}a:hover { color: #df5249;}body { font-color: #333;}</style> 
+    <script src="/trimmer/en.js" type="text/javascript"></script>
+    <script src="/sprockets.js" type="text/javascript"></script>
+    <script src="/js_specs/test_core.js" type="text/javascript"></script>
+  </head> 
+  <body> 
+    <style type="text/css">
+      #testResults {
+        font-family: Monaco, "Courier New", monospace;
+        font-size: 12px; }
+    </style>
+    <script type="text/javascript"> 
+    //<![CDATA[
+    my_user = {"first_day_of_week":"sunday","username":"frank","id":1,"splash_screen":true}
+    my_projects = {"1":{"name":"Earthworks Yoga","permalink":"earthworks","role":3}}
+    current_project = null
+    //]]>
+    </script>
+
+    <div id="testResults"></div>
+
+    <script type="text/javascript"> 
+    //<![CDATA[
+    var now = new Date();
+    var midday = new Date(1986,1,7,14,0,0);
+    var midday_tomorrow = new Date(1986,1,8,14,0,0);
+
+    "date.beginning_of_day returns current day at midnight".
+      assertEquals(midday.beginning_of_day() - 0, midday - 14*60*60*1000);
+    "date.beginning_of_next_day returns next day at midnight".
+      assertEquals(midday.beginning_of_next_day() - 0, midday_tomorrow - 14*60*60*1000);
+
+    "date.strftime renders %a".assertEquals(midday.strftime("%a"), "Fri");
+    "date.strftime renders %A".assertEquals(midday.strftime("%A"), "Friday");
+    "date.strftime renders %b".assertEquals(midday.strftime("%b"), "Feb");
+    "date.strftime renders %B".assertEquals(midday.strftime("%B"), "February");
+    "date.strftime renders %c".assertEquals(midday.strftime("%c"), "Fri Feb 7 14:00:00 1986");
+    "date.strftime renders %d".assertEquals(midday.strftime("%d"), "7");
+    "date.strftime renders %D".assertEquals(midday.strftime("%D"), "07");
+    "date.strftime renders %H".assertEquals(midday.strftime("%H"), "14");
+    "date.strftime renders %i".assertEquals(midday.strftime("%i"), "2");
+    "date.strftime renders %I".assertEquals(midday.strftime("%I"), "02");
+    "date.strftime renders %m".assertEquals(midday.strftime("%m"), "02");
+    "date.strftime renders %M".assertEquals(midday.strftime("%M"), "00");
+    "date.strftime renders %p".assertEquals(midday.strftime("%p"), "pm");
+    "date.strftime renders %S".assertEquals(midday.strftime("%S"), "00");
+    "date.strftime renders %w".assertEquals(midday.strftime("%w"), "5");
+    "date.strftime renders %y".assertEquals(midday.strftime("%y"), "86");
+    "date.strftime renders %Y".assertEquals(midday.strftime("%Y"), "1986");
+
+    "date.timeAgo for less than one minute".
+      assertEquals(now.timeAgo(now), "now");
+    "date.timeAgo for one minute".
+      assertEquals((new Date(now - 1*60*1000)).timeAgo(now), "one minute ago");
+    "date.timeAgo for 5 minutes".
+      assertEquals((new Date(now - 5*60*1000)).timeAgo(now), "5 minutes ago");
+    "date.timeAgo for 60 minutes before 14:00".
+      assertEquals((new Date(midday - 60*60*1000)).timeAgo(midday), "01:00 pm");
+    "date.timeAgo for 1 day before".
+      assertEquals((new Date(midday - 24*60*60*1000)).timeAgo(midday), "Yesterday 02:00 pm");
+    "date.timeAgo for 4 days before".
+      assertEquals((new Date(midday - 4*24*60*60*1000)).timeAgo(midday), "Mon Feb 3");
+    "date.timeAgo for 15 days before".
+      assertEquals((new Date(midday - 15*24*60*60*1000)).timeAgo(midday), "Jan 23");
+    "date.timeAgo for 1 year ago".
+      assertEquals((new Date(midday - 365*24*60*60*1000)).timeAgo(midday), "February 7, 1985");
+    "date.timeAgo for a time in the future".
+      assertEquals((new Date(midday - 0 + 60*60*1000)).timeAgo(midday), "February 7, 1986");
+
+    "date.add_days adds days".
+      assertEquals(midday.add_days(2) - 0, (midday - -(86400000*2)));
+
+	"date.add_weeks adds weeks".
+      assertEquals(midday.add_weeks(2) - 0, (midday - -(86400000*14)));
+
+  	"date.add_months adds months".
+      assertEquals(midday.add_months(1) - 0, (midday - -(86400000*28)));
+
+	"date.is_today returns true if today".
+      assertEquals(now.is_today(), true);
+
+	"date.is_today returns false if tomorrow".
+      assertEquals(now.add_days(1).is_today(), false);
+
+	"date.is_tomorrow returns false if today".
+      assertEquals(now.is_tomorrow(), false);
+
+	"date.is_tomorrow returns true if tomorrow".
+      assertEquals(now.add_days(1).is_tomorrow(), true);
+
+    var dates = [now, now.add_days(1), now.add_days(2), now.add_days(3), now.add_days(-1)]
+    var end_date = now.add_days(3)
+	"date.is_within returns true for the valid range".
+      assertEqualsArray(dates.map(function(d){ return d.is_within(end_date) }), [true, true, true, false, false]);
+
+	"date.days_since returns 0 days since now".
+      assertEquals(now.days_since(), 0);
+
+	"date.days_since returns days since date".
+      assertEquals(now.add_days(-3).days_since(), 3);
+    //]]>
+    </script>
+
+  </body> 
+</html> 
+

@@ -18,25 +18,11 @@ document.on('keyup', '.task_header + .edit_task', function(e, form) {
   if (e.keyCode == Event.KEY_ESC) hideEditTaskFormAndShowHeader(form)
 })
 
-document.on('ajax:failure', 'form.new_task.app_form', function(e, form) {
-  var message = $H(e.memo.responseJSON)
-	message.each( function(error) {
-		form.down('div.text_field').insertOrUpdate('p.error', error.value)
-	})
-})
-
 document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
   var name = form.down('input[name="task[name]"]').getValue()
   form.up('.content').select('.task_header h2, .task .thread_title a.task').invoke('update', name)
 
   hideEditTaskFormAndShowHeader(form)
-})
-
-// update task counter
-document.on('ajax:success', 'form.edit_task', function(e, form) {
-  var task_data = e.memo.headerJSON
-  var counter = $$('.task_counter[data-task-id='+ task_data.id +']').first()
-  if (counter) counter.update(parseInt(counter.innerHTML) + 1)
 })
 
 document.on('click', '.date_picker', function(e, element) {
@@ -120,8 +106,8 @@ Task = {
     if (typeof _people == "object") {
       $$('form.new_comment.edit_task .task_actions select#task_assigned_id, form.new_comment.edit_conversation .conversation_actions select#conversation_assigned_id, #new_task select#task_assigned_id').each(function(select) {
         var project_id = select.up('form').readAttribute('data-project-id')
-        if (!select.descendants().any()) {
-          select.insert(new Element('option').insert(task_unassigned))
+        if (!select.descendants().any() && typeof I18n == "object") {
+          select.insert(new Element('option').insert(I18n.translations.comments['new'].assigned_to_nobody))
         }
         if (typeof _people[project_id] == "object") {
           _people[project_id].each(function(person) {
@@ -134,8 +120,95 @@ Task = {
         }
       })
     }
-  }
+  },
 
+  classesForListed: function(task) {
+    var classes = []
+    var due_date = task.due_on ? new Date(Date.parse(task.due_on)) : null
+    var now = new Date()
+    if (due_date) {
+      if (due_date.is_today())
+        classes.push('due_today')
+      if (due_date.is_tomorrow())
+        classes.push('due_tomorrow')
+      if (due_date.is_within(now.add_weeks(1)))
+        classes.push('due_week')
+      if (due_date.is_within(now.add_weeks(2)))
+        classes.push('due_2weeks')
+      if (due_date.is_within(now.add_weeks(3)))
+        classes.push('due_3weeks')
+      if (due_date.is_within(now.add_months(1)))
+        classes.push('due_month')
+      if (due_date - ((new Date()).beginning_of_day()) < 0)
+        classes.push('overdue')
+    }
+    if (!task.due_on)
+      classes.push('unassigned_date')
+    classes.push('status_' + Task.statusName(task))
+    if (task.status != 1) // !open?
+      classes.push('status_notopen')
+    if (task.due_on && !(task.status == 3 || task.status == 4)) // !(rejected||resolved)
+      classes.push('due_on')
+    if (!(task.status == 3 || task.status == 4))
+      classes.push((task.assigned_id != 0) ? 'assigned' : 'unassigned')
+    if (task.assigned)
+      classes.push('user_' + task.assigned.user_id)
+    return classes.join(' ')
+  },
+
+  nameForAssigned: function(task) {
+    if (!task.assigned)
+      return ''
+    return I18n.t(I18n.translations.common.format_name_short, {
+      first_name: task.assigned.user.first_name, last_name: task.assigned.user.last_name,
+      first_name_first_character: task.assigned.user.first_name.substr(0,1),
+      last_name_first_character: task.assigned.user.last_name.substr(0,1)
+    }).escapeHTML()
+  },
+
+  linkToNameForAssigned: function(task) {
+    if (!task.assigned)
+      return ''
+    return '<a href="/users/' + task.assigned.user.username + '">' + Task.nameForAssigned(task) + '</a>';
+  },
+
+  fullNameForAssigned: function(task) {
+    if (!task.assigned)
+      return ''
+    return I18n.t(I18n.translations.common.format_name, {
+      first_name: task.assigned.user.first_name, last_name: task.assigned.user.last_name
+    }).escapeHTML()
+  },
+
+  dateForDueOn: function(task) {
+    var due_date = task.due_on ? new Date(Date.parse(task.due_on)) : null
+    if (!due_date)
+      return ''
+    if (due_date - (new Date().beginning_of_day()) < 0 && due_date.days_since() <= 5)
+      return I18n.t(I18n.translations.tasks.overdue, {days: due_date.days_since()})
+    else {
+      if (due_date.is_today())
+        return I18n.t(I18n.translations.tasks.due_on.today)
+      else if (due_date.is_tomorrow())
+        return I18n.t(I18n.translations.tasks.due_on.tomorrow)
+      else
+        return due_date.strftime('%b %D')
+    }
+  },
+
+  statusName: function(task) {
+    return ['new', 'open', 'hold', 'resolved', 'rejected'][task.status]
+  },
+
+  renderMyTask: function(task) {
+    return Mustache.to_html(Templates.tasks.my_task, {
+      task_id: task.id,
+      task_classes: Task.classesForListed(task),
+      task_url: '/projects/' + task.project_id + '/tasks/' + task.id,
+      task_name: task.name,
+      task_due: Task.dateForDueOn(task)
+    })
+  }
 }
 
 document.on('click', 'a.show_archived_tasks_link', function(e, el) {
@@ -156,6 +229,8 @@ document.on('ajax:success', '.new_task form', function(e){
     Task.make_all_sortable();
     TaskList.saveColumn();
     TaskList.updatePage('column', TaskList.restoreColumn);
+    my_user.stats.tasks++;
+    document.fire("stats:update");
   }, 0);
 })
 
@@ -173,23 +248,102 @@ document.observe('dom:loaded', function(e) {
   Task.insertAssignableUsers()
 });
 
-document.on('ajax:success', 'form.edit_task', function(e, form) {
-  var person = form['task[assigned_id]'].value
-  var status = form['task[status]'] && form['task[status]'].value
-  var task = form.up('.thread')
-  var task_count = Number($('open_my_tasks').innerHTML),
-      is_assigned_to_me = (status == 1) && my_projects[person]
-      was_assigned_to_me = form.readAttribute('data-mine')
+// main task update callback
+document.on('task:updated', function(e, doc){
+  var task_data = e.memo
+  var is_assigned_to_me = (task_data.status == 1) && task_data.assigned && task_data.assigned.user_id == my_user.id
 
-  form.writeAttribute('data-mine', String(Boolean(is_assigned_to_me)))
+  // update task counter
+  var counter = $$('.task_counter[data-task-id='+ task_data.id +']').first()
+  if (counter) counter.update(parseInt(counter.innerHTML) + 1)
 
-  if (is_assigned_to_me && !(was_assigned_to_me=='true')){
-      task_count += 1
+  // task in task list
+  var task = $('task_' + task_data.id)
+  var task_classes = Task.classesForListed(task_data)
+  if (task) {
+    var due_on = task.down('.assigned_date')
+    var assigned_user = task.down('.assigned_user')
+    due_on.update(Task.dateForDueOn(task_data))
+    assigned_user.update(Task.linkToNameForAssigned(task_data))
+    task.writeAttribute('class', 'task expanded ' + task_classes)
   }
-  if ((was_assigned_to_me=='true') && !is_assigned_to_me){
-      task_count -= 1
-  }
-  $('open_my_tasks').update(task_count)
 
+  // task in thread
+  task = $('thread_task_' + task_data.id)
+  if (task) {
+    var summary = task.down('.task_summary')
+    summary.writeAttribute('class', 'task_summary ' + task_classes)
+    summary.down('.task_status').writeAttribute('class', 'task_status task_status_' + Task.statusName(task_data))
+    summary.down('.task_status').update(Task.statusName(task_data))
+    summary.down('.assigned_date').update(Task.dateForDueOn(task_data))
+    summary.down('.assigned_to').update(task_data.assigned ? I18n.t(I18n.translations.tasks.assigned.assigned_to, {user: Task.fullNameForAssigned(task_data)}) : '')
+    
+    var counter = task.down('.comment_header').down('.comment_count').down()
+    if (counter) counter.update(parseInt(counter.innerHTML) + 1)
+  }
+
+  // task in my tasks sidebar
+  var task_sidebar = $('my_task_' + task_data.id);
+  if (task_sidebar) {
+    if (is_assigned_to_me) {
+      task_sidebar.writeAttribute('class', 'el task ' + task_classes)
+      task_sidebar.down('.due_on').update(Task.dateForDueOn(task_data))
+    } else {
+      task_sidebar.remove()
+    }
+  } else if (is_assigned_to_me) {
+    $('my_tasks').next().insert({top:Task.renderMyTask(task_data)})
+  }
+
+  $('open_my_tasks').update($('my_tasks').next().getElementsBySelector('.el.task').length)
+
+  // task in sidebar (viewing single task)
+  task_sidebar = $('task_list_task_' + task_data.id);
+  if (task_sidebar) {
+    task_sidebar.writeAttribute('class', 'task ' + task_classes)
+    task_sidebar.down('.due_on').update(Task.dateForDueOn(task_data))
+  }
 })
 
+document.on('ajax:success', 'form.edit_task', function(e, form) {
+  var task_data = e.memo.headerJSON
+  if (!task_data)
+    return
+
+  document.fire('task:updated', task_data)
+
+  // Update form and task count
+  var assigned_user_id = task_data.assigned ? task_data.assigned.user_id : 0
+  var is_assigned_to_me = (task_data.status == 1) && assigned_user_id == my_user.id
+
+  form.writeAttribute('data-mine', String(Boolean(is_assigned_to_me)))
+})
+
+
+document.on('ajax:failure', 'form.new_task.app_form', function(e, form) {
+  var message = $H(e.memo.responseJSON)
+	message.keys().each( function(k) {
+		field = form.down('#task_'+k)
+		if (field) field.parentNode.insertOrUpdate('span.error', message.get(k))
+	})
+})
+
+document.on('ajax:before', 'form.new_task.app_form', function(e, form) {
+  form.select('span.error').invoke('remove')
+})
+
+document.on('ajax:success', '.task_list form.new_task', function(e, form) {
+  var person = form['task[assigned_id]'].getValue()
+  var task_count = Number($('open_my_tasks').innerHTML)
+  var is_assigned_to_me = my_projects[person]
+
+  var response = e.memo.responseText
+  resetCommentsForm(form)
+
+  if (is_assigned_to_me) {
+    task_count += 1
+    $('open_my_tasks').update(task_count)
+  }
+
+  Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(response)
+})

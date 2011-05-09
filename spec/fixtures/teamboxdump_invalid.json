@@ -144,7 +144,6 @@
             "created_at": "2010-11-05 14:00:02 +0000",
             "pages": [],
             "task_lists": [{
-                "watchers": [1363],
                 "position": 1,
                 "tasks": [{
                     "watchers": [1365],

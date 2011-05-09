@@ -3,21 +3,25 @@ class ApiV1::NotesController < ApiV1::APIController
   before_filter :load_note, :except => [:index,:create]
   
   def index
-    query = {:conditions => api_range,
-             :limit => api_limit,
-             :order => 'id DESC',
-             :include => [:project, :page]}
+    authorize! :show, target||current_user
     
-    @notes = if target
-      target.notes.all(query)
+    context = if target
+      target.notes
     else
-      Note.find_all_by_project_id(current_user.project_ids, query)
+      Note.where(:project_id => current_user.project_ids)
     end
+    
+    @notes = context.except(:order).
+                     where(api_range('notes')).
+                     limit(api_limit).
+                     order('notes.id DESC').
+                     includes([:project, :page])
     
     api_respond @notes, :references => [:project, :page]
   end
 
   def show
+    authorize! :show, @note
     api_respond @note, :include => [:page_slot]
   end
   
@@ -59,9 +63,9 @@ class ApiV1::NotesController < ApiV1::APIController
   
   def load_note
     @note = if target
-      target.notes.find params[:id]
+      target.notes.find_by_id(params[:id])
     else
-      Note.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+      Note.where(:project_id => current_user.project_ids).find_by_id(params[:id])
     end
     api_error :not_found, :type => 'ObjectNotFound', :message => 'Note not found' unless @note
   end

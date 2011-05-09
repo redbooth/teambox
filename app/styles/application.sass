@@ -2,6 +2,7 @@
 @import base
 @import layout
 @import forms
+@import loader
 
 @import icons
 @import search
@@ -12,6 +13,7 @@
 @import comments
 @import conversations
 @import tasks
+@import task_list_templates
 @import pages
 @import users
 @import banner
@@ -23,6 +25,8 @@
 @import teambox_data
 @import google_docs
 @import sidebar
+@import overlays
+@import quick_add_pane
 
 @import calendar_date_select
 @import autocomplete
@@ -32,6 +36,10 @@
 @import preview
 @import hoverable
 @import colorpicker
+@import keyboard
+@import first_steps
+@import badges
+@import oauth
 
 .navigation
   display: none
@@ -39,10 +47,6 @@
 // overriding a default style
 #column .nav_links .conversations
   margin: 0
-
-div.column_wrap h2
-  text-transform: none
-  font-weight: bold
 
 .activity .upload_list .upload_file span
   display: inline-block
@@ -76,7 +80,7 @@ div.column_wrap h2
   font-size: 12px
   color: rgb(200,200,200)
   margin: 0
-  a.add_button, a.new_task_list_link
+  a.add_button, a.new_task_list_link, a.new_task_list_template
     text-decoration: none
   a
     text-decoration: underline

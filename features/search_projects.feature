@@ -64,3 +64,31 @@ Feature: Search comments in projects
     And I search for "minerals"
     Then I should see "Minerals to watch for" in the results
 
+  Scenario: Search for an upload in a task
+    Given there is a task titled "See my lolcats" in the project "Gold Digging"
+    And the task titled "See my lolcats" has a file named "lolcat1.png" attached
+    When the search index is reindexed
+    And I search for "lolcat1"
+    Then I should see "See my lolcats" in the results
+
+  Scenario: Search for an upload in a conversation
+    Given there is a conversation titled "Invisible lolcats!!" in the project "Gold Digging"
+    And the conversation titled "Invisible lolcats!!" has a file named "invisible_violin.png" attached
+    When the search index is reindexed
+    And I search for "invisible_violin"
+    Then I should see "Invisible lolcats!!" in the results
+
+  Scenario: Search for google doc in a task
+    Given there is a task titled "Lolcats spreadsheet" in the project "Gold Digging"
+    And the task titled "Lolcats spreadsheet" has a google doc named "lolcat.xls" attached
+    When the search index is reindexed
+    And I search for "lolcat.xls"
+    Then I should see "Lolcats spreadsheet" in the results
+
+  Scenario: Search for google doc in a conversation
+    Given there is a conversation titled "List of funny animals" in the project "Gold Digging"
+    And the conversation titled "List of funny animals" has a google doc named "no-moar-cats" attached
+    When the search index is reindexed
+    And I search for "no-moar-cats"
+    Then I should see "List of funny animals" in the results
+

@@ -18,6 +18,7 @@ require 'csv'
 
 RSpec.configure do |config|
   config.include AuthenticatedTestHelper
+  config.include OauthControllerSpecHelper
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
   # config.include Rack::Test::Methods
@@ -27,7 +28,7 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
-  config.fixture_path = Rails.root + '/spec/fixtures/'
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
   
   # == Fixtures
   #
@@ -151,3 +152,4 @@ end
 def app
   Rails.application
 end
+

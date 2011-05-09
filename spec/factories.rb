@@ -95,6 +95,16 @@ Factory.define :simple_conversation, :parent => :conversation do |conversation|
   conversation.simple true
 end
 
+Factory.define :task_list_template do |template|
+  template.association(:organization)
+  template.name 'I will come up with a better name later'
+  template.tasks [['First task'],['Second task'],['Third task']]
+end
+
+Factory.define :complete_task_list_template, :parent => :task_list_template do |template|
+  template.tasks [['First task', 'Bla bla bla'],['Second task','You motherfucker'],['Third task','Booh yah.']]
+end
+
 Factory.define :task_list do |task_list|
   task_list.name 'Buy Groceries'
   task_list.association(:user)
@@ -176,3 +186,36 @@ end
 Factory.define :email_bounce do |f|
   f.email { Factory.next(:email) }
 end
+
+Factory.define :google_doc do |d|
+  d.title "Very interesting spreadsheet"
+  d.url "https://google.com/document/1234"
+  d.document_type "spreadsheet"
+
+  d.association :user
+  d.association :project
+  d.association :comment
+end
+
+Factory.define :client_application do |f|
+  f.association(:user)
+  f.name "MyString"
+  f.url "http://test.com"
+  f.support_url "http://test.com/support"
+  f.callback_url "http://application/callback"
+  f.key "one_key"
+  f.secret "MyString"
+  f.created_at Time.parse("2007-11-17 16:56:51")
+  f.updated_at Time.parse("2007-11-17 16:56:51")
+end
+
+Factory.define :cucumber_ly, :parent => :client_application do |f|
+  f.association(:user)
+  f.name "Cucumber.ly"
+  f.url "http://cucumber.ly"
+  f.support_url "http://cucumber.ly/support"
+  f.callback_url "http://cucumber.ly/callback"
+  f.created_at Time.parse("2007-11-17 16:56:51")
+  f.updated_at Time.parse("2007-11-17 16:56:51")
+end
+

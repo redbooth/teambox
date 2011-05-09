@@ -137,3 +137,10 @@ Feature: Daily reminder for tasks email
     When the daily task reminders go out
     Then I should receive no emails
 
+  Scenario: User should receive reminder in their locale
+    Given the task called "Give water to the flowers" is assigned to me
+    And the task called "Give water to the flowers" is due tomorrow
+    Then I change my locale to français
+    When the daily task reminders go out
+    Then I open the email
+    And I should see "Ceci est un courriel de rappel pour vos tâches sur Teambox" in the email body

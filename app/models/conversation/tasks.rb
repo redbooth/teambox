@@ -48,6 +48,8 @@ class Conversation
       end
 
       task.save
+      update_attribute :converted_to, task.id
+
       self.reload.destroy
     end
     task

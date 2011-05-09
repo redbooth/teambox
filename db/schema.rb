@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110212184746) do
+ActiveRecord::Schema.define(:version => 20110404233401) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -23,10 +23,14 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
     t.datetime "updated_at"
     t.integer  "comment_target_id"
     t.boolean  "deleted",             :default => false, :null => false
+    t.integer  "last_activity_id"
   end
 
+  add_index "activities", ["comment_target_id"], :name => "index_activities_on_comment_target_id"
+  add_index "activities", ["comment_target_type"], :name => "index_activities_on_comment_target_type"
   add_index "activities", ["created_at"], :name => "index_activities_on_created_at"
   add_index "activities", ["deleted"], :name => "index_activities_on_deleted"
+  add_index "activities", ["last_activity_id"], :name => "index_activities_on_last_activity_id"
   add_index "activities", ["project_id"], :name => "index_activities_on_project_id"
   add_index "activities", ["target_id"], :name => "index_activities_on_target_id"
   add_index "activities", ["target_type"], :name => "index_activities_on_target_type"
@@ -63,6 +67,20 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
     t.integer "user_id"
     t.boolean "public",  :default => false
   end
+
+  create_table "client_applications", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "support_url"
+    t.string   "callback_url"
+    t.string   "key",          :limit => 40
+    t.string   "secret",       :limit => 40
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
 
   create_table "comments", :force => true do |t|
     t.integer  "target_id"
@@ -106,11 +124,11 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
     t.string   "name"
     t.integer  "last_comment_id"
     t.integer  "comments_count",  :default => 0,     :null => false
-    t.text     "watchers_ids"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "simple",          :default => false
     t.boolean  "deleted",         :default => false, :null => false
+    t.integer  "converted_to"
   end
 
   add_index "conversations", ["deleted"], :name => "index_conversations_on_deleted"
@@ -222,6 +240,48 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
   add_index "notes", ["deleted"], :name => "index_notes_on_deleted"
   add_index "notes", ["page_id"], :name => "index_notes_on_page_id"
 
+  create_table "notifications", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.integer  "target_id"
+    t.string   "target_type"
+    t.boolean  "sent",        :default => false
+    t.boolean  "read",        :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["person_id", "sent"], :name => "index_notifications_on_person_id_and_sent"
+  add_index "notifications", ["user_id", "read"], :name => "index_notifications_on_user_id_and_read"
+
+  create_table "oauth_nonces", :force => true do |t|
+    t.string   "nonce"
+    t.integer  "timestamp"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "oauth_nonces", ["nonce", "timestamp"], :name => "index_oauth_nonces_on_nonce_and_timestamp", :unique => true
+
+  create_table "oauth_tokens", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "type",                  :limit => 20
+    t.integer  "client_application_id"
+    t.string   "token",                 :limit => 40
+    t.string   "secret",                :limit => 40
+    t.string   "callback_url"
+    t.string   "verifier",              :limit => 20
+    t.string   "scope"
+    t.datetime "authorized_at"
+    t.datetime "invalidated_at"
+    t.datetime "valid_to"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "oauth_tokens", ["token"], :name => "index_oauth_tokens_on_token", :unique => true
+
   create_table "organizations", :force => true do |t|
     t.string   "name"
     t.string   "permalink",                                                   :null => false
@@ -255,7 +315,6 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
     t.string   "name"
     t.text     "description"
     t.integer  "last_comment_id"
-    t.text     "watchers_ids"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
@@ -271,10 +330,16 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
     t.integer  "project_id"
     t.integer  "source_user_id"
     t.string   "permissions"
-    t.integer  "role",           :default => 2
+    t.integer  "role",                   :default => 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted",        :default => false, :null => false
+    t.boolean  "deleted",                :default => false, :null => false
+    t.integer  "digest",                 :default => 0
+    t.datetime "last_digest_delivery"
+    t.datetime "next_digest_delivery"
+    t.boolean  "watch_new_task",         :default => false
+    t.boolean  "watch_new_conversation", :default => false
+    t.boolean  "watch_new_page",         :default => false
   end
 
   add_index "people", ["deleted"], :name => "index_people_on_deleted"
@@ -331,6 +396,15 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
     t.integer "account_type",         :default => 0
   end
 
+  create_table "task_list_templates", :force => true do |t|
+    t.string   "name"
+    t.integer  "organization_id"
+    t.integer  "position"
+    t.text     "raw_tasks"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "task_lists", :force => true do |t|
     t.integer  "project_id"
     t.integer  "user_id"
@@ -339,7 +413,6 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
     t.integer  "position"
     t.integer  "last_comment_id"
     t.integer  "comments_count",       :default => 0,     :null => false
-    t.text     "watchers_ids"
     t.boolean  "archived",             :default => false
     t.integer  "archived_tasks_count", :default => 0,     :null => false
     t.integer  "tasks_count",          :default => 0,     :null => false
@@ -363,7 +436,6 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
     t.integer  "position"
     t.integer  "comments_count",  :default => 0,     :null => false
     t.integer  "last_comment_id"
-    t.text     "watchers_ids"
     t.integer  "assigned_id"
     t.integer  "status",          :default => 0
     t.date     "due_on"
@@ -373,6 +445,7 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
     t.boolean  "deleted",         :default => false, :null => false
   end
 
+  add_index "tasks", ["assigned_id"], :name => "index_tasks_on_assigned_id"
   add_index "tasks", ["deleted"], :name => "index_tasks_on_deleted"
   add_index "tasks", ["project_id"], :name => "index_tasks_on_project_id"
   add_index "tasks", ["task_list_id"], :name => "index_tasks_on_task_list_id"
@@ -413,49 +486,56 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
   add_index "uploads", ["deleted"], :name => "index_uploads_on_deleted"
   add_index "uploads", ["page_id"], :name => "index_uploads_on_page_id"
+  add_index "uploads", ["project_id", "deleted", "updated_at"], :name => "index_uploads_on_project_id_and_deleted_and_updated_at"
 
   create_table "users", :force => true do |t|
-    t.string   "login",                     :limit => 40
-    t.string   "first_name",                :limit => 20,  :default => ""
-    t.string   "last_name",                 :limit => 20,  :default => ""
+    t.string   "login",                           :limit => 40
+    t.string   "first_name",                      :limit => 20,  :default => ""
+    t.string   "last_name",                       :limit => 20,  :default => ""
     t.text     "biography"
-    t.string   "email",                     :limit => 100
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
-    t.string   "remember_token",            :limit => 40
+    t.string   "email",                           :limit => 100
+    t.string   "crypted_password",                :limit => 40
+    t.string   "salt",                            :limit => 40
+    t.string   "remember_token",                  :limit => 40
     t.datetime "remember_token_expires_at"
-    t.string   "time_zone",                                :default => "Eastern Time (US & Canada)"
-    t.string   "locale",                                   :default => "en"
-    t.string   "first_day_of_week",                        :default => "sunday"
-    t.integer  "invitations_count",                        :default => 0,                            :null => false
-    t.string   "login_token",               :limit => 40
+    t.string   "time_zone",                                      :default => "Eastern Time (US & Canada)"
+    t.string   "locale",                                         :default => "en"
+    t.string   "first_day_of_week",                              :default => "sunday"
+    t.integer  "invitations_count",                              :default => 0,                            :null => false
+    t.string   "login_token",                     :limit => 40
     t.datetime "login_token_expires_at"
-    t.boolean  "confirmed_user",                           :default => false
-    t.string   "rss_token",                 :limit => 40
-    t.boolean  "admin",                                    :default => false
-    t.integer  "comments_count",                           :default => 0,                            :null => false
-    t.boolean  "notify_mentions",                          :default => true
-    t.boolean  "notify_conversations",                     :default => true
-    t.boolean  "notify_tasks",                             :default => true
+    t.boolean  "confirmed_user",                                 :default => false
+    t.string   "rss_token",                       :limit => 40
+    t.boolean  "admin",                                          :default => false
+    t.integer  "comments_count",                                 :default => 0,                            :null => false
+    t.boolean  "notify_mentions",                                :default => true
+    t.boolean  "notify_conversations",                           :default => true
+    t.boolean  "notify_tasks",                                   :default => true
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.integer  "invited_by_id"
-    t.integer  "invited_count",                            :default => 0,                            :null => false
+    t.integer  "invited_count",                                  :default => 0,                            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "wants_task_reminder",                      :default => true
+    t.boolean  "wants_task_reminder",                            :default => true
     t.text     "recent_projects_ids"
-    t.string   "feature_level",                            :default => ""
-    t.string   "spreedly_token",                           :default => ""
+    t.string   "feature_level",                                  :default => ""
+    t.string   "spreedly_token",                                 :default => ""
     t.datetime "avatar_updated_at"
     t.datetime "visited_at"
-    t.boolean  "betatester",                               :default => false
-    t.boolean  "splash_screen",                            :default => false
+    t.boolean  "betatester",                                     :default => false
+    t.boolean  "splash_screen",                                  :default => false
     t.integer  "assigned_tasks_count"
     t.integer  "completed_tasks_count"
-    t.boolean  "deleted",                                  :default => false,                        :null => false
+    t.boolean  "deleted",                                        :default => false,                        :null => false
     t.text     "settings"
+    t.integer  "digest_delivery_hour",                           :default => 9
+    t.boolean  "instant_notification_on_mention",                :default => true
+    t.integer  "default_digest",                                 :default => 0
+    t.boolean  "default_watch_new_task",                         :default => false
+    t.boolean  "default_watch_new_conversation",                 :default => false
+    t.boolean  "default_watch_new_page",                         :default => false
   end
 
   add_index "users", ["deleted"], :name => "index_users_on_deleted"
@@ -480,6 +560,21 @@ ActiveRecord::Schema.define(:version => 20110212184746) do
   add_index "versions", ["user_id", "user_type"], :name => "index_versions_on_user_id_and_user_type"
   add_index "versions", ["user_name"], :name => "index_versions_on_user_name"
   add_index "versions", ["versioned_id", "versioned_type"], :name => "index_versions_on_versioned_id_and_versioned_type"
+
+  create_table "watchers", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.integer  "watchable_id"
+    t.string   "watchable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "watchers", ["user_id", "watchable_id", "watchable_type"], :name => "uniqueness_index", :unique => true
+  add_index "watchers", ["user_id", "watchable_id", "watchable_type"], :name => "watchers_uniqueness_index", :unique => true
+  add_index "watchers", ["user_id"], :name => "index_watchers_on_user_id"
+  add_index "watchers", ["watchable_id"], :name => "index_watchers_on_watchable_id"
+  add_index "watchers", ["watchable_type"], :name => "index_watchers_on_watchable_type"
 
   create_table "websites", :force => true do |t|
     t.integer "card_id"

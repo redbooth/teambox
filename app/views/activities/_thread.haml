@@ -2,6 +2,7 @@
 - thread_class = thread.class.name.underscore
 - thread_id = "#{thread_class}_#{thread.id}"
 - comments = thread.comments
+- last_comment = comments.first
 
 .thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}", :'data-project-id' => thread.project.id }
   -# Title of the element
@@ -10,22 +11,33 @@
     .info
       - icon = { "Conversation" => "comment", "Task" => "tick" }[thread.class.to_s]
       %img{ :src => "/famfamfam/#{icon}.png", :style => 'padding: 4px' }
+      - if thread.comments_count > 1
+        .comment_count
+          %span= thread.comments_count
     .block
       - case thread
       - when Conversation
         - if thread.to_s.present?
-          %p.thread_title= t(".conversation_with_title_html",
+          .thread_title= t(".conversation_with_title_html",
               :conversation => link_to(thread, [thread.project, thread]),
-              :project => link_to(thread.project, thread.project))
+              :project => project_link_with_overlay(thread.project))
         - else
-          %p= t(".conversation_without_title_html",
+          .thread_title= t(".conversation_without_title_html",
               :conversation_url => project_conversation_path(thread.project, thread),
-              :project => link_to(thread.project, thread.project))
+              :project => project_link_with_overlay(thread.project))
       - when Task
-        %p.thread_title= t(".task_on_task_list_html",
+        .thread_title= t(".task_on_task_list_html",
             :task => link_to(thread, [thread.project, thread]),
             :task_list => link_to(thread.task_list, [thread.task_list.project, thread.task_list]))
-        %p= link_to thread.project, thread.project
+        = project_link_with_overlay thread.project
+        .task_summary{:class => task_classes(thread)}
+          = task_status_badge(thread.status_name)
+          = span_for_thread_due_date(thread)
+          %span.assigned_to= (thread.assigned && thread.open?) ? t('tasks.assigned.assigned_to', :user => thread.assigned.user.name) : ''
+      - if last_comment
+        %p.excerpt
+          %strong= last_comment.user.name
+          = strip_tags last_comment.body_html
     .clear
 
   .comments

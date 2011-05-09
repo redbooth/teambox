@@ -92,7 +92,7 @@ module ActivitiesHelper
       { :page => link_to_unless(plain || object.deleted?, h(object), [activity.project, object]) }
     when 'create_person', 'delete_person'
       { :person => link_to_unless(plain, h(object.user.name), object.user),
-        :project => link_to_unless(plain, h(activity.project), activity.project) }
+        :project => plain ? nil : project_link_with_overlay(activity.project) }
     when 'create_task'
       { :task => link_to_unless(plain, h(object), [activity.project, object]),
         :task_list => link_to_unless(plain, h(object.task_list), [activity.project, object.task_list]) }
@@ -106,7 +106,7 @@ module ActivitiesHelper
       { :file => link_to_unless(plain, h(text), project_uploads_path(activity.project, :anchor => dom_id(object))) }
     when 'create_project'
       { :person => link_to_unless(plain, h(activity.user), activity.user),
-        :project => link_to_unless(plain, h(activity.project), activity.project) }
+        :project => plain ? nil : project_link_with_overlay(activity.project) }
     when 'create_comment'
       # one of Project, Task or Conversation
       object = object.target

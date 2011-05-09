@@ -10,16 +10,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    respond_to do |f|
-      f.any(:html, :m)
-      f.js {
-        @show_part = params[:part]
-        render :template => 'tasks/reload'
-      }
-      f.xml  { render :xml     => @task.to_xml }
-      f.json { render :as_json => @task.to_xml }
-      f.yaml { render :as_yaml => @task.to_xml }
-    end
   end
 
   def new
@@ -47,6 +37,7 @@ class TasksController < ApplicationController
         if @task.new_record?
           output_errors_json(@task)
         else
+          response.content_type = Mime::HTML
           render(:partial => 'tasks/task', :locals => {
             :project => @current_project,
             :task_list => @task_list,
@@ -86,7 +77,7 @@ class TasksController < ApplicationController
             response.headers['X-JSON'] = @task.to_json(:include => :assigned)
 
             render :partial => 'comments/comment',
-              :locals => { :comment => comment, :threaded => true }
+              :locals => { :comment => comment }
           else
             render :nothing => true
           end
@@ -116,7 +107,6 @@ class TasksController < ApplicationController
         redirect_to [@current_project, @task_list]
       }
       f.js { render :layout => false }
-      handle_api_success(f, @task)
     end
   end
 

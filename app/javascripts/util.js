@@ -64,10 +64,6 @@ Event.addBehavior = function(hash) {
 }
 Event.addBehavior.reload = Prototype.emptyFunction
 
-function hideBySelector(selector) {
-  insertCss(selector + ' {display:none}')
-}
-
 function insertCss(css) {
   var head = document.getElementsByTagName('head')[0],
       style = document.createElement('style')

@@ -8,6 +8,6 @@
       = link_to t('activities.thread.more_comments', :count => comments.size - show_comments),
         show_thread_path(thread, :thread_type => thread.class.to_s),
         :'data-remote' => true
-  = render comments[0..(show_comments-1)].reverse, :threaded => true
+  = render comments[0..(show_comments-1)].reverse
 - else
-  = render comments.reverse, :threaded => true
+  = render comments.reverse

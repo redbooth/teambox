@@ -19,7 +19,10 @@ class User < ActiveRecord::Base
                   :rss,
                   :scopes,
                   :validation,
-                  :task_reminders
+                  :task_reminders,
+                  :stats,
+                  :badges,
+                  :oauth
 
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
@@ -27,13 +30,16 @@ class User < ActiveRecord::Base
   has_many :task_lists
   has_many :pages
   has_many :people
+  has_many :notifications, :dependent => :destroy
   has_many :projects, :through => :people, :order => 'name ASC'
   has_many :invitations, :foreign_key => 'invited_user_id'
+  has_many :sent_invitations, :class_name => 'Invitation', :foreign_key => :user_id
   has_many :activities
   has_many :uploads
   has_many :app_links, :dependent => :destroy
   has_many :memberships
   has_many :teambox_datas
+  has_many :watchers, :dependent => :destroy
 
   has_many :organizations, :through => :memberships
   has_many :admin_organizations, :through => :memberships, :source => :organization, :conditions => {'memberships.role' => Membership::ROLES[:admin]}
@@ -41,7 +47,9 @@ class User < ActiveRecord::Base
   belongs_to :invited_by, :class_name => 'User'
 
   has_one :card
+  accepts_nested_attributes_for :people, :update_only => true, :reject_if => proc { |attributes| (attributes.keys - %w(id digest watch_new_conversation watch_new_task)).any? }
   accepts_nested_attributes_for :card
+
   default_scope :order => 'users.updated_at DESC'
   scope :in_alphabetical_order, :order => 'users.first_name ASC'
 
@@ -61,7 +69,12 @@ class User < ActiveRecord::Base
                   :notify_conversations,
                   :notify_tasks,
                   :splash_screen,
-                  :wants_task_reminder
+                  :wants_task_reminder,
+                  :keyboard_shortcuts,
+                  :digest_delivery_hour,
+                  :instant_notification_on_mention,
+                  :default_digest, :default_watch_new_task, :default_watch_new_conversation,
+                  :people_attributes
 
   attr_accessor   :activate, :old_password
 
@@ -136,10 +149,10 @@ class User < ActiveRecord::Base
   end
   
   def users_with_shared_projects
-    ids = self.projects.map(&:user_ids).flatten
-    ids += Invitation.find(:all, :conditions => {:project_id => self.project_ids}, :select => 'user_id').map(&:user_id)
+    ids = self.projects.except(:order).order('id DESC').map(&:user_ids).flatten
+    ids += Invitation.where(:project_id => self.project_ids).select('user_id').map(&:user_id)
     
-    User.find(:all, :conditions => {:id => ids.uniq})
+    User.where({:id => ids.uniq})
   end
 
   def new_comment(user,target,comment)
@@ -248,6 +261,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def nearest_pending_tasks
+    pending_tasks.reject { |t| t.due_on && t.due_on > 2.weeks.from_now.to_datetime }
+  end
+
   def clear_pending_tasks!
     Rails.cache.delete("pending_tasks.#{id}")
   end
@@ -262,6 +279,14 @@ class User < ActiveRecord::Base
 
   def users_for_user_map
     @users_for_user_map ||= self.organizations.map{|o| o.users + o.users_in_projects }.flatten.uniq
+  end
+
+  def keyboard_shortcuts
+    !!settings['keyboard_shortcuts']
+  end
+
+  def keyboard_shortcuts=(v)
+    self.settings = { 'keyboard_shortcuts' => v == "1" }
   end
 
   protected

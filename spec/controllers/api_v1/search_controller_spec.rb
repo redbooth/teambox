@@ -14,6 +14,7 @@ describe ApiV1::SearchController do
       
       p1 = @project
       p2 = Factory.create :project, :user => @user
+      @results.stub!(:project).and_return(p2)
       
       ThinkingSphinx.should_receive(:search).
         with(*search_params([p1.id, p2.id])).and_return(@results)
@@ -49,6 +50,7 @@ describe ApiV1::SearchController do
       comment = Factory.create :comment, :project => project
 
       @results = mock('results', {:map => [comment.to_api_hash], :each => true})
+      @results.stub!(:project).and_return(project)
       controller.stub!(:user_can_search?).and_return(false)
       
       owner = project.user

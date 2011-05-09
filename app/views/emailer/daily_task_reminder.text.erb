@@ -1,0 +1,10 @@
+<%= t('users.daily_task_reminder_email.daily_task_reminder_from_teambox') %>
+
+<%= tasks_for_daily_reminder(@tasks[:late], @user, t('users.daily_task_reminder_email.late_tasks')) %>
+<%= tasks_for_daily_reminder(@tasks[:today], @user, t('users.daily_task_reminder_email.tasks_for_today')) %>
+<%= tasks_for_daily_reminder(@tasks[:tomorrow], @user, t('users.daily_task_reminder_email.tasks_for_tomorrow')) %>
+<%= tasks_for_daily_reminder(@tasks[:for_next_two_weeks], @user, t('users.daily_task_reminder_email.tasks_for_next_two_weeks')) %>
+<%= tasks_for_daily_reminder(@tasks[:no_due_date], @user, t('users.daily_task_reminder_email.tasks_without_a_due_date')) %>
+
+<%= t('users.daily_task_reminder_email.you_receive_this_message_html', :link => t('users.daily_task_reminder_email.settings_page')) %>
+<%= account_notifications_url %>

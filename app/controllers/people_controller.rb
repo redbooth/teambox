@@ -14,8 +14,6 @@ class PeopleController < ApplicationController
     respond_to do |f|
       f.any(:html, :m)
       f.xml   { render :xml     => @people.to_xml(:root => 'people') }
-      f.json  { render :as_json => @people.to_xml(:root => 'people') }
-      f.yaml  { render :as_yaml => @people.to_xml(:root => 'people') }
     end
   end
 

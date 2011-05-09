@@ -1,0 +1,10 @@
+- content_for :column do
+  = render 'shared/user_navigation'
+
+%h2= t('.title')
+
+- form_for :client_application, :url => { :action => :create }, :html => {:id => 'new_oauth_clients'} do |f|
+  = render :partial => "form", :locals => { :f => f }
+  = submit_tag t('.submit')
+  = t('common.or')
+  = link_to t('common.cancel'), developer_oauth_clients_path

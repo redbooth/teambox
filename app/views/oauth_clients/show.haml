@@ -1,0 +1,32 @@
+- content_for :column do
+  = render 'shared/user_navigation'
+
+.oauth_client_header
+  .text_actions
+    = link_to 'Edit', edit_oauth_client_path(@client_application)
+    = t('common.or')
+    = link_to 'Back', developer_oauth_clients_path
+  %h2
+    = @client_application.name
+
+%h3 App Key
+%pre=@client_application.key
+
+%h3 App Secret
+%pre=@client_application.secret
+
+%h3 Callback URI
+%pre=@client_application.callback_url
+
+%h3 Access Token URL
+%pre
+  ="http#{'s' if request.ssl?}://#{request.host_with_port}#{token_path}"
+
+%h3 Authorize URL
+%pre
+  ="http#{'s' if request.ssl?}://#{request.host_with_port}#{authorize_path}"
+
+%p
+  For more details, please
+  = link_to 'read the Authentication section in the API Docs', api_auth_path
+

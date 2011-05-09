@@ -120,6 +120,44 @@ describe ApiV1::ActivitiesController do
         end
       end
     end
+    
+    it "should not allow oauth users without :read_projects to view activities" do
+      login_as_with_oauth_scope @project.user, []
+      get :index, :access_token => @project.user.current_token.token
+      response.status.should == 401
+    end
+    
+    it "should allow oauth users with :read_projects to view activities" do
+      login_as_with_oauth_scope @project.user, [:read_projects]
+      get :index, :access_token => @project.user.current_token.token
+      response.should be_success
+    end
+    
+    it "restricts activities by target" do
+      login_as @user
+      
+      @conversation = @project.new_conversation(@owner, {:name => 'Something needs to be done'})
+      @conversation.body = 'Hell yes!'
+      @conversation.save!
+      
+      get :index, :target_type => 'Conversation'
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].map{|a| a['target_type']}.uniq.should == ['Conversation']
+    end
+    
+    it "restricts activities by comment target" do
+      login_as @user
+      
+      @conversation = @project.new_conversation(@owner, {:name => 'Something needs to be done'})
+      @conversation.body = 'Hell yes!'
+      @conversation.save!
+      
+      get :index, :comment_target_type => 'Conversation'
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].map{|a| a['comment_target_type']}.uniq.should == ['Conversation']
+    end
   end
   
   describe "#show" do

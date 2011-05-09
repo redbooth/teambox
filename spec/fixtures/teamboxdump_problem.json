@@ -287,7 +287,6 @@
                 "user_id": 5999,
                 "created_at": "2010-06-14 14:26:57 +0000",
                 "project_id": 16123,
-                "watchers": [],
                 "updated_at": "2010-06-14 14:26:57 +0000",
                 "slots": [{
                     "rel_object_type": "Upload",
@@ -332,7 +331,6 @@
                 "user_id": 5999,
                 "created_at": "2010-06-07 14:13:12 +0000",
                 "project_id": 16123,
-                "watchers": [],
                 "updated_at": "2010-06-07 14:13:12 +0000",
                 "slots": [{
                     "rel_object_type": "Note",
@@ -403,7 +401,6 @@
                 "user_id": 5999,
                 "created_at": "2010-11-05 10:04:06 +0000",
                 "project_id": 16123,
-                "watchers": [5999],
                 "position": 1,
                 "updated_at": "2010-11-05 10:04:06 +0000",
                 "archived": false,
@@ -500,7 +497,6 @@
                 "user_id": 5999,
                 "created_at": "2010-04-21 12:29:28 +0000",
                 "project_id": 16123,
-                "watchers": [5999],
                 "position": 2,
                 "updated_at": "2010-07-11 21:39:21 +0000",
                 "start_on": "2010-07-30",

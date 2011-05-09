@@ -12,9 +12,6 @@ class UsersController < ApplicationController
     # show current user
     respond_to do |f|
       f.any(:html, :m)  { redirect_to root_path }
-      f.xml   { render :xml     => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
-      f.json  { render :as_json => @current_user.users_with_shared_projects.to_xml(:root => 'users') }
-      f.yaml  { render :as_yaml => @current_user.users_with_shared_projects.to_xml(:root => 'users')}
     end
   end
   
@@ -61,9 +58,6 @@ class UsersController < ApplicationController
         }
       else
         format.any(:html, :m)
-        format.xml  { render :xml => @user.to_xml }
-        format.json { render :as_json => @user.to_xml }
-        format.yaml { render :as_yaml => @user.to_xml }
       end
     end
   end
@@ -165,6 +159,13 @@ class UsersController < ApplicationController
   def text_styles
     render :layout => false
   end
+  
+  def email_posts
+    @project_permalink = params[:project_permalink]||''
+    @target_type = params[:target_type]||''
+    @target_id = params[:target_id]||''
+    render :layout => false
+  end
 
   def calendars
   end
@@ -205,6 +206,22 @@ class UsersController < ApplicationController
     @current_user.settings = { :collapse_activities => params[:collapsed] }
     @current_user.save!
     render :text => "activities are now #{params[:collapsed] ? 'collapsed' : 'expanded'}"
+  end
+
+  def increment_stat
+    key = params[:stat].to_s
+    @current_user.increment_stat(key)
+    render :text => @current_user.get_stat(key)
+  end
+
+  def grant_badge
+    @current_user.grant_badge params[:badge]
+    head :ok
+  end
+
+  def hide_first_steps
+    @current_user.write_setting 'show_first_steps', false
+    head :ok
   end
 
   private

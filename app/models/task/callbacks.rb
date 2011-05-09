@@ -1,8 +1,8 @@
 class Task
   
   before_create :init_task
-  after_create :log_create
-  before_save :set_watchers
+  after_create :log_create, :update_user_stats
+  after_save :set_watchers
   after_destroy :clear_targets
 
   def init_task
@@ -14,8 +14,12 @@ class Task
   end
 
   def set_watchers
-    add_watcher(assigned.user, false) if assigned
+    add_watcher(assigned.user) if assigned
     true
+  end
+
+  def update_user_stats
+    user.increment_stat 'tasks' if user
   end
 
   def clear_targets

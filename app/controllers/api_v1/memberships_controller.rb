@@ -4,11 +4,19 @@ class ApiV1::MembershipsController < ApiV1::APIController
   before_filter :load_membership, :except => [:index]
   
   def index
-    api_respond @organization.memberships(:include => [:organization, :user],
-                                          :order => 'id DESC'), :references => [:organization, :user]
+    authorize! :show, @organization
+    
+    @memberships = @organization.memberships.except(:order).
+                                             where(api_range('memberships')).
+                                             limit(api_limit).
+                                             order('memberships.id DESC').
+                                             includes([:organization, :user])
+    
+    api_respond @memberships, :references => [:organization, :user]
   end
 
   def show
+    authorize! :show, @membership
     api_respond @membership, :include => [:user]
   end
   

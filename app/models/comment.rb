@@ -10,7 +10,9 @@ class Comment < ActiveRecord::Base
   belongs_to :target, :polymorphic => true, :counter_cache => true
   belongs_to :assigned, :class_name => 'Person'
   belongs_to :previous_assigned, :class_name => 'Person'
-  
+
+  has_many :notifications, :dependent => :destroy
+
   def task_comment?
     self.target_type == "Task"
   end
@@ -49,8 +51,10 @@ class Comment < ActiveRecord::Base
   validate :check_duplicate, :if => lambda { |c| !@is_importing and c.target_id? and not c.hours? }, :on => :create
   validates_presence_of :body, :unless => lambda { |c| c.task_comment? or c.uploads.to_a.any? or c.google_docs.any? }
 
+  validates_presence_of :user
+
   # was before_create, but must happen before format_attributes
-  before_save   :copy_ownership_from_target, :if => lambda { |c| c.new_record? and c.target_id? }
+  before_validation   :copy_ownership_from_target, :on => :create, :if => lambda { |c| c.target }
   after_create  :trigger_target_callbacks
   after_destroy :cleanup_activities, :cleanup_conversation
 
@@ -114,15 +118,20 @@ class Comment < ActiveRecord::Base
   # they hijack `target` in a before_save callback
   def check_duplicate
     last_comment = target.comments.by_user(self.user_id).latest.first
-    
+
     if last_comment and last_comment.duplicate_of? self
-      errors.add :body, :duplicate
+      last_uploads = last_comment.uploads.map {|x| x.asset_file_name + '_' + x.asset_file_size.to_s }.sort
+      current_uploads = self.uploads.map {|x| x.asset_file_name + '_' + x.asset_file_size.to_s }.sort
+      if current_uploads == last_uploads
+        errors.add :body, :duplicate
+      end
     end
   end
-  
+
   def copy_ownership_from_target # before_create
     self.user_id ||= target.user_id
     self.project_id ||= target.project_id
+    true
   end
 
   def trigger_target_callbacks # after_create

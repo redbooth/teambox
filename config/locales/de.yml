@@ -2,6 +2,12 @@
 de: 
   activerecord: 
     attributes: 
+      address: 
+        city: Stadt
+        country: Land
+        state: Bundesland
+        street: Straße
+        zip: PLZ
       card: 
         city: Stadt
         country: Land
@@ -63,8 +69,6 @@ de:
       website: 
         name: Webseite
     errors: 
-      full_messages: 
-        format: "%{attribute} %{message} "
       messages: 
         accepted: "muss angenommen werden"
         blank: "darf nicht leer sein"
@@ -87,15 +91,21 @@ de:
         too_short: "ist zu kurz (Minimum ist %{count} Zeichen)"
         wrong_length: "hat die falsche Länge (sollte %{count} Zeichen sein)"
       models: 
+        comment: 
+          attributes: 
+            body: 
+              blank: "Sie können keinen leeren Kommentar erstellen."
+              duplicate: "Kommentar duplizieren"
         conversation: 
           attributes: 
+            comments: 
+              must_have_one: "Die Konversation darf nicht mit einem leeren Kommentar anfangen."
             name: 
               no_title: "Bitte vergeben Sie einen Titel für die Konversation"
-      template: 
-        body: "Bitte überprüfen Sie die folgenden Felder:"
-        header: 
-          one: "Konnte %{model} nicht speichern: ein Fehler."
-          other: "Konnte %{model} nicht speichern: %{count} Fehler."
+        task: 
+          attributes: 
+            assigned: 
+              doesnt_belong: "Der zugeordnete Benutzer ist kein Mitglied des Projekts."
     models: 
       address: Adresse
       card: Karte
@@ -106,6 +116,7 @@ de:
       im: IM
       invitation: Einladung
       note: Text
+      organization: Organisation
       page: Seite
       phone_number: Telefon
       project: Projekt
@@ -137,14 +148,20 @@ de:
       by: von
       create_person: "wurde zu diesem Projekt eingeladen"
       title: "%{person} wurde eingeladen zum Projekt %{project} "
+    create_project: 
+      left: "erstellte das Projekt"
+      title: "%{person} erstellte das Projekt %{project}"
     create_task: 
       create_task: "erstellte die Aufgabe"
       title: "%{user} erstellte die Aufgabe %{task} in %{task_list} "
     create_task_list: 
       create_task_list: "erstellte die Aufgabenliste"
       title: "%{user} erstellte die Aufgabenliste %{task_list} "
+    create_teambox_data: 
+      title: "%{person} importierte das Projekt %{project} "
     create_upload: 
       title: "%{user} hat die Datei %{file} hochgeladen"
+      title_with_page: "%{user} hat die Datei zu Seite %{page} hochgeladen: "
     delete_person: 
       by: von
       delete_person: "wurde aus dem Projekt entfernt"
@@ -156,6 +173,48 @@ de:
     edit_page: 
       edit_page: "bearbeitete die Seite"
       title: "%{user} barbeitete die Seite %{page} "
+    thread: 
+      conversation_with_title_html: "%{conversation} im %{project} Projekt"
+      conversation_without_title_html: "Unterhaltung im %{project} Projekt"
+      created: 
+        conversation: "erstellte die Konversation"
+        task: "erstellte die Aufgabe"
+      more_comments: 
+        one: "Zeige einen Kommentar"
+        other: "Zeige %{count} Kommentare"
+      task_on_task_list_html: "%{task} in %{task_list} Tätigkeitsliste"
+  affiliate: 
+    area: "Affiliate Bereich"
+    index: 
+      addresses: Adressen
+      credits_earned: "Ihre verdienter Credit."
+      desc_1_html: "Mit unseren Partner Tools können Sie Teambox anderen Personen empfehlen und <strong>Frei Monate</strong> nutzen oder <strong>echtes Geld</strong> verdienen. "
+      desc_2_html: "Laden Sie neue Benutzer zu Teambox ein, und verdienen Sie  <strong>%{percent}% der Einnahmen</strong>, die Ihre eingeladenen Benutzer bezahlen,  <strong>dauerhaft</strong>. "
+      facebook: Facebook
+      get_in_touch: "Nehmen Sie Kontakt zu uns auf"
+      idea1: "Erstellen Sie eine Seite mit Anleitungen für Einsteiger, wie Teambox genutzt werden kann. "
+      idea2: "Posten Sie einen Link zu Teambox in Ihrem Blog und erzählen Sie, wie Teambox Ihnen geholfen hat."
+      idea3: "Veranstalten Sie ein Event über Projekt Zusammenarbeit und empfehlen Sie Teambox Ihren Zuhörern."
+      idea4: "Versenden Sie einfach eMail Einladungen an neue Benutzer. "
+      ideas: "Einige Ideen, um das Beste aus Teambox herauszuholen."
+      learn_more: "Mehr erfahren..."
+      no_referred_users: "Sie haben bisher keine empfohlenen Benutzer. "
+      option_1: "Option 1: Teilen Sie diesen Link"
+      option_2: "Option 2: Laden Sie Ihre Kontakte per eMail ein"
+      option_3: "Option 3: Laden Sie Ihre Kontakte ein durch Import einer CSV-Datei"
+      over_100: "Wenn sie mehr als 100 $Einnahmen haben, "
+      plan_for: "Plan für"
+      premium_plan: "Premium Konto"
+      refer_info: "Empfehlen Sie %{users} Benutzer für %{plan} Konten, verdienen Sie jeden Monat $%{credit}. "
+      referred_users: "Ihre eingeladenen Benutzer"
+      send_invites: "Zu Teambox einladen"
+      send_money: "und wir überweisen Ihnen Ihr verdientes Geld. "
+      sent_invites_to: "Die Einladungs-eMail wird an die folgenden Adressen versendet: "
+      sent_number_of_invites: "Die Einladungs-eMail wird gesendet an: "
+      tracking1: "Wenn Sie Benutzer zu Teambox einladen, müssen sie sich auf einer Seite mit einem speziellen Parameter registrieren."
+      tracking2: "Dieser eindeutige Parameter erlaubt es uns, Ihre Nutzer zu verfolgen."
+      tracking3: "Sobald ein Benutzer diesem Link folgt, wird erkannt, dass er von Ihnen kommt."
+      twitter: Twitter
   avatars: 
     edit: 
       upload: "Laden Sie diesen Avatar hoch"
@@ -187,6 +246,14 @@ de:
       social_networks: "Soziale Netzwerke"
       vcard: "vCard herunterladen"
       websites: Webseiten
+    card_types: 
+      business: Arbeit
+      fax: Fax
+      home: Privat
+      mobile: Mobil
+      other: Andere
+      personal: privat
+      work: Arbeit
     field: 
       add_addresses: "Adresse hinzufügen"
       add_email_addresses: "Email hinzufügen"
@@ -199,6 +266,8 @@ de:
       confirm_delete: "Möchten Sie diesen Kommentar wirklich löschen?"
       convert_task: "Ändere zu Aufgabe"
       edit: "Bearbeite Kommentar"
+    attach: 
+      tooltip: Anhang
     comment: 
       cannot_edit: "Kommentar kann nach 15 Minuten nicht mehr bearbeitet werden"
       commented_on: "-"
@@ -206,25 +275,35 @@ de:
       confirm_delete: "Sind Sie sicher, dass Sie diesen Kommentar löschen wollen?"
       hours: "%{hours}h "
       hours_with_minutes: "%{hours}h %{minutes}m "
+      loading: Lädt...
+    conversations: 
+      convert_to_task: "Ändere zu Aufgabe"
     convert_form: 
-      destination: "Wählen Sie Ziel Aufgabenliste"
+      destination: "Wählen die Ziel-Aufgabenliste"
       name: "Geben Sie einen Namen für die Aufgabenliste ein"
     edit: 
       submit: Speichern
     errors: 
       cannot_update: "Sie haben keine Berechtigung, diesen Kommentare zu beabeiten"
+    fields: 
+      attach: Anhang
     hours: 
       add_hours: Stunden
       hours: "Wie viele Stunden haben Sie in diese Aufgabe investiert?"
       time_tracking_docs: "Lernen Sie, wie Sie Ihre Arbeitszeit dokumentieren"
+      tooltip: "Füge Stunden zu dieser Aufgabe hinzu"
     new: 
       assigned_to: "Zugeordnet zu:"
       assigned_to_nobody: "Nicht zugeordnet"
       conversation: "Schicken Sie eine Nachricht an alle Gruppenmitglieder."
       project: "Was machen Sie gerade? Teilen Sie Ideen, Links und Updates."
+      sending: Sendet...
       submit: Kommentar
       task: "Definieren Sie Arbeitsbedarfe durch Kommentare."
       task_list: "Teilen Sie Ihre Meinung zu dieser Aufgabenliste. Um Aufgaben zu erstellen und zu verteilen, benutzen Sie das Seitenmenü."
+    preview: 
+      close: "Verstecke Vorschau"
+      preview: Vorschau
   common: 
     accept: Annehmen
     and: und
@@ -237,8 +316,11 @@ de:
     decline: Ablehnen
     delete: Löschen
     edit: Bearbeiten
+    format_name: "%{first_name}%{last_name}"
+    format_name_short: "%{first_name_first_character} . %{last_name}"
     gantt_chart: "Gantt Diagramm"
     in_project: in
+    logged_out: "Sie sind abgemeldet"
     next: Next
     not_allowed: "Sie sind nicht berechtigt, dies zu tun."
     or: oder
@@ -247,9 +329,7 @@ de:
     rename: Umbenennen
     save: Speichern
     show_more: "Zeige mehr"
-    tasks: 
-      one: "1 Aufgabe"
-      other: "%{count} Aufgaben"
+    signup: Registrierung
   confirm: 
     delete_group: "Sind Sie sicher, dass Sie diese Gruppe löschen wollen?"
     delete_page: "Sind Sie sicher, dass Sie diese Seite löschen wollen?"
@@ -260,23 +340,27 @@ de:
     actions: 
       confirm_delete: "Sind Sie sicher, dass Sie diese Konversation löschen wollen?"
     column: 
-      cant_create: "Sie haben nicht die Berechtigung, Konversationen in diesem Projekt zu erzäugen."
+      cant_create: "Sie haben keine Berechtigung, Konversationen in diesem Projekt zu beginnen"
       new_conversation: "Neue Konversation"
       subscribe: "Abonnieren Sie den Nachrichten Feed"
     conversation_with_extract: 
       posted_by: "Veröffentlicht von"
+    convert_form: 
+      name: Aufgabenname
+      status: Status
+      task_list: "Erstelle Aufgabe in"
     edit: 
       submit: "Konversation aktualisieren"
     fields: 
       body: "Erster Kommentar"
       name: Titel
-      tooltips: 
-        body: "Stellen Sie eine Frage, teilen Sie dem Team Neues mit, beginnen Sie eine Diskussion"
-        name: "So kurz wie möglich, dies wird in den Betreff der Bestätigungs Eamil eingefügt"
     index: 
+      new_conversation: "Neue Unterhaltung"
       rss: 
-        description: "Konversationen für Projekt %{name}"
-        title: "%{name} Konversationen"
+        description: "Konversationen im Projekt %{name}"
+        title: "%{name} Konversationen "
+      title: "Konversationen in %{project}"
+      view_single: "weiter lesen"
     link: 
       edit: Bearbeiten
     new: 
@@ -286,7 +370,7 @@ de:
       create_first: "Erstellen Sie die erste Konversation in diesem Projekt!"
       define_html: "Nutzen Sie Konversationen, um <b>Entscheidungen zu diskutieren</b> und <b>ihr Team zu informieren</b> auf einer zentralen Plattform.<br/> Jede Konversation ist ein Kommentarbaum, der viele Emails überflüssig macht."
       empty: "Dieses Projekt hat bisher keine Konversationen."
-      footer1_html: "Konversationen sind hervorragend, um <b>ein Design zu bearbeiten</b>, <b>einen Termin zu entscheiden</b> für ein Treffen oder um Neuigkeiten <b>mitzuteilen</b>."
+      footer1_html: "Konversationen sind hervorragend, um <b>ein Design zu bearbeiten</b>, <b>einen Termin zu vereinbaren</b> für ein Treffen oder um Neuigkeiten <b>mitzuteilen</b>."
       footer2_html: "Durch die Baumanordnung ist es einfach, den zeitlichen Ablauf zu verfolgen, zu sehen welche Dateien gesendet worden sind und die Meinungen jedes Teilnehmers  zu kennen. In Teambox heißt <b>zusammenarbeiten auch kommunizieren</b>."
       item1_html: "<b>Dateien hochladen</b>. An Kommentare können auch Dateien angehängt werden."
       item2_html: "<b>Abonnieren</b> Sie eine Konversation, um über zukünftige Antworten per Email oder RSS informiert zu werden."
@@ -302,6 +386,7 @@ de:
       started_by: "Erstellt von"
     watcher_fields: 
       add_suscribers: "Welche Teilnehmer verfolgen diese Konversation?"
+      cant_notify: "Dies ist ein öffentliches Projekt. Zur Vermeidung von Spam E-Mails, zeigen wir nicht die Liste der Benutzer, die Sie benachrichtigen können."
       invite_users: "Sie sind der einzige Benutzer in diesem Projekt!"
       no_users_yet_html: "Konversationen sind nützlicher wenn sie geteilt werden. <a href='%{invite_link}'>Laden Sie Benutzer ein</a> zu diesem Projekt, so dass sie diese Konversation lesen können, Antworten senden können und Aktualisierungen erhalten."
       people_all: "Alle Teilnehmer im Projekt"
@@ -634,6 +719,8 @@ de:
       - !ruby/symbol month
       - !ruby/symbol day
     yesterday: Gestern
+  date_picker: 
+    no_date_assigned: "Kein Termin zugeordnet"
   datetime: 
     distance_in_words: 
       about_x_hours: 
@@ -650,11 +737,11 @@ de:
         other: "fast %{count} Jahre"
       half_a_minute: "halbe Minute"
       less_than_x_minutes: 
-        one: "weniger als 1 Minute"
+        one: jetzt
         other: "weniger als %{count} Minuten"
       less_than_x_seconds: 
-        one: "weniger als 1 Sekunde"
-        other: "weniger als %{count} Sekunden"
+        one: jetzt
+        other: jetzt
       over_x_years: 
         one: "über 1 Jahr"
         other: "über %{count} Jahre"
@@ -668,8 +755,8 @@ de:
         one: "1 Monat"
         other: "%{count} Monate"
       x_seconds: 
-        one: "1 Sekunde"
-        other: "%{count} Sekunden"
+        one: jetzt
+        other: jetzt
     prompts: 
       day: Tag
       hour: Stunde
@@ -694,10 +781,15 @@ de:
     new: 
       submit: Hinzufügen
   emailer: 
+    bounce: 
+      not_project_member_error: "Sie sind noch kein Mitglied in diesem Teambox Projekt."
+      subject: "Fehler beim Senden der E-Mail an Teambox"
+      user_not_found_error: "Diese E-Mail-Adresse ist keinem Teambox-Konto zugeordnet."
     common: 
       answer_above_this_line: "ANTWORTEN SIE OBERHALB DIESES LINKS, UM EINE ANTWORT ZU SENDEN"
       do_not_answer: "Antworten Sie nicht auf diese Email."
     confirm: 
+      complete: "Anmeldung abzuschließen"
       hey: "Hallo %{user_name}!"
       log_in: "Jetzt bei Teambox anmelden!"
       plaintext_link: "Wenn das nicht funktioniert, kopieren Sie den folgenden Link und fügen Sie ihn in die Adresszeile Ihres Browsers ein:"
@@ -714,44 +806,44 @@ de:
       plan_share_and_collaborate: "Planen Sie, Geben Sie Aufgaben frei and erfassen Sie, was gemacht werden soll. So einfach, wie es sein soll."
       report_abuse: "Diese Email wurde versendet auf den Wunsch einer Ihrer Kontakte. Teilen Sie uns bitte jeglichen Missbrauch mit."
       subject: "%{user} teilt das Projekt [%{project}] mit Ihnen "
+      subject_without_project: "%{name} hat Sie zu Teambox eingeladen"
       teambox_is_a_pm_platform: "Teambox ist eine Projekt Management Plattform, die für die Echtzeit Zusammenarbeit entwickelt wurde."
       you_have_been_invited_to: "Sie sind zu dem Projekt <b>%{project}</b> eingeladen worden!"
     notify: 
       are_watching: " haben diese Konversation abonniert und werden über zukünftige Antworten benachrichtigt."
-      assigned_to: "Zugeordnet zu <b>%{user}</b>"
       comment: "Kommentar auf der Projektseite: "
       comments: "%{number} Kommentare"
       conversation: "Konversation:"
       due_on: "Fällig am %{date}"
       my_tasks: "Mehr Aufgaben, die Ihnen zugeordnet sind in %{project}"
-      notification_settings: "Sie können Ihre <a href='%{url}'>Benachrichtigungseinstellungen hier</a> für weitere Emails ändern."
       project: "Teambox Projekt:"
       reply: "Sie können auch eine Email senden um auf die Konversation zu antworten."
       status: "Status: %{status}"
-      stop_watching: "<a href='%{stop_watching_url}'>Abbestellen</a> der Email Benachrichtigungen für diesen Baum."
       task: "Aufgabe:"
       task_commands: "Schreiben Sie #resolve, #reject or #hold (erledigt, abgelehnt, warten) am Anfang Ihrer Antwort, um den Aufgabenstatus zu ändern. Schreiben Sie #%{username}, um die Aufgabe @%{username} zuzuordnen, etc. "
       task_list: "Aufgabenliste:"
-      view_online: "Sie können <a href='%{link}'>diese Konversation online aufrufen</a>, um zu antworten und Dateien hochzuladen."
+    project_membership_notification: 
+      subject: "%{user} teilt [ %{project} ] mit Ihnen"
     reset_password: 
       hey: "Hallo %{user_name}!"
       log_in: "Melden Sie sich jetzt bei Teambox an!"
+      new_password: "neues Passwort"
       plaintext_link: "Wenn dieses nicht funktioniert, kopieren Sie den folgenden Link und fügen Sie ihn in die Adresszeile Ihres Browsers ein:"
       problems_html: "Wenn Sie irgendwelche Probleme haben, kontaktieren Sie uns unter %{support}"
       report_abuse: "Sie erhalten dieses Email, weil Sie sichr für ein Teambox-Benutzerkonto registriert haben mit %{email}"
       subject: "Ihr Passwort wurde erfolgreich zurückgesetzt"
+      successfully_reset: "Ihr Passwort wurde erfolgreich zurückgesetzt."
+    teamboxdata: 
+      hey: "Hey, %{user_name} !"
+      import_failed: "Ihre Daten konnten nicht importiert werden"
+      imported: "Ihre Daten wurden importiert"
     upload: 
       file: "Datei:"
-  example_projects: 
-    new: 
-      create: "Erstellen Sie ein Beispiel-Projekt"
-      error: "Beispielprojekt konnte nicht erstellt werden."
-      error_list: "Beispielprojekt konnte nicht erstellt werden. Folgende Projekte sind ungültig: %{list}."
-      learn: "Lernen Sie an einem Beispiel!"
-      line1: "Wenn Sie das erste Mal Teambox nutzen, können Sie ein Beispiel-Projekt mit beliebigen Inhalten erstellen."
-      line2: "Das Navigieren durch die Seiten lehrt Sie, wie Sie jeden Bestandteil von Teambox nutzen."
-      line3: "Stellen Sie sicher, dass Sie <b>die Anleitungen lesen</b> und <b>experimentieren</b> Sie mit dem Erstellen, Bearbeiten und Löschen von Elementen!"
-      line4: "In diesem Projekt können Sie keine anderen Benutzer einladen, aber Sie können alles andere ausprobieren."
+  errors: 
+    format: "%{attribute}%{message}"
+    messages: 
+      accepted: "muss akzeptiert werden"
+      blank: "darf nicht leer sein"
   form: 
     cancel: Abbrechen
   hours: 
@@ -760,9 +852,14 @@ de:
     comments: Zeiteinträge
     entry_hours: std.
     entry_total: Gesamt
+    filter_assigned: 
+      my_tasks: "Meine Aufgaben"
     filter_by: "Filtern nach"
+    filter_organization: 
+      all: "Alle Organisationen"
     filters: 
       assigned_to: Teilnehmer
+      organizations: Organisationen
       projects: Projekte
       tasks: Aufgaben
     report: Report
@@ -785,11 +882,13 @@ de:
       title: "Offene Einladungen"
     invitation: 
       discard: "Einladung verwerfen"
-      invited_email: "%{inviter} hat <b>%{email}</b> eingeladen am Projekt teilzunehmen."
       invited_user_html: "%{inviter} hat <b>%{invitee}</b> eingeladen am Projekt teilzunehmen."
       pending: "Eine Email wurde an den Benutzer versendet, aber sie wurde noch nicht bestätigt."
       resend: "Einladungs-Email noch einmal versenden"
       time_ago: "(%{time_ago_in_words} vorher)"
+    invite_format: 
+      to_invite: 
+        title: einladen
     pending: 
       invited_to_join: "%{by} hat Sie eingeladen an dem Projekt %{project} teilzunehmen."
       to_access_or: "um das Projekt aufzurufen oder"
@@ -799,17 +898,38 @@ de:
       resent: "Die Einladung wurde erneut versendet an %{recipient}. Wenn die Email nicht erhalten wurde, kontrollieren Sie bitte den Spam-Ordner."
       return: Zurück
     search: 
+      help: Hilfe
       invite: Einladen
       invite_from_project: "Vom Projekt einladen"
       invite_people: "Laden Sie Teilnehmer für dieses Projekt ein"
-      role: "Bitte wählen Sie eine Rolle"
+      role: "Bitte wählen Sie eine Rolle für dieses Projekt"
       submit: Versenden
       username_or_email: "Geben Sie den Benutzernamen des Teammitglieds oder die Email ein:"
     sent: 
       email_sent: "<b>Wir haben diesem Benutzer gerade eine Benachrichtigungs-Email gesendet mit einem Link, um die Einladung anzunehmen</b>. Wenn sie die Email nicht erhalten haben, stellen Sie sicher, dass sie nicht als Spam eingestuft wurde oder wählen Sie eine andere Email Adresse. Wenn weiterhin Probleme bestehen, nehmen Sie bitte Kontakt zu unserem Team auf."
-  last_announcement_html: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   locales: 
+    af: Afrikanisch
+    ar: Arabisch
+    bs: Bosnisch
+    bt: Bulgarisch
+    ca: Katalanisch
+    cz: Tschechisch
+    da: Dänisch
     de: Deutsch
+    el: Griechisch
+    en: Englisch
+    es: Spanisch
+    et: Estnisch
+    fa: Persisch
+    fi: Finnisch
+    fr: Französisch
+    he: Hebräisch
+    hr: Kroatisch
+    hu: Ungarisch
+    id: Indonesisch
+    is: Isländisch
+    it: Italienisch
+    ja: Japanisch
   not_found: 
     conversation: "Konversation %{id} wurde nicht im Projekt gefunden."
     page: "Seite %{id} wurde nicht im Projekt gefunden."
@@ -868,6 +988,10 @@ de:
     unlink_account: "Verbindung zu Konto aufheben"
     your_account_is_linked_html: "Ihr %{provider} Profil ist <strong>verbunden</strong> mit Teambox."
     your_account_is_not_linked_html: "Ihr %{provider} Profil ist <strong>nicht verbunden</strong> mit Teambox"
+  organizations: 
+    delete: 
+      delete: "Organisation löschen"
+      deleted: "Organisation gelöscht"
   page_title: 
     archived_task_lists: "Archivierte Aufgaben"
     create_uploads: "Datei hochladen"
@@ -881,7 +1005,6 @@ de:
     index_task_lists: "Alle Aufgabenlisten"
     index_uploads: "Alle hochgeladenen Dateien"
     new_conversations: "Neue Konversation"
-    new_example_projects: "Erstellen Sie ein Beispiel-Projekt"
     new_pages: "Neue Seite"
     new_projects: "Neues Projekt"
     new_users: Registrieren
@@ -894,11 +1017,9 @@ de:
       new_divider: Trenner
       new_note: Text
       new_task_list: Aufgabenliste
-      new_upload: Hochladen
+      new_upload: "Bild oder Datei"
     column: 
       all_pages: "Alle Seiten"
-      cant_create: "Sie haben keine Berechtigung, Seiten in diesem Projekt zu erstellen."
-      new_page: "Neue Seite"
     edit: 
       submit: Aktualisieren
       title: "Seite bearbeiten"
@@ -908,7 +1029,6 @@ de:
       name: Name
       name_description: "Wählen Sie einen kurzen und aussagekräftigen Titel"
     index: 
-      pages_in_this_project: "Seiten in diesem Projekt"
       rss: 
         description: "Seiten im Projekt %{name}"
         title: "%{name} Seiten"
@@ -921,7 +1041,7 @@ de:
       feature4_html: "<b>Wiki</b>. Seiten funktionieren wie ein Wiki, sie geben schnellen Zugriff auf die Projektinformationen."
       footer1_html: "Nutzen Sie Teambox als Ihr <b>öffentliches Whiteboard</b> für häufig gebrauchte Informationen."
       footer2_html: "Sie können auf jeder Seite zu jeder Notiz auch Dateien hinzufügen. Probieren Sie es einfach aus!"
-      submit: Erstellen
+      submit: "Seite erstellen"
       title: "Neue Seite"
     primer: 
       create_first: "Erstellen Sie die erste Seite für dieses Projekt!"
@@ -971,40 +1091,26 @@ de:
       edit: Bearbeiten
     update: 
       success: "Sie haben die Rolle von %{name} aktualisiert"
-  plans: 
-    copies: 
-      copy1: "Teambox gefällt Ihnen? Wir sind Vollzeitkräfte! <a href='%{link}'>Stufen Sie Ihren Tarif hoch</a>, um unsere Leistung zu unterstützen! "
-      copy2: "<a href='%{link}'>Stufen Sie Ihren Tarif hoch</a> für mehr Projekte, mehr Speicherplatz und für die Suche über alle Projekte. "
-      copy3: "<a href='%{link}'>Mehr Leistung</a> mit einem Premium Tarif! Mehr Speicherplatz, bis zu 2000 Projekte. "
-      copy4: "<a href='%{link}'>Arbeiten Sie besser</a> mit einem Premium Tarif: Suchleiste über alle Projekte. "
-      copy5: "<a href='%{link}'>Stufen Sie Ihren Teamboxtarif jetzt hoch</a> und genießen Sie professionelle Zusammenarbeit! "
-      copy6: "Die Suchleiste über alle Projekte kann Ihnen viele Stunden Suche ersparen. <a href='%{link}'>Stufen sie jetzt hoch</a>, um sie zu nutzen! "
-      copy7: "Ihr Geschäft ist wichtig! <a href='%{link}'>Erhalten Sie den besten Support</a> für Teambox mit unseren Premium Tarifen. "
   projects: 
     edit: 
       change_owner: "Besitzer ändern"
       invalid_transferred: "Der Projekt Besitz konnte nicht übertragen werden, bitte Fehler korrigieren und noch einmal versuchen."
       submit: "Änderungen speichern"
-      title_deletion: "Projekt Archivieren/Löschen"
-      title_ownership: Besitzer
-      title_picture: Projektlogo
-      title_settings: "Generelle Einstellungen"
+      title_deletion: "Projekt %{project}  Archivieren/Löschen"
+      title_ownership: "Besitzer von %{project} "
+      title_picture: "Projektlogo für Projekt %{project}"
+      title_settings: "Generelle Einstellungen für Projekt %{project}"
       transferred: "Projekt Besitz wurde übertragen."
     fields: 
-      archived: "Dieses Projekt archivieren"
       archiving: "Dieses Projekt archivieren"
       confirm_delete: "Sind Sie sicher, dass Sie dieses Projekt endgültig löschen wollen? DIES KANN NICHT RÜCKGÄNGIG GEMACHT WERDEN! Wenn Sie das Projekt behalten wollen, nutzen Sie bitte 'Dieses Projekt archivieren'."
       forever: "Dieses Projekt endgültig löschen"
-      name: Name
       new: 
         time_tracking_docs: "Lernen Sie mehr"
       owner: Besitzer
       owner_description: "Der Besitzer ist die einzige Person, die die Projekteinstellungen editieren kann. Wenn Sie den Besitzer ändern, können Sie die Projekteinstellungen nicht mehr ändern."
-      permalink_html: URL
       permalink_description: "Dies wird die Web-Adresse Ihres Projektes. Wählen Sie sie so kurz wie möglich und vermeiden Sie Leerzeichen."
-      settings: 
-        upgrade_html: "Um <b>dieses Projekt wiederherzustellen</b> und es wieder zu bearbetiten, müssen Sie <a href='%{link}'>Ihren Tarif hochstufen. Sie erhalten mehr Speicherplatz und mehr Möglichkeiten </a> oder Sie archivieren andere Projekte. "
-        you_cant_unarchive: "Sie haben %{active} aktive Projekte, und Ihr Tarif erlaubt maximal %{max} Projekte"
+      permalink_html: URL
       tracks_time_html: "Zeiterfassung aktivieren"
     index: 
       archived: "Zeige %{count} archivierte Projekte..."
@@ -1019,8 +1125,6 @@ de:
         one: "Sie haben ein aktives Projekt"
         other: "Sie haben %{count} aktive Projekte."
         zero: "Sie haben keine aktiven Projekte."
-      create_an_example_project: "Zum ersten Mal bei Teambox? <a href='%{link}'>Erstellen Sie ein Beispiel-Projekt</a> zum Ausprobieren und Lernen."
-      created: "Ihr Projekt wurde erstellt!"
       invalid_project: "Ungültiges Projekt, bitte Fehler korrigieren und noch einmal versuchen."
       new_project: "Neues Projekt..."
       not_allowed: "Mit ihrem aktuellen Zugang können Sie keine Projekte erstellen."
@@ -1032,19 +1136,6 @@ de:
         one: "Sie können mit Ihrem aktuellen Tarif noch ein Projekt erstellen."
         other: "Sie können mit Ihrem aktuellen Tarif noch %{count} Projekte erstellen."
         zero_html: "Sie können keine Projekte mehr erstellen. <br/>Die maximale Anzahl von Projekten mit Ihrem aktuellen Tarif ist %{max}."
-    new_primer: 
-      define1_html: "Ein Projekt ist eine freigegebene Gruppe mit Ihren Teammitgliedern."
-      define2_html: "In einem Projekt kann jedes Teammitglied:"
-      feature1_html: "Den Status aktualisieren."
-      feature2_html: "Konversationen starten oder beantworten."
-      feature3_html: "Anhänge senden."
-      feature4_html: "Aufgaben zuordnen und überprüfen."
-      feature5_html: "Aufgaben kommentieren."
-      feature6_html: "Den Zeitaufwand für jede Tätigkeit erfassen."
-      feature7_html: "Seiten erstellen, bearbeiten und ansehen."
-      footer: "Dieses Projekt gehört Ihnen. Sie können dieses Projekt jederzeit an einen anderen Benutzer übertragen."
-      limited: "Bei einem kostenlosen Benutzerkonto können Sie maximal 50 MB an Anhängen für dieses Projekt hochladen."
-      upgrade: "Kaufen Sie jetzt die Premium-Version!"
     primer: 
       create_first: "Erstellen Sie Ihr erstes Projekt!"
       define1_html: "Nutzen Sie Projekte für die <b>Zusammenarbeit</b> im Team: Eine Webseite gestalten, eine Party organisieren, Kundenaufträge bearbeiten..."
@@ -1056,6 +1147,9 @@ de:
       item3_html: "<b>Diskutieren Sie</b> über wichtige Entscheidungen mit Konversationen."
       item4_html: "<b>Planen Sie</b> was zu tun ist und erstellen Sie aktuelle Aufgabenpläne."
       item5_html: "<b>Teilen Sie Informationen</b> mit einfach zu bearbeitenden Seiten für jedes Projekt."
+    recent_conversations: 
+      title: "Neuste Konversationen"
+      view_all: "Alle Konversationen "
     show: 
       new_task_list_link: "Neue Aufgabenliste"
       rss: 
@@ -1064,10 +1158,10 @@ de:
       subscribe: "Abonnieren Sie den Nachrichten Feed"
       text_styling: "Text Formatierung"
       tip: "Erwähnen Sie jemanden über @benutzername in Ihrem Status, erhält der Benutzer eine Email mit Ihrer Nachricht"
+      title: "Neuste Aktivitäten in  %{project}"
       update_your_status: "Aktualisieren Sie Ihren Status..."
   reset_passwords: 
     create: 
-      invalid: "Die URL zur Änderung des Passwortes ist ungültig oder abgelaufen. Bitte versuchen Sie, über den Button 'Ich habe mein Passwort vergessen' einen neuen Link anzufordern. <br/>Wenn das nicht hilft, kontaktieren Sie uns unter %{support}"
       not_found_html: "Wir finden keine Benutzer mit dieser Email Adresse: %{email}<br/>Bitte prüfen Sie die Email Adresse und versuchen Sie es noch einmal. Wenn das nicht hilft, kontaktieren Sie uns unter %{support}"
       password_not_updated: "Das neue Passwort ist ungültig. Bitte melden Sie sich erneut an."
       password_updated: "Das Passwort wurde erfolgreich geändert. Bitte melden Sie sich an."
@@ -1092,8 +1186,6 @@ de:
       title: Anmelden
       video: "Um was geht es in Teambox?"
   shared: 
-    archived_projects: 
-      archived_projects: "Archivierte Projekte"
     footer: 
       help: Hilfe
       mobile: "Mobile Version"
@@ -1111,8 +1203,11 @@ de:
       subscribe_to_feeds: "Abonnieren Sie Nachrichtenfeeds..."
     navigation: 
       all_projects: "Alle Projekte"
-      new_project: + Neues Projekt
-      welcome: Willkommen
+      conversations: "Konversationen "
+      my_tasks: "Meine Aufgaben"
+      new_project: "+ Neues Projekt"
+      open_my_tasks: "Öffne alle meine Aufgaben"
+      recent_activity: "Neuste Aktivitäten"
     project_navigation: 
       all_conversations: "Alle Konversationen"
       all_pages: "Alle Seiten"
@@ -1133,8 +1228,6 @@ de:
       general: "Generelle Einstellungen"
       ownership: Besitz
       picture: Projektbild
-    projects: 
-      projects: Projekte
     public_navigation: 
       community: Community
       help: "Hilfe and Support"
@@ -1215,17 +1308,12 @@ de:
         cant_be_blank: "Name darf nicht leer sein"
         too_long: "Name darf nicht länger als 255 Zeichen sein"
     fields: 
-      finish_on: "Endet am... <i>optional</i>"
-      name: "Name der Aufgabenliste"
       optional: "Mit einem Start- und Enddatum wird diese Aufgabe in dem GANTT-Diagramm angezeigt"
-      start_on: "Beginnt am... <i>optional</i>"
       task_list: "Eine Aufgabenliste definiert einen Meilenstein für Ihr Projekt. In einer Aufgabenliste können Sie Aufgaben erstellen und diese bestimmten Personen zuordnen."
       title: "Neue Aufgabenliste"
     filter: 
       anybody: Jeder
       anytime: Jeder
-      assigned_to: "Zeige Aufgaben, die zugeordnet sind zu..."
-      due_date: "Zeige Aufgaben mit Fälligkeitsdatum..."
       late_tasks: "Überfällige Aufgaben"
       my_tasks: "Meine Aufgaben"
       no_date_assigned: "Ohne Datum"
@@ -1243,7 +1331,7 @@ de:
         title: "%{name} Aufgaben Aktualisierung"
       starts_on: "Startet am %{date} "
       tasks_for_all_projects: "Projektübergreifende Aufgaben"
-      tasks_for_project: "Aufgabenlisten für dieses Projekt"
+      tasks_for_project: "Aufgabenlisten für %{project} "
     link: 
       edit: Bearbeiten
       new: "Neue Aufgabenliste"
@@ -1290,9 +1378,6 @@ de:
     fields: 
       assigned_to: "Wer ist verantwortlich?"
       assigned_to_nobody: Niemand
-      body: "Was soll getan werden? <i>optional</i> "
-      due_on: "Muss erledigt werden vor… (optional)"
-      name: "Was muss erledigt werden?"
       optional: "Sie können im Feld unterhalb detailliertere Angaben für diese Aufgabe machen. "
       task: "Wählen Sie eine ausführbare Aufgabe. Je klarer, desto besser"
       title: "Neue Aufgabe"
@@ -1303,7 +1388,7 @@ de:
         other: "Blende %{count} archivierte Aufgaben aus"
       new: "+ Aufgabe hinzufügen"
     my_tasks: 
-      my_tasks: "Meine Aufgaben"
+      my_tasks: "Meine Aufgaben in allen Projekten"
     new: 
       submit: "Aufgabe hinzufügen"
       title: "Neue Aufgabe"
@@ -1311,11 +1396,11 @@ de:
     show: 
       title: "Aufgabe: %{name}"
     status: 
-      hold: halten
+      hold: warten
       new: neu
-      open: öffnen
+      open: offen
       rejected: abgelehnt
-      resolved: gelöst
+      resolved: erledigt
     unarchive_box: 
       reopen: "Diese Aufgabe wieder öffnen"
       task_is_closed: "Diese Aufgabe ist geschlossen und archiviert"
@@ -1340,7 +1425,7 @@ de:
       max_upload_size: "Maximale Anhang-Größe ist %{mb} Mb"
       new_file: "Eine Datei hochladen"
     new: 
-      select_a_file: "Wählen Sie eine Datei"
+      select_a_file: "Wählen Sie eine Datei zum Hochladen"
     primer: 
       create_first: "Laden Sie zuerst Dateine für dieses Projekt hoch!"
       define1_html: "Hatten Sie jemals Probleme mit dem Freigeben von Dateien für Ihr Team? Teambox macht das Freigeben einfach."
@@ -1403,7 +1488,6 @@ de:
         title: "Welchen Nachrichten-Ticker sollte ich benutzen?"
       follow_activities: "Sie können Teambox Aktivitäten mit News-Readern (Desktop oder Mobil) beobachten."
       import: 
-        body: "Sie finden hier eine Liste von Feeds, die Sie abonnieren können. Importieren Sie diese in Ihren News-Reader mit einem <strong>Rechtsklick auf den Link</strong> und wählen Sie <strong>Link-Adresse kopieren</strong>. Wechseln Sie zu Ihrem News-Reader, erstellen Sie einen neuen Feed und fügen Sie die kopierte Adresse des Feeds ein. "
         title: "Wie Sie einen neuen Nachrichten Feed importieren"
       more_tips: 
         body_html: "Lernen Sie <a href='%{link}'>mehr Wege kennen, auf Teambox zuzugreifen</a>. "
@@ -1414,6 +1498,9 @@ de:
       title: "Synchronisieren Sie Ihre Aktivitäten-Feeds"
       your_feeds: "Ihre Nachrichten-Feeds"
     form: 
+      biography: Lebenslauf
+      change_password: "Passwort ändern"
+      confirm_password: "Passwort bestätigen"
       delete: 
         account_deleted: "Ihr Konto wurde gelöscht. Wir werden Sie vermissen!"
         couldnt_delete_account: "Wir können Ihr Konto nicht löschen, da Sie noch aktive oder archivierte Projekte haben. "
@@ -1422,17 +1509,6 @@ de:
         steps_before_2: "Das stellt sicher, dass andere Benutzer die Daten behalten, wenn Sie Ihr Konto löschen. "
         steps_before_3: "Verlassen Sie oder löschen Sie Ihre aktuellen Projekte, und kehren Sie dann auf diese Seite zurück, um Ihr Konto zu löschen. "
         what_will_happen: "Nach dem Löschen Ihres Kontos werden Sie auf Ihr Teambox-Profil nicht mehr zugreifen können."
-      picture: 
-        destroy: "Avatar löschen"
-        field: "Ihr Avatar"
-        gravatar_in_use_html: "Wir haben kein Bild von Ihnen, daher benutzen wir %{gravatar}: "
-        max_size: "Die Datei ist größer als %{mb}"
-        presence: "Sie können keine leere Datei hochladen"
-        upload_here_or_at_gravatar_html: "Sie können hier einen neuen Avator hochladen, oder laden Sie ihren globalen Avatar zu der Adresse %{gravatar}, um ihn für Teambox und für viele andere Webseiten zu benutzen."
-        we_have_this_avatar_html: "Dies ist ihr momentaner Avatar: "
-      biography: Lebenslauf
-      change_password: "Passwort ändern"
-      confirm_password: "Passwort bestätigen"
       email: Email
       first_day_of_week: "Woche beginnt"
       first_name: Vorname
@@ -1452,20 +1528,10 @@ de:
       picture: 
         destroy: "Avatar löschen"
         field: "Ihr Avatar"
-        gravatar_in_use: "Wir haben kein Bild von Ihnen, daher benutzen wir %{gravatar}: "
         max_size: "Die Datei ist größer als %{mb}"
         presence: "Sie können keine leere Datei hochladen"
-        upload_here_or_at_gravatar: "Sie können hier einen neuen Avator hochladen, oder laden Sie ihren globalen Avatar zu der Adresse %{gravatar}, um ihn für Teambox und für viele andere Webseiten zu benutzen."
-        we_have_this_avatar: "Dies ist ihr momentaner Avatar: "
       sunday: Sonntag
       time_zone: Zeitzone
-      tooltips: 
-        email: "Geben Sie Ihre echte Email Adresse ein, damit Ihre Team-Mitglieder sie anschreiben können."
-        first_name: "Maximal 20 Zeichen."
-        last_name: "Maximal 20 Zeichen."
-        login: "Für die Anmeldung brauchen Sie einen Benutzernamen. Mitglieder können Sie über den Benutzernamen suchen. Der Benutzername darf nur aus Kleinbuchstaben bestehen. Leerzeichen sind nicht erlaubt. Sie können Unterstriche benutzen."
-        password: "Eine Kombination aus Großbuchstaben, Kleinbuchstaben und Zahlen wird für ein sicheres Passwort empfohlen."
-        phone: "Vorzugsweise Mobiltelefon. Geben Sie Ihre Landesvorwahl ein, z.B. +49 (2345) 1234-567"
     new: 
       existing_user_html: "Wenn Sie bereits ein Benutzerkonto haben, <a href='%{login_url}'> melden Sie sich an</a> oder <a href='%{forgot_url}'>lassen Sie sich Ihr Passwort zusenden</a>."
       no_public_signup: "Public signup wird vom System leider nicht unterstützt."
@@ -1477,13 +1543,12 @@ de:
       pending_invite: "%{name} wurde bereits zu einem Ihrer Projekte eingeladen. Sie können nicht auf die Informationen zugreifen, bevor die Einladung akzeptiert wurde."
       profile: Profil
       projects: Projekte
-      recent_activity_for: "Kürzliche Aktivitäten für %{user_name}"
+      recent_activity_for: "Neuste Aktivitäten von %{user_name}"
     unconfirmed_email: 
       follow_the_link_html: "Bitte <b>öffnen Sie diese Email und folgen Sie dem enthaltenen Link</b>, um Ihr Benutzerkonto zu aktvieren."
       invitation_sent_to_html: "Eine Email-Einladung wurde an <i>%{email}</i> gesendet, damit Sie Ihre Email Adresse bestätigen können."
       problems_html: "Wenn immer noch Probleme auftreten, kontaktieren Sie uns über %{support}"
       problems_title: Probleme?
-      resend: "Sie finden die Email nicht? Klicken Sie <a href='%{link}'>hier</a>, um die Aktivierungs-Email erneut zu versenden."
       spam: "Prüfen Sie, dass die Email nicht durch Ihr Mail-Programm als Spam eingestuft wurde."
       title: "Bestätigen Sie Ihre Email"
       wrong_address_html: "Falsche Adresse? Wenn Sie sich bei ihrer Email Adresse vertippt haben, <a href='%{link}'>brechen Sie die Anmeldung ab</a> und erstellen Sie ein neues Benutzerkonto mit einer gültigen Email Adresse."
@@ -1493,23 +1558,6 @@ de:
     user: 
       formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: "Aus dem Projekt entfernen"
-    welcome: 
-      get_started: "Starten Sie mit Teambox!"
-      intro1: "Herzlich Willkommen als neueste Mitglied von Teambox! Sie werden bald erleben, wie Sie Teambox zum Ausgangspukt für Ihre täglichen Aufgaben machen können."
-      intro2: "Was können Sie jetzt tun? Erstellen Sie ein Projekt zum <b>Zusammenarbeiten</b>:"
-      projects: 
-        create_your_first_project: "Eine Veranstaltung, ein Design, ein Produkt... Starten Sie und <a href='%{link}'>erstellen Sie Ihr erstes Projekt</a> jetzt!"
-        share_and_collaborate: "Erstellen Sie Freigaben und arbeiten Sie mit Ihrem Team zusammen! Geben und erhalten Sie Updates von Projektständen, Konversationen, Aufgaben, Seiten und Dateien."
-        title: Projekte
-      spread: 
-        facebook: Facebook
-        help: "Sie können <b>uns helfen</b>, indem Sie Ihren Freunden erzählen, wie viel Spaß die Arbeit mit Teambox macht auf"
-        in_your_site: "auf Ihrer Webseite!"
-        reasons: "Wir haben jahrelang an Teambox gearbeitet in der Hoffnung, dass es für Sie nützlich ist. <br/>Wir sind reale Menschen, motivierte Entwickler mit viel Engagement, genau wie Sie!"
-        tell_us: "Wenn Ihnen Teambox gefällt, <a href='mailto:%{address}'> erzählen Sie uns davon</a> in einer Email!"
-        title: "Lieben Sie uns auch?"
-        twitter: "Twitter,"
-      stop_welcome: "Diesen Willkommensdialog nicht mehr zeigen"
   weakling: 
     average: mittel
     default: "muss mindestens 5 Zeichen haben"

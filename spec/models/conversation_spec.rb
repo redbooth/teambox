@@ -64,7 +64,7 @@ describe Conversation do
     person = Factory.create(:person, :project => project, :user => other_guy)
     
     conversation = Factory.create(:conversation, :project => project, :user => project.user,
-      :watchers_ids => [other_guy.id.to_s])
+      :watcher_ids => [other_guy.id.to_s])
     
     conversation.watchers.should include(conversation.user)
     conversation.watchers.should include(person.user)

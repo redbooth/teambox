@@ -10,18 +10,22 @@ class Invitation < RoleRecord
   validate :email_valid?
   
   attr_reader :user_or_email
-  attr_accessor :is_silent
-  attr_accessible :user_or_email, :role, :membership, :invited_user
+  attr_accessor :is_silent, :locale
+  attr_accessible :user_or_email, :role, :membership, :invited_user, :locale
 
   before_create :generate_token
   before_save :copy_user_email, :if => :invited_user
-  after_create :auto_accept, :send_email
+  after_create :auto_accept, :send_email, :update_user_stats
 
   scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
 
   # Reserved so invitations can be sent for other targets, in addition to Project
   def target
     project
+  end
+  
+  def user
+    @user ||= user_id ? User.find_with_deleted(user_id) : nil
   end
 
   def user_or_email=(value)
@@ -64,6 +68,24 @@ class Invitation < RoleRecord
     to_api_hash(options).to_json
   end
 
+  def send_email
+    return if @is_silent
+    if invited_user
+      if belongs_to_organization?
+        Emailer.send_with_language :project_membership_notification, invited_user.locale, self.id
+        self.destroy
+      else
+        Emailer.send_with_language :project_invitation, invited_user.locale , self.id
+      end
+    else
+      Emailer.send_with_language :signup_invitation, (self.locale || user.locale), self.id
+    end
+  end
+  
+  if Rails.env.production? and respond_to? :handle_asynchronously
+    handle_asynchronously :send_email 
+  end
+
   protected
 
   def valid_user?
@@ -103,24 +125,6 @@ class Invitation < RoleRecord
     self.accept(invited_user) if belongs_to_organization?
   end
 
-  def send_email
-    return if @is_silent
-    if invited_user
-      if belongs_to_organization?
-        Emailer.send_email :project_membership_notification, self.id
-        self.destroy
-      else
-        Emailer.send_email :project_invitation, self.id
-      end
-    else
-      Emailer.send_email :signup_invitation, self.id
-    end
-  end
-  
-  if Rails.env.production? and respond_to? :handle_asynchronously
-    handle_asynchronously :send_email 
-  end
-  
   def copy_user_email
     self.email ||= invited_user.email
   end
@@ -129,10 +133,12 @@ class Invitation < RoleRecord
     invited_user and target.respond_to?(:organization) and target.organization.try(:is_user?, invited_user)
   end
 
-  protected
+  def valid_email?(value)
+    EmailValidator.check_address(value)
+  end
 
-    def valid_email?(value)
-      EmailValidator.check_address(value)
-    end
+  def update_user_stats
+    user.increment_stat 'invites' if user
+  end
 
 end

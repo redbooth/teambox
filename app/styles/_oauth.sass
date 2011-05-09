@@ -1,0 +1,101 @@
+#new_oauth_clients, #edit_oauth_clients
+  label
+    float: left
+    width: 130px
+    text-align: right
+    padding-right: 10px
+    vertical-align: middle
+    font-size: 12px
+  .text_area
+    padding: 5px 0px
+    textarea
+      height: 4em
+  .many_fields
+    padding-top: 10px
+    border-top: solid 1px rgb(230, 230, 230)
+    clear: both
+    label
+      padding-bottom: 10px
+  .fields
+    float: right
+    width: 500px
+    input
+      width: 140px
+  .submit
+    margin-top: 20px
+    padding-left: 300px
+    clear: both
+
+#oauth_clients
+  .oauth_client
+    +clearing
+    font-size: 12px
+    padding: 5px
+    margin-bottom: 5px
+    .name
+      float: left
+      width: 350px
+      h2
+        margin: 0px
+        font-size: 14px
+    p
+      margin: 0
+    .actions
+      float: right
+      text-align: right
+      width: 5.5em
+      padding-top: 5px
+      a
+        +button
+        display: block
+        margin-bottom: 5px
+
+#client_tokens
+  .client_token
+    +clearing
+    font-size: 12px
+    padding: 5px
+    margin-bottom: 5px
+    .name
+      float: left
+      width: 350px
+      h2
+        margin: 0px
+        font-size: 14px
+    p
+      margin: 0
+      color: rgb(150, 150, 150)
+    .actions
+      float: right
+      text-align: right
+      width: 8.5em
+      padding-top: 5px
+      a
+        +button
+        display: block
+        margin-bottom: 5px
+
+.show_oauth_clients
+  .oauth_clients_header
+    display: block
+    margin-bottom: 10px
+    .text_actions
+      margin-top: 5px
+      float: right
+      font-size: 12px
+      color: rgb(200, 200, 200)
+      a
+        text-decoration: underline
+    .description
+      font-size: 12px
+      color: rgb(180, 180, 180)
+  h3
+    font-size: 18px
+    font-weight: normal
+    margin: 0px
+      bottom: 5px
+  pre
+    background-color: #f0f0f0
+    padding: 10px
+    margin: 10px 0
+    overflow-x: auto

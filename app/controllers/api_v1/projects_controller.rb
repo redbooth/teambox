@@ -2,13 +2,19 @@ class ApiV1::ProjectsController < ApiV1::APIController
   before_filter :load_organization
   
   def index
-    @projects = current_user.projects(:include => [:organization, :user],
-                                      :order => 'id DESC')
+    authorize! :show, current_user
+    
+    @projects = current_user.projects.except(:order).
+                             where(api_range('projects')).
+                             limit(api_limit).
+                             order('projects.id DESC').
+                             includes([:organization, :user])
     
     api_respond @projects, :references => [:organization, :user]
   end
 
   def show
+    authorize! :show, @current_project
     api_respond @current_project, :include => api_include
   end
   

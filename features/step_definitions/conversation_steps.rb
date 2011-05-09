@@ -16,11 +16,16 @@ Given /^I started a simple conversation(?: in the "([^\"]*)" project)?$/ do |pro
   Factory(:conversation, :user => @current_user, :project => (project_name ? Project.find_by_name(project_name) : @current_project), :name => nil, :simple => true)
 end
 
+Given /^(@.+) started a conversation named "([^\"]+)"(?: in the "([^\"]*)" project)?$/ do |user_name, conversation_name, project_name|
+  user = User.find_by_login(user_name.gsub('@',''))
+  Factory(:conversation, :user => user, :project => (project_name ? Project.find_by_name(project_name) : @current_project), :name => conversation_name)
+end
+
 Given /^the conversation "([^\"]+)" is watched by (@.+)$/ do |name, users|
   conversation = Conversation.find_by_name(name)
   
   each_user(users) do |user|
-    conversation.add_watcher(user, false)
+    conversation.add_watcher(user)
   end
   
   conversation.save(:validate => false)
@@ -113,3 +118,9 @@ Then /^I should see "([^\"]+)" in the thread starter$/ do |msg|
   comment = all("p.starter").last.text.strip
   comment.should match(/#{msg}/)
 end
+
+When /^I add a comment to the last conversation in the "([^"]*)" project$/ do |project_name|
+  project = Project.find_by_name(project_name)
+  Factory :comment, :target => project.conversations.last, :user => @current_user
+end
+

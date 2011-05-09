@@ -20,7 +20,8 @@ class Conversation < RoleRecord
     :reject_if => lambda { |comment| comment['body'].blank? }
 
   attr_accessible :name, :simple, :body, :comments_attributes
-
+  
+  validates_presence_of :user
   validates_presence_of :name, :message => :no_title, :unless => :simple?
   
   validate :check_comments_presence, :on => :create, :unless => :is_importing
@@ -29,9 +30,10 @@ class Conversation < RoleRecord
   scope :not_simple, :conditions => { :simple => false }
   scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
 
-  before_save :set_comments_author, :if => :updating_user
+  before_validation :set_comments_target
+  before_validation :set_comments_author, :if => :updating_user
   before_update :set_simple
-  after_create :log_create
+  after_create :log_create, :update_user_stats
   after_destroy :clear_targets
   
 
@@ -42,13 +44,14 @@ class Conversation < RoleRecord
 
   def self.from_github(payload)
     text = description_for_github_push(payload)
-    
+
     self.create!(:body => text, :simple => true) do |conversation|
-      conversation.user = conversation.project.user if conversation.project
+      author = payload['commits'].any? ? conversation.project.users.detect { |u| u.name == payload['commits'][0]['author']['name'] } : nil
+      conversation.user = author || conversation.project.user
       yield conversation if block_given?
     end
   end
-  
+
   def self.description_for_github_push(payload)
     text = "New code on <a href='%s'>%s</a> %s\n\n" % [
       payload['repository']['url'], payload['repository']['name'], payload['ref']
@@ -97,7 +100,7 @@ class Conversation < RoleRecord
   end
 
   define_index do
-    where "`conversations`.`deleted` = 0"
+    where Conversation.undeleted_clause_sql
 
     indexes name, :sortable => true
 
@@ -105,6 +108,7 @@ class Conversation < RoleRecord
     indexes comments.user.first_name, :as => :user_first_name
     indexes comments.user.last_name, :as => :user_last_name
     indexes comments.uploads(:asset_file_name), :as => :upload_name
+    indexes comments.google_docs(:title), :as => :google_doc_name
     
     has project_id, created_at, updated_at
   end
@@ -117,10 +121,19 @@ class Conversation < RoleRecord
     end
   end
 
-  def set_comments_author # before_save
+  def set_comments_author # before_validation
     comments.select(&:new_record?).each do |comment|
       comment.user = updating_user
     end
     true
   end
+  
+  def set_comments_target
+    comments.each{|c|c.target = self if c.target.nil?}
+  end
+
+  def update_user_stats
+    user.increment_stat 'conversations' if user
+  end
+
 end

@@ -1,0 +1,28 @@
+<%= answer_instructions %>
+
+<%= t('emailer.notify.project') %> <%= h(@project.name) %>
+<%= project_url(@project) %>
+
+<%= t('emailer.notify.task_list') %> <%= h(@task_list.name) %>
+<%= project_task_list_url(@project, @task_list) %>
+
+<%= t('emailer.notify.task') %> <%= h(@task.name) %>
+<%= project_task_url(@project, @task) %>
+
+<%- if @task.assigned %>
+<%= t('emailer.notify.assigned_to', :user => h(@task.assigned.user.name)) %>
+<%= t('emailer.notify.status', :status => localized_status_name(@task)) %> <%= t('emailer.notify.due_on', :date => due_on(@task)) if @task.due_on %>
+<%- end %>
+
+<%= emailer_list_comments(@task.comments) %>
+
+
+<%= t('emailer.notify.view_this_conversation_online_html', :conversation => t('emailer.notify.conversation')) %> <%= project_task_url(@project, @task) %>
+<%= emailer_answer_to_this_email %>
+
+<%= @task.watchers.collect {|u| h(u) }.to_sentence %> <%= t('emailer.notify.are_watching') %>
+
+<%= emailer_commands_for_tasks(@recipient) %>
+
+<%= t('emailer.notify.stop_watching_link_html', :stop_watch => t('emailer.notify.stop_watch')) -%> <%= project_task_url(@project, @task) %>
+<%= t('emailer.notify.notification_settings_link_html', :settings_link => t('emailer.notify.settings_link')) -%> <%= account_notifications_url %>

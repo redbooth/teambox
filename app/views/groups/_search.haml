@@ -1,9 +1,0 @@
-.invite_by_search
-  = form_for [target, invitation], :person do |f|
-    %h2= t('.invite_people')
-    .text_field
-      = f.label :user_or_email, t('.username_or_email')
-      = f.text_field :user_or_email
-    .submit
-      = f.submit t('.invite')
-    .clear

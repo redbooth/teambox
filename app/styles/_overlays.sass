@@ -1,0 +1,46 @@
+.project_overlay
+  display: inline-block
+  position: relative
+  font-size: 12px
+  .overlay
+    position: absolute
+    top: -11px
+    left: -11px
+    width: 300px
+    background-color: rgb(230,230,230)
+    background-color: rgba(255,255,255,0.95)
+    padding: 10px
+    z-index: 10000
+    +box-shadow(#777 1px 2px 10px)
+    +rounded(5px)
+    border: 1px solid #999
+    overflow: hidden
+    p.title
+      margin: 0 0 20px 0 !important
+    .sections
+      p
+        margin: 0 !important
+        a
+          padding: 5px
+          display: block
+          color: #333
+          padding-left: 28px
+          background-position: 3px 4px
+          background-repeat: no-repeat
+          &:hover
+            text-decoration: none
+            color: $link_hover
+          &.recent_activity
+            background-image: url(/famfamfam/newspaper.png)
+          &.conversations
+            background-image: url(/famfamfam/comment.png)
+          &.tasks
+            background-image: url(/famfamfam/tick.png)
+          &.time
+            background-image: url(/famfamfam/time.png)
+          &.pages
+            background-image: url(/famfamfam/layout_content.png)
+          &.files
+            background-image: url(/famfamfam/folder.png)
+          &.people
+            background-image: url(/famfamfam/group.png)

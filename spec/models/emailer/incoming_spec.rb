@@ -110,7 +110,7 @@ describe Emailer do
 
 
       it "should add the Inbox list if it exists" do
-        list = @project.task_lists.create(:user => @owner, :name => 'Inbox')
+        list = @project.create_task_list(@owner, {:name => 'Inbox'})
         
         lambda do
           Emailer.receive(@email_template.to_s)

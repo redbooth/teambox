@@ -92,6 +92,12 @@ Given /^(@.+) (?:has|have) (?:his|her|their) time zone set to (.+)$/ do |users, 
   end
 end
 
+Given /^(@.+) wants to watch new conversations$/ do |users|
+  each_user(users) do |user|
+    user.people.where(:project_id => @current_project.id).first.update_attribute :watch_new_conversation, true
+  end
+end
+
 Given /I am the user (.*)$/ do |login|
   @current_user ||= Factory(login.to_sym)
 end
@@ -118,4 +124,14 @@ end
 Given /^I set my preference to expanded threads$/ do
   visit expand_activities_path 
   @current_user.reload.settings["collapse_activities"].should be_false
+end
+
+Given /^I have badges enabled$/ do
+  @current_user.write_setting 'show_badges', true
+  @current_user.reload.settings["show_badges"].should be_true
+end
+
+Given /^I have first steps enabled$/ do
+  @current_user.write_setting 'show_first_steps', true
+  @current_user.reload.settings["show_first_steps"].should be_true
 end

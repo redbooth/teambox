@@ -1,7 +1,8 @@
 class OrganizationsController < ApplicationController
   skip_before_filter :load_project
-  before_filter :load_organization, :only => [:show, :edit, :appearance, :update, :projects, :delete, :destroy]
+  before_filter :load_organization, :only => [:show, :edit, :appearance, :update, :projects, :delete, :destroy, :update_appearance]
   before_filter :load_page_title, :only => [:show, :members, :projects, :edit, :appearance, :update, :delete]
+
   before_filter :redirect_community, :only => [:index, :new, :create]
 
   def index
@@ -51,14 +52,14 @@ class OrganizationsController < ApplicationController
     if @organization.update_attributes(params[:organization])
       flash[:success] = t('organizations.edit.saved')
     end
+    render :action => :edit
+  end
 
-    redirect_path = if request.referer =~ /appearance/
-                      appearance_organization_path(@organization)
-                    else
-                      edit_organization_path(@organization)
-                    end
-
-    redirect_to redirect_path
+  def update_appearance
+    if @organization.update_attributes(params[:organization])
+      flash[:success] = t('organizations.edit.saved')
+    end
+    render :action => :appearance
   end
 
   def external_view

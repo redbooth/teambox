@@ -1,0 +1,1 @@
+page.update_watching(@current_project,current_user,@page,:stopped_watching)

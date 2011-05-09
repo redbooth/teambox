@@ -28,7 +28,6 @@ class ConversationsController < ApplicationController
             redirect_to current_conversation
           end
         }
-        handle_api_success(f, @conversation, true)
       end
     else
       respond_to do |f|
@@ -41,7 +40,6 @@ class ConversationsController < ApplicationController
             render :action => :new
           end
         }
-        handle_api_error(f, @conversation)
       end
     end
   end
@@ -52,9 +50,6 @@ class ConversationsController < ApplicationController
     respond_to do |f|
       f.any(:html, :m)
       f.rss   { render :layout => false }
-      f.xml   { render :xml     => @conversations.to_xml }
-      f.json  { render :as_json => @conversations.to_xml }
-      f.yaml  { render :as_yaml => @conversations.to_xml }
     end
   end
 
@@ -63,9 +58,6 @@ class ConversationsController < ApplicationController
 
     respond_to do |f|
       f.any(:html, :m)
-      f.xml   { render :xml     => @conversation.to_xml(:include => :comments) }
-      f.json  { render :as_json => @conversation.to_xml(:include => :comments) }
-      f.yaml  { render :as_yaml => @conversation.to_xml(:include => :comments) }
     end
   end
 
@@ -76,12 +68,6 @@ class ConversationsController < ApplicationController
     respond_to do |f|
       f.js   { head :ok }
       f.any(:html, :m) { redirect_to current_conversation }
-      
-      if success
-        handle_api_success(f, @conversation)
-      else
-        handle_api_error(f, @conversation)
-      end
     end
   end
 
@@ -95,7 +81,6 @@ class ConversationsController < ApplicationController
         redirect_to project_conversations_path(@current_project)
       end
       f.js { head :ok }
-      handle_api_success(f, @conversation)
     end
   end
 
@@ -156,7 +141,9 @@ class ConversationsController < ApplicationController
   protected
   
     def load_conversation
-      @conversation = @current_project.conversations.find params[:id]
+      @conversation = @current_project.conversations.with_deleted.find params[:id]
+      redirect_to project_task_path(@current_project.id, @conversation.converted_to) if @conversation.deleted && @conversation.converted_to
+      raise ActiveRecord::RecordNotFound if @conversation.deleted && @conversation.converted_to.nil?
     end
     
     def current_conversation

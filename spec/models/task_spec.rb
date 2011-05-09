@@ -12,12 +12,14 @@ describe Task do
 
   describe "a new task" do
     before do
-      @task = Factory(:task)
-      @task.project.add_user(@task.user)
+      @project = Factory(:project)
+      @user = Factory(:user)
+      @project.add_user(@user)
+      @task = Factory(:task, :project => @project, :user => @user)
     end
     
     it "should add the task creator as a watcher" do
-      @task.watchers.should include(@task.user)
+      @task.reload.watchers.should include(@user)
     end
 
     it "should be created with a new status" do
@@ -70,7 +72,7 @@ describe Task do
       it "should add the assigned user as a watcher" do
         @task.assign_to @user
         @task.should be_assigned_to(@user)
-        @task.watchers.should include(@user)
+        @task.reload.has_watcher?(@user).should be_true
       end
     
       it "transitions from new to open" do
@@ -123,8 +125,8 @@ describe Task do
     end
     
     it "gets correct tasks" do
-      tasks = Task.active.assigned_to(@user).order('name').all
-      tasks.map(&:name).should == ["Feed the dog", "Feed the cat"]
+      tasks = Task.active.assigned_to(@user).except(:order).order('name').all
+      tasks.map(&:name).should == ["Feed the cat", "Feed the dog"]
     end
   end
   
@@ -218,7 +220,7 @@ describe Task do
 
       task.update_attributes(:status => "4", :comments_attributes => [{:body => ""}])
       task.reload
-      task.completed_at.beginning_of_day.to_date.should == Time.now.beginning_of_day.to_date
+      task.completed_at.utc.beginning_of_day.to_date.should == Time.now.utc.beginning_of_day.to_date
 
       task.update_attributes(:status => "2", :comments_attributes => [{:body => ""}])
       task.reload
@@ -226,7 +228,7 @@ describe Task do
 
       task.update_attributes(:status => "3", :comments_attributes => [{:body => ""}])
       task.reload
-      task.completed_at.beginning_of_day.to_date.should == Time.now.beginning_of_day.to_date
+      task.completed_at.utc.beginning_of_day.to_date.should == Time.now.utc.beginning_of_day.to_date
     end
 
     it "saves assigned user transitions" do

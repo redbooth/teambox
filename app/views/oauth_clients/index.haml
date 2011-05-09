@@ -1,0 +1,14 @@
+- content_for :column do
+  = render 'shared/user_navigation'
+
+%h2= t('.title')
+- unless @tokens.empty?
+  %p= t('.authorized_applications')
+
+  #client_tokens
+    = render :partial => 'client_token', :collection => @tokens
+- else
+  %p= t('.no_authorized_applications')
+
+%p
+  = t('.developers_register_html', :url => developer_oauth_clients_path)

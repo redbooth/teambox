@@ -85,7 +85,7 @@
     margin: 15px 0
     display: block
 
-  a.gantt_link, a.calendars_link, a.print_link, a.email_link, a.subscribe, a.public_link, a.leave_link, a.csv_link
+  a.gantt_link, a.calendars_link, a.print_link, a.email_link, a.subscribe, a.public_link, a.leave_link, a.csv_link, a.join_link
     display: block
     margin-top: 5px
     font-size: 13px
@@ -106,6 +106,10 @@
   a.leave_link
     margin-top: 20px
     +leave_icon
+  a.join_link
+    +sprite("/famfamfam/group_add.png", 0, 0, 16px, 16px)
+    display: block
+    width: auto
   a.subscribe
     margin-top: 15px
     +feed_icon
@@ -336,10 +340,12 @@ form#invite_contacts
 img#activity_paginate_loading
   margin-left: 300px
 
-body.list_projects
+.projects_pane
   h4
     font-size: 12px
     margin: 30px 0 10px
+    a
+      color: black
   p
     font-size: 13px
     margin: 6px 0 6px 10px

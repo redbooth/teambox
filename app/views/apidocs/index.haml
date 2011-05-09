@@ -31,7 +31,7 @@
   and the API will return the standard HTTP status codes.
 
 %p
-  For added security, our API also supports HTTPS for encrypted traffic.
+  For <a href="/api/auth">authentication</a>, we support OAuth2 and HTTP Basic Authentication. We recommend you use OAuth2 if you are integrating Teambox with third party services or clients. All Teambox traffic uses HTTPS.
 
 %h2 Your first request
 %p
@@ -58,10 +58,8 @@
 
 %h2 Useful tools
 
-%p To post information into Teambox, you can do it through the terminal with curl.
-%p
-  But there's a very nice web interface called
-  = link_to "hurl", "http://hurl.it"
-  which will make it much easier to test and debug the output. So <strong>use it</strong>!
+%p There is a rather nice gem for ruby developers, <a href="https://github.com/teambox/teambox-ruby-client">teambox-client</a>.
+
+%p If you have written a client for your favourite programming language, <a href="http://teambox.com/projects/teambox">please let us know</a>!
 
 = render 'apidocs/column'

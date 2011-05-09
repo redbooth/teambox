@@ -37,6 +37,13 @@ When /^(?:|I )press "([^\"]*)"(?: within "([^\"]*)")?$/ do |button, selector|
   end
 end
 
+When /^(?:|I )press the last "([^\"]*)"(?: within "([^\"]*)")?$/ do |button, selector|
+  with_scope(selector) do
+    all(:xpath, XPath::HTML.button(button)).last.click
+  end
+end
+
+
 When /^(?:|I )follow "([^\"]*)"(?: within "([^\"]*)")?$/ do |link, selector|
   with_scope(selector) do
     click_link(link)
@@ -118,6 +125,17 @@ When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"(?: within "([^\"]*)")?$/ 
   end
 end
 
+
+When /^(?:|I )bookmark the link "([^\"]*)"(?: within "([^\"]*)")?$/ do |link,selector|
+  with_scope(selector) do
+    @bookmarked_link = find_link(link)['href']
+  end
+end
+
+When /^(?:|I )am going to the bookmarked link$/ do
+  visit @bookmarked_link
+end
+
 Then /^(?:|I )should see JSON:$/ do |expected_json|
   require 'json'
   expected = JSON.pretty_generate(JSON.parse(expected_json))
@@ -128,7 +146,7 @@ end
 Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   if Capybara.current_driver == Capybara.javascript_driver
     with_css_scope(selector) do |scope|
-      assert scope.has_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
+      assert scope.has_xpath?("//*[contains(text(), \"#{text}\")]", :visible => true)
     end
   elsif page.respond_to? :should
     with_scope(selector) do

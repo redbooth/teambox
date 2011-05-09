@@ -1,0 +1,12 @@
+-------------------------------------------------
+<%= comment.user.name + ', ' %> <%= I18n.l(comment.created_at.in_time_zone(@recipient.time_zone), :format => "%b %d - %I:%M %p") %>: <%= localized_status_name(comment) if comment.task_comment? %>
+<% if comment.task_comment? and comment.assigned_transition? %>
+<% if comment.assigned_id? %>
+<%= t('tasks.assigned.assigned_to', :user => comment.assigned.user.name) %> 
+<% else %>
+<%= t('tasks.assigned.unassigned') %>
+<% end %>
+<% end %>
+<%= comment.body %>
+
+<%= render :partial => 'emailer/upload', :collection => comment.uploads %>

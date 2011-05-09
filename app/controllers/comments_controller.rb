@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
           if comment.new_record?
             output_errors_json(comment)
           else
-            render :partial => 'comment', :locals => { :comment => comment, :threaded => true }
+            render :partial => 'comment', :locals => { :comment => comment }
           end
         else
           redirect_back_or_to root_path
@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
     respond_to do |wants|
       wants.any(:html, :m) {
         if request.xhr? or iframe?
-          render :partial => 'comment', :locals => { :comment => @comment, :threaded => true }
+          render :partial => 'comment', :locals => { :comment => @comment }
         else
           redirect_to [target.project, target]
         end

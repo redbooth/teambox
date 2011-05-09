@@ -16,10 +16,17 @@ class Activity < ActiveRecord::Base
   scope :limit_per_page, :limit => Teambox.config.activities_per_page
   scope :by_id, :order => 'id DESC'
   scope :by_updated, :order => 'updated_at desc'
+
+  # COALESCE returns the first non null element and it's standard SQL
+  scope :by_thread, :order => "COALESCE(last_activity_id, id) desc"
   scope :threads, :conditions => "target_type != 'Comment'"
-  scope :before, lambda { |activity_id| { :conditions => ["id < ?", activity_id ] } }
+  scope :before, lambda { |previous| { :conditions => ["id < ? AND (last_activity_id IS NULL OR last_activity_id < ?)", previous.last_id, previous.last_id] } }
   scope :after, lambda { |activity_id| { :conditions => ["id > ?", activity_id ] } }
   scope :from_user, lambda { |user| { :conditions => { :user_id => user.id } } }
+
+  # We have to update the activity of the thread if such is the case
+  after_create :ping_parent_activity
+
 
   def self.log(project,target,action,creator_id)
     project_id = project.try(:id)
@@ -28,8 +35,6 @@ class Activity < ActiveRecord::Base
     if target.is_a? Comment
       comment_target_type = target.target_type
       comment_target_id = target.target_id
-      # touch activity related to that comment's thread
-      Activity.last(:conditions => ["target_type = ? AND target_id = ?", comment_target_type, comment_target_id]).try(:touch)
     end
     
     activity = Activity.new(
@@ -39,12 +44,17 @@ class Activity < ActiveRecord::Base
       :user_id => creator_id,
       :comment_target_type => comment_target_type,
       :comment_target_id => comment_target_id)
-    activity.created_at = target.try(:created_at) || nil
+    activity.created_at = target.try(:updated_at) || target.try(:created_at)
     activity.save
     
     activity
   end
-  
+
+  # Returns the id of the activity itself or the activity's last children's activity if any
+  def last_id
+    last_activity_id || id
+  end
+
   def refs_thread_comments
     if target.respond_to? :first_comment
       [target.first_comment] + target.recent_comments
@@ -121,7 +131,7 @@ class Activity < ActiveRecord::Base
   end
 
   def self.for_projects(projects)
-    in_projects(projects).limit_per_page.by_updated
+    in_projects(projects).limit_per_page.by_thread
   end
 
   def to_xml(options = {})
@@ -139,6 +149,7 @@ class Activity < ActiveRecord::Base
         xml.tag! 'first-name', user.first_name
         xml.tag! 'last-name',  user.last_name
         xml.tag! 'avatar-url', user.avatar_or_gravatar_url(:thumb)
+        xml.tag! 'micro-avatar-url', user.avatar_or_gravatar_url(:micro)
       end
 
       xml.project :id => project_id do
@@ -156,13 +167,16 @@ class Activity < ActiveRecord::Base
   def to_api_hash(options = {})
     base = {
       :id => id,
+      :last_activity_id => last_activity_id,
       :action => action,
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
       :user_id => user_id,
       :project_id => project_id,
       :target_id => target_id,
-      :target_type => target_type
+      :target_type => target_type,
+      :comment_target_id => comment_target_id,
+      :comment_target_type => comment_target_type
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
@@ -185,6 +199,14 @@ class Activity < ActiveRecord::Base
     end
     
     base
+  end
+
+  protected
+
+  def ping_parent_activity
+    if target.is_a? Comment and parent = Activity.last(:conditions => ["target_type = ? AND target_id = ?", comment_target_type, comment_target_id])
+      parent.update_attribute :last_activity_id, id # touch activity related to that comment's thread
+    end
   end
 
 end

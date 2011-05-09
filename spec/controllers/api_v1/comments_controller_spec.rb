@@ -79,6 +79,7 @@ describe ApiV1::CommentsController do
       task = Factory.create(:task, :project => @project)
       comment = @project.new_comment(@user, task, {:body => 'Something happened!'})
       comment.save!
+      task.reload
       
       get :index, :project_id => @project.permalink, :task_id => task.id
       response.should be_success
@@ -118,12 +119,20 @@ describe ApiV1::CommentsController do
       task = Factory.create(:task, :project => @project)
       comment = @project.new_comment(@user, task, {:body => 'Something happened!'})
       comment.save!
+      task.reload
       
       get :index, :task_id => task.id
       response.should be_success
       task_comments = JSON.parse(response.body)['objects']
       
       task_comments.map{|a| a['id'].to_i}.should == task.comment_ids.sort
+    end
+    
+    it "shows returns 404's for ficticious targets" do
+      login_as @user
+      
+      get :index, :conversation_id => 123
+      response.status.should == 404
     end
     
     it "limits comments" do
@@ -150,6 +159,10 @@ describe ApiV1::CommentsController do
     it "returns references for linked objects" do
       login_as @user
       
+      person = @project.people.find_by_user_id(@user.id)
+      task = Factory.create(:task, :project => @project, :user => @user)
+      task.comments.create_by_user(@user, {:body => 'TEST', :assigned => person}).save!
+      
       get :index, :project_id => @project.permalink
       response.should be_success
       
@@ -159,6 +172,8 @@ describe ApiV1::CommentsController do
       
       references.include?("#{@project.id}_Project").should == true
       references.include?("#{@comment.user_id}_User").should == true
+      references.include?("#{@comment.user_id}_User").should == true
+      references.include?("#{person.id}_Person").should == true
     end
   end
   
@@ -227,6 +242,33 @@ describe ApiV1::CommentsController do
       JSON.parse(response.body)['errors']['type'].should == 'InsufficientPermissions'
       
       conversation.reload.comments(true).length.should == 1
+    end
+    
+    it "should not allow oauth users without :write_projects to post a comment" do
+      login_as_with_oauth_scope @project.user, []
+      
+      conversation = Factory.create(:conversation, :project => @project)
+      conversation.comments.length.should == 1
+      
+      post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :body => 'Created!',
+                    :access_token => @project.user.current_token.token
+      response.status.should == 401
+      JSON.parse(response.body)['errors']['type'].should == 'InsufficientPermissions'
+      
+      conversation.reload.comments.length.should == 1
+    end
+    
+    it "should allow oauth users with :write_projects to post a comment" do
+      login_as_with_oauth_scope @project.user, [:write_projects]
+      
+      conversation = Factory.create(:conversation, :project => @project)
+      conversation.comments.length.should == 1
+      
+      post :create, :project_id => @project.permalink, :conversation_id => conversation.id, :body => 'Created!',
+                    :access_token => @project.user.current_token.token
+      response.should be_success
+      
+      conversation.reload.comments.length.should == 2
     end
   end
   

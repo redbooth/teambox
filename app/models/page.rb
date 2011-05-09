@@ -1,21 +1,24 @@
 class Page < RoleRecord
   include Immortal
+  include Watchable
+
   has_many :notes, :dependent => :destroy
   has_many :dividers, :dependent => :destroy
   has_many :uploads, :dependent => :destroy
   
   has_many :slots, :class_name => 'PageSlot', :order => 'position ASC', :dependent => :delete_all
-
+  
   has_permalink :name, :scope => :project_id
-
+  
   attr_accessible :name, :description, :note_attributes
   attr_accessor :suppress_activity
-
+  
+  validates_presence_of :user
   validates_length_of :name, :minimum => 1
   
   default_scope :order => 'position ASC, created_at DESC, id DESC'
   
-  after_create :log_create
+  after_create :log_create, :update_user_stats
   after_update :log_update
   
   def build_note(note = {})
@@ -135,7 +138,6 @@ class Page < RoleRecord
       xml.tag! 'description',     description
       xml.tag! 'created-at',      created_at.to_s(:db)
       xml.tag! 'updated-at',      updated_at.to_s(:db)
-      xml.tag! 'watchers',        Array(watchers_ids).join(',')
       if Array(options[:include]).include? :slots
         slots.to_xml(options.merge({ :skip_instruct => true, :root => 'slots' }))
       end
@@ -147,6 +149,10 @@ class Page < RoleRecord
     end
   end
   
+  def update_user_stats
+    user.increment_stat 'pages' if user
+  end
+
   def to_api_hash(options = {})
     base = {
       :id => id,
@@ -155,8 +161,7 @@ class Page < RoleRecord
       :name => name,
       :description => description,
       :created_at => created_at.to_s(:api_time),
-      :updated_at => updated_at.to_s(:api_time),
-      :watchers => Array.wrap(watchers_ids)
+      :updated_at => updated_at.to_s(:api_time)
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
@@ -173,7 +178,7 @@ class Page < RoleRecord
   end
 
   define_index do
-    where "`pages`.`deleted` = 0"
+    where Page.undeleted_clause_sql
 
     indexes name, :sortable => true
     indexes description

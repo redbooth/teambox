@@ -11,6 +11,8 @@ class Organization < ActiveRecord::Base
   has_many :admins, :through => :memberships, :source => :user, :conditions => {'memberships.role' => Membership::ROLES[:admin]}
   has_many :participants, :through => :memberships, :source => :user, :conditions => {'memberships.role' => Membership::ROLES[:participant]}
 
+  has_many :task_list_templates
+
   validates_length_of     :name, :minimum => 4
 
   validates_presence_of   :permalink
@@ -75,7 +77,7 @@ class Organization < ActiveRecord::Base
   end
 
   def users_in_projects
-    User.find(:all, :joins => :people, :conditions => {:people => {:project_id => project_ids}}).uniq
+    User.joins(:people).select("distinct users.*").where({:people => {:project_id => project_ids}}).all
   end
 
   # External users are simply involved in some project of the organization
@@ -140,13 +142,4 @@ class Organization < ActiveRecord::Base
 
 end
 
-Organization.default_settings = {
-    'colours' => {
-      'header_bar' => '78ACD7',
-      'links' => '259BAD',
-      'highlight' => 'fff9da',
-      'text' => '333',
-      'link_hover' => 'df5249'
-    }
-  }
-
+Organization.default_settings = { }

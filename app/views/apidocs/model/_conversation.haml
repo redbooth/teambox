@@ -25,12 +25,12 @@
   %p=raw "Updates the title of a conversation."
 
 - doc_for :convert_to_task,
-          :parameters => {:conversation => {:name => 'Mobile App', :comment => 'Optional comment'}},
+          :parameters => {:name => 'Mobile App', :task_list_id => 123, :comment => {:body => 'Lets taskify this conversation'}},
           :status => :created,
           :example => @task.to_api_hash(:include => [:comments]),
           :role => :participant do
   %p=raw "Converts a conversation to a task, returning the created task."
-  %p=raw "<tt>conversation</tt> parameters are optional except in the case of simple conversations."
+  %p=raw "Parameters are optional, with the exception of <tt>name</tt> being required in the case of simple conversations."
 
 - doc_for :watch,
           :status => :updated,

@@ -176,11 +176,14 @@ describe ApiV1::ConversationsController do
       
       post :convert_to_task, :project_id => @project.permalink,
                              :id => @another_conversation.id,
-                             :conversation => {:name => 'Tasked', :comment => 'Converted!'}
+                             :name => 'Tasked', :comment => {:body => 'Converted!'},
+                             :status => 2, :assigned_id => @project.people.first.id
       
       response.should be_success
       data = JSON.parse(response.body)
       data['name'].should == 'Tasked'
+      data['assigned_id'].should == @project.people.first.id
+      data['status'].should == 2
       Task.find_by_id(data['id'].to_i).name.should == 'Tasked'
     end
     

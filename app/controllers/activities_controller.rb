@@ -20,17 +20,14 @@ class ActivitiesController < ApplicationController
         end
       end
       format.m
-      format.xml  { render :xml     => @activities.to_xml }
-      format.json { render :as_json => @activities.to_xml }
-      format.yaml { render :as_yaml => @activities.to_xml }
     end
   end
 
   def show_more
     @activities = if @user
-      Activity.for_projects(@target).before(params[:id]).from_user(@user)
+      Activity.for_projects(@target).before(Activity.find(params[:id])).from_user(@user)
     else
-      Activity.for_projects(@target).before(params[:id])
+      Activity.for_projects(@target).before(Activity.find(params[:id]))
     end
     @threads = @activities.threads
     @last_activity = @threads.all.last
@@ -38,23 +35,6 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to projects_path }
       format.js   { render :layout  => false }
-      format.xml  { render :xml     => @activities.to_xml }
-      format.json { render :as_json => @activities.to_xml }
-      format.yaml { render :as_yaml => @activities.to_xml }
-    end
-  end
-
-  def show_new
-    @activities = Activity.for_projects(@target).after(params[:id])
-    @threads = @activities.threads
-    @last_activity = @threads.all.last
-
-    respond_to do |format|
-      format.html { redirect_to projects_path }
-      format.js { render :layout => false }
-      format.xml  { render :xml     => @activities.to_xml }
-      format.json { render :as_json => @activities.to_xml }
-      format.yaml { render :as_yaml => @activities.to_xml }
     end
   end
 
@@ -68,13 +48,9 @@ class ActivitiesController < ApplicationController
       format.html {
         if request.xhr?
           render :partial => 'comments/comment',
-            :collection => @comments.reverse,
-            :locals => { :threaded => true }
+            :collection => @comments.reverse
         end
       }
-      format.xml  { render :xml     => @comments.to_xml }
-      format.json { render :as_json => @comments.to_xml }
-      format.yaml { render :as_yaml => @comments.to_xml }
     end
   end
 
@@ -84,7 +60,14 @@ class ActivitiesController < ApplicationController
     # * The requested project if given
     def get_target
       @target = if params[:project_id]
-        @current_project = @current_user.projects.find_by_permalink(params[:project_id])
+        @current_project = Project.find_by_permalink(params[:project_id])
+        if @current_project
+          unless @current_user.project_ids.include?(@current_project.id) ||
+                 @current_project.organization.is_admin?(current_user)
+            @current_project = nil
+          end
+        end
+        @current_project
       elsif params[:user_id]
         @user = User.find_by_id(params[:user_id])
         @user.projects_shared_with(@current_user)

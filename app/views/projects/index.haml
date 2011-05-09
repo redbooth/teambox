@@ -7,24 +7,20 @@
     .project_select
       = label_tag :project_id, t('comments.new.comment_on_project')
       = select_tag :project_id, options_for_projects_by_organization(commentable_projects)
-    
     = form.hidden_field :simple
-    
     - form.object.comments.build
     - form.fields_for :comments do |fields|
       = render 'comments/fields', :f => fields, :placeholder => t('comments.new.project')
 
 - if current_user.projects.any?
   #activities
-    = list_threads(@threads)
+    -# list_threads(@threads)
+    = javascript_tag "document.on('dom:loaded', function() { TeamboxClient.fetchAndRenderActivities() })"
     = show_more_button
-  = #javascript_tag autorefresh(@activities)
 - else
   = render 'projects/primer'
 
 - content_for :column do
   .more_links
+    = render "shared/collapse"
     .el= link_to t('shared.instructions.subscribe_to_feeds'), feeds_path, :class => 'feeds'
-    .el= link_to t('shared.instructions.subscribe_to_calendars'), calendars_path, :class => 'calendar'
-    .el= link_to t('shared.collapsed_mode'), "#", :class => 'collapsed_mode'
-    .el{ :style => 'display: none' }= link_to t('shared.expanded_mode'), "#", :class => 'expanded_mode'

@@ -106,29 +106,23 @@ module ProjectsHelper
   end
 
   def leave_project_link(project)
-    unless project.user == current_user
+    person = current_user.people.detect { |p| p.project_id == project.id }
+    unless (project.user == current_user) || !person
       link_to t('people.column.leave_project'),
-        project_person_path(project, current_user.people.detect { |p| p.project_id == project.id }),
+        project_person_path(project, person),
         :method => :delete, :confirm => t('people.column.confirm_delete'), :class => :leave_link
     end
   end
 
-  def reset_autorefresh
-    "clearInterval(autorefresh)"
-  end
-
-  def autorefresh(activities, project = nil)
-    first_id = Array(activities).first.id
-    
-    ajax_request = if project
-      remote_function(:url => project_show_new_path(project, first_id))
-    else
-      remote_function(:url => show_new_path(first_id))
+  def join_project_link(project)
+    msg = ""
+    if project.organization.is_admin?(current_user)
+      msg = t('projects.not_in_project.explain_admin_html', :organization => h(@current_project.organization))
+      link_to t('projects.not_in_project.join'), join_project_path(project), :title => msg, :class => :join_link
+    elsif project.public
+      msg = t('projects.not_in_project.explain_public_html', :organization => h(@current_project.organization))
+      link_to t('projects.not_in_project.join'), join_project_path(project), :title => msg, :class => :public_link
     end
-
-    interval = Teambox.config.autorefresh_interval*1000
-
-    "autorefresh = setInterval(\"#{ajax_request}\", #{interval})"
   end
 
   def options_for_owner(people)
@@ -145,7 +139,7 @@ module ProjectsHelper
 
   # FIXME eventually migrate that to just use the plain json from projects_people_data
   def autocomplete_projects_people_data
-    projects = @current_project ? [@current_project] : current_user.projects.reject{ |p| p.new_record? }
+    projects = current_user.projects.reject{ |p| p.new_record? }
     return nil if projects.empty?
     
     format = '@%s <span class="informal">%s</span>'
@@ -178,4 +172,9 @@ module ProjectsHelper
   end
   memoize :commentable_projects
 
+  def project_link_with_overlay(project)
+    content_tag :div, :class => :project_overlay do
+      link_to project, project, :'data-project-id' => project.id 
+    end
+  end
 end

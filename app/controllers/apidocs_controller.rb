@@ -21,6 +21,9 @@ class ApidocsController < ApplicationController
 
   def routes
   end
+  
+  def auth
+  end
 
   def model
     @model = params[:model].downcase

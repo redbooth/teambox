@@ -4,10 +4,13 @@
 class Person < ActiveRecord::Base
   include Immortal
 
+  concerned_with :digest
+
   belongs_to :user
   belongs_to :project
   belongs_to :source_user, :class_name => 'User'
   has_many :tasks, :foreign_key => 'assigned_id', :dependent => :nullify
+  has_many :notifications, :dependent => :delete_all
   
   after_create :log_create
   after_destroy :log_delete, :cleanup_after
@@ -33,8 +36,7 @@ class Person < ActiveRecord::Base
 
   scope :in_alphabetical_order, :include => :user, :order => 'users.first_name ASC'
 
-  
-  attr_accessible :role, :permissions
+  attr_accessible :role, :permissions, :digest, :watch_new_task, :watch_new_conversation
 
   def owner?
     project.owner?(user)
@@ -81,7 +83,7 @@ class Person < ActiveRecord::Base
       INNER JOIN users ON users.id = people.user_id
       WHERE people.project_id IN (#{project_ids.join(',')})
         AND (people.deleted IS NULL OR people.deleted IS FALSE)
-      ORDER BY users.id = #{current_user.try(:id).to_i} DESC,users.login
+      ORDER BY users.id = #{current_user.try(:id).to_i} DESC, users.first_name, users.last_name
     SQL
   end
   
@@ -115,6 +117,7 @@ class Person < ActiveRecord::Base
         :username => user.login,
         :first_name => user.first_name,
         :last_name => user.last_name,
+        :micro_avatar_url => user.avatar_or_gravatar_url(:micro),
         :avatar_url => user.avatar_or_gravatar_url(:thumb)
       }
     end
@@ -135,5 +138,6 @@ class Person < ActiveRecord::Base
   def cleanup_after
     user.remove_recent_project(project)
     user.tasks_counts_update
+    user.watchers.where(:project_id => project_id).destroy_all
   end
 end

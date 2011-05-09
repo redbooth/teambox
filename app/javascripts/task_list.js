@@ -273,8 +273,29 @@ var TaskList = {
         }
       }
     });
+  },
+
+  switchToTemplate: function() {
+    $('traditional_task_list_form').hide()
+    $('task_list_name').value = ""
+    $('template_task_list_form').show()
+  },
+
+  switchFromTemplate: function() {
+    $('template_task_list_form').hide()
+    $('traditional_task_list_form').show()
   }
 };
+
+document.on('click', '#traditional_task_list_form a.create_from_template', function(e, el) {
+  TaskList.switchToTemplate()
+  e.stop()
+})
+
+document.on('click', '#template_task_list_form a.create_traditional', function(e, el) {
+  TaskList.switchFromTemplate()
+  e.stop()
+})
 
 document.on('click', '#reorder_task_lists_link', function(e, element){
   e.stop()
@@ -380,23 +401,4 @@ document.on('click', '.task_list .new_task form a[href="#cancel"]', function(e, 
 
 document.on('keyup', '.task_list .new_task form', function(e, form) {
   if (e.keyCode == Event.KEY_ESC) hideTaskFormAndShowLink(form)
-})
-
-document.on('ajax:success', '.task_list form.new_task', function(e, form) {
-  var person = form['task[assigned_id]'].getValue();
-  var task_count = Number($('open_my_tasks').innerHTML)
-  var is_assigned_to_me = my_projects[person]
-
-  if (e.memo.transport) {
-    var response = e.memo.responseText
-  } else {
-    var response = e.memo.responseText.unescapeHTML()
-    resetCommentsForm(form)
-  }
-
-  if (is_assigned_to_me) {
-    task_count += 1
-    $('open_my_tasks').update(task_count)
-  }
-  Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(response)
 })

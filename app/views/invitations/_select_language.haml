@@ -1,0 +1,5 @@
+.select_language
+  %p
+    =t(".invitations_will_be_sent_in_language_html", :language => link_to(current_locale_name, "#", :id => :invitation_select_language))
+  #all_locales{:style => "display: none"}
+    = select_tag :locale, options_for_select(locale_select_values, I18n.locale)

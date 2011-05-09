@@ -149,7 +149,7 @@ class Project < ActiveRecord::Base
             end
             url         "#{base_url}/#{task.project.permalink}/tasks/#{task.id}"
           end
-          klass         "PRIVATE"
+          klass         "PUBLIC"
           dtstamp       DateTime.civil(created_date.year,created_date.month,created_date.day,created_date.hour,created_date.min,created_date.sec,created_date.offset)
           uid           "tb-#{task.project.id}-#{task.id}"
         end

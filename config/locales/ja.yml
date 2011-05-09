@@ -69,8 +69,6 @@ ja:
       website: 
         name: ウェブサイト
     errors: 
-      full_messages: 
-        format: "%{attribute}%{message}"
       messages: 
         accepted: は承認されなければなりません。
         blank: は空ではいけません。
@@ -108,11 +106,6 @@ ja:
           attributes: 
             assigned: 
               doesnt_belong: 担当ユーザーはプロジェクトに参加していません。
-      template: 
-        body: 次の項目を確認してください。
-        header: 
-          one: "%{model}にエラーが発生しました。"
-          other: "%{model}に%{count}つのエラーが発生しました。"
     models: 
       address: 住所
       card: カード
@@ -164,6 +157,8 @@ ja:
     create_task_list: 
       create_task_list: タスクリストを作成しました。
       title: "%{user} タスクリスト作成 %{task_list} "
+    create_teambox_data: 
+      title: "%{person} が %{project} をインポートしました。"
     create_upload: 
       title: "%{user} ファイルのアップロード %{file} "
     delete_person: 
@@ -184,7 +179,6 @@ ja:
       more_comments: 
         one: 1つの以前のコメント
         other: "%{count} つの以前のコメント"
-      on_task_list: "&raquo;"
   affiliate: 
     area: アフィリエイト・エリア
     index: 
@@ -204,7 +198,6 @@ ja:
       option_1: オプション1：このリンクを利用する
       option_2: オプション2：メールをアドレスを入力し、招待状を送る
       option_3: オプション3：CSVファイルで連絡先をインポートし、招待する
-      over_200: 200米ドル以上ある時にはいつでも
       plan_for: のためのプラン
       premium_plan: プレミアム・アカウント
       refer_info: "%{users} のユーザーが%{plan}導入頂いた場合、毎月$%{credit}の収入"
@@ -291,6 +284,7 @@ ja:
       tooltip: 添付
     comment: 
       cannot_edit: コメントは15分後に編集不可です
+      commented_in_project: "%{project} の %{user}"
       commented_on: "-"
       commented_on_a_task_list: "-"
       confirm_delete: このコメントを削除してもよろしですか?
@@ -325,9 +319,7 @@ ja:
     preview: 
       close: 閉じる
       preview: プレビュー
-      showing: "..."
   common: 
-    format_name: "%{last_name} %{first_name} さん"
     accept: 了承
     and: と
     calendar: カレンダー
@@ -341,7 +333,7 @@ ja:
     edit: 編集
     format_name: "%{last_name} %{first_name} さん"
     gantt_chart: ガントチャート
-    in_project: "&raquo;"
+    in_project: ＞
     next: 次
     not_allowed: この操作は許可されていません。
     or: または
@@ -351,9 +343,6 @@ ja:
     save: 投稿
     show_more: さらに詳しく
     signup: サインアップ
-    tasks: 
-      one: "1 タスク"
-      other: "%{count} タスク"
   confirm: 
     delete_group: このグループを削除してよいですか？
     delete_page: このページを削除しますか?
@@ -388,6 +377,7 @@ ja:
     primer: 
       create_first: プロジェクトの最初のチャットを始めましょう!
       define_html: 会話機能を使って<b>意思決定のための議論</b>や、<b>チームへの情報更新</b>に集中することができます。<br/>会話はスレッド形式になっており、乱雑なメールでのやりとりから自由になれます。
+      empty: このプロジェクトにはまだ会話がありません。
       footer1_html: 会話は<b>デザインを共有</b>したり、ミーティングの<b>日程</b>を決めたり、ニュースを<b>周知</b>するのにとても便利です。
       footer2_html: スレッド形式になっているので、過去どんなファイルが送られたか、チームメイトが何を言ったかをさっと振り返ることができます。Teamboxでは、<b>共同作業がそのまま報告</b>なのです。
       item1_html: "<b>ファイル共有</b> それぞれのコメントにはファイルを添付できます。"
@@ -737,6 +727,8 @@ ja:
       - !ruby/symbol month
       - !ruby/symbol day
     yesterday: 昨日
+  date_picker: 
+    no_date_assigned: 日付が割り当てられていません。
   datetime: 
     distance_in_words: 
       about_x_hours: 
@@ -808,6 +800,8 @@ ja:
       answer_above_this_line: 返答は、文頭よりお願いします。
       do_not_answer: このメールに返信しないでください。
     confirm: 
+      complete: サインアップを完了させてください。
+      follow_this_link: "%{complete} のためには、下記よりTeamboxにログオンしてください。"
       hey: "こんにちは、 %{user_name}!"
       log_in: Teamboxにログインしてください!
       plaintext_link: "リンクが正常に動作しないときは、以下のリンクをブラウザのアドレスバーにコピー&ペーストしてください。:"
@@ -829,41 +823,49 @@ ja:
       you_have_been_invited_to: "あなたはプロジェクト<b>%{project}</b>に招待されました。"
     notify: 
       are_watching: " は会話参加者です。これ以降の回答が通知されます。"
-      assigned_to: "<b>%{user}</b>に割り当てされている"
+      are_watching_task: 
+        one: " このタスクの購読をすることで将来の返信の通知を受けることができます。"
+        other: " このタスクの購読をすることで将来の返信の通知を受けることができます。"
       comment: "コメントをプロジェクトのスタートページに: "
       comments: "%{number}個のコメント"
       conversation: "会話:"
       due_on: "%{date}まで"
       my_tasks: "%{project}で、あなたに割り当てされているタスク"
-      notification_settings: "以後のメール通知について、<a href='%{url}'>こちらで</a>通知設定を変更できます。"
       project: "Teambox プロジェクト:"
       reply: このメールに返信することで、会話に返信することもできます。
+      settings_link: 通知設定
       status: "状態: %{status}"
-      stop_watching: "このスレッドの<a href='%{stop_watching_url}'>ウォッチをやめる</a>と、eメールでの通知をやめることができます。"
+      stop_watch: 購読の停止
       task: "タスク:"
       task_commands: "#resolve (解決済)、 #reject　(取下げ)  #hold　(保留)　を返信の最初に記載することで、タスクの状況を変更できます。#%{username}を記載することで担当者"
+      task_link: このタスクをオンラインで確認
       task_list: "タスクリスト:"
-      view_online: "<a href='%{link}'>この会話をオンラインで見て</a>、回答や添付ファイルを確認できます。"
+    project_membership_notification: 
+      project_link: "%{project} へ貢献するつもりなら以下のリンクをクリックしてください"
+      subject: "%{user} は [%{project}] をあなたと共有しました"
+      you_have_been_added_to: "%{project} に参加しました。"
     reset_password: 
+      follow_this_link: "Teamboxの %{new_password}  には、以下のリソクを使ってログインする必要があります："
       hey: "こんにちは、%{user_name}!"
       log_in: Teamboxにログインしてください!
+      new_password: 新しいパスワードの設定
       plaintext_link: "これが正常に動作しないときは、以下のリンクをブラウザのアドレスバーにコピー&ペーストしてください。:"
       problems_html: "もし問題がありましたら、%{support}に連絡してください。"
       report_abuse: "このメールは、あなたが%{email}でTeamboxにサインアップしたために送付されています。"
       subject: パスワードのリセット完了
       successfully_reset: パスワードはリセットされました。
+    teamboxdata: 
+      data_export_failed: "Teamboxからのデータエクスポートに失敗しました。再度エクスポートするには、以下リンクを参照下さい ："
+      data_exported: Teamboxからデータのエクスポートに成功しました。以下のリンクから結果データのダウンロードができます：
+      data_import_failed: "Teamboxへのインポートに失敗しました。指定したデータが有効であることを確認してください。再度アップロードするには以下のリンクをご覧ください ："
+      data_imported: Teamboxに正しく挿入されました。詳細を見る場合には以下のリンクをクリックください：
+      export_failed: エクスポートできませんでした。
+      exported: ダウンロードの開始が可能です。
+      hey: "%{user_name} さん！"
+      import_failed: インポートできませんでした。
+      imported: データインポートが終了しました。
     upload: 
       file: "ファイル:"
-  example_projects: 
-    new: 
-      create: サンプルプロジェクトを作成する
-      error: サンプルプロジェクトを作成できません。
-      error_list: "サンプルプロジェクトを作成できません。以下のプロジェクトは無効です。: %{list}"
-      learn: サンプルで学習しましょう!
-      line1: Teamboxを使うのが今回初めてなら、サンプル・プロジェクトを作成することができます。
-      line2: ページを読み進むことで、Teamboxのそれぞれの機能の使い方を知ることができるでしょう。
-      line3: 必ず<b>説明を読み</b>、要素の作成、編集、削除を<b>試して</b>ください。
-      line4: このプロジェクトでは他のユーザーを招待することはできませんが、それ以外の機能は全部利用できます。
   form: 
     cancel: キャンセル
   hours: 
@@ -905,8 +907,8 @@ ja:
       title: 保留している招待
     invitation: 
       discard: 招待を取り消す
-      invited_email: "%{inviter}は<b>%{email}</b>をこのプロジェクトに招待しました。"
       invited_user_html: "%{inviter}は<b>%{invitee}</b>をこのプロジェクトに招待しました。"
+      just_now: "(just now)"
       pending: このユーザーに招待メールを送信しましたが、まだ確認されていません
       resend: 招待メールを再送する
       time_ago: "(%{time_ago_in_words} 前)"
@@ -935,7 +937,6 @@ ja:
       username_or_email: チームメートのユーザ名、もしくはeメールを入力してください。
     sent: 
       email_sent: <b>このユーザーにプロジェクトへの招待を受け入れるリンクを含んだeメールを送信しました。もしeメールが見つからないようであれば、迷惑メールに分類されていないか確認するか、異なるeメールアドレスを試して見てください。もし問題が解決しないようでしたら、我々のスタッフに連絡してください。
-  last_announcement_html: "Teamboxに関する最新の情報は<a href='http://blog.teambox.com'>ブログ(英語)</a>でお読みになれます。日本語での提供は下半期を2010年秋頃を予定してます。 "
   locales: 
     af: アフリカーンス語
     ar: アラビア語
@@ -1009,6 +1010,7 @@ ja:
       participant: 参加者としてです。彼自身のプロジェクトを作成出来ます。
   not_found: 
     conversation: "会話 %{id} はこのプロジェクトにはありません"
+    data: データのロケーティングに問題がありましたよ。
     page: "ページ %{id} はこのプロジェクトにはありません。"
     project: "プロジェクト %{id} は存在しません。"
     task: "タスク %{id} はこのプロジェクトにはありません。"
@@ -1079,9 +1081,25 @@ ja:
     your_account_is_linked_html: "プロファイル%{provider}がTeamboxと<strong>リンクされました。</strong>"
     your_account_is_not_linked_html: "プロファイル %{provider}はTeambox と <strong>リンクされていません。</strong> "
   organizations: 
+    active_projects: 
+      dont_belong: このプロジェクトに属していません
+      no_active_projects: この組織にはアクティブなプロジェクトは存在しません。
+      settings: セッティング
+      storage: "ファイルの %{now}"
+      title: 有効なプロジェクト
+    appearance: 
+      submit: 変更を保存する
+    appearance_fields: 
+      colours: サイトカラー
+      header_bar_colour: ヘッダーの色
+      highlight_colour: ハイライト時の色
+      link_hover_colour: リンクホバーの基本色
+      links_colour: デフォルトリンクの色
+      text_colour: テキストのデフォルト色
+    archived_projects: 
+      last_activity: "%{date} の最後の活動"
+      title: アーカイブされたプロジェクト
     billing: 
-      billing_area: "請求書へのアクセス、ダウングレード若しくは請求関連の設定はいつでも<a href='%{link}'>請求関連エリア</a>から可能です。"
-      billing_email: "請求書送り先メアド<em>この送り先に請求書をお送りします。</em> "
       current_plan: 現在のプラン
       downgrade: グレード・ダウン
       plan: プラン
@@ -1091,16 +1109,12 @@ ja:
       submit: 請求書宛先メアド更新
       suggested_upgrade: 
         for_only: "月額$%{price} アップで"
-        get_projects: "<b>プロジェクトを%{number}</b> まで"
-        get_storage: "<b>%{number}</b> まで"
         upgrade_to: "%{plan} へアップ・グレードする"
       upgrade: アップグレードをしましょう！
-      yearly_plans: 
-        save_with_yearly_plans: "<b>20%の節約</b>。年間契約も可能です。その場合<b>２ヶ月間の無料</b> となります。"
-        signup_links: "年間契約は<a href='%{corporate}'>コーポレイト ($2990)</a>, <a href='%{pro}'>プロ ($990)</a>, <a href='%{basic}'>ベーシック($290)</a> or <a href='%{personal}'>パーソナル ($120)</a>があります。 "
     column: 
       admin_projects: プロジェクト管理
       admin_users: ユーザー管理
+      appearance: 外観
       billing: プランと課金
       delete: この組織を消去
       general_settings: 一般設定
@@ -1109,7 +1123,6 @@ ja:
       confirm: 組織の消去は元に戻せない動作であり、そしてその組織に関係のある情報も消去される事理解しています。
       delete: この組織を消去する
       deleted: その組織を消去しました
-      go_delete_some_projects: "組織を消去する前に全てのプロジェクトを<a href='%{link}'>消去若しくは移動</a>する必要があります。"
       go_downgrade_to_free_plan: "組織の消去前に有料プランから脱会<a href='%{link}'>unsubscribe</a>が必要です。無料プランへのダウングレードは<a href='%{link}'>請求</a>セクションから行えます。 "
       need_to_be_admin: この組織の消去は管理者でなければなりません
       not_paid_plan: 有料プランの組織は削除出来ません。
@@ -1123,17 +1136,11 @@ ja:
       submit: 変更を保存する
       there_are: "There are"
     external_view: 
-      create_your_own_org: "しかしながら、あなたのプロジェクトの為に<a href='%{link}'>独自の組織を作成</a>する事可能です。"
       request_permission: この組織にアクセスするためには、管理者の誰かにその許可を要請して下さい。
       title: "%{name} "
       you_cant_access: この組織にアクセスしたり、編集をする権限はありません。
     fields: 
-      description: "入り口ページに表示されるHTMLは<a href=\"http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations\">こちらでさらに詳しく分かります</a> "
-      domain: "ドメイン<em>オプションです。独自のドメインを組織に利用する事が出来ます。詳しくはこちらをどうぞ<a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='How to use your own domain for your organization in Teambox'>documentation</a>.</em> "
-      logo: "ロゴは<em>134x36 ピクセルが理想です</em> "
-      name: 組織名
       name_placeholder: あなたの組織
-      permalink: "短縮組織コード<em>アルファベットを使用してださい。スペース利用不可です。これはWEB アドレスに使用します。</em>"
     index: 
       about: 
         explain1: 組織はプロジェクトとユーザーのグループ化をパーソナライズ化した名前のもと利用出来ます。
@@ -1160,16 +1167,9 @@ ja:
         other: "%{count} のプロジェクト"
       participant: 参加者
       upgrade: Teamboxをアップグレードしましょう。
-      you_are: "あなたはこの組織の<strong>%{role}</strong> です。"
       your_plan_is: "あなたのプランは%{plan} です"
     projects: 
-      active_projects: アクティブなプロジェクト
-      archived_projects: 保管されたプロジェクト
-      instructions: "この組織のためのプロジェクトがあります。管理者はプロジェクトを<a href='%{organizations_link}'>他の組織</a>へ移動をプロジェクト設定より実行する事ができます。"
-      last_activity: "最後の活動日は%{date} "
       new_project: 新たなプロジェクト
-      role: " あなたは<strong>%{role}</strong> です。"
-      settings: 設定
       title: "組織名'%{organization}'  "
     usage: 
       active_projects: 
@@ -1192,7 +1192,6 @@ ja:
     index_task_lists: 全てのタスクリスト
     index_uploads: 全てのファイル
     new_conversations: 新規の会話
-    new_example_projects: サンプルプロジェクトを作成
     new_pages: 新規ページ
     new_projects: 新規プロジェクト
     new_users: サインアップ
@@ -1208,8 +1207,6 @@ ja:
       new_upload: アップロード
     column: 
       all_pages: 全てのページ
-      cant_create: ページをこのプロジェクトにおいて作成する権限がありません。
-      new_page: 新しいページ
       reorder: 再整列
       reorder_done: 完了
     edit: 
@@ -1221,7 +1218,6 @@ ja:
       name: 名前
       name_description: 短くて分かりやすい名前をつけてください
     index: 
-      pages_in_this_project: プロジェクトの中のページ
       rss: 
         description: "ページ in project %{name}"
         title: "%{name}"
@@ -1293,14 +1289,6 @@ ja:
     update: 
       success: "%{name}の役割を更新しました "
   plans: 
-    copies: 
-      copy1: "Teamboxの調子はいかがですか？ <a href='%{link}'>アップグレード</a> によりTeamboxはさらに便利になります！"
-      copy2: "<a href='%{link}'>アップグレードはこちらから</a>。プロジェクト数と容量アップ、さらに全てのプロジェクト間の検索が可能になります。"
-      copy3: "<a href='{{link}}'>プレミアムアカウントでさらなる充実を！</a> エクストラ容量が追加され、更にプロジェクト利用可能数も２０００となります。"
-      copy4: "プレミアム・アカウントにより<a href='%{link}'>効率アップ</a>: 検索バーが全てのプロジェクトの横断検索を提供します。"
-      copy5: "<a href='%{link}'>アップ・グレードしましょう</a>そしてより一層のコラボレーションを実現しましょう "
-      copy6: "全てのプロジェクト内を検索できる”検索バー”は業務効率を大幅アップします。 <a href='%{link}'>アップグレード</a>をお勧めします! "
-      copy7: "あなたのビジネスは私達にとっても重要です。プレミアム・プランで <a href='%{link}'>より手厚いサポート</a>を提供しています。"
     show: 
       title: どの組織をアップグレードしますか？
       usage: "この組織上に<b>%{available_projects} さらなるプロジェクト</b> 作成する事が出来ます。"
@@ -1321,18 +1309,12 @@ ja:
       title_settings: 一般設定
       transferred: プロジェクトのオーナーが変更されました。
     fields: 
-      archived: このプロジェクトをアーカイブする
       archiving: このプロジェクトをアーカイブする
       confirm_delete: "このプロジェクトを永久に削除してもよろしいですか? 削除すると、元に戻すことはできません。もし保存したいのであれば、プロジェクトをアーカイブしてください。"
       extra_options: 他のオプション
       forever: このプロジェクトを永久に削除する
-      name: プロジェクト名
       name_example: プロジェクト名
       new: 
-        choose_organization: 
-          choose_org: "組織<em>どの組織がこのプロジェクトのオーナーですか?</em> "
-          new_org_name: "組織名 <em>後ほどこの組織にプロジェクトを追加していくことが可能です</em>"
-          or_create_a_new_org: "あるいは<a href='%{link}'>新しい組織</a>をつくる"
         time_tracking_docs: もっと学ぶ
       organization: 組織
       organizations: 
@@ -1343,15 +1325,11 @@ ja:
         upgrade_organization: このプロジェクトを更新してください。
       owner: オーナー
       owner_description: オーナーはプロジェクトの責任者です。オーナーは、別のユーザーにその所有権を譲らない限り、プロジェクトから外すことはできません。
-      permalink: URL
       permalink_description: あなたのプロジェクトのアドレスです。なるべく短くしましょう。空白を入れることはできません。
       public_project_html: "プロジェクトを公開する。<em>誰でもアクセス及び参加が<a href='/public'>公開プロジェクトセクション</a>から可能となります。</em> "
       select_an_organization: 組織を選択する
       settings: 
         manage_organizations: 組織を管理する
-        you_cant_transfer_this_project: "このプロジェクトは<b>%{organization}</b> 組織のものです。移行する権限はあなたにはありません。"
-        upgrade_html: "<b>このプロジェクトをアーカイブから戻し</b>、編集可能にするには、<a href='%{link}'>アップグレードを行い、容量及び機能アップ</a>するか、他のプロジェクトをアーカイブする必要があります。"
-        you_cant_unarchive: " %{active}のプロジェクトを利用中です。現在のプランでは %{max} のプロジェクトまでご利用可能です。"
       tracks_time_html: タイムトラッキングを有効にする。<em>各タスクの稼働時間を記録する事ができるようになります。</em>
     index: 
       archived: "%{count}個のアーカイブされたプロジェクト"
@@ -1368,11 +1346,7 @@ ja:
         one: 一つの稼働中のプロジェクトがあります。
         other: "{{count}}個のアクティブ・プロジェクトがあります。"
         zero: アクティブなプロジェクトがありません。
-      create_an_example_project: "Teamboxは初めてですか? <a href='%{link}'>サンプルプロジェクトを作成して</a>、いろいろ試して学んでみましょう。"
-      created: プロジェクトが作成されました!
       invalid_project: 無効なプロジェクトです。エラーを修正して再度実行してください。
-      invite_by_email: ご友人・知人のメールアドレスを入力して、招待しましょう
-      invite_people: プロジェクトに人々を招待しましょう
       new_project: 新規プロジェクト...
       not_allowed: このアカウントではプロジェクトの作成はできません。
       select_an_organization: プロジェクトが所属する組織を選択してください
@@ -1384,23 +1358,7 @@ ja:
       you_can_create_more: 
         one: あと一つプロジェクトを現在のプランで追加出来ます。
         other: "現在の課金プランで、あと{{count}}のプロジェクトが作成出来ます。 "
-        zero: "現在の作成可能なプロジェクトの数は{{max}}です。"
-    new_primer: 
-      define1_html: プロジェクトはチームメイトと共有するグループです。
-      define2_html: "プロジェクト中では、チームメイトは以下のことができます:"
-      feature1_html: 状況を更新する
-      feature2_html: 会話を始めたり、返信したりする
-      feature3_html: ファイルを添付する
-      feature4_html: タスクを割り当てしたり、確認したりする
-      feature5_html: タスクにコメントする
-      feature6_html: それぞれの実行時間を記録する
-      feature7_html: ページを作成、編集、閲覧する
-      footer: このプロジェクトはあなたが所有していますが、いつでも他のユーザーに譲ることができます。
-      limited: "無料アカウントでは、ファイルは 50 Mbまでアップロード可能です。"
-      upgrade: アカウントをアップグレードしてください!
     not_in_project: 
-      explain_admin: "参加するとこのプロジェクトをご覧になれます。参加すれば、会話・タスク・ページ・ファイルなどのセクションにアクセスする事ができます。あなたが <b>%{organization}</b> 組織の管理者なためこのような事ができます。 "
-      explain_public: "参加すると、このプロジェクトをご覧になることができます。参加するとまた、会話、タスク、ページそしてファイルにアクセスする事が出来ます。これは<b>公開プロジェクト</b>なためこのような事ができます。 "
       join: このプロジェクトに参加する
       not_allowed: これはプライベート・プロジェクトで、あなたは残念ながらアクセス出来ません。
       title: "'%{project}' に参加しますか？"
@@ -1438,7 +1396,6 @@ ja:
       update_your_status: あなたの状況を更新...
   reset_passwords: 
     create: 
-      invalid: "このパスワード変更のURLは、無効もしくは失効しています。ホームページから再度パスワード再発行を行ってください。もしうまくいかないときは、%{support}に連絡してください。"
       not_found_html: "このeメールのユーザーを見つけられませんでした: %{email}<br/>eメールアドレスを確認して再度実行してください。うまくいかないときは、%{support} に連絡してください。"
       password_not_updated: 新しいパスワードが無効です。再度実行してください。
       password_updated: パスワードが更新されました。ログインしてください。
@@ -1461,6 +1418,9 @@ ja:
     participant: 参加者
   search: 
     index: 
+      no_results: 
+        explain: 精巧な検索結果を導くためには、詳細なワードで検索してください。
+        title: "'%{term}' では何もみつかりませんでした。ご期待にそえず申し訳ございません。"
       report: "%{count}件の結果が \"%{term}\"で見つかりました "
       search_again: 再検索
       title: 全てのプロジェクトを検索中
@@ -1480,11 +1440,8 @@ ja:
       title: ログイン
       video: Teamboxとは？
   shared: 
-    archived_projects: 
-      archived_projects: アーカイブされたプロジェクト
-    chrome_frame: 
-      enhance: "Enhance your Teamboxでの体験を Google Chrome Frameでさらに向上する事が出来ます。ここを <a href=\"%{link}\" target=\\\"_blank\\\">クリック</a>して設定しましょう。"
     footer: 
+      feedback: フィードバック
       help: ヘルプ
       mobile: モバイル版
       support: フィードバックとバグ報告
@@ -1509,7 +1466,6 @@ ja:
     navigation: 
       all_projects: 全てのプロジェクト
       new_project: +
-      welcome: ようこそ
     project_navigation: 
       affiliate_area: アフィリエイト・エリア
       all_conversations: 全ての会話
@@ -1534,12 +1490,6 @@ ja:
       general: 一般設定
       ownership: オーナー設定
       picture: "プロジェクト Picture"
-    projects: 
-      projects: プロジェクト
-    projects_dropdown: 
-      all_projects: 全プロジェクトのクロスビュー
-      new_project: "+ 新プロジェクト"
-      recent_projects: 最近のプロジェクト
     public_navigation: 
       community: コミュニティ
       help: ヘルプとサポート
@@ -1577,6 +1527,7 @@ ja:
       plans_and_billing: 課金プラン
       profile_information: プロフィール
       profile_picture: プロフィール画像
+      your_data: インポート／エクスポート
     watchers: 
       nobody_watching: 誰にも通知していません
       people_watching: "通知中の人々: "
@@ -1630,10 +1581,7 @@ ja:
         cant_be_blank: 名前は空ではいけません
         too_long: 名前は255文字までにしなければなりません
     fields: 
-      finish_on: "終了日 <i>(任意)</i>"
-      name: タスクリスト名
       optional: 開始と終了日を設定した場合、ガンチャートに表示されます。
-      start_on: "開始日 <i>(任意)</i>"
       task_list: タスクリストはあなたのプロジェクトのマイルストーンになります。タスクリストの中にタスクを作成して、人々に割り当て出来ます。
       title: 新しいタスクリスト
     filter: 
@@ -1641,9 +1589,7 @@ ja:
       3weeks: 次の３週間
       anybody: 全て
       anytime: 全て
-      assigned_to: タスクの担当者表示
       by_name: 名前によりタスクにフィルターをかける
-      due_date: タスクの期限表示
       late_tasks: 遅延タスク
       month: 一ヶ月以内
       my_tasks: 自分のタスク
@@ -1707,6 +1653,7 @@ ja:
       due_on: 締切
       today: 今日
       tomorrow: 明日
+      undefined: 期限未設定
     edit: 
       sending: タスクを更新中
       submit: タスクを更新
@@ -1717,9 +1664,6 @@ ja:
     fields: 
       assigned_to: 責任者は誰でしょうか？
       assigned_to_nobody: 誰も
-      body: "何をしなければいけませんか？<i>(任意)</i> "
-      due_on: 期限日<i>(任意)</i>
-      name: タスク
       optional: 以下に、より詳細な指示を書き込む事が出来ます。
       task: タスク名を決めてください。詳細であるほど良いです。
       title: 新しいタスク
@@ -1731,9 +1675,6 @@ ja:
       new: "+ タスクを追加"
     my_tasks: 
       my_tasks: 全てのプロジェクトの自分のタスク
-    my_tasks_listing: 
-      back: オーバービューに戻る
-      tasks: 自分のタスク
     new: 
       sending: タスクを作成中
       submit: タスクを追加
@@ -1754,6 +1695,46 @@ ja:
       reopen: タスクをリオープンする
       task_is_closed: このタスクはクローズされアーカイブされています。
       unarchive: アーカイブを復元する
+  teambox_datas: 
+    column: 
+      description: Teamboxからデータの抽出入が可能です。
+    data: 
+      confirm_delete: このデータを削除して宜しいですか？
+      incomplete: 詳細情報が必要です。
+      processed_at: "処理されました。 %{processed_at}"
+      processing: 現在処理中です・・・
+      remove: 削除する
+    export_fields: 
+      description: エクスポートするプロジェクトを選択してください。
+    import_fields: 
+      in_organization: 全てのプロジェクトをこの組織の中に入れる
+      please_supply_user_map: 以下のユーザーがインポートの中に見つかりました。対象ユーザーがTeambox中のどのユーザーなのか確認してください。
+      select_file: データが入っているファイルを選択してください。
+      service: どのサービスをエクスポートしましたか？
+      teambox_user: Teamboxユーザー
+      user: ユーザー
+    index: 
+      exports: プロジェクトのエクスポート
+      imports: ファイルからデータのインポートをする
+      imports_explain: TeamboxやBasecampのプロジェクトをインポートできます。
+      no_exports: 最近のエクスポートはありません。
+      no_imports: 最近のインポートはありません。
+      title: データのインポート/エクスポート
+    new_export: 
+      submit: データのエクスポート
+      title: データのエクスポート
+    new_import: 
+      submit: データのインポート
+      title: データのインポート
+    show_export: 
+      download: エクスポートをダウンロードする
+      projects: エクスポート済みプロジェクト：
+      title: インポート／エクスポート
+    show_import: 
+      import_error: インポート中にエラーが発生しました。もう一度実行下さい。
+      projects: プロジェクトのインポート
+      submit: インポート
+      title: データのインポート
   time: 
     am: am
     formats: 
@@ -1763,6 +1744,9 @@ ja:
     pm: pm
   uploads: 
     comment_upload_link: 添付
+    errors: 
+      exceeded_storage_plan_limit: "%{organization_name} の許容量を超えています。<a href='%{url}'>アップグレード</a>をして許容量を増やしましょう。"
+      general: ファイルのアップロードにエラーがありました。
     form: 
       description_html: "タイトル <i>(任意)</i>"
       max_size: "ファイルサイズは %{mb} Mbを超えることはできません。"
@@ -1771,10 +1755,13 @@ ja:
       upload: ファイルをアップロード
     index: 
       cant_create: ファイルとこのプロジェクトにアップロード出来る権限をお持ちではありません。
+      current_storage_size: "組織 %{organization_name}. には %{bytes} アップロードが可能です。<br/><br/><a href='%{url}'>アップグレード</a> して容量をもっと増やしましょう。"
       max_upload_size: "アップロードサイズの最大は %{mb} Mb"
       new_file: ファイルをアップロード
+      no_storage_left: "利用可能なリミットに達しました。<br/><br/>是非、<a href='%{url}'>アップグレード</a>をどうぞ。 "
     new: 
       select_a_file: ファイルを選択
+      storage_remaining: "%{bytes} までアップロードが可能です。 <a href='%{url}'>アップグレードをして容量アップをどうぞ。</a>"
       uploading: アップロード中
     primer: 
       create_first: プロジェクトの最初のファイルをアップロードしましょう!
@@ -1839,7 +1826,6 @@ ja:
         title: どのニュースリーダーを使えば良いのでしょうか？
       follow_activities: Teamboxの活動内容をPCもしくは携帯電話でニュースリーダーで追う事が可能です。
       import: 
-        body: こちらにフォロー可能なフィードリストがあります。フィードリーダーにインポートするには<strong>リンクを右クリック</strong>し、<strong>リンクアドレスをコピーする</strong>を選択してください。
         title: 新規ニュースフィードのインポート方法
       more_tips: 
         body_html: "<a href='%{link}'>Teamboxをもっと便利に使いましょう！</a>. "
@@ -1850,7 +1836,6 @@ ja:
       title: あなたの行動フィードを同期
       your_feeds: 新しいニュースフィード
     form: 
-      agreement: "登録をすることにより、Teamboxのご利用 %{terms} 及びプライバシー規定 %{privacy} に同意したことになります。"
       betatester: β版を事前に利用する（注：正式リリース前ですので不安定です）。
       biography: 自己紹介
       change_password: パスワード変更
@@ -1891,11 +1876,8 @@ ja:
       picture: 
         destroy: アバターを削除
         field: あなたのアバター
-        gravatar_in_use: "あなたの写真がありませんので%{gravatar}: を利用しています。"
         max_size: "ファイルサイズは%{mb}におさめる必要があります"
         presence: 空ファイルはアップロードできません
-        upload_here_or_at_gravatar: "ここでアバターをアップロードするか、%{gravatar}にアップロードして、Teamboxだけではなく他の多くのウェブサイトで利用できるようにもできます。"
-        we_have_this_avatar: "現在のあなたのアバターです:"
       privacy: プライバシー
       subscription: 
         card_expiration: 期限
@@ -1958,7 +1940,6 @@ ja:
       invitation_sent_to_html: "あなたのメールアドレスを確認するため、招待状が<i>%{email}</i>に送られました。"
       problems_html: "問題が解決されない場合、お手数ですが%{support} までご連絡願います。"
       problems_title: 認証メールが届いていませんか？
-      resend: "メールが見つかりませんか？こちら<a href='%{link}'>こちら再送</a>をクリックする事により、認証メールを再送します。"
       spam: メールがスパムメールとして分類されていないか確認してください。
       title: メールを確認
       wrong_address_html: "メールアドレスが間違っていませんか？もしタイプミスの場合、<a href='%{link}'>登録を中止</a>し、新しいアカウントを有効なメールアドレスにて作成してください。 "
@@ -1968,23 +1949,6 @@ ja:
     user: 
       formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: プロジェクトから削除
-    welcome: 
-      get_started: Teamboxを始めよう!
-      intro1: "ようこそ新メンバー! <br/>Teamboxを一日の出発点にするためにはどうすればいいか、すぐにわかります。"
-      intro2: まずは、<b>共同作業</b>のためにプロジェクトを作成しましょう。
-      projects: 
-        create_your_first_project: "イベントや、デザインや、製品開発など... さぁ、今すぐ<a href='%{link}'>最初のプロジェクトを作成</a>しましょう!"
-        share_and_collaborate: 会話での共同作業や、ファイルを共有しましょう。プロジェクトには、プロジェクト・スタートーページの更新や、会話、タスク、ページとファイルなどがあります。
-        title: プロジェクト
-      spread: 
-        facebook: Facebook
-        help: "<b>私達に協力してください。</b> Teamboxをどのように使っているかを"
-        in_your_site: あなたのサイトで友達に伝えてください!
-        reasons: 私達はTeamboxがあなたの役に立つことを願って、長年Teamboxに取り組んでいます。<br/>私達はあなたと同じく、使命と意欲を持った開発者です。
-        tell_us: "Teamboxを楽しんでいただけたなら、ぜひ私達に<a href='mailto:%{address}'>メールで</a>お知らせください。"
-        title: 私達のことも好きになっていただけますか?
-        twitter: Twitterや
-      stop_welcome: 「ようこそ」タブを表示しないようにする
   weakling: 
     average: 平均
     default: 最低5文字必要です

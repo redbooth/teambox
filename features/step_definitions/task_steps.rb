@@ -173,7 +173,7 @@ end
 Then /^I should see "([^\"]+)" in the task thread title$/ do |msg|
   link = false
   wait_until do
-    link = find(".thread[data-class=task] p.thread_title a")
+    link = find(".thread[data-class=task] .thread_title a")
   end
   comment = link.text
   comment.should match(/#{msg}/)

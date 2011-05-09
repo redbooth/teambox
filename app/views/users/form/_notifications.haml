@@ -6,6 +6,39 @@
   .check_box.notify
     = f.check_box :notify_tasks
     = f.label :notify_tasks, t('.notify_tasks')
+
+%br
+%h3= t('.notification_options')
+.watch_new= t('.watch_new_item')
+%table.notifications
+  %tr.sub-header
+    %th.project= t('.project_name')
+    %th.digest= t('.digest')
+    %th.checkbox= t('.watch_new_task')
+    %th.checkbox= t('.watch_new_conversation')
+    %th.checkbox= t('.watch_new_page')
+  %tr
+    %td.project= t('.default')
+    %td= f.select :default_digest, digest_select_options
+    %td.checkbox= f.check_box :default_watch_new_task
+    %td.checkbox= f.check_box :default_watch_new_conversation
+    %td.checkbox= f.check_box :default_watch_new_page
+
+  = f.fields_for :people do |person|
+    %tr
+      %td.project= person.object.project.name
+      %td= person.select :digest, digest_select_options
+      %td.checkbox= person.check_box :watch_new_task
+      %td.checkbox= person.check_box :watch_new_conversation
+      %td.checkbox= person.check_box :watch_new_page
+
+.notifications.many_fields
+  .notify
+    = f.label :digest_delivery_hour, t('.digest_delivery_time')
+    = f.select :digest_delivery_hour, (0..24).collect {|i| [ l(Time.now.at_midnight + i.hours, :format => :short), i ] }
   .check_box.notify
     = f.check_box :wants_task_reminder
     = f.label :wants_task_reminder, t('.wants_task_reminder')
+  .check_box.notify
+    = f.check_box :instant_notification_on_mention
+    = f.label :instant_notification_on_mention, t('.notify_on_mention')

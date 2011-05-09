@@ -1,12 +1,26 @@
 %h3= t('.title')
 %p= t('.task_list')
-.name.text_field
-  = f.label :name, t('.name_html')
-  = f.text_field :name, :autofocus => true
-%p.optional= t('.optional')
-.pick_date
-  = f.label :start_on, t('.start_on_html')
-  = date_picker(f, :start_on)
-.pick_date
-  = f.label :finish_on, t('.finish_on_html')
-  = date_picker(f, :finish_on)
+#traditional_task_list_form
+  .name.text_field
+    = f.label :name, t('.name_html')
+    = f.text_field :name, :autofocus => true
+    %a.template_link.create_from_template{ :href => '#' }
+      = t '.or_from_template'
+  %p.optional= t('.optional')
+  .pick_date
+    = f.label :start_on, t('.start_on_html')
+    = date_picker(f, :start_on)
+  .pick_date
+    = f.label :finish_on, t('.finish_on_html')
+    = date_picker(f, :finish_on)
+#template_task_list_form{ :style => 'display: none;' }
+  .template.text_field
+    = f.label :template, 'Create a task list from a template'
+    - if project.organization.task_list_templates.any?
+      = f.select :template, project.organization.task_list_templates.collect { |t| [t.name, t.id] }, :include_blank => true
+    - else
+      %p
+        = t '.no_templates_yet_html', :link => link_to(t('.task_list_templates_page'), organization_task_list_templates_path(project.organization))
+    %a.template_link.create_traditional{ :href => '#' }
+      = t '.or_from_scratch'
+

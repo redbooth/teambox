@@ -1,4 +1,7 @@
 class ApiV1::APIController < ApplicationController
+  include Oauth::Controllers::ApplicationControllerMethods
+  Oauth2Token = ::Oauth2Token
+  
   skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token, :add_chrome_frame_header
 
   API_LIMIT = 50
@@ -9,8 +12,26 @@ class ApiV1::APIController < ApplicationController
     api_error(:unauthorized, :type => 'InsufficientPermissions', :message => 'Insufficient permissions')
   end
   
+  def current_user
+    @current_user ||= (login_from_session ||
+                       login_from_basic_auth ||
+                       login_from_cookie ||
+                       login_from_oauth) unless @current_user == false
+  end
+  
+  def login_from_oauth
+    user = Authenticator.new(self,[:token]).allow? ? current_token.user : nil
+    user.current_token = current_token if user
+    user
+  end
+  
   def access_denied
-    api_error(:unauthorized, :type => 'AuthorizationFailed', :message => 'Login required')
+    api_error(:unauthorized, :type => 'AuthorizationFailed', :message => @access_denied_message || 'Login required')
+  end
+  
+  def invalid_oauth_response(code=401,message="Invalid OAuth Request")
+    @access_denied_message = message
+    false
   end
   
   def load_project
@@ -79,13 +100,13 @@ class ApiV1::APIController < ApplicationController
   
   def api_wrap(object, options={})
     objects = if object.respond_to? :each
-      object.map{|o| o.to_api_hash(options) }
+      object.map{|o| o.to_api_hash(options.merge(:emit_type => true)) }
     else
-      object.to_api_hash(options)
+      object.to_api_hash(options.merge(:emit_type => true))
     end
     
     if options[:references] || options[:reference_collections]
-      { :objects => objects }.tap do |wrap|
+      { :type => 'List', :objects => objects }.tap do |wrap|
         # List of messages to send to the object to get referenced objects
         if options[:references]
           wrap[:references] = Array(object).map do |obj|
@@ -128,7 +149,7 @@ class ApiV1::APIController < ApplicationController
   end
   
   def handle_api_error(object,options={})
-    errors = object.try(:errors)||{}
+    errors = (object.try(:errors)||{}).to_hash
     errors[:type] = 'InvalidRecord'
     errors[:message] = 'One or more fields were invalid'
     respond_to do |f|
@@ -161,16 +182,16 @@ class ApiV1::APIController < ApplicationController
     end
   end
   
-  def api_range
+  def api_range(table_name)
     since_id = params[:since_id]
     max_id = params[:max_id]
     
     if since_id and max_id
-      ['id > ? AND id < ?', since_id, max_id]
+      ["#{table_name}.id > ? AND #{table_name}.id < ?", since_id, max_id]
     elsif since_id
-      ['id > ?', since_id]
+      ["#{table_name}.id > ?", since_id]
     elsif max_id
-      ['id < ?', max_id]
+      ["#{table_name}.id < ?", max_id]
     else
       []
     end

@@ -180,6 +180,14 @@ describe Invitation do
       invitation = @project.new_invitation(@inviter, :user_or_email => "sigmund.freud@gmail.com")
       invitation.should_not be_valid
     end
+    
+    it "should still return a valid inviter if they are deleted" do
+      invitation = @project.new_invitation(@inviter, :user_or_email => "sigmund.freud@gmail.com")
+      invitation.save
+      @inviter.destroy
+      invitation.reload
+      invitation.user.should_not == nil
+    end
   end
   
   describe "an existing invitation" do

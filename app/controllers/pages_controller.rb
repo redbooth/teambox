@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :load_page, :only => [ :show, :edit, :update, :reorder, :destroy ]
+  before_filter :load_page, :only => [ :show, :edit, :update, :reorder, :destroy, :watch, :unwatch ]
   before_filter :set_page_title
   
   rescue_from CanCan::AccessDenied do |exception|
@@ -15,9 +15,6 @@ class PagesController < ApplicationController
     
     respond_to do |f|
       f.any(:html, :m)
-      f.xml { render :xml    => @pages.to_xml(:include => :slots, :root => 'pages') }
-      f.json{ render :as_json => @pages.to_xml(:include => :slots, :root => 'pages') }
-      f.yaml{ render :as_yaml => @pages.to_xml(:include => :slots, :root => 'pages') }
       f.rss { render :layout => false }
     end
   end
@@ -37,10 +34,8 @@ class PagesController < ApplicationController
     respond_to do |f|
       if @page.save
         f.any(:html, :m) { redirect_to project_page_path(@current_project,@page) }
-        handle_api_success(f, @page, true)
       else
         f.any(:html, :m) { render :new }
-        handle_api_error(f, @page)
       end
     end
   end
@@ -50,9 +45,6 @@ class PagesController < ApplicationController
     
     respond_to do |f|
       f.any(:html, :m)
-      f.xml { render :xml    => @page.to_xml(:include => [:slots, :objects]) }
-      f.json{ render :as_json => @page.to_xml(:include => [:slots, :objects]) }
-      f.yaml{ render :as_yaml => @page.to_xml(:include => [:slots, :objects]) }
     end
   end
   
@@ -76,10 +68,8 @@ class PagesController < ApplicationController
     respond_to do |f|
       if @page.update_attributes(params[:page])
         f.any(:html, :m)  { redirect_to project_page_path(@current_project,@page) }
-        handle_api_success(f, @page)
       else
         f.any(:html, :m)  { render :edit }
-        handle_api_error(f, @page)
       end
     end
   end
@@ -110,7 +100,6 @@ class PagesController < ApplicationController
     
     respond_to do |f|
       f.js   { render :layout => false }
-      handle_api_success(f, @page)
     end
   end
   
@@ -136,14 +125,27 @@ class PagesController < ApplicationController
       respond_to do |f|
         flash[:success] = t('deleted.page', :name => @page.to_s)
         f.any(:html, :m)  { redirect_to project_pages_path(@current_project) }
-        handle_api_success(f, @page)
       end
     else
       respond_to do |f|
         flash[:error] = t('common.not_allowed')
         f.any(:html, :m) { redirect_to project_page_path(@current_project,@page) }
-        handle_api_error(f, @page)
       end
+    end
+  end
+
+  def watch
+    authorize! :watch, @page
+    @page.add_watcher(current_user)
+    respond_to do |f|
+      f.js { render :layout => false }
+    end
+  end
+
+  def unwatch
+    @page.remove_watcher(current_user)
+    respond_to do |f|
+      f.js { render :layout => false }
     end
   end
 

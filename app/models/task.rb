@@ -24,8 +24,9 @@ class Task < RoleRecord
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| %w[body hours human_hours uploads_attributes google_docs_attributes].all? { |k| comment[k].blank? } }
 
-  attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes
+  attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes, :user
 
+  validates_presence_of :user
   validates_presence_of :name, :message => I18n.t('tasks.errors.name.cant_be_blank')
   validates_length_of   :name, :maximum => 255, :message => I18n.t('tasks.errors.name.too_long')
   validates_inclusion_of :status, :in => STATUSES.values, :message => "is not a valid status"
@@ -37,8 +38,10 @@ class Task < RoleRecord
   attr_accessor :updating_date
 
   after_save :update_tasks_counts
+  before_validation :nilize_assigned_id
+  before_validation :set_comments_target
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
-  before_save :set_comments_author, :if => :updating_user
+  before_validation :set_comments_author, :if => :updating_user
   before_save :transition_from_new_to_open, :if => :assigned_id?
   before_save :save_changes_to_comment, :if => :track_changes?
   before_save :save_completed_at
@@ -87,6 +90,11 @@ class Task < RoleRecord
   
   def unassigned?
     !assigned
+  end
+
+  #we can rely on assigned_id being nil
+  def assigned_id
+    self[:assigned_id] == 0 ? nil : self[:assigned_id]
   end
 
   def assigned_to?(user)
@@ -149,7 +157,7 @@ class Task < RoleRecord
 
     comment = case activity[:event_type]
     when 'story_create'
-      "#{story[:description]}\n\n<a href='#{story[:url]}'>View on #PT</a>"
+      "#{story[:description]}\n\n<a href=http://www.pivotaltracker.com/story/show/#{story[:id]}>View on #PT</a>"
     when 'story_update'
       if story[:current_state]
         # TODO: setting assigned person all the time might not be what we want
@@ -199,7 +207,7 @@ class Task < RoleRecord
   end
 
   define_index do
-    where "`tasks`.`deleted` = 0"
+    where Task.undeleted_clause_sql
 
     indexes name, :sortable => true
 
@@ -207,11 +215,18 @@ class Task < RoleRecord
     indexes comments.user.first_name, :as => :user_first_name
     indexes comments.user.last_name, :as => :user_last_name
     indexes comments.uploads(:asset_file_name), :as => :upload_name
+    indexes comments.google_docs(:title), :as => :google_doc_name
 
     has project_id, created_at, updated_at
   end
 
   protected
+
+  #don't store 0 when assigned_id was set by a string
+  def nilize_assigned_id
+    self[:assigned_id] = nil if assigned_id.to_i == 0
+  end
+
   def check_asignee_membership
     unless project.people.include?(assigned)
       errors.add :assigned, :doesnt_belong
@@ -228,6 +243,10 @@ class Task < RoleRecord
   def remember_comment_created # before_update
     @comment_created = comments.any?(&:new_record?)
     true
+  end
+  
+  def set_comments_target
+    comments.each{|c|c.target = self if c.target.nil?}
   end
 
   def save_changes_to_comment # before_save

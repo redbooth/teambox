@@ -1,0 +1,6 @@
+%h2= t('.title')
+- @watch_list_by_project.each do |project, watch_list|
+  .project= project
+  .watch_list
+    - watch_list.each do |watcher|
+      = render watcher

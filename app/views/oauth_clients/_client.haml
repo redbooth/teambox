@@ -1,0 +1,5 @@
+.oauth_client[client]
+  .name
+    %h2= link_to client.name, oauth_client_path(client.id)
+  .actions
+    = link_to t('.edit'), edit_oauth_client_path(client)

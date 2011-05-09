@@ -19,6 +19,12 @@ class ApplicationController < ActionController::Base
                 :load_community_organization,
                 :add_chrome_frame_header
 
+  # Revert behavior to rails < 3.0.4 where an invalid request (aka without csrf token)
+  # won't destroy the session but just raise an invalid authenticity token exception.
+  def handle_unverified_request
+    raise(ActionController::InvalidAuthenticityToken)
+  end
+
   # If the parameter ?nolayout=1 is passed, then we will render without a layout
   # If the parameter ?extractparts=1 is passed, then we will render blocks for content and sidebar
   layout proc { |controller|
@@ -73,13 +79,15 @@ class ApplicationController < ActionController::Base
         elsif @current_project.invitations.exists?(:invited_user_id => current_user)
           # there is an invitation pending for accept
           redirect_to project_invitations_path(@current_project)
+        elsif @current_project.organization.is_admin?(current_user)
+          return
         else
           # sorry, no dice
           if [:rss, :ics].include? request.formats.map(&:symbol)
             render :nothing => true
           else
             respond_to do |f|
-              f.any(:html, :m) { render 'projects/not_in_project', :status => :forbidden }
+              f.any(:html, :m, :print) { render 'projects/not_in_project', :status => :forbidden }
             end
           end
         end
@@ -203,6 +211,7 @@ class ApplicationController < ActionController::Base
         response.content_type = Mime::JSON
         render :json => record.errors.as_json, :status => 400
       elsif iframe?
+        response.content_type = Mime::HTML
         render :template => 'shared/iframe_error', :layout => false, :locals => { :data => record.errors.as_json }
       end
     end
@@ -217,55 +226,6 @@ class ApplicationController < ActionController::Base
         end
       end
       split_events
-    end
-    
-    # http://www.coffeepowered.net/2009/02/16/powerful-easy-dry-multi-format-rest-apis-part-2/
-    def render(opts = nil, extra_options = {}, &block)
-      if opts && opts.is_a?(Hash) then
-        if opts[:to_yaml] or opts[:as_yaml] then
-          headers["Content-Type"] = "text/plain;"
-          text = nil
-          if opts[:as_yaml] then
-            text = Hash.from_xml(opts[:as_yaml]).to_yaml
-          else
-            text = Hash.from_xml(render_to_string(:template => opts[:to_yaml], :layout => false)).to_yaml
-          end
-          super opts.merge(:text => content, :layout => false)
-        elsif opts[:to_json] or opts[:as_json] then
-          content = nil
-          if opts[:to_json] then
-            content = Hash.from_xml(render_to_string(:template => opts[:to_json], :layout => false)).to_json
-          elsif opts[:as_json] then
-            content = Hash.from_xml(opts[:as_json]).to_json
-          end
-          cbparam = params[:callback] || params[:jsonp]
-          content = "#{cbparam}(#{content})" unless cbparam.blank?
-          super opts.merge(:json => content, :layout => false)
-        else
-          super(opts, extra_options, &block)
-        end
-      else
-        super(opts, extra_options, &block)
-      end
-    end
-    
-    def handle_api_error(f,object)
-      error_list = object.nil? ? [] : object.errors
-      f.xml  { render :xml => error_list.to_xml,     :status => :unprocessable_entity }
-      f.json { render :as_json => error_list.to_xml, :status => :unprocessable_entity }
-      f.yaml { render :as_yaml => error_list.to_xml, :status => :unprocessable_entity }
-    end
-    
-    def handle_api_success(f,object,is_new=false)
-      if is_new
-        f.xml  { render :xml => object.to_xml, :status => :created }
-        f.json { render :as_json => object.to_xml, :status => :created }
-        f.yaml { render :as_yaml => object.to_xml, :status => :created }
-      else
-        f.xml  { head :ok }
-        f.json { head :ok }
-        f.yaml { head :ok }
-      end
     end
     
     def calculate_position(obj)

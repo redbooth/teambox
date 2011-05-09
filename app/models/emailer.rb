@@ -206,6 +206,26 @@ class Emailer < ActionMailer::Base
     })
   end
 
+  def project_digest(user_id, person_id, project_id, target_types_and_ids, comment_ids)
+    @recipient     = User.find(user_id)
+    @person        = Person.find(person_id)
+    @project       = Project.find(project_id)
+    @targets = target_types_and_ids.map do |target|
+      case target[:target_type]
+      when 'Conversation'
+        Conversation.find target[:target_id]
+      when 'Task'
+        Task.find target[:target_id]
+      end
+    end
+    @comments      = Comment.where(:id => comment_ids)
+
+    mail({
+      :to            => @recipient.email,
+      :subject       => I18n.t("emailer.digest.title.#{@person.digest_type}", :project => @project.name)
+    })
+  end
+
   # requires data from rake db:seed
   class Preview < MailView
     def notify_task
@@ -216,6 +236,19 @@ class Emailer < ActionMailer::Base
     def notify_conversation
       conversation = Conversation.find_by_name "Seth Godin's 'What matters now'"
       ::Emailer.notify_conversation(conversation.user.id, conversation.project.id, conversation.id)
+    end
+
+    def project_digest
+      project_id = Project.first
+      person_id = Project.first.people.first.id
+      user_id = Project.first.users.first.id
+
+      comments = Project.first.comments
+      comment_ids = comments.map(&:id).shuffle[0 .. (comments.size/3)]
+
+      target_types_and_ids = comments.map {|c| {:target_type => c.target_type, :target_id => c.target_id}}.uniq
+
+      ::Emailer.project_digest(user_id, person_id, project_id, target_types_and_ids, comment_ids)
     end
 
     def daily_task_reminder

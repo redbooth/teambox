@@ -2,16 +2,19 @@ class ApiV1::PagesController < ApiV1::APIController
   before_filter :load_page, :only => [:show, :update, :reorder, :destroy]
   
   def index
-    query = {:conditions => api_range,
-             :limit => api_limit,
-             :order => 'id DESC',
-             :include => [:project, :user]}
+    authorize! :show, @current_project||current_user
     
-    @pages = if @current_project
-      @current_project.pages.where(api_scope).all(query)
+    context = if @current_project
+      @current_project.pages.where(api_scope)
     else
-      Page.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      Page.where(:project_id => current_user.project_ids).where(api_scope)
     end
+    
+    @pages = context.except(:order).
+                     where(api_range('pages')).
+                     limit(api_limit).
+                     order('pages.id DESC').
+                     includes([:project, :user])
     
     api_respond @pages, :include => :slots, :references => [:project, :user]
   end
@@ -27,6 +30,7 @@ class ApiV1::PagesController < ApiV1::APIController
   end
     
   def show
+    authorize! :show, @page
     api_respond @page, :include => [:slots, :objects]
   end
   
@@ -86,9 +90,9 @@ class ApiV1::PagesController < ApiV1::APIController
   
   def load_page
     @page = if @current_project
-      @current_project.pages.find(params[:id])
+      @current_project.pages.find_by_id(params[:id])
     else
-      Page.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+      Page.where(:project_id => current_user.project_ids).find_by_id(params[:id])
     end
     api_error :not_found, :type => 'ObjectNotFound', :message => 'Page not found' unless @page
   end

@@ -41,9 +41,11 @@ module UsersHelper
   
   def load_javascript_user_data
     javascript_tag %(
-      my_user = #{json_user}
-      my_projects = #{json_people}
-      current_project = #{@current_project ? @current_project.id : 'null'}
+      my_user = #{json_user};
+      my_projects = #{json_projects};
+      my_organizations = #{json_organizations};
+      my_tasks = #{json_tasks};
+      current_project = #{@current_project ? @current_project.id : 'null'};
     )
   end
   
@@ -161,26 +163,56 @@ module UsersHelper
     EOS
   end
 
+  def digest_select_options
+    Person::DIGEST.collect {|option,index| [ t(".digest_option_#{option}"), index ] }.to_a.sort_by {|k,v| v }
+  end
+
   protected
+
+    def json_tasks
+      current_user.nearest_pending_tasks.to_json
+    end
 
     def json_user
       {
         :id => current_user.id,
         :username => current_user.login, 
         :splash_screen => current_user.splash_screen,
-        :collapse_activities => !!current_user.settings["collapse_activities"]
+        :collapse_activities => !!current_user.settings["collapse_activities"],
+        :keyboard_shortcuts => !!current_user.settings["keyboard_shortcuts"],
+        :first_day_of_week => current_user.first_day_of_week,
+        :stats => {
+          :projects => current_user.get_stat('projects'),
+          :conversations => current_user.get_stat('conversations'),
+          :tasks => current_user.get_stat('tasks'),
+          :pages => current_user.get_stat('pages'),
+          :invites => current_user.get_stat('invites')
+        },
+        :first_steps => current_user.show_first_steps,
+        :badges => current_user.badges,
+        :show_badges => current_user.show_badges
       }.to_json
     end
 
-    def json_people
+    def json_projects
       projects = {}
-      current_user.people.all(:include => :project).collect do |p|
+      current_user.people.all(:include => :project).each do |p|
         projects[p.project.id] = {
           :permalink => p.project.permalink,
           :role => p.role,
+          :organization_id => p.project.organization_id,
+          :archived => p.project.archived,
           :name => h(p.project.name) }
       end
       projects.to_json
+    end
+
+    def json_organizations
+      Organization.find(current_user.projects.collect(&:organization_id).compact).collect do |org| {
+        :id => org.id,
+        :name => org.name,
+        :permalink => org.permalink }
+      end.to_json
     end
 
 end

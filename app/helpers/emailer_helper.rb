@@ -4,7 +4,7 @@ module EmailerHelper
   include TasksHelper
 
   def email_global
-    'font-size: 14px; color: rgb(50,50,50); font-family: Helvetica, Arial'
+    'font-size: 14px; color: rgb(50,50,50); font-family: Helvetica, Arial; margin: 20px 0'
   end
 
   def email_box(target = nil)
@@ -12,19 +12,25 @@ module EmailerHelper
     when Task
       case target.status
       when 0 # new
-        'background-color: #f5f5f5; border: 1px #cccccc solid;'
+        'background-color: #f5f5f5; border-bottom: 2px #cccccc solid;'
       when 2 # hold
-        'background-color: #ffddff; border: 1px #bb99bb solid;'
+        'background-color: #ffddff; border-bottom: 2px #bb99bb solid;'
       when 3 # resolved
-        'background-color: #ddffdd; border: 1px #66aa66 solid;'
+        'background-color: #ddffdd; border-bottom: 2px #66aa66 solid;'
       when 4 # rejected
-        'background-color: #ffdddd; border: 1px #aa6666 solid;'
+        'background-color: #ffdddd; border-bottom: 2px #aa6666 solid;'
       else # assigned and default
-        'background-color: rgb(255,255,200); border: 1px rgb(220,220,150) solid;'
+        'background-color: rgb(255,255,200); border-bottom: 2px rgb(220,220,150) solid;'
       end
+    when Conversation
+      'background-color: rgb(245,245,245); border-bottom: 2px rgb(200,200,200) solid;'
     else
-      'background-color: rgb(255,255,200); border: 1px rgb(220,220,150) solid;'
-    end + 'margin: 10px; padding: 10px'
+      'background-color: rgb(255,255,220); border: 1px rgb(220,220,150) solid;'
+    end + 'padding: 5px 10px; margin: 20px 0;'
+  end
+
+  def email_button
+    "border-top: 1px solid #96D1F8; background: #65A9D7; background: -webkit-gradient(linear, left top, left bottom, from(#3E779D), to(#65A9D7)); background: -moz-linear-gradient(top, #3E779D, #65A9D7); padding: 4px 10px; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: rgba(0, 0, 0, 1) 0 1px 0; -moz-box-shadow: rgba(0, 0, 0, 1) 0 1px 0; box-shadow: rgba(0, 0, 0, 1) 0 1px 0; text-shadow: rgba(0, 0, 0, .4) 0 1px 0; color: white; font-size: 14px; font-family: Helvetica, serif; text-decoration: none; vertical-align: middle; margin: 5px 10px;"
   end
 
   def email_text(size)
@@ -47,8 +53,9 @@ module EmailerHelper
     render 'emailer/dont_answer'
   end
 
-  def emailer_list_comments(comments)
-    render :partial => 'emailer/comment', :collection => comments, :locals => { :unread => comments.first }
+  def emailer_list_comments(comments, unread = nil )
+    unread ||= comments.first
+    render :partial => 'emailer/comment', :collection => comments, :locals => { :unread => unread }
   end
 
   def emailer_recent_tasks(project, user)
@@ -107,15 +114,7 @@ module EmailerHelper
   end
 
   def email_navigation
-    "#{organization_header_bar_colour}order-bottom-left-radius: 5px 5px; border-bottom-right-radius: 5px 5px; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px;padding: 4px 10px;"
-  end
-
-  def inline_organization_link_colour
-    "color: ##{@organization ? @organization.settings['colours']['links'] : ''}"
-  end
-
-  def inline_organization_text_colour
-    "font-color: ##{@organization ? @organization.settings['colours']['text'] : ''}"
+    "order-bottom-left-radius: 5px 5px; border-bottom-right-radius: 5px 5px; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px;padding: 4px 10px;"
   end
 
 end

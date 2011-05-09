@@ -1,22 +1,2 @@
-#report
-  %h1
-    - if @current_project
-      = t('.title_in_project', :project => h(@current_project))
-    - else
-      = t('.title')
+= javascript_tag "Search.getResults('#{params[:q]}')"
 
-  - form_tag search_path, :method => 'get' do
-    = text_field_tag :q, @search_terms, :id => 'search_terms'
-    = submit_tag(@comments ? t('.search_again') : t('search.submit'), :name => nil)
-
-- if @results
-
-  - if @results.any?
-    %h2= t('.report', :count => @results.total_entries, :term => h(@search_terms))
-    #results
-      = render :partial => 'search/result', :collection => @results
-    = will_paginate @results
-
-  - else
-    %h2= t('.no_results.title', :term => h(@search_terms))
-    %p= t('.no_results.explain')
