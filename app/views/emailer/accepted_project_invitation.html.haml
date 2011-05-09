@@ -1,0 +1,19 @@
+.email{ :style => email_global }
+
+  = dont_answer
+
+  .box{ :style => email_box }
+    %p{ :style => email_text(:big) }
+      = t('emailer.accepted_invitation.user_has_accepted', :project => @project.name, :user => @invited_user.name)
+    %h2{ :style => email_text(:big) }
+      = link_to t('emailer.accepted_invitation.go_to_project', :project => @project.name, :user => @invited_user.name), project_url(@project)
+    %p{ :style => email_text(:normal) }
+      = t('emailer.accepted_invitation.you_can_now_collaborate')
+    %p
+      %strong
+        = t('emailer.invitation.current_users')
+      = @project.people.collect { |p| p.name }.to_sentence
+
+  .footer{ :style => email_text(:small) }
+    %p
+      = t('emailer.invitation.report_abuse')

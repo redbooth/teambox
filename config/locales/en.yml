@@ -1439,6 +1439,11 @@ en:
       subject: "%{user} shared [%{project}] with you"
       you_have_been_added_to: "You are now a member of the project %{project}"
       project_link: "Click on the link below to start collaborating on %{project} now"
+    accepted_invitation:
+      subject: "%{user} accepted your invitation to [%{project}]"
+      user_has_accepted: "%{user} has accepted your invitation to %{project}"
+      go_to_project: "Go to %{project} now, and collaborate with %{user}"
+      you_can_now_collaborate: "How can you get started? Post conversations or create some tasks on the project!"
     invitation:
       subject: "%{user} shared [%{project}] with you"
       collaborate_with: "%{name} wants to collaborate with you on Teambox:"

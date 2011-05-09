@@ -53,11 +53,16 @@ Feature: Invite a user to a project
     And I fill in "Password" with "tellastory"
     And I fill in "Confirm password" with "tellastory"
     And I press "Create account"
+    Then show me the page
     Then I should see "Ruby Rockstars"
     And I should see "Thanks for signing up!"
     When I go to the people page of the "Ruby Rockstars" project
     Then I should see "Edward Bloom"
     And I should see "Mislav Marohnić"
+    Then "mislav@teambox.com" should receive an email
+    When "mislav@teambox.com" opens the email
+    Then I should see "Edward Bloom has accepted your invitation to Ruby Rockstars" in the email body
+
 
   Scenario: Mislav is invited to a project by someone else
     Given I am logged in as @mislav
@@ -94,6 +99,7 @@ Feature: Invite a user to a project
     And I press "Invite"
     Then "pablo@teambox.com" should receive an email
     And  "jordi@teambox.com" should receive an email
+
   Scenario: Mislav leaves a project
 
   Scenario: Mislav resends invitation email

@@ -111,6 +111,21 @@ class Emailer < ActionMailer::Base
     )
   end
 
+  # Sent to the person who invited the user when an invitation is accepted
+  def accepted_project_invitation(invited_user_id, invitation_id)
+    @invitation     = Invitation.find(invitation_id)
+    @referral       = @invitation.user
+    @invited_user   = User.find(invited_user_id)
+    @project        = @invitation.project
+    mail(
+      :to         => @referral.email,
+      :from       => self.class.from_user(nil, @referral),
+      :subject    => I18n.t("emailer.accepted_invitation.subject",
+                            :user => @invited_user.name,
+                            :project => @invitation.project.name)
+    )
+  end
+
   def notify_export(data_id)
     @data  = TeamboxData.find(data_id)
     @user  = @data.user
@@ -325,6 +340,18 @@ class Emailer < ActionMailer::Base
       invitation.is_silent = true
       invitation.save!(false)
       ::Emailer.project_invitation(invitation.id)
+    end
+
+    def accepted_project_invitation
+      invitation = Invitation.new do |i|
+        i.token = ActiveSupport::SecureRandom.hex(20)
+        i.user = User.first
+        i.invited_user = User.last
+        i.project = Project.first
+      end
+      invitation.is_silent = true
+      invitation.save!(false)
+      ::Emailer.accepted_project_invitation(invitation.id)
     end
 
     def confirm_email
