@@ -138,10 +138,12 @@ document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, fo
            update('<strong>' + body.down('.before').down('.user').innerHTML + '</strong> ' + excerpt)
     
     // Update privacy status
-    if (e.memo.headerJSON.is_private && !thread.hasClassName('private'))
-      thread.addClassName('private')
-    else
+    if (e.memo.headerJSON.is_private) {
+      if (!thread.hasClassName('private'))
+        thread.addClassName('private')
+    } else {
       thread.removeClassName('private')
+    }
   }
   my_user.stats.conversations++;
   document.fire("stats:update");
