@@ -16,7 +16,8 @@ Feature: Logging In
   Scenario: Mislav logs in for the first time and sees the new project primer (he is not impressed)
     When I have confirmed my email
     And I go to the home page
-    Then I should see "Create your first project!"
+    Then show me the page
+    Then I should see "Create a Project"
 
   Scenario: Mislav logout and try to login with wrong password and username
     When I log out
