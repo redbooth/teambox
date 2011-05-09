@@ -53,7 +53,6 @@ Feature: Invite a user to a project
     And I fill in "Password" with "tellastory"
     And I fill in "Confirm password" with "tellastory"
     And I press "Create account"
-    Then show me the page
     Then I should see "Ruby Rockstars"
     And I should see "Thanks for signing up!"
     When I go to the people page of the "Ruby Rockstars" project
