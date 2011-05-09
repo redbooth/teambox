@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   before_filter :load_projects, :only => [:index]
   before_filter :set_page_title
   before_filter :disallow_for_community, :only => [:new, :create]
-  before_filter :load_pending_projects, :only => [:index, :show]
+  before_filter :load_pending_projects, :only => [:index, :show, :new, :create]
   
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
