@@ -256,6 +256,18 @@ describe Conversation do
       task = conversation.convert_to_task!
       lambda {Conversation.find(conversation.id)}.should raise_error(ActiveRecord::RecordNotFound)
     end
+    
+    it "all related comments and activities should be private" do
+      conversation = Factory.create(:conversation, :is_private => true, :simple => false)
+      conversation.comments_attributes = {"0" => { :body => "Just sayin' hi" }}
+      conversation.save!
+      task = conversation.convert_to_task!
+      task.should_not be_nil
+      task.is_private.should == true
+      task.comments(true).any?{|c|c.is_private}.should == true
+      Activity.where(:target_id => task.id, :target_type => 'Task').each{|a| a.is_private.should == true}
+      Activity.where(:comment_target_id => task.id, :comment_target_type => 'Task').each{|a| a.is_private.should == true}
+    end
   end
   
   describe "private conversations" do
