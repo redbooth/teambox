@@ -29,8 +29,10 @@ class HooksController < ApplicationController
       @current_project.conversations.from_github JSON.parse(params[:payload])
     when 'email'
       Emailer.receive_params(params)
-    when 'pivotal'
+    when 'pivotal', 'pivotal_v2'
       @current_project.task_lists.from_pivotal_tracker(params[:activity])
+    when 'pivotal_v3'
+      @current_project.task_lists.from_pivotal_tracker(params[:activity], :v3)
     else
       raise ArgumentError
     end

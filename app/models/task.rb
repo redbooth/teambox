@@ -142,11 +142,19 @@ class Task < RoleRecord
   end
   
   TRACKER_STATUS_MAP = {
-    'started' => :open, 'delivered' => :hold, 'accepted' => :resolved, 'rejected' => :rejected
+    'unscheduled' => :new, 'started' => :open, 'delivered' => :hold, 'accepted' => :resolved, 'rejected' => :rejected
   }
   
-  def update_from_pivotal_tracker(author, activity)
-    story = activity[:stories][:story]
+  def update_from_pivotal_tracker(author, activity, version = :v2)
+    story = nil
+    if version == :v2
+      story = activity[:stories][:story]
+    elsif version == :v3
+      story = activity[:stories].first
+    else
+      raise ArgumentError, "Unknown version for task from pivotal tracker"
+    end
+    
     author_name = activity[:author]
     self.updating_user = author || self.user
 
