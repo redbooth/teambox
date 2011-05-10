@@ -60,7 +60,6 @@ Teambox::Application.routes.draw do
     match '/auth/failure' => 'auth#failure', :as => :auth_failure
     match '/complete_signup' => 'users#complete_signup', :as => :complete_signup
     match '/auth/:provider/unlink' => 'users#unlink_app', :as => :unlink_app
-    match '/auth/google' => 'auth#index', :as => :authorize_google_docs, :defaults => {:provider => 'google'}
 
     resources :google_docs do
       get :search, :on => :collection
