@@ -113,7 +113,7 @@ class Emailer < ActionMailer::Base
 
   # Sent to the person who invited the user when an invitation is accepted
   def accepted_project_invitation(invited_user_id, invitation_id)
-    @invitation     = Invitation.find(invitation_id)
+    @invitation     = Invitation.with_deleted.find(invitation_id)
     @referral       = @invitation.user
     @invited_user   = User.find(invited_user_id)
     @project        = @invitation.project
