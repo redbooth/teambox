@@ -439,10 +439,10 @@ ActiveRecord::Schema.define(:version => 20110517231302) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "position"
-    t.integer  "comments_count",  :default => 0,     :null => false
+    t.integer  "comments_count",            :default => 0,     :null => false
     t.integer  "last_comment_id"
     t.integer  "assigned_id"
-    t.integer  "status",          :default => 0
+    t.integer  "status",                    :default => 0
     t.date     "due_on"
     t.datetime "completed_at"
     t.datetime "created_at"

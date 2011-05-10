@@ -46,6 +46,7 @@ class Task < RoleRecord
   before_save :save_changes_to_comment, :if => :track_changes?
   before_save :save_completed_at
   before_validation :remember_comment_created, :on => :update
+  before_save :update_google_calendar_event
   
   def assigned
     @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
@@ -316,5 +317,100 @@ class Task < RoleRecord
   
   def transition_from_new_to_open # before_save
     self.status_name = :open if self.status_name == :new
+  end
+  
+  def to_google_calendar_event
+    GoogleCalendar::Event.new(options_for_google_calendar_event)
+  end
+  
+  def options_for_google_calendar_event
+    {
+      :title => self.name,
+      :details => "#{self.comments.first.try(:body)}\r\n\r\n#{"https://#{Teambox.config.app_domain}/projects/#{self.project.permalink}/tasks/#{self.id}"}",
+      :start => self.due_on ? self.due_on : nil,
+      :end => self.due_on ? self.due_on : nil
+    }
+  end
+  
+  def update_calendar_event(calendar_entry)
+    calendar_entry.title = self.name if self.name_changed?
+    calendar_entry.start = self.due_on if self.due_on_changed?
+    calendar_entry.end = self.due_on if self.due_on_changed?
+  end
+  
+  def update_google_calendar_event
+    begin
+      do_calendar_update
+    rescue => e
+      Rails.logger.warn "[GCal] Cannot perform google calendar event #{e.message}"
+      Rails.logger.warn e.backtrace
+    end
+  end
+  
+  def do_calendar_update
+    unless self.name_changed? || self.due_on_changed? || self.assigned_id_changed? || self.status_changed?
+      Rails.logger.debug "[GCal] Not updating google calendar as nothing we care about has changed"
+      return
+    else
+      Rails.logger.debug "[GCal] Google cal task changed? name:#{self.name_changed?} || due_on:#{self.due_on_changed?} || assigned:#{self.assigned_id_changed?} || status:#{self.status_changed?}"
+    end
+    
+    if !self.google_calendar_url_token.blank?
+      delete_old_events_if_required
+    end
+    
+    # Perform the main add action if this calendar is suitable
+    if self.assigned && self.assigned.user && !self.due_on.nil? && self.open?
+      gcal = self.assigned.user.get_calendar_app
+      return if gcal.nil?
+      
+      calendar = self.assigned.user.google_calendar(gcal)
+      return if calendar.nil?
+      
+      if self.google_calendar_url_token.blank? # Create a new calendar entry
+        event = gcal.create_event(calendar.url_token, self.to_google_calendar_event)
+        self.google_calendar_url_token = event.url_token
+      else # Update the exsiting entry with the new details
+        event = gcal.find_event(calendar.url_token, self.google_calendar_url_token)
+        update_calendar_event(event)
+        gcal.update_event(event)
+      end
+    end
+  end
+  
+  def delete_old_events_if_required
+    if !self.new_record? && self.assigned_id_changed? && !self.assigned_id_was.blank?
+      # We need to remove the calendar entry from the old user if they exist
+      Rails.logger.debug "[GCal] Assigned user changed from #{self.assigned_id_was.inspect} to #{self.assigned_id.inspect}"
+    
+      old_person = Person.find(self.assigned_id_was)
+      return if old_person.nil?
+    
+      gcal = old_person.user.get_calendar_app
+      return if gcal.nil?
+    
+      calendar = old_person.user.google_calendar(gcal)
+      return if calendar.nil?
+    
+      event = gcal.find_event(calendar.url_token, self.google_calendar_url_token)
+      gcal.delete_event(event)
+      self.google_calendar_url_token = nil
+    end
+  
+    if !self.new_record? && ((self.due_on_changed? && self.due_on.blank? && !self.due_on_was.blank?) || (self.status_changed? && !self.open?))
+      # We need to remove the calendar entry the user as it no longer has a due date or is no longer open
+      Rails.logger.debug "[GCal] Due on changed from #{self.due_on_was.inspect} to #{self.due_on.inspect}" if self.due_on_changed?
+      Rails.logger.debug "[GCal] Status changed from #{self.status_was.inspect} to #{self.status.inspect}" if self.status_changed?
+    
+      gcal = self.assigned.user.get_calendar_app
+      return if gcal.nil?
+    
+      calendar = self.assigned.user.google_calendar(gcal)
+      return if calendar.nil?
+    
+      event = gcal.find_event(calendar.url_token, self.google_calendar_url_token)
+      gcal.delete_event(event)
+      self.google_calendar_url_token = nil
+    end
   end
 end

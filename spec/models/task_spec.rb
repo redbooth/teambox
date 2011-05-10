@@ -396,4 +396,25 @@ describe Task do
     end
   end
 
+  describe "google calendar system" do
+    it "should create a correctly formatted GoogleCalendar::Event when sent #to_google_calendar_event" do
+      task = Factory(:task, :due_on => Date.today)
+      google_event = task.send(:to_google_calendar_event)
+      google_event.title.should == task.name
+      google_event.details.should be_nil
+      google_event.start.should == Date.today
+      google_event.end.should == Date.today
+      
+      task.due_on.should be_instance_of(Date)
+    end
+    
+    it "should create a correctly formatted GoogleCalendar::Event when sent #to_google_calendar_event with a body" do
+      task = Factory(:task, :comments => [Factory(:comment, :body => 'Do it by tomorrow')])
+      google_event = task.send(:to_google_calendar_event)
+      google_event.title.should == task.name
+      google_event.details.should == "Do it by tomorrow"
+      google_event.start.should == task.due_on
+      google_event.end.should == task.due_on
+    end
+  end
 end

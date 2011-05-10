@@ -64,6 +64,8 @@ Teambox::Application.routes.draw do
     resources :google_docs do
       get :search, :on => :collection
     end
+    
+    resources :google_calendars
 
     #RAILS 3 Useless resource?
     resources :reset_passwords

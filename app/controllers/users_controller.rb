@@ -178,6 +178,21 @@ class UsersController < ApplicationController
   end
 
   def calendars
+    oauth_info = Teambox.config.providers.detect { |p| p.provider == 'google' }
+    if oauth_info.nil?
+      Rails.logger.debug "There is no Google provider cannot list calendars"
+      return true
+    end
+    consumer = OAuth::Consumer.new(oauth_info.key, oauth_info.secret, GoogleCalendar::RESOURCES)
+    
+    app_link = current_user.app_links.find_by_provider('google')
+    if app_link.nil?
+      Rails.logger.debug "The user has not linked their Google account, cannot link calendars"
+      return true
+    end
+    
+    gcal = GoogleCalendar.new(app_link.credentials['token'], app_link.credentials['secret'], consumer)
+    @google_calendars = gcal.list_own
   end
 
   def feeds
