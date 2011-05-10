@@ -763,15 +763,11 @@
       if (oldIE) {
         this.iframe = $('<iframe src="javascript:0" tabindex="-1" />').hide().appendTo('body')[0].contentWindow;
       }
-      /*
       if ('onhashchange' in window && !oldIE) {
-        $(window).bind('hashchange', this.checkUrl);
+        jQuery(window).bind('hashchange', this.checkUrl);
       } else {
-      */
         setInterval(this.checkUrl, this.interval);
-      /*
       }
-      */
       historyStarted = true;
       return this.loadUrl();
     },
