@@ -130,7 +130,7 @@ class Conversation < RoleRecord
   end
   
   def set_comments_target
-    comments.each{|c| c.target = self if c.target.nil?}
+    comments.each{|c| c.target = self if c.target.nil? or c.new_record?}
   end
 
   def update_user_stats

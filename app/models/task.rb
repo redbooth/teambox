@@ -22,7 +22,7 @@ class Task < RoleRecord
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
   accepts_nested_attributes_for :comments, :allow_destroy => false,
-    :reject_if => lambda { |comment| %w[body hours human_hours uploads_attributes google_docs_attributes].all? { |k| comment[k].blank? } }
+    :reject_if => lambda { |comment| %w[is_private body hours human_hours uploads_attributes google_docs_attributes].all? { |k| comment[k].blank? } }
 
   attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes, :user
 
@@ -45,7 +45,7 @@ class Task < RoleRecord
   before_save :transition_from_new_to_open, :if => :assigned_id?
   before_save :save_changes_to_comment, :if => :track_changes?
   before_save :save_completed_at
-  before_update :remember_comment_created
+  before_validation :remember_comment_created, :on => :update
   
   def assigned
     @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
@@ -256,7 +256,7 @@ class Task < RoleRecord
   end
   
   def set_comments_target
-    comments.each{|c| c.target = self if c.target.nil? }
+    comments.each{|c| c.target = self if c.target.nil? or c.new_record? }
   end
 
   def save_changes_to_comment # before_save

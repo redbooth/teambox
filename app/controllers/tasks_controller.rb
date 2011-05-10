@@ -82,7 +82,7 @@ class TasksController < ApplicationController
     respond_to do |f|
       f.any(:html, :m) {
         if request.xhr? or iframe?
-          if @task.comment_created?
+          if success and @task.comment_created?
             comment = @task.comments(true).first
             response.headers['X-JSON'] = @task.to_json(:include => :assigned)
 
