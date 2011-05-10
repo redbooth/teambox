@@ -48,6 +48,10 @@ class Conversation
       end
 
       task.save
+
+      #Ensure correct order when rendering comments
+      task.comments(true)
+
       update_attribute :converted_to, task.id
 
       self.reload.destroy
