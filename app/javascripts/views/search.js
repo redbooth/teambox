@@ -19,7 +19,7 @@ Teambox.Views.Search = Backbone.View.extend({
   // Keyboard navigation for quick results
   navigateQuickResults: function(evt) {
     // When pressing Enter..
-    if (evt.keyCode === 13) {
+    if (evt.keyCode === Event.KEY_RETURN) {
       // Run full search, and prevent submitting the form
       if (this.highlight_index === 0) {
         this.submitSearch();
@@ -27,31 +27,32 @@ Teambox.Views.Search = Backbone.View.extend({
         var a = $('quicksearch_results').down('li.selected a');
         document.location = a.readAttribute('href');
       }
-      return false;
+      evt.stop();
+      return;
     }
 
     // Close the search box when clicking Esc
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === Event.KEY_ESC) {
       this.hideQuickResults();
       $('searchbox').blur();
-      return false;
+      evt.stop();
+      return;
     }
 
     // Prevent up/down cursor actions on the input
-    if (evt.keyCode === 38) { return false; }
-    if (evt.keyCode === 40) { return false; }
+    if (evt.keyCode === Event.KEY_UP) { evt.stop(); return; }
+    if (evt.keyCode === Event.KEY_DOWN) { evt.stop(); return; }
   },
 
   // Display the 20 most recent matching results
   showQuickResults: function(evt) {
     // Ignore Enter and Esc, since they are already handled on keydown
-    if (evt.keyCode === 13) { return false; }
-    if (evt.keyCode === 27) { return false; }
+    if (evt.keyCode === Event.KEY_RETURN) { evt.stop(); return; }
+    if (evt.keyCode === Event.KEY_ESC) { evt.stop(); return; }
 
     // Move highlighted element up or down, if possible
-    if (evt.keyCode === 38) { this.moveHighlight(-1); return false; }
-    if (evt.keyCode === 40) { this.moveHighlight(1); return false; }
-
+    if (evt.keyCode === Event.KEY_UP) { this.moveHighlight(-1); evt.stop(); return; }
+    if (evt.keyCode === Event.KEY_DOWN) { this.moveHighlight(1); evt.stop(); return; }
 
     var search_term = $('searchbox').value;
 
@@ -85,13 +86,13 @@ Teambox.Views.Search = Backbone.View.extend({
 
   // Move the highlighted index in quick results up and down
   moveHighlight: function(inc) {
+    if (!$('quicksearch_results')) { return; }
     this.highlight_index = (this.highlight_index + inc) || 0;
     var lis = $('quicksearch_results').select('li');
     this.highlight_index = [0, this.highlight_index].max();
     this.highlight_index = [lis.length-1, this.highlight_index].min();
     lis.invoke('removeClassName', 'selected');
     lis[this.highlight_index].addClassName('selected');
-    return false;
   },
 
   // Fade out the quick results dialog
@@ -109,7 +110,6 @@ Teambox.Views.Search = Backbone.View.extend({
   submitSearch: function() {
     this.hideQuickResults();
     document.location.hash = "#!/search/"+escape($('searchbox').value);
-    return false;
   },
 
   // Perform an API call to fetch full search results in Sphinx
