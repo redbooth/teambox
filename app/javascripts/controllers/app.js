@@ -1,23 +1,23 @@
 Teambox.Controllers.AppController = Backbone.Controller.extend({
   routes: {
-    '!/'                  : 'index',
-    '!/today'             : 'today',
-    '!/my_tasks'          : 'my_tasks',
-    '!/all_tasks'         : 'all_tasks',
-    '!/search/:terms'     : 'search',
-    '!/users/:id'         : 'users_show',
+    '/'                  : 'index',
+    '/today'             : 'today',
+    '/my_tasks'          : 'my_tasks',
+    '/all_tasks'         : 'all_tasks',
+    '/search/:terms'     : 'search',
+    '/users/:id'         : 'users_show',
     // projects
-    '!/projects'                            : 'projects_index',
-    '!/projects/new'                        : 'projects_new',
-    '!/projects/:id'                        : 'projects_show',
-    '!/projects/:project/conversations'     : 'conversations_index',
-    '!/projects/:project/conversations/:id' : 'conversations_show',
-    '!/projects/:project/tasks'             : 'tasks_index',
-    '!/projects/:project/tasks/:id'         : 'tasks_show',
-    '!/projects/:project/pages'             : 'pages_index',
-    '!/projects/:project/pages/:id'         : 'pages_show',
-    '!/projects/:project/people'            : 'people_index',
-    '!/projects/:project/settings'          : 'project_edit'
+    '/projects'                            : 'projects_index',
+    '/projects/new'                        : 'projects_new',
+    '/projects/:id'                        : 'projects_show',
+    '/projects/:project/conversations'     : 'conversations_index',
+    '/projects/:project/conversations/:id' : 'conversations_show',
+    '/projects/:project/tasks'             : 'tasks_index',
+    '/projects/:project/tasks/:id'         : 'tasks_show',
+    '/projects/:project/pages'             : 'pages_index',
+    '/projects/:project/pages/:id'         : 'pages_show',
+    '/projects/:project/people'            : 'people_index',
+    '/projects/:project/settings'          : 'project_edit'
   },
 
   // Top level collections

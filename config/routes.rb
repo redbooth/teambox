@@ -389,7 +389,8 @@ Teambox::Application.routes.draw do
 
   end
 
-  root :to => 'projects#index'
+  # Load the main Backbone app
+  root :to => 'interface#app'
 
   if Rails.env.development?
     mount Emailer::Preview => 'mail_view'
