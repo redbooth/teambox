@@ -4,11 +4,18 @@ PrivateBox = {
     var box = form.down('.private_options');
     box.select('.private_users').invoke('remove');
 
-    var object_id = box.readAttribute('object-prefix');
-    var object_type = box.readAttribute('object-type');
+    // Check for watcher list in thread
+    var thread = box.up('.thread')
+    var watcher_ids = null;
+    if (thread)
+      watcher_ids = (thread.readAttribute('data-watcher-ids')||'').split(',');
+
+    // Update buttons & people list
     var watchers = form.down('.watchers');
     if (box.down('.option.private input').checked) {
-      box.insert({ bottom: this.peopleHTML(object_id, object_type, project_id) });
+      box.insert({ bottom: this.peopleHTML(box.readAttribute('object-prefix'),
+                                           box.readAttribute('object-type'),
+                                           project_id, watcher_ids) });
       if (watchers) {
         watchers.select('input').invoke('disable');
         watchers.hide();
@@ -26,14 +33,15 @@ PrivateBox = {
     PrivateBox.redrawBox(form, project_id);
   },
 
-  peopleHTML: function(object_id, object_type, project_id) {
+  peopleHTML: function(object_id, object_type, project_id, watcher_ids) {
     var people = _people[project_id];
     var html = "";
     html = "<div class='private_users'>";
     html += people.collect(function(p) {
       if (p[3] == my_user.id) return '<input type="hidden" name="'+object_type+'[private_ids][]" type="checkbox" value="'+p[3]+'"/>';
       var ident = object_id +'_private_'+ p[3];
-      return '<div class="private_user"><input checked="checked" name="'+object_type+'[private_ids][]" type="checkbox" value="'+p[3]+'" id="'+ ident + '"/><label for="' + ident + '">'+p[2]+'</label></div>';
+      var is_checked = (watcher_ids == null || watcher_ids.indexOf(p[3]) >= 0) ? 'checked="checked"' : '';
+      return '<div class="private_user"><input '+is_checked+' name="'+object_type+'[private_ids][]" type="checkbox" value="'+p[3]+'" id="'+ ident + '"/><label for="' + ident + '">'+p[2]+'</label></div>';
     }).compact().join("");
     html += "</div>";
     return html;

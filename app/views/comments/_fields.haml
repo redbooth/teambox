@@ -39,8 +39,7 @@
       - if task_form
         = link_to t('comments.hours.tooltip'), '#hours', :class => 'add_hours_icon hoverable', :title => "Log hours"
       = link_to "Watchers", '#watchers', :class => 'add_watchers hoverable', :title => "Notify people"
-      - if f.object.target.nil? or f.object.target.new_record? or can?(:update_privacy, f.object.target)
-        = link_to "Privacy", '#privacy', :class => 'private_switch hoverable', :title => "Control who can see this element"
+      = link_to "Privacy", '#privacy', :class => 'private_switch hoverable', :title => "Control who can see this element"
 
     - if task_form
       .task_actions
