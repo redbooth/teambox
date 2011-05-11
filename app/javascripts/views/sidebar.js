@@ -44,11 +44,10 @@ Teambox.Views.Sidebar = Backbone.View.extend({
   },
 
   // Handle clicks for the sidebar
-  clickElement: function(evt) {
-    var el = evt.currentTarget;
+  clickElement: function(e, el) {
     // Adding this to handle highlight for backboned links
     if (el.down('a.backboned')) { return; }
-    if (this.toggleElement(el, true)) { return false; }
+    if (this.toggleElement(el, true)) { e.stop(); }
   },
 
   // Try to highlight the loaded element link in the sidebar
