@@ -4,14 +4,22 @@
 //= require <lib/backbone-prototype>
 //= require <handlebars>
 
+// where? TODO
 //= require <rails>
+
+// rename to modernizr? TODO
 //= require <html5>
+
+// where? TODO
 //= require <builder>
 //= require <effects>
 //= require <controls>
 //= require <dragdrop>
 //= require <sound>
+
+// is this needed? backbone manages history already TODO
 //= require <history>
+
 //= require <loader>
 
 //= require <teambox>
@@ -42,9 +50,15 @@
 // Remove me by substituting Mustache code for Handlebars FIXME
 //= require <mustache>
 
+// where? TODO
 //= require <calendar_date_select>
+
 //= require <facebox>
+
+// where? TODO
 //= require <showdown>
+
+// where? we load it as html5 TODO
 //= require <modernizr>
 
 //= require <util>
@@ -63,7 +77,10 @@
 //= require <i18n>
 //= require <datetime>
 //= require <expand_comment>
+
+// duplicated? TODO
 //= require <facebox>
+
 //= require <filter>
 //= require <first_steps>
 //= require <forms>

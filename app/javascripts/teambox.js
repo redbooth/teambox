@@ -1,11 +1,11 @@
-Teambox = {
+var Teambox = {
   Models: {},
   Collections: {},
   Controllers: {},
   Views: {},
-  init: function() {
+  init: function () {
     //Start application once everything has loaded.
-    Loader.init(function() {
+    Loader.init(function () {
       // Set the new root url
       if (window.location.hash === '') {
         window.location.hash = '#!/';
@@ -35,6 +35,6 @@ Teambox = {
   }
 };
 
-document.on("dom:loaded", function() {
+document.on("dom:loaded", function () {
   Teambox.init();
 });
