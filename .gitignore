@@ -24,3 +24,5 @@ webrat-*
 capybara-*
 rerun.txt
 teambox2
+.pre-commit
+.git_fail_words
