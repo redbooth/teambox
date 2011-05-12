@@ -1,6 +1,8 @@
 Teambox.Views.Projects = Backbone.View.extend({
 
-  initialize: function() {
+  initialize: function(options) {
+    this.app = options.app;
+
     _.bindAll(this, 'render');
     // TODO: Listen for changes in my projects
   },
@@ -27,3 +29,4 @@ Teambox.Views.Projects = Backbone.View.extend({
   }
 
 });
+

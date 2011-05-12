@@ -5,7 +5,9 @@ Teambox.Views.CommentForm = Backbone.View.extend({
 
   template: Handlebars.compile(Templates.partials.comment_form),
 
-  initialize: function() {
+  initialize: function(options) {
+    this.app = options.app;
+
     _.bindAll(this, "render");
     // Fixme: bind to changes
   },

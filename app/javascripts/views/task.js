@@ -13,7 +13,9 @@ Teambox.Views.Task = Backbone.View.extend({
     "keyup form.edit_title input": "keyupTitle"
   },
 
-  initialize: function() {
+  initialize: function(options) {
+    this.app = options.app;
+
     _.bindAll(this, "render");
     this.model.bind('change', this.render);
   },

@@ -1,6 +1,8 @@
 Teambox.Views.Conversation = Backbone.View.extend({
 
-  initialize: function() {
+  initialize: function(options) {
+    this.app = options.app;
+
     _.bindAll(this, 'render');
     this.model.bind('change', this.render);
   },

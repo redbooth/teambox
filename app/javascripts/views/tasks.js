@@ -6,6 +6,8 @@
 Teambox.Views.Tasks = Backbone.View.extend({
 
   initialize: function(options) {
+    this.app = options.app;
+
     this.tasks_filter = options.tasks_filter || 'all';
     _.bindAll(this, 'render');
   },

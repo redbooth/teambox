@@ -3,11 +3,13 @@ Teambox.Views.Sidebar = Backbone.View.extend({
   //el: $('column'),
 
   // Initialize the sidebar
-  initialize: function() {
+  initialize: function(options) {
+    this.app = options.app;
+
     _.bindAll(this, 'renderTaskCounter');
 
     // TODO: bind only to change
-    Teambox.my_tasks.bind('all', this.renderTaskCounter);
+    this.app.my_tasks.bind('all', this.renderTaskCounter);
 
     // Hide folded navigation bar elements
     $(this.el).select('.contained').invoke('hide');
@@ -24,16 +26,16 @@ Teambox.Views.Sidebar = Backbone.View.extend({
   renderTaskCounter: function() {
     $$("#my_tasks_link span, #today_link span").invoke('remove');
 
-    var mine = Teambox.my_tasks.mine();
-    var today = Teambox.my_tasks.today();
-    var late = Teambox.my_tasks.late();
+    var mine  = this.app.my_tasks.mine();
+    var today = this.app.my_tasks.today();
+    var late  = this.app.my_tasks.late();
 
     if (mine && mine.length > 0) {
       $("my_tasks_link").insert({ bottom: "<span>"+mine.length+"</span>" });
     }
     if (today && today.length > 0) {
       $("today_link").insert({ bottom: "<span>"+today.length+"</span>" });
-      if (Teambox.my_tasks.late().length > 0) {
+      if (this.app.my_tasks.late().length > 0) {
         $$("#today_link span")[0].addClassName('red');
       }
     }

@@ -13,7 +13,7 @@ JavascriptReloading = {
 
   onreload: function() {
     console.log('sprockets reloaded');
-    Teambox.init();
+    $app = Teambox.application = new Teambox.Controllers.AppController();
   },
 
   insertButton: function() {

@@ -8,12 +8,13 @@ Teambox.Views.Search = Backbone.View.extend({
     "focusout input#searchbox": "hideQuickResults"
   },
 
-  initialize: function() {
-  },
-
   quickresult_template: Handlebars.compile(Templates.search.quicksearch),
   loading_template: Handlebars.compile(Templates.search.loading),
   results_template: Handlebars.compile(Templates.search.results),
+
+  initialize: function(options) {
+    this.app = options.app;
+  },
 
   // Keyboard navigation for quick results
   navigateQuickResults: function(evt) {
@@ -61,7 +62,7 @@ Teambox.Views.Search = Backbone.View.extend({
 
     // Find matches among the titles of my elements
     var regex = RegExp('\\W'+search_term, 'i');
-    var found = Teambox.my_tasks.models.select(function(i) {
+    var found = this.app.my_tasks.models.select(function(i) {
       return i.get('name') &&
         (" "+i.get('name').toLowerCase()).match(regex);
     }).sortBy(function(i) {
