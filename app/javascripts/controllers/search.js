@@ -7,4 +7,3 @@ Teambox.Controllers.SearchController = Teambox.Controllers.BaseController.extend
     this.app.search_view.getResults(terms);
   }
 });
-
