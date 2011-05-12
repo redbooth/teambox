@@ -46,6 +46,12 @@ module UsersHelper
       my_organizations = #{json_organizations};
       my_tasks = #{json_tasks};
       current_project = #{@current_project ? @current_project.id : 'null'};
+
+      document.on("dom:loaded", function () {
+        if($app) {
+          _.extend($app.config, #{json_config});
+        }
+      });
     )
   end
   
@@ -171,6 +177,14 @@ module UsersHelper
 
     def json_tasks
       current_user.nearest_pending_tasks.to_json
+    end
+
+    def json_config
+      config = {}
+      config[:app_env] = Rails.env
+      config[:push_server] = {}
+      config[:push_server][:port] = Teambox.config.juggernaut.port
+      config.to_json
     end
 
     def json_user

@@ -12,7 +12,8 @@ class User
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
       :micro_avatar_url => avatar_or_gravatar_url(:micro),
-      :avatar_url => avatar_or_gravatar_url(:thumb)
+      :avatar_url => avatar_or_gravatar_url(:thumb),
+      :authentication_token => authentication_token
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
