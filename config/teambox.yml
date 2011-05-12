@@ -137,7 +137,7 @@ defaults: &defaults
   - "*.datetime"
   - "*.calendar"
   - "*.time"
-  - "*.comments.new.assigned_to_nobody"
+  - "*.comments"
   - "*.roles"
   - "*.common"
   - "*.tasks"

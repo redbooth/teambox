@@ -210,15 +210,8 @@ document.on('mouseover', '.textilized a', function(e, link) {
 hideBySelector('#activities .thread form.new_comment .extra')
 
 document.on('focusin', '#activities .thread form.new_comment textarea', function(e, input) {
-  var extra = input.up('form').down('.extra')
-  var thread = input.up('.thread')
-  if (thread) {
-    var user_id = thread.readAttribute('data-creator-user-id')
-    if (user_id == my_user.id)
-      extra.down('.private_switch').show()
-    else if (user_id)
-      extra.down('.private_switch').hide()
-  }
+  var form = input.up('form')
+  var extra = form.down('.extra')
   extra.forceShow()
 })
 

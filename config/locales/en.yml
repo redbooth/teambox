@@ -1111,6 +1111,7 @@ en:
     private:
       public: This element is visible to everybody in this project
       private: This element is only visible to people you specify...
+      private_global: This element is only visible to the following people...
   teambox_datas:
     new_import:
       title: "Import data"
