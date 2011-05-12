@@ -12,7 +12,6 @@
 //= require <effects>
 //= require <controls>
 //= require <dragdrop>
-//= require <sound>
 
 //= require <teambox>
 
