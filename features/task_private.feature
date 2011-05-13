@@ -49,7 +49,8 @@ Feature: Creating a private task
     Given I am logged in as @pablo
     When I go to the page of the "Post lolcats" task
     Then I should see "Post lolcats"
-    And I should not see "Privacy"
+    When I follow "Privacy"
+    Then I should see "This element is only visible to the following people..."
     Given I am logged in as @mislav
     When I go to the page of the "Post lolcats" task
     And I fill in the comment box with "Just updating again!"
@@ -66,10 +67,12 @@ Feature: Creating a private task
     Given @mislav created a private task named "Post lolcats" in the task list called "Lolbox"
     And the task "Post lolcats" is watched by @pablo
     When I go to the page of the "Post lolcats" task
-    Then I should see "Privacy"
+    And I follow "Privacy"
+    Then I should see "This element is only visible to people you specify..."
     Given I am logged in as @pablo
     When I go to the page of the "Post lolcats" task
-    Then I should not see "Privacy"
+    And I follow "Privacy"
+    Then I should see "This element is only visible to the following people..."
 
   Scenario: Making a private task public
     Given @mislav created a private task named "Post lolcats" in the task list called "Lolbox"

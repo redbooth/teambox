@@ -10,7 +10,7 @@ PrivateBox = {
     var is_private = false;
     if (thread) {
       watcher_ids = (thread.readAttribute('data-watcher-ids')||'').split(',');
-      is_private = thread.hasClassName('private')
+      is_private = thread.hasClassName('private');
     }
 
     // Update buttons & people list
