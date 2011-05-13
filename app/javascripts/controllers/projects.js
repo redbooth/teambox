@@ -8,12 +8,12 @@ Teambox.Controllers.ProjectsController = Backbone.Controller.extend({
   },
 
   projects_index: function() {
-    this.highlightSidebar('projects_link');
+    Teambox.Views.Sidebar.highlightSidebar('projects_link');
     Teambox.projects_view.render();
   },
 
   projects_new: function() {
-    this.highlightSidebar('new_project_link');
+    Teambox.Views.Sidebar.highlightSidebar('new_project_link');
     $('content').update( 'new project' );
   },
 
@@ -23,4 +23,3 @@ Teambox.Controllers.ProjectsController = Backbone.Controller.extend({
 
 });
 
-_.extend(Teambox.Controllers.ProjectsController.prototype, Teambox.Views.Utility);

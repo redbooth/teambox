@@ -7,5 +7,3 @@ Teambox.Controllers.UsersController = Backbone.Controller.extend({
     $('content').update( 'show user' );
   }
 });
-
-_.extend(Teambox.Controllers.UsersController.prototype, Teambox.Views.Utility);

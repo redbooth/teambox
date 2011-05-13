@@ -121,4 +121,8 @@ Teambox.Views.Sidebar = Backbone.View.extend({
     el.addClassName('selected');
   }
 
+},{
+  highlightSidebar: function(id) {
+    $app.sidebar_view.selectElement($(id), true);
+  }
 });

@@ -8,4 +8,3 @@ Teambox.Controllers.SearchController = Backbone.Controller.extend({
   }
 });
 
-_.extend(Teambox.Controllers.SearchController.prototype, Teambox.Views.Utility);

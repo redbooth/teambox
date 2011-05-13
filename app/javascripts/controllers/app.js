@@ -17,24 +17,22 @@ Teambox.Controllers.AppController = Teambox.Controllers.BaseController.extend({
   },
 
   index: function() {
-    this.highlightSidebar('activity_link');
+    Teambox.Views.Sidebar.highlightSidebar('activity_link');
     this.activities_view.render();
   },
 
   today: function() {
-    this.highlightSidebar('today_link');
+    Teambox.Views.Sidebar.highlightSidebar('today_link');
     this.today_view.render();
   },
 
   my_tasks: function() {
-    this.highlightSidebar('my_tasks_link');
+    Teambox.Views.Sidebar.highlightSidebar('my_tasks_link');
     this.my_tasks_view.render();
   },
 
   all_tasks: function() {
-    this.highlightSidebar('all_tasks_link');
+    Teambox.Views.Sidebar.highlightSidebar('all_tasks_link');
     this.all_tasks_view.render();
   }
 });
-
-_.extend(Teambox.Controllers.AppController.prototype, Teambox.Views.Utility);

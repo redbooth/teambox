@@ -17,6 +17,3 @@ Teambox.Controllers.ConversationsController = Backbone.Controller.extend({
   }
 
 });
-
-
-_.extend(Teambox.Controllers.ConversationsController.prototype, Teambox.Views.Utility);

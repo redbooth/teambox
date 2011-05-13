@@ -13,5 +13,3 @@ Teambox.Controllers.TasksController = Backbone.Controller.extend({
     $('content').update( 'show task' );
   }
 });
-
-_.extend(Teambox.Controllers.TasksController.prototype, Teambox.Views.Utility);

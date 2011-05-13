@@ -12,5 +12,3 @@ Teambox.Controllers.PagesController = Backbone.Controller.extend({
     $('content').update( 'show page' );
   }
 });
-
-_.extend(Teambox.Controllers.PagesController.prototype, Teambox.Views.Utility);
