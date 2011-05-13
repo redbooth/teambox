@@ -27,6 +27,7 @@
 //= require <lib/teambox_api>
 //= require <helpers/handlebars>
 //= require <controllers/base>
+//= require <controllers/bootstrap>
 //= require <controllers/app>
 //= require <controllers/projects>
 //= require <controllers/tasks>

@@ -1,4 +1,4 @@
-Teambox.Controllers.AppController = Teambox.Controllers.BaseController.extend({
+Teambox.Controllers.AppController = Teambox.Controllers.Bootstrap.extend({
   routes: {
     '/'                  : 'index',
     '/today'             : 'today',
@@ -6,7 +6,7 @@ Teambox.Controllers.AppController = Teambox.Controllers.BaseController.extend({
     '/all_tasks'         : 'all_tasks'
   },
   initialize: function(options) {
-    Teambox.Controllers.BaseController.prototype.initialize.call(this, options);
+    Teambox.Controllers.Bootstrap.prototype.initialize.call(this, options);
 
     this.projects_controller = new Teambox.Controllers.ProjectsController({app: this});
     this.users_controller = new Teambox.Controllers.UsersController({app: this});

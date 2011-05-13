@@ -1,4 +1,4 @@
-Teambox.Controllers.BaseController = Backbone.Controller.extend({
+Teambox.Controllers.Bootstrap = Backbone.Controller.extend({
   config: {},
 
   initialize: function(options) {
