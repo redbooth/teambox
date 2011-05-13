@@ -165,7 +165,7 @@ class Comment < ActiveRecord::Base
       # Allow the owner to change the privacy status
       if target.respond_to?(:is_private)
         can_change_private = self.user_id == target.user_id
-        target.is_private = self.is_private if can_change_private
+        target.is_private = self.is_private if can_change_private && @is_private_set
         if target.is_private && can_change_private && @private_ids && @is_private_set
           target.set_private_watchers(@private_ids)
         elsif target.is_private

@@ -1,10 +1,10 @@
 class PrivateElements < ActiveRecord::Migration
   def self.up
-    add_column :activities, :is_private, :boolean, :default => false
-    add_column :comments, :is_private, :boolean, :default => false
-    add_column :conversations, :is_private, :boolean, :default => false
-    add_column :tasks, :is_private, :boolean, :default => false
-    add_column :uploads, :is_private, :boolean, :default => false
+    add_column :activities, :is_private, :boolean, :default => false, :null => false
+    add_column :comments, :is_private, :boolean, :default => false, :null => false
+    add_column :conversations, :is_private, :boolean, :default => false, :null => false
+    add_column :tasks, :is_private, :boolean, :default => false, :null => false
+    add_column :uploads, :is_private, :boolean, :default => false, :null => false
   end
 
   def self.down

@@ -29,7 +29,7 @@ class ApiV1::TasksController < ApiV1::APIController
   def create
     authorize! :make_tasks, @current_project
     @task = @task_list.tasks.build_by_user(current_user, params)
-    @task.is_private = params[:task][:is_private] if params[:task]
+    @task.is_private = (params[:task][:is_private]||false) if params[:task]
     @task.save
     
     if @task.new_record?
