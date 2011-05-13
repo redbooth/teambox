@@ -2,20 +2,18 @@ Teambox.Controllers.Bootstrap = Backbone.Controller.extend({
   config: {},
 
   initialize: function(options) {
-    var self = this;
+    var self = this,
+        _loader = Teambox.modules.Loader(function () {
+          // Set the new root url
+          if (window.location.hash === '') {
+            window.location.hash = '#!/';
+          }
+
+          self.build();
+          Backbone.history.start();
+        });
+
     Backbone.Controller.prototype.initialize.call(this, options);
-
-    Loader.init(function () {
-      // Set the new root url
-      if (window.location.hash === '') {
-        window.location.hash = '#!/';
-      }
-
-      self.build();
-
-      Backbone.history.start();
-
-    });
 
     // Initialize models and collections
     this.my_user     = new Teambox.Models.User();
@@ -25,12 +23,12 @@ Teambox.Controllers.Bootstrap = Backbone.Controller.extend({
 
     // Fetch all data we're going to need
     // Uses the Loader class, which updates the progress bar
-    this.my_user.fetch({ success: Loader.loaded('user') });
-    this.my_tasks.fetch({ success: Loader.loaded('tasks') });
-    this.my_threads.fetch({ success: Loader.loaded('activities') });
-    this.my_projects.fetch({ success: Loader.loaded('projects') });
+    this.my_user.fetch({ success: _loader.load('user') });
+    this.my_tasks.fetch({ success: _loader.load('tasks') });
+    this.my_threads.fetch({ success: _loader.load('activities') });
+    this.my_projects.fetch({ success: _loader.load('projects') });
   },
-  build: function() {
+  build: function () {
     // Initialize views
     this.activities_view = new Teambox.Views.Activities({ app: this, collection: this.my_threads });
     this.today_view      = new Teambox.Views.Tasks({ app: this, collection: this.my_tasks, tasks_filter: 'today' });

@@ -20,9 +20,9 @@
 // is this needed? backbone manages history already TODO
 //= require <history>
 
-//= require <loader>
-
 //= require <teambox>
+
+//= require <modules/loader>
 
 //= require <lib/teambox_api>
 //= require <helpers/handlebars>

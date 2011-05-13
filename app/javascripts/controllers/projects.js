@@ -1,26 +1,38 @@
-Teambox.Controllers.ProjectsController = Teambox.Controllers.BaseController.extend({
+(function () {
 
-  routes: {
-    '/projects'                            : 'projects_index',
-    '/projects/new'                        : 'projects_new',
-    '/projects/:id'                        : 'projects_show',
-    '/projects/:project/people'            : 'people_index',
-    '/projects/:project/settings'          : 'project_edit'
-  },
+  var ProjectsController = Teambox.Controllers.BaseController.extend({
 
-  projects_index: function() {
-    Teambox.Views.Sidebar.highlightSidebar('projects_link');
-    this.app.projects_view.render();
-  },
+    routes: {
+      '/projects'                     : 'projects_index'
+    , '/projects/new'                 : 'projects_new'
+    , '/projects/:id'                 : 'projects_show'
+    , '/projects/:project/people'     : 'people_index'
+    , '/projects/:project/settings'   : 'project_edit'
+    , '/projects/:project/task_lists' : 'task_lists'
+    }
 
-  projects_new: function() {
-    Teambox.Views.Sidebar.highlightSidebar('new_project_link');
-    $('content').update( 'new project' );
-  },
+  , projects_index: function () {
+      Teambox.Views.Sidebar.highlightSidebar('projects_link');
+      this.app.projects_view.render();
+    }
 
-  projects_show: function() {
-    $('content').update( 'show project' );
-  }
+  , projects_new: function () {
+      Teambox.Views.Sidebar.highlightSidebar('new_project_link');
+      $('content').update('new project');
+    }
 
-});
+  , projects_show: function () {
+      $('content').update('show project');
+    }
 
+  , task_lists: function (project) {
+      Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_task_lists');
+      this.app.today_view.render();
+    }
+
+  });
+
+  // exports
+  Teambox.Controllers.ProjectsController = ProjectsController;
+
+}());

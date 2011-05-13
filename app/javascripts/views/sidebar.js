@@ -1,128 +1,177 @@
-Teambox.Views.Sidebar = Backbone.View.extend({
-  // Bind to the document's body, with the existing DOM
-  //el: $('column'),
+(function () {
 
-  // Initialize the sidebar
-  initialize: function(options) {
-    this.app = options.app;
-
-    _.bindAll(this, 'renderTaskCounter');
-
-    // TODO: bind only to change
-    this.app.my_tasks.bind('all', this.renderTaskCounter);
-
-    // Hide folded navigation bar elements
-    $(this.el).select('.contained').invoke('hide');
-
-    // Select and expand the current element
-    var current = this.detectSelectedSection();
-    if (current) {
-      this.toggleElement(current);
-      this.showContainers(current);
+  var Sidebar = Backbone.View.extend({
+    events: {
+      "click .el" : "clickElement"
     }
-  },
 
-  // Updates my tasks' counter
-  renderTaskCounter: function() {
-    $$("#my_tasks_link span, #today_link span").invoke('remove');
+  , initialize: function (options) {
+      this.app = options.app;
 
-    var mine  = this.app.my_tasks.mine();
-    var today = this.app.my_tasks.today();
-    var late  = this.app.my_tasks.late();
+      _.bindAll(this, 'renderTaskCounter');
 
-    if (mine && mine.length > 0) {
-      $("my_tasks_link").insert({ bottom: "<span>"+mine.length+"</span>" });
-    }
-    if (today && today.length > 0) {
-      $("today_link").insert({ bottom: "<span>"+today.length+"</span>" });
-      if (this.app.my_tasks.late().length > 0) {
-        $$("#today_link span")[0].addClassName('red');
+      // TODO: bind only to change
+      this.app.my_tasks.bind('all', this.renderTaskCounter);
+
+      // Hide folded navigation bar elements
+      $(this.el).select('.contained').invoke('hide');
+
+      // Select and expand the current element
+      var current = this.detectSelectedSection();
+      if (current) {
+        this.toggleElement(current);
+        this.showContainers(current);
       }
     }
-  },
 
-  events: {
-    "click .el"         : "clickElement"
-  },
+    /* renders the counters on the tasks sidebar
+     *
+     */
+  , renderTaskCounter: function () {
+      var mine  = this.app.my_tasks.mine()
+        , today = this.app.my_tasks.today()
+        , late  = this.app.my_tasks.late();
 
-  // Handle clicks for the sidebar
-  clickElement: function(e, el) {
-    // Adding this to handle highlight for backboned links
-    if (el.down('a.backboned')) { return; }
-    if (this.toggleElement(el, true)) { e.stop(); }
-  },
+      $$("#my_tasks_link span, #today_link span").invoke('remove');
 
-  // Try to highlight the loaded element link in the sidebar
-  // TODO: Replace with controllers selecting the right element
-  detectSelectedSection: function() {
-    // Direct match
-    var link = $$('.nav_links a').select(function(e) {
-      return e.getAttribute('href') == window.location.pathname;
-    }).last();
-    if (link) { link.up('.el').addClassName('selected'); }
-    // Close enough
-    if (!link) {
-      link = $$('.nav_links a').sortBy(function(e) {
-        return e.getAttribute('href').length;
-        }).select(function(e) {
-          return (window.location.pathname.search(e.getAttribute('href')) > -1 && e.getAttribute('href') != '/');
-      }).last();
-      if (link) { link.up('.el').addClassName('children-selected'); }
-    }
 
-    if(link) { return link.up('.el'); }
-  },
+      if (mine && mine.length > 0) {
+        $("my_tasks_link").insert({ bottom: "<span>" + mine.length + "</span>" });
+      }
 
-  // Expand containers for this element, if it's under one
-  showContainers: function(current) {
-    var container = current.up('.contained');
-    if (container) {
-      container.show().previous('.el').addClassName('expanded');
-      // traverse up to find more containers
-      while (container = container.up('.contained')) {
-        container.show().previous('.el').addClassName('expanded');
+      if (today && today.length > 0) {
+        $("today_link").insert({ bottom: "<span>" + today.length + "</span>" });
+        if (late.length > 0) {
+          $$("#today_link span")[0].addClassName('red');
+        }
       }
     }
-  },
 
-  // Expand an element containing others
-  toggleElement: function(el, effect) {
-    var contained = el.next();
-    // if next element is an expanded area..
-    if (contained && contained.hasClassName('contained')) {
-      if (el.hasClassName('expanded')) {
-        // contract it if it's open
-        el.removeClassName('expanded');
-        contained.setStyle({height: ''});
-        contained.blindUp({ duration: 0.2 });
+    /* handles on clicking a sidebar element
+     *
+     * @param {Event} e
+     * @param {Element} el
+     */
+  , clickElement: function (e, el) {
+      // Adding this to handle highlight for backboned links
+      if (el.down('a.backboned')) {
+        return;
+      }
+
+      if (this.toggleElement(el, true)) {
+        e.stop();
+      }
+    }
+
+    /* Selects the link in the sidebar according to the current url
+     *
+     * @return {Element} link selected
+     *
+     * TODO: Replace with controllers selecting the right element <= sure?
+     */
+  , detectSelectedSection: function () {
+      // Direct match
+      var links = $$('.nav_links a')
+        , link = links.select(function (e) {
+            return e.getAttribute('href') === window.location.hash;
+          }).last();
+
+      if (link) {
+        return link.up('.el');
       } else {
-        // contract others if open
-        var visible_containers = el.up().select('.contained').select( function(e) { return e.visible(); });
-        effect ? visible_containers.invoke("blindUp", { duration: 0.2 }) : visible_containers.invoke('hide');
-        el.up().select('.el').invoke('removeClassName', 'expanded');
-        // expand the selected one
-        el.addClassName('expanded');
+        link = links.sortBy(function (e) {
+          return e.getAttribute('href').length;
+        }).select(function (e) {
+          return (window.location.pathname.search(e.getAttribute('href')) > -1 && e.getAttribute('href') !== '/');
+        }).last();
 
-        contained.setStyle({height: ''});
-        effect ? contained.blindDown({ duration: 0.2 }) : contained.show();
+        return link.up('.el');
       }
-      // Stop the event and don't follow the link
-      return true;
     }
-    // Stop the event if it's selected (don't follow the link)
-    return el.hasClassName('selected');
-  },
 
-  // Highlight this element, clearing others
-  selectElement: function(el) {
-    $(this.el).select('.el.selected')
-      .invoke('removeClassName', 'selected')
-      .invoke('removeClassName', 'children-selected');
-    el.addClassName('selected');
-  }
+    /* Expand containers for this element, if it's under one
+     *
+     * @param {Element} element
+     */
+  , showContainers: function (element) {
+      (function next(el) {
+        var container = el.up();
+        if (container.hasClassName('contained')) {
+          container.show().previous('.el').addClassName('expanded');
+        } else if (container.hasClassName('nav_links')) {
+          return;
+        }
+        next(container);
+      }(element));
+    }
 
-},{
-  highlightSidebar: function(id) {
-    $app.sidebar_view.selectElement($(id), true);
+    /* Expand element containing others
+     *
+     * @param {Element} element
+     * @param {Boolean} effect
+     *
+     * @return {Boolean} element should prevent an event
+     */
+  , toggleElement: function (element, effect) {
+      var next = element.next()
+        , parent = element.up()
+        , visible_containers;
+
+      // if next element is an expandable area..
+      if (next && next.hasClassName('contained')) {
+        if (element.hasClassName('expanded')) {
+          // contract it if it's open
+          element.removeClassName('expanded');
+          next.setStyle({height: ''});
+          if (effect) {
+            next.blindUp({ duration: 0.2 });
+          } else {
+            next.hide();
+          }
+        } else {
+          // contract others if open
+          visible_containers = parent.select('.contained').select(function (e) {
+            return e.visible();
+          });
+
+          if (effect) {
+            visible_containers.invoke("blindUp", { duration: 0.2 });
+          } else {
+            visible_containers.invoke('hide');
+          }
+          parent.select('.el').invoke('removeClassName', 'expanded');
+
+          // expand the selected one
+          element.addClassName('expanded');
+          next.setStyle({height: ''});
+          if (effect) {
+            next.blindDown({ duration: 0.2 });
+          } else {
+            next.show();
+          }
+        }
+
+        return true;
+      }
+
+      return element.hasClassName('selected');
+    }
+
+    // Highlight this element, clearing others
+  , selectElement: function (el) {
+      $(this.el).select('.el.selected')
+        .invoke('removeClassName', 'selected')
+        .invoke('removeClassName', 'children-selected');
+      el.addClassName('selected');
+    }
+
   }
-});
+, { highlightSidebar: function (id) {
+      // TODO: is there a global with app_controller?
+      $app.sidebar_view.selectElement($(id), true);
+  }
+  });
+
+  // expose
+  Teambox.Views.Sidebar = Sidebar;
+}());
