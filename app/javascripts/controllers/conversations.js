@@ -1,4 +1,4 @@
-Teambox.Controllers.ConversationsController = Backbone.Controller.extend({
+Teambox.Controllers.ConversationsController = Teambox.Controllers.BaseController.extend({
   routes: {
     '/projects/:project/conversations'     : 'conversations_index',
     '/projects/:project/conversations/:id' : 'conversations_show'

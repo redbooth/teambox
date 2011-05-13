@@ -1,4 +1,4 @@
-Teambox.Controllers.TasksController = Backbone.Controller.extend({
+Teambox.Controllers.TasksController = Teambox.Controllers.BaseController.extend({
   routes: {
     '/projects/:project/tasks'             : 'tasks_index',
     '/projects/:project/tasks/:id'         : 'tasks_show'

@@ -1,4 +1,5 @@
-Teambox.Controllers.ProjectsController = Backbone.Controller.extend({
+Teambox.Controllers.ProjectsController = Teambox.Controllers.BaseController.extend({
+
   routes: {
     '/projects'                            : 'projects_index',
     '/projects/new'                        : 'projects_new',
@@ -9,7 +10,7 @@ Teambox.Controllers.ProjectsController = Backbone.Controller.extend({
 
   projects_index: function() {
     Teambox.Views.Sidebar.highlightSidebar('projects_link');
-    Teambox.projects_view.render();
+    this.app.projects_view.render();
   },
 
   projects_new: function() {

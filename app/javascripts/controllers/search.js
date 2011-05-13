@@ -1,10 +1,10 @@
-Teambox.Controllers.SearchController = Backbone.Controller.extend({
+Teambox.Controllers.SearchController = Teambox.Controllers.BaseController.extend({
   routes: {
     '/search/:terms'     : 'search'
   },
 
   search: function(terms) {
-    Teambox.search_view.getResults(terms);
+    this.app.search_view.getResults(terms);
   }
 });
 

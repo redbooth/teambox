@@ -1,4 +1,4 @@
-Teambox.Controllers.PagesController = Backbone.Controller.extend({
+Teambox.Controllers.PagesController = Teambox.Controllers.BaseController.extend({
   routes: {
     '/projects/:project/pages'             : 'pages_index',
     '/projects/:project/pages/:id'         : 'pages_show'

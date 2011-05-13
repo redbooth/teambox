@@ -1,4 +1,4 @@
-Teambox.Controllers.UsersController = Backbone.Controller.extend({
+Teambox.Controllers.UsersController = Teambox.Controllers.BaseController.extend({
   routes: {
     '/users/:id'         : 'users_show'
   },
