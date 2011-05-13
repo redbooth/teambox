@@ -5,12 +5,12 @@ class Reinforcewatcheruniqueness < ActiveRecord::Migration
     end
 
     Watcher.connection.execute <<-EOF
-      DELETE #{Watcher.table_name}
-      FROM #{Watcher.table_name},
+      DELETE 
+      FROM #{Watcher.table_name} USING
         (SELECT MAX(id) as dupid, COUNT(id) as dupcnt, user_id, watchable_id, watchable_type
          FROM #{Watcher.table_name}
          GROUP BY user_id, watchable_id, watchable_type
-         HAVING dupcnt > 1) as duplicates
+         HAVING COUNT(id) > 1) as duplicates
       WHERE #{Watcher.table_name}.id = duplicates.dupid
     EOF
 
