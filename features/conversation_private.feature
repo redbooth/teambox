@@ -91,9 +91,13 @@ Feature: Creating a private conversation
     When I go to the conversations page
     Then I should see "Roflcopter"
 
-  Scenario: I can't see a private conversation on the users profile
+  Scenario: Private conversations are private
     Given @enric started a private conversation named "Let's fire Jordi"
+    And the search index is reindexed
     When I go to the profile of "enric"
     Then I should see "Enric Lluelles"
     And  I should not see "fire Jordi"
+    When I search for "fire"
+    And I wait for 1 second
+    Then I should not see "fire Jordi"
 

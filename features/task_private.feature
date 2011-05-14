@@ -88,9 +88,12 @@ Feature: Creating a private task
     When I go to the task lists page
     Then I should see "Post lolcats"
 
-  Scenario: I can't see a private task on the users profile
+  Scenario: Private tasks are private
     Given @enric created a private task named "Firing orders" in the task list called "Lolbox"
+    And the search index is reindexed
     When I go to the profile of "enric"
     Then I should see "Enric Lluelles"
     And  I should not see "Firing orders"
+    When I search for "Firing"
+    Then I should not see "Firing orders"
 

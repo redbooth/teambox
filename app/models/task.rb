@@ -230,6 +230,10 @@ class Task < RoleRecord
     has project_id, created_at, updated_at
   end
 
+  def is_visible?(user)
+    !is_private or watchers.include? user
+  end
+
   protected
 
   #don't store 0 when assigned_id was set by a string
