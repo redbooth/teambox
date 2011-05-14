@@ -6,7 +6,8 @@ Feature: Creating a private task
       | login  | email                    | first_name | last_name |
       | pablo  | pablo@teambox.com        | Pablo      | Villalba  |
       | jordi  | jordi@teambox.com        | Jordi      | Romero    |
-    Given a project with users @mislav, @pablo and @jordi
+      | enric  | enric@teambox.com        | Enric      | Lluelles  |
+    Given a project with users @mislav, @pablo, @jordi and @enric
     And I am logged in as @mislav
     And I have a task list called "Lolbox"
 
@@ -86,4 +87,10 @@ Feature: Creating a private task
     Given I am logged in as @pablo
     When I go to the task lists page
     Then I should see "Post lolcats"
+
+  Scenario: I can't see a private task on the users profile
+    Given @enric created a private task named "Firing orders" in the task list called "Lolbox"
+    When I go to the profile of "enric"
+    Then I should see "Enric Lluelles"
+    And  I should not see "Firing orders"
 
