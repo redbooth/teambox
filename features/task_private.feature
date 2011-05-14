@@ -95,5 +95,6 @@ Feature: Creating a private task
     Then I should see "Enric Lluelles"
     And  I should not see "Firing orders"
     When I search for "Firing"
+    And I wait for 1 second
     Then I should not see "Firing orders"
 
