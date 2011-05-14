@@ -212,12 +212,12 @@ class TaskListsController < ApplicationController
       @chart_task_lists = []
       if @current_project
         @task_lists = (@task_lists || @current_project.task_lists.unarchived)
-        conditions = ["project_id = :project_id AND status IN (:status) AND due_on IS NOT NULL", {
+        conditions = ["tasks.project_id = :project_id AND status IN (:status) AND due_on IS NOT NULL", {
                        :project_id => @current_project.id,
                        :status => Task::ACTIVE_STATUS_CODES }]
       else
         @task_lists = current_user.projects.collect { |p| p.task_lists.unarchived }.flatten.compact
-        conditions = ["project_id IN (:project_ids) AND status IN (:status) AND due_on IS NOT NULL", {
+        conditions = ["tasks.project_id IN (:project_ids) AND status IN (:status) AND due_on IS NOT NULL", {
                        :project_ids => Array(current_user.projects.unarchived).map(&:id),
                        :status => Task::ACTIVE_STATUS_CODES }]
       end
