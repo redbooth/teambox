@@ -44,7 +44,7 @@ class ProjectsController < ApplicationController
     
     @threads = @activities.threads.all(:include => [:project, :target])
     @last_activity = @threads.last
-    @recent_conversations = @current_project.conversations.not_simple.recent(4)
+    @recent_conversations = @current_project.conversations.not_simple.recent(4).reject { |c| !c.is_visible?(current_user) }
     @new_conversation = @current_project.conversations.new(:simple => true)
 
     respond_to do |f|

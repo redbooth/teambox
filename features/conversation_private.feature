@@ -100,4 +100,6 @@ Feature: Creating a private conversation
     When I search for "fire"
     And I wait for 1 second
     Then I should not see "fire Jordi"
+    When I go to the project page
+    Then I should not see "fire Jordi"
 
