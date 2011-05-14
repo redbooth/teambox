@@ -10,14 +10,13 @@ to everywhere just using email.
 You can [try Teambox online][teambox] for free to see how it works. Teambox is open-source software, meaning you
 can also download it, change its code and host yourself.
 
-[![Preview of Teambox][preview]][tour]
-
 Project info
 ------------
 
 - Official website: <http://teambox.com/>
 - Code repository: <http://github.com/teambox/teambox>
-- Community mailing list: <http://teambox.com/group>
+- Open-source community support: <http://teambox.com/community>
+- End user guide: <http://guide.teambox.com>
 - Open-source contributors: <http://github.com/teambox/teambox/contributors>
 - License: [GNU Affero GPL 3][license]
 
@@ -26,10 +25,5 @@ Installation
 
 Hop to [our wiki](http://wiki.github.com/teambox/teambox/ "Teambox wiki") to get detailed information on
 installing Teambox.
-
-[teambox]: http://teambox.com
-[tour]: http://teambox.com/tour
-[preview]: https://teambox.com/images/marketing/screenshot.png
-[license]: http://www.gnu.org/licenses/agpl-3.0.html
 
 Thanks to the many Ruby projects we're using and the Famfamfam icon collection.
