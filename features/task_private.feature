@@ -90,6 +90,7 @@ Feature: Creating a private task
 
   Scenario: Private tasks are private
     Given @enric created a private task named "Firing orders" in the task list called "Lolbox"
+    And he tracks 2 hours on the task "Firing orders" with the comment "tracking confidential time"
     And the search index is reindexed
     When I go to the profile of "enric"
     Then I should see "Enric Lluelles"
@@ -97,4 +98,6 @@ Feature: Creating a private task
     When I search for "Firing"
     And I wait for 1 second
     Then I should not see "Firing orders"
+    When I go to the time tracking page
+    Then I should not see "tracking confidential time"
 

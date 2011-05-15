@@ -25,13 +25,15 @@ class HoursController < ApplicationController
     end
     
     conditions = if @current_project
-      ['project_id = ? AND created_at >= ? AND created_at < ? AND hours > 0', 
+      ['comments.project_id = ? AND comments.created_at >= ? AND comments.created_at < ? AND comments.hours > 0',
         @current_project.id, @start_date, @end_date]
     else
-      ['project_id IN (?) AND created_at >= ? AND created_at < ? AND hours > 0',
+      ['comments.project_id IN (?) AND comments.created_at >= ? AND comments.created_at < ? AND comments.hours > 0',
         current_user.project_ids, @start_date, @end_date]
     end
-    @comments = Comment.find(:all, :conditions => conditions, :include => [:project, :user, :target])
+    @comments = Comment.where(conditions).includes([:project, :user, :target]).
+                    where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                    joins("LEFT JOIN watchers ON (comments.target_id = watchers.watchable_id AND watchers.watchable_type = comments.target_type) AND watchers.user_id = #{current_user.id}")
     
     respond_to do |format|
       format.html { }

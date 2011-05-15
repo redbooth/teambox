@@ -201,4 +201,8 @@ Given /^the task "([^\"]+)" is watched by (@.+)$/ do |name, users|
   task.save(:validate => false)
 end
 
+Given /^(?:he|she|I) tracks? (\d+) hours? on the task "([^"]*)" with the comment "([^"]*)"$/ do |hours, name, comment|
+ task = Task.find_by_name(name)
+ task.comments.create :body => comment, :human_hours => hours
+end
 
