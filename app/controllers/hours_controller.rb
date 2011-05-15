@@ -43,6 +43,7 @@ class HoursController < ApplicationController
   end
   
   def by_period
+    # FIXME This is still being used? We need Garbage Collection :)
     @start_date = hours_time('start')
     @end_date = hours_time('end')
     
