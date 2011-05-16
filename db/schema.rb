@@ -473,6 +473,8 @@ ActiveRecord::Schema.define(:version => 20110524125342) do
     t.string   "service"
     t.integer  "status",                      :default => 0
     t.boolean  "deleted",                     :default => false, :null => false
+    t.integer  "organization_id"
+    t.text     "user_map"
   end
 
   add_index "teambox_datas", ["deleted"], :name => "index_teambox_datas_on_deleted"

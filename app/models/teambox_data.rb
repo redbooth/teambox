@@ -2,44 +2,22 @@ class TeamboxData < ActiveRecord::Base
   include Immortal
 
   belongs_to :user
-  concerned_with :serialization, :attributes, :teambox, :basecamp
+  belongs_to :organization
+  concerned_with :serialization, :attributes, :teambox, :basecamp, :validations
   
-  attr_accessible :project_ids, :type_name, :import_data, :user_map, :target_organization, :service
-  
-  before_validation :set_service, :on => :create
-  before_create :check_state
-  after_create  :post_check_state
-  after_update  :post_check_state
-  before_update :check_state
-  before_destroy :clear_import_data
-  
+  attr_accessible :project_ids, :type_name, :import_data, :user_map, :target_organization, :service, :organization_id
+
   has_attached_file :processed_data,
     :url  => "/exports/:id/:basename.:extension",
     :path => Teambox.config.amazon_s3 ?
       "exports/:id/:filename" :
       ":rails_root/exports/:id/:filename"
-  
-  validate :check_map
-  
-  def check_map
-    @errors.add "service", "Unknown service #{service}" if !['teambox', 'basecamp'].include?(service)
-    if type_name == :import and status_name == :mapping
-      # user needs to be an admin of the target organization
-      if !user.admin_organizations.map(&:permalink).include?(target_organization)
-        return @errors.add("target_organization", "Should be an admin")
-      end
-      
-      # All users need to be known to the owner
-      users = user.users_for_user_map.map(&:login)
-      
-      user_map.each do |login,dest_login|
-        if !users.include?(dest_login.strip)
-          @errors.add "user_map_#{login}", "#{dest_login} Not known to user"
-        end
-      end
-    end
-  end
-  
+
+  before_validation :set_service, :on => :create
+  after_save  :post_check_state
+  before_save :check_state
+  before_destroy :clear_import_data
+
   def clear_import_data
     if type_name == :import
       fname = import_data_file_name
@@ -47,15 +25,15 @@ class TeamboxData < ActiveRecord::Base
       self.processed_data_file_name = nil
     end
   end
-  
+
   def set_service
     self.service ||= 'teambox'
   end
-  
+
   def temp_upload_path
     "/tmp"
   end
-  
+
   def store_import_data
     begin
       # store the import in a temporary file, since we don't need it for long
@@ -125,38 +103,35 @@ class TeamboxData < ActiveRecord::Base
       Emailer.send_with_language(:notify_import, user.locale, self.id) if @dispatch_notification
     end
   end
-  
+
   def do_import
     self.processed_at = Time.now
     next_status = :imported
-    
+
     begin
       org_map = {}
       organizations.each do |org|
-        org_map[org['permalink']] = target_organization
+        org_map[org['permalink']] = organization.permalink
       end
-      
-      throw Exception.new("Import is invalid") if !valid?
-      
-      if service == 'basecamp'
-        unserialize_basecamp({'User' => user_map, 'Organization' => org_map})
-      else
-        unserialize({'User' => user_map, 'Organization' => org_map})
-      end
+
+      throw Exception.new("Import is invalid #{errors.full_messages}") if !valid?
+
+      unserialize({'User' => user_map, 'Organization' => org_map})
+
     rescue Exception => e
       # Something went wrong?!
-      Rails.logger.warn "#{user} imported an invalid dump (#{self.id}) #{e.inspect}"
+      Rails.logger.warn "#{user} imported an invalid dump (#{self.id}) #{e.inspect} #{self.errors.inspect}"
       self.processed_at = nil
       next_status = :uploading
     end
-    
+
     self.status_name = next_status
     clear_import_data
     @dispatch_notification = true
-    
+
     save unless new_record? or @check_state
   end
-  
+
   def do_export
     self.processed_at = Time.now
     @data = serialize(organizations_to_export, projects)
@@ -184,24 +159,24 @@ class TeamboxData < ActiveRecord::Base
   def exported?
     type_name == :export && status > EXPORT_STATUSES[:processing]
   end
-  
+
   def imported?
     type_name == :import && status > IMPORT_STATUSES[:processing]
   end
-  
+
   def processing?
     type_name == :import ? [IMPORT_STATUSES[:pre_processing], IMPORT_STATUSES[:processing]].include?(status) :
                            [EXPORT_STATUSES[:pre_processing], EXPORT_STATUSES[:processing]].include?(status)
   end
-  
+
   def error?
     (imported? or exported?) and processed_at.nil?
   end
-  
+
   def downloadable?(user)
     type_name == :export && user.id == user_id
   end
-  
+
   def to_api_hash(options = {})
     base = {
       :id => id,

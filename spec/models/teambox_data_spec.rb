@@ -228,7 +228,7 @@ describe TeamboxData do
       organization.add_member(user, Membership::ROLES[:admin])
       dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user; d.save}
       dump.data = @teambox_dump
-      dump.target_organization = organization.permalink
+      dump.organization = organization
       dump.user_map = user_map
       dump.status_name = :mapping
       
@@ -250,14 +250,13 @@ describe TeamboxData do
       dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user; d.save}
       dump.import_data = mock_uploader('dump.js', 'text/json', ActiveSupport::JSON.encode(@teambox_dump))
       dump.save
-      dump.target_organization = organization.permalink
+      dump.organization = organization
       dump.user_map = user_map
       dump.status_name = :pre_processing
       
       dump.save.should == true
       dump = TeamboxData.find_by_id(dump.id)
       
-      dump.map_data.should_not == nil
       dump.error?.should_not == true
       dump.status_name.should == :pre_processing
       dump.data.should_not == nil
@@ -278,7 +277,7 @@ describe TeamboxData do
       organization.add_member(user, Membership::ROLES[:admin])
       dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user;d.save}
       dump.data = @teambox_dump
-      dump.target_organization = organization.permalink
+      dump.target_organization = organization
       dump.user_map = user_map
       dump.status_name = :mapping
       
