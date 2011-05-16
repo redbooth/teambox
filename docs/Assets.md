@@ -1,6 +1,6 @@
-# Assets
+# Assets [DRAFT]
 
-Documentation about `css` and `js`:
+Documentation draft about `css` and `js`:
 
   * Coding standards
   * Tests
@@ -8,91 +8,94 @@ Documentation about `css` and `js`:
 
 ## JS
 
-  A - Should we make `JSLint|Hint` mandatory? If so, which flags?
-  B - Which coding standard should be adopted?
-  C - Which library should we use to test?
-  D - Should we use a global namespace?
-  E - Should we use loaders?
-  F - Which minfier should be used?
-  G - How does the client cache the file?
-  H - How is the build done?
+### File organization
 
-### Opinions / Answers
+All javascripts live under `/app/javascripts`
+[TODO: some are still on `vendor/sprockets`]
+[TODO: get rid of duplicates and unused modules]
 
-  A - Should we make `JSLint|Hint` mandatory? If so, which flags?
+    app/
+    |-javascripts/
+    |---collections/        # Backbone collections
+    |---controllers/        # Backbone controllers
+    |---helpers/            # Backbone helpers
+    |---models/             # Backbone models
+    |---modules/            # Modules implemented by us
+    |---vendor/             # third party modules
+    |---views/              # Backbone views
+    |
+    |---application.js      # [Sprocket/Jammit] All our code
+    |---libs.js             # [Sprocket/Jammit] Contains frameworks and third party modules.
+                            # They don't change oftern so they can be cached a lot.
 
-      We should use JSHint, is a little bit more flexible than JSLint.
-      The flags I recommend are:
-        `/*jshint browser: true, devel: true, jquery: true, debug: true, forin: true, undef: true, eqeqeq: true, bitwise: true, immed: true, laxbreak: true, noarg: true, noempty: true, nonew: true, indent: 2, maxlen: 120 */`
+### Namespace
 
-  B - Which coding standard should be adopted?
+In order to avoid lots of global variables, we namespace our `js` modules under the `Teambox` namespace
 
-      JSLint provides your with a very strict coding standard.
-      Although, by using `laxbreak` flag, we could use "comma first"
-      as it helps to detect missing commas.
+    Teambox
+    |-Collections  # Collection constructors
+    |-Controllers  # Controller constructors
+    |-Models       # Model constructors
+    |-Views        # View constructors
+    |
+    |-collections  # collection instances
+    |-controllers  # controller instances
+    |-models       # model instances
+    |-views        # view instances
+    |
+    |-modules      # our modules
+    |-cache        # client side cache
 
-      ``` javascript
-      var foo = 'bar';
+### JSHint
 
-      function () {
-        var zemba = 'fleiba'; // <= Someone types `;` instead of ','
-            foo = null;
+JSHint is used with the following flags.
+Some options just define a coding standard, but others will help to prevent bugs / memory leaks.
+If you use vim, I highly recommend using [jshint.vim](https://github.com/wookiehangover/jshint.vim)
 
-        // BUG. We overwrite foo here.
-      }
-      ```
-      ``` javascript
-      // Comma first example
-      var foo = 'bar';
+[TODO: there are lots of globals around which can be namespaced or added to the jshint.rc file]
 
-      function () {
-        var zemba = 'fleiba'
-          , foo = null;
+      /*jshint prototypejs: true, browser: true, devel: true, node: true, jquery: true, debug: true,
+      forin: true, undef: true, eqeqeq: true, bitwise: true, immed: true, laxbreak: true, noarg: true,
+      noempty: true, nonew: true, indent: 2, maxlen: 120, onevar: true */
+      /*global Teambox, _, Backbone, Templates, Handlebars */
 
-        // Easier to spot a missing comma
-      }
-      ```
+### Coding standard
 
-  C - Which library should we use to test?
+  * We will try to stick to JSHint as much as possible, but without being zealots.
+  * Comma-first helps to detect missing commas.
+  * Private functions and variables start with `_`.
+  * Adopt the **module pattern** as much as possible, it helps to avoid global namespace pollution and allows privacy.
+    Declaring dependencies as local variables helps the minifiers.
 
-      Jasmine seems to be the favourite in the Rails community.
+  * [TO REVIEW] variables are under_scored.
+  * [TO REVIEW] Methods are camelCased.
+  * [TO REVIEW] Constuctors are CamelCased, and the first letter uppercased.
 
-  D - Should we use a global namespace?
+Example:
 
-      I think `Teambox` is used now as a global namespace.
-      I would use `TEAMBOX` instead. Is a good practice to use
-      uppercase for global variables.
+``` javascript
+(function () {
+  var FooPrinter = function () { } // constructor
+    , _printStuff = console.log    // dependency, it can be renamed by a minfier
+    , _private_var = 'foo';        // private var
 
-  E - Should we use loaders?
+  FooPrinter.prototype.printFoo = function () {
+    _printStuff(_private_var);
+    return this;
+  };
 
-      Are there big files that are used rarely? If so I would split the
-      giant js file and load them with a loader.
+  // exports
+  Teambox.modules.FooPrinter = FooPrinter;
+}())
 
-      Having a monolithic `js` file is not a good solution because every
-      little change on any of the parts will expire the clients cached copy.
+var FooPrinter = Teambox.modules.FooPrinter
+  , my_printer = new FooPrinter();
 
-  F - Which minfier should be used?
-
-      [UglifyJS](https://github.com/mishoo/UglifyJS) seems to be the best one right now.
-
-  G - How does the client cache the file?
-
-      Never expire (Expire: Thu, 28 Apr 2050 20:00:00 GMT).
-      Expiration should be handled by file name.
-
-      The js files name should be their hashed contents.
-      That way, users will always have a fresh copy.
-
-  H - How is the build done?
-
-      --
-
-Other opinions:
-We should get rid of prototype. :)
+  my_printer
+    .printFoo(); // => foo
+    .printFoo(); // => foo
+```
 
 ## CSS
 
-  * Which coding standard is adopted?
-  * Which minfier is used?
-  * Which caching HTTP headers are sent?
-  * How does the client receive a recent deployed version?
+...
