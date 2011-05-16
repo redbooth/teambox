@@ -43,7 +43,6 @@ describe ProjectsController do
       
       get :show, :id => @project.id, :format => 'ics'
       
-      puts response.body.inspect
       response.body.match(/Fix everything/).should_not == nil
       response.body.match(/Silence the critics/).should == nil
       response.body.match(/People are asking too many questions/).should == nil
