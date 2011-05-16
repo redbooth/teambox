@@ -5,11 +5,11 @@
 
 - if @data.need_data?
   = form_for @data, :html => {:multipart => true} do |f|
-    = fields_for_teambox_import(f, @data)
+    = render :partial => 'teambox_datas/import_fields', :locals => {:f => f, :data => @data}
     .submit
       = f.submit t('.submit')
       = t('common.or')
-      %a{:href => teambox_data_path(@data), :class => 'cancel', 'data-method' => 'delete'}= t('common.cancel')
+      = link_to t('common.cancel'), @data, :class => 'cancel', :"data-method" => :delete
 - elsif @data.processed_at
   %p= t('teambox_datas.data.processed_at', :processed_at => @data.processed_at)
   %p= t('.projects')
@@ -18,7 +18,7 @@
       %li= link_to h(project.name), project_path(project)
 - elsif @data.processing?
   %p= t('teambox_datas.data.processing')
-  %a{:href => teambox_data_path(@data), :class => 'cancel', 'data-method' => 'delete'}= t('common.cancel')
+  = link_to t('common.cancel'), @data, :class => 'cancel', :"data-method" => :delete
 - else
   %p= t('.import_error')	
-  %a{:href => teambox_data_path(@data), :class => 'cancel', 'data-method' => 'delete'}= t('common.cancel')
+  = link_to t('common.cancel'), @data, :class => 'cancel', :"data-method" => :delete

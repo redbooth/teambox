@@ -30,10 +30,6 @@ module TeamboxDatasHelper
     javascript_tag "_import_users_autocomplete = #{names.to_json}"
   end
   
-  def fields_for_teambox_import(form, data)
-    render :partial => 'teambox_datas/import_fields', :locals => {:f => form, :data => data}
-  end
-  
   def fields_for_teambox_export(form, data)
     render :partial => 'teambox_datas/export_fields', :locals => {:f => form, :data => data}
   end
