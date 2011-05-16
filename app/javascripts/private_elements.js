@@ -1,16 +1,30 @@
 PrivateBox = {
 
+  findUser: function(project_id, user_id) {
+    var people = _people[project_id];
+    var len = people.length;
+    for (var i=0; i<len; i++) {
+      var p = people[i];
+      if (p[3] == user_id)
+        return p;
+    }
+    return null;
+  },
+
   redrawBox: function(form, project_id) {
     var box = form.down('.private_options');
     box.select('.private_users').invoke('remove');
+    box.select('.readonly_warning').invoke('remove');
 
     // Check for watcher list in thread
     var thread = box.up('.thread')
     var watcher_ids = null;
     var is_private = false;
+    var creator_id = null;
     if (thread) {
       watcher_ids = (thread.readAttribute('data-watcher-ids')||'').split(',');
       is_private = thread.hasClassName('private');
+      creator_id = thread.readAttribute('data-creator-user-id');
     }
 
     // Update buttons & people list
@@ -31,6 +45,11 @@ PrivateBox = {
       box.insert({ bottom: this.peopleShowHTML(box.readAttribute('object-prefix'),
                                            box.readAttribute('object-type'),
                                            project_id, watcher_ids) });
+      var creator = PrivateBox.findUser(project_id, creator_id);
+      if (creator)
+        box.insert({ bottom: '<p class="readonly_warning">' +
+                             I18n.t(I18n.translations.comments['private']['readonly_warning'], {user: '<a href="/users/'+creator_id+'">'+creator[2]+'</a>'}) +
+                             '</p>'})
     }
   },
 

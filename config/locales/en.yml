@@ -1112,6 +1112,7 @@ en:
       public: This element is visible to everybody in this project
       private: This element is only visible to people you specify...
       private_global: This element is only visible to the following people...
+      readonly_warning: "Only %{user} is able to change privacy settings."
   teambox_datas:
     new_import:
       title: "Import data"
