@@ -34,17 +34,35 @@ describe ProjectsController do
       response.body.match(/We deny everything/).should_not == nil
       response.body.match(/Nothing wrong here/).should_not == nil
     end
+    
+    it "should not shown private objects we cant see in ical" do
+      login_as @user
+      
+      task = Factory.create(:task, :project => @project, :name => 'Silence the critics', :comments_attributes => {'0' => {'body' => 'People are asking too many questions'} }, :is_private => true, :due_on => Time.now)
+      other_task = Factory.create(:task, :project => @project, :name => 'Fix everything', :due_on => Time.now)
+      
+      get :show, :id => @project.id, :format => 'ics'
+      
+      puts response.body.inspect
+      response.body.match(/Fix everything/).should_not == nil
+      response.body.match(/Silence the critics/).should == nil
+      response.body.match(/People are asking too many questions/).should == nil
+    end
   end
   
   describe "#show" do
-    it "should not shown private objects we cant see in feeds" do
+    before do
       @user = Factory(:confirmed_user)
       @project = Factory(:project)
       @project.add_user @user
+      
+      @task = Factory.create(:task, :project => @project, :name => 'Silence the critics', :comments_attributes => {'0' => {'body' => 'People are asking too many questions'} }, :is_private => true, :due_on => Time.now)
+    end
+    
+    it "should not show private objects we cant see in feeds" do
       login_as @user
       
       conversation = Factory.create(:conversation, :project => @project, :name => 'We screwed up', :body => 'PANIC!', :is_private => true)
-      task = Factory.create(:task, :project => @project, :name => 'Silence the critics', :comments_attributes => {'0' => {'body' => 'People are asking too many questions'} }, :is_private => true)
       other_conversation = Factory.create(:conversation, :project => @project, :name => 'We deny everything', :body => 'Nothing wrong here')
       
       get :show, :id => @project.id, :format => 'rss'
@@ -54,6 +72,18 @@ describe ProjectsController do
       response.body.match(/People are asking too many questions/).should == nil
       response.body.match(/We deny everything/).should_not == nil
       response.body.match(/Nothing wrong here/).should_not == nil
+    end
+    
+    it "should not show private objects we cant see in ical" do
+      login_as @user
+      
+      other_task = Factory.create(:task, :project => @project, :name => 'Fix everything', :due_on => Time.now)
+      
+      get :show, :id => @project.id, :format => 'ics'
+      
+      response.body.match(/Fix everything/).should_not == nil
+      response.body.match(/Silence the critics/).should == nil
+      response.body.match(/People are asking too many questions/).should == nil
     end
   end
   

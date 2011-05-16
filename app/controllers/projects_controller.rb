@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
       end
       f.m     { redirect_to activities_path if request.path == '/' }
       f.rss   { render :layout  => false }
-      f.ics   { render :text    => Project.to_ical(@projects, params[:filter] == 'mine' ? current_user : nil, request.host, request.port) }
+      f.ics   { render :text    => Project.to_ical(@projects, current_user, params[:filter] == 'mine' ? current_user : nil, request.host, request.port) }
       f.print { render :layout  => 'print' }
     end
   end
@@ -50,7 +50,7 @@ class ProjectsController < ApplicationController
     respond_to do |f|
       f.any(:html, :m)
       f.rss   { render :layout  => false }
-      f.ics   { render :text    => @current_project.to_ical(params[:filter] == 'mine' ? current_user : nil) }
+      f.ics   { render :text    => @current_project.to_ical(current_user, params[:filter] == 'mine' ? current_user : nil) }
       f.print { render :layout  => 'print' }
     end
   end
