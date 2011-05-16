@@ -37,33 +37,23 @@ class TeamboxDatasController < ApplicationController
   
   def create
     @data = current_user.teambox_datas.build(params[:teambox_data])
-    
-    respond_to do |f|
-      if @data.save
-        f.html { redirect_to teambox_data_path(@data) }
-      else
-        flash.now[:error] = "There were errors with the information you supplied!"
-        f.html { render view_for_data(:new) }
-      end
+    if @data.save
+      redirect_to teambox_data_path(@data)
+    else
+      flash.now[:error] = "There were errors with the information you supplied!"
+      render view_for_data(:new)
     end
   end
   
   def update
-    respond_to do |f|
-      if !@data.processing? and !@data.update_attributes(params[:teambox_data])
-        if @data.status_name == :uploading
-          flash.now[:error] = t('teambox_datas.show_import.import_error')
-        end
-        f.html { render view_for_data(:show) }
-      else
-        if @data.processing?
-          f.html { redirect_to teambox_data_path(@data) }
-        else
-          flash.now[:error] = "There were errors with the information you supplied!"
-          f.html { render view_for_data(:show) }
-        end
-      end
+    #TODO: Refactor this mess, along with the model
+    return redirect_to(@data) if @data.processing?
+    unless @data.update_attributes(params[:teambox_data])
+      flash.now[:error] = t('teambox_datas.show_import.import_error')
+    else
+      flash.now[:error] = "There were errors with the information you supplied!" if !@data.processing?
     end
+    render view_for_data(:show)
   end
   
   def destroy
