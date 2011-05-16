@@ -4,7 +4,7 @@
 - comments = thread.comments
 - last_comment = comments.first
 
-.thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}", :'data-project-id' => thread.project.id }
+.thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}", :'data-project-id' => thread.project.id, :'data-creator-user-id' => thread.try(:user_id), :'data-watcher-ids' => (thread.try(:watcher_ids)||[]).join(','), :class => thread.is_private ? 'private' : nil }
   -# Title of the element
   .comment.comment_header
     %span.time= posted_date(comments.first ? comments.first.created_at : thread.created_at)
@@ -18,15 +18,21 @@
       - case thread
       - when Conversation
         - if thread.to_s.present?
-          .thread_title= t(".conversation_with_title_html",
+          .thread_title
+            .lock_icon
+            = t(".conversation_with_title_html",
               :conversation => link_to(thread, [thread.project, thread]),
               :project => project_link_with_overlay(thread.project))
         - else
-          .thread_title= t(".conversation_without_title_html",
+          .thread_title
+            .lock_icon
+            = t(".conversation_without_title_html",
               :conversation_url => project_conversation_path(thread.project, thread),
               :project => project_link_with_overlay(thread.project))
       - when Task
-        .thread_title= t(".task_on_task_list_html",
+        .thread_title
+          .lock_icon
+          = t(".task_on_task_list_html",
             :task => link_to(thread, [thread.project, thread]),
             :task_list => link_to(thread.task_list, [thread.task_list.project, thread.task_list]))
         = project_link_with_overlay thread.project

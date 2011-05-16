@@ -114,6 +114,10 @@ class Conversation < RoleRecord
     has project_id, created_at, updated_at
   end
 
+  def is_visible?(user)
+    !is_private or watchers.include? user
+  end
+
   protected
   
   def check_comments_presence
@@ -130,7 +134,7 @@ class Conversation < RoleRecord
   end
   
   def set_comments_target
-    comments.each{|c|c.target = self if c.target.nil?}
+    comments.each{|c| c.target = self if c.target.nil? or c.new_record?}
   end
 
   def update_user_stats

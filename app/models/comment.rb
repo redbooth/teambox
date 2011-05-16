@@ -38,9 +38,11 @@ class Comment < ActiveRecord::Base
     :reject_if => lambda { |google_docs| google_docs['title'].blank? || google_docs['url'].blank? }
   
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
-                  :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes
+                  :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes, :private_ids, :is_private
 
   attr_accessor :is_importing
+  attr_accessor :private_ids
+  attr_accessor :is_private_set
 
   scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
   scope :latest, :order => 'id DESC'
@@ -48,8 +50,8 @@ class Comment < ActiveRecord::Base
   # TODO: investigate how we can enable this and not break nested attributes
   # validates_presence_of :target_id, :user_id, :project_id
   
-  validate :check_duplicate, :if => lambda { |c| !@is_importing and c.target_id? and not c.hours? }, :on => :create
-  validates_presence_of :body, :unless => lambda { |c| c.task_comment? or c.uploads.to_a.any? or c.google_docs.any? }
+  validate :check_duplicate, :if => lambda { |c| !@is_importing and !c.is_private_changed? and c.target_id? and not c.hours? }, :on => :create
+  validates_presence_of :body, :unless => lambda { |c| c.is_private_set or c.task_comment? or c.uploads.to_a.any? or c.google_docs.any? }
 
   validates_presence_of :user
 
@@ -140,21 +142,49 @@ class Comment < ActiveRecord::Base
   def copy_ownership_from_target # before_create
     self.user_id ||= target.user_id
     self.project_id ||= target.project_id
+    # Private field inherits from target UNLESS it is set and its being changed by the owner
+    can_change_private = self.user_id == target.user_id
+    if target.respond_to?(:is_private)
+      self[:is_private] = target.is_private unless can_change_private && @is_private_set
+    end
     true
+  end
+  
+  def is_private=(value)
+    self[:is_private] = value
+    @is_private_set = true
   end
 
   def trigger_target_callbacks # after_create
     @activity = project.log_activity(self, 'create') if project_id?
+    return if target.nil?
 
     if target.respond_to?(:add_watchers)
-      new_watchers = defined?(@mentioned) ? @mentioned.to_a : []
-      new_watchers << self.user if self.user
-      target.add_watchers new_watchers
+      can_mention_watchers = true
+      
+      # Allow the owner to change the privacy status
+      if target.respond_to?(:is_private)
+        can_change_private = self.user_id == target.user_id
+        target.is_private = self.is_private if can_change_private && @is_private_set
+        if target.is_private && can_change_private && @private_ids && @is_private_set
+          target.set_private_watchers(@private_ids)
+        elsif target.is_private
+          target.add_watchers([target.user])
+        end
+      end
+      
+      if !target.is_private
+        new_watchers = defined?(@mentioned) ? @mentioned.to_a : []
+        new_watchers << self.user if self.user
+        target.add_watchers new_watchers
+      end
     end
     
     if target.respond_to?(:updated_at)
-      target.update_attribute :updated_at, self.created_at
+      target.updated_at = self.created_at
     end
+    
+    target.save(:validate => false)
   end
   
   def cleanup_activities # after_destroy

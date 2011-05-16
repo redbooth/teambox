@@ -149,7 +149,8 @@ class Upload < RoleRecord
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
       :user_id => user_id,
-      :comment_id => comment_id
+      :comment_id => comment_id,
+      :is_private => is_private
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
@@ -162,12 +163,15 @@ class Upload < RoleRecord
     if comment_id
       self.user_id = comment.user_id
       self.project_id = comment.project_id
+      self.is_private = comment.is_private
     end
+    true
   end
   
   def update_comment_to_show_delete
     if self.comment && self.comment.body.blank? && self.comment.uploads.count == 1
       self.comment.update_attributes(:body => "File deleted")
     end
+    true
   end
 end

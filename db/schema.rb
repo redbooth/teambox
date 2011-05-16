@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20110418210553) do
     t.integer  "comment_target_id"
     t.boolean  "deleted",             :default => false, :null => false
     t.integer  "last_activity_id"
+    t.boolean  "is_private",          :default => false, :null => false
   end
 
   add_index "activities", ["comment_target_id"], :name => "index_activities_on_comment_target_id"
@@ -100,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20110418210553) do
     t.date     "previous_due_on"
     t.integer  "uploads_count",        :default => 0
     t.boolean  "deleted",              :default => false, :null => false
+    t.boolean  "is_private",           :default => false, :null => false
   end
 
   add_index "comments", ["created_at"], :name => "index_comments_on_created_at"
@@ -128,6 +130,7 @@ ActiveRecord::Schema.define(:version => 20110418210553) do
     t.boolean  "simple",          :default => false
     t.boolean  "deleted",         :default => false, :null => false
     t.integer  "converted_to"
+    t.boolean  "is_private",      :default => false, :null => false
   end
 
   add_index "conversations", ["deleted"], :name => "index_conversations_on_deleted"
@@ -442,6 +445,7 @@ ActiveRecord::Schema.define(:version => 20110418210553) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",         :default => false, :null => false
+    t.boolean  "is_private",      :default => false, :null => false
   end
 
   add_index "tasks", ["assigned_id"], :name => "index_tasks_on_assigned_id"
@@ -480,6 +484,7 @@ ActiveRecord::Schema.define(:version => 20110418210553) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",            :default => false, :null => false
+    t.boolean  "is_private",         :default => false, :null => false
   end
 
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"

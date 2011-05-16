@@ -10,6 +10,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    authorize! :show, @task
     respond_to do |f|
       f.any(:html, :m)
       f.js {
@@ -30,7 +31,9 @@ class TasksController < ApplicationController
 
   def create
     authorize! :make_tasks, @current_project
-    @task = @task_list.tasks.create_by_user(current_user, params[:task])
+    @task = @task_list.tasks.build_by_user(current_user, params[:task])
+    @task.is_private = (params[:task][:is_private]||false) if params[:task]
+    @task.save
     
     respond_to do |f|
       f.any(:html, :m) {
@@ -79,7 +82,7 @@ class TasksController < ApplicationController
     respond_to do |f|
       f.any(:html, :m) {
         if request.xhr? or iframe?
-          if @task.comment_created?
+          if success and @task.comment_created?
             comment = @task.comments(true).first
             response.headers['X-JSON'] = @task.to_json(:include => :assigned)
 

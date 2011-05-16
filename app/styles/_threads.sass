@@ -57,6 +57,11 @@
           height: 14px
           font-size: 11px
           margin-top: 8px
+      .lock_icon
+        position: relative
+        top: 2px
+        display: none
+        margin-right: 10px
   span.time
     position: relative
     float: right
@@ -79,6 +84,12 @@
     background-color: $comments_bkg
     margin: 0
     padding: 2px 0 5px 6px
+
+.thread.private
+  .comment_header
+    .block
+      .lock_icon
+        display: inline-block
 
 .expand_comment
   a
@@ -131,11 +142,35 @@
   .thread.collapsed
     margin: 0
 
-.add_watchers_box
+.add_watchers_box, .private_options
   margin-left: 45px
   padding: 5px 0 20px
   max-height: 200px
   overflow-y: auto
+
+.private_options
+  max-height: 300px
+  .option
+    label
+      display: inline-block
+      font-weight: normal
+  .private_users
+    display: block
+    margin: 10px 0
+    padding-left: 22px
+    .private_user
+      display: inline-block
+      label
+        width: 170px
+        white-space: nowrap
+        overflow-x: hidden
+        display: inline-block
+        text-overflow: ellipsis
+        font-weight: normal
+      input
+        margin-right: 10px
+
+.add_watchers_box
   p
     font-size: 11px
     font-weight: bold

@@ -37,7 +37,7 @@
   - for task_list in @project.task_lists
     %p.task_list
       %b= link_to(h(task_list), project_task_list_path(@project, task_list)) + ":"
-      - tasks = task_list.tasks.all(:select => 'id, name', :order => 'id desc', :limit => 5)
+      - tasks = task_list.tasks.where(:is_private => false).select('id, name').order('id desc').limit(5)
       - tasks = tasks.collect { |task| link_to h(task), project_task_path(@project, task) }
       = raw tasks.join(", ") + (tasks.size == 5 ? ", ..." : "")
   

@@ -158,6 +158,24 @@ describe ApiV1::ActivitiesController do
       
       JSON.parse(response.body)['objects'].map{|a| a['comment_target_type']}.uniq.should == ['Conversation']
     end
+    
+    it "does not show activities for unwatched private objects" do
+      login_as @user
+      
+      conversation = Factory(:conversation, :project => @project)
+      conversation.update_attribute(:is_private, true)
+      
+      get :index
+      response.should be_success
+      
+      list = {}
+      JSON.parse(response.body)['objects'].each do |object|
+        list["#{object['comment_target_type']}#{object['comment_target_id']}"] = object if object['comment_target_type']
+        list["#{object['target_type']}#{object['target_id']}"] = object
+      end
+      
+      list["Conversation#{conversation.id}"].should == nil
+    end
   end
   
   describe "#show" do
@@ -176,6 +194,19 @@ describe ApiV1::ActivitiesController do
       references.include?("#{activity.target_id}_#{activity.target_type}").should == true
       references.include?("#{activity.user_id}_User").should == true
       references.include?("#{activity.project_id}_Project").should == true
+    end
+    
+    it "does not show an activity for an unwatched private object" do
+      login_as @user
+      
+      conversation = Factory(:conversation, :project => @project)
+      conversation.update_attribute(:is_private, true)
+      
+      activity = @project.activities.where(:comment_target_type => 'Conversation').order('id DESC').first
+      
+      get :show, :project_id => @project.permalink, :id => activity.id
+      
+      response.status.should == 401
     end
   end
 end

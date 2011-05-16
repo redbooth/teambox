@@ -124,8 +124,24 @@ document.on('click', '.thread .comments .more_comments a', function(e, el) {
 document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, form) {
   resetCommentsForm(form)
   var comment_data = e.memo.responseText
+  var conversation_data = e.memo.headerJSON
+  var thread = form.up('.thread')
+
+  if (conversation_data) {
+    // Update privacy status
+    if (conversation_data.is_private) {
+      if (!thread.hasClassName('private'))
+        thread.addClassName('private')
+    } else {
+      thread.removeClassName('private')
+    }
+
+    // sync attributes
+    thread.writeAttribute('data-user-id', conversation_data.user_id)
+    thread.writeAttribute('data-watcher-ids', (conversation_data.watchers||[]).join(','))
+  }
+
   if (!e.memo.responseText.blank()) {
-    var thread = form.up('.thread')
     var new_comment = thread.down('.comments').insert(e.memo.responseText).down('.comment:last-child')
     new_comment.highlight({ duration: 1 })
 
@@ -194,7 +210,9 @@ document.on('mouseover', '.textilized a', function(e, link) {
 hideBySelector('#activities .thread form.new_comment .extra')
 
 document.on('focusin', '#activities .thread form.new_comment textarea', function(e, input) {
-  input.up('form').down('.extra').forceShow()
+  var form = input.up('form')
+  var extra = form.down('.extra')
+  extra.forceShow()
 })
 
 // document.on('focusout', '.thread form.new_comment textarea', function(e, input) {

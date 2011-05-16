@@ -24,6 +24,10 @@ module RssFeedHelper
       @xml.pubDate((date_or_time || Time.now.utc).to_s(:rfc822))
     end
     
+    def description(value)
+      @xml.tag! 'description', value
+    end
+    
     # Creates an entry tag for a specific record and prefills the id using class and id.
     #
     # Options:

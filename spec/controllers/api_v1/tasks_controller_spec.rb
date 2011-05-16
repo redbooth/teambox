@@ -158,6 +158,16 @@ describe ApiV1::TasksController do
         references.include?("#{comment.user_id}_User").should == true
       end
     end
+    
+    it "does not show unwatched private tasks in a project" do
+      login_as @user
+      @task.update_attribute(:is_private, true)
+      
+      get :index, :project_id => @project.permalink
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 1
+    end
   end
   
   describe "#show" do
@@ -197,6 +207,25 @@ describe ApiV1::TasksController do
       
       get :show, :project_id => @project.permalink, :task_list_id => @other_list.id, :id => @task.id
       response.status.should == 404
+    end
+    
+    it "does not show private tasks unwatched by the user" do
+      login_as @user
+      @task.update_attribute(:is_private, true)
+      
+      get :show, :project_id => @project.permalink, :id => @task.id
+      response.status.should == 401
+    end
+    
+    it "shows private tasks watched by the user" do
+      login_as @user
+      @task.add_watcher(@user)
+      @task.update_attribute(:is_private, true)
+      
+      get :show, :project_id => @project.permalink, :id => @task.id
+      response.should be_success
+      
+      JSON.parse(response.body)['id'].to_i.should == @task.id
     end
   end
   
@@ -239,6 +268,14 @@ describe ApiV1::TasksController do
       
       @task.reload.name.should_not == 'Modified'
     end
+    
+    it "should not allow participants not watching to modify a private task" do
+      @task.update_attribute(:is_private, true)
+      login_as @user
+      
+      put :update, :project_id => @project.permalink, :id => @task.id, :name => 'Modified'
+      response.status.should == 401
+    end
   end
   
   describe "#watch" do
@@ -258,6 +295,14 @@ describe ApiV1::TasksController do
       response.status.should == 401
       
       @task.reload.watcher_ids.include?(@observer.id).should_not == true
+    end
+    
+    it "should not allow participants to watch private conversations" do
+      @task.update_attribute(:is_private, true)
+      login_as @user
+
+      put :watch, :project_id => @project.permalink, :id => @task.id
+      response.status.should == 401
     end
   end
   
@@ -298,6 +343,14 @@ describe ApiV1::TasksController do
       response.status.should == 401
       
       @task_list.tasks(true).length.should == 1
+    end
+    
+    it "should not allow admins not watching to modify a private task" do
+      @task.update_attribute(:is_private, true)
+      login_as @admin
+      
+      put :destroy, :project_id => @project.permalink, :id => @task.id
+      response.status.should == 401
     end
   end
 end

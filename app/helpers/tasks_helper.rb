@@ -15,6 +15,7 @@ module TasksHelper
       classes << 'due_on' unless task.due_on.nil? or task.closed?
       classes << (task.assigned.nil? ? 'unassigned' : 'assigned') unless task.closed?
       classes << "user_#{task.assigned.user_id}" unless task.assigned.nil?
+      classes << 'private' if task.is_private
     end.join(' ')
   end
 
@@ -96,6 +97,15 @@ module TasksHelper
 
   def list_tasks(task_list, tasks,editable=true)
     render tasks,
+      :project => task_list && task_list.project,
+      :task_list => task_list,
+      :editable => editable
+  end
+  
+  def list_tasks_with_private(task_list, tasks,editable=true)
+    render tasks.
+     where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+     joins("LEFT JOIN watchers ON tasks.id = watchers.watchable_id AND watchers.watchable_type = 'Task' AND watchers.user_id = #{current_user.id}"),
       :project => task_list && task_list.project,
       :task_list => task_list,
       :editable => editable

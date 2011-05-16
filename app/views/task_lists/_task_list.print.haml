@@ -10,8 +10,8 @@
     - if show_the_lists
       %div{ :id => task_list_id(:the_main_tasks,project,task_list), :class => 'tasks open' }
         - if !task_list.archived
-          = list_tasks(task_list,task_list.tasks.unarchived,false)
+          = list_tasks_with_private(task_list,task_list.tasks.unarchived,false)
       .task_list_closed{ :id => task_list_id(:with_closed_tasks,project,task_list) }
         %div{ :id => task_list_id(:the_closed_tasks,project,task_list), :class => 'tasks closed' }
           - if !header_on_index
-            = list_tasks(task_list,task_list.tasks.archived,false)
+            = list_tasks_with_private(task_list,task_list.tasks.archived,false)

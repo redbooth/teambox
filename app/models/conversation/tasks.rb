@@ -16,6 +16,7 @@ class Conversation
       t.task_list = task_list
       t.assigned = assigned_person
       t.created_at = created_at
+      t.is_private = is_private
     end
 
     task.errors.each {|attr,msg| errors.add(attr, msg)}

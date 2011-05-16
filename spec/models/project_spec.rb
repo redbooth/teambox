@@ -214,7 +214,7 @@ describe Project do
       project = Factory(:project)
       task_list = Factory(:task_list, :project => project)
       task = Factory(:task, :project => project, :task_list => task_list, :due_on => Time.parse("2010/01/01").to_date)
-      calendar = project.to_ical
+      calendar = project.to_ical(project.user)
       calendar.should =~ /DTSTART;VALUE=DATE:20100101/m
       calendar.should =~ /DTEND;VALUE=DATE:20100102/m
     end

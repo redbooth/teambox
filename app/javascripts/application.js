@@ -52,6 +52,7 @@
 //= require <params>
 //= require <person>
 //= require <preview>
+//= require <private_elements>
 //= require <projects>
 //= require <search>
 //= require <sessions>

@@ -12,6 +12,7 @@ class ApiV1::SearchController < ApiV1::APIController
           :with => { :project_id => project_ids },
           :page => params[:page],
           :classes => [Conversation, Task, TaskList, Page]
+      @results.reject! { |r| r.respond_to?(:is_visible?) and !r.is_visible?(current_user) }
     end
     api_respond(@results || [], :include => [:thread_comments], :references => [:project])
   end

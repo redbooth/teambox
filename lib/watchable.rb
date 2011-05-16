@@ -9,11 +9,23 @@ module Watchable
     model.has_many :watcher_tags, :as => :watchable, :class_name => 'Watcher', :dependent => :destroy
     #Make it obvious that autosave is acting here
     model.has_many :watchers, :through => :watcher_tags, :source => :user, :autosave => true
+    model.after_save :update_private
   end
 
   def watchers_ids
     warn "[DEPRECIATION] `watchers_ids` is deprecated.  Please use `watcher_ids` instead."
     watcher_ids
+  end
+  
+  def set_private_watchers(new_ids)
+    new_ids_with_owner = (new_ids.map(&:to_i) + [self.user_id]).uniq
+    watchers_to_remove = watcher_ids - new_ids_with_owner
+    (new_ids_with_owner-watcher_ids).each do |user_id|
+      watcher = Watcher.new(:user_id => user_id, :project_id => self.project_id,
+                            :watchable_id => self.id, :watchable_type => self.class.to_s)
+      watcher.save
+    end
+    Watcher.where(:watchable_id => self.id, :watchable_type => self.class, :user_id => watchers_to_remove).destroy_all
   end
 
   def add_watcher(user)
@@ -47,6 +59,20 @@ module Watchable
 
   def people_ids_watching
     people_watching.select(:id).map(&:id)
+  end
+  
+  def update_private
+    return unless self.respond_to?(:is_private)
+    if !new_record? and is_private_changed?
+      Activity.where(:target_type => self.class.to_s, :target_id => self.id).each{|a| a.update_attribute(:is_private, is_private)}
+      Activity.where(:comment_target_type => self.class.to_s, :comment_target_id => self.id).each{|a| a.update_attribute(:is_private, is_private)}
+      Comment.where(:target_type => self.class.to_s, :target_id => self.id).each{|a| 
+        a.update_attribute(:is_private, is_private)
+        a.uploads.each{|upload| upload.update_attribute(:is_private, is_private)}
+      }
+    end
+    
+    true
   end
 
   protected

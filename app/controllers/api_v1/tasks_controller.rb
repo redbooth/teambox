@@ -13,6 +13,8 @@ class ApiV1::TasksController < ApiV1::APIController
     
     @tasks = context.except(:order).
                      where(api_range('tasks')).
+                     where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                     joins("LEFT JOIN watchers ON (tasks.id = watchers.watchable_id AND watchers.watchable_type = 'Task') AND watchers.user_id = #{current_user.id}").
                      limit(api_limit).
                      order('tasks.id DESC')
     
@@ -26,7 +28,9 @@ class ApiV1::TasksController < ApiV1::APIController
   
   def create
     authorize! :make_tasks, @current_project
-    @task = @task_list.tasks.create_by_user(current_user, params)
+    @task = @task_list.tasks.build_by_user(current_user, params)
+    @task.is_private = (params[:task][:is_private]||false) if params[:task]
+    @task.save
     
     if @task.new_record?
       handle_api_error(@task)

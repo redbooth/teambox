@@ -1,0 +1,6 @@
+.option.normal
+  %input{:id => '{{object_prefix}}_public', :name => '{{object_type}}[is_private]', :type => 'radio', :value => 'false', :disabled => 'true'}
+  %label{ :for => '{{object_prefix}}_public' } {{is_public}}
+.option.private
+  %input{:id => '{{object_prefix}}_private', :name => '{{object_type}}[is_private]', :type => 'radio', :value => 'true', :disabled => 'true'}
+  %label{ :for => '{{object_prefix}}_private' } {{is_private}}

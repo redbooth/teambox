@@ -31,12 +31,24 @@ Given /^the following tasks? with hours exists?:?$/ do |table|
   end
 end
 
-Given /^the task called "([^\"]*)" belongs to the task list called "([^\"]*)"$/ do |task_name, task_list_name|
+Given /^the (p[a-z]+ )?task called "([^\"]*)" belongs to the task list called "([^\"]*)"$/ do |priv_type, task_name, task_list_name|
+  priv_type = (priv_type||'').strip == 'private'
   Given %(there is a task called "#{task_name}")
   Given %(there is a task list called "#{task_list_name}")
   task_list = TaskList.find_by_name(task_list_name)
-  Task.find_by_name(task_name).update_attribute(:task_list, task_list)
+  task = Task.find_by_name(task_name)
+  task.update_attribute(:task_list, task_list)
+  task.update_attribute(:is_private, priv_type)
 end
+
+Given /^(@.+) created a (p[a-z]+ )?task named "([^\"]+)" in the task list called "([^\"]*)"$/ do |user_name, priv_type, task_name, task_list_name|
+  is_private = (priv_type||'').strip == 'private'
+  user = User.find_by_login(user_name.gsub('@',''))
+  task_list = TaskList.find_by_name(task_list_name)
+  task_list ||= @current_project.task_lists.create(:name => task_list_name, :user => user)
+  Factory(:task, :user => user, :is_private => is_private, :name => task_name, :task_list => task_list, :project => task_list.project)
+end
+
 
 Given /^the task called "([^\"]*)" belongs to the project called "([^\"]*)"$/ do |task_name, project_name|
   Given %(there is a task called "#{task_name}")
@@ -178,3 +190,19 @@ Then /^I should see "([^\"]+)" in the task thread title$/ do |msg|
   comment = link.text
   comment.should match(/#{msg}/)
 end
+
+Given /^the task "([^\"]+)" is watched by (@.+)$/ do |name, users|
+  task = Task.find_by_name(name)
+  
+  each_user(users) do |user|
+    task.add_watcher(user)
+  end
+  
+  task.save(:validate => false)
+end
+
+Given /^(?:he|she|I) tracks? (\d+) hours? on the task "([^"]*)" with the comment "([^"]*)"$/ do |hours, name, comment|
+ task = Task.find_by_name(name)
+ task.comments.create :body => comment, :human_hours => hours
+end
+

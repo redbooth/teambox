@@ -48,7 +48,9 @@ class UsersController < ApplicationController
     @card = @user.card
     @projects_shared = @user.projects_shared_with(@current_user)
     @shares_invited_projects = @projects_shared.empty? && @user.shares_invited_projects_with?(@current_user)
-    @activities = Activity.for_projects(@user.projects_shared_with(@current_user)).from_user(@user)
+    @activities = Activity.for_projects(@user.projects_shared_with(@current_user)).from_user(@user).
+      where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+      joins("LEFT JOIN watchers ON ((activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.target_id = watchers.watchable_id AND watchers.watchable_type = activities.target_type)) AND watchers.user_id = #{current_user.id}")
     @threads = @activities.threads
     @last_activity = @activities.all.last
 

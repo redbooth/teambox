@@ -18,6 +18,7 @@ class CommentsController < ApplicationController
           if comment.new_record?
             output_errors_json(comment)
           else
+            response.headers['X-JSON'] = comment.target.to_json
             render :partial => 'comment', :locals => { :comment => comment }
           end
         else
