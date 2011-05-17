@@ -1,7 +1,7 @@
 window.WEB_SOCKET_SWF_LOCATION = window.location.protocol + "//" + window.location.host  + "/WebSocketMain.swf";
 
 (function() {
-  var ACTIVE_PATHS = [/^\/$/,/^\/projects\/?$/, /^\/projects\/[^\/]+\/?$/, /#!\/projects\/[^\/]+\/?$/];
+  var ACTIVE_PATHS = [/^\/$/,/^\/projects\/?$/, /^\/projects\/[^\/]+\/?$/, /#!\/projects\/[^\/]+\/?$/, /^#!$/];
 
   var NotificationsController = function(app) {
     this.initialize(app);
