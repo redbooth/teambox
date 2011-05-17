@@ -33,11 +33,11 @@ Feature: Creating a task list
     And I click on the finish date selector
     And I select the month "January" on the calendar
     And I select the year "2010" on the calendar
-    And I select "25" in the "finish" calender
+    And I select "25" in the calendar
     And I click on the start date selector
     And I select the month "January" on the calendar
     And I select the year "2010" on the calendar
-    And I select "15" in the "start" calender
+    And I select "15" in the calendar
     And I press "Update Task List"
     And I wait for 2 second
     Then I should see "Jan 15 - Jan 25"

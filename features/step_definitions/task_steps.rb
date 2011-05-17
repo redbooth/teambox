@@ -176,7 +176,7 @@ Then /^I should see "([^"]*)" within the task header$/ do |text|
   Then %(I should see "#{text}" within ".task_header h2")
 end
 
-When /^(?:|I )select "([^\"]*)" in the "([^\"]*)" calender?$/ do |number, calender|
+When /^(?:|I )select "([^\"]*)" in the calendar?$/ do |number|
   find(:css,"table div[contains(#{number})]").click
 end
 
