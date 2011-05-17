@@ -76,6 +76,12 @@ Example:
 ``` javascript
 (function () {
   var FooPrinter = function () { } // constructor
+    , _config = { user: 'bla'
+                , pasw: '123'
+                , nested: { hey: 'ho'
+                          , fleiba: 'hi'
+                          }
+                }
     , _printStuff = console.log    // dependency, it can be renamed by a minfier
     , _private_var = 'foo';        // private var
 
