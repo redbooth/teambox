@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110516120900) do
+ActiveRecord::Schema.define(:version => 20110517231302) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20110516120900) do
   add_index "activities", ["comment_target_type"], :name => "index_activities_on_comment_target_type"
   add_index "activities", ["created_at"], :name => "index_activities_on_created_at"
   add_index "activities", ["deleted"], :name => "index_activities_on_deleted"
+  add_index "activities", ["is_private"], :name => "index_activities_on_is_private"
   add_index "activities", ["last_activity_id"], :name => "index_activities_on_last_activity_id"
   add_index "activities", ["project_id"], :name => "index_activities_on_project_id"
   add_index "activities", ["target_id"], :name => "index_activities_on_target_id"
@@ -107,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20110516120900) do
   add_index "comments", ["created_at"], :name => "index_comments_on_created_at"
   add_index "comments", ["deleted"], :name => "index_comments_on_deleted"
   add_index "comments", ["hours"], :name => "index_comments_on_hours"
+  add_index "comments", ["is_private"], :name => "index_comments_on_is_private"
   add_index "comments", ["project_id"], :name => "index_comments_on_project_id"
   add_index "comments", ["target_type", "target_id", "user_id"], :name => "index_comments_on_target_type_and_target_id_and_user_id"
 
@@ -134,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20110516120900) do
   end
 
   add_index "conversations", ["deleted"], :name => "index_conversations_on_deleted"
+  add_index "conversations", ["is_private"], :name => "index_conversations_on_is_private"
   add_index "conversations", ["project_id"], :name => "index_conversations_on_project_id"
 
   create_table "dividers", :force => true do |t|
@@ -450,6 +453,7 @@ ActiveRecord::Schema.define(:version => 20110516120900) do
 
   add_index "tasks", ["assigned_id"], :name => "index_tasks_on_assigned_id"
   add_index "tasks", ["deleted"], :name => "index_tasks_on_deleted"
+  add_index "tasks", ["is_private"], :name => "index_tasks_on_is_private"
   add_index "tasks", ["project_id"], :name => "index_tasks_on_project_id"
   add_index "tasks", ["task_list_id"], :name => "index_tasks_on_task_list_id"
 
@@ -489,6 +493,7 @@ ActiveRecord::Schema.define(:version => 20110516120900) do
 
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
   add_index "uploads", ["deleted"], :name => "index_uploads_on_deleted"
+  add_index "uploads", ["is_private"], :name => "index_uploads_on_is_private"
   add_index "uploads", ["page_id"], :name => "index_uploads_on_page_id"
   add_index "uploads", ["project_id", "deleted", "updated_at"], :name => "index_uploads_on_project_id_and_deleted_and_updated_at"
 
