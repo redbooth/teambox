@@ -79,16 +79,11 @@ class TeamboxData
   def organizations
     metadata['organizations']
   end
-  
+
   def ids_to_users
-    if @ids_to_users.nil?
-      @ids_to_users ||= {}
-      users.each{|u| @ids_to_users[u['id']] = u}
-    else
-      @ids_to_users
-    end
+    @ids_to_users ||= users.inject({}){|hash,u| hash[u['id']] = u}
   end
-  
+
   def resolve_user(id)
     return nil if id.nil?
     user = @imported_users[id]
