@@ -14,6 +14,7 @@
               window.location.hash = '#!/';
             }
 
+            self.notificationsController = new Teambox.Controllers.Notifications(self);
             self.build();
             Backbone.history.start();
           });
@@ -48,3 +49,4 @@
   });
 
 }());
+
