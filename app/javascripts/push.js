@@ -28,10 +28,15 @@ _.extend(Teambox.Controllers.Notifications.prototype, Backbone.Events, {
       meta.login = user.get('login');
     }
 
+    var port = function() {
+      return ('https:' === document.location.protocol) ? 443 : 80;
+    };
+
     var socket = new Juggernaut({
-      port: app.config.push_server.port,
+      host: "push." + document.location.host,
+      port: port(),
       meta: meta,
-      secure: ('https:' == document.location.protocol)
+      secure: ('https:' === document.location.protocol)
     });
 
     this.setApp(app);
