@@ -30,7 +30,6 @@
         if (LOADER.loaded === LOADER.total) {
           _body.toggleClassName('loading');
           if (callback) {
-            console.log('FLEIBA');
             return callback();
           }
         } else {
