@@ -1500,11 +1500,11 @@ en:
       reply: "You can also reply to this email to post a reply in the conversation."
       task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
       are_watching: 
-        one: " is suscribed to this conversation, and will be notified of future replies."
-        other: " are suscribed to this conversation, and will be notified of future replies."
+        one: " is subscribed to this conversation, and will be notified of future replies."
+        other: " are subscribed to this conversation, and will be notified of future replies."
       are_watching_task: 
-        one: " is suscribed to this task, and will be notified of future replies."
-        other: " are suscribed to this task, and will be notified of future replies."
+        one: " is subscribed to this task, and will be notified of future replies."
+        other: " are subscribed to this task, and will be notified of future replies."
       stop_watching_link_html: "%{stop_watch} this thread to stop receiving email notifications."
       stop_watch: Stop watching
       notification_settings_link_html: "You can change your %{settings_link} for further emails."

@@ -824,8 +824,8 @@ ca:
         one: " està subscrit a aquesta conversa, serà notificat de futures respostes."
         other: " estan subscrits a aquesta conversa, seran notificats de futures respostes."
       are_watching_task: 
-        one: " is suscribed to this task, and will be notified of future replies."
-        other: " are suscribed to this task, and will be notified of future replies."
+        one: " està subscrit a aquesta tasca, serà notificat de futures respostes."
+        other: " estan subscrits a aquesta tasca, seran notificats de futures respostes."
       comment: "Comentari a la paret del projecte: "
       comments: "%{number} comentaris"
       conversation: "Conversa:"
