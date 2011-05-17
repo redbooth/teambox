@@ -54,9 +54,6 @@ window.WEB_SOCKET_SWF_LOCATION = window.location.protocol + "//" + window.locati
     ,setApp: function(app) {
       this.app = app;
     }
-    ,getSocket: function() {
-      return this.socket;
-    }
     ,setSocket: function(socket) {
       var self = this;
 
