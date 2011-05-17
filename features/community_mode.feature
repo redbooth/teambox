@@ -112,6 +112,8 @@ Feature: When I use Teambox community version, there is only one organization
   Scenario: I can't create a project if I'm not part of the organization
     Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
+    And @pablo exists
+    And "pablo" is an administrator in the organization called "ACME"
     And "mislav" is not a member of the organization called "ACME"
     And I go to the home page
     Then I should not see "+ New Project"
