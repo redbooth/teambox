@@ -1,26 +1,63 @@
-describe("Loader", function () {
+/*globals setFixtures, describe, beforeEach, expect, it, jasmine, sinon*/
+describe("Loader()", function () {
 
-  console.log(Teambox);
   var Loader = Teambox.modules.Loader
-    , _stubBody = function () {
-        return sinon.stub(window, "$$").withArgs('body').return([{}]);
-      }
-    , _stubLoadingBar = function () {
-        return sinon.stub(window, "$$").withArgs('.loading .bar .fill').return([{}]);
-      }
-    , _callback = function () {
-        console.log('called');
-      };
+    , callback
+    , loader;
 
-  it('should be initialized `loaded` and `total`', function () {
-    var body = _stubBody()
-      , loading_bar = _stubLoadingBar();
+  beforeEach(function () {
+    callback = sinon.spy();
 
-    sinon.spy(body, 'addClassName').withArgs('loading');
-    sinon.spy(loading_bar, 'setStyle').withArgs({width: "10px"});
+    setFixtures("<body><div class='loading'><div class='bar'><div class='fill'></div></div></div></body>");
+    loader = Loader(callback);
+  });
 
-    this.Loader = Loader(_callback);
-    expect(this.Loader.loaded).toEqual(0);
-    expect(this.Loader.total).toEqual(0);
+  it('should set body class and loading bar style', function () {
+    expect($$('body')[0]).toHaveClass('loading');
+    expect($$('.loading .bar .fill')[0]).toHaveAttr('style', 'width: 10px;');
+  });
+
+  it('should be initialized with `loaded` and `total`', function () {
+    expect(loader.loaded).toEqual(0);
+    expect(loader.total).toEqual(0);
+  });
+
+  describe("loader#load", function () {
+    var callbacks = {}
+      , req = ['fleiba', 'zemba'];
+
+    beforeEach(function () {
+      _.each(req, function (val) {
+        callbacks[val] = loader.load(val);
+      });
+    });
+
+    it('should increase `total` and return a callback', function () {
+      _.each(req, function (val) {
+        expect(_.isFunction(callbacks[val])).toBeTruthy();
+      });
+      expect(loader.loaded).toEqual(0);
+      expect(loader.total).toEqual(2);
+    });
+
+    describe("loader#load callback called uncomplete", function () {
+      it('should increase `loaded` and update the loading bar style', function () {
+        callbacks.fleiba();
+        expect(loader.loaded).toEqual(1);
+        expect(loader.total).toEqual(2);
+        expect($$('.loading .bar .fill')[0]).toHaveAttr('style', 'width: 200px;');
+        expect(callback).not.toHaveBeenCalled();
+      });
+    });
+
+    describe("loader#load callback called complete", function () {
+      it('should increase `loaded` and return to the `Loader#callback`', function () {
+        _.each(req, function (val) {
+          callbacks[val]();
+        });
+        expect(callback).toHaveBeenCalled();
+        expect($$('body')[0]).not.toHaveClass('loading');
+      });
+    });
   });
 });
