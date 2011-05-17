@@ -359,9 +359,9 @@ describe Comment do
         :body => "Can't touch this"
       Comment.update_all({:updated_at => 15.minutes.ago}, :id => comment.id)
 
-      comment.reload.updated_at.should be_within(1).of(15.minutes.ago)
+      comment.reload.updated_at.should be_within(5).of(15.minutes.ago)
       upload.reload.destroy
-      comment.reload.updated_at.should be_within(1).of(Time.now)
+      comment.reload.updated_at.should be_within(5).of(Time.now)
     end
   end
   
