@@ -129,7 +129,7 @@ module TasksHelper
   def date_picker(f, field, options = {}, html_options = {})
     selected_date = f.object.send(field.to_sym) ? localize(f.object.send(field.to_sym), :format => :long) : ''
 
-    content_tag :div, :class => "date_picker" do
+    content_tag :div, :class => "date_picker", :id => "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}" do
       [ image_tag('/images/calendar_date_select/calendar.gif', :class => :calendar_date_select_popup_icon),
         content_tag(:span, selected_date.blank? ? t('date_picker.no_date_assigned') : selected_date, :class => 'localized_date'),
         f.hidden_field(field, html_options.reverse_merge!(:class => :datepicker))

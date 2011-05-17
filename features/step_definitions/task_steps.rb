@@ -145,6 +145,16 @@ Then /^I select the year "([^\"]*)" with the date picker$/ do |year|
   field.select(year)
 end
 
+Then /^I click on the (\w+) date selector$/ do |field|
+  with_css_scope("#show_task_list div[id$=_#{field}_on]") do |node|
+    node.find("span").click
+  end
+end
+
+Then /^I select the (\w+) "([^"]*)" on the calendar$/ do |field, value|
+  find(".#{field}").select(value)
+end
+
 Then /^I select the day "([^\"]*)" with the date picker$/ do |day|
   with_css_scope("div[class='calendar_date_select']") do |node|
     element = node.all(:xpath,"//*[.='#{day}']").detect {|e| e.tag_name == 'td' && !e['innerHTML'].include?('other')}
@@ -167,9 +177,7 @@ Then /^I should see "([^"]*)" within the task header$/ do |text|
 end
 
 When /^(?:|I )select "([^\"]*)" in the "([^\"]*)" calender?$/ do |number, calender|
-  with_css_scope("div[id$='_#{calender}_on']") do |node|
-    node.find(:css,"table div[contains(#{number})]").click
-  end
+  find(:css,"table div[contains(#{number})]").click
 end
 
 Then /^(?:|I )should see "([^\"]*)" status change?$/ do |text|

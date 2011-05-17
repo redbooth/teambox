@@ -30,11 +30,13 @@ Feature: Creating a task list
     When I reveal all action menus
     And I follow "Set the start & end date"
     And I wait for 2 seconds
-    And I select "January" from "task_list_finish_on_month" within "div[id$='_finish_on']"
-    And I select "2010" from "task_list_finish_on_year" within "div[id$='_finish_on']"
+    And I click on the finish date selector
+    And I select the month "January" on the calendar
+    And I select the year "2010" on the calendar
     And I select "25" in the "finish" calender
-    And I select "January" from "task_list_start_on_month" within "div[id$='_start_on']"
-    And I select "2010" from "task_list_start_on_year" within "div[id$='_start_on']"
+    And I click on the start date selector
+    And I select the month "January" on the calendar
+    And I select the year "2010" on the calendar
     And I select "15" in the "start" calender
     And I press "Update Task List"
     And I wait for 2 second
