@@ -112,7 +112,8 @@ Feature: Managing organizations
   Scenario: I can't delete an organization if I'm not an admin
     Then I follow "ACME"
     And I should see "Delete"
-    When I am a participant in the organization called "ACME"
+    When "pablo" is an administrator in the organization called "ACME"
+    And I am a participant in the organization called "ACME"
     And I go to the organizations page
     And I follow "ACME"
     Then I should not see "Delete"
