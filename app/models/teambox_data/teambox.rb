@@ -1,4 +1,63 @@
 class TeamboxData
+
+  def unserialize_user udata, create_users
+    user_name = (@imported_users[udata['username']] || udata['username']).strip
+    user = User.find_by_login(user_name)
+    if user.nil? and create_users
+      user = User.new(udata)
+      user.login = udata['username']
+      user.password = user.password_confirmation = udata['password'] || rand().to_s
+      user.save!
+    end
+
+    raise(Exception, "User '#{user_name}' could not be resolved") if user.nil?
+
+    @imported_users[udata['id']] = user
+    @processed_objects[:user] << user.id
+    import_log(user, "#{udata['username']} -> #{user_name}")
+  end
+
+  def unserialize_users dump, opts
+    @processed_objects[:user] = []
+
+    dump['users'].each{ |u| unserialize_user u, opts[:create_users]}
+  end
+
+  def unserialize_organizations dump, opts
+    @processed_objects[:organization] = []
+
+    (dump['organizations']||[]).map do |organization_data|
+      unserialize_organization organization_data, opts[:create_organizations]
+    end
+  end
+
+  def unserialize_organization organization_data, create_organizations
+    organization_name = @organization_map[organization_data['permalink']] || organization_data['permalink']
+    org = Organization.find_by_permalink(organization_name)
+
+    if user and org and !org.is_admin?(user)
+      raise(Exception, "#{user} needs to be an admin of #{org}")
+    end
+
+    if org.nil?
+      if create_organizations
+        org = unpack_object(Organization.new, organization_data, [])
+        org.permalink = organization_name
+        org.save!
+      else
+        raise(Exception, "Organization #{org} could not be resolved")
+      end
+    end
+
+    @organization_map[organization_data['id']] = org
+    @processed_objects[:organization] << org.id
+
+    Array(organization_data['members']).each do |member_data|
+      org_user = resolve_user(member_data['user_id'])
+      org.add_member(org_user, member_data['role']) if org_user && !org.is_user?(org_user)
+    end
+  end
+
   def unserialize_teambox(dump, object_maps, opts={})
     ActiveRecord::Base.transaction do
       @object_map = {
@@ -9,52 +68,11 @@ class TeamboxData
       @processed_objects = {}
       @imported_users = @object_map['User'].clone
       @organization_map = @object_map['Organization'].clone
-      
-      @processed_objects[:user] = []
-      
-      @users = dump['users'].map do |udata|
-        user_name = (@imported_users[udata['username']] || udata['username']).strip
-        user = User.find_by_login(user_name)
-        if user.nil? and opts[:create_users]
-          user = User.new(udata)
-          user.login = udata['username']
-          user.password = user.password_confirmation = udata['password'] || rand().to_s
-          user.save!
-        end
-        
-        raise(Exception, "User '#{user_name}' could not be resolved") if user.nil?
-        
-        @imported_users[udata['id']] = user
-        @processed_objects[:user] << user.id
-        import_log(user, "#{udata['username']} -> #{user_name}")
-      end.compact
-      
-      @processed_objects[:organization] = []
-      @organizations = (dump['organizations']||[]).map do |organization_data|
-        organization_name = @organization_map[organization_data['permalink']] || organization_data['permalink']
-        organization = Organization.find_by_permalink(organization_name)
-        
-        if user and organization and !organization.is_admin?(user)
-          raise(Exception, "#{user} needs to be an admin of #{organization}")
-        end
-        
-        if organization.nil? and opts[:create_organizations]
-          organization = unpack_object(Organization.new, organization_data, []) if organization.nil?
-          organization.permalink = organization_name if organization.nil?
-          organization.save!
-        end
-        
-        raise(Exception, "Organization #{organization} could not be resolved") if organization.nil?
-        
-        @organization_map[organization_data['id']] = organization
-        @processed_objects[:user] << organization.id
-        
-        Array(organization_data['members']).each do |member_data|
-          org_user = resolve_user(member_data['user_id'])
-          organization.add_member(org_user, member_data['role']) if org_user && !organization.is_user?(org_user)
-        end
-      end
-      
+
+      unserialize_users dump, opts
+
+      unserialize_organizations dump, opts
+
       @processed_objects[:project] = []
       @imported_people = {}
       @projects = (dump['projects']||[]).map do |project_data|

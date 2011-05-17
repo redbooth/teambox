@@ -50,7 +50,8 @@ class TeamboxDatasController < ApplicationController
     unless @data.update_attributes(params[:teambox_data])
       flash.now[:error] = t('teambox_datas.show_import.import_error')
     else
-      flash.now[:error] = "There were errors with the information you supplied!" if !@data.processing?
+      #TODO: A lot more fine-grained error handling here
+      flash.now[:error] = "There were errors with the information you supplied!" if !(@data.processing? || @data.imported? || @data.exported?)
     end
     render view_for_data(:show)
   end
