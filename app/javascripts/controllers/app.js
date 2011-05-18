@@ -5,7 +5,7 @@ Teambox.Controllers.AppController = Teambox.Controllers.Bootstrap.extend({
     '/my_tasks'          : 'my_tasks',
     '/all_tasks'         : 'all_tasks'
   },
-  initialize: function(options) {
+  initialize: function (options) {
     Teambox.Controllers.Bootstrap.prototype.initialize.call(this, options);
 
     this.projects_controller = new Teambox.Controllers.ProjectsController({app: this});
@@ -16,23 +16,23 @@ Teambox.Controllers.AppController = Teambox.Controllers.Bootstrap.extend({
     this.pages_controller = new Teambox.Controllers.PagesController({app: this});
   },
 
-  index: function() {
+  index: function () {
     Teambox.Views.Sidebar.highlightSidebar('activity_link');
     this.activities_view.render();
   },
 
-  today: function() {
+  today: function () {
     Teambox.Views.Sidebar.highlightSidebar('today_link');
-    this.today_view.render();
+    Teambox.views.today_tasks.render();
   },
 
-  my_tasks: function() {
+  my_tasks: function () {
     Teambox.Views.Sidebar.highlightSidebar('my_tasks_link');
-    this.my_tasks_view.render();
+    Teambox.views.my_tasks.render();
   },
 
-  all_tasks: function() {
+  all_tasks: function () {
     Teambox.Views.Sidebar.highlightSidebar('all_tasks_link');
-    this.all_tasks_view.render();
+    Teambox.views.all_tasks.render();
   }
 });
