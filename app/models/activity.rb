@@ -17,8 +17,7 @@ class Activity < ActiveRecord::Base
   scope :by_id, :order => 'id DESC'
   scope :by_updated, :order => 'updated_at desc'
 
-  # COALESCE returns the first non null element and it's standard SQL
-  scope :by_thread, :order => "COALESCE(last_activity_id, activities.id) desc"
+  scope :by_thread, :order => "last_activity_id desc"
   scope :threads, :conditions => "target_type != 'Comment'"
   scope :before, lambda { |previous| { :conditions => ["activities.id < ? AND (last_activity_id IS NULL OR last_activity_id < ?)", previous.last_id, previous.last_id] } }
   scope :after, lambda { |activity_id| { :conditions => ["activities.id > ?", activity_id ] } }
