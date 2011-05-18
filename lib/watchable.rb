@@ -64,15 +64,12 @@ module Watchable
   def update_private
     return unless self.respond_to?(:is_private)
     if !new_record? and is_private_changed?
-      Activity.where(:target_type => self.class.to_s, :target_id => self.id).each{|a| a.update_attribute(:is_private, is_private)}
-      Activity.where(:comment_target_type => self.class.to_s, :comment_target_id => self.id).each{|a| a.update_attribute(:is_private, is_private)}
-      Comment.where(:target_type => self.class.to_s, :target_id => self.id).each{|a| 
-        a.update_attribute(:is_private, is_private)
-        a.uploads.each{|upload| upload.update_attribute(:is_private, is_private)}
-      }
+      Activity.update_all({ :is_private => is_private }, { :target_type => self.class.to_s, :target_id => self.id })
+      Activity.update_all({ :is_private => is_private }, { :comment_target_type => self.class.to_s, :comment_target_id => self.id })
+      Upload.joins(:comment).where(["comments.target_type = ? AND comments.target_id = ?", self.class.to_s, self.id]).update_all(["uploads.is_private = ?", is_private])
+      Comment.update_all({ :is_private => is_private }, { :target_type => self.class.to_s, :target_id => self.id })
     end
-    
-    true
+    true # after_save
   end
 
   protected
