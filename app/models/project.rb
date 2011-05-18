@@ -105,11 +105,11 @@ class Project < ActiveRecord::Base
   end
 
   def to_ical(current_user, filter_user = nil)
-    Project.calendar_for_tasks(current_user, tasks, self, filter_user)
+    Project.to_ical([self], current_user, filter_user)
   end
 
   def self.to_ical(projects, for_user, filter_user = nil, host = nil, port = 80)
-    self.calendar_for_tasks(Task.where(:project_id => projects.map(&:id)), projects, filter_user, host, port)
+    self.calendar_for_tasks(for_user, Task.where(:project_id => projects.map(&:id)), projects, filter_user, host, port)
   end
   
   protected
@@ -119,14 +119,14 @@ class Project < ActiveRecord::Base
       when Project then projects.name
       else "Teambox - All Projects"
       end
-      
+
       # privacy filter
       tasks = query_tasks.includes(:project).
                           where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
                           joins("LEFT JOIN watchers ON (tasks.id = watchers.watchable_id AND watchers.watchable_type = 'Task') AND watchers.user_id = #{current_user.id}")
-      
+
       if filter_user
-        people = People.where(:user_id => filter_user.id)
+        people = Person.where(:user_id => filter_user.id)
         tasks = tasks.where(:assigned_id => people.map(&:id))
       end
 
