@@ -35,7 +35,7 @@ document.on('click', '.nav_links a.ajax', function(e,a) {
         return this.onFailure(r);
       
       // Mark the new element as selected
-      Teambox.sidebar_view.selectElement(a.up('.el'))
+      Teambox.views.sidebar.selectElement(a.up('.el'))
 
       document.body.className = parts.body_classes
       $('content').update(parts.content)

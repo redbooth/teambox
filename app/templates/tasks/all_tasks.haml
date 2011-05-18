@@ -1,0 +1,11 @@
+.filters
+  %strong= t('task_lists.filter.filter_tasks') + ": "
+  %input#filter_tasks_by_name{ :type => 'search', :placeholder => t('task_lists.filter.by_name') }
+  = filter_assigned_dropdown()
+  = filter_due_date_dropdown()
+
+= print_task_lists_link
+
+#tasks_for_all_projects
+  .task_list
+    .tasks

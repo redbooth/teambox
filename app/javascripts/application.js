@@ -23,9 +23,12 @@
 //= require <teambox>
 
 //= require <modules/loader>
+//= require <modules/params>
+//= require <modules/filter>
 
 //= require <lib/teambox_api>
 //= require <helpers/handlebars>
+//= require <helpers/tasks>
 //= require <controllers/base>
 //= require <controllers/bootstrap>
 //= require <controllers/app>
@@ -50,7 +53,9 @@
 //= require <views/projects>
 //= require <views/search>
 //= require <views/sidebar>
-//= require <views/tasks>
+//= require <views/tasks/all_tasks>
+//= require <views/tasks/my_tasks>
+//= require <views/tasks/today_tasks>
 //= require <views/task>
 //= require <views/thread>
 //= require <views/watchers>
@@ -89,7 +94,6 @@
 // duplicated? TODO
 //= require <facebox>
 
-//= require <filter>
 //= require <first_steps>
 //= require <forms>
 //= require <google_docs>
@@ -104,7 +108,6 @@
 //= require <overlays>
 //= require <pages>
 //= require <pagination>
-//= require <params>
 //= require <person>
 //= require <preview>
 //= require <quick_add_pane>

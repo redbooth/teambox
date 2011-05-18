@@ -18,6 +18,7 @@ src_files:
   - app/javascripts/lib/handlebars.js
   - app/javascripts/teambox.js
   - app/javascripts/modules/loader.js
+  - app/javascripts/modules/params.js
 
 # stylesheets
 #
@@ -57,7 +58,7 @@ helpers:
 #   - **/*[sS]pec.js
 #
 spec_files:
-  - **/*[sS]pec.js
+  - specs/**/*[sS]pec.js
 
 # src_dir
 #
