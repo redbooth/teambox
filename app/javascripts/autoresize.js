@@ -9,9 +9,9 @@ Element.addMethods({
       area.setStyle({ height: possible + 'px' })
     }
   }
-})
+});
 
-var resizeLimited = Element.resizeToText.debounce(100)
+var resizeLimited = _.debounce(Element.resizeToText, 100);
 
 document.on('keyup', 'textarea', function(e, area) {
   var doResize = function() { area.resizeToText(false) }

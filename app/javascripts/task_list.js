@@ -5,7 +5,7 @@ var TaskList = {
     this.currentDraggable = draggable
   },
   
-  sortableUpdate: function() {
+  sortableUpdate: _.debounce(function() {
     task_list_ids = this.currentDraggable.up().select('.task_list').collect(
     function(task_list) {
         return task_list.readAttribute('data-task-list-id')
@@ -15,7 +15,7 @@ var TaskList = {
       method: 'put',
       parameters: { task_list_ids: task_list_ids }
     })
-  }.debounce(100),
+  }, 100),
 
   makeSortable: function() {
     TaskList.in_sort = true;

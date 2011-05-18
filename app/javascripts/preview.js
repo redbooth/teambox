@@ -11,7 +11,7 @@ var Preview = {
       box.update(make(value))
     })
 
-    textarea.on('keyup', formatter.makeHtml.bind(formatter).throttle(300))
+    textarea.on('keyup', _.throttle(formatter.makeHtml.bind(formatter), 300));
     formatter.makeHtml()
     return box
   },

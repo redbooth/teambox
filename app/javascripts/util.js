@@ -1,30 +1,3 @@
-// Call this on any function to transform it into a function that will only be called
-// once in the given interval. Example: function().throttle(200) for 200ms.
-// Useful, for example, to avoid constant processing while typing in a live search box.
-Function.prototype.throttle = function(t) {
-  var timeout, fn = this, tick = function() {
-    var scope = this, args = arguments
-    fn.apply(scope, args)
-    timeout = null
-  }
-  return function() {
-    var timeout, fn = this
-    if (!timeout) timeout = setTimeout(tick, t)
-  }
-}
-
-// Call this on any function to transform it into a function that will only be called
-// after the first pause lasting at least the given interval.
-// Call function().debounce(200) for 200ms. Useful, for example, to check an available username.
-Function.prototype.debounce = function(t) {
-  var timeout, fn = this
-  return function() {
-    var scope = this, args = arguments
-    timeout && clearTimeout(timeout)
-    timeout = setTimeout(function() { fn.apply(scope, args) }, t)
-  }
-}
-
 Element.addMethods({
   forceShow: function(element, display) {
     return $(element).setStyle({ display: (display || 'block') })

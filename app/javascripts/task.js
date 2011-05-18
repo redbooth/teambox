@@ -40,7 +40,7 @@ Task = {
     this.currentDraggable = draggable
   },
   
-  sortableUpdate: function() {
+  sortableUpdate: _.debounce(function() {
     var taskId = this.currentDraggable.readAttribute('data-task-id'),
         taskList = this.currentDraggable.up('.task_list')
         taskListId = taskList.readAttribute('data-task-list-id')
@@ -54,7 +54,7 @@ Task = {
       method: 'put',
       parameters: { task_list_id: taskListId, task_ids: taskIds }
     })
-  }.debounce(100),
+  }, 100),
 
   makeSortable: function(task_id, all_task_ids) {
     Sortable.create(task_id, {
