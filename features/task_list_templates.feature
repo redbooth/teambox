@@ -25,6 +25,7 @@ Feature: Create task list tempates and convert them to tasks
     And I follow "create a Task List from a template"
     And I select "Hiring process" from "template"
     And I press "Add Task List"
+    And I wait for 1 seconds
     Then I should see "Hiring process" within ".task_list"
     And I should see "Hiring process" within ".head"
 
