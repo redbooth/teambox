@@ -86,6 +86,14 @@ function resetCommentsForm(form) {
   form.select('input[type=file]').each(function(input) {
     if (input.getValue()) input.remove()
   })
+  // clear private box
+  var private_opts = form.down('.private_options');
+  if (private_opts) {
+	private_opts.childElements().invoke('remove');
+	private_opts.hide();
+	var trigger = form.down('.private_switch');
+	if (trigger) trigger.removeAttribute('form-present');
+  }
   // clear hours
   var hours = form.down('input[name*="[human_hours]"]')
   if (hours) hours.setValue('')

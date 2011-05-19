@@ -30,6 +30,7 @@ PrivateBox = {
     // Update buttons & people list
     var watchers = form.down('.watchers'); // see new conversation form
     var private_input = box.down('.option.private input');
+    var public_input = box.down('.option.normal input');
     if (private_input && private_input.checked) {
       box.insert({ bottom: this.peopleHTML(box.readAttribute('object-prefix'),
                                            box.readAttribute('object-type'),
@@ -58,6 +59,13 @@ PrivateBox = {
     var select = $$('select#project_id');
     var project_id = form.readAttribute('data-project-id') || select[0].select('option').find(function(ele){return !!ele.selected;}).value;
     
+    // Forever alone
+    var private_option = form.down('.option.private input');
+    if (private_option) {
+      var text = _people[project_id].length == 1 ? I18n.translations.comments['private']['private_foreveralone'] : I18n.translations.comments['private']['private'];
+	  form.down('.option.private label').update(text);
+    }
+
     PrivateBox.redrawBox(form, project_id);
   },
 
@@ -135,14 +143,18 @@ document.on("click", "a.private_switch", function(e,el) {
     el.writeAttribute('form-present', '1')
   }
 
-  PrivateBox.update(el);
-
   var options = el.up('form').down('.private_options')
   if (options.visible()) {
     options.select('input').invoke('disable');
-    options.hide();
   } else {
     options.select('input').invoke('enable');
+  }
+
+  PrivateBox.update(el);
+
+  if (options.visible()) {
+    options.hide();
+  } else {
     options.show();
   }
 });

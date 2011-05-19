@@ -77,6 +77,13 @@ Feature: Creating a private conversation
     When I go to the page of the "Roflcopter" conversation
     And I follow "Privacy"
     Then I should see "This element is only visible to the following people..."
+
+  Scenario: Mislav is forever alone
+    Given Only @mislav is in the project
+    And @mislav started a private conversation named "Roflcopter"
+    When I go to the page of the "Roflcopter" conversation
+    And I follow "Privacy"
+    Then I should see "This element is only visible to you"
   
   Scenario: Making a private conversation public
     Given @mislav started a private conversation named "Roflcopter"

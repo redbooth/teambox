@@ -46,6 +46,14 @@ Given(/^(@.+) left the project$/) do |users|
   end
 end
 
+Given(/^Only (@.+) is in the project$/) do |users|
+  user_list = []
+  project_users = @current_project.users
+  each_user(users) {|user| user_list << user}
+  users_to_remove = project_users - user_list
+  users_to_remove.each {|user| @current_project.remove_user user}
+end
+
 Given /I am currently in the project (.*)$/ do |project_type|
   @current_project ||= Factory(project_type.to_sym)
   visit(projects_path(@current_project))

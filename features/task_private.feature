@@ -35,6 +35,21 @@ Feature: Creating a private task
     And I go to the page of the "Post lolcats" task
     Then I should not see "Post lolcats"
 
+  Scenario: Private task options should clear
+    When I go to the task lists page
+    When I follow "+ Add Task"
+    And I fill in "Task title" with "Post lolcats"
+    Then I should not see "This element is visible to everybody in this project"
+    When I follow "Privacy"
+    Then the "This element is visible to everybody in this project" checkbox should be checked
+    When I press "Add Task"
+    And I wait for 1 second
+    Then I should see "Post lolcats" as a task name
+    And I fill in "Task title" with "Locate cheezburger"
+    Then I should not see "This element is visible to everybody in this project"
+    When I follow "Privacy"
+    Then the "This element is visible to everybody in this project" checkbox should be checked
+
   Scenario: Managing people in a private task
     Given @mislav created a private task named "Post lolcats" in the task list called "Lolbox"
     When I go to the page of the "Post lolcats" task
