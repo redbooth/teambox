@@ -18,6 +18,10 @@ class Activity < ActiveRecord::Base
   scope :by_updated, :order => 'updated_at desc'
 
   scope :by_thread, :order => "last_activity_id desc"
+
+  # Before we relied on COALESCE for this, now we materialize it
+  after_create :auto_populate_last_activity_id
+
   scope :threads, :conditions => "target_type != 'Comment'"
   scope :before, lambda { |previous| { :conditions => ["activities.id < ? AND (last_activity_id IS NULL OR last_activity_id < ?)", previous.last_id, previous.last_id] } }
   scope :after, lambda { |activity_id| { :conditions => ["activities.id > ?", activity_id ] } }
@@ -192,6 +196,11 @@ class Activity < ActiveRecord::Base
   end
 
   protected
+
+
+  def auto_populate_last_activity_id
+    update_attribute :last_activity_id, id
+  end
 
   def ping_parent_activity
     if target.is_a? Comment and parent = Activity.last(:conditions => ["target_type = ? AND target_id = ?", comment_target_type, comment_target_id])
