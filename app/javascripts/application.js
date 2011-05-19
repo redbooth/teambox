@@ -1,6 +1,7 @@
 //= require <lib/prototype>
 //= require <lib/underscore>
 //= require <lib/underscore.date>
+//= require <lib/underscore.string>
 //= require <lib/jquery>
 //= require <lib/backbone-prototype>
 //= require <lib/handlebars>
@@ -51,10 +52,15 @@
 //= require <views/projects>
 //= require <views/search>
 //= require <views/sidebar>
+
 //= require <views/tasks/all_tasks>
 //= require <views/tasks/my_tasks>
 //= require <views/tasks/today_tasks>
 //= require <views/task>
+
+//= require <views/filters>
+//= require <views/filters/name>
+//
 //= require <views/thread>
 //= require <views/watchers>
 

@@ -1,7 +1,7 @@
 /*globals Templates*/
-(function () {
+var Templates;
 
-  var Templates;
+(function () {
 
   Teambox.Views.Task = Backbone.View.extend({
 

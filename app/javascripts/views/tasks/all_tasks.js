@@ -10,10 +10,15 @@
   };
 
   AllTasks.render = function () {
+    var filters = new Teambox.Views.Filters({filters: ['name'/*, 'assigned', 'due_date'*/]});
+
     Teambox.helpers.tasks.render({ tasks: this.collection
                                  , title: this.title
                                  , template: this.template
                                  , primer_template: this.primer_template });
+
+    // add filters
+    $('content').insert({top: filters.render().el});
   };
 
   // expose

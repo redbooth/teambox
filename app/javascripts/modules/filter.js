@@ -19,109 +19,6 @@
     }
   };
 
-  /* shows all task_list containers
-   * @return self
-   */
-  Filter.showAllTaskLists = function () {
-    $$(".task_list_container").invoke('show');
-    return Filter;
-  };
-
-  /* shows all tasks
-   * @return self
-   */
-  Filter.showAllTasks = function () {
-    $$(".tasks div.task").invoke('show');
-    $$(".tasks.closed div.task").invoke('show');
-    return Filter;
-  };
-
-  /* hides all tasks
-   * @return self
-   */
-  Filter.hideAllTasks = function () {
-    $$(".tasks div.task").invoke('hide');
-    $$(".tasks.closed div.task").invoke('hide');
-    return Filter;
-  };
-
-  /* gets all the tasks according a filter
-   *
-   * @param {String} assigned
-   * @param {String} due_date
-   *
-   * @return {Array} filtered tasks
-   */
-  Filter.filterTasks = function (assigned, due_date) {
-    return $$(".tasks div." + assigned).select(function (e) {
-      return (due_date === null || e.hasClassName(due_date));
-    });
-  };
-
-  /* shows all the tasks according a filter
-   *
-   * @param {String} assigned
-   * @param {String} due_date
-   *
-   * @return self
-   */
-  Filter.showTasks = function (assigned, due_date) {
-    Filter.hideAllTasks().filterTasks(assigned, due_date).invoke('show');
-  };
-
-  /* hides all the tasks according a filter
-   *
-   * @param {String} assigned
-   * @param {String} due_date
-   *
-   * @return self
-   */
-  Filter.hideTasks = function (assigned, due_date) {
-    Filter.showAllTasks().filterTasks(assigned, due_date).invoke('hide');
-  };
-
-  /* counts all the tasks according a filter
-   *
-   * @param {String} assigned
-   * @param {String} due_date
-   *
-   * @return {Integer} number of matching tasks
-   */
-  Filter.countTasks = function (assigned, due_date) {
-    return Filter.filterTasks(assigned, due_date).length;
-  };
-
-  /* Hides task lists if they don't have any visible tasks
-   * @param {String} assigned
-   * @param {String} due_date
-   *
-   * @retun self
-   */
-  Filter.foldEmptyTaskLists = function () {
-    $$("div.task_list").each(function (e) {
-      var container = e.up('.task_list_container'), visible_tasks;
-
-      if (!container) {
-        return;
-      }
-
-      if (container.hasClassName('archived')) {
-        container.hide();
-        return;
-      }
-
-      visible_tasks = e.select(".task").reject(function (e) {
-        return e.getStyle("display") === "none";
-      });
-
-      if (visible_tasks.length === 0) {
-        container.hide();
-      }
-    });
-
-    return Filter;
-  };
-
   /* get an array of options
    *
    * @params @options
@@ -188,19 +85,6 @@
     }
 
     Filter.foldEmptyTaskLists().updateCounts({due_date: true});
-  };
-
-  /* hides tasks matching a name
-   *
-   * @param {String} name
-   */
-  Filter.hideByName = function (name) {
-    name = name.toLowerCase();
-    $$(".tasks div.task").each(function (t) {
-      if (!t.down('a.name').innerHTML.toLowerCase().match(name)) {
-        t.hide();
-      }
-    });
   };
 
   /* updates counts on the filter options
@@ -289,11 +173,6 @@
 
   // export
   Teambox.modules.Filter = Filter;
-
-  // TODO: this should go to the view!
-  document.on('keyup', '#filter_tasks_by_name', _.throttle(function (evt, el) {
-    Filter.updateTasks();
-  }, 200)); // throttling the function  improves performance
 
   // handles the "clear searchbox" event for webkit
   document.on('click', '#filter_tasks_by_name', function (evt, el) {
