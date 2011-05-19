@@ -1,16 +1,12 @@
-//= require <prototype>
-//= require <underscore>
+//= require <lib/prototype>
+//= require <lib/underscore>
+//= require <lib/underscore.date>
 //= require <lib/jquery>
 //= require <lib/backbone-prototype>
-//= require <handlebars>
+//= require <lib/handlebars>
 
-// where? TODO
 //= require <rails>
-
-// rename to modernizr? TODO
 //= require <html5>
-
-// where? TODO
 //= require <builder>
 //= require <effects>
 //= require <controls>
@@ -26,7 +22,9 @@
 //= require <modules/params>
 //= require <modules/filter>
 
+// TODO: move it to modules
 //= require <lib/teambox_api>
+
 //= require <helpers/handlebars>
 //= require <helpers/tasks>
 //= require <controllers/base>
@@ -63,15 +61,9 @@
 // Remove me by substituting Mustache code for Handlebars FIXME
 //= require <mustache>
 
-// where? TODO
 //= require <calendar_date_select>
-
 //= require <facebox>
-
-// where? TODO
 //= require <showdown>
-
-// where? we load it as html5 TODO
 //= require <modernizr>
 
 //= require <util>
@@ -90,9 +82,6 @@
 //= require <i18n>
 //= require <datetime>
 //= require <expand_comment>
-
-// duplicated? TODO
-//= require <facebox>
 
 //= require <first_steps>
 //= require <forms>

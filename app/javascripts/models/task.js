@@ -5,26 +5,29 @@
     initialize: function () {
     }
 
-  , overdue: function () {
-      return new Date() - this.get('due_on');
+  , overdue: function (offset) {
+      if (this.get('due_on')) {
+        var ms_difference = _.now().from(_.date(this.get('due_on'), "YYYY-MM-DD"), true, true);
+        return Math.floor((ms_difference + (offset || 0)) / _one_day);
+      } else {
+        return 0; // not sure about that
+      }
     }
 
   , is_overdue: function () {
-      return !this.get('archived?') && this.get('due_on') && new Date() > this.get('due_on');
+      return !this.get('archived?') && this.overdue() > 0;
     }
 
   , is_due_today: function () {
-      return this.get('due_on') === new Date();
+      return this.overdue() === 0;
     }
 
   , is_due_tomorrow: function () {
-      return this.get('due_on') === new Date() + _one_day;
+      return this.overdue() === -1;
     }
 
   , is_due_in: function (time_end) {
-      return this.get('due_on')
-          && this.get('due_on') >= new Date()
-          && this.get('due_on') < (new Date() + time_end);
+      return !this.is_overdue() && this.overdue(time_end) <= 0;
     }
 
   , url: function () {
