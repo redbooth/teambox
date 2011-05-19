@@ -1,16 +1,19 @@
+/*globals Templates*/
 (function () {
+
+  var Templates;
 
   Teambox.Views.Task = Backbone.View.extend({
 
     tagName: "div"
   , className: "task"
-  , template: Handlebars.compile(Templates.partials.task)
+  , template: Templates && Handlebars.compile(Templates.partials.task)
 
   , events: {
-      "click a.name": "expandComments",
-      "click a.edit": "editTitle",
-      "blur form.edit_title input": "updateTitle",
-      "keyup form.edit_title input": "keyupTitle"
+      "click a.name": "expandComments"
+    , "click a.edit": "editTitle"
+    , "blur form.edit_title input": "updateTitle"
+    , "keyup form.edit_title input": "keyupTitle"
     }
 
   , initialize: function (options) {
@@ -20,10 +23,13 @@
     }
 
   , render: function () {
-      $(this.el).update(this.template(this.model.toJSON()));
-      $(this.el).writeAttribute('id', 'task_' + this.model.id);
-      $(this.el).writeAttribute('data-task-id', this.model.id);
-      $(this.el).addClassName(this.getClasses());
+      var el = $(this.el);
+
+      el.update(this.template(this.model.toJSON()));
+      el.writeAttribute('id', 'task_' + this.model.id);
+      el.writeAttribute('data-task-id', this.model.id);
+      el.addClassName(this.getClasses());
+
       return this;
     }
 
@@ -39,6 +45,8 @@
         foo = new Effect.BlindDown(thread_block, {duration: 0.3});
         foo = new Effect.Appear(task.down('.expanded_actions'), {duration: 0.3});
         Date.format_posted_dates();
+
+        // TODO: ?
         Task.insertAssignableUsers();
       }
 
@@ -46,6 +54,10 @@
       return false;
     }
 
+    /* get the classes according to the model's status
+     *
+     * @return {String} classes
+     */
   , getClasses: function () {
       var task = this.model
         , one_week = 1000 * 60 * 60 * 24 * 7
@@ -65,8 +77,8 @@
          ('due_3weeks', task.is_due_in(one_week * 3))
          ('due_month', task.is_due_in(one_week * 4))
          ('overdue', task.is_overdue())
-         ('unassigned_date', task.get('due_on'))
-         ('status_' + task.status_name, true)
+         ('unassigned_date', !task.get('due_on'))
+         ('status_' + task.get('status_name'), true)
          ('status_notopen', !task.get('open?'))
          ('due_on', task.get('due_on') || task.get('closed?'))
          (task.get('assigned') ? 'assigned' : 'unassigned', !task.get('closed?'))

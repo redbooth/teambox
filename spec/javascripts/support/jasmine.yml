@@ -18,9 +18,11 @@ src_files:
   - app/javascripts/lib/backbone-prototype.js
   - app/javascripts/lib/handlebars.js
   - app/javascripts/teambox.js
+
   - app/javascripts/modules/loader.js
   - app/javascripts/modules/params.js
   - app/javascripts/models/task.js
+  - app/javascripts/views/task.js
 
 # stylesheets
 #
