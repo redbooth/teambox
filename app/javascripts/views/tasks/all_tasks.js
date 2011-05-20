@@ -10,7 +10,7 @@
   };
 
   AllTasks.render = function () {
-    var filters = new Teambox.Views.Filters({filters: ['name'/*, 'assigned', 'due_date'*/]});
+    var filters = new Teambox.Views.Filters({task_list: this, filters: ['name', 'assigned', 'due_date', 'status']});
 
     Teambox.helpers.tasks.render({ tasks: this.collection
                                  , title: this.title

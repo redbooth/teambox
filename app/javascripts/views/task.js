@@ -78,7 +78,7 @@ var Templates;
          ('due_month', task.is_due_in(one_week * 4))
          ('overdue', task.is_overdue())
          ('unassigned_date', !task.get('due_on'))
-         ('status_' + task.get('status_name'), true)
+         ('status_' + task.get('status'), true)
          ('status_notopen', !task.get('open?'))
          ('due_on', task.get('due_on') || task.get('closed?'))
          (task.get('assigned') ? 'assigned' : 'unassigned', !task.get('closed?'))

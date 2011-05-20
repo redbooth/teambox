@@ -24,74 +24,18 @@
     return TasksHelper;
   };
 
-  /* shows all tasks
+  /* changes visibility of all tasks
+   * @param {Boolean} show
    * @return self
    */
-  TasksHelper.showAllTasks = function () {
-    $$(".tasks div.task").invoke('show');
-    $$(".tasks.closed div.task").invoke('show');
+  TasksHelper.displayAllTasks = function (show) {
+    var verb = show ? 'show' : 'hide';
+    $$(".tasks div.task").invoke(verb);
+    $$(".tasks.closed div.task").invoke(verb);
     return TasksHelper;
-  };
-
-  /* hides all tasks
-   * @return self
-   */
-  TasksHelper.hideAllTasks = function () {
-    $$(".tasks div.task").invoke('hide');
-    $$(".tasks.closed div.task").invoke('hide');
-    return TasksHelper;
-  };
-
-  /* gets all the tasks according a filter
-   *
-   * @param {String} assigned
-   * @param {String} due_date
-   *
-   * @return {Array} filtered tasks
-   */
-  TasksHelper.filterTasks = function (assigned, due_date) {
-    return $$(".tasks div." + assigned).select(function (e) {
-      return (due_date === null || e.hasClassName(due_date));
-    });
-  };
-
-  /* shows all the tasks according a filter
-   *
-   * @param {String} assigned
-   * @param {String} due_date
-   *
-   * @return self
-   */
-  TasksHelper.showTasks = function (assigned, due_date) {
-    TasksHelper.hideAllTasks().filterTasks(assigned, due_date).invoke('show');
-  };
-
-  /* hides all the tasks according a filter
-   *
-   * @param {String} assigned
-   * @param {String} due_date
-   *
-   * @return self
-   */
-  TasksHelper.hideTasks = function (assigned, due_date) {
-    TasksHelper.showAllTasks().filterTasks(assigned, due_date).invoke('hide');
-  };
-
-  /* counts all the tasks according a filter
-   *
-   * @param {String} assigned
-   * @param {String} due_date
-   *
-   * @return {Integer} number of matching tasks
-   */
-  TasksHelper.countTasks = function (assigned, due_date) {
-    return TasksHelper.filterTasks(assigned, due_date).length;
   };
 
   /* Hides task lists if they don't have any visible tasks
-   * @param {String} assigned
-   * @param {String} due_date
-   *
    * @retun self
    */
   TasksHelper.foldEmptyTaskLists = function () {
@@ -119,25 +63,54 @@
     return TasksHelper;
   };
 
-  /* shows or hides tasks matching a name
+  /* select tasks matching a name
    *
    * @param {String} name
-   * @param {Boolean} show
-   * @retun self
+   * @return {Array} tasks matched
    */
-  TasksHelper.displayByName = function (name, show) {
+  TasksHelper.selectName = function (tasks, name) {
     name = name.toLowerCase();
-    $$(".tasks div.task").each(function (t) {
-      if (t.down('a.name').innerHTML.toLowerCase().match(name)) {
-        if (show) {
-          t.show();
-        } else {
-          t.hide();
-        }
-      }
+    return tasks.select(function (t) {
+      return t.down('a.name').innerHTML.toLowerCase().match(name);
     });
-    return TasksHelper;
   };
+
+  /* select tasks matching assigned/due_date
+   *
+   * @param {String} name
+   * @param {String} klass
+   * @return {Array} tasks matched
+   */
+  _.each(['Assigned', 'DueDate', 'Status'], function (filter) {
+    TasksHelper['select' + filter] = function (tasks, klass) {
+      return tasks.select(function (t) {
+        return t.hasClassName(klass);
+      });
+    };
+  });
+
+  /* Applies filters and hide/show the tasks according to it
+   *
+   * @param {String} filter
+   * @param {String} value
+   */
+  TasksHelper.filter = function (filter, value) {
+    var tasks = $$(".tasks div.task"), method;
+
+    this.filters = this.filters || {};
+    this.filters[filter] = value;
+
+    for (filter in this.filters) {
+      if (this.filters[filter]) {
+        method = 'select' + _.camelize(_.capitalize(filter));
+        tasks = TasksHelper[method](tasks, this.filters[filter]);
+      }
+    }
+
+    TasksHelper.showAllTaskLists().displayAllTasks(false);
+    tasks.invoke('show');
+    TasksHelper.foldEmptyTaskLists();
+  }
 
   // expose
   Teambox.helpers.tasks = TasksHelper;

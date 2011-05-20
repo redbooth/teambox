@@ -8,29 +8,28 @@
 
   FilterName.initialize = function (options) {
     var el = $(this.el);
+
+    this.task_list = options.task_list;
+
     el.writeAttribute('type', 'search');
     el.writeAttribute('placeholder', this.placeholder);
 
     _.bindAll(this, 'render');
 
-    el.observe('keyup', _.throttle(FilterName.updateTasks.bind(this), 200));
+    el.observe('keyup', _.throttle(FilterName.filterTasks.bind(this), 200));
+    // handles the "clear searchbox" event for webkit
+    el.observe('click', _.throttle(FilterName.filterTasks.bind(this), 200));
   };
 
   FilterName.render = function () {
     return this;
   };
 
-  FilterName.updateTasks = function () {
-    var el = $(this.el);
+  FilterName.filterTasks = function () {
+    var el = $(this.el)
+      , has_value = (el.value !== '' && el.value !== this.placeholder);
 
-    if (el.value !== '' && el.value !== this.placeholder) {
-      Teambox.helpers.tasks
-        .showAllTaskLists()
-        .hideAllTasks()
-        .displayByName(el.value, true);
-    }
-
-    Teambox.helpers.tasks.foldEmptyTaskLists();
+    Teambox.helpers.tasks.filter.call(this.task_list, 'name', has_value ? el.value : null);
   };
 
   // expose

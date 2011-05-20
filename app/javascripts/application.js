@@ -21,7 +21,6 @@
 
 //= require <modules/loader>
 //= require <modules/params>
-//= require <modules/filter>
 
 // TODO: move it to modules
 //= require <lib/teambox_api>
@@ -60,6 +59,9 @@
 
 //= require <views/filters>
 //= require <views/filters/name>
+//= require <views/filters/assigned>
+//= require <views/filters/due_date>
+//= require <views/filters/status>
 //
 //= require <views/thread>
 //= require <views/watchers>
