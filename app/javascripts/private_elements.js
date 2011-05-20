@@ -11,6 +11,17 @@ PrivateBox = {
     return null;
   },
 
+  allUsersEnabled: function(private_users) {
+	var count = 0
+    var users = private_users.select('.private_user input')
+    users.each(function(fe){ if (fe.checked) count += 1 })
+    return count == users.length
+  },
+
+  updateAllUsersEnabled: function(users) {
+    users.down('.private_all input').checked = PrivateBox.allUsersEnabled(users)
+  },
+
   redrawBox: function(form, project_id) {
     var box = form.down('.private_options');
     box.select('.private_users').invoke('remove');
@@ -39,6 +50,8 @@ PrivateBox = {
         watchers.select('input').invoke('disable');
         watchers.hide();
       }
+      // Update All input
+      PrivateBox.updateAllUsersEnabled(box.down('.private_users'));
     } else if (private_input && watchers) {
       watchers.select('input').invoke('enable');
       watchers.show();
@@ -73,6 +86,7 @@ PrivateBox = {
     var people = _people[project_id];
     var html = "";
     html = "<div class='private_users'>";
+    html += '<div class="private_all"><input id="'+object_id +'_private_all" name="'+object_type+'[all_private]" type="checkbox" value="true"/><label for="'+object_id +'_private_all">'+ I18n.translations.comments['private']['all'] +'</label></div>';
     html += people.collect(function(p) {
       if (p[3] == my_user.id) return '<input type="hidden" name="'+object_type+'[private_ids][]" type="checkbox" value="'+p[3]+'"/>';
       var ident = object_id +'_private_'+ p[3];
@@ -161,6 +175,15 @@ document.on("click", "a.private_switch", function(e,el) {
 
 document.on("change", ".private_options .option.normal input", function(e,el) {
   PrivateBox.update(el);
+});
+
+document.on("change", ".private_users .private_all input", function(e,el) {
+  el.up('.private_users').select('.private_user input').each(function(fe){ fe.checked = el.checked; })
+});
+
+document.on("change", ".private_users .private_user input", function(e,el) {
+  var users = el.up('.private_users')
+  users.down('.private_all input').checked = PrivateBox.allUsersEnabled(users)
 });
 
 document.on("change", ".private_options .option.private input", function(e,el) {

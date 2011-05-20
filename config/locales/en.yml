@@ -1114,6 +1114,7 @@ en:
       private_foreveralone: This element is only visible to you
       private_global: This element is only visible to the following people...
       readonly_warning: "Only %{user} is able to change privacy settings."
+      all: "All"
   teambox_datas:
     new_import:
       title: "Import data"
