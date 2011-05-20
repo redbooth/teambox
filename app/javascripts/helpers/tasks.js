@@ -89,29 +89,6 @@
     };
   });
 
-  /* Applies filters and hide/show the tasks according to it
-   *
-   * @param {String} filter
-   * @param {String} value
-   */
-  TasksHelper.filter = function (filter, value) {
-    var tasks = $$(".tasks div.task"), method;
-
-    this.filters = this.filters || {};
-    this.filters[filter] = value;
-
-    for (filter in this.filters) {
-      if (this.filters[filter]) {
-        method = 'select' + _.camelize(_.capitalize(filter));
-        tasks = TasksHelper[method](tasks, this.filters[filter]);
-      }
-    }
-
-    TasksHelper.showAllTaskLists().displayAllTasks(false);
-    tasks.invoke('show');
-    TasksHelper.foldEmptyTaskLists();
-  }
-
   // expose
   Teambox.helpers.tasks = TasksHelper;
 
