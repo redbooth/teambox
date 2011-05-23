@@ -1,54 +1,60 @@
-Teambox.Views.Activities = Backbone.View.extend({
+/*globals Templates*/
+(function () {
 
-  initialize: function(options) {
-    this.app = options.app;
+  var Activities = { tagName: 'div'
+                   , id: 'activities'
+                   , templates: { project:  { create: Handlebars.compile(Templates.activities.project_create) }
+                                , note:     { create: Handlebars.compile(Templates.activities.note_create)
+                                            , edit: Handlebars.compile(Templates.activities.note_edit) }
+                                , page:     { create: Handlebars.compile(Templates.activities.page_create)
+                                            , edit: Handlebars.compile(Templates.activities.page_edit) }
+                                , tasklist: { create: Handlebars.compile(Templates.activities.task_list_create) }
+                                , raw_activity: Handlebars.compile(
+                                    "<div class='activity'>activity_{{id}} {{target_type}} {{action}} {{#target}}{{{body_html}}}{{/target}} </div>"
+                                  )
+                               }
+      };
 
+  Activities.initialize = function (options) {
     _.bindAll(this, 'render');
-  },
 
-  templates: {
-    project: {
-      create: Handlebars.compile(Templates.activities.project_create)
-    },
-    note: {
-      create: Handlebars.compile(Templates.activities.note_create),
-      edit: Handlebars.compile(Templates.activities.note_edit)
-    },
-    page: {
-      create: Handlebars.compile(Templates.activities.page_create),
-      edit: Handlebars.compile(Templates.activities.page_edit)
-    },
-    tasklist: {
-      create: Handlebars.compile(Templates.activities.task_list_create)
-    },
-    raw_activity: Handlebars.compile(
-      "<div class='activity'>activity_{{id}} {{target_type}} {{action}} {{#target}}{{{body_html}}}{{/target}} </div>"
-    )
-  },
+    this.bind('add', this.appendThread.bind(this));
+  };
+
+  Activities.appendThread = function (thread) {
+    var template;
+    if (thread.get('type') === "Conversation" || thread.get('type') === "Task") {
+      this.el.insert({ bottom: (new Teambox.Views.Thread({ model: thread })).render().el });
+    } else {
+      template = (this.templates[thread.get('target_type').toLowerCase()] || {})[thread.get('action')]
+        || this.templates.raw_activity;
+      this.el.insert({ bottom: template(thread.toJSON()) });
+    }
+  };
+
+  Activities.fetchNextPage = function () {
+    var self = this;
+    this.collection.fetchNextPage();
+  };
 
   // Build the activity feed by rendering every thread
-  render: function() {
+  Activities.render = function () {
     var self = this;
 
-    $('view_title').update('All your projects');
-    $('content').update('');
+    this.el.update('');
+    $('view_title').update('Recent activity');
 
     // Render each thread
-    this.collection.each(function(thread) {
-      var template;
-
-      if(thread.get('type') === "Conversation" || thread.get('type') === "Task") {
-        // FIXME: This way of creating views could leak memory
-        var view = new Teambox.Views.Thread({ model: thread });
-        $('content').insert({ bottom: view.render().el });
-      } else {
-        var name = + "_" + thread.get('action');
-        template = (self.templates[thread.get('target_type').toLowerCase()] || {})[thread.get('action')] ||
-          self.templates.raw_activity;
-        $('content').insert({ bottom: template(thread.toJSON()) });
-      }
-
+    this.collection.each(function (thread) {
+      self.appendThread(thread);
     });
-  }
 
-});
+    $('content').update(this.el);
+    $('content').insert({bottom: '<a href="#" class="button" id="activity_paginate_link"><span>Show more</span></a>'});
+    $('activity_paginate_link').observe('click', Activities.fetchNextPage.bind(this));
+  };
+
+  // exports
+  Teambox.Views.Activities = Backbone.View.extend(Activities);
+
+}());

@@ -33,14 +33,14 @@
     },
     build: function () {
       // Initialize views
-      this.activities_view = new Teambox.Views.Activities({ app: this, collection: this.my_threads });
       this.projects_view   = new Teambox.Views.Projects({ app: this, collection: this.my_projects });
       this.search_view     = new Teambox.Views.Search({ app: this, el: $('search') });
 
-      views.today_tasks    = new Teambox.Views.TodayTasks({ collection: this.my_tasks });
-      views.my_tasks       = new Teambox.Views.MyTasks({ collection: this.my_tasks });
-      views.all_tasks      = new Teambox.Views.AllTasks({ collection: this.my_tasks });
-      views.sidebar        = new Teambox.Views.Sidebar({ el: $('column') });
+      views.activities  = new Teambox.Views.Activities({ collection: this.my_threads });
+      views.today_tasks = new Teambox.Views.TodayTasks({ collection: this.my_tasks });
+      views.my_tasks    = new Teambox.Views.MyTasks({ collection: this.my_tasks });
+      views.all_tasks   = new Teambox.Views.AllTasks({ collection: this.my_tasks });
+      views.sidebar     = new Teambox.Views.Sidebar({ el: $('column') });
     }
   });
 

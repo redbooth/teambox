@@ -1,38 +1,46 @@
-Teambox.Controllers.AppController = Teambox.Controllers.Bootstrap.extend({
-  routes: {
-    '/'                  : 'index',
-    '/today'             : 'today',
-    '/my_tasks'          : 'my_tasks',
-    '/all_tasks'         : 'all_tasks'
-  },
-  initialize: function (options) {
-    Teambox.Controllers.Bootstrap.prototype.initialize.call(this, options);
+(function () {
 
-    this.projects_controller = new Teambox.Controllers.ProjectsController({app: this});
-    this.users_controller = new Teambox.Controllers.UsersController({app: this});
-    this.tasks_controller = new Teambox.Controllers.TasksController({app: this});
-    this.conversations_controller = new Teambox.Controllers.ConversationsController({app: this});
-    this.search_controller = new Teambox.Controllers.SearchController({app: this});
-    this.pages_controller = new Teambox.Controllers.PagesController({app: this});
-  },
+  var Views = Teambox.Views
+    , Controllers = Teambox.Controllers
+    , views = Teambox.views;
 
-  index: function () {
-    Teambox.Views.Sidebar.highlightSidebar('activity_link');
-    this.activities_view.render();
-  },
+  Teambox.Controllers.AppController = Controllers.Bootstrap.extend({
+    routes: {
+      '/'                  : 'index',
+      '/today'             : 'today',
+      '/my_tasks'          : 'my_tasks',
+      '/all_tasks'         : 'all_tasks'
+    },
+    initialize: function (options) {
+      Controllers.Bootstrap.prototype.initialize.call(this, options);
 
-  today: function () {
-    Teambox.Views.Sidebar.highlightSidebar('today_link');
-    Teambox.views.today_tasks.render();
-  },
+      this.projects_controller = new Controllers.ProjectsController({app: this});
+      this.users_controller = new Controllers.UsersController({app: this});
+      this.tasks_controller = new Controllers.TasksController({app: this});
+      this.conversations_controller = new Controllers.ConversationsController({app: this});
+      this.search_controller = new Controllers.SearchController({app: this});
+      this.pages_controller = new Controllers.PagesController({app: this});
+    },
 
-  my_tasks: function () {
-    Teambox.Views.Sidebar.highlightSidebar('my_tasks_link');
-    Teambox.views.my_tasks.render();
-  },
+    index: function () {
+      Views.Sidebar.highlightSidebar('activity_link');
+      views.activities.render();
+    },
 
-  all_tasks: function () {
-    Teambox.Views.Sidebar.highlightSidebar('all_tasks_link');
-    Teambox.views.all_tasks.render();
-  }
-});
+    today: function () {
+      Views.Sidebar.highlightSidebar('today_link');
+      views.today_tasks.render();
+    },
+
+    my_tasks: function () {
+      Views.Sidebar.highlightSidebar('my_tasks_link');
+      views.my_tasks.render();
+    },
+
+    all_tasks: function () {
+      Views.Sidebar.highlightSidebar('all_tasks_link');
+      views.all_tasks.render();
+    }
+  });
+
+}());
