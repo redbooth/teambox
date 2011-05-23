@@ -1,24 +1,41 @@
 class ApiV1::APIController < ApplicationController
   include Oauth::Controllers::ApplicationControllerMethods
   Oauth2Token = ::Oauth2Token
-  
+
   skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token, :add_chrome_frame_header
+  before_filter      :api_throttle
 
   API_LIMIT = 50
+  API_THROTTLE_LIMIT = 200
 
   protected
-  
+
   rescue_from CanCan::AccessDenied do |exception|
     api_error(:unauthorized, :type => 'InsufficientPermissions', :message => 'Insufficient permissions')
   end
-  
+
   def current_user
     @current_user ||= (login_from_session ||
                        login_from_basic_auth ||
                        login_from_cookie ||
                        login_from_oauth) unless @current_user == false
   end
-  
+
+  def api_throttle
+    return unless Rails.env.production?
+    # Limit of API_THROTTLE_LIMIT per hour
+    throttle_key = "#{current_user.id}:#{Time.now.strftime('%Y-%m-%dT%H')}"
+    if val = Rails.cache.read(throttle_key)
+      if val.to_i > API_THROTTLE_LIMIT
+        api_error(:unauthorized, :type => 'AuthorizationFailed', :message => 'Rate Limit Exceeded')
+      else
+        Rails.cache.increment(throttle_key)
+      end
+    else
+      Rails.cache.write(throttle_key, 1, :raw => true) # raw is needed to have 'increment' working
+    end
+  end
+
   def login_from_oauth
     user = Authenticator.new(self,[:token]).allow? ? current_token.user : nil
     user.current_token = current_token if user
