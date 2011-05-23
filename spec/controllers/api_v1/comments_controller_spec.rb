@@ -169,8 +169,18 @@ describe ApiV1::CommentsController do
       login_as @user
       
       person = @project.people.find_by_user_id(@user.id)
+      other_person = @project.people.find_by_user_id(@project.user_id)
+      
       task = Factory.create(:task, :project => @project, :user => @user)
       task.comments.create_by_user(@user, {:body => 'TEST', :assigned => person}).save!
+      56.times { |i| task.comments.create_by_user(@user, {:body => "Errm #{i}", :assigned => nil}).save!}
+      
+      task = Task.find_by_id(task.id)
+      task.updating_user = @user
+      task.assigned = other_person
+      task.comments_attributes = {'0' => {:body => 'TEST!!'}}
+      task.save!
+      task.reload.assigned.should == other_person
       
       get :index, :project_id => @project.permalink
       response.should be_success
@@ -182,7 +192,8 @@ describe ApiV1::CommentsController do
       references.include?("#{@project.id}_Project").should == true
       references.include?("#{@comment.user_id}_User").should == true
       references.include?("#{@comment.user_id}_User").should == true
-      references.include?("#{person.id}_Person").should == true
+      references.include?("#{other_person.id}_Person").should == true
+      references.include?("#{person.id}_Person").should == false # off the list
     end
     
     it "does not show unwatched private comments in a project" do

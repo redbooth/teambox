@@ -125,21 +125,20 @@ class ApiV1::APIController < ApplicationController
       api_response[:references] = references if references
     end
   end
-
-  # refs is a hash like: table => ids to load, e.g. { :comments => [1,2,3] }
-  def load_references(refs)
-    # Now let's load everything else but the users
-    user_ids = Array(refs.delete(:users))
-    people_ids = Array(refs.delete(:people))
+  
+  def load_reference_hashes(refs, user_ids, people_ids)
+    result = []
     
-    elements = refs.collect do |ref, values|
+    result += refs.collect do |ref, values|
       ref_class = ref.to_s.classify
       case ref_class
       when 'Person'
         people_ids += values
         []
       when 'Comment'
-        Comment.where(:id => values).includes(:target).all
+        comments = Comment.where(:id => values).includes(:target).all
+        new_refs = comments.map{|c| load_reference_hashes(c.references, user_ids, people_ids)}.flatten
+        comments + new_refs
       when 'Upload'
         Upload.where(:id => values).includes(:page_slot).all
       when 'Note'
@@ -153,7 +152,18 @@ class ApiV1::APIController < ApplicationController
       else
         ref_class.constantize.where(:id => values).all
       end
-    end.flatten.uniq
+    end
+    
+    result.flatten.uniq
+  end
+
+  # refs is a hash like: table => ids to load, e.g. { :comments => [1,2,3] }
+  def load_references(refs)
+    # Now let's load everything else but the users
+    user_ids = Array(refs.delete(:users))
+    people_ids = Array(refs.delete(:people))
+    
+    elements = load_reference_hashes(refs, user_ids, people_ids)
 
     # Load all people
     people = Person.where(:id => people_ids.uniq).all
