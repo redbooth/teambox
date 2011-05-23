@@ -107,7 +107,11 @@ Teambox::Application.routes.draw do
     post  '/account/first_steps/hide' => 'users#hide_first_steps'
     post  '/account/tutorials/hide' => 'users#hide_tutorials'
 
-    resources :teambox_datas, :path => '/datas'
+    resources :teambox_datas, :path => '/datas' do
+      member do
+        get :download
+      end
+    end
 
     resources :users do
       resources :invitations
