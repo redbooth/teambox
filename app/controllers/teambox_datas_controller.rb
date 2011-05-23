@@ -1,6 +1,8 @@
 class TeamboxDatasController < ApplicationController
   skip_before_filter :load_project
   before_filter :find_data, :except => [:index, :new, :create]
+  
+  SEND_FILE_METHOD = :default
 
   def index
     # show current imports/exports
@@ -71,6 +73,33 @@ class TeamboxDatasController < ApplicationController
     
     respond_to do |f|
       f.html { redirect_to teambox_datas_path }
+    end
+  end
+  
+  def download
+    head(:forbidden) and return unless @data.downloadable?(current_user)
+    
+    if Teambox.config.amazon_s3
+      redirect_to @data.processed_data.url
+    else
+      path = @data.processed_data.path
+      unless File.exist?(path)
+        head(:bad_request)
+        raise "Unable to download file"
+      end
+
+      mime_type = File.mime_type?(@data.processed_data_file_name)
+      mime_type = 'application/octet-stream' if mime_type == 'unknown/unknown'
+
+      send_file_options = { :type => mime_type }
+      response.headers['Cache-Control'] = 'private, max-age=31557600'
+
+      case SEND_FILE_METHOD
+        when :apache then send_file_options[:x_sendfile] = true
+        when :nginx then head(:x_accel_redirect => path.gsub(Rails.root, ''), :content_type => send_file_options[:type]) and return
+      end
+
+      send_file(path, send_file_options)
     end
   end
   
