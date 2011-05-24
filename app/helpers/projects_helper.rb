@@ -156,7 +156,7 @@ module ProjectsHelper
   end
 
   def projects_people_data
-    projects = @current_project ? [@current_project] : current_user.projects.reject{ |p| p.new_record? }
+    projects = current_user.projects.reject{ |p| p.new_record? }
     return nil if projects.empty?
     data = {}
     rows = Person.user_names_from_projects(projects, current_user)
