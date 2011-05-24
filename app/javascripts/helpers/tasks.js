@@ -49,15 +49,12 @@
 
     _.each(sorted, function (el) {
       var current_status = TasksHelper.getStatusID(by)(el);
-      console.log(current_status);
-      console.log(last_status);
       if (last_status !== current_status) {
         $('content').insert('<div class="group"></div>');
       }
       $('content').insert({bottom: el});
       last_status = current_status;
     });
-    console.log($('content'));
   };
 
   /* Sort tasks by...
