@@ -5,6 +5,3 @@ _.each(['Models', 'Collections', 'Controllers', 'Views'            // Constructo
   Teambox[el] = {};
 });
 
-document.on("dom:loaded", function () {
-  Teambox.controllers.application = new Teambox.Controllers.AppController();
-});
