@@ -10,13 +10,16 @@
   .expanded_actions{:style => "display: none"}
     %a.full{:href => "/projects/{{project_id}}/tasks/{{id}}"}= t('tasks.task.full_view')
     %a.edit{:href => "#"}= t('tasks.task.edit')
+
   {{#if due_on}}
   %span.assigned_date{ :style => 'display: inline-block' } {{date due_on}} 
   {{/if}}
+
   {{#assigned}}
   %span.assigned_user
     %a{:href => "/users/{{user.username}}"} {{short_name user}}
   {{/assigned}}
+
   .extended
     %span.project
       %a{:href => "/projects/{{project_id}}"} {{project.name}}

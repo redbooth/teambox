@@ -14,7 +14,7 @@ describe("Loader()", function () {
 
   it('should set body class and loading bar style', function () {
     expect($$('body')[0]).toHaveClass('loading');
-    expect($$('.loading .bar .fill')[0]).toHaveAttr('style', 'width: 10px;');
+    expect($$('.loading .bar .fill')[0].getStyle('width')).toEqual('10px');
   });
 
   it('should be initialized with `loaded` and `total`', function () {
@@ -45,7 +45,7 @@ describe("Loader()", function () {
         callbacks.fleiba();
         expect(loader.loaded).toEqual(1);
         expect(loader.total).toEqual(2);
-        expect($$('.loading .bar .fill')[0]).toHaveAttr('style', 'width: 200px;');
+        expect($$('.loading .bar .fill')[0].getStyle('width')).toEqual('200px');
         expect(callback).not.toHaveBeenCalled();
       });
     });

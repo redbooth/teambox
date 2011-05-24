@@ -81,6 +81,7 @@ var Templates;
          ('status_' + task.get('status'), true)
          ('status_notopen', !task.get('open?'))
          ('due_on', task.get('due_on') || task.get('closed?'))
+         (task.get('task_list_id') ? 'task_list_' + task.get('task_list_id') : '', task.get('task_list_id'))
          (task.get('assigned') ? 'assigned' : 'unassigned', !task.get('closed?'))
          (task.get('assigned') ? 'user_' + task.get('assigned').user_id : null, true);
 

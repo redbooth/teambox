@@ -104,7 +104,6 @@
 //= require <navigation_ajax>
 //= require <overlays>
 //= require <pages>
-//= require <pagination>
 //= require <person>
 //= require <preview>
 //= require <quick_add_pane>

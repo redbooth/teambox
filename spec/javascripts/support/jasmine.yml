@@ -23,6 +23,7 @@ src_files:
   - app/javascripts/modules/params.js
   - app/javascripts/models/task.js
   - app/javascripts/views/task.js
+  - app/javascripts/helpers/tasks.js
 
 # stylesheets
 #
