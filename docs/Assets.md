@@ -18,7 +18,7 @@ All javascripts live under `/app/javascripts`
     |-javascripts/
     |---collections/        # Backbone collections
     |---controllers/        # Backbone controllers
-    |---helpers/            # Backbone helpers
+    |---helpers/            # Backbone helpers, shared functions between views
     |---models/             # Backbone models
     |---modules/            # Modules implemented by us
     |---vendor/             # third party modules
@@ -48,11 +48,12 @@ In order to avoid lots of global variables, we namespace our `js` modules under 
 
 ### JSHint
 
-JSHint is used with the following flags.
 Some options just define a coding standard, but others will help to prevent bugs / memory leaks.
 If you use vim, I highly recommend using [jshint.vim](https://github.com/wookiehangover/jshint.vim)
 
 [TODO: there are lots of globals around which can be namespaced or added to the jshint.rc file]
+
+Recommended options.
 
       /*jshint prototypejs: true, browser: true, devel: true, node: true, jquery: true, debug: true,
       forin: true, undef: true, eqeqeq: true, bitwise: true, immed: true, laxbreak: true, noarg: true,
@@ -61,7 +62,7 @@ If you use vim, I highly recommend using [jshint.vim](https://github.com/wookieh
 
 ### Coding standard
 
-  * We will try to stick to JSHint as much as possible, but without being zealots.
+  * We will try to stick to JSHint as much as possible, but without being stupid zealots.
   * Comma-first helps to detect missing commas.
   * Private functions and variables start with `_`.
   * Adopt the **module pattern** as much as possible, it helps to avoid global namespace pollution and allows privacy.
@@ -101,6 +102,19 @@ var FooPrinter = Teambox.modules.FooPrinter
     .printFoo(); // => foo
     .printFoo(); // => foo
 ```
+
+### Testing
+
+We use Jasmine for testing.
+Include your specs under `spec/javascripts/specs`. Try to keep the original file hierachy.
+Test only one file for each spec.
+Stub any AJAX call, or DOM.
+[sinon](http://sinonjs.org/), [jasmine-sinon](https://github.com/froots/jasmine-sinon) and [jasmine-prototype](https://github.com/masylum/jasmine-prototype) are included.
+
+Any new file you need to test must be added to `spec/javascripts/support/jasmine.yml`
+
+To run the tests: `rake jasmine` and then open your browser to `0.0.0.0:8888`
+
 
 ## CSS
 

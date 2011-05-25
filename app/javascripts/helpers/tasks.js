@@ -41,17 +41,19 @@
    * @param {Array} tasks
    * @param {Object} options
    *
-   * @return {Array} sorted elements
+   * @return self
    */
   TasksHelper.ungroup = function (tasks) {
     $$('#content .group').invoke('remove');
+
+    return TasksHelper;
   };
 
   /* Group tasks by...
    *
    * @param {Object} options
    *
-   * @return {Array} sorted elements
+   * @return self
    */
   TasksHelper.group = function (options) {
     // deletes previous groupings
@@ -68,6 +70,8 @@
       options.where.insert({bottom: el});
       last_status = current_status;
     });
+
+    return TasksHelper;
   };
 
   /* Sort tasks by...
