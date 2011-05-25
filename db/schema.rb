@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110517231302) do
+ActiveRecord::Schema.define(:version => 20110524125342) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -447,8 +447,9 @@ ActiveRecord::Schema.define(:version => 20110517231302) do
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted",         :default => false, :null => false
-    t.boolean  "is_private",      :default => false, :null => false
+    t.boolean  "deleted",                   :default => false, :null => false
+    t.string   "google_calendar_url_token"
+    t.boolean  "is_private",                :default => false, :null => false
   end
 
   add_index "tasks", ["assigned_id"], :name => "index_tasks_on_assigned_id"
@@ -546,6 +547,7 @@ ActiveRecord::Schema.define(:version => 20110517231302) do
     t.boolean  "default_watch_new_conversation",                 :default => false
     t.boolean  "default_watch_new_page",                         :default => false
     t.boolean  "notify_pages",                                   :default => false
+    t.string   "google_calendar_url_token"
   end
 
   add_index "users", ["deleted"], :name => "index_users_on_deleted"
