@@ -41,18 +41,21 @@ module UsersHelper
   
   def load_javascript_user_data
     javascript_tag %(
-      my_user = #{json_user};
-      my_projects = #{json_projects};
-      my_organizations = #{json_organizations};
-      my_tasks = #{json_tasks};
-      current_project = #{@current_project ? @current_project.id : 'null'};
+     window.my_user = #{json_user};
+     window.my_projects = #{json_projects};
+     window.my_organizations = #{json_organizations};
+     window.my_tasks = #{json_tasks};
+     window.current_project = #{@current_project ? @current_project.id : 'null'};
 
-      document.on("dom:loaded", function () {
-        if($app) {
-          _.extend($app.config, #{json_config});
-        }
-      });
-    )
+      (function(){
+        var $app = Teambox.controllers.application;
+
+        document.on("dom:loaded", function () {
+          if($app) {
+            _.extend($app.config, #{json_config});
+          }
+        });
+      }());
   end
   
   def load_my_avatar_for_new_comments
