@@ -10,7 +10,7 @@
       options.tasks.each(function (task) {
         var view = new Teambox.Views.Task({ model: task });
         //TODO: render tasks on a document fragment and insert it only once to avoid reflow
-        $$('.task_list .tasks')[0].insert({ bottom: view.render().el });
+        $$('#content .tasks')[0].insert({ bottom: view.render().el });
       });
     } else {
       $('content').update(options.primer_template());
@@ -36,23 +36,36 @@
     return TasksHelper;
   };
 
-  /* Group tasks by...
+  /* Delete all the groups
    *
    * @param {Array} tasks
    * @param {Object} options
    *
    * @return {Array} sorted elements
    */
-  TasksHelper.group = function (tasks, by) {
-    var sorted = TasksHelper.sort(tasks, by)
-      , last_status = null;
+  TasksHelper.ungroup = function (tasks) {
+    $$('#content .group').invoke('remove');
+  };
+
+  /* Group tasks by...
+   *
+   * @param {Object} options
+   *
+   * @return {Array} sorted elements
+   */
+  TasksHelper.group = function (options) {
+    // deletes previous groupings
+    TasksHelper.ungroup();
+
+    var sorted = TasksHelper.sort(options.tasks, options.by)
+      , last_status = {order: null};
 
     _.each(sorted, function (el) {
-      var current_status = TasksHelper.getStatusID(by)(el);
-      if (last_status !== current_status) {
-        $('content').insert('<div class="group"></div>');
+      var current_status = TasksHelper.getStatus(options.by)(el);
+      if (last_status.order !== current_status.order) {
+        options.where.insert('<div class="group">' + current_status.label + '</div>');
       }
-      $('content').insert({bottom: el});
+      options.where.insert({bottom: el});
       last_status = current_status;
     });
   };
@@ -60,35 +73,41 @@
   /* Sort tasks by...
    *
    * @param {Array} tasks
-   * @param {Object} options
+   * @param {String} by
    *
    * @return {Array} sorted elements
    */
   TasksHelper.sort = function (tasks, by) {
-    return _.sortBy(tasks, TasksHelper.getStatusID(by));
+    return _.sortBy(tasks, TasksHelper.getStatus(by, 'order'));
   };
 
   /* Get task status by
    *
-   * @param {Array} tasks
-   * @param {Object} options
+   * @param {String} by
+   * @param {String} optional attr
    *
    * @return {Function} get status
    */
-  TasksHelper.getStatusID = function (by) {
-    var filter = Teambox.Models.Task.filters[by];
+  TasksHelper.getStatus = function (by, attr) {
+    var status = Teambox.Models.Task.status[by];
     switch (by) {
     case 'assigned':
     case 'due_date':
+    case 'status':
       return function (task) {
-        var el = _.detect(filter, function (filter) {
-          return task.hasClassName(filter);
-        });
-        return el ? filter.indexOf(el) : null;
+        for (var key in status) {
+          if (task.hasClassName(key)) {
+            return attr ? status[key][attr] : status[key];
+          }
+        }
       };
     case 'task_list':
       return function (task) {
-        return task.className.match(/task_list_([0-9])/)[1];
+        var el = {
+          order: +task.className.match(/task_list_([0-9])/)[1]
+        , label: task.select('.project a')[0].textContent
+        };
+        return attr ? el[attr] : el;
       };
     }
   };

@@ -55,17 +55,26 @@
   };
 
   // static
-  TaskStatic.filters = {
-    due_date: [ 'overdue'
-              , 'due_today'
-              , 'due_tomorrow'
-              , 'due_week'
-              , 'due_2weeks'
-              , 'due_3weeks'
-              , 'due_month'
-              , 'unassigned_date' ]
-  , assigned: ['mine', 'assigned', 'unassigned']
-  , status: ['new', 'open', 'hold', 'resolved', 'rejected']
+  TaskStatic.status = {
+    due_date: { overdue:         {order: 0, label: 'late tasks'}
+              , due_today:       {order: 1, label: 'today'}
+              , due_tomorrow:    {order: 2, label: 'tomorrow'}
+              , due_week:        {order: 3, label: 'this week'}
+              , due_2weeks:      {order: 4, label: 'next 2 weeks'}
+              , due_3weeks:      {order: 5, label: 'next 3 weeks'}
+              , due_month:       {order: 6, label: 'within 1 month'}
+              , unassigned_date: {order: 7, label: 'no date assigned'}
+              }
+  , assigned: { mine:            {order: 0, label: 'mine'}
+              , assigned:        {order: 1, label: 'assigned'}
+              , unassigned:      {order: 2, label: 'unassigned'}
+              }
+  , status:   { 'new':             {order: 0, label: 'new'}
+              , open:              {order: 1, label: 'open'}
+              , hold:              {order: 2, label: 'hold'}
+              , resolved:          {order: 3, label: 'resolved'}
+              , rejected:          {order: 4, label: 'rejected'}
+              }
   }
 
   // exports

@@ -2,6 +2,7 @@
 
   var FilterDueDate = { tagName: 'select'
                       , id: 'filter_due_date'
+                        // TODO: generate this with task::status
                       , options_html: '<option value="">anytime</option>'
                                     + '<option value="overdue">late tasks</option>'
                                     + '<option value="unassigned_date">no date assigned</option>'
