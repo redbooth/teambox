@@ -233,7 +233,7 @@ class GoogleCalendar
     def request(method, url, body=nil, headers={}, options = {}, redirects = 0)
       url = create_url(url, options) unless redirects > 0
       
-      Rails.logger.debug("[GCal] #{method} URL: #{url}")
+      Rails.logger.info("[GCal] #{method} URL: #{url}")
       # Rails.logger.debug(body)
       case method
       when :post, :put
@@ -243,7 +243,7 @@ class GoogleCalendar
       end
       res = @access_token.send(method, *args)
       
-      Rails.logger.debug "[GCal] Response: #{res.code}" ##{res.body}"
+      Rails.logger.info "[GCal] Response: #{res.code}" ##{res.body}"
       case res.code.to_i
       when 200, 201
         return res.body

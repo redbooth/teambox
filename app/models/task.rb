@@ -349,10 +349,10 @@ class Task < RoleRecord
   
   def do_calendar_update
     unless self.name_changed? || self.due_on_changed? || self.assigned_id_changed? || self.status_changed?
-      Rails.logger.debug "[GCal] Not updating google calendar as nothing we care about has changed"
+      Rails.logger.info "[GCal] Not updating google calendar as nothing we care about has changed"
       return
     else
-      Rails.logger.debug "[GCal] Google cal task changed? name:#{self.name_changed?} || due_on:#{self.due_on_changed?} || assigned:#{self.assigned_id_changed?} || status:#{self.status_changed?}"
+      Rails.logger.info "[GCal] Google cal task changed? name:#{self.name_changed?} || due_on:#{self.due_on_changed?} || assigned:#{self.assigned_id_changed?} || status:#{self.status_changed?}"
     end
     
     if !self.google_calendar_url_token.blank?
@@ -381,7 +381,7 @@ class Task < RoleRecord
   def delete_old_events_if_required
     if !self.new_record? && self.assigned_id_changed? && !self.assigned_id_was.blank?
       # We need to remove the calendar entry from the old user if they exist
-      Rails.logger.debug "[GCal] Assigned user changed from #{self.assigned_id_was.inspect} to #{self.assigned_id.inspect}"
+      Rails.logger.info "[GCal] Assigned user changed from #{self.assigned_id_was.inspect} to #{self.assigned_id.inspect}"
     
       old_person = Person.find(self.assigned_id_was)
       return if old_person.nil?
@@ -399,8 +399,8 @@ class Task < RoleRecord
   
     if !self.new_record? && ((self.due_on_changed? && self.due_on.blank? && !self.due_on_was.blank?) || (self.status_changed? && !self.open?))
       # We need to remove the calendar entry the user as it no longer has a due date or is no longer open
-      Rails.logger.debug "[GCal] Due on changed from #{self.due_on_was.inspect} to #{self.due_on.inspect}" if self.due_on_changed?
-      Rails.logger.debug "[GCal] Status changed from #{self.status_was.inspect} to #{self.status.inspect}" if self.status_changed?
+      Rails.logger.info "[GCal] Due on changed from #{self.due_on_was.inspect} to #{self.due_on.inspect}" if self.due_on_changed?
+      Rails.logger.info "[GCal] Status changed from #{self.status_was.inspect} to #{self.status.inspect}" if self.status_changed?
     
       gcal = self.assigned.user.get_calendar_app
       return if gcal.nil?
