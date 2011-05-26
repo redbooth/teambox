@@ -14,9 +14,6 @@
 //= require <dragdrop>
 //= require <sound>
 
-// is this needed? backbone manages history already TODO
-//= require <history>
-
 //= require <teambox>
 
 //= require <modules/loader>
