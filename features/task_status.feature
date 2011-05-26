@@ -24,6 +24,13 @@ Feature: Changing Task Status from New
     Then I should see "new → open" status change
     And I should see "Assigned to Mislav Marohnić"
 
+  Scenario: Mislav changes task without commenting (new -> open:Mislav)
+    Given I am on its task page
+    And I select "Mislav Marohnić" from "Assigned to"
+    And I press "Save"
+    Then I should see "new → open" status change
+    And I should see "Assigned to Mislav Marohnić"
+
   Scenario: Mislav changes task (new -> hold)
     Given I am on its task page
     When I fill in the comment box with "I need to wait till the engine cools down"

@@ -255,7 +255,7 @@ class Task < RoleRecord
   end
   
   def remember_comment_created # before_update
-    @comment_created = comments.any?(&:new_record?)
+    @comment_created = comments.any?(&:new_record?) || assigned_id_changed? || status_changed?
     true
   end
   
