@@ -15,32 +15,32 @@ describe UploadsController do
     @page.reload
   end
   
-  route_matches("/assets/22/original/test", 
+  route_matches("/downloads/22/original/test", 
     :get, 
     :controller => "uploads", 
     :action => "download", 
     :filename =>"test", :id => "22", :style => "original")
-  route_matches("/assets/22/original/test......", 
+  route_matches("/downloads/22/original/test......", 
     :get, 
     :controller => "uploads", 
     :action => "download", 
     :filename =>"test......", :id => "22", :style => "original")
-  route_matches("/assets/22/original/test.test",          
+  route_matches("/downloads/22/original/test.test",          
     :get, 
     :controller => "uploads", 
     :action => "download", 
     :filename =>"test.test", :id => "22", :style => "original")
-  route_matches("/assets/22/original/test.jpg",           
+  route_matches("/downloads/22/original/test.jpg",           
     :get, 
     :controller => "uploads", 
     :action => "download", 
     :filename =>"test.jpg", :id => "22", :style => "original")
-  route_matches("/assets/22/original/test.test.jpg",      
+  route_matches("/downloads/22/original/test.test.jpg",      
     :get, 
     :controller => "uploads", 
     :action => "download", 
     :filename =>"test.test.jpg", :id => "22", :style => "original")
-  route_matches("/assets/22/original/test.test.test.jpg", 
+  route_matches("/downloads/22/original/test.test.test.jpg", 
     :get, 
     :controller => "uploads", 
     :action => "download", 
@@ -66,6 +66,32 @@ describe UploadsController do
     
       get :index, :project_id => @project.permalink
       response.body.match(/semicolons\.js/).should_not == nil
+    end
+  end
+
+  describe "#download of private uploads" do
+    before do
+      @conversation = Factory.create(:conversation, :is_private => true, :user => @project.user, :project => @project)
+      @upload = @project.uploads.new({:asset => mock_uploader('lawsuit.txt', 'text/plain', "1 million dolalrs please")})
+
+      @upload.user = @user
+      @upload.is_private = true
+      @upload.comment = @conversation.comments.first
+      @upload.save!
+    end
+    
+    it "should not allow downloading of private uploads belonging to targets we are not watching" do
+      login_as @user
+      get :download, :id => @upload.id, :filename => 'lawsuit.txt'
+      response.body.match(/million/).should == nil
+    end
+    
+    it "allows downloading of private uploads belonging to objects we are a watcher of" do
+      @conversation.add_watcher(@user)
+      login_as @user
+    
+      get :download, :id => @upload.id, :filename => 'lawsuit.txt'
+      response.body.match(/million/).should_not == nil
     end
   end
   

@@ -1,5 +1,6 @@
 class Upload < RoleRecord
   include Immortal
+  include PrivateElements
 
   ICONS = %w(aac ai aiff avi bmp c cpp css dat dmg doc dotx dwg dxf eps exe flv gif h hpp html ics iso java jpg key mid mp3 mp4 mpg odf ods odt otp ots ott pdf php png ppt psd py qt rar rb rtf sql tga tgz tiff txt wav xls xlsx xml yml zip)
     
@@ -22,9 +23,11 @@ class Upload < RoleRecord
   
   include PageWidget
 
+  DOWNLOADS_URL = "/downloads/:id/:style/:basename.:extension"
+
   has_attached_file :asset,
     :styles => { :thumb => "150x150>" },
-    :url  => "/assets/:id/:style/:basename.:extension",
+    :url  => DOWNLOADS_URL,
     :path => Teambox.config.amazon_s3 ?
       "assets/:id/:style/:filename" :
       ":rails_root/assets/:id/:style/:filename",
@@ -53,11 +56,12 @@ class Upload < RoleRecord
   end
 
   def url(style_name = nil, use_timestamp = false)
-    if !!Teambox.config.amazon_s3
-      AWS::S3::S3Object.url_for(asset.path(style_name), asset.bucket_name, {:expires_in => Teambox.config.amazon_s3_expiration.to_i})
-    else
-      asset.url(style_name, use_timestamp)
-    end
+    url = asset.original_filename.nil? ? Paperclip::Interpolations.interpolate(@default_url, asset, style_name) : Paperclip::Interpolations.interpolate(DOWNLOADS_URL, asset, style_name)
+    use_timestamp && asset.updated_at ? [url, asset.updated_at].compact.join(url.include?("?") ? "&" : "?") : url
+  end
+
+  def s3_url(style_name = nil)
+    AWS::S3::S3Object.url_for(asset.path(style_name), asset.bucket_name, {:expires_in => Teambox.config.amazon_s3_expiration.to_i})
   end
 
   def file_name
@@ -95,7 +99,8 @@ class Upload < RoleRecord
   end
 
   def downloadable?(user)
-    true
+    project.user_ids.include?(user.id) &&
+    user_can_access_private_target?(user)
   end
 
   def file_type
