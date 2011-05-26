@@ -46,7 +46,7 @@ class Task < RoleRecord
   before_save :save_changes_to_comment, :if => :track_changes?
   before_save :save_completed_at
   before_validation :remember_comment_created, :on => :update
-  before_save :update_google_calendar_event
+  before_save :update_google_calendar_event, :if => lambda {|t| t.assigned.try(:user).try(:admin?) }
   
   def assigned
     @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
