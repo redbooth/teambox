@@ -2,8 +2,6 @@ class TeamboxDatasController < ApplicationController
   skip_before_filter :load_project
   before_filter :find_data, :except => [:index, :new, :create]
   
-  SEND_FILE_METHOD = :default
-
   def index
     # show current imports/exports
     @data_imports = current_user.teambox_datas.find_all_by_type_id(0)
@@ -93,11 +91,6 @@ class TeamboxDatasController < ApplicationController
 
       send_file_options = { :type => mime_type }
       response.headers['Cache-Control'] = 'private, max-age=31557600'
-
-      case SEND_FILE_METHOD
-        when :apache then send_file_options[:x_sendfile] = true
-        when :nginx then head(:x_accel_redirect => path.gsub(Rails.root, ''), :content_type => send_file_options[:type]) and return
-      end
 
       send_file(path, send_file_options)
     end

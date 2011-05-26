@@ -14,7 +14,7 @@
       [+]
 
   .reference{ :style => 'display: none' }
-    = link_to_upload upload, t('.download')
+    = link_to_upload upload, t('.download'), {:rel => nil}
     - if can?(:update, upload) # and request.format != :m
       = link_to t('.remove'), [upload.project, upload], :'data-remote' => true,
         :'data-method' => 'delete', :'data-confirm' => t('confirm.delete_upload')

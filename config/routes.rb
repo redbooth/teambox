@@ -374,7 +374,7 @@ Teambox::Application.routes.draw do
 
     match '/my_projects' => 'projects#list', :as => :all_projects
 
-    match 'assets/:id/:style/:filename' => 'uploads#download', :constraints => { :filename => /.*/ }, :via => :get
+    match 'downloads/:id(/:style)/:filename' => 'uploads#download', :constraints => {:filename => /.*/}, :via => :get
 
   end
 
