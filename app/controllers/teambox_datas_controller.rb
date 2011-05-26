@@ -74,6 +74,28 @@ class TeamboxDatasController < ApplicationController
     end
   end
   
+  def download
+    head(:forbidden) and return unless @data.downloadable?(current_user)
+    
+    if Teambox.config.amazon_s3
+      redirect_to @data.processed_data.url
+    else
+      path = @data.processed_data.path
+      unless File.exist?(path)
+        head(:bad_request)
+        raise "Unable to download file"
+      end
+
+      mime_type = File.mime_type?(@data.processed_data_file_name)
+      mime_type = 'application/octet-stream' if mime_type == 'unknown/unknown'
+
+      send_file_options = { :type => mime_type }
+      response.headers['Cache-Control'] = 'private, max-age=31557600'
+
+      send_file(path, send_file_options)
+    end
+  end
+  
 private
 
   def find_data
