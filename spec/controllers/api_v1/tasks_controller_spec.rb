@@ -260,6 +260,15 @@ describe ApiV1::TasksController do
       @task.reload.name.should == 'Modified'
     end
     
+    it "should use the logged in user as the modifier of the task" do
+      login_as @user
+      
+      put :update, :project_id => @project.permalink, :id => @task.id, :comments_attributes => {'0' => {'body' => 'TEST'}}
+      response.should be_success
+      
+      @task.reload.comments.last.user_id.should == @user.id
+    end
+     
     it "should not allow observers to modify a task" do
       login_as @observer
       
