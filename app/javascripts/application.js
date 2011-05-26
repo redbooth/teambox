@@ -8,6 +8,8 @@
 
 //= require <rails>
 //= require <html5>
+
+// TODO: Builder is only used by colorPicker, should we remove it?
 //= require <builder>
 //= require <effects>
 //= require <controls>
@@ -77,7 +79,6 @@
 //= require <badges>
 //= require <banner>
 //= require <chat>
-//= require <colorPicker>
 //= require <comment>
 //= require <compact_mode>
 //= require <conversation>
