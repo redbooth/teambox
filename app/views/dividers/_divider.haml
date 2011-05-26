@@ -3,4 +3,4 @@
     = render :partial => 'dividers/actions', :locals => {:divider => divider}
   %h3
     %span
-      = divider.name.empty?? '&nbsp;' : h(divider.name)
+      = divider.name.empty?? '&nbsp;'.html_safe : h(divider.name)
