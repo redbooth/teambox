@@ -143,6 +143,7 @@ defaults: &defaults
   - "*.common"
   - "*.tasks"
   - "*.projects"
+  - "*.conversations"
 
 development:
   <<: *defaults

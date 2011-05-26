@@ -241,9 +241,13 @@ document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
   }
   
   if (project) {
-    var people = _people_autocomplete[project],
-        autocompleter = input.retrieve('autocompleter')
-        
+    var people = _people[project],
+        autocompleter = input.retrieve('autocompleter'),
+        all = "@all <span class='informal'>" + I18n.translations.conversations.watcher_fields.people_all + "</span>"
+
+    people = [all].concat(people.collect(function (p) {
+      return "@" + p[1] + " <span class='informal'>" + p[2] + "</span>"
+    }))
     if (autocompleter) {
       // update options array in case the projects selector changed value
       autocompleter.options.array = people
