@@ -9,8 +9,7 @@
 //= require <rails>
 //= require <html5>
 
-// TODO: Builder is only used by colorPicker, should we remove it?
-//= require <builder>
+// Scriptaculous dependencies
 //= require <effects>
 //= require <controls>
 //= require <dragdrop>
@@ -111,5 +110,4 @@
 //= require <task_list_templates>
 //= require <threads>
 //= require <upload>
-//= require <yahoo.color>
 //= require <watchers>
