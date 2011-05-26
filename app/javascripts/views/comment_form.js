@@ -37,7 +37,7 @@ Teambox.Views.CommentForm = Backbone.View.extend({
     "click a.attach_icon"     : "toggleAttach",
     "click a.add_hours_icon"  : "toggleHours",
     "click a.add_watchers"    : "toggleWatchers",
-    "focus textarea"          : "revealCommentArea"
+    "focusin textarea"          : "revealCommentArea"
   },
 
   // Toggle the attach files area
