@@ -327,8 +327,8 @@ class Task < RoleRecord
     {
       :title => self.name,
       :details => "#{self.comments.first.try(:body)}\r\n\r\n#{"https://#{Teambox.config.app_domain}/projects/#{self.project.permalink}/tasks/#{self.id}"}",
-      :start => self.due_on ? self.due_on : nil,
-      :end => self.due_on ? self.due_on : nil
+      :start => self.due_on,
+      :end => self.due_on
     }
   end
   
