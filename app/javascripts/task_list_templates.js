@@ -9,7 +9,7 @@ TaskListTemplates = {
   },
 
   render: function(template) {
-    return Mustache.to_html(Templates.task_list_templates.template, template)
+    return Handlebars.compile(Templates.task_list_templates.template)(template)
   },
 
   generateForm: function(id) {
@@ -29,13 +29,13 @@ TaskListTemplates = {
     }
     template.tasks.push({name: '', desc: ''})
     if (e.down('form')) { e.down('form').remove() }
-    e.insert({ top: Mustache.to_html(Templates.task_list_templates.form, template) })
+    e.insert({ top: Handlebars.compile(Templates.task_list_templates.form)(template) })
     TaskListTemplates.sortableForm()
   },
 
   addField: function(el) {
     if (!el.down('ul input[name="task_list_template[titles][]"][value=]')) {
-      el.down('ul').insert(Mustache.to_html(Templates.task_list_templates.form_task, {} ))
+      el.down('ul').insert(Handlebars.compile(Templates.task_list_templates.form_task)())
       TaskListTemplates.sortableForm()
     }
   },

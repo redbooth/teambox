@@ -63,9 +63,6 @@
 //= require <views/thread>
 //= require <views/watchers>
 
-// Remove me by substituting Mustache code for Handlebars FIXME
-//= require <mustache>
-
 //= require <calendar_date_select>
 //= require <facebox>
 //= require <showdown>

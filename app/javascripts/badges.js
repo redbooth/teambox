@@ -27,7 +27,7 @@ Badge = {
     // Remove any badges visible now and show this one
     $$('.overlay_badge').invoke('remove');
     $$('body')[0].insert({ bottom:
-      Mustache.to_html(Templates.badges[name])
+      Handlebars.compile(Templates.badges[name])()
     });
     var badge = $$('.overlay_badge')[0];
     var pop = new Effect.MoveBottom(badge, {

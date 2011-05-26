@@ -9,7 +9,8 @@ Overlays = {
   closeAll: function() {
     this.open_overlays.invoke('remove');
     this.open_overlays = [];
-  }
+  },
+  project_template: Handlebars.compile(Templates.projects.overlay)
 };
 
 
@@ -20,7 +21,8 @@ document.on("click", ".project_overlay a", function(e,el) {
     e.stop();
     Overlays.open(
       el.up('.project_overlay'),
-      Mustache.to_html(Templates.projects.overlay, { project: project }));
+      Overlays.project_template({ project: project })
+    );
   }
 });
 

@@ -5,7 +5,7 @@ FirstSteps = {
     if (!my_user.show_badges) { return; }
     if (!my_user.first_steps) { return; }
     $$(".first_steps").invoke('remove');
-    var html = Mustache.to_html(Templates.first_steps.overview);
+    var html = Handlebars.compile(Templates.first_steps.overview)();
 
     // Where will the overview be rendered?
     this.where = where || this.where || 'column';
@@ -61,13 +61,14 @@ FirstSteps = {
       this.stepsCompleted();
     }
   },
+  progress_bar_template: Handlebars.compile(Templates.first_steps.progress_bar),
   // Draws progress bar for the overview
   drawProgressBar: function() {
     var container = $$(".first_steps")[0];
     if (!container) { return; }
     container.select(".completion").invoke("remove");
     var percentage = Math.floor(this.steps.completed*100/this.steps.total);
-    var html = Mustache.to_html(Templates.first_steps.progress_bar, {
+    var html = this.progress_bar_template({
       width: 100,
       filled: percentage,
       text: percentage+'%' });

@@ -201,7 +201,7 @@ Task = {
   },
 
   renderMyTask: function(task) {
-    return Mustache.to_html(Templates.tasks.my_task, {
+    return Handlebars.compile(Templates.tasks.my_task)({
       task_id: task.id,
       task_classes: Task.classesForListed(task),
       task_url: '/projects/' + task.project_id + '/tasks/' + task.id,

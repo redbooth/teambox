@@ -93,7 +93,7 @@ class TrimmerController < ActionController::Base
 
   protected
 
-    # Gets all templates and renders them as JSON, to be used as Mustache templates
+    # Gets all templates and renders them as JSON, to be used as Mustache or Handlebars templates
     def templates_to_js(options)
       old_locale = I18n.locale
       I18n.locale = options[:locale]
