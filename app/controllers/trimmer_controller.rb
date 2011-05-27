@@ -83,12 +83,18 @@ class TrimmerController < ActionController::Base
 
   def translations
     render :text => translations_to_js(:locale => params[:locale], :only => KEYS), :content_type => 'text/javascript'
-  end 
+  end
 
   # Exports templates and translations in a single request
   def resources
-    render :text => translations_to_js(:locale => params[:locale], :only => KEYS) + "\n" +
+    template = render_to_string :text => translations_to_js(:locale => params[:locale], :only => KEYS) + "\n" +
                     templates_to_js(:locale => params[:locale]), :content_type => 'text/javascript'
+
+    # TODO: how can I activate page cache on dev for a single controller? :(
+    # we can't test having dynamic js
+    file = File.new(Rails.root.join('public', 'trimmer', "#{params[:locale]}.js"), 'w')
+    file.puts(template)
+    render :text => template
   end
 
   protected

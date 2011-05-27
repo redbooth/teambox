@@ -1,4 +1,3 @@
-/*globals Templates*/
 (function () {
 
   var Activities = { tagName: 'div'
@@ -17,8 +16,7 @@
 
   Activities.initialize = function (options) {
     _.bindAll(this, 'render');
-
-    this.bind('add', this.appendThread.bind(this));
+    this.bind('add', Activities.appendThread.bind(this));
   };
 
   Activities.appendThread = function (thread) {
@@ -30,11 +28,6 @@
         || this.templates.raw_activity;
       this.el.insert({ bottom: template(thread.toJSON()) });
     }
-  };
-
-  Activities.fetchNextPage = function () {
-    var self = this;
-    this.collection.fetchNextPage();
   };
 
   // Build the activity feed by rendering every thread
@@ -51,7 +44,7 @@
 
     $('content').update(this.el);
     $('content').insert({bottom: '<a href="#" class="button" id="activity_paginate_link"><span>Show more</span></a>'});
-    $('activity_paginate_link').observe('click', Activities.fetchNextPage.bind(this));
+    $('activity_paginate_link').observe('click', this.collection.fetchNextPage);
   };
 
   // exports
