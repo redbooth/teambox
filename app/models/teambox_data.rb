@@ -201,7 +201,11 @@ class TeamboxData < ActiveRecord::Base
   def users_to_export
     organizations_to_export.map{|o| o.users + o.users_in_projects }.flatten.compact
   end
-  
+
+  def downloadable?(user)
+    type_name == :export && user.id == user_id
+  end
+
   def to_api_hash(options = {})
     base = {
       :id => id,

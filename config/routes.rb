@@ -94,7 +94,11 @@ Teambox::Application.routes.draw do
     match '/account/activity_feed_mode/collapsed' => 'users#change_activities_mode', :as => :collapse_activities, :collapsed => true
     match '/account/activity_feed_mode/expanded' => 'users#change_activities_mode', :as => :expand_activities, :collapsed => false
 
-    resources :teambox_datas, :path => '/datas'
+    resources :teambox_datas, :path => '/datas' do
+      member do
+        get :download
+      end
+    end
 
     resources :users do
       resources :invitations
@@ -370,7 +374,7 @@ Teambox::Application.routes.draw do
 
     match '/my_projects' => 'projects#list', :as => :all_projects
 
-    match 'assets/:id/:style/:filename' => 'uploads#download', :constraints => { :filename => /.*/ }, :via => :get
+    match 'downloads/:id(/:style)/:filename' => 'uploads#download', :constraints => {:filename => /.*/}, :via => :get
 
   end
 

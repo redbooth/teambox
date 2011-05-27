@@ -3,8 +3,6 @@ class UploadsController < ApplicationController
   skip_before_filter :load_project, :only => [:download]
   before_filter :set_page_title
   
-  SEND_FILE_METHOD = :default
-  
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
       error_message = "You are not allowed to do that!"
@@ -17,28 +15,31 @@ class UploadsController < ApplicationController
     head(:not_found) and return if (upload = Upload.find_by_id(params[:id])).nil?
     head(:forbidden) and return unless upload.downloadable?(current_user)
 
-    path = upload.asset.path(params[:style])
-    unless File.exist?(path) && params[:filename].to_s == upload.asset_file_name
-      head(:bad_request)
-      raise "Unable to download file"
-    end  
+    if !!Teambox.config.amazon_s3
+      unless upload.asset.exists?(params[:style]) && params[:filename].to_s == upload.asset_file_name
+        head(:bad_request)
+        raise "Unable to download file"
+      end
+      redirect_to upload.s3_url(params[:style])
+    else
+      path = upload.asset.path(params[:style])
+      unless File.exist?(path) && params[:filename].to_s == upload.asset_file_name
+        head(:bad_request)
+        raise "Unable to download file"
+      end  
 
-    mime_type = File.mime_type?(upload.asset_file_name)
+      mime_type = File.mime_type?(upload.asset_file_name)
 
-    mime_type = 'application/octet-stream' if mime_type == 'unknown/unknown'
+      mime_type = 'application/octet-stream' if mime_type == 'unknown/unknown'
 
-    send_file_options = { :type => mime_type }
+      send_file_options = { :type => mime_type }
 
-    response.headers['Cache-Control'] = 'private, max-age=31557600'
+      response.headers['Cache-Control'] = 'private, max-age=31557600'
 
-    case SEND_FILE_METHOD
-      when :apache then send_file_options[:x_sendfile] = true
-      when :nginx then head(:x_accel_redirect => path.gsub(Rails.root, ''), :content_type => send_file_options[:type]) and return
+      send_file(path, send_file_options)
     end
-
-    send_file(path, send_file_options)
   end
-  
+
   def index
     @uploads = @current_project.uploads.order('updated_at DESC')
     @upload ||= @current_project.uploads.new

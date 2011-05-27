@@ -18,4 +18,4 @@
       %li= link_to h(project.name), project_path(project)
 
   - unless @data.processing?
-    %p= link_to t('.download'), @data.processed_data.url
+    %p= link_to t('.download'), download_teambox_data_path(@data)

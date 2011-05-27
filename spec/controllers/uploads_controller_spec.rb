@@ -13,32 +13,32 @@ describe UploadsController do
     @page.reload
   end
   
-  route_matches("/assets/22/original/test", 
+  route_matches("/downloads/22/original/test", 
     :get, 
     :controller => "uploads", 
     :action => "download", 
     :filename =>"test", :id => "22", :style => "original")
-  route_matches("/assets/22/original/test......", 
+  route_matches("/downloads/22/original/test......", 
     :get, 
     :controller => "uploads", 
     :action => "download", 
     :filename =>"test......", :id => "22", :style => "original")
-  route_matches("/assets/22/original/test.test",          
+  route_matches("/downloads/22/original/test.test",          
     :get, 
     :controller => "uploads", 
     :action => "download", 
     :filename =>"test.test", :id => "22", :style => "original")
-  route_matches("/assets/22/original/test.jpg",           
+  route_matches("/downloads/22/original/test.jpg",           
     :get, 
     :controller => "uploads", 
     :action => "download", 
     :filename =>"test.jpg", :id => "22", :style => "original")
-  route_matches("/assets/22/original/test.test.jpg",      
+  route_matches("/downloads/22/original/test.test.jpg",      
     :get, 
     :controller => "uploads", 
     :action => "download", 
     :filename =>"test.test.jpg", :id => "22", :style => "original")
-  route_matches("/assets/22/original/test.test.test.jpg", 
+  route_matches("/downloads/22/original/test.test.test.jpg", 
     :get, 
     :controller => "uploads", 
     :action => "download", 
