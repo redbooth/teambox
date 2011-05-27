@@ -1,29 +1,27 @@
-Teambox.Controllers.ConversationsController = Teambox.Controllers.BaseController.extend({
-  routes: {
-    '/projects/:project/conversations'     : 'conversations_index',
-    '/projects/:project/conversations/:id' : 'conversations_show'
-  },
+(function () {
+  var ConversationsController = { routes: { '/projects/:project/conversations'     : 'index'
+                                          , '/projects/:project/conversations/:id' : 'show' }};
 
-  conversations_new: function() {
+  ConversationsController['new'] = function () {
     $('content').update( Handlebars.compile(Templates.conversations['new'])() );
-  },
+  };
 
-  // Display 'loading', fetch the conversation and display it
-  conversations_show: function(project, id) {
-    var model = new Teambox.Models.Conversation({ id: id });
-    var view = new Teambox.Views.Conversation({ model: model });
+    // Display 'loading', fetch the conversation and display it
+  ConversationsController.show = function (project, id) {
+    var model = Teambox.collections.threads.detect(function (i) {
+          return ((i.id === +id) && (i.get('type') === "Conversation"));
+        });
 
-    // Try to find this element in the Threads collection
-    var found_element = _.findFromCollection(Teambox.my_threads, id, "Conversation");
-
-    if (found_element) {
-      // Set the element on the view
-      model.set(found_element);
-    } else {
-      // Display "loading" and fetch the element, which will trigger the view
-      view.render();
+    if (!model) {
+      model = new Teambox.Models.Conversation({ id: id });
       model.fetch();
     }
- }
 
-});
+    $('content').update((new Teambox.Views.Thread({model: model})).render().el);
+
+    Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_conversations');
+  };
+
+  // exports
+  Teambox.Controllers.ConversationsController = Teambox.Controllers.BaseController.extend(ConversationsController);
+}());

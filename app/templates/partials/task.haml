@@ -4,11 +4,11 @@
   %span.task_status.task_counter{"data-task-id" => "{{id}}"} {{comments_count}}
 .status {{status_text}}
 .taskName
-  %a.name{:href => "/projects/{{project_id}}/tasks/{{id}}"} {{name}}
+  %a.name{:href => "/projects/{{project.url}}/tasks/{{id}}"} {{name}}
   %form.edit_title{ :style => 'display: none' }
     %input{ :value => '{{name}}' }
   .expanded_actions{:style => "display: none"}
-    %a.full{:href => "/projects/{{project_id}}/tasks/{{id}}"}= t('tasks.task.full_view')
+    %a.full{:href => "/projects/{{project.url}}/tasks/{{id}}"}= t('tasks.task.full_view')
     %a.edit{:href => "#"}= t('tasks.task.edit')
 
   {{#if due_on}}
@@ -22,10 +22,10 @@
 
   .extended
     %span.project
-      %a{:href => "/projects/{{project_id}}"} {{project.name}}
+      %a{:href => "/projects/{{project.url}}"} {{project.name}}
       &rarr;
     %span.task_list
-      %a{:href => "/projects/{{project_id}}/task_lists"} {{task_list.name}}
+      %a{:href => "/projects/{{project.url}}/task_lists"} {{task_list.name}}
 .clear
 .thread{ :style => 'display: none' }
   .comments

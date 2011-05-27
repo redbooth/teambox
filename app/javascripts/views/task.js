@@ -1,13 +1,10 @@
-/*globals Templates*/
-var Templates;
-
 (function () {
 
   Teambox.Views.Task = Backbone.View.extend({
 
     tagName: "div"
   , className: "task"
-  , template: Templates && Handlebars.compile(Templates.partials.task)
+  , template: Handlebars.compile(Templates.partials.task)
 
   , events: {
       "click a.name": "expandComments"

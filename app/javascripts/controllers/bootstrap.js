@@ -1,5 +1,7 @@
 (function () {
-  var views = Teambox.views;
+  var views = Teambox.views
+    , models = Teambox.models
+    , collections = Teambox.collections;
 
   Teambox.Controllers.Bootstrap = Backbone.Controller.extend({
     config: {},
@@ -19,10 +21,10 @@
       Backbone.Controller.prototype.initialize.call(this, options);
 
       // Initialize models and collections
-      this.my_user     = new Teambox.Models.User();
-      this.my_tasks    = new Teambox.Collections.Tasks();
-      this.my_threads  = new Teambox.Collections.Threads();
-      this.my_projects = new Teambox.Collections.Projects();
+      models.user          = this.my_user     = new Teambox.Models.User();
+      collections.tasks    = this.my_tasks    = new Teambox.Collections.Tasks();
+      collections.threads  = this.my_threads  = new Teambox.Collections.Threads();
+      collections.projects = this.my_projects = new Teambox.Collections.Projects();
 
       // Fetch all data we're going to need
       // Uses the Loader class, which updates the progress bar
@@ -31,6 +33,7 @@
       this.my_threads.fetch({ success: _loader.load('activities') });
       this.my_projects.fetch({ success: _loader.load('projects') });
     },
+
     build: function () {
       // Initialize views
       this.projects_view   = new Teambox.Views.Projects({ app: this, collection: this.my_projects });

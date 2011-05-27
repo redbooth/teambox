@@ -9,7 +9,7 @@
 
   Sidebar.initialize = function (options) {
     var app_controller = Teambox.controllers.application
-      , current = this.detectSelectedSection();
+      , current = SidebarStatic.detectSelectedSection(window.location.hash);
 
     _.bindAll(this, 'renderTaskCounter');
 
@@ -62,32 +62,6 @@
 
     if (this.toggleElement(el, true)) {
       e.stop();
-    }
-  };
-
-  /* Selects the link in the sidebar according to the current url
-   *
-   * @return {Element} link selected
-   *
-   * TODO: Replace with controllers selecting the right element <= sure?
-   */
-  Sidebar.detectSelectedSection = function () {
-    // Direct match
-    var links = $$('.nav_links a')
-      , link = links.select(function (e) {
-          return e.getAttribute('href') === window.location.hash;
-        }).last();
-
-    if (link) {
-      return link.up('.el');
-    } else {
-      link = links.sortBy(function (e) {
-        return e.getAttribute('href').length;
-      }).select(function (e) {
-        return (window.location.pathname.search(e.getAttribute('href')) > -1 && e.getAttribute('href') !== '/');
-      }).last();
-
-      return link.up('.el');
     }
   };
 
@@ -164,12 +138,45 @@
     $(this.el).select('.el.selected')
       .invoke('removeClassName', 'selected')
       .invoke('removeClassName', 'children-selected');
-    el.addClassName('selected');
+
+    if (el) {
+      el.addClassName('selected');
+    }
   };
 
   // *class* methods
   SidebarStatic.highlightSidebar = function (id) {
     Teambox.views.sidebar.selectElement($(id), true);
+  };
+
+  /* Selects the link in the sidebar according to the current url
+   *
+   * @return {Element} link selected
+   *
+   * TODO: Replace with controllers selecting the right element <= sure?
+   *
+   *       Sure? we could do a mixed solution, this autoselects
+   *       according to a url, and if a link was not found, we can force it
+   *       from the controller by using `toggleElement` and|or `showContainers`
+   */
+  SidebarStatic.detectSelectedSection = function (hash) {
+    // Direct match
+    var links = $$('.nav_links a')
+      , link = links.select(function (e) {
+          return e.getAttribute('href') === hash;
+        }).last();
+
+    if (link) {
+      return link.up('.el');
+    } else {
+      link = links.sortBy(function (e) {
+        return e.getAttribute('href').length;
+      }).select(function (e) {
+        return (hash.search(e.getAttribute('href')) > -1 && e.getAttribute('href') !== '/');
+      }).last();
+
+      return link && link.up('.el');
+    }
   };
 
   // expose
