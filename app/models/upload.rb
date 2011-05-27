@@ -56,6 +56,7 @@ class Upload < RoleRecord
 
   def url(style_name = nil, use_timestamp = false)
     url = asset.original_filename.nil? ? Paperclip::Interpolations.interpolate(@default_url, asset, style_name) : Paperclip::Interpolations.interpolate(DOWNLOADS_URL, asset, style_name)
+    url = URI.escape(url)
     use_timestamp && asset.updated_at ? [url, asset.updated_at].compact.join(url.include?("?") ? "&" : "?") : url
   end
 
