@@ -242,9 +242,6 @@ document.observe('dom:loaded', function(e) {
     Task.make_all_sortable()
   }
   Task.highlight_my_tasks()
-  Filter.populatePeopleForTaskFilter()
-  Filter.updateCounts(false)
-  Filter.updateFilters()
   Task.insertAssignableUsers()
 });
 
