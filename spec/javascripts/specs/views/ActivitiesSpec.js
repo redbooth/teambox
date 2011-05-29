@@ -2,10 +2,11 @@
 describe("views/activities", function () {
 
   var ActivitiesView = Teambox.Views.Activities
-    , Collection = {}
+    , Collection = _.extend({}, Backbone.Events)
     , activities;
 
   beforeEach(function () {
+    setFixtures('<div id="content"><a id="activity_paginate_link">show more</a></div>');
     activities = new ActivitiesView({collection: Collection});
   });
 
@@ -31,8 +32,13 @@ describe("views/activities", function () {
                                , project_id: 1
                                });
 
-    activities.trigger('add', thread);
+    Collection.trigger('add', thread);
     expect(activities.el).toContain('.comment');
+  });
+
+  it('`hidePagination` should be triggered when no more elements are added to the collection', function () {
+    Collection.trigger('no_more_pages');
+    expect($('activity_paginate_link')).toBeHidden();
   });
 
 });

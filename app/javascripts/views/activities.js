@@ -11,15 +11,17 @@
                                 , raw_activity: Handlebars.compile(
                                     "<div class='activity'>activity_{{id}} {{target_type}} {{action}} {{#target}}{{{body_html}}}{{/target}} </div>"
                                   )
-                               }
+                                }
       };
 
   Activities.initialize = function (options) {
     _.bindAll(this, 'render');
-    this.bind('add', Activities.appendThread.bind(this));
+
+    this.collection.bind('add', Activities.appendThread.bind(this));
+    this.collection.bind('no_more_pages', Activities.hidePagination.bind(this));
   };
 
-  Activities.appendThread = function (thread) {
+  Activities.appendThread = function appendThread(thread) {
     var template;
     if (thread.get('type') === "Conversation" || thread.get('type') === "Task") {
       this.el.insert({ bottom: (new Teambox.Views.Thread({ model: thread })).render().el });
@@ -28,6 +30,10 @@
         || this.templates.raw_activity;
       this.el.insert({ bottom: template(thread.toJSON()) });
     }
+  };
+
+  Activities.hidePagination = function hidePagination() {
+    $('activity_paginate_link').hide();
   };
 
   // Build the activity feed by rendering every thread
@@ -44,7 +50,7 @@
 
     $('content').update(this.el);
     $('content').insert({bottom: '<a href="#" class="button" id="activity_paginate_link"><span>Show more</span></a>'});
-    $('activity_paginate_link').observe('click', this.collection.fetchNextPage);
+    $('activity_paginate_link').observe('click', this.collection.fetchNextPage.bind(this.collection));
   };
 
   // exports

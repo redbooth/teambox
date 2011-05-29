@@ -10,7 +10,8 @@ describe("collections/threads", function () {
 
   it('`fetchNextPage` should append a thread into the activities', function () {
     var stub = sinon.stub(threads, 'fetch', function (obj) {
-      expect(obj).toEqual({data: 'max_id=4', add: true});
+      expect(obj.data).toEqual('max_id=4');
+      expect(obj.add).toEqual(true);
     });
 
     threads.fetchNextPage();
