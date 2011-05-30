@@ -35,6 +35,7 @@
 //= require <controllers/users>
 //= require <controllers/search>
 //= require <models/base>
+//= require <models/comment>
 //= require <models/conversation>
 //= require <models/project>
 //= require <models/task>

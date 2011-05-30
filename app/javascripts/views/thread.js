@@ -1,17 +1,25 @@
 // This view renders a Conversation or Task as a thread
 (function () {
 
-  var Thread = {
-    tagName: 'div'
-  , className: 'thread'
-  , template: Handlebars.compile(Templates.partials.thread)
-  };
+  var Thread = { tagName: 'div'
+               , className: 'thread'
+               , template: Handlebars.compile(Templates.partials.thread) };
 
   Thread.initialize = function (options) {
-    this.app = options.app;
-
     _.bindAll(this, "render");
-    // Fixme: bind to changes
+    this.model.bind('comment:added', Thread.addComment.bind(this));
+  };
+
+  Thread.addComment = function (resp) {
+    resp.user = _.clone(Teambox.models.user.attributes);
+
+    var template = Handlebars.compile(Templates.partials.comment)
+      , el = template(resp);
+
+    $(this.el)
+      .select('.comments')[0]
+      .insert({bottom: el})
+      .highlight({duration: 1});
   };
 
   Thread.render = function () {
