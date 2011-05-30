@@ -191,13 +191,13 @@ module UsersHelper
 
     def json_projects
       projects = {}
-      current_user.people.all(:include => :project).each do |p|
-        projects[p.project.id] = {
-          :permalink => p.project.permalink,
+      current_user.projects.except(:select).select("projects.id, projects.permalink, projects.organization_id, projects.archived, projects.name, people.role").each do |p|
+        projects[p.id] = {
+          :permalink => p.permalink,
           :role => p.role,
-          :organization_id => p.project.organization_id,
-          :archived => p.project.archived,
-          :name => h(p.project.name) }
+          :organization_id => p.organization_id,
+          :archived => p.archived,
+          :name => h(p.name) }
       end
       projects.to_json
     end
