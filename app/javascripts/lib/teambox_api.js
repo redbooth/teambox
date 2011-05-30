@@ -102,7 +102,7 @@ _.parseFromAPI = function(json) {
 
 // Find an element by id and type inside a Backbone collection
 _.findFromCollection = function(collection, id, type) {
-  return collection.toJSON().detect(function(i) {
+  return collection.getAttributes().detect(function(i) {
     return ((i.id == id) && (i.type == type));
   });
 };

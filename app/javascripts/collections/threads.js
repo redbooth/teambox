@@ -40,6 +40,6 @@
   }
 
   // exports
-  Teambox.Collections.Threads = Backbone.Collection.extend(Threads);
+  Teambox.Collections.Threads = Teambox.Collections.Base.extend(Threads);
 
 }());

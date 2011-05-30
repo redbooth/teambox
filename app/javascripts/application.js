@@ -40,6 +40,7 @@
 //= require <models/task>
 //= require <models/thread>
 //= require <models/user>
+//= require <collections/base>
 //= require <collections/projects>
 //= require <collections/tasks>
 //= require <collections/threads>
