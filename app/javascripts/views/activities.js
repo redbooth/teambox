@@ -28,7 +28,7 @@
     } else {
       template = (this.templates[thread.get('target_type').toLowerCase()] || {})[thread.get('action')]
         || this.templates.raw_activity;
-      this.el.insert({ bottom: template(thread.toJSON()) });
+      this.el.insert({ bottom: template(thread.getAttributes()) });
     }
   };
 

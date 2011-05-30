@@ -13,7 +13,7 @@ Teambox.Models.User = Teambox.Models.Base.extend({
   // Updates the username link on the header
   render: function() {
     $('username').update(
-      this.username_template(this.toJSON())
+      this.username_template(this.getAttributes())
     );
     return this;
   },

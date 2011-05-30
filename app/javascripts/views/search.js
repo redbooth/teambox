@@ -68,7 +68,7 @@ Teambox.Views.Search = Backbone.View.extend({
         (" "+i.get('name').toLowerCase()).match(regex);
     }).sortBy(function(i) {
       return i.updated_at;
-    }).slice(0,20).collect(function(i) { return i.toJSON(); });
+    }).slice(0,20).collect(function(i) { return i.getAttributes(); });
 
     // Display the dropdown menu with results
     $$('#quicksearch_results').invoke('remove');

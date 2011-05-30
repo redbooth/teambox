@@ -1,6 +1,6 @@
 (function () {
 
-  Teambox.Models.Thread = Backbone.Model.extend({
+  Teambox.Models.Thread = Teambox.Models.Base.extend({
     initialize: function () {
     }
   , render: function () {

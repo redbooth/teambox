@@ -14,7 +14,7 @@ Teambox.Models.Conversation = Teambox.Models.Base.extend({
   // Check if the model has been loaded fully
   isLoaded: function() {
     // If it doesn't have a project_id, for example, it's not loaded
-    return !!this.toJSON().project_id;
+    return !!this.getAttributes().project_id;
   }
 
 });

@@ -78,7 +78,7 @@
   }
 
   // exports
-  Teambox.Models.Task = Backbone.Model.extend(Task, TaskStatic);
+  Teambox.Models.Task = Teambox.Models.Base.extend(Task, TaskStatic);
 
 }());
 

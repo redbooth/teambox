@@ -1,4 +1,7 @@
 Teambox.Models.Base = Backbone.Model.extend({
+  getAttributes: function() {
+    return _.clone(this.attributes);
+  },
   toJSON: function() {
     return _.reduce(this.attributes, function(attrs, v, k) {
      if (_.all(['object', 'function'], function(type) {return typeof v != type})) {

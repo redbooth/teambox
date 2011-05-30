@@ -22,7 +22,7 @@
   , render: function () {
       var el = $(this.el);
 
-      el.update(this.template(this.model.toJSON()));
+      el.update(this.template(this.model.getAttributes()));
       el.writeAttribute('id', 'task_' + this.model.id);
       el.writeAttribute('data-task-id', this.model.id);
       el.addClassName(this.getClasses());

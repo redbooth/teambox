@@ -15,7 +15,7 @@ Teambox.Views.Conversation = Backbone.View.extend({
   // Display the conversation (or a loading box while it's loading)
   render: function() {
     if(this.model.isLoaded()) {
-      var html = this.template(this.model.toJSON());
+      var html = this.template(this.model.getAttributes());
       $('content').update(html);
       var thread = new Teambox.Views.Thread({ model: this.model });
       $('content').insert({ bottom: thread.render().el });

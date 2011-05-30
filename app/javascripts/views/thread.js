@@ -28,7 +28,7 @@
     this.model.attributes.is_task = this.model.get('type') === 'Task';
 
     // Prepare the thread DOM element
-    $(this.el).update(this.template(this.model.toJSON()));
+    $(this.el).update(this.template(this.model.getAttributes()));
 
     // Insert the comment form at bottom of the thread element
     // FIXME: This way of creating views could leak memory

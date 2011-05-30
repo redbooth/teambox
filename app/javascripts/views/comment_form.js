@@ -30,7 +30,7 @@
     });
 
     $(this.el).addClassName("edit_" + this.model.get('type').toLowerCase());
-    $(this.el).update(this.template(this.model.toJSON()));
+    $(this.el).update(this.template(this.model.getAttributes()));
 
     return this;
   };

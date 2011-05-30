@@ -16,7 +16,7 @@ Teambox.Views.Watchers = Backbone.View.extend({
   render: function() {
     $(this.el).update(
       // using fake data for users, should use project's users
-      this.template({ users: [this.app.my_user.toJSON()] })
+      this.template({ users: [this.app.my_user.getAttributes()] })
     );
     // TODO: Add the list of people in the project here
     return this;
