@@ -56,6 +56,7 @@ module UsersHelper
           }
         });
       }());
+    )
   end
   
   def load_my_avatar_for_new_comments
