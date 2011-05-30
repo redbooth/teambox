@@ -73,7 +73,7 @@
     })).save(null, {
       success: function (model, resp) {
         self.reset();
-        self.model.trigger('comment:added', resp);
+        self.model.trigger('comment:added', resp, _.clone(Teambox.models.user));
       }
     });
     return false;

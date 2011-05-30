@@ -25,9 +25,11 @@ src_files:
 
   - app/javascripts/helpers/handlebars.js
 
+  - app/javascripts/models/base.js
   - app/javascripts/models/task.js
   - app/javascripts/models/thread.js
 
+  - app/javascripts/collections/base.js
   - app/javascripts/collections/threads.js
 
   - app/javascripts/views/task.js

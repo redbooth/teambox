@@ -161,3 +161,16 @@ document.on("ajax:success", function() {
   Date.format_posted_dates.defer();
 });
 
+/* fallback parse to handle mysql date format */
+(function () {
+  var origParse = Date.parse;
+  Date.parse = function (date) {
+    var timestamp = origParse(date), struct;
+    if (isNaN(timestamp) && (struct = /^(\d{4}|[+\-]\d{6})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/.exec(date))) {
+      timestamp = Date.UTC(+struct[1], +struct[2] - 1, +struct[3], +struct[4], +struct[5], +struct[6]);
+    }
+
+    return timestamp;
+  };
+}());
+

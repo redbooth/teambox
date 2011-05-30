@@ -10,16 +10,15 @@
     this.model.bind('comment:added', Thread.addComment.bind(this));
   };
 
-  Thread.addComment = function (resp) {
-    resp.user = _.clone(Teambox.models.user.attributes);
+  Thread.addComment = function (resp, user) {
+    resp.user = user.attributes;
 
     var template = Handlebars.compile(Templates.partials.comment)
       , el = template(resp);
 
     $(this.el)
       .select('.comments')[0]
-      .insert({bottom: el})
-      .highlight({duration: 1});
+      .insert({bottom: el});
   };
 
   Thread.render = function () {

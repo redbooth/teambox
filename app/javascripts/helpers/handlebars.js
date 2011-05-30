@@ -1,39 +1,36 @@
-Handlebars.registerHelper('downcase', function(str) {
+Handlebars.registerHelper('downcase', function (str) {
   return str.toLowerCase();
 });
 
-Handlebars.registerHelper('short_name', function(user) {
+Handlebars.registerHelper('short_name', function (user) {
   user = user || this;
   return user.first_name[0] + ". " + user.last_name;
 });
 
-Handlebars.registerHelper('full_name', function(user) {
+Handlebars.registerHelper('full_name', function (user) {
   user = user || this;
   return user.first_name + " " + user.last_name;
 });
 
-Handlebars.registerHelper('ms', function(time) {
-  if(!time) { return; }
-  return Date.parse(time);
+Handlebars.registerHelper('ms', function (time) {
+  return time ? _.date(time) : '';
 });
 
-Handlebars.registerHelper('date', function(time) {
+Handlebars.registerHelper('date', function (time) {
   if(!time) { return; }
   var date = new Date(Date.parse(time));
   return date && date.strftime("%b %d");
 });
 
-Handlebars.registerHelper('time_ago', function(time) {
-  if(!time) { return; }
-  var date = new Date(Date.parse(time));
-  return date && date.timeAgo();
+Handlebars.registerHelper('time_ago', function (time) {
+  return time ? _.date(Date.parse(time)).fromNow() : '';
 });
 
-Handlebars.registerHelper('status_name', function() {
+Handlebars.registerHelper('status_name', function () {
   return $w('new open hold resolved rejected')[this.status];
 });
 
-Handlebars.registerHelper('status_text', function() {
+Handlebars.registerHelper('status_text', function () {
   if(this.status == 1 && this.assigned) {
     return this.assigned.user.first_name + " " + this.assigned.user.last_name[0];
   } else {
@@ -42,9 +39,9 @@ Handlebars.registerHelper('status_text', function() {
 });
 
 // Render status transitions in comments
-Handlebars.registerHelper('status_transition', function() {
+Handlebars.registerHelper('status_transition', function () {
   var status = $w('new open hold resolved rejected')
-    .collect(function(s) {
+    .collect(function (s) {
       return '<span class="task_status task_status_'+s+'">'+s+'</span>';
     });
   var before = status[this.previous_status];
