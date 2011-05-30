@@ -203,11 +203,10 @@ module UsersHelper
     end
 
     def json_organizations
-      Organization.find(current_user.projects.collect(&:organization_id).compact).collect do |org| {
-        :id => org.id,
-        :name => org.name,
-        :permalink => org.permalink }
-      end.to_json
+      current_user.projects.joins(:organization).
+        except(:select).except(:order).
+        select('distinct(organizations.id), organizations.name, organizations.permalink').
+        collect(&:attributes).to_json
     end
 
 end
