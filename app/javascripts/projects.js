@@ -42,7 +42,30 @@ Projects = {
     I18n.translations.roles.commenter,
     I18n.translations.roles.participant,
     I18n.translations.roles.admin
-  ]
+  ],
+  fastCommentForm: function() {
+    var projects_in_orgs = {};
+    (new Hash(my_projects)).each(function(p) {
+      var org_id = p[1].organization_id;
+      if (projects_in_orgs[org_id]) {
+        projects_in_orgs[org_id].push(p[0]);
+      }
+      else {
+        projects_in_orgs[org_id] = [p[0]];
+      }
+    });
+    var groups = [];
+    my_organizations.each(function(o) {
+      var group = new Element('optgroup', { label: o.name });
+      projects_in_orgs[o.id].each(function(p) {
+        var project = new Element('option', { value: p }).insert(my_projects[p].name);
+        group.insert(project);
+      });
+      groups.push(group);
+      $('project_id').insert(group);
+    });
+
+  }
 }
 
 document.on('click', 'a.show_archived', function(e,el) {
@@ -61,3 +84,8 @@ document.on('click', 'a.delete_project', function(e, el){
 		]
 	})
 })
+
+document.on("dom:loaded", function () {
+  Projects.fastCommentForm();
+})
+

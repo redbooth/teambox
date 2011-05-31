@@ -149,11 +149,6 @@ module ProjectsHelper
     javascript_tag "_people = #{data.to_json}"
   end
 
-  def commentable_projects
-    @projects.select { |p| p.commentable?(current_user) and not p.archived? }
-  end
-  memoize :commentable_projects
-
   def project_link_with_overlay(project)
     content_tag :div, :class => :project_overlay do
       link_to project, project, :'data-project-id' => project.id 
