@@ -67,6 +67,39 @@ Handlebars.registerHelper('status_transition', function () {
   return new Handlebars.SafeString(html);
 });
 
+Handlebars.registerHelper('project_url', function() {
+  return "#!/projects/"+this.permalink;
+});
+
+Handlebars.registerHelper('comment_url', function() {
+  return this.target.url();
+});
+
+Handlebars.registerHelper('conversation_url', function() {
+  return "#!/projects/"+this.project.permalink+"/conversations/"+this.id;
+});
+
+Handlebars.registerHelper('task_url', function() {
+  return "#!/projects/"+this.project.permalink+"/tasks/"+this.id;
+});
+
+Handlebars.registerHelper('task_list_url', function() {
+  return "#!/projects/"+this.project.permalink+"/task_lists/"+this.id;
+});
+
+Handlebars.registerHelper('note_url', function() {
+  return "#!/projects/"+this.project.permalink+"/pages/"+this.page_id;
+});
+
+Handlebars.registerHelper('page_url', function() {
+  return "#!/projects/"+this.project.permalink+"/pages/"+this.id;
+});
+
+Handlebars.registerHelper('user_url', function(user) {
+  user = user || this;
+  return "#!/users/" + user.username;
+});
+
 // Register helpers
 Handlebars.registerPartial("comment", Templates.partials.comment);
 Handlebars.registerPartial("thread", Templates.partials.thread);

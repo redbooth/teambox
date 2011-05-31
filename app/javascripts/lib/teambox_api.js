@@ -27,31 +27,6 @@ _.parseFromAPI = function(json) {
     e.assigned = collection.findRef(e.assigned_id, 'Person');
     e.organization = collection.findRef(e.organization_id, 'Organization');
 
-    // Insert a method to generate URLs for this item
-    e.url = function() {
-      switch(e.type) {
-        case "Comment":
-          return e.target.url();
-        case "Conversation":
-          return "#!/projects/"+e.project.permalink+"/conversations/"+e.id;
-        case "Task":
-          return "#!/projects/"+e.project.permalink+"/tasks/"+e.id;
-        case "TaskList":
-          return "#!/projects/"+e.project.permalink+"/task_lists/"+e.id;
-        case "Page":
-          return "#!/projects/"+e.project.permalink+"/pages/"+e.id;
-        case "Note":
-          return "#!/projects/"+e.project.permalink+"/pages/"+e.page.id;
-        case "Project":
-          return "#!/projects/"+e.permalink;
-        case "User":
-          return "#!/users/"+e.username;
-        default:
-          console.log("Didn't implement URL for "+e.type+". Object: "+e);
-          return "#!/wip";
-      }
-    };
-
     // Only 'new' and 'open' tasks have due dates and assignees
     if(e.type == "Task" && e.status && e.status !== 0 && e.status !== 1) {
       e.due_on = undefined;

@@ -1,6 +1,6 @@
 .activity
   {{#user}}
-  <a href="{{url}}" class="micro_avatar" style="background: url({{micro_avatar_url}}) no-repeat"></a>
+  <a href="{{note_url}}" class="micro_avatar" style="background: url({{micro_avatar_url}}) no-repeat"></a>
   {{/user}}
   .activity_block
     .date
@@ -8,17 +8,17 @@
         {{time_ago updated_at}}
     %p
       {{#user}}
-      %a{ :href => "{{url}}" } {{full_name}}
+      %a{ :href => "{{note_url}}" } {{full_name}}
       {{/user}}
       created the note
       {{#target}}
-      %a{ :href => "{{url}}" } {{name}}
+      %a{ :href => "{{note_url}}" } {{name}}
       {{/target}}
       %span.project
         in 
         {{#target}}{{#page}}
-        %a{ :href => "{{url}}" } {{name}}
+        %a{ :href => "{{note_url}}" } {{name}}
         {{/page}}{{/target}}
         {{#project}}
-        %a{ :href => "{{url}}" } ({{name}})
+        %a{ :href => "{{note_url}}" } ({{name}})
         {{/project}}
