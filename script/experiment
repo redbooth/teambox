@@ -1,0 +1,37 @@
+#!/bin/bash
+#
+# Usage:
+# script/experiment faster_threads 1 http://localhost:3000/api/1/activities
+# script/experiment faster_threads 2 http://localhost:3000/api/1/activities
+# script/experiment faster_threads sexychart
+#
+
+NAME=$1
+
+if [ "$2" = "sexychart" ]; then
+  echo "set terminal postscript color" > sexychart.plot
+  echo "set output \"$NAME.ps\"" >> sexychart.plot
+  echo "set title \"Experiment $NAME\"" >> sexychart.plot
+  echo "set size 1,0.7" >> sexychart.plot
+  echo "set grid y" >> sexychart.plot
+  echo "set xlabel \"request\"" >> sexychart.plot
+  echo "set ylabel \"response time (ms)\"" >> sexychart.plot
+  echo "plot \\" >> sexychart.plot
+  for i in experiment_${NAME}_*.dat; do
+    echo "\"$i\" using 9 smooth sbezier with lines title \"version $i\", \\" >> sexychart.plot
+  done
+  echo "1" >> sexychart.plot
+  gnuplot sexychart.plot
+  rm sexychart.plot
+  exit
+fi
+
+NUM=$2
+URL=$3
+
+echo "Experiment: $NAME"
+echo "Version:    $NUM"
+echo "URL:        $URL"
+
+ab -c 1 -n 20 -g experiment_${NAME}_${NUM}.dat $URL
+
