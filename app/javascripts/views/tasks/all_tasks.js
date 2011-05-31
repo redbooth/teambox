@@ -1,4 +1,3 @@
-/*globals Templates*/
 (function () {
   var AllTasks = { title: "All tasks in your projects"
                  , template: Handlebars.compile(Templates.tasks.index)

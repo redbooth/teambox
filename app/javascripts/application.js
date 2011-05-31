@@ -44,10 +44,12 @@
 //= require <collections/base>
 //= require <collections/projects>
 //= require <collections/tasks>
+//= require <collections/task_lists>
 //= require <collections/threads>
 //= require <views/activities>
 //= require <views/comment_form>
 //= require <views/conversation>
+//= require <views/convert_to_task>
 //= require <views/projects>
 //= require <views/search>
 //= require <views/sidebar>

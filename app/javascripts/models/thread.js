@@ -7,6 +7,14 @@
   , render: function () {
     }
 
+  , isTask: function () {
+      return this.get('type') === 'Task';
+    }
+
+  , isConversation: function () {
+      return this.get('type') === 'Conversation';
+    }
+
   , url: function () {
       switch (this.get('type')) {
       case 'Conversation':

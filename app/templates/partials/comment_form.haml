@@ -57,26 +57,6 @@
     {{else}}
     %span.convert_to_task
       <a href="#convert_to_task">Convert to task</a>
-    .convert_to_task{ :style => "display:none" }
-      .conversation_actions
-        .fields
-          <label for="conversation_name">Name this task:</label>
-          <input class="required" disabled="disabled" error_message="must not be blank" id="conversation_name" name="conversation[name]" placeholder="eg. Upload Logo Proposal" size="30" type="text" value="Project Welcome">
-        .fields
-          <label for="conversation_task_list_id">Create task in:</label>
-          <select disabled="disabled" id="conversation_task_list_id" name="conversation[task_list_id]"> <option value="">Loading...</option> </select>
-        .fields
-          <label for="conversation_status">Status:</label>
-          <select disabled="disabled" id="conversation_status" name="conversation[status]"> <option value="0">new</option> <option value="1">open</option> <option value="2">hold</option> <option value="3">resolved</option> <option value="4">rejected</option> </select>
-          <select disabled="disabled" id="conversation_assigned_id" name="conversation[assigned_id]"> <option>Unassigned</option> <option value="1">Frank Kramer</option> <option value="2">Corrina Kottke</option> <option value="5">Marco Fizzulo</option> </select>
-        .fields
-          .date_picker
-            <img alt="Calendar" class="calendar_date_select_popup_icon" src="/images/calendar_date_select/calendar.gif">
-            <input disabled="disabled" id="conversation_due_on" name="conversation[due_on]" type="hidden">
-            <span class="localized_date"><i>No date assigned</i></span>
-      .submit
-        <a href="#cancel_conversion" class="cancel">Cancel</a>
-        <input data-disable-with="Sending…" disabled="disabled" id="comment_submit" name="commit" type="submit" value="Convert">
     {{/if}}
     %span.new{ :style => "display: none" }
       ← &nbsp;&nbsp; Select <b>Notify people</b> to send notifications for this conversation.

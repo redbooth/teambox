@@ -242,37 +242,13 @@ var TaskList = {
       TaskList.destroySortable()
     }
   },
-  
+
   updatePrimer: function() {
     var primer = $('primer');
     if (primer && $$('.task_list').length == 0)
       primer.show();
     else if (primer)
       primer.hide();
-  },
-  populateTaskListSelect: function(project_id, select, callback) {
-
-    new Ajax.Request('/api/1/projects/' + project_id + '/task_lists.json', {
-      method:'get',
-      requestHeaders: {Accept: 'application/json'},
-      onSuccess: function(transport){
-        var json = transport.responseText.evalJSON(true);
-        select.options.length = 0;
-        json.objects.each(function(taskList) {
-          select.options.add(new Option(taskList.name, taskList.id));
-        });
-
-        if (!select.childElements().any(function(option) {return option.text == 'Inbox';})) {
-          select.options.add(new Option("Inbox", ''));
-        }
-      },
-      onFailure: function() {
-        alert('Error loading page! Please reload.');
-        if (callback) {
-          callback();
-        }
-      }
-    });
   },
 
   switchToTemplate: function() {
