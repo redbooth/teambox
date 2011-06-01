@@ -183,8 +183,8 @@
 
         switch(activity.action) {
           case 'create':
-            this.app.my_threads.add(activity.target);
-            this.app.my_projects.add(activity.target);
+            this.app.my_threads.add(activity);
+            this.app.my_projects.add(activity);
             break;
           case 'delete':
             project = this.app.my_projects.get(activity.target_id);
@@ -205,7 +205,7 @@
         var thread;
         switch(activity.action) {
           case 'create':
-            this.app.my_threads.add(activity.target);
+            this.app.my_threads.add(activity);
             break;
           case 'delete':
             thread  = this.app.my_threads.get(activity.target_id); 
