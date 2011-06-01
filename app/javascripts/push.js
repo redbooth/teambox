@@ -65,32 +65,35 @@ window.WEB_SOCKET_SWF_LOCATION = window.location.protocol + "//" + window.locati
         console.log("disconnected: ");
       });
 
-      socket.subscribe("/users/" + this.app.my_user.get('authentication_token'), function(message){
+      socket.subscribe("/users/" + self.app.my_user.get('authentication_token'), function(message){
+        var activity;
         try {
-          var activity = JSON.parse(message);
-          console.log("Received activity: ", activity);
-
-          var matchPath = function(r) {
-              return (r.exec(window.location.hash) || r.exec(window.location.pathname) || []).length > 0;
-          };
-
-          if (activity.target_type === 'Person' || activity.user_id !== this.app.my_user.get('id')) {
-            if (ACTIVE_PATHS.any(matchPath)) {
-              var project_level_matches = /#!\/projects\/([^\/]+)\/?$/.exec(window.location.hash) ||
-                                          /^\/projects\/([^\/]+)\/?$/.exec(window.location.pathname);
-
-              if (project_level_matches && (project_level_matches[1] === activity.project.permalink)) {
-                self.notifyActivity(activity);
-              }
-              else if (!project_level_matches) {
-                self.notifyActivity(activity);
-              }
-            }
-          }
+          activity = JSON.parse(message);
         }
         catch(err) {
           console.log('[Push Error]'  + err + ' parsing: ', message);
         }
+
+        console.log("Received activity: ", activity);
+
+        var matchPath = function(r) {
+            return (r.exec(window.location.hash) || r.exec(window.location.pathname) || []).length > 0;
+        };
+
+        if (activity.target_type === 'Person' || activity.user_id !== self.app.my_user.get('id')) {
+          if (ACTIVE_PATHS.any(matchPath)) {
+            var project_level_matches = /#!\/projects\/([^\/]+)\/?$/.exec(window.location.hash) ||
+                                        /^\/projects\/([^\/]+)\/?$/.exec(window.location.pathname);
+
+            if (project_level_matches && (project_level_matches[1] === activity.project.permalink)) {
+              self.notifyActivity(activity);
+            }
+            else if (!project_level_matches) {
+              self.notifyActivity(activity);
+            }
+          }
+        }
+
       });
 
       this.socket = socket;
