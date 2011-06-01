@@ -85,10 +85,30 @@ NavigationBar = {
   selectElement: function(el) {
     $$('.nav_links .el.selected').invoke('removeClassName', 'selected').invoke('removeClassName', 'children-selected')
     el.addClassName('selected')
+  },
+
+  loadProjectsSidebar: function() {
+    var active_projects = $H(my_projects).select(function(p) { return !p[1].archived; });
+    var projects_to_show = active_projects;
+    var show_more = ($H(my_projects).size() > 0);
+    if (projects_to_show.size() > 3) {
+      projects_to_show = projects_to_show.select(function(p) { return my_user.recent_projects.include(p[0]); })
+    }
+    var projects = projects_to_show.collect(function(p) {
+      return { name: p[1].name
+             , permalink: p[1].permalink
+             , time_tracking: p[1].time_tracking
+             , owner: (p[1].owner == my_user.id) // Owner?
+             , can_admin: (p[1].role == "3") // Admin?
+      };
+    })
+    $('my_projects').down('span').update(active_projects.size());
+    $('my_projects_list').update(Mustache.to_html(Templates.navigation.project, { projects: projects, show_more: show_more, new_project: my_user.can_create_project }));
   }
 }
 
 document.on("dom:loaded", function() {
+  NavigationBar.loadProjectsSidebar()
   $$('.nav_links .contained').invoke('hide')
   var column = window.$('column')
   if (!column)

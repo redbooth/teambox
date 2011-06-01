@@ -283,11 +283,5 @@ BLOCK
       page << errors
     end
   end
-
-  def can_access_as_org_admin?(projects_to_show)
-    logged_in? && 
-    @current_project && 
-    !projects_to_show.include?(@current_project) && 
-    @current_project.organization.is_admin?(current_user)
-  end
 end
+

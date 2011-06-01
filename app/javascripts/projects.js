@@ -44,6 +44,9 @@ Projects = {
     I18n.translations.roles.admin
   ],
   fastCommentForm: function() {
+    if (!$('project_id')) {
+      return;
+    }
     var projects_in_orgs = {};
     (new Hash(my_projects)).each(function(p) {
       var org_id = p[1].organization_id;
