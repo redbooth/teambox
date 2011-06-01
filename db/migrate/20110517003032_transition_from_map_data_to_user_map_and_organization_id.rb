@@ -1,5 +1,6 @@
 class TransitionFromMapDataToUserMapAndOrganizationId < ActiveRecord::Migration
   class TeamboxData < ActiveRecord::Base
+    belongs_to :organization
   end
   class Organization < ActiveRecord::Base
   end
