@@ -67,37 +67,57 @@ Handlebars.registerHelper('status_transition', function () {
   return new Handlebars.SafeString(html);
 });
 
-Handlebars.registerHelper('project_url', function() {
-  return "#!/projects/"+this.permalink;
+Handlebars.registerHelper('project_url', function(project) {
+  project = project || this;
+  var url = "#!/projects/" + project.permalink;
+  return new Handlebars.SafeString(url);
 });
 
-Handlebars.registerHelper('comment_url', function() {
-  return this.target.url();
+Handlebars.registerHelper('comment_url', function(comment) {
+  comment = comment || this;
+  var url = comment.target.url();
+  return new Handlebars.SafeString(url);
 });
 
-Handlebars.registerHelper('conversation_url', function() {
-  return "#!/projects/"+this.project.permalink+"/conversations/"+this.id;
+Handlebars.registerHelper('conversation_url', function(conversation, project) {
+  conversation = conversation || this;
+  project = project || this.project;
+  var url = "#!/projects/" + project.permalink + "/conversations/" + conversation.id;
+  return new Handlebars.SafeString(url);
 });
 
-Handlebars.registerHelper('task_url', function() {
-  return "#!/projects/"+this.project.permalink+"/tasks/"+this.id;
+Handlebars.registerHelper('task_url', function(task, project) {
+  task = task || this;
+  project = project || this.project;
+  var url = "#!/projects/" + project.permalink + "/tasks/" + task.id;
+  return new Handlebars.SafeString(url);
 });
 
-Handlebars.registerHelper('task_list_url', function() {
-  return "#!/projects/"+this.project.permalink+"/task_lists/"+this.id;
+Handlebars.registerHelper('task_list_url', function(task_list, project) {
+  task_list = task_list || this;
+  project = project || this.project;
+  var url = "#!/projects/" + project.permalink + "/task_lists/" + task_list.id;
+  return new Handlebars.SafeString(url);
 });
 
-Handlebars.registerHelper('note_url', function() {
-  return "#!/projects/"+this.project.permalink+"/pages/"+this.page_id;
+Handlebars.registerHelper('note_url', function(note, project) {
+  note = note || this;
+  project = project || this.project;
+  var url = "#!/projects/" + project.permalink+"/pages/" + note.page_id;
+  return new Handlebars.SafeString(url);
 });
 
-Handlebars.registerHelper('page_url', function() {
-  return "#!/projects/"+this.project.permalink+"/pages/"+this.id;
+Handlebars.registerHelper('page_url', function(page, project) {
+  page = page || this;
+  project = project || this.project;
+  var url = "#!/projects/" + project.permalink + "/pages/" + page.id;
+  return new Handlebars.SafeString(url);
 });
 
 Handlebars.registerHelper('user_url', function(user) {
   user = user || this;
-  return "#!/users/" + user.username;
+  var url = "#!/users/" + user.username;
+  return new Handlebars.SafeString(url);
 });
 
 // Register helpers
