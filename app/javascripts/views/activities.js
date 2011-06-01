@@ -17,6 +17,7 @@
   Activities.initialize = function (options) {
     _.bindAll(this, 'render');
 
+    this.collection.unbind('add');
     this.collection.bind('add', Activities.appendThread.bind(this));
     this.collection.bind('no_more_pages', Activities.hidePagination.bind(this));
   };
