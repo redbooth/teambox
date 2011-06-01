@@ -114,18 +114,19 @@ window.WEB_SOCKET_SWF_LOCATION = window.location.protocol + "//" + window.locati
 
       switch(activity.action) {
         case 'create':
-          Teambox['my_' + activity.target_type.toLowerCase()].add(activity.changes);
+          this.app['my_' + activity.target_type.toLowerCase() + 's'].add(activity.target);
+          this.app['my_threads'].add(activity);
           break;
         case 'update':
-          thread = Teambox['my_' + activity.target_type.toLowerCase()].get(activity.target_id);
+          thread = this.app['my_' + activity.target_type.toLowerCase() + 's'].get(activity.target_id);
           if (thread) {
             thread.set(activity.changes);
           }
           break;
         case 'delete':
-          thread = Teambox['my_' + activity.target_type.toLowerCase()].get(activity.target_id);
+          thread = this.app['my_' + activity.target_type.toLowerCase() + 's'].get(activity.target_id);
           if (thread) {
-            Teambox['my_' + activity.target_type.toLowerCase()].remove(thread);
+            this.app['my_' + activity.target_type.toLowerCase() + 's'].remove(thread);
           }
           break;
         
