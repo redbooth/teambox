@@ -14,9 +14,7 @@
     .thread_title
       {{#if is_task}}
       <a href="{{task_url}}">{{name}}</a> on
-      {{#task_list}}
-      <a href="{{task_list_url}}">{{name}}</a>
-      {{/task_list}}
+      <a href="{{task_list_url task_list}}">{{name}}</a>
       task list
       {{else}}
       <a href="{{conversation_url}}">{{name}}</a>
