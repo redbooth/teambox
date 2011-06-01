@@ -4,6 +4,15 @@
     , Task = {}
     , TaskStatic = {};
 
+  /* Returns the class name
+   *
+   * @return {String}
+   */
+  Task.className = function () {
+    return 'Task';
+  };
+
+
   /* get the overdue if a due date is provided
    *
    * @param {Integer} offset
