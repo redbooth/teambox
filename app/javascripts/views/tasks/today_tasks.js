@@ -7,6 +7,11 @@
 
   TodayTasks.initialize = function (options) {
     _.bindAll(this, 'render');
+    ['change','add','remove'].each(function(event) {
+      this.collection.unbind(event);
+      this.collection.bind(event, this.render);
+    }.bind(this));
+
   };
 
   TodayTasks.render = function () {

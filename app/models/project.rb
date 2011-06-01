@@ -33,7 +33,11 @@ class Project < ActiveRecord::Base
     return log_later(target, action, creator_id) if self.is_importing
     Activity.log(self, target, action, creator_id)
   end
-  
+
+  def destroy_activity(target, action)
+    Activity.remove_log(self, target, action)
+  end
+
   def log_later(target, action, creator_id)
     @import_activities ||= []
     base = {:date => target.try(:created_at) || nil,
@@ -50,15 +54,22 @@ class Project < ActiveRecord::Base
   end
   
   def add_user(user, params={})
+    log_create_activity = false
     unless has_member?(user)
       person = Person.with_deleted.where(:project_id => self.id, :user_id => user.id).first
+      log_create_activity = !person.nil?
+
       person ||= people.build
-      
+
       person.user = user
       person.role = params[:role] if params[:role]
       person.source_user_id = params[:source_user].try(:id)
       person.deleted = false
-      person.save
+
+      if person.save && log_create_activity
+        person.log_create
+      end
+
       person
     end
   end

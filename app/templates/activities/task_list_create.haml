@@ -1,6 +1,6 @@
 .activity
   {{#user}}
-  <a href="{{url}}" class="micro_avatar" style="background: url({{micro_avatar_url}}) no-repeat"></a>
+  <a href="{{user_url}}" class="micro_avatar" style="background: url({{micro_avatar_url}}) no-repeat"></a>
   {{/user}}
   .activity_block
     .date
@@ -8,14 +8,14 @@
         {{time_ago updated_at}}
     %p
       {{#user}}
-      %a{ :href => "{{url}}" } {{full_name}}
+      %a{ :href => "{{user_url}}" } {{full_name}}
       {{/user}}
       created the task list
       {{#target}}
-      %a{ :href => "{{url}}" } {{name}}
+      %a{ :href => "{{task_list_url}}" } {{name}}
       {{/target}}
       %span.project
         in the project
         {{#project}}
-        %a{ :href => "{{url}}" } {{name}}
+        %a{ :href => "{{project_url}}" } {{name}}
         {{/project}}

@@ -38,9 +38,9 @@ class Comment < ActiveRecord::Base
     :reject_if => lambda { |google_docs| google_docs['title'].blank? || google_docs['url'].blank? }
   
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
-                  :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes
+                  :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes, :dont_push
 
-  attr_accessor :is_importing
+  attr_accessor :is_importing, :dont_push
 
   scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
   scope :latest, :order => 'id DESC'

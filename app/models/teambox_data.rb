@@ -4,7 +4,8 @@ class TeamboxData < ActiveRecord::Base
   belongs_to :user
   concerned_with :serialization, :attributes, :teambox, :basecamp
   
-  attr_accessible :project_ids, :type_name, :import_data, :user_map, :target_organization, :service
+  attr_accessor :dont_push
+  attr_accessible :project_ids, :type_name, :import_data, :user_map, :target_organization, :service, :dont_push
   
   before_validation :set_service, :on => :create
   before_create :check_state

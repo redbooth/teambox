@@ -4,6 +4,16 @@
   Conversation.initialize = function (options) {
   };
 
+ /* Returns the class name
+  *
+  * @return {String}
+  */
+  Conversation.className = function () {
+      return this.get('type');
+  };
+
+
+
   Conversation.convert_to_task_url = function () {
     return '/api/1/projects/' + this.get('project_id') + '/conversations/' + this.get('id') + '/convert_to_task';
   };

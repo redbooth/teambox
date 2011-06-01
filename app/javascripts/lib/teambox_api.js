@@ -2,7 +2,6 @@
 // Utility methods for Teambox API
 //
 
-
 // Parses a Teambox API response object and modifies it, fetching each
 // reference object from the response.
 // Returns an array of objects with their referenced projects, comments, etc.
@@ -27,31 +26,6 @@ _.parseFromAPI = function(json) {
     e.page = collection.findRef(e.page_id, 'Page');
     e.assigned = collection.findRef(e.assigned_id, 'Person');
     e.organization = collection.findRef(e.organization_id, 'Organization');
-
-    // Insert a method to generate URLs for this item
-    e.url = function() {
-      switch(this.type) {
-        case "Comment":
-          return this.target.url();
-        case "Conversation":
-          return "#!/projects/"+this.project.permalink+"/conversations/"+this.id;
-        case "Task":
-          return "#!/projects/"+this.project.permalink+"/tasks/"+this.id;
-        case "TaskList":
-          return "#!/projects/"+this.project.permalink+"/task_lists/"+this.id;
-        case "Page":
-          return "#!/projects/"+this.project.permalink+"/pages/"+this.id;
-        case "Note":
-          return "#!/projects/"+this.project.permalink+"/pages/"+this.page.id;
-        case "Project":
-          return "#!/projects/"+this.permalink;
-        case "User":
-          return "#!/users/"+this.username;
-        default:
-          console.log("Didn't implement URL for "+this.type+". Object: "+this);
-          return "#!/wip";
-      }
-    };
 
     // Only 'new' and 'open' tasks have due dates and assignees
     if(e.type == "Task" && e.status && e.status !== 0 && e.status !== 1) {

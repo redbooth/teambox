@@ -24,21 +24,25 @@
 
     index: function () {
       Views.Sidebar.highlightSidebar('activity_link');
+      views.activities  = new Teambox.Views.Activities({ collection: this.my_threads });
       views.activities.render();
     },
 
     today: function () {
       Views.Sidebar.highlightSidebar('today_link');
+      views.today_tasks = new Teambox.Views.TodayTasks({ collection: this.my_tasks });
       views.today_tasks.render();
     },
 
     my_tasks: function () {
       Views.Sidebar.highlightSidebar('my_tasks_link');
+      views.my_tasks    = new Teambox.Views.MyTasks({ collection: this.my_tasks });
       views.my_tasks.render();
     },
 
     all_tasks: function () {
       Views.Sidebar.highlightSidebar('all_tasks_link');
+      views.all_tasks   = new Teambox.Views.AllTasks({ collection: this.my_tasks });
       views.all_tasks.render();
     }
   });
@@ -48,3 +52,4 @@
   });
 
 }());
+

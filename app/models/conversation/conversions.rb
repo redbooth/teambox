@@ -43,6 +43,20 @@ class Conversation
     if Array(options[:include]).include? :comments
       base[:comments] = comments.map{|c| c.to_api_hash(options)}
     end
+
+    if Array(options[:include]).include? :user
+      base[:user] = {
+        :username => user.login,
+        :first_name => user.first_name,
+        :last_name => user.last_name,
+        :avatar_url => user.avatar_or_gravatar_url(:thumb),
+        :micro_avatar_url => user.avatar_or_gravatar_url(:micro)
+      }
+    end
+
+    if Array(options[:include]).include? :project
+      base[:project] = {:name => project.name, :permalink => project.permalink}
+    end
     
     base
   end

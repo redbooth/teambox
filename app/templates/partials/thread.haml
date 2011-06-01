@@ -13,18 +13,16 @@
   .block
     .thread_title
       {{#if is_task}}
-      <a href="{{url}}">{{name}}</a> on
-      {{#task_list}}
-      <a href="{{url}}">{{name}}</a>
-      {{/task_list}}
+      <a href="{{task_url}}">{{name}}</a> on
+      <a href="{{task_list_url task_list}}">{{name}}</a>
       task list
       {{else}}
-      <a href="{{url}}">{{name}}</a>
+      <a href="{{conversation_url}}">{{name}}</a>
       conversation
       {{/if}}
     {{#project}}
     .project_overlay
-      <a href="{{url}}" data-project-id="{{id}}">{{name}}</a>
+      <a href="{{project_url}}" data-project-id="{{id}}">{{name}}</a>
     {{/project}}
     {{#if is_task}}
     .task_summary

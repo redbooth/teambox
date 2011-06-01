@@ -11,6 +11,7 @@ document.on("change", "select#project_id", function(e,el) {
 
 // Pop up a notice asking to notify users for new conversations
 document.on("keyup", "form.new_conversation textarea", function(e,el) {
+  if (typeof window['Watchers'] == 'undefined') { return; }
   if (el.value.length === 0) { return; }
 
   if (Watchers.notify_people_span) { return; }

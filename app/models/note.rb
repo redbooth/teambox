@@ -61,6 +61,24 @@ class Note < RoleRecord
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
+
+    if Array(options[:include]).include? :user
+      base[:user] = {
+        :username => updated_by.login,
+        :first_name => updated_by.first_name,
+        :last_name => updated_by.last_name,
+        :avatar_url => updated_by.avatar_or_gravatar_url(:thumb),
+        :micro_avatar_url => updated_by.avatar_or_gravatar_url(:micro)
+      }
+    end
+
+    if Array(options[:include]).include? :project
+      base[:project] = {:name => project.name, :permalink => project.permalink}
+    end
+
+    if Array(options[:include]).include? :page
+      base[:page] = {:name => page.name}
+    end
     
     base
   end

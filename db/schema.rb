@@ -434,15 +434,17 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "position"
-    t.integer  "comments_count",  :default => 0,     :null => false
+    t.integer  "comments_count",         :default => 0,     :null => false
     t.integer  "last_comment_id"
     t.integer  "assigned_id"
-    t.integer  "status",          :default => 0
+    t.integer  "status",                 :default => 0
     t.date     "due_on"
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted",         :default => false, :null => false
+    t.boolean  "deleted",                :default => false, :null => false
+    t.integer  "record_conversion_id"
+    t.string   "record_conversion_type"
   end
 
   add_index "tasks", ["assigned_id"], :name => "index_tasks_on_assigned_id"
@@ -536,8 +538,10 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.boolean  "default_watch_new_task",                         :default => false
     t.boolean  "default_watch_new_conversation",                 :default => false
     t.boolean  "default_watch_new_page",                         :default => false
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], :name => "index_users_on_auth_token", :unique => true
   add_index "users", ["deleted"], :name => "index_users_on_deleted"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 

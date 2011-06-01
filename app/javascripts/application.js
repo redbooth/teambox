@@ -2,6 +2,8 @@
 //= require <lib/underscore>
 //= require <lib/underscore.date>
 //= require <lib/underscore.string>
+//= require <socket_io>
+//= require <juggernaut>
 //= require <lib/jquery>
 //= require <lib/backbone-prototype>
 //= require <lib/handlebars>
@@ -13,6 +15,8 @@
 //= require <effects>
 //= require <controls>
 //= require <dragdrop>
+//= require <hackz>
+//= require <cookie>
 //= require <hackz>
 
 //= require <teambox>
@@ -114,3 +118,4 @@
 //= require <threads>
 //= require <upload>
 //= require <watchers>
+//= require <push>

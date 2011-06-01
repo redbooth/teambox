@@ -5,7 +5,7 @@
 # Configuration shared between all environments:
 defaults: &defaults
   # The domain from where your app is served
-  app_domain: localhost
+  app_domain: teambox.smackaho.st
 
   # How many activities should activity feeds display?
   activities_per_page: 25
@@ -130,15 +130,23 @@ defaults: &defaults
   #   :secret: 
 
   heroku: <%= !!ENV['HEROKU_TYPE'] %>
+  only_https_hosts:
+  juggernaut:
+    port: 8090
+  push_new_activities: false
 
 development:
   <<: *defaults
-  app_domain: localhost:3000
+  app_domain: teambox.smackaho.st
   asset_max_file_size: 1
   allow_outgoing_email: false
 
 production:
   <<: *defaults
+
+staging:
+  <<: *defaults
+  push_new_activities: true
 
 test: &test
   <<: *defaults

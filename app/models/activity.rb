@@ -55,6 +55,11 @@ class Activity < ActiveRecord::Base
     last_activity_id || id
   end
 
+  def self.remove_log(project,target,action)
+    activity = where(:project_id => project.id, :target_id => target.id, :target_type => target.class.name, :action => action).first
+    activity.destroy if activity
+  end
+
   def refs_thread_comments
     if target.respond_to? :first_comment
       [target.first_comment] + target.recent_comments
@@ -126,8 +131,22 @@ class Activity < ActiveRecord::Base
     end || project
   end
 
+  def thread?
+    %w(Conversation Task).include?(target_type)
+  end
+
   def thread_id
     target_type == 'Comment' ? "#{comment_target_type}_#{comment_target_id}" : "#{target_type}_#{target_id}"
+  end
+
+  def activity_id
+    if target_type == 'Comment'
+      "#{target_type.downcase}_#{target_id}"
+    elsif thread?
+      "thread_#{target_type.downcase}_#{target_id}"
+    else
+      "activity_#{target_type.downcase}_#{target_id}"
+    end
   end
 
   def self.for_projects(projects)
@@ -164,6 +183,52 @@ class Activity < ActiveRecord::Base
     end
   end
   
+  def to_push_data(options={})
+    target_includes = [:project, :user]
+    includes = [:target, :project, :user]
+    case self.target_type
+    when 'User'
+      includes = []
+      target_includes = []
+    when 'Project'
+      includes = [:user]
+      target_includes = [:user]
+    when 'Task'
+      target_includes << :comments
+      target_includes << :assigned
+      target_includes << :task_list
+    when 'Conversation'
+      target_includes << :comments
+    when 'Page'
+      target_includes << :slots
+      target_includes << :objects
+    when 'Note'
+      target_includes << :page
+    when 'Divider'
+      target_includes << :page
+    end
+
+    data = to_api_hash(:include => includes,
+                       :emit_type => true,
+                       :target_options => {
+                         :emit_type => true,
+                         :include => target_includes
+                       })
+    data
+  end
+
+  def is_first_comment?
+    comment_target && comment_target.respond_to?(:first_comment) && comment_target.first_comment == target
+  end
+
+  def is_converted_comment?
+    comment_target ? comment_target.respond_to?(:record_conversion) && comment_target.record_conversion : false
+  end
+
+  def push?
+    target && target.respond_to?(:dont_push) ? !target.dont_push : true
+  end
+
   def to_api_hash(options = {})
     base = {
       :id => id,
@@ -175,8 +240,11 @@ class Activity < ActiveRecord::Base
       :project_id => project_id,
       :target_id => target_id,
       :target_type => target_type,
+      :action_type => action_type,
       :comment_target_id => comment_target_id,
-      :comment_target_type => comment_target_type
+      :comment_target_type => comment_target_type,
+      :activity_id => activity_id,
+      :changes => action_type == 'create' ? target.attributes : target.previous_changes
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
@@ -186,7 +254,7 @@ class Activity < ActiveRecord::Base
     end
     
     if Array(options[:include]).include? :target
-      base[:target] = target.to_api_hash
+      base[:target] = target.to_api_hash(options[:target_options])
     end
     
     if Array(options[:include]).include? :user
@@ -194,7 +262,8 @@ class Activity < ActiveRecord::Base
         :username => user.login,
         :first_name => user.first_name,
         :last_name => user.last_name,
-        :avatar_url => user.avatar_or_gravatar_url(:thumb)
+        :avatar_url => user.avatar_or_gravatar_url(:thumb),
+        :micro_avatar_url => user.avatar_or_gravatar_url(:micro)
       }
     end
     

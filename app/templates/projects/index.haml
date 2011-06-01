@@ -9,7 +9,7 @@
   .projects
     {{#active_projects}}
     %p.project
-      %a{ :href => "{{url}}" } {{name}}
+      %a{ :href => "{{project_url}}" } {{name}}
       %span.status
         {{my_role}}
         {{#admin}}

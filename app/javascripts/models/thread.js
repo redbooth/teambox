@@ -1,7 +1,13 @@
 (function () {
 
   Teambox.Models.Thread = Teambox.Models.Base.extend({
-    initialize: function () {
+
+   /* Returns the class name
+    *
+    * @return {String}
+    */
+    className: function () {
+      return this.get('type');
     }
 
   , render: function () {

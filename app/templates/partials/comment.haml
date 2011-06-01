@@ -2,7 +2,7 @@
     :'data-project' => "{{project_id}}", :'data-user' => "{{user_id}}" }
   .info
     {{#user}}
-    %a.micro_avatar{ :href => "{{url}}",
+    %a.micro_avatar{ :href => "{{user_url}}",
       :style => "background: url({{micro_avatar_url}}) no-repeat" }
     {{/user}}
   .block
@@ -13,7 +13,7 @@
     .body.textilized
       .before
         {{#user}}
-        %a.user{ :href => "{{url}}" }
+        %a.user{ :href => "{{user_url}}" }
           {{full_name}}
         {{/user}}
         <!-- TODO: due on transition -->

@@ -41,11 +41,21 @@ module UsersHelper
   
   def load_javascript_user_data
     javascript_tag %(
-      my_user = #{json_user};
-      my_projects = #{json_projects};
-      my_organizations = #{json_organizations};
-      my_tasks = #{json_tasks};
-      current_project = #{@current_project ? @current_project.id : 'null'};
+     window.my_user = #{json_user};
+     window.my_projects = #{json_projects};
+     window.my_organizations = #{json_organizations};
+     window.my_tasks = #{json_tasks};
+     window.current_project = #{@current_project ? @current_project.id : 'null'};
+
+      (function(){
+        var $app = Teambox.controllers.application;
+
+        document.on("dom:loaded", function () {
+          if($app) {
+            _.extend($app.config, #{json_config});
+          }
+        });
+      }());
     )
   end
   
@@ -173,6 +183,14 @@ module UsersHelper
       current_user.nearest_pending_tasks.to_json
     end
 
+    def json_config
+      config = {}
+      config[:app_env] = Rails.env
+      config[:push_server] = {}
+      config[:push_server][:port] = Teambox.config.juggernaut.port
+      config.to_json
+    end
+
     def json_user
       {
         :id => current_user.id,
@@ -190,7 +208,8 @@ module UsersHelper
         },
         :first_steps => current_user.show_first_steps,
         :badges => current_user.badges,
-        :show_badges => current_user.show_badges
+        :show_badges => current_user.show_badges,
+        :authentication_token => current_user.authentication_token
       }.to_json
     end
 

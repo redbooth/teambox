@@ -1,6 +1,6 @@
 class NotificationsObserver < ActiveRecord::Observer
 
-  observe :comment
+  observe :comment, :activity
 
 
   method_name = %w(cucumber test).any? {|env| Rails.env == env} ? :after_create : :after_commit
@@ -9,12 +9,39 @@ class NotificationsObserver < ActiveRecord::Observer
     return if method_name == :after_commit && !obj.send(:transaction_include_action?, :create)
 
     case obj
+      when Activity
+        push_on_create(obj) unless Rails.env == 'test'
       when Comment
         notify_watchers_on_new_comment(obj)
     end
   end
 
   protected
+
+    def push_on_create(activity)
+
+      #TODO: Also send none project-related activities
+      if activity.project && !activity.is_first_comment? && activity.push?
+        activity_hash = activity.to_push_data()
+
+        users = User.select_auth_tokens activity.project.users
+
+        #Publish activities to:
+        # * project users
+        # * organization admins if project/person activity
+        # * activity user if person activity
+        if %w(Project Person).include? activity.target_type
+          users = users.concat User.select_auth_tokens activity.project.organization.admins
+          if activity.target_type == 'Person'
+            users << activity.target.user.to_auth_token
+          end
+        end
+
+        users.uniq.each do |user|
+          Juggernaut.publish("/users/#{user[0]}", activity_hash.to_json)
+        end
+      end
+    end
 
     def notify_watchers_on_new_comment(comment)
       return if comment.try(:project).try(:is_importing)
