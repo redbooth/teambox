@@ -169,6 +169,20 @@ class Page < RoleRecord
     if Array(options[:include]).include? :slots
       base[:slots] = slots.map{|s| s.to_api_hash(options)}
     end
+
+    if Array(options[:include]).include? :user
+      base[:user] = {
+        :username => user.login,
+        :first_name => user.first_name,
+        :last_name => user.last_name,
+        :avatar_url => user.avatar_or_gravatar_url(:thumb),
+        :micro_avatar_url => user.avatar_or_gravatar_url(:micro)
+      }
+    end
+
+    if Array(options[:include]).include? :project
+      base[:project] = {:name => project.name, :permalink => project.permalink}
+    end
     
     if Array(options[:include]).include? :objects
       base[:objects] = refs_objects.map{|o| o.to_api_hash(:emit_type => true)}

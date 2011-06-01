@@ -65,7 +65,8 @@ class Task
         :username => user.login,
         :first_name => user.first_name,
         :last_name => user.last_name,
-        :avatar_url => user.avatar_or_gravatar_url(:thumb)
+        :avatar_url => user.avatar_or_gravatar_url(:thumb),
+        :micro_avatar_url => user.avatar_or_gravatar_url(:micro)
       }
     end
 
