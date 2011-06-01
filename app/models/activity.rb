@@ -184,6 +184,22 @@ class Activity < ActiveRecord::Base
   end
   
   def to_push_data(options={})
+    includes = [:project, :user]
+    case self.target_type
+    when 'Task'
+      includes << :comments
+      includes << :assigned
+      includes << :task_list
+    when 'Conversation'
+      includes << :comments
+    end
+
+    data = to_api_hash(:include => [:target],
+                         :target_options => {
+                           :include => includes
+                         })
+
+
     data = to_api_hash(options)
     data
   end
@@ -215,7 +231,7 @@ class Activity < ActiveRecord::Base
       :comment_target_id => comment_target_id,
       :comment_target_type => comment_target_type,
       :activity_id => activity_id,
-      :changes => target.previous_changes
+      :changes => action_type == 'create' ? target.attributes : target.previous_changes
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
@@ -225,7 +241,7 @@ class Activity < ActiveRecord::Base
     end
     
     if Array(options[:include]).include? :target
-      base[:target] = target.to_api_hash
+      base[:target] = target.to_api_hash(options[:target_options])
     end
     
     if Array(options[:include]).include? :user

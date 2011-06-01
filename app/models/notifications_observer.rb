@@ -22,7 +22,7 @@ class NotificationsObserver < ActiveRecord::Observer
 
       #TODO: Also send none project-related activities
       if activity.project && !activity.is_first_comment? && activity.push?
-        activity_hash = activity.to_push_data(:include => [:project, :target, :user])
+        activity_hash = activity.to_push_data()
 
         users = User.select_auth_tokens activity.project.users
 
